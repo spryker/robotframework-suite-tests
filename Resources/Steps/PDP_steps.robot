@@ -10,6 +10,7 @@ Resource    ../Common/Common_Keywords_Yves.robot
 ${price}    ${pdp_price_element_locator}
 ${addToCartButton}    ${pdp_add_to_cart_button}
 ${alternativeProducts}    ${pdp_alternative_products_slider}
+${measurementUnitSuggestion}    ${pdp_measurement_unit_notification}
 
 *** Keywords ***
 Yves: PDP contains/doesn't contain: 
@@ -36,3 +37,15 @@ Yves: add product to the shopping cart
 Yves: change quantity on PDP:
     [Arguments]    ${qtyToSet}
     Input Text    ${pdp_quantity_input_filed}    ${qtyToSet}
+
+Yves: select the following 'Sales Unit' on PDP:
+    [Arguments]    ${salesUnit}
+    Wait Until Element Is Visible    ${pdp_measurement_sales_unit_selector}
+    Select From List By Label    ${pdp_measurement_sales_unit_selector}    ${salesUnit}
+
+Yves: change quantity using '+' or '-' button № times:
+    [Arguments]    ${action}    ${clicksCount}
+    FOR    ${index}    IN RANGE    0    ${clicksCount}
+        Run Keyword If    '${action}' == '+'    Click Element    ${pdp_increase_quantity_button}
+        ...    ELSE IF    '${action}' == '-'    Click Element    ${pdp_decrease_quantity_button} 
+    END
