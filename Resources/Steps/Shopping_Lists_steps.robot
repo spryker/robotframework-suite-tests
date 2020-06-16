@@ -19,6 +19,8 @@ Go to 'Shopping Lists' page
 
 Yves: create new 'Shopping List' with name:
     [Arguments]    ${shoppingListName}
+    ${currentURL}=    Get Location        
+    Run Keyword Unless    '/shopping-list' in '${currentURL}'    Go To    ${host}shopping-list
     Input Text    ${shopping_list_name_input_field}    ${shoppingListName}
     Click Element    ${create_shopping_list_button}
     Wait For Document Ready 
