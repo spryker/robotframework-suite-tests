@@ -11,6 +11,7 @@ ${price}    ${pdp_price_element_locator}
 ${addToCartButton}    ${pdp_add_to_cart_button}
 ${alternativeProducts}    ${pdp_alternative_products_slider}
 ${measurementUnitSuggestion}    ${pdp_measurement_unit_notification}
+${packagingUnitSuggestion}    ${pdp_packaging_unit_notification}
 
 *** Keywords ***
 Yves: PDP contains/doesn't contain: 
@@ -42,6 +43,7 @@ Yves: select the following 'Sales Unit' on PDP:
     [Arguments]    ${salesUnit}
     Wait Until Element Is Visible    ${pdp_measurement_sales_unit_selector}
     Select From List By Label    ${pdp_measurement_sales_unit_selector}    ${salesUnit}
+    Wait For Document Ready    
 
 Yves: change quantity using '+' or '-' button № times:
     [Arguments]    ${action}    ${clicksCount}
@@ -49,3 +51,12 @@ Yves: change quantity using '+' or '-' button № times:
         Run Keyword If    '${action}' == '+'    Click Element    ${pdp_increase_quantity_button}
         ...    ELSE IF    '${action}' == '-'    Click Element    ${pdp_decrease_quantity_button} 
     END
+
+Yves: change variant of the product on PDP on:
+    [Arguments]    ${variantToChoose}
+    Select From List By Label    ${pdp_variant_selector}    ${variantToChoose}
+    Wait For Document Ready    
+
+Yves: change amount on PDP:
+    [Arguments]    ${amountToSet}
+    Input Text    ${pdp_amount_input_filed}    ${amountToSet}

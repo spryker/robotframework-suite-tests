@@ -122,20 +122,20 @@ Resource    ../../Resources/Steps/Order_History_steps.robot
 #     Yves: go to the shopping cart through the header with name:  measurementUnitsCart+${random}
 #     Yves: 'Shopping Cart' page is displayed
 #     Yves: shopping cart contains the following products:    425079
-
+# 
 # Packaging_Units
 #     Yves: login on Yves with provided credentials:    sonia@spryker.com
-#     Yves: create new 'Shopping Cart' with name:    packagingUnitsCart
+#     Yves: create new 'Shopping Cart' with name:    packagingUnitsCart+${random}
 #     Yves: go to PDP of the product with sku:    M21766 
 #     Yves: change variant of the product on PDP on:    Box
 #     Yves: change amount on PDP:    51
-#     Yves: PDP contains/doesn't contain    packagingUnitSuggestion
+#     Yves: PDP contains/doesn't contain:    true    ${packagingUnitSuggestion}
 #     Yves: change amount on PDP:    10
 #     Yves: add product to the shopping cart
-#     Yves: go to the shopping cart through the header with name:    packagingUnitsCart
+#     Yves: go to the shopping cart through the header with name:    packagingUnitsCart+${random}
 #     Yves: shopping cart contains the following products:    421519_3
 
-# Product_Sets
+Product_Sets
 #     Yves: login on Yves with provided credentials:    sonia@spryker.com
 #     Yves: create new 'Shopping Cart' with name:    productSetsCart
 #     Yves: go to URL:    /en/product-sets
