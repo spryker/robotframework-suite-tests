@@ -18,6 +18,8 @@ Go to 'Shopping Carts' page
 
 Yves: create new 'Shopping Cart' with name:
     [Arguments]    ${shoppingCartName}
+    ${currentURL}=    Get Location        
+    Run Keyword Unless    '/multi-cart' in '${currentURL}'    Go To    ${host}multi-cart
     Click Element    ${create_shopping_cart_button}
     Wait For Document Ready
     Input Text    ${shopping_cart_name_input_field}    ${shoppingCartName}
@@ -54,3 +56,7 @@ Yves: shopping cart contains the following products:
 Yves: click on the '${buttonName}' button
     Run Keyword If    '${buttonName}' == 'Checkout'    Click Element    ${shopping_cart_checkout_button}
     ...    ELSE IF    '${buttonName}' == 'Request a Quote'    Click Element    ${shopping_cart_request_quote_button}
+
+Yves: shopping cart contains product with unit price:
+    [Arguments]    ${sku}    ${productPrice}
+    Page Should Contain Element    xpath=//main[contains(@class,'cart-page')]//div[contains(@class,'product-card-item__col--description')]//div[contains(.,'SKU: ${sku}')]/ancestor::article//*[contains(@class,'product-card-item__col--description')]/div[1]//*[contains(@class,'money-price__amount')][contains(.,'${productPrice}')]

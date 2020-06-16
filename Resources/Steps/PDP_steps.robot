@@ -4,10 +4,12 @@ Library    String
 Library    BuiltIn
 Library    Collections
 Resource    ../Pages/Yves/Yves_Product_Details_Page.robot
+Resource    ../Common/Common_Keywords_Yves.robot
 
 *** Variable ***
 ${price}    ${pdp_price_element_locator}
 ${addToCartButton}    ${pdp_add_to_cart_button}
+${alternativeProducts}    ${pdp_alternative_products_slider}
 
 *** Keywords ***
 Yves: PDP contains/doesn't contain: 
@@ -29,3 +31,8 @@ Yves: add product to the shopping cart
     Wait Until Page Contains Element    ${pdp_add_to_cart_button}
     Click Element    ${pdp_add_to_cart_button}
     Wait For Document Ready    
+    Yves: remove flash messages
+
+Yves: change quantity on PDP:
+    [Arguments]    ${qtyToSet}
+    Input Text    ${pdp_quantity_input_filed}    ${qtyToSet}
