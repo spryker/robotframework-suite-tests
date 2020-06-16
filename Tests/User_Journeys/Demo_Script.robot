@@ -110,7 +110,7 @@ Resource    ../../Resources/Steps/Order_History_steps.robot
 #     Yves: go to PDP of the product with sku:  M21100
 #     Yves: PDP contains/doesn't contain:    true    ${alternativeProducts}
 
-# Measurement_Units
+Measurement_Units
 #     Yves: login on Yves with provided credentials:    sonia@spryker.com
 #     Yves: create new 'Shopping Cart' with name:    measurementUnitsCart
 #     Yves: go to PDP of the product with sku:    M23723 
