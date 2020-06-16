@@ -103,7 +103,7 @@ Volume_Prices
     Yves: login on Yves with provided credentials:    sonia@spryker.com
     Yves: create new 'Shopping Cart' with name:    VolumePriceCart
     Yves: go to PDP of the product with sku:    M21189  
-#     Yves: change quantity on PDP:    5
+    Yves: change quantity on PDP:    5
 #     Yves: add product to the shopping cart
 #     Yves: go to the shopping cart through the header with name:    VolumePriceCart
 #     Yves: shopping cart contains product with unit price:    sku    price
