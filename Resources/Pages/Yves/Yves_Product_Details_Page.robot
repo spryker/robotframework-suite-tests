@@ -14,3 +14,5 @@ ${pdp_decrease_quantity_button}    xpath= //form[@class='js-product-configurator
 ${pdp_variant_selector}    xpath=//*[@data-qa='component variant']//select
 ${pdp_amount_input_filed}    id=user-amount
 ${pdp_packaging_unit_notification}    xpath=//*[@class='packaging-unit-notifications']
+${pdp_product_bundle_include_small}    xpath=//div[@class='js-product-options-bundle__target']
+${pdp_product_bundle_include_large}    xpath=//div[@data-qa='component product-bundle']

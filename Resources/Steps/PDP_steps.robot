@@ -12,6 +12,8 @@ ${addToCartButton}    ${pdp_add_to_cart_button}
 ${alternativeProducts}    ${pdp_alternative_products_slider}
 ${measurementUnitSuggestion}    ${pdp_measurement_unit_notification}
 ${packagingUnitSuggestion}    ${pdp_packaging_unit_notification}
+${bundleItemsSmall}    ${pdp_product_bundle_include_small}
+${bundleItemsLarge}    ${pdp_product_bundle_include_large}
 
 *** Keywords ***
 Yves: PDP contains/doesn't contain: 
