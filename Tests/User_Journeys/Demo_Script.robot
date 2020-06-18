@@ -6,6 +6,7 @@ Test Teardown     TestTeardown
 Resource    ../../Resources/Common/Common.robot
 Resource    ../../Resources/Steps/Header_steps.robot
 Resource    ../../Resources/Common/Common_Keywords_Yves.robot
+Resource    ../../Resources/Common/Common_Keywords_Zed.robot
 Resource    ../../Resources/Steps/PDP_steps.robot
 Resource    ../../Resources/Steps/Shopping_Lists_steps.robot
 Resource    ../../Resources/Steps/Checkout_steps.robot
@@ -166,15 +167,15 @@ Resource    ../../Resources/Steps/Product_Set_steps.robot
 #     Yves: add product to the shopping cart
 #     Yves: go to the shopping cart through the header with name:    productRelationCart+${random}
 #     Yves: shopping cart contains/doesn't contain the following elements:    true    ${upSellProducts}
-
-Default_Merchants
+# 
+# Default_Merchants
 #     Zed: Login on Zed with Provided Credentials:    admin@spryker.com
 #     Zed: Go to Second Navigation Item Level:    Merchants    Merchants
 #     Zed: Table should contain:    Restrictions Merchant
 #     Zed: Table should contain:    Prices Merchant
 #     Zed: Table should contain:    Products Restrictions Merchant
 
-# Product_Restrictions
+Product_Restrictions
 #     Yves: login on Yves with provided credentials:    sonia@spryker.com
 #     Yves: perform search by:    Soennecken
 #     Yves: 'Catalog' page should show products:    18
