@@ -157,14 +157,15 @@ Resource    ../../Resources/Steps/Product_Set_steps.robot
 #     Yves: shopping cart contains the following products:    000201
 
 Product_Relations
-#     Yves: login on Yves with provided credentials:    sonia@spryker.com
-#     Yves: create new 'Shopping Cart' with name:    productRelationCart
-#     Yves: go to PDP of the product with sku:    M29529
-#     Yves: PDP contains/doesn't contain    crossSellProducts 
-#     Yves: go to PDP of the product with sku:    M29524
-#     Yves: add product to the shopping cart
-#     Yves: go to the shopping cart through the header with name:    productRelationCart
-#     Yves: shopping cart contains the following elements:    upSellProducts
+    Yves: login on Yves with provided credentials:    Trever.m@spryker.com
+    Yves: create new 'Shopping Cart' with name:    productRelationCart+${random}
+    Yves: go to PDP of the product with sku:    M29529
+    Yves: PDP contains/doesn't contain:    true    ${relatedProducts}
+    Yves: go to PDP of the product with sku:    M29524
+    Yves: PDP contains/doesn't contain:    false    ${relatedProducts}
+    Yves: add product to the shopping cart
+    Yves: go to the shopping cart through the header with name:    productRelationCart+${random}
+    Yves: shopping cart contains the following elements:    upSellProducts
 
 # Default_Merchants
 #     Zed: Login on Zed with Provided Credentials:    admin@spryker.com

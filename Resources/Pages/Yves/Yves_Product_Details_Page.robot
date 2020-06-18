@@ -16,3 +16,4 @@ ${pdp_amount_input_filed}    id=user-amount
 ${pdp_packaging_unit_notification}    xpath=//*[@class='packaging-unit-notifications']
 ${pdp_product_bundle_include_small}    xpath=//div[@class='js-product-options-bundle__target']
 ${pdp_product_bundle_include_large}    xpath=//div[@data-qa='component product-bundle']
+${pdp_related_products}    xpath=//*[contains(@class,'title--product-slider')][contains(.,'Similar products')]/../slick-carousel
