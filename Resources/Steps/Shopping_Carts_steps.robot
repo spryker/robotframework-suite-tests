@@ -2,6 +2,10 @@
 Resource    ../Pages/Yves/Yves_Shopping_Carts_page.robot
 Resource    ../Pages/Yves/Yves_Shopping_Cart_page.robot
 
+
+*** Variables ***
+${upSellProducts}    ${shopping_cart_upp-sell_products_section}
+
 *** Keywords ***
 Yves: 'Shopping Carts' widget contains:
     [Arguments]    ${shoppingCartName}    ${accessLevel}
@@ -60,3 +64,18 @@ Yves: click on the '${buttonName}' button
 Yves: shopping cart contains product with unit price:
     [Arguments]    ${sku}    ${productPrice}
     Page Should Contain Element    xpath=//main[contains(@class,'cart-page')]//div[contains(@class,'product-card-item__col--description')]//div[contains(.,'SKU: ${sku}')]/ancestor::article//*[contains(@class,'product-card-item__col--description')]/div[1]//*[contains(@class,'money-price__amount')][contains(.,'${productPrice}')]
+
+Yves: shopping cart contains/doesn't contain the following elements:
+    [Arguments]    ${condition}    @{shopping_cart_elements_list}    ${element1}=${EMPTY}     ${element2}=${EMPTY}     ${element3}=${EMPTY}     ${element4}=${EMPTY}     ${element5}=${EMPTY}     ${element6}=${EMPTY}     ${element7}=${EMPTY}     ${element8}=${EMPTY}     ${element9}=${EMPTY}     ${element10}=${EMPTY}     ${element11}=${EMPTY}     ${element12}=${EMPTY}     ${element13}=${EMPTY}     ${element14}=${EMPTY}     ${element15}=${EMPTY}
+    ${shopping_cart_elements_list_count}=   get length  ${shopping_cart_elements_list}
+    FOR    ${index}    IN RANGE    0    ${shopping_cart_elements_list_count}
+        ${shopping_cart_element_to_check}=    Get From List    ${shopping_cart_elements_list}    ${index}
+        Run Keyword If    '${condition}' == 'true'    
+        ...    Run Keywords
+        ...    Log    ${shopping_cart_element_to_check}    #Left as an example of multiple actions in Condition
+        ...    AND    Page Should Contain Element    ${shopping_cart_element_to_check}    message=${shopping_cart_element_to_check} is not displayed
+        Run Keyword If    '${condition}' == 'false'    
+        ...    Run Keywords
+        ...    Log    ${shopping_cart_element_to_check}    #Left as an example of multiple actions in Condition
+        ...    AND    Page Should Not Contain Element    ${shopping_cart_element_to_check}    message=${shopping_cart_element_to_check} should not be displayed
+    END

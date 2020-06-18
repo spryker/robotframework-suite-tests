@@ -155,19 +155,19 @@ Resource    ../../Resources/Steps/Product_Set_steps.robot
 #     Yves: add product to the shopping cart
 #     Yves: go to the shopping cart through the header with name:    productBundleCart+${random}
 #     Yves: shopping cart contains the following products:    000201
+# 
+# Product_Relations
+#     Yves: login on Yves with provided credentials:    Trever.m@spryker.com
+#     Yves: create new 'Shopping Cart' with name:    productRelationCart+${random}
+#     Yves: go to PDP of the product with sku:    M29529
+#     Yves: PDP contains/doesn't contain:    true    ${relatedProducts}
+#     Yves: go to PDP of the product with sku:    M29524
+#     Yves: PDP contains/doesn't contain:    false    ${relatedProducts}
+#     Yves: add product to the shopping cart
+#     Yves: go to the shopping cart through the header with name:    productRelationCart+${random}
+#     Yves: shopping cart contains/doesn't contain the following elements:    true    ${upSellProducts}
 
-Product_Relations
-    Yves: login on Yves with provided credentials:    Trever.m@spryker.com
-    Yves: create new 'Shopping Cart' with name:    productRelationCart+${random}
-    Yves: go to PDP of the product with sku:    M29529
-    Yves: PDP contains/doesn't contain:    true    ${relatedProducts}
-    Yves: go to PDP of the product with sku:    M29524
-    Yves: PDP contains/doesn't contain:    false    ${relatedProducts}
-    Yves: add product to the shopping cart
-    Yves: go to the shopping cart through the header with name:    productRelationCart+${random}
-    Yves: shopping cart contains the following elements:    upSellProducts
-
-# Default_Merchants
+Default_Merchants
 #     Zed: Login on Zed with Provided Credentials:    admin@spryker.com
 #     Zed: Go to Second Navigation Item Level:    Merchants    Merchants
 #     Zed: Table should contain:    Restrictions Merchant
@@ -267,7 +267,7 @@ Product_Relations
 #     Yves: 'Summary' page is displayed
 #     Yves: 'Summary' page contains:    cancelRequest    listAlert    statusWaiting
 #     Yves: go to the shopping cart through the header with name:    approvalCart
-#     Yves: shopping cart contains the following elements:    lockedCart
+#     Yves: shopping cart contains/doesn't contain the following elements:    lockedCart
 #     Yves: create new shopping cart with name:    newApprovalCart
 #     Yves: go to PDP of the product with sku:    M58314
 #     Yves: add product to the shopping cart
