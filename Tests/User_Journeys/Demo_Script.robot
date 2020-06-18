@@ -6,11 +6,13 @@ Test Teardown     TestTeardown
 Resource    ../../Resources/Common/Common.robot
 Resource    ../../Resources/Steps/Header_steps.robot
 Resource    ../../Resources/Common/Common_Keywords_Yves.robot
+Resource    ../../Resources/Common/Common_Keywords_Zed.robot
 Resource    ../../Resources/Steps/PDP_steps.robot
 Resource    ../../Resources/Steps/Shopping_Lists_steps.robot
 Resource    ../../Resources/Steps/Checkout_steps.robot
 Resource    ../../Resources/Steps/Order_History_steps.robot
 Resource    ../../Resources/Steps/Product_Set_steps.robot
+Resource    ../../Resources/Steps/Catalog_steps.robot
 
 *** Test Cases ***
 # Guest_User_Restrictions
@@ -155,30 +157,30 @@ Resource    ../../Resources/Steps/Product_Set_steps.robot
 #     Yves: add product to the shopping cart
 #     Yves: go to the shopping cart through the header with name:    productBundleCart+${random}
 #     Yves: shopping cart contains the following products:    000201
-
-Product_Relations
-    Yves: login on Yves with provided credentials:    Trever.m@spryker.com
-    Yves: create new 'Shopping Cart' with name:    productRelationCart+${random}
-    Yves: go to PDP of the product with sku:    M29529
-    Yves: PDP contains/doesn't contain:    true    ${relatedProducts}
-    Yves: go to PDP of the product with sku:    M29524
-    Yves: PDP contains/doesn't contain:    false    ${relatedProducts}
-    Yves: add product to the shopping cart
-    Yves: go to the shopping cart through the header with name:    productRelationCart+${random}
-    Yves: shopping cart contains the following elements:    upSellProducts
-
+# 
+# Product_Relations
+#     Yves: login on Yves with provided credentials:    Trever.m@spryker.com
+#     Yves: create new 'Shopping Cart' with name:    productRelationCart+${random}
+#     Yves: go to PDP of the product with sku:    M29529
+#     Yves: PDP contains/doesn't contain:    true    ${relatedProducts}
+#     Yves: go to PDP of the product with sku:    M29524
+#     Yves: PDP contains/doesn't contain:    false    ${relatedProducts}
+#     Yves: add product to the shopping cart
+#     Yves: go to the shopping cart through the header with name:    productRelationCart+${random}
+#     Yves: shopping cart contains/doesn't contain the following elements:    true    ${upSellProducts}
+# 
 # Default_Merchants
 #     Zed: Login on Zed with Provided Credentials:    admin@spryker.com
 #     Zed: Go to Second Navigation Item Level:    Merchants    Merchants
 #     Zed: Table should contain:    Restrictions Merchant
 #     Zed: Table should contain:    Prices Merchant
 #     Zed: Table should contain:    Products Restrictions Merchant
-
+# 
 # Product_Restrictions
-#     Yves: login on Yves with provided credentials:    sonia@spryker.com
+#     Yves: login on Yves with provided credentials:    Trever.m@spryker.com
 #     Yves: perform search by:    Soennecken
 #     Yves: 'Catalog' page should show products:    18
-#     Yves: go to URL:    /en/office-furniture/storage/lockers
+#     Yves: go to URL:    en/office-furniture/storage/lockers
 #     Yves: 'Catalog' page should show products:    34
 #     Yves: logout on Yves as a customer
 #     Yves: login on Yves with provided credentials:    frida@ottom.de
@@ -186,15 +188,15 @@ Product_Relations
 #     Yves: 'Catalog' page should show products:    0
 #     Yves: logout on Yves as a customer
 #     Yves: login on Yves with provided credentials:    alexa@ottom.de
-#     Yves: go to URL:    /en/office-furniture/storage/lockers
+#     Yves: go to URL:    en/office-furniture/storage/lockers
 #     Yves: 'Catalog' page should show products:    0
-#     Yves: go to URL:    /en/transport/lift-carts
+#     Yves: go to URL:    en/transport/lift-carts
 #     Yves: 'Catalog' page should show products:    16
-#     Yves: go to URL:    /en/transport/sack-trucks
-#     Yves: 'Catalog' page should show products:    10
-
+#     Yves: go to URL:    en/transport/sack-trucks
+#    Yves: 'Catalog' page should show products:    10
+# 
 # Customer_Specific_Prices
-#     Yves: login on Yves with provided credentials:    sonia@spryker.com
+#     Yves: login on Yves with provided credentials:    Trever.m@spryker.com
 #     Yves: perform search by:    EUROKRAFT trolley - with open shovel
 #     Yves: product with name in the catalog should have price:    EUROKRAFT trolley - with open shovel    €235.43
 #     Yves: go to PDP of the product with sku:    M70208
@@ -202,11 +204,11 @@ Product_Relations
 #     Yves: logout on Yves as a customer
 #     Yves: login on Yves with provided credentials:    karl@spryker.com
 #     Yves: perform search by:    EUROKRAFT trolley - with open shovel
-#     Yves: product with name xxx in the catalog should have price:    EUROKRAFT trolley - with open shovel    €188.34
+#     Yves: product with name in the catalog should have price:    EUROKRAFT trolley - with open shovel    €188.34
 #     Yves: go to PDP of the product with sku:    M70208
 #     Yves: product price on the PDP should be:    €188.34
 
-# Agent_Assist
+Agent_Assist
 #     Zed: Login on Zed with Provided Credentials:    admin@spryker.com
 #     Zed: Go to Second Navigation Item Level:    Users Control    User
 #     Zed: create new Zed user with the following data:    agent@spryker.com    change123    Agent    Assist    This user is an agent    en_US
@@ -267,7 +269,7 @@ Product_Relations
 #     Yves: 'Summary' page is displayed
 #     Yves: 'Summary' page contains:    cancelRequest    listAlert    statusWaiting
 #     Yves: go to the shopping cart through the header with name:    approvalCart
-#     Yves: shopping cart contains the following elements:    lockedCart
+#     Yves: shopping cart contains/doesn't contain the following elements:    lockedCart
 #     Yves: create new shopping cart with name:    newApprovalCart
 #     Yves: go to PDP of the product with sku:    M58314
 #     Yves: add product to the shopping cart

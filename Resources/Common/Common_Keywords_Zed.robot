@@ -20,9 +20,9 @@ Zed: Go to First Navigation Item Level:
     click element  xpath=//span[contains(@class,'nav-label')][contains(text(),'${navigation_item}')]/../../a
 
 Zed: Go to Second Navigation Item Level:
-    [Documentation]     example: "Zed: Go to Second Navigation Item Level  Customers      Customer Access"
+    [Documentation]     example: "Zed: Go to Second Navigation Item Level    Customers    Customer Access"
     [Arguments]     ${navigation_item_level1}   ${navigation_item_level2}
-    ${node_state}=  Get Element Attribute  xpath=//span[contains(@class,'nav-label')][contains(text(),'${navigation_item_level1}')]/ancestor::li[1]     class
+    ${node_state}=  Get Element Attribute  xpath=(//span[contains(@class,'nav-label')][contains(text(),'${navigation_item_level1}')]/ancestor::li)[1]    class
     log  ${node_state}
     Run Keyword If    'active' in '${node_state}'   run keywords  wait until element is visible  xpath=//ul[contains(@class,'nav-second-level')]//a/span[text()='${navigation_item_level2}']
     ...    AND      click element  xpath=//ul[contains(@class,'nav-second-level')]//a/span[text()='${navigation_item_level2}']
@@ -63,5 +63,5 @@ Zed: Perform Search By:
 
 Zed: Table should contain:
     [Arguments]    ${search_key}
-    Zed: Perform Search By:  Robot First+${random}
-    table should contain  ${zed_table_locator}  Robot First+${random}
+    Zed: Perform Search By:  ${search_key}
+    table should contain  ${zed_table_locator}  ${search_key}
