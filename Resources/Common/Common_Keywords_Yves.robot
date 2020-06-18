@@ -72,3 +72,7 @@ Yves: get the last placed order ID by current customer
     ${lastPlacedOrder}=    Get Text    xpath=//div[contains(@data-qa,'component order-table')]//tr[1]//td[@data-content='Order Id'][1]
     Set Suite Variable    ${lastPlacedOrder}    ${lastPlacedOrder}
     [Return]    ${lastPlacedOrder}
+
+Yves: go to URL:
+    [Arguments]    ${url}
+    Go To    ${host}${url}

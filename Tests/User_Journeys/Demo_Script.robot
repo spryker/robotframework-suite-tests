@@ -10,6 +10,7 @@ Resource    ../../Resources/Steps/PDP_steps.robot
 Resource    ../../Resources/Steps/Shopping_Lists_steps.robot
 Resource    ../../Resources/Steps/Checkout_steps.robot
 Resource    ../../Resources/Steps/Order_History_steps.robot
+Resource    ../../Resources/Steps/Product_Set_steps.robot
 
 *** Test Cases ***
 # Guest_User_Restrictions
@@ -109,62 +110,62 @@ Resource    ../../Resources/Steps/Order_History_steps.robot
 # Alternative_Products
 #     Yves: go to PDP of the product with sku:  M21100
 #     Yves: PDP contains/doesn't contain:    true    ${alternativeProducts}
-
+# 
 # Measurement_Units
 #     Yves: login on Yves with provided credentials:    sonia@spryker.com
-#     Yves: create new 'Shopping Cart' with name:    measurementUnitsCart
+#     Yves: create new 'Shopping Cart' with name:    measurementUnitsCart+${random}
 #     Yves: go to PDP of the product with sku:    M23723 
-#     Yves: select the following 'Sales Unit' on PDP:    salesUnit
-#     Yves: change quantity on PDP:    4
-#     Yves: PDP contains/doesn't contain    measurementUnitSuggestion 
-#     Yves: change quantity on PDP:    3
+#     Yves: select the following 'Sales Unit' on PDP:    Meter
+#     Yves: change quantity using '+' or '-' button № times:    +    1
+#     Yves: PDP contains/doesn't contain:    true    ${measurementUnitSuggestion}
+#     Yves: change quantity using '+' or '-' button № times:    -    1
 #     Yves: add product to the shopping cart
-#     Yves: go to the shopping cart through the header with name:  measurementUnitsCart
+#     Yves: go to the shopping cart through the header with name:  measurementUnitsCart+${random}
 #     Yves: 'Shopping Cart' page is displayed
 #     Yves: shopping cart contains the following products:    425079
-
+# 
 # Packaging_Units
 #     Yves: login on Yves with provided credentials:    sonia@spryker.com
-#     Yves: create new 'Shopping Cart' with name:    packagingUnitsCart
+#     Yves: create new 'Shopping Cart' with name:    packagingUnitsCart+${random}
 #     Yves: go to PDP of the product with sku:    M21766 
 #     Yves: change variant of the product on PDP on:    Box
 #     Yves: change amount on PDP:    51
-#     Yves: PDP contains/doesn't contain    packagingUnitSuggestion
+#     Yves: PDP contains/doesn't contain:    true    ${packagingUnitSuggestion}
 #     Yves: change amount on PDP:    10
 #     Yves: add product to the shopping cart
-#     Yves: go to the shopping cart through the header with name:    packagingUnitsCart
+#     Yves: go to the shopping cart through the header with name:    packagingUnitsCart+${random}
 #     Yves: shopping cart contains the following products:    421519_3
-
+# 
 # Product_Sets
-#     Yves: login on Yves with provided credentials:    sonia@spryker.com
-#     Yves: create new 'Shopping Cart' with name:    productSetsCart
-#     Yves: go to URL:    /en/product-sets
+#     Yves: login on Yves with provided credentials:    Trever.m@spryker.com
+#     Yves: create new 'Shopping Cart' with name:    productSetsCart+${random}
+#     Yves: go to URL:    en/product-sets
 #     Yves: 'Product Sets' page contains the following sets:    The Presenter's Set    Basic office supplies    The ultimate data disposal set
 #     Yves: view the following Product Set:    Basic office supplies
 #     Yves: 'Product Set' page contains the following products:    Clairefontaine Collegeblock 8272C DIN A5, 90 sheets
-#     Yves: change variant of the product on CMS page on:    lined
+#     Yves: change variant of the product on CMS page on:    Clairefontaine Collegeblock 8272C DIN A5, 90 sheets    lined
 #     Yves: add all products to the shopping cart from Product Set
-#     Yves: go to the shopping cart through the header with name:    shoppingCartName
 #     Yves: shopping cart contains the following products:    421344    420687    421511    423452
-
+# 
 # Product_Bundles
-#     Yves: login on Yves with provided credentials:    sonia@spryker.com
-#     Yves: create new 'Shopping Cart' with name:    productBundleCart
+#     Yves: login on Yves with provided credentials:    Trever.m@spryker.com
+#     Yves: create new 'Shopping Cart' with name:    productBundleCart+${random}
 #     Yves: go to PDP of the product with sku:    000201
-#     Yves: PDP contains/doesn't contain    bundleItemsSmall    bundleItemsLarge
+#     Yves: PDP contains/doesn't contain:    true    ${bundleItemsSmall}    ${bundleItemsLarge}
 #     Yves: add product to the shopping cart
-#     Yves: go to the shopping cart through the header with name:    productBundleCart
+#     Yves: go to the shopping cart through the header with name:    productBundleCart+${random}
 #     Yves: shopping cart contains the following products:    000201
 
-# Product_Relations
-#     Yves: login on Yves with provided credentials:    sonia@spryker.com
-#     Yves: create new 'Shopping Cart' with name:    productRelationCart
-#     Yves: go to PDP of the product with sku:    M29529
-#     Yves: PDP contains/doesn't contain    crossSellProducts 
-#     Yves: go to PDP of the product with sku:    M29524
-#     Yves: add product to the shopping cart
-#     Yves: go to the shopping cart through the header with name:    productRelationCart
-#     Yves: shopping cart contains the following elements:    upSellProducts
+Product_Relations
+    Yves: login on Yves with provided credentials:    Trever.m@spryker.com
+    Yves: create new 'Shopping Cart' with name:    productRelationCart+${random}
+    Yves: go to PDP of the product with sku:    M29529
+    Yves: PDP contains/doesn't contain:    true    ${relatedProducts}
+    Yves: go to PDP of the product with sku:    M29524
+    Yves: PDP contains/doesn't contain:    false    ${relatedProducts}
+    Yves: add product to the shopping cart
+    Yves: go to the shopping cart through the header with name:    productRelationCart+${random}
+    Yves: shopping cart contains the following elements:    upSellProducts
 
 # Default_Merchants
 #     Zed: Login on Zed with Provided Credentials:    admin@spryker.com
