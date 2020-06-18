@@ -1,7 +1,7 @@
 *** Settings ***
 Resource    ../Pages/Yves/Yves_Checkout_Address_Page.robot
 Resource    ../Pages/Yves/Yves_Checkout_Summary_page.robot
-Resource    ../Common/Common_Keywords_Yves.robot
+Resource    ../Common/Common_Yves.robot
 
 *** Variables ***
 ${submit_checkout_form_button}    xpath=//div[contains(@class,'form--checkout-form')]//button[@data-qa='submit-button']

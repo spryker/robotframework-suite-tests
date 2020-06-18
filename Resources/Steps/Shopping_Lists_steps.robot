@@ -1,7 +1,7 @@
 *** Settings ***
 Resource    ../Common/Common.robot
 Resource    ../Pages/Yves/Yves_Shopping_Lists_page.robot
-Resource    ../Common/Common_Keywords_Yves.robot
+Resource    ../Common/Common_Yves.robot
 
 *** Keywords ***
 Yves: 'Shopping List' widget contains:

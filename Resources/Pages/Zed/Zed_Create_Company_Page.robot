@@ -15,4 +15,3 @@ Zed: Create New Company with Provided Name
     wait until element is visible  ${zed_success_flash_message}
     wait until element is visible  ${zed_table_locator}
     table should contain  ${zed_table_locator}  ${company_name}
-

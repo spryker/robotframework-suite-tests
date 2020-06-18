@@ -4,7 +4,7 @@ Library    String
 Library    BuiltIn
 Library    Collections
 Resource    ../Pages/Yves/Yves_Product_Details_Page.robot
-Resource    ../Common/Common_Keywords_Yves.robot
+Resource    ../Common/Common_Yves.robot
 
 *** Variable ***
 ${price}    ${pdp_price_element_locator}
