@@ -193,10 +193,10 @@ Resource    ../../Resources/Steps/Catalog_steps.robot
 #     Yves: go to URL:    en/transport/lift-carts
 #     Yves: 'Catalog' page should show products:    16
 #     Yves: go to URL:    en/transport/sack-trucks
-#     Yves: 'Catalog' page should show products:    10
-
-Customer_Specific_Prices
-#     Yves: login on Yves with provided credentials:    sonia@spryker.com
+#    Yves: 'Catalog' page should show products:    10
+# 
+# Customer_Specific_Prices
+#     Yves: login on Yves with provided credentials:    Trever.m@spryker.com
 #     Yves: perform search by:    EUROKRAFT trolley - with open shovel
 #     Yves: product with name in the catalog should have price:    EUROKRAFT trolley - with open shovel    €235.43
 #     Yves: go to PDP of the product with sku:    M70208
@@ -204,11 +204,11 @@ Customer_Specific_Prices
 #     Yves: logout on Yves as a customer
 #     Yves: login on Yves with provided credentials:    karl@spryker.com
 #     Yves: perform search by:    EUROKRAFT trolley - with open shovel
-#     Yves: product with name xxx in the catalog should have price:    EUROKRAFT trolley - with open shovel    €188.34
+#     Yves: product with name in the catalog should have price:    EUROKRAFT trolley - with open shovel    €188.34
 #     Yves: go to PDP of the product with sku:    M70208
 #     Yves: product price on the PDP should be:    €188.34
 
-# Agent_Assist
+Agent_Assist
 #     Zed: Login on Zed with Provided Credentials:    admin@spryker.com
 #     Zed: Go to Second Navigation Item Level:    Users Control    User
 #     Zed: create new Zed user with the following data:    agent@spryker.com    change123    Agent    Assist    This user is an agent    en_US

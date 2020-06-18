@@ -63,3 +63,8 @@ Yves: change variant of the product on PDP on:
 Yves: change amount on PDP:
     [Arguments]    ${amountToSet}
     Input Text    ${pdp_amount_input_filed}    ${amountToSet}
+
+Yves: product price on the PDP should be:
+    [Arguments]    ${expectedProductPrice}
+    ${actualProductPrice}=    Get Text    ${pdp_price_element_locator}
+    Should Be Equal    ${expectedProductPrice}    ${actualProductPrice}
