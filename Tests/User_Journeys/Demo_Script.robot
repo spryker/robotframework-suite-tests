@@ -5,8 +5,8 @@ Test Setup        TestSetup
 Test Teardown     TestTeardown
 Resource    ../../Resources/Common/Common.robot
 Resource    ../../Resources/Steps/Header_steps.robot
-Resource    ../../Resources/Common/Common_Keywords_Yves.robot
-Resource    ../../Resources/Common/Common_Keywords_Zed.robot
+Resource    ../../Resources/Common/Common_Yves.robot
+Resource    ../../Resources/Common/Common_Zed.robot
 Resource    ../../Resources/Steps/PDP_steps.robot
 Resource    ../../Resources/Steps/Shopping_Lists_steps.robot
 Resource    ../../Resources/Steps/Checkout_steps.robot
@@ -209,9 +209,9 @@ Resource    ../../Resources/Steps/Catalog_steps.robot
 #     Yves: product price on the PDP should be:    €188.34
 
 Agent_Assist
-#     Zed: Login on Zed with Provided Credentials:    admin@spryker.com
-#     Zed: Go to Second Navigation Item Level:    Users Control    User
-#     Zed: create new Zed user with the following data:    agent@spryker.com    change123    Agent    Assist    This user is an agent    en_US
+    Zed: Login on Zed with Provided Credentials:    admin@spryker.com
+    Zed: Go to Second Navigation Item Level:    Users Control    User
+    Zed: create new Zed user with the following data:    agent@spryker.com    change123    Agent    Assist    This user is an agent    en_US
 #     Yves: go to the 'Home' page   
 #     Yves: go to URL:    /agent/login
 #     Yves: login on Yves with provided credentials:    agent@spryker.com

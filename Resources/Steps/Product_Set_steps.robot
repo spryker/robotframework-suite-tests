@@ -1,7 +1,7 @@
 *** Settings ***
 Library    SeleniumLibrary    plugins=SeleniumTestability;True;30 Seconds;True
 Resource    ../Pages/Yves/Yves_Product_Sets.robot
-Resource    ../Common/Common_Keywords_Yves.robot
+Resource    ../Common/Common_Yves.robot
 
 *** Keywords ***
 Yves: 'Product Sets' page contains the following sets:
