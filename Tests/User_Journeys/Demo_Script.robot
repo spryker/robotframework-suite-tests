@@ -12,6 +12,7 @@ Resource    ../../Resources/Steps/Shopping_Lists_steps.robot
 Resource    ../../Resources/Steps/Checkout_steps.robot
 Resource    ../../Resources/Steps/Order_History_steps.robot
 Resource    ../../Resources/Steps/Product_Set_steps.robot
+Resource    ../../Resources/Steps/Catalog_steps.robot
 
 *** Test Cases ***
 # Guest_User_Restrictions
@@ -174,12 +175,12 @@ Resource    ../../Resources/Steps/Product_Set_steps.robot
 #     Zed: Table should contain:    Restrictions Merchant
 #     Zed: Table should contain:    Prices Merchant
 #     Zed: Table should contain:    Products Restrictions Merchant
-
-Product_Restrictions
-#     Yves: login on Yves with provided credentials:    sonia@spryker.com
+# 
+# Product_Restrictions
+#     Yves: login on Yves with provided credentials:    Trever.m@spryker.com
 #     Yves: perform search by:    Soennecken
 #     Yves: 'Catalog' page should show products:    18
-#     Yves: go to URL:    /en/office-furniture/storage/lockers
+#     Yves: go to URL:    en/office-furniture/storage/lockers
 #     Yves: 'Catalog' page should show products:    34
 #     Yves: logout on Yves as a customer
 #     Yves: login on Yves with provided credentials:    frida@ottom.de
@@ -187,14 +188,14 @@ Product_Restrictions
 #     Yves: 'Catalog' page should show products:    0
 #     Yves: logout on Yves as a customer
 #     Yves: login on Yves with provided credentials:    alexa@ottom.de
-#     Yves: go to URL:    /en/office-furniture/storage/lockers
+#     Yves: go to URL:    en/office-furniture/storage/lockers
 #     Yves: 'Catalog' page should show products:    0
-#     Yves: go to URL:    /en/transport/lift-carts
+#     Yves: go to URL:    en/transport/lift-carts
 #     Yves: 'Catalog' page should show products:    16
-#     Yves: go to URL:    /en/transport/sack-trucks
+#     Yves: go to URL:    en/transport/sack-trucks
 #     Yves: 'Catalog' page should show products:    10
 
-# Customer_Specific_Prices
+Customer_Specific_Prices
 #     Yves: login on Yves with provided credentials:    sonia@spryker.com
 #     Yves: perform search by:    EUROKRAFT trolley - with open shovel
 #     Yves: product with name in the catalog should have price:    EUROKRAFT trolley - with open shovel    €235.43

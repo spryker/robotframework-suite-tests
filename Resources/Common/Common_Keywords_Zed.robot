@@ -22,7 +22,6 @@ Zed: Go to First Navigation Item Level:
 Zed: Go to Second Navigation Item Level:
     [Documentation]     example: "Zed: Go to Second Navigation Item Level    Customers    Customer Access"
     [Arguments]     ${navigation_item_level1}   ${navigation_item_level2}
-    Sleep    5s
     ${node_state}=  Get Element Attribute  xpath=(//span[contains(@class,'nav-label')][contains(text(),'${navigation_item_level1}')]/ancestor::li)[1]    class
     log  ${node_state}
     Run Keyword If    'active' in '${node_state}'   run keywords  wait until element is visible  xpath=//ul[contains(@class,'nav-second-level')]//a/span[text()='${navigation_item_level2}']
