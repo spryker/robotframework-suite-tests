@@ -19,7 +19,7 @@ Zed: Create New Company User with Provided Email/Company/Business Unit and Role(
     Zed: Click Button in Header  Add User
     input text  ${zed_create_company_user_email_field}  ${email}
     select from list by label  ${zed_create__company_user_salutation_dropdown}  Mr
-    Zed: Select Checkbox by Lable  Send password token through email
+    Zed: Select Checkbox by Label  Send password token through email
     input text  ${zed_create_company_user_first_name_field}     Robot First+${random}
     input text  ${zed_create_company_user_last_name_field}      robot Last+${random}
     select from list by label  ${zed_create_company_user_gender_dropdow}    Male
@@ -28,7 +28,7 @@ Zed: Create New Company User with Provided Email/Company/Business Unit and Role(
     select from list by label  ${zed_create_company_company_name_dropdown}  ${company}
     sleep  2s
     select from list by label  ${zed_create_company_business_unit_dropdown}      ${business_unit}
-    Zed: Select Checkbox by Lable  ${role}
+    Zed: Select Checkbox by Label  ${role}
     Zed: Submit the Form
     wait until element is visible  ${zed_success_flash_message}
     wait until element is visible  ${zed_table_locator}

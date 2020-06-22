@@ -15,11 +15,11 @@ Zed: Create New Company Role with Prodided Permissions
     Zed: Click Button in Header    Add company user role
     ${new_list_of_permissions}=   get length  ${permissions_list}
     log  ${new_list_of_permissions}
-    run keyword if  '${is_default}'=='true'     Zed: Select Checkbox by Lable  Is Default
+    run keyword if  '${is_default}'=='true'     Zed: Select Checkbox by Label  Is Default
     : FOR    ${index}    IN RANGE    0    ${new_list_of_permissions}
     \    ${permission_to_set}=    Get From List    ${permissions_list}    ${index}
     \    Log    ${permission_to_set}
-    \    Zed: Select Checkbox by Lable   ${permission_to_set}
+    \    Zed: Select Checkbox by Label   ${permission_to_set}
     select from list by label   ${zed_role_company_dropdown_locator}    ${select_company_for_role}
     input text  ${zed_role_name_field}  ${new_role_name}
     Zed: Submit the Form
