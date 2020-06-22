@@ -1,6 +1,6 @@
 *** Settings ***
+Library    BuiltIn
 Resource                  Common.robot
-Resource                  Common_Variables_Zed.robot
 Resource                  ../Pages/Zed/Zed_Login_page.robot
 
 *** Variable ***
@@ -25,7 +25,7 @@ Zed: Login on Zed with Provided Credentials:
 Zed: Go to First Navigation Item Level:
     [Documentation]     example: "Zed: Go to First Navigation Item Level  Customers"
     [Arguments]     ${navigation_item}
-    click element  xpath=//span[contains(@class,'nav-label')][contains(text(),'${navigation_item}')]/../../a
+    Click element with JavaScript    //span[contains(@class,'nav-label')][contains(text(),'${navigation_item}')]/../../a
 
 Zed: Go to Second Navigation Item Level:
     [Documentation]     example: "Zed: Go to Second Navigation Item Level    Customers    Customer Access"
@@ -34,7 +34,7 @@ Zed: Go to Second Navigation Item Level:
     log  ${node_state}
     Run Keyword If    'active' in '${node_state}'   run keywords  wait until element is visible  xpath=//ul[contains(@class,'nav-second-level')]//a/span[text()='${navigation_item_level2}']
     ...    AND      click element  xpath=//ul[contains(@class,'nav-second-level')]//a/span[text()='${navigation_item_level2}']
-    ...    ELSE     run keywords    click element  xpath=//span[contains(@class,'nav-label')][contains(text(),'${navigation_item_level1}')]/../../a
+    ...    ELSE     run keywords    Click element with JavaScript    //span[contains(@class,'nav-label')][contains(text(),'${navigation_item_level1}')]/../../a
     ...    AND      wait until element is visible  xpath=//ul[contains(@class,'nav-second-level')]//a/span[text()='${navigation_item_level2}']
     ...    AND      click element  xpath=//ul[contains(@class,'nav-second-level')]//a/span[text()='${navigation_item_level2}']
 
@@ -49,12 +49,12 @@ Zed: Click Action Button in a Table For Row That Contains
     wait until element is visible  xpath=//table[contains(@class,'dataTable')]/tbody//td[contains(text(),'${row_content}')]/../td[position()=last()]/*[contains(.,'${zed_table_action_button_locator}')]
     click element  xpath=//table[contains(@class,'dataTable')]/tbody//td[contains(text(),'${row_content}')]/../td[position()=last()]/*[contains(.,'${zed_table_action_button_locator}')]
 
-Zed: Select Checkbox by Lable
+Zed: Select Checkbox by Label
     [Arguments]  ${checkbox_label}
     wait until element is visible  xpath=//input[@type='checkbox']/../../label[contains(text(),'${checkbox_label}')]//input
     select checkbox     xpath=//input[@type='checkbox']/../../label[contains(text(),'${checkbox_label}')]//input
 
-Zed: Unselect Checkbox by Lable
+Zed: Unselect Checkbox by Label
     [Arguments]  ${checkbox_label}
     wait until element is visible  xpath=//input[@type='checkbox']/../../label[contains(text(),'${checkbox_label}')]//input
     unselect checkbox     xpath=//input[@type='checkbox']/../../label[contains(text(),'${checkbox_label}')]//input

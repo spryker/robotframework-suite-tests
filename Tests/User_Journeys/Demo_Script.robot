@@ -13,6 +13,7 @@ Resource    ../../Resources/Steps/Checkout_steps.robot
 Resource    ../../Resources/Steps/Order_History_steps.robot
 Resource    ../../Resources/Steps/Product_Set_steps.robot
 Resource    ../../Resources/Steps/Catalog_steps.robot
+Resource    ../../Resources/Steps/Agent_Assist_steps.robot
 
 *** Test Cases ***
 # Guest_User_Restrictions
@@ -196,7 +197,7 @@ Resource    ../../Resources/Steps/Catalog_steps.robot
 #    Yves: 'Catalog' page should show products:    10
 # 
 # Customer_Specific_Prices
-#     Yves: login on Yves with provided credentials:    Trever.m@spryker.com
+    # Yves: login on Yves with provided credentials:    Trever.m@spryker.com
 #     Yves: perform search by:    EUROKRAFT trolley - with open shovel
 #     Yves: product with name in the catalog should have price:    EUROKRAFT trolley - with open shovel    €235.43
 #     Yves: go to PDP of the product with sku:    M70208
@@ -207,23 +208,23 @@ Resource    ../../Resources/Steps/Catalog_steps.robot
 #     Yves: product with name in the catalog should have price:    EUROKRAFT trolley - with open shovel    €188.34
 #     Yves: go to PDP of the product with sku:    M70208
 #     Yves: product price on the PDP should be:    €188.34
-
-Agent_Assist
-    Zed: Login on Zed with Provided Credentials:    admin@spryker.com
-    Zed: Go to Second Navigation Item Level:    Users Control    User
-    Zed: create new Zed user with the following data:    agent@spryker.com    change123    Agent    Assist    This user is an agent    en_US
+# 
+# Agent_Assist
+#     Zed: Login on Zed with Provided Credentials:    admin@spryker.com
+#     Zed: create new Zed user with the following data:    agent@spryker.com+${random}    change123    Agent    Assist    Root group    This user is an agent    en_US
 #     Yves: go to the 'Home' page   
-#     Yves: go to URL:    /agent/login
-#     Yves: login on Yves with provided credentials:    agent@spryker.com
-#     Yves: header 'should' contain:    customerSearchWidget
+#     Yves: go to URL:    agent/login
+#     Yves: login on Yves with provided credentials:    agent@spryker.com+${random}
+#     Yves: header contains/doesn't contain:    true    ${customerSearchWidget}
 #     Yves: perform search by customer:    Karl
-#     Yves: agent widget contains:    Karl Schmid: karl@spryker.com
-#     Yves: login under the customer:    Karl Schmid: karl@spryker.com
-#     Yves: product with name xxx in the catalog should have price:    EUROKRAFT trolley - with open shovel    €188.34
+#     Yves: agent widget contains:    karl@spryker.com
+#     Yves: login under the customer:    karl@spryker.com
+#     Yves: perform search by:    EUROKRAFT trolley - with open shovel
+#     Yves: product with name in the catalog should have price:    EUROKRAFT trolley - with open shovel    €188.34
 #     Yves: go to PDP of the product with sku:    M70208
 #     Yves: product price on the PDP should be:    €188.34
 
-# Business_on_Behalf
+# # Business_on_Behalf
 #     Zed: Login on Zed with Provided Credentials:    admin@spryker.com
 #     Zed: Go to Second Navigation Item Level:    Company Account    Company Users
 #     Zed: Click Action Button in a Table For Row That Contains    Trever Meier    Attach to BU

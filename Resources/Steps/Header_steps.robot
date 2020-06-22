@@ -16,6 +16,7 @@ ${quickOrderIcon}    ${quick_order_icon_header_menu_item}
 ${accountIcon}    ${user_navigation_icon_header_menu_item}
 ${shoppingListIcon}    ${shopping_list_icon_header_menu_item}
 ${shoppingCartIcon}    ${shopping_car_icon_header_menu_item}
+${customerSearchWidget}    ${agent_customer_search_widget}  
 
 *** Keywords ***
 Yves: perform search by:

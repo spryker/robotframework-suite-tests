@@ -18,15 +18,18 @@ ${notification_area}    xpath=//section[@data-qa='component notification-area']
 *** Keywords ***
 Yves: login on Yves with provided credentials:
     [Arguments]    ${email}    ${password}=${default_password}
-    delete all cookies
-    Go To    ${host}
-    Wait Until Element Is Visible    ${header_login_button}
-    Click Element    ${header_login_button}
-    Wait Until Element Is Visible    ${email_field}
+    ${currentURL}=    Get Location        
+    Run Keyword Unless    '/login' in '${currentURL}'    
+    ...    Run Keywords   
+    ...    delete all cookies 
+    ...    AND    Go To    ${host}
+    ...    AND    Wait Until Element Is Visible    ${header_login_button}
+    ...    AND    Click Element    ${header_login_button}
+    ...    AND    Wait Until Element Is Visible    ${email_field}
     input text    ${email_field}    ${email}
     input text    ${password_field}    ${password}
     click element    ${form_login_button}
-    Run Keyword If    '${email}'!= 'fake'    Wait Until Element Is Visible    ${user_navigation_icon_header_menu_item}    ${loading_time}    Dashboard page is not displayed
+    Run Keyword Unless    'fake' in '${email}' or 'agent' in '${email}'  Wait Until Element Is Visible    ${user_navigation_icon_header_menu_item}    ${loading_time}    Dashboard page is not displayed  
     Yves: remove flash messages
     Wait For Document Ready    
 
