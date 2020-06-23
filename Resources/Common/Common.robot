@@ -10,8 +10,10 @@ Resource                  ../Pages/Yves/Yves_Login_Page.robot
 # *** SUITE VARIABLES ***
 #${browser}        headlesschrome
 ${browser}             chrome
-${host}                https://www.de.b2b.demo-spryker.com/
-${zed_url}             https://os.de.b2b.demo-spryker.com/
+${host}                https://shs-ecommerce-st:42vV4snUE9cghAQZq@www.shs-ecommerce-st.demo-spryker.com/
+${zed_url}             https://shs-ecommerce-st:42vV4snUE9cghAQZq@os.shs-ecommerce-st.demo-spryker.com/
+# ${host}                https://www.de.b2b.demo-spryker.com/
+# ${zed_url}             https://os.de.b2b.demo-spryker.com/
 ${email_domain}        @spryker.com
 ${default_password}    change123
 ${loading_time}        10s

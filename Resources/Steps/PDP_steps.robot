@@ -68,3 +68,10 @@ Yves: product price on the PDP should be:
     [Arguments]    ${expectedProductPrice}
     ${actualProductPrice}=    Get Text    ${pdp_price_element_locator}
     Should Be Equal    ${expectedProductPrice}    ${actualProductPrice}
+
+Yves: add product to the shopping list
+    Wait Until Element Is Visible    ${pdp_add_to_shopping_list_button}
+    Click Element    ${pdp_add_to_shopping_list_button}
+    Wait For Document Ready    
+    Wait For Testability Ready    
+    Yves: remove flash messages
