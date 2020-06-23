@@ -426,6 +426,14 @@ Resource    ../../Resources/Steps/Agent_Assist_steps.robot
 #     Yves: 'View Order' page is displayed
 #     Yves: 'Order Details' page contains the following configurable bundle N times:    Presentation bundle    2
 
+Test_Test
+    Yves: login on Yves with provided credentials:    sonia@spryker.com
+    Yves: create new 'Shopping List' with name:    ansho+${random}
+    Yves: go to PDP of the product with sku:    M24637
+    Yves: add product to the shopping list
+    Yves: go to 'Shopping Lists' page through the header
+    Yves: the following shopping list is shown:    ansho+${random}    Sonia Wagner    Full access
+
 
     
 
