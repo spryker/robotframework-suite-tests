@@ -45,7 +45,7 @@ Resource    ../../Resources/Steps/Agent_Assist_steps.robot
 
 # Share_Shopping_Carts
 #     Yves: login on Yves with provided credentials:    sonia@spryker.com
-#     Yves: 'Shopping Carts' widget contains:    Dmexco event    Owner access
+#     # Yves: 'Shopping Carts' widget contains:    Dmexco event    Owner access
 #     Yves: go to 'Shopping Carts' page through the header
 #     Yves: 'Shopping Carts' page is displayed
 #     Yves: create new 'Shopping Cart' with name:    shoppingCartName+${random}
@@ -62,11 +62,28 @@ Resource    ../../Resources/Steps/Agent_Assist_steps.robot
 #     Yves: go to 'Shopping Carts' page through the header
 #     Yves: 'Shopping Carts' page is displayed
 #     Yves: the following shopping cart is shown:    shoppingCartName+${random}    Full access
+#     Yves: go to the shopping cart through the header with name:    shoppingCartName+${random}
+#     Yves: 'Shopping Cart' page is displayed
+#     Yves: shopping cart contains the following products:    100414
+#     Yves: click on the 'Checkout' button
+#     Yves: billing address same as shipping address:    true
+#     Yves: select the following existing address on the checkout as 'shipping' address and go next:    Mr Trever Meier, Kirncher Str. 7, 10247 Berlin
+#     Yves: select the following shipping method on the checkout and go next:    Express
+#     Yves: select the following payment method on the checkout and go next:    Invoice
+#     Yves: 'submit the order' on the summary page
+#     Yves: 'Thank you' page is displayed
+#     Yves: go to the 'Home' page
+#     Yves: go to user menu item in header:    Order History
+#     Yves: 'Order History' page is displayed
+#     Yves: get the last placed order ID by current customer
+#     Yves: 'View Order/ Reorder' on the order history page:     View Order    ${lastPlacedOrder}
+#     Yves: 'View Order' page is displayed
+
 
 # Quick_Order
 #     Yves: login on Yves with provided credentials:    sonia@spryker.com
 #     Yves: create new 'Shopping Cart' with name:    quickOrderCart+${random}
-    # Yves: create new 'Shopping List' with name:    quickOrderList+${random}
+#     Yves: create new 'Shopping List' with name:    quickOrderList+${random}
 #     Yves: go to 'Quick Order' page through the header
 #     Yves: 'Quick Order' page is displayed
 #     Yves: add the following articles into the form through quick order text area:    401627,1\n520561,21\n101509,21\n419871,51\n419869,11\n425073,71\n425084,2 
@@ -95,12 +112,12 @@ Resource    ../../Resources/Steps/Agent_Assist_steps.robot
 #     Yves: get the last placed order ID by current customer
 #     Yves: 'View Order/ Reorder' on the order history page:     View Order    ${lastPlacedOrder}
 #     Yves: 'View Order' page is displayed
-#     # ### Reorder ###
+#     ### Reorder ###
 #     Yves: reorder all items from 'View Order' page
 #     Yves: go to the shopping cart through the header with name:    Cart from order ${lastPlacedOrder}
 #     Yves: 'Shopping Cart' page is displayed
 #     Yves: shopping cart contains the following products:    401627    520561    101509    419871    419869    425073    425084
-# 
+
 # Volume_Prices
 #     Yves: login on Yves with provided credentials:    sonia@spryker.com
 #     Yves: create new 'Shopping Cart' with name:    VolumePriceCart+${random}
@@ -113,7 +130,7 @@ Resource    ../../Resources/Steps/Agent_Assist_steps.robot
 # Alternative_Products
 #     Yves: go to PDP of the product with sku:  M21100
 #     Yves: PDP contains/doesn't contain:    true    ${alternativeProducts}
-# 
+
 # Measurement_Units
 #     Yves: login on Yves with provided credentials:    sonia@spryker.com
 #     Yves: create new 'Shopping Cart' with name:    measurementUnitsCart+${random}
@@ -126,7 +143,7 @@ Resource    ../../Resources/Steps/Agent_Assist_steps.robot
 #     Yves: go to the shopping cart through the header with name:  measurementUnitsCart+${random}
 #     Yves: 'Shopping Cart' page is displayed
 #     Yves: shopping cart contains the following products:    425079
-# 
+
 # Packaging_Units
 #     Yves: login on Yves with provided credentials:    sonia@spryker.com
 #     Yves: create new 'Shopping Cart' with name:    packagingUnitsCart+${random}
@@ -138,7 +155,7 @@ Resource    ../../Resources/Steps/Agent_Assist_steps.robot
 #     Yves: add product to the shopping cart
 #     Yves: go to the shopping cart through the header with name:    packagingUnitsCart+${random}
 #     Yves: shopping cart contains the following products:    421519_3
-# 
+
 # Product_Sets
 #     Yves: login on Yves with provided credentials:    Trever.m@spryker.com
 #     Yves: create new 'Shopping Cart' with name:    productSetsCart+${random}
@@ -149,7 +166,7 @@ Resource    ../../Resources/Steps/Agent_Assist_steps.robot
 #     Yves: change variant of the product on CMS page on:    Clairefontaine Collegeblock 8272C DIN A5, 90 sheets    lined
 #     Yves: add all products to the shopping cart from Product Set
 #     Yves: shopping cart contains the following products:    421344    420687    421511    423452
-# 
+
 # Product_Bundles
 #     Yves: login on Yves with provided credentials:    Trever.m@spryker.com
 #     Yves: create new 'Shopping Cart' with name:    productBundleCart+${random}
@@ -158,7 +175,7 @@ Resource    ../../Resources/Steps/Agent_Assist_steps.robot
 #     Yves: add product to the shopping cart
 #     Yves: go to the shopping cart through the header with name:    productBundleCart+${random}
 #     Yves: shopping cart contains the following products:    000201
-# 
+
 # Product_Relations
 #     Yves: login on Yves with provided credentials:    Trever.m@spryker.com
 #     Yves: create new 'Shopping Cart' with name:    productRelationCart+${random}
@@ -169,14 +186,14 @@ Resource    ../../Resources/Steps/Agent_Assist_steps.robot
 #     Yves: add product to the shopping cart
 #     Yves: go to the shopping cart through the header with name:    productRelationCart+${random}
 #     Yves: shopping cart contains/doesn't contain the following elements:    true    ${upSellProducts}
-# 
+
 # Default_Merchants
 #     Zed: Login on Zed with Provided Credentials:    admin@spryker.com
 #     Zed: Go to Second Navigation Item Level:    Merchants    Merchants
 #     Zed: Table should contain:    Restrictions Merchant
 #     Zed: Table should contain:    Prices Merchant
 #     Zed: Table should contain:    Products Restrictions Merchant
-# 
+
 # Product_Restrictions
 #     Yves: login on Yves with provided credentials:    Trever.m@spryker.com
 #     Yves: perform search by:    Soennecken
@@ -195,7 +212,7 @@ Resource    ../../Resources/Steps/Agent_Assist_steps.robot
 #     Yves: 'Catalog' page should show products:    16
 #     Yves: go to URL:    en/transport/sack-trucks
 #    Yves: 'Catalog' page should show products:    10
-# 
+
 # Customer_Specific_Prices
     # Yves: login on Yves with provided credentials:    Trever.m@spryker.com
 #     Yves: perform search by:    EUROKRAFT trolley - with open shovel
@@ -208,7 +225,7 @@ Resource    ../../Resources/Steps/Agent_Assist_steps.robot
 #     Yves: product with name in the catalog should have price:    EUROKRAFT trolley - with open shovel    €188.34
 #     Yves: go to PDP of the product with sku:    M70208
 #     Yves: product price on the PDP should be:    €188.34
-# 
+
 # Agent_Assist
 #     Zed: Login on Zed with Provided Credentials:    admin@spryker.com
 #     Zed: create new Zed user with the following data:    agent@spryker.com+${random}    change123    Agent    Assist    Root group    This user is an agent    en_US
@@ -217,6 +234,7 @@ Resource    ../../Resources/Steps/Agent_Assist_steps.robot
 #     Yves: login on Yves with provided credentials:    agent@spryker.com+${random}
 #     Yves: header contains/doesn't contain:    true    ${customerSearchWidget}
 #     Yves: perform search by customer:    Karl
+#     Sleep    5s
 #     Yves: agent widget contains:    karl@spryker.com
 #     Yves: login under the customer:    karl@spryker.com
 #     Yves: perform search by:    EUROKRAFT trolley - with open shovel
@@ -224,8 +242,8 @@ Resource    ../../Resources/Steps/Agent_Assist_steps.robot
 #     Yves: go to PDP of the product with sku:    M70208
 #     Yves: product price on the PDP should be:    €188.34
 
-# # Business_on_Behalf
-#     Zed: Login on Zed with Provided Credentials:    admin@spryker.com
+# Business_on_Behalf
+    # Zed: Login on Zed with Provided Credentials:    admin@spryker.com
 #     Zed: Go to Second Navigation Item Level:    Company Account    Company Users
 #     Zed: Click Action Button in a Table For Row That Contains    Trever Meier    Attach to BU
 #     Zed: attach company user to the following BU with role:    Spryker Systems Berlin (id: 28)    Admin
@@ -409,7 +427,7 @@ Resource    ../../Resources/Steps/Agent_Assist_steps.robot
 #     Yves: 'Order Details' page contains the following configurable bundle N times:    Presentation bundle    2
 
 
-
+    
 
     
 

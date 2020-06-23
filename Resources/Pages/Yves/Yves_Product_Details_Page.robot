@@ -17,3 +17,4 @@ ${pdp_packaging_unit_notification}    xpath=//*[@class='packaging-unit-notificat
 ${pdp_product_bundle_include_small}    xpath=//div[@class='js-product-options-bundle__target']
 ${pdp_product_bundle_include_large}    xpath=//div[@data-qa='component product-bundle']
 ${pdp_related_products}    xpath=//*[contains(@class,'title--product-slider')][contains(.,'Similar products')]/../slick-carousel
+${pdp_add_to_shopping_list_button}    xpath=//button[@data-qa='add-to-shopping-list-button']
