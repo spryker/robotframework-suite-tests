@@ -214,7 +214,7 @@ Resource    ../../Resources/Steps/Agent_Assist_steps.robot
 #    Yves: 'Catalog' page should show products:    10
 
 # Customer_Specific_Prices
-    # Yves: login on Yves with provided credentials:    Trever.m@spryker.com
+#     Yves: login on Yves with provided credentials:    Trever.m@spryker.com
 #     Yves: perform search by:    EUROKRAFT trolley - with open shovel
 #     Yves: product with name in the catalog should have price:    EUROKRAFT trolley - with open shovel    €235.43
 #     Yves: go to PDP of the product with sku:    M70208
@@ -234,7 +234,6 @@ Resource    ../../Resources/Steps/Agent_Assist_steps.robot
 #     Yves: login on Yves with provided credentials:    agent@spryker.com+${random}
 #     Yves: header contains/doesn't contain:    true    ${customerSearchWidget}
 #     Yves: perform search by customer:    Karl
-#     Sleep    5s
 #     Yves: agent widget contains:    karl@spryker.com
 #     Yves: login under the customer:    karl@spryker.com
 #     Yves: perform search by:    EUROKRAFT trolley - with open shovel
@@ -425,14 +424,6 @@ Resource    ../../Resources/Steps/Agent_Assist_steps.robot
 #     Yves: 'view order' on the order history with ID:    orderID
 #     Yves: 'View Order' page is displayed
 #     Yves: 'Order Details' page contains the following configurable bundle N times:    Presentation bundle    2
-
-Test_Test
-    Yves: login on Yves with provided credentials:    sonia@spryker.com
-    Yves: create new 'Shopping List' with name:    ansho+${random}
-    Yves: go to PDP of the product with sku:    M24637
-    Yves: add product to the shopping list
-    Yves: go to 'Shopping Lists' page through the header
-    Yves: the following shopping list is shown:    ansho+${random}    Sonia Wagner    Full access
 
 
     
