@@ -11,17 +11,16 @@ Library           SeleniumLibrary
 UJ:Managing_B2B_Copmany_Account_in_Zed_Part_1
     [Documentation]    This user journey is to check possibility to Create Company, Business unit and initial Admin user with Permissions for Managing User in Zed
     Zed: Login on Zed with Provided Credentials  ${admin_email}  ${default_password}
-    Zed: Create New Company with Provided Name   Robot+${random}
-    Zed: Click Action Button in a Table For Row That Contains  Robot+${random}      Approve
-    Zed: Click Action Button in a Table For Row That Contains  Robot+${random}      Activate
-    Zed: Create New Company Role with Prodided Permissions  Robot+${random}     Test Robot Role+${random}   false  Add company users   Invite users   Enable / Disable company users    See Company Menu    Add item to cart    Change item in cart     Remove item from cart   Place Order     Alter Cart Up To Amount
-    Zed: Create New Company Role with Prodided Permissions  Trial     Existing Role+${random}   false  Add company users   Invite users   Enable / Disable company users    See Company Menu    Add item to cart    Change item in cart     Remove item from cart   Place Order     Alter Cart Up To Amount
-    Zed: Create New Company Business Unit with Prodived Name and Company  Test Robot BU+${random}   Robot+${random}
-    Zed: Create New Company User with Provided Email/Company/Business Unit and Role(s)  ${test_customer_email}   Robot+${random}     Test Robot BU+${random} (id: ${newly_created_business_unit_id})    Test Robot Role+${random}
-    Yves: Change Password on Default One via Link from Email for Provided User   ${test_customer_email}
-    Yves: Login on Yves with Provided Credentials     ${test_customer_email}
-    Yves: Check that Company Menu is available for Logged in User
-    Zed: Click Button in Header  button_name
+    Zed: create new Company with provided name:    Robot+${random}
+    Zed: click Action Button in a table for row that contains:    Robot+${random}    Approve
+    Zed: click Action Button in a table for row that contains:    Robot+${random}    Activate
+    Zed: create new Company Role with provided permissions:    Robot+${random}    Test Robot Role+${random}    false    Add company users    Invite users    Enable / Disable company users    See Company Menu    Add item to cart    Change item in cart    Remove item from cart    Place Order    Alter Cart Up To Amount
+    Zed: create new Company Role with provided permissions:    Trial    Existing Role+${random}    false    Add company users    Invite users    Enable / Disable company users    See Company Menu    Add item to cart    Change item in cart    Remove item from cart    Place Order    Alter Cart Up To Amount
+    Zed: create new Company Business Unit with provided name and company:    Test Robot BU+${random}    Robot+${random}
+    Zed: Create new Company User with provided email/company/business unit and role(s):    ${test_customer_email}    Robot+${random}    Test Robot BU+${random}    (id: ${newly_created_business_unit_id})    Test Robot Role+${random}
+    # Yves: Login on Yves with Provided Credentials:     ${test_customer_email}
+    # Yves: company menu 'should' be available for logged in user   
+    # Zed: click button in Header:  button_name
 
 UJ:Managing_B2B_Copmany_Account_in_Zed_Part_1
     [Documentation]    This user journey is to check possibility to Create Company, Business unit and initial Admin user with Permissions for Managing User in Zed
