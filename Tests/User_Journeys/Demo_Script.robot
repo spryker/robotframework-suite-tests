@@ -30,7 +30,7 @@ Resource    ../../Resources/Steps/Agent_Assist_steps.robot
 #     Yves: 'Company Users' page is displayed
 
 # Share_Shopping_Lists
-#     Yves: login on Yves with provided credentials:    sonia@spryker.com
+    # Yves: login on Yves with provided credentials:    sonia@spryker.com
 #     Yves: 'Shopping List' widget contains:    Newcomers    Full access
 #     Yves: go to 'Shopping Lists' page through the header
 #     Yves: 'Shopping Lists' page is displayed
@@ -188,11 +188,11 @@ Resource    ../../Resources/Steps/Agent_Assist_steps.robot
 #     Yves: shopping cart contains/doesn't contain the following elements:    true    ${upSellProducts}
 
 # Default_Merchants
-#     Zed: Login on Zed with Provided Credentials:    admin@spryker.com
-#     Zed: Go to Second Navigation Item Level:    Merchants    Merchants
-#     Zed: Table should contain:    Restrictions Merchant
-#     Zed: Table should contain:    Prices Merchant
-#     Zed: Table should contain:    Products Restrictions Merchant
+#     Zed: login on Zed with provided credentials:    admin@spryker.com
+#     Zed: go to second navigation item level:    Merchants    Merchants
+#     Zed: table should contain:    Restrictions Merchant
+#     Zed: table should contain:    Prices Merchant
+#     Zed: table should contain:    Products Restrictions Merchant
 
 # Product_Restrictions
 #     Yves: login on Yves with provided credentials:    Trever.m@spryker.com
@@ -227,7 +227,7 @@ Resource    ../../Resources/Steps/Agent_Assist_steps.robot
 #     Yves: product price on the PDP should be:    €188.34
 
 # Agent_Assist
-#     Zed: Login on Zed with Provided Credentials:    admin@spryker.com
+#     Zed: login on Zed with provided credentials:    admin@spryker.com
 #     Zed: create new Zed user with the following data:    agent@spryker.com+${random}    change123    Agent    Assist    Root group    This user is an agent    en_US
 #     Yves: go to the 'Home' page   
 #     Yves: go to URL:    agent/login
@@ -242,8 +242,8 @@ Resource    ../../Resources/Steps/Agent_Assist_steps.robot
 #     Yves: product price on the PDP should be:    €188.34
 
 # Business_on_Behalf
-    # Zed: Login on Zed with Provided Credentials:    admin@spryker.com
-#     Zed: Go to Second Navigation Item Level:    Company Account    Company Users
+    # Zed: login on Zed with provided credentials:    admin@spryker.com
+#     Zed: go to second navigation item level:    Company Account    Company Users
 #     Zed: Click Action Button in a Table For Row That Contains    Trever Meier    Attach to BU
 #     Zed: attach company user to the following BU with role:    Spryker Systems Berlin (id: 28)    Admin
 #     Yves: go to the 'Home' page   

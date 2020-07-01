@@ -4,7 +4,7 @@ Library    SeleniumLibrary    plugins=SeleniumTestability;True;30 Seconds;True
 Library    String
 Library    OperatingSystem
 Resource                  ../Pages/Yves/Yves_Header_Section.robot
-Resource                  ../Pages/Yves/Yves_Login_Page.robot
+Resource                  ../Pages/Yves/Yves_Login_page.robot
 
 *** Variables ***
 # *** SUITE VARIABLES ***
