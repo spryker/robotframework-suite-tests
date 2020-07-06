@@ -30,8 +30,8 @@ Zed: go to first navigation item level:
 Zed: go to second navigation item level:
     [Documentation]     example: "Zed: Go to Second Navigation Item Level    Customers    Customer Access"
     [Arguments]     ${navigation_item_level1}   ${navigation_item_level2}
-    ${node_state}=  Get Element Attribute  xpath=(//span[contains(@class,'nav-label')][contains(text(),'${navigation_item_level1}')]/ancestor::li)[1]    class
-    log  ${node_state}
+    ${node_state}=    Get Element Attribute  xpath=(//span[contains(@class,'nav-label')][contains(text(),'${navigation_item_level1}')]/ancestor::li)[1]    class
+    log    ${node_state}
     Run Keyword If    'active' in '${node_state}'   run keywords  wait until element is visible  xpath=//ul[contains(@class,'nav-second-level')]//a/span[text()='${navigation_item_level2}']
     ...    AND      click element  xpath=//ul[contains(@class,'nav-second-level')]//a/span[text()='${navigation_item_level2}']
     ...    ELSE     run keywords    Click element with JavaScript    //span[contains(@class,'nav-label')][contains(text(),'${navigation_item_level1}')]/../../a
@@ -39,37 +39,37 @@ Zed: go to second navigation item level:
     ...    AND      click element  xpath=//ul[contains(@class,'nav-second-level')]//a/span[text()='${navigation_item_level2}']
 
 Zed: click button in Header:
-    [Arguments]  ${button_name}
-    wait until element is visible  xpath=//div[@class='title-action']/a[contains(.,'${button_name}')]
-    click element  xpath=//div[@class='title-action']/a[contains(.,'${button_name}')]
+    [Arguments]    ${button_name}
+    wait until element is visible    xpath=//div[@class='title-action']/a[contains(.,'${button_name}')]
+    click element    xpath=//div[@class='title-action']/a[contains(.,'${button_name}')]
 
 Zed: click Action Button in a table for row that contains:
-    [Arguments]  ${row_content}     ${zed_table_action_button_locator}
-    Zed: perform search by:  ${row_content}
-    wait until element is visible  xpath=//table[contains(@class,'dataTable')]/tbody//td[contains(text(),'${row_content}')]/../td[position()=last()]/*[contains(.,'${zed_table_action_button_locator}')]
-    click element  xpath=//table[contains(@class,'dataTable')]/tbody//td[contains(text(),'${row_content}')]/../td[position()=last()]/*[contains(.,'${zed_table_action_button_locator}')]
+    [Arguments]    ${row_content}    ${zed_table_action_button_locator}
+    Zed: perform search by:    ${row_content}
+    wait until element is visible    xpath=//table[contains(@class,'dataTable')]/tbody//td[contains(text(),'${row_content}')]/../td[position()=last()]/*[contains(.,'${zed_table_action_button_locator}')]
+    click element    xpath=//table[contains(@class,'dataTable')]/tbody//td[contains(text(),'${row_content}')]/../td[position()=last()]/*[contains(.,'${zed_table_action_button_locator}')]
 
 Zed: select checkbox by Label:
-    [Arguments]  ${checkbox_label}
-    wait until element is visible  xpath=//input[@type='checkbox']/../../label[contains(text(),'${checkbox_label}')]//input
-    select checkbox     xpath=//input[@type='checkbox']/../../label[contains(text(),'${checkbox_label}')]//input
+    [Arguments]    ${checkbox_label}
+    wait until element is visible    xpath=//input[@type='checkbox']/../../label[contains(text(),'${checkbox_label}')]//input
+    select checkbox    xpath=//input[@type='checkbox']/../../label[contains(text(),'${checkbox_label}')]//input
 
 Zed: unselect checkbox by Label:
-    [Arguments]  ${checkbox_label}
-    wait until element is visible  xpath=//input[@type='checkbox']/../../label[contains(text(),'${checkbox_label}')]//input
-    unselect checkbox     xpath=//input[@type='checkbox']/../../label[contains(text(),'${checkbox_label}')]//input
+    [Arguments]    ${checkbox_label}
+    wait until element is visible    xpath=//input[@type='checkbox']/../../label[contains(text(),'${checkbox_label}')]//input
+    unselect checkbox    xpath=//input[@type='checkbox']/../../label[contains(text(),'${checkbox_label}')]//input
 
 Zed: submit the form
     wait until element is visible    ${zed_save_button}
     click element   ${zed_save_button}
 
 Zed: perform search by:
-    [Arguments]  ${search_key}
-    input text  ${zed_search_field_locator}     ${search_key}
-    sleep  2s
+    [Arguments]    ${search_key}
+    input text    ${zed_search_field_locator}    ${search_key}
+    sleep    2s
     wait until page contains element    ${zed_processing_block_locator}
 
 Zed: table should contain:
     [Arguments]    ${search_key}
-    Zed: perform search by:  ${search_key}
-    table should contain  ${zed_table_locator}  ${search_key}
+    Zed: perform search by:    ${search_key}
+    table should contain    ${zed_table_locator}  ${search_key}

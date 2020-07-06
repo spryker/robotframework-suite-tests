@@ -14,6 +14,7 @@ Resource    ../../Resources/Steps/Order_History_steps.robot
 Resource    ../../Resources/Steps/Product_Set_steps.robot
 Resource    ../../Resources/Steps/Catalog_steps.robot
 Resource    ../../Resources/Steps/Agent_Assist_steps.robot
+Resource    ../../Resources/Steps/Company_steps.robot
 
 *** Test Cases ***
 # Guest_User_Restrictions
@@ -75,7 +76,7 @@ Resource    ../../Resources/Steps/Agent_Assist_steps.robot
 #     Yves: go to the 'Home' page
 #     Yves: go to user menu item in header:    Order History
 #     Yves: 'Order History' page is displayed
-#     Yves: get the last placed order ID by current customer
+    # Yves: get the last placed order ID by current customer
 #     Yves: 'View Order/ Reorder' on the order history page:     View Order    ${lastPlacedOrder}
 #     Yves: 'View Order' page is displayed
 
@@ -242,34 +243,34 @@ Resource    ../../Resources/Steps/Agent_Assist_steps.robot
 #     Yves: product price on the PDP should be:    €188.34
 
 # Business_on_Behalf
-    # Zed: login on Zed with provided credentials:    admin@spryker.com
+#     Zed: login on Zed with provided credentials:    admin@spryker.com
 #     Zed: go to second navigation item level:    Company Account    Company Users
-#     Zed: Click Action Button in a Table For Row That Contains    Trever Meier    Attach to BU
+#     Zed: click Action Button in a table for row that contains:    Trever    Attach to BU
 #     Zed: attach company user to the following BU with role:    Spryker Systems Berlin (id: 28)    Admin
-#     Yves: go to the 'Home' page   
 #     Yves: login on Yves with provided credentials:    Trever.m@spryker.com
-#     Yves: go to URL:    /company/user/select
+#     Yves: go to URL:    en/company/user/select
 #     Yves: 'Select Business Unit' page is displayed
-#     Yves: 'Business Unit' dropdown contains:    BU1    BU2
+#     Yves: 'Business Unit' dropdown contains:    Spryker Systems GmbH / Spryker Systems HR department    Spryker Systems GmbH / Spryker Systems Berlin
 
 # Business_Unit_Address_on_Checkout
-#     Yves: login on Yves with provided credentials:    sonia@spryker.com
-#     Yves: create new 'Shopping Cart' with name:    businessAddressCart
-#     Yves: go to PDP of the product with sku:    sku
+#     Yves: login on Yves with provided credentials:    Trever.m@spryker.com
+#     Yves: create new 'Shopping Cart' with name:    businessAddressCart+${random}
+#     Yves: go to PDP of the product with sku:    M64933
 #     Yves: add product to the shopping cart
-#     Yves: go to the shopping cart through the header with name:    shoppingCartName
+#     Yves: go to the shopping cart through the header with name:    businessAddressCart+${random}
 #     Yves: click on the 'Checkout' button
 #     Yves: billing address same as shipping address:    true
-#     Yves: select the following existing address on the checkout as 'shipping' address and go next:    Ms Sonia Wagner, Kirncher Str. 7, 10247 Berlin
+#     Yves: select the following existing address on the checkout as 'shipping' address and go next:    Mr Trever Meier, Kirncher Str. 7, 10247 Berlin
 #     Yves: select the following shipping method on the checkout and go next:    Express
 #     Yves: select the following payment method on the checkout and go next:    Invoice
 #     Yves: 'submit the order' on the summary page
 #     Yves: 'Thank you' page is displayed
 #     Yves: go to user menu item in header:    Order History
 #     Yves: 'Order History' page is displayed
-#     Yves: 'view order' on the order history with ID:    orderID
-#     Yves: 'View Order' page is displayed
-#     Yves: shipping address on the order details page is:    Ms Sonia Wagner, Kirncher Str. 7, 10247 Berlin
+#     Yves: get the last placed order ID by current customer
+#     Yves: 'View Order/ Reorder' on the order history page:    View Order    ${lastPlacedOrder} 
+#     Yves: 'Order Details' page is displayed
+#     Yves: shipping address on the order details page is:    Mr. Trever Meier Spryker Systems GmbH Kirncher Str. 7 10247 Berlin, Germany 4902890031
 
 # Approval_Process
 #     Yves: login on Yves with provided credentials:    kevin@spryker.com

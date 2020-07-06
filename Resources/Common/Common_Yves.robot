@@ -9,7 +9,8 @@ Resource    ../Pages/Yves/Yves_Shopping_Cart_page.robot
 Resource    ../Pages/Yves/Yves_Shopping_List_page.robot
 Resource    ../Pages/Yves/Yves_Checkout_Success_page.robot
 Resource    ../Pages/Yves/Yves_Order_History_page.robot
-Resource    ../Pages/Yves/Yves_View_Order_page.robot
+Resource    ../Pages/Yves/Yves_Order_Details_page.robot
+Resource    ../Pages/Yves/Yves_MA_Your_Business_Unit_page.robot
 
 *** Variable ***
 ${notification_area}    xpath=//section[@data-qa='component notification-area']
@@ -51,7 +52,8 @@ Yves: '${pageName}' page is displayed
     ...    ELSE IF    '${pageName}' == 'Quick Order'    Page Should Contain Element    ${quick_order_main_content_locator}    ${pageName} page is not displayed
     ...    ELSE IF    '${pageName}' == 'Thank you'    Page Should Contain Element    ${success_page_main_container_locator}    ${pageName} page is not displayed
     ...    ELSE IF    '${pageName}' == 'Order History'    Page Should Contain Element    ${order_history_main_content_locator}    ${pageName} page is not displayed     
-    ...    ELSE IF    '${pageName}' == 'View Order'    Page Should Contain Element    ${view_order_main_content_locator}    ${pageName} page is not displayed 
+    ...    ELSE IF    '${pageName}' == 'Order Details'    Page Should Contain Element    ${order_details_main_content_locator}    ${pageName} page is not displayed 
+    ...    ELSE IF    '${pageName}' == 'Select Business Unit'    Page Should Contain Element    ${business_unit_selector}    ${pageName} page is not displayed 
 
 Yves: remove flash messages    ${flash_massage_state}=    Run Keyword And Ignore Error    Wait Until Page Contains Element        ${notification_area}    3s
     Log    ${flash_massage_state}
@@ -69,9 +71,12 @@ Yves: go to the 'Home' page
     Go To    ${host}
 
 Yves: get the last placed order ID by current customer
-    Yves: go to the 'Home' page
-    Yves: go to user menu item in header:    Order History
-    Yves: 'Order History' page is displayed
+    ${currentURL}=    Get Location        
+    Run Keyword Unless    '/customer/order' in '${currentURL}'
+    ...    Run Keywords   
+    ...    Yves: go to the 'Home' page 
+    ...    AND    Yves: go to user menu item in header:    Order History
+    ...    AND    Yves: 'Order History' page is displayed
     ${lastPlacedOrder}=    Get Text    xpath=//div[contains(@data-qa,'component order-table')]//tr[1]//td[@data-content='Order Id'][1]
     Set Suite Variable    ${lastPlacedOrder}    ${lastPlacedOrder}
     [Return]    ${lastPlacedOrder}
