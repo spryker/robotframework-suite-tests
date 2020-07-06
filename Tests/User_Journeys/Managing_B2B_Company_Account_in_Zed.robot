@@ -10,7 +10,7 @@ Library           SeleniumLibrary
 *** Test Cases ***
 UJ:Managing_B2B_Copmany_Account_in_Zed_Part_1
     [Documentation]    This user journey is to check possibility to Create Company, Business unit and initial Admin user with Permissions for Managing User in Zed
-    Zed: Login on Zed with Provided Credentials  ${admin_email}  ${default_password}
+    Zed: Login on Zed with Provided Credentials:    ${admin_email}  ${default_password}
     Zed: create new Company with provided name:    Robot+${random}
     Zed: click Action Button in a table for row that contains:    Robot+${random}    Approve
     Zed: click Action Button in a table for row that contains:    Robot+${random}    Activate

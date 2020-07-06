@@ -1,6 +1,8 @@
 *** Settings ***
+Library    String
+Library    BuiltIn
 Resource    ../Pages/Yves/Yves_Order_History_page.robot
-Resource    ../Pages/Yves/Yves_View_Order_page.robot
+Resource    ../Pages/Yves/Yves_Order_Details_page.robot
 
 *** Keywords ***
 Yves: 'View Order/ Reorder' on the order history page: 
@@ -10,7 +12,12 @@ Yves: 'View Order/ Reorder' on the order history page:
 
 
 Yves: reorder all items from 'View Order' page
-    Click Element    ${view_order_reorder_all_button}
+    Click Element    ${order_details_reorder_all_button}
     Wait For Document Ready    
     Yves: remove flash messages
-    
+
+Yves: shipping address on the order details page is:
+    [Arguments]    ${expectedShippingAddress}
+    ${actualShippingAddress}=    Get Text    ${order_details_shipping_address_locator}
+    ${actualShippingAddress}=    Replace String    ${actualShippingAddress}    \n    ${SPACE}
+    Should Be Equal    ${expectedShippingAddress}    ${actualShippingAddress}
