@@ -5,6 +5,7 @@ Resource    ../Pages/Yves/Yves_Shopping_Cart_page.robot
 
 *** Variables ***
 ${upSellProducts}    ${shopping_cart_upp-sell_products_section}
+${lockedCart}    ${shopping_cart_locked_cart_form}
 
 *** Keywords ***
 Yves: 'Shopping Carts' widget contains:
@@ -79,3 +80,7 @@ Yves: shopping cart contains/doesn't contain the following elements:
         ...    Log    ${shopping_cart_element_to_check}    #Left as an example of multiple actions in Condition
         ...    AND    Page Should Not Contain Element    ${shopping_cart_element_to_check}    message=${shopping_cart_element_to_check} should not be displayed
     END
+
+Yves: shopping cart with name xxx has the following status:
+    [Arguments]    ${cartName}    ${status}
+    Page Should Contain Element    //*[@data-qa='component quote-table']//table//td[@data-content='Name'][contains(.,'${cartName}')]/../td//*[contains(@data-qa,'component quote-status')][contains(.,'${status}')]

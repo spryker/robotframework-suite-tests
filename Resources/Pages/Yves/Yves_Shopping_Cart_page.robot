@@ -3,3 +3,4 @@ ${shopping_cart_main_content_locator}    xpath=//*[@data-qa='component cart-side
 ${shopping_cart_checkout_button}    xpath=//a[@data-qa='cart-go-to-checkout']
 ${shopping_cart_request_quote_button}    xpath=//a[contains(@href,'/quote-request/create')]
 ${shopping_cart_upp-sell_products_section}    xpath=//main[contains(@class,'page-layout-main--cart-page')]//slick-carousel[@data-qa='component slick-carousel']
+${shopping_cart_locked_cart_form}    xpath=//form[@class='cart-locking__form']

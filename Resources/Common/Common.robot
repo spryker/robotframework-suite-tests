@@ -8,18 +8,15 @@ Resource                  ../Pages/Yves/Yves_Login_page.robot
 
 *** Variables ***
 # *** SUITE VARIABLES ***
-#${browser}        headlesschrome
-${browser}             chrome
-# ${host}                https://shs-ecommerce-st:42vV4snUE9cghAQZq@www.shs-ecommerce-st.demo-spryker.com/
-# ${zed_url}             https://shs-ecommerce-st:42vV4snUE9cghAQZq@os.shs-ecommerce-st.demo-spryker.com/
+${browser}             headlesschrome
+# ${browser}             chrome
 ${host}                https://www.de.b2b.demo-spryker.com/
 ${zed_url}             https://os.de.b2b.demo-spryker.com/
 ${email_domain}        @spryker.com
 ${default_password}    change123
-${loading_time}        10s
+${loading_time}        3s
 ${admin_email}         admin@spryker.com
 #${test_customer_email}      test.spryker+${random}@gmail.com
-#${zed_log_out_button}   xpath=//ul[@class='nav navbar-top-links navbar-right']//a[contains(@href,'logout')]
 
 *** Keywords ***
 SuiteSetup
@@ -27,7 +24,9 @@ SuiteSetup
     [tags]  common
     # Empty Directory    Results
     Open Browser    ${host}    ${browser}
-    Maximize Browser Window
+    Run Keyword if    'headless' in '${browser}'    Set Window Size    1440    900
+    Run Keyword Unless    'headless' in '${browser}'    Maximize Browser Window
+    # Maximize Browser Window
     ${random}=    Generate Random String    5    [NUMBERS]
     Set Global Variable    ${random}
     ${test_customer_email}=     set variable    test.spryker+${random}@gmail.com

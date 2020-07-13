@@ -10,7 +10,7 @@ Resource    ../Pages/Yves/Yves_Shopping_List_page.robot
 Resource    ../Pages/Yves/Yves_Checkout_Success_page.robot
 Resource    ../Pages/Yves/Yves_Order_History_page.robot
 Resource    ../Pages/Yves/Yves_Order_Details_page.robot
-Resource    ../Pages/Yves/Yves_MA_Your_Business_Unit_page.robot
+Resource    ../Pages/Yves/Yves_Customer_Account_page.robot
 
 *** Variable ***
 ${notification_area}    xpath=//section[@data-qa='component notification-area']
@@ -30,7 +30,7 @@ Yves: login on Yves with provided credentials:
     input text    ${email_field}    ${email}
     input text    ${password_field}    ${password}
     click element    ${form_login_button}
-    Run Keyword Unless    'fake' in '${email}' or 'agent' in '${email}'  Wait Until Element Is Visible    ${user_navigation_icon_header_menu_item}    ${loading_time}    Dashboard page is not displayed  
+    Run Keyword Unless    'fake' in '${email}' or 'agent' in '${email}'  Wait Until Element Is Visible    ${user_navigation_icon_header_menu_item}    ${loading_time}    Login Failed!
     Yves: remove flash messages
     Wait For Document Ready    
 
@@ -53,9 +53,10 @@ Yves: '${pageName}' page is displayed
     ...    ELSE IF    '${pageName}' == 'Thank you'    Page Should Contain Element    ${success_page_main_container_locator}    ${pageName} page is not displayed
     ...    ELSE IF    '${pageName}' == 'Order History'    Page Should Contain Element    ${order_history_main_content_locator}    ${pageName} page is not displayed     
     ...    ELSE IF    '${pageName}' == 'Order Details'    Page Should Contain Element    ${order_details_main_content_locator}    ${pageName} page is not displayed 
-    ...    ELSE IF    '${pageName}' == 'Select Business Unit'    Page Should Contain Element    ${business_unit_selector}    ${pageName} page is not displayed 
+    ...    ELSE IF    '${pageName}' == 'Select Business Unit'    Page Should Contain Element    ${customer_account_business_unit_selector}    ${pageName} page is not displayed 
+    ...    ELSE IF    '${pageName}' == 'Summary'    Page Should Contain Element    ${checkout_summary_main_content_locator}    ${pageName} page is not displayed 
 
-Yves: remove flash messages    ${flash_massage_state}=    Run Keyword And Ignore Error    Wait Until Page Contains Element        ${notification_area}    3s
+Yves: remove flash messages    ${flash_massage_state}=    Run Keyword And Ignore Error    Wait Until Page Contains Element        ${notification_area}    1s
     Log    ${flash_massage_state}
     Run Keyword If    'PASS' in ${flash_massage_state}     Remove element from HTML with JavaScript    //section[@data-qa='component notification-area']
 

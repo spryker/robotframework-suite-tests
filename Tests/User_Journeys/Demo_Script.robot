@@ -15,6 +15,7 @@ Resource    ../../Resources/Steps/Product_Set_steps.robot
 Resource    ../../Resources/Steps/Catalog_steps.robot
 Resource    ../../Resources/Steps/Agent_Assist_steps.robot
 Resource    ../../Resources/Steps/Company_steps.robot
+Resource    ../../Resources/Steps/Customer_Account_steps.robot
 
 *** Test Cases ***
 # Guest_User_Restrictions
@@ -83,7 +84,7 @@ Resource    ../../Resources/Steps/Company_steps.robot
 
 # Quick_Order
 #     Yves: login on Yves with provided credentials:    sonia@spryker.com
-#     Yves: create new 'Shopping Cart' with name:    quickOrderCart+${random}
+    # Yves: create new 'Shopping Cart' with name:    quickOrderCart+${random}
 #     Yves: create new 'Shopping List' with name:    quickOrderList+${random}
 #     Yves: go to 'Quick Order' page through the header
 #     Yves: 'Quick Order' page is displayed
@@ -254,45 +255,46 @@ Resource    ../../Resources/Steps/Company_steps.robot
 
 # Business_Unit_Address_on_Checkout
 #     Yves: login on Yves with provided credentials:    Trever.m@spryker.com
-#     Yves: create new 'Shopping Cart' with name:    businessAddressCart+${random}
-#     Yves: go to PDP of the product with sku:    M64933
-#     Yves: add product to the shopping cart
-#     Yves: go to the shopping cart through the header with name:    businessAddressCart+${random}
-#     Yves: click on the 'Checkout' button
-#     Yves: billing address same as shipping address:    true
-#     Yves: select the following existing address on the checkout as 'shipping' address and go next:    Mr Trever Meier, Kirncher Str. 7, 10247 Berlin
-#     Yves: select the following shipping method on the checkout and go next:    Express
-#     Yves: select the following payment method on the checkout and go next:    Invoice
-#     Yves: 'submit the order' on the summary page
-#     Yves: 'Thank you' page is displayed
-#     Yves: go to user menu item in header:    Order History
-#     Yves: 'Order History' page is displayed
-#     Yves: get the last placed order ID by current customer
-#     Yves: 'View Order/ Reorder' on the order history page:    View Order    ${lastPlacedOrder} 
-#     Yves: 'Order Details' page is displayed
-#     Yves: shipping address on the order details page is:    Mr. Trever Meier Spryker Systems GmbH Kirncher Str. 7 10247 Berlin, Germany 4902890031
+    # Yves: create new 'Shopping Cart' with name:    businessAddressCart+${random}
+    # Yves: go to PDP of the product with sku:    M64933
+    # Yves: add product to the shopping cart
+    # Yves: go to the shopping cart through the header with name:    businessAddressCart+${random}
+    # Yves: click on the 'Checkout' button
+    # Yves: billing address same as shipping address:    true
+    # Yves: select the following existing address on the checkout as 'shipping' address and go next:    Mr Trever Meier, Kirncher Str. 7, 10247 Berlin
+    # Yves: select the following shipping method on the checkout and go next:    Express
+    # Yves: select the following payment method on the checkout and go next:    Invoice
+    # Yves: 'submit the order' on the summary page
+    # Yves: 'Thank you' page is displayed
+    # Yves: go to user menu item in header:    Order History
+    # Yves: 'Order History' page is displayed
+    # Yves: get the last placed order ID by current customer
+    # Yves: 'View Order/ Reorder' on the order history page:    View Order    ${lastPlacedOrder} 
+    # Yves: 'Order Details' page is displayed
+    # Yves: shipping address on the order details page is:    Mr. Trever Meier Spryker Systems GmbH Kirncher Str. 7 10247 Berlin, Germany 4902890031
 
 # Approval_Process
 #     Yves: login on Yves with provided credentials:    kevin@spryker.com
-#     Yves: create new 'Shopping Cart' with name:    approvalCart
+#     Yves: create new 'Shopping Cart' with name:    approvalCart+${random}
 #     Yves: go to PDP of the product with sku:    M49320
 #     Yves: add product to the shopping cart
-#     Yves: go to the shopping cart through the header with name:    approvalCart
+#     Yves: go to the shopping cart through the header with name:    approvalCart+${random}
 #     Yves: click on the 'Checkout' button
 #     Yves: billing address same as shipping address:    true
-#     Yves: select the following existing address on the checkout as 'shipping' address and go next:            Mr Kevin Sidorov, Oderberger Str. 57, 10115 Berlin
+#     Yves: select the following existing address on the checkout as 'shipping' address and go next:    Mr Kevin Sidorov, Oderberger Str. 57, 10115 Berlin
 #     Yves: select the following shipping method on the checkout and go next:    Express
 #     Yves: select the following payment method on the checkout and go next:    Invoice
 #     Yves: select approver on the 'Summary' page:    Emma Schmidt (€1,000.00)
 #     Yves: 'send the request' on the summary page
 #     Yves: 'Summary' page is displayed
-#     Yves: 'Summary' page contains:    cancelRequest    listAlert    statusWaiting
-#     Yves: go to the shopping cart through the header with name:    approvalCart
-#     Yves: shopping cart contains/doesn't contain the following elements:    lockedCart
-#     Yves: create new shopping cart with name:    newApprovalCart
+#     Yves: 'Summary' page contains/doesn't contain:    true    ${cancelRequestButton}    ${alertWarning}    ${quoteStatus}
+#     Yves: go to the 'Home' page
+#     Yves: go to the shopping cart through the header with name:    approvalCart+${random}
+#     Yves: shopping cart contains/doesn't contain the following elements:    true    ${lockedCart}
+#     Yves: create new 'Shopping Cart' with name:    newApprovalCart+${random}
 #     Yves: go to PDP of the product with sku:    M58314
 #     Yves: add product to the shopping cart
-#     Yves: go to the shopping cart through the header with name:    newApprovalCart
+#     Yves: go to the shopping cart through the header with name:    newApprovalCart+${random}
 #     Yves: click on the 'Checkout' button
 #     Yves: billing address same as shipping address:    true
 #     Yves: select the following existing address on the checkout as 'shipping' address and go next:            Mr Kevin Sidorov, Oderberger Str. 57, 10115 Berlin
@@ -300,10 +302,10 @@ Resource    ../../Resources/Steps/Company_steps.robot
 #     Yves: select the following payment method on the checkout and go next:    Invoice
 #     Yves: 'submit the order' on the summary page
 #     Yves: 'Thank you' page is displayed
-#     Yves: create new shopping cart with name:    anotherApprovalCart
+#     Yves: create new 'Shopping Cart' with name:    anotherApprovalCart+${random}
 #     Yves: go to PDP of the product with sku:    M58314
 #     Yves: add product to the shopping cart
-#     Yves: go to the shopping cart through the header with name:    anotherApprovalCart
+#     Yves: go to the shopping cart through the header with name:    anotherApprovalCart+${random}
 #     Yves: click on the 'Checkout' button
 #     Yves: billing address same as shipping address:    true
 #     Yves: select the following existing address on the checkout as 'shipping' address and go next:            Mr Kevin Sidorov, Oderberger Str. 57, 10115 Berlin
@@ -312,36 +314,45 @@ Resource    ../../Resources/Steps/Company_steps.robot
 #     Yves: select approver on the 'Summary' page:    Emma Schmidt (€1,000.00)
 #     Yves: 'send the request' on the summary page
 #     Yves: 'Summary' page is displayed
-#     Yves: 'Summary' page contains:    cancelRequest    listAlert    statusWaiting
+#     Yves: 'Summary' page contains/doesn't contain:    true    ${cancelRequestButton}    ${alertWarning}    ${quoteStatus}
 #     Yves: logout on Yves as a customer
 #     Yves: login on Yves with provided credentials:    emma@spryker.com
 #     Yves: go to user menu item in header:    Overview
 #     Yves: 'Overview' page is displayed
-#     Yves: go to user menu item in the left bar:    Shopping Carts
+#     Yves: go to user menu item in the left bar:    Shopping carts
 #     Yves: 'Shopping Carts' page is displayed
-#     Yves: the following shopping carts are shown:    approvalCart    anotherApprovalCart
-#     Yves: shopping cart with name xxx has the following status:    approvalCart    status
-#     Yves: go to the shopping cart through the header with name:    approvalCart
+#     Yves: the following shopping cart is shown:    approvalCart+${random}    Read-only
+#     Yves: the following shopping cart is shown:    anotherApprovalCart+${random}    Read-only
+#     Yves: shopping cart with name xxx has the following status:    approvalCart+${random}    Waiting
+#     Yves: shopping cart with name xxx has the following status:    anotherApprovalCart+${random}    Waiting
+#     Yves: go to the shopping cart through the header with name:    approvalCart+${random}
 #     Yves: click on the 'Checkout' button
 #     Yves: 'Summary' page is displayed
 #     Yves: 'approve the cart' on the summary page
 #     Yves: 'Summary' page is displayed
-#     Yves: 'Summary' page contains:    cancelRequest    listAlert    statusApproved
+#     Yves: 'Summary' page contains/doesn't contain:    false    ${cancelRequestButton}    ${alertWarning}
+#     Yves: go to the 'Home' page
 #     Yves: go to user menu item in header:    Overview
 #     Yves: 'Overview' page is displayed
-#     Yves: go to user menu item in the left bar:    Shopping Carts
+#     Yves: go to user menu item in the left bar:    Shopping carts
 #     Yves: 'Shopping Carts' page is displayed
-#     Yves: the following shopping carts are shown:    approvalCart    anotherApprovalCart
-#     Yves: shopping cart with name xxx has the following status:    approvalCart    status
+#     Yves: the following shopping cart is shown:    approvalCart+${random}    Read-only
+#     Yves: the following shopping cart is shown:    anotherApprovalCart+${random}    Read-only
+#     Yves: shopping cart with name xxx has the following status:    approvalCart+${random}    Approved
+#     Yves: shopping cart with name xxx has the following status:    anotherApprovalCart+${random}    Waiting
 #     Yves: logout on Yves as a customer
 #     Yves: login on Yves with provided credentials:    kevin@spryker.com
-#     Yves: go to the shopping cart through the header with name:    approvalCart
+#     Yves: go to user menu item in the left bar:    Shopping carts
+#     Yves: shopping cart with name xxx has the following status:    approvalCart+${random}    Approved
+#     Yves: go to the shopping cart through the header with name:    approvalCart+${random}
+#     Yves: shopping cart contains/doesn't contain the following elements:    true    ${lockedCart}
+#     Yves: click on the 'Checkout' button
 #     Yves: 'Summary' page is displayed
 #     Yves: 'submit the order' on the summary page
 #     Yves: 'Thank you' page is displayed
 
-# Request_for_Quote
-#     Yves: go to URL:    /agent/login
+Request_for_Quote
+    Yves: go to URL:    /agent/login
 #     Yves: login on Yves with provided credentials:    agent@spryker.com
 #     Yves: header 'should' contain:    quoteRequestsWidget
 #     Yves: go to 'Quote Requests' page through the header
