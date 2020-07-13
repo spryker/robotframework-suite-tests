@@ -3,4 +3,4 @@
 Results/
 *.png
 *.log
-.vscode/settings.json
+settings.json
