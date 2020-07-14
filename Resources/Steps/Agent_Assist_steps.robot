@@ -1,10 +1,11 @@
 *** Settings ***
 Resource    ../Pages/Zed/Zed_Create_Zed_User_page.robot
 Resource    ../Common/Common_Zed.robot
+Resource    ../Common/Common.robot
 
 *** Keywords ***
 Zed: create new Zed user with the following data:
-    [Arguments]    ${zedUserEmail}    ${zedUserPassword}    ${zedUserFirstName}    ${zedUserLastName}    ${checkboxGroup}   ${checkboxAgent}    ${userInterfaceLanguage}
+    [Arguments]    ${zedUserEmail}    ${zedUserPassword}=${default_password}   ${zedUserFirstName}    ${zedUserLastName}    ${checkboxGroup}   ${checkboxAgent}    ${userInterfaceLanguage}
     ${currentURL}=    Get Location        
     Run Keyword Unless    '/user' in '${currentURL}'    Zed: go to second navigation item level:    Users Control    User
     Zed: click button in Header:    Add New User

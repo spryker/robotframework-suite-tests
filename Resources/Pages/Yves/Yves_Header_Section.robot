@@ -22,7 +22,8 @@ ${shopping_cart_sub_navigation_create_cart_button}    xpath=//*[contains(@class,
 ${search_form_header_menu_item}    xpath=//div[@data-qa="component search-form"]//input
 ${agent_customer_search_widget}    xpath=//autocomplete-form[contains(@suggestion-url,'agent-widget')]//input[@name='query']
 ${agent_confirm_login_button}    xpath=//div[@class='agent-control-bar__header']//button[@type='submit']
-
+${agent_quote_requests_header_item}    xpath=//agent-control-bar//a[contains(@href,'quote-request')]/ancestor::li[contains(@class,'menu__item--has-children')]
+${agent_quote_requests_widget}    xpath=//agent-control-bar//a[contains(@href,'quote-request')]/ancestor::li[contains(@class,'menu__item--has-children')]//ul[contains(@class,'menu--wider')]
   
 
 

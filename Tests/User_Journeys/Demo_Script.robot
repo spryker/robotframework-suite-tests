@@ -1,4 +1,5 @@
 *** Settings ***
+Library    BuiltIn
 Suite Setup       SuiteSetup
 Suite Teardown    SuiteTeardown
 Test Setup        TestSetup
@@ -127,7 +128,7 @@ Resource    ../../Resources/Steps/Customer_Account_steps.robot
 #     Yves: change quantity on PDP:    5
 #     Yves: add product to the shopping cart
 #     Yves: go to the shopping cart through the header with name:    VolumePriceCart+${random}
-#     Yves: shopping cart contains product with unit price:    420685    €4.20
+#     Yves: shopping cart contains product with unit price:    420685    4.20
 
 # Alternative_Products
 #     Yves: go to PDP of the product with sku:  M21100
@@ -234,7 +235,7 @@ Resource    ../../Resources/Steps/Customer_Account_steps.robot
 #     Yves: go to the 'Home' page   
 #     Yves: go to URL:    agent/login
 #     Yves: login on Yves with provided credentials:    agent@spryker.com+${random}
-#     Yves: header contains/doesn't contain:    true    ${customerSearchWidget}
+    # Yves: header contains/doesn't contain:    true    ${customerSearchWidget}
 #     Yves: perform search by customer:    Karl
 #     Yves: agent widget contains:    karl@spryker.com
 #     Yves: login under the customer:    karl@spryker.com
@@ -351,12 +352,15 @@ Resource    ../../Resources/Steps/Customer_Account_steps.robot
 #     Yves: 'submit the order' on the summary page
 #     Yves: 'Thank you' page is displayed
 
-Request_for_Quote
-    Yves: go to URL:    /agent/login
-#     Yves: login on Yves with provided credentials:    agent@spryker.com
-#     Yves: header 'should' contain:    quoteRequestsWidget
+# Request_for_Quote
+#     Zed: login on Zed with provided credentials:    admin@spryker.com
+#     Zed: create new Zed user with the following data:    agent_quote+${random}@spryker.com    change123    Request    Quote    Root group    This user is an agent    en_US
+#     Yves: go to URL:    agent/login
+#     Yves: login on Yves with provided credentials:    agent_quote+${random}@spryker.com
+#     Yves: header contains/doesn't contain:    true    ${quoteRequestsWidget}
 #     Yves: go to 'Quote Requests' page through the header
 #     Yves: 'Quote Requests' page is displayed
+#     ### After first run status is changed, so step will fail ###
 #     Yves: quote request with reference xxx should have status:    DE--21-5    Waiting
 #     Yves: view quote request with reference:    DE--21-5
 #     Yves: 'Quote Request Details' page is displayed
@@ -364,32 +368,40 @@ Request_for_Quote
 #     Yves: change price for the product in the quote request with sku xxx on:    424605    5
 #     Yves: click 'Send to Customer' button on the 'Quote Request Details' page 
 #     Yves: logout on Yves as a customer
+#     Yves: go to the 'Home' page
 #     Yves: login on Yves with provided credentials:    sonia@spryker.com
 #     Yves: go to user menu item in header:    Quote Requests
 #     Yves: quote request with reference xxx should have status:    DE--21-5    Ready
 #     Yves: view quote request with reference:    DE--21-5
 #     Yves: click 'Revise' button on the 'Quote Request Details' page
 #     Yves: click 'Edit Items' button on the 'Quote Request Details' page
-#     Yves: delete product from the shopping cart with sku:    212427
+#     ### After first run product is removed, so step will fail ###
+#     Yves: delete product from the shopping cart with sku:    425159
 #     Yves: click 'Save and Back to Edit' button on the 'Quote Request Details' page
 #     Yves: add the following note to the quote request:    Spryker rocks
 #     Yves: click 'Save' button on the 'Quote Request Details' page
 #     Yves: click 'Send to Agent' button on the 'Quote Request Details' page
-#     Yves: move mouse over header menu item:     quoteRequestsWidget
+#     Yves: logout on Yves as a customer
+#     Yves: go to URL:    agent/login
+#     Yves: login on Yves with provided credentials:    agent_quote+${random}@spryker.com
+#     Yves: move mouse over header menu item:     ${quoteRequestsWidget}
 #     Yves: 'Quote Requests' widget is shown
 #     Yves: go to the quote request through the header with reference:    DE--21-5
 #     Yves: 'Quote Request Details' page contains the following note:   Spryker rocks
-#     Yves: set 'Valid Till' date for the quote request, today:    +1
+#     Yves: click 'Revise' button on the 'Quote Request Details' page 
+#     Yves: set 'Valid Till' date for the quote request, today +:    1 day
 #     Yves: change price for the product in the quote request with sku xxx on:    424605    5
 #     Yves: click 'Send to Customer' button on the 'Quote Request Details' page
 #     Yves: logout on Yves as a customer
+#     Yves: go to the 'Home' page
 #     Yves: login on Yves with provided credentials:    sonia@spryker.com
 #     Yves: go to user menu item in header:    Quote Requests
 #     Yves: quote request with reference xxx should have status:    DE--21-5    Ready
 #     Yves: view quote request with reference:    DE--21-5
 #     Yves: click 'Convert to Cart' button on the 'Quote Request Details' page
-#     Yves: 'Shopping Carts' page is displayed
+#     Yves: 'Shopping Cart' page is displayed
 #     Yves: shopping cart contains product with unit price:    424605    5
+#     Yves: shopping cart doesn't contain the following products:    425159
 #     Yves: click on the 'Checkout' button
 #     Yves: billing address same as shipping address:    true
 #     Yves: select the following existing address on the checkout as 'shipping' address and go next:    Ms Sonia Wagner, Kirncher Str. 7, 10247 Berlin
@@ -399,8 +411,8 @@ Request_for_Quote
 #     Yves: 'submit the order' on the summary page
 #     Yves: 'Thank you' page is displayed
 
-# Unique_URL
-#     Yves: login on Yves with provided credentials:    sonia@spryker.com
+Unique_URL
+    Yves: login on Yves with provided credentials:    sonia@spryker.com
 #     Yves: create new 'Shopping Cart' with name:    externalCart
 #     Yves: go to PDP of the product with sku:    M90806
 #     Yves: add product to the shopping cart

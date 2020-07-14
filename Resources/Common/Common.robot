@@ -61,3 +61,9 @@ Remove element from HTML with JavaScript
     Execute Javascript 
     ...    var element=document.evaluate("${xpath}", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
     ...    element.parentNode.removeChild(element);
+
+Add/Edit element attribute with JavaScript:
+    [Arguments]    ${xpath}    ${attribute}    ${attributeValue}
+    Execute Javascript
+    ...    var element=document.evaluate("${xpath}", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+    ...    element.setAttribute("${attribute}", "${attributeValue}");

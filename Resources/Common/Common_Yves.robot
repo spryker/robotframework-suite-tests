@@ -11,6 +11,8 @@ Resource    ../Pages/Yves/Yves_Checkout_Success_page.robot
 Resource    ../Pages/Yves/Yves_Order_History_page.robot
 Resource    ../Pages/Yves/Yves_Order_Details_page.robot
 Resource    ../Pages/Yves/Yves_Customer_Account_page.robot
+Resource    ../Pages/Yves/Yves_Quote_Requests_page.robot
+Resource    ../Pages/Yves/Yves_Quote_Request_page.robot
 
 *** Variable ***
 ${notification_area}    xpath=//section[@data-qa='component notification-area']
@@ -31,6 +33,7 @@ Yves: login on Yves with provided credentials:
     input text    ${password_field}    ${password}
     click element    ${form_login_button}
     Run Keyword Unless    'fake' in '${email}' or 'agent' in '${email}'  Wait Until Element Is Visible    ${user_navigation_icon_header_menu_item}    ${loading_time}    Login Failed!
+    Run Keyword If    'agent' in '${email}'    Yves: header contains/doesn't contain:    true    ${customerSearchWidget}
     Yves: remove flash messages
     Wait For Document Ready    
 
@@ -55,6 +58,8 @@ Yves: '${pageName}' page is displayed
     ...    ELSE IF    '${pageName}' == 'Order Details'    Page Should Contain Element    ${order_details_main_content_locator}    ${pageName} page is not displayed 
     ...    ELSE IF    '${pageName}' == 'Select Business Unit'    Page Should Contain Element    ${customer_account_business_unit_selector}    ${pageName} page is not displayed 
     ...    ELSE IF    '${pageName}' == 'Summary'    Page Should Contain Element    ${checkout_summary_main_content_locator}    ${pageName} page is not displayed 
+    ...    ELSE IF    '${pageName}' == 'Quote Requests'    Page Should Contain Element    ${quote_requests_main_content_locator}    ${pageName} page is not displayed 
+    ...    ELSE IF    '${pageName}' == 'Quote Request Details'    Page Should Contain Element    ${quote_request_main_content_locator}    ${pageName} page is not displayed 
 
 Yves: remove flash messages    ${flash_massage_state}=    Run Keyword And Ignore Error    Wait Until Page Contains Element        ${notification_area}    1s
     Log    ${flash_massage_state}

@@ -7,6 +7,7 @@ Resource    ../Pages/Yves/Yves_Header_Section.robot
 Resource    ../Steps/Shopping_Carts_steps.robot
 Resource    ../Steps/Shopping_Lists_steps.robot
 Resource    ../Steps/Quick_Order_steps.robot
+Resource    ../Steps/Request_for_Quote_steps.robot
 
 *** Variable ***
 ${priceModeSwitcher}    ${price_mode_switcher_header_menu_item}
@@ -17,6 +18,7 @@ ${accountIcon}    ${user_navigation_icon_header_menu_item}
 ${shoppingListIcon}    ${shopping_list_icon_header_menu_item}
 ${shoppingCartIcon}    ${shopping_car_icon_header_menu_item}
 ${customerSearchWidget}    ${agent_customer_search_widget}  
+${quoteRequestsWidget}    ${agent_quote_requests_header_item}
 
 *** Keywords ***
 Yves: perform search by:
@@ -61,6 +63,7 @@ Yves: go to '${pageName}' page through the header
     Run Keyword If    '${pageName}' == 'Shopping Lists'    Go to 'Shopping Lists' page
     ...    ELSE IF    '${pageName}' == 'Shopping Carts'    Go to 'Shopping Carts' page  
     ...    ELSE IF    '${pageName}' == 'Quick Order'    Go to 'Quick Order' page
+    ...    ELSE IF    '${pageName}' == 'Quote Requests'    Go to 'Quote Requests' page 
 
 Yves: go to user menu item in header:
     [Arguments]    ${user_menu_item}
@@ -69,3 +72,18 @@ Yves: go to user menu item in header:
     Wait Until Element Is Visible    ${user_navigation_fly_out_header_menu_item}
     Click Element    //li[contains(@class,'user-navigation__item--user')]//nav[contains(@class,'user-navigation__sub-nav')]//ul[contains(@class,'list--secondary')]//a[text()='${user_menu_item}']
     Wait For Document Ready  
+
+Yves: move mouse over header menu item:
+    [Arguments]    @{header_elements_list}    ${element1}=${EMPTY}     ${element2}=${EMPTY}     ${element3}=${EMPTY}     ${element4}=${EMPTY}     ${element5}=${EMPTY}     ${element6}=${EMPTY}     ${element7}=${EMPTY}     ${element8}=${EMPTY}     ${element9}=${EMPTY}     ${element10}=${EMPTY}     ${element11}=${EMPTY}     ${element12}=${EMPTY}     ${element13}=${EMPTY}     ${element14}=${EMPTY}     ${element15}=${EMPTY}
+    ${header_elements_list_count}=   get length  ${header_elements_list}
+    FOR    ${index}    IN RANGE    0    ${header_elements_list_count}
+        ${header_element_to_check}=    Get From List    ${header_elements_list}    ${index}
+        Mouse Over    ${header_element_to_check}
+        Sleep    1s
+    END
+
+Yves: '${headerItem}' widget is shown
+    Run Keyword If    '${headerItem}' == 'Quote Requests'    
+    ...    Run Keywords
+    ...    Wait Until Element Is Visible    ${agent_quote_requests_widget}    
+    ...    AND    Page Should Contain Element    ${agent_quote_requests_widget}
