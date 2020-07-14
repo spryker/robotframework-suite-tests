@@ -411,21 +411,22 @@ Resource    ../../Resources/Steps/Customer_Account_steps.robot
 #     Yves: 'submit the order' on the summary page
 #     Yves: 'Thank you' page is displayed
 
-Unique_URL
-    Yves: login on Yves with provided credentials:    sonia@spryker.com
-#     Yves: create new 'Shopping Cart' with name:    externalCart
+# Unique_URL
+#     Yves: login on Yves with provided credentials:    sonia@spryker.com
+#     Yves: create new 'Shopping Cart' with name:    externalCart+${random}
 #     Yves: go to PDP of the product with sku:    M90806
 #     Yves: add product to the shopping cart
-#     Yves: go to the shopping cart through the header with name:    externalCart
+#     Yves: go to the shopping cart through the header with name:    externalCart+${random}
 #     Yves: 'Shopping Cart' page is displayed
-#     Yves: copy link for external cart sharing
+#     Yves: get link for external cart sharing
 #     Yves: logout on Yves as a customer
-#     Yves: go to URL:    externalCartLink
-#     Yves: 'Preview Shopping Cart' page is displayed 
+#     Yves: go to external URL:    ${externalURL}
+#     Yves: 'Shopping Cart' page is displayed
+#     Yves: Shopping Cart title should be equal:    Preview: externalCart+${random}
 #     Yves: shopping cart contains the following products:    108302
 
-# Configurable_Bundle
-#     Yves: login on Yves with provided credentials:    sonia@spryker.com
+Configurable_Bundle
+    Yves: login on Yves with provided credentials:    sonia@spryker.com
 #     Yves: create new 'Shopping Cart' with name:    confBundle
 #     Yves: go to level 1 in the 'Main Navigation':    More    Configurable Bundle
 #     Yves: 'Choose Bundle to configure' page is displayed

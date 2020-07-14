@@ -90,3 +90,7 @@ Yves: get the last placed order ID by current customer
 Yves: go to URL:
     [Arguments]    ${url}
     Go To    ${host}${url}
+
+Yves: go to external URL:
+    [Arguments]    ${url}
+    Go To    ${url}

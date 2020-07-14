@@ -99,3 +99,15 @@ Yves: shopping cart doesn't contain the following products:
         ${sku_to_check}=    Get From List    ${sku_list}    ${index}
         Page Should Not Contain Element    xpath=//main[contains(@class,'cart-page')]//div[contains(@class,'product-card-item__col--description')]//div[contains(.,'SKU: ${sku_to_check}')]/ancestor::article
     END  
+
+Yves: get link for external cart sharing
+    Expand shopping cart accordion:    Share Cart via link
+    Click Element    xpath=//input[@name='cart-share'][contains(@target-class-name,'external')]/ancestor::label
+    Wait Until Element Is Visible    xpath=//input[@id='PREVIEW']
+    ${externalURL}=    Get Element Attribute    xpath=//input[@id='PREVIEW']    value
+    Set Suite Variable    ${externalURL}
+
+Yves: Shopping Cart title should be equal:
+    [Arguments]    ${expectedCartTitle}
+    ${actualCartTitle}=    Get Text    ${shopping_cart_cart_title}
+    Should Be Equal    ${actualCartTitle}    ${expectedCartTitle}
