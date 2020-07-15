@@ -1,8 +1,5 @@
 *** Settings ***
 Library    SeleniumLibrary    plugins=SeleniumTestability;True;30 Seconds;True
-# Library    String
-# Library    BuiltIn
-# Library    Collections
 Resource    ../Pages/Yves/Yves_Catalog_page.robot
 
 *** Keywords ***

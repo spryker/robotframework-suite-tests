@@ -3,7 +3,7 @@ Suite Setup       SuiteSetup
 Suite Teardown    SuiteTeardown
 Test Setup        TestSetup
 Test Teardown     TestTeardown
-Library           SeleniumLibrary
+Library           SeleniumLibrary    plugins=SeleniumTestability;True;30 Seconds;True
 
 
 

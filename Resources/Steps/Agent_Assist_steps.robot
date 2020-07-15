@@ -25,7 +25,7 @@ Zed: create new Zed user with the following data:
 Yves: perform search by customer:
     [Arguments]    ${searchQuery}
     Input Text    ${agent_customer_search_widget}    ${searchQuery}
-    Wait For Testability Ready    
+    Wait For Document Ready    
     Wait For Document Ready    
 
 Yves: agent widget contains:
@@ -38,5 +38,5 @@ Yves: login under the customer:
     Wait Until Element Is Visible    //ul[@data-qa='component customer-list']/li[@data-value='${searchQuery}']
     Click Element    xpath=//ul[@data-qa='component customer-list']/li[@data-value='${searchQuery}']
     Click Element    ${agent_confirm_login_button}
-    Wait For Testability Ready    
+    Wait For Document Ready    
     Wait For Document Ready 

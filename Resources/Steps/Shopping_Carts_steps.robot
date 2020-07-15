@@ -111,3 +111,10 @@ Yves: Shopping Cart title should be equal:
     [Arguments]    ${expectedCartTitle}
     ${actualCartTitle}=    Get Text    ${shopping_cart_cart_title}
     Should Be Equal    ${actualCartTitle}    ${expectedCartTitle}
+
+Yves: change quantity of the configurable bundle in the shopping cart on:
+    [Documentation]    In case of multiple matches, changes quantity for the first product in the shopping cart
+    [Arguments]    ${confBundleTitle}    ${quantity}
+    Input Text    xpath=//article[@data-qa='component configured-bundle'][1]//*[contains(@class,'configured-bundle__title')][text()='${confBundleTitle}']/ancestor::article//input[@data-qa='quantity-input']    ${quantity}
+    Click Element    xpath=//article[@data-qa='component configured-bundle'][1]//*[contains(@class,'configured-bundle__title')][text()='${confBundleTitle}']
+    Wait For Document Ready    

@@ -13,10 +13,10 @@ Resource    ../Pages/Yves/Yves_Order_Details_page.robot
 Resource    ../Pages/Yves/Yves_Customer_Account_page.robot
 Resource    ../Pages/Yves/Yves_Quote_Requests_page.robot
 Resource    ../Pages/Yves/Yves_Quote_Request_page.robot
+Resource    ../Pages/Yves/Yve_Choose_Bundle_to_Configure_page.robot
 
 *** Variable ***
 ${notification_area}    xpath=//section[@data-qa='component notification-area']
-
 
 *** Keywords ***
 Yves: login on Yves with provided credentials:
@@ -60,6 +60,7 @@ Yves: '${pageName}' page is displayed
     ...    ELSE IF    '${pageName}' == 'Summary'    Page Should Contain Element    ${checkout_summary_main_content_locator}    ${pageName} page is not displayed 
     ...    ELSE IF    '${pageName}' == 'Quote Requests'    Page Should Contain Element    ${quote_requests_main_content_locator}    ${pageName} page is not displayed 
     ...    ELSE IF    '${pageName}' == 'Quote Request Details'    Page Should Contain Element    ${quote_request_main_content_locator}    ${pageName} page is not displayed 
+    ...    ELSE IF    '${pageName}' == 'Choose Bundle to configure'    Page Should Contain Element    ${choose_bundle_main_content_locator}    ${pageName} page is not displayed 
 
 Yves: remove flash messages    ${flash_massage_state}=    Run Keyword And Ignore Error    Wait Until Page Contains Element        ${notification_area}    1s
     Log    ${flash_massage_state}
@@ -94,3 +95,35 @@ Yves: go to URL:
 Yves: go to external URL:
     [Arguments]    ${url}
     Go To    ${url}
+
+Yves: go to second navigation item level:
+    [Arguments]     ${navigation_item_level1}   ${navigation_item_level2}
+    ${nodeClass}=    Get Element Attribute    xpath=//div[@class='header__navigation']//navigation-multilevel[@data-qa='component navigation-multilevel']/ul[@class='menu menu--lvl-0']//li[contains(@class,'menu__item--lvl-0')]/span/*[contains(@class,'lvl-0')][1][text()='${navigation_item_level1}']/ancestor::li    class
+    ${nodeClass}=    Replace String    ${nodeClass}    \n    ${EMPTY}
+    ${nodeShownClass}=    Set Variable    is-shown
+    ${nodeUpdatedClass}=    Set Variable    ${nodeClass} ${nodeShownClass} 
+    Log    ${nodeClass}
+    ${1LevelXpath}=    Set Variable    //div[@class='header__navigation']//navigation-multilevel[@data-qa='component navigation-multilevel']/ul[@class='menu menu--lvl-0']//li[contains(@class,'menu__item--lvl-0')]/span/*[contains(@class,'lvl-0')][1][text()='${navigation_item_level1}']/ancestor::li
+    Add/Edit element attribute with JavaScript:    ${1LevelXpath}    class    ${nodeUpdatedClass}
+    Wait Until Element Is Visible    //div[@class='header__navigation']//navigation-multilevel[@data-qa='component navigation-multilevel']/ul[@class='menu menu--lvl-0']//li[contains(@class,'menu__item--lvl-0')]/span/*[contains(@class,'lvl-0')][1][text()='${navigation_item_level1}']/ancestor::li//ul[contains(@class,'menu--lvl-1')]
+    Click element with JavaScript    //div[@class='header__navigation']//navigation-multilevel[@data-qa='component navigation-multilevel']/ul[@class='menu menu--lvl-0']//li[contains(@class,'menu__item--lvl-0')]/span/*[contains(@class,'lvl-0')][1][text()='${navigation_item_level1}']/ancestor::li//ul[contains(@class,'menu--lvl-1')]//li[contains(@class,'menu__item--lvl-1')]/span/*[contains(@class,'lvl-1')][1][text()='${navigation_item_level2}']
+    Wait For Document Ready    
+
+Yves: go to first navigation item level:
+    [Arguments]     ${navigation_item_level1}
+    Wait Until Element Is Visible    xpath=//div[@class='header__navigation']//navigation-multilevel[@data-qa='component navigation-multilevel']/ul[@class='menu menu--lvl-0']//li[contains(@class,'menu__item--lvl-0')]/span/*[contains(@class,'lvl-0')][1][text()='${navigation_item_level1}']
+    Click element with JavaScript    //div[@class='header__navigation']//navigation-multilevel[@data-qa='component navigation-multilevel']/ul[@class='menu menu--lvl-0']//li[contains(@class,'menu__item--lvl-0')]/span/*[contains(@class,'lvl-0')][1][text()='${navigation_item_level1}']
+    Wait For Document Ready  
+
+Yves: go to third navigation item level:
+    [Arguments]     ${navigation_item_level1}   ${navigation_item_level3}
+    ${nodeClass}=    Get Element Attribute    xpath=//div[@class='header__navigation']//navigation-multilevel[@data-qa='component navigation-multilevel']/ul[@class='menu menu--lvl-0']//li[contains(@class,'menu__item--lvl-0')]/span/*[contains(@class,'lvl-0')][1][text()='${navigation_item_level1}']/ancestor::li    class
+    ${nodeClass}=    Replace String    ${nodeClass}    \n    ${EMPTY}
+    ${nodeShownClass}=    Set Variable    is-shown
+    ${nodeUpdatedClass}=    Set Variable    ${nodeClass} ${nodeShownClass} 
+    Log    ${nodeClass}
+    ${1LevelXpath}=    Set Variable    //div[@class='header__navigation']//navigation-multilevel[@data-qa='component navigation-multilevel']/ul[@class='menu menu--lvl-0']//li[contains(@class,'menu__item--lvl-0')]/span/*[contains(@class,'lvl-0')][1][text()='${navigation_item_level1}']/ancestor::li
+    Add/Edit element attribute with JavaScript:    ${1LevelXpath}    class    ${nodeUpdatedClass}
+    Wait Until Element Is Visible    //div[@class='header__navigation']//navigation-multilevel[@data-qa='component navigation-multilevel']/ul[@class='menu menu--lvl-0']//li[contains(@class,'menu__item--lvl-0')]/span/*[contains(@class,'lvl-0')][1][text()='${navigation_item_level1}']/ancestor::li//ul[contains(@class,'menu--lvl-1')]
+    Click element with JavaScript    //div[@class='header__navigation']//navigation-multilevel[@data-qa='component navigation-multilevel']/ul[@class='menu menu--lvl-0']//li[contains(@class,'menu__item--lvl-0')]/span/*[contains(@class,'lvl-0')][1][text()='${navigation_item_level1}']/ancestor::li//ul[contains(@class,'menu--lvl-2')]//li[contains(@class,'menu__item--lvl-2')]/span/*[contains(@class,'lvl-2')][1][text()='${navigation_item_level3}']
+    Wait For Document Ready 

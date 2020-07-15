@@ -73,5 +73,5 @@ Yves: add product to the shopping list
     Wait Until Element Is Visible    ${pdp_add_to_shopping_list_button}
     Click Element    ${pdp_add_to_shopping_list_button}
     Wait For Document Ready    
-    Wait For Testability Ready    
+    Wait For Document Ready    
     Yves: remove flash messages

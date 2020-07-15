@@ -17,6 +17,7 @@ Resource    ../../Resources/Steps/Catalog_steps.robot
 Resource    ../../Resources/Steps/Agent_Assist_steps.robot
 Resource    ../../Resources/Steps/Company_steps.robot
 Resource    ../../Resources/Steps/Customer_Account_steps.robot
+Resource    ../../Resources/Steps/Configurable_Bundle_steps.robot
 
 *** Test Cases ***
 # Guest_User_Restrictions
@@ -427,28 +428,36 @@ Resource    ../../Resources/Steps/Customer_Account_steps.robot
 
 Configurable_Bundle
     Yves: login on Yves with provided credentials:    sonia@spryker.com
-#     Yves: create new 'Shopping Cart' with name:    confBundle
-#     Yves: go to level 1 in the 'Main Navigation':    More    Configurable Bundle
-#     Yves: 'Choose Bundle to configure' page is displayed
-#     Yves: choose bundle to configure:    Presentation bundle
-#     Yves: select product in the bundle slot:    Slot 5    408104
-#     Yves: select product in the bundle slot:    Slot 6    423172
-#     Yves: go to 'Summary' step in the bundle configurator
-#     Yves: app products to the shopping cart in the bundle configurator
-#     Yves: go to the shopping cart through the header with name:    confBundle
-#     Yves: change quantity of the configurable bundle in the shopping cart on:    Presentation bundle    2
-#     Yves: click on the 'Checkout' button
-#     Yves: billing address same as shipping address:    true
-#     Yves: select the following existing address on the checkout as 'shipping' address and go next:    Ms Sonia Wagner, Kirncher Str. 7, 10247 Berlin
-#     Yves: select the following shipping method on the checkout and go next:    Express
-#     Yves: select the following payment method on the checkout and go next:    Invoice
-#     Yves: 'submit the order' on the summary page
-#     Yves: 'Thank you' page is displayed
-#     Yves: go to user menu item in header:    Order History
-#     Yves: 'Order History' page is displayed
-#     Yves: 'view order' on the order history with ID:    orderID
-#     Yves: 'View Order' page is displayed
-#     Yves: 'Order Details' page contains the following configurable bundle N times:    Presentation bundle    2
+    Yves: create new 'Shopping Cart' with name:    confBundle+${random}
+    Yves: go to second navigation item level:    More    Configurable Bundle
+    Yves: 'Choose Bundle to configure' page is displayed
+    Yves: choose bundle template to configure:    Presentation bundle
+    Yves: select product in the bundle slot:    Slot 5    408104
+    Yves: select product in the bundle slot:    Slot 6    423172
+    Yves: go to 'Summary' step in the bundle configurator
+    Yves: add products to the shopping cart in the bundle configurator
+    Yves: go to second navigation item level:    More    Configurable Bundle
+    Yves: 'Choose Bundle to configure' page is displayed
+    Yves: choose bundle template to configure:    Presentation bundle
+    Yves: select product in the bundle slot:    Slot 5    421539
+    Yves: select product in the bundle slot:    Slot 6    424551
+    Yves: go to 'Summary' step in the bundle configurator
+    Yves: add products to the shopping cart in the bundle configurator
+    Yves: go to the shopping cart through the header with name:    confBundle+${random}
+    Yves: change quantity of the configurable bundle in the shopping cart on:    Presentation bundle    2
+    Yves: click on the 'Checkout' button
+    Yves: billing address same as shipping address:    true
+    Yves: select the following existing address on the checkout as 'shipping' address and go next:    Ms Sonia Wagner, Kirncher Str. 7, 10247 Berlin
+    Yves: select the following shipping method on the checkout and go next:    Express
+    Yves: select the following payment method on the checkout and go next:    Invoice
+    Yves: 'submit the order' on the summary page
+    Yves: 'Thank you' page is displayed
+    Yves: go to user menu item in header:    Order History
+    Yves: 'Order History' page is displayed
+    Yves: get the last placed order ID by current customer
+    Yves: 'View Order/ Reorder' on the order history page:    View Order    ${lastPlacedOrder}
+    Yves: 'View Order' page is displayed
+    Yves: 'Order Details' page contains the following product title N times:    Presentation bundle    3
 
 
     
