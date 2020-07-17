@@ -16,26 +16,27 @@ Yves: billing address same as shipping address:
     
 Yves: select the following existing address on the checkout as 'shipping' address and go next:
     [Arguments]    ${addressToUse}
+    Wait Until Element Is Visible    ${checkout_address_delivery_dropdown}
     Select From List By Label    ${checkout_address_delivery_dropdown}    ${addressToUse}
-    Click Element    ${submit_checkout_form_button}
+    Scroll and Click Element    ${submit_checkout_form_button}
     Wait For Document Ready    
 
 Yves: select the following shipping method on the checkout and go next:
     [Arguments]    ${shippingMethod}
-    Click Element    xpath=//div[@data-qa='component shipment-sidebar']//*[contains(.,'Shipping Method')]/../ul//label[contains(.,'${shippingMethod}')]/span[contains(@class,'radio__box')]
-    Click Element    ${submit_checkout_form_button}
+    Scroll and Click Element    xpath=//div[@data-qa='component shipment-sidebar']//*[contains(.,'Shipping Method')]/../ul//label[contains(.,'${shippingMethod}')]/span[contains(@class,'radio__box')]
+    Scroll and Click Element    ${submit_checkout_form_button}
     Wait For Document Ready    
 
 Yves: select the following payment method on the checkout and go next:
     [Arguments]    ${paymentMethod}
-    Click Element    //form[@id='payment-form']//li[@class='checkout-list__item'][contains(.,'${paymentMethod}')]//span[contains(@class,'toggler-radio__box')]
-    Click Element    ${submit_checkout_form_button}
+    Scroll and Click Element    //form[@id='payment-form']//li[@class='checkout-list__item'][contains(.,'${paymentMethod}')]//span[contains(@class,'toggler-radio__box')]
+    Scroll and Click Element    ${submit_checkout_form_button}
     Wait For Document Ready    
 
 Yves: '${checkoutAction}' on the summary page
-    Run Keyword If    '${checkoutAction}' == 'submit the order'    Click Element    ${checkout_summary_submit_order_button}
-    ...    ELSE IF    '${checkoutAction}' == 'send the request'    Click Element    ${checkout_summary_send_request_button}
-    ...    ELSE IF    '${checkoutAction}' == 'approve the cart'    Click Element    ${checkout_summary_approve_request_button}
+    Run Keyword If    '${checkoutAction}' == 'submit the order'    Scroll and Click Element    ${checkout_summary_submit_order_button}
+    ...    ELSE IF    '${checkoutAction}' == 'send the request'    Scroll and Click Element    ${checkout_summary_send_request_button}
+    ...    ELSE IF    '${checkoutAction}' == 'approve the cart'    Scroll and Click Element    ${checkout_summary_approve_request_button}
     Wait For Document Ready      
 
 Yves: select approver on the 'Summary' page:

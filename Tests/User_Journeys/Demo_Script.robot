@@ -83,7 +83,6 @@ Share_Shopping_Carts
     Yves: 'View Order/ Reorder' on the order history page:     View Order    ${lastPlacedOrder}
     Yves: 'View Order' page is displayed
 
-
 Quick_Order
     Yves: login on Yves with provided credentials:    sonia@spryker.com
     Yves: create new 'Shopping Cart' with name:    quickOrderCart+${random}

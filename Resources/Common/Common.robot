@@ -10,8 +10,8 @@ Resource                  ../Pages/Yves/Yves_Login_page.robot
 # *** SUITE VARIABLES ***
 # ${browser}             headlesschrome
 ${browser}             chrome
-${host}                https://www.de.b2b.demo-spryker.com/
-${zed_url}             https://os.de.b2b.demo-spryker.com/
+${host}                http://yves.de.spryker.local/
+${zed_url}             http://zed.de.spryker.local/
 ${email_domain}        @spryker.com
 ${default_password}    change123
 ${loading_time}        3s
@@ -24,7 +24,7 @@ SuiteSetup
     [tags]  common
     # Empty Directory    Results
     Open Browser    ${host}    ${browser}
-    Run Keyword if    'headless' in '${browser}'    Set Window Size    1440    900
+    Run Keyword if    'headless' in '${browser}'    Set Window Size    1440    1080
     Run Keyword Unless    'headless' in '${browser}'    Maximize Browser Window
     # Maximize Browser Window
     ${random}=    Generate Random String    5    [NUMBERS]
@@ -52,7 +52,7 @@ Select Random Option From List
     ${index}=    Convert To String    ${index}
     Select From List By Index    ${dropDownLocator}    ${index}
 
-Click element with JavaScript
+Click Element with JavaScript
     [Arguments]    ${xpath}
     Execute Javascript    document.evaluate("${xpath}", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.click()
 
@@ -67,3 +67,8 @@ Add/Edit element attribute with JavaScript:
     Execute Javascript
     ...    var element=document.evaluate("${xpath}", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
     ...    element.setAttribute("${attribute}", "${attributeValue}");
+
+Scroll and Click Element
+    [Arguments]    ${locator}
+    Scroll Element Into View    ${locator}
+    Click Element    ${locator}

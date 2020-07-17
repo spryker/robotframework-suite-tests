@@ -14,7 +14,7 @@ Yves: 'Product Sets' page contains the following sets:
 
 Yves: view the following Product Set:
     [Arguments]    ${productSetName}
-    Click Element    xpath=//*[contains(@class,'product-set-card__name')][text()="${productSetName}"]/ancestor::article
+    Scroll and Click Element    xpath=//*[contains(@class,'product-set-card__name')][text()="${productSetName}"]/ancestor::article
 
 Yves: 'Product Set' page contains the following products:
     [Arguments]    @{product_name_list}    ${productName1}=${EMPTY}     ${productName2}=${EMPTY}     ${productName3}=${EMPTY}     ${productName4}=${EMPTY}     ${productName5}=${EMPTY}     ${productName6}=${EMPTY}     ${productName7}=${EMPTY}     ${productName8}=${EMPTY}     ${productName9}=${EMPTY}     ${productName10}=${EMPTY}     ${productName11}=${EMPTY}     ${productName12}=${EMPTY}     ${productName13}=${EMPTY}     ${productName14}=${EMPTY}     ${productName15}=${EMPTY}
@@ -31,5 +31,5 @@ Yves: change variant of the product on CMS page on:
     Wait For Document Ready    
 
 Yves: add all products to the shopping cart from Product Set
-    Click Element    ${add_all_product_to_the_shopping_cart}
+    Scroll and Click Element    ${add_all_product_to_the_shopping_cart}
     Yves: remove flash messages

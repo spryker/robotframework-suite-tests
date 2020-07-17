@@ -9,27 +9,27 @@ ${share_shopping_cart_confirm_button}    xpath=//form[@name='shareCartForm']//bu
 *** Keywords ***
 Edit shopping cart with name:    
     [Arguments]    ${shoppingCartName}
-    Click Element    xpath=//*[@data-qa='component quote-table']//table//td[@data-content='Name'][contains(.,'${shoppingCartName}')]/..//ul//a[contains(.,'Edit')]
+    Scroll and Click Element    xpath=//*[@data-qa='component quote-table']//table//td[@data-content='Name'][contains(.,'${shoppingCartName}')]/..//ul//a[contains(.,'Edit')]
 
 Duplicate shopping cart with name:    
     [Arguments]    ${shoppingCartName}
-    Click Element    xpath=//*[@data-qa='component quote-table']//table//td[@data-content='Name'][contains(.,'${shoppingCartName}')]/..//ul//a[contains(.,'Duplicate')]
+    Scroll and Click Element    xpath=//*[@data-qa='component quote-table']//table//td[@data-content='Name'][contains(.,'${shoppingCartName}')]/..//ul//a[contains(.,'Duplicate')]
 
 Add to list shopping cart with name:    
     [Arguments]    ${shoppingCartName}
-    Click Element    xpath=//*[@data-qa='component quote-table']//table//td[@data-content='Name'][contains(.,'${shoppingCartName}')]/..//ul//a[contains(.,'Add to list')]
+    Scroll and Click Element    xpath=//*[@data-qa='component quote-table']//table//td[@data-content='Name'][contains(.,'${shoppingCartName}')]/..//ul//a[contains(.,'Add to list')]
 
 Dismiss shopping cart with name:    
     [Arguments]    ${shoppingCartName}
-    Click Element    xpath=//*[@data-qa='component quote-table']//table//td[@data-content='Name'][contains(.,'${shoppingCartName}')]/..//ul//a[contains(.,'Dismiss')]
+    Scroll and Click Element    xpath=//*[@data-qa='component quote-table']//table//td[@data-content='Name'][contains(.,'${shoppingCartName}')]/..//ul//a[contains(.,'Dismiss')]
 
 Delete shopping cart with name:    
     [Arguments]    ${shoppingCartName}
-    Click Element    xpath=//*[@data-qa='component quote-table']//table//td[@data-content='Name'][contains(.,'${shoppingCartName}')]/..//ul//a[contains(.,'Delete')]
+    Scroll and Click Element    xpath=//*[@data-qa='component quote-table']//table//td[@data-content='Name'][contains(.,'${shoppingCartName}')]/..//ul//a[contains(.,'Delete')]
 
 Share shopping cart with name:    
     [Arguments]    ${shoppingCartName}
-    Click Element    xpath=//*[@data-qa='component quote-table']//table//td[@data-content='Name'][contains(.,'${shoppingCartName}')]/..//ul//a[contains(.,'Share')]
+    Scroll and Click Element    xpath=//*[@data-qa='component quote-table']//table//td[@data-content='Name'][contains(.,'${shoppingCartName}')]/..//ul//a[contains(.,'Share')]
 
 Select access level to share shopping cart with:
     [Arguments]    ${customerToShareWith}    ${accessLevel}

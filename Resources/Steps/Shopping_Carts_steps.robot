@@ -18,17 +18,17 @@ Yves: 'Shopping Carts' widget contains:
 Go to 'Shopping Carts' page
     Mouse Over    ${shopping_car_icon_header_menu_item}
     Wait Until Page Contains Element    ${shopping_cart_sub_navigation_widget}
-    Click Element    ${shopping_cart_sub_navigation_all_carts_button}
+    Click Element with JavaScript    ${shopping_cart_sub_navigation_all_carts_button}
     Wait For Document Ready    
 
 Yves: create new 'Shopping Cart' with name:
     [Arguments]    ${shoppingCartName}
     ${currentURL}=    Get Location        
     Run Keyword Unless    '/multi-cart' in '${currentURL}'    Go To    ${host}multi-cart
-    Click Element    ${create_shopping_cart_button}
+    Scroll and Click Element    ${create_shopping_cart_button}
     Wait For Document Ready
     Input Text    ${shopping_cart_name_input_field}    ${shoppingCartName}
-    Click Element    ${create_new_cart_submit_button}
+    Scroll and Click Element    ${create_new_cart_submit_button}
     Wait For Document Ready    
 
 Yves: the following shopping cart is shown:
@@ -39,7 +39,7 @@ Yves: share shopping cart with user:
     [Arguments]    ${shoppingCartName}    ${customerToShare}    ${accessLevel}
     Share shopping cart with name:    ${shoppingCartName}
     Select access level to share shopping cart with:    ${customerToShare}    ${accessLevel}
-    Click Element    ${share_shopping_cart_confirm_button}
+    Scroll and Click Element    ${share_shopping_cart_confirm_button}
     Yves: 'Shopping Carts' page is displayed
     Yves: flash message 'should' be shown
 
@@ -48,7 +48,7 @@ Yves: go to the shopping cart through the header with name:
     Wait Until Element Is Visible    ${shopping_car_icon_header_menu_item} 
     Mouse Over    ${shopping_car_icon_header_menu_item} 
     Wait Until Element Is Visible    ${shopping_cart_sub_navigation_widget}
-    Click Element    //*[contains(@class,'icon--cart')]/ancestor::li//div[contains(@class,'js-user-navigation__sub-nav-cart')]//div[@class='mini-cart-detail']//a/*[text()='${shoppingCartName}']
+    Scroll and Click Element    //*[contains(@class,'icon--cart')]/ancestor::li//div[contains(@class,'js-user-navigation__sub-nav-cart')]//div[@class='mini-cart-detail']//a/*[text()='${shoppingCartName}']
     
 Yves: shopping cart contains the following products:
     [Arguments]    @{sku_list}    ${sku1}=${EMPTY}     ${sku2}=${EMPTY}     ${sku3}=${EMPTY}     ${sku4}=${EMPTY}     ${sku5}=${EMPTY}     ${sku6}=${EMPTY}     ${sku7}=${EMPTY}     ${sku8}=${EMPTY}     ${sku9}=${EMPTY}     ${sku10}=${EMPTY}     ${sku11}=${EMPTY}     ${sku12}=${EMPTY}     ${sku13}=${EMPTY}     ${sku14}=${EMPTY}     ${sku15}=${EMPTY}
@@ -59,8 +59,8 @@ Yves: shopping cart contains the following products:
     END    
     
 Yves: click on the '${buttonName}' button
-    Run Keyword If    '${buttonName}' == 'Checkout'    Click Element    ${shopping_cart_checkout_button}
-    ...    ELSE IF    '${buttonName}' == 'Request a Quote'    Click Element    ${shopping_cart_request_quote_button}
+    Run Keyword If    '${buttonName}' == 'Checkout'    Scroll and Click Element    ${shopping_cart_checkout_button}
+    ...    ELSE IF    '${buttonName}' == 'Request a Quote'    Scroll and Click Element    ${shopping_cart_request_quote_button}
 
 Yves: shopping cart contains product with unit price:
     [Documentation]    Already contains '€' sign inside
@@ -88,7 +88,7 @@ Yves: shopping cart with name xxx has the following status:
 
 Yves: delete product from the shopping cart with sku:
     [Arguments]    ${sku}
-    Click Element    //main[contains(@class,'cart-page')]//div[contains(@class,'product-card-item__col--description')]//div[contains(.,'SKU: ${sku}')]/ancestor::article//a[contains(@href,'remove')]
+    Scroll and Click Element    //main[contains(@class,'cart-page')]//div[contains(@class,'product-card-item__col--description')]//div[contains(.,'SKU: ${sku}')]/ancestor::article//a[contains(@href,'remove')]
     Wait For Document Ready    
     Yves: remove flash messages
 
@@ -102,7 +102,7 @@ Yves: shopping cart doesn't contain the following products:
 
 Yves: get link for external cart sharing
     Expand shopping cart accordion:    Share Cart via link
-    Click Element    xpath=//input[@name='cart-share'][contains(@target-class-name,'external')]/ancestor::label
+    Scroll and Click Element    xpath=//input[@name='cart-share'][contains(@target-class-name,'external')]/ancestor::label
     Wait Until Element Is Visible    xpath=//input[@id='PREVIEW']
     ${externalURL}=    Get Element Attribute    xpath=//input[@id='PREVIEW']    value
     Set Suite Variable    ${externalURL}
@@ -116,5 +116,5 @@ Yves: change quantity of the configurable bundle in the shopping cart on:
     [Documentation]    In case of multiple matches, changes quantity for the first product in the shopping cart
     [Arguments]    ${confBundleTitle}    ${quantity}
     Input Text    xpath=//article[@data-qa='component configured-bundle'][1]//*[contains(@class,'configured-bundle__title')][text()='${confBundleTitle}']/ancestor::article//input[@data-qa='quantity-input']    ${quantity}
-    Click Element    xpath=//article[@data-qa='component configured-bundle'][1]//*[contains(@class,'configured-bundle__title')][text()='${confBundleTitle}']
+    Scroll and Click Element    xpath=//article[@data-qa='component configured-bundle'][1]//*[contains(@class,'configured-bundle__title')][text()='${confBundleTitle}']
     Wait For Document Ready    

@@ -30,13 +30,14 @@ Yves: perform search by customer:
 
 Yves: agent widget contains:
     [Arguments]    ${searchQuery}
+    Wait Until Element Is Visible    xpath=//ul[@data-qa='component customer-list']/li[@data-value='${searchQuery}']    ${loading_time} 
     Page Should Contain Element    xpath=//ul[@data-qa='component customer-list']/li[@data-value='${searchQuery}']
 
 Yves: login under the customer:
     [Arguments]    ${searchQuery} 
     Yves: perform search by customer:    ${searchQuery}
     Wait Until Element Is Visible    //ul[@data-qa='component customer-list']/li[@data-value='${searchQuery}']
-    Click Element    xpath=//ul[@data-qa='component customer-list']/li[@data-value='${searchQuery}']
-    Click Element    ${agent_confirm_login_button}
+    Scroll and Click Element    xpath=//ul[@data-qa='component customer-list']/li[@data-value='${searchQuery}']
+    Scroll and Click Element    ${agent_confirm_login_button}
     Wait For Document Ready    
     Wait For Document Ready 

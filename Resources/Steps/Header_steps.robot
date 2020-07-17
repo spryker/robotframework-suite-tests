@@ -33,7 +33,7 @@ Yves: go to company menu item:
     wait until element is visible  ${company_name_icon_header_menu_item}
     mouse over  ${company_name_icon_header_menu_item}
     element should be enabled    ${company_account_navigation_fly_out_header_menu_item}
-    Click Element    //div[@class='header__top']//a[contains(@class,'navigation-top__company')]/..//nav[contains(@class,'navigation-list')]/ul//a[text()='${company_menu_item}']
+    Scroll and Click Element    //div[@class='header__top']//a[contains(@class,'navigation-top__company')]/..//nav[contains(@class,'navigation-list')]/ul//a[text()='${company_menu_item}']
     Wait For Document Ready  
 
 Yves: company menu '${condition}' be available for logged in user
@@ -70,7 +70,7 @@ Yves: go to user menu item in header:
     wait until element is visible  ${user_navigation_icon_header_menu_item}
     mouse over  ${user_navigation_icon_header_menu_item}
     Wait Until Element Is Visible    ${user_navigation_fly_out_header_menu_item}
-    Click Element    //li[contains(@class,'user-navigation__item--user')]//nav[contains(@class,'user-navigation__sub-nav')]//ul[contains(@class,'list--secondary')]//a[text()='${user_menu_item}']
+    Scroll and Click Element    //li[contains(@class,'user-navigation__item--user')]//nav[contains(@class,'user-navigation__sub-nav')]//ul[contains(@class,'list--secondary')]//a[text()='${user_menu_item}']
     Wait For Document Ready  
 
 Yves: move mouse over header menu item:

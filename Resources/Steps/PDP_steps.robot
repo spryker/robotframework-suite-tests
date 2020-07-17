@@ -34,7 +34,7 @@ Yves: PDP contains/doesn't contain:
 
 Yves: add product to the shopping cart
     Wait Until Page Contains Element    ${pdp_add_to_cart_button}
-    Click Element    ${pdp_add_to_cart_button}
+    Scroll and Click Element    ${pdp_add_to_cart_button}
     Wait For Document Ready    
     Yves: remove flash messages
 
@@ -51,8 +51,8 @@ Yves: select the following 'Sales Unit' on PDP:
 Yves: change quantity using '+' or '-' button № times:
     [Arguments]    ${action}    ${clicksCount}
     FOR    ${index}    IN RANGE    0    ${clicksCount}
-        Run Keyword If    '${action}' == '+'    Click Element    ${pdp_increase_quantity_button}
-        ...    ELSE IF    '${action}' == '-'    Click Element    ${pdp_decrease_quantity_button} 
+        Run Keyword If    '${action}' == '+'    Scroll and Click Element    ${pdp_increase_quantity_button}
+        ...    ELSE IF    '${action}' == '-'    Scroll and Click Element    ${pdp_decrease_quantity_button} 
     END
 
 Yves: change variant of the product on PDP on:
@@ -71,7 +71,7 @@ Yves: product price on the PDP should be:
 
 Yves: add product to the shopping list
     Wait Until Element Is Visible    ${pdp_add_to_shopping_list_button}
-    Click Element    ${pdp_add_to_shopping_list_button}
+    Scroll and Click Element    ${pdp_add_to_shopping_list_button}
     Wait For Document Ready    
     Wait For Document Ready    
     Yves: remove flash messages

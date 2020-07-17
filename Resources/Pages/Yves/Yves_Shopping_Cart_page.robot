@@ -21,5 +21,5 @@ Expand shopping cart accordion:
      ${accordionState}=    Replace String    ${accordionState}    \n    ${EMPTY}
      Log    ${accordionState}
      Run Keyword Unless    'active' in '${accordionState}'    Run Keywords
-     ...    Click Element    xpath=//div[@data-qa='component cart-sidebar']//*[contains(@class,'cart-sidebar-item__title')][contains(.,'${accordionTitle}')]
+     ...    Scroll and Click Element    xpath=//div[@data-qa='component cart-sidebar']//*[contains(@class,'cart-sidebar-item__title')][contains(.,'${accordionTitle}')]
      ...    AND    Wait Until Element Is Visible    xpath=//div[@data-qa='component cart-sidebar']//*[contains(@class,'cart-sidebar-item__title')][contains(.,'${accordionTitle}')]/../div[contains(@class,'cart-sidebar-item__content')]
