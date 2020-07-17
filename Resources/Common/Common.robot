@@ -58,7 +58,7 @@ Click Element with JavaScript
 
 Remove element from HTML with JavaScript
     [Arguments]    ${xpath}
-    Execute Javascript 
+    Execute Javascript
     ...    var element=document.evaluate("${xpath}", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
     ...    element.parentNode.removeChild(element);
 

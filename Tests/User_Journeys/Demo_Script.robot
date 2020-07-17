@@ -23,12 +23,12 @@ Resource    ../../Resources/Steps/Configurable_Bundle_steps.robot
 Guest_User_Restrictions
     [Documentation]    Checks that guest users are not able to see: Prices, Availability, Quick Order, "My Account" features
     Yves: header contains/doesn't contain:    false    ${priceModeSwitcher}    ${currencySwitcher}    ${quickOrderIcon}    ${accountIcon}    ${shoppingListIcon}    ${shoppingCartIcon}
-    Yves: go to PDP of the product with sku:    M70208 
+    Yves: go to PDP of the product with sku:    M70208
     Yves: PDP contains/doesn't contain:     false    ${price}    ${addToCartButton}
     Yves: login on Yves with provided credentials:    sonia@spryker.com
     Yves: header contains/doesn't contain:    true    ${priceModeSwitcher}    ${currencySwitcher}    ${quickOrderIcon}    ${accountIcon}    ${shoppingListIcon}    ${shoppingCartIcon}
-    Yves: company menu 'should' be available for logged in user   
-    Yves: go to PDP of the product with sku:    M70208 
+    Yves: company menu 'should' be available for logged in user
+    Yves: go to PDP of the product with sku:    M70208
     Yves: PDP contains/doesn't contain:     true    ${price}    ${addToCartButton}
     Yves: go to company menu item:    Users
     Yves: 'Company Users' page is displayed
@@ -44,12 +44,12 @@ Share_Shopping_Lists
     Yves: login on Yves with provided credentials:    karl@spryker.com
     Yves: 'Shopping List' widget contains:    shoppingListName+${random}    Full access
     Yves: go to 'Shopping Lists' page through the header
-    Yves: 'Shopping Lists' page is displayed 
+    Yves: 'Shopping Lists' page is displayed
     Yves: the following shopping list is shown:    shoppingListName+${random}    Sonia Wagner    Full access
 
 Share_Shopping_Carts
     Yves: login on Yves with provided credentials:    sonia@spryker.com
-    # Yves: 'Shopping Carts' widget contains:    Dmexco event    Owner access
+    Yves: 'Shopping Carts' widget contains:    Dmexco event    Owner access
     Yves: go to 'Shopping Carts' page through the header
     Yves: 'Shopping Carts' page is displayed
     Yves: create new 'Shopping Cart' with name:    shoppingCartName+${random}
@@ -89,13 +89,13 @@ Quick_Order
     Yves: create new 'Shopping List' with name:    quickOrderList+${random}
     Yves: go to 'Quick Order' page through the header
     Yves: 'Quick Order' page is displayed
-    Yves: add the following articles into the form through quick order text area:    401627,1\n520561,21\n101509,21\n419871,51\n419869,11\n425073,71\n425084,2 
+    Yves: add the following articles into the form through quick order text area:    401627,1\n520561,21\n101509,21\n419871,51\n419869,11\n425073,71\n425084,2
     Yves: add products to the shopping cart from quick order page
     Yves: go to the shopping cart through the header with name:    quickOrderCart+${random}
     Yves: 'Shopping Cart' page is displayed
     Yves: shopping cart contains the following products:    401627    520561    101509    419871    419869    425073    425084
     Yves: go to 'Quick Order' page through the header
-    Yves: add the following articles into the form through quick order text area:    401627,11\n520561,21\n101509,21\n419871,51\n419869,11\n425073,71\n425084,2 
+    Yves: add the following articles into the form through quick order text area:    401627,11\n520561,21\n101509,21\n419871,51\n419869,11\n425073,71\n425084,2
     Yves: add products to the shopping list from quick order page with name:    quickOrderList+${random}
     Yves: 'Shopping List' page is displayed
     Yves: shopping list contains the following products:    401627    520561    101509    419871    419869    425073    425084
@@ -124,7 +124,7 @@ Quick_Order
 Volume_Prices
     Yves: login on Yves with provided credentials:    sonia@spryker.com
     Yves: create new 'Shopping Cart' with name:    VolumePriceCart+${random}
-    Yves: go to PDP of the product with sku:    M21189  
+    Yves: go to PDP of the product with sku:    M21189
     Yves: change quantity on PDP:    5
     Yves: add product to the shopping cart
     Yves: go to the shopping cart through the header with name:    VolumePriceCart+${random}
@@ -137,7 +137,7 @@ Alternative_Products
 Measurement_Units
     Yves: login on Yves with provided credentials:    sonia@spryker.com
     Yves: create new 'Shopping Cart' with name:    measurementUnitsCart+${random}
-    Yves: go to PDP of the product with sku:    M23723 
+    Yves: go to PDP of the product with sku:    M23723
     Yves: select the following 'Sales Unit' on PDP:    Meter
     Yves: change quantity using '+' or '-' button № times:    +    1
     Yves: PDP contains/doesn't contain:    true    ${measurementUnitSuggestion}
@@ -150,7 +150,7 @@ Measurement_Units
 Packaging_Units
     Yves: login on Yves with provided credentials:    sonia@spryker.com
     Yves: create new 'Shopping Cart' with name:    packagingUnitsCart+${random}
-    Yves: go to PDP of the product with sku:    M21766 
+    Yves: go to PDP of the product with sku:    M21766
     Yves: change variant of the product on PDP on:    Box
     Yves: change amount on PDP:    51
     Yves: PDP contains/doesn't contain:    true    ${packagingUnitSuggestion}
@@ -232,7 +232,7 @@ Customer_Specific_Prices
 Agent_Assist
     Zed: login on Zed with provided credentials:    admin@spryker.com
     Zed: create new Zed user with the following data:    agent@spryker.com+${random}    change123    Agent    Assist    Root group    This user is an agent    en_US
-    Yves: go to the 'Home' page   
+    Yves: go to the 'Home' page
     Yves: go to URL:    agent/login
     Yves: login on Yves with provided credentials:    agent@spryker.com+${random}
     Yves: header contains/doesn't contain:    true    ${customerSearchWidget}
@@ -270,7 +270,7 @@ Business_Unit_Address_on_Checkout
     Yves: go to user menu item in header:    Order History
     Yves: 'Order History' page is displayed
     Yves: get the last placed order ID by current customer
-    Yves: 'View Order/ Reorder' on the order history page:    View Order    ${lastPlacedOrder} 
+    Yves: 'View Order/ Reorder' on the order history page:    View Order    ${lastPlacedOrder}
     Yves: 'Order Details' page is displayed
     Yves: shipping address on the order details page is:    Mr. Trever Meier Spryker Systems GmbH Kirncher Str. 7 10247 Berlin, Germany 4902890031
 
@@ -364,9 +364,9 @@ Request_for_Quote
     Yves: quote request with reference xxx should have status:    DE--21-5    Waiting
     Yves: view quote request with reference:    DE--21-5
     Yves: 'Quote Request Details' page is displayed
-    Yves: click 'Revise' button on the 'Quote Request Details' page 
+    Yves: click 'Revise' button on the 'Quote Request Details' page
     Yves: change price for the product in the quote request with sku xxx on:    424605    5
-    Yves: click 'Send to Customer' button on the 'Quote Request Details' page 
+    Yves: click 'Send to Customer' button on the 'Quote Request Details' page
     Yves: logout on Yves as a customer
     Yves: go to the 'Home' page
     Yves: login on Yves with provided credentials:    sonia@spryker.com
@@ -388,7 +388,7 @@ Request_for_Quote
     Yves: 'Quote Requests' widget is shown
     Yves: go to the quote request through the header with reference:    DE--21-5
     Yves: 'Quote Request Details' page contains the following note:   Spryker rocks
-    Yves: click 'Revise' button on the 'Quote Request Details' page 
+    Yves: click 'Revise' button on the 'Quote Request Details' page
     Yves: set 'Valid Till' date for the quote request, today +:    1 day
     Yves: change price for the product in the quote request with sku xxx on:    424605    5
     Yves: click 'Send to Customer' button on the 'Quote Request Details' page
@@ -457,34 +457,3 @@ Configurable_Bundle
     Yves: 'View Order/ Reorder' on the order history page:    View Order    ${lastPlacedOrder}
     Yves: 'View Order' page is displayed
     Yves: 'Order Details' page contains the following product title N times:    Presentation bundle    3
-
-
-    
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
-
-
-    
-
-
-
