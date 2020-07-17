@@ -4,7 +4,7 @@ Library    BuiltIn
 Resource    ../Common/Common_Yves.robot
 Resource    ../Common/Common_Zed.robot
 Resource    ../Pages/Zed/Zed_Attach_to_Business_Unit_page.robot
-Resource    ../Pages/Yves/Yves_MA_Your_Business_Unit_page.robot
+Resource    ../Pages/Yves/Yves_Customer_Account_page.robot
 
 
 *** Keywords ***

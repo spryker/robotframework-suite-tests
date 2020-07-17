@@ -1,10 +1,11 @@
 *** Settings ***
 Resource    ../Pages/Zed/Zed_Create_Zed_User_page.robot
 Resource    ../Common/Common_Zed.robot
+Resource    ../Common/Common.robot
 
 *** Keywords ***
 Zed: create new Zed user with the following data:
-    [Arguments]    ${zedUserEmail}    ${zedUserPassword}    ${zedUserFirstName}    ${zedUserLastName}    ${checkboxGroup}   ${checkboxAgent}    ${userInterfaceLanguage}
+    [Arguments]    ${zedUserEmail}    ${zedUserPassword}   ${zedUserFirstName}    ${zedUserLastName}    ${checkboxGroup}   ${checkboxAgent}    ${userInterfaceLanguage}
     ${currentURL}=    Get Location        
     Run Keyword Unless    '/user' in '${currentURL}'    Zed: go to second navigation item level:    Users Control    User
     Zed: click button in Header:    Add New User
@@ -24,18 +25,19 @@ Zed: create new Zed user with the following data:
 Yves: perform search by customer:
     [Arguments]    ${searchQuery}
     Input Text    ${agent_customer_search_widget}    ${searchQuery}
-    Wait For Testability Ready    
+    Wait For Document Ready    
     Wait For Document Ready    
 
 Yves: agent widget contains:
     [Arguments]    ${searchQuery}
+    Wait Until Element Is Visible    xpath=//ul[@data-qa='component customer-list']/li[@data-value='${searchQuery}']    ${loading_time} 
     Page Should Contain Element    xpath=//ul[@data-qa='component customer-list']/li[@data-value='${searchQuery}']
 
 Yves: login under the customer:
     [Arguments]    ${searchQuery} 
     Yves: perform search by customer:    ${searchQuery}
     Wait Until Element Is Visible    //ul[@data-qa='component customer-list']/li[@data-value='${searchQuery}']
-    Click Element    xpath=//ul[@data-qa='component customer-list']/li[@data-value='${searchQuery}']
-    Click Element    ${agent_confirm_login_button}
-    Wait For Testability Ready    
+    Scroll and Click Element    xpath=//ul[@data-qa='component customer-list']/li[@data-value='${searchQuery}']
+    Scroll and Click Element    ${agent_confirm_login_button}
+    Wait For Document Ready    
     Wait For Document Ready 

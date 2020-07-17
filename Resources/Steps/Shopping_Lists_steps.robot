@@ -14,7 +14,7 @@ Yves: 'Shopping List' widget contains:
 Go to 'Shopping Lists' page
     Mouse Over    ${shopping_list_icon_header_menu_item}
     Wait Until Page Contains Element    ${shopping_list_sub_navigation_widget}
-    Click Element    ${shopping_list_sub_navigation_all_lists_button}
+    Click Element with JavaScript    ${shopping_list_sub_navigation_all_lists_button}
     Wait For Document Ready    
 
 Yves: create new 'Shopping List' with name:
@@ -22,7 +22,7 @@ Yves: create new 'Shopping List' with name:
     ${currentURL}=    Get Location        
     Run Keyword Unless    '/shopping-list' in '${currentURL}'    Go To    ${host}shopping-list
     Input Text    ${shopping_list_name_input_field}    ${shoppingListName}
-    Click Element    ${create_shopping_list_button}
+    Scroll and Click Element    ${create_shopping_list_button}
     Wait For Document Ready 
 
 Yves: the following shopping list is shown:
@@ -33,7 +33,7 @@ Yves: share shopping list with user:
     [Arguments]    ${shoppingListName}    ${customer}    ${accessLevel}
     Share shopping list with name:    ${shoppingListName} 
     Select access level to share shopping list with:    ${customer}    ${accessLevel}
-    Click Element    ${share_shopping_list_confirm_button}
+    Scroll and Click Element    ${share_shopping_list_confirm_button}
     Yves: 'Shopping Lists' page is displayed
     Yves: flash message 'should' be shown
 

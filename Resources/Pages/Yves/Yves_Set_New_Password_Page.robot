@@ -11,5 +11,5 @@ Yves: set new password on Restore Password page
     wait until element is visible  ${new_password_field}
     input text  ${new_password_field}   ${default_password}
     input text  ${confirm_new_password_field}   ${default_password}
-    click element  ${new_password_submit_button}
+    Scroll and Click Element  ${new_password_submit_button}
     wait until page does not contain element  ${new_password_submit_button}

@@ -19,7 +19,7 @@ ${relatedProducts}    ${pdp_related_products}
 *** Keywords ***
 Yves: PDP contains/doesn't contain: 
     [Arguments]    ${condition}    @{pdp_elements_list}    ${element1}=${EMPTY}     ${element2}=${EMPTY}     ${element3}=${EMPTY}     ${element4}=${EMPTY}     ${element5}=${EMPTY}     ${element6}=${EMPTY}     ${element7}=${EMPTY}     ${element8}=${EMPTY}     ${element9}=${EMPTY}     ${element10}=${EMPTY}     ${element11}=${EMPTY}     ${element12}=${EMPTY}     ${element13}=${EMPTY}     ${element14}=${EMPTY}     ${element15}=${EMPTY}
-    ${pdp_elements_list_count}=   get length  ${pdp_elements_list}
+    ${pdp_elements_list_count}=   get length    ${pdp_elements_list}
     FOR    ${index}    IN RANGE    0    ${pdp_elements_list_count}
         ${pdp_element_to_check}=    Get From List    ${pdp_elements_list}    ${index}
         Run Keyword If    '${condition}' == 'true'    
@@ -34,7 +34,7 @@ Yves: PDP contains/doesn't contain:
 
 Yves: add product to the shopping cart
     Wait Until Page Contains Element    ${pdp_add_to_cart_button}
-    Click Element    ${pdp_add_to_cart_button}
+    Scroll and Click Element    ${pdp_add_to_cart_button}
     Wait For Document Ready    
     Yves: remove flash messages
 
@@ -51,8 +51,8 @@ Yves: select the following 'Sales Unit' on PDP:
 Yves: change quantity using '+' or '-' button № times:
     [Arguments]    ${action}    ${clicksCount}
     FOR    ${index}    IN RANGE    0    ${clicksCount}
-        Run Keyword If    '${action}' == '+'    Click Element    ${pdp_increase_quantity_button}
-        ...    ELSE IF    '${action}' == '-'    Click Element    ${pdp_decrease_quantity_button} 
+        Run Keyword If    '${action}' == '+'    Scroll and Click Element    ${pdp_increase_quantity_button}
+        ...    ELSE IF    '${action}' == '-'    Scroll and Click Element    ${pdp_decrease_quantity_button} 
     END
 
 Yves: change variant of the product on PDP on:
@@ -71,7 +71,7 @@ Yves: product price on the PDP should be:
 
 Yves: add product to the shopping list
     Wait Until Element Is Visible    ${pdp_add_to_shopping_list_button}
-    Click Element    ${pdp_add_to_shopping_list_button}
+    Scroll and Click Element    ${pdp_add_to_shopping_list_button}
     Wait For Document Ready    
-    Wait For Testability Ready    
+    Wait For Document Ready    
     Yves: remove flash messages
