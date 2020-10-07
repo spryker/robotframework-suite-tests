@@ -23,7 +23,7 @@ Resource    ../../Resources/Steps/Configurable_Bundle_steps.robot
 Guest_User_Restrictions
     [Documentation]    Checks that guest users are not able to see: Prices, Availability, Quick Order, "My Account" features
     Yves: header contains/doesn't contain:    false    ${priceModeSwitcher}    ${currencySwitcher}    ${quickOrderIcon}    ${accountIcon}    ${shoppingListIcon}    ${shoppingCartIcon}
-    Yves: go to PDP of the product with sku:    M70208
+    # Yves: go to PDP of the product with sku:    M70208
     Yves: PDP contains/doesn't contain:     false    ${price}    ${addToCartButton}
     Yves: login on Yves with provided credentials:    sonia@spryker.com
     Yves: header contains/doesn't contain:    true    ${priceModeSwitcher}    ${currencySwitcher}    ${quickOrderIcon}    ${accountIcon}    ${shoppingListIcon}    ${shoppingCartIcon}
