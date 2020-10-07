@@ -23,12 +23,14 @@ Resource    ../../Resources/Steps/Configurable_Bundle_steps.robot
 Guest_User_Restrictions
     [Documentation]    Checks that guest users are not able to see: Prices, Availability, Quick Order, "My Account" features
     Yves: header contains/doesn't contain:    false    ${priceModeSwitcher}    ${currencySwitcher}    ${quickOrderIcon}    ${accountIcon}    ${shoppingListIcon}    ${shoppingCartIcon}
-    # Yves: go to PDP of the product with sku:    M70208
+    # Yves: go to PDP of the product with sku:    M70208 
+    # xpath=(//article[@data-qa='component product-card'])[1] need to be changed to //product-item[@data-qa='component product-item'][1]
     Yves: PDP contains/doesn't contain:     false    ${price}    ${addToCartButton}
     Yves: login on Yves with provided credentials:    sonia@spryker.com
     Yves: header contains/doesn't contain:    true    ${priceModeSwitcher}    ${currencySwitcher}    ${quickOrderIcon}    ${accountIcon}    ${shoppingListIcon}    ${shoppingCartIcon}
     Yves: company menu 'should' be available for logged in user
-    Yves: go to PDP of the product with sku:    M70208
+    # Yves: go to PDP of the product with sku:    M70208
+    # xpath=(//article[@data-qa='component product-card'])[1] need to be changed to //product-item[@data-qa='component product-item'][1]
     Yves: PDP contains/doesn't contain:     true    ${price}    ${addToCartButton}
     Yves: go to company menu item:    Users
     Yves: 'Company Users' page is displayed
