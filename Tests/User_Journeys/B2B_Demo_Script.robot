@@ -37,7 +37,8 @@ Guest_User_Restrictions
 
 Share_Shopping_Lists
     Yves: login on Yves with provided credentials:    sonia@spryker.com
-    Yves: 'Shopping List' widget contains:    Newcomers    Full access
+    # Yves: 'Shopping List' widget contains:    Newcomers    Full access
+    # Шопинг лист может быть удален с YVES и тест будет падать, возможно стоит исключить проверку 
     Yves: go to 'Shopping Lists' page through the header
     Yves: 'Shopping Lists' page is displayed
     Yves: create new 'Shopping List' with name:    shoppingListName+${random}

@@ -20,32 +20,32 @@ Resource    ../../Resources/Steps/Customer_Account_steps.robot
 Resource    ../../Resources/Steps/Configurable_Bundle_steps.robot
 
 *** Test Cases ***
-Guest_User_Restrictions
-    [Documentation]    Checks that guest users are not able to see: Prices, Availability, Quick Order, "My Account" features
-    Yves: header contains/doesn't contain:    false    ${priceModeSwitcher}    ${currencySwitcher}    ${quickOrderIcon}    ${accountIcon}    ${shoppingListIcon}    ${shoppingCartIcon}
-    Yves: go to PDP of the product with sku:    M70208
-    Yves: PDP contains/doesn't contain:     false    ${price}    ${addToCartButton}
-    Yves: login on Yves with provided credentials:    sonia@spryker.com
-    Yves: header contains/doesn't contain:    true    ${priceModeSwitcher}    ${currencySwitcher}    ${quickOrderIcon}    ${accountIcon}    ${shoppingListIcon}    ${shoppingCartIcon}
-    Yves: company menu 'should' be available for logged in user
-    Yves: go to PDP of the product with sku:    M70208
-    Yves: PDP contains/doesn't contain:     true    ${price}    ${addToCartButton}
-    Yves: go to company menu item:    Users
-    Yves: 'Company Users' page is displayed
-
-# Share_Shopping_Lists
+# Guest_User_Restrictions
+#     [Documentation]    Checks that guest users are not able to see: Prices, Availability, Quick Order, "My Account" features
+#     Yves: header contains/doesn't contain:    false    ${priceModeSwitcher}    ${currencySwitcher}    ${quickOrderIcon}    ${accountIcon}    ${shoppingListIcon}    ${shoppingCartIcon}
+#     Yves: go to PDP of the product with sku:    M70208
+#     Yves: PDP contains/doesn't contain:     false    ${price}    ${addToCartButton}
 #     Yves: login on Yves with provided credentials:    sonia@spryker.com
-#     Yves: 'Shopping List' widget contains:    Newcomers    Full access
-#     Yves: go to 'Shopping Lists' page through the header
-#     Yves: 'Shopping Lists' page is displayed
-#     Yves: create new 'Shopping List' with name:    shoppingListName+${random}
-#     Yves: the following shopping list is shown:    shoppingListName+${random}    Sonia Wagner    Full access
-#     Yves: share shopping list with user:    shoppingListName+${random}    Karl Schmid    Full access
-#     Yves: login on Yves with provided credentials:    karl@spryker.com
-#     Yves: 'Shopping List' widget contains:    shoppingListName+${random}    Full access
-#     Yves: go to 'Shopping Lists' page through the header
-#     Yves: 'Shopping Lists' page is displayed
-#     Yves: the following shopping list is shown:    shoppingListName+${random}    Sonia Wagner    Full access
+#     Yves: header contains/doesn't contain:    true    ${priceModeSwitcher}    ${currencySwitcher}    ${quickOrderIcon}    ${accountIcon}    ${shoppingListIcon}    ${shoppingCartIcon}
+#     Yves: company menu 'should' be available for logged in user
+#     Yves: go to PDP of the product with sku:    M70208
+#     Yves: PDP contains/doesn't contain:     true    ${price}    ${addToCartButton}
+#     Yves: go to company menu item:    Users
+#     Yves: 'Company Users' page is displayed
+
+Share_Shopping_Lists
+    Yves: login on Yves with provided credentials:    sonia@spryker.com
+    Yves: 'Shopping List' widget contains:    Newcomers    Full access
+    Yves: go to 'Shopping Lists' page through the header
+    Yves: 'Shopping Lists' page is displayed
+    Yves: create new 'Shopping List' with name:    shoppingListName+${random}
+    Yves: the following shopping list is shown:    shoppingListName+${random}    Sonia Wagner    Full access
+    Yves: share shopping list with user:    shoppingListName+${random}    Karl Schmid    Full access
+    Yves: login on Yves with provided credentials:    karl@spryker.com
+    Yves: 'Shopping List' widget contains:    shoppingListName+${random}    Full access
+    Yves: go to 'Shopping Lists' page through the header
+    Yves: 'Shopping Lists' page is displayed
+    Yves: the following shopping list is shown:    shoppingListName+${random}    Sonia Wagner    Full access
 
 # Share_Shopping_Carts
 #     Yves: login on Yves with provided credentials:    sonia@spryker.com
