@@ -74,7 +74,7 @@ Share_Shopping_Carts
     Yves: select the following existing address on the checkout as 'shipping' address and go next:    Mr Trever Meier, Kirncher Str. 7, 10247 Berlin
     Yves: select the following shipping method on the checkout and go next:    Express
     Yves: select the following payment method on the checkout and go next:    Invoice
-    
+    Yves: Accept the Terms and Conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
     Yves: go to the 'Home' page
