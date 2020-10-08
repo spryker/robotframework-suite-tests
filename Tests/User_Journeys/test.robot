@@ -33,55 +33,55 @@ Resource    ../../Resources/Steps/Configurable_Bundle_steps.robot
 #     Yves: go to company menu item:    Users
 #     Yves: 'Company Users' page is displayed
 
-Share_Shopping_Lists
-    Yves: login on Yves with provided credentials:    sonia@spryker.com
-    Yves: 'Shopping List' widget contains:    Newcomers    Full access
-    Yves: go to 'Shopping Lists' page through the header
-    Yves: 'Shopping Lists' page is displayed
-    Yves: create new 'Shopping List' with name:    shoppingListName+${random}
-    Yves: the following shopping list is shown:    shoppingListName+${random}    Sonia Wagner    Full access
-    Yves: share shopping list with user:    shoppingListName+${random}    Karl Schmid    Full access
-    Yves: login on Yves with provided credentials:    karl@spryker.com
-    Yves: 'Shopping List' widget contains:    shoppingListName+${random}    Full access
-    Yves: go to 'Shopping Lists' page through the header
-    Yves: 'Shopping Lists' page is displayed
-    Yves: the following shopping list is shown:    shoppingListName+${random}    Sonia Wagner    Full access
-
-# Share_Shopping_Carts
+# Share_Shopping_Lists
 #     Yves: login on Yves with provided credentials:    sonia@spryker.com
-#     Yves: 'Shopping Carts' widget contains:    Dmexco event    Owner access
-#     Yves: go to 'Shopping Carts' page through the header
-#     Yves: 'Shopping Carts' page is displayed
-#     Yves: create new 'Shopping Cart' with name:    shoppingCartName+${random}
-#     Yves: 'Shopping Carts' widget contains:    shoppingCartName+${random}    Owner access
-#     Yves: go to 'Shopping Carts' page through the header
-#     Yves: 'Shopping Carts' page is displayed
-#     Yves: the following shopping cart is shown:    shoppingCartName+${random}    Owner access
-#     Yves: share shopping cart with user:    shoppingCartName+${random}    Meier Trever    Full access
-#     Yves: go to PDP of the product with sku:    M10569
-#     Yves: add product to the shopping cart
-#     Yves: logout on Yves as a customer
-#     Yves: login on Yves with provided credentials:    Trever.m@spryker.com
-#     Yves: 'Shopping Carts' widget contains:    shoppingCartName+${random}    Full access
-#     Yves: go to 'Shopping Carts' page through the header
-#     Yves: 'Shopping Carts' page is displayed
-#     Yves: the following shopping cart is shown:    shoppingCartName+${random}    Full access
-#     Yves: go to the shopping cart through the header with name:    shoppingCartName+${random}
-#     Yves: 'Shopping Cart' page is displayed
-#     Yves: shopping cart contains the following products:    100414
-#     Yves: click on the 'Checkout' button
-#     Yves: billing address same as shipping address:    true
-#     Yves: select the following existing address on the checkout as 'shipping' address and go next:    Mr Trever Meier, Kirncher Str. 7, 10247 Berlin
-#     Yves: select the following shipping method on the checkout and go next:    Express
-#     Yves: select the following payment method on the checkout and go next:    Invoice
-#     Yves: 'submit the order' on the summary page
-#     Yves: 'Thank you' page is displayed
-#     Yves: go to the 'Home' page
-#     Yves: go to user menu item in header:    Order History
-#     Yves: 'Order History' page is displayed
-#     Yves: get the last placed order ID by current customer
-#     Yves: 'View Order/ Reorder' on the order history page:     View Order    ${lastPlacedOrder}
-#     Yves: 'View Order' page is displayed
+#     Yves: 'Shopping List' widget contains:    Newcomers    Full access
+#     Yves: go to 'Shopping Lists' page through the header
+#     Yves: 'Shopping Lists' page is displayed
+#     Yves: create new 'Shopping List' with name:    shoppingListName+${random}
+#     Yves: the following shopping list is shown:    shoppingListName+${random}    Sonia Wagner    Full access
+#     Yves: share shopping list with user:    shoppingListName+${random}    Karl Schmid    Full access
+#     Yves: login on Yves with provided credentials:    karl@spryker.com
+#     Yves: 'Shopping List' widget contains:    shoppingListName+${random}    Full access
+#     Yves: go to 'Shopping Lists' page through the header
+#     Yves: 'Shopping Lists' page is displayed
+#     Yves: the following shopping list is shown:    shoppingListName+${random}    Sonia Wagner    Full access
+
+Share_Shopping_Carts
+    Yves: login on Yves with provided credentials:    sonia@spryker.com
+    Yves: 'Shopping Carts' widget contains:    Dmexco event    Owner access
+    Yves: go to 'Shopping Carts' page through the header
+    Yves: 'Shopping Carts' page is displayed
+    Yves: create new 'Shopping Cart' with name:    shoppingCartName+${random}
+    Yves: 'Shopping Carts' widget contains:    shoppingCartName+${random}    Owner access
+    Yves: go to 'Shopping Carts' page through the header
+    Yves: 'Shopping Carts' page is displayed
+    Yves: the following shopping cart is shown:    shoppingCartName+${random}    Owner access
+    Yves: share shopping cart with user:    shoppingCartName+${random}    Meier Trever    Full access
+    Yves: go to PDP of the product with sku:    M10569
+    Yves: add product to the shopping cart
+    Yves: logout on Yves as a customer
+    Yves: login on Yves with provided credentials:    Trever.m@spryker.com
+    Yves: 'Shopping Carts' widget contains:    shoppingCartName+${random}    Full access
+    Yves: go to 'Shopping Carts' page through the header
+    Yves: 'Shopping Carts' page is displayed
+    Yves: the following shopping cart is shown:    shoppingCartName+${random}    Full access
+    Yves: go to the shopping cart through the header with name:    shoppingCartName+${random}
+    Yves: 'Shopping Cart' page is displayed
+    Yves: shopping cart contains the following products:    100414
+    Yves: click on the 'Checkout' button
+    Yves: billing address same as shipping address:    true
+    Yves: select the following existing address on the checkout as 'shipping' address and go next:    Mr Trever Meier, Kirncher Str. 7, 10247 Berlin
+    Yves: select the following shipping method on the checkout and go next:    Express
+    Yves: select the following payment method on the checkout and go next:    Invoice
+    Yves: 'submit the order' on the summary page
+    Yves: 'Thank you' page is displayed
+    Yves: go to the 'Home' page
+    Yves: go to user menu item in header:    Order History
+    Yves: 'Order History' page is displayed
+    Yves: get the last placed order ID by current customer
+    Yves: 'View Order/ Reorder' on the order history page:     View Order    ${lastPlacedOrder}
+    Yves: 'View Order' page is displayed
 
 # Quick_Order
 #     Yves: login on Yves with provided credentials:    sonia@spryker.com

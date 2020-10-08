@@ -13,7 +13,7 @@ Yves: 'Shopping Carts' widget contains:
     Wait Until Element Is Visible    ${shopping_car_icon_header_menu_item} 
     Mouse Over    ${shopping_car_icon_header_menu_item} 
     Wait Until Element Is Visible    ${shopping_cart_sub_navigation_widget}
-    Page Should Contain Element    xpath=//*[contains(@class,'icon--cart')]/ancestor::li//div[contains(@class,'js-user-navigation__sub-nav-cart')]//span[text()[contains(.,'${accessLevel}')]]/ancestor::div[@class='mini-cart-detail']//a/*[text()='${shoppingCartName}']
+    Page Should Contain Element    xpath=//*[contains(@class,'icon--cart')]/ancestor::li//div[contains(@class,'js-user-navigation__sub-nav-cart')]//span[text()[contains(.,'${accessLevel}')]]/ancestor::div[@class='mini-cart-detail']//button/*[text()='${shoppingCartName}']
 
 Go to 'Shopping Carts' page
     Mouse Over    ${shopping_car_icon_header_menu_item}
