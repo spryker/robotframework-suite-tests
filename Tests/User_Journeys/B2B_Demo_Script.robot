@@ -77,12 +77,11 @@ Share_Shopping_Carts
     Yves: 'Shopping Cart' page is displayed
     Yves: shopping cart contains the following products:    100414
     Yves: click on the 'Checkout' button
-    # Yves: billing address same as shipping address:    true
-    # Этот шаг падает с ошибкой, пробовала заменить на xpth, почему-то все-равно не находит. (xpath=//div[contains(@class,'col col--sm-12 js-address__form-handler-billingSameAsShipping')]//toggler-checkbox[@name='addressesForm[billingSameAsShipping]'])
+    Yves: billing address same as shipping address:    true
     Yves: select the following existing address on the checkout as 'shipping' address and go next:    Mr Trever Meier, Kirncher Str. 7, 10247 Berlin
     Yves: select the following shipping method on the checkout and go next:    Express
-    # все следующие шаги я проверить не могу так как не получается пройти сейм ас биллинг степ.
     Yves: select the following payment method on the checkout and go next:    Invoice
+    # надо добавить клик на чекбокс agree with
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
     Yves: go to the 'Home' page
