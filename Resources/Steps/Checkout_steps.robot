@@ -15,8 +15,9 @@ Yves: billing address same as shipping address:
     Run Keyword If    '${state}' == 'true'    Add/Edit element attribute with JavaScript:    //input[@id='addressesForm_billingSameAsShipping']    checked    checked
    
 Yves: Accept the Terms and Conditions:
-    [Arguments]    ${state}
-    Run Keyword If    '${state}' == 'true'    Add/Edit element attribute with JavaScript:    //input[@name='acceptTermsAndConditions']    checked    checked  
+   [Arguments]    ${state}
+    Wait Until Page Contains Element    xpath=//input[@name='acceptTermsAndConditions']
+    Run Keyword If    '${state}' == 'true'  Click Element with JavaScript    //input[@name='acceptTermsAndConditions']
      
 Yves: select the following existing address on the checkout as 'shipping' address and go next:
     [Arguments]    ${addressToUse}
