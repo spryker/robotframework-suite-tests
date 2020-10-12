@@ -84,53 +84,53 @@ Resource    ../../Resources/Steps/Configurable_Bundle_steps.robot
 #     Yves: 'View Order/ Reorder' on the order history page:     View Order    ${lastPlacedOrder}
 #     Yves: 'View Order' page is displayed
 
-Quick_Order
-    Yves: login on Yves with provided credentials:    sonia@spryker.com
-    Yves: create new 'Shopping Cart' with name:    quickOrderCart+${random}
-    Yves: create new 'Shopping List' with name:    quickOrderList+${random}
-    Yves: go to 'Quick Order' page through the header
-    Yves: 'Quick Order' page is displayed
-    Yves: add the following articles into the form through quick order text area:    401627,1\n520561,3\n101509,21\n419871,1\n419869,11\n425073,1\n425084,2
-    Yves: add products to the shopping cart from quick order page
-    Yves: go to the shopping cart through the header with name:    quickOrderCart+${random}
-    Yves: 'Shopping Cart' page is displayed
-    Yves: shopping cart contains the following products:    401627    520561    101509    419871    419869    425073    425084
-    Yves: go to 'Quick Order' page through the header
-    Yves: add the following articles into the form through quick order text area:    401627,1\n520561,3\n101509,21\n419871,1\n419869,11\n425073,1\n425084,2
-    Yves: add products to the shopping list from quick order page with name:    quickOrderList+${random}
-    Yves: 'Shopping List' page is displayed
-    Yves: shopping list contains the following products:    401627    520561    101509    419871    419869    425073    425084
-    Yves: go to the shopping cart through the header with name:    quickOrderCart+${random}
-    ### Order placement ###
-    Yves: click on the 'Checkout' button
-    Yves: billing address same as shipping address:    true
-    Yves: select the following existing address on the checkout as 'shipping' address and go next:    Ms Sonia Wagner, Oderberger Str. 57, 10115 Berlin
-    Yves: select the following shipping method on the checkout and go next:    Express
-    Yves: select the following payment method on the checkout and go next:    Invoice
-    Yves: Accept the Terms and Conditions:    true
-    Yves: 'submit the order' on the summary page
-    Yves: 'Thank you' page is displayed
-    ### Order History ###
-    Yves: go to the 'Home' page
-    Yves: go to user menu item in header:    Order History
-    Yves: 'Order History' page is displayed
-    Yves: get the last placed order ID by current customer
-    Yves: 'View Order/ Reorder' on the order history page:     View Order    ${lastPlacedOrder}
-    Yves: 'View Order' page is displayed
-    ### Reorder ###
-    Yves: reorder all items from 'View Order' page
-    Yves: go to the shopping cart through the header with name:    Cart from order ${lastPlacedOrder}
-    Yves: 'Shopping Cart' page is displayed
-    Yves: shopping cart contains the following products:    401627    520561    101509    419871    419869    425073    425084
-
-# Volume_Prices
+# Quick_Order
 #     Yves: login on Yves with provided credentials:    sonia@spryker.com
-#     Yves: create new 'Shopping Cart' with name:    VolumePriceCart+${random}
-#     Yves: go to PDP of the product with sku:    M21189
-#     Yves: change quantity on PDP:    5
-#     Yves: add product to the shopping cart
-#     Yves: go to the shopping cart through the header with name:    VolumePriceCart+${random}
-#     Yves: shopping cart contains product with unit price:    420685    4.20
+#     Yves: create new 'Shopping Cart' with name:    quickOrderCart+${random}
+#     Yves: create new 'Shopping List' with name:    quickOrderList+${random}
+#     Yves: go to 'Quick Order' page through the header
+#     Yves: 'Quick Order' page is displayed
+#     Yves: add the following articles into the form through quick order text area:    401627,1\n520561,3\n101509,21\n419871,1\n419869,11\n425073,1\n425084,2
+#     Yves: add products to the shopping cart from quick order page
+#     Yves: go to the shopping cart through the header with name:    quickOrderCart+${random}
+#     Yves: 'Shopping Cart' page is displayed
+#     Yves: shopping cart contains the following products:    401627    520561    101509    419871    419869    425073    425084
+#     Yves: go to 'Quick Order' page through the header
+#     Yves: add the following articles into the form through quick order text area:    401627,1\n520561,3\n101509,21\n419871,1\n419869,11\n425073,1\n425084,2
+#     Yves: add products to the shopping list from quick order page with name:    quickOrderList+${random}
+#     Yves: 'Shopping List' page is displayed
+#     Yves: shopping list contains the following products:    401627    520561    101509    419871    419869    425073    425084
+#     Yves: go to the shopping cart through the header with name:    quickOrderCart+${random}
+#     ### Order placement ###
+#     Yves: click on the 'Checkout' button
+#     Yves: billing address same as shipping address:    true
+#     Yves: select the following existing address on the checkout as 'shipping' address and go next:    Ms Sonia Wagner, Oderberger Str. 57, 10115 Berlin
+#     Yves: select the following shipping method on the checkout and go next:    Express
+#     Yves: select the following payment method on the checkout and go next:    Invoice
+#     Yves: Accept the Terms and Conditions:    true
+#     Yves: 'submit the order' on the summary page
+#     Yves: 'Thank you' page is displayed
+#     ### Order History ###
+#     Yves: go to the 'Home' page
+#     Yves: go to user menu item in header:    Order History
+#     Yves: 'Order History' page is displayed
+#     Yves: get the last placed order ID by current customer
+#     Yves: 'View Order/ Reorder' on the order history page:     View Order    ${lastPlacedOrder}
+#     Yves: 'View Order' page is displayed
+#     ### Reorder ###
+#     Yves: reorder all items from 'View Order' page
+#     Yves: go to the shopping cart through the header with name:    Cart from order ${lastPlacedOrder}
+#     Yves: 'Shopping Cart' page is displayed
+#     Yves: shopping cart contains the following products:    401627    520561    101509    419871    419869    425073    425084
+
+Volume_Prices
+    Yves: login on Yves with provided credentials:    sonia@spryker.com
+    Yves: create new 'Shopping Cart' with name:    VolumePriceCart+${random}
+    Yves: go to PDP of the product with sku:    M21189
+    Yves: change quantity on PDP:    5
+    Yves: add product to the shopping cart
+    Yves: go to the shopping cart through the header with name:    VolumePriceCart+${random}
+    Yves: shopping cart contains product with unit price:    420685    4.20
 
 # Alternative_Products
 #     Yves: go to PDP of the product with sku:  M21100
