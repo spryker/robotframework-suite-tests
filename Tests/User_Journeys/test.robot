@@ -90,13 +90,13 @@ Quick_Order
     Yves: create new 'Shopping List' with name:    quickOrderList+${random}
     Yves: go to 'Quick Order' page through the header
     Yves: 'Quick Order' page is displayed
-    Yves: add the following articles into the form through quick order text area:    401627,1\n520561,21\n101509,21\n419871,51\n419869,11\n425073,71\n425084,2
+    Yves: add the following articles into the form through quick order text area:    401627,1\n520561,3\n101509,21\n419871,1\n419869,11\n425073,1\n425084,2
     Yves: add products to the shopping cart from quick order page
     Yves: go to the shopping cart through the header with name:    quickOrderCart+${random}
     Yves: 'Shopping Cart' page is displayed
     Yves: shopping cart contains the following products:    401627    520561    101509    419871    419869    425073    425084
     Yves: go to 'Quick Order' page through the header
-    Yves: add the following articles into the form through quick order text area:    401627,11\n520561,21\n101509,21\n419871,51\n419869,11\n425073,71\n425084,2
+    Yves: add the following articles into the form through quick order text area:    401627,1\n520561,3\n101509,21\n419871,1\n419869,11\n425073,1\n425084,2
     Yves: add products to the shopping list from quick order page with name:    quickOrderList+${random}
     Yves: 'Shopping List' page is displayed
     Yves: shopping list contains the following products:    401627    520561    101509    419871    419869    425073    425084
@@ -104,7 +104,7 @@ Quick_Order
     ### Order placement ###
     Yves: click on the 'Checkout' button
     Yves: billing address same as shipping address:    true
-    Yves: select the following existing address on the checkout as 'shipping' address and go next:    Ms Sonia Wagner, Kirncher Str. 7, 10247 Berlin
+    Yves: select the following existing address on the checkout as 'shipping' address and go next:    Ms Sonia Wagner, Oderberger Str. 57, 10115 Berlin
     Yves: select the following shipping method on the checkout and go next:    Express
     Yves: select the following payment method on the checkout and go next:    Invoice
     Yves: Accept the Terms and Conditions:    true

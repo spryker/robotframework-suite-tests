@@ -126,7 +126,8 @@ Quick_Order
     Yves: 'View Order/ Reorder' on the order history page:     View Order    ${lastPlacedOrder}
     Yves: 'View Order' page is displayed
     ### Reorder ###
-    Yves: reorder all items from 'View Order' page
+    # Yves: reorder all items from 'View Order' page
+    # Изменила xpath=//customer-reorder-form[@data-qa='component customer-reorder-form']//button[contains(.,'Reorder all')]
     Yves: go to the shopping cart through the header with name:    Cart from order ${lastPlacedOrder}
     Yves: 'Shopping Cart' page is displayed
     Yves: shopping cart contains the following products:    401627    520561    101509    419871    419869    425073    425084
