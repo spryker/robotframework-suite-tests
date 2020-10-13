@@ -136,18 +136,18 @@ Resource    ../../Resources/Steps/Configurable_Bundle_steps.robot
 #     Yves: go to PDP of the product with sku:  M21100
 #     Yves: PDP contains/doesn't contain:    true    ${alternativeProducts}
 
-Measurement_Units
-    Yves: login on Yves with provided credentials:    sonia@spryker.com
-    Yves: create new 'Shopping Cart' with name:    measurementUnitsCart+${random}
-    Yves: go to PDP of the product with sku:    M23723
-    Yves: select the following 'Sales Unit' on PDP:    Meter
-    Yves: change quantity using '+' or '-' button № times:    +    1
-    Yves: PDP contains/doesn't contain:    true    ${measurementUnitSuggestion}
-    Yves: change quantity using '+' or '-' button № times:    -    1
-    Yves: add product to the shopping cart
-    Yves: go to the shopping cart through the header with name:  measurementUnitsCart+${random}
-    Yves: 'Shopping Cart' page is displayed
-    Yves: shopping cart contains the following products:    425079
+# Measurement_Units
+#     Yves: login on Yves with provided credentials:    sonia@spryker.com
+#     Yves: create new 'Shopping Cart' with name:    measurementUnitsCart+${random}
+#     Yves: go to PDP of the product with sku:    M23723
+#     Yves: select the following 'Sales Unit' on PDP:    Meter
+#     Yves: change quantity using '+' or '-' button № times:    +    1
+#     Yves: PDP contains/doesn't contain:    true    ${measurementUnitSuggestion}
+#     Yves: change quantity using '+' or '-' button № times:    -    1
+#     Yves: add product to the shopping cart
+#     Yves: go to the shopping cart through the header with name:  measurementUnitsCart+${random}
+#     Yves: 'Shopping Cart' page is displayed
+#     Yves: shopping cart contains the following products:    425079
 
 # Packaging_Units
 #     Yves: login on Yves with provided credentials:    sonia@spryker.com
@@ -161,16 +161,16 @@ Measurement_Units
 #     Yves: go to the shopping cart through the header with name:    packagingUnitsCart+${random}
 #     Yves: shopping cart contains the following products:    421519_3
 
-# Product_Sets
-#     Yves: login on Yves with provided credentials:    Trever.m@spryker.com
-#     Yves: create new 'Shopping Cart' with name:    productSetsCart+${random}
-#     Yves: go to URL:    en/product-sets
-#     Yves: 'Product Sets' page contains the following sets:    The Presenter's Set    Basic office supplies    The ultimate data disposal set
-#     Yves: view the following Product Set:    Basic office supplies
-#     Yves: 'Product Set' page contains the following products:    Clairefontaine Collegeblock 8272C DIN A5, 90 sheets
-#     Yves: change variant of the product on CMS page on:    Clairefontaine Collegeblock 8272C DIN A5, 90 sheets    lined
-#     Yves: add all products to the shopping cart from Product Set
-#     Yves: shopping cart contains the following products:    421344    420687    421511    423452
+Product_Sets
+    Yves: login on Yves with provided credentials:    sonia@spryker.com
+    Yves: create new 'Shopping Cart' with name:    productSetsCart+${random}
+    Yves: go to URL:    en/product-sets
+    Yves: 'Product Sets' page contains the following sets:    The Presenter's Set    Basic office supplies    The ultimate data disposal set
+    Yves: view the following Product Set:    Basic office supplies
+    Yves: 'Product Set' page contains the following products:    Clairefontaine Collegeblock 8272C DIN A5, 90 sheets
+    Yves: change variant of the product on CMS page on:    Clairefontaine Collegeblock 8272C DIN A5, 90 sheets    lined
+    Yves: add all products to the shopping cart from Product Set
+    Yves: shopping cart contains the following products:    421344    420687    421511    423452
 
 # Product_Bundles
 #     Yves: login on Yves with provided credentials:    Trever.m@spryker.com

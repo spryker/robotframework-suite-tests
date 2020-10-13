@@ -21,13 +21,13 @@ Yves: 'Product Set' page contains the following products:
     ${product_name_list_count}=   get length  ${product_name_list}
     FOR    ${index}    IN RANGE    0    ${product_name_list_count}
         ${product_name_to_check}=    Get From List    ${product_name_list}    ${index}
-        Page Should Contain Element    xpath=//*[contains(@class,'product-card--sets')]//a[contains(.,'${product_name_to_check}')]/ancestor::article
+        Page Should Contain Element    xpath=//*[contains(@class,'custom-element product-set-details')]//a[contains(.,'${product_name_to_check}')]
     END
 
 Yves: change variant of the product on CMS page on:
     [Arguments]    ${productName}    ${variantToSet}
-    Mouse Over    xpath=//*[contains(@class,'product-card--sets')]//a[contains(.,'${productName}')]/ancestor::article//select
-    Select From List By Label    xpath=//*[contains(@class,'product-card--sets')]//a[contains(.,'${productName}')]/ancestor::article//select    ${variantToSet}
+    Mouse Over    xpath=//*[contains(@class,'custom-element product-set-details')]//a[contains(.,'${productName}')]
+    Select From List By Label    xpath=//*[contains(@class,'custom-element product-set-details')]//a[contains(.,'${productName}')]/ancestor::article//select    ${variantToSet}
     Wait For Document Ready    
 
 Yves: add all products to the shopping cart from Product Set

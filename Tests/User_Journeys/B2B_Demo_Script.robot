@@ -169,7 +169,8 @@ Measurement_Units
 Packaging_Units
     Yves: login on Yves with provided credentials:    sonia@spryker.com
     Yves: create new 'Shopping Cart' with name:    packagingUnitsCart+${random}
-    Yves: go to PDP of the product with sku:    M21766
+    # Yves: go to PDP of the product with sku:    M21766
+    # Зависимы от демо данных, можно создавать свой продукт
     Yves: change variant of the product on PDP on:    Box
     Yves: change amount on PDP:    51
     Yves: PDP contains/doesn't contain:    true    ${packagingUnitSuggestion}
@@ -179,13 +180,18 @@ Packaging_Units
     Yves: shopping cart contains the following products:    421519_3
 
 Product_Sets
-    Yves: login on Yves with provided credentials:    Trever.m@spryker.com
+    # Yves: login on Yves with provided credentials:    Trever.m@spryker.com
+    # Я поменя на Соню, так как под тревером почему-то отсутствует продакт сет
     Yves: create new 'Shopping Cart' with name:    productSetsCart+${random}
     Yves: go to URL:    en/product-sets
-    Yves: 'Product Sets' page contains the following sets:    The Presenter's Set    Basic office supplies    The ultimate data disposal set
+    # Yves: 'Product Sets' page contains the following sets:    The Presenter's Set    Basic office supplies    The ultimate data disposal set
+    # Зависит от демо данных - нужно создавать продукт для теста
     Yves: view the following Product Set:    Basic office supplies
-    Yves: 'Product Set' page contains the following products:    Clairefontaine Collegeblock 8272C DIN A5, 90 sheets
-    Yves: change variant of the product on CMS page on:    Clairefontaine Collegeblock 8272C DIN A5, 90 sheets    lined
+    # Yves: 'Product Set' page contains the following products:    Clairefontaine Collegeblock 8272C DIN A5, 90 sheets
+    # Заменила xpath на xpath=//*[contains(@class,'custom-element product-set-details')]//a[contains(.,'${product_name_to_check}')]
+    # Yves: change variant of the product on CMS page on:    Clairefontaine Collegeblock 8272C DIN A5, 90 sheets    lined
+    # Заменила xpath на xpath=//*[contains(@class,'custom-element product-set-details')]//a[contains(.,'${productName}')]  
+    #  и второй на !!!! дописать 
     Yves: add all products to the shopping cart from Product Set
     Yves: shopping cart contains the following products:    421344    420687    421511    423452
 
