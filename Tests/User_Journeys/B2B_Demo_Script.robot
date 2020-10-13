@@ -147,7 +147,8 @@ Volume_Prices
     Yves: shopping cart contains product with unit price:    420685    4.20
 
 Alternative_Products
-    Yves: go to PDP of the product with sku:  M21100
+    # Yves: go to PDP of the product with sku:  M21100
+    # Тест зависит от демо данных, лучше создавать свой продукт с альтернативными
     Yves: PDP contains/doesn't contain:    true    ${alternativeProducts}
 
 Measurement_Units

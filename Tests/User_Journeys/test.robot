@@ -132,22 +132,22 @@ Resource    ../../Resources/Steps/Configurable_Bundle_steps.robot
 #     Yves: go to the shopping cart through the header with name:    VolumePriceCart+${random}
 #     Yves: shopping cart contains product with unit price:    420685    4.20
 
-Alternative_Products
-    Yves: go to PDP of the product with sku:  M21100
-    Yves: PDP contains/doesn't contain:    true    ${alternativeProducts}
+# Alternative_Products
+#     Yves: go to PDP of the product with sku:  M21100
+#     Yves: PDP contains/doesn't contain:    true    ${alternativeProducts}
 
-# Measurement_Units
-#     Yves: login on Yves with provided credentials:    sonia@spryker.com
-#     Yves: create new 'Shopping Cart' with name:    measurementUnitsCart+${random}
-#     Yves: go to PDP of the product with sku:    M23723
-#     Yves: select the following 'Sales Unit' on PDP:    Meter
-#     Yves: change quantity using '+' or '-' button № times:    +    1
-#     Yves: PDP contains/doesn't contain:    true    ${measurementUnitSuggestion}
-#     Yves: change quantity using '+' or '-' button № times:    -    1
-#     Yves: add product to the shopping cart
-#     Yves: go to the shopping cart through the header with name:  measurementUnitsCart+${random}
-#     Yves: 'Shopping Cart' page is displayed
-#     Yves: shopping cart contains the following products:    425079
+Measurement_Units
+    Yves: login on Yves with provided credentials:    sonia@spryker.com
+    Yves: create new 'Shopping Cart' with name:    measurementUnitsCart+${random}
+    Yves: go to PDP of the product with sku:    M23723
+    Yves: select the following 'Sales Unit' on PDP:    Meter
+    Yves: change quantity using '+' or '-' button № times:    +    1
+    Yves: PDP contains/doesn't contain:    true    ${measurementUnitSuggestion}
+    Yves: change quantity using '+' or '-' button № times:    -    1
+    Yves: add product to the shopping cart
+    Yves: go to the shopping cart through the header with name:  measurementUnitsCart+${random}
+    Yves: 'Shopping Cart' page is displayed
+    Yves: shopping cart contains the following products:    425079
 
 # Packaging_Units
 #     Yves: login on Yves with provided credentials:    sonia@spryker.com
