@@ -123,18 +123,18 @@ Resource    ../../Resources/Steps/Configurable_Bundle_steps.robot
 #     Yves: 'Shopping Cart' page is displayed
 #     Yves: shopping cart contains the following products:    401627    520561    101509    419871    419869    425073    425084
 
-Volume_Prices
-    Yves: login on Yves with provided credentials:    sonia@spryker.com
-    Yves: create new 'Shopping Cart' with name:    VolumePriceCart+${random}
-    Yves: go to PDP of the product with sku:    M21189
-    Yves: change quantity on PDP:    5
-    Yves: add product to the shopping cart
-    Yves: go to the shopping cart through the header with name:    VolumePriceCart+${random}
-    Yves: shopping cart contains product with unit price:    420685    4.20
+# Volume_Prices
+#     Yves: login on Yves with provided credentials:    sonia@spryker.com
+#     Yves: create new 'Shopping Cart' with name:    VolumePriceCart+${random}
+#     Yves: go to PDP of the product with sku:    M21189
+#     Yves: change quantity on PDP:    5
+#     Yves: add product to the shopping cart
+#     Yves: go to the shopping cart through the header with name:    VolumePriceCart+${random}
+#     Yves: shopping cart contains product with unit price:    420685    4.20
 
-# Alternative_Products
-#     Yves: go to PDP of the product with sku:  M21100
-#     Yves: PDP contains/doesn't contain:    true    ${alternativeProducts}
+Alternative_Products
+    Yves: go to PDP of the product with sku:  M21100
+    Yves: PDP contains/doesn't contain:    true    ${alternativeProducts}
 
 # Measurement_Units
 #     Yves: login on Yves with provided credentials:    sonia@spryker.com

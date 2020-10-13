@@ -138,8 +138,10 @@ Quick_Order
 Volume_Prices
     Yves: login on Yves with provided credentials:    sonia@spryker.com
     Yves: create new 'Shopping Cart' with name:    VolumePriceCart+${random}
-    Yves: go to PDP of the product with sku:    M21189
-    Yves: change quantity on PDP:    5
+    # Yves: go to PDP of the product with sku:    M21189
+    # Тест зависит от демо данных (можно создавать свой продукт с волюм ценой)
+    # Yves: change quantity on PDP:    5
+    # Заменила  xpath для qty input на  //div[@class='product-configurator__add-to-cart']//input[@name='quantity']
     Yves: add product to the shopping cart
     Yves: go to the shopping cart through the header with name:    VolumePriceCart+${random}
     Yves: shopping cart contains product with unit price:    420685    4.20
