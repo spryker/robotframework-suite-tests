@@ -156,9 +156,11 @@ Measurement_Units
     Yves: create new 'Shopping Cart' with name:    measurementUnitsCart+${random}
     Yves: go to PDP of the product with sku:    M23723
     Yves: select the following 'Sales Unit' on PDP:    Meter
-    Yves: change quantity using '+' or '-' button № times:    +    1
+    # Yves: change quantity using '+' or '-' button № times:    +    1
+    # Зменила xpath на //div[@class='product-configurator__add-to-cart']//button[contains(@class,'quantity-counter__button--increment')] и на //div[@class='product-configurator__add-to-cart']//button[contains(@class,'quantity-counter__button--decrement')]
     Yves: PDP contains/doesn't contain:    true    ${measurementUnitSuggestion}
-    Yves: change quantity using '+' or '-' button № times:    -    1
+    # Yves: change quantity using '+' or '-' button № times:    -    1
+    # Зменила xpath на //div[@class='product-configurator__add-to-cart']//button[contains(@class,'quantity-counter__button--increment')] и на //div[@class='product-configurator__add-to-cart']//button[contains(@class,'quantity-counter__button--decrement')]
     Yves: add product to the shopping cart
     Yves: go to the shopping cart through the header with name:  measurementUnitsCart+${random}
     Yves: 'Shopping Cart' page is displayed
