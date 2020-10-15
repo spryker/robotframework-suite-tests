@@ -181,16 +181,16 @@ Resource    ../../Resources/Steps/Configurable_Bundle_steps.robot
 #     Yves: go to the shopping cart through the header with name:    productBundleCart+${random}
 #     Yves: shopping cart contains the following products:    000201
 
-Product_Relations
-    Yves: login on Yves with provided credentials:    sonia@spryker.com
-    Yves: create new 'Shopping Cart' with name:    productRelationCart+${random}
-    Yves: go to PDP of the product with sku:    M29529
-    Yves: PDP contains/doesn't contain:    true    ${relatedProducts}
-    Yves: go to PDP of the product with sku:    M29524
-    Yves: PDP contains/doesn't contain:    false    ${relatedProducts}
-    Yves: add product to the shopping cart
-    Yves: go to the shopping cart through the header with name:    productRelationCart+${random}
-    Yves: shopping cart contains/doesn't contain the following elements:    true    ${upSellProducts}
+# Product_Relations
+#     Yves: login on Yves with provided credentials:    sonia@spryker.com
+#     Yves: create new 'Shopping Cart' with name:    productRelationCart+${random}
+#     Yves: go to PDP of the product with sku:    M29529
+#     Yves: PDP contains/doesn't contain:    true    ${relatedProducts}
+#     Yves: go to PDP of the product with sku:    M29524
+#     Yves: PDP contains/doesn't contain:    false    ${relatedProducts}
+#     Yves: add product to the shopping cart
+#     Yves: go to the shopping cart through the header with name:    productRelationCart+${random}
+#     Yves: shopping cart contains/doesn't contain the following elements:    true    ${upSellProducts}
 
 # Default_Merchants
 #     Zed: login on Zed with provided credentials:    admin@spryker.com
@@ -200,7 +200,7 @@ Product_Relations
 #     Zed: table should contain:    Products Restrictions Merchant
 
 # Product_Restrictions
-#     Yves: login on Yves with provided credentials:    Trever.m@spryker.com
+#     Yves: login on Yves with provided credentials:    sonia@spryker.com
 #     Yves: perform search by:    Soennecken
 #     Yves: 'Catalog' page should show products:    18
 #     Yves: go to URL:    en/office-furniture/storage/lockers
@@ -218,18 +218,18 @@ Product_Relations
 #     Yves: go to URL:    en/transport/sack-trucks
 #    Yves: 'Catalog' page should show products:    10
 
-# Customer_Specific_Prices
-#     Yves: login on Yves with provided credentials:    Trever.m@spryker.com
-#     Yves: perform search by:    EUROKRAFT trolley - with open shovel
-#     Yves: product with name in the catalog should have price:    EUROKRAFT trolley - with open shovel    €235.43
-#     Yves: go to PDP of the product with sku:    M70208
-#     Yves: product price on the PDP should be:    €235.43
-#     Yves: logout on Yves as a customer
-#     Yves: login on Yves with provided credentials:    karl@spryker.com
-#     Yves: perform search by:    EUROKRAFT trolley - with open shovel
-#     Yves: product with name in the catalog should have price:    EUROKRAFT trolley - with open shovel    €188.34
-#     Yves: go to PDP of the product with sku:    M70208
-#     Yves: product price on the PDP should be:    €188.34
+Customer_Specific_Prices
+    Yves: login on Yves with provided credentials:    sonia@spryker.com
+    Yves: perform search by:    EUROKRAFT trolley - with open shovel
+    Yves: product with name in the catalog should have price:    EUROKRAFT trolley - with open shovel    €235.43
+    Yves: go to PDP of the product with sku:    M70208
+    Yves: product price on the PDP should be:    €235.43
+    Yves: logout on Yves as a customer
+    Yves: login on Yves with provided credentials:    karl@spryker.com
+    Yves: perform search by:    EUROKRAFT trolley - with open shovel
+    Yves: product with name in the catalog should have price:    EUROKRAFT trolley - with open shovel    €188.34
+    Yves: go to PDP of the product with sku:    M70208
+    Yves: product price on the PDP should be:    €188.34
 
 # Agent_Assist
 #     Zed: login on Zed with provided credentials:    admin@spryker.com
