@@ -197,7 +197,8 @@ Product_Sets
     Yves: shopping cart contains the following products:    421344    420687    421511    423452
 
 Product_Bundles
-    Yves: login on Yves with provided credentials:    Trever.m@spryker.com
+    # Yves: login on Yves with provided credentials:    Trever.m@spryker.com
+    # Заменила на Соню. НЕ знаю почему но под тревером бандла нет
     Yves: create new 'Shopping Cart' with name:    productBundleCart+${random}
     Yves: go to PDP of the product with sku:    000201
     Yves: PDP contains/doesn't contain:    true    ${bundleItemsSmall}    ${bundleItemsLarge}
