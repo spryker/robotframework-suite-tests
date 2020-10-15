@@ -27,7 +27,8 @@ Yves: 'Product Set' page contains the following products:
 Yves: change variant of the product on CMS page on:
     [Arguments]    ${productName}    ${variantToSet}
     Mouse Over    xpath=//*[contains(@class,'custom-element product-set-details')]//a[contains(.,'${productName}')]
-    Select From List By Label    xpath=//*[contains(@class,'custom-element product-set-details')]//a[contains(.,'${productName}')]/ancestor::article//select    ${variantToSet}
+    Select From List By Label   //*[contains(@class,'custom-element product-set-details')]//div[@class='product-item__variant']/descendant::select    ${variantToSet}
+    # xpath=//*[contains(@class,'custom-element product-set-details')]//a[contains(.,'${productName}')]/ancestor::article//select    ${variantToSet}
     Wait For Document Ready    
 
 Yves: add all products to the shopping cart from Product Set

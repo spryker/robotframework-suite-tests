@@ -191,8 +191,9 @@ Product_Sets
     # Заменила xpath на xpath=//*[contains(@class,'custom-element product-set-details')]//a[contains(.,'${product_name_to_check}')]
     # Yves: change variant of the product on CMS page on:    Clairefontaine Collegeblock 8272C DIN A5, 90 sheets    lined
     # Заменила xpath на xpath=//*[contains(@class,'custom-element product-set-details')]//a[contains(.,'${productName}')]  
-    #  и второй на !!!! дописать 
-    Yves: add all products to the shopping cart from Product Set
+    #  и второй на //*[contains(@class,'custom-element product-set-details')]//div[@class='product-item__variant']/descendant::select    ${variantToSet}
+    # Yves: add all products to the shopping cart from Product Set
+    # Заменила на //*[@class='custom-element product-set-details']//button[@class='button button--expand-sm-only spacing-bottom spacing-bottom--biggest']
     Yves: shopping cart contains the following products:    421344    420687    421511    423452
 
 Product_Bundles

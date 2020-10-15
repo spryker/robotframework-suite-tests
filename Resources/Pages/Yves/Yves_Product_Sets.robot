@@ -1,2 +1,2 @@
 *** Variables ***
-${add_all_product_to_the_shopping_cart}    xpath=//*[@class='product-set-details']//button[@type='submit']
+${add_all_product_to_the_shopping_cart}    xpath=//*[@class='custom-element product-set-details']//button[@class='button button--expand-sm-only spacing-bottom spacing-bottom--biggest']
