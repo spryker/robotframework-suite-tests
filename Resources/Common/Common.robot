@@ -8,10 +8,10 @@ Resource                  ../Pages/Yves/Yves_Login_page.robot
 
 *** Variables ***
 # *** SUITE VARIABLES ***
-${browser}             headlesschrome
-# ${browser}             chrome
-${host}                http://yves.de.spryker.local/
-${zed_url}             http://zed.de.spryker.local/
+#${browser}             headlesschrome
+${browser}             chrome
+${host}                https://www.de.b2b.demo-spryker.com/
+${zed_url}             https://os.de.b2b.demo-spryker.com/
 ${email_domain}        @spryker.com
 ${default_password}    change123
 ${loading_time}        3s

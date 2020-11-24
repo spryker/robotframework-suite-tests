@@ -20,255 +20,216 @@ Resource    ../../Resources/Steps/Customer_Account_steps.robot
 Resource    ../../Resources/Steps/Configurable_Bundle_steps.robot
 
 *** Test Cases ***
-Guest_User_Restrictions
-    [Documentation]    Checks that guest users are not able to see: Prices, Availability, Quick Order, "My Account" features
-    Yves: header contains/doesn't contain:    false    ${priceModeSwitcher}    ${currencySwitcher}    ${quickOrderIcon}    ${accountIcon}    ${shoppingListIcon}    ${shoppingCartIcon}
-    Yves: go to PDP of the product with sku:    M70208 
-    Yves: PDP contains/doesn't contain:     false    ${price}    ${addToCartButton}
-    Yves: login on Yves with provided credentials:    sonia@spryker.com
-    Yves: header contains/doesn't contain:    true    ${priceModeSwitcher}    ${currencySwitcher}    ${quickOrderIcon}    ${accountIcon}    ${shoppingListIcon}    ${shoppingCartIcon}
-    Yves: company menu 'should' be available for logged in user
-    Yves: go to PDP of the product with sku:    M70208
-    Yves: PDP contains/doesn't contain:     true    ${price}    ${addToCartButton}
-    Yves: go to company menu item:    Users
-    Yves: 'Company Users' page is displayed
+# Guest_User_Restrictions
+#     [Documentation]    Checks that guest users are not able to see: Prices, Availability, Quick Order, "My Account" features
+#     Yves: header contains/doesn't contain:    false    ${priceModeSwitcher}    ${currencySwitcher}    ${quickOrderIcon}    ${accountIcon}    ${shoppingListIcon}    ${shoppingCartIcon}
+#     Yves: go to PDP of the product with sku:    M70208
+#     Yves: PDP contains/doesn't contain:     false    ${price}    ${addToCartButton}
+#     Yves: login on Yves with provided credentials:    sonia@spryker.com
+#     Yves: header contains/doesn't contain:    true    ${priceModeSwitcher}    ${currencySwitcher}    ${quickOrderIcon}    ${accountIcon}    ${shoppingListIcon}    ${shoppingCartIcon}
+#     Yves: company menu 'should' be available for logged in user
+#     Yves: go to PDP of the product with sku:    M70208
+#     Yves: PDP contains/doesn't contain:     true    ${price}    ${addToCartButton}
+#     Yves: go to company menu item:    Users
+#     Yves: 'Company Users' page is displayed
 
-Share_Shopping_Lists
-    Yves: login on Yves with provided credentials:    sonia@spryker.com
-    Yves: go to 'Shopping Lists' page through the header
-    Yves: 'Shopping Lists' page is displayed
-    Yves: create new 'Shopping List' with name:    shoppingListName+${random}
-    Yves: the following shopping list is shown:    shoppingListName+${random}    Sonia Wagner    Full access
-    Yves: share shopping list with user:    shoppingListName+${random}    Karl Schmid    Full access
-    Yves: login on Yves with provided credentials:    karl@spryker.com
-    Yves: 'Shopping List' widget contains:    shoppingListName+${random}    Full access
-    Yves: go to 'Shopping Lists' page through the header
-    Yves: 'Shopping Lists' page is displayed
-    Yves: the following shopping list is shown:    shoppingListName+${random}    Sonia Wagner    Full access
-    Yves: delete 'Shopping List' with name:    shoppingListName+${random}
+# Share_Shopping_Lists
+#     Yves: login on Yves with provided credentials:    sonia@spryker.com
+#     Yves: 'Shopping List' widget contains:    Newcomers    Full access
+#     Yves: go to 'Shopping Lists' page through the header
+#     Yves: 'Shopping Lists' page is displayed
+#     Yves: create new 'Shopping List' with name:    shoppingListName+${random}
+#     Yves: the following shopping list is shown:    shoppingListName+${random}    Sonia Wagner    Full access
+#     Yves: share shopping list with user:    shoppingListName+${random}    Karl Schmid    Full access
+#     Yves: login on Yves with provided credentials:    karl@spryker.com
+#     Yves: 'Shopping List' widget contains:    shoppingListName+${random}    Full access
+#     Yves: go to 'Shopping Lists' page through the header
+#     Yves: 'Shopping Lists' page is displayed
+#     Yves: the following shopping list is shown:    shoppingListName+${random}    Sonia Wagner    Full access
 
+# Share_Shopping_Carts
+#     Yves: login on Yves with provided credentials:    sonia@spryker.com
+#     Yves: 'Shopping Carts' widget contains:    Dmexco event    Owner access
+#     Yves: go to 'Shopping Carts' page through the header
+#     Yves: 'Shopping Carts' page is displayed
+#     Yves: create new 'Shopping Cart' with name:    shoppingCartName+${random}
+#     # Yves: 'Shopping Carts' widget contains:    shoppingCartName+${random}    Owner access
+#     Yves: go to 'Shopping Carts' page through the header
+#     Yves: 'Shopping Carts' page is displayed
+#     Yves: the following shopping cart is shown:    shoppingCartName+${random}    Owner access
+#     Yves: share shopping cart with user:    shoppingCartName+${random}    Meier Trever    Full access
+#     Yves: go to PDP of the product with sku:    M10569
+#     Yves: add product to the shopping cart
+#     Yves: logout on Yves as a customer
+#     Yves: login on Yves with provided credentials:    Trever.m@spryker.com
+#     # Yves: 'Shopping Carts' widget contains:    shoppingCartName+${random}    Full access
+#     Yves: go to 'Shopping Carts' page through the header
+#     Yves: 'Shopping Carts' page is displayed
+#     Yves: the following shopping cart is shown:    shoppingCartName+${random}    Full access
+#     Yves: go to the shopping cart through the header with name:    shoppingCartName+${random}
+#     Yves: 'Shopping Cart' page is displayed
+#     Yves: shopping cart contains the following products:    100414
+#     Yves: click on the 'Checkout' button
+#     Yves: billing address same as shipping address:    true
+#     Yves: select the following existing address on the checkout as 'shipping' address and go next:    Mr Trever Meier, Kirncher Str. 7, 10247 Berlin
+#     Yves: select the following shipping method on the checkout and go next:    Express
+#     Yves: select the following payment method on the checkout and go next:    Invoice
+#     Yves: Accept the Terms and Conditions:    true
+#     Yves: 'submit the order' on the summary page
+#     Yves: 'Thank you' page is displayed
+#     Yves: go to the 'Home' page
+#     Yves: go to user menu item in header:    Order History
+#     Yves: 'Order History' page is displayed
+#     Yves: get the last placed order ID by current customer
+#     Yves: 'View Order/ Reorder' on the order history page:     View Order    ${lastPlacedOrder}
+#     Yves: 'View Order' page is displayed
 
-Share_Shopping_Carts
-    Yves: login on Yves with provided credentials:    sonia@spryker.com
-    Yves: go to 'Shopping Carts' page through the header
-    Yves: 'Shopping Carts' page is displayed
-    Yves: create new 'Shopping Cart' with name:    shoppingCartName+${random}
-    Yves: 'Shopping Carts' widget contains:    shoppingCartName+${random}    Owner access
-    Yves: go to 'Shopping Carts' page through the header
-    Yves: 'Shopping Carts' page is displayed
-    Yves: the following shopping cart is shown:    shoppingCartName+${random}    Owner access
-    Yves: share shopping cart with user:    shoppingCartName+${random}    Meier Trever    Full access
-    Yves: go to PDP of the product with sku:    M10569
-    Yves: add product to the shopping cart
-    Yves: logout on Yves as a customer
-    Yves: login on Yves with provided credentials:    Trever.m@spryker.com
-    Yves: 'Shopping Carts' widget contains:    shoppingCartName+${random}    Full access
-    Yves: go to 'Shopping Carts' page through the header
-    Yves: 'Shopping Carts' page is displayed
-    Yves: the following shopping cart is shown:    shoppingCartName+${random}    Full access
-    Yves: go to the shopping cart through the header with name:    shoppingCartName+${random}
-    Yves: 'Shopping Cart' page is displayed
-    Yves: shopping cart contains the following products:    100414
-    Yves: click on the 'Checkout' button
-    Yves: billing address same as shipping address:    true
-    Yves: select the following existing address on the checkout as 'shipping' address and go next:    Mr Trever Meier, Kirncher Str. 7, 10247 Berlin
-    Yves: select the following shipping method on the checkout and go next:    Express
-    Yves: select the following payment method on the checkout and go next:    Invoice
-    Yves: Accept the Terms and Conditions:    true
-    Yves: 'submit the order' on the summary page
-    Yves: 'Thank you' page is displayed
-    Yves: go to the 'Home' page
-    Yves: go to user menu item in header:    Order History
-    Yves: 'Order History' page is displayed
-    Yves: get the last placed order ID by current customer
-    Yves: 'View Order/ Reorder' on the order history page:     View Order    ${lastPlacedOrder}
-    Yves: 'View Order' page is displayed
+# Quick_Order
+#     Yves: login on Yves with provided credentials:    sonia@spryker.com
+#     Yves: create new 'Shopping Cart' with name:    quickOrderCart+${random}
+#     Yves: create new 'Shopping List' with name:    quickOrderList+${random}
+#     Yves: go to 'Quick Order' page through the header
+#     Yves: 'Quick Order' page is displayed
+#     Yves: add the following articles into the form through quick order text area:    401627,1\n520561,3\n101509,21\n419871,1\n419869,11\n425073,1\n425084,2
+#     Yves: add products to the shopping cart from quick order page
+#     Yves: go to the shopping cart through the header with name:    quickOrderCart+${random}
+#     Yves: 'Shopping Cart' page is displayed
+#     Yves: shopping cart contains the following products:    401627    520561    101509    419871    419869    425073    425084
+#     Yves: go to 'Quick Order' page through the header
+#     Yves: add the following articles into the form through quick order text area:    401627,1\n520561,3\n101509,21\n419871,1\n419869,11\n425073,1\n425084,2
+#     Yves: add products to the shopping list from quick order page with name:    quickOrderList+${random}
+#     Yves: 'Shopping List' page is displayed
+#     Yves: shopping list contains the following products:    401627    520561    101509    419871    419869    425073    425084
+#     Yves: go to the shopping cart through the header with name:    quickOrderCart+${random}
+#     ### Order placement ###
+#     Yves: click on the 'Checkout' button
+#     Yves: billing address same as shipping address:    true
+#     Yves: select the following existing address on the checkout as 'shipping' address and go next:    Ms Sonia Wagner, Oderberger Str. 57, 10115 Berlin
+#     Yves: select the following shipping method on the checkout and go next:    Express
+#     Yves: select the following payment method on the checkout and go next:    Invoice
+#     Yves: Accept the Terms and Conditions:    true
+#     Yves: 'submit the order' on the summary page
+#     Yves: 'Thank you' page is displayed
+#     ### Order History ###
+#     Yves: go to the 'Home' page
+#     Yves: go to user menu item in header:    Order History
+#     Yves: 'Order History' page is displayed
+#     Yves: get the last placed order ID by current customer
+#     Yves: 'View Order/ Reorder' on the order history page:     View Order    ${lastPlacedOrder}
+#     Yves: 'View Order' page is displayed
+#     ### Reorder ###
+#     Yves: reorder all items from 'View Order' page
+#     Yves: go to the shopping cart through the header with name:    Cart from order ${lastPlacedOrder}
+#     Yves: 'Shopping Cart' page is displayed
+#     Yves: shopping cart contains the following products:    401627    520561    101509    419871    419869    425073    425084
 
-Quick_Order
-    Yves: login on Yves with provided credentials:    sonia@spryker.com
-    Yves: create new 'Shopping Cart' with name:    quickOrderCart+${random}
-    Yves: create new 'Shopping List' with name:    quickOrderList+${random}
-    Yves: go to 'Quick Order' page through the header
-    Yves: 'Quick Order' page is displayed
-    Yves: add the following articles into the form through quick order text area:    401627,1\n520561,3\n101509,21\n419871,1\n419869,11\n425073,1\n425084,2
-    Yves: add products to the shopping cart from quick order page
-    Yves: go to the shopping cart through the header with name:    quickOrderCart+${random}
-    Yves: 'Shopping Cart' page is displayed
-    Yves: shopping cart contains the following products:    401627    520561    101509    419871    419869    425073    425084
-    Yves: go to 'Quick Order' page through the header
-    Yves: add the following articles into the form through quick order text area:    401627,1\n520561,3\n101509,21\n419871,1\n419869,11\n425073,1\n425084,2
-    Yves: add products to the shopping list from quick order page with name:    quickOrderList+${random}
-    Yves: 'Shopping List' page is displayed
-    Yves: shopping list contains the following products:    401627    520561    101509    419871    419869    425073    425084
-    Yves: go to the shopping cart through the header with name:    quickOrderCart+${random}
-    ### Order placement ###
-    Yves: click on the 'Checkout' button
-    Yves: billing address same as shipping address:    true
-    Yves: select the following existing address on the checkout as 'shipping' address and go next:    Ms Sonia Wagner, Kirncher Str. 7, 10247 Berlin
-    Yves: select the following shipping method on the checkout and go next:    Express
-    Yves: select the following payment method on the checkout and go next:    Invoice
-    Yves: Accept the Terms and Conditions:    true
-    Yves: 'submit the order' on the summary page
-    Yves: 'Thank you' page is displayed
-    ### Order History ###
-    Yves: go to the 'Home' page
-    Yves: go to user menu item in header:    Order History
-    Yves: 'Order History' page is displayed
-    Yves: get the last placed order ID by current customer
-    Yves: 'View Order/ Reorder' on the order history page:     View Order    ${lastPlacedOrder}
-    Yves: 'View Order' page is displayed
-    ### Reorder ###
-    Yves: reorder all items from 'View Order' page
-    Yves: go to the shopping cart through the header with name:    Cart from order ${lastPlacedOrder}
-    Yves: 'Shopping Cart' page is displayed
-    Yves: shopping cart contains the following products:    401627    520561    101509    419871    419869    425073    425084
-    Yves: delete 'Shopping List' with name:    quickOrderList+${random}
+# Volume_Prices
+#     Yves: login on Yves with provided credentials:    sonia@spryker.com
+#     Yves: create new 'Shopping Cart' with name:    VolumePriceCart+${random}
+#     Yves: go to PDP of the product with sku:    M21189
+#     Yves: change quantity on PDP:    5
+#     Yves: add product to the shopping cart
+#     Yves: go to the shopping cart through the header with name:    VolumePriceCart+${random}
+#     Yves: shopping cart contains product with unit price:    420685    4.20
 
-Volume_Prices
-    Yves: login on Yves with provided credentials:    sonia@spryker.com
-    Yves: create new 'Shopping Cart' with name:    VolumePriceCart+${random}
-    Yves: go to PDP of the product with sku:    M21189
-    Yves: change quantity on PDP:    5
-    Yves: add product to the shopping cart
-    Yves: go to the shopping cart through the header with name:    VolumePriceCart+${random}
-    Yves: shopping cart contains product with unit price:    420685    4.20
-    Yves: delete 'Shopping Cart' with name:    VolumePriceCart+${random}
+# Alternative_Products
+#     Yves: go to PDP of the product with sku:  M21100
+#     Yves: PDP contains/doesn't contain:    true    ${alternativeProducts}
 
-Alternative_Products
-    Yves: go to PDP of the product with sku:  M21100
-    Yves: PDP contains/doesn't contain:    true    ${alternativeProducts}
+# Measurement_Units
+#     Yves: login on Yves with provided credentials:    sonia@spryker.com
+#     Yves: create new 'Shopping Cart' with name:    measurementUnitsCart+${random}
+#     Yves: go to PDP of the product with sku:    M23723
+#     Yves: select the following 'Sales Unit' on PDP:    Meter
+#     Yves: change quantity using '+' or '-' button № times:    +    1
+#     Yves: PDP contains/doesn't contain:    true    ${measurementUnitSuggestion}
+#     Yves: change quantity using '+' or '-' button № times:    -    1
+#     Yves: add product to the shopping cart
+#     Yves: go to the shopping cart through the header with name:  measurementUnitsCart+${random}
+#     Yves: 'Shopping Cart' page is displayed
+#     Yves: shopping cart contains the following products:    425079
 
-Measurement_Units
-    Yves: login on Yves with provided credentials:    sonia@spryker.com
-    Yves: create new 'Shopping Cart' with name:    measurementUnitsCart+${random}
-    Yves: go to PDP of the product with sku:    M23723
-    Yves: select the following 'Sales Unit' on PDP:    Meter
-    Yves: change quantity using '+' or '-' button № times:    +    1
-    # Зменила xpath на //div[@class='product-configurator__add-to-cart']//button[contains(@class,'quantity-counter__button--increment')] и на //div[@class='product-configurator__add-to-cart']//button[contains(@class,'quantity-counter__button--decrement')]
-    Yves: PDP contains/doesn't contain:    true    ${measurementUnitSuggestion}
-    Yves: change quantity using '+' or '-' button № times:    -    1
-    # Зменила xpath на //div[@class='product-configurator__add-to-cart']//button[contains(@class,'quantity-counter__button--increment')] и на //div[@class='product-configurator__add-to-cart']//button[contains(@class,'quantity-counter__button--decrement')]
-    Yves: add product to the shopping cart
-    Yves: go to PDP of the product with sku:    M1006871
-    Yves: add product to the shopping cart
-    Yves: go to the shopping cart through the header with name:  measurementUnitsCart+${random}
-    Yves: 'Shopping Cart' page is displayed
-    Yves: shopping cart contains the following products:    425079
-    Yves: click on the 'Checkout' button
-    Yves: billing address same as shipping address:    true
-    Yves: select the following existing address on the checkout as 'shipping' address and go next:    Ms Sonia Wagner, Kirncher Str. 7, 10247 Berlin
-    Yves: select the following shipping method on the checkout and go next:    Express
-    Yves: select the following payment method on the checkout and go next:    Invoice
-    Yves: Accept the Terms and Conditions:    true
-    Yves: 'submit the order' on the summary page
-    Yves: 'Thank you' page is displayed
+# Packaging_Units
+#     Yves: login on Yves with provided credentials:    sonia@spryker.com
+#     Yves: create new 'Shopping Cart' with name:    packagingUnitsCart+${random}
+#     Yves: go to PDP of the product with sku:    M21766
+#     Yves: change variant of the product on PDP on:    Box
+#     Yves: change amount on PDP:    51
+#     Yves: PDP contains/doesn't contain:    true    ${packagingUnitSuggestion}
+#     Yves: change amount on PDP:    10
+#     Yves: add product to the shopping cart
+#     Yves: go to the shopping cart through the header with name:    packagingUnitsCart+${random}
+#     Yves: shopping cart contains the following products:    421519_3
 
-Packaging_Units
-    Yves: login on Yves with provided credentials:    sonia@spryker.com
-    Yves: create new 'Shopping Cart' with name:    packagingUnitsCart+${random}
-    Yves: go to PDP of the product with sku:    M21766
-    Yves: change variant of the product on PDP on:    Box
-    Yves: change amount on PDP:    51
-    Yves: PDP contains/doesn't contain:    true    ${packagingUnitSuggestion}
-    Yves: change amount on PDP:    10
-    Yves: add product to the shopping cart
-    Yves: go to PDP of the product with sku:    M1006871
-    Yves: add product to the shopping cart
-    Yves: go to the shopping cart through the header with name:    packagingUnitsCart+${random}
-    Yves: shopping cart contains the following products:    421519_3
-    Yves: click on the 'Checkout' button
-    Yves: billing address same as shipping address:    true
-    Yves: select the following existing address on the checkout as 'shipping' address and go next:    Ms Sonia Wagner, Kirncher Str. 7, 10247 Berlin
-    Yves: select the following shipping method on the checkout and go next:    Express
-    Yves: select the following payment method on the checkout and go next:    Invoice
-    Yves: Accept the Terms and Conditions:    true
-    Yves: 'submit the order' on the summary page
-    Yves: 'Thank you' page is displayed
+# Product_Sets
+#     Yves: login on Yves with provided credentials:    sonia@spryker.com
+#     Yves: create new 'Shopping Cart' with name:    productSetsCart+${random}
+#     Yves: go to URL:    en/product-sets
+#     Yves: 'Product Sets' page contains the following sets:    The Presenter's Set    Basic office supplies    The ultimate data disposal set
+#     Yves: view the following Product Set:    Basic office supplies
+#     Yves: 'Product Set' page contains the following products:    Clairefontaine Collegeblock 8272C DIN A5, 90 sheets
+#     Yves: change variant of the product on CMS page on:    Clairefontaine Collegeblock 8272C DIN A5, 90 sheets    lined
+#     Yves: add all products to the shopping cart from Product Set
+#     Yves: shopping cart contains the following products:    421344    420687    421511    423452
 
-Product_Sets
-    Yves: login on Yves with provided credentials:    Trever.m@spryker.com
-    Yves: create new 'Shopping Cart' with name:    productSetsCart+${random}
-    Yves: go to URL:    en/product-sets
-    Yves: 'Product Sets' page contains the following sets:    The Presenter's Set    Basic office supplies    The ultimate data disposal set
-    Yves: view the following Product Set:    Basic office supplies
-    Yves: 'Product Set' page contains the following products:    Clairefontaine Collegeblock 8272C DIN A5, 90 sheets
-    Yves: change variant of the product on CMS page on:    Clairefontaine Collegeblock 8272C DIN A5, 90 sheets    lined
-    Yves: add all products to the shopping cart from Product Set
-    Yves: shopping cart contains the following products:    421344    420687    421511    423452
-    Yves: delete 'Shopping Cart' with name:    productSetsCart+${random}
+# Product_Bundles
+#     Yves: login on Yves with provided credentials:    sonia@spryker.com
+#     Yves: create new 'Shopping Cart' with name:    productBundleCart+${random}
+#     Yves: go to PDP of the product with sku:    000201
+#     Yves: PDP contains/doesn't contain:    true    ${bundleItemsSmall}    ${bundleItemsLarge}
+#     Yves: add product to the shopping cart
+#     Yves: go to the shopping cart through the header with name:    productBundleCart+${random}
+#     Yves: shopping cart contains the following products:    000201
 
-Product_Bundles
-    Yves: login on Yves with provided credentials:    Trever.m@spryker.com
-    Yves: create new 'Shopping Cart' with name:    productBundleCart+${random}
-    Yves: go to PDP of the product with sku:    000201
-    Yves: PDP contains/doesn't contain:    true    ${bundleItemsSmall}    ${bundleItemsLarge}
-    Yves: add product to the shopping cart
-    Yves: go to the shopping cart through the header with name:    productBundleCart+${random}
-    Yves: shopping cart contains the following products:    000201
-    Yves: click on the 'Checkout' button
-    Yves: billing address same as shipping address:    true
-    Yves: select the following existing address on the checkout as 'shipping' address and go next:    Mr Trever Meier, Kirncher Str. 7, 10247 Berlin
-    Yves: select the following shipping method on the checkout and go next:    Express
-    Yves: select the following payment method on the checkout and go next:    Invoice
-    Yves: Accept the Terms and Conditions:    true
-    Yves: 'submit the order' on the summary page
-    Yves: 'Thank you' page is displayed
-
-Product_Relations
-    Yves: login on Yves with provided credentials:    Trever.m@spryker.com
-    Yves: create new 'Shopping Cart' with name:    productRelationCart+${random}
-    Yves: go to PDP of the product with sku:    M29529
-    Yves: PDP contains/doesn't contain:    true    ${relatedProducts}
-    Yves: go to PDP of the product with sku:    M29524
-    Yves: PDP contains/doesn't contain:    false    ${relatedProducts}
-    Yves: add product to the shopping cart
-    Yves: go to the shopping cart through the header with name:    productRelationCart+${random}
-    Yves: shopping cart contains/doesn't contain the following elements:    true    ${upSellProducts}
-    Yves: delete 'Shopping Cart' with name:    productRelationCart+${random}
+# Product_Relations
+#     Yves: login on Yves with provided credentials:    sonia@spryker.com
+#     Yves: create new 'Shopping Cart' with name:    productRelationCart+${random}
+#     Yves: go to PDP of the product with sku:    M29529
+#     Yves: PDP contains/doesn't contain:    true    ${relatedProducts}
+#     Yves: go to PDP of the product with sku:    M29524
+#     Yves: PDP contains/doesn't contain:    false    ${relatedProducts}
+#     Yves: add product to the shopping cart
+#     Yves: go to the shopping cart through the header with name:    productRelationCart+${random}
+#     Yves: shopping cart contains/doesn't contain the following elements:    true    ${upSellProducts}
 
 # Default_Merchants
-#    Zed: login on Zed with provided credentials:    admin@spryker.com
+#     Zed: login on Zed with provided credentials:    admin@spryker.com
 #     Zed: go to second navigation item level:    Merchants    Merchants
 #     Zed: table should contain:    Restrictions Merchant
 #     Zed: table should contain:    Prices Merchant
 #     Zed: table should contain:    Products Restrictions Merchant
 
-Product_Restrictions
-    Yves: login on Yves with provided credentials:    Trever.m@spryker.com
-    Yves: perform search by:    Soennecken
-    Yves: 'Catalog' page should show products:    18
-    Yves: go to URL:    en/office-furniture/storage/lockers
-    Yves: 'Catalog' page should show products:    34
-    Yves: logout on Yves as a customer
-    Yves: login on Yves with provided credentials:    frida@ottom.de
-    Yves: perform search by:    Soennecken
-    Yves: 'Catalog' page should show products:    0
-    Yves: logout on Yves as a customer
-    Yves: login on Yves with provided credentials:    alexa@ottom.de
-    Yves: go to URL:    en/office-furniture/storage/lockers
-    Yves: 'Catalog' page should show products:    0
-    Yves: go to URL:    en/transport/lift-carts
-    Yves: 'Catalog' page should show products:    16
-    Yves: go to URL:    en/transport/sack-trucks
-    Yves: 'Catalog' page should show products:    10
+# Product_Restrictions
+#     Yves: login on Yves with provided credentials:    sonia@spryker.com
+#     Yves: perform search by:    Soennecken
+#     Yves: 'Catalog' page should show products:    18
+#     Yves: go to URL:    en/office-furniture/storage/lockers
+#     Yves: 'Catalog' page should show products:    34
+#     Yves: logout on Yves as a customer
+#     Yves: login on Yves with provided credentials:    frida@ottom.de
+#     Yves: perform search by:    Soennecken
+#     Yves: 'Catalog' page should show products:    0
+#     Yves: logout on Yves as a customer
+#     Yves: login on Yves with provided credentials:    alexa@ottom.de
+#     Yves: go to URL:    en/office-furniture/storage/lockers
+#     Yves: 'Catalog' page should show products:    0
+#     Yves: go to URL:    en/transport/lift-carts
+#     Yves: 'Catalog' page should show products:    16
+#     Yves: go to URL:    en/transport/sack-trucks
+#    Yves: 'Catalog' page should show products:    10
 
 Customer_Specific_Prices
-    Yves: login on Yves with provided credentials:    Trever.m@spryker.com
+    Yves: login on Yves with provided credentials:    sonia@spryker.com
     Yves: perform search by:    EUROKRAFT trolley - with open shovel
     Yves: product with name in the catalog should have price:    EUROKRAFT trolley - with open shovel    €235.43
     Yves: go to PDP of the product with sku:    M70208
     Yves: product price on the PDP should be:    €235.43
     Yves: logout on Yves as a customer
     Yves: login on Yves with provided credentials:    karl@spryker.com
-    Yves: create new 'Shopping Cart' with name:    customerPrices+${random}
     Yves: perform search by:    EUROKRAFT trolley - with open shovel
     Yves: product with name in the catalog should have price:    EUROKRAFT trolley - with open shovel    €188.34
     Yves: go to PDP of the product with sku:    M70208
     Yves: product price on the PDP should be:    €188.34
-    Yves: add product to the shopping cart
-    Yves: go to the shopping cart through the header with name:    customerPrices+${random}
-    Yves: shopping cart contains product with unit price:    403125    188.34
-    Yves: delete 'Shopping Cart' with name:    customerPrices+${random}
 
 # Agent_Assist
 #     Zed: login on Zed with provided credentials:    admin@spryker.com
@@ -284,7 +245,7 @@ Customer_Specific_Prices
 #     Yves: product with name in the catalog should have price:    EUROKRAFT trolley - with open shovel    €188.34
 #     Yves: go to PDP of the product with sku:    M70208
 #     Yves: product price on the PDP should be:    €188.34
-# 
+
 # Business_on_Behalf
 #     Zed: login on Zed with provided credentials:    admin@spryker.com
 #     Zed: go to second navigation item level:    Company Account    Company Users
