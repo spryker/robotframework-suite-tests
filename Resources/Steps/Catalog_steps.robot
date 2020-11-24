@@ -10,5 +10,5 @@ Yves: 'Catalog' page should show products:
 
 Yves: product with name in the catalog should have price:
     [Arguments]    ${productName}    ${expectedProductPrice}
-    ${actualProductPrice}=    Get Text    xpath=//article[@data-qa='component product-card']//a[text()='${productName}']/..//*[@data-qa='component money-price']/*[contains(@class,'money-price__amount')]
+    ${actualProductPrice}=    Get Text    xpath=//product-item[@data-qa='component product-item']//a[contains(@class,'product-item__name')][contains(text(),'${productName}')]/..//*[@data-qa='component money-price']/*[contains(@class,'money-price__amount')]
     Should Be Equal    ${actualProductPrice}    ${expectedProductPrice}

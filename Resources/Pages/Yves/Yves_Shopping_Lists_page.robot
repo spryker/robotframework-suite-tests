@@ -6,6 +6,7 @@ ${share_shopping_list_customers_section}    xpath=//div[@data-qa="component comp
 ${share_shopping_list_business_unit_section}    xpath=//div[@data-qa="component company-dashbord-item"]//*[text()='Business Unit']/../../div[@data-qa='component share-list']
 ${share_shopping_list_confirm_button}    xpath=//form[@name='share_shopping_list_form']//button[@data-qa='submit-button']
 
+
 *** Keywords ***
 Select access level to share shopping list with:
     [Arguments]    ${customerToShareWith}    ${accessLevel}

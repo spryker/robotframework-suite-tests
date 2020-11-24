@@ -22,7 +22,7 @@ ${admin_email}         admin@spryker.com
 SuiteSetup
     [documentation]  Basic steps before each suite
     [tags]  common
-    # Empty Directory    Results
+    Remove Files    ${OUTPUTDIR}/selenium-screenshot-*.png
     Open Browser    ${host}    ${browser}
     Run Keyword if    'headless' in '${browser}'    Set Window Size    1440    1080
     Run Keyword Unless    'headless' in '${browser}'    Maximize Browser Window

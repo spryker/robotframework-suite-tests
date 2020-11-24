@@ -1,6 +1,7 @@
 *** Settings ***
 Resource    ../Pages/Yves/Yves_Shopping_Carts_page.robot
 Resource    ../Pages/Yves/Yves_Shopping_Cart_page.robot
+Resource    ../Pages/Yves/Yves_Delete_Shopping_Cart_page.robot
 Resource    ../Common/Common_Yves.robot
 
 *** Variables ***
@@ -13,7 +14,7 @@ Yves: 'Shopping Carts' widget contains:
     Wait Until Element Is Visible    ${shopping_car_icon_header_menu_item} 
     Mouse Over    ${shopping_car_icon_header_menu_item} 
     Wait Until Element Is Visible    ${shopping_cart_sub_navigation_widget}
-    Page Should Contain Element    xpath=//*[contains(@class,'icon--cart')]/ancestor::li//div[contains(@class,'js-user-navigation__sub-nav-cart')]//span[text()[contains(.,'${accessLevel}')]]/ancestor::div[@class='mini-cart-detail']//button/*[text()='${shoppingCartName}']
+    Page Should Contain Element    xpath=//*[contains(@class,'icon--cart')]/ancestor::li//div[contains(@class,'js-user-navigation__sub-nav-cart')]//span[text()[contains(.,'${accessLevel}')]]/ancestor::div[@class='mini-cart-detail']//*[contains(@class,'mini-cart-detail__title')]/*[text()='${shoppingCartName}']
 
 Go to 'Shopping Carts' page
     Mouse Over    ${shopping_car_icon_header_menu_item}
@@ -48,7 +49,7 @@ Yves: go to the shopping cart through the header with name:
     Wait Until Element Is Visible    ${shopping_car_icon_header_menu_item} 
     Mouse Over    ${shopping_car_icon_header_menu_item} 
     Wait Until Element Is Visible    ${shopping_cart_sub_navigation_widget}
-    Scroll and Click Element    //*[contains(@class,'icon--cart')]/ancestor::li//div[contains(@class,'js-user-navigation__sub-nav-cart')]//div[@class='mini-cart-detail']//a/*[text()='${shoppingCartName}']
+    Scroll and Click Element    //*[contains(@class,'icon--cart')]/ancestor::li//div[contains(@class,'js-user-navigation__sub-nav-cart')]//div[@class='mini-cart-detail']//*[contains(@class,'mini-cart-detail__title')]/*[text()='${shoppingCartName}']
     
 Yves: shopping cart contains the following products:
     [Arguments]    @{sku_list}    ${sku1}=${EMPTY}     ${sku2}=${EMPTY}     ${sku3}=${EMPTY}     ${sku4}=${EMPTY}     ${sku5}=${EMPTY}     ${sku6}=${EMPTY}     ${sku7}=${EMPTY}     ${sku8}=${EMPTY}     ${sku9}=${EMPTY}     ${sku10}=${EMPTY}     ${sku11}=${EMPTY}     ${sku12}=${EMPTY}     ${sku13}=${EMPTY}     ${sku14}=${EMPTY}     ${sku15}=${EMPTY}
@@ -117,4 +118,13 @@ Yves: change quantity of the configurable bundle in the shopping cart on:
     [Arguments]    ${confBundleTitle}    ${quantity}
     Input Text    xpath=//article[@data-qa='component configured-bundle'][1]//*[contains(@class,'configured-bundle__title')][text()='${confBundleTitle}']/ancestor::article//input[@data-qa='quantity-input']    ${quantity}
     Scroll and Click Element    xpath=//article[@data-qa='component configured-bundle'][1]//*[contains(@class,'configured-bundle__title')][text()='${confBundleTitle}']
+    Wait For Document Ready    
+
+Yves: delete 'Shopping Cart' with name:
+    [Arguments]    ${shoppingCartName}
+    ${currentURL}=    Get Location        
+    Run Keyword Unless    '/shopping-list' in '${currentURL}'    Go To    ${host}multi-cart
+    Delete shopping cart with name:    ${shoppingCartName}
+    Wait Until Element Is Visible    ${delete_shopping_cart_button}
+    Click Element    ${delete_shopping_cart_button}
     Wait For Document Ready    
