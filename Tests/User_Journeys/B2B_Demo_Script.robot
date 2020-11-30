@@ -75,7 +75,7 @@ Share_Shopping_Carts
     Yves: select the following existing address on the checkout as 'shipping' address and go next:    Mr Trever Meier, Kirncher Str. 7, 10247 Berlin
     Yves: select the following shipping method on the checkout and go next:    Express
     Yves: select the following payment method on the checkout and go next:    Invoice
-    Yves: Accept the Terms and Conditions:    true
+    Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
     Yves: go to the 'Home' page
@@ -108,7 +108,7 @@ Quick_Order
     Yves: select the following existing address on the checkout as 'shipping' address and go next:    Ms Sonia Wagner, Kirncher Str. 7, 10247 Berlin
     Yves: select the following shipping method on the checkout and go next:    Express
     Yves: select the following payment method on the checkout and go next:    Invoice
-    Yves: Accept the Terms and Conditions:    true
+    Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
     ### Order History ###
@@ -158,7 +158,7 @@ Measurement_Units
     Yves: select the following existing address on the checkout as 'shipping' address and go next:    Ms Sonia Wagner, Kirncher Str. 7, 10247 Berlin
     Yves: select the following shipping method on the checkout and go next:    Express
     Yves: select the following payment method on the checkout and go next:    Invoice
-    Yves: Accept the Terms and Conditions:    true
+    Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
 
@@ -180,7 +180,7 @@ Packaging_Units
     Yves: select the following existing address on the checkout as 'shipping' address and go next:    Ms Sonia Wagner, Kirncher Str. 7, 10247 Berlin
     Yves: select the following shipping method on the checkout and go next:    Express
     Yves: select the following payment method on the checkout and go next:    Invoice
-    Yves: Accept the Terms and Conditions:    true
+    Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
 
@@ -209,7 +209,7 @@ Product_Bundles
     Yves: select the following existing address on the checkout as 'shipping' address and go next:    Mr Trever Meier, Kirncher Str. 7, 10247 Berlin
     Yves: select the following shipping method on the checkout and go next:    Express
     Yves: select the following payment method on the checkout and go next:    Invoice
-    Yves: Accept the Terms and Conditions:    true
+    Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
 
@@ -225,12 +225,12 @@ Product_Relations
     Yves: shopping cart contains/doesn't contain the following elements:    true    ${upSellProducts}
     Yves: delete 'Shopping Cart' with name:    productRelationCart+${random}
 
-# Default_Merchants
-#    Zed: login on Zed with provided credentials:    admin@spryker.com
-#     Zed: go to second navigation item level:    Merchants    Merchants
-#     Zed: table should contain:    Restrictions Merchant
-#     Zed: table should contain:    Prices Merchant
-#     Zed: table should contain:    Products Restrictions Merchant
+Default_Merchants
+   Zed: login on Zed with provided credentials:    admin@spryker.com
+    Zed: go to second navigation item level:    Marketplace    Merchants
+    Zed: table should contain:    Restrictions Merchant
+    Zed: table should contain:    Prices Merchant
+    Zed: table should contain:    Products Restrictions Merchant
 
 Product_Restrictions
     Yves: login on Yves with provided credentials:    Trever.m@spryker.com
@@ -286,115 +286,119 @@ Agent_Assist
     Zed: login on Zed with provided credentials:    admin@spryker.com
     Zed: delete Zed user with the following email:    agent@spryker.com+${random}
 
-# Business_on_Behalf
-#     Zed: login on Zed with provided credentials:    admin@spryker.com
-#     Zed: go to second navigation item level:    Company Account    Company Users
-#     Zed: click Action Button in a table for row that contains:    Trever    Attach to BU
-#     Zed: attach company user to the following BU with role:    Spryker Systems Berlin (id: 28)    Admin
-#     Yves: login on Yves with provided credentials:    Trever.m@spryker.com
-#     Yves: go to URL:    en/company/user/select
-#     Yves: 'Select Business Unit' page is displayed
-#     Yves: 'Business Unit' dropdown contains:    Spryker Systems GmbH / Spryker Systems HR department    Spryker Systems GmbH / Spryker Systems Berlin
+Business_on_Behalf
+    Zed: login on Zed with provided credentials:    admin@spryker.com
+    Zed: go to second navigation item level:    Customers    Company Users
+    Zed: click Action Button in a table for row that contains:    Donald    Attach to BU
+    Zed: attach company user to the following BU with role:    Spryker Systems Zurich (id: 25)    Admin
+    Yves: login on Yves with provided credentials:    donald@spryker.com
+    Yves: go to URL:    en/company/user/select
+    Yves: 'Select Business Unit' page is displayed
+    Yves: 'Business Unit' dropdown contains:    Spryker Systems GmbH / Spryker Systems Berlin    Spryker Systems GmbH / Spryker Systems Zurich
 
-# Business_Unit_Address_on_Checkout
-#     Yves: login on Yves with provided credentials:    Trever.m@spryker.com
-#     Yves: create new 'Shopping Cart' with name:    businessAddressCart+${random}
-#     Yves: go to PDP of the product with sku:    M64933
-#     Yves: add product to the shopping cart
-#     Yves: go to the shopping cart through the header with name:    businessAddressCart+${random}
-#     Yves: click on the 'Checkout' button
-#     Yves: billing address same as shipping address:    true
-#     Yves: select the following existing address on the checkout as 'shipping' address and go next:    Mr Trever Meier, Kirncher Str. 7, 10247 Berlin
-#     Yves: select the following shipping method on the checkout and go next:    Express
-#     Yves: select the following payment method on the checkout and go next:    Invoice
-#     Yves: 'submit the order' on the summary page
-#     Yves: 'Thank you' page is displayed
-#     Yves: go to user menu item in header:    Order History
-#     Yves: 'Order History' page is displayed
-#     Yves: get the last placed order ID by current customer
-#     Yves: 'View Order/ Reorder' on the order history page:    View Order    ${lastPlacedOrder}
-#     Yves: 'Order Details' page is displayed
-#     Yves: shipping address on the order details page is:    Mr. Trever Meier Spryker Systems GmbH Kirncher Str. 7 10247 Berlin, Germany 4902890031
+Business_Unit_Address_on_Checkout
+    Yves: login on Yves with provided credentials:    Trever.m@spryker.com
+    Yves: create new 'Shopping Cart' with name:    businessAddressCart+${random}
+    Yves: go to PDP of the product with sku:    M64933
+    Yves: add product to the shopping cart
+    Yves: go to the shopping cart through the header with name:    businessAddressCart+${random}
+    Yves: click on the 'Checkout' button
+    Yves: billing address same as shipping address:    true
+    Yves: select the following existing address on the checkout as 'shipping' address and go next:    Mr Trever Meier, Kirncher Str. 7, 10247 Berlin
+    Yves: select the following shipping method on the checkout and go next:    Express
+    Yves: select the following payment method on the checkout and go next:    Invoice
+    Yves: accept the terms and conditions:    true
+    Yves: 'submit the order' on the summary page
+    Yves: 'Thank you' page is displayed
+    Yves: go to user menu item in header:    Order History
+    Yves: 'Order History' page is displayed
+    Yves: get the last placed order ID by current customer
+    Yves: 'View Order/ Reorder' on the order history page:    View Order    ${lastPlacedOrder}
+    Yves: 'Order Details' page is displayed
+    Yves: shipping address on the order details page is:    Mr. Trever Meier Spryker Systems GmbH Kirncher Str. 7 10247 Berlin, Germany 4902890031
 
-# Approval_Process
-#     Yves: login on Yves with provided credentials:    kevin@spryker.com
-#     Yves: create new 'Shopping Cart' with name:    approvalCart+${random}
-#     Yves: go to PDP of the product with sku:    M49320
-#     Yves: add product to the shopping cart
-#     Yves: go to the shopping cart through the header with name:    approvalCart+${random}
-#     Yves: click on the 'Checkout' button
-#     Yves: billing address same as shipping address:    true
-#     Yves: select the following existing address on the checkout as 'shipping' address and go next:    Mr Kevin Sidorov, Oderberger Str. 57, 10115 Berlin
-#     Yves: select the following shipping method on the checkout and go next:    Express
-#     Yves: select the following payment method on the checkout and go next:    Invoice
-#     Yves: select approver on the 'Summary' page:    Emma Schmidt (€1,000.00)
-#     Yves: 'send the request' on the summary page
-#     Yves: 'Summary' page is displayed
-#     Yves: 'Summary' page contains/doesn't contain:    true    ${cancelRequestButton}    ${alertWarning}    ${quoteStatus}
-#     Yves: go to the 'Home' page
-#     Yves: go to the shopping cart through the header with name:    approvalCart+${random}
-#     Yves: shopping cart contains/doesn't contain the following elements:    true    ${lockedCart}
-#     Yves: create new 'Shopping Cart' with name:    newApprovalCart+${random}
-#     Yves: go to PDP of the product with sku:    M58314
-#     Yves: add product to the shopping cart
-#     Yves: go to the shopping cart through the header with name:    newApprovalCart+${random}
-#     Yves: click on the 'Checkout' button
-#     Yves: billing address same as shipping address:    true
-#     Yves: select the following existing address on the checkout as 'shipping' address and go next:            Mr Kevin Sidorov, Oderberger Str. 57, 10115 Berlin
-#     Yves: select the following shipping method on the checkout and go next:    Express
-#     Yves: select the following payment method on the checkout and go next:    Invoice
-#     Yves: 'submit the order' on the summary page
-#     Yves: 'Thank you' page is displayed
-#     Yves: create new 'Shopping Cart' with name:    anotherApprovalCart+${random}
-#     Yves: go to PDP of the product with sku:    M58314
-#     Yves: add product to the shopping cart
-#     Yves: go to the shopping cart through the header with name:    anotherApprovalCart+${random}
-#     Yves: click on the 'Checkout' button
-#     Yves: billing address same as shipping address:    true
-#     Yves: select the following existing address on the checkout as 'shipping' address and go next:            Mr Kevin Sidorov, Oderberger Str. 57, 10115 Berlin
-#     Yves: select the following shipping method on the checkout and go next:    Express
-#     Yves: select the following payment method on the checkout and go next:    Invoice
-#     Yves: select approver on the 'Summary' page:    Emma Schmidt (€1,000.00)
-#     Yves: 'send the request' on the summary page
-#     Yves: 'Summary' page is displayed
-#     Yves: 'Summary' page contains/doesn't contain:    true    ${cancelRequestButton}    ${alertWarning}    ${quoteStatus}
-#     Yves: logout on Yves as a customer
-#     Yves: login on Yves with provided credentials:    emma@spryker.com
-#     Yves: go to user menu item in header:    Overview
-#     Yves: 'Overview' page is displayed
-#     Yves: go to user menu item in the left bar:    Shopping carts
-#     Yves: 'Shopping Carts' page is displayed
-#     Yves: the following shopping cart is shown:    approvalCart+${random}    Read-only
-#     Yves: the following shopping cart is shown:    anotherApprovalCart+${random}    Read-only
-#     Yves: shopping cart with name xxx has the following status:    approvalCart+${random}    Waiting
-#     Yves: shopping cart with name xxx has the following status:    anotherApprovalCart+${random}    Waiting
-#     Yves: go to the shopping cart through the header with name:    approvalCart+${random}
-#     Yves: click on the 'Checkout' button
-#     Yves: 'Summary' page is displayed
-#     Yves: 'approve the cart' on the summary page
-#     Yves: 'Summary' page is displayed
-#     Yves: 'Summary' page contains/doesn't contain:    false    ${cancelRequestButton}    ${alertWarning}
-#     Yves: go to the 'Home' page
-#     Yves: go to user menu item in header:    Overview
-#     Yves: 'Overview' page is displayed
-#     Yves: go to user menu item in the left bar:    Shopping carts
-#     Yves: 'Shopping Carts' page is displayed
-#     Yves: the following shopping cart is shown:    approvalCart+${random}    Read-only
-#     Yves: the following shopping cart is shown:    anotherApprovalCart+${random}    Read-only
-#     Yves: shopping cart with name xxx has the following status:    approvalCart+${random}    Approved
-#     Yves: shopping cart with name xxx has the following status:    anotherApprovalCart+${random}    Waiting
-#     Yves: logout on Yves as a customer
-#     Yves: login on Yves with provided credentials:    kevin@spryker.com
-#     Yves: go to user menu item in the left bar:    Shopping carts
-#     Yves: shopping cart with name xxx has the following status:    approvalCart+${random}    Approved
-#     Yves: go to the shopping cart through the header with name:    approvalCart+${random}
-#     Yves: shopping cart contains/doesn't contain the following elements:    true    ${lockedCart}
-#     Yves: click on the 'Checkout' button
-#     Yves: 'Summary' page is displayed
-#     Yves: 'submit the order' on the summary page
-#     Yves: 'Thank you' page is displayed
+Approval_Process
+    Yves: login on Yves with provided credentials:    kevin@spryker.com
+    Yves: create new 'Shopping Cart' with name:    approvalCart+${random}
+    Yves: go to PDP of the product with sku:    M49320
+    Yves: add product to the shopping cart
+    Yves: go to the shopping cart through the header with name:    approvalCart+${random}
+    Yves: click on the 'Checkout' button
+    Yves: billing address same as shipping address:    true
+    Yves: select the following existing address on the checkout as 'shipping' address and go next:    Mr Kevin Sidorov, Oderberger Str. 57, 10115 Berlin
+    Yves: select the following shipping method on the checkout and go next:    Express
+    Yves: select the following payment method on the checkout and go next:    Invoice
+    Yves: select approver on the 'Summary' page:    Emma Schmidt (€1,000.00)
+    Yves: 'send the request' on the summary page
+    Yves: 'Summary' page is displayed
+    Yves: 'Summary' page contains/doesn't contain:    true    ${cancelRequestButton}    ${alertWarning}    ${quoteStatus}
+    Yves: go to the 'Home' page
+    Yves: go to the shopping cart through the header with name:    approvalCart+${random}
+    Yves: shopping cart contains/doesn't contain the following elements:    true    ${lockedCart}
+    Yves: create new 'Shopping Cart' with name:    newApprovalCart+${random}
+    Yves: go to PDP of the product with sku:    M58314
+    Yves: add product to the shopping cart
+    Yves: go to the shopping cart through the header with name:    newApprovalCart+${random}
+    Yves: click on the 'Checkout' button
+    Yves: billing address same as shipping address:    true
+    Yves: select the following existing address on the checkout as 'shipping' address and go next:            Mr Kevin Sidorov, Oderberger Str. 57, 10115 Berlin
+    Yves: select the following shipping method on the checkout and go next:    Express
+    Yves: select the following payment method on the checkout and go next:    Invoice
+    Yves: accept the terms and conditions:    true
+    Yves: 'submit the order' on the summary page
+    Yves: 'Thank you' page is displayed
+    Yves: create new 'Shopping Cart' with name:    anotherApprovalCart+${random}
+    Yves: go to PDP of the product with sku:    M58314
+    Yves: add product to the shopping cart
+    Yves: go to the shopping cart through the header with name:    anotherApprovalCart+${random}
+    Yves: click on the 'Checkout' button
+    Yves: billing address same as shipping address:    true
+    Yves: select the following existing address on the checkout as 'shipping' address and go next:            Mr Kevin Sidorov, Oderberger Str. 57, 10115 Berlin
+    Yves: select the following shipping method on the checkout and go next:    Express
+    Yves: select the following payment method on the checkout and go next:    Invoice
+    Yves: select approver on the 'Summary' page:    Emma Schmidt (€1,000.00)
+    Yves: 'send the request' on the summary page
+    Yves: 'Summary' page is displayed
+    Yves: 'Summary' page contains/doesn't contain:    true    ${cancelRequestButton}    ${alertWarning}    ${quoteStatus}
+    Yves: logout on Yves as a customer
+    Yves: login on Yves with provided credentials:    emma@spryker.com
+    Yves: go to user menu item in header:    Overview
+    Yves: 'Overview' page is displayed
+    Yves: go to user menu item in the left bar:    Shopping carts
+    Yves: 'Shopping Carts' page is displayed
+    Yves: the following shopping cart is shown:    approvalCart+${random}    Read-only
+    Yves: the following shopping cart is shown:    anotherApprovalCart+${random}    Read-only
+    Yves: shopping cart with name xxx has the following status:    approvalCart+${random}    Waiting
+    Yves: shopping cart with name xxx has the following status:    anotherApprovalCart+${random}    Waiting
+    Yves: go to the shopping cart through the header with name:    approvalCart+${random}
+    Yves: click on the 'Checkout' button
+    Yves: 'Summary' page is displayed
+    Yves: 'approve the cart' on the summary page
+    Yves: 'Summary' page is displayed
+    Yves: 'Summary' page contains/doesn't contain:    false    ${cancelRequestButton}    ${alertWarning}
+    Yves: go to the 'Home' page
+    Yves: go to user menu item in header:    Overview
+    Yves: 'Overview' page is displayed
+    Yves: go to user menu item in the left bar:    Shopping carts
+    Yves: 'Shopping Carts' page is displayed
+    Yves: the following shopping cart is shown:    approvalCart+${random}    Read-only
+    Yves: the following shopping cart is shown:    anotherApprovalCart+${random}    Read-only
+    Yves: shopping cart with name xxx has the following status:    approvalCart+${random}    Approved
+    Yves: shopping cart with name xxx has the following status:    anotherApprovalCart+${random}    Waiting
+    Yves: logout on Yves as a customer
+    Yves: login on Yves with provided credentials:    kevin@spryker.com
+    Yves: go to user menu item in the left bar:    Shopping carts
+    Yves: shopping cart with name xxx has the following status:    approvalCart+${random}    Approved
+    Yves: go to the shopping cart through the header with name:    approvalCart+${random}
+    Yves: shopping cart contains/doesn't contain the following elements:    true    ${lockedCart}
+    Yves: click on the 'Checkout' button
+    Yves: 'Summary' page is displayed
+    Yves: Accept the Terms and Conditions:    true
+    Yves: 'submit the order' on the summary page
+    Yves: 'Thank you' page is displayed
 
 # Request_for_Quote
+##    ToDo: create quote for test
 #     Zed: login on Zed with provided credentials:    admin@spryker.com
 #     Zed: create new Zed user with the following data:    agent_quote+${random}@spryker.com    change123    Request    Quote    Root group    This user is an agent    en_US
 #     Yves: go to URL:    agent/login
@@ -450,22 +454,25 @@ Agent_Assist
 #     Yves: select the following shipping method on the checkout and go next:    Express
 #     Yves: select the following payment method on the checkout and go next:    Invoice
 #     Yves: shopping cart contains product with unit price:    424605    5
+#     Yves: accept the terms and conditions:    true
 #     Yves: 'submit the order' on the summary page
 #     Yves: 'Thank you' page is displayed
+#     Zed: delete Zed user with the following email:    agent_quote+${random}@spryker.com
 
-# Unique_URL
-#     Yves: login on Yves with provided credentials:    sonia@spryker.com
-#     Yves: create new 'Shopping Cart' with name:    externalCart+${random}
-#     Yves: go to PDP of the product with sku:    M90806
-#     Yves: add product to the shopping cart
-#     Yves: go to the shopping cart through the header with name:    externalCart+${random}
-#     Yves: 'Shopping Cart' page is displayed
-#     Yves: get link for external cart sharing
-#     Yves: logout on Yves as a customer
-#     Yves: go to external URL:    ${externalURL}
-#     Yves: 'Shopping Cart' page is displayed
-#     Yves: Shopping Cart title should be equal:    Preview: externalCart+${random}
-#     Yves: shopping cart contains the following products:    108302
+Unique_URL
+    Yves: login on Yves with provided credentials:    sonia@spryker.com
+    Yves: create new 'Shopping Cart' with name:    externalCart+${random}
+    Yves: go to PDP of the product with sku:    M90806
+    Yves: add product to the shopping cart
+    Yves: go to the shopping cart through the header with name:    externalCart+${random}
+    Yves: 'Shopping Cart' page is displayed
+    Yves: get link for external cart sharing
+    Yves: logout on Yves as a customer
+    Yves: go to external URL:    ${externalURL}
+    Yves: 'Shopping Cart' page is displayed
+    Yves: Shopping Cart title should be equal:    Preview: externalCart+${random}
+    Yves: shopping cart contains the following products:    108302
+    Yves: delete 'Shopping Cart' with name:    externalCart+${random}
 
 # Configurable_Bundle
 #     Yves: login on Yves with provided credentials:    sonia@spryker.com
@@ -491,6 +498,7 @@ Agent_Assist
 #     Yves: select the following existing address on the checkout as 'shipping' address and go next:    Ms Sonia Wagner, Kirncher Str. 7, 10247 Berlin
 #     Yves: select the following shipping method on the checkout and go next:    Express
 #     Yves: select the following payment method on the checkout and go next:    Invoice
+#     Yves: accept the terms and conditions:    true
 #     Yves: 'submit the order' on the summary page
 #     Yves: 'Thank you' page is displayed
 #     Yves: go to user menu item in header:    Order History
