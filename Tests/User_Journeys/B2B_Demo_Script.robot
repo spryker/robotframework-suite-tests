@@ -18,6 +18,7 @@ Resource    ../../Resources/Steps/Agent_Assist_steps.robot
 Resource    ../../Resources/Steps/Company_steps.robot
 Resource    ../../Resources/Steps/Customer_Account_steps.robot
 Resource    ../../Resources/Steps/Configurable_Bundle_steps.robot
+Resource    ../../Resources/Steps/Users_steps.robot
 
 *** Test Cases ***
 Guest_User_Restrictions
@@ -144,10 +145,8 @@ Measurement_Units
     Yves: go to PDP of the product with sku:    M23723
     Yves: select the following 'Sales Unit' on PDP:    Meter
     Yves: change quantity using '+' or '-' button № times:    +    1
-    # Зменила xpath на //div[@class='product-configurator__add-to-cart']//button[contains(@class,'quantity-counter__button--increment')] и на //div[@class='product-configurator__add-to-cart']//button[contains(@class,'quantity-counter__button--decrement')]
     Yves: PDP contains/doesn't contain:    true    ${measurementUnitSuggestion}
     Yves: change quantity using '+' or '-' button № times:    -    1
-    # Зменила xpath на //div[@class='product-configurator__add-to-cart']//button[contains(@class,'quantity-counter__button--increment')] и на //div[@class='product-configurator__add-to-cart']//button[contains(@class,'quantity-counter__button--decrement')]
     Yves: add product to the shopping cart
     Yves: go to PDP of the product with sku:    M1006871
     Yves: add product to the shopping cart
@@ -270,21 +269,23 @@ Customer_Specific_Prices
     Yves: shopping cart contains product with unit price:    403125    188.34
     Yves: delete 'Shopping Cart' with name:    customerPrices+${random}
 
-# Agent_Assist
-#     Zed: login on Zed with provided credentials:    admin@spryker.com
-#     Zed: create new Zed user with the following data:    agent@spryker.com+${random}    change123    Agent    Assist    Root group    This user is an agent    en_US
-#     Yves: go to the 'Home' page
-#     Yves: go to URL:    agent/login
-#     Yves: login on Yves with provided credentials:    agent@spryker.com+${random}
-#     Yves: header contains/doesn't contain:    true    ${customerSearchWidget}
-#     Yves: perform search by customer:    Karl
-#     Yves: agent widget contains:    karl@spryker.com
-#     Yves: login under the customer:    karl@spryker.com
-#     Yves: perform search by:    EUROKRAFT trolley - with open shovel
-#     Yves: product with name in the catalog should have price:    EUROKRAFT trolley - with open shovel    €188.34
-#     Yves: go to PDP of the product with sku:    M70208
-#     Yves: product price on the PDP should be:    €188.34
-# 
+Agent_Assist
+    Zed: login on Zed with provided credentials:    admin@spryker.com
+    Zed: create new Zed user with the following data:    agent@spryker.com+${random}    change123    Agent    Assist    Root group    This user is an agent    en_US
+    Yves: go to the 'Home' page
+    Yves: go to URL:    agent/login
+    Yves: login on Yves with provided credentials:    agent@spryker.com+${random}
+    Yves: header contains/doesn't contain:    true    ${customerSearchWidget}
+    Yves: perform search by customer:    Karl
+    Yves: agent widget contains:    karl@spryker.com
+    Yves: login under the customer:    karl@spryker.com
+    Yves: perform search by:    EUROKRAFT trolley - with open shovel
+    Yves: product with name in the catalog should have price:    EUROKRAFT trolley - with open shovel    €188.34
+    Yves: go to PDP of the product with sku:    M70208
+    Yves: product price on the PDP should be:    €188.34
+    Zed: login on Zed with provided credentials:    admin@spryker.com
+    Zed: delete Zed user with the following email:    agent@spryker.com+${random}
+
 # Business_on_Behalf
 #     Zed: login on Zed with provided credentials:    admin@spryker.com
 #     Zed: go to second navigation item level:    Company Account    Company Users
