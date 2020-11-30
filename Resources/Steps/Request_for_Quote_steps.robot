@@ -5,11 +5,19 @@ Resource    ../Pages/Yves/Yves_Quote_Request_page.robot
 Resource    ../Common/Common_Yves.robot
 Resource    ../Steps/Header_steps.robot
 Resource    ../Common/Common.robot
+Resource    ../../Resources/Pages/Yves/Yves_Shopping_Cart_page.robot
 
 *** Keywords ***
 Go to 'Quote Requests' page
     Scroll and Click Element    ${agent_quote_requests_header_item}
     Wait For Document Ready    
+
+Yves: convert a cart to a quote request
+    Scroll and Click Element    ${request_a_quote_button}
+    Wait For Document Ready
+    Scroll and Click Element    ${quote_request_convert_from_cart_confirm_button}
+    Wait For Document Ready
+       
 
 Yves: quote request with reference xxx should have status:
     [Arguments]    ${quoteReference}    ${expectedStatus}

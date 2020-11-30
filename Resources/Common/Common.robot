@@ -2,7 +2,9 @@
 
 Library    SeleniumLibrary    plugins=SeleniumTestability;True;30 Seconds;True
 Library    String
+Library    Dialogs
 Library    OperatingSystem
+Library    ../../Resources/Libraries/common.py
 Resource                  ../Pages/Yves/Yves_Header_Section.robot
 Resource                  ../Pages/Yves/Yves_Login_page.robot
 
@@ -10,8 +12,8 @@ Resource                  ../Pages/Yves/Yves_Login_page.robot
 # *** SUITE VARIABLES ***
 #${browser}             headlesschrome
 ${browser}             chrome
-${host}                https://www.de.b2b.demo-spryker.com/
-${zed_url}             https://os.de.b2b.demo-spryker.com/
+#${host}                https://www.de.b2b.demo-spryker.com/
+#${zed_url}             https://os.de.b2b.demo-spryker.com/
 ${email_domain}        @spryker.com
 ${default_password}    change123
 ${loading_time}        3s
@@ -19,10 +21,19 @@ ${admin_email}         admin@spryker.com
 #${test_customer_email}      test.spryker+${random}@gmail.com
 
 *** Keywords ***
+Load Variables
+    [Arguments]    ${env}=B2B
+    &{vars}=   Define Environment Variables From File    ${env}
+    FOR    ${key}    ${value}    IN    &{vars}
+        Log    Key is '${key}' and value is '${value}'.
+        Set Global Variable    ${${key}}    ${value}
+    END
+
 SuiteSetup
     [documentation]  Basic steps before each suite
     [tags]  common
-    Remove Files    ${OUTPUTDIR}/selenium-screenshot-*.png    
+    # Empty Directory    Results
+    Load Variables    ${env}
     Open Browser    ${host}    ${browser}
     Run Keyword if    'headless' in '${browser}'    Set Window Size    1440    1080
     Run Keyword Unless    'headless' in '${browser}'    Maximize Browser Window
@@ -40,9 +51,12 @@ SuiteTeardown
 
 TestSetup
     Delete All Cookies
+    ${random}=    Generate Random String    5    [NUMBERS]
+    Set Global Variable    ${random}
     Go To    ${host}
 
 TestTeardown
+    Run Keyword If Test Failed    Pause Execution
     Delete All Cookies
 
 Select Random Option From List
