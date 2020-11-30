@@ -4,3 +4,4 @@ Results/
 *.png
 *.log
 settings.json
+.DS_Store
