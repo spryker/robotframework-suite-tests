@@ -20,6 +20,7 @@ Resource    ../../Resources/Steps/Customer_Account_steps.robot
 Resource    ../../Resources/Steps/Configurable_Bundle_steps.robot
 Resource    ../../Resources/Pages/Yves/Yves_Shopping_Cart_page.robot
 Resource    ../../Resources/Pages/Yves/Yves_Agent_Assist_page.robot
+Resource    ../../Resources/Steps/Users_steps.robot
 
 
 *** Test Cases ***
@@ -39,6 +40,8 @@ Agent_Assist_Impersonate_As_Customer
     Yves: product with name in the catalog should have price:    EUROKRAFT trolley - with open shovel    €188.34
     Yves: go to PDP of the product with sku:    M70208
     Yves: product price on the PDP should be:    €188.34
+    Zed: login on Zed with provided credentials:    admin@spryker.com
+    Zed: delete Zed user with the following email:    agent@spryker.com+${random}
 
 # Agent_Assist_Impersonate_As_Customer_Merchant_Prices
 #     [Documentation]    This test case checks the overall possibility to create an agent user in Zed, login with his credentials in Yves and impersonate as a customer.
