@@ -24,7 +24,7 @@ ${admin_email}         admin@spryker.com
 *** Keywords ***
 Load Variables
     [Arguments]    ${env}
-    &{vars}=   Define Environment Variables From File    ${env}
+    &{vars}=   Define Environment Variables From Json File    ${env}
     FOR    ${key}    ${value}    IN    &{vars}
         Log    Key is '${key}' and value is '${value}'.
         Set Global Variable    ${${key}}    ${value}
