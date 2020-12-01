@@ -36,8 +36,9 @@ Agent_Assist_Impersonate_As_Customer
     Yves: perform search by customer:    ${yves_user_first_name}
     Yves: agent widget contains:    ${yves_user_email}
     Yves: login under the customer:    ${yves_user_email}
-    Yves: go to PDP of the product with sku:    ${one_variant_product_abstract_sku}
-    Yves: product price on the PDP should be:    ${one_variant_product_abstract_price}
+    Yves: header contains/doesn't contain:    false    ${customerSearchWidget}
+    # Yves: go to PDP of the product with sku:    ${one_variant_product_abstract_sku}
+    # Yves: product price on the PDP should be:    ${one_variant_product_abstract_price}
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: delete Zed user with the following email:    agent@spryker.com+${random}
 
