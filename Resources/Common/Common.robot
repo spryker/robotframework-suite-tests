@@ -10,6 +10,7 @@ Resource                  ../Pages/Yves/Yves_Login_page.robot
 
 *** Variables ***
 # *** SUITE VARIABLES ***
+${env}                  B2B
 #${browser}             headlesschrome
 ${browser}             chrome
 #${host}                https://www.de.b2b.demo-spryker.com/
@@ -22,7 +23,7 @@ ${admin_email}         admin@spryker.com
 
 *** Keywords ***
 Load Variables
-    [Arguments]    ${env}=B2B
+    [Arguments]    ${env}
     &{vars}=   Define Environment Variables From File    ${env}
     FOR    ${key}    ${value}    IN    &{vars}
         Log    Key is '${key}' and value is '${value}'.
@@ -31,8 +32,8 @@ Load Variables
 
 SuiteSetup
     [documentation]  Basic steps before each suite
-    [tags]  common
-    # Empty Directory    Results
+    Remove Files    ${OUTPUTDIR}/selenium-screenshot-*.png
+    Remove Files    Resources/Libraries/__pycache__/*
     Load Variables    ${env}
     Open Browser    ${host}    ${browser}
     Run Keyword if    'headless' in '${browser}'    Set Window Size    1440    1080
@@ -56,7 +57,7 @@ TestSetup
     Go To    ${host}
 
 TestTeardown
-    Run Keyword If Test Failed    Pause Execution
+    # Run Keyword If Test Failed    Pause Execution
     Delete All Cookies
 
 Select Random Option From List
