@@ -25,6 +25,7 @@ Resource    ../../Resources/Steps/Users_steps.robot
 
 *** Test Cases ***
 Agent_Assist_Impersonate_As_Customer
+//autocomplete-form[@data-qa='component autocomplete-form']//input[@name='query']
     [Documentation]    This test case checks the overall possibility to create an agent user in Zed, login with his credentials in Yves and impersonate as a customer.
     [Tags]    suite-nonsplit    b2c    b2b    all
     Zed: login on Zed with provided credentials:    ${zedAdminEmail}    ${zedAdminPassword}    
@@ -33,9 +34,9 @@ Agent_Assist_Impersonate_As_Customer
     Yves: go to URL:    agent/login
     Yves: login on Yves with provided credentials:    agent@spryker.com+${random}
     Yves: header contains/doesn't contain:    true    ${customerSearchWidget}
-    Yves: perform search by customer:    ${firstName}
-    Yves: agent widget contains:    ${email}
-    Yves: login under the customer:    ${email}
+    Yves: perform search by customer:    ${yves_user_first_name}
+    Yves: agent widget contains:    ${yves_user_email}
+    Yves: login under the customer:    ${yves_user_email}
     Yves: perform search by:    EUROKRAFT trolley - with open shovel
     Yves: product with name in the catalog should have price:    EUROKRAFT trolley - with open shovel    €188.34
     Yves: go to PDP of the product with sku:    M70208
