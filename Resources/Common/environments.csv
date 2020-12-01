@@ -1,4 +1,4 @@
 environment,host,zed_url,yves_user_email,yves_user_first_name,yves_user_last_name,yves_user_password,zed_admin_email,zed_admin_password,one_variant_product_abstract_sku,multi_variant_product_abstract_sku,measurement_unit_product_abstract_sku,packaging_unit_product_abstract_sku
-B2B,https://www.de.b2b.demo-spryker.com/,https://os.de.b2b.demo-spryker.com/,sonia@spryker.com,Sonia,Wagner,change123,admin@spryker.com,change123,test2,M21692,M23723,M21766
-B2C,https://www.de.b2c.demo-spryker.com/,https://os.de.b2c.demo-spryker.com/,spencor.hopkin@spryker.com,Spencor,Hopkin,change123,admin@spryker.com,change123,009,051,215,218
+b2b,https://www.de.b2b.demo-spryker.com/,https://os.de.b2b.demo-spryker.com/,sonia@spryker.com,Sonia,Wagner,change123,admin@spryker.com,change123,test2,M21692,M23723,M21766
+b2c,https://www.de.b2c.demo-spryker.com/,https://os.de.b2c.demo-spryker.com/,spencor.hopkin@spryker.com,Spencor,Hopkin,change123,admin@spryker.com,change123,009,051,215,218
 suite-nonsplit,https://www.69.demo-spryker.com/,https://os.69.demo-spryker.com/,spencor.hopkin@spryker.com,Spencor,Hopkin,change123,admin@spryker.com,change123,009,051,215,218
