@@ -43,7 +43,7 @@ Yves: go to PDP of the product with sku:
     Yves: perform search by:    ${sku}
     Wait Until Page Contains Element    ${catalog_product_card_locator}
     Wait For Document Ready    
-    Scroll and Click Element    ${catalog_product_card_locator}
+    Scroll and Click Element    xpath=//product-item[@data-qa='component product-item'][1]//a[contains(@class,'link-detail-page')][@xpath='1']
     Wait For Document Ready
     Wait Until Page Contains Element    ${pdp_main_container_locator}
 
