@@ -27,7 +27,7 @@ Resource    ../../Resources/Steps/Users_steps.robot
 Agent_Assist_Impersonate_As_Customer
     [Documentation]    This test case checks the overall possibility to create an agent user in Zed, login with his credentials in Yves and impersonate as a customer.
     [Tags]    suite-nonsplit    b2c    b2b    all
-    Zed: login on Zed with provided credentials:    ${zedAdminEmail}    ${zedAdminPassword}    
+    Zed: login on Zed with provided credentials:    ${zed_admin_email}    ${zed_admin_password}    
     Zed: create new Zed user with the following data:    agent@spryker.com+${random}    change123    Agent    Assist    Root group    This user is an agent    en_US
     Yves: go to the 'Home' page
     Yves: go to URL:    agent/login
@@ -36,11 +36,9 @@ Agent_Assist_Impersonate_As_Customer
     Yves: perform search by customer:    ${yves_user_first_name}
     Yves: agent widget contains:    ${yves_user_email}
     Yves: login under the customer:    ${yves_user_email}
-    # Yves: perform search by:    EUROKRAFT trolley - with open shovel
-    # Yves: product with name in the catalog should have price:    EUROKRAFT trolley - with open shovel    €188.34
-    # Yves: go to PDP of the product with sku:    M70208
-    # Yves: product price on the PDP should be:    €188.34
-    Zed: login on Zed with provided credentials:    admin@spryker.com
+    Yves: go to PDP of the product with sku:    ${one_variant_product_abstract_sku}
+    Yves: product price on the PDP should be:    ${one_variant_product_abstract_price}
+    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: delete Zed user with the following email:    agent@spryker.com+${random}
 
 # Agent_Assist_Impersonate_As_Customer_Merchant_Prices
