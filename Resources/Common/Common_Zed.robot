@@ -26,6 +26,7 @@ Zed: login on Zed with provided credentials:
 Zed: go to first navigation item level:
     [Documentation]     example: "Zed: Go to First Navigation Item Level  Customers"
     [Arguments]     ${navigation_item}
+
     Click Element with JavaScript    //span[contains(@class,'nav-label')][text()='${navigation_item}']/../../a
 
 Zed: go to second navigation item level:
