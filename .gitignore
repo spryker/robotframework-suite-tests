@@ -5,3 +5,6 @@ Results/
 *.log
 settings.json
 .DS_Store
+/.idea
+/User_Journeys/output.xml
+Resources/Common/__pycache__
