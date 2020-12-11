@@ -468,7 +468,7 @@ Unique_URL
     Yves: 'Shopping Cart' page is displayed
     Yves: get link for external cart sharing
     Yves: logout on Yves as a customer
-    Yves: go to external URL:    ${externalURL}
+    Yves: go to relative URL:    ${externalURL}
     Yves: 'Shopping Cart' page is displayed
     Yves: Shopping Cart title should be equal:    Preview: externalCart+${random}
     Yves: shopping cart contains the following products:    108302
