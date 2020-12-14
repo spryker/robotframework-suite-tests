@@ -91,13 +91,9 @@ Yves: get the last placed order ID by current customer
     Set Suite Variable    ${lastPlacedOrder}    ${lastPlacedOrder}
     [Return]    ${lastPlacedOrder}
 
-Yves: go to relative URL:
-    [Arguments]    ${url}
-    ${url}=    Get URL Without Starting Slash    ${url}
-    Go To    ${host}${url}
-
 Yves: go to URL:
     [Arguments]    ${url}
+    ${url}=    Get URL Without Starting Slash    ${url}
     Go To    ${host}${url}
 
 Yves: go to external URL:

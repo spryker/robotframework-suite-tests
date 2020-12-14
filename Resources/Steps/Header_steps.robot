@@ -1,5 +1,5 @@
 *** Settings ***
-Library    SeleniumLibrary    plugins=SeleniumTestability;True;30 Seconds;True
+Library    SeleniumLibrary    plugins=SeleniumTestability;True;30 Seconds;True    implicit_wait=30.0
 Library    String
 Library    BuiltIn
 Library    Collections
