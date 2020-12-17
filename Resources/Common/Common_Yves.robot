@@ -1,4 +1,6 @@
 *** Settings ***
+Library    ../../Resources/Common/support.py
+
 Resource    Common.robot
 Resource    ../Pages/Yves/Yves_Catalog_page.robot
 Resource    ../Pages/Yves/Yves_Product_Details_Page.robot
@@ -88,6 +90,11 @@ Yves: get the last placed order ID by current customer
     ${lastPlacedOrder}=    Get Text    xpath=//div[contains(@data-qa,'component order-table')]//tr[1]//td[@data-content='Order Id'][1]
     Set Suite Variable    ${lastPlacedOrder}    ${lastPlacedOrder}
     [Return]    ${lastPlacedOrder}
+
+Yves: go to relative URL:
+    [Arguments]    ${url}
+    ${url}=    Get URL Without Starting Slash    ${url}
+    Go To    ${host}${url}
 
 Yves: go to URL:
     [Arguments]    ${url}
