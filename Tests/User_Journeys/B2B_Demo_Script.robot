@@ -457,6 +457,7 @@ Approval_Process
 #     Yves: accept the terms and conditions:    true
 #     Yves: 'submit the order' on the summary page
 #     Yves: 'Thank you' page is displayed
+#     Zed: login on Zed with provided credentials:    admin@spryker.com
 #     Zed: delete Zed user with the following email:    agent_quote+${random}@spryker.com
 
 Unique_URL

@@ -55,7 +55,7 @@ Yves: go to the quote request through the header with reference:
 
 Yves: 'Quote Request Details' page contains the following note:
     [Arguments]    ${noteToCheck}
-    ${actualNote}=    Get Text    xpath=//*[contains(text(),'Spryker rocks')]
+    ${actualNote}=    Get Text    xpath=//*[contains(text(),${noteToCheck})]
     Should Be Equal    ${actualNote}    ${noteToCheck}
 
 Yves: set 'Valid Till' date for the quote request, today +:
@@ -66,4 +66,3 @@ Yves: set 'Valid Till' date for the quote request, today +:
 
 Yves: set 'Valid Till' date in the past for the quote request:
     Add/Edit element attribute with JavaScript:    //input[@id='quote_request_agent_form_validUntil']    value    2019-07-15 02:47:55.432
-
