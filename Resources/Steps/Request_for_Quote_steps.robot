@@ -55,7 +55,7 @@ Yves: go to the quote request through the header with reference:
 
 Yves: 'Quote Request Details' page contains the following note:
     [Arguments]    ${noteToCheck}
-    ${actualNote}=    Get Text    xpath=//*[contains(text(),${noteToCheck})]
+    ${actualNote}=    Get Text    xpath=//main[contains(@class,'request-for-quote')]//label[@class='label'][contains(text(),'Notes')]//following-sibling::p[1]
     Should Be Equal    ${actualNote}    ${noteToCheck}
 
 Yves: set 'Valid Till' date for the quote request, today +:
