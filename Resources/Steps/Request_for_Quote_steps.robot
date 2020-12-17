@@ -38,6 +38,7 @@ Yves: click '${buttonName}' button on the 'Quote Request Details' page
     ...    ELSE IF    '${buttonName}' == 'Send to Customer'    Scroll and Click Element    ${quote_request_send_to_customer_button}
     ...    ELSE IF    '${buttonName}' == 'Edit'    Scroll and Click Element    ${quote_request_edit_button}
     ...    ELSE IF    '${buttonName}' == 'Edit Items'    Scroll and Click Element    ${quote_request_edit_items_button}
+    ...    ELSE IF    '${buttonName}' == 'Save'    Scroll and Click Element    ${quote_request_save_button}
     ...    ELSE IF    '${buttonName}' == 'Save and Back to Edit'    Scroll and Click Element    ${quote_request_save_and_back_to_edit_button}
     ...    ELSE IF    '${buttonName}' == 'Send to Agent'    Scroll and Click Element    ${quote_request_send_to_agent_button}
     Wait For Document Ready  
@@ -62,7 +63,7 @@ Yves: go to the quote request through the header with reference:
 
 Yves: 'Quote Request Details' page contains the following note:
     [Arguments]    ${noteToCheck}
-    ${actualNote}=    Get Text    xpath=//div[@data-qa='component quote-request-main-content']//div/label[text()='Notes']/../*[@class='text-break']
+    ${actualNote}=    Get Text    xpath=//main[contains(@class,'request-for-quote')]//label[@class='label'][contains(text(),'Notes')]//following-sibling::p[1]
     Should Be Equal    ${actualNote}    ${noteToCheck}
 
 Yves: set 'Valid Till' date for the quote request, today +:
@@ -78,4 +79,3 @@ Yves: submit new request for quote
     ${lastCreatedRfQ}=    Get Text    xpath=//*[@class='page-info__title']
     Set Suite Variable    ${lastCreatedRfQ}    ${lastCreatedRfQ}
     [Return]    ${lastCreatedRfQ}
-
