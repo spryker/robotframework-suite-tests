@@ -74,3 +74,8 @@ Yves: set 'Valid Till' date for the quote request, today +:
 Yves: set 'Valid Till' date in the past for the quote request:
     Add/Edit element attribute with JavaScript:    //input[@id='quote_request_agent_form_validUntil']    value    2019-07-15 02:47:55.432
 
+Yves: submit new request for quote
+    ${lastCreatedRfQ}=    Get Text    xpath=//*[@class='page-info__title']
+    Set Suite Variable    ${lastCreatedRfQ}    ${lastCreatedRfQ}
+    [Return]    ${lastCreatedRfQ}
+
