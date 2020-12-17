@@ -5,11 +5,19 @@ Resource    ../Pages/Yves/Yves_Quote_Request_page.robot
 Resource    ../Common/Common_Yves.robot
 Resource    ../Steps/Header_steps.robot
 Resource    ../Common/Common.robot
+Resource    ../../Resources/Pages/Yves/Yves_Shopping_Cart_page.robot
 
 *** Keywords ***
 Go to 'Quote Requests' page
     Scroll and Click Element    ${agent_quote_requests_header_item}
     Wait For Document Ready    
+
+Yves: convert a cart to a quote request
+    Scroll and Click Element    ${request_a_quote_button}
+    Wait For Document Ready
+    Scroll and Click Element    ${quote_request_convert_from_cart_confirm_button}
+    Wait For Document Ready
+       
 
 Yves: quote request with reference xxx should have status:
     [Arguments]    ${quoteReference}    ${expectedStatus}
@@ -66,3 +74,8 @@ Yves: set 'Valid Till' date for the quote request, today +:
 
 Yves: set 'Valid Till' date in the past for the quote request:
     Add/Edit element attribute with JavaScript:    //input[@id='quote_request_agent_form_validUntil']    value    2019-07-15 02:47:55.432
+
+Yves: submit new request for quote
+    ${lastCreatedRfQ}=    Get Text    xpath=//*[@class='page-info__title']
+    Set Suite Variable    ${lastCreatedRfQ}    ${lastCreatedRfQ}
+    [Return]    ${lastCreatedRfQ}
