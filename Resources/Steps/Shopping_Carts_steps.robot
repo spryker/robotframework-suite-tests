@@ -89,7 +89,7 @@ Yves: shopping cart with name xxx has the following status:
 
 Yves: delete product from the shopping cart with sku:
     [Arguments]    ${sku}
-    Scroll and Click Element    //main[contains(@class,'cart-page')]//div[contains(@class,'product-card-item__col--description')]//div[contains(.,'SKU: ${sku}')]/ancestor::article//a[contains(@href,'remove')]
+    Scroll and Click Element    //form[@name='removeFromCartForm_${sku}']//*[contains(@action,'cart/remove')]
     Wait For Document Ready    
     Yves: remove flash messages
 
@@ -98,7 +98,7 @@ Yves: shopping cart doesn't contain the following products:
     ${sku_list_count}=   get length  ${sku_list}
     FOR    ${index}    IN RANGE    0    ${sku_list_count}
         ${sku_to_check}=    Get From List    ${sku_list}    ${index}
-        Page Should Not Contain Element    xpath=//main[contains(@class,'cart-page')]//div[contains(@class,'product-card-item__col--description')]//div[contains(.,'SKU: ${sku_to_check}')]/ancestor::article
+        Page Should Not Contain Element    xpath=//form[@name='removeFromCartForm_${sku_to_check}']
     END  
 
 Yves: get link for external cart sharing
