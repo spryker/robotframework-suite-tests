@@ -1,6 +1,5 @@
 *** Settings ***
 Library    ../../Resources/Libraries/common.py
-
 Resource    Common.robot
 Resource    ../Pages/Yves/Yves_Catalog_page.robot
 Resource    ../Pages/Yves/Yves_Product_Details_Page.robot
