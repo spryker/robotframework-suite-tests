@@ -12,7 +12,12 @@ ${submit_checkout_form_button}    xpath=//div[contains(@class,'form--checkout-fo
 *** Keywords ***
 Yves: billing address same as shipping address:
     [Arguments]    ${state}
-    Run Keyword If    '${state}' == 'true'    Select Checkbox    ${checkout_address_billing_same_as_shipping_checkbox}
+    Run Keyword If    '${state}' == 'true'    Add/Edit element attribute with JavaScript:    //input[@id='addressesForm_billingSameAsShipping']    checked    checked
+   
+Yves: accept the terms and conditions:
+   [Arguments]    ${state}
+    Wait Until Page Contains Element    xpath=//input[@name='acceptTermsAndConditions']
+    Run Keyword If    '${state}' == 'true'    Run Keyword And Ignore Error    Click Element with JavaScript    //input[@name='acceptTermsAndConditions']
     
 Yves: select the following existing address on the checkout as 'shipping' address and go next:
     [Arguments]    ${addressToUse}

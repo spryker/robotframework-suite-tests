@@ -14,7 +14,7 @@ Yves: select product in the bundle slot:
     [Arguments]    ${slot}    ${sku}
     Scroll and Click Element    xpath=//form[@name='configurator_state_form']//button[contains(.,'${slot}')]
     Wait For Document Ready    
-    Scroll and Click Element    xpath=//article[@data-qa='component configurator-product']//div[contains(@class,'description')]//span[text()='Sku: ${sku}']/ancestor::article//button
+    Scroll and Click Element    xpath=//product-item-list[@data-qa='component configurator-product']//span[@class='configurator-product__sku'][text()='Sku: ${sku}']/ancestor::product-item-list//button
     Wait For Document Ready    
 
 Yves: go to 'Summary' step in the bundle configurator

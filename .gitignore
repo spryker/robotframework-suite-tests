@@ -4,3 +4,6 @@ Results/
 *.png
 *.log
 settings.json
+.DS_Store
+Resources/Libraries/__pycache__
+Resources/Libraries/__pycache__/*

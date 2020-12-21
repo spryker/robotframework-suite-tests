@@ -2,6 +2,7 @@
 Resource    ../Common/Common.robot
 Resource    ../Pages/Yves/Yves_Shopping_Lists_page.robot
 Resource    ../Common/Common_Yves.robot
+Resource    ../Pages/Yves/Yves_Delete_Shopping_List_page.robot
 
 *** Keywords ***
 Yves: 'Shopping List' widget contains:
@@ -37,10 +38,6 @@ Yves: share shopping list with user:
     Yves: 'Shopping Lists' page is displayed
     Yves: flash message 'should' be shown
 
-# Yves: the following shopping cart is shown:
-#     [Arguments]    ${shoppingCartName}    ${shoppingCartAccess}
-#     Page Should Contain Element    xpath=//*[@data-qa="component shopping-list-overview-table"]//table//td[@data-content='Access'][contains(.,'${shoppingListAccess}')]/../td[@data-content='Owner'][contains(.,'${shoppingListOwner}')]/../td[@data-content='Name'][contains(.,'${shoppingListName}')]
-
 Yves: shopping list contains the following products:
     [Arguments]    @{sku_list}    ${sku1}=${EMPTY}     ${sku2}=${EMPTY}     ${sku3}=${EMPTY}     ${sku4}=${EMPTY}     ${sku5}=${EMPTY}     ${sku6}=${EMPTY}     ${sku7}=${EMPTY}     ${sku8}=${EMPTY}     ${sku9}=${EMPTY}     ${sku10}=${EMPTY}     ${sku11}=${EMPTY}     ${sku12}=${EMPTY}     ${sku13}=${EMPTY}     ${sku14}=${EMPTY}     ${sku15}=${EMPTY}
     ${sku_list_count}=   get length  ${sku_list}
@@ -48,3 +45,12 @@ Yves: shopping list contains the following products:
         ${sku_to_check}=    Get From List    ${sku_list}    ${index}
         Page Should Contain Element    xpath=//*[@data-qa='component shopping-list-table']//div[contains(@class,'product-card-item__col--description')]//div[contains(.,'SKU: ${sku_to_check}')]/ancestor::article
     END  
+
+Yves: delete 'Shopping List' with name:
+    [Arguments]    ${shoppingListName} 
+    ${currentURL}=    Get Location        
+    Run Keyword Unless    '/shopping-list' in '${currentURL}'    Go To    ${host}shopping-list
+    Delete shopping list with name:    ${shoppingListName}
+    Wait Until Element Is Visible    ${delete_shopping_list_button}
+    Click Element    ${delete_shopping_list_button}
+    Wait For Document Ready    

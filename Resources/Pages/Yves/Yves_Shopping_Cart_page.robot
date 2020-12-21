@@ -9,6 +9,7 @@ ${shopping_cart_request_quote_button}    xpath=//a[contains(@href,'/quote-reques
 ${shopping_cart_upp-sell_products_section}    xpath=//main[contains(@class,'page-layout-main--cart-page')]//slick-carousel[@data-qa='component slick-carousel']
 ${shopping_cart_locked_cart_form}    xpath=//form[@class='cart-locking__form']
 ${shopping_cart_cart_title}    xpath=//*[contains(@class,'cart-title__text')]
+${request_a_quote_button}    xpath=//a[contains(@class,'button')][contains(text(),'Request a Quote')]
 
 *** Keywords ***
 Expand shopping cart accordion: 
