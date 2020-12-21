@@ -12,5 +12,5 @@ Zed: delete Zed user with the following email:
     Wait For Document Ready    
     Wait Until Page Contains Element    ${zed_confirm_delete_user_button}
     Click Element    ${zed_confirm_delete_user_button}
-    Wait For Document Ready    
+    Wait For Document Ready
 

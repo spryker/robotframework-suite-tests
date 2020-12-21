@@ -1,4 +1,5 @@
 *** Settings ***
+Library    ../../Resources/Libraries/common.py
 Resource    Common.robot
 Resource    ../Pages/Yves/Yves_Catalog_page.robot
 Resource    ../Pages/Yves/Yves_Product_Details_Page.robot
@@ -43,7 +44,7 @@ Yves: go to PDP of the product with sku:
     Yves: perform search by:    ${sku}
     Wait Until Page Contains Element    ${catalog_product_card_locator}
     Wait For Document Ready    
-    Scroll and Click Element    ${catalog_product_card_locator}
+    Scroll and Click Element    xpath=//product-item[@data-qa='component product-item'][1]//a[contains(@class,'link-detail-page')][@xpath='1']
     Wait For Document Ready
     Wait Until Page Contains Element    ${pdp_main_container_locator}
 
@@ -91,6 +92,7 @@ Yves: get the last placed order ID by current customer
 
 Yves: go to URL:
     [Arguments]    ${url}
+    ${url}=    Get URL Without Starting Slash    ${url}
     Go To    ${host}${url}
 
 Yves: go to external URL:

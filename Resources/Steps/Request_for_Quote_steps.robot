@@ -5,11 +5,19 @@ Resource    ../Pages/Yves/Yves_Quote_Request_page.robot
 Resource    ../Common/Common_Yves.robot
 Resource    ../Steps/Header_steps.robot
 Resource    ../Common/Common.robot
+Resource    ../../Resources/Pages/Yves/Yves_Shopping_Cart_page.robot
 
 *** Keywords ***
 Go to 'Quote Requests' page
     Scroll and Click Element    ${agent_quote_requests_header_item}
     Wait For Document Ready    
+
+Yves: convert a cart to a quote request
+    Scroll and Click Element    ${request_a_quote_button}
+    Wait For Document Ready
+    Scroll and Click Element    ${quote_request_convert_from_cart_confirm_button}
+    Wait For Document Ready
+       
 
 Yves: quote request with reference xxx should have status:
     [Arguments]    ${quoteReference}    ${expectedStatus}
@@ -30,6 +38,7 @@ Yves: click '${buttonName}' button on the 'Quote Request Details' page
     ...    ELSE IF    '${buttonName}' == 'Send to Customer'    Scroll and Click Element    ${quote_request_send_to_customer_button}
     ...    ELSE IF    '${buttonName}' == 'Edit'    Scroll and Click Element    ${quote_request_edit_button}
     ...    ELSE IF    '${buttonName}' == 'Edit Items'    Scroll and Click Element    ${quote_request_edit_items_button}
+    ...    ELSE IF    '${buttonName}' == 'Save'    Scroll and Click Element    ${quote_request_save_button}
     ...    ELSE IF    '${buttonName}' == 'Save and Back to Edit'    Scroll and Click Element    ${quote_request_save_and_back_to_edit_button}
     ...    ELSE IF    '${buttonName}' == 'Send to Agent'    Scroll and Click Element    ${quote_request_send_to_agent_button}
     Wait For Document Ready  
@@ -54,7 +63,7 @@ Yves: go to the quote request through the header with reference:
 
 Yves: 'Quote Request Details' page contains the following note:
     [Arguments]    ${noteToCheck}
-    ${actualNote}=    Get Text    xpath=//div[@data-qa='component quote-request-main-content']//div/label[text()='Notes']/../*[@class='text-break']
+    ${actualNote}=    Get Text    xpath=//main[contains(@class,'request-for-quote')]//label[@class='label'][contains(text(),'Notes')]//following-sibling::p[1]
     Should Be Equal    ${actualNote}    ${noteToCheck}
 
 Yves: set 'Valid Till' date for the quote request, today +:
@@ -66,3 +75,7 @@ Yves: set 'Valid Till' date for the quote request, today +:
 Yves: set 'Valid Till' date in the past for the quote request:
     Add/Edit element attribute with JavaScript:    //input[@id='quote_request_agent_form_validUntil']    value    2019-07-15 02:47:55.432
 
+Yves: submit new request for quote
+    ${lastCreatedRfQ}=    Get Text    xpath=//*[@class='page-info__title']
+    Set Suite Variable    ${lastCreatedRfQ}    ${lastCreatedRfQ}
+    [Return]    ${lastCreatedRfQ}

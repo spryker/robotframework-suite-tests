@@ -397,67 +397,81 @@ Approval_Process
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
 
-# Request_for_Quote
-##    ToDo: create quote for test
-#     Zed: login on Zed with provided credentials:    admin@spryker.com
-#     Zed: create new Zed user with the following data:    agent_quote+${random}@spryker.com    change123    Request    Quote    Root group    This user is an agent    en_US
-#     Yves: go to URL:    agent/login
-#     Yves: login on Yves with provided credentials:    agent_quote+${random}@spryker.com
-#     Yves: header contains/doesn't contain:    true    ${quoteRequestsWidget}
-#     Yves: go to 'Quote Requests' page through the header
-#     Yves: 'Quote Requests' page is displayed
-#     ### After first run status is changed, so step will fail ###
-#     Yves: quote request with reference xxx should have status:    DE--21-5    Waiting
-#     Yves: view quote request with reference:    DE--21-5
-#     Yves: 'Quote Request Details' page is displayed
-#     Yves: click 'Revise' button on the 'Quote Request Details' page
-#     Yves: change price for the product in the quote request with sku xxx on:    424605    5
-#     Yves: click 'Send to Customer' button on the 'Quote Request Details' page
-#     Yves: logout on Yves as a customer
-#     Yves: go to the 'Home' page
-#     Yves: login on Yves with provided credentials:    sonia@spryker.com
-#     Yves: go to user menu item in header:    Quote Requests
-#     Yves: quote request with reference xxx should have status:    DE--21-5    Ready
-#     Yves: view quote request with reference:    DE--21-5
-#     Yves: click 'Revise' button on the 'Quote Request Details' page
-#     Yves: click 'Edit Items' button on the 'Quote Request Details' page
-#     ### After first run product is removed, so step will fail ###
-#     Yves: delete product from the shopping cart with sku:    425159
-#     Yves: click 'Save and Back to Edit' button on the 'Quote Request Details' page
-#     Yves: add the following note to the quote request:    Spryker rocks
-#     Yves: click 'Save' button on the 'Quote Request Details' page
-#     Yves: click 'Send to Agent' button on the 'Quote Request Details' page
-#     Yves: logout on Yves as a customer
-#     Yves: go to URL:    agent/login
-#     Yves: login on Yves with provided credentials:    agent_quote+${random}@spryker.com
-#     Yves: move mouse over header menu item:     ${quoteRequestsWidget}
-#     Yves: 'Quote Requests' widget is shown
-#     Yves: go to the quote request through the header with reference:    DE--21-5
-#     Yves: 'Quote Request Details' page contains the following note:   Spryker rocks
-#     Yves: click 'Revise' button on the 'Quote Request Details' page
-#     Yves: set 'Valid Till' date for the quote request, today +:    1 day
-#     Yves: change price for the product in the quote request with sku xxx on:    424605    5
-#     Yves: click 'Send to Customer' button on the 'Quote Request Details' page
-#     Yves: logout on Yves as a customer
-#     Yves: go to the 'Home' page
-#     Yves: login on Yves with provided credentials:    sonia@spryker.com
-#     Yves: go to user menu item in header:    Quote Requests
-#     Yves: quote request with reference xxx should have status:    DE--21-5    Ready
-#     Yves: view quote request with reference:    DE--21-5
-#     Yves: click 'Convert to Cart' button on the 'Quote Request Details' page
-#     Yves: 'Shopping Cart' page is displayed
-#     Yves: shopping cart contains product with unit price:    424605    5
-#     Yves: shopping cart doesn't contain the following products:    425159
-#     Yves: click on the 'Checkout' button
-#     Yves: billing address same as shipping address:    true
-#     Yves: select the following existing address on the checkout as 'shipping' address and go next:    Ms Sonia Wagner, Kirncher Str. 7, 10247 Berlin
-#     Yves: select the following shipping method on the checkout and go next:    Express
-#     Yves: select the following payment method on the checkout and go next:    Invoice
-#     Yves: shopping cart contains product with unit price:    424605    5
-#     Yves: accept the terms and conditions:    true
-#     Yves: 'submit the order' on the summary page
-#     Yves: 'Thank you' page is displayed
-#     Zed: delete Zed user with the following email:    agent_quote+${random}@spryker.com
+Request_for_Quote
+# #    ToDo: create quote for test
+    Zed: login on Zed with provided credentials:    admin@spryker.com
+    Zed: create new Zed user with the following data:    agent_quote+${random}@spryker.com    change123    Request    Quote    Root group    This user is an agent    en_US
+    Yves: login on Yves with provided credentials:    spencor.hopkin@spryker.com
+    Yves: create new 'Shopping Cart' with name:    RfQ+${random}
+    Yves: go to PDP of the product with sku:    212837
+    #ToDo add one more product to the cart
+    Yves: add product to the shopping cart
+    Yves: go to PDP of the product with sku:    101515
+    Yves: add product to the shopping cart
+    Yves: go to the shopping cart through the header with name:    RfQ+${random}
+    Yves: click on the 'Request a Quote' button
+    Yves: submit new request for quote
+    Yves: click on the 'Send to Agent' button
+    Yves: logout on Yves as a customer
+    Yves: go to URL:    agent/login
+    Yves: login on Yves with provided credentials:    agent_quote+${random}@spryker.com
+    Yves: header contains/doesn't contain:    true    ${quoteRequestsWidget}
+    Yves: go to 'Quote Requests' page through the header
+    Yves: 'Quote Requests' page is displayed
+    ### After first run status is changed, so step will fail ###
+    Yves: quote request with reference xxx should have status:    ${lastCreatedRfQ}    Waiting
+    Yves: view quote request with reference:    ${lastCreatedRfQ}
+    Yves: 'Quote Request Details' page is displayed
+    Yves: click 'Revise' button on the 'Quote Request Details' page
+    #todo replace all SKUs in this test with added to cart above
+    Yves: change price for the product in the quote request with sku xxx on:    212837    5
+    Yves: click 'Send to Customer' button on the 'Quote Request Details' page
+    Yves: logout on Yves as a customer
+    Yves: go to the 'Home' page
+    Yves: login on Yves with provided credentials:    sonia@spryker.com
+    Yves: go to user menu item in header:    Quote Requests
+    Yves: quote request with reference xxx should have status:    ${lastCreatedRfQ}    Ready
+    Yves: view quote request with reference:    ${lastCreatedRfQ}
+    Yves: click 'Revise' button on the 'Quote Request Details' page
+    Yves: click 'Edit Items' button on the 'Quote Request Details' page
+    ### After first run product is removed, so step will fail ###
+    Yves: delete product from the shopping cart with sku:    101515
+    Yves: click 'Save and Back to Edit' button on the 'Quote Request Details' page
+    Yves: add the following note to the quote request:    Spryker rocks
+    Yves: click 'Save' button on the 'Quote Request Details' page
+    Yves: click 'Send to Agent' button on the 'Quote Request Details' page
+    Yves: logout on Yves as a customer
+    Yves: go to URL:    agent/login
+    Yves: login on Yves with provided credentials:    agent_quote+${random}@spryker.com
+    Yves: move mouse over header menu item:     ${quoteRequestsWidget}
+    Yves: 'Quote Requests' widget is shown
+    Yves: go to the quote request through the header with reference:    ${lastCreatedRfQ}
+    Yves: 'Quote Request Details' page contains the following note:   Spryker rocks
+    Yves: click 'Revise' button on the 'Quote Request Details' page
+    Yves: set 'Valid Till' date for the quote request, today +:    1 day
+    Yves: change price for the product in the quote request with sku xxx on:    212837    5
+    Yves: click 'Send to Customer' button on the 'Quote Request Details' page
+    Yves: logout on Yves as a customer
+    Yves: go to the 'Home' page
+    Yves: login on Yves with provided credentials:    spencor.hopkin@spryker.com
+    Yves: go to user menu item in header:    Quote Requests
+    Yves: quote request with reference xxx should have status:    ${lastCreatedRfQ}    Ready
+    Yves: view quote request with reference:    ${lastCreatedRfQ}
+    Yves: click 'Convert to Cart' button on the 'Quote Request Details' page
+    Yves: 'Shopping Cart' page is displayed
+    Yves: shopping cart contains product with unit price:    212837    5
+    Yves: shopping cart doesn't contain the following products:    101515
+    Yves: click on the 'Checkout' button
+    Yves: billing address same as shipping address:    true
+    Yves: select the following existing address on the checkout as 'shipping' address and go next:    Ms Sonia Wagner, Kirncher Str. 7, 10247 Berlin
+    Yves: select the following shipping method on the checkout and go next:    Express
+    Yves: select the following payment method on the checkout and go next:    Invoice
+    Yves: shopping cart contains product with unit price:    212837    5
+    Yves: accept the terms and conditions:    true
+    Yves: 'submit the order' on the summary page
+    Yves: 'Thank you' page is displayed
+    Zed: login on Zed with provided credentials:    admin@spryker.com
+    Zed: delete Zed user with the following email:    agent_quote+${random}@spryker.com
 
 Unique_URL
     Yves: login on Yves with provided credentials:    sonia@spryker.com
@@ -468,42 +482,42 @@ Unique_URL
     Yves: 'Shopping Cart' page is displayed
     Yves: get link for external cart sharing
     Yves: logout on Yves as a customer
-    Yves: go to external URL:    ${externalURL}
+    Yves: go to URL:    ${externalURL}
     Yves: 'Shopping Cart' page is displayed
     Yves: Shopping Cart title should be equal:    Preview: externalCart+${random}
     Yves: shopping cart contains the following products:    108302
     Yves: delete 'Shopping Cart' with name:    externalCart+${random}
 
-# Configurable_Bundle
-#     Yves: login on Yves with provided credentials:    sonia@spryker.com
-#     Yves: create new 'Shopping Cart' with name:    confBundle+${random}
-#     Yves: go to second navigation item level:    More    Configurable Bundle
-#     Yves: 'Choose Bundle to configure' page is displayed
-#     Yves: choose bundle template to configure:    Presentation bundle
-#     Yves: select product in the bundle slot:    Slot 5    408104
-#     Yves: select product in the bundle slot:    Slot 6    423172
-#     Yves: go to 'Summary' step in the bundle configurator
-#     Yves: add products to the shopping cart in the bundle configurator
-#     Yves: go to second navigation item level:    More    Configurable Bundle
-#     Yves: 'Choose Bundle to configure' page is displayed
-#     Yves: choose bundle template to configure:    Presentation bundle
-#     Yves: select product in the bundle slot:    Slot 5    421539
-#     Yves: select product in the bundle slot:    Slot 6    424551
-#     Yves: go to 'Summary' step in the bundle configurator
-#     Yves: add products to the shopping cart in the bundle configurator
-#     Yves: go to the shopping cart through the header with name:    confBundle+${random}
-#     Yves: change quantity of the configurable bundle in the shopping cart on:    Presentation bundle    2
-#     Yves: click on the 'Checkout' button
-#     Yves: billing address same as shipping address:    true
-#     Yves: select the following existing address on the checkout as 'shipping' address and go next:    Ms Sonia Wagner, Kirncher Str. 7, 10247 Berlin
-#     Yves: select the following shipping method on the checkout and go next:    Express
-#     Yves: select the following payment method on the checkout and go next:    Invoice
-#     Yves: accept the terms and conditions:    true
-#     Yves: 'submit the order' on the summary page
-#     Yves: 'Thank you' page is displayed
-#     Yves: go to user menu item in header:    Order History
-#     Yves: 'Order History' page is displayed
-#     Yves: get the last placed order ID by current customer
-#     Yves: 'View Order/ Reorder' on the order history page:    View Order    ${lastPlacedOrder}
-#     Yves: 'View Order' page is displayed
-#     Yves: 'Order Details' page contains the following product title N times:    Presentation bundle    3
+Configurable_Bundle
+    Yves: login on Yves with provided credentials:    sonia@spryker.com
+    Yves: create new 'Shopping Cart' with name:    confBundle+${random}
+    Yves: go to second navigation item level:    More    Configurable Bundle
+    Yves: 'Choose Bundle to configure' page is displayed
+    Yves: choose bundle template to configure:    Presentation bundle
+    Yves: select product in the bundle slot:    Slot 5    408104
+    Yves: select product in the bundle slot:    Slot 6    423172
+    Yves: go to 'Summary' step in the bundle configurator
+    Yves: add products to the shopping cart in the bundle configurator
+    Yves: go to second navigation item level:    More    Configurable Bundle
+    Yves: 'Choose Bundle to configure' page is displayed
+    Yves: choose bundle template to configure:    Presentation bundle
+    Yves: select product in the bundle slot:    Slot 5    421539
+    Yves: select product in the bundle slot:    Slot 6    424551
+    Yves: go to 'Summary' step in the bundle configurator
+    Yves: add products to the shopping cart in the bundle configurator
+    Yves: go to the shopping cart through the header with name:    confBundle+${random}
+    Yves: change quantity of the configurable bundle in the shopping cart on:    Presentation bundle    2
+    Yves: click on the 'Checkout' button
+    Yves: billing address same as shipping address:    true
+    Yves: select the following existing address on the checkout as 'shipping' address and go next:    Ms Sonia Wagner, Kirncher Str. 7, 10247 Berlin
+    Yves: select the following shipping method on the checkout and go next:    Express
+    Yves: select the following payment method on the checkout and go next:    Invoice
+    Yves: accept the terms and conditions:    true
+    Yves: 'submit the order' on the summary page
+    Yves: 'Thank you' page is displayed
+    Yves: go to user menu item in header:    Order History
+    Yves: 'Order History' page is displayed
+    Yves: get the last placed order ID by current customer
+    Yves: 'View Order/ Reorder' on the order history page:    View Order    ${lastPlacedOrder}
+    Yves: 'View Order' page is displayed
+    Yves: 'Order Details' page contains the following product title N times:    Presentation bundle    3
