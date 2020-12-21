@@ -8,5 +8,4 @@ settings.json
 /.idea
 /User_Journeys/output.xml
 Resources/Libraries/__pycache__
-Resources/Common/__pycache__
 /.vscode
