@@ -10,16 +10,16 @@ Resource                  ../Pages/Yves/Yves_Login_page.robot
 
 *** Variables ***
 # *** SUITE VARIABLES ***
-${env}                  B2B
+${env}                 b2b
 ${browser}             headlesschrome
 # ${browser}             chrome
-#${host}                https://www.de.b2b.demo-spryker.com/
-#${zed_url}             https://os.de.b2b.demo-spryker.com/
+# ${host}                https://www.de.b2b.demo-spryker.com/
+# ${zed_url}             https://os.de.b2b.demo-spryker.com/
 ${email_domain}        @spryker.com
 ${default_password}    change123
 ${loading_time}        3s
 ${admin_email}         admin@spryker.com
-#${test_customer_email}      test.spryker+${random}@gmail.com
+${fake_email}          test.spryker+${random}@gmail.com
 
 *** Keywords ***
 Load Variables
