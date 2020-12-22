@@ -398,44 +398,38 @@ Approval_Process
     Yves: 'Thank you' page is displayed
 
 Request_for_Quote
-# #    ToDo: create quote for test
     Zed: login on Zed with provided credentials:    admin@spryker.com
     Zed: create new Zed user with the following data:    agent_quote+${random}@spryker.com    change123    Request    Quote    Root group    This user is an agent    en_US
-    Yves: login on Yves with provided credentials:    spencor.hopkin@spryker.com
-    Yves: create new 'Shopping Cart' with name:    RfQ+${random}
-    Yves: go to PDP of the product with sku:    212837
-    #ToDo add one more product to the cart
+    Yves: login on Yves with provided credentials:    Trever.m@spryker.com
+    Yves: create new 'Shopping Cart' with name:    RfQCart+${random}
+    Yves: go to PDP of the product with sku:    M70208
     Yves: add product to the shopping cart
-    Yves: go to PDP of the product with sku:    101515
+    Yves: go to PDP of the product with sku:    M1018212
     Yves: add product to the shopping cart
-    Yves: go to the shopping cart through the header with name:    RfQ+${random}
-    Yves: click on the 'Request a Quote' button
+    Yves: go to the shopping cart through the header with name:    RfQCart+${random}
     Yves: submit new request for quote
-    Yves: click on the 'Send to Agent' button
+    Yves: click 'Send to Agent' button on the 'Quote Request Details' page
     Yves: logout on Yves as a customer
     Yves: go to URL:    agent/login
     Yves: login on Yves with provided credentials:    agent_quote+${random}@spryker.com
     Yves: header contains/doesn't contain:    true    ${quoteRequestsWidget}
     Yves: go to 'Quote Requests' page through the header
     Yves: 'Quote Requests' page is displayed
-    ### After first run status is changed, so step will fail ###
     Yves: quote request with reference xxx should have status:    ${lastCreatedRfQ}    Waiting
     Yves: view quote request with reference:    ${lastCreatedRfQ}
     Yves: 'Quote Request Details' page is displayed
     Yves: click 'Revise' button on the 'Quote Request Details' page
-    #todo replace all SKUs in this test with added to cart above
-    Yves: change price for the product in the quote request with sku xxx on:    212837    5
+    Yves: change price for the product in the quote request with sku xxx on:    403125    500
     Yves: click 'Send to Customer' button on the 'Quote Request Details' page
     Yves: logout on Yves as a customer
     Yves: go to the 'Home' page
-    Yves: login on Yves with provided credentials:    sonia@spryker.com
+    Yves: login on Yves with provided credentials:    Trever.m@spryker.com
     Yves: go to user menu item in header:    Quote Requests
     Yves: quote request with reference xxx should have status:    ${lastCreatedRfQ}    Ready
     Yves: view quote request with reference:    ${lastCreatedRfQ}
     Yves: click 'Revise' button on the 'Quote Request Details' page
     Yves: click 'Edit Items' button on the 'Quote Request Details' page
-    ### After first run product is removed, so step will fail ###
-    Yves: delete product from the shopping cart with sku:    101515
+    Yves: delete product from the shopping cart with sku:    102121
     Yves: click 'Save and Back to Edit' button on the 'Quote Request Details' page
     Yves: add the following note to the quote request:    Spryker rocks
     Yves: click 'Save' button on the 'Quote Request Details' page
@@ -449,24 +443,24 @@ Request_for_Quote
     Yves: 'Quote Request Details' page contains the following note:   Spryker rocks
     Yves: click 'Revise' button on the 'Quote Request Details' page
     Yves: set 'Valid Till' date for the quote request, today +:    1 day
-    Yves: change price for the product in the quote request with sku xxx on:    212837    5
+    Yves: change price for the product in the quote request with sku xxx on:    403125    500
     Yves: click 'Send to Customer' button on the 'Quote Request Details' page
     Yves: logout on Yves as a customer
     Yves: go to the 'Home' page
-    Yves: login on Yves with provided credentials:    spencor.hopkin@spryker.com
+    Yves: login on Yves with provided credentials:    Trever.m@spryker.com
     Yves: go to user menu item in header:    Quote Requests
     Yves: quote request with reference xxx should have status:    ${lastCreatedRfQ}    Ready
     Yves: view quote request with reference:    ${lastCreatedRfQ}
     Yves: click 'Convert to Cart' button on the 'Quote Request Details' page
     Yves: 'Shopping Cart' page is displayed
-    Yves: shopping cart contains product with unit price:    212837    5
-    Yves: shopping cart doesn't contain the following products:    101515
+    Yves: shopping cart contains product with unit price:    403125    500
+    Yves: shopping cart doesn't contain the following products:    102121
     Yves: click on the 'Checkout' button
     Yves: billing address same as shipping address:    true
-    Yves: select the following existing address on the checkout as 'shipping' address and go next:    Ms Sonia Wagner, Kirncher Str. 7, 10247 Berlin
+    Yves: select the following existing address on the checkout as 'shipping' address and go next:    Mr Trever Meier, Kirncher Str. 7, 10247 Berlin
     Yves: select the following shipping method on the checkout and go next:    Express
     Yves: select the following payment method on the checkout and go next:    Invoice
-    Yves: shopping cart contains product with unit price:    212837    5
+    Yves: shopping cart contains product with unit price:    403125    500
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed

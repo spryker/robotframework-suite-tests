@@ -89,7 +89,7 @@ Yves: shopping cart with name xxx has the following status:
 
 Yves: delete product from the shopping cart with sku:
     [Arguments]    ${sku}
-    Scroll and Click Element    //form[@name='removeFromCartForm_${sku}']//*[contains(@action,'cart/remove')]
+    Scroll and Click Element    xpath=//form[@name='removeFromCartForm_${sku}']//button
     Wait For Document Ready    
     Yves: remove flash messages
 

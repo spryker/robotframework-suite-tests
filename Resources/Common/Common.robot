@@ -19,7 +19,7 @@ ${email_domain}        @spryker.com
 ${default_password}    change123
 ${loading_time}        3s
 ${admin_email}         admin@spryker.com
-${fake_email}          test.spryker+${random}@gmail.com
+# ${fake_email}          test.spryker+${random}@gmail.com
 
 *** Keywords ***
 Load Variables
