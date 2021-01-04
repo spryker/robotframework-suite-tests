@@ -4,6 +4,8 @@ Library    String
 Library    BuiltIn
 Library    Collections
 Resource    ../Pages/Yves/Yves_Header_Section.robot
+Resource    ../Pages/Yves/Yves_Catalog_page.robot
+Resource    ../Steps/Request_for_Quote_steps.robot
 Resource    ../Steps/Shopping_Carts_steps.robot
 Resource    ../Steps/Shopping_Lists_steps.robot
 Resource    ../Steps/Quick_Order_steps.robot
@@ -26,7 +28,7 @@ Yves: perform search by:
     wait until element is visible    ${search_form_header_menu_item}
     Input Text    ${search_form_header_menu_item}    ${searchTerm}
     Press Keys    None    RETURN
-    Wait For Document Ready
+    Wait Until Page Contains Element    ${catalog_main_page_locator}
 
 Yves: go to company menu item:
     [Arguments]    ${company_menu_item}

@@ -31,3 +31,7 @@ Delete shopping list with name:
 Dismiss shopping list with name:
     [Arguments]    ${shoppingListName}       
     Scroll and Click Element    xpath=//*[@data-qa="component shopping-list-overview-table"]//table//td[@data-content='Name'][contains(.,'${shoppingListName}')]/..//div[@data-qa='component table-action-list']//a[contains(.,'Dismiss')]
+
+View shopping list with name:
+    [Arguments]    ${shoppingListName}       
+    Scroll and Click Element    xpath=//*[@data-qa="component shopping-list-overview-table"]//table//td[@data-content='Name'][contains(.,'${shoppingListName}')]//a[contains(@href,'details')]

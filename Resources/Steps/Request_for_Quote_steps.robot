@@ -77,7 +77,8 @@ Yves: set 'Valid Till' date in the past for the quote request:
     Add/Edit element attribute with JavaScript:    //input[@id='quote_request_agent_form_validUntil']    value    2019-07-15 02:47:55.432
 
 Yves: submit new request for quote
-    Yves: click on the 'Request a Quote' button
+    [Documentation]    Returns ID of the RfQ
+    Yves: click on the 'Request a Quote' button in the shopping cart
     Wait For Document Ready
     Scroll and Click Element    ${quote_request_convert_from_cart_confirm_button}
     Wait For Document Ready

@@ -44,12 +44,13 @@ Zed: click button in Header:
     [Arguments]    ${button_name}
     wait until element is visible    xpath=//div[@class='title-action']/a[contains(.,'${button_name}')]
     Scroll and Click Element    xpath=//div[@class='title-action']/a[contains(.,'${button_name}')]
+    Wait For Document Ready    
 
 Zed: click Action Button in a table for row that contains:
     [Arguments]    ${row_content}    ${zed_table_action_button_locator}
     Zed: perform search by:    ${row_content}
-    wait until element is visible    xpath=//table[contains(@class,'dataTable')]/tbody//td[contains(text(),'${row_content}')]/../td[position()=last()]/*[contains(.,'${zed_table_action_button_locator}')]
-    Scroll and Click Element    xpath=//table[contains(@class,'dataTable')]/tbody//td[contains(text(),'${row_content}')]/../td[position()=last()]/*[contains(.,'${zed_table_action_button_locator}')]
+    wait until element is visible    xpath=//table[contains(@class,'dataTable')]/tbody//td[contains(text(),'${row_content}')]/../td[contains(@class,'column-Action') or contains(@class,'column-action')]/*[contains(.,'${zed_table_action_button_locator}')]
+    Scroll and Click Element    xpath=//table[contains(@class,'dataTable')]/tbody//td[contains(text(),'${row_content}')]/../td[contains(@class,'column-Action') or contains(@class,'column-action')]/*[contains(.,'${zed_table_action_button_locator}')]
 
 Zed: select checkbox by Label:
     [Arguments]    ${checkbox_label}

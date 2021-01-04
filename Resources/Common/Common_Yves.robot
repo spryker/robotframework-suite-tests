@@ -15,6 +15,8 @@ Resource    ../Pages/Yves/Yves_Customer_Account_page.robot
 Resource    ../Pages/Yves/Yves_Quote_Requests_page.robot
 Resource    ../Pages/Yves/Yves_Quote_Request_page.robot
 Resource    ../Pages/Yves/Yve_Choose_Bundle_to_Configure_page.robot
+Resource    ../Pages/Yves/Yves_Create_Return_page.robot
+Resource    ../Pages/Yves/Yves_Return_Details_page.robot
 
 *** Variable ***
 ${notification_area}    xpath=//section[@data-qa='component notification-area']
@@ -29,7 +31,7 @@ Yves: login on Yves with provided credentials:
     ...    AND    delete all cookies 
     ...    AND    Reload Page
     ...    AND    Wait Until Element Is Visible    ${header_login_button}
-    ...    AND    Click Element    ${header_login_button}
+    ...    AND    Scroll and Click Element    ${header_login_button}
     ...    AND    Wait Until Element Is Visible    ${email_field}
     input text    ${email_field}    ${email}
     input text    ${password_field}    ${password}
@@ -63,6 +65,8 @@ Yves: '${pageName}' page is displayed
     ...    ELSE IF    '${pageName}' == 'Quote Requests'    Page Should Contain Element    ${quote_requests_main_content_locator}    ${pageName} page is not displayed 
     ...    ELSE IF    '${pageName}' == 'Quote Request Details'    Page Should Contain Element    ${quote_request_main_content_locator}    ${pageName} page is not displayed 
     ...    ELSE IF    '${pageName}' == 'Choose Bundle to configure'    Page Should Contain Element    ${choose_bundle_main_content_locator}    ${pageName} page is not displayed 
+    ...    ELSE IF    '${pageName}' == 'Create Return'    Page Should Contain Element    ${create_return_main_content_locator}    ${pageName} page is not displayed  
+    ...    ELSE IF    '${pageName}' == 'Return Details'    Page Should Contain Element    ${return_details_main_content_locator}    ${pageName} page is not displayed  
 
 Yves: remove flash messages    ${flash_massage_state}=    Run Keyword And Ignore Error    Wait Until Page Contains Element        ${notification_area}    1s
     Log    ${flash_massage_state}
@@ -130,3 +134,24 @@ Yves: go to third navigation item level:
     Wait Until Element Is Visible    //div[@class='header__navigation']//navigation-multilevel[@data-qa='component navigation-multilevel']/ul[@class='menu menu--lvl-0']//li[contains(@class,'menu__item--lvl-0')]/span/*[contains(@class,'lvl-0')][1][text()='${navigation_item_level1}']/ancestor::li//ul[contains(@class,'menu--lvl-1')]
     Click Element with JavaScript    //div[@class='header__navigation']//navigation-multilevel[@data-qa='component navigation-multilevel']/ul[@class='menu menu--lvl-0']//li[contains(@class,'menu__item--lvl-0')]/span/*[contains(@class,'lvl-0')][1][text()='${navigation_item_level1}']/ancestor::li//ul[contains(@class,'menu--lvl-2')]//li[contains(@class,'menu__item--lvl-2')]/span/*[contains(@class,'lvl-2')][1][text()='${navigation_item_level3}']
     Wait For Document Ready 
+
+Yves: get index of the first available product
+    Yves: perform search by:    ${EMPTY}
+    Wait Until Page Contains Element    ${catalog_main_page_locator}
+    ${productsCount}=    Get Element Count    xpath=//product-item[@data-qa='component product-item']
+    Log    ${productsCount}
+    FOR    ${index}    IN RANGE    1    ${productsCount}+1
+        ${status}=    Run Keyword And Ignore Error    Page should contain element    xpath=//product-item[@data-qa='component product-item'][${index}]//*[@class='product-item__actions']//ajax-add-to-cart//button[@disabled='']
+        Log    ${index}
+        Run keyword if    'PASS' in ${status}    Continue For Loop
+        Run keyword if    'FAIL' in ${status}    Run Keywords
+        ...    Return From Keyword    ${index}
+        ...    AND    Exit For Loop
+    END
+        ${productIndex}=    Set Variable    ${index}
+        Return From Keyword    ${productIndex}
+
+Yves: go to the PDP of the first available product
+    ${index}=    Yves: get index of the first available product
+    Scroll and Click Element    xpath=//product-item[@data-qa='component product-item'][${index}]//a[contains(@class,'link-detail-page') and (contains(@class,'name'))]
+    Wait Until Page Contains Element    ${pdp_main_container_locator} 
