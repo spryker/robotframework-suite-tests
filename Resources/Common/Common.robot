@@ -1,6 +1,6 @@
 *** Settings ***
 
-Library    SeleniumLibrary    plugins=SeleniumTestability;True;30 Seconds;True    implicit_wait=30.0
+Library    SeleniumLibrary    plugins=SeleniumTestability;True;30 Seconds;True
 Library    String
 Library    Dialogs
 Library    OperatingSystem
@@ -62,7 +62,7 @@ TestTeardown
 
 Select Random Option From List
     [Arguments]    ${dropDownLocator}    ${dropDownOptionsLocator}
-    ${getOptionsCount}=    Get Matching Xpath Count    ${dropDownOptionsLocator}
+    ${getOptionsCount}=    Get Element Count    ${dropDownOptionsLocator}
     ${index}=    Evaluate    random.randint(0, ${getOptionsCount}-1)    random
     ${index}=    Convert To String    ${index}
     Select From List By Index    ${dropDownLocator}    ${index}
