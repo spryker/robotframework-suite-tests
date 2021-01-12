@@ -18,3 +18,5 @@ ${pdp_product_bundle_include_small}    xpath=//div[@class='js-product-options-bu
 ${pdp_product_bundle_include_large}    xpath=//div[@data-qa='component product-bundle']
 ${pdp_related_products}    xpath=//*[contains(@class,'title--product-slider')][contains(.,'Similar products')]/../slick-carousel
 ${pdp_add_to_shopping_list_button}    xpath=//button[@data-qa='add-to-shopping-list-button']
+${pdp_product_sku}    xpath=//section[@class='product-configurator']//div[@class='product-configurator__sku']
+${pdp_shopping_list_selector}    xpath=//form[contains(@action,'shopping-list')]//select

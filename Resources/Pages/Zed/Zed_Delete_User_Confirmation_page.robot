@@ -1,4 +1,3 @@
-
 *** Settings ***
 Library    SeleniumLibrary    plugins=SeleniumTestability;True;30 Seconds;True
 

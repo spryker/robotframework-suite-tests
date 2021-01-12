@@ -11,6 +11,6 @@ Zed: delete Zed user with the following email:
     Zed: click Action Button in a table for row that contains:    ${zed_email}    Delete
     Wait For Document Ready    
     Wait Until Page Contains Element    ${zed_confirm_delete_user_button}
-    Click Element    ${zed_confirm_delete_user_button}
+    Scroll and Click Element    ${zed_confirm_delete_user_button}
     Wait For Document Ready
 

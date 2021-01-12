@@ -59,7 +59,7 @@ Yves: shopping cart contains the following products:
         Page Should Contain Element    xpath=//main[contains(@class,'cart-page')]//div[contains(@class,'product-card-item__col--description')]//div[contains(.,'SKU: ${sku_to_check}')]/ancestor::article
     END    
     
-Yves: click on the '${buttonName}' button
+Yves: click on the '${buttonName}' button in the shopping cart
     Run Keyword If    '${buttonName}' == 'Checkout'    Scroll and Click Element    ${shopping_cart_checkout_button}
     ...    ELSE IF    '${buttonName}' == 'Request a Quote'    Scroll and Click Element    ${shopping_cart_request_quote_button}
 
@@ -89,7 +89,7 @@ Yves: shopping cart with name xxx has the following status:
 
 Yves: delete product from the shopping cart with sku:
     [Arguments]    ${sku}
-    Scroll and Click Element    //main[contains(@class,'cart-page')]//div[contains(@class,'product-card-item__col--description')]//div[contains(.,'SKU: ${sku}')]/ancestor::article//a[contains(@href,'remove')]
+    Scroll and Click Element    xpath=//form[@name='removeFromCartForm_${sku}']//button
     Wait For Document Ready    
     Yves: remove flash messages
 
@@ -98,7 +98,7 @@ Yves: shopping cart doesn't contain the following products:
     ${sku_list_count}=   get length  ${sku_list}
     FOR    ${index}    IN RANGE    0    ${sku_list_count}
         ${sku_to_check}=    Get From List    ${sku_list}    ${index}
-        Page Should Not Contain Element    xpath=//main[contains(@class,'cart-page')]//div[contains(@class,'product-card-item__col--description')]//div[contains(.,'SKU: ${sku_to_check}')]/ancestor::article
+        Page Should Not Contain Element    xpath=//form[@name='removeFromCartForm_${sku_to_check}']
     END  
 
 Yves: get link for external cart sharing
@@ -126,5 +126,5 @@ Yves: delete 'Shopping Cart' with name:
     Run Keyword Unless    '/shopping-list' in '${currentURL}'    Go To    ${host}multi-cart
     Delete shopping cart with name:    ${shoppingCartName}
     Wait Until Element Is Visible    ${delete_shopping_cart_button}
-    Click Element    ${delete_shopping_cart_button}
+    Scroll and Click Element    ${delete_shopping_cart_button}
     Wait For Document Ready    

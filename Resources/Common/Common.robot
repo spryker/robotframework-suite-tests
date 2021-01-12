@@ -6,20 +6,20 @@ Library    Dialogs
 Library    OperatingSystem
 Library    ../../Resources/Libraries/common.py
 Resource                  ../Pages/Yves/Yves_Header_Section.robot
-Resource                  ../Pages/Yves/Yves_Login_page.robot
+Resource                  ../Pages/Yves/Yves_Login_Page.robot
 
 *** Variables ***
 # *** SUITE VARIABLES ***
-${env}                  B2B
+${env}                 b2b
 ${browser}             headlesschrome
 # ${browser}             chrome
-#${host}                https://www.de.b2b.demo-spryker.com/
-#${zed_url}             https://os.de.b2b.demo-spryker.com/
+# ${host}                https://www.de.b2b.demo-spryker.com/
+# ${zed_url}             https://os.de.b2b.demo-spryker.com/
 ${email_domain}        @spryker.com
 ${default_password}    change123
 ${loading_time}        3s
 ${admin_email}         admin@spryker.com
-#${test_customer_email}      test.spryker+${random}@gmail.com
+# ${fake_email}          test.spryker+${random}@gmail.com
 
 *** Keywords ***
 Load Variables
@@ -62,7 +62,7 @@ TestTeardown
 
 Select Random Option From List
     [Arguments]    ${dropDownLocator}    ${dropDownOptionsLocator}
-    ${getOptionsCount}=    Get Matching Xpath Count    ${dropDownOptionsLocator}
+    ${getOptionsCount}=    Get Element Count    ${dropDownOptionsLocator}
     ${index}=    Evaluate    random.randint(0, ${getOptionsCount}-1)    random
     ${index}=    Convert To String    ${index}
     Select From List By Index    ${dropDownLocator}    ${index}

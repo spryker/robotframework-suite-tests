@@ -33,6 +33,8 @@ Yves: PDP contains/doesn't contain:
     END
 
 Yves: add product to the shopping cart
+    ${variants_present_status}=    Run Keyword And Ignore Error    Page should contain element    ${pdp_variant_selector}
+    Run Keyword If    'PASS' in ${variants_present_status}    Yves: change variant of the product on PDP on random value
     Wait Until Page Contains Element    ${pdp_add_to_cart_button}
     Scroll and Click Element    ${pdp_add_to_cart_button}
     Wait For Document Ready    
@@ -69,9 +71,38 @@ Yves: product price on the PDP should be:
     ${actualProductPrice}=    Get Text    ${pdp_price_element_locator}
     Should Be Equal    ${expectedProductPrice}    ${actualProductPrice}
 
-Yves: add product to the shopping list
+Yves: add product to the shopping list:
+    [Documentation]    If SL name is not provided, default one will be used
+    [Arguments]    ${shoppingListName}=${EMPTY}
+    ${variants_present_status}=    Run Keyword And Ignore Error    Page should contain element    ${pdp_variant_selector}
+    ${shopping_list_dropdown_status}=    Run Keyword And Ignore Error    Page should contain element    ${pdp_shopping_list_selector}
+    Run Keyword If    'PASS' in ${variants_present_status}    Yves: change variant of the product on PDP on random value
+    Run Keyword If    ('${shoppingListName}' != '${EMPTY}' and 'PASS' in ${shopping_list_dropdown_status})    Select From List By Label    ${pdp_shopping_list_selector}    ${shoppingListName}
     Wait Until Element Is Visible    ${pdp_add_to_shopping_list_button}
     Scroll and Click Element    ${pdp_add_to_shopping_list_button}
-    Wait For Document Ready    
-    Wait For Document Ready    
+    Wait For Document Ready     
     Yves: remove flash messages
+
+Yves: change variant of the product on PDP on random value
+    Wait Until Element Is Visible    ${pdp_variant_selector}
+    Select Random Option From List    ${pdp_variant_selector}    xpath=//*[@data-qa='component variant']//select//option[@value]
+    Wait For Document Ready
+
+Yves: get sku of the concrete product on PDP
+    Wait Until Element Is Visible    ${pdp_product_sku}
+    ${got_concrete_product_sku}=    Get Text    ${pdp_product_sku}
+    ${got_concrete_product_sku}=    Replace String    ${got_concrete_product_sku}    SKU:     ${EMPTY}
+    ${got_concrete_product_sku}=    Replace String    ${got_concrete_product_sku}    ${SPACE}    ${EMPTY}
+    Set Global Variable    ${got_concrete_product_sku}
+    [Return]    ${got_concrete_product_sku}
+
+Yves: get sku of the abstract product on PDP
+    Wait For Document Ready    
+    ${currentURL}=    Get Location        
+    ${got_abstract_product_sku}=    Get Regexp Matches    ${currentURL}    ([^-]+$)
+    ${got_abstract_product_sku}=    Convert To String    ${got_abstract_product_sku}
+    ${got_abstract_product_sku}=    Replace String    ${got_abstract_product_sku}    '    ${EMPTY}
+    ${got_abstract_product_sku}=    Replace String    ${got_abstract_product_sku}    [    ${EMPTY}
+    ${got_abstract_product_sku}=    Replace String    ${got_abstract_product_sku}    ]    ${EMPTY}
+    Set Global Variable    ${got_abstract_product_sku}
+    [Return]    ${got_abstract_product_sku}

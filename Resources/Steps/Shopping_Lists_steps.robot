@@ -12,7 +12,7 @@ Yves: 'Shopping List' widget contains:
     Wait Until Element Is Visible    ${shopping_list_sub_navigation_widget}
     Page Should Contain Element    xpath=//*[contains(@class,'icon--header-shopping-list')]/ancestor::li//div[contains(@class,'js-user-navigation__sub-nav-shopping-list')]//span[text()[contains(.,'${accessLevel}')]]/..//a/*[text()='${shoppingListName}']
 
-Go to 'Shopping Lists' page
+Yves: go To 'Shopping Lists' Page
     Mouse Over    ${shopping_list_icon_header_menu_item}
     Wait Until Page Contains Element    ${shopping_list_sub_navigation_widget}
     Click Element with JavaScript    ${shopping_list_sub_navigation_all_lists_button}
@@ -52,5 +52,11 @@ Yves: delete 'Shopping List' with name:
     Run Keyword Unless    '/shopping-list' in '${currentURL}'    Go To    ${host}shopping-list
     Delete shopping list with name:    ${shoppingListName}
     Wait Until Element Is Visible    ${delete_shopping_list_button}
-    Click Element    ${delete_shopping_list_button}
+    Scroll and Click Element    ${delete_shopping_list_button}
     Wait For Document Ready    
+
+Yves: view shopping list with name:
+    [Arguments]    ${shoppingListName}
+    ${currentURL}=    Get Location        
+    Run Keyword Unless    '/shopping-list' in '${currentURL}'    Go To    ${host}shopping-list
+    View shopping list with name:   ${shoppingListName}

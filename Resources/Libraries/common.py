@@ -7,7 +7,7 @@ def defineEnvironmentVariablesFromJsonFile(env):
     variables = {}
     environments_file_path = 'Resources/Environments/environments_' + env + '.json'
     try:
-        with open(environments_file_path) as json_file:      
+        with open(environments_file_path) as json_file:
             data = json.loads(json_file.read())
             for d in data:
                 if d["environment"] == env:
@@ -17,6 +17,12 @@ def defineEnvironmentVariablesFromJsonFile(env):
                             variables[key] = value
     except:
         print(f'Environment {env} not found!')
-    if not variables:
-        print(f'No variables found for environment {env}')
     return variables
+
+
+def get_url_without_starting_slash(string):
+    if string[0] == "/":
+        string_without_starting_slash = string[1:]
+        return string_without_starting_slash
+    else:
+        return string

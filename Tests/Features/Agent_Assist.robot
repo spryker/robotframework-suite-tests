@@ -20,7 +20,7 @@ Resource    ../../Resources/Steps/Customer_Account_steps.robot
 Resource    ../../Resources/Steps/Configurable_Bundle_steps.robot
 Resource    ../../Resources/Pages/Yves/Yves_Shopping_Cart_page.robot
 Resource    ../../Resources/Pages/Yves/Yves_Agent_Assist_page.robot
-Resource    ../../Resources/Steps/Users_steps.robot
+Resource    ../../Resources/Steps/Zed_Users_steps.robot
 
 
 *** Test Cases ***
@@ -28,26 +28,26 @@ Agent_Assist_Impersonate_As_Customer
     [Documentation]    This test case checks the overall possibility to create an agent user in Zed, login with his credentials in Yves and impersonate as a customer.
     [Tags]    suite-nonsplit    b2c    b2b    all
     Zed: login on Zed with provided credentials:    ${zed_admin_email}    ${zed_admin_password}    
-    Zed: create new Zed user with the following data:    agent@spryker.com+${random}    change123    Agent    Assist    Root group    This user is an agent    en_US
+    Zed: create new Zed user with the following data:    agent+${random}@spryker.com    change123    Agent    Assist    Root group    This user is an agent    en_US
     Yves: go to the 'Home' page
     Yves: go to URL:    agent/login
-    Yves: login on Yves with provided credentials:    agent@spryker.com+${random}
+    Yves: login on Yves with provided credentials:    agent+${random}@spryker.com
     Yves: header contains/doesn't contain:    true    ${customerSearchWidget}
     Yves: perform search by customer:    ${yves_user_first_name}
     Yves: agent widget contains:    ${yves_user_email}
     Yves: login under the customer:    ${yves_user_email}
     Yves: header contains/doesn't contain:    false    ${customerSearchWidget}
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    Zed: delete Zed user with the following email:    agent@spryker.com+${random}
+    Zed: delete Zed user with the following email:    agent+${random}@spryker.com
 
 # Agent_Assist_Impersonate_As_Customer_Merchant_Prices
 #     [Documentation]    This test case checks the overall possibility to create an agent user in Zed, login with his credentials in Yves and impersonate as a customer.
 #     [Tags]    b2b
 #     Zed: login on Zed with provided credentials:    ${zedAdminEmail}    ${zedAdminPassword}    
-#     Zed: create new Zed user with the following data:    agent@spryker.com+${random}    change123    Agent    Assist    Root group    This user is an agent    en_US
+#     Zed: create new Zed user with the following data:    agent+${random}@spryker.com    change123    Agent    Assist    Root group    This user is an agent    en_US
 #     Yves: go to the 'Home' page
 #     Yves: go to URL:    agent/login
-#     Yves: login on Yves with provided credentials:    agent@spryker.com+${random}
+#     Yves: login on Yves with provided credentials:    agent+${random}@spryker.com
 #     Yves: header contains/doesn't contain:    true    ${customerSearchWidget}
 #     Yves: perform search by customer:    ${yvesUserFirstName}
 #     Yves: agent widget contains:    ${yvesUserEmail}
@@ -61,12 +61,12 @@ Agent_Assist_Impersonate_As_Customer
 #     [Documentation]    This test case checks that an agent in a B2B shop has a menu for request for quote
 #     [Tags]    b2b    suite_nonsplit 
 #     Zed: login on Zed with provided credentials:    admin@spryker.com
-#     Zed: create new Zed user with the following data:    agent@spryker.com+${random}    change123    Agent    Assist    Root group    This user is an agent    en_US
+#     Zed: create new Zed user with the following data:    agent+${random}@spryker.com    change123    Agent    Assist    Root group    This user is an agent    en_US
 #     Yves: go to the 'Home' page
 #     Yves: go to URL:    agent/login
-#     Yves: login on Yves with provided credentials:    agent@spryker.com+${random}
+#     Yves: login on Yves with provided credentials:    agent+${random}@spryker.com
 #     Yves: header contains/doesn't contain:    true    ${quote_request_agent_widget}
-#     Click Element    ${agent_assist_overview_link}
+#     Scroll and Click Element    ${agent_assist_overview_link}
 #     Wait For Document Ready
 #     Page Should Contain Element    ${agent_assist_menu_overview}
 #     Page Should Contain Element    ${agent_assist_menu_quote_request}
@@ -75,12 +75,12 @@ Agent_Assist_Impersonate_As_Customer
 #     [Documentation]    This test case checks that an agent in a B2C shop has no menu for request for quote
 #     [Tags]    b2c
 #     Zed: login on Zed with provided credentials:    admin@spryker.com
-#     Zed: create new Zed user with the following data:    agent@spryker.com+${random}    change123    Agent    Assist    Root group    This user is an agent    en_US
+#     Zed: create new Zed user with the following data:    agent+${random}@spryker.com    change123    Agent    Assist    Root group    This user is an agent    en_US
 #     Yves: go to the 'Home' page
 #     Yves: go to URL:    agent/login
-#     Yves: login on Yves with provided credentials:    agent@spryker.com+${random}
+#     Yves: login on Yves with provided credentials:    agent+${random}@spryker.com
 #     Yves: header contains/doesn't contain:    false    ${quote_request_agent_widget}
-#     Click Element    ${agent_assist_overview_link}
+#     Scroll and Click Element    ${agent_assist_overview_link}
 #     Wait For Document Ready
 #     Page Should Contain Element    ${agent_assist_menu_overview}
 #     Page Should Not Contain Element    ${agent_assist_menu_quote_request}
@@ -95,10 +95,10 @@ Agent_Assist_Impersonate_As_Customer
 #     Yves: go to the shopping cart through the header with name:    QuoteRequest+${random}
 #     Yves: convert a cart to a quote request
 #     Zed: login on Zed with provided credentials:    admin@spryker.com
-#     Zed: create new Zed user with the following data:    agent@spryker.com+${random}    change123    Agent    Assist    Root group    This user is an agent    en_US
+#     Zed: create new Zed user with the following data:    agent+${random}@spryker.com    change123    Agent    Assist    Root group    This user is an agent    en_US
 #     Yves: go to the 'Home' page
 #     Yves: go to URL:    agent/login
-#     Yves: login on Yves with provided credentials:    agent@spryker.com+${random}
+#     Yves: login on Yves with provided credentials:    agent+${random}@spryker.com
 #     Yves: header contains/doesn't contain:    true    ${customerSearchWidget}
 #     Yves: perform search by customer:    Karl
 #     Yves: agent widget contains:    karl@spryker.com
