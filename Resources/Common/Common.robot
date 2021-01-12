@@ -6,7 +6,7 @@ Library    Dialogs
 Library    OperatingSystem
 Library    ../../Resources/Libraries/common.py
 Resource                  ../Pages/Yves/Yves_Header_Section.robot
-Resource                  ../Pages/Yves/Yves_Login_page.robot
+Resource                  ../Pages/Yves/Yves_Login_Page.robot
 
 *** Variables ***
 # *** SUITE VARIABLES ***
