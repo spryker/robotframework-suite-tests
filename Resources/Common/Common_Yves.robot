@@ -7,7 +7,7 @@ Resource    ../Pages/Yves/Yves_Company_Users_page.robot
 Resource    ../Pages/Yves/Yves_Shopping_Lists_page.robot
 Resource    ../Pages/Yves/Yves_Shopping_Carts_page.robot
 Resource    ../Pages/Yves/Yves_Shopping_Cart_page.robot
-Resource    ../Pages/Yves/Yves_Shopping_List_page.robot
+Resource    ../Pages/Yves/Yves_Shopping_list_page.robot
 Resource    ../Pages/Yves/Yves_Checkout_Success_page.robot
 Resource    ../Pages/Yves/Yves_Order_History_page.robot
 Resource    ../Pages/Yves/Yves_Order_Details_page.robot
