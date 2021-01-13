@@ -8,7 +8,8 @@ Go to 'Quick Order' page
 
 Yves: add the following articles into the form through quick order text area:
     [Arguments]    ${contentToUse}
-    Input text into field    ${quick_order_add_articles_text_area}    ${contentToUse}    clear=True
+    Clear Element Text    ${quick_order_add_articles_text_area}
+    Input text into field    ${quick_order_add_articles_text_area}    ${contentToUse}
     Scroll and Click Element    ${quick_order_verify_button}
     Wait For Document Ready    
 
@@ -21,6 +22,7 @@ Yves: add products to the shopping list from quick order page with name:
     [Arguments]    ${shoppingListName}
     Wait Until Element Is Visible    ${quick_order_shopping_list_selector}
     Select shopping list on 'Quick Order' page    ${shoppingListName}
+    Wait For Testability Ready
     Scroll and Click Element    ${quick_order_add_to_shopping_list_button}
     Wait For Document Ready   
     Yves: remove flash messages 
