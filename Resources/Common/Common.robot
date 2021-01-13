@@ -102,11 +102,11 @@ Input text into field
     Wait For Testability Ready
     Input Text    ${locator}    ${text}
     
-Wait until page is loaded
-    FOR    ${INDEX}    IN RANGE    1    5000
-        ${isPageLoaded}=    Execute JavaScript    return window.addEventListener("load",function(n){console.log("All resources finished loading!")});
-        ${isPageLoaded}=    Convert To String    ${isPageLoaded}
-        Log    ${INDEX}
-        Log    ${isPageLoaded}
-        Run Keyword If    '${isPageLoaded}' == 'true'    Exit For Loop
-    END
+# Wait until page is loaded
+#     FOR    ${INDEX}    IN RANGE    1    5000
+#         ${isPageLoaded}=    Execute JavaScript    return window.addEventListener("load",function(n){console.log("All resources finished loading!")});
+#         ${isPageLoaded}=    Convert To String    ${isPageLoaded}
+#         Log    ${INDEX}
+#         Log    ${isPageLoaded}
+#         Run Keyword If    '${isPageLoaded}' == 'true'    Exit For Loop
+#     END

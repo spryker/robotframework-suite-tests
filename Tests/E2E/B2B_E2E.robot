@@ -155,7 +155,7 @@ Discontinued_Alternative_Products
 
 Measurement_Units
     Yves: login on Yves with provided credentials:    sonia@spryker.com
-   Yves: create new 'Shopping Cart' with name:    measurementUnitsCart+${random}
+    Yves: create new 'Shopping Cart' with name:    measurementUnitsCart+${random}
     Yves: go to PDP of the product with sku:    M23723
     Yves: select the following 'Sales Unit' on PDP:    Meter
     Yves: change quantity using '+' or '-' button № times:    +    1
