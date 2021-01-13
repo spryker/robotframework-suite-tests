@@ -3,7 +3,7 @@ Library    SeleniumLibrary    plugins=SeleniumTestability;True;30 Seconds;True
 Library    String
 Library    BuiltIn
 Library    Collections
-Resource    ../Pages/Yves/Yves_Product_Details_Page.robot
+Resource    ../Pages/Yves/Yves_Product_Details_page.robot
 Resource    ../Common/Common_Yves.robot
 
 *** Variable ***
@@ -42,7 +42,7 @@ Yves: add product to the shopping cart
 
 Yves: change quantity on PDP:
     [Arguments]    ${qtyToSet}
-    Input Text    ${pdp_quantity_input_filed}    ${qtyToSet}
+    Input text into field    ${pdp_quantity_input_filed}    ${qtyToSet}
 
 Yves: select the following 'Sales Unit' on PDP:
     [Arguments]    ${salesUnit}
@@ -64,7 +64,7 @@ Yves: change variant of the product on PDP on:
 
 Yves: change amount on PDP:
     [Arguments]    ${amountToSet}
-    Input Text    ${pdp_amount_input_filed}    ${amountToSet}
+    Input text into field    ${pdp_amount_input_filed}    ${amountToSet}
 
 Yves: product price on the PDP should be:
     [Arguments]    ${expectedProductPrice}

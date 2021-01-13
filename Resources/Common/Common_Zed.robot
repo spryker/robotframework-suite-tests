@@ -18,8 +18,8 @@ Zed: login on Zed with provided credentials:
     delete all cookies
     Reload Page    
     Wait Until Element Is Visible    ${zed_user_name_field}
-    input text    ${zed_user_name_field}    ${email}
-    input text    ${zed_password_field}    ${password}
+    Input text into field    ${zed_user_name_field}    ${email}
+    Input text into field    ${zed_password_field}    ${password}
     Scroll and Click Element    ${zed_login_button}
     Wait Until Element Is Visible    ${zed_log_out_button}    ${loading_time}    Zed:Dashboard page is not displayed
 
@@ -68,7 +68,7 @@ Zed: submit the form
 
 Zed: perform search by:
     [Arguments]    ${search_key}
-    input text    ${zed_search_field_locator}    ${search_key}
+    Input text into field    ${zed_search_field_locator}    ${search_key}
     sleep    2s
     wait until page contains element    ${zed_processing_block_locator}
 

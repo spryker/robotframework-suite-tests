@@ -8,7 +8,7 @@ Go to 'Quick Order' page
 
 Yves: add the following articles into the form through quick order text area:
     [Arguments]    ${contentToUse}
-    Input Text    ${quick_order_add_articles_text_area}    ${contentToUse}    clear=True
+    Input text into field    ${quick_order_add_articles_text_area}    ${contentToUse}    clear=True
     Scroll and Click Element    ${quick_order_verify_button}
     Wait For Document Ready    
 

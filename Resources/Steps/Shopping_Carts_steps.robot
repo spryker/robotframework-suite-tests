@@ -28,7 +28,7 @@ Yves: create new 'Shopping Cart' with name:
     Run Keyword Unless    '/multi-cart' in '${currentURL}'    Go To    ${host}multi-cart
     Scroll and Click Element    ${create_shopping_cart_button}
     Wait For Document Ready
-    Input Text    ${shopping_cart_name_input_field}    ${shoppingCartName}
+    Input text into field    ${shopping_cart_name_input_field}    ${shoppingCartName}
     Scroll and Click Element    ${create_new_cart_submit_button}
     Wait For Document Ready    
 
@@ -116,7 +116,7 @@ Yves: Shopping Cart title should be equal:
 Yves: change quantity of the configurable bundle in the shopping cart on:
     [Documentation]    In case of multiple matches, changes quantity for the first product in the shopping cart
     [Arguments]    ${confBundleTitle}    ${quantity}
-    Input Text    xpath=//article[@data-qa='component configured-bundle'][1]//*[contains(@class,'configured-bundle__title')][text()='${confBundleTitle}']/ancestor::article//input[@data-qa='quantity-input']    ${quantity}
+    Input text into field    xpath=//article[@data-qa='component configured-bundle'][1]//*[contains(@class,'configured-bundle__title')][text()='${confBundleTitle}']/ancestor::article//input[@data-qa='quantity-input']    ${quantity}
     Scroll and Click Element    xpath=//article[@data-qa='component configured-bundle'][1]//*[contains(@class,'configured-bundle__title')][text()='${confBundleTitle}']
     Wait For Document Ready    
 
