@@ -35,7 +35,7 @@ Zed: add alternative products to the following abstract:
     ${alternative_products_list_count}=   get length  ${alternative_products_list}
     FOR    ${index}    IN RANGE    0    ${alternative_products_list_count}
         ${alternative_product_to_assign}=    Get From List    ${alternative_products_list}    ${index}
-        Input Text    ${zed_pdp_add_products_alternative_input}    ${alternative_product_to_assign}
+        Input text into field    ${zed_pdp_add_products_alternative_input}    ${alternative_product_to_assign}
         Wait Until Element Is Visible    ${zed_pdp_alternative_products_suggestion}
         Press Keys    None    RETURN
     END

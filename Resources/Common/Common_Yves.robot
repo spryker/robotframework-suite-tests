@@ -2,7 +2,7 @@
 Library    ../../Resources/Libraries/common.py
 Resource    Common.robot
 Resource    ../Pages/Yves/Yves_Catalog_page.robot
-Resource    ../Pages/Yves/Yves_Product_Details_Page.robot
+Resource    ../Pages/Yves/Yves_Product_Details_page.robot
 Resource    ../Pages/Yves/Yves_Company_Users_page.robot
 Resource    ../Pages/Yves/Yves_Shopping_Lists_page.robot
 Resource    ../Pages/Yves/Yves_Shopping_Carts_page.robot
@@ -33,8 +33,8 @@ Yves: login on Yves with provided credentials:
     ...    AND    Wait Until Element Is Visible    ${header_login_button}
     ...    AND    Scroll and Click Element    ${header_login_button}
     ...    AND    Wait Until Element Is Visible    ${email_field}
-    input text    ${email_field}    ${email}
-    input text    ${password_field}    ${password}
+    Input text into field    ${email_field}    ${email}
+    Input text into field    ${password_field}    ${password}
     Scroll and Click Element    ${form_login_button}
     Run Keyword Unless    'fake' in '${email}' or 'agent' in '${email}'  Wait Until Element Is Visible    ${user_navigation_icon_header_menu_item}    ${loading_time}    Login Failed!
     Run Keyword If    'agent' in '${email}'    Yves: header contains/doesn't contain:    true    ${customerSearchWidget}

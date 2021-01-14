@@ -22,9 +22,10 @@ Yves: create new 'Shopping List' with name:
     [Arguments]    ${shoppingListName}
     ${currentURL}=    Get Location        
     Run Keyword Unless    '/shopping-list' in '${currentURL}'    Go To    ${host}shopping-list
-    Input Text    ${shopping_list_name_input_field}    ${shoppingListName}
+    Input text into field    ${shopping_list_name_input_field}    ${shoppingListName}
     Scroll and Click Element    ${create_shopping_list_button}
     Wait For Document Ready 
+    Reload Page    
 
 Yves: the following shopping list is shown:
     [Arguments]    ${shoppingListName}    ${shoppingListOwner}    ${shoppingListAccess}

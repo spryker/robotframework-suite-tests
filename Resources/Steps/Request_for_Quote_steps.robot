@@ -50,11 +50,11 @@ Yves: change price for the product in the quote request with sku xxx on:
     ${use_default_price_state}=    Get Element Attribute    xpath=//article[@data-qa='component quote-request-cart-item']//div[contains(@class,'quote-request-cart-item__column--content')][contains(.,'${sku}')]/ancestor::article//*[contains(@class,'quote-request-cart-item__column--total')]//input[@type='checkbox']    checked
     Log    ${use_default_price_state}
     Run Keyword If    'true' in '${use_default_price_state}'    Scroll and Click Element    xpath=//article[@data-qa='component quote-request-cart-item']//div[contains(@class,'quote-request-cart-item__column--content')][contains(.,'${sku}')]/ancestor::article//*[contains(@class,'quote-request-cart-item__column--total')]//span[@name='use_default_price']
-    Input Text    xpath=//article[@data-qa='component quote-request-cart-item']//div[contains(@class,'quote-request-cart-item__column--content')][contains(.,'${sku}')]/ancestor::article//*[contains(@class,'quote-request-cart-item__column--total')]//input[@type='text']    ${priceToSet}
+    Input text into field    xpath=//article[@data-qa='component quote-request-cart-item']//div[contains(@class,'quote-request-cart-item__column--content')][contains(.,'${sku}')]/ancestor::article//*[contains(@class,'quote-request-cart-item__column--total')]//input[@type='text']    ${priceToSet}
 
 Yves: add the following note to the quote request:
     [Arguments]    ${noteToSet}
-    Input Text    ${quote_request_notes_text_area}    ${noteToSet}
+    Input text into field    ${quote_request_notes_text_area}    ${noteToSet}
 
 Yves: go to the quote request through the header with reference:
     [Arguments]    ${quoteReference}

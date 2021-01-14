@@ -9,7 +9,7 @@ ${new_password_submit_button}    xpath=//form[@name='restoreForm']//*[contains(@
 *** Keywords ***
 Yves: set new password on Restore Password page
     wait until element is visible  ${new_password_field}
-    input text  ${new_password_field}   ${default_password}
-    input text  ${confirm_new_password_field}   ${default_password}
+    Input text into field  ${new_password_field}   ${default_password}
+    Input text into field  ${confirm_new_password_field}   ${default_password}
     Scroll and Click Element  ${new_password_submit_button}
     wait until page does not contain element  ${new_password_submit_button}

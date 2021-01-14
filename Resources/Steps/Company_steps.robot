@@ -14,9 +14,9 @@ Zed: create new Company Business Unit with provided name and company:
     Zed: go to second navigation item level:    Company Account    Company Units
     Zed: click button in Header:    Create Company Business Unit
     select from list by label    ${zed_bu_company_dropdown_locator}    ${company_business_unit}
-    input text    ${zed_bu_name_field}    ${bu_name_to_set}
-    input text    ${zed_bu_iban_field}    testiban+${random}
-    input text    ${zed_bu_bic_field}    testbic+${random}
+    Input text into field    ${zed_bu_name_field}    ${bu_name_to_set}
+    Input text into field    ${zed_bu_iban_field}    testiban+${random}
+    Input text into field    ${zed_bu_bic_field}    testbic+${random}
     Zed: submit the form
     wait until element is visible    ${zed_success_flash_message}
     wait until element is visible    ${zed_table_locator}
@@ -31,7 +31,7 @@ Zed: create new Company with provided name:
     Zed: go to second navigation item level:    Company Account    Companies
     Zed: click button in Header:    Create Company
     wait until element is visible    id=company_name
-    input text    ${zed_company_name_input_field}    ${company_name}
+    Input text into field    ${zed_company_name_input_field}    ${company_name}
     Zed: submit the form
     wait until element is visible    ${zed_success_flash_message}
     wait until element is visible    ${zed_table_locator}
@@ -51,7 +51,7 @@ Zed: create new Company Role with provided permissions:
         Zed: select checkbox by Label:   ${permission_to_set}
     END
     select from list by label    ${zed_role_company_dropdown_locator}    ${select_company_for_role}
-    input text    ${zed_role_name_field}    ${new_role_name}
+    Input text into field    ${zed_role_name_field}    ${new_role_name}
     Zed: submit the form
     Zed: perform search by:    ${new_role_name}
     table should contain    ${zed_table_locator}    ${new_role_name}
@@ -61,14 +61,14 @@ Zed: Create new Company User with provided email/company/business unit and role(
     Zed: go to second navigation item level:    Company Account    Company Users
     wait until element is visible    ${zed_table_locator}
     Zed: click button in Header:    Add User
-    input text    ${zed_create_company_user_email_field}  ${email}
+    Input text into field    ${zed_create_company_user_email_field}  ${email}
     select from list by label    ${zed_create__company_user_salutation_dropdown}    Mr
     Zed: select checkbox by Label:    Send password token through email
-    input text    ${zed_create_company_user_first_name_field}    Robot First+${random}
-    input text    ${zed_create_company_user_last_name_field}    robot Last+${random}
+    Input text into field    ${zed_create_company_user_first_name_field}    Robot First+${random}
+    Input text into field    ${zed_create_company_user_last_name_field}    robot Last+${random}
     select from list by label    ${zed_create_company_user_gender_dropdow}    Male
-    input text    ${zed_create_company_user_dob_picker}    25.10.1989
-    input text    ${zed_create_company_user_phone_field}    495-123-45-67
+    Input text into field    ${zed_create_company_user_dob_picker}    25.10.1989
+    Input text into field    ${zed_create_company_user_phone_field}    495-123-45-67
     select from list by label    ${zed_create_company_company_name_dropdown}    ${company}
     sleep    2s
     select from list by label    ${zed_create_company_business_unit_dropdown}    ${business_unit}

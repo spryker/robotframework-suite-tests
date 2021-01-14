@@ -1,5 +1,5 @@
 *** Settings ***
-Resource    ../Pages/Yves/Yves_Checkout_Address_Page.robot
+Resource    ../Pages/Yves/Yves_Checkout_Address_page.robot
 Resource    ../Pages/Yves/Yves_Checkout_Summary_page.robot
 Resource    ../Common/Common_Yves.robot
 
