@@ -89,9 +89,7 @@ Scroll and Click Element
     Scroll Element Into View    ${locator}
     Wait Until Element Is Enabled    ${locator}
     Wait Until Element Is Visible    ${locator}
-    Wait For Testability Ready
     Click Element    ${locator}
-    Wait For Testability Ready
     
 Input text into field
     [Arguments]    ${locator}    ${text}
@@ -99,7 +97,6 @@ Input text into field
     Scroll Element Into View    ${locator}
     Wait Until Element Is Enabled    ${locator}
     Wait Until Element Is Visible    ${locator}
-    Wait For Testability Ready
     Input Text    ${locator}    ${text}
     
 # Wait until page is loaded

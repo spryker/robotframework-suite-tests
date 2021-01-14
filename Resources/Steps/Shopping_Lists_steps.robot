@@ -25,6 +25,7 @@ Yves: create new 'Shopping List' with name:
     Input text into field    ${shopping_list_name_input_field}    ${shoppingListName}
     Scroll and Click Element    ${create_shopping_list_button}
     Wait For Document Ready 
+    Reload Page    
 
 Yves: the following shopping list is shown:
     [Arguments]    ${shoppingListName}    ${shoppingListOwner}    ${shoppingListAccess}
