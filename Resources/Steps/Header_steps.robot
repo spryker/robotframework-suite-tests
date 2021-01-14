@@ -1,5 +1,5 @@
 *** Settings ***
-Library    SeleniumLibrary    plugins=SeleniumTestability;True;30 Seconds;True    implicit_wait=30.0
+Library    SeleniumLibrary    plugins=SeleniumTestability;True;30 Seconds;True
 Library    String
 Library    BuiltIn
 Library    Collections
@@ -26,7 +26,7 @@ ${quoteRequestsWidget}    ${agent_quote_requests_header_item}
 Yves: perform search by:
     [Arguments]    ${searchTerm}
     wait until element is visible    ${search_form_header_menu_item}
-    Input Text    ${search_form_header_menu_item}    ${searchTerm}
+    Input text into field    ${search_form_header_menu_item}    ${searchTerm}
     Press Keys    None    RETURN
     Wait Until Page Contains Element    ${catalog_main_page_locator}
 

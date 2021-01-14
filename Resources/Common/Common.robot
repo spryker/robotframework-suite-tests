@@ -85,5 +85,25 @@ Add/Edit element attribute with JavaScript:
 
 Scroll and Click Element
     [Arguments]    ${locator}
+    Wait Until Page Contains Element    ${locator}
     Scroll Element Into View    ${locator}
+    Wait Until Element Is Enabled    ${locator}
+    Wait Until Element Is Visible    ${locator}
     Click Element    ${locator}
+    
+Input text into field
+    [Arguments]    ${locator}    ${text}
+    Wait Until Page Contains Element    ${locator}
+    Scroll Element Into View    ${locator}
+    Wait Until Element Is Enabled    ${locator}
+    Wait Until Element Is Visible    ${locator}
+    Input Text    ${locator}    ${text}
+    
+# Wait until page is loaded
+#     FOR    ${INDEX}    IN RANGE    1    5000
+#         ${isPageLoaded}=    Execute JavaScript    return window.addEventListener("load",function(n){console.log("All resources finished loading!")});
+#         ${isPageLoaded}=    Convert To String    ${isPageLoaded}
+#         Log    ${INDEX}
+#         Log    ${isPageLoaded}
+#         Run Keyword If    '${isPageLoaded}' == 'true'    Exit For Loop
+#     END

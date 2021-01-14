@@ -137,6 +137,7 @@ Volume_Prices
     Yves: delete 'Shopping Cart' with name:    VolumePriceCart+${random}
 
 Discontinued_Alternative_Products
+    # extend methods "Zed: discontinue the following product:" and "Zed: undo discontinue the following product:" to check first that the product can be discontinued or undicontinued
     Yves: go to PDP of the product with sku:  M21100
     Yves: PDP contains/doesn't contain:    true    ${alternativeProducts}
     Yves: login on Yves with provided credentials:    Trever.m@spryker.com
@@ -154,7 +155,7 @@ Discontinued_Alternative_Products
 
 Measurement_Units
     Yves: login on Yves with provided credentials:    sonia@spryker.com
-   Yves: create new 'Shopping Cart' with name:    measurementUnitsCart+${random}
+    Yves: create new 'Shopping Cart' with name:    measurementUnitsCart+${random}
     Yves: go to PDP of the product with sku:    M23723
     Yves: select the following 'Sales Unit' on PDP:    Meter
     Yves: change quantity using '+' or '-' button № times:    +    1

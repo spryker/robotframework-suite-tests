@@ -13,4 +13,5 @@ ${quick_order_shopping_list_selector}    name=idShoppingList
 *** Keywords ***
 Select shopping list on 'Quick Order' page
     [Arguments]    ${shoppingListName}
+    Scroll Element Into View    ${quick_order_shopping_list_selector}
     Select From List By Label    ${quick_order_shopping_list_selector}    ${shoppingListName}
