@@ -290,9 +290,9 @@ Agent_Assist
     Yves: go to URL:    agent/login
     Yves: login on Yves with provided credentials:    agent+${random}@spryker.com
     Yves: header contains/doesn't contain:    true    ${customerSearchWidget}
-    Yves: perform search by customer:    Sally
-    Yves: agent widget contains:    sally@ottom.de
-    Yves: login under the customer:    sally@ottom.de
+    Yves: perform search by customer:    Karl
+    Yves: agent widget contains:    karl@spryker.com
+    Yves: login under the customer:    karl@spryker.com
     Yves: perform search by:    EUROKRAFT trolley - with open shovel
     Yves: product with name in the catalog should have price:    EUROKRAFT trolley - with open shovel    €188.34
     Yves: go to PDP of the product with sku:    M70208
@@ -329,7 +329,7 @@ Business_Unit_Address_on_Checkout
     Yves: get the last placed order ID by current customer
     Yves: 'View Order/Reorder/Return' on the order history page:    View Order    ${lastPlacedOrder}
     Yves: 'Order Details' page is displayed
-    Yves: shipping address on the order details page is:    Mr. Ahill Grant Ottom ltd Seeburger Str. 270 10115 Berlin, Germany 4908892455
+    Yves: shipping address on the order details page is:    Mr. Ahill Grant Ottom ltd Seeburger Str. 270 10115 Berlin, Germany 4908892455
 
 Approval_Process
     Yves: login on Yves with provided credentials:    sally@ottom.de
