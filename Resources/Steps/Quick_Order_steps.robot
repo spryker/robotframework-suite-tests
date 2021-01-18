@@ -22,7 +22,6 @@ Yves: add products to the shopping list from quick order page with name:
     [Arguments]    ${shoppingListName}
     Wait Until Element Is Visible    ${quick_order_shopping_list_selector}
     Select shopping list on 'Quick Order' page    ${shoppingListName}
-    Wait For Testability Ready
     Scroll and Click Element    ${quick_order_add_to_shopping_list_button}
     Wait For Document Ready   
     Yves: remove flash messages 
