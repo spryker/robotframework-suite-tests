@@ -25,10 +25,13 @@ ${admin_email}         admin@spryker.com
 Load Variables
     [Arguments]    ${env}
     &{vars}=   Define Environment Variables From Json File    ${env}
+    Log Variables
     FOR    ${key}    ${value}    IN    &{vars}
         Log    Key is '${key}' and value is '${value}'.
-        Set Global Variable    ${${key}}    ${value}
+        ${temp}=   Get Variable Value  ${${key}}   ${value}
+        Set Global Variable    ${${key}}    ${temp}
     END
+    Log Variables
 
 SuiteSetup
     [documentation]  Basic steps before each suite
