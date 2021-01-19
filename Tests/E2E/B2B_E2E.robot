@@ -26,32 +26,33 @@ Resource    ../../Resources/Steps/Orders_Management_steps.robot
 Guest_User_Restrictions
     [Documentation]    Checks that guest users are not able to see: Prices, Availability, Quick Order, "My Account" features
     Yves: header contains/doesn't contain:    false    ${priceModeSwitcher}    ${currencySwitcher}    ${quickOrderIcon}    ${accountIcon}    ${shoppingListIcon}    ${shoppingCartIcon}
-    Yves: go to PDP of the product with sku:    M70208 
+    Yves: go to PDP of the product with sku:    ${one_variant_product_abstract_sku} 
     Yves: PDP contains/doesn't contain:     false    ${price}    ${addToCartButton}
-    Yves: login on Yves with provided credentials:    sonia@spryker.com
+    Yves: login on Yves with provided credentials:    ${yves_company_user_manager_and_buyer_email}
     Yves: header contains/doesn't contain:    true    ${priceModeSwitcher}    ${currencySwitcher}    ${quickOrderIcon}    ${accountIcon}    ${shoppingListIcon}    ${shoppingCartIcon}
     Yves: company menu 'should' be available for logged in user
-    Yves: go to PDP of the product with sku:    M70208
+    Yves: go to PDP of the product with sku:    ${one_variant_product_abstract_sku}
     Yves: PDP contains/doesn't contain:     true    ${price}    ${addToCartButton}
     Yves: go to company menu item:    Users
     Yves: 'Company Users' page is displayed
 
+
 Share_Shopping_Lists
-    Yves: login on Yves with provided credentials:    andrew@ottom.de
+    Yves: login on Yves with provided credentials:    ${yves_company_user_shared_permission_owner_email}
     Yves: go to 'Shopping Lists' page
     Yves: 'Shopping Lists' page is displayed
     Yves: create new 'Shopping List' with name:    shoppingListName+${random}
-    Yves: the following shopping list is shown:    shoppingListName+${random}    Andrew Wedner    Full access
-    Yves: share shopping list with user:    shoppingListName+${random}    Sally Koval    Full access
-    Yves: login on Yves with provided credentials:    sally@ottom.de
+    Yves: the following shopping list is shown:    shoppingListName+${random}    ${yves_company_user_shared_permission_owner_firstname} ${yves_company_user_shared_permission_owner_lastname}    Full access
+    Yves: share shopping list with user:    shoppingListName+${random}    ${yves_company_user_shared_permission_receiver_firstname} ${yves_company_user_shared_permission_receiver_lastname}    Full access
+    Yves: login on Yves with provided credentials:    ${yves_company_user_shared_permission_receiver_email}
     Yves: 'Shopping List' widget contains:    shoppingListName+${random}    Full access
     Yves: go to 'Shopping Lists' page
     Yves: 'Shopping Lists' page is displayed
-    Yves: the following shopping list is shown:    shoppingListName+${random}    Andrew Wedner    Full access
+    Yves: the following shopping list is shown:    shoppingListName+${random}    ${yves_company_user_shared_permission_owner_firstname} ${yves_company_user_shared_permission_owner_lastname}    Full access
     Yves: delete 'Shopping List' with name:    shoppingListName+${random}
 
 Share_Shopping_Carts
-    Yves: login on Yves with provided credentials:    andrew@ottom.de
+    Yves: login on Yves with provided credentials:    ${yves_company_user_shared_permission_owner_email}
     Yves: go to 'Shopping Carts' page through the header
     Yves: 'Shopping Carts' page is displayed
     Yves: create new 'Shopping Cart' with name:    shoppingCartName+${random}
@@ -59,11 +60,11 @@ Share_Shopping_Carts
     Yves: go to 'Shopping Carts' page through the header
     Yves: 'Shopping Carts' page is displayed
     Yves: the following shopping cart is shown:    shoppingCartName+${random}    Owner access
-    Yves: share shopping cart with user:    shoppingCartName+${random}    Koval Sally    Full access
+    Yves: share shopping cart with user:    shoppingCartName+${random}    ${yves_company_user_shared_permission_receiver_lastname} ${yves_company_user_shared_permission_receiver_firstname}    Full access
     Yves: go to PDP of the product with sku:    M10569
     Yves: add product to the shopping cart
     Yves: logout on Yves as a customer
-    Yves: login on Yves with provided credentials:    sally@ottom.de
+    Yves: login on Yves with provided credentials:    ${yves_company_user_shared_permission_receiver_email}
     Yves: 'Shopping Carts' widget contains:    shoppingCartName+${random}    Full access
     Yves: go to 'Shopping Carts' page through the header
     Yves: 'Shopping Carts' page is displayed
@@ -73,7 +74,7 @@ Share_Shopping_Carts
     Yves: shopping cart contains the following products:    100414
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: billing address same as shipping address:    true
-    Yves: select the following existing address on the checkout as 'shipping' address and go next:    Ms Sally Koval, Seeburger Str. 270, 10115 Berlin
+    Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${yves_company_user_shared_permission_receiver_address}
     Yves: select the following shipping method on the checkout and go next:    Express
     Yves: select the following payment method on the checkout and go next:    Invoice
     Yves: accept the terms and conditions:    true
@@ -87,7 +88,7 @@ Share_Shopping_Carts
     Yves: 'View Order' page is displayed
 
 Quick_Order
-    Yves: login on Yves with provided credentials:    andrew@ottom.de
+    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     Yves: create new 'Shopping Cart' with name:    quickOrderCart+${random}
     Yves: create new 'Shopping List' with name:    quickOrderList+${random}
     Yves: go to 'Quick Order' page through the header
@@ -106,7 +107,7 @@ Quick_Order
     ### Order placement ###
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: billing address same as shipping address:    true
-    Yves: select the following existing address on the checkout as 'shipping' address and go next:    Mr Andrew Wedner, Seeburger Str. 270, 10115 Berlin
+    Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${yves_company_user_buyer_address}
     Yves: select the following shipping method on the checkout and go next:    Express
     Yves: select the following payment method on the checkout and go next:    Invoice
     Yves: accept the terms and conditions:    true
@@ -127,7 +128,7 @@ Quick_Order
     Yves: delete 'Shopping List' with name:    quickOrderList+${random}
 
 Volume_Prices
-    Yves: login on Yves with provided credentials:    andrew@ottom.de
+    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     Yves: create new 'Shopping Cart' with name:    VolumePriceCart+${random}
     Yves: go to PDP of the product with sku:    M21189
     Yves: change quantity on PDP:    5
@@ -140,13 +141,13 @@ Discontinued_Alternative_Products
     # extend methods "Zed: discontinue the following product:" and "Zed: undo discontinue the following product:" to check first that the product can be discontinued or undicontinued
     Yves: go to PDP of the product with sku:  M21100
     Yves: PDP contains/doesn't contain:    true    ${alternativeProducts}
-    Yves: login on Yves with provided credentials:    Ahill@ottom.de
+    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     Yves: create new 'Shopping List' with name:    shoppingListName+${random}
     Yves: go to the PDP of the first available product
     Yves: add product to the shopping list:
     Yves: get sku of the concrete product on PDP
     Yves: get sku of the abstract product on PDP
-    Zed: login on Zed with provided credentials:    admin@spryker.com
+    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: discontinue the following product:    ${got_abstract_product_sku}    ${got_concrete_product_sku}
     Zed: product is successfully discontinued
     Zed: add alternative products to the following abstract:    M22613
@@ -154,7 +155,7 @@ Discontinued_Alternative_Products
     Zed: undo discontinue the following product:    ${got_abstract_product_sku}    ${got_concrete_product_sku}
 
 Measurement_Units
-    Yves: login on Yves with provided credentials:    andrew@ottom.de
+    Yves: login on Yves with provided credentials:    ${yves_company_user_manager_and_buyer_email}
     Yves: create new 'Shopping Cart' with name:    measurementUnitsCart+${random}
     Yves: go to PDP of the product with sku:    M23723
     Yves: select the following 'Sales Unit' on PDP:    Meter
@@ -169,7 +170,7 @@ Measurement_Units
     Yves: shopping cart contains the following products:    425079
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: billing address same as shipping address:    true
-    Yves: select the following existing address on the checkout as 'shipping' address and go next:    Mr Andrew Wedner, Seeburger Str. 270, 10115 Berlin
+    Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${yves_company_user_manager_and_buyer_address}
     Yves: select the following shipping method on the checkout and go next:    Express
     Yves: select the following payment method on the checkout and go next:    Invoice
     Yves: accept the terms and conditions:    true
@@ -177,7 +178,7 @@ Measurement_Units
     Yves: 'Thank you' page is displayed
 
 Packaging_Units
-    Yves: login on Yves with provided credentials:    andrew@ottom.de
+    Yves: login on Yves with provided credentials:    ${yves_company_user_manager_and_buyer_email}
     Yves: create new 'Shopping Cart' with name:    packagingUnitsCart+${random}
     Yves: go to PDP of the product with sku:    M21766
     Yves: change variant of the product on PDP on:    Box
@@ -191,7 +192,7 @@ Packaging_Units
     Yves: shopping cart contains the following products:    421519_3
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: billing address same as shipping address:    true
-    Yves: select the following existing address on the checkout as 'shipping' address and go next:    Mr Andrew Wedner, Seeburger Str. 270, 10115 Berlin
+    Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${yves_company_user_manager_and_buyer_address}
     Yves: select the following shipping method on the checkout and go next:    Express
     Yves: select the following payment method on the checkout and go next:    Invoice
     Yves: accept the terms and conditions:    true
@@ -199,7 +200,7 @@ Packaging_Units
     Yves: 'Thank you' page is displayed
 
 Product_Sets
-    Yves: login on Yves with provided credentials:    Ahill@ottom.de
+    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     Yves: create new 'Shopping Cart' with name:    productSetsCart+${random}
     Yves: go to URL:    en/product-sets
     Yves: 'Product Sets' page contains the following sets:    The Presenter's Set    Basic office supplies    The ultimate data disposal set
@@ -211,7 +212,7 @@ Product_Sets
     Yves: delete 'Shopping Cart' with name:    productSetsCart+${random}
 
 Product_Bundles
-    Yves: login on Yves with provided credentials:    Ahill@ottom.de
+    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     Yves: create new 'Shopping Cart' with name:    productBundleCart+${random}
     Yves: go to PDP of the product with sku:    000201
     Yves: PDP contains/doesn't contain:    true    ${bundleItemsSmall}    ${bundleItemsLarge}
@@ -220,7 +221,7 @@ Product_Bundles
     Yves: shopping cart contains the following products:    000201
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: billing address same as shipping address:    true
-    Yves: select the following existing address on the checkout as 'shipping' address and go next:    Mr Ahill Grant, Seeburger Str. 270, 10115 Berlin
+    Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${yves_company_user_buyer_address}
     Yves: select the following shipping method on the checkout and go next:    Express
     Yves: select the following payment method on the checkout and go next:    Invoice
     Yves: accept the terms and conditions:    true
@@ -228,11 +229,11 @@ Product_Bundles
     Yves: 'Thank you' page is displayed
 
 Product_Relations
-    Yves: login on Yves with provided credentials:    Ahill@ottom.de
+    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     Yves: create new 'Shopping Cart' with name:    productRelationCart+${random}
-    Yves: go to PDP of the product with sku:    M29529
+    Yves: go to PDP of the product with sku:    ${product_with_relations_related_products_sku}
     Yves: PDP contains/doesn't contain:    true    ${relatedProducts}
-    Yves: go to PDP of the product with sku:    M29524
+    Yves: go to PDP of the product with sku:    ${product_with_relations_upselling_sku}
     Yves: PDP contains/doesn't contain:    false    ${relatedProducts}
     Yves: add product to the shopping cart
     Yves: go to the shopping cart through the header with name:    productRelationCart+${random}
@@ -240,24 +241,24 @@ Product_Relations
     Yves: delete 'Shopping Cart' with name:    productRelationCart+${random}
 
 Default_Merchants
-    Zed: login on Zed with provided credentials:    admin@spryker.com
+    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Marketplace    Merchants
     Zed: table should contain:    Restrictions Merchant
     Zed: table should contain:    Prices Merchant
     Zed: table should contain:    Products Restrictions Merchant
 
 Product_Restrictions
-    Yves: login on Yves with provided credentials:    Trever.m@spryker.com
+    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     Yves: perform search by:    Soennecken
     Yves: 'Catalog' page should show products:    18
     Yves: go to URL:    en/office-furniture/storage/lockers
     Yves: 'Catalog' page should show products:    34
     Yves: logout on Yves as a customer
-    Yves: login on Yves with provided credentials:    frida@ottom.de
+    Yves: login on Yves with provided credentials:    ${yves_company_user_restriction_customer_email_1}
     Yves: perform search by:    Soennecken
     Yves: 'Catalog' page should show products:    0
     Yves: logout on Yves as a customer
-    Yves: login on Yves with provided credentials:    alexa@ottom.de
+    Yves: login on Yves with provided credentials:    ${yves_company_user_restriction_customer_email_2}
     Yves: go to URL:    en/office-furniture/storage/lockers
     Yves: 'Catalog' page should show products:    0
     Yves: go to URL:    en/transport/lift-carts
@@ -266,59 +267,59 @@ Product_Restrictions
     Yves: 'Catalog' page should show products:    10
 
 Customer_Specific_Prices
-    Yves: login on Yves with provided credentials:    Trever.m@spryker.com
-    Yves: perform search by:    EUROKRAFT trolley - with open shovel
-    Yves: product with name in the catalog should have price:    EUROKRAFT trolley - with open shovel    €235.43
-    Yves: go to PDP of the product with sku:    M70208
-    Yves: product price on the PDP should be:    €235.43
+    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
+    Yves: perform search by:    ${one_variant_product_abstract_name}
+    Yves: product with name in the catalog should have price:    ${one_variant_product_abstract_name}    ${one_variant_product_default_price}
+    Yves: go to PDP of the product with sku:    ${one_variant_product_abstract_sku}
+    Yves: product price on the PDP should be:    ${one_variant_product_default_price}
     Yves: logout on Yves as a customer
-    Yves: login on Yves with provided credentials:    karl@spryker.com
+    Yves: login on Yves with provided credentials:    ${yves_company_user_special_prices_customer_email}
     Yves: create new 'Shopping Cart' with name:    customerPrices+${random}
-    Yves: perform search by:    EUROKRAFT trolley - with open shovel
-    Yves: product with name in the catalog should have price:    EUROKRAFT trolley - with open shovel    €188.34
-    Yves: go to PDP of the product with sku:    M70208
-    Yves: product price on the PDP should be:    €188.34
+    Yves: perform search by:    ${one_variant_product_abstract_name}
+    Yves: product with name in the catalog should have price:    ${one_variant_product_abstract_name}    ${one_variant_product_merchant_price}
+    Yves: go to PDP of the product with sku:    ${one_variant_product_abstract_sku}
+    Yves: product price on the PDP should be:    ${one_variant_product_merchant_price}
     Yves: add product to the shopping cart
     Yves: go to the shopping cart through the header with name:    customerPrices+${random}
     Yves: shopping cart contains product with unit price:    403125    188.34
     Yves: delete 'Shopping Cart' with name:    customerPrices+${random}
 
 Agent_Assist
-    Zed: login on Zed with provided credentials:    admin@spryker.com
+    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: create new Zed user with the following data:    agent+${random}@spryker.com    change123    Agent    Assist    Root group    This user is an agent    en_US
     Yves: go to the 'Home' page
     Yves: go to URL:    agent/login
     Yves: login on Yves with provided credentials:    agent+${random}@spryker.com
     Yves: header contains/doesn't contain:    true    ${customerSearchWidget}
-    Yves: perform search by customer:    Karl
-    Yves: agent widget contains:    karl@spryker.com
-    Yves: login under the customer:    karl@spryker.com
-    Yves: perform search by:    EUROKRAFT trolley - with open shovel
-    Yves: product with name in the catalog should have price:    EUROKRAFT trolley - with open shovel    €188.34
-    Yves: go to PDP of the product with sku:    M70208
-    Yves: product price on the PDP should be:    €188.34
-    Zed: login on Zed with provided credentials:    admin@spryker.com
+    Yves: perform search by customer:    ${yves_company_user_special_prices_customer_firstname}
+    Yves: agent widget contains:    ${yves_company_user_special_prices_customer_email}
+    Yves: login under the customer:    ${yves_company_user_special_prices_customer_email}
+    Yves: perform search by:    ${one_variant_product_abstract_name}
+    Yves: product with name in the catalog should have price:    ${one_variant_product_abstract_name}    ${one_variant_product_merchant_price}
+    Yves: go to PDP of the product with sku:    ${one_variant_product_abstract_sku}
+    Yves: product price on the PDP should be:    ${one_variant_product_merchant_price}
+    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: delete Zed user with the following email:    agent+${random}@spryker.com
 
 Business_on_Behalf
-    Zed: login on Zed with provided credentials:    admin@spryker.com
+    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Customers    Company Users
     Zed: click Action Button in a table for row that contains:    Donald    Attach to BU
     Zed: attach company user to the following BU with role:    Spryker Systems Zurich (id: 25)    Admin
-    Yves: login on Yves with provided credentials:    donald@spryker.com
+    Yves: login on Yves with provided credentials:    ${yves_company_user_bob_email}
     Yves: go to URL:    en/company/user/select
     Yves: 'Select Business Unit' page is displayed
     Yves: 'Business Unit' dropdown contains:    Spryker Systems GmbH / Spryker Systems Berlin    Spryker Systems GmbH / Spryker Systems Zurich
 
 Business_Unit_Address_on_Checkout
-    Yves: login on Yves with provided credentials:    Ahill@ottom.de
+    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     Yves: create new 'Shopping Cart' with name:    businessAddressCart+${random}
     Yves: go to PDP of the product with sku:    M64933
     Yves: add product to the shopping cart
     Yves: go to the shopping cart through the header with name:    businessAddressCart+${random}
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: billing address same as shipping address:    true
-    Yves: select the following existing address on the checkout as 'shipping' address and go next:    Mr Ahill Grant, Seeburger Str. 270, 10115 Berlin
+    Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${yves_company_user_buyer_address}
     Yves: select the following shipping method on the checkout and go next:    Express
     Yves: select the following payment method on the checkout and go next:    Invoice
     Yves: accept the terms and conditions:    true
@@ -332,14 +333,14 @@ Business_Unit_Address_on_Checkout
     Yves: shipping address on the order details page is:    Mr. Ahill Grant Ottom ltd Seeburger Str. 270 10115 Berlin, Germany 4908892455
 
 Approval_Process
-    Yves: login on Yves with provided credentials:    sally@ottom.de
+    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_with_limit_email}
     Yves: create new 'Shopping Cart' with name:    approvalCart+${random}
     Yves: go to PDP of the product with sku:    M49320
     Yves: add product to the shopping cart
     Yves: go to the shopping cart through the header with name:    approvalCart+${random}
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: billing address same as shipping address:    true
-    Yves: select the following existing address on the checkout as 'shipping' address and go next:    Ms Sally Koval, Seeburger Str. 270, 10115 Berlin
+    Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${yves_company_user_buyer_with_limit_address}
     Yves: select the following shipping method on the checkout and go next:    Express
     Yves: select the following payment method on the checkout and go next:    Invoice
     Yves: select approver on the 'Summary' page:    Lilu Dallas (€1,000.00)
@@ -355,7 +356,7 @@ Approval_Process
     Yves: go to the shopping cart through the header with name:    newApprovalCart+${random}
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: billing address same as shipping address:    true
-    Yves: select the following existing address on the checkout as 'shipping' address and go next:            Ms Sally Koval, Seeburger Str. 270, 10115 Berlin
+    Yves: select the following existing address on the checkout as 'shipping' address and go next:            ${yves_company_user_buyer_with_limit_address}
     Yves: select the following shipping method on the checkout and go next:    Express
     Yves: select the following payment method on the checkout and go next:    Invoice
     Yves: accept the terms and conditions:    true
@@ -367,7 +368,7 @@ Approval_Process
     Yves: go to the shopping cart through the header with name:    anotherApprovalCart+${random}
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: billing address same as shipping address:    true
-    Yves: select the following existing address on the checkout as 'shipping' address and go next:            Ms Sally Koval, Seeburger Str. 270, 10115 Berlin
+    Yves: select the following existing address on the checkout as 'shipping' address and go next:            ${yves_company_user_buyer_with_limit_address}
     Yves: select the following shipping method on the checkout and go next:    Express
     Yves: select the following payment method on the checkout and go next:    Invoice
     Yves: select approver on the 'Summary' page:    Lilu Dallas (€1,000.00)
@@ -375,7 +376,7 @@ Approval_Process
     Yves: 'Summary' page is displayed
     Yves: 'Summary' page contains/doesn't contain:    true    ${cancelRequestButton}    ${alertWarning}    ${quoteStatus}
     Yves: logout on Yves as a customer
-    Yves: login on Yves with provided credentials:    Lilu@ottom.de
+    Yves: login on Yves with provided credentials:    ${yves_company_user_approver_email}
     Yves: go to user menu item in header:    Overview
     Yves: 'Overview' page is displayed
     Yves: go to user menu item in the left bar:    Shopping carts
@@ -400,7 +401,7 @@ Approval_Process
     Yves: shopping cart with name xxx has the following status:    approvalCart+${random}    Approved
     Yves: shopping cart with name xxx has the following status:    anotherApprovalCart+${random}    Waiting
     Yves: logout on Yves as a customer
-    Yves: login on Yves with provided credentials:    sally@ottom.de
+    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_with_limit_email}
     Yves: go to user menu item in the left bar:    Shopping carts
     Yves: shopping cart with name xxx has the following status:    approvalCart+${random}    Approved
     Yves: go to the shopping cart through the header with name:    approvalCart+${random}
@@ -412,11 +413,11 @@ Approval_Process
     Yves: 'Thank you' page is displayed
 
 Request_for_Quote
-    Zed: login on Zed with provided credentials:    admin@spryker.com
+    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: create new Zed user with the following data:    agent_quote+${random}@spryker.com    change123    Request    Quote    Root group    This user is an agent    en_US
-    Yves: login on Yves with provided credentials:    Ahill@ottom.de
+    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     Yves: create new 'Shopping Cart' with name:    RfQCart+${random}
-    Yves: go to PDP of the product with sku:    M70208
+    Yves: go to PDP of the product with sku:    ${one_variant_product_abstract_sku}
     Yves: add product to the shopping cart
     Yves: go to PDP of the product with sku:    M1018212
     Yves: add product to the shopping cart
@@ -437,7 +438,7 @@ Request_for_Quote
     Yves: click 'Send to Customer' button on the 'Quote Request Details' page
     Yves: logout on Yves as a customer
     Yves: go to the 'Home' page
-    Yves: login on Yves with provided credentials:    Ahill@ottom.de
+    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     Yves: go to user menu item in header:    Quote Requests
     Yves: quote request with reference xxx should have status:    ${lastCreatedRfQ}    Ready
     Yves: view quote request with reference:    ${lastCreatedRfQ}
@@ -461,7 +462,7 @@ Request_for_Quote
     Yves: click 'Send to Customer' button on the 'Quote Request Details' page
     Yves: logout on Yves as a customer
     Yves: go to the 'Home' page
-    Yves: login on Yves with provided credentials:    Ahill@ottom.de
+    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     Yves: go to user menu item in header:    Quote Requests
     Yves: quote request with reference xxx should have status:    ${lastCreatedRfQ}    Ready
     Yves: view quote request with reference:    ${lastCreatedRfQ}
@@ -471,18 +472,18 @@ Request_for_Quote
     Yves: shopping cart doesn't contain the following products:    102121
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: billing address same as shipping address:    true
-    Yves: select the following existing address on the checkout as 'shipping' address and go next:    Mr Ahill Grant, Seeburger Str. 270, 10115 Berlin
+    Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${yves_company_user_buyer_address}
     Yves: select the following shipping method on the checkout and go next:    Express
     Yves: select the following payment method on the checkout and go next:    Invoice
     Yves: shopping cart contains product with unit price:    403125    500
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
-    Zed: login on Zed with provided credentials:    admin@spryker.com
+    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: delete Zed user with the following email:    agent_quote+${random}@spryker.com
 
 Unique_URL
-    Yves: login on Yves with provided credentials:    andrew@ottom.de
+    Yves: login on Yves with provided credentials:    ${yves_company_user_manager_and_buyer_email}
     Yves: create new 'Shopping Cart' with name:    externalCart+${random}
     Yves: go to PDP of the product with sku:    M90806
     Yves: add product to the shopping cart
@@ -497,7 +498,7 @@ Unique_URL
     Yves: delete 'Shopping Cart' with name:    externalCart+${random}
 
 Configurable_Bundle
-    Yves: login on Yves with provided credentials:    andrew@ottom.de
+    Yves: login on Yves with provided credentials:    ${yves_company_user_manager_and_buyer_email}
     Yves: create new 'Shopping Cart' with name:    confBundle+${random}
     Yves: go to second navigation item level:    More    Configurable Bundle
     Yves: 'Choose Bundle to configure' page is displayed
@@ -517,7 +518,7 @@ Configurable_Bundle
     Yves: change quantity of the configurable bundle in the shopping cart on:    Presentation bundle    2
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: billing address same as shipping address:    true
-    Yves: select the following existing address on the checkout as 'shipping' address and go next:    Mr Andrew Wedner, Seeburger Str. 270, 10115 Berlin
+    Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${yves_company_user_manager_and_buyer_address}
     Yves: select the following shipping method on the checkout and go next:    Express
     Yves: select the following payment method on the checkout and go next:    Invoice
     Yves: accept the terms and conditions:    true
@@ -531,7 +532,7 @@ Configurable_Bundle
     Yves: 'Order Details' page contains the following product title N times:    Presentation bundle    3
 
 Return_Management
-    Yves: login on Yves with provided credentials:    Ahill@ottom.de
+    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     Yves: create new 'Shopping Cart' with name:    returnCart+${random}
     Yves: go to PDP of the product with sku:    M90802
     Yves: add product to the shopping cart
@@ -542,18 +543,18 @@ Return_Management
     Yves: go to the shopping cart through the header with name:    returnCart+${random}
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: billing address same as shipping address:    true
-    Yves: select the following existing address on the checkout as 'shipping' address and go next:    Mr Ahill Grant, Seeburger Str. 270, 10115 Berlin
+    Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${yves_company_user_buyer_address}
     Yves: select the following shipping method on the checkout and go next:    Express
     Yves: select the following payment method on the checkout and go next:    Invoice
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
     Yves: get the last placed order ID by current customer
-    Zed: login on Zed with provided credentials:    admin@spryker.com
+    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Pay
     Zed: trigger all matching states inside this order:    Skip timeout
     Zed: trigger all matching states inside this order:    Ship
-    Yves: login on Yves with provided credentials:    Ahill@ottom.de
+    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     Yves: go to user menu item in header:    Order History
     Yves: 'Order History' page is displayed
     Yves: get the last placed order ID by current customer
@@ -570,9 +571,9 @@ Return_Management
     Yves: go to URL:    agent/login
     Yves: login on Yves with provided credentials:    agent+${random}@spryker.com
     Yves: header contains/doesn't contain:    true    ${customerSearchWidget}
-    Yves: perform search by customer:    Ahill@ottom.de
-    Yves: agent widget contains:    Ahill@ottom.de
-    Yves: login under the customer:    Ahill@ottom.de
+    Yves: perform search by customer:    ${yves_company_user_buyer_email}
+    Yves: agent widget contains:    ${yves_company_user_buyer_email}
+    Yves: login under the customer:    ${yves_company_user_buyer_email}
     Yves: go to user menu item in header:    Order History
     Yves: 'View Order/Reorder/Return' on the order history page:     Return    ${lastPlacedOrder}
     Yves: 'Create Return' page is displayed
@@ -581,9 +582,9 @@ Return_Management
     Yves: check that 'Print Slip' contains the following products:    108278
     Zed: login on Zed with provided credentials:    admin@spryker.com
     Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Execute return
-    Yves: login on Yves with provided credentials:    Ahill@ottom.de
+    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     Yves: go to user menu item in header:    Order History
     Yves: 'Order History' page is displayed
     Yves: 'Order History' page contains the following order with a status:    ${lastPlacedOrder}    Returned
-    Zed: login on Zed with provided credentials:    admin@spryker.com
+    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: delete Zed user with the following email:    agent+${random}@spryker.com
