@@ -25,7 +25,8 @@ ${notification_area}    xpath=//section[@data-qa='component notification-area']
 Yves: login on Yves with provided credentials:
     [Arguments]    ${email}    ${password}=${default_password}
     ${currentURL}=    Get Location        
-    Run Keyword Unless    '/login' in '${currentURL}'    
+    Run Keyword Unless    '/login' in '${currentURL}'
+    ...    Run keyword if    '${env}'=='b2b'    
     ...    Run Keywords   
     ...    Go To    ${host}
     ...    AND    delete all cookies 
@@ -33,10 +34,18 @@ Yves: login on Yves with provided credentials:
     ...    AND    Wait Until Element Is Visible    ${header_login_button}
     ...    AND    Scroll and Click Element    ${header_login_button}
     ...    AND    Wait Until Element Is Visible    ${email_field}
+    ...    ELSE    Run Keywords
+    ...    Go To    ${host}
+    ...    AND    delete all cookies 
+    ...    AND    Reload Page
+    ...    AND    mouse over  &{user_navigation_icon_header_menu_item}[${env}]
+    ...    AND    Wait Until Element Is Visible    ${user_navigation_menu_login_button} 
+    ...    AND    Scroll and Click Element    ${user_navigation_menu_login_button} 
+    ...    AND    Wait Until Element Is Visible    ${email_field}
     Input text into field    ${email_field}    ${email}
     Input text into field    ${password_field}    ${password}
     Scroll and Click Element    ${form_login_button}
-    Run Keyword Unless    'fake' in '${email}' or 'agent' in '${email}'  Wait Until Element Is Visible    ${user_navigation_icon_header_menu_item}    ${loading_time}    Login Failed!
+    Run Keyword Unless    'fake' in '${email}' or 'agent' in '${email}'  Wait Until Element Is Visible    ${user_navigation_icon_header_menu_item}[${env}]    ${loading_time}    Login Failed!
     Run Keyword If    'agent' in '${email}'    Yves: header contains/doesn't contain:    true    ${customerSearchWidget}
     Yves: remove flash messages
     Wait For Document Ready    

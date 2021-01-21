@@ -41,36 +41,30 @@ Guest_User_Access
 Authorized_User_Access
     [Documentation]    Checks that authorized users see products info, cart and profile
     Yves: login on Yves with provided credentials:    spencor.hopkin@spryker.com
-    Yves: header contains/doesn't contain:    true    ${currencySwitcher}    ${accountIcon}    ${wishlistIcon}    ${shoppingCartIcon}
+    Yves: header contains/doesn't contain:    true    ${currencySwitcher}    ${accountIcon}[${env}]     ${wishlistIcon}    ${shoppingCartIcon}[${env}] 
     Yves: go to PDP of the product with sku:    002
+    Yves: PDP contains/doesn't contain:     true    ${price}    ${addToCartButton}
     Yves: add product to the shopping cart
     Yves: go to b2c shopping cart
-    Yves: shopping cart contains product with unit price:    Canon IXUS 160    99.99
-    Yves: PDP contains/doesn't contain:     true    ${price}    ${addToCartButton}
+    Yves: shopping cart contains product with unit price:    002    Canon IXUS 160    99.99
     Yves: go to user menu item in header:    Overview
     Yves: 'Overview' page is displayed
-    Yves: go to user menu item in header:    Order History
+    Yves: go to user menu item in header:    Orders History
     Yves: 'Order History' page is displayed
-    Yves: go to user menu item in header:    Wishlist
+    Yves: go To 'Wishlist' Page
     Yves: 'Wishlist' page is displayed
 
 UserAccount
     [Documentation]    Checks user account pages work
-    Yves: login on Yves with provided credentials:    sonia@spryker.com
+    Yves: login on Yves with provided credentials:    spencor.hopkin@spryker.com
     Yves: go to user menu item in header:    Overview
     Yves: 'Overview' page is displayed
-    Yves: go to user menu item in header:    Order History
+    Yves: go to user menu item in header:    Orders History
     Yves: 'Order History' page is displayed
     Yves: go to user menu item in header:    My Profile
     Yves: 'My Profile' page is displayed
-    Yves: go to user menu item in header:    Wishlist
+    Yves: go To 'Wishlist' Page
     Yves: 'Wishlist' page is displayed
-    Yves: go to user menu item in header:    Returns
-    Yves: 'Returns' page is displayed
-    Yves: go to user menu item in header:    Newsletter
-    Yves: 'Newsletter' page is displayed
-    Yves: go to user menu item in header:    Addresses
-    Yves: 'Addresses' page is displayed
     Yves: create a new customer address in profile:     Ms New Address   Kirncher Str.    7    10247    Berlin
     Yves: go to user menu item in header:    Addresses
     Yves: check that user has address exists:    Address1    true

@@ -1,6 +1,6 @@
 *** Settings ***
 Resource    ../Common/Common.robot
-Resource    ../Pages/Yves_Header_Section.robot
+Resource    ../Yves/Yves_Header_Section.robot
 
 *** Keywords ***
 Yves: go To 'Wishlist' Page
