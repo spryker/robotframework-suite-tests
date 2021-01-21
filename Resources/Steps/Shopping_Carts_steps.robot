@@ -11,13 +11,13 @@ ${lockedCart}    ${shopping_cart_locked_cart_form}
 *** Keywords ***
 Yves: 'Shopping Carts' widget contains:
     [Arguments]    ${shoppingCartName}    ${accessLevel}
-    Wait Until Element Is Visible    ${shopping_car_icon_header_menu_item} 
-    Mouse Over    ${shopping_car_icon_header_menu_item} 
+    Wait Until Element Is Visible    &{shopping_car_icon_header_menu_item}[${env}] 
+    Mouse Over    &{shopping_car_icon_header_menu_item}[${env}] 
     Wait Until Element Is Visible    ${shopping_cart_sub_navigation_widget}
     Page Should Contain Element    xpath=//*[contains(@class,'icon--cart')]/ancestor::li//div[contains(@class,'js-user-navigation__sub-nav-cart')]//span[text()[contains(.,'${accessLevel}')]]/ancestor::div[@class='mini-cart-detail']//*[contains(@class,'mini-cart-detail__title')]/*[text()='${shoppingCartName}']
 
 Go to 'Shopping Carts' page
-    Mouse Over    ${shopping_car_icon_header_menu_item}
+    Mouse Over    &{shopping_car_icon_header_menu_item}[${env}]
     Wait Until Page Contains Element    ${shopping_cart_sub_navigation_widget}
     Click Element with JavaScript    ${shopping_cart_sub_navigation_all_carts_button}
     Wait For Document Ready    
@@ -46,10 +46,15 @@ Yves: share shopping cart with user:
 
 Yves: go to the shopping cart through the header with name:
     [Arguments]    ${shoppingCartName}
-    Wait Until Element Is Visible    ${shopping_car_icon_header_menu_item} 
-    Mouse Over    ${shopping_car_icon_header_menu_item} 
+    Wait Until Element Is Visible    &{shopping_car_icon_header_menu_item}[${env}] 
+    Mouse Over    &{shopping_car_icon_header_menu_item}[${env}] 
     Wait Until Element Is Visible    ${shopping_cart_sub_navigation_widget}
     Scroll and Click Element    //*[contains(@class,'icon--cart')]/ancestor::li//div[contains(@class,'js-user-navigation__sub-nav-cart')]//div[@class='mini-cart-detail']//*[contains(@class,'mini-cart-detail__title')]/*[text()='${shoppingCartName}']
+    
+Yves: go to b2c shopping cart
+    Wait Until Element Is Visible    &{shopping_car_icon_header_menu_item}[${env}] 
+    Scroll and Click Element     &{shopping_car_icon_header_menu_item}[${env}]
+    Wait Until Element Is Visible    &{shopping_cart_main_content_locator}[${env}]     
     
 Yves: shopping cart contains the following products:
     [Arguments]    @{sku_list}    ${sku1}=${EMPTY}     ${sku2}=${EMPTY}     ${sku3}=${EMPTY}     ${sku4}=${EMPTY}     ${sku5}=${EMPTY}     ${sku6}=${EMPTY}     ${sku7}=${EMPTY}     ${sku8}=${EMPTY}     ${sku9}=${EMPTY}     ${sku10}=${EMPTY}     ${sku11}=${EMPTY}     ${sku12}=${EMPTY}     ${sku13}=${EMPTY}     ${sku14}=${EMPTY}     ${sku15}=${EMPTY}
@@ -65,8 +70,9 @@ Yves: click on the '${buttonName}' button in the shopping cart
 
 Yves: shopping cart contains product with unit price:
     [Documentation]    Already contains '€' sign inside
-    [Arguments]    ${sku}    ${productPrice}
-    Page Should Contain Element    xpath=//div[contains(@class,'product-card-item__col--description')]//div[contains(.,'SKU: ${sku}')]/ancestor::article//*[contains(@class,'product-card-item__col--description')]/div[1]//*[contains(@class,'money-price__amount')][contains(.,'€${productPrice}')]
+    [Arguments]    ${sku}    ${productName}    ${productPrice}
+    Run Keyword If    '${env}'=='b2b'    Page Should Contain Element    xpath=//div[contains(@class,'product-card-item__col--description')]//div[contains(.,'SKU: ${sku}')]/ancestor::article//*[contains(@class,'product-card-item__col--description')]/div[1]//*[contains(@class,'money-price__amount')][contains(.,'€${productPrice}')]
+    ...    ELSE    Page Should Contain Element    xpath=//main[@class='page-layout-cart']//article[contains(@data-qa,'component product-card-item')]//a[contains(text(),'${productName}')]/following-sibling::span/span[contains(@class,'money-price__amount') and contains(text(),'€${productPrice}')]
 
 Yves: shopping cart contains/doesn't contain the following elements:
     [Arguments]    ${condition}    @{shopping_cart_elements_list}    ${element1}=${EMPTY}     ${element2}=${EMPTY}     ${element3}=${EMPTY}     ${element4}=${EMPTY}     ${element5}=${EMPTY}     ${element6}=${EMPTY}     ${element7}=${EMPTY}     ${element8}=${EMPTY}     ${element9}=${EMPTY}     ${element10}=${EMPTY}     ${element11}=${EMPTY}     ${element12}=${EMPTY}     ${element13}=${EMPTY}     ${element14}=${EMPTY}     ${element15}=${EMPTY}

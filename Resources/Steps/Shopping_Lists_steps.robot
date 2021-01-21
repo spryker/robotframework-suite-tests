@@ -18,6 +18,7 @@ Yves: go To 'Shopping Lists' Page
     Click Element with JavaScript    ${shopping_list_sub_navigation_all_lists_button}
     Wait For Document Ready    
 
+
 Yves: create new 'Shopping List' with name:
     [Arguments]    ${shoppingListName}
     ${currentURL}=    Get Location        

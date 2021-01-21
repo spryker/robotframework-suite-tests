@@ -21,25 +21,26 @@ Resource    ../../Resources/Steps/Configurable_Bundle_steps.robot
 Resource    ../../Resources/Steps/Zed_Users_steps.robot
 Resource    ../../Resources/Steps/Products_steps.robot
 Resource    ../../Resources/Steps/Orders_Management_steps.robot
+Resource    ../../Resources/Steps/Wishlist_steps.robot
 
 *** Test Cases ***
 Guest_User_Access
     [Documentation]    Checks that guest users see products info and cart but not profile
-    Yves: header contains/doesn't contain:    true    ${currencySwitcher}    ${accountIcon}    ${wishlistIcon}    ${shoppingCartIcon}
-    Yves: go to PDP of the product with sku:    002 
+    Yves: header contains/doesn't contain:    true    ${currencySwitcher}    ${accountIcon}[${env}]    ${wishlistIcon}    ${shoppingCartIcon}[${env}]
+    Yves: go to PDP of the product with sku:    002
+    Yves: PDP contains/doesn't contain:     true    ${price}    ${addToCartButton} 
     Yves: add product to the shopping cart
     Yves: go to b2c shopping cart
-    Yves: shopping cart contains product with unit price:    Canon IXUS 160    99.99
-    Yves: PDP contains/doesn't contain:     true    ${price}    ${addToCartButton}
+    Yves: shopping cart contains product with unit price:   002    Canon IXUS 160    99.99
     Yves: go to user menu item in header:    Overview
     Yves: 'Login' page is displayed
-    Yves: go to user menu item in header:    Wishlist
+    Yves: go To 'Wishlist' Page
     Yves: 'Login' page is displayed
     
 
 Authorized_User_Access
     [Documentation]    Checks that authorized users see products info, cart and profile
-    Yves: login on Yves with provided credentials:    sonia@spryker.com
+    Yves: login on Yves with provided credentials:    spencor.hopkin@spryker.com
     Yves: header contains/doesn't contain:    true    ${currencySwitcher}    ${accountIcon}    ${wishlistIcon}    ${shoppingCartIcon}
     Yves: go to PDP of the product with sku:    002
     Yves: add product to the shopping cart

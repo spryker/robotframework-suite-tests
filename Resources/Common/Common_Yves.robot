@@ -46,9 +46,9 @@ Yves: go to PDP of the product with sku:
     Yves: perform search by:    ${sku}
     Wait Until Page Contains Element    ${catalog_product_card_locator}
     Wait For Document Ready    
-    Scroll and Click Element    xpath=//product-item[@data-qa='component product-item'][1]//a[contains(@class,'link-detail-page') and (contains(@class,'name'))]
+    Scroll and Click Element    ${catalog_product_card_locator}
     Wait For Document Ready
-    Wait Until Page Contains Element    ${pdp_main_container_locator}
+    Wait Until Page Contains Element    ${pdp_main_container_locator}[${env}]
 
 Yves: '${pageName}' page is displayed
     Run Keyword If    '${pageName}' == 'Company Users'    Page Should Contain Element    ${company_users_main_content_locator}    ${pageName} page is not displayed
