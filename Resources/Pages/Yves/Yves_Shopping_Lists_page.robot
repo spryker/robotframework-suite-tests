@@ -1,5 +1,6 @@
 *** Variable ***
 ${shopping_lists_main_content_locator}    xpath=//div[@data-qa='component shopping-list-overview-table']
+${shopping_lists_page_form_locator}    xpath=//form[@name='shopping_list_form']
 ${shopping_list_name_input_field}    id=shopping_list_form_name
 ${create_shopping_list_button}    xpath=//form[@name='shopping_list_form']//button[@data-qa='submit-button']
 ${share_shopping_list_customers_section}    xpath=//div[@data-qa="component company-dashbord-item"]//*[text()='Customer']/../../div[@data-qa='component share-list']

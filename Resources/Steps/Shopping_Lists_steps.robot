@@ -14,9 +14,9 @@ Yves: 'Shopping List' widget contains:
 
 Yves: go To 'Shopping Lists' Page
     Mouse Over    ${shopping_list_icon_header_menu_item}
-    Wait Until Page Contains Element    ${shopping_list_sub_navigation_widget}
-    Click Element with JavaScript    ${shopping_list_sub_navigation_all_lists_button}
-    Wait For Document Ready    
+    ${button_exists}=    Run Keyword And Return Status    Element Should Be Visible    ${shopping_list_sub_navigation_all_lists_button}
+    Run Keyword If    ${button_exists}=='PASS'    Click Element with JavaScript    ${shopping_list_sub_navigation_all_lists_button}     
+    ...    ELSE    Scroll and Click Element    ${shopping_list_icon_header_menu_item}        
 
 Yves: create new 'Shopping List' with name:
     [Arguments]    ${shoppingListName}
