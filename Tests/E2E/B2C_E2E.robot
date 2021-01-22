@@ -65,12 +65,20 @@ UserAccount
     Yves: 'My Profile' page is displayed
     Yves: go To 'Wishlist' Page
     Yves: 'Wishlist' page is displayed
-    Yves: create a new customer address in profile:     Ms New Address   Kirncher Str.    7    10247    Berlin
-    Yves: go to user menu item in header:    Addresses
-    Yves: check that user has address exists:    Address1    true
-    Yves: delete user address:    Address1
-    Yves: go to user menu item in header:    Addresses
-    Yves: check that user has address exists:    Address1    false
+    Yves: go to user menu item in the left bar:    Addresses
+    Yves: 'Addresses' page is displayed
+    Yves: go to user menu item in the left bar:    Newsletter
+    Yves: 'Newsletter' page is displayed
+    Yves: go to user menu item in the left bar:    Returns
+    Yves: 'Returns' page is displayed
+    Yves: create a new customer address in profile     Mr    Spencor    Hopkin    Kirncher Str.    7    10247    Berlin    Germany
+    Yves: go to user menu item in the left bar:    Addresses
+    Yves: 'Addresses' page is displayed
+    Yves: check that user has address exists/doesn't exist    true    Mr    Spencor    Hopkin    Kirncher Str.    7    10247    Berlin    Germany
+    Yves: delete user address    Mr    Spencor    Hopkin    Kirncher Str.    7    10247    Berlin    Germany
+    Yves: go to user menu item in the left bar:    Addresses
+    Yves: 'Addresses' page is displayed
+    Yves: check that user has address exists/doesn't exist    false    Mr    Spencor    Hopkin    Kirncher Str.    7    10247    Berlin    Germany
     
     
 Catalog
