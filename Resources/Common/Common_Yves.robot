@@ -38,7 +38,7 @@ Yves: login on Yves with provided credentials:
     ...    Go To    ${host}
     ...    AND    delete all cookies 
     ...    AND    Reload Page
-    ...    AND    mouse over  &{user_navigation_icon_header_menu_item}[${env}]
+    ...    AND    mouse over  ${user_navigation_icon_header_menu_item}[${env}]
     ...    AND    Wait Until Element Is Visible    ${user_navigation_menu_login_button} 
     ...    AND    Scroll and Click Element    ${user_navigation_menu_login_button} 
     ...    AND    Wait Until Element Is Visible    ${email_field}
@@ -127,8 +127,12 @@ Yves: go to second navigation item level:
 
 Yves: go to first navigation item level:
     [Arguments]     ${navigation_item_level1}
-    Wait Until Element Is Visible    xpath=//div[@class='header__navigation']//navigation-multilevel[@data-qa='component navigation-multilevel']/ul[@class='menu menu--lvl-0']//li[contains(@class,'menu__item--lvl-0')]/span/*[contains(@class,'lvl-0')][1][text()='${navigation_item_level1}']
-    Click Element with JavaScript    //div[@class='header__navigation']//navigation-multilevel[@data-qa='component navigation-multilevel']/ul[@class='menu menu--lvl-0']//li[contains(@class,'menu__item--lvl-0')]/span/*[contains(@class,'lvl-0')][1][text()='${navigation_item_level1}']
+    BuiltIn.Run Keyword If    '${env}'=='b2b'    Run keywords
+    ...    Wait Until Element Is Visible    xpath=//div[@class='header__navigation']//navigation-multilevel[@data-qa='component navigation-multilevel']/ul[@class='menu menu--lvl-0']//li[contains(@class,'menu__item--lvl-0')]/span/*[contains(@class,'lvl-0')][1][text()='${navigation_item_level1}']    AND
+    ...    Click Element with JavaScript    //div[@class='header__navigation']//navigation-multilevel[@data-qa='component navigation-multilevel']/ul[@class='menu menu--lvl-0']//li[contains(@class,'menu__item--lvl-0')]/span/*[contains(@class,'lvl-0')][1][text()='${navigation_item_level1}']
+    ...    ELSE    Run keywords
+    ...    Wait Until Element Is Visible    xpath=//*[contains(@class,'header')]//*[contains(@data-qa,'navigation-multilevel')]/*[contains(@class,'navigation-multilevel-node__link--lvl-1 flyout-fullscreen') and contains(text(),'${navigation_item_level1}')]    AND
+    ...    Click Element with JavaScript    //*[contains(@class,'header')]//*[contains(@data-qa,'navigation-multilevel')]/*[contains(@class,'navigation-multilevel-node__link--lvl-1 flyout-fullscreen') and contains(text(),'${navigation_item_level1}')]
     Wait For Document Ready  
 
 Yves: go to third navigation item level:

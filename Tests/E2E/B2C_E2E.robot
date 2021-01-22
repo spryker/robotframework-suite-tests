@@ -71,14 +71,14 @@ UserAccount
     Yves: 'Newsletter' page is displayed
     Yves: go to user menu item in the left bar:    Returns
     Yves: 'Returns' page is displayed
-    Yves: create a new customer address in profile     Mr    Spencor    Hopkin    Kirncher Str.    7    10247    Berlin    Germany
+    Yves: create a new customer address in profile:     Mr    Spencor    Hopkin    Kirncher Str.    7    10247    Berlin    Germany
     Yves: go to user menu item in the left bar:    Addresses
     Yves: 'Addresses' page is displayed
-    Yves: check that user has address exists/doesn't exist    true    Mr    Spencor    Hopkin    Kirncher Str.    7    10247    Berlin    Germany
-    Yves: delete user address    Mr    Spencor    Hopkin    Kirncher Str.    7    10247    Berlin    Germany
+    Yves: check that user has address exists/doesn't exist:    true    Mr    Spencor    Hopkin    Kirncher Str.    7    10247    Berlin    Germany
+    Yves: delete user address:    Mr    Spencor    Hopkin    Kirncher Str.    7    10247    Berlin    Germany
     Yves: go to user menu item in the left bar:    Addresses
     Yves: 'Addresses' page is displayed
-    Yves: check that user has address exists/doesn't exist    false    Mr    Spencor    Hopkin    Kirncher Str.    7    10247    Berlin    Germany
+    Yves: check that user has address exists/doesn't exist:    false    Mr    Spencor    Hopkin    Kirncher Str.    7    10247    Berlin    Germany
     
     
 Catalog
@@ -87,14 +87,14 @@ Catalog
     Yves: 'Catalog' page should show products:    30
     Yves: go to first navigation item level:    Computers
     Yves: 'Catalog' page should show products:    72
-    Yves: page contains CMS element:    Top Sellers    true
-    Yves: page contains CMS element:    Banner    true
+    Yves: page contains CMS element:    Product Slider    Top Sellers
+    Yves: page contains CMS element:    Banner    Computers
     Yves: change sorting order on catalog page:    Sort by price ascending
     Yves: 1st product card in catalog (not)contains:     Price    €18.79
     Yves: change sorting order on catalog page:    Sort by price descending
-    Yves: 1st product card in catalog (not)contains:      Price    €381.68
-    Yves: go to catalog page:     2
-    Yves: catalog page contains filter:    true    Price    Ratings    Label    Brand    Color
+    Yves: 1st product card in catalog (not)contains:      Price    €3,456.99
+    Yves: go to catalog page:    2
+    Yves: catalog page contains filter:    Price    Ratings     Label     Brand    Color
     Yves: select filter value:    Color    Yellow
     Yves: 'Catalog' page should show products:    1
 

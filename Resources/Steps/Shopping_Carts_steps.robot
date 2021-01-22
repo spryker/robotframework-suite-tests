@@ -47,14 +47,14 @@ Yves: share shopping cart with user:
 Yves: go to the shopping cart through the header with name:
     [Arguments]    ${shoppingCartName}
     Wait Until Element Is Visible    &{shopping_car_icon_header_menu_item}[${env}] 
-    Mouse Over    &{shopping_car_icon_header_menu_item}[${env}] 
+    Mouse Over    ${shopping_car_icon_header_menu_item}[${env}] 
     Wait Until Element Is Visible    ${shopping_cart_sub_navigation_widget}
     Scroll and Click Element    //*[contains(@class,'icon--cart')]/ancestor::li//div[contains(@class,'js-user-navigation__sub-nav-cart')]//div[@class='mini-cart-detail']//*[contains(@class,'mini-cart-detail__title')]/*[text()='${shoppingCartName}']
     
 Yves: go to b2c shopping cart
-    Wait Until Element Is Visible    &{shopping_car_icon_header_menu_item}[${env}] 
-    Scroll and Click Element     &{shopping_car_icon_header_menu_item}[${env}]
-    Wait Until Element Is Visible    &{shopping_cart_main_content_locator}[${env}]     
+    Wait Until Element Is Visible    ${shopping_car_icon_header_menu_item}[${env}] 
+    Scroll and Click Element     ${shopping_car_icon_header_menu_item}[${env}]
+    Wait Until Element Is Visible    ${shopping_cart_main_content_locator}[${env}]     
     
 Yves: shopping cart contains the following products:
     [Arguments]    @{sku_list}    ${sku1}=${EMPTY}     ${sku2}=${EMPTY}     ${sku3}=${EMPTY}     ${sku4}=${EMPTY}     ${sku5}=${EMPTY}     ${sku6}=${EMPTY}     ${sku7}=${EMPTY}     ${sku8}=${EMPTY}     ${sku9}=${EMPTY}     ${sku10}=${EMPTY}     ${sku11}=${EMPTY}     ${sku12}=${EMPTY}     ${sku13}=${EMPTY}     ${sku14}=${EMPTY}     ${sku15}=${EMPTY}

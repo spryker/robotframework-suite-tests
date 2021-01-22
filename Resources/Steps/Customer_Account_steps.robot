@@ -14,7 +14,7 @@ Yves: go to user menu item in the left bar:
     ...    Wait Until Element Is Visible    xpath=//a[contains(@class,'menu__link menu__link--customer-navigation') and contains(text(),'${left_navigation_node}')]    AND
     ...    Scroll and Click Element    xpath=//a[contains(@class,'menu__link menu__link--customer-navigation') and contains(text(),'${left_navigation_node}')]
 
-Yves: create a new customer address in profile
+Yves: create a new customer address in profile:
     [Documentation]
     [Arguments]    ${salutation}    ${firstName}    ${lastName}    ${street}    ${houseNumber}    ${postCode}    ${city}    ${country}    ${isDefaultShipping}=True     ${isDefaultBilling}=True       ${company}=    ${phone}=    ${additionalAddress}=
     Yves: go to user menu item in header:    My Profile
@@ -40,7 +40,7 @@ Yves: create a new customer address in profile
     Click Button    ${customer_account_address_submit_button}   
     Wait For Document Ready 
 
-Yves: check that user has address exists/doesn't exist
+Yves: check that user has address exists/doesn't exist:
     [Arguments]    ${exists}    ${salutation}    ${firstName}    ${lastName}    ${street}    ${houseNumber}    ${postCode}    ${city}    ${country}    ${isDefaultShipping}=True     ${isDefaultBilling}=True       ${company}=NUll    ${phone}=NUll    ${additionalAddress}=NUll
     Yves: go to user menu item in header:    My Profile
     Yves: go to user menu item in the left bar:    Addresses
@@ -53,7 +53,7 @@ Yves: check that user has address exists/doesn't exist
     ...    Element Should Not Be Visible    xpath=//div[@class='box']//ul[@class='display-address menu menu--customer-account']//li[contains(text(),'${street} ${houseNumber}')]    AND    
     ...    Element Should Not Be Visible    xpath=//div[@class='box']//ul[@class='display-address menu menu--customer-account']//li[contains(text(),'${postCode} ${city}, ${country}')]
 
-Yves: delete user address
+Yves: delete user address:
     [Arguments]    ${salutation}    ${firstName}    ${lastName}    ${street}    ${houseNumber}    ${postCode}    ${city}    ${country}    ${isDefaultShipping}=True     ${isDefaultBilling}=True       ${company}=NUll    ${phone}=NUll    ${additionalAddress}=NUll
     Yves: go to user menu item in header:    My Profile
     Yves: go to user menu item in the left bar:    Addresses
