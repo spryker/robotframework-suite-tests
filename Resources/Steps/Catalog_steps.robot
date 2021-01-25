@@ -67,6 +67,7 @@ Yves: get current cart item counter value
 
 
 Yves: select product color:
+    [Documentation]    the color should start with capital letter, e.g. Black, Red, White
     [Arguments]    ${colour}
     Scroll Element Into View    xpath=//*[@class='product-item__name js-product-item__name']
     Mouse Over    xpath=//a[@class='product-item__overlay js-product-item__link-detail-page']/ancestor::div[@class='product-item__image-wrap']

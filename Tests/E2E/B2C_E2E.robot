@@ -114,27 +114,27 @@ Catalog_Actions
     Yves: shopping cart contains the following products:    NEX-VG20EH    Canon IXUS 160
 
 Product_labels
-    [Documentation]    Checks that products have labels on PCP and PDP
+    [Documentation]    Checks that products have labels on PLP and PDP
     Yves: go to first navigation item level:    Sale
     Yves: 1st product card in catalog (not)contains:     SaleLabel    true
     Yves: go to PDP of the product with sku:    020
-    Yves: PDP contains/doesn't contain:    true    ${SaleLabel}
+    Yves: PDP contains/doesn't contain:    true    ${pdp_sales_label}
     Yves: go to first navigation item level:    New
     Yves: 1st product card in catalog (not)contains:     NewLabel    true
     Yves: go to PDP of the product with sku:    666
-    Yves: PDP contains/doesn't contain:    true    ${NewLabel}
+    Yves: PDP contains/doesn't contain:    true    ${pdp_new_label}
 
 Product_PDP
     [Documentation]    Checks that PDP contains required elements
     Yves: go to PDP of the product with sku:    135
     Yves: change variant of the product on PDP on:    Flash
-    Yves: PDP contains/doesn't contain:    true  ${price}    ${addToCartButton}    ${Warranty}    ${GiftWrapping}    ${ProductReviews}    ${relatedProducts} 
-    Yves: PDP contains/doesn't contain:    false  ${AddToWishlistButton}
+    Yves: PDP contains/doesn't contain:    true    ${price}    ${addToCartButton}    ${pdp_warranty_option}    ${pdp_gift_wrapping_option}    ${relatedProducts} 
+    Yves: PDP contains/doesn't contain:    false    ${pdp_add_to_wishlist_button}
     Yves: login on Yves with provided credentials:    sonia@spryker.com
     Yves: go to PDP of the product with sku:    135
-    Yves: PDP contains/doesn't contain:    true  ${price}    ${addToCartButtonDisabled}    ${Warranty}    ${GiftWrapping}    ${AddToWishlistButtonDisabled}    ${relatedProducts} 
+    Yves: PDP contains/doesn't contain:    true    ${price}    ${pdp_add_to_cart_disabled_button}    ${pdp_warranty_option}    ${pdp_gift_wrapping_option}     ${pdp_add_to_wishlist_button}    ${relatedProducts} 
     Yves: change variant of the product on PDP on:    Flash
-    Yves: PDP contains/doesn't contain:    true  ${price}    ${addToCartButton}    ${Warranty}    ${GiftWrapping}    ${AddToWishlistButton}    ${relatedProducts} 
+    Yves: PDP contains/doesn't contain:    true    ${price}    ${addToCartButton}    ${pdp_warranty_option}    ${pdp_gift_wrapping_option}     ${pdp_add_to_wishlist_button}    ${relatedProducts} 
 
 
 Volume_Prices
