@@ -26,6 +26,7 @@ ${agent_confirm_login_button}    xpath=//agent-control-bar[@data-qa='component a
 ${agent_quote_requests_header_item}    xpath=//agent-control-bar//a[contains(@href,'quote-request')]/ancestor::li[contains(@class,'menu__item--has-children')]
 ${agent_quote_requests_widget}    xpath=//agent-control-bar//a[contains(@href,'quote-request')]/ancestor::li[contains(@class,'menu__item--has-children')]//ul[contains(@class,'menu--wider')]
 ${wishlist_icon_header_navigation_widget}    xpath=//*[@*='#:wishlist']/ancestor::nav[@data-qa='component navigation-top']
+${cart_widget_item_quantity_counter}    xpath=//*[@data-qa='component navigation-top']//span[contains(@class,'cart-counter__quantity js-cart-counter__quantity')]
 
 
     

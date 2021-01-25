@@ -57,11 +57,12 @@ Yves: go to b2c shopping cart
     Wait Until Element Is Visible    ${shopping_cart_main_content_locator}[${env}]     
     
 Yves: shopping cart contains the following products:
-    [Arguments]    @{sku_list}    ${sku1}=${EMPTY}     ${sku2}=${EMPTY}     ${sku3}=${EMPTY}     ${sku4}=${EMPTY}     ${sku5}=${EMPTY}     ${sku6}=${EMPTY}     ${sku7}=${EMPTY}     ${sku8}=${EMPTY}     ${sku9}=${EMPTY}     ${sku10}=${EMPTY}     ${sku11}=${EMPTY}     ${sku12}=${EMPTY}     ${sku13}=${EMPTY}     ${sku14}=${EMPTY}     ${sku15}=${EMPTY}
-    ${sku_list_count}=   get length  ${sku_list}
-    FOR    ${index}    IN RANGE    0    ${sku_list_count}
-        ${sku_to_check}=    Get From List    ${sku_list}    ${index}
-        Page Should Contain Element    xpath=//main[contains(@class,'cart-page')]//div[contains(@class,'product-card-item__col--description')]//div[contains(.,'SKU: ${sku_to_check}')]/ancestor::article
+    [Documentation]    For item listing you can use sku or name of the product
+    [Arguments]    @{items_list}
+    ${items_list_count}=   get length  ${items_list}
+    FOR    ${index}    IN RANGE    0    ${items_list_count}
+        ${item_to_check}=    Get From List    ${items_list}    ${index}
+        Page Should Contain Element    xpath=//main[contains(@class,'cart')]//article[contains(@data-qa,'component product-card-item')]//*[contains(.,'${item_to_check}')]/ancestor::article
     END    
     
 Yves: click on the '${buttonName}' button in the shopping cart

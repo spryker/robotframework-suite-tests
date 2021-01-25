@@ -111,7 +111,7 @@ Catalog_Actions
     Yves: select product color:    Black
     Yves: quick add to cart for first item in catalog
     Yves: go to b2c shopping cart
-    Yves: shopping cart contains the following products:    NEX-VG20EH    HP Z 440
+    Yves: shopping cart contains the following products:    NEX-VG20EH    Canon IXUS 160
 
 Product_labels
     [Documentation]    Checks that products have labels on PCP and PDP

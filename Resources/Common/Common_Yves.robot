@@ -85,6 +85,12 @@ Yves: flash message '${condition}' be shown
    Run Keyword If    '${condition}' == 'should'    Wait Until Element Is Visible    ${notification_area}    ${loading_time}
     ...    ELSE    Page Should Not Contain Element    ${notification_area}
 
+Yves: flash message should be shown:
+    [Documentation]    ${type} can be: error, success
+    [Arguments]    ${type}    ${text}
+    Run Keyword If    '${type}' == 'error'    Element Should Be Visible    xpath=//flash-message[contains(@class,'alert')]//div[contains(text(),'${text}')]    
+    ...    ELSE    Run Keyword If    '${type}' == 'success'    Element Should Be Visible    xpath=//flash-message[contains(@class,'success')]//div[contains(text(),'${text}')]  
+
 Yves: logout on Yves as a customer
     delete all cookies
     Reload Page    
