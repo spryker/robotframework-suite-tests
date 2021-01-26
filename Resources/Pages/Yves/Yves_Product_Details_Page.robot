@@ -7,7 +7,7 @@ ${pdp_price_element_locator}    xpath=//span[contains(@class,'volume-price__pric
 ${pdp_add_to_cart_button}    xpath=//button[contains(@class,'button') and @data-qa='add-to-cart-button']
 ${pdp_add_to_cart_disabled_button}    xpath=//button[@disabled and contains(text(),'Add to Cart')]
 ${pdp_add_to_wishlist_button}    xpath=//button[@type='submit' and contains(text(),'Add to Wishlist')]
-${pdp_quantity_input_filed}    xpath=//div[@class='product-configurator__add-to-cart']//input[@name='quantity']
+&{pdp_quantity_input_filed}    b2b=xpath=//div[@class='product-configurator__add-to-cart']//input[@name='quantity']    b2c=//*[@data-qa='quantity-input']
 ${pdp_alternative_products_slider}    xpath=//*[@data-qa='component product-alternative-slider']
 ${pdp_measurement_sales_unit_selector}    name=id-product-measurement-sales-unit
 ${pdp_measurement_unit_notification}    id=measurement-unit-choices

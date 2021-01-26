@@ -42,7 +42,9 @@ Yves: add product to the shopping cart
 
 Yves: change quantity on PDP:
     [Arguments]    ${qtyToSet}
-    Input text into field    ${pdp_quantity_input_filed}    ${qtyToSet}
+    Run Keyword If    '${env}'=='b2b'
+    ...    Input text into field    ${pdp_quantity_input_filed}[${env}]    ${qtyToSet}
+    ...    ELSE    Add/Edit element attribute with JavaScript:    ${pdp_quantity_input_filed}[${env}]    value    ${qtyToSet}    
 
 Yves: select the following 'Sales Unit' on PDP:
     [Arguments]    ${salesUnit}

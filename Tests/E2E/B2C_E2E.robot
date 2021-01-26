@@ -144,7 +144,7 @@ Volume_Prices
     Yves: change quantity on PDP:    5
     Yves: add product to the shopping cart
     Yves: go to b2c shopping cart
-    Yves: shopping cart contains product with unit price:    Sony FDR-AX40    8.25
+    Yves: shopping cart contains product with unit price:    193    Sony FDR-AX40    8.25
     Yves: delete from b2c cart products with name:    Sony FDR-AX40
 
 Discontinued_Alternative_Products
