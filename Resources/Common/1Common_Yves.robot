@@ -14,7 +14,7 @@ Resource    ../Pages/Yves/Yves_Order_Details_page.robot
 Resource    ../Pages/Yves/Yves_Customer_Account_page.robot
 Resource    ../Pages/Yves/Yves_Quote_Requests_page.robot
 Resource    ../Pages/Yves/Yves_Quote_Request_page.robot
-Resource    ../Pages/Yves/Yve_Choose_Bundle_to_Configure_page.robot
+Resource    ../Pages/Yves/Yves_Choose_Bundle_to_Configure_page.robot
 Resource    ../Pages/Yves/Yves_Create_Return_page.robot
 Resource    ../Pages/Yves/Yves_Return_Details_page.robot
 
