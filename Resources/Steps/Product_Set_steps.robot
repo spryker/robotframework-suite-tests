@@ -1,6 +1,6 @@
 *** Settings ***
 Library    SeleniumLibrary    plugins=SeleniumTestability;True;30 Seconds;True
-Resource    ../Pages/Yves/Yves_Product_Sets.robot
+Resource    ../Pages/Yves/Yves_Product_Sets_page.robot
 Resource    ../Common/Common_Yves.robot
 
 *** Keywords ***

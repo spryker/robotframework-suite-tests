@@ -14,7 +14,7 @@ Resource    ../Pages/Yves/Yves_Order_Details_page.robot
 Resource    ../Pages/Yves/Yves_Customer_Account_page.robot
 Resource    ../Pages/Yves/Yves_Quote_Requests_page.robot
 Resource    ../Pages/Yves/Yves_Quote_Request_page.robot
-Resource    ../Pages/Yves/Yve_Choose_Bundle_to_Configure_page.robot
+Resource    ../Pages/Yves/Yves_Choose_Bundle_to_Configure_page.robot
 Resource    ../Pages/Yves/Yves_Create_Return_page.robot
 Resource    ../Pages/Yves/Yves_Return_Details_page.robot
 
@@ -61,7 +61,7 @@ Yves: go to PDP of the product with sku:
 
 Yves: '${pageName}' page is displayed
     Run Keyword If    '${pageName}' == 'Company Users'    Page Should Contain Element    ${company_users_main_content_locator}    ${pageName} page is not displayed
-    ...    ELSE IF    '${pageName}' == 'Shopping Lists'    Page Should Contain Element    ${shopping_lists_main_content_locator}    ${pageName} page is not displayed
+    ...    ELSE IF    '${pageName}' == 'Shopping Lists'    Page Should Contain Element    ${shopping_lists_page_form_locator}    ${pageName} page is not displayed
     ...    ELSE IF    '${pageName}' == 'Shopping List'    Page Should Contain Element    ${shopping_list_main_content_locator}    ${pageName} page is not displayed
     ...    ELSE IF    '${pageName}' == 'Shopping Cart'    Page Should Contain Element    ${shopping_cart_main_content_locator}    ${pageName} page is not displayed
     ...    ELSE IF    '${pageName}' == 'Shopping Carts'    Page Should Contain Element    ${shopping_carts_main_content_locator}    ${pageName} page is not displayed

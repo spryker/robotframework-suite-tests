@@ -1,18 +1,16 @@
-[
-        {
-            "environment": "suite-nonsplit",
-            "host": "https://www.69.demo-spryker.com/",
-            "zed_url": "https://os.69.demo-spryker.com/",
-            "yves_user_email": "spencor.hopkin@spryker.com",
-            "yves_user_first_name": "Spencor",
-            "yves_user_last_name": "Hopkin",
-            "yves_user_password": "change123",
-            "zed_admin_email": "admin@spryker.com",
-            "zed_admin_password": "change123",
-            "one_variant_product_abstract_sku": "009",
-            "one_variant_product_abstract_price": "€99.99",
-            "multi_variant_product_abstract_sku": "051",
-            "measurement_unit_product_abstract_sku": "215",
-            "packaging_unit_product_abstract_sku": "218"
-        }
-]
+{
+    "environment": "suite-nonsplit",
+    "host": "https://www.69.demo-spryker.com/",
+    "zed_url": "https://os.69.demo-spryker.com/",
+    "yves_user_email": "spencor.hopkin@spryker.com",
+    "yves_user_first_name": "Spencor",
+    "yves_user_last_name": "Hopkin",
+    "yves_user_password": "change123",
+    "zed_admin_email": "admin@spryker.com",
+    "zed_admin_password": "change123",
+    "one_variant_product_abstract_sku": "009",
+    "one_variant_product_abstract_price": "€99.99",
+    "multi_variant_product_abstract_sku": "051",
+    "measurement_unit_product_abstract_sku": "215",
+    "packaging_unit_product_abstract_sku": "218"
+}
