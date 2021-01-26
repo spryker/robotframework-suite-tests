@@ -113,3 +113,22 @@ Yves: add product to wishlist
     Scroll and Click Element    ${pdp_add_to_wishlist_button}
     Yves: flash message should be shown:    success    Items added successfully
     Yves: remove flash messages
+
+Yves: check if product is available on PDP:
+    [Arguments]    ${abstractSku}    ${isAvailable}
+    Run Keyword If    '${isAvailable}'=='false'    Run keywords    Element Should Be Visible    ${pdp_product_not_available_text}
+    ...    AND    Element Should Be Visible    ${pdp_add_to_cart_disabled_button}
+    ...    AND    Element Should Be Visible    ${pdp_availability_notification_email_field}
+    ...    ELSE    Run keywords    Element Should Not Be Visible    ${pdp_product_not_available_text}
+    ...    AND    Element Should Not Be Visible    ${pdp_add_to_cart_disabled_button}
+    ...    AND    Element Should Not Be Visible    ${pdp_availability_notification_email_field}
+    ...    AND    Element Should Be Visible    ${pdp_add_to_cart_button}      
+
+Yves: submit back in stock notification request for email:
+    [Arguments]    ${email}
+    Input text into field    ${pdp_availability_notification_email_field}    ${email}
+    Scroll and Click Element    xpath=//button[@data-qa='submit-button']
+    Yves: flash message should be shown:    success    Successfully subscribed
+    Yves: remove flash messages
+    Element Should Be Visible    xpath=//button[contains(text(),'Do not notify me when back in stock')]
+    

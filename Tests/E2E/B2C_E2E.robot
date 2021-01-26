@@ -22,6 +22,7 @@ Resource    ../../Resources/Steps/Zed_Users_steps.robot
 Resource    ../../Resources/Steps/Products_steps.robot
 Resource    ../../Resources/Steps/Orders_Management_steps.robot
 Resource    ../../Resources/Steps/Wishlist_steps.robot
+Resource    ../../Resources/Steps/Zed_Availability_steps.robot
 
 *** Test Cases ***
 Guest_User_Access
@@ -175,20 +176,22 @@ Back_in_Stock_Notification
     [Documentation]    Back in stock notification is sent and availability check
     Zed: login on Zed with provided credentials:    admin@spryker.com
     Zed: go to second navigation item level:    Catalog    Availability
-    Zed: check if product is in stock:    009    true
-    Zed: change product in stock status:    009    false
-    Zed: check if product is in stock:    009    false
-    Yves: login on Yves with provided credentials:    sonia@spryker.com
+    Zed: check if product is/not in stock:    009    true
+    Zed: change product stock:    009    009_30692991    false    0
+    Zed: go to second navigation item level:    Catalog    Availability
+    Zed: check if product is/not in stock:    009    false
+    Yves: login on Yves with provided credentials:    spencor.hopkin@spryker.com
     Yves: go to PDP of the product with sku:  009
-    Yves: check if product is in stock on PDP:    009    false
-    Yves: submit back in stock notification request
+    Yves: check if product is available on PDP:    009    false
+    Yves: submit back in stock notification request for email:    spencor.hopkin@spryker.com
     Zed: login on Zed with provided credentials:    admin@spryker.com
     Zed: go to second navigation item level:    Catalog    Availability
-    Zed: change product in stock status:    009    true
-    Zed: check if product is in stock:    009    true
-    Yves: login on Yves with provided credentials:    sonia@spryker.com
+    Zed: change product stock:    009    009_30692991    true    0  
+    Zed: go to second navigation item level:    Catalog    Availability  
+    Zed: check if product is/not in stock:    009    true
+    Yves: login on Yves with provided credentials:    spencor.hopkin@spryker.com
     Yves: go to PDP of the product with sku:  009
-    Yves: check if product is in stock on PDP:    009    true
+    Yves: check if product is available on PDP:    009    true
 
 Add_to_Wishlist
     [Documentation]    Check creation of wishlist and adding to different wishlists

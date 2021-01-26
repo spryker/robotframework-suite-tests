@@ -84,6 +84,12 @@ Add/Edit element attribute with JavaScript:
     ...    var element=document.evaluate("${xpath}", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
     ...    element.setAttribute("${attribute}", "${attributeValue}");
 
+Remove element attribute with JavaScript:
+    [Arguments]    ${xpath}    ${attribute}
+    Execute Javascript
+    ...    var element=document.evaluate("${xpath}", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+    ...    element.removeAttribute("${attribute}"");
+
 Scroll and Click Element
     [Arguments]    ${locator}
     Wait Until Page Contains Element    ${locator}

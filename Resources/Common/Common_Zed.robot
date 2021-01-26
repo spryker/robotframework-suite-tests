@@ -11,6 +11,7 @@ ${zed_table_locator}    xpath=//table[contains(@class,'dataTable')]/tbody
 ${zed_search_field_locator}     xpath=//input[@type='search']
 ${zed_processing_block_locator}     xpath=//div[contains(@class,'dataTables_processing')][@style='display: none;']
 
+
 *** Keywords ***
 Zed: login on Zed with provided credentials:
     [Arguments]    ${email}    ${password}=${default_password}
