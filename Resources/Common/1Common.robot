@@ -5,8 +5,8 @@ Library    String
 Library    Dialogs
 Library    OperatingSystem
 Library    ../../Resources/Libraries/common.py
-Resource                  ../Pages/Yves/Yves_Header_Section.robot
-Resource                  ../Pages/Yves/Yves_Login_Page.robot
+Resource                  ../Pages/Yves/Yves_Header_section.robot
+Resource                  ../Pages/Yves/Yves_Login_page.robot
 
 *** Variables ***
 # *** SUITE VARIABLES ***

@@ -3,7 +3,7 @@ Library    SeleniumLibrary    plugins=SeleniumTestability;True;30 Seconds;True
 Library    String
 Library    BuiltIn
 Library    Collections
-Resource    ../Pages/Yves/Yves_Header_Section.robot
+Resource    ../Pages/Yves/Yves_Header_section.robot
 Resource    ../Pages/Yves/Yves_Catalog_page.robot
 Resource    ../Steps/Request_for_Quote_steps.robot
 Resource    ../Steps/Shopping_Carts_steps.robot
