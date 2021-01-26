@@ -9,7 +9,7 @@ Resource    ../Common/Common_Yves.robot
 *** Variable ***
 ${price}    ${pdp_price_element_locator}
 ${addToCartButton}    ${pdp_add_to_cart_button}
-${alternativeProducts}    ${pdp_alternative_products_slider}
+${alternativeProducts}    ${pdp_alternative_products_slider}[${env}]
 ${measurementUnitSuggestion}    ${pdp_measurement_unit_notification}
 ${packagingUnitSuggestion}    ${pdp_packaging_unit_notification}
 ${bundleItemsSmall}    ${pdp_product_bundle_include_small}
@@ -91,8 +91,8 @@ Yves: change variant of the product on PDP on random value
     Wait For Document Ready
 
 Yves: get sku of the concrete product on PDP
-    Wait Until Element Is Visible    ${pdp_product_sku}
-    ${got_concrete_product_sku}=    Get Text    ${pdp_product_sku}
+    Wait Until Element Is Visible    ${pdp_product_sku}[${env}]
+    ${got_concrete_product_sku}=    Get Text    ${pdp_product_sku}[${env}]
     ${got_concrete_product_sku}=    Replace String    ${got_concrete_product_sku}    SKU:     ${EMPTY}
     ${got_concrete_product_sku}=    Replace String    ${got_concrete_product_sku}    ${SPACE}    ${EMPTY}
     Set Global Variable    ${got_concrete_product_sku}
@@ -108,3 +108,8 @@ Yves: get sku of the abstract product on PDP
     ${got_abstract_product_sku}=    Replace String    ${got_abstract_product_sku}    ]    ${EMPTY}
     Set Global Variable    ${got_abstract_product_sku}
     [Return]    ${got_abstract_product_sku}
+
+Yves: add product to wishlist
+    Scroll and Click Element    ${pdp_add_to_wishlist_button}
+    Yves: flash message should be shown:    success    Items added successfully
+    Yves: remove flash messages

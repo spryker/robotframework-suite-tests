@@ -149,7 +149,7 @@ Discontinued_Alternative_Products
     Zed: login on Zed with provided credentials:    admin@spryker.com
     Zed: discontinue the following product:    ${got_abstract_product_sku}    ${got_concrete_product_sku}
     Zed: product is successfully discontinued
-    Zed: add alternative products to the following abstract:    M22613
+    Zed: add following alternative products to the concrete:    M22613
     Zed: submit the form
     Zed: undo discontinue the following product:    ${got_abstract_product_sku}    ${got_concrete_product_sku}
 

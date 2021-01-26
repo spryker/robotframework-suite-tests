@@ -150,25 +150,26 @@ Volume_Prices
 Discontinued_Alternative_Products
     [Documentation]    Checks discontinued and alternative products
     Yves: go to PDP of the product with sku:  145
-    Yves: change variant of the product on PDP on:    2.3 GHz
+    Yves: change variant of the product on PDP on:    2.3 GHz - Discontinued
     Yves: PDP contains/doesn't contain:    true    ${alternativeProducts}
     Yves: login on Yves with provided credentials:    sonia@spryker.com
     Yves: go to PDP of the product with sku:  010
-    Yves: add product to wishlist:    default
+    Yves: add product to wishlist
     Yves: get sku of the concrete product on PDP
     Yves: get sku of the abstract product on PDP
     Zed: login on Zed with provided credentials:    admin@spryker.com
-    Zed: discontinue the following product:    ${got_abstract_product_sku}    ${got_concrete_product_sku}
+    Zed: discontinue the following product:    010    010_30692994
     Zed: product is successfully discontinued
-    Zed: add alternative products to the following abstract:    011
+    Zed: check if at least one price exists for concrete and add if doesn't:    100
+    Zed: add following alternative products to the concrete:    011
     Zed: submit the form
     Yves: login on Yves with provided credentials:    sonia@spryker.com
-    Yves: go to user menu item in header:    Wishlist
+    Yves: go To 'Wishlist' Page
     Yves: go to wishlist with name:    My wishlist
     Yves: product with sku is marked as discountinued in wishlist:    010
     Yves: product with sku is marked as alternative in wishlist:    011
     Zed: login on Zed with provided credentials:    admin@spryker.com
-    Zed: undo discontinue the following product:    ${got_abstract_product_sku}    ${got_concrete_product_sku}
+    Zed: undo discontinue the following product:    010    010_30692994
 
 Back_in_Stock_Notification
     [Documentation]    Back in stock notification is sent and availability check
