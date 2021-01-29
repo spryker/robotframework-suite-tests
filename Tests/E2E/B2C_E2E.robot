@@ -155,7 +155,7 @@ Discontinued_Alternative_Products
     Yves: PDP contains/doesn't contain:    true    ${alternativeProducts}
     Yves: login on Yves with provided credentials:    sonia@spryker.com
     Yves: go to PDP of the product with sku:  010
-    Yves: add product to wishlist
+    Yves: add product to wishlist:    My wishlist
     Yves: get sku of the concrete product on PDP
     Yves: get sku of the abstract product on PDP
     Zed: login on Zed with provided credentials:    admin@spryker.com
@@ -196,17 +196,19 @@ Back_in_Stock_Notification
 Add_to_Wishlist
     [Documentation]    Check creation of wishlist and adding to different wishlists
     Yves: login on Yves with provided credentials:    sonia@spryker.com
+    Yves: delete all wishlists
     Yves: go to PDP of the product with sku:  003
-    Yves: add product to wishlist:    My Wishlist
-    Yves: go to user menu item in header:    Wishlist
-    Yves: create wishlist with name:    Second Wishlist
+    Yves: add product to wishlist:    My wishlist
+    Yves: go To 'Wishlist' Page
+    Yves: create wishlist with name:    Second wishlist
     Yves: go to PDP of the product with sku:  004
-    Yves: add product to wishlist:    Second Wishlist
-    Yves: go to user menu item in header:    Wishlist
-    Yves: go to wishlist with name:    My Wishlist
+    Yves: add product to wishlist:    Second wishlist
+    Yves: go To 'Wishlist' Page
+    Yves: go to wishlist with name:    My wishlist
     Yves: wishlist contains product with sku:    003_26138343
-    Yves: go to wishlist with name:    Second Wishlist
+    Yves: go to wishlist with name:    Second wishlist
     Yves: wishlist contains product with sku:    004_30663302
+    Yves: delete all wishlists
 
 Product_Sets
     [Documentation]    Check the usage of product sets

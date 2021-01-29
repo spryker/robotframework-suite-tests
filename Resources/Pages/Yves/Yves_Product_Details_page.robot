@@ -30,3 +30,4 @@ ${pdp_gift_wrapping_option}    xpath=//*[contains(@class,'item--option')]//*[con
 ${pdp_product_reviews_list}    xpath=//*[contains(text(),'Product Reviews')]/following-sibling::div/article[@class='review']
 ${pdp_product_not_available_text}    xpath=//span[contains(text(),'This product is currently not available.')]
 ${pdp_availability_notification_email_field}    xpath=//input[@id='availabilityNotificationSubscriptionForm_email']
+${pdp_wishlist_dropdown}    xpath=//select[contains(@name,'wishlist-name')]
