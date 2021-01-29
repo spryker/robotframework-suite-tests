@@ -137,10 +137,13 @@ Yves: delete 'Shopping Cart' with name:
     Wait For Document Ready  
 
 Yves: delete from b2c cart products with name:
-    [Arguments]    ${name}
-    Scroll and Click Element    xpath=//div[@class='page-layout-cart__items-wrap']//a[contains(text(),'${name}')]/ancestor::div/following-sibling::div//form[contains(@name,'removeFromCart')]//button[text()='Remove']
-    Yves: flash message should be shown:    success    Products were removed successfully
-    Yves: remove flash messages
-    Run Keyword If    '${env}'=='b2b'    Page Should Not Contain Element    xpath=//div[contains(@class,'product-card-item__col--description')]//div[contains(.,'${name}')]
-    ...    ELSE    Page Should Not Contain Element    xpath=//main[@class='page-layout-cart']//article[contains(@data-qa,'component product-card-item')]//a[contains(text(),'${name}')]
+    [Arguments]    @{productNameList}
+    FOR    ${product}    IN    @{productNameList}
+        Scroll and Click Element    xpath=//div[@class='page-layout-cart__items-wrap']//a[contains(text(),'${product}')]/ancestor::div/following-sibling::div//form[contains(@name,'removeFromCart')]//button[text()='Remove']
+        Yves: flash message should be shown:    success    Products were removed successfully
+        Yves: remove flash messages
+        Run Keyword If    '${env}'=='b2b'    Page Should Not Contain Element    xpath=//div[contains(@class,'product-card-item__col--description')]//div[contains(.,'${namproducte}')]
+        ...    ELSE    Page Should Not Contain Element    xpath=//main[@class='page-layout-cart']//article[contains(@data-qa,'component product-card-item')]//a[contains(text(),'${product}')]
+    END
+    
     
