@@ -12,13 +12,13 @@ ${addToCartButton}    ${pdp_add_to_cart_button}
 ${alternativeProducts}    ${pdp_alternative_products_slider}[${env}]
 ${measurementUnitSuggestion}    ${pdp_measurement_unit_notification}
 ${packagingUnitSuggestion}    ${pdp_packaging_unit_notification}
-${bundleItemsSmall}    ${pdp_product_bundle_include_small}
+${bundleItemsSmall}    ${pdp_product_bundle_include_small}[${env}]
 ${bundleItemsLarge}    ${pdp_product_bundle_include_large}
-${relatedProducts}    &{pdp_related_products}[${env}]
+${relatedProducts}    ${pdp_related_products}[${env}]
 
 *** Keywords ***
 Yves: PDP contains/doesn't contain: 
-    [Arguments]    ${condition}    @{pdp_elements_list}    ${element1}=${EMPTY}     ${element2}=${EMPTY}     ${element3}=${EMPTY}     ${element4}=${EMPTY}     ${element5}=${EMPTY}     ${element6}=${EMPTY}     ${element7}=${EMPTY}     ${element8}=${EMPTY}     ${element9}=${EMPTY}     ${element10}=${EMPTY}     ${element11}=${EMPTY}     ${element12}=${EMPTY}     ${element13}=${EMPTY}     ${element14}=${EMPTY}     ${element15}=${EMPTY}
+    [Arguments]    ${condition}    @{pdp_elements_list}
     ${pdp_elements_list_count}=   get length    ${pdp_elements_list}
     FOR    ${index}    IN RANGE    0    ${pdp_elements_list_count}
         ${pdp_element_to_check}=    Get From List    ${pdp_elements_list}    ${index}

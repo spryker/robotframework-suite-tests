@@ -19,7 +19,7 @@ Yves: 'Shopping Carts' widget contains:
 Go to 'Shopping Carts' page
     Mouse Over    &{shopping_car_icon_header_menu_item}[${env}]
     Wait Until Page Contains Element    ${shopping_cart_sub_navigation_widget}
-    Click Element with JavaScript    ${shopping_cart_sub_navigation_all_carts_button}
+    Click Element by xpath with JavaScript    ${shopping_cart_sub_navigation_all_carts_button}
     Wait For Document Ready    
 
 Yves: create new 'Shopping Cart' with name:

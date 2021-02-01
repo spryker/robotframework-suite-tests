@@ -16,7 +16,7 @@ ${pdp_decrease_quantity_button}    xpath=//div[@class='product-configurator__add
 ${pdp_variant_selector}    xpath=//*[@data-qa='component variant']//select
 ${pdp_amount_input_filed}    id=user-amount
 ${pdp_packaging_unit_notification}    xpath=//*[@class='packaging-unit-notifications']
-${pdp_product_bundle_include_small}    xpath=//div[@class='js-product-options-bundle__target']
+&{pdp_product_bundle_include_small}    b2b=xpath=//div[@class='js-product-options-bundle__target']    b2c=xpath=//ul[@class='bundle-option-list grid']
 ${pdp_product_bundle_include_large}    xpath=//div[@data-qa='component product-bundle']
 &{pdp_related_products}    b2b=xpath=//*[contains(@class,'title--product-slider')][contains(.,'Similar products')]/../slick-carousel    b2c=xpath=//*[contains(@class,'product-slider')][contains(.,'You might also like')]/../slick-carousel
 ${pdp_add_to_shopping_list_button}    xpath=//button[@data-qa='add-to-shopping-list-button']

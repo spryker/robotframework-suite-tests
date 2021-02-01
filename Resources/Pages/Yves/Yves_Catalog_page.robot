@@ -9,3 +9,4 @@ ${catalog_filter_apply_button}    xpath=//button[contains(text(),'Apply')]
 ${catalog_add_to_cart_button}    xpath=//button[contains(@title,'Add to Cart')]
 
 
+

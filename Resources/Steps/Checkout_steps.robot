@@ -2,6 +2,7 @@
 Resource    ../Pages/Yves/Yves_Checkout_Address_page.robot
 Resource    ../Pages/Yves/Yves_Checkout_Summary_page.robot
 Resource    ../Common/Common_Yves.robot
+Resource    ../Pages/Yves/Yves_Checkout_Payment_page.robot
 
 *** Variables ***
 ${cancelRequestButton}    ${checkout_summary_cancel_request_button}  
@@ -12,12 +13,13 @@ ${submit_checkout_form_button}    xpath=//div[contains(@class,'form--checkout-fo
 *** Keywords ***
 Yves: billing address same as shipping address:
     [Arguments]    ${state}
-    Run Keyword If    '${state}' == 'true'    Add/Edit element attribute with JavaScript:    //input[@id='addressesForm_billingSameAsShipping']    checked    checked
+    Run Keyword If    '${state}' == 'true' and '${env}'=='b2b'    Add/Edit element attribute with JavaScript:    //input[@id='addressesForm_billingSameAsShipping']    checked    checked
+    ...    ELSE    Run Keyword If    '${state}' == 'true' and '${env}'=='b2c'    Click Element by id with JavaScript    addressesForm_billingSameAsShipping   
    
 Yves: accept the terms and conditions:
    [Arguments]    ${state}
     Wait Until Page Contains Element    xpath=//input[@name='acceptTermsAndConditions']
-    Run Keyword If    '${state}' == 'true'    Run Keyword And Ignore Error    Click Element with JavaScript    //input[@name='acceptTermsAndConditions']
+    Run Keyword If    '${state}' == 'true'    Run Keyword And Ignore Error    Click Element by xpath with JavaScript    //input[@name='acceptTermsAndConditions']
     
 Yves: select the following existing address on the checkout as 'shipping' address and go next:
     [Arguments]    ${addressToUse}
@@ -25,6 +27,31 @@ Yves: select the following existing address on the checkout as 'shipping' addres
     Select From List By Label    ${checkout_address_delivery_dropdown}    ${addressToUse}
     Scroll and Click Element    ${submit_checkout_form_button}
     Wait For Document Ready    
+
+Yves: fill in the following shipping address:
+    [Documentation]
+    [Arguments]    ${salutation}    ${firstName}    ${lastName}    ${street}    ${houseNumber}    ${postCode}    ${city}    ${country}    ${isDefaultShipping}=True     ${isDefaultBilling}=True      ${company}=    ${phone}=    ${additionalAddress}=    ${addressesForm_billingSameAsShipping}=true
+    Click Element    xpath=//span[@aria-labelledby='select2-addressesForm_shippingAddress_id_customer_address-container']    modifier=False    action_chain=False
+    Click Element    xpath=//li[contains(text(),'Define new address')]    modifier=False    action_chain=False
+#    Click Element    ${checkout_shipping_address_salutation_dropdown}
+#    Click Element    xpath=//li[@class='select2-results__option' and contains(text(),'${salutation}')]
+    Input text into field    ${checkout_shipping_address_first_name_field}     ${firstName}
+    Input text into field    ${checkout_shipping_address_last_name_field}     ${lastName}
+    Input text into field    ${checkout_shipping_address_company_name_field}     ${company}
+    Input text into field    ${checkout_shipping_address_street_field}     ${street}
+    Input text into field    ${checkout_shipping_address_house_number_field}     ${houseNumber}
+    Input text into field    ${checkout_shipping_address_additional_address_field}     ${additionalAddress}
+    Input text into field    ${checkout_shipping_address_zip_code_field}     ${postCode}
+    Input text into field    ${checkout_shipping_address_city_field}     ${city}
+#     Click Element    ${checkout_shipping_address_country_drop_down_field}
+#     Click Element    xpath=//li[contains(@class,'select2-results__option') and contains(text(),'${country}')]
+    Input text into field    ${checkout_shipping_address_phone_field}     ${phone}
+    Scroll Element Into View    ${checkout_address_submit_button}
+    Wait Until Element Is Enabled    ${checkout_address_submit_button}
+    Wait Until Element Is Visible    ${checkout_address_submit_button}
+    Click Element    ${checkout_address_submit_button}
+    Scroll and Click Element    ${submit_checkout_form_button}   
+    Wait For Document Ready 
 
 Yves: select the following shipping method on the checkout and go next:
     [Arguments]    ${shippingMethod}
@@ -34,8 +61,13 @@ Yves: select the following shipping method on the checkout and go next:
 
 Yves: select the following payment method on the checkout and go next:
     [Arguments]    ${paymentMethod}
-    Scroll and Click Element    //form[@id='payment-form']//li[@class='checkout-list__item'][contains(.,'${paymentMethod}')]//span[contains(@class,'toggler-radio__box')]
-    Scroll and Click Element    ${submit_checkout_form_button}
+    BuiltIn.Run Keyword If    '${env}'=='b2b'    Run keywords
+    ...    Scroll and Click Element    //form[@id='payment-form']//li[@class='checkout-list__item'][contains(.,'${paymentMethod}')]//span[contains(@class,'toggler-radio__box')]
+    ...    AND    Scroll and Click Element    ${submit_checkout_form_button}
+    ...    ELSE    Run keywords
+    ...    Scroll and CLick Element    //form[@name='paymentForm']//span[contains(@class,'toggler') and contains(text(),'${paymentMethod}')]/preceding-sibling::span[@class='toggler-radio__box']
+    ...    AND    Input text into field    ${checkout_payment_invoice_date_of_birth_field}    11.11.1111    
+    ...    AND    Scroll and Click Element    ${submit_checkout_form_button}
     Wait For Document Ready    
 
 Yves: '${checkoutAction}' on the summary page

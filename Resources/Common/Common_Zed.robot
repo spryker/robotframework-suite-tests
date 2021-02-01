@@ -28,7 +28,7 @@ Zed: go to first navigation item level:
     [Documentation]     example: "Zed: Go to First Navigation Item Level  Customers"
     [Arguments]     ${navigation_item}
 
-    Click Element with JavaScript    //ul[@id='side-menu']/li/a/span[@class='nav-label'][contains(text(),'${navigation_item}')]/../../a
+    Click Element by xpath with JavaScript    //ul[@id='side-menu']/li/a/span[@class='nav-label'][contains(text(),'${navigation_item}')]/../../a
 
 Zed: go to second navigation item level:
     [Documentation]     example: "Zed: Go to Second Navigation Item Level    Customers    Customer Access"
@@ -37,7 +37,7 @@ Zed: go to second navigation item level:
     log    ${node_state}
     Run Keyword If    'active' in '${node_state}'   run keywords  wait until element is visible  xpath=//ul[contains(@class,'nav-second-level')]//a/span[text()='${navigation_item_level2}']
     ...    AND      Scroll and Click Element  xpath=//ul[contains(@class,'nav-second-level')]//a/span[text()='${navigation_item_level2}']
-    ...    ELSE     run keywords    Click Element with JavaScript    //ul[@id='side-menu']/li/a/span[@class='nav-label'][contains(text(),'${navigation_item_level1}')]/../../a
+    ...    ELSE     run keywords    Click Element by xpath with JavaScript    //ul[@id='side-menu']/li/a/span[@class='nav-label'][contains(text(),'${navigation_item_level1}')]/../../a
     ...    AND      wait until element is visible  xpath=//ul[contains(@class,'nav-second-level')]//a/span[text()='${navigation_item_level2}']
     ...    AND      Scroll and Click Element  xpath=//ul[contains(@class,'nav-second-level')]//a/span[text()='${navigation_item_level2}']
 

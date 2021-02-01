@@ -51,7 +51,7 @@ Zed: create a return for the following order and product in it:
     Zed: go to second navigation item level:    Sales    Orders
     Zed: perform search by:    ${orderID}
     Zed: click Action Button in a table for row that contains:    ${orderID}    View
-    Click Element with JavaScript    //div[@class='title-action']/a[contains(.,'Return')]
+   Click Element by xpath with JavaScript    //div[@class='title-action']/a[contains(.,'Return')]
     Wait Until Page Contains Element    ${zed_create_return_main_content_locator}
     ${sku_list_count}=   get length  ${sku_list}
     FOR    ${index}    IN RANGE    0    ${sku_list_count}

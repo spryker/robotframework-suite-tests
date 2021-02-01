@@ -233,7 +233,7 @@ Product_Bundles
     Yves: shopping cart contains the following products:    ASUS Bundle
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: billing address same as shipping address:    true
-    Yves: fill in the following shipping address:    Ms Sonia Wagner    Kirncher Str.    7    10247    Berlin
+    Yves: fill in the following shipping address:    Mr    Spencor    Hopkin    Kirncher Str.    7    10247    Berlin    Germany
     Yves: select the following shipping method on the checkout and go next:    Express
     Yves: select the following payment method on the checkout and go next:    Invoice
     Yves: accept the terms and conditions:    true
