@@ -306,11 +306,11 @@ Recommendations
     Yves: go to PDP of the product with sku:    005
     Yves: add product to the shopping cart
     Yves: go to b2c shopping cart
-    Yves: page contains CMS element:    Similar products false
+    Yves: page contains CMS element:    Product Slider    Similar products false
     Yves: go to PDP of the product with sku:    157
     Yves: add product to the shopping cart
     Yves: go to b2c shopping cart
-    Yves: page contains CMS element:    Similar products true
+    Yves: page contains CMS element:    Product Slider    Similar products true
 
 Split_Delivery
     [Documentation]    Checks split delivery in checkout
