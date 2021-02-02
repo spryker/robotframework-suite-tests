@@ -99,11 +99,13 @@ Yves: go to the 'Home' page
     Go To    ${host}
 
 Yves: get the last placed order ID by current customer
-    ${currentURL}=    Get Location        
+    ${currentURL}=    Get Location     
+    Run Keyword If    '${env}'=='b2b'    Set Test Variable    ${menuItem}    Order History
+    ...    ELSE    Set Test Variable    ${menuItem}    Orders History
     Run Keyword Unless    '/customer/order' in '${currentURL}'
     ...    Run Keywords   
     ...    Yves: go to the 'Home' page 
-    ...    AND    Yves: go to user menu item in header:    Order History
+    ...    AND    Yves: go to user menu item in header:    ${menuItem}
     ...    AND    Yves: 'Order History' page is displayed
     ${lastPlacedOrder}=    Get Text    xpath=//div[contains(@data-qa,'component order-table')]//tr[1]//td[1]
     Set Suite Variable    ${lastPlacedOrder}    ${lastPlacedOrder}

@@ -294,7 +294,7 @@ Discounts
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: select guest checkout
     Yves: billing address same as shipping address:    true
-    Yves: fill in the following shipping address:    Ms Guest User    Kirncher Str.    7    10247    Berlin
+    Yves: fill in the following shipping address:    Mr    Guest    user    Kirncher Str.    7    10247    Berlin    Germany
     Yves: select the following shipping method on the checkout and go next:    Express
     Yves: select the following payment method on the checkout and go next:    Invoice
     Yves: accept the terms and conditions:    true
@@ -365,7 +365,7 @@ Return_Management
     Yves: go to b2c shopping cart
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: billing address same as shipping address:    true
-    Yves: fill in the following shipping address:    Ms Guest User    Kirncher Str.    7    10247    Berlin
+    Yves: fill in the following shipping address:    Mr    Guest    User    Kirncher Str.    7    10247    Berlin    Germany
     Yves: select the following shipping method on the checkout and go next:    Express
     Yves: select the following payment method on the checkout and go next:    Invoice
     Yves: accept the terms and conditions:    true
@@ -377,7 +377,7 @@ Return_Management
     Zed: trigger all matching states inside this order:    Skip timeout
     Zed: trigger all matching states inside this order:    Ship
     Yves: login on Yves with provided credentials:    sonia@spryker.com
-    Yves: go to user menu item in header:    Order History
+    Yves: go to user menu item in header:    Orders History
     Yves: 'Order History' page is displayed
     Yves: get the last placed order ID by current customer
     Yves: 'View Order/Reorder/Return' on the order history page:     Return    ${lastPlacedOrder}
@@ -396,7 +396,7 @@ Return_Management
     Yves: perform search by customer:    sonia@spryker.com
     Yves: agent widget contains:    sonia@spryker.com
     Yves: login under the customer:    sonia@spryker.com
-    Yves: go to user menu item in header:    Order History
+    Yves: go to user menu item in header:    Orders History
     Yves: 'View Order/Reorder/Return' on the order history page:     Return    ${lastPlacedOrder}
     Yves: 'Create Return' page is displayed
     Yves: create return for the following products:    008_30692992
@@ -405,7 +405,7 @@ Return_Management
     Zed: login on Zed with provided credentials:    admin@spryker.com
     Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Execute return
     Yves: login on Yves with provided credentials:    sonia@spryker.com
-    Yves: go to user menu item in header:    Order History
+    Yves: go to user menu item in header:    Orders History
     Yves: 'Order History' page is displayed
     Yves: 'Order History' page contains the following order with a status:    ${lastPlacedOrder}    Returned
     Zed: login on Zed with provided credentials:    admin@spryker.com

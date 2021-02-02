@@ -30,9 +30,9 @@ Yves: create return for the following products:
     ${sku_list_count}=   get length  ${sku_list}
     FOR    ${index}    IN RANGE    0    ${sku_list_count}
         ${sku_to_check}=    Get From List    ${sku_list}    ${index}
-        Scroll and Click Element    xpath=//form[@name='return_create_form']//div[@data-qa='component return-product-item']//*[contains(text(),'${sku_to_check}')]/ancestor::div[@data-qa='component return-product-item']/../div[@class='col']//span[contains(@id,'return_create_form_returnItems')]
+        Scroll and Click Element    xpath=(//form[@name='return_create_form']//div[@data-qa='component return-product-item']//*[contains(text(),'${sku_to_check}')]/ancestor::div[@data-qa='component return-product-item']/../div[contains(@class,'col')]//span[contains(@class,'checkbox')])[1]
     END
-    Scroll and Click Element    ${create_return_button}
+    Scroll and Click Element    ${create_return_button}[${env}]
 
 Yves: check that 'Print Slip' contains the following products:
     [Arguments]    @{sku_list}    ${element1}=${EMPTY}     ${element2}=${EMPTY}     ${element3}=${EMPTY}     ${element4}=${EMPTY}     ${element5}=${EMPTY}     ${element6}=${EMPTY}     ${element7}=${EMPTY}     ${element8}=${EMPTY}     ${element9}=${EMPTY}     ${element10}=${EMPTY}     ${element11}=${EMPTY}     ${element12}=${EMPTY}     ${element13}=${EMPTY}     ${element14}=${EMPTY}     ${element15}=${EMPTY}
@@ -51,12 +51,12 @@ Zed: create a return for the following order and product in it:
     Zed: go to second navigation item level:    Sales    Orders
     Zed: perform search by:    ${orderID}
     Zed: click Action Button in a table for row that contains:    ${orderID}    View
-   Click Element by xpath with JavaScript    //div[@class='title-action']/a[contains(.,'Return')]
+    Click Element by xpath with JavaScript    //div[@class='title-action']/a[contains(.,'Return')]
     Wait Until Page Contains Element    ${zed_create_return_main_content_locator}
     ${sku_list_count}=   get length  ${sku_list}
     FOR    ${index}    IN RANGE    0    ${sku_list_count}
         ${sku_to_check}=    Get From List    ${sku_list}    ${index}
-        Scroll and Click Element    xpath=//table[@data-qa='order-item-list']//td/div[contains(text(),'SKU: ${sku_to_check}')]/ancestor::tr//div[@class='checkbox']
+        Scroll and Click Element    xpath=//table[@data-qa='order-item-list']//td/div[contains(text(),'SKU: ${sku_to_check}')]/ancestor::tr//div[@class='checkbox']//input
     END
     Scroll and Click Element    ${zed_create_return_button}  
     Wait Until Page Contains Element    ${zed_return_details_main_content_locator}
