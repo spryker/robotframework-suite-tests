@@ -123,8 +123,8 @@ Yves: Shopping Cart title should be equal:
 Yves: change quantity of the configurable bundle in the shopping cart on:
     [Documentation]    In case of multiple matches, changes quantity for the first product in the shopping cart
     [Arguments]    ${confBundleTitle}    ${quantity}
-    Input text into field    xpath=//article[@data-qa='component configured-bundle'][1]//*[contains(@class,'configured-bundle__title')][text()='${confBundleTitle}']/ancestor::article//input[@data-qa='quantity-input']    ${quantity}
-    Scroll and Click Element    xpath=//article[@data-qa='component configured-bundle'][1]//*[contains(@class,'configured-bundle__title')][text()='${confBundleTitle}']
+    Input text into field    xpath=//main//article[contains(@data-qa,'configured-bundle')][1]//*[contains(@class,'configured-bundle') and text()='${confBundleTitle}']/ancestor::article//input[@data-qa='quantity-input']    ${quantity}
+    Scroll and Click Element    xpath=//main//article[contains(@data-qa,'configured-bundle')][1]//*[contains(@class,'configured-bundle') and text()='${confBundleTitle}']
     Wait For Document Ready    
 
 Yves: delete 'Shopping Cart' with name:

@@ -243,17 +243,17 @@ Product_Bundles
 Configurable_Bundle
     [Documentation]    Check the usage of configurable bundles (includes authorized checkout)
     Yves: login on Yves with provided credentials:    sonia@spryker.com
-    Yves: go to second navigation item level:    More    Configurable Bundle
+    Yves: go to URL:    en/configurable-bundle/configurator/template-selection
     Yves: 'Choose Bundle to configure' page is displayed
     Yves: choose bundle template to configure:    Smartstation Kit
     Yves: select product in the bundle slot:    Slot 5    Canon IXUS 160
     Yves: select product in the bundle slot:    Slot 6    Sony NEX-VG30E
     Yves: go to 'Summary' step in the bundle configurator
     Yves: add products to the shopping cart in the bundle configurator
-    Yves: go to second navigation item level:    More    Configurable Bundle
+    Yves: go to URL:    en/configurable-bundle/configurator/template-selection
     Yves: 'Choose Bundle to configure' page is displayed
     Yves: choose bundle template to configure:    Smartstation Kit
-    Yves: select product in the bundle slot:    Slot 5    Canon PowerShot N
+    Yves: select product in the bundle slot:    Slot 5    Canon IXUS 165
     Yves: select product in the bundle slot:    Slot 6    Sony HDR-MV1
     Yves: go to 'Summary' step in the bundle configurator
     Yves: add products to the shopping cart in the bundle configurator
@@ -261,13 +261,13 @@ Configurable_Bundle
     Yves: change quantity of the configurable bundle in the shopping cart on:    Smartstation Kit    2
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: billing address same as shipping address:    true
-    Yves: fill in the following shipping address:    Ms Sonia Wagner    Kirncher Str.    7    10247    Berlin
+    Yves: fill in the following shipping address:    Mr    Spencor    Hopkin    Kirncher Str.    7    10247    Berlin    Germany
     Yves: select the following shipping method on the checkout and go next:    Express
     Yves: select the following payment method on the checkout and go next:    Invoice
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
-    Yves: go to user menu item in header:    Order History
+    Yves: go to user menu item in header:    Orders History
     Yves: 'Order History' page is displayed
     Yves: get the last placed order ID by current customer
     Yves: 'View Order/Reorder/Return' on the order history page:    View Order    ${lastPlacedOrder}

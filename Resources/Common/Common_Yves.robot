@@ -105,7 +105,7 @@ Yves: get the last placed order ID by current customer
     ...    Yves: go to the 'Home' page 
     ...    AND    Yves: go to user menu item in header:    Order History
     ...    AND    Yves: 'Order History' page is displayed
-    ${lastPlacedOrder}=    Get Text    xpath=//div[contains(@data-qa,'component order-table')]//tr[1]//td[@data-content='Order Id'][1]
+    ${lastPlacedOrder}=    Get Text    xpath=//div[contains(@data-qa,'component order-table')]//tr[1]//td[1]
     Set Suite Variable    ${lastPlacedOrder}    ${lastPlacedOrder}
     [Return]    ${lastPlacedOrder}
 
