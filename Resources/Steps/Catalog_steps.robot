@@ -29,8 +29,8 @@ Yves: change sorting order on catalog page:
 Yves: 1st product card in catalog (not)contains:
     [Documentation]    ${elementName} can be: Price, Name
     [Arguments]    ${elementName}    ${value}
-    Run Keyword If    '${elementName}'=='Price'    Element Should Be Visible    xpath=//span[contains(@class,'default-price') and contains(text(),'${value}')][1]
-    ...    ELSE    Run Keyword If    '${elementName}'=='Name'    Element Should Be Visible    xpath=//span[contains(@class,'item__name') and contains(text(),'${value}')][1]
+    Run Keyword If    '${elementName}'=='Price'    Element Should Be Visible    xpath=//span[contains(@class,'default-price') and contains(.,'${value}')][1]
+    ...    ELSE    Run Keyword If    '${elementName}'=='Name'    Element Should Be Visible    xpath=//span[contains(@class,'item__name') and contains(.,'${value}')][1]
 
 Yves: go to catalog page:
     [Arguments]    ${pageNumber}

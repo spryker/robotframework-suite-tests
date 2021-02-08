@@ -23,7 +23,7 @@ ${pdp_add_to_shopping_list_button}    xpath=//button[@data-qa='add-to-shopping-l
 &{pdp_product_sku}    b2b=xpath=//section[@class='product-configurator']//div[@class='product-configurator__sku']    b2c=//section[@class='product-detail']//div[@class='spacing-top spacing-top--bigger']
 ${pdp_shopping_list_selector}    xpath=//form[contains(@action,'shopping-list')]//select
 ${pdp_sales_label}    xpath=//*[@data-qa='component label-group']//span[contains(text(),'SALE')]
-${pdp_new_label}    xpath=//*[@data-qa='component label-group']//span[contains(text(),'NEW')]
+${pdp_new_label}    xpath=//*[@data-qa='component label-group']//span[contains(text(),'New')]
 ${pdp_warranty_option}    xpath=//*[contains(@class,'item--option')]//*[contains(text(),'Warranty')]
 ${pdp_insurance_option}    xpath=//*[contains(@class,'item--option')]//*[contains(text(),'Insurance')]
 ${pdp_gift_wrapping_option}    xpath=//*[contains(@class,'item--option')]//*[contains(text(),'Gift wrapping')]

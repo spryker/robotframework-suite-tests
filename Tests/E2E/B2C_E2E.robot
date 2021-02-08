@@ -23,6 +23,7 @@ Resource    ../../Resources/Steps/Products_steps.robot
 Resource    ../../Resources/Steps/Orders_Management_steps.robot
 Resource    ../../Resources/Steps/Wishlist_steps.robot
 Resource    ../../Resources/Steps/Zed_Availability_steps.robot
+Resource    ../../Resources/Steps/Zed_Discount_steps.robot
 
 *** Test Cases ***
 Guest_User_Access
@@ -277,22 +278,28 @@ Configurable_Bundle
 
 Discounts
     [Documentation]    Discounts, Promo Products, and Coupon Codes (includes guest checkout)
+    Zed: login on Zed with provided credentials:    admin@spryker.com
+    Zed: go to second navigation item level:    Merchandising    Discount
+    Zed: create a discount and activate it:    voucher    Percentage    5    sku = '*'    test${random}    discountName=Voucher Code 5% ${random}
+    Zed: create a discount and activate it:    cart rule    Percentage    10    sku = '*'    discountName=Cart Rule 10% ${random}
+    Zed: create a discount and activate it:    cart rule    Percentage    100    discountName=Promotional Product 100% ${random}    promotionalProductDiscount=True    promotionalProductAbstractSku=001    promotionalProductQuantity=2
+    Yves: go to the 'Home' page
     Yves: go to PDP of the product with sku:    190
     Yves: add product to the shopping cart
     Yves: go to b2c shopping cart
-    Yves: apply discount voucher to cart:    sprykerbe4p
-    Yves: discount is applied:    10% Discount for all orders above    - €17.46
-    Yves: discount is applied:    5% discount on all white products    - €8.73
-    Yves: go to PDP of the product with sku:    211
-    Yves: add product to the shopping cart
-    Yves: go to b2c shopping cart
-    Yves: discount is applied:    10% Discount for all orders above    - €87.96
-    Yves: promotional product offer is shown in cart
-    Yves: add promotional product to cart
-    Yves: discount is applied:    For every purchase above certain value depending on the currency and net/gross price. you get this promotional product for free    -€162.72
-    Yves: shopping cart contains the following products:    Kodak EasyShare M532    Acer Extensa M2610    HP Bundle
+    Yves: apply discount voucher to cart:    test${random}
+    Yves: discount is applied:    voucher    Voucher Code 5% ${random}    - €17.46
+    Yves: discount is applied:    cart rule    Cart Rule 10% ${random}    - €8.73
+#    Yves: go to PDP of the product with sku:    211
+#    Yves: add product to the shopping cart
+#    Yves: go to b2c shopping cart
+#    Yves: discount is applied:    cart rule    Cart Rule 10% ${random}    - €87.96
+    Yves: promotional product offer is/not shown in cart:    True
+    Yves: change quantity of promotional product and add to cart:    +    1
+    Yves: shopping cart contains the following products:    Kodak EasyShare M532    Canon IXUS 160
+#    Yves: discount is applied:    cart rule    Promotional Product 100% ${random}    - €199.98
     Yves: click on the 'Checkout' button in the shopping cart
-    Yves: select guest checkout
+    Yves: proceed with checkout as guest:    Mr    Guest    user    guest@user.com    
     Yves: billing address same as shipping address:    true
     Yves: fill in the following shipping address:    Mr    Guest    user    Kirncher Str.    7    10247    Berlin    Germany
     Yves: select the following shipping method on the checkout and go next:    Express
@@ -300,6 +307,9 @@ Discounts
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
+    Zed: login on Zed with provided credentials:    admin@spryker.com
+    Zed: go to second navigation item level:    Merchandising    Discount
+    Zed: Deactivate Following Discounts From Overview Page:    Voucher Code 5% ${random}    Cart Rule 10% ${random}    Promotional Product 100% ${random}        
 
 Recommendations
     [Documentation]    Checks similar products section in cart

@@ -54,7 +54,8 @@ Yves: go to the shopping cart through the header with name:
 Yves: go to b2c shopping cart
     Wait Until Element Is Visible    ${shopping_car_icon_header_menu_item}[${env}] 
     Scroll and Click Element     ${shopping_car_icon_header_menu_item}[${env}]
-    Wait Until Element Is Visible    ${shopping_cart_main_content_locator}[${env}]     
+    Wait Until Element Is Visible    ${shopping_cart_main_content_locator}[${env}]
+    Wait For Document Ready         
     
 Yves: shopping cart contains the following products:
     [Documentation]    For item listing you can use sku or name of the product
@@ -73,7 +74,7 @@ Yves: shopping cart contains product with unit price:
     [Documentation]    Already contains '€' sign inside
     [Arguments]    ${sku}    ${productName}    ${productPrice}
     Run Keyword If    '${env}'=='b2b'    Page Should Contain Element    xpath=//div[contains(@class,'product-card-item__col--description')]//div[contains(.,'SKU: ${sku}')]/ancestor::article//*[contains(@class,'product-card-item__col--description')]/div[1]//*[contains(@class,'money-price__amount')][contains(.,'€${productPrice}')]
-    ...    ELSE    Page Should Contain Element    xpath=//main[@class='page-layout-cart']//article[contains(@data-qa,'component product-card-item')]//a[contains(text(),'${productName}')]/following-sibling::span/span[contains(@class,'money-price__amount') and contains(text(),'€${productPrice}')]
+    ...    ELSE    Page Should Contain Element    xpath=//main[@class='page-layout-cart']//article[contains(@data-qa,'component product-card-item')]//a[contains(text(),'${productName}')]/following-sibling::span/span[contains(@class,'money-price__amount') and contains(.,'€${productPrice}')]
 
 Yves: shopping cart contains/doesn't contain the following elements:
     [Arguments]    ${condition}    @{shopping_cart_elements_list}    ${element1}=${EMPTY}     ${element2}=${EMPTY}     ${element3}=${EMPTY}     ${element4}=${EMPTY}     ${element5}=${EMPTY}     ${element6}=${EMPTY}     ${element7}=${EMPTY}     ${element8}=${EMPTY}     ${element9}=${EMPTY}     ${element10}=${EMPTY}     ${element11}=${EMPTY}     ${element12}=${EMPTY}     ${element13}=${EMPTY}     ${element14}=${EMPTY}     ${element15}=${EMPTY}
@@ -145,5 +146,39 @@ Yves: delete from b2c cart products with name:
         Run Keyword If    '${env}'=='b2b'    Page Should Not Contain Element    xpath=//div[contains(@class,'product-card-item__col--description')]//div[contains(.,'${namproducte}')]
         ...    ELSE    Page Should Not Contain Element    xpath=//main[@class='page-layout-cart']//article[contains(@data-qa,'component product-card-item')]//a[contains(text(),'${product}')]
     END
+
+Yves: apply discount voucher to cart:
+    [Arguments]    ${voucherCode}
+    ${expanded}=    Run Keyword And Return Status    ${shopping_cart_voucher_code_section_toggler}
+    Run Keyword If    '${expanded}'=='False'    Scroll and click element    ${shopping_cart_voucher_code_section_toggler}
+    Input text into field    ${shopping_cart_voucher_code_field}    ${voucherCode}
+    Scroll and Click Element    ${shopping_cart_voucher_code_redeem_button}
+    Wait For Document Ready
+    Yves: flash message should be shown:    success    Your voucher code has been applied
+    Yves: remove flash messages
+    Wait For Document Ready
+
+Yves: discount is applied:
+    [Arguments]    ${discountName}    ${discountType}    ${expectedDiscountSum}
+    Run Keyword If    '${discountType}'=='voucher'    Element should be visible    xpath=//span[contains(text(),'${expectedDiscountSum}')]/preceding-sibling::span[contains(text(),'${discountName}')]/ancestor::*[contains(@data-qa,'cart-discount-summary')]/*[contains(text(),'Vouchers')]
+    ...    ELSE    Run Keyword If    '${discountType}'=='cart ruled'    Element should be visible    xpath=//span[contains(text(),'${expectedDiscountSum}')]/preceding-sibling::span[contains(text(),'${discountName}')]/ancestor::*[contains(@data-qa,'cart-discount-summary')]/*[contains(text(),'Discounts')]
+
+Yves: promotional product offer is/not shown in cart:
+    [Arguments]    ${isShown}    
+    Run Keyword If    '${isShown}'=='True'    Element Should Be Visible    ${shopping_cart_promotional_product_section}    message=Promotional products are not displayed but should be
+    ...    ELSE    Run Keyword If    '${isShown}'=='False'    Element Should Not Be Visible    ${shopping_cart_promotional_product_section}    message=Promotional products are displayed but should not
+
+Yves: change quantity of promotional product and add to cart:
+    [Documentation]    set ${action} to + or - to change quantity. ${clickCount} indicates how many times to click
+    [Arguments]    ${action}    ${clicksCount}
+    FOR    ${index}    IN RANGE    0    ${clicksCount}
+        Run Keyword If    '${action}' == '+'    Scroll and Click Element    ${shopping_cart_promotional_product_increase_quantity_button}
+        ...    ELSE IF    '${action}' == '-'    Scroll and Click Element    ${shopping_cart_promotional_product_decrease_quantity_button} 
+    END
+    Scroll and Click Element    ${shopping_cart_promotional_product_add_to_cart_button}
+    Wait For Document Ready    
+    Yves: flash message should be shown:    success    Items added successfully
+    Yves: remove flash messages 
+
     
     

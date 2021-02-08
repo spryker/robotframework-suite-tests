@@ -1,8 +1,10 @@
 *** Settings ***
 Resource    ../Pages/Yves/Yves_Checkout_Address_page.robot
+Resource    ../Pages/Yves/Yves_Checkout_Login_page.robot
+Resource    ../Pages/Yves/Yves_Checkout_Payment_page.robot
 Resource    ../Pages/Yves/Yves_Checkout_Summary_page.robot
 Resource    ../Common/Common_Yves.robot
-Resource    ../Pages/Yves/Yves_Checkout_Payment_page.robot
+
 
 *** Variables ***
 ${cancelRequestButton}    ${checkout_summary_cancel_request_button}  
@@ -17,9 +19,10 @@ Yves: billing address same as shipping address:
     ...    ELSE    Run Keyword If    '${state}' == 'true' and '${env}'=='b2c'    Click Element by id with JavaScript    addressesForm_billingSameAsShipping   
    
 Yves: accept the terms and conditions:
-   [Arguments]    ${state}
-    Wait Until Page Contains Element    xpath=//input[@name='acceptTermsAndConditions']
-    Run Keyword If    '${state}' == 'true'    Run Keyword And Ignore Error    Click Element by xpath with JavaScript    //input[@name='acceptTermsAndConditions']
+    [Documentation]    ${state} can be true or false
+    [Arguments]    ${state}    ${isGuest}=false
+    Run Keyword If    '${state}' == 'true' and '${isGuest}'=='false'    Run keywords    Wait Until Page Contains Element    xpath=//input[@name='acceptTermsAndConditions']    AND    Run Keyword And Ignore Error    Click Element by xpath with JavaScript    //input[@name='acceptTermsAndConditions']
+    ...    ELSE    Run Keyword If    '${state}'=='true' and '${isGuest}'=='true'    Run keywords    Wait Until Page Contains Element    id=guestForm_customer_accept_terms    AND    Click Element by id with JavaScript    guestForm_customer_accept_terms
     
 Yves: select the following existing address on the checkout as 'shipping' address and go next:
     [Arguments]    ${addressToUse}
@@ -95,3 +98,15 @@ Yves: 'Summary' page contains/doesn't contain:
         ...    Log    ${checkout_summary_element_to_check}    #Left as an example of multiple actions in Condition
         ...    AND    Page Should Not Contain Element    ${checkout_summary_element_to_check}    message=${checkout_summary_element_to_check} should not be displayed
     END
+
+Yves: proceed with checkout as guest:
+    [Arguments]    ${salutation}    ${firstName}    ${lastName}    ${email}
+    Click Element by xpath with JavaScript    //span[contains(text(),'Buy as Guest')]/ancestor::label[@class='toggler-radio__container']/input
+    Wait Until Element Is Visible    ${yves_checkout_login_guest_firstName_field}
+    Input text into field    ${yves_checkout_login_guest_firstName_field}     ${firstName}
+    Input text into field    ${yves_checkout_login_guest_lastName_field}     ${lastName}
+    Input text into field    ${yves_checkout_login_guest_email_field}     ${email}
+    Yves: accept the terms and conditions:    true    true
+    Scroll and Click Element    ${yves_checkout_login_buy_as_guest_submit_button} 
+    Wait For Document Ready    
+

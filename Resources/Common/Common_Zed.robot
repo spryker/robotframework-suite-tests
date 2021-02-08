@@ -77,3 +77,8 @@ Zed: table should contain:
     [Arguments]    ${search_key}
     Zed: perform search by:    ${search_key}
     table should contain    ${zed_table_locator}  ${search_key}
+
+Zed: go to tab:
+    [Arguments]    ${tabName}
+    Scroll and Click Element    xpath=//*[contains(@data-toggle,'tab') and contains(text(),'${tabName}')]
+    Wait For Document Ready    
