@@ -123,6 +123,7 @@ Yves: add product to wishlist:
 
 Yves: check if product is available on PDP:
     [Arguments]    ${abstractSku}    ${isAvailable}
+    Reload Page    
     Run Keyword If    '${isAvailable}'=='false'    Run keywords    Element Should Be Visible    ${pdp_product_not_available_text}
     ...    AND    Element Should Be Visible    ${pdp_add_to_cart_disabled_button}
     ...    AND    Element Should Be Visible    ${pdp_availability_notification_email_field}

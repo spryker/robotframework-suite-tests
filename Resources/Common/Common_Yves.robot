@@ -176,3 +176,18 @@ Yves: go to the PDP of the first available product
     ${index}=    Yves: get index of the first available product
     Scroll and Click Element    xpath=//product-item[@data-qa='component product-item'][${index}]//a[contains(@class,'link-detail-page') and (contains(@class,'name'))]
     Wait Until Page Contains Element    ${pdp_main_container_locator} 
+
+Yves: check if cart is not empty and clear it
+    Yves: go to the 'Home' page
+    Yves: go to b2c shopping cart
+    ${productsInCart}=    Get Element Count    xpath=//article[@class='product-card-item']//div[contains(@class,'product-card-item__box')]
+    ${cartIsEmpty}=    Run Keyword And Return Status    Element should be visible    xpath=//*[contains(@class,'spacing-top') and text()='Your shopping cart is empty!']
+    Run Keyword If    '${cartIsEmpty}'=='False'    Helper: iterate items in cart
+    Delete All Cookies
+
+Helper: iterate items in cart
+    ${productsInCart}=    Get Element Count    xpath=//article[@class='product-card-item']//div[contains(@class,'product-card-item__box')]
+    FOR    ${index}    IN RANGE    0    ${productsInCart}
+        Scroll and Click Element    xpath=(//div[@class='page-layout-cart__items-wrap']//ancestor::div/following-sibling::div//form[contains(@name,'removeFromCart')]//button[text()='Remove'])\[1\]
+        Yves: remove flash messages
+    END
