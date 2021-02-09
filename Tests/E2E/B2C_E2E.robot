@@ -215,8 +215,7 @@ Add_to_Wishlist
     Yves: wishlist contains product with sku:    003_26138343
     Yves: go to wishlist with name:    Second wishlist
     Yves: wishlist contains product with sku:    004_30663302
-    Yves: delete all wishlists
-    [Teardown]    Yves: check if cart is not empty and clear it
+    [Teardown]    Run keywords    Yves: delete all wishlists    AND    Yves: check if cart is not empty and clear it
 
 Product_Sets
     [Documentation]    Check the usage of product sets
@@ -317,9 +316,10 @@ Discounts
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
-    Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    Zed: go to second navigation item level:    Merchandising    Discount
-    [Teardown]    Run keywords    Yves: check if cart is not empty and clear it    AND    Zed: Deactivate Following Discounts From Overview Page:    Voucher Code 5% ${random}    Cart Rule 10% ${random}    Promotional Product 100% ${random}        
+    [Teardown]    Run keywords    Yves: check if cart is not empty and clear it    
+    ...    AND    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    ...    AND    Zed: go to second navigation item level:    Merchandising    Discount
+    ...    AND    Zed: Deactivate Following Discounts From Overview Page:    Voucher Code 5% ${random}    Cart Rule 10% ${random}    Promotional Product 100% ${random}        
 
 Recommendations
     [Documentation]    Checks similar products section in cart
