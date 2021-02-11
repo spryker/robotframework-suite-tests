@@ -191,3 +191,12 @@ Helper: iterate items in cart
         Scroll and Click Element    xpath=(//div[@class='page-layout-cart__items-wrap']//ancestor::div/following-sibling::div//form[contains(@name,'removeFromCart')]//button[text()='Remove'])\[1\]
         Yves: remove flash messages
     END
+
+Yves: try reloading page if element is/not appear:
+    [Arguments]    ${element}    ${isDisplayed}
+    FOR    ${index}    IN RANGE    0    7
+        ${elementAppears}=    Run Keyword And Return Status    Element Should Be Visible    ${element}
+        Run Keyword If    '${isDisplayed}'=='True' and '${elementAppears}'=='False'    Reload page
+        ...    ELSE    Run Keyword If    '${isDisplayed}'=='False' and '${elementAppears}'=='True'    Reload page
+        ...    ELSE    Exit For Loop
+    END

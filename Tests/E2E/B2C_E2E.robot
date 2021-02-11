@@ -24,6 +24,7 @@ Resource    ../../Resources/Steps/Orders_Management_steps.robot
 Resource    ../../Resources/Steps/Wishlist_steps.robot
 Resource    ../../Resources/Steps/Zed_Availability_steps.robot
 Resource    ../../Resources/Steps/Zed_Discount_steps.robot
+Resource    ../../Resources/Steps/Zed_CMS_Page_steps.robot
 
 *** Test Cases ***
 Guest_User_Access
@@ -189,8 +190,10 @@ Back_in_Stock_Notification
     Zed: check if product is/not in stock:    009    false
     Yves: login on Yves with provided credentials:    ${yves_second_user_email}
     Yves: go to PDP of the product with sku:  009
+    Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    True
     Yves: check if product is available on PDP:    009    false
     Yves: submit back in stock notification request for email:    ${yves_second_user_email}
+    Yves: unsubscribe from availability notifications
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Catalog    Availability
     Zed: change product stock:    009    009_30692991    true    0  
@@ -198,7 +201,9 @@ Back_in_Stock_Notification
     Zed: check if product is/not in stock:    009    true
     Yves: login on Yves with provided credentials:    ${yves_second_user_email}
     Yves: go to PDP of the product with sku:  009
+    Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    False
     Yves: check if product is available on PDP:    009    true
+    [Teardown]    Zed: check and restore product availability in Zed:    009    Available    009_30692991 
 
 Add_to_Wishlist
     [Documentation]    Check creation of wishlist and adding to different wishlists
@@ -440,16 +445,17 @@ Content_Management
     [Documentation]    Checks cms content can be edited in zed and that correct cms elements are present on homepage   
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Content   Pages
-    Zed: create a new cms page:    Test Page    test-page    Page Title    Page text
+    Zed: create a cms page and publish it:    Test Page${random}    test-page${random}    Page Title    Page text
     Yves: go to the 'Home' page
-    Yves: page contains CMS element:    Banner
-    Yves: page contains CMS element:    Top Sellers
-    Yves: page contains CMS element:    Inspirational block
-    Yves: page contains CMS element:    Multi-inspirational block
-    Yves: page contains CMS element:    Footer
-    Yves: go to URL:    en/test-page
-    Yves: page contains CMS element:    Test Page
-    [Teardown]    Yves: check if cart is not empty and clear it
+    Yves: page contains CMS element:    Homepage Banners
+    Yves: page contains CMS element:    Product Slider    Top Sellers
+    Yves: page contains CMS element:    Homepage Inspirational block
+    Yves: page contains CMS element:    Homepage Banner Video
+    Yves: page contains CMS element:    Footer section
+    Yves: go to URL:    en/test-page${random}
+    Yves: try reloading page if element is/not appear:     xpath=//*[contains(@class,'cms-page__title')]    True
+    Yves: page contains CMS element:    CMS Page Title    Page Title
+    Yves: page contains CMS element:    CMS Page Content    Page text
 
 
 

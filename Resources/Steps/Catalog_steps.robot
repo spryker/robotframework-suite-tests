@@ -14,10 +14,17 @@ Yves: product with name in the catalog should have price:
     Should Be Equal    ${actualProductPrice}    ${expectedProductPrice}
 
 Yves: page contains CMS element:
-    [Documentation]    Arguments are ${type}    ${title}, ${type} can be: Banner, Product Slider
-    [Arguments]    ${type}    ${title}
-    Run Keyword If    '${type}'=='banner'    Element Should Be Visible    xpath=//*[contains(@class,'headline--category') and contains(text(),'${title}')]
-    ...    ELSE    Run Keyword If    '${type}'=='Product slider'    Element Should Be Visible    xpath=//*[contains(@class,'catalog-cms-block')]//*[contains(@class,'title') and contains(text(),'${title}')]
+    [Documentation]    Arguments are ${type}    ${title}, ${type} can be: Banner, Product Slider, Homepage Banners, Homepage Inspirational Block, Homepage Banner Video, Footer section, CMS Page Title, CMS Page Content
+    [Arguments]    ${type}    ${text}=
+    Run Keyword If    '${type}'=='banner'    Element Should Be Visible    xpath=//*[contains(@class,'headline--category') and contains(text(),'${text}')]
+    ...    ELSE    Run Keyword If    '${type}'=='Product slider'    Element Should Be Visible    xpath=//*[contains(@class,'catalog-cms-block')]//*[contains(@class,'title') and contains(text(),'${text}')]
+    ...    ELSE    Run Keyword If    '${type}'=='Homepage Banners'    Element Should Be Visible    xpath=//div[contains(@class,'slick-carousel__container js-slick-carousel__container slick-initialized slick-slider slick-dotted')]
+    ...    ELSE    Run Keyword If    '${type}'=='Homepage Inspirational Block'    Element Should Be Visible    xpath=//*[contains(@class,'multi-inspirational-block__title')]
+    ...    ELSE    Run Keyword If    '${type}'=='Homepage Banner Video'    Element Should Be Visible    xpath=//*[contains(@class,'image-banner__video')]
+    ...    ELSE    Run Keyword If    '${type}'=='Footer section'    Element Should Be Visible    xpath=//*[contains(@class,'footer')]
+    ...    ELSE    Run Keyword If    '${type}'=='CMS Page Title'    Element Should Be Visible    xpath=//*[contains(@class,'cms-page__title') and contains(text(),'${text}')]
+    ...    ELSE    Run Keyword If    '${type}'=='CMS Page Content'    Element Should Be Visible    xpath=//*[contains(@class,'cms-page__content') and contains(text(),'${text}')]
+
 
 Yves: change sorting order on catalog page:
     [Arguments]    ${sortingOption}

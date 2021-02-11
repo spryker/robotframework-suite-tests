@@ -115,9 +115,7 @@ Yves: add product to wishlist:
     Wait Until Element Is Enabled    ${pdp_add_to_wishlist_button}
     ${wishlistSelectorExists}=    Run Keyword And Return Status    Element Should Be Visible    ${pdp_wishlist_dropdown}
     Run Keyword If    '${wishlistSelectorExists}'=='True'
-    ...    Select From List By Value    xpath=//select[contains(@name,'wishlist-name')]    ${wishlistName}    
-#    ...    Scroll and Click Element    xpath=//select[contains(@name,'wishlist-name')]    AND
-#    ...    Click Element    xpath=//select[contains(@name,'wishlist-name')]/option[@value='${wishlistName}']    
+    ...    Select From List By Value    xpath=//select[contains(@name,'wishlist-name')]    ${wishlistName}       
     Scroll and Click Element    ${pdp_add_to_wishlist_button}
     Yves: flash message should be shown:    success    Items added successfully
     Yves: remove flash messages
@@ -141,3 +139,7 @@ Yves: submit back in stock notification request for email:
     Yves: remove flash messages
     Element Should Be Visible    xpath=//button[contains(text(),'Do not notify me when back in stock')]
     
+Yves: unsubscribe from availability notifications
+    Scroll and Click Element    xpath=//button[contains(text(),'Do not notify me when back in stock')]
+    Yves: flash message should be shown:    success    Successfully unsubscribed
+    Yves: remove flash messages

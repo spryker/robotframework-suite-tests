@@ -1,0 +1,27 @@
+*** Variables ***
+${zed_new_cms_page_create_button}    xpath=//a[contains(@class,'btn-create') and contains(text(),'Create page')]
+${zed_cms_page_general_DE_store_checkbox}    id=cms_page_storeRelation_id_stores_0
+${zed_cms_page_general_AT_store_checkbox}    id=cms_page_storeRelation_id_stores_1
+${zed_cms_page_general_US_store_checkbox}    id=cms_page_storeRelation_id_stores_2
+${zed_cms_page_general_is_searchable_checkbox}    id=cms_page_isSearchable
+${zed_cms_page_general_template_dropdown}    id=cms_page_fkTemplate
+${zed_cms_page_general_valid_from_datapicker}    id=cms_page_validFrom
+${zed_cms_page_general_valid_to_datapicker}    id=cms_page_validTo
+${zed_cms_page_general_enUS_name_field}    id=cms_page_pageAttributes_0_name
+${zed_cms_page_general_enUS_url_field}    id=cms_page_pageAttributes_0_url
+${zed_cms_page_general_deDE_translation_collapsed_section}    xpath=(//*[contains(.,'de_DE')]/ancestor::div[contains(@class,'ibox nested collapsed')]//i[contains(@class,'fa fa-chevron-up')])\[1\]
+${zed_cms_page_general_deDE_name_field}    id=cms_page_pageAttributes_1_name
+${zed_cms_page_general_deDE_url_field}    id=cms_page_pageAttributes_1_url
+${zed_cms_page_save_button}    id=submit-cms
+${zed_cms_page_create_success_flashmessage}    xpath=//div[@class='alert alert-success' and contains(text(),'Page was created successfully.')]
+# Placeholders
+${zed_cms_page_placeholder_title_enUS_field}    xpath=//*[@id='cms_glossary_glossaryAttributes_0_translations_0_translation']/following-sibling::div//div[@class='note-editing-area']//p
+${zed_cms_page_placeholder_title_deDE_field}    xpath=//*[@id='cms_glossary_glossaryAttributes_0_translations_1_translation']/following-sibling::div//div[@class='note-editing-area']//p
+${zed_cms_page_placeholder_content_enUS_field}    xpath=//*[@id='cms_glossary_glossaryAttributes_1_translations_0_translation']/following-sibling::div//div[@class='note-editing-area']//p
+${zed_cms_page_placeholder_content_deDE_field}    xpath=//*[@id='cms_glossary_glossaryAttributes_1_translations_1_translation']/following-sibling::div//div[@class='note-editing-area']//p
+${zed_cms_page_update_placeholder_success_flashmessage}    xpath=//div[@class='alert alert-success' and contains(text(),'Placeholder translations successfully updated.')]
+${zed_cms_page_placeholder_content_deDE_translation_collapsed_section}    xpath=(//*[contains(.,'de_DE')]/ancestor::div[contains(@class,'ibox nested collapsed')]//i[contains(@class,'fa fa-chevron-up')])\[3\]
+# Action buttons
+${zed_cms_page_publish_button}=    xpath=//button[@type='submit' and contains(.,'Publish')]
+${zed_cms_page_activate_button}=    xpath=//button[contains(@class,'submit') and contains(.,'Activate')]
+${zed_cms_page_publish_success_flashmessage}=    xpath=//div[@class='alert alert-success' and contains(text(),' successfully published')]

@@ -30,4 +30,15 @@ Zed: change product stock:
     Input text into field    xpath=//input[contains(@id,'AvailabilityGui_stock_stocks_1_quantity')]    ${quantityWarehouse2}   
     Scroll and Click Element    ${zed_save_button}
 
+Zed: check and restore product availability in Zed:    
+    [Arguments]    ${skuAbstract}    ${expectedStatus}    ${skuConcrete}
+    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: go to second navigation item level:    Catalog    Availability
+    Zed: perform search by:    ${skuAbstract}
+    ${isProductAvailable}=    Run Keyword And Return Status    Element Text Should Be    ${zed_availability_product_availability_label}     Available
+    Run Keyword If    '${expectedStatus}'=='Available' and '${isProductAvailable}'=='False'
+    ...    Zed: change product stock:    ${skuAbstract}    ${skuConcrete}    true    0    0
+    ...    ELSE    Run Keyword If   '${expectedStatus}'=='Not Available' and '${isProductAvailable}'=='True'
+    ...    Zed: change product stock:    ${skuAbstract}    ${skuConcrete}    false    0    0
+
 
