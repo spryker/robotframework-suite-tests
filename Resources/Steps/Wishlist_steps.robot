@@ -1,10 +1,11 @@
 *** Settings ***
 Resource    ../Common/Common.robot
+Resource    ../../Resources/Common/Common_Yves.robot
 Resource    ../Pages/Yves/Yves_Wishlist_page.robot
 
 *** Keywords ***
 Yves: go To 'Wishlist' Page
-    Click Element    ${wishlist_icon_header_navigation_widget}
+    Yves: go to URL:    en/wishlist
     Wait For Document Ready 
 
 Yves: go to wishlist with name:

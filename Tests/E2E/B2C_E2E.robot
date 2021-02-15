@@ -154,6 +154,7 @@ Volume_Prices
     Yves: shopping cart contains product with unit price:    193    Sony FDR-AX40    8.25
     Yves: delete from b2c cart products with name:    Sony FDR-AX40
     [Teardown]    Yves: check if cart is not empty and clear it
+    Go to url
 
 Discontinued_Alternative_Products
     [Documentation]    Checks discontinued and alternative products
@@ -161,6 +162,8 @@ Discontinued_Alternative_Products
     Yves: change variant of the product on PDP on:    2.3 GHz - Discontinued
     Yves: PDP contains/doesn't contain:    true    ${alternativeProducts}
     Yves: login on Yves with provided credentials:    ${yves_user_email}
+    Yves: delete all wishlists
+    Yves: go to the 'Home' page
     Yves: go to PDP of the product with sku:  010
     Yves: add product to wishlist:    My wishlist
     Yves: get sku of the concrete product on PDP
@@ -175,6 +178,7 @@ Discontinued_Alternative_Products
     Yves: go To 'Wishlist' Page
     Yves: go to wishlist with name:    My wishlist
     Yves: product with sku is marked as discountinued in wishlist:    010
+    Yves: try reloading page if element is/not appear:    xpath=//*[contains(text(),'Alternative for')]    True
     Yves: product with sku is marked as alternative in wishlist:    011
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: undo discontinue the following product:    010    010_30692994
@@ -214,7 +218,7 @@ Add_to_Wishlist
     Yves: go To 'Wishlist' Page
     Yves: create wishlist with name:    Second wishlist
     Yves: go to PDP of the product with sku:  004
-    Yves: add product to wishlist:    Second wishlist
+    Yves: add product to wishlist:    Second wishlist    select
     Yves: go To 'Wishlist' Page
     Yves: go to wishlist with name:    My wishlist
     Yves: wishlist contains product with sku:    003_26138343
