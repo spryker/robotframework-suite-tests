@@ -34,8 +34,8 @@ Yves: select the following existing address on the checkout as 'shipping' addres
 Yves: fill in the following shipping address:
     [Documentation]
     [Arguments]    ${salutation}    ${firstName}    ${lastName}    ${street}    ${houseNumber}    ${postCode}    ${city}    ${country}    ${isDefaultShipping}=True     ${isDefaultBilling}=True      ${company}=    ${phone}=    ${additionalAddress}=    ${addressesForm_billingSameAsShipping}=true
-    Click Element    xpath=//span[@aria-labelledby='select2-addressesForm_shippingAddress_id_customer_address-container']    modifier=False    action_chain=False
-    Click Element    xpath=//li[contains(text(),'Define new address')]    modifier=False    action_chain=False
+    Click Element    xpath=//span[@aria-labelledby='select2-addressesForm_shippingAddress_id_customer_address-container']
+    Click Element    xpath=//li[contains(text(),'Define new address')]
 #    Click Element    ${checkout_shipping_address_salutation_dropdown}
 #    Click Element    xpath=//li[@class='select2-results__option' and contains(text(),'${salutation}')]
     Input text into field    ${checkout_shipping_address_first_name_field}     ${firstName}
@@ -56,11 +56,63 @@ Yves: fill in the following shipping address:
     Scroll and Click Element    ${submit_checkout_form_button}   
     Wait For Document Ready 
 
+Yves: fill in the following billing address:
+    [Documentation]
+    [Arguments]    ${salutation}    ${firstName}    ${lastName}    ${street}    ${houseNumber}    ${postCode}    ${city}    ${country}    ${company}=    ${phone}=    ${additionalAddress}=    
+    Scroll and Click Element    xpath=//span[@id='select2-addressesForm_billingAddress_id_customer_address-container']
+    Click Element    xpath=//li[contains(text(),'Define new address')]
+#    Click Element    ${checkout_shipping_address_salutation_dropdown}
+#    Click Element    xpath=//li[@class='select2-results__option' and contains(text(),'${salutation}')]
+    Input text into field    ${checkout_billing_address_first_name_field}     ${firstName}
+    Input text into field    ${checkout_billing_address_last_name_field}     ${lastName}
+    Input text into field    ${checkout_billing_address_company_name_field}     ${company}
+    Input text into field    ${checkout_billing_address_street_field}     ${street}
+    Input text into field    ${checkout_billing_address_house_number_field}     ${houseNumber}
+    Input text into field    ${checkout_billing_address_additional_address_field}     ${additionalAddress}
+    Input text into field    ${checkout_billing_address_zip_code_field}     ${postCode}
+    Input text into field    ${checkout_billing_address_city_field}     ${city}
+#     Click Element    ${checkout_shipping_address_country_drop_down_field}
+#     Click Element    xpath=//li[contains(@class,'select2-results__option') and contains(text(),'${country}')]
+    Input text into field    ${checkout_billing_address_phone_field}     ${phone}
+
+Yves: select delivery to multiple addresses
+    Click Element    xpath=//span[@aria-labelledby='select2-addressesForm_shippingAddress_id_customer_address-container']
+    Click Element    xpath=//li[contains(text(),'Deliver to multiple addresses')]
+    Wait Until Element Is Visible    xpath=//*[contains(@class,'title') and contains(text(),'Assign each product to its own delivery address')]
+
+Yves: click checkout button:
+    [Arguments]    ${buttonName}
+    Scroll and Click Element    xpath=//button[@type='submit' and contains(text(),'${buttonName}')]
+    Wait For Document Ready    
+
+
+Yves: select new delivery address for a product:
+    [Arguments]    ${productName}    ${newAddress}=false    ${existingAddress}=    ${salutation}=    ${firstName}=    ${lastName}=    ${street}=    
+    ...    ${houseNumber}=    ${postCode}=    ${city}=    ${country}=    ${isDefaultShipping}=True     ${isDefaultBilling}=True      ${company}=    
+    ...    ${phone}=    ${additionalAddress}=
+    Run Keyword If    '${newAddress}'=='true'    Run keywords    Scroll and Click Element    xpath=//*[contains(@class,'product-card-item')]//div[contains(text(),'${productName}')]/ancestor::article[contains(@data-qa,'component product-card-item')]//span[contains(@aria-labelledby,'id_customer_address-container')]
+    ...    AND    Click Element    xpath=//li[contains(text(),'Define new address')]
+    ...    AND    Input text into field    xpath=//*[contains(@class,'product-card-item')]//div[contains(text(),'${productName}')]${checkout_shipping_multiple_address_first_name_field}     ${firstName}
+    ...    AND    Input text into field    xpath=//*[contains(@class,'product-card-item')]//div[contains(text(),'${productName}')]${checkout_shipping_multiple_address_last_name_field}     ${lastName}
+    ...    AND    Input text into field    xpath=//*[contains(@class,'product-card-item')]//div[contains(text(),'${productName}')]${checkout_shipping_multiple_address_company_name_field}     ${company}
+    ...    AND    Input text into field    xpath=//*[contains(@class,'product-card-item')]//div[contains(text(),'${productName}')]${checkout_shipping_multiple_address_street_field}     ${street}
+    ...    AND    Input text into field    xpath=//*[contains(@class,'product-card-item')]//div[contains(text(),'${productName}')]${checkout_shipping_multiple_address_house_number_field}     ${houseNumber}
+    ...    AND    Input text into field    xpath=//*[contains(@class,'product-card-item')]//div[contains(text(),'${productName}')]${checkout_shipping_multiple_address_additional_address_field}     ${additionalAddress}
+    ...    AND    Input text into field    xpath=//*[contains(@class,'product-card-item')]//div[contains(text(),'${productName}')]${checkout_shipping_multiple_address_zip_code_field}     ${postCode}
+    ...    AND    Input text into field    xpath=//*[contains(@class,'product-card-item')]//div[contains(text(),'${productName}')]${checkout_shipping_multiple_address_city_field}     ${city}
+    ...    ELSE    Run Keyword If    '${newAddress}'=='false'    Run keywords    Click Element    xpath=//*[contains(@class,'product-card-item')]//div[contains(text(),'${productName}')]/ancestor::div[contains(@data-qa,'component address-item-form-field-list')]//span[@aria-labelledby='select2-addressesForm_multiShippingAddresses_0_shippingAddress_id_customer_address-container']
+    ...    AND    Click Element    xpath=//li[contains(text(),'${existingAddress}')]    
+
+
 Yves: select the following shipping method on the checkout and go next:
     [Arguments]    ${shippingMethod}
     Scroll and Click Element    xpath=//div[@data-qa='component shipment-sidebar']//*[contains(.,'Shipping Method')]/../ul//label[contains(.,'${shippingMethod}')]/span[contains(@class,'radio__box')]
     Scroll and Click Element    ${submit_checkout_form_button}
     Wait For Document Ready    
+
+Yves: select the following shipping method for product:
+    [Arguments]    ${productName}    ${shippingMethod}
+    Scroll and Click Element    xpath=//div[contains(text(),'${productName}')]/ancestor::article[contains(@class,'checkout-block')]//div[contains(@data-qa,'component shipment-sidebar')]//ul//label[contains(.,'${shippingMethod}')]/span[contains(@class,'radio__box')]
 
 Yves: select the following payment method on the checkout and go next:
     [Arguments]    ${paymentMethod}

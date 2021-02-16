@@ -154,7 +154,6 @@ Volume_Prices
     Yves: shopping cart contains product with unit price:    193    Sony FDR-AX40    8.25
     Yves: delete from b2c cart products with name:    Sony FDR-AX40
     [Teardown]    Yves: check if cart is not empty and clear it
-    Go to url
 
 Discontinued_Alternative_Products
     [Documentation]    Checks discontinued and alternative products
@@ -347,18 +346,23 @@ Split_Delivery
     Yves: login on Yves with provided credentials:    ${yves_user_email}
     Yves: go to PDP of the product with sku:    007
     Yves: add product to the shopping cart
-    Yves: go to PDP of the product with sku:    010
+    Yves: go to PDP of the product with sku:    011
     Yves: add product to the shopping cart
     Yves: go to PDP of the product with sku:    012
     Yves: add product to the shopping cart
     Yves: go to b2c shopping cart
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: select delivery to multiple addresses
-    Yves: select new delivery address for a product:    Canon IXUS 285    Canon IXUS 180    Canon IXUS 165
-    Yves: set new shipping address for product:    Canon IXUS 285    Ms Product 007    Kirncher Str.    7    10247    Berlin
-    Yves: set new shipping address for product:    Canon IXUS 180    Ms Product 010    Kirncher Str.    10    10247    Berlin
-    Yves: set new shipping address for product:    Canon IXUS 165    Ms Product 012    Kirncher Str.    12    10247    Berlin
-    Yves: select the following shipping method on the checkout and go next:    Express
+    Yves: select new delivery address for a product:    Canon IXUS 285    true    no    Mr    Product    285    Kirncher Str.    7    10247    Berlin    Germany
+    Yves: select new delivery address for a product:    Canon IXUS 180    true    no    Mr    Product    180    Kirncher Str.    7    10247    Berlin    Germany
+    Yves: select new delivery address for a product:    Canon IXUS 165    true    no    Mr    Product    165    Kirncher Str.    7    10247    Berlin    Germany
+    Yves: fill in the following billing address:    Mr    Product    165    Kirncher Str.    7    10247    Berlin    Germany
+    Yves: click checkout button:    Next
+    Yves: select the following shipping method for product:    Canon IXUS 285    Express
+    Yves: select the following shipping method for product:    Canon IXUS 180    Standard
+    Yves: select the following shipping method for product:    Canon IXUS 165    Express
+    Scroll and Click Element    ${submit_checkout_form_button}
+    Wait For Document Ready    
     Yves: select the following payment method on the checkout and go next:    Invoice
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
