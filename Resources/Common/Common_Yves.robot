@@ -63,7 +63,7 @@ Yves: '${pageName}' page is displayed
     Run Keyword If    '${pageName}' == 'Company Users'    Page Should Contain Element    ${company_users_main_content_locator}    ${pageName} page is not displayed
     ...    ELSE IF    '${pageName}' == 'Shopping Lists'    Page Should Contain Element    ${shopping_lists_page_form_locator}    ${pageName} page is not displayed
     ...    ELSE IF    '${pageName}' == 'Shopping List'    Page Should Contain Element    ${shopping_list_main_content_locator}    ${pageName} page is not displayed
-    ...    ELSE IF    '${pageName}' == 'Shopping Cart'    Page Should Contain Element    ${shopping_cart_main_content_locator}    ${pageName} page is not displayed
+    ...    ELSE IF    '${pageName}' == 'Shopping Cart'    Page Should Contain Element    ${shopping_cart_main_content_locator}[${env}]    ${pageName} page is not displayed
     ...    ELSE IF    '${pageName}' == 'Shopping Carts'    Page Should Contain Element    ${shopping_carts_main_content_locator}    ${pageName} page is not displayed
     ...    ELSE IF    '${pageName}' == 'Quick Order'    Page Should Contain Element    ${quick_order_main_content_locator}    ${pageName} page is not displayed
     ...    ELSE IF    '${pageName}' == 'Thank you'    Page Should Contain Element    ${success_page_main_container_locator}[${env}]    ${pageName} page is not displayed
@@ -158,7 +158,7 @@ Yves: go to third navigation item level:
 
 Yves: get index of the first available product
     Yves: perform search by:    ${EMPTY}
-    Wait Until Page Contains Element    ${catalog_main_page_locator}
+    Wait Until Page Contains Element    ${catalog_main_page_locator}[${env}]
     ${productsCount}=    Get Element Count    xpath=//product-item[@data-qa='component product-item']
     Log    ${productsCount}
     FOR    ${index}    IN RANGE    1    ${productsCount}+1
@@ -175,7 +175,7 @@ Yves: get index of the first available product
 Yves: go to the PDP of the first available product
     ${index}=    Yves: get index of the first available product
     Scroll and Click Element    xpath=//product-item[@data-qa='component product-item'][${index}]//a[contains(@class,'link-detail-page') and (contains(@class,'name'))]
-    Wait Until Page Contains Element    ${pdp_main_container_locator} 
+    Wait Until Page Contains Element    ${pdp_main_container_locator}[${env}] 
 
 Yves: check if cart is not empty and clear it
     Yves: go to the 'Home' page

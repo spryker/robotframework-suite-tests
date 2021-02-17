@@ -49,7 +49,7 @@ Zed: create a discount and activate it:
 # Check discount in Zed 
     Zed: go to second navigation item level:    Merchandising    Discount
     Zed: perform search by:    ${discountName}    
-    Element Should Be Visible    xpath=//td[contains(@class,'name') and contains(text(),'${discountName}')]/ancestor::tr[@role='row']//span[contains(@class,'label') and contains(text(),'Active')]    message=None
+    Element Should Be Visible    xpath=//td[contains(@class,'name') and contains(text(),'${discountName}')]/ancestor::tr//span[contains(@class,'label') and contains(text(),'Active')]    message=None
 
 
 

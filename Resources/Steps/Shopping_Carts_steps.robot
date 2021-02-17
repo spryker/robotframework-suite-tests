@@ -11,13 +11,13 @@ ${lockedCart}    ${shopping_cart_locked_cart_form}
 *** Keywords ***
 Yves: 'Shopping Carts' widget contains:
     [Arguments]    ${shoppingCartName}    ${accessLevel}
-    Wait Until Element Is Visible    &{shopping_car_icon_header_menu_item}[${env}] 
-    Mouse Over    &{shopping_car_icon_header_menu_item}[${env}] 
+    Wait Until Element Is Visible    ${shopping_car_icon_header_menu_item}[${env}] 
+    Mouse Over    ${shopping_car_icon_header_menu_item}[${env}] 
     Wait Until Element Is Visible    ${shopping_cart_sub_navigation_widget}
     Page Should Contain Element    xpath=//*[contains(@class,'icon--cart')]/ancestor::li//div[contains(@class,'js-user-navigation__sub-nav-cart')]//span[text()[contains(.,'${accessLevel}')]]/ancestor::div[@class='mini-cart-detail']//*[contains(@class,'mini-cart-detail__title')]/*[text()='${shoppingCartName}']
 
 Go to 'Shopping Carts' page
-    Mouse Over    &{shopping_car_icon_header_menu_item}[${env}]
+    Mouse Over    ${shopping_car_icon_header_menu_item}[${env}]
     Wait Until Page Contains Element    ${shopping_cart_sub_navigation_widget}
     Click Element by xpath with JavaScript    ${shopping_cart_sub_navigation_all_carts_button}
     Wait For Document Ready    
@@ -46,7 +46,7 @@ Yves: share shopping cart with user:
 
 Yves: go to the shopping cart through the header with name:
     [Arguments]    ${shoppingCartName}
-    Wait Until Element Is Visible    &{shopping_car_icon_header_menu_item}[${env}] 
+    Wait Until Element Is Visible    ${shopping_car_icon_header_menu_item}[${env}] 
     Mouse Over    ${shopping_car_icon_header_menu_item}[${env}] 
     Wait Until Element Is Visible    ${shopping_cart_sub_navigation_widget}
     Scroll and Click Element    //*[contains(@class,'icon--cart')]/ancestor::li//div[contains(@class,'js-user-navigation__sub-nav-cart')]//div[@class='mini-cart-detail']//*[contains(@class,'mini-cart-detail__title')]/*[text()='${shoppingCartName}']
