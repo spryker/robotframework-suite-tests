@@ -307,14 +307,14 @@ Discounts
     Yves: apply discount voucher to cart:    test${random}
     Yves: discount is applied:    voucher    Voucher Code 5% ${random}    - €17.46
     Yves: discount is applied:    cart rule    Cart Rule 10% ${random}    - €8.73
-#    Yves: go to PDP of the product with sku:    211
-#    Yves: add product to the shopping cart
-#    Yves: go to b2c shopping cart
-#    Yves: discount is applied:    cart rule    Cart Rule 10% ${random}    - €87.96
+    Yves: go to PDP of the product with sku:    211
+    Yves: add product to the shopping cart
+    Yves: go to b2c shopping cart
+    Yves: discount is applied:    cart rule    Cart Rule 10% ${random}    - €87.96
     Yves: promotional product offer is/not shown in cart:    True
     Yves: change quantity of promotional product and add to cart:    +    1
     Yves: shopping cart contains the following products:    Kodak EasyShare M532    Canon IXUS 160
-#    Yves: discount is applied:    cart rule    Promotional Product 100% ${random}    - €199.98
+    Yves: discount is applied:    cart rule    Promotional Product 100% ${random}    - €199.98
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: proceed with checkout as guest:    Mr    Guest    user    guest@user.com    
     Yves: billing address same as shipping address:    true
