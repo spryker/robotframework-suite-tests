@@ -9,16 +9,16 @@ Resource    ../Common/Common_Yves.robot
 *** Variable ***
 ${price}    ${pdp_price_element_locator}
 ${addToCartButton}    ${pdp_add_to_cart_button}
-${alternativeProducts}    ${pdp_alternative_products_slider}
+${alternativeProducts}    ${pdp_alternative_products_slider}[${env}]
 ${measurementUnitSuggestion}    ${pdp_measurement_unit_notification}
 ${packagingUnitSuggestion}    ${pdp_packaging_unit_notification}
-${bundleItemsSmall}    ${pdp_product_bundle_include_small}
+${bundleItemsSmall}    ${pdp_product_bundle_include_small}[${env}]
 ${bundleItemsLarge}    ${pdp_product_bundle_include_large}
-${relatedProducts}    ${pdp_related_products}
+${relatedProducts}    ${pdp_related_products}[${env}]
 
 *** Keywords ***
 Yves: PDP contains/doesn't contain: 
-    [Arguments]    ${condition}    @{pdp_elements_list}    ${element1}=${EMPTY}     ${element2}=${EMPTY}     ${element3}=${EMPTY}     ${element4}=${EMPTY}     ${element5}=${EMPTY}     ${element6}=${EMPTY}     ${element7}=${EMPTY}     ${element8}=${EMPTY}     ${element9}=${EMPTY}     ${element10}=${EMPTY}     ${element11}=${EMPTY}     ${element12}=${EMPTY}     ${element13}=${EMPTY}     ${element14}=${EMPTY}     ${element15}=${EMPTY}
+    [Arguments]    ${condition}    @{pdp_elements_list}
     ${pdp_elements_list_count}=   get length    ${pdp_elements_list}
     FOR    ${index}    IN RANGE    0    ${pdp_elements_list_count}
         ${pdp_element_to_check}=    Get From List    ${pdp_elements_list}    ${index}
@@ -42,7 +42,9 @@ Yves: add product to the shopping cart
 
 Yves: change quantity on PDP:
     [Arguments]    ${qtyToSet}
-    Input text into field    ${pdp_quantity_input_filed}    ${qtyToSet}
+    Run Keyword If    '${env}'=='b2b'
+    ...    Input text into field    ${pdp_quantity_input_filed}[${env}]    ${qtyToSet}
+    ...    ELSE    Add/Edit element attribute with JavaScript:    ${pdp_quantity_input_filed}[${env}]    value    ${qtyToSet}    
 
 Yves: select the following 'Sales Unit' on PDP:
     [Arguments]    ${salesUnit}
@@ -89,8 +91,8 @@ Yves: change variant of the product on PDP on random value
     Wait For Document Ready
 
 Yves: get sku of the concrete product on PDP
-    Wait Until Element Is Visible    ${pdp_product_sku}
-    ${got_concrete_product_sku}=    Get Text    ${pdp_product_sku}
+    Wait Until Element Is Visible    ${pdp_product_sku}[${env}]
+    ${got_concrete_product_sku}=    Get Text    ${pdp_product_sku}[${env}]
     ${got_concrete_product_sku}=    Replace String    ${got_concrete_product_sku}    SKU:     ${EMPTY}
     ${got_concrete_product_sku}=    Replace String    ${got_concrete_product_sku}    ${SPACE}    ${EMPTY}
     Set Global Variable    ${got_concrete_product_sku}
@@ -106,3 +108,40 @@ Yves: get sku of the abstract product on PDP
     ${got_abstract_product_sku}=    Replace String    ${got_abstract_product_sku}    ]    ${EMPTY}
     Set Global Variable    ${got_abstract_product_sku}
     [Return]    ${got_abstract_product_sku}
+
+Yves: add product to wishlist:
+    [Arguments]    ${wishlistName}    ${selectWishlist}=
+    Wait Until Element Is Visible    ${pdp_add_to_wishlist_button}    timeout=20 seconds    error=Add to wishlist button didn't appear
+    Wait Until Element Is Enabled    ${pdp_add_to_wishlist_button}
+    ${wishlistSelectorExists}=    Run Keyword And Return Status    Element Should Be Visible    ${pdp_wishlist_dropdown}
+    Run Keyword If    '${selectWishlist}'=='select'    Run keywords
+    ...    Wait Until Element Is Visible    xpath=//select[contains(@name,'wishlist-name')]    timeout=20 seconds    error=Add to wishlist button didn't appear
+    ...    AND    Wait Until Element Is Enabled    xpath=//select[contains(@name,'wishlist-name')]
+    ...    AND    Select From List By Value    xpath=//select[contains(@name,'wishlist-name')]    ${wishlistName}      
+    Scroll and Click Element    ${pdp_add_to_wishlist_button}
+    Yves: flash message should be shown:    success    Items added successfully
+    Yves: remove flash messages
+
+Yves: check if product is available on PDP:
+    [Arguments]    ${abstractSku}    ${isAvailable}
+    Reload Page    
+    Run Keyword If    '${isAvailable}'=='false'    Run keywords    Element Should Be Visible    ${pdp_product_not_available_text}
+    ...    AND    Element Should Be Visible    ${pdp_add_to_cart_disabled_button}
+    ...    AND    Element Should Be Visible    ${pdp_availability_notification_email_field}
+    ...    ELSE    Run keywords    Element Should Not Be Visible    ${pdp_product_not_available_text}
+    ...    AND    Element Should Not Be Visible    ${pdp_add_to_cart_disabled_button}
+    ...    AND    Element Should Not Be Visible    ${pdp_availability_notification_email_field}
+    ...    AND    Element Should Be Visible    ${pdp_add_to_cart_button}      
+
+Yves: submit back in stock notification request for email:
+    [Arguments]    ${email}
+    Input text into field    ${pdp_availability_notification_email_field}    ${email}
+    Scroll and Click Element    xpath=//button[@data-qa='submit-button']
+    Yves: flash message should be shown:    success    Successfully subscribed
+    Yves: remove flash messages
+    Element Should Be Visible    xpath=//button[contains(text(),'Do not notify me when back in stock')]
+    
+Yves: unsubscribe from availability notifications
+    Scroll and Click Element    xpath=//button[contains(text(),'Do not notify me when back in stock')]
+    Yves: flash message should be shown:    success    Successfully unsubscribed
+    Yves: remove flash messages

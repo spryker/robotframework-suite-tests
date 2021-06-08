@@ -134,7 +134,7 @@ Volume_Prices
     Yves: change quantity on PDP:    5
     Yves: add product to the shopping cart
     Yves: go to the shopping cart through the header with name:    VolumePriceCart+${random}
-    Yves: shopping cart contains product with unit price:    420685    4.20
+    Yves: shopping cart contains product with unit price:    420685    Post-it stick note Super Sticky Meeting Notes 6445-4SS 4 pieces/pack    4.20
     Yves: delete 'Shopping Cart' with name:    VolumePriceCart+${random}
 
 Discontinued_Alternative_Products
@@ -150,7 +150,7 @@ Discontinued_Alternative_Products
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: discontinue the following product:    ${got_abstract_product_sku}    ${got_concrete_product_sku}
     Zed: product is successfully discontinued
-    Zed: add alternative products to the following abstract:    M22613
+    Zed: add following alternative products to the concrete:    M22613
     Zed: submit the form
     Zed: undo discontinue the following product:    ${got_abstract_product_sku}    ${got_concrete_product_sku}
 
@@ -281,7 +281,7 @@ Customer_Specific_Prices
     Yves: product price on the PDP should be:    ${one_variant_product_merchant_price}
     Yves: add product to the shopping cart
     Yves: go to the shopping cart through the header with name:    customerPrices+${random}
-    Yves: shopping cart contains product with unit price:    403125    188.34
+    Yves: shopping cart contains product with unit price:    403125    EUROKRAFT hand truck - with open shovel - load capacity 400 kg    188.34
     Yves: delete 'Shopping Cart' with name:    customerPrices+${random}
 
 Agent_Assist
@@ -468,14 +468,14 @@ Request_for_Quote
     Yves: view quote request with reference:    ${lastCreatedRfQ}
     Yves: click 'Convert to Cart' button on the 'Quote Request Details' page
     Yves: 'Shopping Cart' page is displayed
-    Yves: shopping cart contains product with unit price:    403125    500
+    Yves: shopping cart contains product with unit price:    403125    EUROKRAFT hand truck - with open shovel - load capacity 400 kg    500
     Yves: shopping cart doesn't contain the following products:    102121
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: billing address same as shipping address:    true
     Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${yves_company_user_buyer_address}
     Yves: select the following shipping method on the checkout and go next:    Express
     Yves: select the following payment method on the checkout and go next:    Invoice
-    Yves: shopping cart contains product with unit price:    403125    500
+    Yves: shopping cart contains product with unit price:    403125    EUROKRAFT hand truck - with open shovel - load capacity 400 kg    500
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed

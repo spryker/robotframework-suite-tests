@@ -11,6 +11,7 @@ ${zed_table_locator}    xpath=//table[contains(@class,'dataTable')]/tbody
 ${zed_search_field_locator}     xpath=//input[@type='search']
 ${zed_processing_block_locator}     xpath=//div[contains(@class,'dataTables_processing')][@style='display: none;']
 
+
 *** Keywords ***
 Zed: login on Zed with provided credentials:
     [Arguments]    ${email}    ${password}=${default_password}
@@ -27,7 +28,7 @@ Zed: go to first navigation item level:
     [Documentation]     example: "Zed: Go to First Navigation Item Level  Customers"
     [Arguments]     ${navigation_item}
 
-    Click Element with JavaScript    //ul[@id='side-menu']/li/a/span[@class='nav-label'][contains(text(),'${navigation_item}')]/../../a
+    Click Element by xpath with JavaScript    //ul[@id='side-menu']/li/a/span[@class='nav-label'][contains(text(),'${navigation_item}')]/../../a
 
 Zed: go to second navigation item level:
     [Documentation]     example: "Zed: Go to Second Navigation Item Level    Customers    Customer Access"
@@ -36,7 +37,7 @@ Zed: go to second navigation item level:
     log    ${node_state}
     Run Keyword If    'active' in '${node_state}'   run keywords  wait until element is visible  xpath=//ul[contains(@class,'nav-second-level')]//a/span[text()='${navigation_item_level2}']
     ...    AND      Scroll and Click Element  xpath=//ul[contains(@class,'nav-second-level')]//a/span[text()='${navigation_item_level2}']
-    ...    ELSE     run keywords    Click Element with JavaScript    //ul[@id='side-menu']/li/a/span[@class='nav-label'][contains(text(),'${navigation_item_level1}')]/../../a
+    ...    ELSE     run keywords    Click Element by xpath with JavaScript    //ul[@id='side-menu']/li/a/span[@class='nav-label'][contains(text(),'${navigation_item_level1}')]/../../a
     ...    AND      wait until element is visible  xpath=//ul[contains(@class,'nav-second-level')]//a/span[text()='${navigation_item_level2}']
     ...    AND      Scroll and Click Element  xpath=//ul[contains(@class,'nav-second-level')]//a/span[text()='${navigation_item_level2}']
 
@@ -76,3 +77,8 @@ Zed: table should contain:
     [Arguments]    ${search_key}
     Zed: perform search by:    ${search_key}
     table should contain    ${zed_table_locator}  ${search_key}
+
+Zed: go to tab:
+    [Arguments]    ${tabName}
+    Scroll and Click Element    xpath=//*[contains(@data-toggle,'tab') and contains(text(),'${tabName}')]
+    Wait For Document Ready    

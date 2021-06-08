@@ -1,16 +1,40 @@
 {
-    "environment": "b2c",
-    "host": "https://www.de.b2c.demo-spryker.com/",
-    "zed_url": "https://os.de.b2c.demo-spryker.com/",
-    "yves_user_email": "spencor.hopkin@spryker.com",
-    "yves_user_first_name": "Spencor",
-    "yves_user_last_name": "Hopkin",
-    "yves_user_password": "change123",
-    "zed_admin_email": "admin@spryker.com",
-    "zed_admin_password": "change123",
-    "one_variant_product_abstract_sku": "009",
-    "one_variant_product_abstract_price": "€99.99",
-    "multi_variant_product_abstract_sku": "051",
-    "measurement_unit_product_abstract_sku": "215",
-    "packaging_unit_product_abstract_sku": "218"
+    "environment": "b2c", 
+
+    "env": {
+        "host": "https://www.de.b2c.demo-spryker.com/",
+        "zed_url": "https://os.de.b2c.demo-spryker.com/"
+    },
+
+    "users": {    
+        "yves_user_email": "george.freeman@spryker.com",
+        "yves_user_first_name": "George",
+        "yves_user_last_name": "Freeman",
+        "yves_user_password": "change123",
+
+        "yves_second_user_email": "bill.martin@spryker.com",
+        "yves_second_user_first_name": "Martin",
+        "yves_second_user_last_name": "Bill",
+        "yves_second_user_password": "change123",
+
+        "zed_admin_email": "admin@spryker.com",
+        "zed_admin_password": "change123"
+    },
+        
+    "products": {
+        "one_variant_product_abstract_sku": "009",
+        "one_variant_product_abstract_name": "EUROKRAFT trolley - with open shovel",
+        "one_variant_product_default_price": "€99.99",
+        
+
+        "multi_variant_product_abstract_sku": "051",
+
+        "measurement_unit_product_abstract_sku": "215",
+
+        "packaging_unit_product_abstract_sku": "218",
+
+        "product_with_relations_related_products_sku": "",
+        "product_with_relations_upselling_sku": ""
+            
+    }
 }

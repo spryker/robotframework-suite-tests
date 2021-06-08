@@ -28,8 +28,16 @@ Zed: undo discontinue the following product:
     Zed: switch to the tab on 'Edit product' page:    Discontinue
     Scroll and Click Element    ${zed_pdp_restore_button}
 
-Zed: add alternative products to the following abstract:
-    [Arguments]    @{alternative_products_list}    ${element1}=${EMPTY}     ${element2}=${EMPTY}     ${element3}=${EMPTY}     ${element4}=${EMPTY}     ${element5}=${EMPTY}     ${element6}=${EMPTY}     ${element7}=${EMPTY}     ${element8}=${EMPTY}     ${element9}=${EMPTY}     ${element10}=${EMPTY}     ${element11}=${EMPTY}     ${element12}=${EMPTY}     ${element13}=${EMPTY}     ${element14}=${EMPTY}     ${element15}=${EMPTY}
+Zed: check if at least one price exists for concrete and add if doesn't:
+    [Arguments]    ${price}
+    ${currentURL}=    Get Location  
+    Run Keyword Unless    'content-price' in '${currentURL}'    Zed: switch to the tab on 'Edit product' page:    Price & Stock
+    ${exists}=    BuiltIn.Run Keyword And Return Status    Element Should Exist    xpath=//table[@id='price-table-collection']//input[@type='text' and @value]
+    Run Keyword If        '${exists}'=='False'    Input text into field    xpath=//table[@id='price-table-collection']//input[1]    ${price}
+    Scroll and Click Element    ${zed_dpd_save_button}
+
+Zed: add following alternative products to the concrete:
+    [Arguments]    @{alternative_products_list}
     ${currentURL}=    Get Location        
     Run Keyword Unless    'content-alternatives' in '${currentURL}'    Zed: switch to the tab on 'Edit product' page:    Product Alternatives
     ${alternative_products_list_count}=   get length  ${alternative_products_list}
@@ -37,8 +45,9 @@ Zed: add alternative products to the following abstract:
         ${alternative_product_to_assign}=    Get From List    ${alternative_products_list}    ${index}
         Input text into field    ${zed_pdp_add_products_alternative_input}    ${alternative_product_to_assign}
         Wait Until Element Is Visible    ${zed_pdp_alternative_products_suggestion}
-        Press Keys    None    RETURN
+        Scroll and Click Element    xpath=//ul[@id='select2-product_concrete_form_edit_alternative_products-results']/li[contains(@class,'select2-results__option') and contains(text(),'(sku: ${alternative_product_to_assign})')]
     END
+
 
 Zed: switch to the tab on 'Edit product' page:
     [Arguments]    ${tabToUse}

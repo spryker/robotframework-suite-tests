@@ -68,9 +68,13 @@ Select Random Option From List
     ${index}=    Convert To String    ${index}
     Select From List By Index    ${dropDownLocator}    ${index}
 
-Click Element with JavaScript
+Click Element by xpath with JavaScript
     [Arguments]    ${xpath}
     Execute Javascript    document.evaluate("${xpath}", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.click()
+
+Click Element by id with JavaScript
+    [Arguments]    ${id}
+    Execute Javascript    document.getElementById("${id}").click()
 
 Remove element from HTML with JavaScript
     [Arguments]    ${xpath}
@@ -83,6 +87,12 @@ Add/Edit element attribute with JavaScript:
     Execute Javascript
     ...    var element=document.evaluate("${xpath}", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
     ...    element.setAttribute("${attribute}", "${attributeValue}");
+
+Remove element attribute with JavaScript:
+    [Arguments]    ${xpath}    ${attribute}
+    Execute Javascript
+    ...    var element=document.evaluate("${xpath}", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+    ...    element.removeAttribute("${attribute}"");
 
 Scroll and Click Element
     [Arguments]    ${locator}
