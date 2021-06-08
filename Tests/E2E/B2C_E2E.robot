@@ -29,7 +29,7 @@ Resource    ../../Resources/Steps/Zed_CMS_Page_steps.robot
 *** Test Cases ***
 Guest_User_Access
     [Documentation]    Checks that guest users see products info and cart but not profile
-    Yves: header contains/doesn't contain:    true    ${currencySwitcher}    ${accountIcon}[${env}]    ${wishlistIcon}    ${shoppingCartIcon}[${env}]
+    Yves: header contains/doesn't contain:    true    ${currencySwitcher}    ${wishlistIcon}    ${accountIcon}    ${shoppingCartIcon}
     Yves: go to PDP of the product with sku:    002
     Yves: PDP contains/doesn't contain:     true    ${price}    ${addToCartButton} 
     Yves: add product to the shopping cart
@@ -44,7 +44,7 @@ Guest_User_Access
 Authorized_User_Access
     [Documentation]    Checks that authorized users see products info, cart and profile
     Yves: login on Yves with provided credentials:    ${yves_second_user_email}
-    Yves: header contains/doesn't contain:    true    ${currencySwitcher}    ${accountIcon}[${env}]     ${wishlistIcon}    ${shoppingCartIcon}[${env}] 
+    Yves: header contains/doesn't contain:    true    ${currencySwitcher}    ${accountIcon}     ${wishlistIcon}    ${shoppingCartIcon} 
     Yves: go to PDP of the product with sku:    002
     Yves: PDP contains/doesn't contain:     true    ${price}    ${addToCartButton}
     Yves: add product to the shopping cart
@@ -373,10 +373,10 @@ Split_Delivery
 Agent_Assist
     [Documentation]    Checks that agent can be used
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    Zed: create new Zed user with the following data:    agent+${random}@spryker.com    change123    Agent    Assist    Root group    This user is an agent    en_US
+    Zed: create new Zed user with the following data:    agent+${random}@spryker.com    change${random}    Agent    Assist    Root group    This user is an agent    en_US
     Yves: go to the 'Home' page
     Yves: go to URL:    agent/login
-    Yves: login on Yves with provided credentials:    agent+${random}@spryker.com
+    Yves: login on Yves with provided credentials:    agent+${random}@spryker.com    change${random}
     Yves: header contains/doesn't contain:    true    ${customerSearchWidget}
     Yves: perform search by customer:    ${yves_user_first_name}
     Yves: agent widget contains:    ${yves_user_email}
@@ -423,11 +423,11 @@ Return_Management
     Yves: check that 'Print Slip' contains the following products:    010_30692994
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: create a return for the following order and product in it:    ${lastPlacedOrder}    007_30691822
-    Zed: create new Zed user with the following data:    agent+${random}@spryker.com    change123    Agent    Assist    Root group    This user is an agent    en_US
+    Zed: create new Zed user with the following data:    agent+${random}@spryker.com    change123${random}    Agent    Assist    Root group    This user is an agent    en_US
     Yves: go to the 'Home' page
     Yves: logout on Yves as a customer
     Yves: go to URL:    agent/login
-    Yves: login on Yves with provided credentials:    agent+${random}@spryker.com
+    Yves: login on Yves with provided credentials:    agent+${random}@spryker.com    change123${random}
     Yves: header contains/doesn't contain:    true    ${customerSearchWidget}
     Yves: perform search by customer:    ${yves_user_email}
     Yves: agent widget contains:    ${yves_user_email}
