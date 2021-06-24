@@ -1,9 +1,9 @@
 {
-    "environment": "b2b", 
+    "environment": "b2b-internal", 
 
     "env": {
-        "host": "https://www.de.b2b.demo-spryker.com/",
-        "zed_url": "https://os.de.b2b.demo-spryker.com/"
+        "host": "https://www.de.b2b-internal.cloud.demo-spryker.com/",
+        "zed_url": "https://os.de.b2b-internal.cloud.demo-spryker.com/"
     },
 
     "users": {    
@@ -59,7 +59,6 @@
         "one_variant_product_default_price": "€235.43",
         "one_variant_product_merchant_price": "€188.34",
         
-
         "multi_variant_product_abstract_sku": "M21692",
 
         "measurement_unit_product_abstract_sku": "M23723",
