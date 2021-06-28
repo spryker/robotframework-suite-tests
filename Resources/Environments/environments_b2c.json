@@ -2,8 +2,8 @@
     "environment": "b2c", 
 
     "env": {
-        "host": "https://www.de.b2c.demo-spryker.com/",
-        "zed_url": "https://os.de.b2c.demo-spryker.com/"
+        "host": "https://www.de.b2c.cloud.demo-spryker.com/",
+        "zed_url": "https://os.de.b2c.cloud.demo-spryker.com/"
     },
 
     "users": {    
