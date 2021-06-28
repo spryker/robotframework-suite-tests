@@ -63,7 +63,8 @@ Zed: unselect checkbox by Label:
     wait until element is visible    xpath=//input[@type='checkbox']/../../label[contains(text(),'${checkbox_label}')]//input
     unselect checkbox    xpath=//input[@type='checkbox']/../../label[contains(text(),'${checkbox_label}')]//input
 
-Zed: submit the form
+Zed: submit the form:
+    [Arguments]    ${zed_save_button}
     wait until element is visible    ${zed_save_button}
     Scroll and Click Element   ${zed_save_button}
 

@@ -18,7 +18,7 @@ Zed: create new Zed user with the following data:
     Zed: select checkbox by Label:    ${checkboxGroup}
     Zed: select checkbox by Label:    ${checkboxAgent}
     Select From List By Label    ${zed_user_interface_language}    ${userInterfaceLanguage}
-    Zed: submit the form
+    Zed: submit the form:
     Wait For Document Ready
     Zed: table should contain:    ${zedUserEmail}  
 

@@ -2,8 +2,8 @@
     "environment": "b2c", 
 
     "env": {
-        "host": "https://www.de.b2c.demo-spryker.com/",
-        "zed_url": "https://os.de.b2c.demo-spryker.com/"
+        "host": "https://www.de.b2c.cloud.demo-spryker.com/",
+        "zed_url": "https://os.de.b2c.cloud.demo-spryker.com/"
     },
 
     "users": {    
@@ -34,7 +34,10 @@
         "packaging_unit_product_abstract_sku": "218",
 
         "product_with_relations_related_products_sku": "",
-        "product_with_relations_upselling_sku": ""
-            
+        "product_with_relations_upselling_sku": ""       
+    },
+    
+    "warehouses": {
+        "warehouse_name": "Test-PBC-4"
     }
 }

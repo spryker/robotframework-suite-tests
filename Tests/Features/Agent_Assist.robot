@@ -4,23 +4,23 @@ Suite Teardown    SuiteTeardown
 Test Setup        TestSetup
 Test Teardown     TestTeardown
 Library           SeleniumLibrary    plugins=SeleniumTestability;True;30 Seconds;True
-Resource    ../../Resources/Steps/Agent_Assist_steps.robot
-Resource    ../../Resources/Common/Common.robot
-Resource    ../../Resources/Steps/Header_steps.robot
-Resource    ../../Resources/Common/Common_Yves.robot
-Resource    ../../Resources/Common/Common_Zed.robot
-Resource    ../../Resources/Steps/PDP_steps.robot
-Resource    ../../Resources/Steps/Shopping_Lists_steps.robot
-Resource    ../../Resources/Steps/Checkout_steps.robot
-Resource    ../../Resources/Steps/Order_History_steps.robot
-Resource    ../../Resources/Steps/Product_Set_steps.robot
-Resource    ../../Resources/Steps/Catalog_steps.robot
-Resource    ../../Resources/Steps/Company_steps.robot
-Resource    ../../Resources/Steps/Customer_Account_steps.robot
-Resource    ../../Resources/Steps/Configurable_Bundle_steps.robot
-Resource    ../../Resources/Pages/Yves/Yves_Shopping_Cart_page.robot
-Resource    ../../Resources/Pages/Yves/Yves_Agent_Assist_page.robot
-Resource    ../../Resources/Steps/Zed_Users_steps.robot
+Resource          ../../Resources/Steps/Agent_Assist_steps.robot
+Resource          ../../Resources/Common/Common.robot
+Resource          ../../Resources/Steps/Header_steps.robot
+Resource          ../../Resources/Common/Common_Yves.robot
+Resource          ../../Resources/Common/Common_Zed.robot
+Resource          ../../Resources/Steps/PDP_steps.robot
+Resource          ../../Resources/Steps/Shopping_Lists_steps.robot
+Resource          ../../Resources/Steps/Checkout_steps.robot
+Resource          ../../Resources/Steps/Order_History_steps.robot
+Resource          ../../Resources/Steps/Product_Set_steps.robot
+Resource          ../../Resources/Steps/Catalog_steps.robot
+Resource          ../../Resources/Steps/Company_steps.robot
+Resource          ../../Resources/Steps/Customer_Account_steps.robot
+Resource          ../../Resources/Steps/Configurable_Bundle_steps.robot
+Resource          ../../Resources/Pages/Yves/Yves_Shopping_Cart_page.robot
+Resource          ../../Resources/Pages/Yves/Yves_Agent_Assist_page.robot
+Resource          ../../Resources/Steps/Zed_Users_steps.robot
 
 
 *** Test Cases ***
