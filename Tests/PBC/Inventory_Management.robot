@@ -31,7 +31,7 @@ Warehouse_Management_Creation
     Zed: click button in Header:                    ${button_to_create_warehouse}
     Wait For Document Ready
     Element Should Be Visible                       xpath=//body//*[contains(text(),'Create Warehouse')]    message=Page for Warehouse creation is not opened
-    Input text into field                           ${warehouse_name_field}   ${warehouse_name}
+    Input text into field                           ${warehouse_name_field}    ${warehouse_name}
     Scroll and Click Element                        ${warehouse_is_active_true}
     Zed: go to tab:                                 ${warehouse_tab_2}
     Zed: select checkbox by Label:                  ${store_1}
@@ -39,6 +39,7 @@ Warehouse_Management_Creation
     Zed: select checkbox by Label:                  ${store_3}
     Zed: submit the form:                           ${warehouse_submit_form}
     Zed: table should contain:                      ${warehouse_name}
+    Zed: Table column value should be equal to:     stock_data_table    2    ${warehouse_name}
 
 Warehouse_Management_Edition
     [Documentation]    Checks that a user can edit a warehouse
@@ -54,6 +55,7 @@ Warehouse_Management_Edition
     Zed: unselect checkbox by Label:                ${store_3}
     Zed: submit the form:                           ${warehouse_submit_form}
     Zed: table should contain:                      ${warehouse_name}
+    Zed: Table column value should be equal to:     stock_data_table    2    ${warehouse_name}-updated
 
 #Warehouse_Management_Deletion
 #    [Documentation]    Checks that a user can delete a warehouse

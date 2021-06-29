@@ -1,14 +1,14 @@
 *** Settings ***
 Library    BuiltIn
-Resource                  Common.robot
-Resource                  ../Pages/Zed/Zed_Login_page.robot
+Resource   Common.robot
+Resource   ../Pages/Zed/Zed_Login_page.robot
 
 *** Variable ***
-${zed_log_out_button}   xpath=//ul[@class='nav navbar-top-links navbar-right']//a[contains(@href,'logout')]
-${zed_save_button}      xpath=//input[contains(@class,'safe-submit')]
-${zed_success_flash_message}    xpath=//div[@class='flash-messages']/div[@class='alert alert-success']
-${zed_table_locator}    xpath=//table[contains(@class,'dataTable')]/tbody
-${zed_search_field_locator}     xpath=//input[@type='search']
+${zed_log_out_button}               xpath=//ul[@class='nav navbar-top-links navbar-right']//a[contains(@href,'logout')]
+${zed_save_button}                  xpath=//input[contains(@class,'safe-submit')]
+${zed_success_flash_message}        xpath=//div[@class='flash-messages']/div[@class='alert alert-success']
+${zed_table_locator}                xpath=//table[contains(@class,'dataTable')]/tbody
+${zed_search_field_locator}         xpath=//input[@type='search']
 ${zed_processing_block_locator}     xpath=//div[contains(@class,'dataTables_processing')][@style='display: none;']
 
 
@@ -82,4 +82,8 @@ Zed: table should contain:
 Zed: go to tab:
     [Arguments]    ${tabName}
     Scroll and Click Element    xpath=//*[contains(@data-toggle,'tab') and contains(text(),'${tabName}')]
-    Wait For Document Ready    
+    Wait For Document Ready
+
+Zed: Table column value should be equal to:
+    [Arguments]                 ${table_id}    ${column_number}    ${expected_value}
+    Element Text Should Be      xpath=//table[@id='${table_id}']/tbody/tr/td[${column_number}]   ${expected_value}
