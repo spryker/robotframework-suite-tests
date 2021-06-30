@@ -23,6 +23,7 @@
         
     "products": {
         "one_variant_product_abstract_sku": "009",
+        "one_variant_product_concrete_sku": "009_30692991",
         "one_variant_product_abstract_name": "EUROKRAFT trolley - with open shovel",
         "one_variant_product_default_price": "€99.99",
         
@@ -38,6 +39,6 @@
     },
     
     "warehouses": {
-        "warehouse_name": "Test-PBC-17"
+        "warehouse_name": "Test-PBC-20"
     }
 }

@@ -5,13 +5,13 @@ Test Setup        TestSetup
 Test Teardown     TestTeardown
 Library           SeleniumLibrary    plugins=SeleniumTestability;True;30 Seconds;True
 Resource          ../../Resources/Common/Common_Zed.robot
+Resource          ../../Resources/Common/Product_Information_Management.robot
+
 
 # Environment variables
 # ${warehouse_name}
 
 *** Variables ***
-${navigation_item_level1}       Administration
-${navigation_item_level2}       Warehouses
 ${button_to_create_warehouse}   Create Warehouse
 ${warehouse_name_field}         id=stock_name
 ${warehouse_is_active_true}     id=stock_isActive_0
@@ -28,7 +28,7 @@ ${warehouse_table}              stock_data_table
 
 
 *** Test Cases ***
-Warehouse_Management_Creation
+Warehouse_Creation
     [Documentation]                                 Checks that a user can create a warehouse
     Zed: Go to the warehouse list
     Zed: click button in Header:                    ${button_to_create_warehouse}
@@ -41,7 +41,7 @@ Warehouse_Management_Creation
     Zed: table should contain:                      ${warehouse_name}
     Zed: Table column value should be equal to:     ${warehouse_table}    2    ${warehouse_name}
 
-Warehouse_Management_View
+Warehouse_View
     [Documentation]                                 Checks that a user can view a warehouse
     Zed: Go to the warehouse list
     Zed: table should contain:                      ${warehouse_name}
@@ -50,8 +50,14 @@ Warehouse_Management_View
     Element Should Be Visible                       xpath=//body//*[contains(text(),'View Warehouse: ${warehouse_name}')]    message=Page for Warehouse view page is not opened
     Element Text Should Be                          xpath=/html/body/div[1]/div/div[3]/div[2]/div/div/div[2]/div[1]/div/dl/dd    ${warehouse_name}
 
-Warehouse_Management_Edition
-    [Documentation]                                 Checks that a user can edit a warehouse
+# Availability_Define_Stock_For_Warehouse_And_Product
+#     [Documentation]                                 Checks that a user can define a stock for a product for the new warehouse
+#     Zed: Go to the product list
+#     Zed: Edit a Concrete Product:                   ${one_variant_product_abstract_sku}    ${one_variant_product_concrete_sku}
+#     Zed: go to tab:                                 ${concrete_product_edit_tab_2}
+
+Warehouse_Edition
+    [Documentation]                                 Checks that a user can edit a warehouse. Make some changes and roll-back.
     Zed: Go to the warehouse list
     Zed: Edit a Warehouse:                          ${warehouse_name}
     Zed: Define a Warehouse name:                   ${warehouse_name}-updated
@@ -69,11 +75,11 @@ Warehouse_Management_Edition
 *** Keywords ***
 Zed: Go to the warehouse list
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    Zed: go to second navigation item level:        ${navigation_item_level1}    ${navigation_item_level2}
+    Zed: go to second navigation item level:        Administration    Warehouses
 
 Zed: Edit a Warehouse:
     [Documentation]                                 Enter the edit page of a warehouse. Expect to be in the Warehouse list page.
-    [Arguments]     ${warehouse_name}
+    [Arguments]                                     ${warehouse_name}
     Zed: table should contain:                      ${warehouse_name}
     Scroll and Click Element                        xpath=/html/body/div[1]/div/div[3]/div[2]/div/div/div[2]/div/div[2]/div/div[1]/div[2]/table/tbody/tr/td[5]/a[2]
     Wait For Document Ready
