@@ -1,26 +1,27 @@
 *** Settings ***
-Library    BuiltIn
+Library           BuiltIn
 Suite Setup       SuiteSetup
 Suite Teardown    SuiteTeardown
 Test Setup        TestSetup
 Test Teardown     TestTeardown
-Resource    ../../Resources/Common/Common.robot
-Resource    ../../Resources/Steps/Header_steps.robot
-Resource    ../../Resources/Common/Common_Yves.robot
-Resource    ../../Resources/Common/Common_Zed.robot
-Resource    ../../Resources/Steps/PDP_steps.robot
-Resource    ../../Resources/Steps/Shopping_Lists_steps.robot
-Resource    ../../Resources/Steps/Checkout_steps.robot
-Resource    ../../Resources/Steps/Order_History_steps.robot
-Resource    ../../Resources/Steps/Product_Set_steps.robot
-Resource    ../../Resources/Steps/Catalog_steps.robot
-Resource    ../../Resources/Steps/Agent_Assist_steps.robot
-Resource    ../../Resources/Steps/Company_steps.robot
-Resource    ../../Resources/Steps/Customer_Account_steps.robot
-Resource    ../../Resources/Steps/Configurable_Bundle_steps.robot
-Resource    ../../Resources/Steps/Zed_Users_steps.robot
-Resource    ../../Resources/Steps/Products_steps.robot
-Resource    ../../Resources/Steps/Orders_Management_steps.robot
+Resource          ../../Resources/Common/Common.robot
+Resource          ../../Resources/Steps/Header_steps.robot
+Resource          ../../Resources/Common/Common_Yves.robot
+Resource          ../../Resources/Common/Common_Zed.robot
+Resource          ../../Resources/Steps/PDP_steps.robot
+Resource          ../../Resources/Steps/Shopping_Lists_steps.robot
+Resource          ../../Resources/Steps/Checkout_steps.robot
+Resource          ../../Resources/Steps/Order_History_steps.robot
+Resource          ../../Resources/Steps/Product_Set_steps.robot
+Resource          ../../Resources/Steps/Catalog_steps.robot
+Resource          ../../Resources/Steps/Agent_Assist_steps.robot
+Resource          ../../Resources/Steps/Company_steps.robot
+Resource          ../../Resources/Steps/Customer_Account_steps.robot
+Resource          ../../Resources/Steps/Configurable_Bundle_steps.robot
+Resource          ../../Resources/Steps/Zed_Users_steps.robot
+Resource          ../../Resources/Steps/Products_steps.robot
+Resource          ../../Resources/Steps/Orders_Management_steps.robot
+
 
 *** Test Cases ***
 Guest_User_Restrictions
@@ -35,7 +36,6 @@ Guest_User_Restrictions
     Yves: PDP contains/doesn't contain:     true    ${price}    ${addToCartButton}
     Yves: go to company menu item:    Users
     Yves: 'Company Users' page is displayed
-
 
 Share_Shopping_Lists
     Yves: login on Yves with provided credentials:    ${yves_company_user_shared_permission_owner_email}
@@ -151,7 +151,7 @@ Discontinued_Alternative_Products
     Zed: discontinue the following product:    ${got_abstract_product_sku}    ${got_concrete_product_sku}
     Zed: product is successfully discontinued
     Zed: add following alternative products to the concrete:    M22613
-    Zed: submit the form
+    Zed: submit the form:
     Zed: undo discontinue the following product:    ${got_abstract_product_sku}    ${got_concrete_product_sku}
 
 Measurement_Units

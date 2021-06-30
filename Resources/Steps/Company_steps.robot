@@ -17,7 +17,7 @@ Zed: create new Company Business Unit with provided name and company:
     Input text into field    ${zed_bu_name_field}    ${bu_name_to_set}
     Input text into field    ${zed_bu_iban_field}    testiban+${random}
     Input text into field    ${zed_bu_bic_field}    testbic+${random}
-    Zed: submit the form
+    Zed: submit the form:
     wait until element is visible    ${zed_success_flash_message}
     wait until element is visible    ${zed_table_locator}
     Zed: perform search by:    ${bu_name_to_set}
@@ -32,7 +32,7 @@ Zed: create new Company with provided name:
     Zed: click button in Header:    Create Company
     wait until element is visible    id=company_name
     Input text into field    ${zed_company_name_input_field}    ${company_name}
-    Zed: submit the form
+    Zed: submit the form:
     wait until element is visible    ${zed_success_flash_message}
     wait until element is visible    ${zed_table_locator}
     table should contain    ${zed_table_locator}    ${company_name}
@@ -52,7 +52,7 @@ Zed: create new Company Role with provided permissions:
     END
     select from list by label    ${zed_role_company_dropdown_locator}    ${select_company_for_role}
     Input text into field    ${zed_role_name_field}    ${new_role_name}
-    Zed: submit the form
+    Zed: submit the form:
     Zed: perform search by:    ${new_role_name}
     table should contain    ${zed_table_locator}    ${new_role_name}
 
@@ -73,7 +73,7 @@ Zed: Create new Company User with provided email/company/business unit and role(
     sleep    2s
     select from list by label    ${zed_create_company_business_unit_dropdown}    ${business_unit}
     Zed: select checkbox by Label:    ${role}
-    Zed: submit the form
+    Zed: submit the form:
     wait until element is visible    ${zed_success_flash_message}
     wait until element is visible    ${zed_table_locator}
     Zed: perform search by:    Robot First+${random}
@@ -84,7 +84,7 @@ Zed: attach company user to the following BU with role:
     Wait Until Element Is Visible    ${zed_business_unit_selector}
     Select From List By Label    ${zed_business_unit_selector}    ${business_unit}
     Zed: select checkbox by Label:    ${role_checkbox}
-    Zed: submit the form
+    Zed: submit the form:
     Wait For Document Ready
 
 Yves: 'Business Unit' dropdown contains:

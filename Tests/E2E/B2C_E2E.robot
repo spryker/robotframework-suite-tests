@@ -1,30 +1,31 @@
 *** Settings ***
-Library    BuiltIn
+Library           BuiltIn
 Suite Setup       SuiteSetup
 Suite Teardown    SuiteTeardown
 Test Setup        TestSetup
 Test Teardown     TestTeardown
-Resource    ../../Resources/Common/Common.robot
-Resource    ../../Resources/Steps/Header_steps.robot
-Resource    ../../Resources/Common/Common_Yves.robot
-Resource    ../../Resources/Common/Common_Zed.robot
-Resource    ../../Resources/Steps/PDP_steps.robot
-Resource    ../../Resources/Steps/Shopping_Lists_steps.robot
-Resource    ../../Resources/Steps/Checkout_steps.robot
-Resource    ../../Resources/Steps/Order_History_steps.robot
-Resource    ../../Resources/Steps/Product_Set_steps.robot
-Resource    ../../Resources/Steps/Catalog_steps.robot
-Resource    ../../Resources/Steps/Agent_Assist_steps.robot
-Resource    ../../Resources/Steps/Company_steps.robot
-Resource    ../../Resources/Steps/Customer_Account_steps.robot
-Resource    ../../Resources/Steps/Configurable_Bundle_steps.robot
-Resource    ../../Resources/Steps/Zed_Users_steps.robot
-Resource    ../../Resources/Steps/Products_steps.robot
-Resource    ../../Resources/Steps/Orders_Management_steps.robot
-Resource    ../../Resources/Steps/Wishlist_steps.robot
-Resource    ../../Resources/Steps/Zed_Availability_steps.robot
-Resource    ../../Resources/Steps/Zed_Discount_steps.robot
-Resource    ../../Resources/Steps/Zed_CMS_Page_steps.robot
+Resource          ../../Resources/Common/Common.robot
+Resource          ../../Resources/Steps/Header_steps.robot
+Resource          ../../Resources/Common/Common_Yves.robot
+Resource          ../../Resources/Common/Common_Zed.robot
+Resource          ../../Resources/Steps/PDP_steps.robot
+Resource          ../../Resources/Steps/Shopping_Lists_steps.robot
+Resource          ../../Resources/Steps/Checkout_steps.robot
+Resource          ../../Resources/Steps/Order_History_steps.robot
+Resource          ../../Resources/Steps/Product_Set_steps.robot
+Resource          ../../Resources/Steps/Catalog_steps.robot
+Resource          ../../Resources/Steps/Agent_Assist_steps.robot
+Resource          ../../Resources/Steps/Company_steps.robot
+Resource          ../../Resources/Steps/Customer_Account_steps.robot
+Resource          ../../Resources/Steps/Configurable_Bundle_steps.robot
+Resource          ../../Resources/Steps/Zed_Users_steps.robot
+Resource          ../../Resources/Steps/Products_steps.robot
+Resource          ../../Resources/Steps/Orders_Management_steps.robot
+Resource          ../../Resources/Steps/Wishlist_steps.robot
+Resource          ../../Resources/Steps/Zed_Availability_steps.robot
+Resource          ../../Resources/Steps/Zed_Discount_steps.robot
+Resource          ../../Resources/Steps/Zed_CMS_Page_steps.robot
+
 
 *** Test Cases ***
 Guest_User_Access
@@ -39,7 +40,6 @@ Guest_User_Access
     Yves: 'Login' page is displayed
     Yves: go To 'Wishlist' Page
     Yves: 'Login' page is displayed
-    
 
 Authorized_User_Access
     [Documentation]    Checks that authorized users see products info, cart and profile
@@ -83,8 +83,7 @@ UserAccount
     Yves: go to user menu item in the left bar:    Addresses
     Yves: 'Addresses' page is displayed
     Yves: check that user has address exists/doesn't exist:    false    Mr    ${yves_second_user_first_name}    ${yves_second_user_last_name}    Kirncher Str.    7    10247    Berlin    Germany
-    
-    
+
 Catalog
     [Documentation]    Checks that catalog options and search work
     Yves: perform search by:    canon
@@ -172,7 +171,7 @@ Discontinued_Alternative_Products
     Zed: product is successfully discontinued
     Zed: check if at least one price exists for concrete and add if doesn't:    100
     Zed: add following alternative products to the concrete:    011
-    Zed: submit the form
+    Zed: submit the form:
     Yves: login on Yves with provided credentials:    ${yves_user_email}
     Yves: go To 'Wishlist' Page
     Yves: go to wishlist with name:    My wishlist

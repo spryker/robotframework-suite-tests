@@ -9,3 +9,4 @@ settings.json
 /User_Journeys/output.xml
 Resources/Libraries/__pycache__
 /.vscode
+.bash_profile

@@ -25,4 +25,3 @@ UJ:Managing_B2B_Copmany_Account_in_Zed_Part_1
 UJ:Managing_B2B_Copmany_Account_in_Zed_Part_1
     [Documentation]    This user journey is to check possibility to Create Company, Business unit and initial Admin user with Permissions for Managing User in Zed
     Given user with <email> and <password> is logged into Zed
-
