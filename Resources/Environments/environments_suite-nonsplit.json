@@ -1,7 +1,7 @@
 {
     "environment": "suite-nonsplit",
-    "host": "https://www.69.demo-spryker.com/",
-    "zed_url": "https://os.69.demo-spryker.com/",
+    "host": "https://www.de.suite-nonsplit.cloud.demo-spryker.com/",
+    "zed_url": "https://os.de.suite-nonsplit.cloud.demo-spryker.com/",
     "yves_user_email": "spencor.hopkin@spryker.com",
     "yves_user_first_name": "Spencor",
     "yves_user_last_name": "Hopkin",

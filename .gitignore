@@ -3,9 +3,11 @@
 Results/
 *.png
 *.log
+*.xml
 settings.json
 .DS_Store
 /.idea
 /User_Journeys/output.xml
 Resources/Libraries/__pycache__
 /.vscode
+.bash_profile
