@@ -6,7 +6,7 @@ Please follow this [guide](https://spryker.atlassian.net/wiki/spaces/PS/pages/14
 
 `robot -v env:{ENVIRONMENT} {PATH}`
 
-# Run tests in chrome browser
+### Run tests in chrome browser
 
 `robot -v env:{ENVIRONMENT} {PATH} -v browser:chrome`
 
