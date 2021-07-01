@@ -1,5 +1,5 @@
 {
-    "environment": "b2c-internal", 
+    "environment": "b2c_internal", 
 
     "env": {
         "host": "https://www.de.b2c-internal.cloud.demo-spryker.com/",
