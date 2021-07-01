@@ -6,6 +6,10 @@ Please follow this [guide](https://spryker.atlassian.net/wiki/spaces/PS/pages/14
 
 `robot -v env:{ENVIRONMENT} {PATH}`
 
+# Run tests in chrome browser
+
+`robot -v env:{ENVIRONMENT} {PATH} -v browser:chrome`
+
 ## Example
 
 ### B2B
@@ -30,4 +34,5 @@ You can also test the B2C internal via the environment `b2c-internal`.
 | `-v env:{ENVIRONMENT}` | Environment variable. Demo in tests will depend on this variable value. Possible values: `b2b`, `b2b-internal`, `b2c`, `b2c-internal`, and `suite-nonsplit`. |
 | `-v host:{URL}` | Yves URL |
 | `-v zed_url:{URL}` | Zed URL |
+| `-v browser:{browser}` | chrome |
 | `{PATH}` | Path to the file to execute |
