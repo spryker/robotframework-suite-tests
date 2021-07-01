@@ -8,7 +8,7 @@ Please follow this [guide](https://spryker.atlassian.net/wiki/spaces/PS/pages/14
 
 ### Run tests in chrome browser
 
-`robot -v env:{ENVIRONMENT} {PATH} -v browser:chrome`
+`robot -v env:{ENVIRONMENT} -v browser:chrome {PATH}`
 
 ## Example
 
