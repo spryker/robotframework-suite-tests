@@ -34,7 +34,6 @@ Load Variables
 Set Up Keyword Arguments
     [Arguments]    @{args}
     ${arguments}=    Fill Variables From Text String    @{args}
-    Log    ${arguments}
 
 SuiteSetup
     [documentation]  Basic steps before each suite
