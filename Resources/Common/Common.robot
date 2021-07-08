@@ -33,7 +33,12 @@ Load Variables
 
 Set Up Keyword Arguments
     [Arguments]    @{args}
-    ${arguments}=    Fill Variables From Text String    @{args}
+    &{arguments}=    Fill Variables From Text String    @{args}
+    FOR    ${key}    ${value}    IN    &{arguments}
+        Log    Key is '${key}' and value is '${value}'.
+        ${var_value}=   Get Variable Value  ${${key}}   ${value}
+        Set Test Variable    ${${key}}    ${var_value}    
+    END
 
 SuiteSetup
     [documentation]  Basic steps before each suite

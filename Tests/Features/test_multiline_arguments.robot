@@ -2,11 +2,18 @@
 Library    BuiltIn
 Suite Setup       SuiteSetup
 Suite Teardown    SuiteTeardown
-Test Setup        TestSetup
 Test Teardown     TestTeardown
 Resource    ../../Resources/Common/Common.robot
+Resource    ../../Resources/Common/Common_Yves.robot
+Resource    ../../Resources/Steps/PDP_steps.robot
+Resource    ../../Resources/Steps/Header_steps.robot
 
 *** Test Cases ***
-test_new_function
-    Set Up Keyword Arguments    || first name | last name | email           | street name    | zip code | telephone     || 
-    ...                         || Mike       | Miller    | test@spyker.com | My Street 123  | 12345    | +123123456789 ||
+b2c_test_new_function
+    Set Up Keyword Arguments    || sku | price   | name           || 
+    ...                         || 005 | €70.00  | Canon IXUS 175 ||
+    Yves: go to PDP of the product with sku:    ${sku}
+    Yves: PDP contains/doesn't contain:     true    ${pdpPriceLocator}    ${addToCartButton} 
+    Yves: add product to the shopping cart
+    Yves: go to b2c shopping cart
+    Yves: shopping cart contains product with unit price:   ${sku}    ${name}    ${price}
