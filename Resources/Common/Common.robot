@@ -39,6 +39,7 @@ Set Up Keyword Arguments
         ${var_value}=   Get Variable Value  ${${key}}   ${value}
         Set Test Variable    ${${key}}    ${var_value}    
     END
+    [Return]    &{arguments}
 
 SuiteSetup
     [documentation]  Basic steps before each suite
