@@ -27,12 +27,12 @@ Guest_User_Restrictions
     [Documentation]    Checks that guest users are not able to see: Prices, Availability, Quick Order, "My Account" features
     Yves: header contains/doesn't contain:    false    ${priceModeSwitcher}    ${currencySwitcher}    ${quickOrderIcon}    ${accountIcon}    ${shoppingListIcon}    ${shoppingCartIcon}
     Yves: go to PDP of the product with sku:    ${one_variant_product_abstract_sku} 
-    Yves: PDP contains/doesn't contain:     false    ${price}    ${addToCartButton}
+    Yves: PDP contains/doesn't contain:     false    ${pdpPriceLocator}    ${addToCartButton}
     Yves: login on Yves with provided credentials:    ${yves_company_user_manager_and_buyer_email}
     Yves: header contains/doesn't contain:    true    ${priceModeSwitcher}    ${currencySwitcher}    ${quickOrderIcon}    ${accountIcon}    ${shoppingListIcon}    ${shoppingCartIcon}
     Yves: company menu 'should' be available for logged in user
     Yves: go to PDP of the product with sku:    ${one_variant_product_abstract_sku}
-    Yves: PDP contains/doesn't contain:     true    ${price}    ${addToCartButton}
+    Yves: PDP contains/doesn't contain:     true    ${pdpPriceLocator}    ${addToCartButton}
     Yves: go to company menu item:    Users
     Yves: 'Company Users' page is displayed
 

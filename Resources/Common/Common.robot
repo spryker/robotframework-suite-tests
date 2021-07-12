@@ -31,6 +31,16 @@ Load Variables
         Set Global Variable    ${${key}}    ${var_value}
     END
 
+Set Up Keyword Arguments
+    [Arguments]    @{args}
+    &{arguments}=    Fill Variables From Text String    @{args}
+    FOR    ${key}    ${value}    IN    &{arguments}
+        Log    Key is '${key}' and value is '${value}'.
+        ${var_value}=   Get Variable Value  ${${key}}   ${value}
+        Set Test Variable    ${${key}}    ${var_value}    
+    END
+    [Return]    &{arguments}
+
 SuiteSetup
     [documentation]  Basic steps before each suite
     Remove Files    ${OUTPUTDIR}/selenium-screenshot-*.png

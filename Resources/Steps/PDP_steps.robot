@@ -7,7 +7,7 @@ Resource    ../Pages/Yves/Yves_Product_Details_page.robot
 Resource    ../Common/Common_Yves.robot
 
 *** Variable ***
-${price}    ${pdp_price_element_locator}
+${pdpPriceLocator}    ${pdp_price_element_locator}
 ${addToCartButton}    ${pdp_add_to_cart_button}
 ${alternativeProducts}    ${pdp_alternative_products_slider}[${env}]
 ${measurementUnitSuggestion}    ${pdp_measurement_unit_notification}

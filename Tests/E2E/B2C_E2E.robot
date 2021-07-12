@@ -11,6 +11,7 @@ Resource    ../../Resources/Common/Common_Zed.robot
 Resource    ../../Resources/Steps/PDP_steps.robot
 Resource    ../../Resources/Steps/Shopping_Lists_steps.robot
 Resource    ../../Resources/Steps/Checkout_steps.robot
+Resource    ../../Resources/Steps/Customer_Registration_steps.robot
 Resource    ../../Resources/Steps/Order_History_steps.robot
 Resource    ../../Resources/Steps/Product_Set_steps.robot
 Resource    ../../Resources/Steps/Catalog_steps.robot
@@ -27,6 +28,14 @@ Resource    ../../Resources/Steps/Zed_Discount_steps.robot
 Resource    ../../Resources/Steps/Zed_CMS_Page_steps.robot
 
 *** Test Cases ***
+New_Customer_Registration
+    [Documentation]    Check that a new user can be registered in the system
+    Register a new customer with data:    
+    ...    || salutation | first name          | last name | e-mail                         | password           ||
+    ...    || Mr.        | Test${random}       | User      | ${random}test.user@spryker.com | change123${random} || 
+    Yves: flash message should be shown:    success    Almost there! We send you an email to validate your email address. Please confirm it to be able to log in.
+
+
 Guest_User_Access
     [Documentation]    Checks that guest users see products info and cart but not profile
     Yves: header contains/doesn't contain:    true    ${currencySwitcher}    ${wishlistIcon}    ${accountIcon}    ${shoppingCartIcon}
