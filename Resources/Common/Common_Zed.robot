@@ -82,3 +82,7 @@ Zed: go to tab:
     [Arguments]    ${tabName}
     Scroll and Click Element    xpath=//*[contains(@data-toggle,'tab') and contains(text(),'${tabName}')]
     Wait For Document Ready    
+
+Zed: message should be shown:
+    [Arguments]    ${text}
+    Element Should Be Visible    xpath=//div[contains(@class,'alert alert-success') and contains(text(),'${text}')]    message=Success message is not shown

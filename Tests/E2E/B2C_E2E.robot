@@ -26,6 +26,7 @@ Resource    ../../Resources/Steps/Wishlist_steps.robot
 Resource    ../../Resources/Steps/Zed_Availability_steps.robot
 Resource    ../../Resources/Steps/Zed_Discount_steps.robot
 Resource    ../../Resources/Steps/Zed_CMS_Page_steps.robot
+Resource    ../../Resources/Steps/Zed_Customer_steps.robot
 
 *** Test Cases ***
 New_Customer_Registration
@@ -34,7 +35,9 @@ New_Customer_Registration
     ...    || salutation | first name          | last name | e-mail                         | password           ||
     ...    || Mr.        | Test${random}       | User      | ${random}test.user@spryker.com | change123${random} || 
     Yves: flash message should be shown:    success    Almost there! We send you an email to validate your email address. Please confirm it to be able to log in.
-
+    [Teardown]    Zed: delete customer:
+    ...    || email                          || 
+    ...    || ${random}test.user@spryker.com ||
 
 Guest_User_Access
     [Documentation]    Checks that guest users see products info and cart but not profile
