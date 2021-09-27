@@ -1,3 +1,6 @@
+*** Settings ***
+Resource    ../../Common/Common.robot
+
 *** Variable ***
 ${shopping_lists_main_content_locator}    xpath=//div[@data-qa='component shopping-list-overview-table']
 ${shopping_lists_page_form_locator}    xpath=//form[@name='shopping_list_form']
@@ -15,24 +18,24 @@ Select access level to share shopping list with:
 
 Edit shopping list with name:
     [Arguments]    ${shoppingListName}       
-    Scroll and Click Element    xpath=xpath=//*[@data-qa="component shopping-list-overview-table"]//table//td[@data-content='Name'][contains(.,'${shoppingListName}')]/..//div[@data-qa='component table-action-list']//a[contains(.,'Edit')]
+    Click    xpath=xpath=//*[@data-qa="component shopping-list-overview-table"]//table//td[@data-content='Name'][contains(.,'${shoppingListName}')]/..//div[@data-qa='component table-action-list']//a[contains(.,'Edit')]
 
 Share shopping list with name:
     [Arguments]    ${shoppingListName}       
-    Scroll and Click Element    xpath=//*[@data-qa="component shopping-list-overview-table"]//table//td[@data-content='Name'][contains(.,'${shoppingListName}')]/..//div[@data-qa='component table-action-list']//a[contains(.,'Share')]
+    Click    xpath=//*[@data-qa="component shopping-list-overview-table"]//table//td[@data-content='Name'][contains(.,'${shoppingListName}')]/..//div[@data-qa='component table-action-list']//a[contains(.,'Share')]
 
 Print shopping list with name:
     [Arguments]    ${shoppingListName}       
-    Scroll and Click Element    xpath=//*[@data-qa="component shopping-list-overview-table"]//table//td[@data-content='Name'][contains(.,'${shoppingListName}')]/..//div[@data-qa='component table-action-list']//a[contains(.,'Print')]
+    Click    xpath=//*[@data-qa="component shopping-list-overview-table"]//table//td[@data-content='Name'][contains(.,'${shoppingListName}')]/..//div[@data-qa='component table-action-list']//a[contains(.,'Print')]
 
 Delete shopping list with name:
     [Arguments]    ${shoppingListName}       
-    Scroll and Click Element    xpath=//*[@data-qa="component shopping-list-overview-table"]//table//td[@data-content='Name'][contains(.,'${shoppingListName}')]/..//div[@data-qa='component table-action-list']//a[contains(.,'Delete')]
+    Click    xpath=//*[@data-qa="component shopping-list-overview-table"]//table//td[@data-content='Name'][contains(.,'${shoppingListName}')]/..//div[@data-qa='component table-action-list']//a[contains(.,'Delete')]
 
 Dismiss shopping list with name:
     [Arguments]    ${shoppingListName}       
-    Scroll and Click Element    xpath=//*[@data-qa="component shopping-list-overview-table"]//table//td[@data-content='Name'][contains(.,'${shoppingListName}')]/..//div[@data-qa='component table-action-list']//a[contains(.,'Dismiss')]
+    Click    xpath=//*[@data-qa="component shopping-list-overview-table"]//table//td[@data-content='Name'][contains(.,'${shoppingListName}')]/..//div[@data-qa='component table-action-list']//a[contains(.,'Dismiss')]
 
 View shopping list with name:
     [Arguments]    ${shoppingListName}       
-    Scroll and Click Element    xpath=//*[@data-qa="component shopping-list-overview-table"]//table//td[@data-content='Name'][contains(.,'${shoppingListName}')]//a[contains(@href,'details')]
+    Click    xpath=//*[@data-qa="component shopping-list-overview-table"]//table//td[@data-content='Name'][contains(.,'${shoppingListName}')]//a[contains(@href,'details')]

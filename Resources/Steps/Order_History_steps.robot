@@ -1,19 +1,19 @@
 *** Settings ***
-Library    String
-Library    BuiltIn
+Resource    ../Common/Common.robot
+Resource    ../Common/Common_Yves.robot
 Resource    ../Pages/Yves/Yves_Order_History_page.robot
 Resource    ../Pages/Yves/Yves_Order_Details_page.robot
 
 *** Keywords ***
 Yves: 'View Order/Reorder/Return' on the order history page: 
     [Arguments]    ${orderAction}    ${lastPlacedOrder}
-    Run Keyword If    '${orderAction}' == 'View Order'    Scroll and Click Element   xpath=//div[contains(@data-qa,'component order-table')]//td[text()='${lastPlacedOrder}']/..//a[contains(.,'${orderAction}')]
-    ...    ELSE IF    '${orderAction}' == 'Reorder'    Scroll and Click Element    xpath=//div[contains(@data-qa,'component order-table')]//td[text()='${lastPlacedOrder}']/..//a[contains(.,'${orderAction}')]
-    ...    ELSE IF    '${orderAction}' == 'Return'    Scroll and Click Element    xpath=//div[contains(@data-qa,'component order-table')]//td[text()='${lastPlacedOrder}']/..//a[contains(.,'${orderAction}')]
+    Run Keyword If    '${orderAction}' == 'View Order'    Click   xpath=//div[contains(@data-qa,'component order-table')]//td[text()='${lastPlacedOrder}']/..//a[contains(.,'${orderAction}')]
+    ...    ELSE IF    '${orderAction}' == 'Reorder'    Click    xpath=//div[contains(@data-qa,'component order-table')]//td[text()='${lastPlacedOrder}']/..//a[contains(.,'${orderAction}')]
+    ...    ELSE IF    '${orderAction}' == 'Return'    Click    xpath=//div[contains(@data-qa,'component order-table')]//td[text()='${lastPlacedOrder}']/..//a[contains(.,'${orderAction}')]
 
 Yves: reorder all items from 'View Order' page
-    Scroll and Click Element    ${order_details_reorder_all_button}
-    Wait For Document Ready    
+    Click    ${order_details_reorder_all_button}
+        
     Yves: remove flash messages
 
 Yves: shipping address on the order details page is:

@@ -1,6 +1,5 @@
 *** Settings ***
-Library    SeleniumLibrary    plugins=SeleniumTestability;True;30 Seconds;True
-Library    BuiltIn
+Resource    ../Common/Common.robot
 Resource    ../Common/Common_Yves.robot
 Resource    ../Common/Common_Zed.robot
 Resource    ../Pages/Zed/Zed_Attach_to_Business_Unit_page.robot
@@ -14,9 +13,9 @@ Zed: create new Company Business Unit with provided name and company:
     Zed: go to second navigation item level:    Company Account    Company Units
     Zed: click button in Header:    Create Company Business Unit
     select from list by label    ${zed_bu_company_dropdown_locator}    ${company_business_unit}
-    Input text into field    ${zed_bu_name_field}    ${bu_name_to_set}
-    Input text into field    ${zed_bu_iban_field}    testiban+${random}
-    Input text into field    ${zed_bu_bic_field}    testbic+${random}
+    Type Text    ${zed_bu_name_field}    ${bu_name_to_set}
+    Type Text    ${zed_bu_iban_field}    testiban+${random}
+    Type Text    ${zed_bu_bic_field}    testbic+${random}
     Zed: submit the form
     wait until element is visible    ${zed_success_flash_message}
     wait until element is visible    ${zed_table_locator}
@@ -31,7 +30,7 @@ Zed: create new Company with provided name:
     Zed: go to second navigation item level:    Company Account    Companies
     Zed: click button in Header:    Create Company
     wait until element is visible    id=company_name
-    Input text into field    ${zed_company_name_input_field}    ${company_name}
+    Type Text    ${zed_company_name_input_field}    ${company_name}
     Zed: submit the form
     wait until element is visible    ${zed_success_flash_message}
     wait until element is visible    ${zed_table_locator}
@@ -51,7 +50,7 @@ Zed: create new Company Role with provided permissions:
         Zed: select checkbox by Label:   ${permission_to_set}
     END
     select from list by label    ${zed_role_company_dropdown_locator}    ${select_company_for_role}
-    Input text into field    ${zed_role_name_field}    ${new_role_name}
+    Type Text    ${zed_role_name_field}    ${new_role_name}
     Zed: submit the form
     Zed: perform search by:    ${new_role_name}
     table should contain    ${zed_table_locator}    ${new_role_name}
@@ -61,14 +60,14 @@ Zed: Create new Company User with provided email/company/business unit and role(
     Zed: go to second navigation item level:    Company Account    Company Users
     wait until element is visible    ${zed_table_locator}
     Zed: click button in Header:    Add User
-    Input text into field    ${zed_create_company_user_email_field}  ${email}
+    Type Text    ${zed_create_company_user_email_field}  ${email}
     select from list by label    ${zed_create__company_user_salutation_dropdown}    Mr
     Zed: select checkbox by Label:    Send password token through email
-    Input text into field    ${zed_create_company_user_first_name_field}    Robot First+${random}
-    Input text into field    ${zed_create_company_user_last_name_field}    robot Last+${random}
+    Type Text    ${zed_create_company_user_first_name_field}    Robot First+${random}
+    Type Text    ${zed_create_company_user_last_name_field}    robot Last+${random}
     select from list by label    ${zed_create_company_user_gender_dropdow}    Male
-    Input text into field    ${zed_create_company_user_dob_picker}    25.10.1989
-    Input text into field    ${zed_create_company_user_phone_field}    495-123-45-67
+    Type Text    ${zed_create_company_user_dob_picker}    25.10.1989
+    Type Text    ${zed_create_company_user_phone_field}    495-123-45-67
     select from list by label    ${zed_create_company_company_name_dropdown}    ${company}
     sleep    2s
     select from list by label    ${zed_create_company_business_unit_dropdown}    ${business_unit}
@@ -85,7 +84,7 @@ Zed: attach company user to the following BU with role:
     Select From List By Label    ${zed_business_unit_selector}    ${business_unit}
     Zed: select checkbox by Label:    ${role_checkbox}
     Zed: submit the form
-    Wait For Document Ready
+    
 
 Yves: 'Business Unit' dropdown contains:
     [Arguments]    @{business_units_list}    ${element1}=${EMPTY}     ${element2}=${EMPTY}     ${element3}=${EMPTY}     ${element4}=${EMPTY}     ${element5}=${EMPTY}     ${element6}=${EMPTY}     ${element7}=${EMPTY}     ${element8}=${EMPTY}     ${element9}=${EMPTY}     ${element10}=${EMPTY}     ${element11}=${EMPTY}     ${element12}=${EMPTY}     ${element13}=${EMPTY}     ${element14}=${EMPTY}     ${element15}=${EMPTY}

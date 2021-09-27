@@ -1,6 +1,3 @@
-*** Settings ***
-Library    SeleniumLibrary    plugins=SeleniumTestability;True;30 Seconds;True
-
 *** Variable ***
 &{pdp_main_container_locator}    b2b=xpath=//main[contains(@class,'page-layout-main--pdp')]//div[@class='container']    b2c=xpath=//main[contains(@class,'page-layout-main')]//div[contains(@class,'pdp')]
 ${pdp_price_element_locator}    xpath=//span[contains(@class,'volume-price__price')]
@@ -9,7 +6,7 @@ ${pdp_add_to_cart_disabled_button}    xpath=//button[@disabled and contains(text
 ${pdp_add_to_wishlist_button}    xpath=//button[@type='submit' and contains(text(),'Add to Wishlist')]
 &{pdp_quantity_input_filed}    b2b=xpath=//div[@class='product-configurator__add-to-cart']//input[@name='quantity']    b2c=//*[@data-qa='quantity-input']
 &{pdp_alternative_products_slider}    b2b=xpath=//*[@data-qa='component product-alternative-slider']    b2c=xpath=//*[contains(@class,'product-slider')][contains(.,'Alternative products')]/../slick-carousel
-${pdp_measurement_sales_unit_selector}    name=id-product-measurement-sales-unit
+${pdp_measurement_sales_unit_selector}    css=*[name=id-product-measurement-sales-unit]
 ${pdp_measurement_unit_notification}    id=measurement-unit-choices
 ${pdp_increase_quantity_button}    xpath=//div[@class='product-configurator__add-to-cart']//button[contains(@class,'quantity-counter__button--increment')]
 ${pdp_decrease_quantity_button}    xpath=//div[@class='product-configurator__add-to-cart']//button[contains(@class,'quantity-counter__button--decrement')]

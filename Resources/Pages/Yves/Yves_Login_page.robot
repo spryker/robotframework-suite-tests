@@ -1,6 +1,3 @@
-*** Settings ***
-Resource                  ../../Common/Common.robot
-
 *** Variables ***
 ${email_field}    id=loginForm_email
 ${password_field}    id=loginForm_password

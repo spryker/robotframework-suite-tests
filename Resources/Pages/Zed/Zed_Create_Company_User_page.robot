@@ -1,5 +1,3 @@
-*** Settings ***
-
 *** Variables ***
 ${zed_create_company_user_email_field}          id=company-user_customer_email
 ${zed_create__company_user_salutation_dropdown}  id=company-user_customer_salutation

@@ -1,20 +1,23 @@
 *** Settings ***
-
-Library    SeleniumLibrary    plugins=SeleniumTestability;True;30 Seconds;True
+Library    Browser
 Library    String
 Library    Dialogs
 Library    OperatingSystem
+Library    Collections
+Library    BuiltIn
+Library    DateTime
 Library    ../../Resources/Libraries/common.py
+Library    Telnet
 Resource                  ../Pages/Yves/Yves_Header_section.robot
 Resource                  ../Pages/Yves/Yves_Login_page.robot
 
 *** Variables ***
 # *** SUITE VARIABLES ***
 ${env}                 b2b
-${browser}             headlesschrome
-# ${browser}             chrome
-# ${host}                https://www.de.b2b.demo-spryker.com/
-# ${zed_url}             https://os.de.b2b.demo-spryker.com/
+${headless}            false
+${browser}             chromium
+${host}                http://yves.de.spryker.local/
+${zed_url}             http://backoffice.de.spryker.local/
 ${email_domain}        @spryker.com
 ${default_password}    change123
 ${loading_time}        3s
@@ -46,30 +49,33 @@ SuiteSetup
     Remove Files    ${OUTPUTDIR}/selenium-screenshot-*.png
     Remove Files    Resources/Libraries/__pycache__/*
     Load Variables    ${env}
-    Open Browser    ${host}    ${browser}
-    Run Keyword if    'headless' in '${browser}'    Set Window Size    1440    1080
-    Run Keyword Unless    'headless' in '${browser}'    Maximize Browser Window
-    # Maximize Browser Window
+    New Browser    ${browser}    headless=${headless}    args=['--ignore-certificate-errors']
+    Set Browser Timeout    60 seconds
+    Run Keyword if    '${headless}=true'    Create default Main Context
+    Run Keyword if    '${headless}=false'    Create default Main Context
+    New Page    ${host}
     ${random}=    Generate Random String    5    [NUMBERS]
     Set Global Variable    ${random}
     ${test_customer_email}=     set variable    test.spryker+${random}@gmail.com
-    set global variable  ${test_customer_email}
+    Set Global Variable  ${test_customer_email}
     [Teardown]
     [Return]    ${random}
 
 SuiteTeardown
-    Delete All Cookies
-    Close All Browsers
+    Close Browser    ALL
 
 TestSetup
-    Delete All Cookies
-    ${random}=    Generate Random String    5    [NUMBERS]
-    Set Global Variable    ${random}
+    # ${random}=    Generate Random String    5    [NUMBERS]
+    # Set Global Variable    ${random}
     Go To    ${host}
 
 TestTeardown
     # Run Keyword If Test Failed    Pause Execution
     Delete All Cookies
+
+Create default Main Context
+    ${main_context}=    New Context    viewport={'width': 1440, 'height': 1080}
+    Set Suite Variable    ${main_context}
 
 Select Random Option From List
     [Arguments]    ${dropDownLocator}    ${dropDownOptionsLocator}
@@ -88,43 +94,123 @@ Click Element by id with JavaScript
 
 Remove element from HTML with JavaScript
     [Arguments]    ${xpath}
-    Execute Javascript
-    ...    var element=document.evaluate("${xpath}", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
-    ...    element.parentNode.removeChild(element);
+    Execute Javascript    var element=document.evaluate("${xpath}", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;element.parentNode.removeChild(element);
 
 Add/Edit element attribute with JavaScript:
     [Arguments]    ${xpath}    ${attribute}    ${attributeValue}
-    Execute Javascript
-    ...    var element=document.evaluate("${xpath}", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
-    ...    element.setAttribute("${attribute}", "${attributeValue}");
+    Log    ${attribute}
+    Log    ${attributeValue}
+    Execute Javascript    (document.evaluate("${xpath}", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue).setAttribute("${attribute}", "${attributeValue}");
 
 Remove element attribute with JavaScript:
     [Arguments]    ${xpath}    ${attribute}
-    Execute Javascript
-    ...    var element=document.evaluate("${xpath}", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
-    ...    element.removeAttribute("${attribute}"");
+    Execute Javascript    var element=document.evaluate("${xpath}", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;element.removeAttribute("${attribute}"");
 
-Scroll and Click Element
+#Migration to the Browser Library    
+Wait Until Element Is Visible
+    [Arguments]    ${locator}    ${timeout}=None    ${error}=None
+    Wait For Elements State    ${locator}    visible    ${timeout}    ${error}
+
+Wait Until Page Contains Element
+    [Arguments]    ${locator}    ${timeout}=0:00:20    ${error}=None
+    Wait For Elements State    ${locator}    attached    ${timeout}    ${error}
+
+Wait Until Element Is Enabled
+# Todo: update 'attached' on real usage
+    [Arguments]    ${locator}    ${timeout}=None    ${error}=None
+    Wait For Elements State    ${locator}    attached    ${timeout}    ${error}
+
+Element Should Be Visible
+    [Arguments]    ${locator}    ${message}=None
+    Wait For Elements State    ${locator}    visible
+
+Page Should Contain Element
+    [Arguments]    ${locator}    ${error}=None    ${timeout}=0:00:20
+    Wait For Elements State    ${locator}    attached    ${timeout}    ${error}
+
+Get Location
+    Get URL
+
+Wait Until Element Is Not Visible
+    [Arguments]    ${locator}    ${timeout}=None    ${error}=None
+    Wait For Elements State    ${locator}    hidden    ${timeout}    ${error}
+
+Page Should Contain Link
+    [Arguments]    ${url}    ${message}=None
+    ${hrefs}=    Execute JavaScript    Array.from(document.querySelectorAll('a')).map(e => e.getAttribute('href'))
+    Should Contain    ${hrefs}    ${url}
+
+Scroll Element Into View
     [Arguments]    ${locator}
-    Wait Until Page Contains Element    ${locator}
-    Scroll Element Into View    ${locator}
-    Wait Until Element Is Enabled    ${locator}
-    Wait Until Element Is Visible    ${locator}
-    Click Element    ${locator}
-    
-Input text into field
+    Hover    ${locator}
+
+Input Text
     [Arguments]    ${locator}    ${text}
-    Wait Until Page Contains Element    ${locator}
-    Scroll Element Into View    ${locator}
-    Wait Until Element Is Enabled    ${locator}
-    Wait Until Element Is Visible    ${locator}
-    Input Text    ${locator}    ${text}
-    
-# Wait until page is loaded
-#     FOR    ${INDEX}    IN RANGE    1    5000
-#         ${isPageLoaded}=    Execute JavaScript    return window.addEventListener("load",function(n){console.log("All resources finished loading!")});
-#         ${isPageLoaded}=    Convert To String    ${isPageLoaded}
-#         Log    ${INDEX}
-#         Log    ${isPageLoaded}
-#         Run Keyword If    '${isPageLoaded}' == 'true'    Exit For Loop
-#     END
+    Type Text    ${locator}    ${text}    0ms
+
+Table Should Contain
+    [Arguments]    ${locator}    ${expected}    ${Message}=None    ${Ignore_case}=None
+    Browser.Get Text    ${locator}    contains    ${expected}
+
+Element Should Contain
+    [Arguments]    ${locator}    ${expected}    ${Message}=None    ${Ignore_case}=None
+    Browser.Get Text    ${locator}    contains    ${expected}
+
+Wait Until Element Contains
+    [Arguments]    ${locator}    ${text}    ${timeout}=None    ${error}=None
+    Browser.Get Text    ${locator}    contains    ${text}
+
+Page Should Not Contain Element
+    [Arguments]    ${locator}    ${message}=None
+    Wait For Elements State    ${locator}    detached
+
+Element Should Not Contain
+    [Arguments]    ${locator}    ${text}
+    Browser.Get Text    ${locator}    validate    "${text}" not in value
+
+Checkbox Should Be Selected
+    [Arguments]    ${locator}
+    Get Checkbox State    ${locator}    ==    checked
+
+Checkbox Should Not Be Selected
+    [Arguments]    ${locator}
+    Get Checkbox State    ${locator}    ==    unchecked
+
+Select Checkbox
+    [Arguments]    ${locator}
+    Check Checkbox    ${locator}
+
+Mouse Over
+    [Arguments]    ${locator}
+    Hover    ${locator}
+
+Element Should Not Be Visible
+    [Arguments]    ${locator}    ${timeout}=None    ${error}=None
+    Wait For Elements State    ${locator}    hidden    ${timeout}    ${error}
+
+Get Element Attribute
+    [Arguments]    ${locator}    ${attribute}
+    Get Attribute    ${locator}    ${attribute}
+
+Select From List By Label
+    [Arguments]    ${locator}    ${value}
+    Select Options By    ${locator}    label    ${value}
+
+Select From List By Value
+    [Arguments]    ${locator}    ${value}
+    Select Options By    ${locator}    value    ${value}
+
+Select From List By Index
+    [Arguments]    ${locator}    ${value}
+    Select Options By    ${locator}    index    ${value}
+
+Select From List By Text
+    [Arguments]    ${locator}    ${value}
+    Select Options By    ${locator}    text    ${value}
+
+Create New Context
+    ${new_context}=    New Context
+    New Page    ${host}
+
+Switch back to the Main Context
+    Switch Context    ${main_context}

@@ -11,7 +11,7 @@ Zed: delete customer:
         ${registrationData}=    Set Up Keyword Arguments    @{args}
         ${currentURL}=    Get Location        
         Run Keyword Unless    '/customer' in '${currentURL}'    Zed: go to second navigation item level:    Customers    Customers
-        Wait For Document Ready
+        
         FOR    ${key}    ${value}    IN    &{registrationData}
             Log    Key is '${key}' and value is '${value}'.
             Zed: perform search by:    ${value}
@@ -19,8 +19,8 @@ Zed: delete customer:
             Run Keyword If    '${customerExists}'=='True'    Run keywords
             ...    Zed: click Action Button in a table for row that contains:    ${value}    Edit    AND
             ...    Wait Until Element Is Visible    ${zed_customer_edit_page_title}    AND
-            ...    Scroll and Click Element    ${zed_customer_delete_button}    AND
+            ...    Click    ${zed_customer_delete_button}    AND
             ...    Wait Until Element Is Visible     ${zed_customer_delete_confirm_button}    AND
-            ...    Scroll and Click Element    ${zed_customer_delete_confirm_button}    AND
+            ...    Click    ${zed_customer_delete_confirm_button}    AND
             ...    Zed: message should be shown:    Customer successfully deleted
         END

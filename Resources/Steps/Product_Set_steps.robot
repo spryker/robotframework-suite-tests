@@ -1,5 +1,5 @@
 *** Settings ***
-Library    SeleniumLibrary    plugins=SeleniumTestability;True;30 Seconds;True
+Resource    ../Common/Common.robot
 Resource    ../Pages/Yves/Yves_Product_Sets_page.robot
 Resource    ../Common/Common_Yves.robot
 
@@ -15,8 +15,8 @@ Yves: 'Product Sets' page contains the following sets:
 
 Yves: view the following Product Set:
     [Arguments]    ${productSetName}
-    Run Keyword If    '${env}'=='b2b'    Scroll and Click Element    xpath=//*[contains(@class,'product-set-card__name')][text()="${productSetName}"]/ancestor::article
-    ...    ELSE    Scroll and Click Element    xpath=//*[contains(@class,'title')][text()="${productSetName}"]/ancestor::article
+    Run Keyword If    '${env}'=='b2b'    Click    xpath=//*[contains(@class,'product-set-card__name')][text()="${productSetName}"]/ancestor::article
+    ...    ELSE    Click    xpath=//*[contains(@class,'title')][text()="${productSetName}"]/ancestor::article
 
 Yves: 'Product Set' page contains the following products:
     [Arguments]    @{product_name_list}    ${productName1}=${EMPTY}     ${productName2}=${EMPTY}     ${productName3}=${EMPTY}     ${productName4}=${EMPTY}     ${productName5}=${EMPTY}     ${productName6}=${EMPTY}     ${productName7}=${EMPTY}     ${productName8}=${EMPTY}     ${productName9}=${EMPTY}     ${productName10}=${EMPTY}     ${productName11}=${EMPTY}     ${productName12}=${EMPTY}     ${productName13}=${EMPTY}     ${productName14}=${EMPTY}     ${productName15}=${EMPTY}
@@ -31,8 +31,8 @@ Yves: change variant of the product on CMS page on:
     Mouse Over    xpath=//*[contains(@class,'custom-element product-set-details')]//a[contains(.,'${productName}')]
     Run Keyword If    '${env}'=='b2b'    Select From List By Label   //*[contains(@class,'custom-element product-set-details')]//div[@class='product-item__variant']/descendant::select    ${variantToSet}
     ...    ELSE    Select From List By Label    //*[contains(@class,'custom-element custom-select custom-select--expand')]//descendant::select    ${variantToSet}
-    Wait For Document Ready    
+        
 
 Yves: add all products to the shopping cart from Product Set
-    Scroll and Click Element    ${add_all_product_to_the_shopping_cart}
+    Click    ${add_all_product_to_the_shopping_cart}
     Yves: remove flash messages

@@ -9,39 +9,39 @@ Zed: create a cms page and publish it:
     ${currentURL}=    Get Location
     Run Keyword Unless    'list-page' in '${currentURL}'
     ...    Zed: go to second navigation item level:    Content    Pages
-    Scroll and Click Element    ${zed_new_cms_page_create_button}
-    Wait For Document Ready    
+    Click    ${zed_new_cms_page_create_button}
+        
 # General page information input
     Element Should Be Visible    xpath=//body//*[contains(text(),'Create CMS Page')]    message=Page for CMS creation is not opened
     Select Checkbox    ${zed_cms_page_general_is_searchable_checkbox}
-    Input text into field    ${zed_cms_page_general_enUS_name_field}    ${enName}
-    Input text into field    ${zed_cms_page_general_enUS_url_field}    ${enURL}
+    Type Text    ${zed_cms_page_general_enUS_name_field}    ${enName}
+    Type Text    ${zed_cms_page_general_enUS_url_field}    ${enURL}
     ${deTitleSectionExpanded}=    Run Keyword And Return Status    Element Should Be Visible    ${zed_cms_page_general_deDE_name_field}
-    Run keyword if    '${deTitleSectionExpanded}'=='False'    Scroll and Click Element    ${zed_cms_page_general_deDE_translation_collapsed_section}
-    Input text into field    ${zed_cms_page_general_deDE_name_field}    ${enName}
-    Input text into field    ${zed_cms_page_general_deDE_url_field}    ${enURL}
-    Scroll and Click Element    ${zed_cms_page_save_button}
-    Wait For Document Ready    
+    Run keyword if    '${deTitleSectionExpanded}'=='False'    Click    ${zed_cms_page_general_deDE_translation_collapsed_section}
+    Type Text    ${zed_cms_page_general_deDE_name_field}    ${enName}
+    Type Text    ${zed_cms_page_general_deDE_url_field}    ${enURL}
+    Click    ${zed_cms_page_save_button}
+        
     Element Should Be Visible    ${zed_cms_page_create_success_flashmessage}    message=Success message is not displayed
 # Placeholder information input
     Element Should Be Visible    xpath=//body//*[contains(text(),'Edit Placeholders: ${enName}')]    message=Page for CMS creation is not opened
-    Input text into field    ${zed_cms_page_placeholder_title_enUS_field}    ${enTitlePlaceholder}
+    Type Text    ${zed_cms_page_placeholder_title_enUS_field}    ${enTitlePlaceholder}
     ${deContentTitleSectionExpanded}=    Run Keyword And Return Status    Element Should Be Visible    ${zed_cms_page_placeholder_title_deDE_field}
-    Run keyword if    '${deContentTitleSectionExpanded}'=='False'    Scroll and Click Element    ${zed_cms_page_general_deDE_translation_collapsed_section}
-    Input text into field    ${zed_cms_page_placeholder_title_deDE_field}    ${enTitlePlaceholder}
+    Run keyword if    '${deContentTitleSectionExpanded}'=='False'    Click    ${zed_cms_page_general_deDE_translation_collapsed_section}
+    Type Text    ${zed_cms_page_placeholder_title_deDE_field}    ${enTitlePlaceholder}
     Zed: go to tab:    Content
-    Wait For Document Ready    
-    Input text into field    ${zed_cms_page_placeholder_content_enUS_field}    ${enContentPlaceholder}
+        
+    Type Text    ${zed_cms_page_placeholder_content_enUS_field}    ${enContentPlaceholder}
     ${deContentContentSectionExpanded}=    Run Keyword And Return Status    Element Should Be Visible    ${zed_cms_page_placeholder_content_deDE_field}
     ${elements}=    Get Element Count    ${zed_cms_page_placeholder_content_deDE_translation_collapsed_section}
     Log    ${elements} 
-#    Run keyword if    '${deContentContentSectionExpanded}'=='False'    Scroll and Click Element    ${zed_cms_page_placeholder_content_deDE_translation_collapsed_section}
-#    Input text into field    ${zed_cms_page_placeholder_content_deDE_field}    ${enContentPlaceholder}
+#    Run keyword if    '${deContentContentSectionExpanded}'=='False'    Click    ${zed_cms_page_placeholder_content_deDE_translation_collapsed_section}
+#    Type Text    ${zed_cms_page_placeholder_content_deDE_field}    ${enContentPlaceholder}
 # Save and publish
-    Scroll and Click Element    ${zed_cms_page_save_button}
-    Wait For Document Ready    
+    Click    ${zed_cms_page_save_button}
+        
     Element Should Be Visible    ${zed_cms_page_update_placeholder_success_flashmessage}    message=Success message is not displayed
-    Scroll and Click Element    ${zed_cms_page_publish_button}
+    Click    ${zed_cms_page_publish_button}
     Element Should Be Visible    ${zed_cms_page_publish_success_flashmessage}    message=Success message is not displayed 
 # Check the CMS page in   
     Zed: go to second navigation item level:    Content    Pages

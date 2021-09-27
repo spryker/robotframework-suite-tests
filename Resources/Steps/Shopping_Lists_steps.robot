@@ -16,17 +16,15 @@ Yves: go To 'Shopping Lists' Page
     Mouse Over    ${shopping_list_icon_header_menu_item}
     ${button_exists}=    Run Keyword And Return Status    Element Should Be Visible    ${shopping_list_sub_navigation_all_lists_button}
     Run Keyword If    ${button_exists}=='PASS'    Click Element by xpath with JavaScript    ${shopping_list_sub_navigation_all_lists_button}     
-    ...    ELSE    Scroll and Click Element    ${shopping_list_icon_header_menu_item}        
+    ...    ELSE    Click    ${shopping_list_icon_header_menu_item}        
 
 
 Yves: create new 'Shopping List' with name:
     [Arguments]    ${shoppingListName}
     ${currentURL}=    Get Location        
     Run Keyword Unless    '/shopping-list' in '${currentURL}'    Go To    ${host}shopping-list
-    Input text into field    ${shopping_list_name_input_field}    ${shoppingListName}
-    Scroll and Click Element    ${create_shopping_list_button}
-    Wait For Document Ready 
-    Reload Page    
+    Type Text    ${shopping_list_name_input_field}    ${shoppingListName}
+    Click    ${create_shopping_list_button}      
 
 Yves: the following shopping list is shown:
     [Arguments]    ${shoppingListName}    ${shoppingListOwner}    ${shoppingListAccess}
@@ -36,7 +34,7 @@ Yves: share shopping list with user:
     [Arguments]    ${shoppingListName}    ${customer}    ${accessLevel}
     Share shopping list with name:    ${shoppingListName} 
     Select access level to share shopping list with:    ${customer}    ${accessLevel}
-    Scroll and Click Element    ${share_shopping_list_confirm_button}
+    Click    ${share_shopping_list_confirm_button}
     Yves: 'Shopping Lists' page is displayed
     Yves: flash message 'should' be shown
 
@@ -54,8 +52,8 @@ Yves: delete 'Shopping List' with name:
     Run Keyword Unless    '/shopping-list' in '${currentURL}'    Go To    ${host}shopping-list
     Delete shopping list with name:    ${shoppingListName}
     Wait Until Element Is Visible    ${delete_shopping_list_button}
-    Scroll and Click Element    ${delete_shopping_list_button}
-    Wait For Document Ready    
+    Click    ${delete_shopping_list_button}
+        
 
 Yves: view shopping list with name:
     [Arguments]    ${shoppingListName}

@@ -3,7 +3,6 @@ Suite Setup       SuiteSetup
 Suite Teardown    SuiteTeardown
 Test Setup        TestSetup
 Test Teardown     TestTeardown
-Library           SeleniumLibrary    plugins=SeleniumTestability;True;30 Seconds;True
 Resource    ../../Resources/Steps/Agent_Assist_steps.robot
 Resource    ../../Resources/Common/Common.robot
 Resource    ../../Resources/Steps/Header_steps.robot
@@ -66,8 +65,8 @@ Agent_Assist_Impersonate_As_Customer
 #     Yves: go to URL:    agent/login
 #     Yves: login on Yves with provided credentials:    agent+${random}@spryker.com
 #     Yves: header contains/doesn't contain:    true    ${quote_request_agent_widget}
-#     Scroll and Click Element    ${agent_assist_overview_link}
-#     Wait For Document Ready
+#     Click    ${agent_assist_overview_link}
+#     
 #     Page Should Contain Element    ${agent_assist_menu_overview}
 #     Page Should Contain Element    ${agent_assist_menu_quote_request}
 
@@ -80,8 +79,8 @@ Agent_Assist_Impersonate_As_Customer
 #     Yves: go to URL:    agent/login
 #     Yves: login on Yves with provided credentials:    agent+${random}@spryker.com
 #     Yves: header contains/doesn't contain:    false    ${quote_request_agent_widget}
-#     Scroll and Click Element    ${agent_assist_overview_link}
-#     Wait For Document Ready
+#     Click    ${agent_assist_overview_link}
+#     
 #     Page Should Contain Element    ${agent_assist_menu_overview}
 #     Page Should Not Contain Element    ${agent_assist_menu_quote_request}
 

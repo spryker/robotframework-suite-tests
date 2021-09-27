@@ -17,11 +17,11 @@ Zed: login on Zed with provided credentials:
     [Arguments]    ${email}    ${password}=${default_password}
     go to    ${zed_url}
     delete all cookies
-    Reload Page    
+    Reload    
     Wait Until Element Is Visible    ${zed_user_name_field}
-    Input text into field    ${zed_user_name_field}    ${email}
-    Input text into field    ${zed_password_field}    ${password}
-    Scroll and Click Element    ${zed_login_button}
+    Type Text    ${zed_user_name_field}    ${email}
+    Type Text    ${zed_password_field}    ${password}
+    Click    ${zed_login_button}
     Wait Until Element Is Visible    ${zed_log_out_button}    ${loading_time}    Zed:Dashboard page is not displayed
 
 Zed: go to first navigation item level:
@@ -36,22 +36,22 @@ Zed: go to second navigation item level:
     ${node_state}=    Get Element Attribute  xpath=(//span[contains(@class,'nav-label')][text()='${navigation_item_level1}']/ancestor::li)[1]    class
     log    ${node_state}
     Run Keyword If    'active' in '${node_state}'   run keywords  wait until element is visible  xpath=//ul[contains(@class,'nav-second-level')]//a/span[text()='${navigation_item_level2}']
-    ...    AND      Scroll and Click Element  xpath=//ul[contains(@class,'nav-second-level')]//a/span[text()='${navigation_item_level2}']
+    ...    AND      Click  xpath=//ul[contains(@class,'nav-second-level')]//a/span[text()='${navigation_item_level2}']
     ...    ELSE     run keywords    Click Element by xpath with JavaScript    //ul[@id='side-menu']/li/a/span[@class='nav-label'][contains(text(),'${navigation_item_level1}')]/../../a
     ...    AND      wait until element is visible  xpath=//ul[contains(@class,'nav-second-level')]//a/span[text()='${navigation_item_level2}']
-    ...    AND      Scroll and Click Element  xpath=//ul[contains(@class,'nav-second-level')]//a/span[text()='${navigation_item_level2}']
+    ...    AND      Click  xpath=//ul[contains(@class,'nav-second-level')]//a/span[text()='${navigation_item_level2}']
 
 Zed: click button in Header:
     [Arguments]    ${button_name}
     wait until element is visible    xpath=//div[@class='title-action']/a[contains(.,'${button_name}')]
-    Scroll and Click Element    xpath=//div[@class='title-action']/a[contains(.,'${button_name}')]
-    Wait For Document Ready    
+    Click    xpath=//div[@class='title-action']/a[contains(.,'${button_name}')]
+        
 
 Zed: click Action Button in a table for row that contains:
     [Arguments]    ${row_content}    ${zed_table_action_button_locator}
     Zed: perform search by:    ${row_content}
     wait until element is visible    xpath=//table[contains(@class,'dataTable')]/tbody//td[contains(text(),'${row_content}')]/../td[contains(@class,'column-Action') or contains(@class,'column-action')]/*[contains(.,'${zed_table_action_button_locator}')]
-    Scroll and Click Element    xpath=//table[contains(@class,'dataTable')]/tbody//td[contains(text(),'${row_content}')]/../td[contains(@class,'column-Action') or contains(@class,'column-action')]/*[contains(.,'${zed_table_action_button_locator}')]
+    Click    xpath=//table[contains(@class,'dataTable')]/tbody//td[contains(text(),'${row_content}')]/../td[contains(@class,'column-Action') or contains(@class,'column-action')]/*[contains(.,'${zed_table_action_button_locator}')]
 
 Zed: select checkbox by Label:
     [Arguments]    ${checkbox_label}
@@ -65,11 +65,11 @@ Zed: unselect checkbox by Label:
 
 Zed: submit the form
     wait until element is visible    ${zed_save_button}
-    Scroll and Click Element   ${zed_save_button}
+    Click   ${zed_save_button}
 
 Zed: perform search by:
     [Arguments]    ${search_key}
-    Input text into field    ${zed_search_field_locator}    ${search_key}
+    Type Text    ${zed_search_field_locator}    ${search_key}
     sleep    2s
     wait until page contains element    ${zed_processing_block_locator}
 
@@ -80,8 +80,8 @@ Zed: table should contain:
 
 Zed: go to tab:
     [Arguments]    ${tabName}
-    Scroll and Click Element    xpath=//*[contains(@data-toggle,'tab') and contains(text(),'${tabName}')]
-    Wait For Document Ready    
+    Click    xpath=//*[contains(@data-toggle,'tab') and contains(text(),'${tabName}')]
+        
 
 Zed: message should be shown:
     [Arguments]    ${text}

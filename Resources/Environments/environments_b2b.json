@@ -2,8 +2,8 @@
     "environment": "b2b", 
 
     "env": {
-            "host": "https://www.de.b2b.demo-spryker.com/",
-            "zed_url": "https://os.de.b2b.demo-spryker.com/"},
+            "host": "http://yves.de.spryker.local/",
+            "zed_url": "http://backoffice.de.spryker.local/"},
 
     "users": {    
             "yves_user_email": "sonia@spryker.com",

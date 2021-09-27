@@ -17,6 +17,7 @@ Resource    ../Pages/Yves/Yves_Quote_Request_page.robot
 Resource    ../Pages/Yves/Yves_Choose_Bundle_to_Configure_page.robot
 Resource    ../Pages/Yves/Yves_Create_Return_page.robot
 Resource    ../Pages/Yves/Yves_Return_Details_page.robot
+Resource    ../Steps/Header_steps.robot
 
 *** Variable ***
 ${notification_area}    xpath=//section[@data-qa='component notification-area']
@@ -30,33 +31,30 @@ Yves: login on Yves with provided credentials:
     ...    Run Keywords   
     ...    Go To    ${host}
     ...    AND    delete all cookies 
-    ...    AND    Reload Page
+    ...    AND    Reload
     ...    AND    Wait Until Element Is Visible    ${header_login_button}
-    ...    AND    Scroll and Click Element    ${header_login_button}
+    ...    AND    Click    ${header_login_button}
     ...    AND    Wait Until Element Is Visible    ${email_field}
     ...    ELSE    Run Keywords
     ...    Go To    ${host}
     ...    AND    delete all cookies 
-    ...    AND    Reload Page
+    ...    AND    Reload
     ...    AND    mouse over  ${user_navigation_icon_header_menu_item}[${env}]
     ...    AND    Wait Until Element Is Visible    ${user_navigation_menu_login_button} 
-    ...    AND    Scroll and Click Element    ${user_navigation_menu_login_button} 
+    ...    AND    Click    ${user_navigation_menu_login_button} 
     ...    AND    Wait Until Element Is Visible    ${email_field}
-    Input text into field    ${email_field}    ${email}
-    Input text into field    ${password_field}    ${password}
-    Scroll and Click Element    ${form_login_button}
+    Type Text    ${email_field}    ${email}
+    Type Text    ${password_field}    ${password}
+    Click    ${form_login_button}
     Run Keyword Unless    'fake' in '${email}' or 'agent' in '${email}'  Wait Until Element Is Visible    ${user_navigation_icon_header_menu_item}[${env}]    ${loading_time}    Login Failed!
     Run Keyword If    'agent' in '${email}'    Yves: header contains/doesn't contain:    true    ${customerSearchWidget}
     Yves: remove flash messages
-    Wait For Document Ready    
 
 Yves: go to PDP of the product with sku:
     [Arguments]    ${sku}
     Yves: perform search by:    ${sku}
     Wait Until Page Contains Element    ${catalog_product_card_locator}
-    Wait For Document Ready    
-    Scroll and Click Element    ${catalog_product_card_locator}
-    Wait For Document Ready
+    Click    ${catalog_product_card_locator}
     Wait Until Page Contains Element    ${pdp_main_container_locator}[${env}]
 
 Yves: '${pageName}' page is displayed
@@ -93,7 +91,7 @@ Yves: flash message should be shown:
 
 Yves: logout on Yves as a customer
     delete all cookies
-    Reload Page    
+    Reload    
 
 Yves: go to the 'Home' page
     Go To    ${host}
@@ -131,7 +129,7 @@ Yves: go to second navigation item level:
     Add/Edit element attribute with JavaScript:    ${1LevelXpath}    class    ${nodeUpdatedClass}
     Wait Until Element Is Visible    //div[@class='header__navigation']//navigation-multilevel[@data-qa='component navigation-multilevel']/ul[@class='menu menu--lvl-0']//li[contains(@class,'menu__item--lvl-0')]/span/*[contains(@class,'lvl-0')][1][text()='${navigation_item_level1}']/ancestor::li//ul[contains(@class,'menu--lvl-1')]
     Click Element by xpath with JavaScript    //div[@class='header__navigation']//navigation-multilevel[@data-qa='component navigation-multilevel']/ul[@class='menu menu--lvl-0']//li[contains(@class,'menu__item--lvl-0')]/span/*[contains(@class,'lvl-0')][1][text()='${navigation_item_level1}']/ancestor::li//ul[contains(@class,'menu--lvl-1')]//li[contains(@class,'menu__item--lvl-1')]/span/*[contains(@class,'lvl-1')][1][text()='${navigation_item_level2}']
-    Wait For Document Ready    
+        
 
 Yves: go to first navigation item level:
     [Arguments]     ${navigation_item_level1}
@@ -141,7 +139,7 @@ Yves: go to first navigation item level:
     ...    ELSE    Run keywords
     ...    Wait Until Element Is Visible    xpath=//*[contains(@class,'header') and @data-qa='component header']//*[contains(@data-qa,'navigation-multilevel')]/*[contains(@class,'navigation-multilevel-node__link--lvl-1') and contains(text(),'${navigation_item_level1}')]    AND
     ...    Click Element by xpath with JavaScript    //*[contains(@class,'header') and @data-qa='component header']//*[contains(@data-qa,'navigation-multilevel')]/*[contains(@class,'navigation-multilevel-node__link--lvl-1') and contains(text(),'${navigation_item_level1}')]
-    Wait For Document Ready  
+      
 
 Yves: go to third navigation item level:
     [Arguments]     ${navigation_item_level1}   ${navigation_item_level3}
@@ -154,7 +152,6 @@ Yves: go to third navigation item level:
     Add/Edit element attribute with JavaScript:    ${1LevelXpath}    class    ${nodeUpdatedClass}
     Wait Until Element Is Visible    //div[@class='header__navigation']//navigation-multilevel[@data-qa='component navigation-multilevel']/ul[@class='menu menu--lvl-0']//li[contains(@class,'menu__item--lvl-0')]/span/*[contains(@class,'lvl-0')][1][text()='${navigation_item_level1}']/ancestor::li//ul[contains(@class,'menu--lvl-1')]
     Click Element by xpath with JavaScript    //div[@class='header__navigation']//navigation-multilevel[@data-qa='component navigation-multilevel']/ul[@class='menu menu--lvl-0']//li[contains(@class,'menu__item--lvl-0')]/span/*[contains(@class,'lvl-0')][1][text()='${navigation_item_level1}']/ancestor::li//ul[contains(@class,'menu--lvl-2')]//li[contains(@class,'menu__item--lvl-2')]/span/*[contains(@class,'lvl-2')][1][text()='${navigation_item_level3}']
-    Wait For Document Ready 
 
 Yves: get index of the first available product
     Yves: perform search by:    ${EMPTY}
@@ -174,7 +171,7 @@ Yves: get index of the first available product
 
 Yves: go to the PDP of the first available product
     ${index}=    Yves: get index of the first available product
-    Scroll and Click Element    xpath=//product-item[@data-qa='component product-item'][${index}]//a[contains(@class,'link-detail-page') and (contains(@class,'name'))]
+    Click    xpath=//product-item[@data-qa='component product-item'][${index}]//a[contains(@class,'link-detail-page') and (contains(@class,'name'))]
     Wait Until Page Contains Element    ${pdp_main_container_locator}[${env}] 
 
 Yves: check if cart is not empty and clear it
@@ -188,7 +185,7 @@ Yves: check if cart is not empty and clear it
 Helper: iterate items in cart
     ${productsInCart}=    Get Element Count    xpath=//article[@class='product-card-item']//div[contains(@class,'product-card-item__box')]
     FOR    ${index}    IN RANGE    0    ${productsInCart}
-        Scroll and Click Element    xpath=(//div[@class='page-layout-cart__items-wrap']//ancestor::div/following-sibling::div//form[contains(@name,'removeFromCart')]//button[text()='Remove'])\[1\]
+        Click    xpath=(//div[@class='page-layout-cart__items-wrap']//ancestor::div/following-sibling::div//form[contains(@name,'removeFromCart')]//button[text()='Remove'])\[1\]
         Yves: remove flash messages
     END
 
@@ -196,7 +193,7 @@ Yves: try reloading page if element is/not appear:
     [Arguments]    ${element}    ${isDisplayed}
     FOR    ${index}    IN RANGE    0    7
         ${elementAppears}=    Run Keyword And Return Status    Element Should Be Visible    ${element}
-        Run Keyword If    '${isDisplayed}'=='True' and '${elementAppears}'=='False'    Reload page
-        ...    ELSE    Run Keyword If    '${isDisplayed}'=='False' and '${elementAppears}'=='True'    Reload page
+        Run Keyword If    '${isDisplayed}'=='True' and '${elementAppears}'=='False'    Reload
+        ...    ELSE    Run Keyword If    '${isDisplayed}'=='False' and '${elementAppears}'=='True'    Reload
         ...    ELSE    Exit For Loop
     END

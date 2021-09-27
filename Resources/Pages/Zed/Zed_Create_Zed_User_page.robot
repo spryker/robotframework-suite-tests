@@ -1,6 +1,3 @@
-*** Settings ***
-Library    SeleniumLibrary    plugins=SeleniumTestability;True;30 Seconds;True
-
 *** Variables ***
 ${zed_user_email_field}    id=user_username
 ${zed_user_password_filed}    id=user_password_first

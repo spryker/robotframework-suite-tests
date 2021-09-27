@@ -1,6 +1,3 @@
-*** Settings ***
-Library    SeleniumLibrary    plugins=SeleniumTestability;True;30 Seconds;True
-
 *** Variables ***
 ${header_login_button}    xpath=//a[contains(@class,'button') and contains(@class,'header__login')]
 ${user_navigation_menu_login_button}    xpath=//a[@class='user-block__button button col' and contains(text(),'Login')]
@@ -8,8 +5,8 @@ ${user_navigation_menu_login_button}    xpath=//a[@class='user-block__button but
 &{user_navigation_fly_out_header_menu_item}    b2b=xpath=//li[contains(@class,'user-navigation__item--user')]//nav[contains(@class,'user-navigation__sub-nav')]//ul[contains(@class,'list--secondary')]    b2c=xpath=//div[contains(@class,'user-block js-nav-overlay__drop-down-block')]
 ${company_name_icon_header_menu_item}    xpath=//div[@class='header__top']//a[contains(@class,'navigation-top__company')]
 ${company_account_navigation_fly_out_header_menu_item}    xpath=//div[@class='header__top']//a[contains(@class,'navigation-top__company')]/..//nav[contains(@class,'navigation-list')]/ul
-${price_mode_switcher_header_menu_item}    name=price-mode
-${currency_switcher_header_menu_item}    name=currency-iso-code
+${price_mode_switcher_header_menu_item}    css=*[name=price-mode]
+${currency_switcher_header_menu_item}    css=*[name=currency-iso-code]
 ${language_switcher_header_menu_item}    xpath=//*[@class='header__top']//*[@data-qa='component language-switcher']//select
 ${quick_order_icon_header_menu_item}    xpath=//*[contains(@class,'icon--quick-order')]/ancestor::a
 ${shopping_list_icon_header_menu_item}    xpath=//*[contains(@class,'icon--header-shopping-list')]/ancestor::a

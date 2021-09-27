@@ -1,6 +1,7 @@
 *** Settings ***
-Library    SeleniumLibrary    plugins=SeleniumTestability;True;30 Seconds;True
 Resource    ../Pages/Yves/Yves_Catalog_page.robot
+Resource    ../Common/Common_Yves.robot
+Resource    ../Common/Common.robot
 
 *** Keywords ***
 Yves: 'Catalog' page should show products:
@@ -28,10 +29,10 @@ Yves: page contains CMS element:
 
 Yves: change sorting order on catalog page:
     [Arguments]    ${sortingOption}
-    Click Element    xpath=//span[contains(@id,'select2-sort')]
+    Click    xpath=//span[contains(@id,'select2-sort')]
     Wait Until Element Is Visible    xpath=//ul[contains(@role,'listbox')]//li[contains(@id,'select2-sort') and contains(text(),'${sortingOption}')]
-    Click Element    xpath=//ul[contains(@role,'listbox')]//li[contains(@id,'select2-sort') and contains(text(),'${sortingOption}')]
-    Wait For Document Ready    
+    Click    xpath=//ul[contains(@role,'listbox')]//li[contains(@id,'select2-sort') and contains(text(),'${sortingOption}')]
+        
 
 Yves: 1st product card in catalog (not)contains:
     [Documentation]    ${elementName} can be: Price, Name
@@ -41,7 +42,7 @@ Yves: 1st product card in catalog (not)contains:
 
 Yves: go to catalog page:
     [Arguments]    ${pageNumber}
-    Click Element    xpath=//a[contains(@class,'pagination__step') and contains(text(),'${pageNumber}')]
+    Click    xpath=//a[contains(@class,'pagination__step') and contains(text(),'${pageNumber}')]
 
 Yves: catalog page contains filter:
     [Arguments]    @{listOfFilters}
@@ -52,15 +53,15 @@ Yves: catalog page contains filter:
 
 Yves: select filter value:
     [Arguments]    ${filter}    ${filterValue}
-    Click Element    xpath=//section[contains(@data-qa,'component filter-section')]//*[contains(text(),'${filter}')]
+    Click    xpath=//section[contains(@data-qa,'component filter-section')]//*[contains(text(),'${filter}')]
     Wait Until Element Is Visible    xpath=//section[contains(@data-qa,'component filter-section')]//*[contains(text(),'${filter}')]/following-sibling::*//*[contains(@value,'${filterValue}')]
-    Click Element    xpath=//section[contains(@data-qa,'component filter-section')]//*[contains(text(),'${filter}')]/following-sibling::*//*[contains(@value,'${filterValue}')]
-    Click Element    ${catalog_filter_apply_button}
-    Wait For Document Ready    
+    Click    xpath=//section[contains(@data-qa,'component filter-section')]//*[contains(text(),'${filter}')]/following-sibling::*//*[contains(@value,'${filterValue}')]
+    Click    ${catalog_filter_apply_button}
+        
 
 Yves: quick add to cart for first item in catalog
     ${initialCartCounter}=    Yves: get current cart item counter value
-    Scroll and Click Element    xpath=//button[contains(@title,'Add to Cart')][1]
+    Click    xpath=//button[contains(@title,'Add to Cart')][1]
     Yves: flash message should be shown:    success    Items added successfully
     Yves: remove flash messages
     ${currentCartCounter}=    Yves: get current cart item counter value

@@ -1,6 +1,3 @@
-*** Settings ***
-Library    SeleniumLibrary    plugins=SeleniumTestability;True;30 Seconds;True
-
 *** Variables ***
 ${zed_bu_company_dropdown_locator}  id=company-business-unit_fk_company
 ${zed_bu_parent_dropdown_locator}   id=company-business-unit_fk_parent_company_business_unit

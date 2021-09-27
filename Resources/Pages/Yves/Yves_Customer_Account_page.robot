@@ -1,6 +1,6 @@
 *** Variables ***
 ${customer_account_business_unit_selector}    id=company_user_account_selector_form_companyUserAccount
-${customer_account_address_form}    name=addressForm
+${customer_account_address_form}    css=*[name=addressForm]
 ${customer_account_address_salutation_dropdown_field}    id=select2-addressForm_salutation-container
 ${customer_account_address_salutation_list}    xpath=//li[@class='select2-results__option']
 ${customer_account_address_first_name_field}    id=addressForm_first_name
