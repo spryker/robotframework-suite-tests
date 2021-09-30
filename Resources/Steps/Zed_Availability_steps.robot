@@ -1,6 +1,7 @@
 *** Settings ***
 Resource    ../Pages/Zed/Zed_Availability_page.robot
 Resource    ../Common/Common_Zed.robot
+Resource    ../Common/Common.robot
 
 *** Keywords ***
 
@@ -24,8 +25,8 @@ Zed: change product stock:
         Log    ${zed_availability_never_out_of_stock_checkbox}
         Log    ${index}
         Log    ${zed_availability_never_out_of_stock_checkbox}\[${index}\]
-        Run Keyword If    '${isNeverOutOfStock}'=='true'    Select Checkbox    \(//*[@type='checkbox' and contains(@id,'is_never_out_of_stock')]\)\[${index}\]
-        ...    ELSE    Unselect Checkbox    \(//*[@type='checkbox' and contains(@id,'is_never_out_of_stock')]\)\[${index}\]
+        Run Keyword If    '${isNeverOutOfStock}'=='true'    Check checkbox    \(//*[@type='checkbox' and contains(@id,'is_never_out_of_stock')]\)\[${index}\]
+        ...    ELSE    Uncheck Checkbox    \(//*[@type='checkbox' and contains(@id,'is_never_out_of_stock')]\)\[${index}\]
     END
     Type Text    xpath=//input[contains(@id,'AvailabilityGui_stock_stocks_0_quantity')]    ${quantityWarehouse1}
     Type Text    xpath=//input[contains(@id,'AvailabilityGui_stock_stocks_1_quantity')]    ${quantityWarehouse2}   

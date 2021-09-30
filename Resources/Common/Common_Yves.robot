@@ -46,7 +46,7 @@ Yves: login on Yves with provided credentials:
     Type Text    ${email_field}    ${email}
     Type Text    ${password_field}    ${password}
     Click    ${form_login_button}
-    Run Keyword Unless    'fake' in '${email}' or 'agent' in '${email}'  Wait Until Element Is Visible    ${user_navigation_icon_header_menu_item}[${env}]    ${loading_time}    Login Failed!
+    Run Keyword Unless    'fake' in '${email}' or 'agent' in '${email}'  Wait Until Element Is Visible    ${user_navigation_icon_header_menu_item}[${env}]     Login Failed!
     Run Keyword If    'agent' in '${email}'    Yves: header contains/doesn't contain:    true    ${customerSearchWidget}
     Yves: remove flash messages
 
@@ -80,7 +80,7 @@ Yves: remove flash messages    ${flash_massage_state}=    Run Keyword And Ignore
     Run Keyword If    'PASS' in ${flash_massage_state}     Remove element from HTML with JavaScript    //section[@data-qa='component notification-area']
 
 Yves: flash message '${condition}' be shown
-   Run Keyword If    '${condition}' == 'should'    Wait Until Element Is Visible    ${notification_area}    ${loading_time}
+   Run Keyword If    '${condition}' == 'should'    Wait Until Element Is Visible    ${notification_area}
     ...    ELSE    Page Should Not Contain Element    ${notification_area}
 
 Yves: flash message should be shown:
@@ -130,7 +130,6 @@ Yves: go to second navigation item level:
     Wait Until Element Is Visible    //div[@class='header__navigation']//navigation-multilevel[@data-qa='component navigation-multilevel']/ul[@class='menu menu--lvl-0']//li[contains(@class,'menu__item--lvl-0')]/span/*[contains(@class,'lvl-0')][1][text()='${navigation_item_level1}']/ancestor::li//ul[contains(@class,'menu--lvl-1')]
     Click Element by xpath with JavaScript    //div[@class='header__navigation']//navigation-multilevel[@data-qa='component navigation-multilevel']/ul[@class='menu menu--lvl-0']//li[contains(@class,'menu__item--lvl-0')]/span/*[contains(@class,'lvl-0')][1][text()='${navigation_item_level1}']/ancestor::li//ul[contains(@class,'menu--lvl-1')]//li[contains(@class,'menu__item--lvl-1')]/span/*[contains(@class,'lvl-1')][1][text()='${navigation_item_level2}']
         
-
 Yves: go to first navigation item level:
     [Arguments]     ${navigation_item_level1}
     BuiltIn.Run Keyword If    '${env}'=='b2b'    Run keywords
@@ -140,7 +139,6 @@ Yves: go to first navigation item level:
     ...    Wait Until Element Is Visible    xpath=//*[contains(@class,'header') and @data-qa='component header']//*[contains(@data-qa,'navigation-multilevel')]/*[contains(@class,'navigation-multilevel-node__link--lvl-1') and contains(text(),'${navigation_item_level1}')]    AND
     ...    Click Element by xpath with JavaScript    //*[contains(@class,'header') and @data-qa='component header']//*[contains(@data-qa,'navigation-multilevel')]/*[contains(@class,'navigation-multilevel-node__link--lvl-1') and contains(text(),'${navigation_item_level1}')]
       
-
 Yves: go to third navigation item level:
     [Arguments]     ${navigation_item_level1}   ${navigation_item_level3}
     ${nodeClass}=    Get Element Attribute    xpath=//div[@class='header__navigation']//navigation-multilevel[@data-qa='component navigation-multilevel']/ul[@class='menu menu--lvl-0']//li[contains(@class,'menu__item--lvl-0')]/span/*[contains(@class,'lvl-0')][1][text()='${navigation_item_level1}']/ancestor::li    class

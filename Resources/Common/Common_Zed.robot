@@ -22,12 +22,11 @@ Zed: login on Zed with provided credentials:
     Type Text    ${zed_user_name_field}    ${email}
     Type Text    ${zed_password_field}    ${password}
     Click    ${zed_login_button}
-    Wait Until Element Is Visible    ${zed_log_out_button}    ${loading_time}    Zed:Dashboard page is not displayed
+    Wait Until Element Is Visible    ${zed_log_out_button}    Zed:Dashboard page is not displayed
 
 Zed: go to first navigation item level:
     [Documentation]     example: "Zed: Go to First Navigation Item Level  Customers"
     [Arguments]     ${navigation_item}
-
     Click Element by xpath with JavaScript    //ul[@id='side-menu']/li/a/span[@class='nav-label'][contains(text(),'${navigation_item}')]/../../a
 
 Zed: go to second navigation item level:
@@ -53,15 +52,15 @@ Zed: click Action Button in a table for row that contains:
     wait until element is visible    xpath=//table[contains(@class,'dataTable')]/tbody//td[contains(text(),'${row_content}')]/../td[contains(@class,'column-Action') or contains(@class,'column-action')]/*[contains(.,'${zed_table_action_button_locator}')]
     Click    xpath=//table[contains(@class,'dataTable')]/tbody//td[contains(text(),'${row_content}')]/../td[contains(@class,'column-Action') or contains(@class,'column-action')]/*[contains(.,'${zed_table_action_button_locator}')]
 
-Zed: select checkbox by Label:
+Zed: Check checkbox by Label:
     [Arguments]    ${checkbox_label}
     wait until element is visible    xpath=//input[@type='checkbox']/../../label[contains(text(),'${checkbox_label}')]//input
-    select checkbox    xpath=//input[@type='checkbox']/../../label[contains(text(),'${checkbox_label}')]//input
+    Check checkbox    xpath=//input[@type='checkbox']/../../label[contains(text(),'${checkbox_label}')]//input
 
-Zed: unselect checkbox by Label:
+Zed: Uncheck Checkbox by Label:
     [Arguments]    ${checkbox_label}
     wait until element is visible    xpath=//input[@type='checkbox']/../../label[contains(text(),'${checkbox_label}')]//input
-    unselect checkbox    xpath=//input[@type='checkbox']/../../label[contains(text(),'${checkbox_label}')]//input
+    Uncheck Checkbox    xpath=//input[@type='checkbox']/../../label[contains(text(),'${checkbox_label}')]//input
 
 Zed: submit the form
     wait until element is visible    ${zed_save_button}

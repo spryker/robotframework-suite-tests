@@ -15,8 +15,8 @@ Zed: create new Zed user with the following data:
     Type Text    ${zed_user_repeat_password_field}    ${zedUserPassword}
     Type Text    ${zed_user_first_name_field}    ${zedUserFirstName}
     Type Text    ${zed_user_last_name_field}    ${zedUserLastName}
-    Zed: select checkbox by Label:    ${checkboxGroup}
-    Zed: select checkbox by Label:    ${checkboxAgent}
+    Zed: Check checkbox by Label:    ${checkboxGroup}
+    Zed: Check checkbox by Label:    ${checkboxAgent}
     Select From List By Label    ${zed_user_interface_language}    ${userInterfaceLanguage}
     Zed: submit the form
     
@@ -30,7 +30,7 @@ Yves: perform search by customer:
 
 Yves: agent widget contains:
     [Arguments]    ${searchQuery}
-    Wait Until Element Is Visible    xpath=//ul[@data-qa='component customer-list']/li[@data-value='${searchQuery}']    ${loading_time} 
+    Wait Until Element Is Visible    xpath=//ul[@data-qa='component customer-list']/li[@data-value='${searchQuery}']
     Page Should Contain Element    xpath=//ul[@data-qa='component customer-list']/li[@data-value='${searchQuery}']
 
 Yves: login under the customer:

@@ -43,11 +43,11 @@ Zed: create new Company Role with provided permissions:
     Zed: click button in Header:    Add company user role
     ${new_list_of_permissions}=    get length    ${permissions_list}
     log    ${new_list_of_permissions}
-    run keyword if  '${is_default}'=='true'     Zed: select checkbox by Label:  Is Default
+    run keyword if  '${is_default}'=='true'     Zed: Check checkbox by Label:  Is Default
     FOR    ${index}    IN RANGE    0    ${new_list_of_permissions}
         ${permission_to_set}=    Get From List    ${permissions_list}    ${index}
         Log    ${permission_to_set}
-        Zed: select checkbox by Label:   ${permission_to_set}
+        Zed: Check checkbox by Label:   ${permission_to_set}
     END
     select from list by label    ${zed_role_company_dropdown_locator}    ${select_company_for_role}
     Type Text    ${zed_role_name_field}    ${new_role_name}
@@ -62,7 +62,7 @@ Zed: Create new Company User with provided email/company/business unit and role(
     Zed: click button in Header:    Add User
     Type Text    ${zed_create_company_user_email_field}  ${email}
     select from list by label    ${zed_create__company_user_salutation_dropdown}    Mr
-    Zed: select checkbox by Label:    Send password token through email
+    Zed: Check checkbox by Label:    Send password token through email
     Type Text    ${zed_create_company_user_first_name_field}    Robot First+${random}
     Type Text    ${zed_create_company_user_last_name_field}    robot Last+${random}
     select from list by label    ${zed_create_company_user_gender_dropdow}    Male
@@ -71,7 +71,7 @@ Zed: Create new Company User with provided email/company/business unit and role(
     select from list by label    ${zed_create_company_company_name_dropdown}    ${company}
     sleep    2s
     select from list by label    ${zed_create_company_business_unit_dropdown}    ${business_unit}
-    Zed: select checkbox by Label:    ${role}
+    Zed: Check checkbox by Label:    ${role}
     Zed: submit the form
     wait until element is visible    ${zed_success_flash_message}
     wait until element is visible    ${zed_table_locator}
@@ -82,7 +82,7 @@ Zed: attach company user to the following BU with role:
     [Arguments]    ${business_unit}    ${role_checkbox}
     Wait Until Element Is Visible    ${zed_business_unit_selector}
     Select From List By Label    ${zed_business_unit_selector}    ${business_unit}
-    Zed: select checkbox by Label:    ${role_checkbox}
+    Zed: Check checkbox by Label:    ${role_checkbox}
     Zed: submit the form
     
 

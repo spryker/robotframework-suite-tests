@@ -13,7 +13,7 @@ Zed: create a cms page and publish it:
         
 # General page information input
     Element Should Be Visible    xpath=//body//*[contains(text(),'Create CMS Page')]    message=Page for CMS creation is not opened
-    Select Checkbox    ${zed_cms_page_general_is_searchable_checkbox}
+    Check checkbox    ${zed_cms_page_general_is_searchable_checkbox}
     Type Text    ${zed_cms_page_general_enUS_name_field}    ${enName}
     Type Text    ${zed_cms_page_general_enUS_url_field}    ${enURL}
     ${deTitleSectionExpanded}=    Run Keyword And Return Status    Element Should Be Visible    ${zed_cms_page_general_deDE_name_field}

@@ -14,13 +14,13 @@ Resource                  ../Pages/Yves/Yves_Login_page.robot
 *** Variables ***
 # *** SUITE VARIABLES ***
 ${env}                 b2b
-${headless}            false
+${headless}            true
 ${browser}             chromium
+${browser_timeout}     65 seconds
 ${host}                http://yves.de.spryker.local/
 ${zed_url}             http://backoffice.de.spryker.local/
 ${email_domain}        @spryker.com
 ${default_password}    change123
-${loading_time}        3s
 ${admin_email}         admin@spryker.com
 # ${fake_email}          test.spryker+${random}@gmail.com
 
@@ -50,7 +50,7 @@ SuiteSetup
     Remove Files    Resources/Libraries/__pycache__/*
     Load Variables    ${env}
     New Browser    ${browser}    headless=${headless}    args=['--ignore-certificate-errors']
-    Set Browser Timeout    60 seconds
+    Set Browser Timeout    ${browser_timeout}
     Run Keyword if    '${headless}=true'    Create default Main Context
     Run Keyword if    '${headless}=false'    Create default Main Context
     New Page    ${host}
@@ -108,32 +108,36 @@ Remove element attribute with JavaScript:
 
 #Migration to the Browser Library    
 Wait Until Element Is Visible
-    [Arguments]    ${locator}    ${timeout}=None    ${error}=None
-    Wait For Elements State    ${locator}    visible    ${timeout}    ${error}
+    [Arguments]    ${locator}    ${message}=None    ${timeout}=None
+    Wait For Elements State    ${locator}    visible    ${timeout}    ${message}
 
 Wait Until Page Contains Element
-    [Arguments]    ${locator}    ${timeout}=0:00:20    ${error}=None
-    Wait For Elements State    ${locator}    attached    ${timeout}    ${error}
+    [Arguments]    ${locator}    ${message}=None    ${timeout}=0:00:20
+    Wait For Elements State    ${locator}    attached    ${timeout}    ${message}
+
+Wait Until Page Does Not Contain Element
+    [Arguments]    ${locator}    ${message}=None    ${timeout}=0:00:20
+    Wait For Elements State    ${locator}    detached    ${timeout}    ${message}
 
 Wait Until Element Is Enabled
 # Todo: update 'attached' on real usage
-    [Arguments]    ${locator}    ${timeout}=None    ${error}=None
-    Wait For Elements State    ${locator}    attached    ${timeout}    ${error}
+    [Arguments]    ${locator}    ${message}=None    ${timeout}=None
+    Wait For Elements State    ${locator}    enabled    ${timeout}    ${message}
 
 Element Should Be Visible
-    [Arguments]    ${locator}    ${message}=None
-    Wait For Elements State    ${locator}    visible
+    [Arguments]    ${locator}    ${message}=None    ${timeout}=None
+    Wait For Elements State    ${locator}    visible    ${timeout}    ${message}
 
 Page Should Contain Element
-    [Arguments]    ${locator}    ${error}=None    ${timeout}=0:00:20
-    Wait For Elements State    ${locator}    attached    ${timeout}    ${error}
+    [Arguments]    ${locator}    ${message}=None    ${timeout}=0:00:20
+    Wait For Elements State    ${locator}    attached    ${timeout}    ${message}
 
 Get Location
     Get URL
 
 Wait Until Element Is Not Visible
-    [Arguments]    ${locator}    ${timeout}=None    ${error}=None
-    Wait For Elements State    ${locator}    hidden    ${timeout}    ${error}
+    [Arguments]    ${locator}    ${message}=None    ${timeout}=None
+    Wait For Elements State    ${locator}    hidden    ${timeout}    ${message}
 
 Page Should Contain Link
     [Arguments]    ${url}    ${message}=None
@@ -149,23 +153,27 @@ Input Text
     Type Text    ${locator}    ${text}    0ms
 
 Table Should Contain
-    [Arguments]    ${locator}    ${expected}    ${Message}=None    ${Ignore_case}=None
-    Browser.Get Text    ${locator}    contains    ${expected}
+    [Arguments]    ${locator}    ${expected}    ${message}=None    ${ignore_case}=None
+    Browser.Get Text    ${locator}    contains    ${expected}    ${message}
 
 Element Should Contain
-    [Arguments]    ${locator}    ${expected}    ${Message}=None    ${Ignore_case}=None
-    Browser.Get Text    ${locator}    contains    ${expected}
+    [Arguments]    ${locator}    ${expected}    ${message}=None    ${ignore_case}=None
+    Browser.Get Text    ${locator}    contains    ${expected}    ${message}
+
+Element Text Should Be
+    [Arguments]    ${locator}    ${expected}    ${message}=None    ${ignore_case}=None
+    Browser.Get Text    ${locator}    equal    ${expected}    ${message} 
 
 Wait Until Element Contains
-    [Arguments]    ${locator}    ${text}    ${timeout}=None    ${error}=None
-    Browser.Get Text    ${locator}    contains    ${text}
+    [Arguments]    ${locator}    ${text}    ${timeout}=None    ${message}=None
+    Browser.Get Text    ${locator}    contains    ${text}    ${message}
 
 Page Should Not Contain Element
-    [Arguments]    ${locator}    ${message}=None
-    Wait For Elements State    ${locator}    detached
+    [Arguments]    ${locator}    ${message}=None    ${timeout}=None
+    Wait For Elements State    ${locator}    detached    ${timeout}    ${message}
 
 Element Should Not Contain
-    [Arguments]    ${locator}    ${text}
+    [Arguments]    ${locator}    ${text}    
     Browser.Get Text    ${locator}    validate    "${text}" not in value
 
 Checkbox Should Be Selected
@@ -176,17 +184,13 @@ Checkbox Should Not Be Selected
     [Arguments]    ${locator}
     Get Checkbox State    ${locator}    ==    unchecked
 
-Select Checkbox
-    [Arguments]    ${locator}
-    Check Checkbox    ${locator}
-
 Mouse Over
     [Arguments]    ${locator}
     Hover    ${locator}
 
 Element Should Not Be Visible
-    [Arguments]    ${locator}    ${timeout}=None    ${error}=None
-    Wait For Elements State    ${locator}    hidden    ${timeout}    ${error}
+    [Arguments]    ${locator}    ${message}=None    ${timeout}=None
+    Wait For Elements State    ${locator}    hidden    ${timeout}    ${message}
 
 Get Element Attribute
     [Arguments]    ${locator}    ${attribute}

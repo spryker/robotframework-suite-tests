@@ -7,4 +7,4 @@ Yves: set new password on Restore Password page
     Type Text  ${new_password_field}   ${default_password}
     Type Text  ${confirm_new_password_field}   ${default_password}
     Click  ${new_password_submit_button}
-    wait until page does not contain element  ${new_password_submit_button}
+    Wait Until Page Does Not Contain Element  ${new_password_submit_button}

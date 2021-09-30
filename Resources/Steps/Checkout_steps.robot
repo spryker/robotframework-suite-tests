@@ -16,8 +16,10 @@ ${submit_checkout_form_button}    xpath=//div[contains(@class,'form--checkout-fo
 *** Keywords ***
 Yves: billing address same as shipping address:
     [Arguments]    ${state}
-    Run Keyword If    '${state}' == 'true' and '${env}'=='b2b'    Click Element by xpath with JavaScript    //input[@id='addressesForm_billingSameAsShipping']
-    ...    ELSE    Run Keyword If    '${state}' == 'true' and '${env}'=='b2c'    Click Element by id with JavaScript    addressesForm_billingSameAsShipping   
+    ${checkboxState}=    Set Variable    ${EMPTY} 
+    ${checkboxState}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//input[@id='addressesForm_billingSameAsShipping'][@checked]
+    Run Keyword If    '${checkboxState}'=='False' and '${state}' == 'true'    Click Element by xpath with JavaScript    //input[@id='addressesForm_billingSameAsShipping']
+    Run Keyword If    '${checkboxState}'=='True' and '${state}' == 'false'    Click Element by xpath with JavaScript    //input[@id='addressesForm_billingSameAsShipping']
    
 Yves: accept the terms and conditions:
     [Documentation]    ${state} can be true or false
@@ -84,8 +86,6 @@ Yves: select delivery to multiple addresses
 Yves: click checkout button:
     [Arguments]    ${buttonName}
     Click    xpath=//button[@type='submit' and contains(text(),'${buttonName}')]
-        
-
 
 Yves: select new delivery address for a product:
     [Arguments]    ${productName}    ${newAddress}=false    ${existingAddress}=    ${salutation}=    ${firstName}=    ${lastName}=    ${street}=    
