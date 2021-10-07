@@ -54,8 +54,8 @@ Yves: catalog page contains filter:
 Yves: select filter value:
     [Arguments]    ${filter}    ${filterValue}
     Click    xpath=//section[contains(@data-qa,'component filter-section')]//*[contains(text(),'${filter}')]
-    Wait Until Element Is Visible    xpath=//section[contains(@data-qa,'component filter-section')]//*[contains(text(),'${filter}')]/following-sibling::*//*[contains(@value,'${filterValue}')]
-    Click    xpath=//section[contains(@data-qa,'component filter-section')]//*[contains(text(),'${filter}')]/following-sibling::*//*[contains(@value,'${filterValue}')]
+    Wait Until Element Is Visible    xpath=//section[contains(@data-qa,'component filter-section')]//*[contains(text(),'${filter}')]/following-sibling::*//input[contains(@value,'${filterValue}')]
+    Click    xpath=//section[contains(@data-qa,'component filter-section')]//*[contains(text(),'${filter}')]/following-sibling::*//input[contains(@value,'${filterValue}')]
     Click    ${catalog_filter_apply_button}
         
 

@@ -41,12 +41,12 @@ New_Customer_Registration
 
 Guest_User_Access
     [Documentation]    Checks that guest users see products info and cart but not profile
-    Yves: header contains/doesn't contain:    true    ${currencySwitcher}    ${wishlistIcon}    ${accountIcon}    ${shoppingCartIcon}
+    Yves: header contains/doesn't contain:    true    ${currencySwitcher}[${env}]   ${wishlistIcon}    ${accountIcon}    ${shoppingCartIcon}
     Yves: go to PDP of the product with sku:    002
-    Yves: PDP contains/doesn't contain:     true    ${price}    ${addToCartButton} 
+    Yves: PDP contains/doesn't contain:     true    ${pdpPriceLocator}    ${addToCartButton} 
     Yves: add product to the shopping cart
     Yves: go to b2c shopping cart
-    Yves: shopping cart contains product with unit price:   002    Canon IXUS 160    99.99
+    Yves: shopping cart contains product with unit price:   002    Canon IXUS 160    94.99
     Yves: go to user menu item in header:    Overview
     Yves: 'Login' page is displayed
     Yves: go To 'Wishlist' Page
@@ -56,12 +56,12 @@ Guest_User_Access
 Authorized_User_Access
     [Documentation]    Checks that authorized users see products info, cart and profile
     Yves: login on Yves with provided credentials:    ${yves_second_user_email}
-    Yves: header contains/doesn't contain:    true    ${currencySwitcher}    ${accountIcon}     ${wishlistIcon}    ${shoppingCartIcon} 
+    Yves: header contains/doesn't contain:    true    ${currencySwitcher}[${env}]    ${accountIcon}     ${wishlistIcon}    ${shoppingCartIcon} 
     Yves: go to PDP of the product with sku:    002
-    Yves: PDP contains/doesn't contain:     true    ${price}    ${addToCartButton}
+    Yves: PDP contains/doesn't contain:     true    ${pdpPriceLocator}     ${addToCartButton}
     Yves: add product to the shopping cart
     Yves: go to b2c shopping cart
-    Yves: shopping cart contains product with unit price:    002    Canon IXUS 160    99.99
+    Yves: shopping cart contains product with unit price:    002    Canon IXUS 160    94.99
     Yves: go to user menu item in header:    Overview
     Yves: 'Overview' page is displayed
     Yves: go to user menu item in header:    Orders History

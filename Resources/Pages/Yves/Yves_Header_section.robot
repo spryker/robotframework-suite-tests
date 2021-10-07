@@ -6,14 +6,14 @@ ${user_navigation_menu_login_button}    xpath=//a[@class='user-block__button but
 ${company_name_icon_header_menu_item}    xpath=//div[@class='header__top']//a[contains(@class,'navigation-top__company')]
 ${company_account_navigation_fly_out_header_menu_item}    xpath=//div[@class='header__top']//a[contains(@class,'navigation-top__company')]/..//nav[contains(@class,'navigation-list')]/ul
 ${price_mode_switcher_header_menu_item}    css=*[name=price-mode]
-${currency_switcher_header_menu_item}    css=*[name=currency-iso-code]
+&{currency_switcher_header_menu_item}    b2b=css=*[name=currency-iso-code]    b2c=xpath=//div[@class='header__select']//select[@name='currency-iso-code']
 ${language_switcher_header_menu_item}    xpath=//*[@class='header__top']//*[@data-qa='component language-switcher']//select
 ${quick_order_icon_header_menu_item}    xpath=//*[contains(@class,'icon--quick-order')]/ancestor::a
 ${shopping_list_icon_header_menu_item}    xpath=//*[contains(@class,'icon--header-shopping-list')]/ancestor::a
 ${shopping_list_sub_navigation_widget}    xpath=//*[contains(@class,'icon--header-shopping-list')]/ancestor::li//div[contains(@class,'js-user-navigation__sub-nav-shopping-list')]
 ${shopping_list_sub_navigation_all_lists_button}    //*[contains(@class,'icon--header-shopping-list')]/ancestor::li//div[contains(@class,'js-user-navigation__sub-nav-shopping-list')]//a[contains(.,'All Shopping Lists')]
 ${shopping_list_sub_navigation_create_list_button}    xpath=//*[contains(@class,'icon--header-shopping-list')]/ancestor::li//div[contains(@class,'js-user-navigation__sub-nav-shopping-list')]//a[contains(.,'Create New List')]
-&{shopping_car_icon_header_menu_item}    b2b=xpath=//*[contains(@class,'icon--cart')]/ancestor::a    b2c=xpath=//*[@*='icon icon--big cart-counter__icon']
+&{shopping_car_icon_header_menu_item}    b2b=xpath=//*[contains(@class,'icon--cart')]/ancestor::a    b2c=xpath=//cart-counter[contains(@class,'navigation-top')]
 ${shopping_cart_sub_navigation_widget}    xpath=//*[contains(@class,'icon--cart')]/ancestor::li//div[contains(@class,'js-user-navigation__sub-nav-cart')]
 ${shopping_cart_sub_navigation_all_carts_button}    //*[contains(@class,'icon--cart')]/ancestor::li//div[contains(@class,'js-user-navigation__sub-nav-cart')]//a[contains(.,'All Carts')]
 ${shopping_cart_sub_navigation_create_cart_button}    xpath=//*[contains(@class,'icon--cart')]/ancestor::li//div[contains(@class,'js-user-navigation__sub-nav-cart')]//a[contains(.,'Create New Cart')]
