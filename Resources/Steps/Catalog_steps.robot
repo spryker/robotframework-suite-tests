@@ -54,14 +54,14 @@ Yves: catalog page contains filter:
 Yves: select filter value:
     [Arguments]    ${filter}    ${filterValue}
     Click    xpath=//section[contains(@data-qa,'component filter-section')]//*[contains(text(),'${filter}')]
-    Wait Until Element Is Visible    xpath=//section[contains(@data-qa,'component filter-section')]//*[contains(text(),'${filter}')]/following-sibling::*//input[contains(@value,'${filterValue}')]
-    Click    xpath=//section[contains(@data-qa,'component filter-section')]//*[contains(text(),'${filter}')]/following-sibling::*//input[contains(@value,'${filterValue}')]
+    Wait Until Element Is Visible    xpath=//section[contains(@data-qa,'component filter-section')]//*[contains(text(),'${filter}')]/following-sibling::*//span[contains(@value,'${filterValue}')]
+    Click    xpath=//section[contains(@data-qa,'component filter-section')]//*[contains(text(),'${filter}')]/following-sibling::*//span[contains(@value,'${filterValue}')]
     Click    ${catalog_filter_apply_button}
         
 
 Yves: quick add to cart for first item in catalog
     ${initialCartCounter}=    Yves: get current cart item counter value
-    Click    xpath=//button[contains(@title,'Add to Cart')][1]
+    Click    xpath=(//button[contains(@title,'Add to Cart')])[1]
     Yves: flash message should be shown:    success    Items added successfully
     Yves: remove flash messages
     ${currentCartCounter}=    Yves: get current cart item counter value
@@ -69,7 +69,7 @@ Yves: quick add to cart for first item in catalog
 
 Yves: get current cart item counter value
     [Documentation]    returns the cart item count number as an integer
-    ${currentCartCounterText}=    Execute Javascript    return document.evaluate("//*[@data-qa='component navigation-top']//span[contains(@class,'cart-counter__quantity js-cart-counter__quantity')]", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.textContent
+    ${currentCartCounterText}=    Execute Javascript    document.evaluate("//*[@data-qa='component navigation-top']//span[contains(@class,'cart-counter__quantity js-cart-counter__quantity')]", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.textContent
     ${currentCartCounter}=    Convert To Integer    ${currentCartCounterText}
     [return]    ${currentCartCounter}
 

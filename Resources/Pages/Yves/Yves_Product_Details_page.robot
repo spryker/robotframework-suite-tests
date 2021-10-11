@@ -1,5 +1,5 @@
 *** Variable ***
-&{pdp_main_container_locator}    b2b=xpath=//main[contains(@class,'page-layout-main--pdp')]//div[@class='container']    b2c=xpath=//*[@itemtype='https://schema.org/Product']
+&{pdp_main_container_locator}    b2b=xpath=//main[contains(@class,'page-layout-main--pdp')]//div[@class='container']    b2c=xpath=//*[@itemtype='https://schema.org/Product']//product-carousel[contains(@*, 'pdp')]
 ${pdp_price_element_locator}    xpath=//span[contains(@class,'volume-price__price')]
 ${pdp_add_to_cart_button}    xpath=//button[contains(@class,'button') and @data-qa='add-to-cart-button']
 ${pdp_add_to_cart_disabled_button}    xpath=//button[@disabled and contains(text(),'Add to Cart')]
@@ -23,7 +23,7 @@ ${pdp_sales_label}    xpath=//*[@data-qa='component label-group']//span[contains
 ${pdp_new_label}    xpath=//*[@data-qa='component label-group']//span[contains(text(),'New')]
 ${pdp_warranty_option}    xpath=//*[contains(@class,'item--option')]//*[contains(text(),'Warranty')]
 ${pdp_insurance_option}    xpath=//*[contains(@class,'item--option')]//*[contains(text(),'Insurance')]
-${pdp_gift_wrapping_option}    xpath=//*[contains(@class,'item--option')]//*[contains(text(),'Gift wrapping')]
+${pdp_gift_wrapping_option}    xpath=//*[contains(@class,'item--option')]//h2[contains(text(),'Gift wrapping')]
 ${pdp_product_reviews_list}    xpath=//*[contains(text(),'Product Reviews')]/following-sibling::div/article[@class='review']
 ${pdp_product_not_available_text}    xpath=//span[contains(text(),'This product is currently not available.')]
 ${pdp_availability_notification_email_field}    xpath=//input[@id='availabilityNotificationSubscriptionForm_email']
