@@ -9,6 +9,7 @@ ${zed_save_button}      xpath=//input[contains(@class,'safe-submit')]
 ${zed_success_flash_message}    xpath=//div[@class='flash-messages']/div[@class='alert alert-success']
 ${zed_table_locator}    xpath=//table[contains(@class,'dataTable')]/tbody
 ${zed_search_field_locator}     xpath=//input[@type='search']
+${zed_variant_search_field_locator}     xpath=//*[@id='product-variant-table_filter']//input[@type='search']
 ${zed_processing_block_locator}     xpath=//div[contains(@class,'dataTables_processing')][@style='display: none;']
 
 
@@ -52,6 +53,13 @@ Zed: click Action Button in a table for row that contains:
     wait until element is visible    xpath=//table[contains(@class,'dataTable')]/tbody//td[contains(text(),'${row_content}')]/../td[contains(@class,'column-Action') or contains(@class,'column-action')]/*[contains(.,'${zed_table_action_button_locator}')]
     Click    xpath=//table[contains(@class,'dataTable')]/tbody//td[contains(text(),'${row_content}')]/../td[contains(@class,'column-Action') or contains(@class,'column-action')]/*[contains(.,'${zed_table_action_button_locator}')]
 
+Zed: click Action Button in Variant table for row that contains:
+    [Arguments]    ${row_content}    ${zed_table_action_button_locator}
+    Zed: perform variant search by:    ${row_content}
+    wait until element is visible    xpath=//table[contains(@class,'dataTable')]/tbody//td[contains(text(),'${row_content}')]/../td[contains(@class,'column-Action') or contains(@class,'column-action')]/*[contains(.,'${zed_table_action_button_locator}')]
+    Click    xpath=//table[contains(@class,'dataTable')]/tbody//td[contains(text(),'${row_content}')]/../td[contains(@class,'column-Action') or contains(@class,'column-action')]/*[contains(.,'${zed_table_action_button_locator}')]
+
+
 Zed: Check checkbox by Label:
     [Arguments]    ${checkbox_label}
     wait until element is visible    xpath=//input[@type='checkbox']/../../label[contains(text(),'${checkbox_label}')]//input
@@ -69,6 +77,12 @@ Zed: submit the form
 Zed: perform search by:
     [Arguments]    ${search_key}
     Type Text    ${zed_search_field_locator}    ${search_key}
+    sleep    2s
+    wait until page contains element    ${zed_processing_block_locator}
+
+Zed: perform variant search by:
+    [Arguments]    ${search_key}
+    Type Text    ${zed_variant_search_field_locator}    ${search_key}
     sleep    2s
     wait until page contains element    ${zed_processing_block_locator}
 

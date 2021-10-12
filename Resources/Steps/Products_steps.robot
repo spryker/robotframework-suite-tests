@@ -11,7 +11,7 @@ Zed: discontinue the following product:
     Zed: click Action Button in a table for row that contains:    ${productAbstract}    Edit
     Wait Until Element Is Visible    ${zed_pdp_abstract_main_content_locator}
     Zed: switch to the tab on 'Edit product' page:    Variants
-    Zed: click Action Button in a table for row that contains:    ${productConcrete}    Edit
+    Zed: click Action Button in Variant table for row that contains:    ${productConcrete}    Edit
     Wait Until Element Is Visible    ${zed_pdp_concrete_main_content_locator}
     Zed: switch to the tab on 'Edit product' page:    Discontinue
     Click    ${zed_pdp_discontinue_button}
@@ -23,7 +23,7 @@ Zed: undo discontinue the following product:
     Zed: click Action Button in a table for row that contains:    ${productAbstract}    Edit
     Wait Until Element Is Visible    ${zed_pdp_abstract_main_content_locator}
     Zed: switch to the tab on 'Edit product' page:    Variants
-    Zed: click Action Button in a table for row that contains:    ${productConcrete}    Edit
+    Zed: click Action Button in Variant table for row that contains:    ${productConcrete}    Edit
     Wait Until Element Is Visible    ${zed_pdp_concrete_main_content_locator}
     Zed: switch to the tab on 'Edit product' page:    Discontinue
     Click    ${zed_pdp_restore_button}
@@ -32,8 +32,8 @@ Zed: check if at least one price exists for concrete and add if doesn't:
     [Arguments]    ${price}
     ${currentURL}=    Get Location  
     Run Keyword Unless    'content-price' in '${currentURL}'    Zed: switch to the tab on 'Edit product' page:    Price & Stock
-    ${exists}=    BuiltIn.Run Keyword And Return Status    Element Should Exist    xpath=//table[@id='price-table-collection']//input[@type='text' and @value]
-    Run Keyword If        '${exists}'=='False'    Type Text    xpath=//table[@id='price-table-collection']//input[1]    ${price}
+    ${exists}=    BuiltIn.Run Keyword And Return Status    Element Should Exist    xpath=///table[@id='price-table-collection']//input[@id='product_concrete_form_edit_prices_1-93-DEFAULT-BOTH_moneyValue_gross_amount']
+    Run Keyword If        '${exists}'=='False'    Type Text    xpath=//table[@id='price-table-collection']//input[@id='product_concrete_form_edit_prices_1-93-DEFAULT-BOTH_moneyValue_gross_amount']    ${price}
     Click    ${zed_dpd_save_button}
 
 Zed: add following alternative products to the concrete:

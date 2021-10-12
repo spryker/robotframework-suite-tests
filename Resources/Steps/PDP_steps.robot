@@ -97,7 +97,8 @@ Yves: get sku of the concrete product on PDP
 
 Yves: get sku of the abstract product on PDP
         
-    ${currentURL}=    Get Location        
+    ${currentURL}=    Get Url
+    Log    current url: ${currentURL}       
     ${got_abstract_product_sku}=    Get Regexp Matches    ${currentURL}    ([^-]+$)
     ${got_abstract_product_sku}=    Convert To String    ${got_abstract_product_sku}
     ${got_abstract_product_sku}=    Replace String    ${got_abstract_product_sku}    '    ${EMPTY}
@@ -108,11 +109,11 @@ Yves: get sku of the abstract product on PDP
 
 Yves: add product to wishlist:
     [Arguments]    ${wishlistName}    ${selectWishlist}=
-    Wait Until Element Is Visible    ${pdp_add_to_wishlist_button}    timeout=20 seconds    error=Add to wishlist button didn't appear
+    Wait Until Element Is Visible    ${pdp_add_to_wishlist_button}
     Wait Until Element Is Enabled    ${pdp_add_to_wishlist_button}
     ${wishlistSelectorExists}=    Run Keyword And Return Status    Element Should Be Visible    ${pdp_wishlist_dropdown}
     Run Keyword If    '${selectWishlist}'=='select'    Run keywords
-    ...    Wait Until Element Is Visible    xpath=//select[contains(@name,'wishlist-name')]    timeout=20 seconds    error=Add to wishlist button didn't appear
+    ...    Wait Until Element Is Visible    xpath=//select[contains(@name,'wishlist-name')]
     ...    AND    Wait Until Element Is Enabled    xpath=//select[contains(@name,'wishlist-name')]
     ...    AND    Select From List By Value    xpath=//select[contains(@name,'wishlist-name')]    ${wishlistName}      
     Click    ${pdp_add_to_wishlist_button}
@@ -133,7 +134,7 @@ Yves: check if product is available on PDP:
 Yves: submit back in stock notification request for email:
     [Arguments]    ${email}
     Type Text    ${pdp_availability_notification_email_field}    ${email}
-    Click    xpath=//button[@data-qa='submit-button']
+    Click    xpath=//button[@data-qa='submit-button' and @class='form__action button button--success']
     Yves: flash message should be shown:    success    Successfully subscribed
     Yves: remove flash messages
     Element Should Be Visible    xpath=//button[contains(text(),'Do not notify me when back in stock')]
