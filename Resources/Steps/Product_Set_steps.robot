@@ -23,12 +23,12 @@ Yves: 'Product Set' page contains the following products:
     ${product_name_list_count}=   get length  ${product_name_list}
     FOR    ${index}    IN RANGE    0    ${product_name_list_count}
         ${product_name_to_check}=    Get From List    ${product_name_list}    ${index}
-        Page Should Contain Element    xpath=//*[contains(@class,'custom-element product-set-details')]//a[contains(.,'${product_name_to_check}')]
+        Page Should Contain Element    xpath=//*[@class='product-item__container' and descendant::a[contains(.,'${product_name_to_check}')]]
     END
 
 Yves: change variant of the product on CMS page on:
     [Arguments]    ${productName}    ${variantToSet}
-    Mouse Over    xpath=//*[contains(@class,'custom-element product-set-details')]//a[contains(.,'${productName}')]
+    Mouse Over    xpath=//*[contains(@class,'product-item__container') and descendant::a[contains(.,'${productName}')]]
     Run Keyword If    '${env}'=='b2b'    Select From List By Label   //*[contains(@class,'custom-element product-set-details')]//div[@class='product-item__variant']/descendant::select    ${variantToSet}
     ...    ELSE    Select From List By Label    //*[contains(@class,'custom-element custom-select custom-select--expand')]//descendant::select    ${variantToSet}
         
