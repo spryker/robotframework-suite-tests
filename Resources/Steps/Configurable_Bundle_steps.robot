@@ -14,7 +14,7 @@ Yves: select product in the bundle slot:
     Click    xpath=//form[@name='configurator_state_form']//button[contains(.,'${slot}')]
         
     Run keyword if    '${env}'=='b2b'    Click    xpath=//product-item-list[@data-qa='component configurator-product']//span[@class='configurator-product__sku'][text()='Sku: ${sku}']/ancestor::product-item-list//button
-    ...    ELSE    Run keyword if    '${env}'=='b2c'    Click    xpath=//product-item-list[@data-qa='component configurator-product']//span[contains(text(),'${sku}')]/ancestor::product-item-list//button
+    ...    ELSE    Run keyword if    '${env}'=='b2c'    Click    xpath=(//product-item-list[@data-qa='component configurator-product']//span[contains(text(),'${sku}')]/ancestor::product-item-list//button)[1]
         
 
 Yves: go to 'Summary' step in the bundle configurator

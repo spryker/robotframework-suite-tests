@@ -288,6 +288,7 @@ Configurable_Bundle
     Yves: add products to the shopping cart in the bundle configurator
     Yves: go to b2c shopping cart
     Yves: change quantity of the configurable bundle in the shopping cart on:    Smartstation Kit    2
+    Yves: flash message should be shown:    success    Configured bundle updated successfully.
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: billing address same as shipping address:    true
     Yves: fill in the following shipping address:    Mr    ${yves_second_user_first_name}    ${yves_second_user_last_name}    Kirncher Str.    7    10247    Berlin    Germany
