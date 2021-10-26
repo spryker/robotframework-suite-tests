@@ -11,7 +11,7 @@ Zed: create a discount and activate it:
     Click    ${zed_discount_add_new_discount_button}
     Wait Until Element Is Visible    ${zed_discount_create_discount_page}
     Run Keyword Unless    'tab-content-general' in '${currentURL}'
-    ...    Zed: go to tab:    General Information
+    ...    Zed: go to tab:    General information
     Run keyword if    '${discountType}'=='voucher'    Select From List By Label    ${zed_discount_type_dropdown}    Voucher codes
     ...    ELSE    Run keyword if    '${discountType}'=='cart rule'    Select From List By Label    ${zed_discount_type_dropdown}    Cart rule
     Type Text    ${zed_discount_name_field}     ${discountName}
@@ -20,7 +20,7 @@ Zed: create a discount and activate it:
     Execute Javascript    document.getElementById("discount_discountGeneral_valid_to").setAttribute("value", "2050-01-01")
 # Discount calculation 
     Zed: go to tab:    Discount calculation
-        
+    Wait For Elements State    ${zed_discount_query_builder_first_calculation_group}    visible    15s      
     Run keyword if    '${valueType}'=='Percentage'    Run Keywords    Select From List By Label    ${zed_discount_calculator_type_drop_down}    Percentage    
     ...    AND    Type Text    ${zed_discount_percentage_value_field}     ${discountValue}
     ...    ELSE    Run keyword if    Run keywords    '${valueType}'=='Fixed amount'    Select From List By Label    ${zed_discount_calculator_type_drop_down}    Fixed amount
@@ -36,7 +36,7 @@ Zed: create a discount and activate it:
     ...    AND    Type Text    ${zed_discount_promotional_product_abstract_quantity_field}     ${promotionalProductQuantity}
 # Discount condition 
     Zed: go to tab:    Conditions
-        
+    Wait For Elements State    ${zed_discount_query_builder_first_condition_group}    visible    15s     
     Click    ${zed_discount_plain_query_apply_when__button}
     Wait Until Element Is Visible    ${zed_discount_plain_query_apply_when_field}
     Type Text    ${zed_discount_plain_query_apply_when_field}     ${applyWhenQuery}

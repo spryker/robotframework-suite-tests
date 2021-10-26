@@ -163,7 +163,7 @@ Yves: delete from b2c cart products with name:
 Yves: apply discount voucher to cart:
     [Arguments]    ${voucherCode}
     ${expanded}=    Run Keyword And Return Status    Get Element State    ${shopping_cart_voucher_code_field}    ==    hidden
-    Run Keyword If    '${expanded}'=='False'    Click    ${shopping_cart_voucher_code_section_toggler}
+    Run Keyword If    '${expanded}'=='False'    Click    ${shopping_cart_voucher_code_section_toggler}[${env}]
     Type Text    ${shopping_cart_voucher_code_field}    ${voucherCode}
     Click    ${shopping_cart_voucher_code_redeem_button}
     Yves: flash message should be shown:    success    Your voucher code has been applied
