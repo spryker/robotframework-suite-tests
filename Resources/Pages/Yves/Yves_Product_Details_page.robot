@@ -28,3 +28,4 @@ ${pdp_product_reviews_list}    xpath=//*[contains(text(),'Product Reviews')]/fol
 ${pdp_product_not_available_text}    xpath=//span[contains(text(),'This product is currently not available.')]
 ${pdp_availability_notification_email_field}    xpath=//input[@id='availabilityNotificationSubscriptionForm_email']
 ${pdp_wishlist_dropdown}    xpath=//select[contains(@name,'wishlist-name')]
+${pdp_reset_selected_variant_locator}    xpath=//div[@class='variant']//button | //div[@class='variant']//a

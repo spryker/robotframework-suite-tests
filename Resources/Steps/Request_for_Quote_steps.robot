@@ -41,9 +41,9 @@ Yves: click '${buttonName}' button on the 'Quote Request Details' page
 
 Yves: change price for the product in the quote request with sku xxx on:
     [Arguments]    ${sku}    ${priceToSet}
-    ${use_default_price_state}=    Get Element Attribute    xpath=//article[@data-qa='component quote-request-cart-item']//div[contains(@class,'quote-request-cart-item__column--content')][contains(.,'${sku}')]/ancestor::article//*[contains(@class,'quote-request-cart-item__column--total')]//input[@type='checkbox']    checked
-    Log    ${use_default_price_state}
-    Run Keyword If    'true' in '${use_default_price_state}'    Click    xpath=//article[@data-qa='component quote-request-cart-item']//div[contains(@class,'quote-request-cart-item__column--content')][contains(.,'${sku}')]/ancestor::article//*[contains(@class,'quote-request-cart-item__column--total')]//span[@name='use_default_price']
+    ${use_default_price_state}=    Set Variable    ${EMPTY} 
+    ${use_default_price_state}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//article[@data-qa='component quote-request-cart-item']//div[contains(@class,'quote-request-cart-item__column--content')][contains(.,'${sku}')]/ancestor::article//*[contains(@class,'quote-request-cart-item__column--total')]//input[@type='checkbox'][@checked]
+    Run Keyword If    '${use_default_price_state}'=='True'    Click Element by xpath with JavaScript    xpath=//article[@data-qa='component quote-request-cart-item']//div[contains(@class,'quote-request-cart-item__column--content')][contains(.,'${sku}')]/ancestor::article//*[contains(@class,'quote-request-cart-item__column--total')]//input[@name='use_default_price']
     Type Text    xpath=//article[@data-qa='component quote-request-cart-item']//div[contains(@class,'quote-request-cart-item__column--content')][contains(.,'${sku}')]/ancestor::article//*[contains(@class,'quote-request-cart-item__column--total')]//input[@type='text']    ${priceToSet}
 
 Yves: add the following note to the quote request:
@@ -73,10 +73,8 @@ Yves: set 'Valid Till' date in the past for the quote request:
 Yves: submit new request for quote
     [Documentation]    Returns ID of the RfQ
     Yves: click on the 'Request a Quote' button in the shopping cart
-    
     Click    ${quote_request_convert_from_cart_confirm_button}
-    
-    ${lastCreatedRfQ}=    Get Text    xpath=//*[@class='page-info__title']
+    ${lastCreatedRfQ}=    Get Text    xpath=//div[@class='page-info']//*[contains(@class,'page-info__title')]
     ${lastCreatedRfQ}=    Replace String    ${lastCreatedRfQ}    \#    ${EMPTY}
     Set Suite Variable    ${lastCreatedRfQ}    ${lastCreatedRfQ}
     [Return]    ${lastCreatedRfQ}

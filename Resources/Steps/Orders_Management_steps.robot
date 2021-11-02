@@ -17,7 +17,11 @@ Zed: trigger all matching states inside xxx order:
 Zed: trigger all matching states inside this order:
     [Arguments]    ${status}
     Reload    
-    Wait Until Page Contains Element    xpath=//div[@id='order-overview']//form[@name='oms_trigger_form']//button[@id='oms_trigger_form_submit'][text()='${status}']
+    FOR    ${index}    IN RANGE    0    10
+        ${order_state_reached}=    Run Keyword And Return Status    Page Should Contain Element    xpath=xpath=//div[@id='order-overview']//form[@name='oms_trigger_form']//button[@id='oms_trigger_form_submit'][text()='${status}']
+        Run Keyword If    '${order_state_reached}'=='False'    Reload
+        ...    ELSE    Exit For Loop
+    END
     Click    xpath=//div[@id='order-overview']//form[@name='oms_trigger_form']//button[@id='oms_trigger_form_submit'][text()='${status}']
         
     ${order_changed_status}=    Run Keyword And Ignore Error    Wait Until Element Is Not Visible    xpath=//div[@id='order-overview']//form[@name='oms_trigger_form']//button[@id='oms_trigger_form_submit'][text()='${status}']

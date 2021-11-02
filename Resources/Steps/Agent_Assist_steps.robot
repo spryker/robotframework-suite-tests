@@ -33,7 +33,7 @@ Yves: agent widget contains:
     Wait Until Element Is Visible    xpath=//ul[@data-qa='component customer-list']/li[@data-value='${searchQuery}']
     Page Should Contain Element    xpath=//ul[@data-qa='component customer-list']/li[@data-value='${searchQuery}']
 
-Yves: login under the customer:
+Yves: As an Agent login under the customer:
     [Arguments]    ${searchQuery} 
     Yves: perform search by customer:    ${searchQuery}
     Wait Until Element Is Visible    //ul[@data-qa='component customer-list']/li[@data-value='${searchQuery}']

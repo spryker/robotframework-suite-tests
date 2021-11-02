@@ -30,11 +30,9 @@ Yves: PDP contains/doesn't contain:
     END
 
 Yves: add product to the shopping cart
-    ${variants_present_status}=    Run Keyword And Ignore Error    Page should contain element    ${pdp_variant_selector}
-    Run Keyword If    'PASS' in ${variants_present_status}    Yves: change variant of the product on PDP on random value
-    Wait Until Page Contains Element    ${pdp_add_to_cart_button}
+    ${variants_present_status}=    Run Keyword And Return Status    Page should contain element    ${pdp_variant_selector}
+    Run Keyword If    '${variants_present_status}'=='True'    Yves: change variant of the product on PDP on random value
     Click    ${pdp_add_to_cart_button}
-        
     Yves: remove flash messages
 
 Yves: change quantity on PDP:
@@ -59,6 +57,7 @@ Yves: change quantity using '+' or '-' button № times:
 Yves: change variant of the product on PDP on:
     [Arguments]    ${variantToChoose}
     Select From List By Label    ${pdp_variant_selector}    ${variantToChoose}
+    Wait Until Page Contains Element    ${pdp_reset_selected_variant_locator}
         
 
 Yves: change amount on PDP:

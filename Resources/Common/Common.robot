@@ -70,7 +70,11 @@ TestSetup
     Go To    ${host}
 
 TestTeardown
-    # Run Keyword If Test Failed    Pause Execution
+    Run Keyword If Test Failed    
+    ...    Run Keywords 
+        # ...    Pause Execution
+    ...    Take screenshot
+    ...    Get Location
     Delete All Cookies
 
 Create default Main Context
@@ -133,8 +137,9 @@ Page Should Contain Element
     Wait For Elements State    ${locator}    attached    ${timeout}    ${message}
 
 Get Location
-    Get URL
-
+    ${current_url}=    Get URL
+    [Return]    ${current_url}
+    
 Wait Until Element Is Not Visible
     [Arguments]    ${locator}    ${message}=None    ${timeout}=None
     Wait For Elements State    ${locator}    hidden    ${timeout}    ${message}
@@ -194,7 +199,8 @@ Element Should Not Be Visible
 
 Get Element Attribute
     [Arguments]    ${locator}    ${attribute}
-    Get Attribute    ${locator}    ${attribute}
+    ${element_attribute}=    Get Attribute    ${locator}    ${attribute}
+    [Return]    ${element_attribute}
 
 Select From List By Label
     [Arguments]    ${locator}    ${value}

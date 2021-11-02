@@ -23,7 +23,7 @@ Yves: 'Product Set' page contains the following products:
     ${product_name_list_count}=   get length  ${product_name_list}
     FOR    ${index}    IN RANGE    0    ${product_name_list_count}
         ${product_name_to_check}=    Get From List    ${product_name_list}    ${index}
-        Page Should Contain Element    xpath=//*[@class='product-item__container' and descendant::a[contains(.,'${product_name_to_check}')]]
+        Page Should Contain Element    xpath=//product-item[@data-qa='component product-item']//a[@itemprop='name'][contains(.,'${product_name_to_check}')]
     END
 
 Yves: change variant of the product on CMS page on:
