@@ -372,7 +372,7 @@ Split_Delivery
     Yves: fill in the following billing address:    Mr    Product    165    Kirncher Str.    7    10247    Berlin    Germany
     Yves: click checkout button:    Next
     Yves: select the following shipping method for product:    Canon IXUS 285    Express
-    Yves: select the following shipping method for product:    Canon IXUS 180    Standard
+    Yves: select the following shipping method for product:    Canon IXUS 180    Same Day
     Yves: select the following shipping method for product:    Canon IXUS 165    Express
     Click    ${submit_checkout_form_button}
         
