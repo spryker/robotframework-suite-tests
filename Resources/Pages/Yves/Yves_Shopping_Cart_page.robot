@@ -9,8 +9,6 @@ ${request_a_quote_button}    xpath=//a[contains(@class,'button')][contains(text(
 &{shopping_cart_voucher_code_section_toggler}    b2c=//input[@id='cartCodeForm_code']//ancestor::div[@data-qa='component toggler-item']
 ${shopping_cart_voucher_code_field}    id=cartCodeForm_code
 ${shopping_cart_voucher_code_redeem_button}    xpath=//button[contains(text(),'Redeem') and contains(@data-qa,'submit')]
-${shopping_cart_promotional_product_section}    xpath=//*[contains(text(),'Promotional products')]/following-sibling::product-item
-${shopping_cart_promotional_product_add_to_cart_button}    xpath=//button[contains(@class,'button--promotion-item') and contains(text(),'Add to Cart')]
 ${shopping_cart_promotional_product_section}    xpath=(//*[contains(text(),'Promotional products')]/following-sibling::product-item)[2]
 ${shopping_cart_promotional_product_add_to_cart_button}    xpath=(//button[contains(@class,'button--promotion-item') and contains(text(),'Add to Cart')])[2]
 ${shopping_cart_promotional_product_increase_quantity_button}    xpath=//product-item[preceding-sibling::h4][2]//div[contains(@class,'button button--quantity js-quantity-counter__incr')]
