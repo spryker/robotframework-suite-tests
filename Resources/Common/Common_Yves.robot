@@ -22,26 +22,27 @@ Resource    ../Steps/Header_steps.robot
 *** Variable ***
 ${notification_area}    xpath=//section[@data-qa='component notification-area']
 
+
 *** Keywords ***
 Yves: login on Yves with provided credentials:
     [Arguments]    ${email}    ${password}=${default_password}
-    ${currentURL}=    Get URL
+    ${currentURL}=    Get Url
     Run Keyword Unless    '/login' in '${currentURL}'
-    ...    Run keyword if    '${env}'=='b2b'    
-    ...    Run Keywords   
+    ...    Run keyword if    '${env}'=='b2b'
+    ...    Run Keywords
     ...    Go To    ${host}
-    ...    AND    delete all cookies 
+    ...    AND    delete all cookies
     ...    AND    Reload
     ...    AND    Wait Until Element Is Visible    ${header_login_button}
     ...    AND    Click    ${header_login_button}
     ...    AND    Wait Until Element Is Visible    ${email_field}
     ...    ELSE    Run Keywords
     ...    Go To    ${host}
-    ...    AND    delete all cookies 
+    ...    AND    delete all cookies
     ...    AND    Reload
     ...    AND    mouse over  ${user_navigation_icon_header_menu_item}[${env}]
-    ...    AND    Wait Until Element Is Visible    ${user_navigation_menu_login_button} 
-    ...    AND    Click    ${user_navigation_menu_login_button} 
+    ...    AND    Wait Until Element Is Visible    ${user_navigation_menu_login_button}
+    ...    AND    Click    ${user_navigation_menu_login_button}
     ...    AND    Wait Until Element Is Visible    ${email_field}
     Type Text    ${email_field}    ${email}
     Type Text    ${password_field}    ${password}
@@ -65,15 +66,15 @@ Yves: '${pageName}' page is displayed
     ...    ELSE IF    '${pageName}' == 'Shopping Carts'    Page Should Contain Element    ${shopping_carts_main_content_locator}    ${pageName} page is not displayed
     ...    ELSE IF    '${pageName}' == 'Quick Order'    Page Should Contain Element    ${quick_order_main_content_locator}    ${pageName} page is not displayed
     ...    ELSE IF    '${pageName}' == 'Thank you'    Page Should Contain Element    ${success_page_main_container_locator}[${env}]    ${pageName} page is not displayed
-    ...    ELSE IF    '${pageName}' == 'Order History'    Page Should Contain Element    ${order_history_main_content_locator}    ${pageName} page is not displayed     
-    ...    ELSE IF    '${pageName}' == 'Order Details'    Page Should Contain Element    ${order_details_main_content_locator}    ${pageName} page is not displayed 
-    ...    ELSE IF    '${pageName}' == 'Select Business Unit'    Page Should Contain Element    ${customer_account_business_unit_selector}    ${pageName} page is not displayed 
-    ...    ELSE IF    '${pageName}' == 'Summary'    Page Should Contain Element    ${checkout_summary_main_content_locator}    ${pageName} page is not displayed 
-    ...    ELSE IF    '${pageName}' == 'Quote Requests'    Page Should Contain Element    ${quote_requests_main_content_locator}    ${pageName} page is not displayed 
-    ...    ELSE IF    '${pageName}' == 'Quote Request Details'    Page Should Contain Element    ${quote_request_main_content_locator}    ${pageName} page is not displayed 
-    ...    ELSE IF    '${pageName}' == 'Choose Bundle to configure'    Page Should Contain Element    ${choose_bundle_main_content_locator}    ${pageName} page is not displayed 
-    ...    ELSE IF    '${pageName}' == 'Create Return'    Page Should Contain Element    ${create_return_main_content_locator}    ${pageName} page is not displayed  
-    ...    ELSE IF    '${pageName}' == 'Return Details'    Page Should Contain Element    ${return_details_main_content_locator}    ${pageName} page is not displayed  
+    ...    ELSE IF    '${pageName}' == 'Order History'    Page Should Contain Element    ${order_history_main_content_locator}    ${pageName} page is not displayed
+    ...    ELSE IF    '${pageName}' == 'Order Details'    Page Should Contain Element    ${order_details_main_content_locator}    ${pageName} page is not displayed
+    ...    ELSE IF    '${pageName}' == 'Select Business Unit'    Page Should Contain Element    ${customer_account_business_unit_selector}    ${pageName} page is not displayed
+    ...    ELSE IF    '${pageName}' == 'Summary'    Page Should Contain Element    ${checkout_summary_main_content_locator}    ${pageName} page is not displayed
+    ...    ELSE IF    '${pageName}' == 'Quote Requests'    Page Should Contain Element    ${quote_requests_main_content_locator}    ${pageName} page is not displayed
+    ...    ELSE IF    '${pageName}' == 'Quote Request Details'    Page Should Contain Element    ${quote_request_main_content_locator}    ${pageName} page is not displayed
+    ...    ELSE IF    '${pageName}' == 'Choose Bundle to configure'    Page Should Contain Element    ${choose_bundle_main_content_locator}    ${pageName} page is not displayed
+    ...    ELSE IF    '${pageName}' == 'Create Return'    Page Should Contain Element    ${create_return_main_content_locator}    ${pageName} page is not displayed
+    ...    ELSE IF    '${pageName}' == 'Return Details'    Page Should Contain Element    ${return_details_main_content_locator}    ${pageName} page is not displayed
 
 Yves: remove flash messages    ${flash_massage_state}=    Run Keyword And Ignore Error    Wait Until Page Contains Element        ${notification_area}    1s
     Log    ${flash_massage_state}
@@ -86,23 +87,23 @@ Yves: flash message '${condition}' be shown
 Yves: flash message should be shown:
     [Documentation]    ${type} can be: error, success
     [Arguments]    ${type}    ${text}
-    Run Keyword If    '${type}' == 'error'    Element Should Be Visible    xpath=//flash-message[contains(@class,'alert')]//div[contains(text(),'${text}')]    
-    ...    ELSE    Run Keyword If    '${type}' == 'success'    Element Should Be Visible    xpath=//flash-message[contains(@class,'success')]//div[contains(text(),'${text}')]  
+    Run Keyword If    '${type}' == 'error'    Element Should Be Visible    xpath=//flash-message[contains(@class,'alert')]//div[contains(text(),'${text}')]
+    ...    ELSE    Run Keyword If    '${type}' == 'success'    Element Should Be Visible    xpath=//flash-message[contains(@class,'success')]//div[contains(text(),'${text}')]
 
 Yves: logout on Yves as a customer
     delete all cookies
-    Reload    
+    Reload
 
 Yves: go to the 'Home' page
     Go To    ${host}
 
 Yves: get the last placed order ID by current customer
-    ${currentURL}=    Get Location     
+    ${currentURL}=    Get Location
     Run Keyword If    '${env}'=='b2b'    Set Test Variable    ${menuItem}    Order History
     ...    ELSE    Set Test Variable    ${menuItem}    Orders History
     Run Keyword Unless    '/customer/order' in '${currentURL}'
-    ...    Run Keywords   
-    ...    Yves: go to the 'Home' page 
+    ...    Run Keywords
+    ...    Yves: go to the 'Home' page
     ...    AND    Yves: go to user menu item in header:    ${menuItem}
     ...    AND    Yves: 'Order History' page is displayed
     ${lastPlacedOrder}=    Get Text    xpath=//div[contains(@data-qa,'component order-table')]//tr[1]//td[1]
@@ -123,13 +124,13 @@ Yves: go to second navigation item level:
     ${nodeClass}=    Get Element Attribute    xpath=//div[@class='header__navigation']//navigation-multilevel[@data-qa='component navigation-multilevel']/ul[@class='menu menu--lvl-0']//li[contains(@class,'menu__item--lvl-0')]/span/*[contains(@class,'lvl-0')][1][text()='${navigation_item_level1}']/ancestor::li    class
     ${nodeClass}=    Replace String    ${nodeClass}    \n    ${EMPTY}
     ${nodeShownClass}=    Set Variable    is-shown
-    ${nodeUpdatedClass}=    Set Variable    ${nodeClass} ${nodeShownClass} 
+    ${nodeUpdatedClass}=    Set Variable    ${nodeClass} ${nodeShownClass}
     Log    ${nodeClass}
     ${1LevelXpath}=    Set Variable    //div[@class='header__navigation']//navigation-multilevel[@data-qa='component navigation-multilevel']/ul[@class='menu menu--lvl-0']//li[contains(@class,'menu__item--lvl-0')]/span/*[contains(@class,'lvl-0')][1][text()='${navigation_item_level1}']/ancestor::li
     Add/Edit element attribute with JavaScript:    ${1LevelXpath}    class    ${nodeUpdatedClass}
     Wait Until Element Is Visible    //div[@class='header__navigation']//navigation-multilevel[@data-qa='component navigation-multilevel']/ul[@class='menu menu--lvl-0']//li[contains(@class,'menu__item--lvl-0')]/span/*[contains(@class,'lvl-0')][1][text()='${navigation_item_level1}']/ancestor::li//ul[contains(@class,'menu--lvl-1')]
     Click Element by xpath with JavaScript    //div[@class='header__navigation']//navigation-multilevel[@data-qa='component navigation-multilevel']/ul[@class='menu menu--lvl-0']//li[contains(@class,'menu__item--lvl-0')]/span/*[contains(@class,'lvl-0')][1][text()='${navigation_item_level1}']/ancestor::li//ul[contains(@class,'menu--lvl-1')]//li[contains(@class,'menu__item--lvl-1')]/span/*[contains(@class,'lvl-1')][1][text()='${navigation_item_level2}']
-        
+
 Yves: go to first navigation item level:
     [Arguments]     ${navigation_item_level1}
     BuiltIn.Run Keyword If    '${env}'=='b2b'    Run keywords
@@ -138,13 +139,13 @@ Yves: go to first navigation item level:
     ...    ELSE    Run keywords
     ...    Wait Until Element Is Visible    xpath=//*[contains(@class,'header') and @data-qa='component header']//*[contains(@data-qa,'navigation-multilevel')]/*[contains(@class,'navigation-multilevel-node__link--lvl-1') and contains(text(),'${navigation_item_level1}')]    AND
     ...    Click Element by xpath with JavaScript    //*[contains(@class,'header') and @data-qa='component header']//*[contains(@data-qa,'navigation-multilevel')]/*[contains(@class,'navigation-multilevel-node__link--lvl-1') and contains(text(),'${navigation_item_level1}')]
-      
+
 Yves: go to third navigation item level:
     [Arguments]     ${navigation_item_level1}   ${navigation_item_level3}
     ${nodeClass}=    Get Element Attribute    xpath=//div[@class='header__navigation']//navigation-multilevel[@data-qa='component navigation-multilevel']/ul[@class='menu menu--lvl-0']//li[contains(@class,'menu__item--lvl-0')]/span/*[contains(@class,'lvl-0')][1][text()='${navigation_item_level1}']/ancestor::li    class
     ${nodeClass}=    Replace String    ${nodeClass}    \n    ${EMPTY}
     ${nodeShownClass}=    Set Variable    is-shown
-    ${nodeUpdatedClass}=    Set Variable    ${nodeClass} ${nodeShownClass} 
+    ${nodeUpdatedClass}=    Set Variable    ${nodeClass} ${nodeShownClass}
     Log    ${nodeClass}
     ${1LevelXpath}=    Set Variable    //div[@class='header__navigation']//navigation-multilevel[@data-qa='component navigation-multilevel']/ul[@class='menu menu--lvl-0']//li[contains(@class,'menu__item--lvl-0')]/span/*[contains(@class,'lvl-0')][1][text()='${navigation_item_level1}']/ancestor::li
     Add/Edit element attribute with JavaScript:    ${1LevelXpath}    class    ${nodeUpdatedClass}
@@ -170,7 +171,7 @@ Yves: get index of the first available product
 Yves: go to the PDP of the first available product
     ${index}=    Yves: get index of the first available product
     Click    xpath=//product-item[@data-qa='component product-item'][${index}]//a[contains(@class,'link-detail-page') and (contains(@class,'name'))]
-    Wait Until Page Contains Element    ${pdp_main_container_locator}[${env}] 
+    Wait Until Page Contains Element    ${pdp_main_container_locator}[${env}]
 
 Yves: check if cart is not empty and clear it
     Yves: go to the 'Home' page
