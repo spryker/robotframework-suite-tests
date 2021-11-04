@@ -22,10 +22,11 @@ Resource    ../Steps/Header_steps.robot
 *** Variable ***
 ${notification_area}    xpath=//section[@data-qa='component notification-area']
 
+
 *** Keywords ***
 Yves: login on Yves with provided credentials:
     [Arguments]    ${email}    ${password}=${default_password}
-    ${currentURL}=    Get Location        
+    ${currentURL}=    Get Url 
     Run Keyword Unless    '/login' in '${currentURL}'
     ...    Run keyword if    '${env}'=='b2b'    
     ...    Run Keywords   
