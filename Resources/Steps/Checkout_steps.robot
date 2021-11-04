@@ -16,6 +16,7 @@ ${submit_checkout_form_button}    xpath=//div[contains(@class,'form--checkout-fo
 *** Keywords ***
 Yves: billing address same as shipping address:
     [Arguments]    ${state}
+    Run keyword if    '${env}'=='b2b'    Wait Until Page Contains Element    ${manage_your_addresses_link}
     ${checkboxState}=    Set Variable    ${EMPTY} 
     ${checkboxState}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//input[@id='addressesForm_billingSameAsShipping'][@checked]
     Run Keyword If    '${checkboxState}'=='False' and '${state}' == 'true'    Click Element by xpath with JavaScript    //input[@id='addressesForm_billingSameAsShipping']
@@ -153,6 +154,7 @@ Yves: 'Summary' page contains/doesn't contain:
 
 Yves: proceed with checkout as guest:
     [Arguments]    ${salutation}    ${firstName}    ${lastName}    ${email}
+    Wait Until Page Contains Element    xpath=//span[contains(text(),'Buy as Guest')]/ancestor::label[@class='toggler-radio__container']/input
     Click Element by xpath with JavaScript    //span[contains(text(),'Buy as Guest')]/ancestor::label[@class='toggler-radio__container']/input
     Wait Until Element Is Visible    ${yves_checkout_login_guest_firstName_field}
     Type Text    ${yves_checkout_login_guest_firstName_field}     ${firstName}

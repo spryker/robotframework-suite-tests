@@ -28,6 +28,7 @@ Zed: login on Zed with provided credentials:
 Zed: go to first navigation item level:
     [Documentation]     example: "Zed: Go to First Navigation Item Level  Customers"
     [Arguments]     ${navigation_item}
+    Wait Until Page Contains Element    xpath=//ul[@id='side-menu']/li/a/span[@class='nav-label'][contains(text(),'${navigation_item}')]/../../a
     Click Element by xpath with JavaScript    //ul[@id='side-menu']/li/a/span[@class='nav-label'][contains(text(),'${navigation_item}')]/../../a
 
 Zed: go to second navigation item level:
@@ -46,7 +47,6 @@ Zed: click button in Header:
     wait until element is visible    xpath=//div[@class='title-action']/a[contains(.,'${button_name}')]
     Click    xpath=//div[@class='title-action']/a[contains(.,'${button_name}')]
         
-
 Zed: click Action Button in a table for row that contains:
     [Arguments]    ${row_content}    ${zed_table_action_button_locator}
     Zed: perform search by:    ${row_content}
@@ -89,13 +89,17 @@ Zed: perform variant search by:
 Zed: table should contain:
     [Arguments]    ${search_key}
     Zed: perform search by:    ${search_key}
-    table should contain    ${zed_table_locator}  ${search_key}
+    Table Should Contain    ${zed_table_locator}  ${search_key}
 
 Zed: go to tab:
     [Arguments]    ${tabName}
     Click    xpath=//*[contains(@data-toggle,'tab') and contains(text(),'${tabName}')]
         
-
 Zed: message should be shown:
     [Arguments]    ${text}
     Element Should Be Visible    xpath=//div[contains(@class,'alert alert-success') and contains(text(),'${text}')]    message=Success message is not shown
+
+Zed: click Action Button(without search) in a table for row that contains:
+    [Arguments]    ${row_content}    ${zed_table_action_button_locator}
+    wait until element is visible    xpath=//table[contains(@class,'dataTable')]/tbody//td[contains(text(),'${row_content}')]/../td[contains(@class,'column-Action') or contains(@class,'column-action')]/*[contains(.,'${zed_table_action_button_locator}')]
+    Click    xpath=//table[contains(@class,'dataTable')]/tbody//td[contains(text(),'${row_content}')]/../td[contains(@class,'column-Action') or contains(@class,'column-action')]/*[contains(.,'${zed_table_action_button_locator}')]

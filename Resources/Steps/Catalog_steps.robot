@@ -11,7 +11,7 @@ Yves: 'Catalog' page should show products:
 
 Yves: product with name in the catalog should have price:
     [Arguments]    ${productName}    ${expectedProductPrice}
-    ${actualProductPrice}=    Get Text    xpath=//product-item[@data-qa='component product-item']//*[contains(@class,'product-item__name')][contains(text(),'${productName}')]/ancestor::*//*[@data-qa='component money-price']/*[contains(@class,'money-price__amount')][contains(@class,'default')]
+    ${actualProductPrice}=    Get Text    xpath=//product-item[@data-qa='component product-item']//*[contains(@class,'product-item__name')][contains(text(),'${productName}')]/ancestor::product-item//*[@data-qa='component money-price']/*[contains(@class,'money-price__amount')][contains(@class,'default')]
     ${actualProductPrice}=    Remove String    ${actualProductPrice}    ${SPACE}
     Log    ${expectedProductPrice}
     Log    ${actualProductPrice}

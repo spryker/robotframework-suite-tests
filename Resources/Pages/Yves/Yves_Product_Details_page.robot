@@ -1,5 +1,5 @@
 *** Variable ***
-&{pdp_main_container_locator}    b2b=xpath=//main[contains(@class,'page-layout-main--pdp')]//div[@class='container']    b2c=xpath=//*[@itemtype='https://schema.org/Product']//product-carousel[contains(@*, 'pdp')]
+&{pdp_main_container_locator}    b2b=xpath=//main[contains(@class,'page-layout-main--pdp')]    b2c=xpath=//*[@itemtype='https://schema.org/Product']//product-carousel[contains(@*, 'pdp')]
 ${pdp_price_element_locator}    xpath=//span[contains(@class,'volume-price__price')]
 ${pdp_add_to_cart_button}    xpath=//button[contains(@class,'button') and @data-qa='add-to-cart-button']
 ${pdp_add_to_cart_disabled_button}    xpath=//button[@disabled and contains(text(),'Add to Cart')]
