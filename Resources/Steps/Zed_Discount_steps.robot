@@ -10,8 +10,6 @@ Zed: create a discount and activate it:
 # General information   
     Click    ${zed_discount_add_new_discount_button}
     Wait Until Element Is Visible    ${zed_discount_create_discount_page}
-    Run Keyword Unless    'tab-content-general' in '${currentURL}'
-    ...    Zed: go to tab:    General information
     Run keyword if    '${discountType}'=='voucher'    Select From List By Label    ${zed_discount_type_dropdown}    Voucher codes
     ...    ELSE    Run keyword if    '${discountType}'=='cart rule'    Select From List By Label    ${zed_discount_type_dropdown}    Cart rule
     Type Text    ${zed_discount_name_field}     ${discountName}

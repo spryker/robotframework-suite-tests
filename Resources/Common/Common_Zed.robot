@@ -93,9 +93,9 @@ Zed: table should contain:
 
 Zed: go to tab:
     [Arguments]    ${tabName}
-    Click    xpath=//*[contains(@data-toggle,'tab') and contains(text(),'${tabName}')]
+    Click    xpath=//a[contains(@data-toggle,'tab') and contains(text(),'${tabName}')]
         
 
 Zed: message should be shown:
     [Arguments]    ${text}
-    Element Should Be Visible    xpath=//div[contains(@class,'alert alert-success') and contains(text(),'${text}')]    message=Success message is not shown
+    Element Should Be Visible    xpath=//div[contains(@class,'alert alert-success')]//*[contains(text(),'${text}')]    message=Success message is not shown
