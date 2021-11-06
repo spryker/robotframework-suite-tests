@@ -16,7 +16,7 @@ Resource                  ../Pages/Yves/Yves_Login_page.robot
 ${env}                 b2b
 ${headless}            true
 ${browser}             chromium
-${browser_timeout}     65 seconds
+${browser_timeout}     60 seconds
 ${host}                http://yves.de.spryker.local/
 ${zed_url}             http://backoffice.de.spryker.local/
 ${email_domain}        @spryker.com
@@ -120,7 +120,6 @@ Wait Until Page Does Not Contain Element
     Wait For Elements State    ${locator}    detached    ${timeout}    ${message}
 
 Wait Until Element Is Enabled
-# Todo: update 'attached' on real usage
     [Arguments]    ${locator}    ${message}=${EMPTY}    ${timeout}=0:00:20
     Wait For Elements State    ${locator}    enabled    ${timeout}    ${message}
 
@@ -129,7 +128,7 @@ Element Should Be Visible
     Wait For Elements State    ${locator}    visible    ${timeout}    ${message}
 
 Page Should Contain Element
-    [Arguments]    ${locator}    ${message}=${EMPTY}    ${timeout}=0:00:03
+    [Arguments]    ${locator}    ${message}=${EMPTY}    ${timeout}=0:00:01
     Wait For Elements State    ${locator}    attached    ${timeout}    ${message}
 
 Get Location
@@ -170,7 +169,7 @@ Wait Until Element Contains
     Get Text    ${locator}    contains    ${text}    ${message}
 
 Page Should Not Contain Element
-    [Arguments]    ${locator}    ${message}=${EMPTY}    ${timeout}=0:00:03
+    [Arguments]    ${locator}    ${message}=${EMPTY}    ${timeout}=0:00:01
     Wait For Elements State    ${locator}    detached    ${timeout}    ${message}
 
 Element Should Not Contain

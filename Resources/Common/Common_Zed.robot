@@ -2,6 +2,7 @@
 Library    BuiltIn
 Resource                  Common.robot
 Resource                  ../Pages/Zed/Zed_Login_page.robot
+Resource    ../Pages/Zed/Zed_Edit_Product_page.robot
 
 *** Variable ***
 ${zed_log_out_button}   xpath=//ul[@class='nav navbar-top-links navbar-right']//a[contains(@href,'logout')]
@@ -10,7 +11,7 @@ ${zed_success_flash_message}    xpath=//div[@class='flash-messages']/div[@class=
 ${zed_table_locator}    xpath=//table[contains(@class,'dataTable')]/tbody
 ${zed_search_field_locator}     xpath=//input[@type='search']
 ${zed_variant_search_field_locator}     xpath=//*[@id='product-variant-table_filter']//input[@type='search']
-${zed_processing_block_locator}     xpath=//div[contains(@class,'dataTables_processing')][@style='display: none;']
+${zed_processing_block_locator}     xpath=//div[contains(@id,'processing')][contains(@class,'dataTables_processing')]
 
 
 *** Keywords ***
@@ -77,14 +78,14 @@ Zed: submit the form
 Zed: perform search by:
     [Arguments]    ${search_key}
     Type Text    ${zed_search_field_locator}    ${search_key}
-    sleep    2s
-    wait until page contains element    ${zed_processing_block_locator}
+    Wait Until Element Is Visible    ${zed_processing_block_locator}
+    Wait Until Element Is Not Visible    ${zed_processing_block_locator} 
 
 Zed: perform variant search by:
     [Arguments]    ${search_key}
     Type Text    ${zed_variant_search_field_locator}    ${search_key}
-    sleep    2s
-    wait until page contains element    ${zed_processing_block_locator}
+    Wait Until Element Is Visible    ${zed_product_variant_table_processing_locator}
+    Wait Until Element Is Not Visible    ${zed_product_variant_table_processing_locator}  
 
 Zed: table should contain:
     [Arguments]    ${search_key}

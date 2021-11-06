@@ -420,6 +420,7 @@ Request_for_Quote
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: create new Zed user with the following data:    agent_quote+${random}@spryker.com    change123${random}    Request    Quote    Root group    This user is an agent    en_US
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
+    Yves: delete all shopping carts
     Yves: create new 'Shopping Cart' with name:    RfQCart+${random}
     Yves: go to PDP of the product with sku:    ${one_variant_product_abstract_sku}
     Yves: add product to the shopping cart
@@ -504,6 +505,7 @@ Request_for_Quote
 
 Configurable_Bundle
     Yves: login on Yves with provided credentials:    ${yves_company_user_manager_and_buyer_email}
+    Yves: delete all shopping carts
     Yves: create new 'Shopping Cart' with name:    confBundle+${random}
     Yves: go to second navigation item level:    More    Configurable Bundle
     Yves: 'Choose Bundle to configure' page is displayed
@@ -570,11 +572,11 @@ Return_Management
     Yves: check that 'Print Slip' contains the following products:    410083
     Zed: login on Zed with provided credentials:    admin@spryker.com
     Zed: create a return for the following order and product in it:    ${lastPlacedOrder}    421426
-    Zed: create new Zed user with the following data:    agent+${random}@spryker.com    change123${random}    Agent    Assist    Root group    This user is an agent    en_US
+    Zed: create new Zed user with the following data:    return+agent+${random}@spryker.com    change123${random}    Agent    Assist    Root group    This user is an agent    en_US
     Yves: go to the 'Home' page
     Yves: logout on Yves as a customer
     Yves: go to URL:    agent/login
-    Yves: login on Yves with provided credentials:    agent+${random}@spryker.com    change123${random}
+    Yves: login on Yves with provided credentials:    return+agent+${random}@spryker.com    change123${random}
     Yves: header contains/doesn't contain:    true    ${customerSearchWidget}
     Yves: perform search by customer:    ${yves_company_user_buyer_email}
     Yves: agent widget contains:    ${yves_company_user_buyer_email}
@@ -592,4 +594,4 @@ Return_Management
     Yves: 'Order History' page is displayed
     Yves: 'Order History' page contains the following order with a status:    ${lastPlacedOrder}    Returned
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    Zed: delete Zed user with the following email:    agent+${random}@spryker.com
+    Zed: delete Zed user with the following email:    return+agent+${random}@spryker.com

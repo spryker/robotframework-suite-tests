@@ -14,7 +14,9 @@ Zed: discontinue the following product:
     Zed: click Action Button in Variant table for row that contains:    ${productConcrete}    Edit
     Wait Until Element Is Visible    ${zed_pdp_concrete_main_content_locator}
     Zed: switch to the tab on 'Edit product' page:    Discontinue
-    Click    ${zed_pdp_discontinue_button}
+    ${can_be_discontinued}=    Run Keyword And Return Status    Page Should Contain Element    ${zed_pdp_discontinue_button}
+    Run Keyword If    '${can_be_discontinued}'=='True'    Click    ${zed_pdp_discontinue_button}
+    
 
 Zed: undo discontinue the following product:
     [Arguments]    ${productAbstract}    ${productConcrete}
@@ -26,7 +28,8 @@ Zed: undo discontinue the following product:
     Zed: click Action Button in Variant table for row that contains:    ${productConcrete}    Edit
     Wait Until Element Is Visible    ${zed_pdp_concrete_main_content_locator}
     Zed: switch to the tab on 'Edit product' page:    Discontinue
-    Click    ${zed_pdp_restore_button}
+    ${can_be_restored}=    Run Keyword And Return Status    Page Should Contain Element    ${zed_pdp_restore_button}
+    Run Keyword If    '${can_be_restored}'=='True'    Click    ${zed_pdp_restore_button}
 
 Zed: check if at least one price exists for concrete and add if doesn't:
     [Arguments]    ${price}

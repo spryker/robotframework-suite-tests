@@ -11,6 +11,7 @@ ${pdp_measurement_unit_notification}    id=measurement-unit-choices
 ${pdp_increase_quantity_button}    xpath=//div[@class='product-configurator__add-to-cart']//button[contains(@class,'quantity-counter__button--increment')]
 ${pdp_decrease_quantity_button}    xpath=//div[@class='product-configurator__add-to-cart']//button[contains(@class,'quantity-counter__button--decrement')]
 ${pdp_variant_selector}    xpath=//*[@data-qa='component variant']//select
+${pdp_variant_custom_selector}    xpath=//*[@data-qa='component variant']//custom-select
 ${pdp_amount_input_filed}    id=user-amount
 ${pdp_packaging_unit_notification}    xpath=//*[@class='packaging-unit-notifications']
 &{pdp_product_bundle_include_small}    b2b=xpath=//div[@class='js-product-options-bundle__target']    b2c=xpath=//ul[@class='bundle-option-list grid']
