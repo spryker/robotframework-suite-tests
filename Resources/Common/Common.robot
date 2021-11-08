@@ -14,7 +14,7 @@ Resource                  ../Pages/Yves/Yves_Login_page.robot
 *** Variables ***
 # *** SUITE VARIABLES ***
 ${env}                 b2b
-${headless}            true
+${headless}            false
 ${browser}             chromium
 ${browser_timeout}     60 seconds
 ${host}                http://yves.de.spryker.local/
@@ -124,7 +124,7 @@ Wait Until Element Is Enabled
     Wait For Elements State    ${locator}    enabled    ${timeout}    ${message}
 
 Element Should Be Visible
-    [Arguments]    ${locator}    ${message}=${EMPTY}    ${timeout}=0:00:03
+    [Arguments]    ${locator}    ${message}=${EMPTY}    ${timeout}=0:00:15
     Wait For Elements State    ${locator}    visible    ${timeout}    ${message}
 
 Page Should Contain Element

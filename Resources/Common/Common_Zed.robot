@@ -98,7 +98,7 @@ Zed: go to tab:
         
 Zed: message should be shown:
     [Arguments]    ${text}
-    Element Should Be Visible    xpath=//div[contains(@class,'alert alert-success') and contains(text(),'${text}')]    message=Success message is not shown
+    Element Should Be Visible    xpath=//div[contains(@class,'alert alert-success')]//*[contains(text(),'${text}')]    message=Success message is not shown
 
 Zed: click Action Button(without search) in a table for row that contains:
     [Arguments]    ${row_content}    ${zed_table_action_button_locator}
