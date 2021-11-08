@@ -18,7 +18,6 @@ Yves: go To 'Shopping Lists' Page
     Run Keyword If    ${button_exists}=='PASS'    Click Element by xpath with JavaScript    ${shopping_list_sub_navigation_all_lists_button}     
     ...    ELSE    Click    ${shopping_list_icon_header_menu_item}        
 
-
 Yves: create new 'Shopping List' with name:
     [Arguments]    ${shoppingListName}
     ${currentURL}=    Get Location        
@@ -53,7 +52,6 @@ Yves: delete 'Shopping List' with name:
     Delete shopping list with name:    ${shoppingListName}
     Wait Until Element Is Visible    ${delete_shopping_list_button}
     Click    ${delete_shopping_list_button}
-        
 
 Yves: view shopping list with name:
     [Arguments]    ${shoppingListName}

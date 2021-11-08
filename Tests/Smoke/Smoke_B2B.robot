@@ -145,9 +145,7 @@ Discontinued_Alternative_Products
     Yves: go to PDP of the product with sku:  M21100
     Yves: PDP contains/doesn't contain:    true    ${alternativeProducts}
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
-    Yves: create new 'Shopping List' with name:    shoppingListName+${random}
     Yves: go to the PDP of the first available product
-    Yves: add product to the shopping list:
     Yves: get sku of the concrete product on PDP
     Yves: get sku of the abstract product on PDP
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
