@@ -56,9 +56,9 @@ Yves: change quantity using '+' or '-' button № times:
 
 Yves: change variant of the product on PDP on:
     [Arguments]    ${variantToChoose}
-    Select From List By Label    ${pdp_variant_selector}    ${variantToChoose}
-    Wait Until Page Contains Element    ${pdp_reset_selected_variant_locator}
-        
+    Click    ${pdp_variant_custom_selector}
+    Select From List By Value    ${pdp_variant_selector}    ${variantToChoose}
+    Wait For Elements State    ${pdp_reset_selected_variant_locator}    attached
 
 Yves: change amount on PDP:
     [Arguments]    ${amountToSet}
@@ -95,7 +95,6 @@ Yves: get sku of the concrete product on PDP
     [Return]    ${got_concrete_product_sku}
 
 Yves: get sku of the abstract product on PDP
-        
     ${currentURL}=    Get Url
     Log    current url: ${currentURL}       
     ${got_abstract_product_sku}=    Get Regexp Matches    ${currentURL}    ([^-]+$)

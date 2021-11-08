@@ -2,6 +2,7 @@
 Library    BuiltIn
 Resource                  Common.robot
 Resource                  ../Pages/Zed/Zed_Login_page.robot
+Resource    ../Pages/Zed/Zed_Edit_Product_page.robot
 
 *** Variable ***
 ${zed_log_out_button}   xpath=//ul[@class='nav navbar-top-links navbar-right']//a[contains(@href,'logout')]
@@ -10,7 +11,7 @@ ${zed_success_flash_message}    xpath=//div[@class='flash-messages']/div[@class=
 ${zed_table_locator}    xpath=//table[contains(@class,'dataTable')]/tbody
 ${zed_search_field_locator}     xpath=//input[@type='search']
 ${zed_variant_search_field_locator}     xpath=//*[@id='product-variant-table_filter']//input[@type='search']
-${zed_processing_block_locator}     xpath=//div[contains(@class,'dataTables_processing')][@style='display: none;']
+${zed_processing_block_locator}     xpath=//div[contains(@id,'processing')][contains(@class,'dataTables_processing')]
 
 
 *** Keywords ***
@@ -28,6 +29,7 @@ Zed: login on Zed with provided credentials:
 Zed: go to first navigation item level:
     [Documentation]     example: "Zed: Go to First Navigation Item Level  Customers"
     [Arguments]     ${navigation_item}
+    Wait Until Page Contains Element    xpath=//ul[@id='side-menu']/li/a/span[@class='nav-label'][contains(text(),'${navigation_item}')]/../../a
     Click Element by xpath with JavaScript    //ul[@id='side-menu']/li/a/span[@class='nav-label'][contains(text(),'${navigation_item}')]/../../a
 
 Zed: go to second navigation item level:
@@ -46,7 +48,6 @@ Zed: click button in Header:
     wait until element is visible    xpath=//div[@class='title-action']/a[contains(.,'${button_name}')]
     Click    xpath=//div[@class='title-action']/a[contains(.,'${button_name}')]
         
-
 Zed: click Action Button in a table for row that contains:
     [Arguments]    ${row_content}    ${zed_table_action_button_locator}
     Zed: perform search by:    ${row_content}
@@ -77,25 +78,29 @@ Zed: submit the form
 Zed: perform search by:
     [Arguments]    ${search_key}
     Type Text    ${zed_search_field_locator}    ${search_key}
-    sleep    2s
-    wait until page contains element    ${zed_processing_block_locator}
+    Wait Until Element Is Visible    ${zed_processing_block_locator}
+    Wait Until Element Is Not Visible    ${zed_processing_block_locator} 
 
 Zed: perform variant search by:
     [Arguments]    ${search_key}
     Type Text    ${zed_variant_search_field_locator}    ${search_key}
-    sleep    2s
-    wait until page contains element    ${zed_processing_block_locator}
+    Wait Until Element Is Visible    ${zed_product_variant_table_processing_locator}
+    Wait Until Element Is Not Visible    ${zed_product_variant_table_processing_locator}  
 
 Zed: table should contain:
     [Arguments]    ${search_key}
     Zed: perform search by:    ${search_key}
-    table should contain    ${zed_table_locator}  ${search_key}
+    Table Should Contain    ${zed_table_locator}  ${search_key}
 
 Zed: go to tab:
     [Arguments]    ${tabName}
-    Click    xpath=//a[contains(@data-toggle,'tab') and contains(text(),'${tabName}')]
+    Click    xpath=//*[contains(@data-toggle,'tab') and contains(text(),'${tabName}')]
         
-
 Zed: message should be shown:
     [Arguments]    ${text}
-    Element Should Be Visible    xpath=//div[contains(@class,'alert alert-success')]//*[contains(text(),'${text}')]    message=Success message is not shown
+    Element Should Be Visible    xpath=//div[contains(@class,'alert alert-success') and contains(text(),'${text}')]    message=Success message is not shown
+
+Zed: click Action Button(without search) in a table for row that contains:
+    [Arguments]    ${row_content}    ${zed_table_action_button_locator}
+    wait until element is visible    xpath=//table[contains(@class,'dataTable')]/tbody//td[contains(text(),'${row_content}')]/../td[contains(@class,'column-Action') or contains(@class,'column-action')]/*[contains(.,'${zed_table_action_button_locator}')]
+    Click    xpath=//table[contains(@class,'dataTable')]/tbody//td[contains(text(),'${row_content}')]/../td[contains(@class,'column-Action') or contains(@class,'column-action')]/*[contains(.,'${zed_table_action_button_locator}')]

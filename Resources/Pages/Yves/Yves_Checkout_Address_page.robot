@@ -31,3 +31,4 @@ ${checkout_billing_address_additional_address_field}    id=addressesForm_billing
 ${checkout_billing_address_zip_code_field}    id=addressesForm_billingAddress_zip_code
 ${checkout_billing_address_city_field}    id=addressesForm_billingAddress_city
 ${checkout_billing_address_phone_field}    id=addressesForm_billingAddress_phone
+${manage_your_addresses_link}    xpath=//a[contains(@href,'customer/address')]

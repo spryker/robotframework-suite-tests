@@ -29,7 +29,6 @@ Yves: create new 'Shopping Cart' with name:
     Click    ${create_shopping_cart_button}
     Type Text    ${shopping_cart_name_input_field}    ${shoppingCartName}
     Click    ${create_new_cart_submit_button}
-        
 
 Yves: the following shopping cart is shown:
     [Arguments]    ${shoppingCartName}    ${shoppingCartAccess}
@@ -66,6 +65,7 @@ Yves: shopping cart contains the following products:
     END    
     
 Yves: click on the '${buttonName}' button in the shopping cart
+    Yves: remove flash messages
     Run Keyword If    '${buttonName}' == 'Checkout'    Click    ${shopping_cart_checkout_button}
     ...    ELSE IF    '${buttonName}' == 'Request a Quote'    Click    ${shopping_cart_request_quote_button}
 
@@ -139,7 +139,22 @@ Yves: change quantity of the configurable bundle in the shopping cart on:
     [Arguments]    ${confBundleTitle}    ${quantity}
     Type Text    xpath=//main//article[contains(@data-qa,'configured-bundle')][1]//*[contains(@class,'configured-bundle') and text()='${confBundleTitle}']/ancestor::article//input[@data-qa='quantity-input']    ${quantity}
     Click    xpath=//main//article[contains(@data-qa,'configured-bundle')][1]//*[contains(@class,'configured-bundle') and text()='${confBundleTitle}']
-        
+    Yves: remove flash messages
+
+Yves: delete all shopping carts
+    Yves: create new 'Shopping Cart' with name:    Z
+    #create new empty cart that will be the last one in the list
+    ${currentURL}=    Get Location        
+    Run Keyword Unless    '/shopping-list' in '${currentURL}'    Go To    ${host}multi-cart
+    ${shoppingCartsCount}=    Get Element Count    xpath=//*[@data-qa='component quote-table']//table/tbody/tr//ul//a[contains(.,'Delete')]
+    Log    ${shoppingCartsCount}
+    FOR    ${index}    IN RANGE    0    ${shoppingCartsCount}-1
+        Log    ${index}
+        Delete first available shopping cart
+        Wait Until Element Is Visible    ${delete_shopping_cart_button}
+        Click    ${delete_shopping_cart_button}
+    END
+    
 
 Yves: delete 'Shopping Cart' with name:
     [Arguments]    ${shoppingCartName}

@@ -12,23 +12,20 @@ Zed: trigger all matching states inside xxx order:
     Zed: perform search by:    ${orderID}
     Zed: click Action Button in a table for row that contains:    ${orderID}    View
     Zed: trigger all matching states inside this order:    ${status}
-        
 
 Zed: trigger all matching states inside this order:
     [Arguments]    ${status}
     Reload    
     FOR    ${index}    IN RANGE    0    10
-        ${order_state_reached}=    Run Keyword And Return Status    Page Should Contain Element    xpath=xpath=//div[@id='order-overview']//form[@name='oms_trigger_form']//button[@id='oms_trigger_form_submit'][text()='${status}']
+        ${order_state_reached}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//div[@id='order-overview']//form[@name='oms_trigger_form']//button[@id='oms_trigger_form_submit'][text()='${status}']
         Run Keyword If    '${order_state_reached}'=='False'    Reload
         ...    ELSE    Exit For Loop
     END
     Click    xpath=//div[@id='order-overview']//form[@name='oms_trigger_form']//button[@id='oms_trigger_form_submit'][text()='${status}']
-        
     ${order_changed_status}=    Run Keyword And Ignore Error    Wait Until Element Is Not Visible    xpath=//div[@id='order-overview']//form[@name='oms_trigger_form']//button[@id='oms_trigger_form_submit'][text()='${status}']
     Run Keyword If    'FAIL' in ${order_changed_status}    Run Keywords
     ...    Reload    
     ...    AND    Click    xpath=//div[@id='order-overview']//form[@name='oms_trigger_form']//button[@id='oms_trigger_form_submit'][text()='${status}']
-    ...    AND        
 
 Yves: create return for the following products:
     [Arguments]    @{sku_list}    ${element1}=${EMPTY}     ${element2}=${EMPTY}     ${element3}=${EMPTY}     ${element4}=${EMPTY}     ${element5}=${EMPTY}     ${element6}=${EMPTY}     ${element7}=${EMPTY}     ${element8}=${EMPTY}     ${element9}=${EMPTY}     ${element10}=${EMPTY}     ${element11}=${EMPTY}     ${element12}=${EMPTY}     ${element13}=${EMPTY}     ${element14}=${EMPTY}     ${element15}=${EMPTY}
@@ -55,6 +52,7 @@ Zed: create a return for the following order and product in it:
     Zed: go to second navigation item level:    Sales    Orders
     Zed: perform search by:    ${orderID}
     Zed: click Action Button in a table for row that contains:    ${orderID}    View
+    Wait Until Page Contains Element    xpath=//div[@class='title-action']/a[contains(.,'Return')]
     Click Element by xpath with JavaScript    //div[@class='title-action']/a[contains(.,'Return')]
     Wait Until Page Contains Element    ${zed_create_return_main_content_locator}
     ${sku_list_count}=   get length  ${sku_list}

@@ -16,7 +16,7 @@ Resource                  ../Pages/Yves/Yves_Login_page.robot
 ${env}                 b2b
 ${headless}            true
 ${browser}             chromium
-${browser_timeout}     65 seconds
+${browser_timeout}     60 seconds
 ${host}                http://yves.de.spryker.local/
 ${zed_url}             http://backoffice.de.spryker.local/
 ${email_domain}        @spryker.com
@@ -70,11 +70,7 @@ TestSetup
     Go To    ${host}
 
 TestTeardown
-    Run Keyword If Test Failed    
-    ...    Run Keywords 
-        # ...    Pause Execution
-    ...    Take screenshot
-    ...    Get Location
+    # Run Keyword If Test Failed    Pause Execution
     Delete All Cookies
 
 Create default Main Context
@@ -112,28 +108,27 @@ Remove element attribute with JavaScript:
 
 #Migration to the Browser Library    
 Wait Until Element Is Visible
-    [Arguments]    ${locator}    ${message}=None    ${timeout}=None
+    [Arguments]    ${locator}    ${message}=${EMPTY}    ${timeout}=0:00:20
     Wait For Elements State    ${locator}    visible    ${timeout}    ${message}
 
 Wait Until Page Contains Element
-    [Arguments]    ${locator}    ${message}=None    ${timeout}=0:00:20
+    [Arguments]    ${locator}    ${message}=${EMPTY}    ${timeout}=0:00:20
     Wait For Elements State    ${locator}    attached    ${timeout}    ${message}
 
 Wait Until Page Does Not Contain Element
-    [Arguments]    ${locator}    ${message}=None    ${timeout}=0:00:20
+    [Arguments]    ${locator}    ${message}=${EMPTY}    ${timeout}=0:00:20
     Wait For Elements State    ${locator}    detached    ${timeout}    ${message}
 
 Wait Until Element Is Enabled
-# Todo: update 'attached' on real usage
-    [Arguments]    ${locator}    ${message}=None    ${timeout}=None
+    [Arguments]    ${locator}    ${message}=${EMPTY}    ${timeout}=0:00:20
     Wait For Elements State    ${locator}    enabled    ${timeout}    ${message}
 
 Element Should Be Visible
-    [Arguments]    ${locator}    ${message}=None    ${timeout}=None
+    [Arguments]    ${locator}    ${message}=${EMPTY}    ${timeout}=0:00:03
     Wait For Elements State    ${locator}    visible    ${timeout}    ${message}
 
 Page Should Contain Element
-    [Arguments]    ${locator}    ${message}=None    ${timeout}=0:00:20
+    [Arguments]    ${locator}    ${message}=${EMPTY}    ${timeout}=0:00:01
     Wait For Elements State    ${locator}    attached    ${timeout}    ${message}
 
 Get Location
@@ -141,11 +136,11 @@ Get Location
     [Return]    ${current_url}
     
 Wait Until Element Is Not Visible
-    [Arguments]    ${locator}    ${message}=None    ${timeout}=None
+    [Arguments]    ${locator}    ${message}=${EMPTY}    ${timeout}=0:00:20
     Wait For Elements State    ${locator}    hidden    ${timeout}    ${message}
 
 Page Should Contain Link
-    [Arguments]    ${url}    ${message}=None
+    [Arguments]    ${url}    ${message}=${EMPTY}
     ${hrefs}=    Execute JavaScript    Array.from(document.querySelectorAll('a')).map(e => e.getAttribute('href'))
     Should Contain    ${hrefs}    ${url}
 
@@ -158,28 +153,28 @@ Input Text
     Type Text    ${locator}    ${text}    0ms
 
 Table Should Contain
-    [Arguments]    ${locator}    ${expected}    ${message}=None    ${ignore_case}=None
-    Browser.Get Text    ${locator}    contains    ${expected}    ${message}
+    [Arguments]    ${locator}    ${expected}    ${message}=${EMPTY}    ${ignore_case}=${EMPTY}
+    Get Text    ${locator}    contains    ${expected}    ${message}
 
 Element Should Contain
-    [Arguments]    ${locator}    ${expected}    ${message}=None    ${ignore_case}=None
-    Browser.Get Text    ${locator}    contains    ${expected}    ${message}
+    [Arguments]    ${locator}    ${expected}    ${message}=${EMPTY}    ${ignore_case}=${EMPTY}
+    Get Text    ${locator}    contains    ${expected}    ${message}
 
 Element Text Should Be
-    [Arguments]    ${locator}    ${expected}    ${message}=None    ${ignore_case}=None
-    Browser.Get Text    ${locator}    equal    ${expected}    ${message} 
+    [Arguments]    ${locator}    ${expected}    ${message}=${EMPTY}    ${ignore_case}=${EMPTY}
+    Get Text    ${locator}    equal    ${expected}    ${message} 
 
 Wait Until Element Contains
-    [Arguments]    ${locator}    ${text}    ${timeout}=None    ${message}=None
-    Browser.Get Text    ${locator}    contains    ${text}    ${message}
+    [Arguments]    ${locator}    ${text}    ${timeout}=0:00:20    ${message}=${EMPTY}
+    Get Text    ${locator}    contains    ${text}    ${message}
 
 Page Should Not Contain Element
-    [Arguments]    ${locator}    ${message}=None    ${timeout}=None
+    [Arguments]    ${locator}    ${message}=${EMPTY}    ${timeout}=0:00:01
     Wait For Elements State    ${locator}    detached    ${timeout}    ${message}
 
 Element Should Not Contain
     [Arguments]    ${locator}    ${text}    
-    Browser.Get Text    ${locator}    validate    "${text}" not in value
+    Get Text    ${locator}    validate    "${text}" not in value
 
 Checkbox Should Be Selected
     [Arguments]    ${locator}
@@ -194,7 +189,7 @@ Mouse Over
     Hover    ${locator}
 
 Element Should Not Be Visible
-    [Arguments]    ${locator}    ${message}=None    ${timeout}=None
+    [Arguments]    ${locator}    ${message}=${EMPTY}    ${timeout}=0:00:03
     Wait For Elements State    ${locator}    hidden    ${timeout}    ${message}
 
 Get Element Attribute

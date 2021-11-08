@@ -4,6 +4,7 @@ Resource    ../Common/Common_Yves.robot
 Resource    ../Common/Common_Zed.robot
 Resource    ../Pages/Zed/Zed_Attach_to_Business_Unit_page.robot
 Resource    ../Pages/Yves/Yves_Customer_Account_page.robot
+Resource    ../Pages/Zed/Zed_Delete_Company_User_page.robot
 
 
 *** Keywords ***
@@ -20,7 +21,7 @@ Zed: create new Company Business Unit with provided name and company:
     wait until element is visible    ${zed_success_flash_message}
     wait until element is visible    ${zed_table_locator}
     Zed: perform search by:    ${bu_name_to_set}
-    table should contain    ${zed_table_locator}    ${bu_name_to_set}
+    Table Should Contain    ${zed_table_locator}    ${bu_name_to_set}
     ${newly_created_business_unit_id}=      get text    xpath=//table[contains(@class,'dataTable')]/tbody//td[contains(text(),'${bu_name_to_set}')]/../td[1]
     log    ${newly_created_business_unit_id}
     set suite variable    ${newly_created_business_unit_id}
@@ -34,7 +35,7 @@ Zed: create new Company with provided name:
     Zed: submit the form
     wait until element is visible    ${zed_success_flash_message}
     wait until element is visible    ${zed_table_locator}
-    table should contain    ${zed_table_locator}    ${company_name}
+    Table Should Contain    ${zed_table_locator}    ${company_name}
 
 Zed: create new Company Role with provided permissions:
     [Documentation]     Creates new company role with provided permission. Permissions are optional
@@ -53,7 +54,7 @@ Zed: create new Company Role with provided permissions:
     Type Text    ${zed_role_name_field}    ${new_role_name}
     Zed: submit the form
     Zed: perform search by:    ${new_role_name}
-    table should contain    ${zed_table_locator}    ${new_role_name}
+    Table Should Contain    ${zed_table_locator}    ${new_role_name}
 
 Zed: Create new Company User with provided email/company/business unit and role(s):
     [Arguments]    ${email}    ${company}    ${business_unit}    ${role}
@@ -76,7 +77,7 @@ Zed: Create new Company User with provided email/company/business unit and role(
     wait until element is visible    ${zed_success_flash_message}
     wait until element is visible    ${zed_table_locator}
     Zed: perform search by:    Robot First+${random}
-    table should contain    ${zed_table_locator}    Robot First+${random}
+    Table Should Contain    ${zed_table_locator}    Robot First+${random}
 
 Zed: attach company user to the following BU with role:
     [Arguments]    ${business_unit}    ${role_checkbox}
@@ -93,3 +94,15 @@ Yves: 'Business Unit' dropdown contains:
         ${business_unit_to_check}=    Get From List    ${business_units_list}    ${index}
         Page Should Contain Element    //select[@id='company_user_account_selector_form_companyUserAccount']/option[contains(.,'${business_unit_to_check}')]
     END
+
+Zed: delete company user xxx withing xxx company business unit:
+    [Documentation]    Possible argument names: company user name
+    [Arguments]    ${companyUserName}    ${companyBusinessUnit}
+    Zed: login on Zed with provided credentials:    ${zed_admin_email}    
+    ${currentURL}=    Get Location        
+    Run Keyword Unless    '/customer' in '${currentURL}'    Zed: go to second navigation item level:    Customers    Company Users
+    Zed: perform search by:    ${companyUserName}
+    ${customerExists}=    Run Keyword And Return Status    Table should contain    ${zed_table_locator}    ${companyBusinessUnit}
+    Run Keyword If    '${customerExists}'=='True'    Run keywords
+        ...    Zed: click Action Button(without search) in a table for row that contains:    ${companyBusinessUnit}    Delete    AND
+        ...    Click    ${zed_confirm_delete_company_user_button}
