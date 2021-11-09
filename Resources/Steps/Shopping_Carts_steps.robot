@@ -139,6 +139,7 @@ Yves: change quantity of the configurable bundle in the shopping cart on:
     [Arguments]    ${confBundleTitle}    ${quantity}
     Type Text    xpath=//main//article[contains(@data-qa,'configured-bundle')][1]//*[contains(@class,'configured-bundle') and text()='${confBundleTitle}']/ancestor::article//input[@data-qa='quantity-input']    ${quantity}
     Click    xpath=//main//article[contains(@data-qa,'configured-bundle')][1]//*[contains(@class,'configured-bundle') and text()='${confBundleTitle}']
+    Wait For Request    timeout=3s
     Yves: remove flash messages
 
 Yves: delete all shopping carts

@@ -519,7 +519,6 @@ Configurable_Bundle
     Yves: select product in the bundle slot:    Slot 6    424551
     Yves: go to 'Summary' step in the bundle configurator
     Yves: add products to the shopping cart in the bundle configurator
-    Yves: go to the shopping cart through the header with name:    confBundle+${random}
     Yves: change quantity of the configurable bundle in the shopping cart on:    Presentation bundle    2
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: billing address same as shipping address:    true
