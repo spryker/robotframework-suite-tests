@@ -14,7 +14,7 @@ Resource                  ../Pages/Yves/Yves_Login_page.robot
 *** Variables ***
 # *** SUITE VARIABLES ***
 ${env}                 b2b
-${headless}            false
+${headless}            true
 ${browser}             chromium
 ${browser_timeout}     60 seconds
 ${host}                http://yves.de.spryker.local/
