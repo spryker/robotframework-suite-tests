@@ -1,10 +1,10 @@
 *** Settings ***
-Resource    ../Common/Common.robot
-Resource    ../Common/Common_Yves.robot
-Resource    ../Common/Common_Zed.robot
-Resource    ../Pages/Zed/Zed_Attach_to_Business_Unit_page.robot
-Resource    ../Pages/Yves/Yves_Customer_Account_page.robot
-Resource    ../Pages/Zed/Zed_Delete_Company_User_page.robot
+Resource    ../common/common.robot
+Resource    ../common/common_yves.robot
+Resource    ../common/common_zed.robot
+Resource    ../pages/zed/zed_attach_to_business_unit_page.robot
+Resource    ../pages/yves/yves_customer_account_page.robot
+Resource    ../pages/zed/zed_delete_company_user_page.robot
 
 
 *** Keywords ***

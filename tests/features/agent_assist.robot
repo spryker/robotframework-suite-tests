@@ -3,23 +3,23 @@ Suite Setup       SuiteSetup
 Suite Teardown    SuiteTeardown
 Test Setup        TestSetup
 Test Teardown     TestTeardown
-Resource    ../../Resources/Steps/Agent_Assist_steps.robot
-Resource    ../../Resources/Common/Common.robot
-Resource    ../../Resources/Steps/Header_steps.robot
-Resource    ../../Resources/Common/Common_Yves.robot
-Resource    ../../Resources/Common/Common_Zed.robot
-Resource    ../../Resources/Steps/PDP_steps.robot
-Resource    ../../Resources/Steps/Shopping_Lists_steps.robot
-Resource    ../../Resources/Steps/Checkout_steps.robot
-Resource    ../../Resources/Steps/Order_History_steps.robot
-Resource    ../../Resources/Steps/Product_Set_steps.robot
-Resource    ../../Resources/Steps/Catalog_steps.robot
-Resource    ../../Resources/Steps/Company_steps.robot
-Resource    ../../Resources/Steps/Customer_Account_steps.robot
-Resource    ../../Resources/Steps/Configurable_Bundle_steps.robot
-Resource    ../../Resources/Pages/Yves/Yves_Shopping_Cart_page.robot
-Resource    ../../Resources/Pages/Yves/Yves_Agent_Assist_page.robot
-Resource    ../../Resources/Steps/Zed_Users_steps.robot
+Resource    ../../resources/steps/agent_assist_steps.robot
+Resource    ../../resources/common/common.robot
+Resource    ../../resources/steps/header_steps.robot
+Resource    ../../resources/common/common_yves.robot
+Resource    ../../resources/common/common_zed.robot
+Resource    ../../resources/steps/pdp_steps.robot
+Resource    ../../resources/steps/shopping_lists_steps.robot
+Resource    ../../resources/steps/checkout_steps.robot
+Resource    ../../resources/steps/order_history_steps.robot
+Resource    ../../resources/steps/product_set_steps.robot
+Resource    ../../resources/steps/catalog_steps.robot
+Resource    ../../resources/steps/company_steps.robot
+Resource    ../../resources/steps/customer_account_steps.robot
+Resource    ../../resources/steps/configurable_bundle_steps.robot
+Resource    ../../resources/pages/yves/yves_shopping_cart_page.robot
+Resource    ../../resources/pages/yves/yves_agent_assist_page.robot
+Resource    ../../resources/steps/zed_users_steps.robot
 
 
 *** Test Cases ***

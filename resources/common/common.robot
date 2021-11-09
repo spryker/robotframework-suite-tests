@@ -6,10 +6,10 @@ Library    OperatingSystem
 Library    Collections
 Library    BuiltIn
 Library    DateTime
-Library    ../../Resources/Libraries/common.py
+Library    ../../resources/libraries/common.py
 Library    Telnet
-Resource                  ../Pages/Yves/Yves_Header_section.robot
-Resource                  ../Pages/Yves/Yves_Login_page.robot
+Resource                  ../pages/yves/yves_header_section.robot
+Resource                  ../pages/yves/Yves_Login_page.robot
 
 *** Variables ***
 # *** SUITE VARIABLES ***

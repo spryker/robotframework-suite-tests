@@ -1,7 +1,7 @@
 *** Settings ***
-Resource    ../Common/Common.robot
-Resource    ../../Resources/Common/Common_Yves.robot
-Resource    ../Pages/Yves/Yves_Wishlist_page.robot
+Resource    ../common/common.robot
+Resource    ../../resources/common/common_yves.robot
+Resource    ../pages/yves/yves_wishlist_page.robot
 
 *** Keywords ***
 Yves: go To 'Wishlist' Page

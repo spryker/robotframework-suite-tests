@@ -1,7 +1,7 @@
 *** Settings ***
-Resource    ../Common/Common_Zed.robot
-Resource    ../Common/Common.robot
-Resource    ../Pages/Zed/Zed_Edit_Product_page.robot
+Resource    ../common/common_zed.robot
+Resource    ../common/common.robot
+Resource    ../pages/zed/zed_edit_product_page.robot
 
 *** Keywords ***
 Zed: discontinue the following product:

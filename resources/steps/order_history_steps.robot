@@ -1,8 +1,8 @@
 *** Settings ***
-Resource    ../Common/Common.robot
-Resource    ../Common/Common_Yves.robot
-Resource    ../Pages/Yves/Yves_Order_History_page.robot
-Resource    ../Pages/Yves/Yves_Order_Details_page.robot
+Resource    ../common/common.robot
+Resource    ../common/common_yves.robot
+Resource    ../pages/yves/yves_order_history_page.robot
+Resource    ../pages/yves/yves_order_details_page.robot
 
 *** Keywords ***
 Yves: 'View Order/Reorder/Return' on the order history page: 

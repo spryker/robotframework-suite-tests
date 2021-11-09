@@ -1,12 +1,12 @@
 *** Settings ***
-Resource    ../Common/Common.robot
-Resource    ../Pages/Yves/Yves_Header_section.robot
-Resource    ../Pages/Yves/Yves_Catalog_page.robot
-Resource    ../Steps/Request_for_Quote_steps.robot
-Resource    ../Steps/Shopping_Carts_steps.robot
-Resource    ../Steps/Shopping_Lists_steps.robot
-Resource    ../Steps/Quick_Order_steps.robot
-Resource    ../Steps/Request_for_Quote_steps.robot
+Resource    ../common/common.robot
+Resource    ../pages/yves/yves_header_section.robot
+Resource    ../pages/yves/yves_catalog_page.robot
+Resource    ../steps/request_for_quote_steps.robot
+Resource    ../steps/shopping_carts_steps.robot
+Resource    ../steps/shopping_lists_steps.robot
+Resource    ../steps/quick_order_steps.robot
+Resource    ../steps/request_for_quote_steps.robot
 
 *** Variable ***
 ${priceModeSwitcher}    ${price_mode_switcher_header_menu_item}

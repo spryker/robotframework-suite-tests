@@ -1,7 +1,7 @@
 *** Settings ***
-Resource    ../Common/Common.robot
-Resource    ../Pages/Yves/Yves_Product_Details_page.robot
-Resource    ../Common/Common_Yves.robot
+Resource    ../common/common.robot
+Resource    ../pages/yves/yves_product_details_page.robot
+Resource    ../common/common_yves.robot
 
 *** Variable ***
 ${pdpPriceLocator}    ${pdp_price_element_locator}

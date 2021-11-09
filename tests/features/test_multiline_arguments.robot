@@ -3,10 +3,10 @@ Library    BuiltIn
 Suite Setup       SuiteSetup
 Suite Teardown    SuiteTeardown
 Test Teardown     TestTeardown
-Resource    ../../Resources/Common/Common.robot
-Resource    ../../Resources/Common/Common_Yves.robot
-Resource    ../../Resources/Steps/PDP_steps.robot
-Resource    ../../Resources/Steps/Header_steps.robot
+Resource    ../../resources/common/common.robot
+Resource    ../../resources/common/common_yves.robot
+Resource    ../../resources/steps/pdp_steps.robot
+Resource    ../../resources/steps/header_steps.robot
 
 *** Test Cases ***
 b2c_test_new_function

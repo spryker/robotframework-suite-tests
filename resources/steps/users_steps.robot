@@ -1,7 +1,7 @@
 *** Settings ***
-Resource    ../Pages/Zed/Zed_Delete_User_Confirmation_page.robot
-Resource    ../Common/Common_Zed.robot
-Resource    ../Common/Common.robot
+Resource    ../pages/zed/zed_delete_user_confirmation_page.robot
+Resource    ../common/common_zed.robot
+Resource    ../common/common.robot
 
 *** Keywords ***
 Zed: delete Zed user with the following email:

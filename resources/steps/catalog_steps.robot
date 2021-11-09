@@ -1,7 +1,7 @@
 *** Settings ***
-Resource    ../Pages/Yves/Yves_Catalog_page.robot
-Resource    ../Common/Common_Yves.robot
-Resource    ../Common/Common.robot
+Resource    ../pages/yves/yves_catalog_page.robot
+Resource    ../common/common_yves.robot
+Resource    ../common/common.robot
 
 *** Keywords ***
 Yves: 'Catalog' page should show products:

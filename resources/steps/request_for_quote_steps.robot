@@ -1,10 +1,10 @@
 *** Settings ***
-Resource    ../Common/Common.robot
-Resource    ../Pages/Yves/Yves_Quote_Request_page.robot
-Resource    ../Common/Common_Yves.robot
-Resource    ../Steps/Header_steps.robot
-Resource    ../Common/Common.robot
-Resource    ../../Resources/Pages/Yves/Yves_Shopping_Cart_page.robot
+Resource    ../common/common.robot
+Resource    ../pages/yves/yves_quote_request_page.robot
+Resource    ../common/common_yves.robot
+Resource    ../steps/header_steps.robot
+Resource    ../common/common.robot
+Resource    ../../resources/pages/yves/yves_shopping_cart_page.robot
 
 *** Keywords ***
 Yves: Go to 'Quote Requests' page

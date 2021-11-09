@@ -1,8 +1,8 @@
 *** Settings ***
-Resource    ../Common/Common.robot
-Resource    ../Pages/Yves/Yves_Shopping_Lists_page.robot
-Resource    ../Common/Common_Yves.robot
-Resource    ../Pages/Yves/Yves_Delete_Shopping_List_page.robot
+Resource    ../common/common.robot
+Resource    ../pages/yves/yves_shopping_lists_page.robot
+Resource    ../common/common_yves.robot
+Resource    ../pages/yves/yves_delete_shopping_list_page.robot
 
 *** Keywords ***
 Yves: 'Shopping List' widget contains:

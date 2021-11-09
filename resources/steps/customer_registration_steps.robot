@@ -1,10 +1,10 @@
 *** Settings ***
-Resource    ../Common/Common.robot
-Resource    ../Steps/Quick_Order_steps.robot
-Resource    ../Pages/Yves/Yves_Customer_Account_page.robot
-Resource    ../../Resources/Common/Common.robot
-Resource    ../Pages/Yves/Yves_Customer_Registration_page.robot
-Resource    ../Steps/Customer_Account_steps.robot
+Resource    ../common/common.robot
+Resource    ../steps/quick_order_steps.robot
+Resource    ../pages/yves/yves_customer_account_page.robot
+Resource    ../../resources/common/common.robot
+Resource    ../pages/yves/yves_customer_registration_page.robot
+Resource    ../steps/customer_account_steps.robot
 
 *** Keywords ***
 Register a new customer with data:

@@ -1,7 +1,7 @@
 *** Settings ***
-Resource    ../Pages/Zed/Zed_Create_Zed_User_page.robot
-Resource    ../Common/Common_Zed.robot
-Resource    ../Common/Common.robot
+Resource    ../pages/zed/zed_create_zed_user_page.robot
+Resource    ../common/common_zed.robot
+Resource    ../common/common.robot
 
 *** Keywords ***
 Zed: create new Zed user with the following data:

@@ -1,23 +1,23 @@
 *** Settings ***
-Library    ../../Resources/Libraries/common.py
-Resource    Common.robot
-Resource    ../Pages/Yves/Yves_Catalog_page.robot
-Resource    ../Pages/Yves/Yves_Product_Details_page.robot
-Resource    ../Pages/Yves/Yves_Company_Users_page.robot
-Resource    ../Pages/Yves/Yves_Shopping_Lists_page.robot
-Resource    ../Pages/Yves/Yves_Shopping_Carts_page.robot
-Resource    ../Pages/Yves/Yves_Shopping_Cart_page.robot
-Resource    ../Pages/Yves/Yves_Shopping_list_page.robot
-Resource    ../Pages/Yves/Yves_Checkout_Success_page.robot
-Resource    ../Pages/Yves/Yves_Order_History_page.robot
-Resource    ../Pages/Yves/Yves_Order_Details_page.robot
-Resource    ../Pages/Yves/Yves_Customer_Account_page.robot
-Resource    ../Pages/Yves/Yves_Quote_Requests_page.robot
-Resource    ../Pages/Yves/Yves_Quote_Request_page.robot
-Resource    ../Pages/Yves/Yves_Choose_Bundle_to_Configure_page.robot
-Resource    ../Pages/Yves/Yves_Create_Return_page.robot
-Resource    ../Pages/Yves/Yves_Return_Details_page.robot
-Resource    ../Steps/Header_steps.robot
+Library    ../../resources/Libraries/common.py
+Resource    common.robot
+Resource    ../pages/yves/yves_catalog_page.robot
+Resource    ../pages/yves/yves_product_details_page.robot
+Resource    ../pages/yves/yves_company_users_page.robot
+Resource    ../pages/yves/yves_shopping_lists_page.robot
+Resource    ../pages/yves/yves_shopping_carts_page.robot
+Resource    ../pages/yves/yves_shopping_cart_page.robot
+Resource    ../pages/yves/yves_shopping_list_page.robot
+Resource    ../pages/yves/yves_checkout_success_page.robot
+Resource    ../pages/yves/yves_order_history_page.robot
+Resource    ../pages/yves/yves_order_details_page.robot
+Resource    ../pages/yves/yves_customer_account_page.robot
+Resource    ../pages/yves/yves_quote_requests_page.robot
+Resource    ../pages/yves/yves_quote_request_page.robot
+Resource    ../pages/yves/yves_choose_bundle_to_configure_page.robot
+Resource    ../pages/yves/yves_create_return_page.robot
+Resource    ../pages/yves/yves_return_details_page.robot
+Resource    ../steps/header_steps.robot
 
 *** Variable ***
 ${notification_area}    xpath=//section[@data-qa='component notification-area']

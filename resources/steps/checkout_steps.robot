@@ -1,10 +1,10 @@
 *** Settings ***
-Resource    ../Pages/Yves/Yves_Checkout_Address_page.robot
-Resource    ../Pages/Yves/Yves_Checkout_Login_page.robot
-Resource    ../Pages/Yves/Yves_Checkout_Payment_page.robot
-Resource    ../Pages/Yves/Yves_Checkout_Summary_page.robot
-Resource    ../Common/Common_Yves.robot
-Resource    ../Common/Common.robot
+Resource    ../pages/yves/yves_checkout_address_page.robot
+Resource    ../pages/yves/yves_checkout_login_page.robot
+Resource    ../pages/yves/yves_checkout_payment_page.robot
+Resource    ../pages/yves/yves_checkout_summary_page.robot
+Resource    ../common/common_yves.robot
+Resource    ../common/common.robot
 
 
 *** Variables ***

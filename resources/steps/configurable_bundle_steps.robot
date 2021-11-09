@@ -1,7 +1,7 @@
 *** Settings ***
-Resource    ../Common/Common.robot
-Resource    ../Common/Common_Yves.robot
-Resource    ../Pages/Yves/Yves_Bundle_Configurator_page.robot
+Resource    ../common/common.robot
+Resource    ../common/common_yves.robot
+Resource    ../pages/yves/yves_bundle_configurator_page.robot
 
 *** Keywords ***
 Yves: choose bundle template to configure:

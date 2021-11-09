@@ -1,8 +1,8 @@
 *** Settings ***
 Library    BuiltIn
-Resource                  Common.robot
-Resource                  ../Pages/Zed/Zed_Login_page.robot
-Resource    ../Pages/Zed/Zed_Edit_Product_page.robot
+Resource                  common.robot
+Resource                  ../pages/zed/zed_login_page.robot
+Resource    ../pages/zed/zed_edit_product_page.robot
 
 *** Variable ***
 ${zed_log_out_button}   xpath=//ul[@class='nav navbar-top-links navbar-right']//a[contains(@href,'logout')]

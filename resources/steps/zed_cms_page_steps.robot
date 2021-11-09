@@ -1,7 +1,7 @@
 *** Settings ***
-Resource    ../Pages/Zed/Zed_CMS_page_page.robot
-Resource    ../Common/Common_Zed.robot
-Resource    ../Common/Common.robot
+Resource    ../pages/zed/zed_cms_page_page.robot
+Resource    ../common/common_zed.robot
+Resource    ../common/common.robot
 
 *** Keywords ***
 Zed: create a cms page and publish it:

@@ -1,7 +1,7 @@
 *** Settings ***
-Resource    ../Common/Common.robot
-Resource    ../Common/Common_Yves.robot 
-Resource    ../Pages/Yves/Yves_Quick_Order_page.robot
+Resource    ../common/common.robot
+Resource    ../common/common_yves.robot 
+Resource    ../pages/yves/yves_quick_order_page.robot
 
 *** Keywords ***
 Yves: Go to 'Quick Order' page

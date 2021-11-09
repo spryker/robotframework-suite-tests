@@ -1,9 +1,9 @@
 *** Settings ***
-Resource    ../Common/Common.robot
-Resource    ../Common/Common_Zed.robot
-Resource    ../Pages/Yves/Yves_Return_Slip_page.robot
-Resource    ../Pages/Zed/Zed_Create_Return_page.robot
-Resource    ../Pages/Zed/Zed_Return_Details_page.robot
+Resource    ../common/common.robot
+Resource    ../common/common_zed.robot
+Resource    ../pages/yves/yves_return_slip_page.robot
+Resource    ../pages/zed/zed_create_return_page.robot
+Resource    ../pages/zed/zed_return_details_page.robot
 
 *** Keywords ***
 Zed: trigger all matching states inside xxx order:

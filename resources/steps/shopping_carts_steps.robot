@@ -1,8 +1,8 @@
 *** Settings ***
-Resource    ../Pages/Yves/Yves_Shopping_Carts_page.robot
-Resource    ../Pages/Yves/Yves_Shopping_Cart_page.robot
-Resource    ../Pages/Yves/Yves_Delete_Shopping_Cart_page.robot
-Resource    ../Common/Common_Yves.robot
+Resource    ../pages/yves/yves_shopping_carts_page.robot
+Resource    ../pages/yves/yves_shopping_cart_page.robot
+Resource    ../pages/yves/yves_delete_shopping_cart_page.robot
+Resource    ../common/common_yves.robot
 
 *** Variables ***
 ${upSellProducts}    ${shopping_cart_upp-sell_products_section}

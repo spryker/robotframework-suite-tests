@@ -1,8 +1,8 @@
 *** Settings ***
-Resource    ../Common/Common.robot
-Resource    ../Steps/Header_steps.robot
-Resource    ../Steps/Quick_Order_steps.robot
-Resource    ../Pages/Yves/Yves_Customer_Account_page.robot
+Resource    ../common/common.robot
+Resource    ../steps/header_steps.robot
+Resource    ../steps/quick_order_steps.robot
+Resource    ../pages/yves/yves_customer_account_page.robot
 
 *** Keywords ***
 Yves: go to user menu item in the left bar:

@@ -1,7 +1,7 @@
 *** Settings ***
-Resource    ../Common/Common.robot
-Resource    ../Pages/Yves/Yves_Product_Sets_page.robot
-Resource    ../Common/Common_Yves.robot
+Resource    ../common/common.robot
+Resource    ../pages/yves/yves_product_sets_page.robot
+Resource    ../common/common_yves.robot
 
 *** Keywords ***
 Yves: 'Product Sets' page contains the following sets:
