@@ -1,0 +1,2345 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 4.0.3 (Python 3.9.5 on darwin)" generated="20211109 18:15:45.082" rpa="false" schemaversion="2">
+<suite id="s1" name="Smoke B2B" source="/Users/shopin/automation/robot/spryker/Tests/Smoke/Smoke_B2B.robot">
+<kw name="SuiteSetup" library="Common" type="SETUP">
+<doc>Basic steps before each suite</doc>
+<kw name="Remove Files" library="OperatingSystem">
+<arg>${OUTPUTDIR}/selenium-screenshot-*.png</arg>
+<doc>Uses `Remove File` to remove multiple files one-by-one.</doc>
+<msg timestamp="20211109 18:15:46.402" level="INFO" html="true">File '&lt;a href="file:///Users/shopin/automation/robot/spryker/selenium-screenshot-*.png"&gt;/Users/shopin/automation/robot/spryker/selenium-screenshot-*.png&lt;/a&gt;' does not exist.</msg>
+<status status="PASS" starttime="20211109 18:15:46.401" endtime="20211109 18:15:46.402"/>
+</kw>
+<kw name="Remove Files" library="OperatingSystem">
+<arg>Resources/Libraries/__pycache__/*</arg>
+<doc>Uses `Remove File` to remove multiple files one-by-one.</doc>
+<msg timestamp="20211109 18:15:46.403" level="INFO" html="true">Removed file '&lt;a href="file:///Users/shopin/automation/robot/spryker/Resources/Libraries/__pycache__/common.cpython-39.pyc"&gt;/Users/shopin/automation/robot/spryker/Resources/Libraries/__pycache__/common.cpython-39.pyc&lt;/a&gt;'.</msg>
+<status status="PASS" starttime="20211109 18:15:46.402" endtime="20211109 18:15:46.403"/>
+</kw>
+<kw name="Load Variables" library="Common">
+<arg>${env}</arg>
+<kw name="Define Environment Variables From Json File" library="common">
+<var>&amp;{vars}</var>
+<arg>${env}</arg>
+<msg timestamp="20211109 18:15:46.405" level="INFO">Looking for b2b environment
+Found an environment b2b!</msg>
+<msg timestamp="20211109 18:15:46.406" level="INFO">&amp;{vars} = { environment=b2b | host=http://yves.de.spryker.local/ | zed_url=http://backoffice.de.spryker.local/ | yves_user_email=sonia@spryker.com | yves_user_first_name=Sonia | yves_user_last_name=Wagner | yve...</msg>
+<status status="PASS" starttime="20211109 18:15:46.404" endtime="20211109 18:15:46.406"/>
+</kw>
+<for flavor="IN">
+<var>${key}</var>
+<var>${value}</var>
+<value>&amp;{vars}</value>
+<iter>
+<var name="${key}">environment</var>
+<var name="${value}">b2b</var>
+<kw name="Log" library="BuiltIn">
+<arg>Key is '${key}' and value is '${value}'.</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20211109 18:15:46.407" level="INFO">Key is 'environment' and value is 'b2b'.</msg>
+<status status="PASS" starttime="20211109 18:15:46.407" endtime="20211109 18:15:46.407"/>
+</kw>
+<kw name="Get Variable Value" library="BuiltIn">
+<var>${var_value}</var>
+<arg>${${key}}</arg>
+<arg>${value}</arg>
+<doc>Returns variable value or ``default`` if the variable does not exist.</doc>
+<msg timestamp="20211109 18:15:46.419" level="INFO">${var_value} = b2b</msg>
+<status status="PASS" starttime="20211109 18:15:46.407" endtime="20211109 18:15:46.419"/>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<arg>${${key}}</arg>
+<arg>${var_value}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<msg timestamp="20211109 18:15:46.425" level="INFO">${environment} = b2b</msg>
+<status status="PASS" starttime="20211109 18:15:46.419" endtime="20211109 18:15:46.426"/>
+</kw>
+<status status="PASS" starttime="20211109 18:15:46.406" endtime="20211109 18:15:46.426"/>
+</iter>
+<iter>
+<var name="${key}">host</var>
+<var name="${value}">http://yves.de.spryker.local/</var>
+<kw name="Log" library="BuiltIn">
+<arg>Key is '${key}' and value is '${value}'.</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20211109 18:15:46.427" level="INFO">Key is 'host' and value is 'http://yves.de.spryker.local/'.</msg>
+<status status="PASS" starttime="20211109 18:15:46.426" endtime="20211109 18:15:46.427"/>
+</kw>
+<kw name="Get Variable Value" library="BuiltIn">
+<var>${var_value}</var>
+<arg>${${key}}</arg>
+<arg>${value}</arg>
+<doc>Returns variable value or ``default`` if the variable does not exist.</doc>
+<msg timestamp="20211109 18:15:46.428" level="INFO">${var_value} = http://yves.de.spryker.local/</msg>
+<status status="PASS" starttime="20211109 18:15:46.427" endtime="20211109 18:15:46.428"/>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<arg>${${key}}</arg>
+<arg>${var_value}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<msg timestamp="20211109 18:15:46.429" level="INFO">${host} = http://yves.de.spryker.local/</msg>
+<status status="PASS" starttime="20211109 18:15:46.428" endtime="20211109 18:15:46.429"/>
+</kw>
+<status status="PASS" starttime="20211109 18:15:46.426" endtime="20211109 18:15:46.429"/>
+</iter>
+<iter>
+<var name="${key}">zed_url</var>
+<var name="${value}">http://backoffice.de.spryker.local/</var>
+<kw name="Log" library="BuiltIn">
+<arg>Key is '${key}' and value is '${value}'.</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20211109 18:15:46.429" level="INFO">Key is 'zed_url' and value is 'http://backoffice.de.spryker.local/'.</msg>
+<status status="PASS" starttime="20211109 18:15:46.429" endtime="20211109 18:15:46.429"/>
+</kw>
+<kw name="Get Variable Value" library="BuiltIn">
+<var>${var_value}</var>
+<arg>${${key}}</arg>
+<arg>${value}</arg>
+<doc>Returns variable value or ``default`` if the variable does not exist.</doc>
+<msg timestamp="20211109 18:15:46.430" level="INFO">${var_value} = http://backoffice.de.spryker.local/</msg>
+<status status="PASS" starttime="20211109 18:15:46.430" endtime="20211109 18:15:46.430"/>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<arg>${${key}}</arg>
+<arg>${var_value}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<msg timestamp="20211109 18:15:46.431" level="INFO">${zed_url} = http://backoffice.de.spryker.local/</msg>
+<status status="PASS" starttime="20211109 18:15:46.430" endtime="20211109 18:15:46.431"/>
+</kw>
+<status status="PASS" starttime="20211109 18:15:46.429" endtime="20211109 18:15:46.431"/>
+</iter>
+<iter>
+<var name="${key}">yves_user_email</var>
+<var name="${value}">sonia@spryker.com</var>
+<kw name="Log" library="BuiltIn">
+<arg>Key is '${key}' and value is '${value}'.</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20211109 18:15:46.432" level="INFO">Key is 'yves_user_email' and value is 'sonia@spryker.com'.</msg>
+<status status="PASS" starttime="20211109 18:15:46.431" endtime="20211109 18:15:46.432"/>
+</kw>
+<kw name="Get Variable Value" library="BuiltIn">
+<var>${var_value}</var>
+<arg>${${key}}</arg>
+<arg>${value}</arg>
+<doc>Returns variable value or ``default`` if the variable does not exist.</doc>
+<msg timestamp="20211109 18:15:46.443" level="INFO">${var_value} = sonia@spryker.com</msg>
+<status status="PASS" starttime="20211109 18:15:46.432" endtime="20211109 18:15:46.443"/>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<arg>${${key}}</arg>
+<arg>${var_value}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<msg timestamp="20211109 18:15:46.449" level="INFO">${yves_user_email} = sonia@spryker.com</msg>
+<status status="PASS" starttime="20211109 18:15:46.443" endtime="20211109 18:15:46.449"/>
+</kw>
+<status status="PASS" starttime="20211109 18:15:46.431" endtime="20211109 18:15:46.449"/>
+</iter>
+<iter>
+<var name="${key}">yves_user_first_name</var>
+<var name="${value}">Sonia</var>
+<kw name="Log" library="BuiltIn">
+<arg>Key is '${key}' and value is '${value}'.</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20211109 18:15:46.449" level="INFO">Key is 'yves_user_first_name' and value is 'Sonia'.</msg>
+<status status="PASS" starttime="20211109 18:15:46.449" endtime="20211109 18:15:46.449"/>
+</kw>
+<kw name="Get Variable Value" library="BuiltIn">
+<var>${var_value}</var>
+<arg>${${key}}</arg>
+<arg>${value}</arg>
+<doc>Returns variable value or ``default`` if the variable does not exist.</doc>
+<msg timestamp="20211109 18:15:46.460" level="INFO">${var_value} = Sonia</msg>
+<status status="PASS" starttime="20211109 18:15:46.450" endtime="20211109 18:15:46.460"/>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<arg>${${key}}</arg>
+<arg>${var_value}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<msg timestamp="20211109 18:15:46.465" level="INFO">${yves_user_first_name} = Sonia</msg>
+<status status="PASS" starttime="20211109 18:15:46.460" endtime="20211109 18:15:46.465"/>
+</kw>
+<status status="PASS" starttime="20211109 18:15:46.449" endtime="20211109 18:15:46.465"/>
+</iter>
+<iter>
+<var name="${key}">yves_user_last_name</var>
+<var name="${value}">Wagner</var>
+<kw name="Log" library="BuiltIn">
+<arg>Key is '${key}' and value is '${value}'.</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20211109 18:15:46.466" level="INFO">Key is 'yves_user_last_name' and value is 'Wagner'.</msg>
+<status status="PASS" starttime="20211109 18:15:46.466" endtime="20211109 18:15:46.466"/>
+</kw>
+<kw name="Get Variable Value" library="BuiltIn">
+<var>${var_value}</var>
+<arg>${${key}}</arg>
+<arg>${value}</arg>
+<doc>Returns variable value or ``default`` if the variable does not exist.</doc>
+<msg timestamp="20211109 18:15:46.475" level="INFO">${var_value} = Wagner</msg>
+<status status="PASS" starttime="20211109 18:15:46.466" endtime="20211109 18:15:46.475"/>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<arg>${${key}}</arg>
+<arg>${var_value}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<msg timestamp="20211109 18:15:46.480" level="INFO">${yves_user_last_name} = Wagner</msg>
+<status status="PASS" starttime="20211109 18:15:46.475" endtime="20211109 18:15:46.480"/>
+</kw>
+<status status="PASS" starttime="20211109 18:15:46.465" endtime="20211109 18:15:46.480"/>
+</iter>
+<iter>
+<var name="${key}">yves_user_password</var>
+<var name="${value}">change123</var>
+<kw name="Log" library="BuiltIn">
+<arg>Key is '${key}' and value is '${value}'.</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20211109 18:15:46.481" level="INFO">Key is 'yves_user_password' and value is 'change123'.</msg>
+<status status="PASS" starttime="20211109 18:15:46.481" endtime="20211109 18:15:46.481"/>
+</kw>
+<kw name="Get Variable Value" library="BuiltIn">
+<var>${var_value}</var>
+<arg>${${key}}</arg>
+<arg>${value}</arg>
+<doc>Returns variable value or ``default`` if the variable does not exist.</doc>
+<msg timestamp="20211109 18:15:46.490" level="INFO">${var_value} = change123</msg>
+<status status="PASS" starttime="20211109 18:15:46.481" endtime="20211109 18:15:46.490"/>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<arg>${${key}}</arg>
+<arg>${var_value}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<msg timestamp="20211109 18:15:46.495" level="INFO">${yves_user_password} = change123</msg>
+<status status="PASS" starttime="20211109 18:15:46.491" endtime="20211109 18:15:46.495"/>
+</kw>
+<status status="PASS" starttime="20211109 18:15:46.481" endtime="20211109 18:15:46.495"/>
+</iter>
+<iter>
+<var name="${key}">yves_company_user_manager_and_buyer_email</var>
+<var name="${value}">andrew@ottom.de</var>
+<kw name="Log" library="BuiltIn">
+<arg>Key is '${key}' and value is '${value}'.</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20211109 18:15:46.496" level="INFO">Key is 'yves_company_user_manager_and_buyer_email' and value is 'andrew@ottom.de'.</msg>
+<status status="PASS" starttime="20211109 18:15:46.496" endtime="20211109 18:15:46.496"/>
+</kw>
+<kw name="Get Variable Value" library="BuiltIn">
+<var>${var_value}</var>
+<arg>${${key}}</arg>
+<arg>${value}</arg>
+<doc>Returns variable value or ``default`` if the variable does not exist.</doc>
+<msg timestamp="20211109 18:15:46.508" level="INFO">${var_value} = andrew@ottom.de</msg>
+<status status="PASS" starttime="20211109 18:15:46.496" endtime="20211109 18:15:46.509"/>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<arg>${${key}}</arg>
+<arg>${var_value}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<msg timestamp="20211109 18:15:46.515" level="INFO">${yves_company_user_manager_and_buyer_email} = andrew@ottom.de</msg>
+<status status="PASS" starttime="20211109 18:15:46.509" endtime="20211109 18:15:46.515"/>
+</kw>
+<status status="PASS" starttime="20211109 18:15:46.495" endtime="20211109 18:15:46.515"/>
+</iter>
+<iter>
+<var name="${key}">yves_company_user_manager_and_buyer_firstname</var>
+<var name="${value}">Andrew</var>
+<kw name="Log" library="BuiltIn">
+<arg>Key is '${key}' and value is '${value}'.</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20211109 18:15:46.516" level="INFO">Key is 'yves_company_user_manager_and_buyer_firstname' and value is 'Andrew'.</msg>
+<status status="PASS" starttime="20211109 18:15:46.515" endtime="20211109 18:15:46.516"/>
+</kw>
+<kw name="Get Variable Value" library="BuiltIn">
+<var>${var_value}</var>
+<arg>${${key}}</arg>
+<arg>${value}</arg>
+<doc>Returns variable value or ``default`` if the variable does not exist.</doc>
+<msg timestamp="20211109 18:15:46.528" level="INFO">${var_value} = Andrew</msg>
+<status status="PASS" starttime="20211109 18:15:46.516" endtime="20211109 18:15:46.528"/>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<arg>${${key}}</arg>
+<arg>${var_value}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<msg timestamp="20211109 18:15:46.534" level="INFO">${yves_company_user_manager_and_buyer_firstname} = Andrew</msg>
+<status status="PASS" starttime="20211109 18:15:46.528" endtime="20211109 18:15:46.534"/>
+</kw>
+<status status="PASS" starttime="20211109 18:15:46.515" endtime="20211109 18:15:46.534"/>
+</iter>
+<iter>
+<var name="${key}">yves_company_user_manager_and_buyer_lastname</var>
+<var name="${value}">Wedner</var>
+<kw name="Log" library="BuiltIn">
+<arg>Key is '${key}' and value is '${value}'.</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20211109 18:15:46.535" level="INFO">Key is 'yves_company_user_manager_and_buyer_lastname' and value is 'Wedner'.</msg>
+<status status="PASS" starttime="20211109 18:15:46.535" endtime="20211109 18:15:46.535"/>
+</kw>
+<kw name="Get Variable Value" library="BuiltIn">
+<var>${var_value}</var>
+<arg>${${key}}</arg>
+<arg>${value}</arg>
+<doc>Returns variable value or ``default`` if the variable does not exist.</doc>
+<msg timestamp="20211109 18:15:46.548" level="INFO">${var_value} = Wedner</msg>
+<status status="PASS" starttime="20211109 18:15:46.535" endtime="20211109 18:15:46.548"/>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<arg>${${key}}</arg>
+<arg>${var_value}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<msg timestamp="20211109 18:15:46.555" level="INFO">${yves_company_user_manager_and_buyer_lastname} = Wedner</msg>
+<status status="PASS" starttime="20211109 18:15:46.548" endtime="20211109 18:15:46.555"/>
+</kw>
+<status status="PASS" starttime="20211109 18:15:46.535" endtime="20211109 18:15:46.555"/>
+</iter>
+<iter>
+<var name="${key}">yves_company_user_manager_and_buyer_address</var>
+<var name="${value}">Mr Andrew Wedner, Seeburger Str. 270, 10115 Berlin</var>
+<kw name="Log" library="BuiltIn">
+<arg>Key is '${key}' and value is '${value}'.</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20211109 18:15:46.555" level="INFO">Key is 'yves_company_user_manager_and_buyer_address' and value is 'Mr Andrew Wedner, Seeburger Str. 270, 10115 Berlin'.</msg>
+<status status="PASS" starttime="20211109 18:15:46.555" endtime="20211109 18:15:46.555"/>
+</kw>
+<kw name="Get Variable Value" library="BuiltIn">
+<var>${var_value}</var>
+<arg>${${key}}</arg>
+<arg>${value}</arg>
+<doc>Returns variable value or ``default`` if the variable does not exist.</doc>
+<msg timestamp="20211109 18:15:46.568" level="INFO">${var_value} = Mr Andrew Wedner, Seeburger Str. 270, 10115 Berlin</msg>
+<status status="PASS" starttime="20211109 18:15:46.555" endtime="20211109 18:15:46.568"/>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<arg>${${key}}</arg>
+<arg>${var_value}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<msg timestamp="20211109 18:15:46.575" level="INFO">${yves_company_user_manager_and_buyer_address} = Mr Andrew Wedner, Seeburger Str. 270, 10115 Berlin</msg>
+<status status="PASS" starttime="20211109 18:15:46.568" endtime="20211109 18:15:46.575"/>
+</kw>
+<status status="PASS" starttime="20211109 18:15:46.555" endtime="20211109 18:15:46.575"/>
+</iter>
+<iter>
+<var name="${key}">yves_company_user_approver_email</var>
+<var name="${value}">lilu@ottom.de</var>
+<kw name="Log" library="BuiltIn">
+<arg>Key is '${key}' and value is '${value}'.</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20211109 18:15:46.575" level="INFO">Key is 'yves_company_user_approver_email' and value is 'lilu@ottom.de'.</msg>
+<status status="PASS" starttime="20211109 18:15:46.575" endtime="20211109 18:15:46.576"/>
+</kw>
+<kw name="Get Variable Value" library="BuiltIn">
+<var>${var_value}</var>
+<arg>${${key}}</arg>
+<arg>${value}</arg>
+<doc>Returns variable value or ``default`` if the variable does not exist.</doc>
+<msg timestamp="20211109 18:15:46.588" level="INFO">${var_value} = lilu@ottom.de</msg>
+<status status="PASS" starttime="20211109 18:15:46.576" endtime="20211109 18:15:46.588"/>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<arg>${${key}}</arg>
+<arg>${var_value}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<msg timestamp="20211109 18:15:46.595" level="INFO">${yves_company_user_approver_email} = lilu@ottom.de</msg>
+<status status="PASS" starttime="20211109 18:15:46.588" endtime="20211109 18:15:46.595"/>
+</kw>
+<status status="PASS" starttime="20211109 18:15:46.575" endtime="20211109 18:15:46.595"/>
+</iter>
+<iter>
+<var name="${key}">yves_company_user_approver_firstname</var>
+<var name="${value}">Lilu</var>
+<kw name="Log" library="BuiltIn">
+<arg>Key is '${key}' and value is '${value}'.</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20211109 18:15:46.595" level="INFO">Key is 'yves_company_user_approver_firstname' and value is 'Lilu'.</msg>
+<status status="PASS" starttime="20211109 18:15:46.595" endtime="20211109 18:15:46.595"/>
+</kw>
+<kw name="Get Variable Value" library="BuiltIn">
+<var>${var_value}</var>
+<arg>${${key}}</arg>
+<arg>${value}</arg>
+<doc>Returns variable value or ``default`` if the variable does not exist.</doc>
+<msg timestamp="20211109 18:15:46.608" level="INFO">${var_value} = Lilu</msg>
+<status status="PASS" starttime="20211109 18:15:46.596" endtime="20211109 18:15:46.608"/>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<arg>${${key}}</arg>
+<arg>${var_value}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<msg timestamp="20211109 18:15:46.615" level="INFO">${yves_company_user_approver_firstname} = Lilu</msg>
+<status status="PASS" starttime="20211109 18:15:46.608" endtime="20211109 18:15:46.615"/>
+</kw>
+<status status="PASS" starttime="20211109 18:15:46.595" endtime="20211109 18:15:46.615"/>
+</iter>
+<iter>
+<var name="${key}">yves_company_user_approver_lastname</var>
+<var name="${value}">Dallas</var>
+<kw name="Log" library="BuiltIn">
+<arg>Key is '${key}' and value is '${value}'.</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20211109 18:15:46.616" level="INFO">Key is 'yves_company_user_approver_lastname' and value is 'Dallas'.</msg>
+<status status="PASS" starttime="20211109 18:15:46.616" endtime="20211109 18:15:46.616"/>
+</kw>
+<kw name="Get Variable Value" library="BuiltIn">
+<var>${var_value}</var>
+<arg>${${key}}</arg>
+<arg>${value}</arg>
+<doc>Returns variable value or ``default`` if the variable does not exist.</doc>
+<msg timestamp="20211109 18:15:46.629" level="INFO">${var_value} = Dallas</msg>
+<status status="PASS" starttime="20211109 18:15:46.616" endtime="20211109 18:15:46.629"/>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<arg>${${key}}</arg>
+<arg>${var_value}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<msg timestamp="20211109 18:15:46.636" level="INFO">${yves_company_user_approver_lastname} = Dallas</msg>
+<status status="PASS" starttime="20211109 18:15:46.629" endtime="20211109 18:15:46.636"/>
+</kw>
+<status status="PASS" starttime="20211109 18:15:46.615" endtime="20211109 18:15:46.636"/>
+</iter>
+<iter>
+<var name="${key}">yves_company_user_shared_permission_owner_email</var>
+<var name="${value}">andrew@ottom.de</var>
+<kw name="Log" library="BuiltIn">
+<arg>Key is '${key}' and value is '${value}'.</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20211109 18:15:46.637" level="INFO">Key is 'yves_company_user_shared_permission_owner_email' and value is 'andrew@ottom.de'.</msg>
+<status status="PASS" starttime="20211109 18:15:46.636" endtime="20211109 18:15:46.637"/>
+</kw>
+<kw name="Get Variable Value" library="BuiltIn">
+<var>${var_value}</var>
+<arg>${${key}}</arg>
+<arg>${value}</arg>
+<doc>Returns variable value or ``default`` if the variable does not exist.</doc>
+<msg timestamp="20211109 18:15:46.649" level="INFO">${var_value} = andrew@ottom.de</msg>
+<status status="PASS" starttime="20211109 18:15:46.637" endtime="20211109 18:15:46.649"/>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<arg>${${key}}</arg>
+<arg>${var_value}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<msg timestamp="20211109 18:15:46.655" level="INFO">${yves_company_user_shared_permission_owner_email} = andrew@ottom.de</msg>
+<status status="PASS" starttime="20211109 18:15:46.649" endtime="20211109 18:15:46.655"/>
+</kw>
+<status status="PASS" starttime="20211109 18:15:46.636" endtime="20211109 18:15:46.655"/>
+</iter>
+<iter>
+<var name="${key}">yves_company_user_shared_permission_owner_firstname</var>
+<var name="${value}">Andrew</var>
+<kw name="Log" library="BuiltIn">
+<arg>Key is '${key}' and value is '${value}'.</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20211109 18:15:46.656" level="INFO">Key is 'yves_company_user_shared_permission_owner_firstname' and value is 'Andrew'.</msg>
+<status status="PASS" starttime="20211109 18:15:46.656" endtime="20211109 18:15:46.656"/>
+</kw>
+<kw name="Get Variable Value" library="BuiltIn">
+<var>${var_value}</var>
+<arg>${${key}}</arg>
+<arg>${value}</arg>
+<doc>Returns variable value or ``default`` if the variable does not exist.</doc>
+<msg timestamp="20211109 18:15:46.668" level="INFO">${var_value} = Andrew</msg>
+<status status="PASS" starttime="20211109 18:15:46.656" endtime="20211109 18:15:46.668"/>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<arg>${${key}}</arg>
+<arg>${var_value}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<msg timestamp="20211109 18:15:46.674" level="INFO">${yves_company_user_shared_permission_owner_firstname} = Andrew</msg>
+<status status="PASS" starttime="20211109 18:15:46.668" endtime="20211109 18:15:46.674"/>
+</kw>
+<status status="PASS" starttime="20211109 18:15:46.655" endtime="20211109 18:15:46.674"/>
+</iter>
+<iter>
+<var name="${key}">yves_company_user_shared_permission_owner_lastname</var>
+<var name="${value}">Wedner</var>
+<kw name="Log" library="BuiltIn">
+<arg>Key is '${key}' and value is '${value}'.</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20211109 18:15:46.675" level="INFO">Key is 'yves_company_user_shared_permission_owner_lastname' and value is 'Wedner'.</msg>
+<status status="PASS" starttime="20211109 18:15:46.675" endtime="20211109 18:15:46.675"/>
+</kw>
+<kw name="Get Variable Value" library="BuiltIn">
+<var>${var_value}</var>
+<arg>${${key}}</arg>
+<arg>${value}</arg>
+<doc>Returns variable value or ``default`` if the variable does not exist.</doc>
+<msg timestamp="20211109 18:15:46.687" level="INFO">${var_value} = Wedner</msg>
+<status status="PASS" starttime="20211109 18:15:46.675" endtime="20211109 18:15:46.687"/>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<arg>${${key}}</arg>
+<arg>${var_value}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<msg timestamp="20211109 18:15:46.694" level="INFO">${yves_company_user_shared_permission_owner_lastname} = Wedner</msg>
+<status status="PASS" starttime="20211109 18:15:46.687" endtime="20211109 18:15:46.694"/>
+</kw>
+<status status="PASS" starttime="20211109 18:15:46.674" endtime="20211109 18:15:46.694"/>
+</iter>
+<iter>
+<var name="${key}">yves_company_user_shared_permission_owner_address</var>
+<var name="${value}">Mr Andrew Wedner, Seeburger Str. 270, 10115 Berlin</var>
+<kw name="Log" library="BuiltIn">
+<arg>Key is '${key}' and value is '${value}'.</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20211109 18:15:46.695" level="INFO">Key is 'yves_company_user_shared_permission_owner_address' and value is 'Mr Andrew Wedner, Seeburger Str. 270, 10115 Berlin'.</msg>
+<status status="PASS" starttime="20211109 18:15:46.695" endtime="20211109 18:15:46.695"/>
+</kw>
+<kw name="Get Variable Value" library="BuiltIn">
+<var>${var_value}</var>
+<arg>${${key}}</arg>
+<arg>${value}</arg>
+<doc>Returns variable value or ``default`` if the variable does not exist.</doc>
+<msg timestamp="20211109 18:15:46.710" level="INFO">${var_value} = Mr Andrew Wedner, Seeburger Str. 270, 10115 Berlin</msg>
+<status status="PASS" starttime="20211109 18:15:46.695" endtime="20211109 18:15:46.710"/>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<arg>${${key}}</arg>
+<arg>${var_value}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<msg timestamp="20211109 18:15:46.718" level="INFO">${yves_company_user_shared_permission_owner_address} = Mr Andrew Wedner, Seeburger Str. 270, 10115 Berlin</msg>
+<status status="PASS" starttime="20211109 18:15:46.711" endtime="20211109 18:15:46.718"/>
+</kw>
+<status status="PASS" starttime="20211109 18:15:46.694" endtime="20211109 18:15:46.718"/>
+</iter>
+<iter>
+<var name="${key}">yves_company_user_shared_permission_receiver_email</var>
+<var name="${value}">sally@ottom.de</var>
+<kw name="Log" library="BuiltIn">
+<arg>Key is '${key}' and value is '${value}'.</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20211109 18:15:46.719" level="INFO">Key is 'yves_company_user_shared_permission_receiver_email' and value is 'sally@ottom.de'.</msg>
+<status status="PASS" starttime="20211109 18:15:46.719" endtime="20211109 18:15:46.719"/>
+</kw>
+<kw name="Get Variable Value" library="BuiltIn">
+<var>${var_value}</var>
+<arg>${${key}}</arg>
+<arg>${value}</arg>
+<doc>Returns variable value or ``default`` if the variable does not exist.</doc>
+<msg timestamp="20211109 18:15:46.733" level="INFO">${var_value} = sally@ottom.de</msg>
+<status status="PASS" starttime="20211109 18:15:46.719" endtime="20211109 18:15:46.733"/>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<arg>${${key}}</arg>
+<arg>${var_value}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<msg timestamp="20211109 18:15:46.739" level="INFO">${yves_company_user_shared_permission_receiver_email} = sally@ottom.de</msg>
+<status status="PASS" starttime="20211109 18:15:46.733" endtime="20211109 18:15:46.739"/>
+</kw>
+<status status="PASS" starttime="20211109 18:15:46.718" endtime="20211109 18:15:46.739"/>
+</iter>
+<iter>
+<var name="${key}">yves_company_user_shared_permission_receiver_firstname</var>
+<var name="${value}">Sally</var>
+<kw name="Log" library="BuiltIn">
+<arg>Key is '${key}' and value is '${value}'.</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20211109 18:15:46.740" level="INFO">Key is 'yves_company_user_shared_permission_receiver_firstname' and value is 'Sally'.</msg>
+<status status="PASS" starttime="20211109 18:15:46.739" endtime="20211109 18:15:46.740"/>
+</kw>
+<kw name="Get Variable Value" library="BuiltIn">
+<var>${var_value}</var>
+<arg>${${key}}</arg>
+<arg>${value}</arg>
+<doc>Returns variable value or ``default`` if the variable does not exist.</doc>
+<msg timestamp="20211109 18:15:46.751" level="INFO">${var_value} = Sally</msg>
+<status status="PASS" starttime="20211109 18:15:46.740" endtime="20211109 18:15:46.751"/>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<arg>${${key}}</arg>
+<arg>${var_value}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<msg timestamp="20211109 18:15:46.757" level="INFO">${yves_company_user_shared_permission_receiver_firstname} = Sally</msg>
+<status status="PASS" starttime="20211109 18:15:46.751" endtime="20211109 18:15:46.757"/>
+</kw>
+<status status="PASS" starttime="20211109 18:15:46.739" endtime="20211109 18:15:46.757"/>
+</iter>
+<iter>
+<var name="${key}">yves_company_user_shared_permission_receiver_lastname</var>
+<var name="${value}">Koval</var>
+<kw name="Log" library="BuiltIn">
+<arg>Key is '${key}' and value is '${value}'.</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20211109 18:15:46.757" level="INFO">Key is 'yves_company_user_shared_permission_receiver_lastname' and value is 'Koval'.</msg>
+<status status="PASS" starttime="20211109 18:15:46.757" endtime="20211109 18:15:46.757"/>
+</kw>
+<kw name="Get Variable Value" library="BuiltIn">
+<var>${var_value}</var>
+<arg>${${key}}</arg>
+<arg>${value}</arg>
+<doc>Returns variable value or ``default`` if the variable does not exist.</doc>
+<msg timestamp="20211109 18:15:46.769" level="INFO">${var_value} = Koval</msg>
+<status status="PASS" starttime="20211109 18:15:46.758" endtime="20211109 18:15:46.769"/>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<arg>${${key}}</arg>
+<arg>${var_value}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<msg timestamp="20211109 18:15:46.776" level="INFO">${yves_company_user_shared_permission_receiver_lastname} = Koval</msg>
+<status status="PASS" starttime="20211109 18:15:46.770" endtime="20211109 18:15:46.776"/>
+</kw>
+<status status="PASS" starttime="20211109 18:15:46.757" endtime="20211109 18:15:46.776"/>
+</iter>
+<iter>
+<var name="${key}">yves_company_user_shared_permission_receiver_address</var>
+<var name="${value}">Ms Sally Koval, Seeburger Str. 270, 10115 Berlin</var>
+<kw name="Log" library="BuiltIn">
+<arg>Key is '${key}' and value is '${value}'.</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20211109 18:15:46.777" level="INFO">Key is 'yves_company_user_shared_permission_receiver_address' and value is 'Ms Sally Koval, Seeburger Str. 270, 10115 Berlin'.</msg>
+<status status="PASS" starttime="20211109 18:15:46.776" endtime="20211109 18:15:46.777"/>
+</kw>
+<kw name="Get Variable Value" library="BuiltIn">
+<var>${var_value}</var>
+<arg>${${key}}</arg>
+<arg>${value}</arg>
+<doc>Returns variable value or ``default`` if the variable does not exist.</doc>
+<msg timestamp="20211109 18:15:46.789" level="INFO">${var_value} = Ms Sally Koval, Seeburger Str. 270, 10115 Berlin</msg>
+<status status="PASS" starttime="20211109 18:15:46.777" endtime="20211109 18:15:46.789"/>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<arg>${${key}}</arg>
+<arg>${var_value}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<msg timestamp="20211109 18:15:46.795" level="INFO">${yves_company_user_shared_permission_receiver_address} = Ms Sally Koval, Seeburger Str. 270, 10115 Berlin</msg>
+<status status="PASS" starttime="20211109 18:15:46.789" endtime="20211109 18:15:46.795"/>
+</kw>
+<status status="PASS" starttime="20211109 18:15:46.776" endtime="20211109 18:15:46.795"/>
+</iter>
+<iter>
+<var name="${key}">yves_company_user_buyer_with_limit_email</var>
+<var name="${value}">sally@ottom.de</var>
+<kw name="Log" library="BuiltIn">
+<arg>Key is '${key}' and value is '${value}'.</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20211109 18:15:46.796" level="INFO">Key is 'yves_company_user_buyer_with_limit_email' and value is 'sally@ottom.de'.</msg>
+<status status="PASS" starttime="20211109 18:15:46.796" endtime="20211109 18:15:46.796"/>
+</kw>
+<kw name="Get Variable Value" library="BuiltIn">
+<var>${var_value}</var>
+<arg>${${key}}</arg>
+<arg>${value}</arg>
+<doc>Returns variable value or ``default`` if the variable does not exist.</doc>
+<msg timestamp="20211109 18:15:46.809" level="INFO">${var_value} = sally@ottom.de</msg>
+<status status="PASS" starttime="20211109 18:15:46.796" endtime="20211109 18:15:46.809"/>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<arg>${${key}}</arg>
+<arg>${var_value}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<msg timestamp="20211109 18:15:46.816" level="INFO">${yves_company_user_buyer_with_limit_email} = sally@ottom.de</msg>
+<status status="PASS" starttime="20211109 18:15:46.809" endtime="20211109 18:15:46.816"/>
+</kw>
+<status status="PASS" starttime="20211109 18:15:46.795" endtime="20211109 18:15:46.816"/>
+</iter>
+<iter>
+<var name="${key}">yves_company_user_buyer_with_limit_firstname</var>
+<var name="${value}">Sally</var>
+<kw name="Log" library="BuiltIn">
+<arg>Key is '${key}' and value is '${value}'.</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20211109 18:15:46.816" level="INFO">Key is 'yves_company_user_buyer_with_limit_firstname' and value is 'Sally'.</msg>
+<status status="PASS" starttime="20211109 18:15:46.816" endtime="20211109 18:15:46.816"/>
+</kw>
+<kw name="Get Variable Value" library="BuiltIn">
+<var>${var_value}</var>
+<arg>${${key}}</arg>
+<arg>${value}</arg>
+<doc>Returns variable value or ``default`` if the variable does not exist.</doc>
+<msg timestamp="20211109 18:15:46.829" level="INFO">${var_value} = Sally</msg>
+<status status="PASS" starttime="20211109 18:15:46.816" endtime="20211109 18:15:46.829"/>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<arg>${${key}}</arg>
+<arg>${var_value}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<msg timestamp="20211109 18:15:46.836" level="INFO">${yves_company_user_buyer_with_limit_firstname} = Sally</msg>
+<status status="PASS" starttime="20211109 18:15:46.830" endtime="20211109 18:15:46.836"/>
+</kw>
+<status status="PASS" starttime="20211109 18:15:46.816" endtime="20211109 18:15:46.836"/>
+</iter>
+<iter>
+<var name="${key}">yves_company_user_buyer_with_limit_lastname</var>
+<var name="${value}">Koval</var>
+<kw name="Log" library="BuiltIn">
+<arg>Key is '${key}' and value is '${value}'.</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20211109 18:15:46.837" level="INFO">Key is 'yves_company_user_buyer_with_limit_lastname' and value is 'Koval'.</msg>
+<status status="PASS" starttime="20211109 18:15:46.836" endtime="20211109 18:15:46.837"/>
+</kw>
+<kw name="Get Variable Value" library="BuiltIn">
+<var>${var_value}</var>
+<arg>${${key}}</arg>
+<arg>${value}</arg>
+<doc>Returns variable value or ``default`` if the variable does not exist.</doc>
+<msg timestamp="20211109 18:15:46.850" level="INFO">${var_value} = Koval</msg>
+<status status="PASS" starttime="20211109 18:15:46.837" endtime="20211109 18:15:46.850"/>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<arg>${${key}}</arg>
+<arg>${var_value}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<msg timestamp="20211109 18:15:46.857" level="INFO">${yves_company_user_buyer_with_limit_lastname} = Koval</msg>
+<status status="PASS" starttime="20211109 18:15:46.850" endtime="20211109 18:15:46.857"/>
+</kw>
+<status status="PASS" starttime="20211109 18:15:46.836" endtime="20211109 18:15:46.857"/>
+</iter>
+<iter>
+<var name="${key}">yves_company_user_buyer_with_limit_address</var>
+<var name="${value}">Ms Sally Koval, Seeburger Str. 270, 10115 Berlin</var>
+<kw name="Log" library="BuiltIn">
+<arg>Key is '${key}' and value is '${value}'.</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20211109 18:15:46.858" level="INFO">Key is 'yves_company_user_buyer_with_limit_address' and value is 'Ms Sally Koval, Seeburger Str. 270, 10115 Berlin'.</msg>
+<status status="PASS" starttime="20211109 18:15:46.858" endtime="20211109 18:15:46.858"/>
+</kw>
+<kw name="Get Variable Value" library="BuiltIn">
+<var>${var_value}</var>
+<arg>${${key}}</arg>
+<arg>${value}</arg>
+<doc>Returns variable value or ``default`` if the variable does not exist.</doc>
+<msg timestamp="20211109 18:15:46.872" level="INFO">${var_value} = Ms Sally Koval, Seeburger Str. 270, 10115 Berlin</msg>
+<status status="PASS" starttime="20211109 18:15:46.858" endtime="20211109 18:15:46.872"/>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<arg>${${key}}</arg>
+<arg>${var_value}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<msg timestamp="20211109 18:15:46.879" level="INFO">${yves_company_user_buyer_with_limit_address} = Ms Sally Koval, Seeburger Str. 270, 10115 Berlin</msg>
+<status status="PASS" starttime="20211109 18:15:46.872" endtime="20211109 18:15:46.879"/>
+</kw>
+<status status="PASS" starttime="20211109 18:15:46.857" endtime="20211109 18:15:46.879"/>
+</iter>
+<iter>
+<var name="${key}">yves_company_user_buyer_email</var>
+<var name="${value}">Ahill@ottom.de</var>
+<kw name="Log" library="BuiltIn">
+<arg>Key is '${key}' and value is '${value}'.</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20211109 18:15:46.880" level="INFO">Key is 'yves_company_user_buyer_email' and value is 'Ahill@ottom.de'.</msg>
+<status status="PASS" starttime="20211109 18:15:46.880" endtime="20211109 18:15:46.880"/>
+</kw>
+<kw name="Get Variable Value" library="BuiltIn">
+<var>${var_value}</var>
+<arg>${${key}}</arg>
+<arg>${value}</arg>
+<doc>Returns variable value or ``default`` if the variable does not exist.</doc>
+<msg timestamp="20211109 18:15:46.893" level="INFO">${var_value} = Ahill@ottom.de</msg>
+<status status="PASS" starttime="20211109 18:15:46.880" endtime="20211109 18:15:46.893"/>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<arg>${${key}}</arg>
+<arg>${var_value}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<msg timestamp="20211109 18:15:46.901" level="INFO">${yves_company_user_buyer_email} = Ahill@ottom.de</msg>
+<status status="PASS" starttime="20211109 18:15:46.894" endtime="20211109 18:15:46.901"/>
+</kw>
+<status status="PASS" starttime="20211109 18:15:46.879" endtime="20211109 18:15:46.901"/>
+</iter>
+<iter>
+<var name="${key}">yves_company_user_buyer_firstname</var>
+<var name="${value}">Ahill</var>
+<kw name="Log" library="BuiltIn">
+<arg>Key is '${key}' and value is '${value}'.</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20211109 18:15:46.901" level="INFO">Key is 'yves_company_user_buyer_firstname' and value is 'Ahill'.</msg>
+<status status="PASS" starttime="20211109 18:15:46.901" endtime="20211109 18:15:46.901"/>
+</kw>
+<kw name="Get Variable Value" library="BuiltIn">
+<var>${var_value}</var>
+<arg>${${key}}</arg>
+<arg>${value}</arg>
+<doc>Returns variable value or ``default`` if the variable does not exist.</doc>
+<msg timestamp="20211109 18:15:46.916" level="INFO">${var_value} = Ahill</msg>
+<status status="PASS" starttime="20211109 18:15:46.902" endtime="20211109 18:15:46.916"/>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<arg>${${key}}</arg>
+<arg>${var_value}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<msg timestamp="20211109 18:15:46.923" level="INFO">${yves_company_user_buyer_firstname} = Ahill</msg>
+<status status="PASS" starttime="20211109 18:15:46.916" endtime="20211109 18:15:46.923"/>
+</kw>
+<status status="PASS" starttime="20211109 18:15:46.901" endtime="20211109 18:15:46.923"/>
+</iter>
+<iter>
+<var name="${key}">yves_company_user_buyer_lastname</var>
+<var name="${value}">Grant</var>
+<kw name="Log" library="BuiltIn">
+<arg>Key is '${key}' and value is '${value}'.</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20211109 18:15:46.924" level="INFO">Key is 'yves_company_user_buyer_lastname' and value is 'Grant'.</msg>
+<status status="PASS" starttime="20211109 18:15:46.923" endtime="20211109 18:15:46.924"/>
+</kw>
+<kw name="Get Variable Value" library="BuiltIn">
+<var>${var_value}</var>
+<arg>${${key}}</arg>
+<arg>${value}</arg>
+<doc>Returns variable value or ``default`` if the variable does not exist.</doc>
+<msg timestamp="20211109 18:15:46.937" level="INFO">${var_value} = Grant</msg>
+<status status="PASS" starttime="20211109 18:15:46.924" endtime="20211109 18:15:46.937"/>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<arg>${${key}}</arg>
+<arg>${var_value}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<msg timestamp="20211109 18:15:46.944" level="INFO">${yves_company_user_buyer_lastname} = Grant</msg>
+<status status="PASS" starttime="20211109 18:15:46.937" endtime="20211109 18:15:46.944"/>
+</kw>
+<status status="PASS" starttime="20211109 18:15:46.923" endtime="20211109 18:15:46.944"/>
+</iter>
+<iter>
+<var name="${key}">yves_company_user_buyer_address</var>
+<var name="${value}">Mr Ahill Grant, Seeburger Str. 270, 10115 Berlin</var>
+<kw name="Log" library="BuiltIn">
+<arg>Key is '${key}' and value is '${value}'.</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20211109 18:15:46.945" level="INFO">Key is 'yves_company_user_buyer_address' and value is 'Mr Ahill Grant, Seeburger Str. 270, 10115 Berlin'.</msg>
+<status status="PASS" starttime="20211109 18:15:46.945" endtime="20211109 18:15:46.945"/>
+</kw>
+<kw name="Get Variable Value" library="BuiltIn">
+<var>${var_value}</var>
+<arg>${${key}}</arg>
+<arg>${value}</arg>
+<doc>Returns variable value or ``default`` if the variable does not exist.</doc>
+<msg timestamp="20211109 18:15:46.958" level="INFO">${var_value} = Mr Ahill Grant, Seeburger Str. 270, 10115 Berlin</msg>
+<status status="PASS" starttime="20211109 18:15:46.945" endtime="20211109 18:15:46.958"/>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<arg>${${key}}</arg>
+<arg>${var_value}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<msg timestamp="20211109 18:15:46.965" level="INFO">${yves_company_user_buyer_address} = Mr Ahill Grant, Seeburger Str. 270, 10115 Berlin</msg>
+<status status="PASS" starttime="20211109 18:15:46.958" endtime="20211109 18:15:46.965"/>
+</kw>
+<status status="PASS" starttime="20211109 18:15:46.944" endtime="20211109 18:15:46.965"/>
+</iter>
+<iter>
+<var name="${key}">yves_company_user_special_prices_customer_email</var>
+<var name="${value}">Elizabet@spryker.com</var>
+<kw name="Log" library="BuiltIn">
+<arg>Key is '${key}' and value is '${value}'.</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20211109 18:15:46.965" level="INFO">Key is 'yves_company_user_special_prices_customer_email' and value is 'Elizabet@spryker.com'.</msg>
+<status status="PASS" starttime="20211109 18:15:46.965" endtime="20211109 18:15:46.965"/>
+</kw>
+<kw name="Get Variable Value" library="BuiltIn">
+<var>${var_value}</var>
+<arg>${${key}}</arg>
+<arg>${value}</arg>
+<doc>Returns variable value or ``default`` if the variable does not exist.</doc>
+<msg timestamp="20211109 18:15:46.977" level="INFO">${var_value} = Elizabet@spryker.com</msg>
+<status status="PASS" starttime="20211109 18:15:46.966" endtime="20211109 18:15:46.977"/>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<arg>${${key}}</arg>
+<arg>${var_value}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<msg timestamp="20211109 18:15:46.984" level="INFO">${yves_company_user_special_prices_customer_email} = Elizabet@spryker.com</msg>
+<status status="PASS" starttime="20211109 18:15:46.978" endtime="20211109 18:15:46.984"/>
+</kw>
+<status status="PASS" starttime="20211109 18:15:46.965" endtime="20211109 18:15:46.984"/>
+</iter>
+<iter>
+<var name="${key}">yves_company_user_special_prices_customer_firstname</var>
+<var name="${value}">Elizabet</var>
+<kw name="Log" library="BuiltIn">
+<arg>Key is '${key}' and value is '${value}'.</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20211109 18:15:46.984" level="INFO">Key is 'yves_company_user_special_prices_customer_firstname' and value is 'Elizabet'.</msg>
+<status status="PASS" starttime="20211109 18:15:46.984" endtime="20211109 18:15:46.984"/>
+</kw>
+<kw name="Get Variable Value" library="BuiltIn">
+<var>${var_value}</var>
+<arg>${${key}}</arg>
+<arg>${value}</arg>
+<doc>Returns variable value or ``default`` if the variable does not exist.</doc>
+<msg timestamp="20211109 18:15:46.996" level="INFO">${var_value} = Elizabet</msg>
+<status status="PASS" starttime="20211109 18:15:46.985" endtime="20211109 18:15:46.996"/>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<arg>${${key}}</arg>
+<arg>${var_value}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<msg timestamp="20211109 18:15:47.002" level="INFO">${yves_company_user_special_prices_customer_firstname} = Elizabet</msg>
+<status status="PASS" starttime="20211109 18:15:46.996" endtime="20211109 18:15:47.002"/>
+</kw>
+<status status="PASS" starttime="20211109 18:15:46.984" endtime="20211109 18:15:47.002"/>
+</iter>
+<iter>
+<var name="${key}">yves_company_user_special_prices_customer_lastname</var>
+<var name="${value}">Keller</var>
+<kw name="Log" library="BuiltIn">
+<arg>Key is '${key}' and value is '${value}'.</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20211109 18:15:47.003" level="INFO">Key is 'yves_company_user_special_prices_customer_lastname' and value is 'Keller'.</msg>
+<status status="PASS" starttime="20211109 18:15:47.003" endtime="20211109 18:15:47.003"/>
+</kw>
+<kw name="Get Variable Value" library="BuiltIn">
+<var>${var_value}</var>
+<arg>${${key}}</arg>
+<arg>${value}</arg>
+<doc>Returns variable value or ``default`` if the variable does not exist.</doc>
+<msg timestamp="20211109 18:15:47.015" level="INFO">${var_value} = Keller</msg>
+<status status="PASS" starttime="20211109 18:15:47.003" endtime="20211109 18:15:47.015"/>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<arg>${${key}}</arg>
+<arg>${var_value}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<msg timestamp="20211109 18:15:47.022" level="INFO">${yves_company_user_special_prices_customer_lastname} = Keller</msg>
+<status status="PASS" starttime="20211109 18:15:47.016" endtime="20211109 18:15:47.022"/>
+</kw>
+<status status="PASS" starttime="20211109 18:15:47.002" endtime="20211109 18:15:47.022"/>
+</iter>
+<iter>
+<var name="${key}">yves_company_user_restriction_customer_email_1</var>
+<var name="${value}">Frida@ottom.de</var>
+<kw name="Log" library="BuiltIn">
+<arg>Key is '${key}' and value is '${value}'.</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20211109 18:15:47.022" level="INFO">Key is 'yves_company_user_restriction_customer_email_1' and value is 'Frida@ottom.de'.</msg>
+<status status="PASS" starttime="20211109 18:15:47.022" endtime="20211109 18:15:47.022"/>
+</kw>
+<kw name="Get Variable Value" library="BuiltIn">
+<var>${var_value}</var>
+<arg>${${key}}</arg>
+<arg>${value}</arg>
+<doc>Returns variable value or ``default`` if the variable does not exist.</doc>
+<msg timestamp="20211109 18:15:47.035" level="INFO">${var_value} = Frida@ottom.de</msg>
+<status status="PASS" starttime="20211109 18:15:47.023" endtime="20211109 18:15:47.035"/>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<arg>${${key}}</arg>
+<arg>${var_value}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<msg timestamp="20211109 18:15:47.043" level="INFO">${yves_company_user_restriction_customer_email_1} = Frida@ottom.de</msg>
+<status status="PASS" starttime="20211109 18:15:47.036" endtime="20211109 18:15:47.043"/>
+</kw>
+<status status="PASS" starttime="20211109 18:15:47.022" endtime="20211109 18:15:47.043"/>
+</iter>
+<iter>
+<var name="${key}">yves_company_user_restriction_customer_email_2</var>
+<var name="${value}">Alexa@ottom.de</var>
+<kw name="Log" library="BuiltIn">
+<arg>Key is '${key}' and value is '${value}'.</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20211109 18:15:47.044" level="INFO">Key is 'yves_company_user_restriction_customer_email_2' and value is 'Alexa@ottom.de'.</msg>
+<status status="PASS" starttime="20211109 18:15:47.043" endtime="20211109 18:15:47.044"/>
+</kw>
+<kw name="Get Variable Value" library="BuiltIn">
+<var>${var_value}</var>
+<arg>${${key}}</arg>
+<arg>${value}</arg>
+<doc>Returns variable value or ``default`` if the variable does not exist.</doc>
+<msg timestamp="20211109 18:15:47.057" level="INFO">${var_value} = Alexa@ottom.de</msg>
+<status status="PASS" starttime="20211109 18:15:47.044" endtime="20211109 18:15:47.057"/>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<arg>${${key}}</arg>
+<arg>${var_value}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<msg timestamp="20211109 18:15:47.065" level="INFO">${yves_company_user_restriction_customer_email_2} = Alexa@ottom.de</msg>
+<status status="PASS" starttime="20211109 18:15:47.058" endtime="20211109 18:15:47.065"/>
+</kw>
+<status status="PASS" starttime="20211109 18:15:47.043" endtime="20211109 18:15:47.065"/>
+</iter>
+<iter>
+<var name="${key}">yves_company_user_bob_email</var>
+<var name="${value}">donald@spryker.com</var>
+<kw name="Log" library="BuiltIn">
+<arg>Key is '${key}' and value is '${value}'.</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20211109 18:15:47.065" level="INFO">Key is 'yves_company_user_bob_email' and value is 'donald@spryker.com'.</msg>
+<status status="PASS" starttime="20211109 18:15:47.065" endtime="20211109 18:15:47.065"/>
+</kw>
+<kw name="Get Variable Value" library="BuiltIn">
+<var>${var_value}</var>
+<arg>${${key}}</arg>
+<arg>${value}</arg>
+<doc>Returns variable value or ``default`` if the variable does not exist.</doc>
+<msg timestamp="20211109 18:15:47.077" level="INFO">${var_value} = donald@spryker.com</msg>
+<status status="PASS" starttime="20211109 18:15:47.065" endtime="20211109 18:15:47.078"/>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<arg>${${key}}</arg>
+<arg>${var_value}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<msg timestamp="20211109 18:15:47.084" level="INFO">${yves_company_user_bob_email} = donald@spryker.com</msg>
+<status status="PASS" starttime="20211109 18:15:47.078" endtime="20211109 18:15:47.084"/>
+</kw>
+<status status="PASS" starttime="20211109 18:15:47.065" endtime="20211109 18:15:47.084"/>
+</iter>
+<iter>
+<var name="${key}">zed_admin_email</var>
+<var name="${value}">admin@spryker.com</var>
+<kw name="Log" library="BuiltIn">
+<arg>Key is '${key}' and value is '${value}'.</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20211109 18:15:47.084" level="INFO">Key is 'zed_admin_email' and value is 'admin@spryker.com'.</msg>
+<status status="PASS" starttime="20211109 18:15:47.084" endtime="20211109 18:15:47.084"/>
+</kw>
+<kw name="Get Variable Value" library="BuiltIn">
+<var>${var_value}</var>
+<arg>${${key}}</arg>
+<arg>${value}</arg>
+<doc>Returns variable value or ``default`` if the variable does not exist.</doc>
+<msg timestamp="20211109 18:15:47.094" level="INFO">${var_value} = admin@spryker.com</msg>
+<status status="PASS" starttime="20211109 18:15:47.085" endtime="20211109 18:15:47.094"/>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<arg>${${key}}</arg>
+<arg>${var_value}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<msg timestamp="20211109 18:15:47.099" level="INFO">${zed_admin_email} = admin@spryker.com</msg>
+<status status="PASS" starttime="20211109 18:15:47.095" endtime="20211109 18:15:47.099"/>
+</kw>
+<status status="PASS" starttime="20211109 18:15:47.084" endtime="20211109 18:15:47.100"/>
+</iter>
+<iter>
+<var name="${key}">zed_admin_password</var>
+<var name="${value}">change123</var>
+<kw name="Log" library="BuiltIn">
+<arg>Key is '${key}' and value is '${value}'.</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20211109 18:15:47.100" level="INFO">Key is 'zed_admin_password' and value is 'change123'.</msg>
+<status status="PASS" starttime="20211109 18:15:47.100" endtime="20211109 18:15:47.100"/>
+</kw>
+<kw name="Get Variable Value" library="BuiltIn">
+<var>${var_value}</var>
+<arg>${${key}}</arg>
+<arg>${value}</arg>
+<doc>Returns variable value or ``default`` if the variable does not exist.</doc>
+<msg timestamp="20211109 18:15:47.110" level="INFO">${var_value} = change123</msg>
+<status status="PASS" starttime="20211109 18:15:47.100" endtime="20211109 18:15:47.110"/>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<arg>${${key}}</arg>
+<arg>${var_value}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<msg timestamp="20211109 18:15:47.115" level="INFO">${zed_admin_password} = change123</msg>
+<status status="PASS" starttime="20211109 18:15:47.110" endtime="20211109 18:15:47.115"/>
+</kw>
+<status status="PASS" starttime="20211109 18:15:47.100" endtime="20211109 18:15:47.115"/>
+</iter>
+<iter>
+<var name="${key}">one_variant_product_abstract_sku</var>
+<var name="${value}">M70208</var>
+<kw name="Log" library="BuiltIn">
+<arg>Key is '${key}' and value is '${value}'.</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20211109 18:15:47.116" level="INFO">Key is 'one_variant_product_abstract_sku' and value is 'M70208'.</msg>
+<status status="PASS" starttime="20211109 18:15:47.115" endtime="20211109 18:15:47.116"/>
+</kw>
+<kw name="Get Variable Value" library="BuiltIn">
+<var>${var_value}</var>
+<arg>${${key}}</arg>
+<arg>${value}</arg>
+<doc>Returns variable value or ``default`` if the variable does not exist.</doc>
+<msg timestamp="20211109 18:15:47.129" level="INFO">${var_value} = M70208</msg>
+<status status="PASS" starttime="20211109 18:15:47.116" endtime="20211109 18:15:47.129"/>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<arg>${${key}}</arg>
+<arg>${var_value}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<msg timestamp="20211109 18:15:47.136" level="INFO">${one_variant_product_abstract_sku} = M70208</msg>
+<status status="PASS" starttime="20211109 18:15:47.130" endtime="20211109 18:15:47.136"/>
+</kw>
+<status status="PASS" starttime="20211109 18:15:47.115" endtime="20211109 18:15:47.136"/>
+</iter>
+<iter>
+<var name="${key}">one_variant_product_abstract_name</var>
+<var name="${value}">EUROKRAFT trolley - with open shovel</var>
+<kw name="Log" library="BuiltIn">
+<arg>Key is '${key}' and value is '${value}'.</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20211109 18:15:47.137" level="INFO">Key is 'one_variant_product_abstract_name' and value is 'EUROKRAFT trolley - with open shovel'.</msg>
+<status status="PASS" starttime="20211109 18:15:47.137" endtime="20211109 18:15:47.137"/>
+</kw>
+<kw name="Get Variable Value" library="BuiltIn">
+<var>${var_value}</var>
+<arg>${${key}}</arg>
+<arg>${value}</arg>
+<doc>Returns variable value or ``default`` if the variable does not exist.</doc>
+<msg timestamp="20211109 18:15:47.151" level="INFO">${var_value} = EUROKRAFT trolley - with open shovel</msg>
+<status status="PASS" starttime="20211109 18:15:47.137" endtime="20211109 18:15:47.151"/>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<arg>${${key}}</arg>
+<arg>${var_value}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<msg timestamp="20211109 18:15:47.158" level="INFO">${one_variant_product_abstract_name} = EUROKRAFT trolley - with open shovel</msg>
+<status status="PASS" starttime="20211109 18:15:47.151" endtime="20211109 18:15:47.158"/>
+</kw>
+<status status="PASS" starttime="20211109 18:15:47.136" endtime="20211109 18:15:47.158"/>
+</iter>
+<iter>
+<var name="${key}">one_variant_product_default_price</var>
+<var name="${value}">€235.43</var>
+<kw name="Log" library="BuiltIn">
+<arg>Key is '${key}' and value is '${value}'.</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20211109 18:15:47.159" level="INFO">Key is 'one_variant_product_default_price' and value is '€235.43'.</msg>
+<status status="PASS" starttime="20211109 18:15:47.159" endtime="20211109 18:15:47.159"/>
+</kw>
+<kw name="Get Variable Value" library="BuiltIn">
+<var>${var_value}</var>
+<arg>${${key}}</arg>
+<arg>${value}</arg>
+<doc>Returns variable value or ``default`` if the variable does not exist.</doc>
+<msg timestamp="20211109 18:15:47.172" level="INFO">${var_value} = €235.43</msg>
+<status status="PASS" starttime="20211109 18:15:47.159" endtime="20211109 18:15:47.172"/>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<arg>${${key}}</arg>
+<arg>${var_value}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<msg timestamp="20211109 18:15:47.180" level="INFO">${one_variant_product_default_price} = €235.43</msg>
+<status status="PASS" starttime="20211109 18:15:47.173" endtime="20211109 18:15:47.180"/>
+</kw>
+<status status="PASS" starttime="20211109 18:15:47.158" endtime="20211109 18:15:47.180"/>
+</iter>
+<iter>
+<var name="${key}">one_variant_product_merchant_price</var>
+<var name="${value}">€188.34</var>
+<kw name="Log" library="BuiltIn">
+<arg>Key is '${key}' and value is '${value}'.</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20211109 18:15:47.180" level="INFO">Key is 'one_variant_product_merchant_price' and value is '€188.34'.</msg>
+<status status="PASS" starttime="20211109 18:15:47.180" endtime="20211109 18:15:47.180"/>
+</kw>
+<kw name="Get Variable Value" library="BuiltIn">
+<var>${var_value}</var>
+<arg>${${key}}</arg>
+<arg>${value}</arg>
+<doc>Returns variable value or ``default`` if the variable does not exist.</doc>
+<msg timestamp="20211109 18:15:47.194" level="INFO">${var_value} = €188.34</msg>
+<status status="PASS" starttime="20211109 18:15:47.181" endtime="20211109 18:15:47.194"/>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<arg>${${key}}</arg>
+<arg>${var_value}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<msg timestamp="20211109 18:15:47.201" level="INFO">${one_variant_product_merchant_price} = €188.34</msg>
+<status status="PASS" starttime="20211109 18:15:47.194" endtime="20211109 18:15:47.201"/>
+</kw>
+<status status="PASS" starttime="20211109 18:15:47.180" endtime="20211109 18:15:47.201"/>
+</iter>
+<iter>
+<var name="${key}">multi_variant_product_abstract_sku</var>
+<var name="${value}">M21692</var>
+<kw name="Log" library="BuiltIn">
+<arg>Key is '${key}' and value is '${value}'.</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20211109 18:15:47.202" level="INFO">Key is 'multi_variant_product_abstract_sku' and value is 'M21692'.</msg>
+<status status="PASS" starttime="20211109 18:15:47.201" endtime="20211109 18:15:47.202"/>
+</kw>
+<kw name="Get Variable Value" library="BuiltIn">
+<var>${var_value}</var>
+<arg>${${key}}</arg>
+<arg>${value}</arg>
+<doc>Returns variable value or ``default`` if the variable does not exist.</doc>
+<msg timestamp="20211109 18:15:47.215" level="INFO">${var_value} = M21692</msg>
+<status status="PASS" starttime="20211109 18:15:47.202" endtime="20211109 18:15:47.215"/>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<arg>${${key}}</arg>
+<arg>${var_value}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<msg timestamp="20211109 18:15:47.222" level="INFO">${multi_variant_product_abstract_sku} = M21692</msg>
+<status status="PASS" starttime="20211109 18:15:47.216" endtime="20211109 18:15:47.222"/>
+</kw>
+<status status="PASS" starttime="20211109 18:15:47.201" endtime="20211109 18:15:47.222"/>
+</iter>
+<iter>
+<var name="${key}">measurement_unit_product_abstract_sku</var>
+<var name="${value}">M23723</var>
+<kw name="Log" library="BuiltIn">
+<arg>Key is '${key}' and value is '${value}'.</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20211109 18:15:47.223" level="INFO">Key is 'measurement_unit_product_abstract_sku' and value is 'M23723'.</msg>
+<status status="PASS" starttime="20211109 18:15:47.223" endtime="20211109 18:15:47.223"/>
+</kw>
+<kw name="Get Variable Value" library="BuiltIn">
+<var>${var_value}</var>
+<arg>${${key}}</arg>
+<arg>${value}</arg>
+<doc>Returns variable value or ``default`` if the variable does not exist.</doc>
+<msg timestamp="20211109 18:15:47.237" level="INFO">${var_value} = M23723</msg>
+<status status="PASS" starttime="20211109 18:15:47.223" endtime="20211109 18:15:47.237"/>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<arg>${${key}}</arg>
+<arg>${var_value}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<msg timestamp="20211109 18:15:47.244" level="INFO">${measurement_unit_product_abstract_sku} = M23723</msg>
+<status status="PASS" starttime="20211109 18:15:47.237" endtime="20211109 18:15:47.244"/>
+</kw>
+<status status="PASS" starttime="20211109 18:15:47.223" endtime="20211109 18:15:47.244"/>
+</iter>
+<iter>
+<var name="${key}">packaging_unit_product_abstract_sku</var>
+<var name="${value}">M21766</var>
+<kw name="Log" library="BuiltIn">
+<arg>Key is '${key}' and value is '${value}'.</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20211109 18:15:47.245" level="INFO">Key is 'packaging_unit_product_abstract_sku' and value is 'M21766'.</msg>
+<status status="PASS" starttime="20211109 18:15:47.245" endtime="20211109 18:15:47.245"/>
+</kw>
+<kw name="Get Variable Value" library="BuiltIn">
+<var>${var_value}</var>
+<arg>${${key}}</arg>
+<arg>${value}</arg>
+<doc>Returns variable value or ``default`` if the variable does not exist.</doc>
+<msg timestamp="20211109 18:15:47.259" level="INFO">${var_value} = M21766</msg>
+<status status="PASS" starttime="20211109 18:15:47.245" endtime="20211109 18:15:47.259"/>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<arg>${${key}}</arg>
+<arg>${var_value}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<msg timestamp="20211109 18:15:47.266" level="INFO">${packaging_unit_product_abstract_sku} = M21766</msg>
+<status status="PASS" starttime="20211109 18:15:47.259" endtime="20211109 18:15:47.266"/>
+</kw>
+<status status="PASS" starttime="20211109 18:15:47.244" endtime="20211109 18:15:47.266"/>
+</iter>
+<iter>
+<var name="${key}">product_with_relations_related_products_sku</var>
+<var name="${value}">M29529</var>
+<kw name="Log" library="BuiltIn">
+<arg>Key is '${key}' and value is '${value}'.</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20211109 18:15:47.267" level="INFO">Key is 'product_with_relations_related_products_sku' and value is 'M29529'.</msg>
+<status status="PASS" starttime="20211109 18:15:47.266" endtime="20211109 18:15:47.267"/>
+</kw>
+<kw name="Get Variable Value" library="BuiltIn">
+<var>${var_value}</var>
+<arg>${${key}}</arg>
+<arg>${value}</arg>
+<doc>Returns variable value or ``default`` if the variable does not exist.</doc>
+<msg timestamp="20211109 18:15:47.280" level="INFO">${var_value} = M29529</msg>
+<status status="PASS" starttime="20211109 18:15:47.267" endtime="20211109 18:15:47.280"/>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<arg>${${key}}</arg>
+<arg>${var_value}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<msg timestamp="20211109 18:15:47.288" level="INFO">${product_with_relations_related_products_sku} = M29529</msg>
+<status status="PASS" starttime="20211109 18:15:47.281" endtime="20211109 18:15:47.288"/>
+</kw>
+<status status="PASS" starttime="20211109 18:15:47.266" endtime="20211109 18:15:47.288"/>
+</iter>
+<iter>
+<var name="${key}">product_with_relations_upselling_sku</var>
+<var name="${value}">M29502</var>
+<kw name="Log" library="BuiltIn">
+<arg>Key is '${key}' and value is '${value}'.</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20211109 18:15:47.288" level="INFO">Key is 'product_with_relations_upselling_sku' and value is 'M29502'.</msg>
+<status status="PASS" starttime="20211109 18:15:47.288" endtime="20211109 18:15:47.288"/>
+</kw>
+<kw name="Get Variable Value" library="BuiltIn">
+<var>${var_value}</var>
+<arg>${${key}}</arg>
+<arg>${value}</arg>
+<doc>Returns variable value or ``default`` if the variable does not exist.</doc>
+<msg timestamp="20211109 18:15:47.302" level="INFO">${var_value} = M29502</msg>
+<status status="PASS" starttime="20211109 18:15:47.289" endtime="20211109 18:15:47.302"/>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<arg>${${key}}</arg>
+<arg>${var_value}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<msg timestamp="20211109 18:15:47.310" level="INFO">${product_with_relations_upselling_sku} = M29502</msg>
+<status status="PASS" starttime="20211109 18:15:47.303" endtime="20211109 18:15:47.310"/>
+</kw>
+<status status="PASS" starttime="20211109 18:15:47.288" endtime="20211109 18:15:47.310"/>
+</iter>
+<status status="PASS" starttime="20211109 18:15:46.406" endtime="20211109 18:15:47.310"/>
+</for>
+<status status="PASS" starttime="20211109 18:15:46.403" endtime="20211109 18:15:47.310"/>
+</kw>
+<kw name="New Browser" library="Browser">
+<arg>${browser}</arg>
+<arg>headless=${headless}</arg>
+<arg>args=['--ignore-certificate-errors']</arg>
+<tag>BrowserControl</tag>
+<tag>Setter</tag>
+<doc>Create a new playwright Browser with specified options.</doc>
+<msg timestamp="20211109 18:15:47.312" level="INFO">{"browser": "chromium", "headless": true, "args": ["--ignore-certificate-errors"], "handleSIGINT": true, "handleSIGTERM": true, "handleSIGHUP": true, "timeout": 30000.0, "devtools": false, "slowMo": 0.0, "tracesDir": "/Users/shopin/automation/robot/spryker/browser/traces/d7c56409-51d8-4c99-92bc-62ad438b3852"}</msg>
+<msg timestamp="20211109 18:15:47.769" level="INFO">Successfully created browser with options: {"browser":"chromium","headless":true,"args":["--ignore-certificate-errors"],"handleSIGINT":true,"handleSIGTERM":true,"handleSIGHUP":true,"timeout":30000,"devtools":false,"slowMo":0,"tracesDir":"/Users/shopin/automation/robot/spryker/browser/traces/d7c56409-51d8-4c99-92bc-62ad438b3852"}</msg>
+<status status="PASS" starttime="20211109 18:15:47.311" endtime="20211109 18:15:47.769"/>
+</kw>
+<kw name="Set Browser Timeout" library="Browser">
+<arg>${browser_timeout}</arg>
+<tag>Config</tag>
+<tag>Setter</tag>
+<doc>Sets the timeout used by most input and getter keywords.</doc>
+<msg timestamp="20211109 18:15:47.773" level="INFO">No context open.</msg>
+<status status="PASS" starttime="20211109 18:15:47.769" endtime="20211109 18:15:47.773"/>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<arg>'${headless}=true'</arg>
+<arg>Create default Main Context</arg>
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<kw name="Create default Main Context" library="Common">
+<kw name="New Context" library="Browser">
+<var>${main_context}</var>
+<arg>viewport={'width': 1440, 'height': 1080}</arg>
+<tag>BrowserControl</tag>
+<tag>Setter</tag>
+<doc>Create a new BrowserContext with specified options.</doc>
+<msg timestamp="20211109 18:15:47.777" level="INFO">{"acceptDownloads": false, "ignoreHTTPSErrors": false, "bypassCSP": false, "viewport": {"width": 1440, "height": 1080}, "deviceScaleFactor": 1.0, "isMobile": false, "hasTouch": false, "javaScriptEnabled": true, "offline": false, "hideRfBrowser": false}</msg>
+<msg timestamp="20211109 18:15:47.806" level="INFO">Successfully created context. </msg>
+<msg timestamp="20211109 18:15:47.806" level="INFO">{'acceptDownloads': False, 'ignoreHTTPSErrors': False, 'bypassCSP': False, 'viewport': {'width': 1440, 'height': 1080}, 'deviceScaleFactor': 1, 'isMobile': False, 'hasTouch': False, 'javaScriptEnabled': True, 'offline': False, 'hideRfBrowser': False}</msg>
+<msg timestamp="20211109 18:15:47.807" level="INFO">${main_context} = context=e400a016-04dc-43af-9acf-e40199c88633</msg>
+<status status="PASS" starttime="20211109 18:15:47.775" endtime="20211109 18:15:47.807"/>
+</kw>
+<kw name="Set Suite Variable" library="BuiltIn">
+<arg>${main_context}</arg>
+<doc>Makes a variable available everywhere within the scope of the current suite.</doc>
+<msg timestamp="20211109 18:15:47.808" level="INFO">${main_context} = context=e400a016-04dc-43af-9acf-e40199c88633</msg>
+<status status="PASS" starttime="20211109 18:15:47.807" endtime="20211109 18:15:47.808"/>
+</kw>
+<status status="PASS" starttime="20211109 18:15:47.774" endtime="20211109 18:15:47.808"/>
+</kw>
+<status status="PASS" starttime="20211109 18:15:47.774" endtime="20211109 18:15:47.808"/>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<arg>'${headless}=false'</arg>
+<arg>Create default Main Context</arg>
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<kw name="Create default Main Context" library="Common">
+<kw name="New Context" library="Browser">
+<var>${main_context}</var>
+<arg>viewport={'width': 1440, 'height': 1080}</arg>
+<tag>BrowserControl</tag>
+<tag>Setter</tag>
+<doc>Create a new BrowserContext with specified options.</doc>
+<msg timestamp="20211109 18:15:47.810" level="INFO">{"acceptDownloads": false, "ignoreHTTPSErrors": false, "bypassCSP": false, "viewport": {"width": 1440, "height": 1080}, "deviceScaleFactor": 1.0, "isMobile": false, "hasTouch": false, "javaScriptEnabled": true, "offline": false, "hideRfBrowser": false}</msg>
+<msg timestamp="20211109 18:15:47.832" level="INFO">Successfully created context. </msg>
+<msg timestamp="20211109 18:15:47.832" level="INFO">{'acceptDownloads': False, 'ignoreHTTPSErrors': False, 'bypassCSP': False, 'viewport': {'width': 1440, 'height': 1080}, 'deviceScaleFactor': 1, 'isMobile': False, 'hasTouch': False, 'javaScriptEnabled': True, 'offline': False, 'hideRfBrowser': False}</msg>
+<msg timestamp="20211109 18:15:47.832" level="INFO">${main_context} = context=93f2a3f8-8be8-4bdb-a42e-664147ae53b0</msg>
+<status status="PASS" starttime="20211109 18:15:47.809" endtime="20211109 18:15:47.832"/>
+</kw>
+<kw name="Set Suite Variable" library="BuiltIn">
+<arg>${main_context}</arg>
+<doc>Makes a variable available everywhere within the scope of the current suite.</doc>
+<msg timestamp="20211109 18:15:47.833" level="INFO">${main_context} = context=93f2a3f8-8be8-4bdb-a42e-664147ae53b0</msg>
+<status status="PASS" starttime="20211109 18:15:47.833" endtime="20211109 18:15:47.833"/>
+</kw>
+<status status="PASS" starttime="20211109 18:15:47.809" endtime="20211109 18:15:47.833"/>
+</kw>
+<status status="PASS" starttime="20211109 18:15:47.808" endtime="20211109 18:15:47.833"/>
+</kw>
+<kw name="New Page" library="Browser">
+<arg>${host}</arg>
+<tag>BrowserControl</tag>
+<tag>Setter</tag>
+<doc>Open a new Page. A Page is the Playwright equivalent to a tab.
+See `Browser, Context and Page` for more information about Page concept.
+Returns a stable identifier for the created page.</doc>
+<msg timestamp="20211109 18:15:51.056" level="INFO">Successfully initialized new page object and opened url: http://yves.de.spryker.local/</msg>
+<status status="PASS" starttime="20211109 18:15:47.834" endtime="20211109 18:15:51.056"/>
+</kw>
+<kw name="Generate Random String" library="String">
+<var>${random}</var>
+<arg>5</arg>
+<arg>[NUMBERS]</arg>
+<doc>Generates a string with a desired ``length`` from the given ``chars``.</doc>
+<msg timestamp="20211109 18:15:51.057" level="INFO">${random} = 63218</msg>
+<status status="PASS" starttime="20211109 18:15:51.057" endtime="20211109 18:15:51.057"/>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<arg>${random}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<msg timestamp="20211109 18:15:51.058" level="INFO">${random} = 63218</msg>
+<status status="PASS" starttime="20211109 18:15:51.058" endtime="20211109 18:15:51.058"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>${test_customer_email}</var>
+<arg>test.spryker+${random}@gmail.com</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20211109 18:15:51.059" level="INFO">${test_customer_email} = test.spryker+63218@gmail.com</msg>
+<status status="PASS" starttime="20211109 18:15:51.059" endtime="20211109 18:15:51.059"/>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<arg>${test_customer_email}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<msg timestamp="20211109 18:15:51.060" level="INFO">${test_customer_email} = test.spryker+63218@gmail.com</msg>
+<status status="PASS" starttime="20211109 18:15:51.060" endtime="20211109 18:15:51.060"/>
+</kw>
+<status status="PASS" starttime="20211109 18:15:46.400" endtime="20211109 18:15:51.060"/>
+</kw>
+<test id="s1-t1" name="Test 3">
+<kw name="TestSetup" library="Common" type="SETUP">
+<kw name="Go To" library="Browser">
+<arg>${host}</arg>
+<tag>BrowserControl</tag>
+<tag>Setter</tag>
+<doc>Navigates to the given ``url``.</doc>
+<msg timestamp="20211109 18:15:53.027" level="INFO">Successfully opened URL http://yves.de.spryker.local/</msg>
+<status status="PASS" starttime="20211109 18:15:51.125" endtime="20211109 18:15:53.027"/>
+</kw>
+<status status="PASS" starttime="20211109 18:15:51.125" endtime="20211109 18:15:53.027"/>
+</kw>
+<kw name="Zed: login on Zed with provided credentials:" library="Common_Zed">
+<arg>admin@spryker.com</arg>
+<kw name="Go To" library="Browser">
+<arg>${zed_url}</arg>
+<tag>BrowserControl</tag>
+<tag>Setter</tag>
+<doc>Navigates to the given ``url``.</doc>
+<msg timestamp="20211109 18:15:55.752" level="INFO">Successfully opened URL http://backoffice.de.spryker.local/</msg>
+<status status="PASS" starttime="20211109 18:15:53.029" endtime="20211109 18:15:55.753"/>
+</kw>
+<kw name="Delete All Cookies" library="Browser">
+<tag>BrowserControl</tag>
+<tag>Setter</tag>
+<doc>Deletes all cookies from the currently active browser context.</doc>
+<msg timestamp="20211109 18:15:55.759" level="INFO">All cookies deleted.</msg>
+<status status="PASS" starttime="20211109 18:15:55.753" endtime="20211109 18:15:55.759"/>
+</kw>
+<kw name="Reload" library="Browser">
+<tag>BrowserControl</tag>
+<tag>Setter</tag>
+<doc>Reloads current active page.</doc>
+<msg timestamp="20211109 18:15:57.166" level="INFO">Reloaded page</msg>
+<status status="PASS" starttime="20211109 18:15:55.760" endtime="20211109 18:15:57.166"/>
+</kw>
+<kw name="Wait Until Element Is Visible" library="Common">
+<arg>${zed_user_name_field}</arg>
+<kw name="Wait For Elements State" library="Browser">
+<arg>${locator}</arg>
+<arg>visible</arg>
+<arg>${timeout}</arg>
+<arg>${message}</arg>
+<tag>PageContent</tag>
+<tag>Wait</tag>
+<doc>Waits for the element found by ``selector`` to satisfy state option.</doc>
+<msg timestamp="20211109 18:15:57.196" level="INFO">Waited for Element with selector id=auth_username at state visible</msg>
+<status status="PASS" starttime="20211109 18:15:57.170" endtime="20211109 18:15:57.196"/>
+</kw>
+<status status="PASS" starttime="20211109 18:15:57.166" endtime="20211109 18:15:57.197"/>
+</kw>
+<kw name="Type Text" library="Browser">
+<arg>${zed_user_name_field}</arg>
+<arg>${email}</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Types the given ``txt`` into the text field found by ``selector``.</doc>
+<msg timestamp="20211109 18:15:57.197" level="INFO">Types the text 'admin@spryker.com' in the given field.</msg>
+<status status="PASS" starttime="20211109 18:15:57.197" endtime="20211109 18:15:57.297"/>
+</kw>
+<kw name="Type Text" library="Browser">
+<arg>${zed_password_field}</arg>
+<arg>${password}</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Types the given ``txt`` into the text field found by ``selector``.</doc>
+<msg timestamp="20211109 18:15:57.297" level="INFO">Types the text 'change123' in the given field.</msg>
+<status status="PASS" starttime="20211109 18:15:57.297" endtime="20211109 18:15:57.336"/>
+</kw>
+<kw name="Click" library="Browser">
+<arg>${zed_login_button}</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="PASS" starttime="20211109 18:15:57.336" endtime="20211109 18:15:59.674"/>
+</kw>
+<kw name="Wait Until Element Is Visible" library="Common">
+<arg>${zed_log_out_button}</arg>
+<arg>Zed:Dashboard page is not displayed</arg>
+<kw name="Wait For Elements State" library="Browser">
+<arg>${locator}</arg>
+<arg>visible</arg>
+<arg>${timeout}</arg>
+<arg>${message}</arg>
+<tag>PageContent</tag>
+<tag>Wait</tag>
+<doc>Waits for the element found by ``selector`` to satisfy state option.</doc>
+<msg timestamp="20211109 18:15:59.763" level="INFO">Waited for Element with selector xpath=//ul[@class='nav navbar-top-links navbar-right']//a[contains(@href,'logout')] at state visible</msg>
+<status status="PASS" starttime="20211109 18:15:59.676" endtime="20211109 18:15:59.763"/>
+</kw>
+<status status="PASS" starttime="20211109 18:15:59.675" endtime="20211109 18:15:59.763"/>
+</kw>
+<status status="PASS" starttime="20211109 18:15:53.028" endtime="20211109 18:15:59.763"/>
+</kw>
+<kw name="Zed: create new Zed user with the following data:" library="Agent_Assist_steps">
+<arg>return+agent3+${random}@spryker.com</arg>
+<arg>change123${random}</arg>
+<arg>Agent</arg>
+<arg>Assist</arg>
+<arg>Root group</arg>
+<arg>This user is an agent</arg>
+<arg>en_US</arg>
+<kw name="Get Location" library="Common">
+<var>${currentURL}</var>
+<kw name="Get Url" library="Browser">
+<var>${current_url}</var>
+<tag>Assertion</tag>
+<tag>Getter</tag>
+<tag>PageContent</tag>
+<doc>Returns the current URL.</doc>
+<msg timestamp="20211109 18:15:59.769" level="INFO">${current_url} = http://backoffice.de.spryker.local/</msg>
+<status status="PASS" starttime="20211109 18:15:59.766" endtime="20211109 18:15:59.769"/>
+</kw>
+<msg timestamp="20211109 18:15:59.769" level="INFO">${currentURL} = http://backoffice.de.spryker.local/</msg>
+<status status="PASS" starttime="20211109 18:15:59.765" endtime="20211109 18:15:59.769"/>
+</kw>
+<kw name="Run Keyword Unless" library="BuiltIn">
+<arg>'/user' in '${currentURL}'</arg>
+<arg>Zed: go to second navigation item level:</arg>
+<arg>Users</arg>
+<arg>Users</arg>
+<doc>Runs the given keyword with the given arguments if ``condition`` is false.</doc>
+<kw name="Zed: go to second navigation item level:" library="Common_Zed">
+<arg>Users</arg>
+<arg>Users</arg>
+<doc>example: "Zed: Go to Second Navigation Item Level Customers Customer Access"</doc>
+<kw name="Get Element Attribute" library="Common">
+<var>${node_state}</var>
+<arg>xpath=(//span[contains(@class,'nav-label')][text()='${navigation_item_level1}']/ancestor::li)[1]</arg>
+<arg>class</arg>
+<kw name="Get Attribute" library="Browser">
+<var>${element_attribute}</var>
+<arg>${locator}</arg>
+<arg>${attribute}</arg>
+<tag>Assertion</tag>
+<tag>Getter</tag>
+<tag>PageContent</tag>
+<doc>Returns the HTML ``attribute`` of the element found by ``selector``.</doc>
+<msg timestamp="20211109 18:15:59.790" level="INFO">${element_attribute} = </msg>
+<status status="PASS" starttime="20211109 18:15:59.772" endtime="20211109 18:15:59.790"/>
+</kw>
+<msg timestamp="20211109 18:15:59.790" level="INFO">${node_state} = </msg>
+<status status="PASS" starttime="20211109 18:15:59.771" endtime="20211109 18:15:59.790"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>${node_state}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20211109 18:15:59.791" level="INFO"/>
+<status status="PASS" starttime="20211109 18:15:59.791" endtime="20211109 18:15:59.791"/>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<arg>'active' in '${node_state}'</arg>
+<arg>run keywords</arg>
+<arg>wait until element is visible</arg>
+<arg>xpath=//ul[contains(@class,'nav-second-level')]//a/span[text()='${navigation_item_level2}']</arg>
+<arg>AND</arg>
+<arg>Click</arg>
+<arg>xpath=//ul[contains(@class,'nav-second-level')]//a/span[text()='${navigation_item_level2}']</arg>
+<arg>ELSE</arg>
+<arg>run keywords</arg>
+<arg>Click Element by xpath with JavaScript</arg>
+<arg>//ul[@id='side-menu']/li/a/span[@class='nav-label'][contains(text(),'${navigation_item_level1}')]/../../a</arg>
+<arg>AND</arg>
+<arg>wait until element is visible</arg>
+<arg>xpath=//ul[contains(@class,'nav-second-level')]//a/span[text()='${navigation_item_level2}']</arg>
+<arg>AND</arg>
+<arg>Click</arg>
+<arg>xpath=//ul[contains(@class,'nav-second-level')]//a/span[text()='${navigation_item_level2}']</arg>
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<kw name="Run Keywords" library="BuiltIn">
+<arg>Click Element by xpath with JavaScript</arg>
+<arg>//ul[@id='side-menu']/li/a/span[@class='nav-label'][contains(text(),'${navigation_item_level1}')]/../../a</arg>
+<arg>AND</arg>
+<arg>wait until element is visible</arg>
+<arg>xpath=//ul[contains(@class,'nav-second-level')]//a/span[text()='${navigation_item_level2}']</arg>
+<arg>AND</arg>
+<arg>Click</arg>
+<arg>xpath=//ul[contains(@class,'nav-second-level')]//a/span[text()='${navigation_item_level2}']</arg>
+<doc>Executes all the given keywords in a sequence.</doc>
+<kw name="Click Element by xpath with JavaScript" library="Common">
+<arg>//ul[@id='side-menu']/li/a/span[@class='nav-label'][contains(text(),'${navigation_item_level1}')]/../../a</arg>
+<kw name="Execute JavaScript" library="Browser">
+<arg>document.evaluate("${xpath}", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.click()</arg>
+<tag>Getter</tag>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Executes given javascript on the page.</doc>
+<status status="PASS" starttime="20211109 18:15:59.793" endtime="20211109 18:15:59.807"/>
+</kw>
+<status status="PASS" starttime="20211109 18:15:59.793" endtime="20211109 18:15:59.807"/>
+</kw>
+<kw name="Wait Until Element Is Visible" library="Common">
+<arg>xpath=//ul[contains(@class,'nav-second-level')]//a/span[text()='${navigation_item_level2}']</arg>
+<kw name="Wait For Elements State" library="Browser">
+<arg>${locator}</arg>
+<arg>visible</arg>
+<arg>${timeout}</arg>
+<arg>${message}</arg>
+<tag>PageContent</tag>
+<tag>Wait</tag>
+<doc>Waits for the element found by ``selector`` to satisfy state option.</doc>
+<msg timestamp="20211109 18:15:59.819" level="INFO">Waited for Element with selector xpath=//ul[contains(@class,'nav-second-level')]//a/span[text()='Users'] at state visible</msg>
+<status status="PASS" starttime="20211109 18:15:59.812" endtime="20211109 18:15:59.819"/>
+</kw>
+<status status="PASS" starttime="20211109 18:15:59.808" endtime="20211109 18:15:59.819"/>
+</kw>
+<kw name="Click" library="Browser">
+<arg>xpath=//ul[contains(@class,'nav-second-level')]//a/span[text()='${navigation_item_level2}']</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="PASS" starttime="20211109 18:15:59.820" endtime="20211109 18:16:01.269"/>
+</kw>
+<status status="PASS" starttime="20211109 18:15:59.792" endtime="20211109 18:16:01.269"/>
+</kw>
+<status status="PASS" starttime="20211109 18:15:59.791" endtime="20211109 18:16:01.269"/>
+</kw>
+<status status="PASS" starttime="20211109 18:15:59.770" endtime="20211109 18:16:01.269"/>
+</kw>
+<status status="PASS" starttime="20211109 18:15:59.769" endtime="20211109 18:16:01.270"/>
+</kw>
+<kw name="Zed: click button in Header:" library="Common_Zed">
+<arg>Add New User</arg>
+<kw name="Wait Until Element Is Visible" library="Common">
+<arg>xpath=//div[@class='title-action']/a[contains(.,'${button_name}')]</arg>
+<kw name="Wait For Elements State" library="Browser">
+<arg>${locator}</arg>
+<arg>visible</arg>
+<arg>${timeout}</arg>
+<arg>${message}</arg>
+<tag>PageContent</tag>
+<tag>Wait</tag>
+<doc>Waits for the element found by ``selector`` to satisfy state option.</doc>
+<msg timestamp="20211109 18:16:01.316" level="INFO">Waited for Element with selector xpath=//div[@class='title-action']/a[contains(.,'Add New User')] at state visible</msg>
+<status status="PASS" starttime="20211109 18:16:01.275" endtime="20211109 18:16:01.316"/>
+</kw>
+<status status="PASS" starttime="20211109 18:16:01.271" endtime="20211109 18:16:01.316"/>
+</kw>
+<kw name="Click" library="Browser">
+<arg>xpath=//div[@class='title-action']/a[contains(.,'${button_name}')]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="PASS" starttime="20211109 18:16:01.317" endtime="20211109 18:16:02.933"/>
+</kw>
+<status status="PASS" starttime="20211109 18:16:01.270" endtime="20211109 18:16:02.933"/>
+</kw>
+<kw name="Wait Until Element Is Visible" library="Common">
+<arg>${zed_user_email_field}</arg>
+<kw name="Wait For Elements State" library="Browser">
+<arg>${locator}</arg>
+<arg>visible</arg>
+<arg>${timeout}</arg>
+<arg>${message}</arg>
+<tag>PageContent</tag>
+<tag>Wait</tag>
+<doc>Waits for the element found by ``selector`` to satisfy state option.</doc>
+<msg timestamp="20211109 18:16:03.000" level="INFO">Waited for Element with selector id=user_username at state visible</msg>
+<status status="PASS" starttime="20211109 18:16:02.941" endtime="20211109 18:16:03.001"/>
+</kw>
+<status status="PASS" starttime="20211109 18:16:02.934" endtime="20211109 18:16:03.001"/>
+</kw>
+<kw name="Type Text" library="Browser">
+<arg>${zed_user_email_field}</arg>
+<arg>${zedUserEmail}</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Types the given ``txt`` into the text field found by ``selector``.</doc>
+<msg timestamp="20211109 18:16:03.003" level="INFO">Types the text 'return+agent3+63218@spryker.com' in the given field.</msg>
+<status status="PASS" starttime="20211109 18:16:03.002" endtime="20211109 18:16:03.079"/>
+</kw>
+<kw name="Type Text" library="Browser">
+<arg>${zed_user_password_filed}</arg>
+<arg>${zedUserPassword}</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Types the given ``txt`` into the text field found by ``selector``.</doc>
+<msg timestamp="20211109 18:16:03.080" level="INFO">Types the text 'change12363218' in the given field.</msg>
+<status status="PASS" starttime="20211109 18:16:03.080" endtime="20211109 18:16:03.119"/>
+</kw>
+<kw name="Type Text" library="Browser">
+<arg>${zed_user_repeat_password_field}</arg>
+<arg>${zedUserPassword}</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Types the given ``txt`` into the text field found by ``selector``.</doc>
+<msg timestamp="20211109 18:16:03.120" level="INFO">Types the text 'change12363218' in the given field.</msg>
+<status status="PASS" starttime="20211109 18:16:03.119" endtime="20211109 18:16:03.158"/>
+</kw>
+<kw name="Type Text" library="Browser">
+<arg>${zed_user_first_name_field}</arg>
+<arg>${zedUserFirstName}</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Types the given ``txt`` into the text field found by ``selector``.</doc>
+<msg timestamp="20211109 18:16:03.159" level="INFO">Types the text 'Agent' in the given field.</msg>
+<status status="PASS" starttime="20211109 18:16:03.159" endtime="20211109 18:16:03.188"/>
+</kw>
+<kw name="Type Text" library="Browser">
+<arg>${zed_user_last_name_field}</arg>
+<arg>${zedUserLastName}</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Types the given ``txt`` into the text field found by ``selector``.</doc>
+<msg timestamp="20211109 18:16:03.189" level="INFO">Types the text 'Assist' in the given field.</msg>
+<status status="PASS" starttime="20211109 18:16:03.189" endtime="20211109 18:16:03.216"/>
+</kw>
+<kw name="Zed: Check checkbox by Label:" library="Common_Zed">
+<arg>${checkboxGroup}</arg>
+<kw name="Wait Until Element Is Visible" library="Common">
+<arg>xpath=//input[@type='checkbox']/../../label[contains(text(),'${checkbox_label}')]//input</arg>
+<kw name="Wait For Elements State" library="Browser">
+<arg>${locator}</arg>
+<arg>visible</arg>
+<arg>${timeout}</arg>
+<arg>${message}</arg>
+<tag>PageContent</tag>
+<tag>Wait</tag>
+<doc>Waits for the element found by ``selector`` to satisfy state option.</doc>
+<msg timestamp="20211109 18:16:03.228" level="INFO">Waited for Element with selector xpath=//input[@type='checkbox']/../../label[contains(text(),'Root group')]//input at state visible</msg>
+<status status="PASS" starttime="20211109 18:16:03.221" endtime="20211109 18:16:03.228"/>
+</kw>
+<status status="PASS" starttime="20211109 18:16:03.217" endtime="20211109 18:16:03.228"/>
+</kw>
+<kw name="Check Checkbox" library="Browser">
+<arg>xpath=//input[@type='checkbox']/../../label[contains(text(),'${checkbox_label}')]//input</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Checks the checkbox or selects radio button found by ``selector``.</doc>
+<status status="PASS" starttime="20211109 18:16:03.229" endtime="20211109 18:16:03.292"/>
+</kw>
+<status status="PASS" starttime="20211109 18:16:03.216" endtime="20211109 18:16:03.292"/>
+</kw>
+<kw name="Zed: Check checkbox by Label:" library="Common_Zed">
+<arg>${checkboxAgent}</arg>
+<kw name="Wait Until Element Is Visible" library="Common">
+<arg>xpath=//input[@type='checkbox']/../../label[contains(text(),'${checkbox_label}')]//input</arg>
+<kw name="Wait For Elements State" library="Browser">
+<arg>${locator}</arg>
+<arg>visible</arg>
+<arg>${timeout}</arg>
+<arg>${message}</arg>
+<tag>PageContent</tag>
+<tag>Wait</tag>
+<doc>Waits for the element found by ``selector`` to satisfy state option.</doc>
+<msg timestamp="20211109 18:16:03.318" level="INFO">Waited for Element with selector xpath=//input[@type='checkbox']/../../label[contains(text(),'This user is an agent')]//input at state visible</msg>
+<status status="PASS" starttime="20211109 18:16:03.298" endtime="20211109 18:16:03.318"/>
+</kw>
+<status status="PASS" starttime="20211109 18:16:03.293" endtime="20211109 18:16:03.318"/>
+</kw>
+<kw name="Check Checkbox" library="Browser">
+<arg>xpath=//input[@type='checkbox']/../../label[contains(text(),'${checkbox_label}')]//input</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Checks the checkbox or selects radio button found by ``selector``.</doc>
+<status status="PASS" starttime="20211109 18:16:03.319" endtime="20211109 18:16:03.365"/>
+</kw>
+<status status="PASS" starttime="20211109 18:16:03.292" endtime="20211109 18:16:03.365"/>
+</kw>
+<kw name="Select From List By Label" library="Common">
+<arg>${zed_user_interface_language}</arg>
+<arg>${userInterfaceLanguage}</arg>
+<kw name="Select Options By" library="Browser">
+<arg>${locator}</arg>
+<arg>label</arg>
+<arg>${value}</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Selects options from select element found by ``selector``.</doc>
+<status status="PASS" starttime="20211109 18:16:03.366" endtime="20211109 18:16:03.381"/>
+</kw>
+<status status="PASS" starttime="20211109 18:16:03.366" endtime="20211109 18:16:03.381"/>
+</kw>
+<kw name="Zed: submit the form" library="Common_Zed">
+<kw name="Wait Until Element Is Visible" library="Common">
+<arg>${zed_save_button}</arg>
+<kw name="Wait For Elements State" library="Browser">
+<arg>${locator}</arg>
+<arg>visible</arg>
+<arg>${timeout}</arg>
+<arg>${message}</arg>
+<tag>PageContent</tag>
+<tag>Wait</tag>
+<doc>Waits for the element found by ``selector`` to satisfy state option.</doc>
+<msg timestamp="20211109 18:16:03.393" level="INFO">Waited for Element with selector xpath=//input[contains(@class,'safe-submit')] at state visible</msg>
+<status status="PASS" starttime="20211109 18:16:03.386" endtime="20211109 18:16:03.393"/>
+</kw>
+<status status="PASS" starttime="20211109 18:16:03.382" endtime="20211109 18:16:03.393"/>
+</kw>
+<kw name="Click" library="Browser">
+<arg>${zed_save_button}</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="PASS" starttime="20211109 18:16:03.394" endtime="20211109 18:16:06.158"/>
+</kw>
+<status status="PASS" starttime="20211109 18:16:03.382" endtime="20211109 18:16:06.158"/>
+</kw>
+<kw name="Zed: table should contain:" library="Common_Zed">
+<arg>${zedUserEmail}</arg>
+<kw name="Zed: perform search by:" library="Common_Zed">
+<arg>${search_key}</arg>
+<kw name="Type Text" library="Browser">
+<arg>${zed_search_field_locator}</arg>
+<arg>${search_key}</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Types the given ``txt`` into the text field found by ``selector``.</doc>
+<msg timestamp="20211109 18:16:06.162" level="INFO">Types the text 'return+agent3+63218@spryker.com' in the given field.</msg>
+<status status="PASS" starttime="20211109 18:16:06.161" endtime="20211109 18:16:06.341"/>
+</kw>
+<kw name="Wait Until Element Is Visible" library="Common">
+<arg>${zed_processing_block_locator}</arg>
+<kw name="Wait For Elements State" library="Browser">
+<arg>${locator}</arg>
+<arg>visible</arg>
+<arg>${timeout}</arg>
+<arg>${message}</arg>
+<tag>PageContent</tag>
+<tag>Wait</tag>
+<doc>Waits for the element found by ``selector`` to satisfy state option.</doc>
+<msg timestamp="20211109 18:16:06.352" level="INFO">Waited for Element with selector xpath=//div[contains(@id,'processing')][contains(@class,'dataTables_processing')] at state visible</msg>
+<status status="PASS" starttime="20211109 18:16:06.346" endtime="20211109 18:16:06.353"/>
+</kw>
+<status status="PASS" starttime="20211109 18:16:06.342" endtime="20211109 18:16:06.353"/>
+</kw>
+<kw name="Wait Until Element Is Not Visible" library="Common">
+<arg>${zed_processing_block_locator}</arg>
+<kw name="Wait For Elements State" library="Browser">
+<arg>${locator}</arg>
+<arg>hidden</arg>
+<arg>${timeout}</arg>
+<arg>${message}</arg>
+<tag>PageContent</tag>
+<tag>Wait</tag>
+<doc>Waits for the element found by ``selector`` to satisfy state option.</doc>
+<msg timestamp="20211109 18:16:09.124" level="INFO">Waited for Element with selector xpath=//div[contains(@id,'processing')][contains(@class,'dataTables_processing')] at state hidden</msg>
+<status status="PASS" starttime="20211109 18:16:06.357" endtime="20211109 18:16:09.124"/>
+</kw>
+<status status="PASS" starttime="20211109 18:16:06.353" endtime="20211109 18:16:09.124"/>
+</kw>
+<status status="PASS" starttime="20211109 18:16:06.160" endtime="20211109 18:16:09.125"/>
+</kw>
+<kw name="Table Should Contain" library="Common">
+<arg>${zed_table_locator}</arg>
+<arg>${search_key}</arg>
+<kw name="Get Text" library="Browser">
+<arg>${locator}</arg>
+<arg>contains</arg>
+<arg>${expected}</arg>
+<arg>${message}</arg>
+<tag>Assertion</tag>
+<tag>Getter</tag>
+<tag>PageContent</tag>
+<doc>Returns text attribute of the element found by ``selector``.</doc>
+<status status="PASS" starttime="20211109 18:16:09.132" endtime="20211109 18:16:09.153"/>
+</kw>
+<status status="PASS" starttime="20211109 18:16:09.125" endtime="20211109 18:16:09.153"/>
+</kw>
+<status status="PASS" starttime="20211109 18:16:06.159" endtime="20211109 18:16:09.153"/>
+</kw>
+<status status="PASS" starttime="20211109 18:15:59.764" endtime="20211109 18:16:09.153"/>
+</kw>
+<kw name="TestTeardown" library="Common" type="TEARDOWN">
+<kw name="Delete All Cookies" library="Browser">
+<tag>BrowserControl</tag>
+<tag>Setter</tag>
+<doc>Deletes all cookies from the currently active browser context.</doc>
+<msg timestamp="20211109 18:16:09.157" level="INFO">All cookies deleted.</msg>
+<status status="PASS" starttime="20211109 18:16:09.154" endtime="20211109 18:16:09.157"/>
+</kw>
+<status status="PASS" starttime="20211109 18:16:09.154" endtime="20211109 18:16:09.157"/>
+</kw>
+<status status="PASS" starttime="20211109 18:15:51.061" endtime="20211109 18:16:09.157"/>
+</test>
+<test id="s1-t2" name="Test 4">
+<kw name="TestSetup" library="Common" type="SETUP">
+<kw name="Go To" library="Browser">
+<arg>${host}</arg>
+<tag>BrowserControl</tag>
+<tag>Setter</tag>
+<doc>Navigates to the given ``url``.</doc>
+<msg timestamp="20211109 18:16:11.111" level="INFO">Successfully opened URL http://yves.de.spryker.local/</msg>
+<status status="PASS" starttime="20211109 18:16:09.167" endtime="20211109 18:16:11.111"/>
+</kw>
+<status status="PASS" starttime="20211109 18:16:09.167" endtime="20211109 18:16:11.112"/>
+</kw>
+<kw name="Zed: login on Zed with provided credentials:" library="Common_Zed">
+<arg>admin@spryker.com</arg>
+<kw name="Go To" library="Browser">
+<arg>${zed_url}</arg>
+<tag>BrowserControl</tag>
+<tag>Setter</tag>
+<doc>Navigates to the given ``url``.</doc>
+<msg timestamp="20211109 18:16:13.278" level="INFO">Successfully opened URL http://backoffice.de.spryker.local/</msg>
+<status status="PASS" starttime="20211109 18:16:11.113" endtime="20211109 18:16:13.279"/>
+</kw>
+<kw name="Delete All Cookies" library="Browser">
+<tag>BrowserControl</tag>
+<tag>Setter</tag>
+<doc>Deletes all cookies from the currently active browser context.</doc>
+<msg timestamp="20211109 18:16:13.281" level="INFO">All cookies deleted.</msg>
+<status status="PASS" starttime="20211109 18:16:13.279" endtime="20211109 18:16:13.282"/>
+</kw>
+<kw name="Reload" library="Browser">
+<tag>BrowserControl</tag>
+<tag>Setter</tag>
+<doc>Reloads current active page.</doc>
+<msg timestamp="20211109 18:16:14.609" level="INFO">Reloaded page</msg>
+<status status="PASS" starttime="20211109 18:16:13.282" endtime="20211109 18:16:14.609"/>
+</kw>
+<kw name="Wait Until Element Is Visible" library="Common">
+<arg>${zed_user_name_field}</arg>
+<kw name="Wait For Elements State" library="Browser">
+<arg>${locator}</arg>
+<arg>visible</arg>
+<arg>${timeout}</arg>
+<arg>${message}</arg>
+<tag>PageContent</tag>
+<tag>Wait</tag>
+<doc>Waits for the element found by ``selector`` to satisfy state option.</doc>
+<msg timestamp="20211109 18:16:14.625" level="INFO">Waited for Element with selector id=auth_username at state visible</msg>
+<status status="PASS" starttime="20211109 18:16:14.613" endtime="20211109 18:16:14.626"/>
+</kw>
+<status status="PASS" starttime="20211109 18:16:14.609" endtime="20211109 18:16:14.626"/>
+</kw>
+<kw name="Type Text" library="Browser">
+<arg>${zed_user_name_field}</arg>
+<arg>${email}</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Types the given ``txt`` into the text field found by ``selector``.</doc>
+<msg timestamp="20211109 18:16:14.626" level="INFO">Types the text 'admin@spryker.com' in the given field.</msg>
+<status status="PASS" starttime="20211109 18:16:14.626" endtime="20211109 18:16:14.656"/>
+</kw>
+<kw name="Type Text" library="Browser">
+<arg>${zed_password_field}</arg>
+<arg>${password}</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Types the given ``txt`` into the text field found by ``selector``.</doc>
+<msg timestamp="20211109 18:16:14.656" level="INFO">Types the text 'change123' in the given field.</msg>
+<status status="PASS" starttime="20211109 18:16:14.656" endtime="20211109 18:16:14.676"/>
+</kw>
+<kw name="Click" library="Browser">
+<arg>${zed_login_button}</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="PASS" starttime="20211109 18:16:14.676" endtime="20211109 18:16:16.569"/>
+</kw>
+<kw name="Wait Until Element Is Visible" library="Common">
+<arg>${zed_log_out_button}</arg>
+<arg>Zed:Dashboard page is not displayed</arg>
+<kw name="Wait For Elements State" library="Browser">
+<arg>${locator}</arg>
+<arg>visible</arg>
+<arg>${timeout}</arg>
+<arg>${message}</arg>
+<tag>PageContent</tag>
+<tag>Wait</tag>
+<doc>Waits for the element found by ``selector`` to satisfy state option.</doc>
+<msg timestamp="20211109 18:16:16.652" level="INFO">Waited for Element with selector xpath=//ul[@class='nav navbar-top-links navbar-right']//a[contains(@href,'logout')] at state visible</msg>
+<status status="PASS" starttime="20211109 18:16:16.571" endtime="20211109 18:16:16.653"/>
+</kw>
+<status status="PASS" starttime="20211109 18:16:16.570" endtime="20211109 18:16:16.653"/>
+</kw>
+<status status="PASS" starttime="20211109 18:16:11.112" endtime="20211109 18:16:16.653"/>
+</kw>
+<kw name="Zed: create new Zed user with the following data:" library="Agent_Assist_steps">
+<arg>return+agent4+${random}@spryker.com</arg>
+<arg>change123${random}</arg>
+<arg>Agent</arg>
+<arg>Assist</arg>
+<arg>Root group</arg>
+<arg>This user is an agent</arg>
+<arg>en_US</arg>
+<kw name="Get Location" library="Common">
+<var>${currentURL}</var>
+<kw name="Get Url" library="Browser">
+<var>${current_url}</var>
+<tag>Assertion</tag>
+<tag>Getter</tag>
+<tag>PageContent</tag>
+<doc>Returns the current URL.</doc>
+<msg timestamp="20211109 18:16:16.656" level="INFO">${current_url} = http://backoffice.de.spryker.local/</msg>
+<status status="PASS" starttime="20211109 18:16:16.655" endtime="20211109 18:16:16.656"/>
+</kw>
+<msg timestamp="20211109 18:16:16.657" level="INFO">${currentURL} = http://backoffice.de.spryker.local/</msg>
+<status status="PASS" starttime="20211109 18:16:16.654" endtime="20211109 18:16:16.657"/>
+</kw>
+<kw name="Run Keyword Unless" library="BuiltIn">
+<arg>'/user' in '${currentURL}'</arg>
+<arg>Zed: go to second navigation item level:</arg>
+<arg>Users</arg>
+<arg>Users</arg>
+<doc>Runs the given keyword with the given arguments if ``condition`` is false.</doc>
+<kw name="Zed: go to second navigation item level:" library="Common_Zed">
+<arg>Users</arg>
+<arg>Users</arg>
+<doc>example: "Zed: Go to Second Navigation Item Level Customers Customer Access"</doc>
+<kw name="Get Element Attribute" library="Common">
+<var>${node_state}</var>
+<arg>xpath=(//span[contains(@class,'nav-label')][text()='${navigation_item_level1}']/ancestor::li)[1]</arg>
+<arg>class</arg>
+<kw name="Get Attribute" library="Browser">
+<var>${element_attribute}</var>
+<arg>${locator}</arg>
+<arg>${attribute}</arg>
+<tag>Assertion</tag>
+<tag>Getter</tag>
+<tag>PageContent</tag>
+<doc>Returns the HTML ``attribute`` of the element found by ``selector``.</doc>
+<msg timestamp="20211109 18:16:16.673" level="INFO">${element_attribute} = </msg>
+<status status="PASS" starttime="20211109 18:16:16.659" endtime="20211109 18:16:16.673"/>
+</kw>
+<msg timestamp="20211109 18:16:16.673" level="INFO">${node_state} = </msg>
+<status status="PASS" starttime="20211109 18:16:16.658" endtime="20211109 18:16:16.673"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>${node_state}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20211109 18:16:16.674" level="INFO"/>
+<status status="PASS" starttime="20211109 18:16:16.674" endtime="20211109 18:16:16.674"/>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<arg>'active' in '${node_state}'</arg>
+<arg>run keywords</arg>
+<arg>wait until element is visible</arg>
+<arg>xpath=//ul[contains(@class,'nav-second-level')]//a/span[text()='${navigation_item_level2}']</arg>
+<arg>AND</arg>
+<arg>Click</arg>
+<arg>xpath=//ul[contains(@class,'nav-second-level')]//a/span[text()='${navigation_item_level2}']</arg>
+<arg>ELSE</arg>
+<arg>run keywords</arg>
+<arg>Click Element by xpath with JavaScript</arg>
+<arg>//ul[@id='side-menu']/li/a/span[@class='nav-label'][contains(text(),'${navigation_item_level1}')]/../../a</arg>
+<arg>AND</arg>
+<arg>wait until element is visible</arg>
+<arg>xpath=//ul[contains(@class,'nav-second-level')]//a/span[text()='${navigation_item_level2}']</arg>
+<arg>AND</arg>
+<arg>Click</arg>
+<arg>xpath=//ul[contains(@class,'nav-second-level')]//a/span[text()='${navigation_item_level2}']</arg>
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<kw name="Run Keywords" library="BuiltIn">
+<arg>Click Element by xpath with JavaScript</arg>
+<arg>//ul[@id='side-menu']/li/a/span[@class='nav-label'][contains(text(),'${navigation_item_level1}')]/../../a</arg>
+<arg>AND</arg>
+<arg>wait until element is visible</arg>
+<arg>xpath=//ul[contains(@class,'nav-second-level')]//a/span[text()='${navigation_item_level2}']</arg>
+<arg>AND</arg>
+<arg>Click</arg>
+<arg>xpath=//ul[contains(@class,'nav-second-level')]//a/span[text()='${navigation_item_level2}']</arg>
+<doc>Executes all the given keywords in a sequence.</doc>
+<kw name="Click Element by xpath with JavaScript" library="Common">
+<arg>//ul[@id='side-menu']/li/a/span[@class='nav-label'][contains(text(),'${navigation_item_level1}')]/../../a</arg>
+<kw name="Execute JavaScript" library="Browser">
+<arg>document.evaluate("${xpath}", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.click()</arg>
+<tag>Getter</tag>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Executes given javascript on the page.</doc>
+<status status="PASS" starttime="20211109 18:16:16.676" endtime="20211109 18:16:16.684"/>
+</kw>
+<status status="PASS" starttime="20211109 18:16:16.675" endtime="20211109 18:16:16.685"/>
+</kw>
+<kw name="Wait Until Element Is Visible" library="Common">
+<arg>xpath=//ul[contains(@class,'nav-second-level')]//a/span[text()='${navigation_item_level2}']</arg>
+<kw name="Wait For Elements State" library="Browser">
+<arg>${locator}</arg>
+<arg>visible</arg>
+<arg>${timeout}</arg>
+<arg>${message}</arg>
+<tag>PageContent</tag>
+<tag>Wait</tag>
+<doc>Waits for the element found by ``selector`` to satisfy state option.</doc>
+<msg timestamp="20211109 18:16:16.695" level="INFO">Waited for Element with selector xpath=//ul[contains(@class,'nav-second-level')]//a/span[text()='Users'] at state visible</msg>
+<status status="PASS" starttime="20211109 18:16:16.689" endtime="20211109 18:16:16.696"/>
+</kw>
+<status status="PASS" starttime="20211109 18:16:16.685" endtime="20211109 18:16:16.696"/>
+</kw>
+<kw name="Click" library="Browser">
+<arg>xpath=//ul[contains(@class,'nav-second-level')]//a/span[text()='${navigation_item_level2}']</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="PASS" starttime="20211109 18:16:16.696" endtime="20211109 18:16:17.918"/>
+</kw>
+<status status="PASS" starttime="20211109 18:16:16.675" endtime="20211109 18:16:17.918"/>
+</kw>
+<status status="PASS" starttime="20211109 18:16:16.674" endtime="20211109 18:16:17.918"/>
+</kw>
+<status status="PASS" starttime="20211109 18:16:16.658" endtime="20211109 18:16:17.919"/>
+</kw>
+<status status="PASS" starttime="20211109 18:16:16.657" endtime="20211109 18:16:17.919"/>
+</kw>
+<kw name="Zed: click button in Header:" library="Common_Zed">
+<arg>Add New User</arg>
+<kw name="Wait Until Element Is Visible" library="Common">
+<arg>xpath=//div[@class='title-action']/a[contains(.,'${button_name}')]</arg>
+<kw name="Wait For Elements State" library="Browser">
+<arg>${locator}</arg>
+<arg>visible</arg>
+<arg>${timeout}</arg>
+<arg>${message}</arg>
+<tag>PageContent</tag>
+<tag>Wait</tag>
+<doc>Waits for the element found by ``selector`` to satisfy state option.</doc>
+<msg timestamp="20211109 18:16:17.996" level="INFO">Waited for Element with selector xpath=//div[@class='title-action']/a[contains(.,'Add New User')] at state visible</msg>
+<status status="PASS" starttime="20211109 18:16:17.924" endtime="20211109 18:16:17.996"/>
+</kw>
+<status status="PASS" starttime="20211109 18:16:17.920" endtime="20211109 18:16:17.996"/>
+</kw>
+<kw name="Click" library="Browser">
+<arg>xpath=//div[@class='title-action']/a[contains(.,'${button_name}')]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="PASS" starttime="20211109 18:16:17.996" endtime="20211109 18:16:19.838"/>
+</kw>
+<status status="PASS" starttime="20211109 18:16:17.919" endtime="20211109 18:16:19.839"/>
+</kw>
+<kw name="Wait Until Element Is Visible" library="Common">
+<arg>${zed_user_email_field}</arg>
+<kw name="Wait For Elements State" library="Browser">
+<arg>${locator}</arg>
+<arg>visible</arg>
+<arg>${timeout}</arg>
+<arg>${message}</arg>
+<tag>PageContent</tag>
+<tag>Wait</tag>
+<doc>Waits for the element found by ``selector`` to satisfy state option.</doc>
+<msg timestamp="20211109 18:16:19.909" level="INFO">Waited for Element with selector id=user_username at state visible</msg>
+<status status="PASS" starttime="20211109 18:16:19.844" endtime="20211109 18:16:19.909"/>
+</kw>
+<status status="PASS" starttime="20211109 18:16:19.839" endtime="20211109 18:16:19.909"/>
+</kw>
+<kw name="Type Text" library="Browser">
+<arg>${zed_user_email_field}</arg>
+<arg>${zedUserEmail}</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Types the given ``txt`` into the text field found by ``selector``.</doc>
+<msg timestamp="20211109 18:16:19.910" level="INFO">Types the text 'return+agent4+63218@spryker.com' in the given field.</msg>
+<status status="PASS" starttime="20211109 18:16:19.910" endtime="20211109 18:16:19.958"/>
+</kw>
+<kw name="Type Text" library="Browser">
+<arg>${zed_user_password_filed}</arg>
+<arg>${zedUserPassword}</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Types the given ``txt`` into the text field found by ``selector``.</doc>
+<msg timestamp="20211109 18:16:19.959" level="INFO">Types the text 'change12363218' in the given field.</msg>
+<status status="PASS" starttime="20211109 18:16:19.959" endtime="20211109 18:16:19.985"/>
+</kw>
+<kw name="Type Text" library="Browser">
+<arg>${zed_user_repeat_password_field}</arg>
+<arg>${zedUserPassword}</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Types the given ``txt`` into the text field found by ``selector``.</doc>
+<msg timestamp="20211109 18:16:19.986" level="INFO">Types the text 'change12363218' in the given field.</msg>
+<status status="PASS" starttime="20211109 18:16:19.986" endtime="20211109 18:16:20.012"/>
+</kw>
+<kw name="Type Text" library="Browser">
+<arg>${zed_user_first_name_field}</arg>
+<arg>${zedUserFirstName}</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Types the given ``txt`` into the text field found by ``selector``.</doc>
+<msg timestamp="20211109 18:16:20.013" level="INFO">Types the text 'Agent' in the given field.</msg>
+<status status="PASS" starttime="20211109 18:16:20.012" endtime="20211109 18:16:20.031"/>
+</kw>
+<kw name="Type Text" library="Browser">
+<arg>${zed_user_last_name_field}</arg>
+<arg>${zedUserLastName}</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Types the given ``txt`` into the text field found by ``selector``.</doc>
+<msg timestamp="20211109 18:16:20.032" level="INFO">Types the text 'Assist' in the given field.</msg>
+<status status="PASS" starttime="20211109 18:16:20.032" endtime="20211109 18:16:20.055"/>
+</kw>
+<kw name="Zed: Check checkbox by Label:" library="Common_Zed">
+<arg>${checkboxGroup}</arg>
+<kw name="Wait Until Element Is Visible" library="Common">
+<arg>xpath=//input[@type='checkbox']/../../label[contains(text(),'${checkbox_label}')]//input</arg>
+<kw name="Wait For Elements State" library="Browser">
+<arg>${locator}</arg>
+<arg>visible</arg>
+<arg>${timeout}</arg>
+<arg>${message}</arg>
+<tag>PageContent</tag>
+<tag>Wait</tag>
+<doc>Waits for the element found by ``selector`` to satisfy state option.</doc>
+<msg timestamp="20211109 18:16:20.065" level="INFO">Waited for Element with selector xpath=//input[@type='checkbox']/../../label[contains(text(),'Root group')]//input at state visible</msg>
+<status status="PASS" starttime="20211109 18:16:20.059" endtime="20211109 18:16:20.065"/>
+</kw>
+<status status="PASS" starttime="20211109 18:16:20.056" endtime="20211109 18:16:20.065"/>
+</kw>
+<kw name="Check Checkbox" library="Browser">
+<arg>xpath=//input[@type='checkbox']/../../label[contains(text(),'${checkbox_label}')]//input</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Checks the checkbox or selects radio button found by ``selector``.</doc>
+<status status="PASS" starttime="20211109 18:16:20.065" endtime="20211109 18:16:20.120"/>
+</kw>
+<status status="PASS" starttime="20211109 18:16:20.055" endtime="20211109 18:16:20.120"/>
+</kw>
+<kw name="Zed: Check checkbox by Label:" library="Common_Zed">
+<arg>${checkboxAgent}</arg>
+<kw name="Wait Until Element Is Visible" library="Common">
+<arg>xpath=//input[@type='checkbox']/../../label[contains(text(),'${checkbox_label}')]//input</arg>
+<kw name="Wait For Elements State" library="Browser">
+<arg>${locator}</arg>
+<arg>visible</arg>
+<arg>${timeout}</arg>
+<arg>${message}</arg>
+<tag>PageContent</tag>
+<tag>Wait</tag>
+<doc>Waits for the element found by ``selector`` to satisfy state option.</doc>
+<msg timestamp="20211109 18:16:20.138" level="INFO">Waited for Element with selector xpath=//input[@type='checkbox']/../../label[contains(text(),'This user is an agent')]//input at state visible</msg>
+<status status="PASS" starttime="20211109 18:16:20.125" endtime="20211109 18:16:20.139"/>
+</kw>
+<status status="PASS" starttime="20211109 18:16:20.121" endtime="20211109 18:16:20.139"/>
+</kw>
+<kw name="Check Checkbox" library="Browser">
+<arg>xpath=//input[@type='checkbox']/../../label[contains(text(),'${checkbox_label}')]//input</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Checks the checkbox or selects radio button found by ``selector``.</doc>
+<status status="PASS" starttime="20211109 18:16:20.139" endtime="20211109 18:16:20.180"/>
+</kw>
+<status status="PASS" starttime="20211109 18:16:20.120" endtime="20211109 18:16:20.180"/>
+</kw>
+<kw name="Select From List By Label" library="Common">
+<arg>${zed_user_interface_language}</arg>
+<arg>${userInterfaceLanguage}</arg>
+<kw name="Select Options By" library="Browser">
+<arg>${locator}</arg>
+<arg>label</arg>
+<arg>${value}</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Selects options from select element found by ``selector``.</doc>
+<status status="PASS" starttime="20211109 18:16:20.181" endtime="20211109 18:16:20.192"/>
+</kw>
+<status status="PASS" starttime="20211109 18:16:20.180" endtime="20211109 18:16:20.192"/>
+</kw>
+<kw name="Zed: submit the form" library="Common_Zed">
+<kw name="Wait Until Element Is Visible" library="Common">
+<arg>${zed_save_button}</arg>
+<kw name="Wait For Elements State" library="Browser">
+<arg>${locator}</arg>
+<arg>visible</arg>
+<arg>${timeout}</arg>
+<arg>${message}</arg>
+<tag>PageContent</tag>
+<tag>Wait</tag>
+<doc>Waits for the element found by ``selector`` to satisfy state option.</doc>
+<msg timestamp="20211109 18:16:20.204" level="INFO">Waited for Element with selector xpath=//input[contains(@class,'safe-submit')] at state visible</msg>
+<status status="PASS" starttime="20211109 18:16:20.197" endtime="20211109 18:16:20.204"/>
+</kw>
+<status status="PASS" starttime="20211109 18:16:20.193" endtime="20211109 18:16:20.204"/>
+</kw>
+<kw name="Click" library="Browser">
+<arg>${zed_save_button}</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="PASS" starttime="20211109 18:16:20.205" endtime="20211109 18:16:23.377"/>
+</kw>
+<status status="PASS" starttime="20211109 18:16:20.193" endtime="20211109 18:16:23.377"/>
+</kw>
+<kw name="Zed: table should contain:" library="Common_Zed">
+<arg>${zedUserEmail}</arg>
+<kw name="Zed: perform search by:" library="Common_Zed">
+<arg>${search_key}</arg>
+<kw name="Type Text" library="Browser">
+<arg>${zed_search_field_locator}</arg>
+<arg>${search_key}</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Types the given ``txt`` into the text field found by ``selector``.</doc>
+<msg timestamp="20211109 18:16:23.382" level="INFO">Types the text 'return+agent4+63218@spryker.com' in the given field.</msg>
+<status status="PASS" starttime="20211109 18:16:23.381" endtime="20211109 18:16:23.572"/>
+</kw>
+<kw name="Wait Until Element Is Visible" library="Common">
+<arg>${zed_processing_block_locator}</arg>
+<kw name="Wait For Elements State" library="Browser">
+<arg>${locator}</arg>
+<arg>visible</arg>
+<arg>${timeout}</arg>
+<arg>${message}</arg>
+<tag>PageContent</tag>
+<tag>Wait</tag>
+<doc>Waits for the element found by ``selector`` to satisfy state option.</doc>
+<msg timestamp="20211109 18:16:23.583" level="INFO">Waited for Element with selector xpath=//div[contains(@id,'processing')][contains(@class,'dataTables_processing')] at state visible</msg>
+<status status="PASS" starttime="20211109 18:16:23.576" endtime="20211109 18:16:23.583"/>
+</kw>
+<status status="PASS" starttime="20211109 18:16:23.572" endtime="20211109 18:16:23.583"/>
+</kw>
+<kw name="Wait Until Element Is Not Visible" library="Common">
+<arg>${zed_processing_block_locator}</arg>
+<kw name="Wait For Elements State" library="Browser">
+<arg>${locator}</arg>
+<arg>hidden</arg>
+<arg>${timeout}</arg>
+<arg>${message}</arg>
+<tag>PageContent</tag>
+<tag>Wait</tag>
+<doc>Waits for the element found by ``selector`` to satisfy state option.</doc>
+<msg timestamp="20211109 18:16:26.094" level="INFO">Waited for Element with selector xpath=//div[contains(@id,'processing')][contains(@class,'dataTables_processing')] at state hidden</msg>
+<status status="PASS" starttime="20211109 18:16:23.588" endtime="20211109 18:16:26.095"/>
+</kw>
+<status status="PASS" starttime="20211109 18:16:23.584" endtime="20211109 18:16:26.095"/>
+</kw>
+<status status="PASS" starttime="20211109 18:16:23.380" endtime="20211109 18:16:26.095"/>
+</kw>
+<kw name="Table Should Contain" library="Common">
+<arg>${zed_table_locator}</arg>
+<arg>${search_key}</arg>
+<kw name="Get Text" library="Browser">
+<arg>${locator}</arg>
+<arg>contains</arg>
+<arg>${expected}</arg>
+<arg>${message}</arg>
+<tag>Assertion</tag>
+<tag>Getter</tag>
+<tag>PageContent</tag>
+<doc>Returns text attribute of the element found by ``selector``.</doc>
+<status status="PASS" starttime="20211109 18:16:26.102" endtime="20211109 18:16:26.115"/>
+</kw>
+<status status="PASS" starttime="20211109 18:16:26.095" endtime="20211109 18:16:26.115"/>
+</kw>
+<status status="PASS" starttime="20211109 18:16:23.379" endtime="20211109 18:16:26.115"/>
+</kw>
+<status status="PASS" starttime="20211109 18:16:16.653" endtime="20211109 18:16:26.116"/>
+</kw>
+<kw name="TestTeardown" library="Common" type="TEARDOWN">
+<kw name="Delete All Cookies" library="Browser">
+<tag>BrowserControl</tag>
+<tag>Setter</tag>
+<doc>Deletes all cookies from the currently active browser context.</doc>
+<msg timestamp="20211109 18:16:26.119" level="INFO">All cookies deleted.</msg>
+<status status="PASS" starttime="20211109 18:16:26.117" endtime="20211109 18:16:26.119"/>
+</kw>
+<status status="PASS" starttime="20211109 18:16:26.116" endtime="20211109 18:16:26.119"/>
+</kw>
+<status status="PASS" starttime="20211109 18:16:09.162" endtime="20211109 18:16:26.119"/>
+</test>
+<kw name="SuiteTeardown" library="Common" type="TEARDOWN">
+<kw name="Close Browser" library="Browser">
+<arg>ALL</arg>
+<tag>BrowserControl</tag>
+<tag>Setter</tag>
+<doc>Closes the current browser.</doc>
+<msg timestamp="20211109 18:16:26.189" level="INFO">Closed all browsers</msg>
+<status status="PASS" starttime="20211109 18:16:26.124" endtime="20211109 18:16:26.190"/>
+</kw>
+<status status="PASS" starttime="20211109 18:16:26.123" endtime="20211109 18:16:26.190"/>
+</kw>
+<status status="PASS" starttime="20211109 18:15:45.085" endtime="20211109 18:16:26.190"/>
+</suite>
+<statistics>
+<total>
+<stat pass="2" fail="0" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat pass="2" fail="0" skip="0" id="s1" name="Smoke B2B">Smoke B2B</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>
