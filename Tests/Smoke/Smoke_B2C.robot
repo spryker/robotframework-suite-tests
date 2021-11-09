@@ -435,11 +435,11 @@ Return_Management
     Yves: check that 'Print Slip' contains the following products:    010_30692994
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: create a return for the following order and product in it:    ${lastPlacedOrder}    007_30691822
-    Zed: create new Zed user with the following data:    agent+${random}@spryker.com    change123${random}    Agent    Assist    Root group    This user is an agent    en_US
+    Zed: create new Zed user with the following data:    returnagent+${random}@spryker.com    change123${random}    Agent    Assist    Root group    This user is an agent    en_US
     Yves: go to the 'Home' page
     Yves: logout on Yves as a customer
     Yves: go to URL:    agent/login
-    Yves: login on Yves with provided credentials:    agent+${random}@spryker.com    change123${random}
+    Yves: login on Yves with provided credentials:    returnagent+${random}@spryker.com    change123${random}
     Yves: header contains/doesn't contain:    true    ${customerSearchWidget}
     Yves: perform search by customer:    ${yves_user_email}
     Yves: agent widget contains:    ${yves_user_email}
@@ -457,14 +457,14 @@ Return_Management
     Yves: 'Order History' page is displayed
     Yves: 'Order History' page contains the following order with a status:    ${lastPlacedOrder}    Returned
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    Zed: delete Zed user with the following email:    agent+${random}@spryker.com
+    Zed: delete Zed user with the following email:    returnagent+${random}@spryker.com
     [Teardown]    Yves: check if cart is not empty and clear it
 
 
 Content_Management
     [Documentation]    Checks cms content can be edited in zed and that correct cms elements are present on homepage   
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    Zed: go to second navigation item level:    Content   Pages
+    Zed: go to second navigation item level:    Content    Pages
     Zed: create a cms page and publish it:    Test Page${random}    test-page${random}    Page Title    Page text
     Yves: go to the 'Home' page
     Yves: page contains CMS element:    Homepage Banners
@@ -472,8 +472,9 @@ Content_Management
     Yves: page contains CMS element:    Homepage Inspirational block
     Yves: page contains CMS element:    Homepage Banner Video
     Yves: page contains CMS element:    Footer section
+    #waiting for P&S to work
+    Sleep    5s
     Yves: go to URL:    en/test-page${random}
-    Yves: try reloading page if element is/not appear:     xpath=//*[contains(@class,'cms-page__title')]    True
     Yves: page contains CMS element:    CMS Page Title    Page Title
     Yves: page contains CMS element:    CMS Page Content    Page text
 
