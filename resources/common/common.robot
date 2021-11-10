@@ -9,7 +9,7 @@ Library    DateTime
 Library    ../../resources/libraries/common.py
 Library    Telnet
 Resource                  ../pages/yves/yves_header_section.robot
-Resource                  ../pages/yves/Yves_Login_page.robot
+Resource                  ../pages/yves/yves_login_page.robot
 
 *** Variables ***
 # *** SUITE VARIABLES ***
