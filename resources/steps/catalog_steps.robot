@@ -65,10 +65,6 @@ Yves: select filter value:
 Yves: quick add to cart for first item in catalog
     ${initialCartCounter}=    Yves: get current cart item counter value
     Click    xpath=(//button[contains(@title,'Add to Cart')])[1]
-    Yves: flash message should be shown:    success    Items added successfully
-    Yves: remove flash messages
-    ${currentCartCounter}=    Yves: get current cart item counter value
-    Should Be True    ${initialCartCounter}+1==${currentCartCounter}
 
 Yves: get current cart item counter value
     [Documentation]    returns the cart item count number as an integer

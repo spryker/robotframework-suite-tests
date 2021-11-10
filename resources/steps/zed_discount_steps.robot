@@ -68,9 +68,7 @@ Zed: Deactivate Following Discounts From Overview Page:
     Zed: go to second navigation item level:    Merchandising    Discount
     FOR    ${name}    IN    @{discountNames}
         Zed: perform search by:    ${name}    
-        ${activated}=    Run Keyword And Return Status    Element Should Be Visible    xpath=Element Should Be Visible    xpath=//td[contains(@class,'name') and contains(text(),'${name}')]/ancestor::tr[@role='row']//span[contains(@class,'label') and contains(text(),'Active')]
-        Run keyword if    '${activated}'=='True'    Click    xpath=//button[contains(.,'Deactivate')]/ancestor::td[contains(@class,'column-Actions')]/preceding-sibling::td[contains(@class,'name') and contains(text(),'${name}')]
-            
+        Click    xpath=//td[contains(text(),'${name}')]/following-sibling::td[contains(@class,'Action')]//button[contains(.,'Deactivate')]
     END    
 
     
