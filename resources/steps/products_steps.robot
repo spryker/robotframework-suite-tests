@@ -17,6 +17,7 @@ Zed: discontinue the following product:
     ${can_be_discontinued}=    Run Keyword And Return Status    Page Should Contain Element    ${zed_pdp_discontinue_button}
     Run Keyword If    '${can_be_discontinued}'=='True'    Click    ${zed_pdp_discontinue_button}
     
+    
 
 Zed: undo discontinue the following product:
     [Arguments]    ${productAbstract}    ${productConcrete}
@@ -50,7 +51,7 @@ Zed: add following alternative products to the concrete:
         Wait Until Element Is Visible    ${zed_pdp_alternative_products_suggestion}
         Click    xpath=//ul[@id='select2-product_concrete_form_edit_alternative_products-results']/li[contains(@class,'select2-results__option') and contains(text(),'(sku: ${alternative_product_to_assign})')]
     END
-
+    Zed: submit the form
 
 Zed: switch to the tab on 'Edit product' page:
     [Arguments]    ${tabToUse}

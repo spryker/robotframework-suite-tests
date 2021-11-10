@@ -16,9 +16,9 @@ Zed: trigger all matching states inside xxx order:
 Zed: trigger all matching states inside this order:
     [Arguments]    ${status}
     Reload    
-    FOR    ${index}    IN RANGE    0    16
+    FOR    ${index}    IN RANGE    0    21
         ${order_state_reached}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//div[@id='order-overview']//form[@name='oms_trigger_form']//button[@id='oms_trigger_form_submit'][text()='${status}']
-        Run Keyword If    '${order_state_reached}'=='False'    Reload
+        Run Keyword If    '${order_state_reached}'=='False'    Run Keywords    Sleep    3s    AND    Reload
         ...    ELSE    Exit For Loop
     END
     Click    xpath=//div[@id='order-overview']//form[@name='oms_trigger_form']//button[@id='oms_trigger_form_submit'][text()='${status}']

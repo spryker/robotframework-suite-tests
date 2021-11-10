@@ -102,6 +102,8 @@ Yves: get sku of the abstract product on PDP
     ${got_abstract_product_sku}=    Replace String    ${got_abstract_product_sku}    '    ${EMPTY}
     ${got_abstract_product_sku}=    Replace String    ${got_abstract_product_sku}    [    ${EMPTY}
     ${got_abstract_product_sku}=    Replace String    ${got_abstract_product_sku}    ]    ${EMPTY}
+    ${sku_length}=    Get Length    ${got_abstract_product_sku}
+    ${got_abstract_product_sku}=    Set Variable If    '${env}'!='b2b' and '${sku_length}'=='2'    0${got_abstract_product_sku}    ${got_abstract_product_sku}   
     Set Global Variable    ${got_abstract_product_sku}
     [Return]    ${got_abstract_product_sku}
 

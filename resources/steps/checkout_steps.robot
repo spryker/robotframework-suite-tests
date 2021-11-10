@@ -110,8 +110,10 @@ Yves: select the following shipping method on the checkout and go next:
     [Arguments]    ${shippingMethod}
     Click    xpath=//div[@data-qa='component shipment-sidebar']//*[contains(.,'Shipping Method')]/../ul//label[contains(.,'${shippingMethod}')]/span[contains(@class,'radio__box')]
     Click    ${submit_checkout_form_button}
-        
 
+Yves: submit form on the checkout
+    Click    ${submit_checkout_form_button}
+        
 Yves: select the following shipping method for product:
     [Arguments]    ${productName}    ${shippingMethod}
     Click    xpath=//div[contains(text(),'${productName}')]/ancestor::article[contains(@class,'checkout-block')]//div[contains(@data-qa,'component shipment-sidebar')]//ul//label[contains(.,'${shippingMethod}')]/span[contains(@class,'radio__box')]

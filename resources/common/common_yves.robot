@@ -115,6 +115,16 @@ Yves: go to URL:
     ${url}=    Get URL Without Starting Slash    ${url}
     Go To    ${host}${url}
 
+Yves: go to newly created page by URL:
+    [Arguments]    ${url}
+    FOR    ${index}    IN RANGE    0    26
+        Go To    ${host}${url}
+        ${page_not_published}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//main//*[contains(text(),'ERROR 404')]
+        Log    ${page_not_published}
+        Run Keyword If    '${page_not_published}'=='True'    Run Keyword    Sleep    3s
+        ...    ELSE    Exit For Loop
+    END
+
 Yves: go to external URL:
     [Arguments]    ${url}
     Go To    ${url}
@@ -158,19 +168,25 @@ Yves: get index of the first available product
     ${productsCount}=    Get Element Count    xpath=//product-item[@data-qa='component product-item']
     Log    ${productsCount}
     FOR    ${index}    IN RANGE    1    ${productsCount}+1
-        ${status}=    Run Keyword And Ignore Error    Page should contain element    xpath=//product-item[@data-qa='component product-item'][${index}]//*[@class='product-item__actions']//ajax-add-to-cart//button[@disabled='']
+        ${status}=    Run Keyword And Ignore Error    
+        ...    Run keyword if    '${env}'=='b2b'    Page should contain element    xpath=//product-item[@data-qa='component product-item'][${index}]//*[@class='product-item__actions']//ajax-add-to-cart//button[@disabled='']
+        ...    ELSE    Run keyword if    '${env}'=='b2c'    Page should contain element    xpath=//product-item[@data-qa='component product-item'][${index}]//ajax-add-to-cart//button
         Log    ${index}
-        Run keyword if    'PASS' in ${status}    Continue For Loop
-        Run keyword if    'FAIL' in ${status}    Run Keywords
+        Run keyword if    'PASS' in ${status} and '${env}'=='b2b'    Continue For Loop
+        Run keyword if    'FAIL' in ${status} and '${env}'=='b2b'    Run Keywords
+        ...    Return From Keyword    ${index}
+        ...    AND    Exit For Loop
+        Run keyword if    'FAIL' in ${status} and '${env}'=='b2c'    Continue For Loop
+        Run keyword if    'PASS' in ${status} and '${env}'=='b2c'    Run Keywords
         ...    Return From Keyword    ${index}
         ...    AND    Exit For Loop
     END
         ${productIndex}=    Set Variable    ${index}
         Return From Keyword    ${productIndex}
-
+    
 Yves: go to the PDP of the first available product
     ${index}=    Yves: get index of the first available product
-    Click    xpath=//product-item[@data-qa='component product-item'][${index}]//a[contains(@class,'link-detail-page') and (contains(@class,'name'))]
+    Click    xpath=//product-item[@data-qa='component product-item'][${index}]//a[contains(@class,'link-detail-page') and (contains(@class,'info')) or (contains(@class,'name'))]
     Wait Until Page Contains Element    ${pdp_main_container_locator}[${env}]
 
 Yves: check if cart is not empty and clear it
@@ -178,10 +194,9 @@ Yves: check if cart is not empty and clear it
     Yves: go to b2c shopping cart
     ${productsInCart}=    Get Element Count    xpath=//article[@class='product-card-item']//div[contains(@class,'product-card-item__box')]
     ${cartIsEmpty}=    Run Keyword And Return Status    Element should be visible    xpath=//*[contains(@class,'spacing-top') and text()='Your shopping cart is empty!']
-    Run Keyword If    '${cartIsEmpty}'=='False'    Helper: iterate items in cart
-    Delete All Cookies
+    Run Keyword If    '${cartIsEmpty}'=='False'    Helper: delete all items in cart
 
-Helper: iterate items in cart
+Helper: delete all items in cart
     ${productsInCart}=    Get Element Count    xpath=//article[@class='product-card-item']//div[contains(@class,'product-card-item__box')]
     FOR    ${index}    IN RANGE    0    ${productsInCart}
         Click    xpath=(//div[@class='page-layout-cart__items-wrap']//ancestor::div/following-sibling::div//form[contains(@name,'removeFromCart')]//button[text()='Remove'])\[1\]

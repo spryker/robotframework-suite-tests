@@ -51,7 +51,6 @@ Guest_User_Access
     Yves: 'Login' page is displayed
     Yves: go To 'Wishlist' Page
     Yves: 'Login' page is displayed
-    
 
 Authorized_User_Access
     [Documentation]    Checks that authorized users see products info, cart and profile
@@ -70,7 +69,7 @@ Authorized_User_Access
     Yves: 'Wishlist' page is displayed
     [Teardown]    Yves: check if cart is not empty and clear it
 
-UserAccount
+User_Account
     [Documentation]    Checks user account pages work
     Yves: login on Yves with provided credentials:    ${yves_second_user_email}
     Yves: go to user menu item in header:    Overview
@@ -95,7 +94,6 @@ UserAccount
     Yves: go to user menu item in the left bar:    Addresses
     Yves: 'Addresses' page is displayed
     Yves: check that user has address exists/doesn't exist:    false    Mr    ${yves_second_user_first_name}    ${yves_second_user_last_name}    Kirncher Str.    7    10247    Berlin    Germany
-    
     
 Catalog
     [Documentation]    Checks that catalog options and search work
@@ -155,7 +153,6 @@ Product_PDP
     Yves: change variant of the product on PDP on:    Flash
     Yves: PDP contains/doesn't contain:    true    ${pdpPriceLocator}    ${addToCartButton}    ${pdp_warranty_option}    ${pdp_gift_wrapping_option}     ${pdp_add_to_wishlist_button}    ${relatedProducts} 
 
-
 Volume_Prices
     [Documentation]    Checks volume prices are applied
     Yves: login on Yves with provided credentials:    ${yves_user_email}
@@ -169,56 +166,56 @@ Volume_Prices
 
 Discontinued_Alternative_Products
     [Documentation]    Checks discontinued and alternative products
-    Yves: go to PDP of the product with sku:  145
+    Yves: go to PDP of the product with sku:    ${product_with_relations_alternative_products_sku}
     Yves: change variant of the product on PDP on:    2.3 GHz - Discontinued
     Yves: PDP contains/doesn't contain:    true    ${alternativeProducts}
     Yves: login on Yves with provided credentials:    ${yves_user_email}
     Yves: delete all wishlists
-    Yves: go to the 'Home' page
-    Yves: go to PDP of the product with sku:  010
+    Yves: go to the PDP of the first available product
     Yves: add product to wishlist:    My wishlist
     Yves: get sku of the concrete product on PDP
     Yves: get sku of the abstract product on PDP
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    Zed: discontinue the following product:    010    010_30692994
+    Zed: discontinue the following product:    ${got_abstract_product_sku}    ${got_concrete_product_sku}
     Zed: product is successfully discontinued
     Zed: check if at least one price exists for concrete and add if doesn't:    100
     Zed: add following alternative products to the concrete:    011
-    Zed: submit the form
     Yves: login on Yves with provided credentials:    ${yves_user_email}
     Yves: go To 'Wishlist' Page
     Yves: go to wishlist with name:    My wishlist
-    Yves: product with sku is marked as discountinued in wishlist:    010
-    Yves: try reloading page if element is/not appear:    xpath=//*[contains(text(),'Alternative for')]    True
+    Yves: product with sku is marked as discountinued in wishlist:    ${got_concrete_product_sku}
     Yves: product with sku is marked as alternative in wishlist:    011
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    Zed: undo discontinue the following product:    010    010_30692994
-    [Teardown]    Yves: check if cart is not empty and clear it
+    Zed: undo discontinue the following product:    ${got_abstract_product_sku}    ${got_concrete_product_sku}
+    [Teardown]    Run Keywords    Yves: login on Yves with provided credentials:    ${yves_user_email}    AND    Yves: check if cart is not empty and clear it
 
 Back_in_Stock_Notification
     [Documentation]    Back in stock notification is sent and availability check
+    Yves: go to the PDP of the first available product
+    Yves: get sku of the concrete product on PDP
+    Yves: get sku of the abstract product on PDP
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Catalog    Availability
-    Zed: check if product is/not in stock:    009    true
-    Zed: change product stock:    009    009_30692991    false    0
+    Zed: check if product is/not in stock:    ${got_abstract_product_sku}    true
+    Zed: change product stock:    ${got_abstract_product_sku}    ${got_concrete_product_sku}    false    0
     Zed: go to second navigation item level:    Catalog    Availability
-    Zed: check if product is/not in stock:    009    false
+    Zed: check if product is/not in stock:    ${got_abstract_product_sku}    false
     Yves: login on Yves with provided credentials:    ${yves_second_user_email}
-    Yves: go to PDP of the product with sku:  009
+    Yves: go to PDP of the product with sku:  ${got_abstract_product_sku}
     Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    True
-    Yves: check if product is available on PDP:    009    false
+    Yves: check if product is available on PDP:    ${got_abstract_product_sku}    false
     Yves: submit back in stock notification request for email:    ${yves_second_user_email}
     Yves: unsubscribe from availability notifications
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Catalog    Availability
-    Zed: change product stock:    009    009_30692991    true    0  
+    Zed: change product stock:    ${got_abstract_product_sku}    ${got_concrete_product_sku}    true    0  
     Zed: go to second navigation item level:    Catalog    Availability  
-    Zed: check if product is/not in stock:    009    true
+    Zed: check if product is/not in stock:    ${got_abstract_product_sku}    true
     Yves: login on Yves with provided credentials:    ${yves_second_user_email}
-    Yves: go to PDP of the product with sku:  009
+    Yves: go to PDP of the product with sku:  ${got_abstract_product_sku}
     Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    False
-    Yves: check if product is available on PDP:    009    true
-    [Teardown]    Zed: check and restore product availability in Zed:    009    Available    009_30692991 
+    Yves: check if product is available on PDP:    ${got_abstract_product_sku}    true
+    [Teardown]    Zed: check and restore product availability in Zed:    ${got_abstract_product_sku}    Available    ${got_concrete_product_sku} 
 
 Add_to_Wishlist
     [Documentation]    Check creation of wishlist and adding to different wishlists
@@ -249,7 +246,7 @@ Product_Sets
     Yves: go to b2c shopping cart
     Yves: shopping cart contains the following products:    TomTom Golf    Samsung Galaxy S6 edge
     Yves: delete from b2c cart products with name:    TomTom Golf    Samsung Galaxy S6 edge
-    [Teardown]    Yves: check if cart is not empty and clear it 
+    [Teardown]    Yves: check if cart is not empty and clear it
 
 Product_Bundles
     [Documentation]    Check the usage of product bundles
@@ -303,7 +300,6 @@ Configurable_Bundle
     Yves: 'View Order' page is displayed
     Yves: 'Order Details' page contains the following product title N times:    Smartstation Kit    3
     [Teardown]    Yves: check if cart is not empty and clear it
-
 
 Discounts
     [Documentation]    Discounts, Promo Products, and Coupon Codes (includes guest checkout)
@@ -373,14 +369,12 @@ Split_Delivery
     Yves: select the following shipping method for product:    Canon IXUS 285    Express
     Yves: select the following shipping method for product:    Canon IXUS 180    Same Day
     Yves: select the following shipping method for product:    Canon IXUS 165    Express
-    Click    ${submit_checkout_form_button}
-        
+    Yves: submit form on the checkout
     Yves: select the following payment method on the checkout and go next:    Invoice
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
     [Teardown]    Yves: check if cart is not empty and clear it
-
 
 Agent_Assist
     [Documentation]    Checks that agent can be used
@@ -404,6 +398,7 @@ Agent_Assist
 Return_Management
     [Documentation]    Checks that returns work and oms process is checked
     Yves: login on Yves with provided credentials:    ${yves_user_email}
+    Yves: check if cart is not empty and clear it
     Yves: go to PDP of the product with sku:    007
     Yves: add product to the shopping cart
     Yves: go to PDP of the product with sku:    008
@@ -460,7 +455,6 @@ Return_Management
     Zed: delete Zed user with the following email:    returnagent+${random}@spryker.com
     [Teardown]    Yves: check if cart is not empty and clear it
 
-
 Content_Management
     [Documentation]    Checks cms content can be edited in zed and that correct cms elements are present on homepage   
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
@@ -472,9 +466,7 @@ Content_Management
     Yves: page contains CMS element:    Homepage Inspirational block
     Yves: page contains CMS element:    Homepage Banner Video
     Yves: page contains CMS element:    Footer section
-    #waiting for P&S to work
-    Sleep    5s
-    Yves: go to URL:    en/test-page${random}
+    Yves: go to newly created page by URL:    en/test-page${random}
     Yves: page contains CMS element:    CMS Page Title    Page Title
     Yves: page contains CMS element:    CMS Page Content    Page text
 

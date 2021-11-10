@@ -124,11 +124,11 @@ Wait Until Element Is Enabled
     Wait For Elements State    ${locator}    enabled    ${timeout}    ${message}
 
 Element Should Be Visible
-    [Arguments]    ${locator}    ${message}=${EMPTY}    ${timeout}=0:00:01
+    [Arguments]    ${locator}    ${message}=${EMPTY}    ${timeout}=0:00:03
     Wait For Elements State    ${locator}    visible    ${timeout}    ${message}
 
 Page Should Contain Element
-    [Arguments]    ${locator}    ${message}=${EMPTY}    ${timeout}=0:00:01
+    [Arguments]    ${locator}    ${message}=${EMPTY}    ${timeout}=0:00:03
     Wait For Elements State    ${locator}    attached    ${timeout}    ${message}
 
 Get Location
@@ -169,7 +169,7 @@ Wait Until Element Contains
     Get Text    ${locator}    contains    ${text}    ${message}
 
 Page Should Not Contain Element
-    [Arguments]    ${locator}    ${message}=${EMPTY}    ${timeout}=0:00:01
+    [Arguments]    ${locator}    ${message}=${EMPTY}    ${timeout}=0:00:03
     Wait For Elements State    ${locator}    detached    ${timeout}    ${message}
 
 Element Should Not Contain
