@@ -13,36 +13,36 @@ Zed: create a cms page and publish it:
         
 # General page information input
     Element Should Be Visible    xpath=//body//*[contains(text(),'Create CMS Page')]    message=Page for CMS creation is not opened
+    Element Should Be Visible    ${zed_cms_page_general_enUS_name_field}    message=US section of CMS page is not open 
+    Click    ${zed_cms_page_general_deDE_collapsed_section}
     Check checkbox    ${zed_cms_page_general_is_searchable_checkbox}
     Type Text    ${zed_cms_page_general_enUS_name_field}    ${enName}
     Type Text    ${zed_cms_page_general_enUS_url_field}    ${enURL}
-    ${deTitleSectionExpanded}=    Run Keyword And Return Status    Element Should Be Visible    ${zed_cms_page_general_deDE_name_field}
-    Run keyword if    '${deTitleSectionExpanded}'=='False'    Click    ${zed_cms_page_general_deDE_translation_collapsed_section}
+    Element Should Be Visible    ${zed_cms_page_general_deDE_name_field}    message=DE section of CMS page is not open 
     Type Text    ${zed_cms_page_general_deDE_name_field}    ${enName}
     Type Text    ${zed_cms_page_general_deDE_url_field}    ${enURL}
+    Click    ${zed_cms_page_general_deDE_expanded_section}
     Click    ${zed_cms_page_save_button}
-        
-    Element Should Be Visible    ${zed_cms_page_create_success_flashmessage}    message=Success message is not displayed
+    Zed: message should be shown:    Page was created successfully.    
+
 # Placeholder information input
     Element Should Be Visible    xpath=//body//*[contains(text(),'Edit Placeholders: ${enName}')]    message=Page for CMS creation is not opened
+    Click    ${zed_cms_page_general_deDE_collapsed_section} 
+    Element Should Be Visible    ${zed_cms_page_placeholder_title_deDE_field}    message=DE section of Title tab is ot open 
     Type Text    ${zed_cms_page_placeholder_title_enUS_field}    ${enTitlePlaceholder}
-    ${deContentTitleSectionExpanded}=    Run Keyword And Return Status    Element Should Be Visible    ${zed_cms_page_placeholder_title_deDE_field}
-    Run keyword if    '${deContentTitleSectionExpanded}'=='False'    Click    ${zed_cms_page_general_deDE_translation_collapsed_section}
     Type Text    ${zed_cms_page_placeholder_title_deDE_field}    ${enTitlePlaceholder}
     Zed: go to tab:    Content
-        
+
+    Element Should Be Visible    ${zed_cms_page_placeholder_content_enUS_field}    message=EN section of Content tab is not visible     
     Type Text    ${zed_cms_page_placeholder_content_enUS_field}    ${enContentPlaceholder}
-    ${deContentContentSectionExpanded}=    Run Keyword And Return Status    Element Should Be Visible    ${zed_cms_page_placeholder_content_deDE_field}
-    ${elements}=    Get Element Count    ${zed_cms_page_placeholder_content_deDE_translation_collapsed_section}
-    Log    ${elements} 
-#    Run keyword if    '${deContentContentSectionExpanded}'=='False'    Click    ${zed_cms_page_placeholder_content_deDE_translation_collapsed_section}
-#    Type Text    ${zed_cms_page_placeholder_content_deDE_field}    ${enContentPlaceholder}
+
 # Save and publish
     Click    ${zed_cms_page_save_button}
-        
-    Element Should Be Visible    ${zed_cms_page_update_placeholder_success_flashmessage}    message=Success message is not displayed
+    Zed: message should be shown:    Placeholder translations successfully updated.
+
     Click    ${zed_cms_page_publish_button}
-    Element Should Be Visible    ${zed_cms_page_publish_success_flashmessage}    message=Success message is not displayed 
+    Zed: message should be shown:    successfully published 
+
 # Check the CMS page in   
     Zed: go to second navigation item level:    Content    Pages
     Zed: perform search by:    ${enName}

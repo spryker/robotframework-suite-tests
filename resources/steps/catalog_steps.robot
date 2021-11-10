@@ -25,9 +25,9 @@ Yves: page contains CMS element:
     ...    ELSE    Run Keyword If    '${type}'=='Homepage Banners'    Element Should Be Visible    xpath=//div[contains(@class,'slick-carousel__container js-slick-carousel__container slick-initialized slick-slider slick-dotted')]
     ...    ELSE    Run Keyword If    '${type}'=='Homepage Inspirational Block'    Element Should Be Visible    xpath=//*[contains(@class,'multi-inspirational-block__title')]
     ...    ELSE    Run Keyword If    '${type}'=='Homepage Banner Video'    Element Should Be Visible    xpath=//*[contains(@class,'image-banner__video')]
-    ...    ELSE    Run Keyword If    '${type}'=='Footer section'    Element Should Be Visible    xpath=//*[contains(@class,'footer')]
-    ...    ELSE    Run Keyword If    '${type}'=='CMS Page Title'    Element Should Be Visible    xpath=//*[contains(@class,'cms-page__title') and contains(text(),'${text}')]
-    ...    ELSE    Run Keyword If    '${type}'=='CMS Page Content'    Element Should Be Visible    xpath=//*[contains(@class,'cms-page__content') and contains(text(),'${text}')]
+    ...    ELSE    Run Keyword If    '${type}'=='Footer section'    Element Should Be Visible    xpath=//*[@class='footer']
+    ...    ELSE    Run Keyword If    '${type}'=='CMS Page Title'    Element Should Be Visible    xpath=//*[contains(@class,'cms-page__title')]//*[contains(text(),'${text}')]
+    ...    ELSE    Run Keyword If    '${type}'=='CMS Page Content'    Element Should Be Visible    xpath=//*[contains(@class,'cms-page__content')]//*[contains(text(),'${text}')]
 
 
 Yves: change sorting order on catalog page:
