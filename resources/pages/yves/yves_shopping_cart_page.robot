@@ -2,7 +2,7 @@
 &{shopping_cart_main_content_locator}    b2b=xpath=//*[@data-qa='component cart-sidebar']    b2c=xpath=//*[@class='page-layout-cart']
 ${shopping_cart_checkout_button}    xpath=//div[contains(@class,'sidebar')]//a[@data-qa='cart-go-to-checkout']
 ${shopping_cart_request_quote_button}    xpath=//a[contains(@href,'/quote-request/create')]
-${shopping_cart_upp-sell_products_section}    xpath=//main[contains(@class,'page-layout-main--cart-page')]//slick-carousel[@data-qa='component slick-carousel']
+${shopping_cart_upp-sell_products_section}    xpath=//main[contains(@class,'cart')]//slick-carousel[@data-qa='component slick-carousel']
 ${shopping_cart_locked_cart_form}    xpath=//form[@class='cart-locking__form']
 ${shopping_cart_cart_title}    xpath=//*[contains(@class,'cart-title__text')]
 ${request_a_quote_button}    xpath=//a[contains(@class,'button')][contains(text(),'Request a Quote')]

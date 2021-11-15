@@ -39,7 +39,7 @@ New_Customer_Registration
     ...    || email                          || 
     ...    || ${random}test.user@spryker.com ||
 
-Guest_User_Access
+Guest_User_Access_Restrictions
     [Documentation]    Checks that guest users see products info and cart but not profile
     Yves: header contains/doesn't contain:    true    ${currencySwitcher}[${env}]   ${wishlistIcon}    ${accountIcon}    ${shoppingCartIcon}
     Yves: go to PDP of the product with sku:    002
@@ -470,6 +470,16 @@ Content_Management
     Yves: page contains CMS element:    CMS Page Title    Page Title
     Yves: page contains CMS element:    CMS Page Content    Page text
 
+Product_Relations
+    Yves: login on Yves with provided credentials:    ${yves_user_email}
+    Yves: go to PDP of the product with sku:    ${product_with_relations_related_products_sku}
+    Yves: PDP contains/doesn't contain:    true    ${relatedProducts}
+    Yves: go to PDP of the product with sku:    ${product_with_relations_upselling_sku}
+    Yves: PDP contains/doesn't contain:    false    ${relatedProducts}
+    Yves: add product to the shopping cart
+    Yves: go to b2c shopping cart
+    Yves: shopping cart contains/doesn't contain the following elements:    true    ${upSellProducts}
+    [Teardown]    Yves: check if cart is not empty and clear it
 
 
 
