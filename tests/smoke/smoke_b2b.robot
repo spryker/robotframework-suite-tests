@@ -595,31 +595,29 @@ Return_Management
     Zed: delete Zed user with the following email:    return+agent+${random}@spryker.com
 
 
-User_Account[TBD]
+User_Account
     [Documentation]    Checks user account pages work
-    Yves: login on Yves with provided credentials:    ${yves_second_user_email}
+    Yves: login on Yves with provided credentials:    ${yves_user_email}
     Yves: go to user menu item in header:    Overview
     Yves: 'Overview' page is displayed
-    Yves: go to user menu item in header:    Orders History
+    Yves: go to user menu item in header:    Order History
     Yves: 'Order History' page is displayed
-    Yves: go to user menu item in header:    My Profile
+    Yves: go to user menu item in header:    Profile
     Yves: 'My Profile' page is displayed
-    Yves: go To 'Wishlist' Page
-    Yves: 'Wishlist' page is displayed
     Yves: go to user menu item in the left bar:    Addresses
     Yves: 'Addresses' page is displayed
     Yves: go to user menu item in the left bar:    Newsletter
     Yves: 'Newsletter' page is displayed
     Yves: go to user menu item in the left bar:    Returns
     Yves: 'Returns' page is displayed
-    Yves: create a new customer address in profile:     Mr    ${yves_second_user_first_name}    ${yves_second_user_last_name}    Kirncher Str.    7    10247    Berlin    Germany
+    Yves: create a new customer address in profile:    Ms    ${yves_user_first_name} ${random}    ${yves_user_last_name} ${random}   Kirncher Str. ${random}    7    ${random}    Berlin    Germany
     Yves: go to user menu item in the left bar:    Addresses
     Yves: 'Addresses' page is displayed
-    Yves: check that user has address exists/doesn't exist:    true    Mr    ${yves_second_user_first_name}    ${yves_second_user_last_name}    Kirncher Str.    7    10247    Berlin    Germany
-    Yves: delete user address:    Mr    ${yves_second_user_first_name}    ${yves_second_user_last_name}    Kirncher Str.    7    10247    Berlin    Germany
+    Yves: check that user has address exists/doesn't exist:    true    ${yves_user_first_name} ${random}    ${yves_user_last_name} ${random}    Kirncher Str. ${random}    7    ${random}    Berlin    Germany
+    Yves: delete user address:    Kirncher Str. ${random}
     Yves: go to user menu item in the left bar:    Addresses
     Yves: 'Addresses' page is displayed
-    Yves: check that user has address exists/doesn't exist:    false    Mr    ${yves_second_user_first_name}    ${yves_second_user_last_name}    Kirncher Str.    7    10247    Berlin    Germany
+    Yves: check that user has address exists/doesn't exist:    false    ${yves_user_first_name} ${random}    ${yves_user_last_name} ${random}    Kirncher Str. ${random}    7    ${random}    Berlin    Germany
 
 Product_PDP[TBD]
     [Documentation]    Checks that PDP contains required elements

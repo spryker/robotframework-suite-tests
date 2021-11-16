@@ -18,10 +18,11 @@ Yves: go to user menu item in the left bar:
 Yves: create a new customer address in profile:
     [Documentation]
     [Arguments]    ${salutation}    ${firstName}    ${lastName}    ${street}    ${houseNumber}    ${postCode}    ${city}    ${country}    ${isDefaultShipping}=True     ${isDefaultBilling}=True       ${company}=    ${phone}=    ${additionalAddress}=
-    Yves: go to user menu item in header:    My Profile
+    Run Keyword If    '${env}'=='b2c'    Yves: go to user menu item in header:    My Profile
+    ...    ELSE    Run Keyword If    '${env}'=='b2b'    Yves: go to user menu item in header:    Profile
     Yves: go to user menu item in the left bar:    Addresses
-    Wait Until Element Is Visible    ${customer_account_add_new_address_button}
-    Click    ${customer_account_add_new_address_button}
+    Wait Until Element Is Visible    ${customer_account_add_new_address_button}[${env}]
+    Click    ${customer_account_add_new_address_button}[${env}]
     Wait Until Element Is Visible    ${customer_account_address_form}
 #  Click    ${customer_account_address_salutation_dropdown_field}
 #  Click    xpath=//li[@class='select2-results__option' and contains(text(),'${salutation}')]
@@ -42,22 +43,25 @@ Yves: create a new customer address in profile:
      
 
 Yves: check that user has address exists/doesn't exist:
-    [Arguments]    ${exists}    ${salutation}    ${firstName}    ${lastName}    ${street}    ${houseNumber}    ${postCode}    ${city}    ${country}    ${isDefaultShipping}=True     ${isDefaultBilling}=True       ${company}=NUll    ${phone}=NUll    ${additionalAddress}=NUll
-    Yves: go to user menu item in header:    My Profile
+    [Arguments]    ${exists}    ${firstName}    ${lastName}    ${street}    ${houseNumber}    ${postCode}    ${city}    ${country}    ${isDefaultShipping}=True     ${isDefaultBilling}=True       ${company}=NUll    ${phone}=NUll    ${additionalAddress}=NUll
+    Run Keyword If    '${env}'=='b2c'    Yves: go to user menu item in header:    My Profile
+    ...    ELSE    Run Keyword If    '${env}'=='b2b'    Yves: go to user menu item in header:    Profile
     Yves: go to user menu item in the left bar:    Addresses
     Run Keyword If    '${exists}'=='true'    Run keywords
-    ...    Element Should Be Visible    xpath=//div[@class='box']//ul[@class='display-address menu menu--customer-account']//li[contains(text(),'${salutation} ${firstName} ${lastName}')]    AND
-    ...    Element Should Be Visible    xpath=//div[@class='box']//ul[@class='display-address menu menu--customer-account']//li[contains(text(),'${street} ${houseNumber}')]    AND    
-    ...    Element Should Be Visible    xpath=//div[@class='box']//ul[@class='display-address menu menu--customer-account']//li[contains(text(),'${postCode} ${city}, ${country}')]
+    ...    Element Should Be Visible    xpath=//ul[contains(@class,'display-address')]//*[contains(text(),'${firstName} ${lastName}')]    AND
+    ...    Element Should Be Visible    xpath=//ul[contains(@class,'display-address')]//*[contains(text(),'${street} ${houseNumber}')]    AND    
+    ...    Element Should Be Visible    xpath=//ul[contains(@class,'display-address')]//*[contains(text(),'${postCode} ${city}, ${country}')]
     ...    ELSE    Run keywords
-    ...    Element Should Not Be Visible    xpath=//div[@class='box']//ul[@class='display-address menu menu--customer-account']//li[contains(text(),'${salutation} ${firstName} ${lastName}')]    AND
-    ...    Element Should Not Be Visible    xpath=//div[@class='box']//ul[@class='display-address menu menu--customer-account']//li[contains(text(),'${street} ${houseNumber}')]    AND    
-    ...    Element Should Not Be Visible    xpath=//div[@class='box']//ul[@class='display-address menu menu--customer-account']//li[contains(text(),'${postCode} ${city}, ${country}')]
+    ...    Element Should Not Be Visible    xpath=//ul[contains(@class,'display-address')]//*[contains(text(),'${firstName} ${lastName}')]    AND
+    ...    Element Should Not Be Visible    xpath=//ul[contains(@class,'display-address')]//*[contains(text(),'${street} ${houseNumber}')]    AND    
+    ...    Element Should Not Be Visible    xpath=//ul[contains(@class,'display-address')]//*[contains(text(),'${postCode} ${city}, ${country}')]
 
 Yves: delete user address:
-    [Arguments]    ${salutation}    ${firstName}    ${lastName}    ${street}    ${houseNumber}    ${postCode}    ${city}    ${country}    ${isDefaultShipping}=True     ${isDefaultBilling}=True       ${company}=NUll    ${phone}=NUll    ${additionalAddress}=NUll
-    Yves: go to user menu item in header:    My Profile
+    [Arguments]    ${street}
+    Run Keyword If    '${env}'=='b2c'    Yves: go to user menu item in header:    My Profile
+    ...    ELSE    Run Keyword If    '${env}'=='b2b'    Yves: go to user menu item in header:    Profile
     Yves: go to user menu item in the left bar:    Addresses
-    Click    xpath=//li[contains(text(),'${salutation} ${firstName} ${lastName}')]/following-sibling::li[contains(text(),'${street} ${houseNumber}')]/following-sibling::li[contains(text(),'${postCode} ${city}, ${country}')]/ancestor::div[@class='box']//button[contains(text(),'Delete')]
-        
+    Run Keyword If    '${env}'=='b2c'    Click    xpath=//li[contains(text(),'${street}')]/ancestor::div[@class='box']//button[contains(text(),'Delete')]
+    ...    ELSE    Run Keyword If    '${env}'=='b2b'    Click    xpath=//li[contains(text(),'${street}')]/ancestor::div[@class='action-card']//button
+            
     Element Should Be Visible    xpath=//flash-message//div[contains(text(),'Address deleted successfully')]   message="Flash message didn't appear"
