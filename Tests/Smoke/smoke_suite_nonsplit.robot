@@ -46,7 +46,7 @@ Authorized_User_Access
     Yves: go to PDP of the product with sku:    002
     Yves: PDP contains/doesn't contain:     true    ${pdpPriceLocator}     ${addToCartButton}
     Yves: add product to the shopping cart
-    Yves: go to Suite shopping cart
+    Yves: go to the shopping cart
     Yves: shopping cart contains product with unit price:    002    Canon IXUS 160    99.99
     Yves: go to user menu item in header:    Overview
     Yves: 'Overview' page is displayed
@@ -111,7 +111,7 @@ Catalog_Actions
     Yves: 1st product card in catalog (not)contains:      Color selector   true
     Yves: select product color:    Black
     Yves: quick add to cart for first item in catalog
-    Yves: go to Suite shopping cart
+    Yves: go to the shopping cart
     Yves: shopping cart contains the following products:    NEX-VG20EH    Canon IXUS 160
     [Teardown]    Yves: check if cart is not empty and clear it
 
@@ -146,9 +146,9 @@ Volume_Prices
     Yves: go to PDP of the product with sku:    193
     Yves: change quantity on PDP:    5
     Yves: add product to the shopping cart
-    Yves: go to Suite shopping cart
+    Yves: go to the shopping cart
     Yves: shopping cart contains product with unit price:    193    Sony FDR-AX40    8.25
-    Yves: delete from Suite cart products with name:    Sony FDR-AX40
+    Yves: delete from the cart products with name:    Sony FDR-AX40
     [Teardown]    Yves: check if cart is not empty and clear it
 
 Discontinued_Alternative_Products
@@ -232,28 +232,11 @@ Product_Sets
     Yves: change variant of the product on CMS page on:    HP Pro Tablet 608 G1    64 GB
     Yves: change variant of the product on CMS page on:    HP EliteDesk 800 G1 Mini    3.1 GHz
     Yves: add all products to the shopping cart from Product Set
-    Yves: go to Suite shopping cart
+    Yves: go to the shopping cart
     Yves: shopping cart contains the following products:    HP Elite x2 1012 G1    HP Pro Tablet 608 G1    HP EliteDesk 800 G1 Mini
-    Yves: delete from Suite cart products with name:    HP Elite x2 1012 G1    HP Pro Tablet 608 G1    HP EliteDesk 800 G1 Mini
+    Yves: delete from the cart products with name:    HP Elite x2 1012 G1    HP Pro Tablet 608 G1    HP EliteDesk 800 G1 Mini
     [Teardown]    Yves: check if cart is not empty and clear it 
 
-Product_Bundles
-    [Documentation]    Check the usage of product bundles
-    Yves: login on Yves with provided credentials:    ${yves_user_email}
-    Yves: go to PDP of the product with sku:    212
-    Yves: PDP contains/doesn't contain:    true    ${bundleItemsSmall}    ${bundleItemsLarge}
-    Yves: add product to the shopping cart
-    Yves: go to Suite shopping cart
-    Yves: shopping cart contains the following products:    ASUS Bundle
-    Yves: click on the 'Checkout' button in the shopping cart
-    Yves: billing address same as shipping address:    true
-    Yves: fill in the following shipping address:    Mr    ${yves_second_user_first_name}    ${yves_second_user_last_name}    Kirncher Str.    7    10247    Berlin    Germany
-    Yves: select the following shipping method on the checkout and go next:    Express
-    Yves: select the following payment method on the checkout and go next:    Invoice
-    Yves: accept the terms and conditions:    true
-    Yves: 'submit the order' on the summary page
-    Yves: 'Thank you' page is displayed
-    [Teardown]    Yves: check if cart is not empty and clear it
 
 Configurable_Bundle
     [Documentation]    Check the usage of configurable bundles (includes authorized checkout)
@@ -301,20 +284,15 @@ Discounts
     Zed: create a discount and activate it:    cart rule    Percentage    100    discountName=Promotional Product 100% ${random}    promotionalProductDiscount=True    promotionalProductAbstractSku=001    promotionalProductQuantity=2
     Yves: go to the 'Home' page
     Yves: go to PDP of the product with sku:    008
-    Yves: add product to the shopping cart
-    Yves: go to Suite shopping cart
+    Yves: add product to the guest shopping cart
+    Yves: go to the guest shopping cart
     Yves: apply discount voucher to cart:    test${random}
     Yves: discount is applied:    voucher    Voucher Code 5% ${random}    - €17.25
     Yves: discount is applied:    cart rule    Cart Rule 10% ${random}    - €34.5
-    Yves: go to PDP of the product with sku:    211
-    Yves: add product to the shopping cart
-    Yves: go to Suite shopping cart
-    Yves: discount is applied:    cart rule    Cart Rule 10% ${random}    - €70.5
-    Yves: promotional product offer is/not shown in cart:    True
-    Yves: change quantity of promotional product and add to cart:    +    1
-    Yves: shopping cart contains the following products:    Canon IXUS 285   HP Bundle
+    Yves: change quantity of promotional product and add to the guest shopping cart:    +    1
+    Yves: shopping cart contains the following products:    Canon IXUS 285
     Yves: discount is applied:    cart rule    Promotional Product 100% ${random}    - €199.98
-    Yves: click on the 'Checkout' button in the shopping cart
+    Yves: click on the 'Checkout' button in the guest shopping cart
     Yves: proceed with checkout as guest:    Mr    Guest    user    guest@user.com    
     Yves: billing address same as shipping address:    true
     Yves: fill in the following shipping address:    Mr    Guest    user    Kirncher Str.    7    10247    Berlin    Germany
@@ -535,7 +513,7 @@ Quick_Order
     Yves: add the following articles into the form through quick order text area:    002_25904004,1\n004_30663302,3\n005_30663301,21\n006_30692993,1\n007_30691822,11\n008_30692992,1\n425084,2
     Yves: add products to the shopping list from quick order page with name:    quickOrderList+${random}
     Yves: 'Shopping List' page is displayed
-    Yves: shopping list contains the following products:    401627    520561    101509    419871    419869    425073    425084
+    Yves: shopping list contains the following products:    002_25904004    004_30663302    005_30663301    006_30692993    007_30691822    008_30692992    009_30692991
     Yves: go to the shopping cart through the header with name:    quickOrderCart+${random}
     ### Order placement ###
     Yves: click on the 'Checkout' button in the shopping cart
