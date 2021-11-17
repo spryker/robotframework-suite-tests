@@ -65,5 +65,15 @@
         "measurement_unit_product_abstract_sku": "",
         "packaging_unit_product_abstract_sku": "218",
         "one_variant_product_abstract_name": "Canon IXUS 285"
-    }
+    },
+
+    "company_units": {
+        "zed_company_unit_1": "Supplier deparment",
+        "zed_company_unit_2": "Ottom store Berlin"
+    },
+
+    "categories": {
+        "category_1": "Digital Cameras",
+        "category_2": "Camcorders"
+    }   
 }

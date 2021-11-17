@@ -568,23 +568,29 @@ Default_Merchants
     Zed: table should contain:    Impala Merchant
 
 Product_Restrictions
+    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    # need to be difined
+    Zed: create merchant relation:    ${zed_company_unit_1}
+    Zed: create black list:    ${zed_company_unit_1}    ${category_1}
+    Zed: create merchant relation:    ${zed_company_unit_2}
+    Zed: create white list:    ${zed_company_unit_2}    ${category_2}
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
-    Yves: perform search by:    Soennecken
-    Yves: 'Catalog' page should show products:    18
-    Yves: go to URL:    en/office-furniture/storage/lockers
-    Yves: 'Catalog' page should show products:    34
+    Yves: perform search by:    ${category_1}
+    Yves: 'Catalog' page should show products:    92
+    Yves: go to URL:    en/cameras-&-camcorders/camcorders
+    Yves: 'Catalog' page should show products:    26
     Yves: logout on Yves as a customer
     Yves: login on Yves with provided credentials:    ${yves_company_user_restriction_customer_email_1}
-    Yves: perform search by:    Soennecken
+    Yves: perform search by:    ${category_1}
     Yves: 'Catalog' page should show products:    0
     Yves: logout on Yves as a customer
     Yves: login on Yves with provided credentials:    ${yves_company_user_restriction_customer_email_2}
-    Yves: go to URL:    en/office-furniture/storage/lockers
+    Yves: go to URL:    en/cameras-&-camcorders/camcorders
+    Yves: 'Catalog' page should show products:    26
+    Yves: go to URL:    en/cameras-&-camcorders/digital-cameras
     Yves: 'Catalog' page should show products:    0
-    Yves: go to URL:    en/transport/lift-carts
-    Yves: 'Catalog' page should show products:    16
-    Yves: go to URL:    en/transport/sack-trucks
-    Yves: 'Catalog' page should show products:    10
+    Yves: go to URL:    en/computer/notebooks
+    Yves: 'Catalog' page should show products:    0
 
 Customer_Specific_Prices
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
