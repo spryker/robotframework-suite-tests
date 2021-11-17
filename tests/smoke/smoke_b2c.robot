@@ -31,19 +31,19 @@ Resource    ../../resources/steps/zed_customer_steps.robot
 *** Test Cases ***
 New_Customer_Registration
     [Documentation]    Check that a new user can be registered in the system
-    Register a new customer with data:    
+    Register a new customer with data:
     ...    || salutation | first name          | last name | e-mail                         | password           ||
-    ...    || Mr.        | Test${random}       | User      | ${random}test.user@spryker.com | Change123!${random} || 
+    ...    || Mr.        | Test${random}       | User      | ${random}test.user@spryker.com | Change123!${random} ||
     Yves: flash message should be shown:    success    Almost there! We send you an email to validate your email address. Please confirm it to be able to log in.
     [Teardown]    Zed: delete customer:
-    ...    || email                          || 
+    ...    || email                          ||
     ...    || ${random}test.user@spryker.com ||
 
-Guest_User_Access
+Guest_User_Access_Restrictions
     [Documentation]    Checks that guest users see products info and cart but not profile
     Yves: header contains/doesn't contain:    true    ${currencySwitcher}[${env}]   ${wishlistIcon}    ${accountIcon}    ${shoppingCartIcon}
     Yves: go to PDP of the product with sku:    002
-    Yves: PDP contains/doesn't contain:     true    ${pdpPriceLocator}    ${addToCartButton} 
+    Yves: PDP contains/doesn't contain:     true    ${pdpPriceLocator}    ${addToCartButton}
     Yves: add product to the shopping cart
     Yves: go to b2c shopping cart
     Yves: shopping cart contains product with unit price:   002    Canon IXUS 160    94.99
@@ -55,7 +55,7 @@ Guest_User_Access
 Authorized_User_Access
     [Documentation]    Checks that authorized users see products info, cart and profile
     Yves: login on Yves with provided credentials:    ${yves_second_user_email}
-    Yves: header contains/doesn't contain:    true    ${currencySwitcher}[${env}]    ${accountIcon}     ${wishlistIcon}    ${shoppingCartIcon} 
+    Yves: header contains/doesn't contain:    true    ${currencySwitcher}[${env}]    ${accountIcon}     ${wishlistIcon}    ${shoppingCartIcon}
     Yves: go to PDP of the product with sku:    002
     Yves: PDP contains/doesn't contain:     true    ${pdpPriceLocator}     ${addToCartButton}
     Yves: add product to the shopping cart
@@ -86,15 +86,15 @@ User_Account
     Yves: 'Newsletter' page is displayed
     Yves: go to user menu item in the left bar:    Returns
     Yves: 'Returns' page is displayed
-    Yves: create a new customer address in profile:     Mr    ${yves_second_user_first_name}    ${yves_second_user_last_name}    Kirncher Str.    7    10247    Berlin    Germany
+    Yves: create a new customer address in profile:     Mr    ${yves_second_user_first_name} ${random}    ${yves_second_user_last_name} ${random}    Kirncher Str. ${random}    7    10247    Berlin    Germany
     Yves: go to user menu item in the left bar:    Addresses
     Yves: 'Addresses' page is displayed
-    Yves: check that user has address exists/doesn't exist:    true    Mr    ${yves_second_user_first_name}    ${yves_second_user_last_name}    Kirncher Str.    7    10247    Berlin    Germany
-    Yves: delete user address:    Mr    ${yves_second_user_first_name}    ${yves_second_user_last_name}    Kirncher Str.    7    10247    Berlin    Germany
+    Yves: check that user has address exists/doesn't exist:    true    ${yves_second_user_first_name} ${random}    ${yves_second_user_last_name} ${random}    Kirncher Str. ${random}    7    10247    Berlin    Germany
+    Yves: delete user address:    Kirncher Str. ${random}
     Yves: go to user menu item in the left bar:    Addresses
     Yves: 'Addresses' page is displayed
-    Yves: check that user has address exists/doesn't exist:    false    Mr    ${yves_second_user_first_name}    ${yves_second_user_last_name}    Kirncher Str.    7    10247    Berlin    Germany
-    
+    Yves: check that user has address exists/doesn't exist:    false    ${yves_second_user_first_name} ${random}    ${yves_second_user_last_name} ${random}    Kirncher Str. ${random}    7    10247    Berlin    Germany
+
 Catalog
     [Documentation]    Checks that catalog options and search work
     Yves: perform search by:    canon
@@ -133,7 +133,7 @@ Product_labels
     [Documentation]    Checks that products have labels on PLP and PDP
     Yves: go to first navigation item level:    Sale
     Yves: 1st product card in catalog (not)contains:     SaleLabel    true
-    Yves: go to PDP of the product with sku:    020
+    Yves: go to the PDP of the first available product on open catalog page
     Yves: PDP contains/doesn't contain:    true    ${pdp_sales_label}
     Yves: go to first navigation item level:    New
     Yves: 1st product card in catalog (not)contains:     NewLabel    true
@@ -145,13 +145,13 @@ Product_PDP
     [Documentation]    Checks that PDP contains required elements
     Yves: go to PDP of the product with sku:    135
     Yves: change variant of the product on PDP on:    Flash
-    Yves: PDP contains/doesn't contain:    true    ${pdpPriceLocator}   ${addToCartButton}    ${pdp_warranty_option}    ${pdp_gift_wrapping_option}    ${relatedProducts} 
+    Yves: PDP contains/doesn't contain:    true    ${pdpPriceLocator}   ${addToCartButton}    ${pdp_warranty_option}    ${pdp_gift_wrapping_option}    ${relatedProducts}
     Yves: PDP contains/doesn't contain:    false    ${pdp_add_to_wishlist_button}
     Yves: login on Yves with provided credentials:    ${yves_user_email}
     Yves: go to PDP of the product with sku:    135
-    Yves: PDP contains/doesn't contain:    true    ${pdpPriceLocator}   ${pdp_add_to_cart_disabled_button}    ${pdp_warranty_option}    ${pdp_gift_wrapping_option}     ${pdp_add_to_wishlist_button}    ${relatedProducts} 
+    Yves: PDP contains/doesn't contain:    true    ${pdpPriceLocator}   ${pdp_add_to_cart_disabled_button}[${env}]    ${pdp_warranty_option}    ${pdp_gift_wrapping_option}     ${pdp_add_to_wishlist_button}    ${relatedProducts}
     Yves: change variant of the product on PDP on:    Flash
-    Yves: PDP contains/doesn't contain:    true    ${pdpPriceLocator}    ${addToCartButton}    ${pdp_warranty_option}    ${pdp_gift_wrapping_option}     ${pdp_add_to_wishlist_button}    ${relatedProducts} 
+    Yves: PDP contains/doesn't contain:    true    ${pdpPriceLocator}    ${addToCartButton}    ${pdp_warranty_option}    ${pdp_gift_wrapping_option}     ${pdp_add_to_wishlist_button}    ${relatedProducts}
 
 Volume_Prices
     [Documentation]    Checks volume prices are applied
@@ -208,14 +208,14 @@ Back_in_Stock_Notification
     Yves: unsubscribe from availability notifications
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Catalog    Availability
-    Zed: change product stock:    ${got_abstract_product_sku}    ${got_concrete_product_sku}    true    0  
-    Zed: go to second navigation item level:    Catalog    Availability  
+    Zed: change product stock:    ${got_abstract_product_sku}    ${got_concrete_product_sku}    true    0
+    Zed: go to second navigation item level:    Catalog    Availability
     Zed: check if product is/not in stock:    ${got_abstract_product_sku}    true
     Yves: login on Yves with provided credentials:    ${yves_second_user_email}
     Yves: go to PDP of the product with sku:  ${got_abstract_product_sku}
     Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    False
     Yves: check if product is available on PDP:    ${got_abstract_product_sku}    true
-    [Teardown]    Zed: check and restore product availability in Zed:    ${got_abstract_product_sku}    Available    ${got_concrete_product_sku} 
+    [Teardown]    Zed: check and restore product availability in Zed:    ${got_abstract_product_sku}    Available    ${got_concrete_product_sku}
 
 Add_to_Wishlist
     [Documentation]    Check creation of wishlist and adding to different wishlists
@@ -330,7 +330,7 @@ Discounts
     Yves: shopping cart contains the following products:    Kodak EasyShare M532    Canon IXUS 160
     Yves: discount is applied:    cart rule    Promotional Product 100% ${random}    - €199.98
     Yves: click on the 'Checkout' button in the shopping cart
-    Yves: proceed with checkout as guest:    Mr    Guest    user    guest@user.com    
+    Yves: proceed with checkout as guest:    Mr    Guest    user    guest@user.com
     Yves: billing address same as shipping address:    true
     Yves: fill in the following shipping address:    Mr    Guest    user    Kirncher Str.    7    10247    Berlin    Germany
     Yves: select the following shipping method on the checkout and go next:    Express
@@ -338,7 +338,7 @@ Discounts
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
-    [Teardown]    Run keywords    Yves: check if cart is not empty and clear it    
+    [Teardown]    Run keywords    Yves: check if cart is not empty and clear it
     ...    AND    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: deactivate following discounts from Overview page:    Voucher Code 5% ${random}    Cart Rule 10% ${random}    Promotional Product 100% ${random}
     ...    AND    Zed: activate following discounts from Overview page:    For every purchase above certain value depending on the currency and net/gross price. you get this promotional product for free    10% Discount for all orders above    €5 every tuesday and wednesday for buying 5 items    5% discount on all white products    10% discount on all products with an Intel Core processor    Free standard delivery
@@ -462,7 +462,7 @@ Return_Management
     [Teardown]    Yves: check if cart is not empty and clear it
 
 Content_Management
-    [Documentation]    Checks cms content can be edited in zed and that correct cms elements are present on homepage   
+    [Documentation]    Checks cms content can be edited in zed and that correct cms elements are present on homepage
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Content    Pages
     Zed: create a cms page and publish it:    Test Page${random}    test-page${random}    Page Title    Page text
@@ -475,3 +475,14 @@ Content_Management
     Yves: go to newly created page by URL:    en/test-page${random}
     Yves: page contains CMS element:    CMS Page Title    Page Title
     Yves: page contains CMS element:    CMS Page Content    Page text
+
+Product_Relations
+    Yves: login on Yves with provided credentials:    ${yves_user_email}
+    Yves: go to PDP of the product with sku:    ${product_with_relations_related_products_sku}
+    Yves: PDP contains/doesn't contain:    true    ${relatedProducts}
+    Yves: go to PDP of the product with sku:    ${product_with_relations_upselling_sku}
+    Yves: PDP contains/doesn't contain:    false    ${relatedProducts}
+    Yves: add product to the shopping cart
+    Yves: go to b2c shopping cart
+    Yves: shopping cart contains/doesn't contain the following elements:    true    ${upSellProducts}
+    [Teardown]    Yves: check if cart is not empty and clear it

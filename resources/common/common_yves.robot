@@ -189,6 +189,10 @@ Yves: go to the PDP of the first available product
     Click    xpath=//product-item[@data-qa='component product-item'][${index}]//a[contains(@class,'link-detail-page') and (contains(@class,'info')) or (contains(@class,'name'))]
     Wait Until Page Contains Element    ${pdp_main_container_locator}[${env}]
 
+Yves: go to the PDP of the first available product on open catalog page
+    Click    xpath=//product-item[@data-qa='component product-item'][1]//a[contains(@class,'link-detail-page') and (contains(@class,'info')) or (contains(@class,'name'))]
+    Wait Until Page Contains Element    ${pdp_main_container_locator}[${env}]
+
 Yves: check if cart is not empty and clear it
     Yves: go to the 'Home' page
     Yves: go to b2c shopping cart
