@@ -209,7 +209,7 @@ Helper: delete all items in cart
 
 Yves: try reloading page if element is/not appear:
     [Arguments]    ${element}    ${isDisplayed}
-    FOR    ${index}    IN RANGE    0    7
+    FOR    ${index}    IN RANGE    0    16
         ${elementAppears}=    Run Keyword And Return Status    Element Should Be Visible    ${element}
         Run Keyword If    '${isDisplayed}'=='True' and '${elementAppears}'=='False'    Reload
         ...    ELSE    Run Keyword If    '${isDisplayed}'=='False' and '${elementAppears}'=='True'    Reload

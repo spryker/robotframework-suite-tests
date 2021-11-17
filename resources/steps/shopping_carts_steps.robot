@@ -193,8 +193,8 @@ Yves: discount is applied:
 
 Yves: promotional product offer is/not shown in cart:
     [Arguments]    ${isShown}    
-    Run Keyword If    '${isShown}'=='True'    Element Should Be Visible    ${shopping_cart_promotional_product_section}    message=Promotional products are not displayed but should be
-    ...    ELSE    Run Keyword If    '${isShown}'=='False'    Element Should Not Be Visible    ${shopping_cart_promotional_product_section}    message=Promotional products are displayed but should not
+    Run Keyword If    '${isShown}'=='true'    Element Should Be Visible    ${shopping_cart_promotional_product_section}    message=Promotional products are not displayed but should be
+    ...    ELSE    Run Keyword If    '${isShown}'=='false'    Element Should Not Be Visible    ${shopping_cart_promotional_product_section}    message=Promotional products are displayed but should not
 
 Yves: change quantity of promotional product and add to cart:
     [Documentation]    set ${action} to + or - to change quantity. ${clickCount} indicates how many times to click
