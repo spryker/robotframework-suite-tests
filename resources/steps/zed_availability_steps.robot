@@ -13,6 +13,9 @@ Zed: check if product is/not in stock:
 
 Zed: change product stock:
     [Arguments]    ${skuAbstract}    ${skuConcrete}    ${isNeverOutOfStock}    ${quantityWarehouse1}    ${quantityWarehouse2}=0
+    ${currentURL}=    Get Location
+    Run Keyword Unless    '/availability-gui' in '${currentURL}'    Zed: go to second navigation item level:    Catalog    Availability
+    Run Keyword If    '/availability-gui/index/edit' in '${currentURL}'    Zed: go to second navigation item level:    Catalog    Availability
     Zed: perform search by:    ${skuAbstract}
     Click    xpath=//a[contains(text(),'${skuAbstract}')]/ancestor::tr//following-sibling::td//*[contains(.,'View')]
         

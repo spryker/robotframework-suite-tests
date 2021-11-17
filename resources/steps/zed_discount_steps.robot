@@ -43,7 +43,7 @@ Zed: create a discount and activate it:
     Click    ${zed_discount_activate_button}
     
 # Voucher codes 
-    Run keyword if    '${discountType}'=='voucher'    Zed: Generate Vouchers:    1    ${voucherCode}
+    Run keyword if    '${discountType}'=='voucher'    Zed: generate vouchers:    1    ${voucherCode}
 # Check discount in Zed 
     Zed: go to second navigation item level:    Merchandising    Discount
     Zed: perform search by:    ${discountName}    
@@ -51,7 +51,7 @@ Zed: create a discount and activate it:
 
 
 
-Zed: Generate Vouchers:
+Zed: generate vouchers:
     [Arguments]    ${quantity}    ${customCode}    ${addRandomLength}=    ${maxNumberOfUsages}=0
     ${currentURL}=    Get Location
     Run Keyword Unless    'tab-content-general' in '${currentURL}'
@@ -62,13 +62,25 @@ Zed: Generate Vouchers:
     Click    ${zed_discount_voucher_code_generate_button}
     
 
-Zed: Deactivate Following Discounts From Overview Page:
+Zed: deactivate following discounts from Overview page:
     [Arguments]    @{discountNames}
     ${items_list_count}=   get length  ${discountNames}
     Zed: go to second navigation item level:    Merchandising    Discount
     FOR    ${name}    IN    @{discountNames}
-        Zed: perform search by:    ${name}    
-        Click    xpath=//td[contains(text(),'${name}')]/following-sibling::td[contains(@class,'Action')]//button[contains(.,'Deactivate')]
+        Zed: perform search by:    ${name}
+        ${isDiscountActive}=    Set Variable    ${EMPTY} 
+        ${isDiscountActive}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//td[contains(text(),'${name}')]/following-sibling::td[contains(@class,'Action')]//button[contains(.,'Deactivate')]
+        Run Keyword If    '${isDiscountActive}'=='True'    Click    xpath=//td[contains(text(),'${name}')]/following-sibling::td[contains(@class,'Action')]//button[contains(.,'Deactivate')]
     END    
 
+Zed: activate following discounts from Overview page:
+    [Arguments]    @{discountNames}
+    ${items_list_count}=   get length  ${discountNames}
+    Zed: go to second navigation item level:    Merchandising    Discount
+    FOR    ${name}    IN    @{discountNames}
+        Zed: perform search by:    ${name}
+        ${isDiscountInactive}=    Set Variable    ${EMPTY} 
+        ${isDiscountInactive}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//td[contains(text(),'${name}')]/following-sibling::td[contains(@class,'Action')]//button[contains(.,'Activate')]
+        Run Keyword If    '${isDiscountInactive}'=='True'    Click    xpath=//td[contains(text(),'${name}')]/following-sibling::td[contains(@class,'Action')]//button[contains(.,'Activate')]
+    END
     
