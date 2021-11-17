@@ -18,10 +18,8 @@ Zed: change product stock:
     Run Keyword If    '/availability-gui/index/edit' in '${currentURL}'    Zed: go to second navigation item level:    Catalog    Availability
     Zed: perform search by:    ${skuAbstract}
     Click    xpath=//a[contains(text(),'${skuAbstract}')]/ancestor::tr//following-sibling::td//*[contains(.,'View')]
-        
     Element Should Be Visible    xpath=//div[@class='ibox float-e-margins']/*[contains(.,'Variant availability')]
     Click    xpath=//*[contains(text(),'${skuConcrete}')]/ancestor::tr//following-sibling::td//*[contains(.,'Edit Stock')]
-        
     Element Should Be Visible    xpath=//div[@class='ibox float-e-margins']/*[contains(.,'Edit Stock')]
     ${checkBoxes}=    Get Element Count    ${zed_availability_never_out_of_stock_checkbox}
     FOR    ${index}    IN RANGE    1    ${checkBoxes}
@@ -33,6 +31,8 @@ Zed: change product stock:
     END
     Type Text    xpath=//input[contains(@id,'AvailabilityGui_stock_stocks_0_quantity')]    ${quantityWarehouse1}
     Type Text    xpath=//input[contains(@id,'AvailabilityGui_stock_stocks_1_quantity')]    ${quantityWarehouse2}   
+    Click    ${zed_save_button}
+    #Resave to apply changes
     Click    ${zed_save_button}
 
 Zed: check and restore product availability in Zed:    

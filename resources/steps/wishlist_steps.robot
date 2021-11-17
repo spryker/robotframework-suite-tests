@@ -16,18 +16,18 @@ Yves: go to wishlist with name:
 
 Yves: product with sku is marked as discountinued in wishlist:
     [Arguments]    ${productSku}
-    FOR    ${index}    IN RANGE    0    16
+    FOR    ${index}    IN RANGE    0    21
         ${discontinue_applied}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//li[contains(text(),'${productSku}')]/ancestor::td/following-sibling::td/span[contains(text(),'Discontinued')]
-        Run Keyword If    '${discontinue_applied}'=='False'    Reload
+        Run Keyword If    '${discontinue_applied}'=='False'    Run Keywords    Sleep    1s    AND    Reload
         ...    ELSE    Exit For Loop
     END    
     Element Should Be Visible    xpath=//li[contains(text(),'${productSku}')]/ancestor::td/following-sibling::td/span[contains(text(),'Discontinued')]
 
 Yves: product with sku is marked as alternative in wishlist:
     [Arguments]    ${productSku}
-    FOR    ${index}    IN RANGE    0    16
+    FOR    ${index}    IN RANGE    0    21
         ${alternative_applied}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//li[contains(text(),'${productSku}')]/ancestor::tr/preceding-sibling::tr//*[contains(text(),'Alternative for')]
-        Run Keyword If    '${alternative_applied}'=='False'    Reload
+        Run Keyword If    '${alternative_applied}'=='False'    Run Keywords    Sleep    1s    AND    Reload
         ...    ELSE    Exit For Loop
     END     
     Element Should Be Visible    xpath=//li[contains(text(),'${productSku}')]/ancestor::tr/preceding-sibling::tr//*[contains(text(),'Alternative for')]

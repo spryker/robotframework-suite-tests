@@ -12,20 +12,26 @@ Zed: create a cms page and publish it:
     Click    ${zed_new_cms_page_create_button}     
 # General page information input
     Page Should Contain Element    xpath=//body//*[contains(text(),'Create CMS Page')]    message=Page for CMS creation is not opened
-    Page Should Contain Element    ${zed_cms_page_general_enUS_name_field}    message=US section of CMS page is not open 
+    Element Should Be Visible    ${zed_cms_page_general_enUS_name_field}    message=US section of CMS page is not open 
+    Scroll Element Into View    ${zed_cms_page_general_deDE_collapsed_section}
     Click    ${zed_cms_page_general_deDE_collapsed_section}
+    ${de_section_expanded}=    Run Keyword And Return Status    Wait Until Element Is Visible    ${zed_cms_page_general_deDE_name_field}    message=DE section of CMS page is not open 
+    Run Keyword If    '${de_section_expanded}'=='False'    Click    ${zed_cms_page_general_deDE_collapsed_section}
+    Wait Until Element Is Visible    ${zed_cms_page_general_deDE_name_field}    message=DE section of CMS page is not open 
     Check checkbox    ${zed_cms_page_general_is_searchable_checkbox}
     Type Text    ${zed_cms_page_general_enUS_name_field}    ${enName}
     Type Text    ${zed_cms_page_general_enUS_url_field}    ${enURL}
-    Page Should Contain Element    ${zed_cms_page_general_deDE_name_field}    message=DE section of CMS page is not open 
     Type Text    ${zed_cms_page_general_deDE_name_field}    ${enName}
     Type Text    ${zed_cms_page_general_deDE_url_field}    ${enURL}
-    Click    ${zed_cms_page_general_deDE_expanded_section}
-    Click    ${zed_cms_page_save_button}  
+    # Click    ${zed_cms_page_general_deDE_expanded_section}
+    Click    ${zed_cms_page_save_button}
 # Placeholder information input
-    Page Should Contain Element    xpath=//body//*[contains(text(),'Edit Placeholders: ${enName}')]    message=Page for CMS creation is not opened
+    ${page_was_created}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//body//*[contains(text(),'Edit Placeholders: ${enName}')]
+    Run Keyword If    '${page_was_created}'=='False'    Click    ${zed_cms_page_save_button}
+    Page Should Contain Element    xpath=//body//*[contains(text(),'Edit Placeholders: ${enName}')]    message=CMS page was not created
+    Scroll Element Into View    ${zed_cms_page_general_deDE_collapsed_section} 
     Click    ${zed_cms_page_general_deDE_collapsed_section} 
-    Page Should Contain Element    ${zed_cms_page_placeholder_title_deDE_field}    message=DE section of Title tab is ot open 
+    Wait Until Element Is Visible    ${zed_cms_page_placeholder_title_deDE_field}    message=DE section of Title tab is not open 
     Type Text    ${zed_cms_page_placeholder_title_enUS_field}    ${enTitlePlaceholder}
     Type Text    ${zed_cms_page_placeholder_title_deDE_field}    ${enTitlePlaceholder}
     Zed: go to tab:    Content

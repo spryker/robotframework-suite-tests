@@ -185,9 +185,10 @@ Discontinued_Alternative_Products
     Yves: go to wishlist with name:    My wishlist
     Yves: product with sku is marked as discountinued in wishlist:    ${got_concrete_product_sku}
     Yves: product with sku is marked as alternative in wishlist:    011
-    Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    Zed: undo discontinue the following product:    ${got_abstract_product_sku}    ${got_concrete_product_sku}
-    [Teardown]    Run Keywords    Yves: login on Yves with provided credentials:    ${yves_user_email}    AND    Yves: check if cart is not empty and clear it
+    [Teardown]    Run Keywords    Yves: login on Yves with provided credentials:    ${yves_user_email}    
+    ...    AND    Yves: check if cart is not empty and clear it
+    ...    AND    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    ...    AND    Zed: undo discontinue the following product:    ${got_abstract_product_sku}    ${got_concrete_product_sku}
 
 Back_in_Stock_Notification
     [Documentation]    Back in stock notification is sent and availability check
@@ -309,6 +310,7 @@ Discounts
     [Documentation]    Discounts, Promo Products, and Coupon Codes (includes guest checkout)
     [Setup]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: deactivate following discounts from Overview page:    For every purchase above certain value depending on the currency and net/gross price. you get this promotional product for free    10% Discount for all orders above    €5 every tuesday and wednesday for buying 5 items    5% discount on all white products    10% discount on all products with an Intel Core processor    Free standard delivery
+    ...    AND    Zed: change product stock:    190    190_25111746    true    10
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Merchandising    Discount
     Zed: create a discount and activate it:    voucher    Percentage    5    sku = '*'    test${random}    discountName=Voucher Code 5% ${random}
@@ -397,9 +399,9 @@ Agent_Assist
     Yves: product with name in the catalog should have price:    Canon PowerShot G9 X    €400.24
     Yves: go to PDP of the product with sku:    031
     Yves: product price on the PDP should be:    €400.24
-    Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    Zed: delete Zed user with the following email:    agent+${random}@spryker.com
-    [Teardown]    Yves: check if cart is not empty and clear it
+    [Teardown]    Run Keywords    Yves: check if cart is not empty and clear it
+    ...    AND    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    ...    AND    Zed: delete Zed user with the following email:    agent+${random}@spryker.com
 
 Return_Management
     [Documentation]    Checks that returns work and oms process is checked
@@ -457,9 +459,9 @@ Return_Management
     Yves: go to user menu item in header:    Orders History
     Yves: 'Order History' page is displayed
     Yves: 'Order History' page contains the following order with a status:    ${lastPlacedOrder}    Returned
-    Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    Zed: delete Zed user with the following email:    returnagent+${random}@spryker.com
-    [Teardown]    Yves: check if cart is not empty and clear it
+    [Teardown]    Run Keywords    Yves: check if cart is not empty and clear it
+    ...    AND    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    ...    AND    Zed: delete Zed user with the following email:    returnagent+${random}@spryker.com
 
 Content_Management
     [Documentation]    Checks cms content can be edited in zed and that correct cms elements are present on homepage
