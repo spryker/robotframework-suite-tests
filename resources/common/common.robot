@@ -17,8 +17,6 @@ ${env}                 b2b
 ${headless}            true
 ${browser}             chromium
 ${browser_timeout}     60 seconds
-${host}                http://yves.de.spryker.local/
-${zed_url}             http://backoffice.de.spryker.local/
 ${email_domain}        @spryker.com
 ${default_password}    change123
 ${admin_email}         admin@spryker.com
