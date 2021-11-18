@@ -9,3 +9,5 @@ settings.json
 /User_Journeys/output.xml
 Resources/Libraries/__pycache__
 /.vscode
+output.xml
+playwright-log.txt
