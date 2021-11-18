@@ -21,6 +21,9 @@ Resource    ../../resources/steps/zed_users_steps.robot
 Resource    ../../resources/steps/products_steps.robot
 Resource    ../../resources/steps/orders_management_steps.robot
 Resource    ../../resources/steps/zed_customer_steps.robot
+Resource    ../../resources/steps/zed_cms_page_steps.robot
+Resource    ../../resources/steps/zed_discount_steps.robot
+Resource    ../../resources/steps/zed_availability_steps.robot
  
 *** Test Cases ***
 Guest_User_Access_Restrictions
@@ -595,86 +598,91 @@ Return_Management
     Zed: delete Zed user with the following email:    return+agent+${random}@spryker.com
 
 
-# User_Account
-#     [Documentation]    Checks user account pages work
-#     Yves: login on Yves with provided credentials:    ${yves_user_email}
-#     Yves: go to user menu item in header:    Overview
-#     Yves: 'Overview' page is displayed
-#     Yves: go to user menu item in header:    Order History
-#     Yves: 'Order History' page is displayed
-#     Yves: go to user menu item in header:    Profile
-#     Yves: 'My Profile' page is displayed
-#     Yves: go to user menu item in the left bar:    Addresses
-#     Yves: 'Addresses' page is displayed
-#     Yves: go to user menu item in the left bar:    Newsletter
-#     Yves: 'Newsletter' page is displayed
-#     Yves: go to user menu item in the left bar:    Returns
-#     Yves: 'Returns' page is displayed
-#     Yves: create a new customer address in profile:    Ms    ${yves_user_first_name} ${random}    ${yves_user_last_name} ${random}   Kirncher Str. ${random}    7    ${random}    Berlin    Germany
-#     Yves: go to user menu item in the left bar:    Addresses
-#     Yves: 'Addresses' page is displayed
-#     Yves: check that user has address exists/doesn't exist:    true    ${yves_user_first_name} ${random}    ${yves_user_last_name} ${random}    Kirncher Str. ${random}    7    ${random}    Berlin    Germany
-#     Yves: delete user address:    Kirncher Str. ${random}
-#     Yves: go to user menu item in the left bar:    Addresses
-#     Yves: 'Addresses' page is displayed
-#     Yves: check that user has address exists/doesn't exist:    false    ${yves_user_first_name} ${random}    ${yves_user_last_name} ${random}    Kirncher Str. ${random}    7    ${random}    Berlin    Germany
+User_Account
+     [Documentation]    Checks user account pages work
+     Yves: login on Yves with provided credentials:    ${yves_user_email}
+     Yves: go to user menu item in header:    Overview
+     Yves: 'Overview' page is displayed
+     Yves: go to user menu item in header:    Order History
+     Yves: 'Order History' page is displayed
+     Yves: go to user menu item in header:    Profile
+     Yves: 'My Profile' page is displayed
+     Yves: go to user menu item in the left bar:    Addresses
+     Yves: 'Addresses' page is displayed
+     Yves: go to user menu item in the left bar:    Newsletter
+     Yves: 'Newsletter' page is displayed
+     Yves: go to user menu item in the left bar:    Returns
+     Yves: 'Returns' page is displayed
+     Yves: create a new customer address in profile:    Ms    ${yves_user_first_name} ${random}    ${yves_user_last_name} ${random}   Kirncher Str. ${random}    7    ${random}    Berlin    Germany
+     Yves: go to user menu item in the left bar:    Addresses
+     Yves: 'Addresses' page is displayed
+     Yves: check that user has address exists/doesn't exist:    true    ${yves_user_first_name} ${random}    ${yves_user_last_name} ${random}    Kirncher Str. ${random}    7    ${random}    Berlin    Germany
+     Yves: delete user address:    Kirncher Str. ${random}
+     Yves: go to user menu item in the left bar:    Addresses
+     Yves: 'Addresses' page is displayed
+     Yves: check that user has address exists/doesn't exist:    false    ${yves_user_first_name} ${random}    ${yves_user_last_name} ${random}    Kirncher Str. ${random}    7    ${random}    Berlin    Germany
 
-# Product_PDP
-#     [Documentation]    Checks that PDP contains required elements
-#     Yves: go to PDP of the product with sku:    ${multi_variant_product_abstract_sku}
-#     Yves: change variant of the product on PDP on:    500 x 930 x 400
-#     Yves: PDP contains/doesn't contain:    true    ${pdp_warranty_option}    ${pdp_insurance_option}
-#     Yves: PDP contains/doesn't contain:    false    ${pdpPriceLocator}   ${addToCartButton} 
-#     Yves: login on Yves with provided credentials:    ${yves_user_email}
-#     Yves: go to PDP of the product with sku:    ${multi_variant_product_abstract_sku}
-#     Yves: PDP contains/doesn't contain:    true    ${pdpPriceLocator}    ${pdp_add_to_cart_disabled_button}[${env}]    ${pdp_warranty_option}    ${pdp_insurance_option}
-#     Yves: change variant of the product on PDP on:    500 x 930 x 400
-#     Yves: PDP contains/doesn't contain:    true    ${pdpPriceLocator}    ${addToCartButton}    ${pdp_warranty_option}    ${pdp_insurance_option} 
+Product_PDP
+     [Documentation]    Checks that PDP contains required elements
+     Yves: go to PDP of the product with sku:    ${multi_variant_product_abstract_sku}
+     Yves: change variant of the product on PDP on:    500 x 930 x 400
+     Yves: PDP contains/doesn't contain:    true    ${pdp_warranty_option}    ${pdp_insurance_option}
+     Yves: PDP contains/doesn't contain:    false    ${pdpPriceLocator}   ${addToCartButton} 
+     Yves: login on Yves with provided credentials:    ${yves_user_email}
+     Yves: go to PDP of the product with sku:    ${multi_variant_product_abstract_sku}
+     Yves: PDP contains/doesn't contain:    true    ${pdpPriceLocator}    ${pdp_add_to_cart_disabled_button}[${env}]    ${pdp_warranty_option}    ${pdp_insurance_option}
+     Yves: change variant of the product on PDP on:    500 x 930 x 400
+     Yves: PDP contains/doesn't contain:    true    ${pdpPriceLocator}    ${addToCartButton}    ${pdp_warranty_option}    ${pdp_insurance_option} 
 
-# Product_labels
-#     [Documentation]    Checks that products have labels on PLP and PDP
-#     Yves: go to first navigation item level:    Sale %
-#     Yves: 1st product card in catalog (not)contains:     SaleLabel    true
-#     Yves: go to the PDP of the first available product on open catalog page
-#     Yves: PDP contains/doesn't contain:    true    ${pdp_sales_label}
-#     Yves: go to first navigation item level:    New
-#     Yves: 1st product card in catalog (not)contains:     NewLabel    true
-#     Yves: go to the PDP of the first available product on open catalog page
-#     Yves: PDP contains/doesn't contain:    true    ${pdp_new_label} 
+Product_labels
+     [Documentation]    Checks that products have labels on PLP and PDP
+     Yves: go to first navigation item level:    Sale %
+     Yves: 1st product card in catalog (not)contains:     SaleLabel    true
+     Yves: go to the PDP of the first available product on open catalog page
+     Yves: PDP contains/doesn't contain:    true    ${pdp_sales_label}
+     Yves: go to first navigation item level:    New
+     Yves: 1st product card in catalog (not)contains:     NewLabel    true
+     Yves: go to the PDP of the first available product on open catalog page
+     Yves: PDP contains/doesn't contain:    true    ${pdp_new_label} 
 
-# Catalog[TBD]
-#     [Documentation]    Checks that catalog options and search work
-#     Yves: perform search by:    canon
-#     Yves: 'Catalog' page should show products:    30
-#     Yves: go to first navigation item level:    Computers
-#     Yves: 'Catalog' page should show products:    72
-#     Yves: page contains CMS element:    Product Slider    Top Sellers
-#     Yves: page contains CMS element:    Banner    Computers
-#     Yves: change sorting order on catalog page:    Sort by price ascending
-#     Yves: 1st product card in catalog (not)contains:     Price    €18.79
-#     Yves: change sorting order on catalog page:    Sort by price descending
-#     Yves: 1st product card in catalog (not)contains:      Price    €3,456.99
-#     Yves: go to catalog page:    2
-#     Yves: catalog page contains filter:    Price    Ratings     Label     Brand    Color
-#     Yves: select filter value:    Color    Blue
-#     Yves: 'Catalog' page should show products:    1
-#     [Teardown]    Yves: check if cart is not empty and clear it
+Catalog
+    [Documentation]    Checks that catalog options and search work
+    Yves: login on Yves with provided credentials:    ${yves_user_email}
+    Yves: perform search by:    chair
+    Yves: 'Catalog' page should show products:    58
+    Yves: go to first navigation item level:    Stationery
+    Yves: 'Catalog' page should show products:    114
+    Yves: change sorting order on catalog page:    Sort by price ascending
+    Yves: 1st product card in catalog (not)contains:     Price    €0.48
+    Yves: change sorting order on catalog page:    Sort by price descending
+    Yves: 1st product card in catalog (not)contains:      Price    €41.68
+    Yves: go to catalog page:    2
+    Yves: catalog page contains filter:    Product Ratings    Product Label    Brand    Color
+    Yves: select filter value:    Color    blue
+    Yves: 'Catalog' page should show products:    3
+    [Teardown]    Yves: check if cart is not empty and clear it
 
-# Catalog_Actions [TBD]
-#     [Documentation]    Checks quick add to cart and product groups
-#     Yves: perform search by:    NEX-VG20EH
-#     Yves: 1st product card in catalog (not)contains:      Add to Cart    true
-#     Yves: quick add to cart for first item in catalog
-#     Yves: perform search by:    HP Z 440
-#     Yves: 1st product card in catalog (not)contains:     Add to Cart    false
-#     Yves: perform search by:    002
-#     Yves: 1st product card in catalog (not)contains:      Add to Cart    true
-#     Yves: 1st product card in catalog (not)contains:      Color selector   true
-#     Yves: select product color:    Black
-#     Yves: quick add to cart for first item in catalog
-#     Yves: go to b2c shopping cart
-#     Yves: shopping cart contains the following products:    NEX-VG20EH    Canon IXUS 160
-#     [Teardown]    Yves: check if cart is not empty and clear it
+Catalog_Actions
+    [Documentation]    Checks quick add to cart and product groups
+    Yves: perform search by:    ${one_variant_product_abstract_sku}
+    Yves: 1st product card in catalog (not)contains:      Add to Cart    false
+    Yves: 1st product card in catalog (not)contains:      View    true
+    Yves: login on Yves with provided credentials:    ${yves_user_email}
+    Yves: create new 'Shopping Cart' with name:    catalogActions+${random}
+    Yves: perform search by:    ${one_variant_product_abstract_sku}
+    Yves: 1st product card in catalog (not)contains:      Add to Cart    true
+    Yves: 1st product card in catalog (not)contains:      View    true
+    Yves: quick add to cart for first item in catalog
+    Yves: perform search by:    ${multi_variant_product_abstract_sku}
+    Yves: 1st product card in catalog (not)contains:     Add to Cart    false
+    Yves: perform search by:    ${multi_color_product_abstract_sku}
+    Yves: 1st product card in catalog (not)contains:      Add to Cart    true
+    Yves: 1st product card in catalog (not)contains:      Color selector   true
+    Yves: select product color:    Red
+    Yves: quick add to cart for first item in catalog
+    Yves: go to the shopping cart through the header with name:    catalogActions+${random}
+    Yves: shopping cart contains the following products:    EUROKRAFT hand truck - with open shovel    rotring fountain pen rapidograph S0203150 1903476, 0.18 mm, red
+    [Teardown]    Yves: delete 'Shopping Cart' with name:    catalogActions+${random}
 
 # Discounts[TBD]
 #     [Documentation]    Discounts, Promo Products, and Coupon Codes (includes guest checkout)
@@ -750,6 +758,34 @@ Return_Management
 #     Yves: add product to the shopping cart
 #     Yves: go to b2c shopping cart
 #     Yves: page contains CMS element:    Product Slider    Similar products true
+#     [Teardown]    Yves: check if cart is not empty and clear it
+
+
+# Split_Delivery
+#     [Documentation]    Checks split delivery in checkout
+#     Yves: login on Yves with provided credentials:    ${yves_user_email}
+#     Yves: go to PDP of the product with sku:    007
+#     Yves: add product to the shopping cart
+#    Yves: go to PDP of the product with sku:    011
+#     Yves: add product to the shopping cart
+#     Yves: go to PDP of the product with sku:    012
+#     Yves: add product to the shopping cart
+#     Yves: go to b2c shopping cart
+#     Yves: click on the 'Checkout' button in the shopping cart
+#     Yves: select delivery to multiple addresses
+#     Yves: select new delivery address for a product:    Canon IXUS 285    true    no    Mr    Product    285    Kirncher Str.    7    10247    Berlin    Germany
+#     Yves: select new delivery address for a product:    Canon IXUS 180    true    no    Mr    Product    180    Kirncher Str.    7    10247    Berlin    Germany
+#     Yves: select new delivery address for a product:    Canon IXUS 165    true    no    Mr    Product    165    Kirncher Str.    7    10247    Berlin    Germany
+#     Yves: fill in the following billing address:    Mr    Product    165    Kirncher Str.    7    10247    Berlin    Germany
+#     Yves: click checkout button:    Next
+#     Yves: select the following shipping method for product:    Canon IXUS 285    Express
+#     Yves: select the following shipping method for product:    Canon IXUS 180    Same Day
+#     Yves: select the following shipping method for product:    Canon IXUS 165    Express
+#     Yves: submit form on the checkout
+#     Yves: select the following payment method on the checkout and go next:    Invoice
+#     Yves: accept the terms and conditions:    true
+#     Yves: 'submit the order' on the summary page
+#     Yves: 'Thank you' page is displayed
 #     [Teardown]    Yves: check if cart is not empty and clear it
 
 # Content_Management[TBD]

@@ -56,9 +56,10 @@
             "one_variant_product_abstract_name": "EUROKRAFT trolley - with open shovel",
             "one_variant_product_default_price": "€235.43",
             "one_variant_product_merchant_price": "€188.34",
-            
 
             "multi_variant_product_abstract_sku": "M58035",
+
+            "multi_color_product_abstract_sku": "M21772",
 
             "measurement_unit_product_abstract_sku": "M23723",
 

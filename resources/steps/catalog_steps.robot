@@ -59,11 +59,11 @@ Yves: select filter value:
     Click    xpath=//section[contains(@data-qa,'component filter-section')]//*[contains(text(),'${filter}')]
     Wait Until Element Is Visible    xpath=//section[contains(@data-qa,'component filter-section')]//*[contains(text(),'${filter}')]/following-sibling::*//span[contains(@value,'${filterValue}')]
     Click    xpath=//section[contains(@data-qa,'component filter-section')]//*[contains(text(),'${filter}')]/following-sibling::*//span[contains(@value,'${filterValue}')]
-    Click    ${catalog_filter_apply_button}
+    Click    ${catalog_filter_apply_button}[${env}]
         
 
 Yves: quick add to cart for first item in catalog
-    ${initialCartCounter}=    Yves: get current cart item counter value
+    #${initialCartCounter}=    Yves: get current cart item counter value
     Click    xpath=(//button[contains(@title,'Add to Cart')])[1]
 
 Yves: get current cart item counter value
@@ -76,7 +76,7 @@ Yves: get current cart item counter value
 Yves: select product color:
     [Documentation]    the color should start with capital letter, e.g. Black, Red, White
     [Arguments]    ${colour}
-    Scroll Element Into View    xpath=//*[@class='product-item__name js-product-item__name']
-    Mouse Over    xpath=//a[@class='product-item__overlay js-product-item__link-detail-page']/ancestor::div[@class='product-item__image-wrap']
+    Scroll Element Into View    xpath=//product-item//*[@itemprop='name']
+    Mouse Over    xpath=//product-item//*[@itemprop='name']
     Wait Until Element Is Visible    xpath=//*[contains(text(),'${colour}')]/ancestor::button[contains(@class,'product-item-color-selector__item')]
     Mouse Over    xpath=//*[contains(text(),'${colour}')]/ancestor::button[contains(@class,'product-item-color-selector__item')]

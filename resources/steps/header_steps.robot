@@ -27,7 +27,11 @@ Yves: perform search by:
     wait until element is visible    ${search_form_header_menu_item}
     Type Text    ${search_form_header_menu_item}    ${searchTerm}
     Keyboard Key    press    Enter
-    Wait Until Page Contains Element    ${catalog_main_page_locator}[${env}]
+    FOR    ${index}    IN RANGE    0    3
+        ${elementAppears}=    Run Keyword And Return Status    Wait Until Page Contains Element    ${catalog_main_page_locator}[${env}]
+        Run Keyword If    '${elementAppears}'=='False'    Continue For Loop
+        ...    ELSE    Exit For Loop
+    END
 
 Yves: go to company menu item:
     [Arguments]    ${company_menu_item}
