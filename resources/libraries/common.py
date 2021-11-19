@@ -6,7 +6,7 @@ import re
 def defineEnvironmentVariablesFromJsonFile(env):
     print(f'Looking for {env} environment')
     variables = {}
-    environments_file_path = 'Resources/Environments/environments_' + env + '.json'
+    environments_file_path = 'resources/environments/environments_' + env + '.json'
     try:
         with open(environments_file_path) as json_file:
             data = json.loads(json_file.read())
