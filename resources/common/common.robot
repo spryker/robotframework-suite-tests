@@ -45,7 +45,7 @@ Set Up Keyword Arguments
 SuiteSetup
     [documentation]  Basic steps before each suite
     Remove Files    ${OUTPUTDIR}/selenium-screenshot-*.png
-    Remove Files    Resources/Libraries/__pycache__/*
+    Remove Files    resources/libraries/__pycache__/*
     Load Variables    ${env}
     New Browser    ${browser}    headless=${headless}    args=['--ignore-certificate-errors']
     Set Browser Timeout    ${browser_timeout}
