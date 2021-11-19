@@ -50,7 +50,7 @@ All these browsers that cover more than 85% of the world wide used browsers, can
 | `-v host:{URL}` | Yves URL |
 | `-v zed_url:{URL}` | Zed URL |
 | `-v browser:{browser}`|Defines in which browser run tests. Possible values: `chromiun`,`firefox`, `webkit`. **Default:** `chromium`|
-| `-v headless:{headless}` |Defines if the browser should be launched in the headless mode. Possible values: `true`,`false`. **Default:** `b2b`|
+| `-v headless:{headless}` |Defines if the browser should be launched in the headless mode. Possible values: `true`,`false`. **Default:** `true`|
 | `-v browser_timeout:{browser_timeout}` |Default time for Implicit wait. **Default:** `60s`|
 | `{PATH}` | Path to the file to execute|
 
