@@ -86,19 +86,21 @@ User_Account
     Yves: 'Newsletter' page is displayed
     Yves: go to user menu item in the left bar:    Returns
     Yves: 'Returns' page is displayed
-    Yves: create a new customer address in profile:     Mr    ${yves_second_user_first_name} ${random}    ${yves_second_user_last_name} ${random}    Kirncher Str. ${random}    7    10247    Berlin    Germany
+    Yves: create a new customer address in profile:     Mr    ${yves_second_user_first_name} ${random}    ${yves_second_user_last_name} ${random}    Kirncher Str. ${random}    7    10247    Berlin${random}    Germany
     Yves: go to user menu item in the left bar:    Addresses
     Yves: 'Addresses' page is displayed
-    Yves: check that user has address exists/doesn't exist:    true    ${yves_second_user_first_name} ${random}    ${yves_second_user_last_name} ${random}    Kirncher Str. ${random}    7    10247    Berlin    Germany
+    Yves: check that user has address exists/doesn't exist:    true    ${yves_second_user_first_name} ${random}    ${yves_second_user_last_name} ${random}    Kirncher Str. ${random}    7    10247    Berlin${random}    Germany
     Yves: delete user address:    Kirncher Str. ${random}
     Yves: go to user menu item in the left bar:    Addresses
     Yves: 'Addresses' page is displayed
-    Yves: check that user has address exists/doesn't exist:    false    ${yves_second_user_first_name} ${random}    ${yves_second_user_last_name} ${random}    Kirncher Str. ${random}    7    10247    Berlin    Germany
+    Yves: check that user has address exists/doesn't exist:    false    ${yves_second_user_first_name} ${random}    ${yves_second_user_last_name} ${random}    Kirncher Str. ${random}    7    10247    Berlin${random}    Germany
 
 Catalog
     [Documentation]    Checks that catalog options and search work
     Yves: perform search by:    canon
     Yves: 'Catalog' page should show products:    30
+    Yves: select filter value:    Color    Blue
+    Yves: 'Catalog' page should show products:    2
     Yves: go to first navigation item level:    Computers
     Yves: 'Catalog' page should show products:    72
     Yves: page contains CMS element:    Product Slider    Top Sellers
@@ -118,7 +120,7 @@ Catalog_Actions
     Yves: perform search by:    NEX-VG20EH
     Yves: 1st product card in catalog (not)contains:      Add to Cart    true
     Yves: quick add to cart for first item in catalog
-    Yves: perform search by:    HP Z 440
+    Yves: perform search by:    115
     Yves: 1st product card in catalog (not)contains:     Add to Cart    false
     Yves: perform search by:    002
     Yves: 1st product card in catalog (not)contains:      Add to Cart    true
@@ -132,6 +134,7 @@ Catalog_Actions
 Product_labels
     [Documentation]    Checks that products have labels on PLP and PDP
     Yves: go to first navigation item level:    Sale
+    #TODO: Method below do nothing with 'SaleLabel' and 'NewLabel'
     Yves: 1st product card in catalog (not)contains:     SaleLabel    true
     Yves: go to the PDP of the first available product on open catalog page
     Yves: PDP contains/doesn't contain:    true    ${pdp_sales_label}
@@ -316,13 +319,13 @@ Discounts
     Zed: create a discount and activate it:    voucher    Percentage    5    sku = '*'    test${random}    discountName=Voucher Code 5% ${random}
     Zed: create a discount and activate it:    cart rule    Percentage    10    sku = '*'    discountName=Cart Rule 10% ${random}
     Zed: create a discount and activate it:    cart rule    Percentage    100    discountName=Promotional Product 100% ${random}    promotionalProductDiscount=True    promotionalProductAbstractSku=002    promotionalProductQuantity=2
-    Yves: go to the 'Home' page
+    Yves: login on Yves with provided credentials:    ${yves_user_email}
     Yves: go to PDP of the product with sku:    190
     Yves: add product to the shopping cart
     Yves: go to b2c shopping cart
     Yves: apply discount voucher to cart:    test${random}
-    Yves: discount is applied:    voucher    Voucher Code 5% ${random}    - €17.46
-    Yves: discount is applied:    cart rule    Cart Rule 10% ${random}    - €8.73
+    Yves: discount is applied:    voucher    Voucher Code 5% ${random}    - €8.73
+    Yves: discount is applied:    cart rule    Cart Rule 10% ${random}    - €17.46
     Yves: go to PDP of the product with sku:    ${bundle_product_abstract_sku}
     Yves: add product to the shopping cart
     Yves: go to b2c shopping cart
@@ -330,16 +333,18 @@ Discounts
     Yves: promotional product offer is/not shown in cart:    true
     Yves: change quantity of promotional product and add to cart:    +    1
     Yves: shopping cart contains the following products:    Kodak EasyShare M532    Canon IXUS 160
-    Yves: discount is applied:    cart rule    Promotional Product 100% ${random}    - €199.98
+    Yves: discount is applied:    cart rule    Promotional Product 100% ${random}    - €189.98
     Yves: click on the 'Checkout' button in the shopping cart
-    Yves: proceed with checkout as guest:    Mr    Guest    user    guest@user.com
     Yves: billing address same as shipping address:    true
-    Yves: fill in the following shipping address:    Mr    Guest    user    Kirncher Str.    7    10247    Berlin    Germany
+    Yves: fill in the following shipping address:    Mr    ${yves_second_user_first_name}    ${yves_second_user_last_name}    Kirncher Str.    7    10247    Berlin    Germany
     Yves: select the following shipping method on the checkout and go next:    Express
     Yves: select the following payment method on the checkout and go next:    Invoice
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
+    Yves: get the last placed order ID by current customer
+    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: grand total for the order equals:    ${lastPlacedOrder}    €760.58
     [Teardown]    Run keywords    Yves: check if cart is not empty and clear it
     ...    AND    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: deactivate following discounts from Overview page:    Voucher Code 5% ${random}    Cart Rule 10% ${random}    Promotional Product 100% ${random}
@@ -488,3 +493,53 @@ Product_Relations
     Yves: go to b2c shopping cart
     Yves: shopping cart contains/doesn't contain the following elements:    true    ${upSellProducts}
     [Teardown]    Yves: check if cart is not empty and clear it
+
+Guest_Checkout
+    [Documentation]    Guest checkout with bundles, discounts and OMS
+    [Setup]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    ...    AND    Zed: change product stock:    ${bundled_product_1_abstract_sku}    ${bundled_product_1_concrete_sku}    true    10
+    ...    AND    Zed: change product stock:    ${bundled_product_2_abstract_sku}    ${bundled_product_2_concrete_sku}    true    10
+    ...    AND    Zed: change product stock:    ${bundled_product_3_abstract_sku}    ${bundled_product_3_concrete_sku}    true    10
+    ...    AND    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    ...    AND    Zed: go to second navigation item level:    Merchandising    Discount
+    ...    AND    Zed: create a discount and activate it:    voucher    Percentage    5    sku = '*'    guestTest${random}    discountName=Guest Voucher Code 5% ${random}
+    ...    AND    Zed: create a discount and activate it:    cart rule    Percentage    10    sku = '*'    discountName=Guest Cart Rule 10% ${random}
+    Yves: go to the 'Home' page
+    Yves: go to PDP of the product with sku:    ${bundle_product_abstract_sku}
+    Yves: PDP contains/doesn't contain:    true    ${bundleItemsSmall}    ${bundleItemsLarge}
+    Yves: add product to the shopping cart
+    Yves: go to URL:    en/configurable-bundle/configurator/template-selection
+    Yves: 'Choose Bundle to configure' page is displayed
+    Yves: choose bundle template to configure:    Smartstation Kit
+    Yves: select product in the bundle slot:    Slot 5    Sony Cyber-shot DSC-W830
+    Yves: select product in the bundle slot:    Slot 6    Sony NEX-VG30E
+    Yves: go to 'Summary' step in the bundle configurator
+    Yves: add products to the shopping cart in the bundle configurator
+    Yves: go to PDP of the product with sku:    007
+    Yves: add product to the shopping cart
+    Yves: go to PDP of the product with sku:    008
+    Yves: add product to the shopping cart
+    Yves: go to b2c shopping cart
+    Yves: apply discount voucher to cart:    guestTest${random}
+    Yves: shopping cart contains the following products:    ${bundle_product_product_name}
+    Yves: click on the 'Checkout' button in the shopping cart
+    Yves: proceed with checkout as guest:    Mr    Guest    user    guest+${random}@user.com
+    Yves: billing address same as shipping address:    true
+    Yves: fill in the following shipping address:    Mr    Guest    user    Kirncher Str.    7    10247    Berlin    Germany
+    Yves: select the following shipping method on the checkout and go next:    Express
+    Yves: select the following payment method on the checkout and go next:    Invoice
+    Yves: accept the terms and conditions:    true
+    Yves: 'submit the order' on the summary page
+    Yves: 'Thank you' page is displayed
+    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: get the last placed order ID of the customer by email:    guest+${random}@user.com
+    Zed: trigger all matching states inside xxx order:    ${zedLastPlacedOrder}    Pay
+    Zed: trigger all matching states inside this order:    Skip timeout
+    Zed: trigger all matching states inside this order:    Ship
+    Zed: trigger all matching states inside this order:    Stock update
+    Zed: trigger all matching states inside this order:    Close
+    [Teardown]    Run keywords    Yves: check if cart is not empty and clear it
+    ...    AND    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    ...    AND    Zed: deactivate following discounts from Overview page:    Guest Voucher Code 5% ${random}    Guest Cart Rule 10% ${random}
+
+#TODO: Refunds

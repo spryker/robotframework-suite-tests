@@ -62,3 +62,18 @@ Zed: create a return for the following order and product in it:
     END
     Click    ${zed_create_return_button}  
     Wait Until Page Contains Element    ${zed_return_details_main_content_locator}
+
+Zed: grand total for the order equals:
+    [Arguments]    ${orderID}    ${grandTotal}
+    Zed: go to second navigation item level:    Sales    Orders
+    Zed: perform search by:    ${orderID}
+    Table Should Contain    ${zed_table_locator}  ${grandTotal}
+
+Zed: get the last placed order ID of the customer by email:
+    [Documentation]    Returns orderID of the last order from the Backoffice by email
+    [Arguments]    ${email}
+    Zed: go to second navigation item level:    Sales    Orders
+    Zed: perform search by:    ${email}
+    ${zedLastPlacedOrder}=    Get Text    xpath=//table[contains(@data-ajax,'sales')][contains(@class,'dataTable')]/tbody/tr[1]/td[2]
+    Set Suite Variable    ${zedLastPlacedOrder}    ${zedLastPlacedOrder}
+    [Return]    ${zedLastPlacedOrder}

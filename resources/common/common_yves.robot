@@ -98,6 +98,7 @@ Yves: go to the 'Home' page
     Go To    ${host}
 
 Yves: get the last placed order ID by current customer
+    [Documentation]    Returns orderID of the last order from customer account
     ${currentURL}=    Get Location
     Run Keyword If    '${env}'=='b2b'    Set Test Variable    ${menuItem}    Order History
     ...    ELSE    Set Test Variable    ${menuItem}    Orders History

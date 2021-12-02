@@ -60,7 +60,6 @@ Zed: click Action Button in Variant table for row that contains:
     wait until element is visible    xpath=//table[contains(@class,'dataTable')]/tbody//td[contains(text(),'${row_content}')]/../td[contains(@class,'column-Action') or contains(@class,'column-action')]/*[contains(.,'${zed_table_action_button_locator}')]
     Click    xpath=//table[contains(@class,'dataTable')]/tbody//td[contains(text(),'${row_content}')]/../td[contains(@class,'column-Action') or contains(@class,'column-action')]/*[contains(.,'${zed_table_action_button_locator}')]
 
-
 Zed: Check checkbox by Label:
     [Arguments]    ${checkbox_label}
     wait until element is visible    xpath=//input[@type='checkbox']/../../label[contains(text(),'${checkbox_label}')]//input
@@ -78,14 +77,17 @@ Zed: submit the form
 Zed: perform search by:
     [Arguments]    ${search_key}
     Type Text    ${zed_search_field_locator}    ${search_key}
+    Keyboard Key    press    Enter
     Wait Until Element Is Visible    ${zed_processing_block_locator}
     Wait Until Element Is Not Visible    ${zed_processing_block_locator} 
+    Sleep    3s
 
 Zed: perform variant search by:
     [Arguments]    ${search_key}
     Type Text    ${zed_variant_search_field_locator}    ${search_key}
     Wait Until Element Is Visible    ${zed_product_variant_table_processing_locator}
     Wait Until Element Is Not Visible    ${zed_product_variant_table_processing_locator}  
+    Sleep    3s
 
 Zed: table should contain:
     [Arguments]    ${search_key}

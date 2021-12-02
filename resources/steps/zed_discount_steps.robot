@@ -32,24 +32,20 @@ Zed: create a discount and activate it:
     ...    AND    Wait Until Element Is Visible    ${zed_discount_promotional_product_abstract_sku_field}
     ...    AND    Type Text    ${zed_discount_promotional_product_abstract_sku_field}     ${promotionalProductAbstractSku}
     ...    AND    Type Text    ${zed_discount_promotional_product_abstract_quantity_field}     ${promotionalProductQuantity}
-# Discount condition 
+    # Discount condition 
     Zed: go to tab:    Conditions
     Wait For Elements State    ${zed_discount_query_builder_first_condition_group}    visible    15s     
     Click    ${zed_discount_plain_query_apply_when__button}
     Wait Until Element Is Visible    ${zed_discount_plain_query_apply_when_field}
     Type Text    ${zed_discount_plain_query_apply_when_field}     ${applyWhenQuery}
-    Click    ${zed_discount_save_button}
-        
+    Click    ${zed_discount_save_button}  
     Click    ${zed_discount_activate_button}
-    
-# Voucher codes 
+    # Voucher codes 
     Run keyword if    '${discountType}'=='voucher'    Zed: generate vouchers:    1    ${voucherCode}
-# Check discount in Zed 
+    # Check discount in Zed 
     Zed: go to second navigation item level:    Merchandising    Discount
     Zed: perform search by:    ${discountName}    
     Element Should Be Visible    xpath=//td[contains(@class,'name') and contains(text(),'${discountName}')]/ancestor::tr//span[contains(@class,'label') and contains(text(),'Active')]    message=None
-
-
 
 Zed: generate vouchers:
     [Arguments]    ${quantity}    ${customCode}    ${addRandomLength}=    ${maxNumberOfUsages}=0
@@ -61,7 +57,6 @@ Zed: generate vouchers:
     Type Text    ${zed_discount_voucher_max_usages_field}     ${maxNumberOfUsages}
     Click    ${zed_discount_voucher_code_generate_button}
     
-
 Zed: deactivate following discounts from Overview page:
     [Arguments]    @{discountNames}
     ${items_list_count}=   get length  ${discountNames}

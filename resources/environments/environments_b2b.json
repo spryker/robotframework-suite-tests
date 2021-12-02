@@ -65,7 +65,9 @@
             "packaging_unit_product_abstract_sku": "M21766",
 
             "product_with_relations_related_products_sku": "M29529",
-            "product_with_relations_upselling_sku": "M29502"
+            "product_with_relations_upselling_sku": "M29502",
+
+            "bundle_product_abstract_sku": "B0001"
             
         }
 }

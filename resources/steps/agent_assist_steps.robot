@@ -19,7 +19,6 @@ Zed: create new Zed user with the following data:
     Zed: Check checkbox by Label:    ${checkboxAgent}
     Select From List By Label    ${zed_user_interface_language}    ${userInterfaceLanguage}
     Zed: submit the form
-    
     Zed: table should contain:    ${zedUserEmail}  
 
 Yves: perform search by customer:
