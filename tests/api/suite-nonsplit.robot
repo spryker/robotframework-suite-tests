@@ -1,15 +1,9 @@
 *** Settings ***
-# Suite Setup       SuiteSetup
-# Suite Teardown    SuiteTeardown
-# Test Setup        TestSetup
-# Test Teardown     TestTeardown
+Suite Setup       SuiteSetup
+
 Resource    ../../resources/common/common_api.robot
 
 *** Test Cases ***
-# GET
-#     GET    https://glue.de.b2c.demo-spryker.com/catalog-search
-#     Status Should Be    200
-
 Examples
     ###
     When I get access token for the customer:    sonia@spryker.com
@@ -29,7 +23,7 @@ Examples
     And Response body has correct self link
     
 
-
+#TODO: implement the foloowing methods:
 # Response parameter value should contain:    [data][attr]    value
 # Response parameter value should be larger than:    [ata][attr]    number|date
 # Response parameter value should be smaller than:    [ata][attr]    number|date

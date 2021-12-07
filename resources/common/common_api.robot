@@ -10,6 +10,7 @@ Library    JSONLibrary
 Library    ../../resources/libraries/common.py
 
 *** Variables ***
+# *** SUITE VARIABLES ***
 ${glue_url}                    http://glue.de.spryker.local
 ${bapi_url}                    http://backend-api.de.spryker.local
 ${api_timeout}                 60
@@ -18,14 +19,34 @@ ${default_allow_redirects}     true
 ${default_auth}                ${NONE}
 
 *** Keywords ***
-# SuiteSetup
-#     fsdf
-# SuiteTeardown
-#     fsdf
-# TestSetup
-#     sdf
-# TestTeardown
-#     dsf
+SuiteSetup
+    [Documentation]    Basic steps before each suite
+    Remove Files    ${OUTPUTDIR}/selenium-screenshot-*.png
+    Remove Files    resources/libraries/__pycache__/*
+    Load Variables    ${env}
+    ${random}=    Generate Random String    5    [NUMBERS]
+    Set Global Variable    ${random}
+    [Teardown]
+    [Return]    ${random}
+
+Load Variables
+    [Arguments]    ${env}
+    &{vars}=   Define Environment Variables From Json File    ${env}
+    FOR    ${key}    ${value}    IN    &{vars}
+        Log    Key is '${key}' and value is '${value}'.
+        ${var_value}=   Get Variable Value  ${${key}}   ${value}
+        Set Global Variable    ${${key}}    ${var_value}
+    END
+
+Set Up Keyword Arguments
+    [Arguments]    @{args}
+    &{arguments}=    Fill Variables From Text String    @{args}
+    FOR    ${key}    ${value}    IN    &{arguments}
+        Log    Key is '${key}' and value is '${value}'.
+        ${var_value}=   Get Variable Value  ${${key}}   ${value}
+        Set Test Variable    ${${key}}    ${var_value}    
+    END
+    [Return]    &{arguments}
 
 I set Headers:
     [Arguments]    &{headers}
