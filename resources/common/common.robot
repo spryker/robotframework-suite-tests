@@ -75,6 +75,19 @@ Create default Main Context
     ${main_context}=    New Context    viewport={'width': 1440, 'height': 1080}
     Set Suite Variable    ${main_context}
 
+Variable datatype shpuld be:    
+    [Arguments]    ${variable}    ${expected_data_type}
+    ${actual_data_type}=    Evaluate datatype of a variable:    ${variable}
+    Should Be Equal    ${actual_data_type}    ${expected_data_type}
+
+Evaluate datatype of a variable:
+    [Arguments]    ${variable}
+    ${data_type}=    Evaluate     type($variable).__name__
+    [Return]    ${data_type}
+    #Example of assertions:
+    # ${is int}=      Evaluate     isinstance($variable, int)    # will be True
+    # ${is string}=   Evaluate     isinstance($variable, str)    # will be False
+
 Select Random Option From List
     [Arguments]    ${dropDownLocator}    ${dropDownOptionsLocator}
     ${getOptionsCount}=    Get Element Count    ${dropDownOptionsLocator}
