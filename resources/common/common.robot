@@ -75,7 +75,7 @@ Create default Main Context
     ${main_context}=    New Context    viewport={'width': 1440, 'height': 1080}
     Set Suite Variable    ${main_context}
 
-Variable datatype shpuld be:    
+Variable datatype should be:    
     [Arguments]    ${variable}    ${expected_data_type}
     ${actual_data_type}=    Evaluate datatype of a variable:    ${variable}
     Should Be Equal    ${actual_data_type}    ${expected_data_type}

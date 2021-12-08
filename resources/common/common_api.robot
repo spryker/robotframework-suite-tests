@@ -194,9 +194,23 @@ Response body should contain:
 
 Response body parameter should be:
     [Arguments]    ${json_path}    ${expected_value}
-    ${json_path}=    Replace String    ${json_path}    [    ['
-    ${json_path}=    Replace String    ${json_path}    ]    ']
-    Should Be Equal    ${response_body${json_path}}    ${expected_value}
+    ${data}=    Get Value From Json    ${response_body}    ${json_path}
+    ${data}=    Convert To String    ${data}
+    ${data}=    Replace String    ${data}    '   ${EMPTY}
+    ${data}=    Replace String    ${data}    [   ${EMPTY}
+    ${data}=    Replace String    ${data}    ]   ${EMPTY}
+    Log    ${data}
+    Should Be Equal    ${data}    ${expected_value}
+
+Response body parameter should NOT be:
+    [Arguments]    ${json_path}    ${expected_value}
+    ${data}=    Get Value From Json    ${response_body}    ${json_path}
+    ${data}=    Convert To String    ${data}
+    ${data}=    Replace String    ${data}    '   ${EMPTY}
+    ${data}=    Replace String    ${data}    [   ${EMPTY}
+    ${data}=    Replace String    ${data}    ]   ${EMPTY}
+    Log    ${data}
+    Should Not Be Equal    ${data}    ${expected_value}
 
 Response body parameter should have datatype:
     [Documentation]    str, int, ...
@@ -226,3 +240,33 @@ Response body has correct self link
     ${actual_self_link}=    Replace String    ${actual_self_link}    '    ${EMPTY}
     Should Be Equal    ${actual_self_link}    ${expected_self_link}
     
+Response body parameter should be greater than:
+    [Arguments]    ${json_path}    ${expected_value}
+    ${data}=    Get Value From Json    ${response_body}    ${json_path}
+    ${data}=    Convert To String    ${data}
+    ${data}=    Replace String    ${data}    '   ${EMPTY}
+    ${data}=    Replace String    ${data}    [   ${EMPTY}
+    ${data}=    Replace String    ${data}    ]   ${EMPTY}
+    ${result}=    Evaluate    ${data} > ${expected_value}
+    ${result}=    Convert To String    ${result}
+    Should Be Equal    ${result}    True    ${data} is not greater than expected: ${expected_value}
+
+Response body parameter should be less than:
+    [Arguments]    ${json_path}    ${expected_value}
+    ${data}=    Get Value From Json    ${response_body}    ${json_path}
+    ${data}=    Convert To String    ${data}
+    ${data}=    Replace String    ${data}    '   ${EMPTY}
+    ${data}=    Replace String    ${data}    [   ${EMPTY}
+    ${data}=    Replace String    ${data}    ]   ${EMPTY}
+    ${result}=    Evaluate    ${data} < ${expected_value}
+    ${result}=    Convert To String    ${result}
+    Should Be Equal    ${result}    True    ${data} is not greater than expected: ${expected_value}
+
+Response body parameter should not be EMPTY:
+    [Arguments]    ${json_path}
+    ${data}=    Get Value From Json    ${response_body}    ${json_path}
+    ${data}=    Convert To String    ${data}
+    ${data}=    Replace String    ${data}    '   ${EMPTY}
+    ${data}=    Replace String    ${data}    [   ${EMPTY}
+    ${data}=    Replace String    ${data}    ]   ${EMPTY}
+    Should Not Be Equal    ${data}    None    ${data} is not empty but shoud be
