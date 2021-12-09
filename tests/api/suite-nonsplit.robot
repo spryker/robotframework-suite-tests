@@ -34,17 +34,18 @@ Examples
     Then Response body parameter should not be EMPTY:    data.attributes.name
     When I send a GET request:    /merchants/MER000001/merchant-opening-hours
     Then Response body parameter should NOT be:    data[0].id    000
-
-
-    
-
-#TODO: implement the foloowing methods:
-# Response parameter value should be larger than:    [ata][attr]    |date
-# Response parameter value should be smaller than:    [ata][attr]   |date
-# Response should contain the array of certain size:   [data][array]     number
-# Include in response should contain certain number of values:   [data][array]     value       number
-# Each array element of array in response should contain property:     [data][array]      property
-# Each array element of array in response should contain value:     [data][array]      value
-# Each array element of array in response should contain property with value:     [data][array]      value     property
-# Response should return error message:      text
-
+    Then Response body parameter should be greater than:    data[0].attributes.dateSchedule[0].date    2019-01-01
+    Then Response body parameter should be less than:    data[0].attributes.dateSchedule[0].date    ${today}
+    Then Response should contain the array of a certain size:    data[0].attributes.weekdaySchedule    8
+    ###
+    When I send a GET request:    /abstract-products/209?include=concrete-product-image-sets,concrete-products
+    Then Each array element of array in response should contain property:     [included]    type
+    Each array element of array in response should contain value:     [included]      name
+    When I send a GET request:    /navigations/footer_navigation
+    Then Each array element of array in response should contain property with value:     [data][attributes][nodes]    nodeType    cms_page
+    And Response should contain certain number of values:    [data][attributes][nodes]    cms_page    4
+    ###
+    When I set Headers:    Content-Type=application/octet-streamtest    Accept=application/octet-stream
+    And I send a POST request:    /guest-cart-items    {"data":{"type":"guest-cart-items","attributes":{"sku":"201_11217755","quantity":1}}}
+    Then Response should return error code:    109
+    And Response should return error message:    Anonymous customer unique id is empty.

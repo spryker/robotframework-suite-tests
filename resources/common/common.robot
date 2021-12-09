@@ -54,6 +54,8 @@ SuiteSetup
     New Page    ${host}
     ${random}=    Generate Random String    5    [NUMBERS]
     Set Global Variable    ${random}
+    ${today}=    Get Current Date    result_format=%Y-%m-%d
+    Set Global Variable    ${today}
     ${test_customer_email}=     set variable    test.spryker+${random}@gmail.com
     Set Global Variable  ${test_customer_email}
     [Teardown]

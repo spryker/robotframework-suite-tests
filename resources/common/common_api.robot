@@ -26,6 +26,8 @@ SuiteSetup
     Load Variables    ${env}
     ${random}=    Generate Random String    5    [NUMBERS]
     Set Global Variable    ${random}
+    ${today}=    Get Current Date    result_format=%Y-%m-%d
+    Set Global Variable    ${today}
     [Teardown]
     [Return]    ${random}
 
@@ -69,11 +71,11 @@ I get access token for the customer:
     [Return]    ${token}
 
 I send a POST request:
-    [Arguments]   ${path}    ${json}    ${timeout}=${api_timeout}    ${allow_redirects}=${default_allow_redirects}    ${auth}=${default_auth}
+    [Arguments]   ${path}    ${json}    ${timeout}=${api_timeout}    ${allow_redirects}=${default_allow_redirects}    ${auth}=${default_auth}    ${expected_status}=ANY
     ${data}=    Evaluate    ${json}
     ${hasValue}    Run Keyword and return status     Should not be empty    ${headers}
-    ${response}=    Run Keyword if    ${hasValue}    POST    ${glue_url}${path}    json=${data}    headers=${headers}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    
-    ...    ELSE    POST    ${glue_url}${path}    json=${data}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}
+    ${response}=    Run Keyword if    ${hasValue}    POST    ${glue_url}${path}    json=${data}    headers=${headers}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}
+    ...    ELSE    POST    ${glue_url}${path}    json=${data}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=ANY
     ${response_body}=    Set Variable    ${response.json()}
     ${response_headers}=    Set Variable    ${response.headers}
     Set Test Variable    ${response_headers}    ${response_headers}
@@ -83,11 +85,11 @@ I send a POST request:
     [Return]    ${response_body}
 
 I send a POST request with data:
-    [Arguments]   ${path}    ${data}    ${timeout}=${api_timeout}    ${allow_redirects}=${default_allow_redirects}    ${auth}=${default_auth}
+    [Arguments]   ${path}    ${data}    ${timeout}=${api_timeout}    ${allow_redirects}=${default_allow_redirects}    ${auth}=${default_auth}    ${expected_status}=ANY
     ${data}=    Evaluate    ${data}
     ${hasValue}    Run Keyword and return status     Should not be empty    ${headers}
-    ${response}=    Run Keyword if    ${hasValue}    POST    ${glue_url}${path}    data=${data}    headers=${headers}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    
-    ...    ELSE    POST    ${glue_url}${path}    data=${data}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}
+    ${response}=    Run Keyword if    ${hasValue}    POST    ${glue_url}${path}    data=${data}    headers=${headers}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}
+    ...    ELSE    POST    ${glue_url}${path}    data=${data}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}
     ${response_body}=    Set Variable    ${response.json()}
     ${response_headers}=    Set Variable    ${response.headers}
     Set Test Variable    ${response_headers}    ${response_headers}
@@ -97,11 +99,11 @@ I send a POST request with data:
     [Return]    ${response_body}
 
 I send a PUT request:
-    [Arguments]   ${path}    ${json}    ${timeout}=${api_timeout}    ${allow_redirects}=${default_allow_redirects}    ${auth}=${default_auth}
+    [Arguments]   ${path}    ${json}    ${timeout}=${api_timeout}    ${allow_redirects}=${default_allow_redirects}    ${auth}=${default_auth}    ${expected_status}=ANY
     ${data}=    Evaluate    ${json}
     ${hasValue}    Run Keyword and return status     Should not be empty    ${headers}
-    ${response}=    Run Keyword if    ${hasValue}    PUT    ${glue_url}${path}    json=${data}    headers=${headers}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    
-    ...    ELSE    PUT    ${glue_url}${path}    json=${data}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}
+    ${response}=    Run Keyword if    ${hasValue}    PUT    ${glue_url}${path}    json=${data}    headers=${headers}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}
+    ...    ELSE    PUT    ${glue_url}${path}    json=${data}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}
     ${response_body}=    Set Variable    ${response.json()}
     ${response_headers}=    Set Variable    ${response.headers}
     Set Test Variable    ${response_headers}    ${response_headers}
@@ -111,11 +113,11 @@ I send a PUT request:
     [Return]    ${response_body}
 
 I send a PUT request with data:
-    [Arguments]   ${path}    ${data}    ${timeout}=${api_timeout}    ${allow_redirects}=${default_allow_redirects}    ${auth}=${default_auth}
+    [Arguments]   ${path}    ${data}    ${timeout}=${api_timeout}    ${allow_redirects}=${default_allow_redirects}    ${auth}=${default_auth}    ${expected_status}=ANY
     ${data}=    Evaluate    ${data}
     ${hasValue}    Run Keyword and return status     Should not be empty    ${headers}
-    ${response}=    Run Keyword if    ${hasValue}    PUT    ${glue_url}${path}    data=${data}    headers=${headers}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    
-    ...    ELSE    PUT    ${glue_url}${path}    data=${data}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}
+    ${response}=    Run Keyword if    ${hasValue}    PUT    ${glue_url}${path}    data=${data}    headers=${headers}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}
+    ...    ELSE    PUT    ${glue_url}${path}    data=${data}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}
     ${response_body}=    Set Variable    ${response.json()}
     ${response_headers}=    Set Variable    ${response.headers}
     Set Test Variable    ${response_headers}    ${response_headers}
@@ -125,11 +127,11 @@ I send a PUT request with data:
     [Return]    ${response_body}
 
 I send a PATCH request:
-    [Arguments]   ${path}    ${json}    ${timeout}=${api_timeout}    ${allow_redirects}=${default_allow_redirects}    ${auth}=${default_auth}
+    [Arguments]   ${path}    ${json}    ${timeout}=${api_timeout}    ${allow_redirects}=${default_allow_redirects}    ${auth}=${default_auth}    ${expected_status}=ANY
     ${data}=    Evaluate    ${json}
     ${hasValue}    Run Keyword and return status     Should not be empty    ${headers}
-    ${response}=    Run Keyword if    ${hasValue}    PATCH    ${glue_url}${path}    json=${data}    headers=${headers}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    
-    ...    ELSE    PATCH    ${glue_url}${path}    json=${data}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}
+    ${response}=    Run Keyword if    ${hasValue}    PATCH    ${glue_url}${path}    json=${data}    headers=${headers}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}
+    ...    ELSE    PATCH    ${glue_url}${path}    json=${data}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}
     ${response_body}=    Set Variable    ${response.json()}
     ${response_headers}=    Set Variable    ${response.headers}
     Set Test Variable    ${response_headers}    ${response_headers}
@@ -139,11 +141,11 @@ I send a PATCH request:
     [Return]    ${response_body}
 
 I send a PATCH request with data
-    [Arguments]   ${path}    ${data}    ${timeout}=${api_timeout}    ${allow_redirects}=${default_allow_redirects}    ${auth}=${default_auth}
+    [Arguments]   ${path}    ${data}    ${timeout}=${api_timeout}    ${allow_redirects}=${default_allow_redirects}    ${auth}=${default_auth}    ${expected_status}=ANY
     ${data}=    Evaluate    ${data}
     ${hasValue}    Run Keyword and return status     Should not be empty    ${headers}
-    ${response}=    Run Keyword if    ${hasValue}    PATCH    ${glue_url}${path}    data=${data}    headers=${headers}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    
-    ...    ELSE    PATCH    ${glue_url}${path}    data=${data}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}
+    ${response}=    Run Keyword if    ${hasValue}    PATCH    ${glue_url}${path}    data=${data}    headers=${headers}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}
+    ...    ELSE    PATCH    ${glue_url}${path}    data=${data}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}
     ${response_body}=    Set Variable    ${response.json()}
     ${response_headers}=    Set Variable    ${response.headers}
     Set Test Variable    ${response_headers}    ${response_headers}
@@ -153,10 +155,10 @@ I send a PATCH request with data
     [Return]    ${response_body}
 
 I send a GET request:
-    [Arguments]   ${path}    ${timeout}=${api_timeout}    ${allow_redirects}=${default_allow_redirects}    ${auth}=${default_auth}
+    [Arguments]   ${path}    ${timeout}=${api_timeout}    ${allow_redirects}=${default_allow_redirects}    ${auth}=${default_auth}    ${expected_status}=ANY
     ${hasValue}    Run Keyword and return status     Should not be empty    ${headers}
-    ${response}=    Run Keyword if    ${hasValue}    GET    ${glue_url}${path}    headers=${headers}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}
-    ...    ELSE    GET    ${glue_url}${path}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}
+    ${response}=    Run Keyword if    ${hasValue}    GET    ${glue_url}${path}    headers=${headers}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}
+    ...    ELSE    GET    ${glue_url}${path}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}
     ${response_body}=    Set Variable    ${response.json()}
     ${response_headers}=    Set Variable    ${response.headers}
     Set Test Variable    ${response_headers}    ${response_headers}
@@ -166,10 +168,10 @@ I send a GET request:
     [Return]    ${response_body}
 
 I send a DELETE request:
-    [Arguments]   ${path}    ${timeout}=${api_timeout}    ${allow_redirects}=${default_allow_redirects}    ${auth}=${default_auth}
+    [Arguments]   ${path}    ${timeout}=${api_timeout}    ${allow_redirects}=${default_allow_redirects}    ${auth}=${default_auth}    ${expected_status}=ANY
     ${hasValue}    Run Keyword and return status     Should not be empty    ${headers}
-    ${response}=    Run Keyword if    ${hasValue}    DELETE    ${glue_url}${path}    headers=${headers}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}
-    ...    ELSE    DELETE    ${glue_url}${path}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}
+    ${response}=    Run Keyword if    ${hasValue}    DELETE    ${glue_url}${path}    headers=${headers}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}
+    ...    ELSE    DELETE    ${glue_url}${path}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}
     ${response_body}=    Set Variable    ${response.json()}
     ${response_headers}=    Set Variable    ${response.headers}
     Set Test Variable    ${response_headers}    ${response_headers}
@@ -239,28 +241,6 @@ Response body has correct self link
     ${actual_self_link}=    Replace String    ${actual_self_link}    ]    ${EMPTY}
     ${actual_self_link}=    Replace String    ${actual_self_link}    '    ${EMPTY}
     Should Be Equal    ${actual_self_link}    ${expected_self_link}
-    
-Response body parameter should be greater than:
-    [Arguments]    ${json_path}    ${expected_value}
-    ${data}=    Get Value From Json    ${response_body}    ${json_path}
-    ${data}=    Convert To String    ${data}
-    ${data}=    Replace String    ${data}    '   ${EMPTY}
-    ${data}=    Replace String    ${data}    [   ${EMPTY}
-    ${data}=    Replace String    ${data}    ]   ${EMPTY}
-    ${result}=    Evaluate    ${data} > ${expected_value}
-    ${result}=    Convert To String    ${result}
-    Should Be Equal    ${result}    True    ${data} is not greater than expected: ${expected_value}
-
-Response body parameter should be less than:
-    [Arguments]    ${json_path}    ${expected_value}
-    ${data}=    Get Value From Json    ${response_body}    ${json_path}
-    ${data}=    Convert To String    ${data}
-    ${data}=    Replace String    ${data}    '   ${EMPTY}
-    ${data}=    Replace String    ${data}    [   ${EMPTY}
-    ${data}=    Replace String    ${data}    ]   ${EMPTY}
-    ${result}=    Evaluate    ${data} < ${expected_value}
-    ${result}=    Convert To String    ${result}
-    Should Be Equal    ${result}    True    ${data} is not greater than expected: ${expected_value}
 
 Response body parameter should not be EMPTY:
     [Arguments]    ${json_path}
@@ -270,3 +250,94 @@ Response body parameter should not be EMPTY:
     ${data}=    Replace String    ${data}    [   ${EMPTY}
     ${data}=    Replace String    ${data}    ]   ${EMPTY}
     Should Not Be Equal    ${data}    None    ${data} is not empty but shoud be
+
+Response body parameter should be greater than:
+    [Arguments]    ${json_path}    ${expected_value}
+    ${data}=    Get Value From Json    ${response_body}    ${json_path}
+    ${data}=    Convert To String    ${data}
+    ${data}=    Replace String    ${data}    '   ${EMPTY}
+    ${data}=    Replace String    ${data}    [   ${EMPTY}
+    ${data}=    Replace String    ${data}    ]   ${EMPTY}
+    ${result}=    Evaluate    '${data}' > '${expected_value}'
+    ${result}=    Convert To String    ${result}
+    Should Be Equal    ${result}    True    Actual ${data} is not greater than expected ${expected_value}
+
+Response body parameter should be less than:
+    [Arguments]    ${json_path}    ${expected_value}
+    ${data}=    Get Value From Json    ${response_body}    ${json_path}
+    ${data}=    Convert To String    ${data}
+    ${data}=    Replace String    ${data}    '   ${EMPTY}
+    ${data}=    Replace String    ${data}    [   ${EMPTY}
+    ${data}=    Replace String    ${data}    ]   ${EMPTY}
+    ${result}=    Evaluate    '${data}' < '${expected_value}'
+    ${result}=    Convert To String    ${result}
+    Should Be Equal    ${result}    True    Actula ${data} is not less than expected ${expected_value}
+
+Response should contain the array of a certain size:
+    [Arguments]    ${json_path}    ${expected_size}
+    @{data}=    Get Value From Json    ${response_body}    ${json_path}
+    ${list_length}=    Get Length    @{data}
+    ${list_length}=    Convert To String    ${list_length}
+    # ${log_list}=    Log List    @{data}
+    Should Be Equal    ${list_length}    ${expected_size}    actual size ${list_length} doesn't equal expected ${expected_size}
+    
+Each array element of array in response should contain property:
+    [Arguments]    ${json_path}    ${expected_property}
+    @{data}=    Get Value From Json    ${response_body}    ${json_path}
+    ${list_length}=    Get Length    @{data}
+    ${log_list}=    Log List    @{data}
+    FOR    ${index}    IN RANGE    0    ${list_length}
+        ${list_element}=    Get From List    @{data}    ${index}
+        List Should Contain Value    ${list_element}    ${expected_property}
+    END
+
+Each array element of array in response should contain value:
+    [Arguments]    ${json_path}    ${expected_property}
+    @{data}=    Get Value From Json    ${response_body}    ${json_path}
+    ${list_length}=    Get Length    @{data}
+    ${log_list}=    Log List    @{data}
+    FOR    ${index}    IN RANGE    0    ${list_length}
+        ${list_element}=    Get From List    @{data}    ${index}
+        ${sub_list_element}=    Create List    ${list_element}
+        ${sub_list_element}=    Convert To String    ${sub_list_element}
+        Should Contain    : ${sub_list_element}    ${expected_property}
+    END
+
+Each array element of array in response should contain property with value:
+    [Arguments]    ${json_path}    ${expected_property}    ${expected_value}
+    @{data}=    Get Value From Json    ${response_body}    ${json_path}
+    ${list_length}=    Get Length    @{data}
+    ${log_list}=    Log List    @{data}
+    FOR    ${index}    IN RANGE    0    ${list_length}
+        ${list_element}=    Get From List    @{data}    ${index}
+        Dictionary Should Contain Item    ${list_element}    ${expected_property}    ${expected_value}
+    END
+
+Response should return error message:
+    [Arguments]    ${error_message}
+    ${data}=    Get Value From Json    ${response_body}    [errors][0][detail]
+    ${data}=    Convert To String    ${data}
+    ${data}=    Replace String    ${data}    '   ${EMPTY}
+    ${data}=    Replace String    ${data}    [   ${EMPTY}
+    ${data}=    Replace String    ${data}    ]   ${EMPTY}
+    Log    ${data}
+    Should Be Equal    ${data}    ${error_message}    Actual ${data} doens't equal expected ${error_message}
+
+Response should return error code:
+    [Arguments]    ${error_message}
+    ${data}=    Get Value From Json    ${response_body}    [errors][0][code]
+    ${data}=    Convert To String    ${data}
+    ${data}=    Replace String    ${data}    '   ${EMPTY}
+    ${data}=    Replace String    ${data}    [   ${EMPTY}
+    ${data}=    Replace String    ${data}    ]   ${EMPTY}
+    Log    ${data}
+    Should Be Equal    ${data}    ${error_message}    Actual ${data} doens't equal expected ${error_message}
+
+Response should contain certain number of values:
+    [Arguments]    ${json_path}    ${expected_value}    ${expected_count}
+    @{data}=    Get Value From Json    ${response_body}    ${json_path}
+    ${log_list}=    Log List    @{data}
+    ${list_as_string}=    Convert To String    @{data}
+    ${count}=    Get Count    : ${list_as_string}    ${expected_value}
+    ${count}=    Convert To String    ${count}
+    Should Be Equal    ${count}    ${expected_count}    Actual ${count} doesn't equal expected ${expected_count}
