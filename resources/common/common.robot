@@ -54,6 +54,8 @@ SuiteSetup
     New Page    ${host}
     ${random}=    Generate Random String    5    [NUMBERS]
     Set Global Variable    ${random}
+    ${today}=    Get Current Date    result_format=%Y-%m-%d
+    Set Global Variable    ${today}
     ${test_customer_email}=     set variable    test.spryker+${random}@gmail.com
     Set Global Variable  ${test_customer_email}
     [Teardown]
@@ -74,6 +76,19 @@ TestTeardown
 Create default Main Context
     ${main_context}=    New Context    viewport={'width': 1440, 'height': 1080}
     Set Suite Variable    ${main_context}
+
+Variable datatype should be:    
+    [Arguments]    ${variable}    ${expected_data_type}
+    ${actual_data_type}=    Evaluate datatype of a variable:    ${variable}
+    Should Be Equal    ${actual_data_type}    ${expected_data_type}
+
+Evaluate datatype of a variable:
+    [Arguments]    ${variable}
+    ${data_type}=    Evaluate     type($variable).__name__
+    [Return]    ${data_type}
+    #Example of assertions:
+    # ${is int}=      Evaluate     isinstance($variable, int)    # will be True
+    # ${is string}=   Evaluate     isinstance($variable, str)    # will be False
 
 Select Random Option From List
     [Arguments]    ${dropDownLocator}    ${dropDownOptionsLocator}

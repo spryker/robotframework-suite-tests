@@ -1,13 +1,32 @@
 # Installation
 
-Installation requires both Robot Framework and Browser library powered by Playwright. 
+### For UI testing installation requires both Robot Framework and Browser library powered by Playwright. 
 1. Install [Robot Framework](https://github.com/robotframework/robotframework/blob/master/INSTALL.rst)
 2. Install [Browser library](https://robotframework-browser.org/#installation)
 
+### For API testing installation requires Robot Framework, [RequestsLibrary](https://github.com/MarketSquare/robotframework-requests) and [JSONLibrary](https://github.com/robotframework-thailand/robotframework-jsonlibrary)
+1. Install [Robot Framework](https://github.com/robotframework/robotframework/blob/master/INSTALL.rst)
+2. Install RequestsLibrary: `pip install robotframework-requests`
+3. Install JSONLibrary: `pip install -U robotframework-jsonlibrary`
 
 # How to run tests
 
 `robot -v env:{ENVIRONMENT} {PATH}`
+
+## Supported Parameters
+
+| Parameter | Comment |
+|:--- |:--- |
+| `-d {PATH}` | Path to the folder to store the run report. Like `results` |
+| `-v env:{ENVIRONMENT}` | Environment variable. Demo data, locators and hosts in tests will depend on this variable value. Possible values: `b2b`, `b2c` and `api-suite`. Other demoshops, like `mp-b2cb`, `mp-b2b`, `suite` and other comming soon. **Default:** `b2b` |
+| `-v host:{URL}` | Yves URL |
+| `-v zed_url:{URL}` | Zed URL |
+| `-v glue_url:{URL}` | Glue URL |
+| `-v bapi_url:{URL}` | BAPI URL |
+| `-v browser:{browser}`|Defines in which browser run tests. Possible values: `chromiun`,`firefox`, `webkit`. **Default:** `chromium`|
+| `-v headless:{headless}` |Defines if the browser should be launched in the headless mode. Possible values: `true`,`false`. **Default:** `true`|
+| `-v browser_timeout:{browser_timeout}` |Default time for Implicit wait. **Default:** `60s`|
+| `{PATH}` | Path to the file to execute|
 
 ### [Supported Browsers](https://marketsquare.github.io/robotframework-browser/Browser.html#SupportedBrowsers)
 | Browser  	|Browser with this engine|
@@ -40,19 +59,6 @@ All these browsers that cover more than 85% of the world wide used browsers, can
 `robot -v env:b2b -v browser:chromium -v headless:true -v host:https://www.de.b2b.demo-spryker.com/ -v zed_url:https://backoffice.de.b2b.demo-spryker.com/  -d results tests/smoke/smoke_b2b.robot`
 
 `robot -v env:b2c -v browser:firefox -v headless:false -v host:https://www.de.b2c.demo-spryker.com/ -v zed_url:https://backoffice.de.b2c.demo-spryker.com/  -d results tests/smoke/smoke_b2c.robot`
-
-## Supported Parameters
-
-| Parameter | Comment |
-|:--- |:--- |
-| `-d {PATH}` | Path to the folder to store the run report. Like `results` |
-| `-v env:{ENVIRONMENT}` | Environment variable. Demo data, locators and hosts in tests will depend on this variable value. Possible values: `b2b` and `b2c`. Other demoshops comming soon. **Default:** `b2b` |
-| `-v host:{URL}` | Yves URL |
-| `-v zed_url:{URL}` | Zed URL |
-| `-v browser:{browser}`|Defines in which browser run tests. Possible values: `chromiun`,`firefox`, `webkit`. **Default:** `chromium`|
-| `-v headless:{headless}` |Defines if the browser should be launched in the headless mode. Possible values: `true`,`false`. **Default:** `true`|
-| `-v browser_timeout:{browser_timeout}` |Default time for Implicit wait. **Default:** `60s`|
-| `{PATH}` | Path to the file to execute|
 
 
 ## [Built-in libraries](https://robotframework.org/?tab=builtin#resources)
