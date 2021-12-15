@@ -1,5 +1,5 @@
 {
-    "environment": "api-suite", 
+    "environment": "api_suite", 
 
     "env": {
         "glue_url": "http://glue.de.spryker.local",
@@ -42,7 +42,16 @@
 
         "product_with_relations_related_products_sku": "200",
         "product_with_relations_alternative_products_sku": "145",
-        "product_with_relations_upselling_sku": "018"
+        "product_with_relations_upselling_sku": "018",
+
+        "concrete_product_with_alternative_sku": "138_30046855",
+        "abstract_product_with_alternative_sku": "138",
+
+        "abstract_available_product_with_stock": "183",
+        "abstract_available_with_stock_and_never_out_of_stock": "130",
+        "abstract_available_product_never_out_of_stock": "666",
+        "abstract_unavailable_product": "189",
+        "abstract_available_product_with_3_concretes": "177"
             
     }
 }
