@@ -398,3 +398,12 @@ Save value to a variable:
     Set Test Variable    ${${name}}    ${var_value}  
     [Return]    ${name}
 
+Response body parameter should contain:
+    [Arguments]    ${json_path}    ${expected_value}
+    ${data}=    Get Value From Json    ${response_body}    ${json_path}
+    ${data}=    Convert To String    ${data}
+    ${data}=    Replace String    ${data}    '   ${EMPTY}
+    ${data}=    Replace String    ${data}    [   ${EMPTY}
+    ${data}=    Replace String    ${data}    ]   ${EMPTY}
+    Log    ${data}
+    Should Contain   ${data}    ${expected_value}

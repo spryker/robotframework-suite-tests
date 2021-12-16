@@ -17,6 +17,9 @@ Abstract_product_with_one_concrete
     And Response body parameter should not be EMPTY:    [data][attributes][description]
     And Response body parameter should not be EMPTY:    [data][attributes][attributes]
     And Response should contain the array of a certain size:    [data][attributes][superAttributesDefinition]    3
+    And Response should contain the array of a certain size:    [data][attributes][attributeMap]    4
+    And Response should contain the array of a certain size:    [data][attributes][attributeMap][product_concrete_ids]    1
+    And Response body parameter should contain:    [data][attributes][attributeMap][product_concrete_ids]    ${abstract_available_product_with_stock}
     And Response body parameter should be:    [data][attributes][superAttributes][color]    White
     And Response body parameter should not be EMPTY:    [data][attributes][metaTitle]
     And Response body parameter should not be EMPTY:    [data][attributes][metaKeywords]
@@ -24,3 +27,4 @@ Abstract_product_with_one_concrete
     And Response body parameter should not be EMPTY:    [data][attributes][attributeNames]
     And Response body parameter should not be EMPTY:    [data][attributes][url]
     And Response body has correct self link internal
+
