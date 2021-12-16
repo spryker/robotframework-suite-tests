@@ -387,8 +387,6 @@ Save value to a variable:
     ${var_value}=    Replace String    ${var_value}    '   ${EMPTY}
     ${var_value}=    Replace String    ${var_value}    [   ${EMPTY}
     ${var_value}=    Replace String    ${var_value}    ]   ${EMPTY}
-    Set Test Variable    ${${name}}    ${var_value}
-    Log    value: ${var_value}  
-    Log    name: ${name}    
+    Set Test Variable    ${${name}}    ${var_value}  
     [Return]    ${name}
 
