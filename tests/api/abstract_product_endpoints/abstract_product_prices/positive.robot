@@ -15,9 +15,9 @@ Abstract_prices_detault_only
     And Response body parameter should be:    [data][0][attributes][prices][0][priceTypeName]    DEFAULT
     And Response body parameter should be:    [data][0][attributes][prices][0][netAmount]    None
     And Response body parameter should be:    [data][0][attributes][prices][0][grossAmount]    ${default_price}
-    And Response body parameter should be:    [data][0][attributes][prices][0][currency][code]    EUR
-    And Response body parameter should be:    [data][0][attributes][prices][0][currency][name]    Euro
-    And Response body parameter should be:    [data][0][attributes][prices][0][currency][symbol]    €
+    And Response body parameter should be:    [data][0][attributes][prices][0][currency][code]    ${currency_code}
+    And Response body parameter should be:    [data][0][attributes][prices][0][currency][name]    ${currency_name}
+    And Response body parameter should be:    [data][0][attributes][prices][0][currency][symbol]    ${currency_symbol}
     And Response should contain the array of a certain size:    [data][0][attributes][prices][0][volumePrices]   0
     And Response body has correct self link
 
@@ -33,9 +33,9 @@ Abstract_volume_prices
     And Response body parameter should be:    [data][0][attributes][prices][0][priceTypeName]    DEFAULT
     And Response body parameter should be:    [data][0][attributes][prices][0][netAmount]    None
     And Response body parameter should be:    [data][0][attributes][prices][0][grossAmount]    ${default_price}
-    And Response body parameter should be:    [data][0][attributes][prices][0][currency][code]    EUR
-    And Response body parameter should be:    [data][0][attributes][prices][0][currency][name]    Euro
-    And Response body parameter should be:    [data][0][attributes][prices][0][currency][symbol]    €
+    And Response body parameter should be:    [data][0][attributes][prices][0][currency][code]    ${currency_code}
+    And Response body parameter should be:    [data][0][attributes][prices][0][currency][name]    ${currency_name}
+    And Response body parameter should be:    [data][0][attributes][prices][0][currency][symbol]    ${currency_symbol}
     And Response should contain the array of a certain size:    [data][0][attributes][prices][0][volumePrices]   3
     And Each array element of array in response should contain property:    [data][0][attributes][prices][0][volumePrices]    grossAmount
     And Each array element of array in response should contain property:    [data][0][attributes][prices][0][volumePrices]    netAmount
@@ -59,8 +59,8 @@ Abstract_prices_original_price
     And Response body parameter should be:    [data][0][attributes][prices][1][priceTypeName]    ORIGINAL
     And Response body parameter should be greater than:    [data][0][attributes][prices][1][grossAmount]   ${default_price}
     And Each array element of array in response should contain property with value:    [data][0][attributes][prices]    netAmount    None
-    And Each array element of array in response should contain value:    [data][0][attributes][prices]    EUR
-    And Each array element of array in response should contain value:    [data][0][attributes][prices]    Euro
-    And Each array element of array in response should contain value:    [data][0][attributes][prices]    €
+    And Each array element of array in response should contain value:    [data][0][attributes][prices]    ${currency_code}
+    And Each array element of array in response should contain value:    [data][0][attributes][prices]    ${currency_name}
+    And Each array element of array in response should contain value:    [data][0][attributes][prices]    ${currency_symbol}
     And Each array element of array in response should contain property with value:    [data][0][attributes][prices]    volumePrices    []
     And Response body has correct self link

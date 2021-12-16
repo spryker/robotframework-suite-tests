@@ -20,11 +20,13 @@
         "zed_admin_email": "admin@spryker.com",
         "zed_admin_password": "change123"
     },
+    "shop":{
+        "currency_name": "Euro",
+        "currency_code": "EUR",
+        "currency_symbol": "€"
+    },
         
     "products": {
-        "one_variant_product_abstract_sku": "009",
-        "one_variant_product_abstract_name": "EUROKRAFT trolley - with open shovel",
-        "one_variant_product_default_price": "€99.99",
         
         "bundle_product_abstract_sku": "211",
         "bundle_product_product_name": "HP Bundle",
@@ -46,14 +48,18 @@
 
         "concrete_product_with_alternative_sku": "138_30046855",
         "abstract_product_with_alternative_sku": "138",
+        "alternative_abstract_product": "155",
 
         "abstract_available_product_with_stock": "183",
+        "abstract_available_product_with_stock_name": "Sony Xperia SGP512E1",
         "abstract_available_with_stock_and_never_out_of_stock": "130",
         "abstract_available_product_never_out_of_stock": "666",
         "abstract_unavailable_product": "189",
         "abstract_available_product_with_3_concretes": "177",
         "abstract_product_with_volume_prices": "093",
         "abstract_product_with_original_prices": "203"
+
+        
             
     }
 }
