@@ -379,3 +379,16 @@ Response include element has self link:
         Run Keyword if    ${result}    Exit For Loop     
     END   
     Should Be Equal As Strings    ${result}    True    Include section ${expected_value} was not found
+
+Save value to a variable:
+    [Arguments]    ${json_path}    ${name}
+    ${var_value}=    Get Value From Json    ${response_body}    ${json_path}
+    ${var_value}=    Convert To String    ${var_value}
+    ${var_value}=    Replace String    ${var_value}    '   ${EMPTY}
+    ${var_value}=    Replace String    ${var_value}    [   ${EMPTY}
+    ${var_value}=    Replace String    ${var_value}    ]   ${EMPTY}
+    Set Test Variable    ${${name}}    ${var_value}
+    Log    value: ${var_value}  
+    Log    name: ${name}    
+    [Return]    ${name}
+

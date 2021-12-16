@@ -51,7 +51,9 @@
         "abstract_available_with_stock_and_never_out_of_stock": "130",
         "abstract_available_product_never_out_of_stock": "666",
         "abstract_unavailable_product": "189",
-        "abstract_available_product_with_3_concretes": "177"
+        "abstract_available_product_with_3_concretes": "177",
+        "abstract_product_with_volume_prices": "093",
+        "abstract_product_with_original_prices": "203"
             
     }
 }
