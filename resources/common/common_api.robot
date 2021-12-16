@@ -241,8 +241,13 @@ Response body has correct self link
     ${actual_self_link}=    Replace String    ${actual_self_link}    '    ${EMPTY}
     Should Be Equal    ${actual_self_link}    ${expected_self_link}
 
+Response body has correct self link internal
     ${actual_self_link}=    Get Value From Json    ${response_body}    [data][links][self]    #Exampleof path: $..address.streetAddress
     ${actual_self_link}=    Convert To String    ${actual_self_link}
+    ${actual_self_link}=    Replace String    ${actual_self_link}    [    ${EMPTY}
+    ${actual_self_link}=    Replace String    ${actual_self_link}    ]    ${EMPTY}
+    ${actual_self_link}=    Replace String    ${actual_self_link}    '    ${EMPTY}
+    Log    ${response_body}  
     Should Be Equal    ${actual_self_link}    ${expected_self_link}
 
 
