@@ -68,7 +68,7 @@
         "abstract_product_with_original_prices": "203",
 
         "abstract_product_with_label": "001",
-        "abstract_product_with_labelname": "Canon IXUS 160",
+        "abstract_product_with_label_name": "Canon IXUS 160",
 
         "abstract_product_with_concrete_offers": "093",
         "abstract_product_with_concrete_offers_name": "Sony SmartWatch 3",
@@ -78,8 +78,16 @@
 
         "abstract_product_with_options": "093",
         "abstract_product_with_options_name": "Sony SmartWatch 3"
-
-        
             
+    },
+    "content":{
+
+        "abstract_product_list_id": "apl-1",
+        "abstract_list_product1_sku": "204",
+        "abstract_list_product1_name": "Sony PXW-FS5K",
+        "abstract_list_product2_sku": "205",
+        "abstract_list_product2_name": "Toshiba CAMILEO S30",
+        "abstract_list_size": "2"
+
     }
 }
