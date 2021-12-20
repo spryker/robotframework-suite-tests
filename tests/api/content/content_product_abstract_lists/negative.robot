@@ -26,14 +26,14 @@ Get_abstract_product_list_with_no_id
     And Response should return error message:    Content key is missing.
 
 Get_abstract_product_list_products_with_missing_id
-    When I send a GET request:    //content-product-abstract-lists//abstract-products
+    When I send a GET request:    /content-product-abstract-lists//abstract-products
     Then Response status code should be:    400
     And Response reason should be:    Bad Request
     And Response should return error code:    2202
     And Response should return error message:    Content key is missing.
 
 Get_abstract_product_list_products_with_no_id
-    When I send a GET request:    //content-product-abstract-lists/abstract-products
+    When I send a GET request:    /content-product-abstract-lists/abstract-products
     Then Response status code should be:    404
     And Response reason should be:    Not Found
     And Response should return error code:    2201

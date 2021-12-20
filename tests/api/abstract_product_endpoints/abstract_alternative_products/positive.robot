@@ -7,7 +7,7 @@ Product_has_abstract_alternative
     When I send a GET request:    /concrete-products/${concrete_product_with_alternative_sku}/abstract-alternative-products
     Then Response status code should be:    200
     And Response reason should be:    OK
-    And Response header parameter should be:    Content-Type    application/vnd.api+json
+    And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response should contain the array of a certain size:    [data]    1
     And Response body parameter should be:    [data][0][type]    abstract-products
     And Response body parameter should have datatype:    [data][0][attributes][name]    str
@@ -18,7 +18,7 @@ Product_has_abstract_alternative_with_includes
     When I send a GET request:    /concrete-products/${concrete_product_with_alternative_sku}/abstract-alternative-products?include=abstract-product-image-sets,abstract-product-availabilities,abstract-product-prices,category-nodes
     Then Response status code should be:    200
     And Response reason should be:    OK
-    And Response header parameter should be:    Content-Type    application/vnd.api+json
+    And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response should contain the array of a certain size:    [data]    1
     And Response body parameter should be:    [data][0][type]    abstract-products
     And Response body has correct self link
@@ -38,7 +38,7 @@ Product_has_abstract_alternative_with_includes
 
 Product_has_no_abstract_alternative
     When I send a GET request:    /concrete-products/${bundled_product_1_concrete_sku}/abstract-alternative-products
-    Then Response header parameter should be:    Content-Type    application/vnd.api+json
+    Then Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response should contain the array of a certain size:    [data]    0
     And Response body has correct self link
     And Response reason should be:    OK

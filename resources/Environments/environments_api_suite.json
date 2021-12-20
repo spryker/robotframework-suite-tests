@@ -89,5 +89,13 @@
         "abstract_list_product2_name": "Toshiba CAMILEO S30",
         "abstract_list_size": "2"
 
+    },
+    "availability":{
+        "stock_is_0": "0.0000000000",
+        "stock_is_20": "20.0000000000"
+    },
+    "misc":{
+        "default_header_content_type": "application/vnd.api+json"
     }
+
 }

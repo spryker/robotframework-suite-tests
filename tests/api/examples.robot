@@ -8,7 +8,7 @@ Examples
     When I get access token for the customer:    sonia@spryker.com
     ### Check specific header parameter value. Multiple params are NOT supported. 
     #TODO: update to support multiple params
-    Then Response header parameter should be:    Content-Type    application/vnd.api+json
+    Then Response header parameter should be:    Content-Type    ${default_header_content_type}
     Then Response body parameter should be greater than:    [data][attributes][expiresIn]    0
     Then Response body parameter should be less than:    [data][attributes][expiresIn]    500000
     ### Might be: OK, Created, Not found, etc.

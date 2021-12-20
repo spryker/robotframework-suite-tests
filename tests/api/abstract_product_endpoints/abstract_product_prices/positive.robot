@@ -7,7 +7,7 @@ Abstract_prices_detault_only
     When I send a GET request:    /abstract-products/${abstract_available_product_with_3_concretes}/abstract-product-prices
     Then Response status code should be:    200
     And Response reason should be:    OK
-    And Response header parameter should be:    Content-Type    application/vnd.api+json
+    And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response body parameter should be:    [data][0][id]    ${abstract_available_product_with_3_concretes}
     And Response body parameter should be greater than:    [data][0][attributes][price]   100
     And Save value to a variable:    [data][0][attributes][price]    default_price
@@ -25,7 +25,7 @@ Abstract_volume_prices
     When I send a GET request:    /abstract-products/${abstract_product_with_volume_prices}/abstract-product-prices
     Then Response status code should be:    200
     And Response reason should be:    OK
-    And Response header parameter should be:    Content-Type    application/vnd.api+json
+    And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response body parameter should be:    [data][0][id]    ${abstract_product_with_volume_prices}
     And Response body parameter should be greater than:    [data][0][attributes][price]   100
     And Save value to a variable:    [data][0][attributes][price]    default_price
@@ -49,7 +49,7 @@ Abstract_prices_original_price
     When I send a GET request:    /abstract-products/${abstract_product_with_original_prices}/abstract-product-prices
     Then Response status code should be:    200
     And Response reason should be:    OK
-    And Response header parameter should be:    Content-Type    application/vnd.api+json
+    And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response body parameter should be:    [data][0][id]    ${abstract_product_with_original_prices}
     And Response body parameter should be greater than:    [data][0][attributes][price]   100
     And Save value to a variable:    [data][0][attributes][price]    default_price

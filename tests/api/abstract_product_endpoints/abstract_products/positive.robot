@@ -7,7 +7,7 @@ Abstract_product_with_one_concrete
     When I send a GET request:    /abstract-products/${abstract_available_product_with_stock}
     Then Response status code should be:    200
     And Response reason should be:    OK
-    And Response header parameter should be:    Content-Type    application/vnd.api+json
+    And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response body parameter should be:    [data][id]    ${abstract_available_product_with_stock}
     And Response body parameter should be:    [data][attributes][sku]    ${abstract_available_product_with_stock}
     And Response body parameter should be:    [data][attributes][merchantReference]    None
@@ -32,7 +32,7 @@ Abstract_product_with_3_concrete3
     When I send a GET request:    /abstract-products/${abstract_available_product_with_3_concretes}
     Then Response status code should be:    200
     And Response reason should be:    OK
-    And Response header parameter should be:    Content-Type    application/vnd.api+json
+    And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response body parameter should be:    [data][id]    ${abstract_available_product_with_3_concretes}
     And Response body parameter should be:    [data][attributes][sku]    ${abstract_available_product_with_3_concretes}
     And Response body parameter should be:    [data][attributes][merchantReference]    None
@@ -57,7 +57,7 @@ Abstract_product_with_abstract_includes_for_availability_images_taxes_categories
     When I send a GET request:    /abstract-products/${abstract_available_product_with_stock}?include=abstract-product-availabilities,abstract-product-image-sets,product-tax-sets,category-nodes,abstract-product-prices
     Then Response status code should be:    200
     And Response reason should be:    OK
-    And Response header parameter should be:    Content-Type    application/vnd.api+json
+    And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response body parameter should be:    [data][id]    ${abstract_available_product_with_stock}
     And Response body parameter should be:    [data][attributes][sku]    ${abstract_available_product_with_stock}
     And Response body parameter should be:    [data][attributes][name]    ${abstract_available_product_with_stock_name}
@@ -84,7 +84,7 @@ Abstract_product_with_abstract_includes_for_labels
     When I send a GET request:    /abstract-products/${abstract_product_with_label}?include=product-labels
     Then Response status code should be:    200
     And Response reason should be:    OK
-    And Response header parameter should be:    Content-Type    application/vnd.api+json
+    And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response body parameter should be:    [data][id]    ${abstract_product_with_label}
     And Response body parameter should be:    [data][attributes][sku]    ${abstract_product_with_label}
     And Response body parameter should be:    [data][attributes][name]    ${abstract_product_with_label_name}
@@ -100,7 +100,7 @@ Abstract_product_with_abstract_includes_for_reviews
     When I send a GET request:    /abstract-products/${abstract_product_with_reviews}?include=product-reviews
     Then Response status code should be:    200
     And Response reason should be:    OK
-    And Response header parameter should be:    Content-Type    application/vnd.api+json
+    And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response body parameter should be:    [data][id]    ${abstract_product_with_reviews}
     And Response body parameter should be:    [data][attributes][sku]    ${abstract_product_with_reviews}
     And Response body parameter should be:    [data][attributes][name]    ${abstract_product_with_reviews_name}
@@ -114,7 +114,7 @@ Abstract_product_with_abstract_includes_for_options
     When I send a GET request:    /abstract-products/${abstract_product_with_options}?include=product-options
     Then Response status code should be:    200
     And Response reason should be:    OK
-    And Response header parameter should be:    Content-Type    application/vnd.api+json
+    And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response body parameter should be:    [data][id]    ${abstract_product_with_options}
     And Response body parameter should be:    [data][attributes][sku]    ${abstract_product_with_options}
     And Response body parameter should be:    [data][attributes][name]    ${abstract_product_with_options_name}
@@ -128,7 +128,7 @@ Abstract_product_with_3_concrete_and_concrete_nested_includes
     When I send a GET request:    /abstract-products/${abstract_available_product_with_3_concretes}?include=concrete-products,concrete-product-prices,concrete-product-image-sets,concrete-product-availabilities
     Then Response status code should be:    200
     And Response reason should be:    OK
-    And Response header parameter should be:    Content-Type    application/vnd.api+json
+    And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response body parameter should be:    [data][id]    ${abstract_available_product_with_3_concretes}
     And Response body parameter should be:    [data][attributes][sku]    ${abstract_available_product_with_3_concretes}
     And Response body parameter should be:    [data][attributes][name]    ${abstract_available_product_with_3_concretes_name}
@@ -148,7 +148,7 @@ Abstract_product_with_concrete_includes_nested_offers
     When I send a GET request:    /abstract-products/${abstract_product_with_concrete_offers}?include=concrete-products,product-offers,merchants,product-offer-availabilities,product-offer-prices
     Then Response status code should be:    200
     And Response reason should be:    OK
-    And Response header parameter should be:    Content-Type    application/vnd.api+json
+    And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response body parameter should be:    [data][id]    ${abstract_product_with_concrete_offers}
     And Response body parameter should be:    [data][attributes][sku]    ${abstract_product_with_concrete_offers}
     And Response body parameter should be:    [data][attributes][name]    ${abstract_product_with_concrete_offers_name}
