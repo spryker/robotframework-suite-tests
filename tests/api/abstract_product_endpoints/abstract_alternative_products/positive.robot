@@ -14,7 +14,7 @@ Product_has_abstract_alternative
     And Response body parameter should be:    [data][0][attributes][sku]    ${alternative_abstract_product}
     And Response body has correct self link
 
-Product_has_abstract_alternativewaith_includes
+Product_has_abstract_alternative_with_includes
     When I send a GET request:    /concrete-products/${concrete_product_with_alternative_sku}/abstract-alternative-products?include=abstract-product-image-sets,abstract-product-availabilities,abstract-product-prices,category-nodes
     Then Response status code should be:    200
     And Response reason should be:    OK
@@ -25,8 +25,8 @@ Product_has_abstract_alternativewaith_includes
     And Response should contain the array of a certain size:    [data][0][relationships][abstract-product-image-sets][data]    1
     And Response should contain the array of a certain size:    [data][0][relationships][abstract-product-availabilities][data]    1
     And Response should contain the array of a certain size:    [data][0][relationships][abstract-product-prices][data]    1
-    And Response should contain the array of a certain size:    [data][0][relationships][category-nodes][data]    3
-    And Response should contain the array of a certain size:    [included]    6
+    And Response should contain the array larger than a certain size:    [data][0][relationships][category-nodes][data]    1
+    And Response should contain the array larger than a certain size:    [included]    4
     And Response include should contain certain entity type:    category-nodes
     And Response include should contain certain entity type:    abstract-product-image-sets
     And Response include should contain certain entity type:    abstract-product-prices

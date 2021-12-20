@@ -290,6 +290,16 @@ Response should contain the array of a certain size:
     ${list_length}=    Convert To String    ${list_length}
     #${log_list}=    Log List    @{data}
     Should Be Equal    ${list_length}    ${expected_size}    actual size ${list_length} doesn't equal expected ${expected_size}
+
+Response should contain the array larger than a certain size:
+    [Arguments]    ${json_path}    ${expected_size}
+    @{data}=    Get Value From Json    ${response_body}    ${json_path}
+    Log    @{data}
+    ${list_length}=    Get Length    @{data}
+    ${list_length}=    Convert To Integer    ${list_length}
+    ${result}=    Evaluate   ${list_length} > ${expected_size}
+    ${result}=    Convert To String    ${result}
+    Should Be Equal    ${result}    True    Actual array length is ${list_length} and it is not greater than expected ${expected_size}
     
 Each array element of array in response should contain property:
     [Arguments]    ${json_path}    ${expected_property}
@@ -406,4 +416,4 @@ Response body parameter should contain:
     ${data}=    Replace String    ${data}    [   ${EMPTY}
     ${data}=    Replace String    ${data}    ]   ${EMPTY}
     Log    ${data}
-    Should Contain   ${data}    ${expected_value}
+    Should Contain   ${data}    ${expected_value}  
