@@ -95,12 +95,6 @@ The full list can be found on the [official website](https://robotframework.org/
 | RequestsLibrary |Library for sending and API requests and receiving the responses.| [Documentation](https://marketsquare.github.io/robotframework-requests/doc/RequestsLibrary.html)|
 | JSONLibrary |Library for parsing JSONs that come in API responses.| [Documentation](https://robotframework-thailand.github.io/robotframework-jsonlibrary/JSONLibrary.html)|
 
-To install RequestsLibrary:
-`pip install robotframework-requests`
-
-To install JSONLibrary
-`pip install -U robotframework-jsonlibrary`
-
 ## Automatically re-executing failed tests
 There is often a need to re-execute a subset of tests, for example, after fixing a bug in the system under test or in the tests themselves. This can be accomplished by selecting test cases by names (--test and --suite options), tags (--include and --exclude), or by previous status (--rerunfailed or --rerunfailedsuites).
 
