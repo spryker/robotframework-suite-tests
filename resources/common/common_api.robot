@@ -234,13 +234,22 @@ Response header parameter should be:
     Should Be Equal    ${actual_header_value}    ${header_value}
 
 Response body has correct self link
-    ${actual_self_link}=    Get Value From Json    ${response_body}    $..links.self    #Exampleof path: $..address.streetAddress
+    ${actual_self_link}=    Get Value From Json    ${response_body}    $.links.self    #Exampleof path: $..address.streetAddress
     ${actual_self_link}=    Convert To String    ${actual_self_link}
-    ${actual_self_link}=    Fetch From Left    ${actual_self_link}    ,
     ${actual_self_link}=    Replace String    ${actual_self_link}    [    ${EMPTY}
     ${actual_self_link}=    Replace String    ${actual_self_link}    ]    ${EMPTY}
     ${actual_self_link}=    Replace String    ${actual_self_link}    '    ${EMPTY}
     Should Be Equal    ${actual_self_link}    ${expected_self_link}
+
+Response body has correct self link internal
+    ${actual_self_link}=    Get Value From Json    ${response_body}    [data][links][self]    #Exampleof path: $..address.streetAddress
+    ${actual_self_link}=    Convert To String    ${actual_self_link}
+    ${actual_self_link}=    Replace String    ${actual_self_link}    [    ${EMPTY}
+    ${actual_self_link}=    Replace String    ${actual_self_link}    ]    ${EMPTY}
+    ${actual_self_link}=    Replace String    ${actual_self_link}    '    ${EMPTY}
+    Log    ${response_body}  
+    Should Be Equal    ${actual_self_link}    ${expected_self_link}
+
 
 Response body parameter should not be EMPTY:
     [Arguments]    ${json_path}
@@ -276,10 +285,21 @@ Response body parameter should be less than:
 Response should contain the array of a certain size:
     [Arguments]    ${json_path}    ${expected_size}
     @{data}=    Get Value From Json    ${response_body}    ${json_path}
+    Log    @{data}
     ${list_length}=    Get Length    @{data}
     ${list_length}=    Convert To String    ${list_length}
-    # ${log_list}=    Log List    @{data}
+    #${log_list}=    Log List    @{data}
     Should Be Equal    ${list_length}    ${expected_size}    actual size ${list_length} doesn't equal expected ${expected_size}
+
+Response should contain the array larger than a certain size:
+    [Arguments]    ${json_path}    ${expected_size}
+    @{data}=    Get Value From Json    ${response_body}    ${json_path}
+    Log    @{data}
+    ${list_length}=    Get Length    @{data}
+    ${list_length}=    Convert To Integer    ${list_length}
+    ${result}=    Evaluate   ${list_length} > ${expected_size}
+    ${result}=    Convert To String    ${result}
+    Should Be Equal    ${result}    True    Actual array length is ${list_length} and it is not greater than expected ${expected_size}
     
 Each array element of array in response should contain property:
     [Arguments]    ${json_path}    ${expected_property}
@@ -341,3 +361,59 @@ Response should contain certain number of values:
     ${count}=    Get Count    : ${list_as_string}    ${expected_value}
     ${count}=    Convert To String    ${count}
     Should Be Equal    ${count}    ${expected_count}    Actual ${count} doesn't equal expected ${expected_count}
+
+Response include should contain certain entity type:
+    [Arguments]    ${expected_value}    #this should be the 'type' of the included item, e.g. abstract-product-prices
+    @{include}=    Get Value From Json    ${response_body}    [included]
+    ${list_length}=    Get Length    @{include}
+    ${log_list}=    Log List    @{include}
+    FOR    ${index}    IN RANGE    0    ${list_length}
+        ${include_element}=    Get From List    @{include}    ${index}
+        ${type}=    Get Value From Json    ${include_element}    [type]
+        ${type}=    Convert To String    ${type}
+        ${type}=    Replace String    ${type}    '   ${EMPTY}
+        ${type}=    Replace String    ${type}    [   ${EMPTY}
+        ${type}=    Replace String    ${type}    ]   ${EMPTY}
+        ${result}=    Evaluate    '${type}' == '${expected_value}'
+        Run Keyword if    ${result}    Exit For Loop     
+    END   
+    Should Be Equal As Strings    ${result}    True    Include section ${expected_value} was not found
+
+Response include element has self link:
+    [Arguments]    ${expected_value}    #this should be the 'type' of the included item, e.g. abstract-product-prices
+    @{include}=    Get Value From Json    ${response_body}    [included]
+    ${list_length}=    Get Length    @{include}
+    ${log_list}=    Log List    @{include}
+    FOR    ${index}    IN RANGE    0    ${list_length}
+        ${include_element}=    Get From List    @{include}    ${index}
+        ${type}=    Get Value From Json    ${include_element}    [type]
+        ${type}=    Convert To String    ${type}
+        ${type}=    Replace String    ${type}    '   ${EMPTY}
+        ${type}=    Replace String    ${type}    [   ${EMPTY}
+        ${type}=    Replace String    ${type}    ]   ${EMPTY}
+        ${result}=    Evaluate    '${type}' == '${expected_value}'
+        ${link_found}=    Run Keyword if    ${result}    Get Value From Json    ${include_element}    [links][self]
+        Run Keyword if    ${link_found}    Should Not Be Equal    ${link_found}    None    ${link_found} is  empty for ${expected_value} include section
+        Run Keyword if    ${result}    Exit For Loop     
+    END   
+    Should Be Equal As Strings    ${result}    True    Include section ${expected_value} was not found
+
+Save value to a variable:
+    [Arguments]    ${json_path}    ${name}
+    ${var_value}=    Get Value From Json    ${response_body}    ${json_path}
+    ${var_value}=    Convert To String    ${var_value}
+    ${var_value}=    Replace String    ${var_value}    '   ${EMPTY}
+    ${var_value}=    Replace String    ${var_value}    [   ${EMPTY}
+    ${var_value}=    Replace String    ${var_value}    ]   ${EMPTY}
+    Set Test Variable    ${${name}}    ${var_value}  
+    [Return]    ${name}
+
+Response body parameter should contain:
+    [Arguments]    ${json_path}    ${expected_value}
+    ${data}=    Get Value From Json    ${response_body}    ${json_path}
+    ${data}=    Convert To String    ${data}
+    ${data}=    Replace String    ${data}    '   ${EMPTY}
+    ${data}=    Replace String    ${data}    [   ${EMPTY}
+    ${data}=    Replace String    ${data}    ]   ${EMPTY}
+    Log    ${data}
+    Should Contain   ${data}    ${expected_value}  
