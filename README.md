@@ -19,6 +19,7 @@
 |:--- |:--- |
 | `-d {PATH}` | Path to the folder to store the run report. Like `results` |
 | `-v env:{ENVIRONMENT}` | Environment variable. Demo data, locators and hosts in tests will depend on this variable value. Possible values: `b2b`, `b2c` and `api-suite`. Other demoshops, like `mp-b2cb`, `mp-b2b`, `suite` and other comming soon. **Default:** `b2b` |
+| `-s test_suite_name` | Test suite name is the name of any subfolder in tests folder (without path) or filename (without extension). If specified, tests from that folder/file folder will be executed.|
 | `-v host:{URL}` | Yves URL |
 | `-v zed_url:{URL}` | Zed URL |
 | `-v glue_url:{URL}` | Glue URL |
@@ -53,6 +54,19 @@ All these browsers that cover more than 85% of the world wide used browsers, can
 
 `robot -v env:b2c -v browser:firefox -d results tests/smoke/smoke_b2c.robot`
 
+### API
+
+Execute all tests in api folder (all API tests that exist).
+`robot -v env:b2c -d results -s api .`
+
+Execute only positive tests in api folder (all positive API tests that exist, from all folders).
+`robot -v env:b2c -d results -s positive .`
+
+Execute all positive and negative tests in tests/api/abstract_product_endpoints folder folder / test suite - tests in subfolder will be executed as well.
+`robot -v env:b2c -d results -s abstract_product_endpoint .`
+
+Execute all positive and negative tests in tests/api/abstract_product_endpoints/abstract_products folder folder / test suite.
+`robot -v env:b2c -d results -s abstract_products .`
 
 ### Custom
 
@@ -73,13 +87,19 @@ All these browsers that cover more than 85% of the world wide used browsers, can
 | Screenshot |Provides keywords to capture screenshots of the desktop.| [Documentation](https://robotframework.org/robotframework/latest/libraries/Screenshot.html)|
 | String |Library for generating, modifying and verifying strings.| [Documentation](https://robotframework.org/robotframework/latest/libraries/String.html)|
 
-
 ## External libraries that can be installed based on your needs
 The full list can be found on the [official website](https://robotframework.org/?tab=libraries#resources)
 | Name  	|Description| Keywords documentation|
 |:--- |:--- |:--- |
 | Browser |A modern web testing library powered by [Playwright]((https://github.com/microsoft/playwright)). Aiming for speed, reliability and visibility. **Note: Already installed**| [Documentation](https://marketsquare.github.io/robotframework-browser/Browser.html)|
+| RequestsLibrary |Library for sending and API requests and receiving the responses.| [Documentation](https://marketsquare.github.io/robotframework-requests/doc/RequestsLibrary.html)|
+| JSONLibrary |Library for parsing JSONs that come in API responses.| [Documentation](https://robotframework-thailand.github.io/robotframework-jsonlibrary/JSONLibrary.html)|
 
+To install RequestsLibrary:
+`pip install robotframework-requests`
+
+To install JSONLibrary
+`pip install -U robotframework-jsonlibrary`
 
 ## Automatically re-executing failed tests
 There is often a need to re-execute a subset of tests, for example, after fixing a bug in the system under test or in the tests themselves. This can be accomplished by selecting test cases by names (--test and --suite options), tags (--include and --exclude), or by previous status (--rerunfailed or --rerunfailedsuites).
