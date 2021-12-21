@@ -18,7 +18,7 @@
 | Parameter | Comment |
 |:--- |:--- |
 | `-d {PATH}` | Path to the folder to store the run report. Like `results` |
-| `-v env:{ENVIRONMENT}` | Environment variable. Demo data, locators and hosts in tests will depend on this variable value. Possible values: `b2b`, `b2c` and `api-suite`. Other demoshops, like `mp-b2cb`, `mp-b2b`, `suite` and other comming soon. **Default:** `b2b` |
+| `-v env:{ENVIRONMENT}` | Environment variable. Demo data, locators and hosts in tests will depend on this variable value. Possible values: `b2b`, `b2c` and `api_suite`. Other demoshops, like `mp_b2c`, `mp_b2b`, `suite` and other comming soon. **Default:** `b2b` |
 | `-s test_suite_name` | Test suite name is the name of any subfolder in tests folder (without path) or filename (without extension). If specified, tests from that folder/file folder will be executed.|
 | `-v host:{URL}` | Yves URL |
 | `-v zed_url:{URL}` | Zed URL |
@@ -27,6 +27,8 @@
 | `-v browser:{browser}`|Defines in which browser run tests. Possible values: `chromiun`,`firefox`, `webkit`. **Default:** `chromium`|
 | `-v headless:{headless}` |Defines if the browser should be launched in the headless mode. Possible values: `true`,`false`. **Default:** `true`|
 | `-v browser_timeout:{browser_timeout}` |Default time for Implicit wait. **Default:** `60s`|
+| `-v api_timeout:${api_timeout}` |Default time for Implicit wait of the response in API tests. **Default:** `60s`|
+| `-v default_allow_redirects:${default_allow_redirects}` |Boolean, allow redirects in API tests. **Default:** `60s`|
 | `{PATH}` | Path to the file to execute|
 
 ### [Supported Browsers](https://marketsquare.github.io/robotframework-browser/Browser.html#SupportedBrowsers)
@@ -57,16 +59,16 @@ All these browsers that cover more than 85% of the world wide used browsers, can
 ### API
 
 Execute all tests in api folder (all API tests that exist).
-`robot -v env:b2c -d results -s api .`
+`robot -v env:api_suite -d results -s api .`
 
 Execute only positive tests in api folder (all positive API tests that exist, from all folders).
-`robot -v env:b2c -d results -s positive .`
+`robot -v env:api_suite -d results -s positive .`
 
 Execute all positive and negative tests in tests/api/abstract_product_endpoints folder folder / test suite - tests in subfolder will be executed as well.
-`robot -v env:b2c -d results -s abstract_product_endpoint .`
+`robot -v env:api_suite -d results -s abstract_product_endpoint .`
 
 Execute all positive and negative tests in tests/api/abstract_product_endpoints/abstract_products folder folder / test suite.
-`robot -v env:b2c -d results -s abstract_products .`
+`robot -v env:api_suite -d results -s abstract_products .`
 
 ### Custom
 
