@@ -28,7 +28,7 @@
 | `-v headless:{headless}` |Defines if the browser should be launched in the headless mode. Possible values: `true`,`false`. **Default:** `true`|
 | `-v browser_timeout:{browser_timeout}` |Default time for Implicit wait. **Default:** `60s`|
 | `-v api_timeout:${api_timeout}` |Default time for Implicit wait of the response in API tests. **Default:** `60s`|
-| `-v default_allow_redirects:${default_allow_redirects}` |Boolean, allow redirects in API tests. **Default:** `60s`|
+| `-v default_allow_redirects:${default_allow_redirects}` |Boolean, allow redirects in API tests. **Default:** `true`|
 | `{PATH}` | Path to the file to execute|
 
 ### [Supported Browsers](https://marketsquare.github.io/robotframework-browser/Browser.html#SupportedBrowsers)
