@@ -5,7 +5,6 @@ Resource    ../../../../resources/common/common_api.robot
 *** Test Cases ***
 
 Get_access_token_for_customer
-    #When I set Headers:    Content-Type=application/json    Accept=*/*
     When I send a POST request:    /access-tokens    {"data":{"type":"access-tokens","attributes":{"username":"${yves_user_email}","password":"${yves_user_password}"}}}
     Then Response status code should be:    201
     And Response reason should be:    Created

@@ -172,7 +172,6 @@ I send a DELETE request:
     ${hasValue}    Run Keyword and return status     Should not be empty    ${headers}
     ${response}=    Run Keyword if    ${hasValue}    DELETE    ${glue_url}${path}    headers=${headers}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}
     ...    ELSE    DELETE    ${glue_url}${path}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}
-    ${response_body}=    Set Variable    ${response.json()}
     ${response_headers}=    Set Variable    ${response.headers}
     Set Test Variable    ${response_headers}    ${response_headers}
     Set Test Variable    ${response_body}    ${response_body}
@@ -249,6 +248,16 @@ Response body has correct self link internal
     ${actual_self_link}=    Replace String    ${actual_self_link}    '    ${EMPTY}
     Log    ${response_body}  
     Should Be Equal    ${actual_self_link}    ${expected_self_link}
+
+Response body has correct self link for created entity:
+    [Arguments]    ${url}    #the ending of the url, usually the ID
+    ${actual_self_link}=    Get Value From Json    ${response_body}    [data][links][self]    #Exampleof path: $..address.streetAddress
+    ${actual_self_link}=    Convert To String    ${actual_self_link}
+    ${actual_self_link}=    Replace String    ${actual_self_link}    [    ${EMPTY}
+    ${actual_self_link}=    Replace String    ${actual_self_link}    ]    ${EMPTY}
+    ${actual_self_link}=    Replace String    ${actual_self_link}    '    ${EMPTY}
+    Log    ${response_body}  
+    Should Be Equal    ${actual_self_link}    ${expected_self_link}/${url}
 
 
 Response body parameter should not be EMPTY:
@@ -417,3 +426,21 @@ Response body parameter should contain:
     ${data}=    Replace String    ${data}    ]   ${EMPTY}
     Log    ${data}
     Should Contain   ${data}    ${expected_value}  
+
+Array in response should contain property with value:
+    [Arguments]    ${json_path}    ${expected_property}    ${expected_value}
+    @{data}=    Get Value From Json    ${response_body}    ${json_path}
+    ${list_length}=    Get Length    @{data}
+    ${log_list}=    Log List    @{data}
+    FOR    ${index}    IN RANGE    0    ${list_length}
+        ${list_element}=    Get From List    @{data}    ${index}
+        Log    list: ${list_element}
+        ${value}=    Get Value From Json    ${list_element}    ${expected_property}
+        ${value}=    Convert To String    ${value}
+        ${value}=    Replace String    ${value}    '   ${EMPTY}
+        ${value}=    Replace String    ${value}    [   ${EMPTY}
+        ${value}=    Replace String    ${value}    ]   ${EMPTY}
+        ${result}=    Evaluate    '${value}' == '${expected_value}'
+        Run Keyword if    ${result}    Exit For Loop    
+    END
+    Should Be Equal As Strings    ${result}    True    Value ${expected_value} was not found in the array

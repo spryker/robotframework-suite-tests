@@ -11,11 +11,14 @@
         "yves_user_first_name": "Sonia",
         "yves_user_last_name": "Wagner",
         "yves_user_password": "change123",
+        "yves_user_reference": "DE--21",
+        "yves_user_salutation": "Ms",
 
         "yves_second_user_email": "bill.martin@spryker.com",
         "yves_second_user_first_name": "Martin",
         "yves_second_user_last_name": "Bill",
         "yves_second_user_password": "change123",
+        "yves_second_user_reference": "DE--4",
 
         "invalid_yves_user_email": "george.freeman@spryker.com",
         "invalid_yves_user_first_name": "George",
@@ -25,6 +28,20 @@
         "zed_admin_email": "admin@spryker.com",
         "zed_admin_password": "change123"
     },
+    
+    "address":{
+        "default_address1": "Third, 33, 11",
+        "default_address2": "33-B",
+        "default_address3": "third. address. line",
+        "default_zipCode": "12312",
+        "default_city": "Berlin",
+        "default_country": "Germany",
+        "default_iso2Code": "DE",
+        "default_company": "Spryker",
+        "default_phone": "22111-3-4-5"
+
+    },
+
     "shop":{
         "currency_name": "Euro",
         "currency_code": "EUR",
