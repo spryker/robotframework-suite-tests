@@ -7,15 +7,20 @@
     },
 
     "users": {    
-        "yves_user_email": "george.freeman@spryker.com",
-        "yves_user_first_name": "George",
-        "yves_user_last_name": "Freeman",
+        "yves_user_email": "sonia@spryker.com",
+        "yves_user_first_name": "Sonia",
+        "yves_user_last_name": "Wagner",
         "yves_user_password": "change123",
 
         "yves_second_user_email": "bill.martin@spryker.com",
         "yves_second_user_first_name": "Martin",
         "yves_second_user_last_name": "Bill",
         "yves_second_user_password": "change123",
+
+        "invalid_yves_user_email": "george.freeman@spryker.com",
+        "invalid_yves_user_first_name": "George",
+        "invalid_yves_user_last_name": "Freeman",
+        "invalid_yves_user_password": "change123!",
 
         "zed_admin_email": "admin@spryker.com",
         "zed_admin_password": "change123"
