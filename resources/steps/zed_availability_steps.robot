@@ -42,7 +42,7 @@ Zed: check and restore product availability in Zed:
     Zed: perform search by:    ${skuAbstract}
     ${isProductAvailable}=    Run Keyword And Return Status    Element Text Should Be    ${zed_availability_product_availability_label}     Available
     Run Keyword If    '${expectedStatus}'=='Available' and '${isProductAvailable}'=='False'
-    ...    Zed: change product stock:    ${skuAbstract}    ${skuConcrete}    true    0    0
+    ...    Zed: change product stock:    ${skuAbstract}    ${skuConcrete}    true    10    0
     ...    ELSE    Run Keyword If   '${expectedStatus}'=='Not Available' and '${isProductAvailable}'=='True'
     ...    Zed: change product stock:    ${skuAbstract}    ${skuConcrete}    false    0    0
 

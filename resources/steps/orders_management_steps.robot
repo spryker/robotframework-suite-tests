@@ -27,6 +27,19 @@ Zed: trigger all matching states inside this order:
     ...    Reload    
     ...    AND    Click    xpath=//div[@id='order-overview']//form[@name='oms_trigger_form']//button[@id='oms_trigger_form_submit'][text()='${status}']
 
+Zed: trigger matching state of order item inside xxx shipment:
+    [Arguments]    ${sku}    ${event}    ${shipment}=1
+    FOR    ${index}    IN RANGE    0    21
+        ${order_state_reached}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//table[@data-qa='order-item-list'][${shipment}]/tbody//td/div[@class='sku'][contains(text(),'${sku}')]/ancestor::tr/td[last()]/form//button[contains(text(),'${event}')]
+        Run Keyword If    '${order_state_reached}'=='False'    Run Keywords    Sleep    3s    AND    Reload
+        ...    ELSE    Exit For Loop
+    END
+    Click    xpath=//table[@data-qa='order-item-list'][${shipment}]/tbody//td/div[@class='sku'][contains(text(),'${sku}')]/ancestor::tr/td[last()]/form//button[contains(text(),'${event}')]
+    ${order_changed_status}=    Run Keyword And Ignore Error    Element Should Not Be Visible    xpath=//table[@data-qa='order-item-list'][${shipment}]/tbody//td/div[@class='sku'][contains(text(),'${sku}')]/ancestor::tr/td[last()]/form//button[contains(text(),'${event}')]
+    Run Keyword If    'FAIL' in ${order_changed_status}    Run Keywords
+    ...    Reload    
+    ...    AND    Click    xpath=//table[@data-qa='order-item-list'][${shipment}]/tbody//td/div[@class='sku'][contains(text(),'${sku}')]/ancestor::tr/td[last()]/form//button[contains(text(),'${event}')]
+
 Yves: create return for the following products:
     [Arguments]    @{sku_list}    ${element1}=${EMPTY}     ${element2}=${EMPTY}     ${element3}=${EMPTY}     ${element4}=${EMPTY}     ${element5}=${EMPTY}     ${element6}=${EMPTY}     ${element7}=${EMPTY}     ${element8}=${EMPTY}     ${element9}=${EMPTY}     ${element10}=${EMPTY}     ${element11}=${EMPTY}     ${element12}=${EMPTY}     ${element13}=${EMPTY}     ${element14}=${EMPTY}     ${element15}=${EMPTY}
     ${sku_list_count}=   get length  ${sku_list}
@@ -77,3 +90,13 @@ Zed: get the last placed order ID of the customer by email:
     ${zedLastPlacedOrder}=    Get Text    xpath=//table[contains(@data-ajax,'sales')][contains(@class,'dataTable')]/tbody/tr[1]/td[2]
     Set Suite Variable    ${zedLastPlacedOrder}    ${zedLastPlacedOrder}
     [Return]    ${zedLastPlacedOrder}
+
+Zed: order has the following number of shipments:
+    [Arguments]    ${orderID}    ${expectedShipments}
+    Zed: go to second navigation item level:    Sales    Orders
+    Zed: perform search by:    ${orderID}
+    Zed: click Action Button in a table for row that contains:    ${orderID}    View
+    Wait Until Element Is Visible    xpath=//table[@data-qa='order-item-list'][1]
+    ${actualShipments}=    Get Element Count    xpath=//table[@data-qa='order-item-list']
+    Should Be Equal    '${expectedShipments}'    '${actualShipments}'
+    

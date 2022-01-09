@@ -120,11 +120,11 @@ Product_labels
     Yves: go to first navigation item level:    Sale %
     Yves: 1st product card in catalog (not)contains:     SaleLabel    true
     Yves: go to PDP of the product with sku:    020
-    Yves: PDP contains/doesn't contain:    true    ${pdp_sales_label}
+    Yves: PDP contains/doesn't contain:    true    ${pdp_sales_label}[${env}]
     Yves: go to first navigation item level:    New
     Yves: 1st product card in catalog (not)contains:     NewLabel    true
     Yves: go to PDP of the product with sku:    666
-    Yves: PDP contains/doesn't contain:    true    ${pdp_new_label}
+    Yves: PDP contains/doesn't contain:    true    ${pdp_new_label}[${env}]
     [Teardown]    Yves: check if cart is not empty and clear it
 
 Product_PDP
@@ -260,7 +260,7 @@ Configurable_Bundle
     Yves: flash message should be shown:    success    Configured bundle updated successfully.
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: billing address same as shipping address:    true
-    Yves: fill in the following shipping address:    Mr    ${yves_second_user_first_name}    ${yves_second_user_last_name}    Kirncher Str.    7    10247    Berlin    Germany
+    Yves: fill in the following new shipping address:    Mr    ${yves_second_user_first_name}    ${yves_second_user_last_name}    Kirncher Str.    7    10247    Berlin    Germany
     Yves: select the following shipping method on the checkout and go next:    Express
     Yves: select the following payment method on the checkout and go next:    Invoice
     Yves: accept the terms and conditions:    true
@@ -295,7 +295,7 @@ Discounts
     Yves: click on the 'Checkout' button in the guest shopping cart
     Yves: proceed with checkout as guest:    Mr    Guest    user    guest@user.com    
     Yves: billing address same as shipping address:    true
-    Yves: fill in the following shipping address:    Mr    Guest    user    Kirncher Str.    7    10247    Berlin    Germany
+    Yves: fill in the following new shipping address:    Mr    Guest    user    Kirncher Str.    7    10247    Berlin    Germany
     Yves: select the following shipping method on the checkout and go next:    Express
     Yves: select the following payment method on the checkout and go next:    Invoice
     Yves: accept the terms and conditions:    true
@@ -333,7 +333,7 @@ Split_Delivery
     Yves: select new delivery address for a product:    Canon IXUS 285    true    no    Mr    Product    285    Kirncher Str.    7    10247    Berlin    Germany
     Yves: select new delivery address for a product:    Canon IXUS 180    true    no    Mr    Product    180    Kirncher Str.    7    10247    Berlin    Germany
     Yves: select new delivery address for a product:    Canon IXUS 165    true    no    Mr    Product    165    Kirncher Str.    7    10247    Berlin    Germany
-    Yves: fill in the following billing address:    Mr    Product    165    Kirncher Str.    7    10247    Berlin    Germany
+    Yves: fill in the following new billing address:    Mr    Product    165    Kirncher Str.    7    10247    Berlin    Germany
     Yves: click checkout button:    Next
     Yves: select the following shipping method for product:    Canon IXUS 285    Express
     Yves: select the following shipping method for product:    Canon IXUS 180    Same Day
@@ -378,7 +378,7 @@ Return_Management
     Yves: go to b2c shopping cart
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: billing address same as shipping address:    true
-    Yves: fill in the following shipping address:    Mr    Guest    User    Kirncher Str.    7    10247    Berlin    Germany
+    Yves: fill in the following new shipping address:    Mr    Guest    User    Kirncher Str.    7    10247    Berlin    Germany
     Yves: select the following shipping method on the checkout and go next:    Express
     Yves: select the following payment method on the checkout and go next:    Invoice
     Yves: accept the terms and conditions:    true

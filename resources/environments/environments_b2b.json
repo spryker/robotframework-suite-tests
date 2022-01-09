@@ -60,6 +60,8 @@
 
             "multi_variant_product_abstract_sku": "M58035",
 
+            "multi_color_product_abstract_sku": "M12655",
+
             "measurement_unit_product_abstract_sku": "M23723",
 
             "packaging_unit_product_abstract_sku": "M21766",
@@ -67,7 +69,15 @@
             "product_with_relations_related_products_sku": "M29529",
             "product_with_relations_upselling_sku": "M29502",
 
-            "bundle_product_abstract_sku": "B0001"
-            
+            "bundle_product_abstract_sku": "B0001",
+            "bundle_product_concrete_sku": "000101",
+
+            "bundled_product_1_abstract_sku": "M528",
+            "bundled_product_2_abstract_sku": "M1017905",
+            "bundled_product_3_abstract_sku": "M24605",
+
+            "bundled_product_1_concrete_sku": "104939",
+            "bundled_product_2_concrete_sku": "574995",
+            "bundled_product_3_concrete_sku": "426581" 
         }
 }

@@ -20,13 +20,15 @@ ${pdp_product_bundle_include_large}    xpath=//div[@data-qa='component product-b
 ${pdp_add_to_shopping_list_button}    xpath=//button[@data-qa='add-to-shopping-list-button']
 &{pdp_product_sku}    b2b=xpath=//section[@class='product-configurator']//div[@class='product-configurator__sku']    b2c=//section[@class='product-detail']//div[@class='spacing-top spacing-top--bigger']
 ${pdp_shopping_list_selector}    xpath=//form[contains(@action,'shopping-list')]//select
-${pdp_sales_label}    xpath=//*[@data-qa='component label-group']//span[contains(text(),'SALE')]
-${pdp_new_label}    xpath=//*[@data-qa='component label-group']//span[contains(text(),'New')]
+&{pdp_sales_label}    b2b=xpath=//*[@class='page-info']//*[@data-qa='component label-group']//span[contains(text(),'SALE')]    b2c=xpath=//product-carousel//*[@data-qa='component label-group']//span[contains(text(),'SALE')]
+&{pdp_new_label}    b2b=xpath=//*[@class='page-info']//*[@data-qa='component label-group']//span[contains(text(),'New')]    b2c=xpath=//product-carousel//*[@data-qa='component label-group']//span[contains(text(),'New')]
 ${pdp_warranty_option}    xpath=//*[contains(@class,'option')]//*[contains(text(),'Warranty')]
 ${pdp_insurance_option}    xpath=//*[contains(@class,'option')]//*[contains(text(),'Insurance')]
 ${pdp_gift_wrapping_option}    xpath=//*[contains(@class,'option')]//h2[contains(text(),'Gift wrapping')]
 ${pdp_product_reviews_list}    xpath=//*[contains(text(),'Product Reviews')]/following-sibling::div/article[@class='review']
-${pdp_product_not_available_text}    xpath=//span[contains(text(),'This product is currently not available.')]
+${pdp_product_not_available_text}    xpath=//form[@class='js-product-configurator__form-add-to-cart']//*[contains(@class,'text')][contains(text(),'This product is currently not available.')]
 ${pdp_availability_notification_email_field}    xpath=//input[@id='availabilityNotificationSubscriptionForm_email']
 ${pdp_wishlist_dropdown}    xpath=//select[contains(@name,'wishlist-name')]
 ${pdp_reset_selected_variant_locator}    xpath=//div[@class='variant']//button | //div[@class='variant']//a
+${pdp_back_in_stock_subscribe_button}    xpath=//form[@id='availability_notification_subscription']//button[@data-qa='submit-button']
+${pdp_back_in_stock_unsubscribe_button}    xpath=//form[@id='availability_unsubscribe']//button[@type='submit']

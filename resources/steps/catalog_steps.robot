@@ -26,8 +26,9 @@ Yves: page contains CMS element:
     ...    ELSE    Run Keyword If    '${type}'=='Homepage Inspirational Block'    Element Should Be Visible    xpath=//*[contains(@class,'multi-inspirational-block__title')]
     ...    ELSE    Run Keyword If    '${type}'=='Homepage Banner Video'    Element Should Be Visible    xpath=//*[contains(@class,'image-banner__video')]
     ...    ELSE    Run Keyword If    '${type}'=='Footer section'    Element Should Be Visible    xpath=//*[@class='footer']
-    ...    ELSE    Run Keyword If    '${type}'=='CMS Page Title'    Element Should Be Visible    xpath=//*[contains(@class,'cms-page__title')]//*[contains(text(),'${text}')]
-    ...    ELSE    Run Keyword If    '${type}'=='CMS Page Content'    Element Should Be Visible    xpath=//*[contains(@class,'cms-page__content')]//*[contains(text(),'${text}')]
+    ...    ELSE    Run Keyword If    '${type}'=='CMS Page Title'    Element Should Be Visible    xpath=//*[contains(@class,'cms-page')][contains(@class,'title')]//*[contains(text(),'${text}')]
+    ...    ELSE    Run Keyword If    '${type}'=='CMS Page Content' and '${env}'=='b2c'    Element Should Be Visible    xpath=//*[contains(@class,'cms-page__content')]//*[contains(text(),'${text}')]
+    ...    ELSE    Run Keyword If    '${type}'=='CMS Page Content' and '${env}'=='b2b'    Element Should Be Visible    xpath=//main[contains(@class,'cms-page')]//*[contains(text(),'${text}')]
     ...    ELSE    Run Keyword If    '${type}'=='CMS Block'    Element Should Be Visible    xpath=//div[contains(@class,'catalog-cms-block')]//*[.="${text}"]
 
 
@@ -39,7 +40,7 @@ Yves: change sorting order on catalog page:
         
 
 Yves: 1st product card in catalog (not)contains:
-    [Documentation]    ${elementName} can be: Price, Name, Add to Cart, Color selector
+    [Documentation]    ${elementName} can be: Price, Name, Add to Cart, Color selector, Sale label, New label
     [Arguments]    ${elementName}    ${value}
     Run Keyword If    '${elementName}'=='Price' and '${value}'=='true'    Element Should Be Visible    xpath=//product-item[@data-qa='component product-item'][1]//span[contains(@class,'default-price') and contains(.,'${value}')]
     ...    ELSE    Run Keyword If    '${elementName}'=='Price' and '${value}'=='false'    Element Should Not Be Visible    xpath=//product-item[@data-qa='component product-item'][1]//span[contains(@class,'default-price') and contains(.,'${value}')]
@@ -51,6 +52,10 @@ Yves: 1st product card in catalog (not)contains:
     ...    ELSE    Run Keyword If    '${env}'=='b2c' and '${elementName}'=='Add to Cart' and '${value}'=='false'    Element Should Not Be Visible    xpath=//product-item[@data-qa='component product-item'][1]//ajax-add-to-cart//button
     ...    ELSE    Run Keyword If    '${elementName}'=='Color selector' and '${value}'=='true'    Page Should Contain Element   xpath=//product-item[@data-qa='component product-item'][1]//product-item-color-selector
     ...    ELSE    Run Keyword If    '${elementName}'=='Color selector' and '${value}'=='false'    Page Should Not Contain Element   xpath=//product-item[@data-qa='component product-item'][1]//product-item-color-selector
+    ...    ELSE    Run Keyword If    '${elementName}'=='Sale label' and '${value}'=='true'    Page Should Contain Element   xpath=//product-item[@data-qa='component product-item'][1]//label-group//span[contains(text(),'SALE')]
+    ...    ELSE    Run Keyword If    '${elementName}'=='Sale label' and '${value}'=='false'    Page Should Not Contain Element   xpath=//product-item[@data-qa='component product-item'][1]//label-group//span[contains(text(),'SALE')]
+    ...    ELSE    Run Keyword If    '${elementName}'=='New label' and '${value}'=='true'    Page Should Contain Element   xpath=//product-item[@data-qa='component product-item'][1]//label-group//span[contains(text(),'New')]
+    ...    ELSE    Run Keyword If    '${elementName}'=='New label' and '${value}'=='false'    Page Should Not Contain Element   xpath=//product-item[@data-qa='component product-item'][1]//label-group//span[contains(text(),'New')]
 
 Yves: go to catalog page:
     [Arguments]    ${pageNumber}

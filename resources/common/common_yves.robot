@@ -173,11 +173,15 @@ Yves: get index of the first available product
         ...    Run keyword if    '${env}'=='b2b'    Page should contain element    xpath=//product-item[@data-qa='component product-item'][${index}]//*[@class='product-item__actions']//ajax-add-to-cart//button[@disabled='']
         ...    ELSE    Run keyword if    '${env}'=='b2c'    Page should contain element    xpath=//product-item[@data-qa='component product-item'][${index}]//ajax-add-to-cart//button
         Log    ${index}
+        ${pdp_url}=    Run keyword if    '${env}'=='b2b'    Get Element Attribute    xpath=//product-item[@data-qa='component product-item'][${index}]//a[@itemprop='url']    href
         Run keyword if    'PASS' in ${status} and '${env}'=='b2b'    Continue For Loop
+        Run keyword if    'bundle' in '${pdp_url}' and '${env}'=='b2c'    Continue For Loop
         Run keyword if    'FAIL' in ${status} and '${env}'=='b2b'    Run Keywords
         ...    Return From Keyword    ${index}
         ...    AND    Exit For Loop
+        ${pdp_url}=    Run keyword if    '${env}'=='b2c'    Get Element Attribute    xpath=//product-item[@data-qa='component product-item'][${index}]//div[contains(@class,'product-item__image')]//a[contains(@class,'link-detail-page')]    href
         Run keyword if    'FAIL' in ${status} and '${env}'=='b2c'    Continue For Loop
+        Run keyword if    'bundle' in '${pdp_url}' and '${env}'=='b2c'    Continue For Loop
         Run keyword if    'PASS' in ${status} and '${env}'=='b2c'    Run Keywords
         ...    Return From Keyword    ${index}
         ...    AND    Exit For Loop
@@ -212,7 +216,7 @@ Yves: try reloading page if element is/not appear:
     [Arguments]    ${element}    ${isDisplayed}
     FOR    ${index}    IN RANGE    0    21
         ${elementAppears}=    Run Keyword And Return Status    Element Should Be Visible    ${element}
-        Run Keyword If    '${isDisplayed}'=='True' and '${elementAppears}'=='False'    Run Keywords    Sleep    1s    AND    Reload
-        ...    ELSE    Run Keyword If    '${isDisplayed}'=='False' and '${elementAppears}'=='True'    Run Keywords    Sleep    1s    AND    Reload
+        Run Keyword If    '${isDisplayed}'=='True' and '${elementAppears}'=='False'    Run Keywords    Sleep    3s    AND    Reload
+        ...    ELSE    Run Keyword If    '${isDisplayed}'=='False' and '${elementAppears}'=='True'    Run Keywords    Sleep    3s    AND    Reload
         ...    ELSE    Exit For Loop
     END

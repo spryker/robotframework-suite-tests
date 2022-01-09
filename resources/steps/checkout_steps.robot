@@ -30,81 +30,80 @@ Yves: accept the terms and conditions:
     
 Yves: select the following existing address on the checkout as 'shipping' address and go next:
     [Arguments]    ${addressToUse}
-    Wait Until Element Is Visible    ${checkout_address_delivery_dropdown}
-    Select From List By Label    ${checkout_address_delivery_dropdown}    ${addressToUse}
+    Wait Until Element Is Visible    ${checkout_address_delivery_selector}[${env}]
+    Select From List By Label    ${checkout_address_delivery_selector}[${env}]    ${addressToUse}
     Click    ${submit_checkout_form_button}
         
+Yves: fill in the following new shipping address:
+    [Documentation]    Possible argument names: salutation, firstName, lastName, street, houseNumber, postCode, city, country, company, phone, additionalAddress
+    [Arguments]    @{args}
+    ${newAddressData}=    Set Up Keyword Arguments    @{args}
+    Select From List By Label    ${checkout_address_delivery_selector}[${env}]    Define new address
+    Wait Until Element Is Visible    ${checkout_new_shipping_address_form}
+    FOR    ${key}    ${value}    IN    &{newAddressData}
+        Log    Key is '${key}' and value is '${value}'.
+        Run keyword if    '${key}'=='salutation' and '${value}' != '${EMPTY}'    Select From List By Label    ${checkout_shipping_address_salutation_selector}    ${value}
+        Run keyword if    '${key}'=='firstName' and '${value}' != '${EMPTY}'    Type Text    ${checkout_shipping_address_first_name_field}[${env}]    ${value}
+        Run keyword if    '${key}'=='lastName' and '${value}' != '${EMPTY}'    Type Text    ${checkout_shipping_address_last_name_field}    ${value}
+        Run keyword if    '${key}'=='street' and '${value}' != '${EMPTY}'    Type Text    ${checkout_shipping_address_street_field}    ${value}
+        Run keyword if    '${key}'=='houseNumber' and '${value}' != '${EMPTY}'    Type Text    ${checkout_shipping_address_house_number_field}    ${value}
+        Run keyword if    '${key}'=='postCode' and '${value}' != '${EMPTY}'    Type Text    ${checkout_shipping_address_zip_code_field}    ${value}
+        Run keyword if    '${key}'=='city' and '${value}' != '${EMPTY}'    Type Text    ${checkout_shipping_address_city_field}    ${value}
+        Run keyword if    '${key}'=='country' and '${value}' != '${EMPTY}'    Select From List By Label    ${checkout_shipping_address_country_selector}    ${value}
+        Run keyword if    '${key}'=='company' and '${value}' != '${EMPTY}'    Type Text    ${checkout_shipping_address_company_name_field}    ${value}
+        Run keyword if    '${key}'=='phone' and '${value}' != '${EMPTY}'    Type Text    ${checkout_shipping_address_phone_field}    ${value}
+        Run keyword if    '${key}'=='additionalAddress' and '${value}' != '${EMPTY}'    Type Text    ${checkout_shipping_address_additional_address_field}    ${value}
+    END   
 
-Yves: fill in the following shipping address:
-    [Documentation]
-    [Arguments]    ${salutation}    ${firstName}    ${lastName}    ${street}    ${houseNumber}    ${postCode}    ${city}    ${country}    ${isDefaultShipping}=True     ${isDefaultBilling}=True      ${company}=    ${phone}=    ${additionalAddress}=    ${addressesForm_billingSameAsShipping}=true
-    Click    xpath=//span[@aria-labelledby='select2-addressesForm_shippingAddress_id_customer_address-container']
-    Click    xpath=//li[contains(text(),'Define new address')]
-#    Click    ${checkout_shipping_address_salutation_dropdown}
-#    Click    xpath=//li[@class='select2-results__option' and contains(text(),'${salutation}')]
-    Type Text    ${checkout_shipping_address_first_name_field}     ${firstName}
-    Type Text    ${checkout_shipping_address_last_name_field}     ${lastName}
-    Type Text    ${checkout_shipping_address_company_name_field}     ${company}
-    Type Text    ${checkout_shipping_address_street_field}     ${street}
-    Type Text    ${checkout_shipping_address_house_number_field}     ${houseNumber}
-    Type Text    ${checkout_shipping_address_additional_address_field}     ${additionalAddress}
-    Type Text    ${checkout_shipping_address_zip_code_field}     ${postCode}
-    Type Text    ${checkout_shipping_address_city_field}     ${city}
-#     Click    ${checkout_shipping_address_country_drop_down_field}
-#     Click    xpath=//li[contains(@class,'select2-results__option') and contains(text(),'${country}')]
-    Type Text    ${checkout_shipping_address_phone_field}     ${phone}
-    Scroll Element Into View    ${checkout_address_submit_button}
-    Wait Until Element Is Enabled    ${checkout_address_submit_button}
-    Wait Until Element Is Visible    ${checkout_address_submit_button}
-    Click    ${checkout_address_submit_button}
-    Click    ${submit_checkout_form_button}   
-     
-
-Yves: fill in the following billing address:
-    [Documentation]
-    [Arguments]    ${salutation}    ${firstName}    ${lastName}    ${street}    ${houseNumber}    ${postCode}    ${city}    ${country}    ${company}=    ${phone}=    ${additionalAddress}=    
-    Click    xpath=//span[@id='select2-addressesForm_billingAddress_id_customer_address-container']
-    Click    xpath=//li[contains(text(),'Define new address')]
-#    Click    ${checkout_shipping_address_salutation_dropdown}
-#    Click    xpath=//li[@class='select2-results__option' and contains(text(),'${salutation}')]
-    Type Text    ${checkout_billing_address_first_name_field}     ${firstName}
-    Type Text    ${checkout_billing_address_last_name_field}     ${lastName}
-    Type Text    ${checkout_billing_address_company_name_field}     ${company}
-    Type Text    ${checkout_billing_address_street_field}     ${street}
-    Type Text    ${checkout_billing_address_house_number_field}     ${houseNumber}
-    Type Text    ${checkout_billing_address_additional_address_field}     ${additionalAddress}
-    Type Text    ${checkout_billing_address_zip_code_field}     ${postCode}
-    Type Text    ${checkout_billing_address_city_field}     ${city}
-#     Click    ${checkout_shipping_address_country_drop_down_field}
-#     Click    xpath=//li[contains(@class,'select2-results__option') and contains(text(),'${country}')]
-    Type Text    ${checkout_billing_address_phone_field}     ${phone}
+Yves: fill in the following new billing address:
+    [Documentation]    Possible argument names: salutation, firstName, lastName, street, houseNumber, postCode, city, country, company, phone, additionalAddress
+    [Arguments]    @{args}
+    ${newAddressData}=    Set Up Keyword Arguments    @{args}
+    Select From List By Label    ${checkout_address_billing_selector}[${env}]    Define new address
+    Wait Until Element Is Visible    ${checkout_new_billing_address_form}
+    FOR    ${key}    ${value}    IN    &{newAddressData}
+        Log    Key is '${key}' and value is '${value}'.
+        Run keyword if    '${key}'=='salutation' and '${value}' != '${EMPTY}'    Select From List By Label    ${checkout_billing_address_salutation_selector}    ${value}
+        Run keyword if    '${key}'=='firstName' and '${value}' != '${EMPTY}'    Type Text    ${checkout_billing_address_first_name_field}    ${value}
+        Run keyword if    '${key}'=='lastName' and '${value}' != '${EMPTY}'    Type Text    ${checkout_billing_address_last_name_field}    ${value}
+        Run keyword if    '${key}'=='street' and '${value}' != '${EMPTY}'    Type Text    ${checkout_billing_address_street_field}    ${value}
+        Run keyword if    '${key}'=='houseNumber' and '${value}' != '${EMPTY}'    Type Text    ${checkout_billing_address_house_number_field}    ${value}
+        Run keyword if    '${key}'=='postCode' and '${value}' != '${EMPTY}'    Type Text    ${checkout_billing_address_zip_code_field}    ${value}
+        Run keyword if    '${key}'=='city' and '${value}' != '${EMPTY}'    Type Text    ${checkout_billing_address_city_field}    ${value}
+        Run keyword if    '${key}'=='country' and '${value}' != '${EMPTY}'    Select From List By Label    ${checkout_billing_address_country_select}    ${value}
+        Run keyword if    '${key}'=='company' and '${value}' != '${EMPTY}'    Type Text    ${checkout_billing_address_company_name_field}    ${value}
+        Run keyword if    '${key}'=='phone' and '${value}' != '${EMPTY}'    Type Text    ${checkout_billing_address_phone_field}    ${value}
+        Run keyword if    '${key}'=='additionalAddress' and '${value}' != '${EMPTY}'    Type Text    ${checkout_billing_address_additional_address_field}    ${value}
+    END
 
 Yves: select delivery to multiple addresses
-    Click    xpath=//span[@aria-labelledby='select2-addressesForm_shippingAddress_id_customer_address-container']
-    Click    xpath=//li[contains(text(),'Deliver to multiple addresses')]
-    Wait Until Element Is Visible    xpath=//*[contains(@class,'title') and contains(text(),'Assign each product to its own delivery address')]
+    Select From List By Label    ${checkout_address_delivery_selector}[${env}]    Deliver to multiple addresses
 
 Yves: click checkout button:
     [Arguments]    ${buttonName}
-    Click    xpath=//button[@type='submit' and contains(text(),'${buttonName}')]
+    Click    xpath=//button[@type='submit' and contains(text(),'${buttonName}')]  
 
-Yves: select new delivery address for a product:
-    [Arguments]    ${productName}    ${newAddress}=false    ${existingAddress}=    ${salutation}=    ${firstName}=    ${lastName}=    ${street}=    
-    ...    ${houseNumber}=    ${postCode}=    ${city}=    ${country}=    ${isDefaultShipping}=True     ${isDefaultBilling}=True      ${company}=    
-    ...    ${phone}=    ${additionalAddress}=
-    Run Keyword If    '${newAddress}'=='true'    Run keywords    Click    xpath=//*[contains(@class,'product-card-item')]//div[contains(text(),'${productName}')]/ancestor::article[contains(@data-qa,'component product-card-item')]//span[contains(@aria-labelledby,'id_customer_address-container')]
-    ...    AND    Click    xpath=//li[contains(text(),'Define new address')]
-    ...    AND    Type Text    xpath=//*[contains(@class,'product-card-item')]//div[contains(text(),'${productName}')]${checkout_shipping_multiple_address_first_name_field}     ${firstName}
-    ...    AND    Type Text    xpath=//*[contains(@class,'product-card-item')]//div[contains(text(),'${productName}')]${checkout_shipping_multiple_address_last_name_field}     ${lastName}
-    ...    AND    Type Text    xpath=//*[contains(@class,'product-card-item')]//div[contains(text(),'${productName}')]${checkout_shipping_multiple_address_company_name_field}     ${company}
-    ...    AND    Type Text    xpath=//*[contains(@class,'product-card-item')]//div[contains(text(),'${productName}')]${checkout_shipping_multiple_address_street_field}     ${street}
-    ...    AND    Type Text    xpath=//*[contains(@class,'product-card-item')]//div[contains(text(),'${productName}')]${checkout_shipping_multiple_address_house_number_field}     ${houseNumber}
-    ...    AND    Type Text    xpath=//*[contains(@class,'product-card-item')]//div[contains(text(),'${productName}')]${checkout_shipping_multiple_address_additional_address_field}     ${additionalAddress}
-    ...    AND    Type Text    xpath=//*[contains(@class,'product-card-item')]//div[contains(text(),'${productName}')]${checkout_shipping_multiple_address_zip_code_field}     ${postCode}
-    ...    AND    Type Text    xpath=//*[contains(@class,'product-card-item')]//div[contains(text(),'${productName}')]${checkout_shipping_multiple_address_city_field}     ${city}
-    ...    ELSE    Run Keyword If    '${newAddress}'=='false'    Run keywords    Click    xpath=//*[contains(@class,'product-card-item')]//div[contains(text(),'${productName}')]/ancestor::div[contains(@data-qa,'component address-item-form-field-list')]//span[@aria-labelledby='select2-addressesForm_multiShippingAddresses_0_shippingAddress_id_customer_address-container']
-    ...    AND    Click    xpath=//li[contains(text(),'${existingAddress}')]    
-
+Yves: fill in new delivery address for a product:
+    [Documentation]    Possible argument names: product (SKU or Name), salutation, firstName, lastName, street, houseNumber, postCode, city, country, company, phone, additionalAddress
+    [Arguments]    @{args}
+    ${newAddressData}=    Set Up Keyword Arguments    @{args}
+    # Wait Until Element Is Visible    ${checkout_shipping_address_item_form}
+    FOR    ${key}    ${value}    IN    &{newAddressData}
+        Log    Key is '${key}' and value is '${value}'.
+        ${item}=    Set Variable If    '${key}'=='product'    ${value}    ${item}
+        Select From List By Label    xpath=//article[contains(@data-qa,'component product-card-item')]//*[contains(.,'${item}')]//select    Define new address
+        Run keyword if    '${key}'=='salutation' and '${value}' != '${EMPTY}'    Select From List By Label    xpath=//article[contains(@data-qa,'component product-card-item')]//*[contains(.,'${item}')]/ancestor::div[contains(@class,'address-item-form')][1]//select[contains(@name,'[salutation]')]    ${value}
+        Run keyword if    '${key}'=='firstName' and '${value}' != '${EMPTY}'    Type Text    xpath=//article[contains(@data-qa,'component product-card-item')]//*[contains(.,'${item}')]/ancestor::div[contains(@class,'address-item-form')][1]//input[contains(@name,'[first_name]')]    ${value}
+        Run keyword if    '${key}'=='lastName' and '${value}' != '${EMPTY}'    Type Text    xpath=//article[contains(@data-qa,'component product-card-item')]//*[contains(.,'${item}')]/ancestor::div[contains(@class,'address-item-form')][1]//input[contains(@name,'[last_name]')]    ${value}
+        Run keyword if    '${key}'=='street' and '${value}' != '${EMPTY}'    Type Text    xpath=//article[contains(@data-qa,'component product-card-item')]//*[contains(.,'${item}')]/ancestor::div[contains(@class,'address-item-form')][1]//input[contains(@name,'[address1]')]    ${value}
+        Run keyword if    '${key}'=='houseNumber' and '${value}' != '${EMPTY}'    Type Text    xpath=//article[contains(@data-qa,'component product-card-item')]//*[contains(.,'${item}')]/ancestor::div[contains(@class,'address-item-form')][1]//input[contains(@name,'[address2]')]    ${value}
+        Run keyword if    '${key}'=='postCode' and '${value}' != '${EMPTY}'    Type Text    xpath=//article[contains(@data-qa,'component product-card-item')]//*[contains(.,'${item}')]/ancestor::div[contains(@class,'address-item-form')][1]//input[contains(@name,'[zip_code]')]    ${value}
+        Run keyword if    '${key}'=='city' and '${value}' != '${EMPTY}'    Type Text    xpath=//article[contains(@data-qa,'component product-card-item')]//*[contains(.,'${item}')]/ancestor::div[contains(@class,'address-item-form')][1]//input[contains(@name,'[city]')]    ${value}
+        Run keyword if    '${key}'=='country' and '${value}' != '${EMPTY}'    Select From List By Label    xpath=//article[contains(@data-qa,'component product-card-item')]//*[contains(.,'${item}')]/ancestor::div[contains(@class,'address-item-form')][1]//select[contains(@name,'[iso2_code]')]    ${value}
+        Run keyword if    '${key}'=='company' and '${value}' != '${EMPTY}'    Type Text    xpath=//article[contains(@data-qa,'component product-card-item')]//*[contains(.,'${item}')]/ancestor::div[contains(@class,'address-item-form')][1]//input[contains(@name,'[company]')]    ${value}
+        Run keyword if    '${key}'=='phone' and '${value}' != '${EMPTY}'    Type Text    xpath=//article[contains(@data-qa,'component product-card-item')]//*[contains(.,'${item}')]/ancestor::div[contains(@class,'address-item-form')][1]//input[contains(@name,'[phone]')]    ${value}
+        Run keyword if    '${key}'=='additionalAddress' and '${value}' != '${EMPTY}'    Type Text    xpath=//article[contains(@data-qa,'component product-card-item')]//*[contains(.,'${item}')]/ancestor::div[contains(@class,'address-item-form')][1]//input[contains(@name,'[address3]')]    ${value}
+    END
 
 Yves: select the following shipping method on the checkout and go next:
     [Arguments]    ${shippingMethod}
@@ -114,9 +113,9 @@ Yves: select the following shipping method on the checkout and go next:
 Yves: submit form on the checkout
     Click    ${submit_checkout_form_button}
         
-Yves: select the following shipping method for product:
-    [Arguments]    ${productName}    ${shippingMethod}
-    Click    xpath=//div[contains(text(),'${productName}')]/ancestor::article[contains(@class,'checkout-block')]//div[contains(@data-qa,'component shipment-sidebar')]//ul//label[contains(.,'${shippingMethod}')]/span[contains(@class,'radio__box')]
+Yves: select the following shipping method for the shipment:
+    [Arguments]    ${shipment}    ${shippingProvider}    ${shippingMethod}
+        Click    xpath=//form[@name='shipmentCollectionForm']/descendant::article[contains(@class,'grid')][${shipment}]//div[@data-qa='component shipment-sidebar']//*[contains(@class,'title')]/*[contains(text(),'${shippingProvider}')]/..//following-sibling::ul[1]//label[contains(.,'${shippingMethod}')]/span[contains(@class,'radio__box')]
 
 Yves: select the following payment method on the checkout and go next:
     [Arguments]    ${paymentMethod}

@@ -134,12 +134,12 @@ Yves: check if product is available on PDP:
 Yves: submit back in stock notification request for email:
     [Arguments]    ${email}
     Type Text    ${pdp_availability_notification_email_field}    ${email}
-    Click    xpath=//button[@data-qa='submit-button' and @class='form__action button button--success']
+    Click    ${pdp_back_in_stock_subscribe_button}
     Yves: flash message should be shown:    success    Successfully subscribed
     Yves: remove flash messages
     Element Should Be Visible    xpath=//button[contains(text(),'Do not notify me when back in stock')]
     
 Yves: unsubscribe from availability notifications
-    Click    xpath=//button[contains(text(),'Do not notify me when back in stock')]
+    Click    ${pdp_back_in_stock_unsubscribe_button}
     Yves: flash message should be shown:    success    Successfully unsubscribed
     Yves: remove flash messages

@@ -12,8 +12,6 @@ Register a new customer with data:
     [Arguments]    @{args}
     ${registrationData}=    Set Up Keyword Arguments    @{args}
     Yves: go to user menu item in header:    Sign Up
-        
-    Wait Until Element Is Visible    ${registration_page_title}
     FOR    ${key}    ${value}    IN    &{registrationData}
         Log    Key is '${key}' and value is '${value}'.
         Run keyword if    '${key}'=='first name'    Type Text    ${registration_first_name_field}    ${value}
