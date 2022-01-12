@@ -6,7 +6,7 @@ Resource    ../../../../resources/common/common_api.robot
 
 ######POST#####
 Create_customer_address_with_missing_required_fields
-    When When I get access token for the customer:    ${yves_user_email}
+    When I get access token for the customer:    ${yves_user_email}
     And I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     And I send a POST request:    /customers/${yves_user_reference}/addresses    {"data": {"type": "addresses","attributes": {"address3": "${default_address3}","country": "${default_country}","iso2Code": "${default_iso2Code}","company":"${default_company}","phone": "${default_phone}"}}}
     Then Response status code should be:    422
@@ -25,7 +25,7 @@ Create_customer_address_with_missing_required_fields
     And Array in response should contain property with value:    [errors]    detail    isDefaultBilling => This field is missing.
 
 Create_customer_address_with_empty_fields
-    When When I get access token for the customer:    ${yves_user_email}
+    When I get access token for the customer:    ${yves_user_email}
     And I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     And I send a POST request:    /customers/${yves_user_reference}/addresses    {"data": {"type": "addresses","attributes": {"customer_reference": "","salutation": "","firstName": "","lastName": "","address1": "","address2": "","address3": "","zipCode": "","city": "","country": "","iso2Code": "","company":"","phone": "","isDefaultShipping": "","isDefaultBilling": ""}}}
     Then Response status code should be:    422
@@ -42,7 +42,7 @@ Create_customer_address_with_empty_fields
     And Array in response should contain property with value:    [errors]    detail    city => This value should not be blank.
 
 Create_customer_address_with_customer_reference_not_matching_token
-    When When I get access token for the customer:    ${yves_user_email}
+    When I get access token for the customer:    ${yves_user_email}
     And I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     And I send a POST request:    /customers/DE--1/addresses    {"data": {"type": "addresses","attributes": {"salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}","address1": "${default_address1}","address2": "${default_address2}","zipCode": "${default_zipCode}","city": "${default_city}","iso2Code": "${default_iso2Code}","isDefaultShipping": False,"isDefaultBilling": False}}}
     Then Response status code should be:    403
@@ -51,7 +51,7 @@ Create_customer_address_with_customer_reference_not_matching_token
     And Response should return error message:    Unauthorized request.
 
 Create_customer_address_with_non_existing_customer_reference
-    When When I get access token for the customer:    ${yves_user_email}
+    When I get access token for the customer:    ${yves_user_email}
     And I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     And I send a POST request:    /customers/DE--10000/addresses    {"data": {"type": "addresses","attributes": {"salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}","address1": "${default_address1}","address2": "${default_address2}","zipCode": "${default_zipCode}","city": "${default_city}","iso2Code": "${default_iso2Code}","isDefaultShipping": False,"isDefaultBilling": False}}}
     Then Response status code should be:    403
@@ -60,7 +60,7 @@ Create_customer_address_with_non_existing_customer_reference
     And Response should return error message:    Unauthorized request.
 
 Create_customer_address_with_empty_customer_reference
-    When When I get access token for the customer:    ${yves_user_email}
+    When I get access token for the customer:    ${yves_user_email}
     And I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     And I send a POST request:    /customers//addresses    {"data": {"type": "addresses","attributes": {"salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}","address1": "${default_address1}","address2": "${default_address2}","zipCode": "${default_zipCode}","city": "${default_city}","iso2Code": "${default_iso2Code}","isDefaultShipping": False,"isDefaultBilling": False}}}
     Then Response status code should be:    403
@@ -69,7 +69,7 @@ Create_customer_address_with_empty_customer_reference
     And Response should return error message:    Unauthorized request.
 
 Create_customer_address_with_empty_type
-    When When I get access token for the customer:    ${yves_user_email}
+    When I get access token for the customer:    ${yves_user_email}
     And I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     And I send a POST request:    /customers/${yves_user_reference}/addresses    {"data": {"type": "","attributes": {"salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}","address1": "${default_address1}","address2": "${default_address2}","zipCode": "${default_zipCode}","city": "${default_city}","iso2Code": "${default_iso2Code}","isDefaultShipping": False,"isDefaultBilling": False}}}
     Then Response status code should be:    400
