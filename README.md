@@ -58,6 +58,9 @@ All these browsers that cover more than 85% of the world wide used browsers, can
 
 ### API
 
+NOTE: the progress of the API automation can be found here https://spryker.atlassian.net/wiki/spaces/PS/pages/3104834019/Robot+Framework+API+automation+progress.
+If you are automating any endpoint, please mark it as WIP in this table, mark it as Done when finished.
+
 Execute all tests in api folder (all API tests that exist).
 `robot -v env:api_suite -d results -s api .`
 

@@ -173,9 +173,10 @@ I send a DELETE request:
     ${response}=    Run Keyword if    ${hasValue}    DELETE    ${glue_url}${path}    headers=${headers}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}
     ...    ELSE    DELETE    ${glue_url}${path}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}
     ${response_headers}=    Set Variable    ${response.headers}
+    Set Test Variable    ${response}    ${response}
+    ${response_body}=    Run Keyword if    ${response.status_code} != 204    Set Variable    ${response.json()}
     Set Test Variable    ${response_headers}    ${response_headers}
     Set Test Variable    ${response_body}    ${response_body}
-    Set Test Variable    ${response}    ${response}
     Set Test Variable    ${expected_self_link}    ${glue_url}${path}
     [Return]    ${response_body}
 
