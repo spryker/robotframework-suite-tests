@@ -210,7 +210,7 @@ Update_customer_address_several_fields
     ...    AND    Response status code should be:    201
     ...    AND    Save value to a variable:    [data][id]    address_uid
     ...    AND    Response body parameter should be:    [data][attributes][isDefaultBilling]    True
-    When I send a PATCH request:    /customers/${yves_user_reference}/addresses/${address_uid}    {"data": {"type": "addresses","id": "{{customer_address_1}}","attributes": {"address1": "${changed_address1}","address2": "${changed_address2}","address3": "${changed_address3}","phone": "${changed_phone}"}}}
+    When I send a PATCH request:    /customers/${yves_user_reference}/addresses/${address_uid}    {"data": {"type": "addresses","attributes": {"address1": "${changed_address1}","address2": "${changed_address2}","address3": "${changed_address3}","phone": "${changed_phone}"}}}
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
