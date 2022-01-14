@@ -27,7 +27,10 @@
         "invalid_yves_user_password": "change123!",
 
         "zed_admin_email": "admin@spryker.com",
-        "zed_admin_password": "change123"
+        "zed_admin_password": "change123",
+
+        "agent_email": "agent123@spryker.com",
+        "agent_password": "change123"
     },
     
     "address":{
