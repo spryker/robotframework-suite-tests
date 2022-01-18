@@ -5,9 +5,10 @@ Resource    ../../../../resources/common/common_api.robot
 *** Test Cases ***
 #####POST#####
 Create_customer_address_with_all_fields
-    When I get access token for the customer:    ${yves_user_email}
-    And I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
-    And I send a POST request:    /customers/${yves_user_reference}/addresses    {"data": {"type": "addresses","attributes": {"customer_reference": "${yves_user_reference}","salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}","address1": "${default_address1}","address2": "${default_address2}","address3": "${default_address3}","zipCode": "${default_zipCode}","city": "${default_city}","country": "${default_country}","iso2Code": "${default_iso2Code}","company":"${default_company}","phone": "${default_phone}","isDefaultShipping": False,"isDefaultBilling": False}}}
+        [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
+    ...    AND    Cleanup existing customer addresses:    ${yves_user_reference}
+    When I send a POST request:    /customers/${yves_user_reference}/addresses    {"data": {"type": "addresses","attributes": {"customer_reference": "${yves_user_reference}","salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}","address1": "${default_address1}","address2": "${default_address2}","address3": "${default_address3}","zipCode": "${default_zipCode}","city": "${default_city}","country": "${default_country}","iso2Code": "${default_iso2Code}","company":"${default_company}","phone": "${default_phone}","isDefaultShipping": False,"isDefaultBilling": False}}}
     Then Response status code should be:    201
     And Response reason should be:    Created
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
@@ -28,13 +29,14 @@ Create_customer_address_with_all_fields
     And Response body parameter should be:    [data][attributes][phone]    ${default_phone}
     And Response body parameter should be:    [data][attributes][isDefaultShipping]    True
     And Response body parameter should be:    [data][attributes][isDefaultBilling]    True
-    Response body has correct self link for created entity:    ${address_uid_1}
+    And Response body has correct self link for created entity:    ${address_uid_1}
     [Teardown]    Run Keywords    I send a DELETE request:     /customers/${yves_user_reference}/addresses/${address_uid_1}
     ...    AND    Response status code should be:    204
 
 Create_customer_address_only_required_fields
-    When I get access token for the customer:    ${yves_user_email}
-    And I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
+    ...    AND    Cleanup existing customer addresses:    ${yves_user_reference}
     And I send a POST request:    /customers/${yves_user_reference}/addresses    {"data": {"type": "addresses","attributes": {"salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}","address1": "${default_address1}","address2": "${default_address2}","zipCode": "${default_zipCode}","city": "${default_city}","iso2Code": "${default_iso2Code}","isDefaultShipping": False,"isDefaultBilling": False}}}
     Then Response status code should be:    201
     And Response reason should be:    Created
@@ -56,15 +58,16 @@ Create_customer_address_only_required_fields
     And Response body parameter should be:    [data][attributes][phone]    None
     And Response body parameter should be:    [data][attributes][isDefaultShipping]    True
     And Response body parameter should be:    [data][attributes][isDefaultBilling]    True
-    Response body has correct self link for created entity:    ${address_uid_1}
+    And Response body has correct self link for created entity:    ${address_uid_1}
     [Teardown]    Run Keywords    I send a DELETE request:     /customers/${yves_user_reference}/addresses/${address_uid_1}
     ...    AND    Response status code should be:    204
     
 
 
 Create_customer_address_as_shipping_default
-    When I get access token for the customer:    ${yves_user_email}
-    And I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
+    ...    AND    Cleanup existing customer addresses:    ${yves_user_reference}
     And I send a POST request:    /customers/${yves_user_reference}/addresses    {"data": {"type": "addresses","attributes": {"salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}","address1": "${default_address1}","address2": "${default_address2}","zipCode": "${default_zipCode}","city": "${default_city}","iso2Code": "${default_iso2Code}","isDefaultShipping": False,"isDefaultBilling": False}}}
     Then Response status code should be:    201
     And Response reason should be:    Created
@@ -92,8 +95,9 @@ Create_customer_address_as_shipping_default
     ...    AND    Response status code should be:    204
 
 Create_customer_address_as_billing_default
-    When I get access token for the customer:    ${yves_user_email}
-    And I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
+    ...    AND    Cleanup existing customer addresses:    ${yves_user_reference}
     And I send a POST request:    /customers/${yves_user_reference}/addresses    {"data": {"type": "addresses","attributes": {"customer_reference": "${yves_user_reference}","salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}","address1": "${default_address1}","address2": "${default_address2}","address3": "${default_address3}","zipCode": "${default_zipCode}","city": "${default_city}","country": "${default_country}","iso2Code": "${default_iso2Code}","company":"${default_company}","phone": "${default_phone}","isDefaultShipping": False,"isDefaultBilling": False}}}
     Then Response status code should be:    201
     And Response reason should be:    Created
@@ -122,8 +126,9 @@ Create_customer_address_as_billing_default
 
 #GET
 Get_empty_list_of_customer_addresses
-    When I get access token for the customer:    ${yves_user_email}
-    And I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
+    ...    AND    Cleanup existing customer addresses:    ${yves_user_reference}
     And I send a GET request:    /customers/${yves_user_reference}/addresses
     Then Response status code should be:    200
     And Response reason should be:    OK
@@ -133,6 +138,7 @@ Get_empty_list_of_customer_addresses
 Get_list_of_customer_addresses_with_1_address
     [Setup]    Run keywords    I get access token for the customer:    ${yves_user_email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
+    ...    AND    Cleanup existing customer addresses:    ${yves_user_reference}
     ...    AND    I send a POST request:    /customers/${yves_user_reference}/addresses    {"data": {"type": "addresses","attributes": {"customer_reference": "${yves_user_reference}","salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}","address1": "${default_address1}","address2": "${default_address2}","address3": "${default_address3}","zipCode": "${default_zipCode}","city": "${default_city}","country": "${default_country}","iso2Code": "${default_iso2Code}","company":"${default_company}","phone": "${default_phone}","isDefaultShipping": False,"isDefaultBilling": False}}}
     ...    AND    Response status code should be:    201
     When I send a GET request:    /customers/${yves_user_reference}/addresses
@@ -164,6 +170,7 @@ Get_list_of_customer_addresses_with_1_address
 Get_list_of_customer_addresses_with_2_addresses
     [Setup]    Run keywords    I get access token for the customer:    ${yves_user_email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
+    ...    AND    Cleanup existing customer addresses:    ${yves_user_reference}
     ...    AND    I send a POST request:    /customers/${yves_user_reference}/addresses    {"data": {"type": "addresses","attributes": {"customer_reference": "${yves_user_reference}","salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}","address1": "${default_address1}","address2": "${default_address2}","address3": "${default_address3}","zipCode": "${default_zipCode}","city": "${default_city}","country": "${default_country}","iso2Code": "${default_iso2Code}","company":"${default_company}","phone": "${default_phone}","isDefaultShipping": False,"isDefaultBilling": False}}}
     ...    AND    Response status code should be:    201
     ...    AND    I send a POST request:    /customers/${yves_user_reference}/addresses    {"data": {"type": "addresses","attributes": {"customer_reference": "${yves_user_reference}","salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}","address1": "${default_address1}","address2": "${default_address2}","address3": "${default_address3}","zipCode": "${default_zipCode}","city": "${default_city}","country": "${default_country}","iso2Code": "${default_iso2Code}","company":"${default_company}","phone": "${default_phone}","isDefaultShipping": False,"isDefaultBilling": False}}}
@@ -187,6 +194,7 @@ Get_list_of_customer_addresses_with_2_addresses
 Delete_customer_address
     [Setup]    Run keywords    I get access token for the customer:    ${yves_user_email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
+    ...    AND    Cleanup existing customer addresses:    ${yves_user_reference}
     ...    AND    I send a POST request:    /customers/${yves_user_reference}/addresses    {"data": {"type": "addresses","attributes": {"customer_reference": "${yves_user_reference}","salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}","address1": "${default_address1}","address2": "${default_address2}","address3": "${default_address3}","zipCode": "${default_zipCode}","city": "${default_city}","country": "${default_country}","iso2Code": "${default_iso2Code}","company":"${default_company}","phone": "${default_phone}","isDefaultShipping": False,"isDefaultBilling": False}}}
     ...    AND    Response status code should be:    201
     ...    AND    I send a GET request:    /customers/${yves_user_reference}/addresses
@@ -206,6 +214,7 @@ Delete_customer_address
 Update_customer_address_several_fields
     [Setup]    Run keywords    I get access token for the customer:    ${yves_user_email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
+    ...    AND    Cleanup existing customer addresses:    ${yves_user_reference}
     ...    AND    I send a POST request:    /customers/${yves_user_reference}/addresses    {"data": {"type": "addresses","attributes": {"customer_reference": "${yves_user_reference}","salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}","address1": "${default_address1}","address2": "${default_address2}","address3": "${default_address3}","zipCode": "${default_zipCode}","city": "${default_city}","country": "${default_country}","iso2Code": "${default_iso2Code}","company":"${default_company}","phone": "${default_phone}","isDefaultShipping": False,"isDefaultBilling": False}}}
     ...    AND    Response status code should be:    201
     ...    AND    Save value to a variable:    [data][id]    address_uid

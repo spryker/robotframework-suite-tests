@@ -344,6 +344,7 @@ Each array element of array in response should contain property with value:
     END
 
 Response should return error message:
+    [Documentation]    Keyword checkd the HTTP response error message for the request sent before this keyword. Call only for negative tests where you expect an error. NOTE: it checks only the first error, if there are more than one, better use this keyword: Array in response should contain property with value
     [Arguments]    ${error_message}
     ${data}=    Get Value From Json    ${response_body}    [errors][0][detail]
     ${data}=    Convert To String    ${data}
@@ -354,6 +355,7 @@ Response should return error message:
     Should Be Equal    ${data}    ${error_message}    Actual ${data} doens't equal expected ${error_message}
 
 Response should return error code:
+    [Documentation]    Keyword checkd the HTTP response code for the request sent before this keyword. Call only for negative tests where you expect an error. NOTE: it checks only the first error, if there are more than one, better use this keyword: Array in response should contain property with value
     [Arguments]    ${error_message}
     ${data}=    Get Value From Json    ${response_body}    [errors][0][code]
     ${data}=    Convert To String    ${data}
@@ -364,6 +366,7 @@ Response should return error code:
     Should Be Equal    ${data}    ${error_message}    Actual ${data} doens't equal expected ${error_message}
 
 Response should contain certain number of values:
+    [Documentation]    Keyword checks if a certain response paratemeter has the specified number of the specified items in it. E.g. can check that response contains 5 categories or 4 cms pages: [data][attributes][nodes]    cms_page    4
     [Arguments]    ${json_path}    ${expected_value}    ${expected_count}
     @{data}=    Get Value From Json    ${response_body}    ${json_path}
     ${log_list}=    Log List    @{data}
@@ -373,6 +376,7 @@ Response should contain certain number of values:
     Should Be Equal    ${count}    ${expected_count}    Actual ${count} doesn't equal expected ${expected_count}
 
 Response include should contain certain entity type:
+    [Documentation]    Keyword checks that a certain entity is included into the response. It accepts the type of the included entity (usually can be found in [included][index][type]) and checks if such entoty exists
     [Arguments]    ${expected_value}    #this should be the 'type' of the included item, e.g. abstract-product-prices
     @{include}=    Get Value From Json    ${response_body}    [included]
     ${list_length}=    Get Length    @{include}
@@ -390,6 +394,7 @@ Response include should contain certain entity type:
     Should Be Equal As Strings    ${result}    True    Include section ${expected_value} was not found
 
 Response include element has self link:
+    [Documentation]    Keyword checks that a specific included entity contains the correct self link. It accepts the type of the included entity (usually can be found in [included][index][type]) and checks that the section with such type exists and has a correct self link.
     [Arguments]    ${expected_value}    #this should be the 'type' of the included item, e.g. abstract-product-prices
     @{include}=    Get Value From Json    ${response_body}    [included]
     ${list_length}=    Get Length    @{include}
@@ -409,6 +414,7 @@ Response include element has self link:
     Should Be Equal As Strings    ${result}    True    Include section ${expected_value} was not found
 
 Save value to a variable:
+    [Documentation]    Keyword saves any value located in a response parameter ${json_path} to a test scope variable called ${name}. E.g. can be used to save value returned in [data][id] into vatiable called cart_uid 
     [Arguments]    ${json_path}    ${name}
     ${var_value}=    Get Value From Json    ${response_body}    ${json_path}
     ${var_value}=    Convert To String    ${var_value}
@@ -419,6 +425,7 @@ Save value to a variable:
     [Return]    ${name}
 
 Response body parameter should contain:
+    [Documentation]    Keyword checks that response parameter ${json_path} contains the specified value ${expected_value}. E.g. can check that [data][type] is addresses.
     [Arguments]    ${json_path}    ${expected_value}
     ${data}=    Get Value From Json    ${response_body}    ${json_path}
     ${data}=    Convert To String    ${data}
@@ -429,6 +436,7 @@ Response body parameter should contain:
     Should Contain   ${data}    ${expected_value}  
 
 Array in response should contain property with value:
+    [Documentation]    Keyword checks is the specified array contains the specified property with the specified value. E.g. can be used to check response contains all the correct errors, if there are more than one error returned for one request.
     [Arguments]    ${json_path}    ${expected_property}    ${expected_value}
     @{data}=    Get Value From Json    ${response_body}    ${json_path}
     ${list_length}=    Get Length    @{data}
@@ -445,3 +453,28 @@ Array in response should contain property with value:
         Run Keyword if    ${result}    Exit For Loop    
     END
     Should Be Equal As Strings    ${result}    True    Value ${expected_value} was not found in the array
+
+Cleanup existing customer addresses:
+    [Documentation]    Delete any and all addresses customer with the specified customer reference has
+    [Arguments]    ${customer_reference}
+    ${response}=    GET    ${glue_url}/customers/${customer_reference}/addresses    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}    expected_status=200
+    ${response_body}=    Set Variable    ${response.json()}
+    Set Test Variable    ${response_body}    ${response_body}
+    Set Test Variable    ${response}    ${response}
+    Should Be Equal As Strings    ${response.status_code}    200    Could not get customer addresses
+    @{data}=    Get Value From Json    ${response_body}    [data]
+    ${list_length}=    Get Length    @{data}
+    ${list_length}=    Convert To Integer    ${list_length}
+    ${log_list}=    Log List    @{data}
+    FOR    ${index}    IN RANGE    0    ${list_length}
+        ${list_element}=    Get From List    @{data}    ${index}
+        Log    list: ${list_element}
+        ${address_uid}=    Get Value From Json    ${list_element}    [id]
+        ${address_uid}=    Convert To String    ${address_uid}
+        ${address_uid}=    Replace String    ${address_uid}    '   ${EMPTY}
+        ${address_uid}=    Replace String    ${address_uid}    [   ${EMPTY}
+        ${address_uid}=    Replace String    ${address_uid}    ]   ${EMPTY}
+        ${response_delete}=    DELETE    ${glue_url}/customers/${customer_reference}/addresses/${address_uid}    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}    expected_status=204
+        Set Test Variable    ${response_delete}    ${response_delete}
+        Should Be Equal As Strings    ${response_delete.status_code}    204    Could not delete a customer address
+    END

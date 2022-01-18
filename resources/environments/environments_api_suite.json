@@ -21,11 +21,6 @@
         "yves_second_user_reference": "DE--4",
         "yves_second_user_salutation": "Mr",
 
-        "invalid_yves_user_email": "george.freeman@spryker.com",
-        "invalid_yves_user_first_name": "George",
-        "invalid_yves_user_last_name": "Freeman",
-        "invalid_yves_user_password": "change123!",
-
         "zed_admin_email": "admin@spryker.com",
         "zed_admin_password": "change123",
 
