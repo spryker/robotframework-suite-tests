@@ -11,3 +11,4 @@ resources/libraries/__pycache__
 /.vscode
 output.xml
 playwright-log.txt
+!API_Keyword_Documentation.html

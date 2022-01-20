@@ -44,7 +44,7 @@ Create_customer_address_with_empty_fields
 Create_customer_address_with_invalid_salutation_bug_CC-15866
     When I get access token for the customer:    ${yves_user_email}
     And I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
-    And I send a POST request:    /customers/${yves_user_reference}/addresses    {"data": {"type": "addresses","attributes": {"salutation": "Fake","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}","address1": "${default_address1}","address2": "${default_address2}","zipCode": "${default_zipCode}","city": "${default_city}","iso2Code": "${default_iso2Code}","isDefaultShipping": False,"isDefaultBilling": False}}}
+    And I send a POST request:    /customers/${yves_user_reference}/addresses    {"data": {"type": "addresses","attributes": {"salutation": "Fake","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}","address1": "${default_address1}","address2": "${default_address2}","zipCode": "${default_zipCode}","city": "${default_city}","iso2Code": "${default_iso2Code}","isDefaultShipping": ${default_shipping_status},"isDefaultBilling": ${default_billing_status}}}}
     Then Response status code should be:    400
     And Response reason should be:    Bad Request
     And Response should return error message:    Invalid value.
@@ -52,7 +52,7 @@ Create_customer_address_with_invalid_salutation_bug_CC-15866
 Create_customer_address_with_customer_reference_not_matching_token
     When I get access token for the customer:    ${yves_user_email}
     And I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
-    And I send a POST request:    /customers/${yves_second_user_reference}/addresses    {"data": {"type": "addresses","attributes": {"salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}","address1": "${default_address1}","address2": "${default_address2}","zipCode": "${default_zipCode}","city": "${default_city}","iso2Code": "${default_iso2Code}","isDefaultShipping": False,"isDefaultBilling": False}}}
+    And I send a POST request:    /customers/${yves_second_user_reference}/addresses    {"data": {"type": "addresses","attributes": {"salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}","address1": "${default_address1}","address2": "${default_address2}","zipCode": "${default_zipCode}","city": "${default_city}","iso2Code": "${default_iso2Code}","isDefaultShipping": ${default_shipping_status},"isDefaultBilling": ${default_billing_status}}}}
     Then Response status code should be:    403
     And Response reason should be:    Forbidden
     And Response should return error code:    411
@@ -61,7 +61,7 @@ Create_customer_address_with_customer_reference_not_matching_token
 Create_customer_address_with_non_existing_customer_reference
     When I get access token for the customer:    ${yves_user_email}
     And I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
-    And I send a POST request:    /customers/DE--10000/addresses    {"data": {"type": "addresses","attributes": {"salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}","address1": "${default_address1}","address2": "${default_address2}","zipCode": "${default_zipCode}","city": "${default_city}","iso2Code": "${default_iso2Code}","isDefaultShipping": False,"isDefaultBilling": False}}}
+    And I send a POST request:    /customers/DE--10000/addresses    {"data": {"type": "addresses","attributes": {"salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}","address1": "${default_address1}","address2": "${default_address2}","zipCode": "${default_zipCode}","city": "${default_city}","iso2Code": "${default_iso2Code}","isDefaultShipping": ${default_shipping_status},"isDefaultBilling": ${default_billing_status}}}}
     Then Response status code should be:    403
     And Response reason should be:    Forbidden
     And Response should return error code:    411
@@ -70,7 +70,7 @@ Create_customer_address_with_non_existing_customer_reference
 Create_customer_address_with_empty_customer_reference
     When I get access token for the customer:    ${yves_user_email}
     And I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
-    And I send a POST request:    /customers//addresses    {"data": {"type": "addresses","attributes": {"salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}","address1": "${default_address1}","address2": "${default_address2}","zipCode": "${default_zipCode}","city": "${default_city}","iso2Code": "${default_iso2Code}","isDefaultShipping": False,"isDefaultBilling": False}}}
+    And I send a POST request:    /customers//addresses    {"data": {"type": "addresses","attributes": {"salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}","address1": "${default_address1}","address2": "${default_address2}","zipCode": "${default_zipCode}","city": "${default_city}","iso2Code": "${default_iso2Code}","isDefaultShipping": ${default_shipping_status},"isDefaultBilling": ${default_billing_status}}}}
     Then Response status code should be:    403
     And Response reason should be:    Forbidden
     And Response should return error code:    411
@@ -79,7 +79,7 @@ Create_customer_address_with_empty_customer_reference
 Create_customer_address_with_empty_type
     When I get access token for the customer:    ${yves_user_email}
     And I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
-    And I send a POST request:    /customers/${yves_user_reference}/addresses    {"data": {"type": "","attributes": {"salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}","address1": "${default_address1}","address2": "${default_address2}","zipCode": "${default_zipCode}","city": "${default_city}","iso2Code": "${default_iso2Code}","isDefaultShipping": False,"isDefaultBilling": False}}}
+    And I send a POST request:    /customers/${yves_user_reference}/addresses    {"data": {"type": "","attributes": {"salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}","address1": "${default_address1}","address2": "${default_address2}","zipCode": "${default_zipCode}","city": "${default_city}","iso2Code": "${default_iso2Code}","isDefaultShipping": ${default_shipping_status},"isDefaultBilling": ${default_billing_status}}}}
     Then Response status code should be:    400
     And Response reason should be:    Bad Request
     And Response should return error message:    Invalid type.
@@ -96,7 +96,7 @@ Get_non-existent_customer_address
 Get_other_customer_address_list
     [Setup]    Run keywords    I get access token for the customer:    ${yves_second_user_email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
-    ...    AND    I send a POST request:    /customers/${yves_second_user_reference}/addresses    {"data": {"type": "addresses","attributes": {"salutation": "${yves_second_user_salutation}","firstName": "${yves_second_user_first_name}","lastName": "${yves_second_user_last_name}","address1": "${default_address1}","address2": "${default_address2}","address3": "${default_address3}","zipCode": "${default_zipCode}","city": "${default_city}","country": "${default_country}","iso2Code": "${default_iso2Code}","company":"${default_company}","phone": "${default_phone}","isDefaultShipping": False,"isDefaultBilling": False}}}
+    ...    AND    I send a POST request:    /customers/${yves_second_user_reference}/addresses    {"data": {"type": "addresses","attributes": {"salutation": "${yves_second_user_salutation}","firstName": "${yves_second_user_first_name}","lastName": "${yves_second_user_last_name}","address1": "${default_address1}","address2": "${default_address2}","address3": "${default_address3}","zipCode": "${default_zipCode}","city": "${default_city}","country": "${default_country}","iso2Code": "${default_iso2Code}","company":"${default_company}","phone": "${default_phone}","isDefaultShipping": ${default_shipping_status},"isDefaultBilling": ${default_billing_status}}}}
     ...    AND    Response status code should be:    201
     ...    AND    Save value to a variable:    [data][id]    address_uid
     When I get access token for the customer:    ${yves_user_email}
@@ -127,7 +127,7 @@ Get_address_list_with_no_token
 Get_other_customer_address_by_id
     [Setup]    Run keywords    I get access token for the customer:    ${yves_second_user_email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
-    ...    AND    I send a POST request:    /customers/${yves_second_user_reference}/addresses    {"data": {"type": "addresses","attributes": {"salutation": "${yves_second_user_salutation}","firstName": "${yves_second_user_first_name}","lastName": "${yves_second_user_last_name}","address1": "${default_address1}","address2": "${default_address2}","address3": "${default_address3}","zipCode": "${default_zipCode}","city": "${default_city}","country": "${default_country}","iso2Code": "${default_iso2Code}","company":"${default_company}","phone": "${default_phone}","isDefaultShipping": False,"isDefaultBilling": False}}}
+    ...    AND    I send a POST request:    /customers/${yves_second_user_reference}/addresses    {"data": {"type": "addresses","attributes": {"salutation": "${yves_second_user_salutation}","firstName": "${yves_second_user_first_name}","lastName": "${yves_second_user_last_name}","address1": "${default_address1}","address2": "${default_address2}","address3": "${default_address3}","zipCode": "${default_zipCode}","city": "${default_city}","country": "${default_country}","iso2Code": "${default_iso2Code}","company":"${default_company}","phone": "${default_phone}","isDefaultShipping": ${default_shipping_status},"isDefaultBilling": ${default_billing_status}}}}
     ...    AND    Response status code should be:    201
     ...    AND    Save value to a variable:    [data][id]    address_uid
     When I get access token for the customer:    ${yves_user_email}
@@ -144,7 +144,7 @@ Get_other_customer_address_by_id
 Get_other_customer_address_by_id_and_reference
     [Setup]    Run keywords    I get access token for the customer:    ${yves_second_user_email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
-    ...    AND    I send a POST request:    /customers/${yves_second_user_reference}/addresses    {"data": {"type": "addresses","attributes": {"salutation": "${yves_second_user_salutation}","firstName": "${yves_second_user_first_name}","lastName": "${yves_second_user_last_name}","address1": "${default_address1}","address2": "${default_address2}","address3": "${default_address3}","zipCode": "${default_zipCode}","city": "${default_city}","country": "${default_country}","iso2Code": "${default_iso2Code}","company":"${default_company}","phone": "${default_phone}","isDefaultShipping": False,"isDefaultBilling": False}}}
+    ...    AND    I send a POST request:    /customers/${yves_second_user_reference}/addresses    {"data": {"type": "addresses","attributes": {"salutation": "${yves_second_user_salutation}","firstName": "${yves_second_user_first_name}","lastName": "${yves_second_user_last_name}","address1": "${default_address1}","address2": "${default_address2}","address3": "${default_address3}","zipCode": "${default_zipCode}","city": "${default_city}","country": "${default_country}","iso2Code": "${default_iso2Code}","company":"${default_company}","phone": "${default_phone}","isDefaultShipping": ${default_shipping_status},"isDefaultBilling": ${default_billing_status}}}}
     ...    AND    Response status code should be:    201
     ...    AND    Save value to a variable:    [data][id]    address_uid
     When I get access token for the customer:    ${yves_user_email}
@@ -179,7 +179,7 @@ Patch_customer_address_with_fake_id
 Patch_another_customer_address
     [Setup]    Run keywords    I get access token for the customer:    ${yves_second_user_email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
-    ...    AND    I send a POST request:    /customers/${yves_second_user_reference}/addresses    {"data": {"type": "addresses","attributes": {"salutation": "${yves_second_user_salutation}","firstName": "${yves_second_user_first_name}","lastName": "${yves_second_user_last_name}","address1": "${default_address1}","address2": "${default_address2}","address3": "${default_address3}","zipCode": "${default_zipCode}","city": "${default_city}","country": "${default_country}","iso2Code": "${default_iso2Code}","company":"${default_company}","phone": "${default_phone}","isDefaultShipping": False,"isDefaultBilling": False}}}
+    ...    AND    I send a POST request:    /customers/${yves_second_user_reference}/addresses    {"data": {"type": "addresses","attributes": {"salutation": "${yves_second_user_salutation}","firstName": "${yves_second_user_first_name}","lastName": "${yves_second_user_last_name}","address1": "${default_address1}","address2": "${default_address2}","address3": "${default_address3}","zipCode": "${default_zipCode}","city": "${default_city}","country": "${default_country}","iso2Code": "${default_iso2Code}","company":"${default_company}","phone": "${default_phone}","isDefaultShipping": ${default_shipping_status},"isDefaultBilling": ${default_billing_status}}}}
     ...    AND    Response status code should be:    201
     ...    AND    Save value to a variable:    [data][id]    address_uid
     When I get access token for the customer:    ${yves_user_email}
@@ -196,7 +196,7 @@ Patch_another_customer_address
 Patch_another_customer_address_by_id_using_reference
     [Setup]    Run keywords    I get access token for the customer:    ${yves_second_user_email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
-    ...    AND    I send a POST request:    /customers/${yves_second_user_reference}/addresses    {"data": {"type": "addresses","attributes": {"salutation": "${yves_second_user_salutation}","firstName": "${yves_second_user_first_name}","lastName": "${yves_second_user_last_name}","address1": "${default_address1}","address2": "${default_address2}","address3": "${default_address3}","zipCode": "${default_zipCode}","city": "${default_city}","country": "${default_country}","iso2Code": "${default_iso2Code}","company":"${default_company}","phone": "${default_phone}","isDefaultShipping": False,"isDefaultBilling": False}}}
+    ...    AND    I send a POST request:    /customers/${yves_second_user_reference}/addresses    {"data": {"type": "addresses","attributes": {"salutation": "${yves_second_user_salutation}","firstName": "${yves_second_user_first_name}","lastName": "${yves_second_user_last_name}","address1": "${default_address1}","address2": "${default_address2}","address3": "${default_address3}","zipCode": "${default_zipCode}","city": "${default_city}","country": "${default_country}","iso2Code": "${default_iso2Code}","company":"${default_company}","phone": "${default_phone}","isDefaultShipping": ${default_shipping_status},"isDefaultBilling": ${default_billing_status}}}}
     ...    AND    Response status code should be:    201
     ...    AND    Save value to a variable:    [data][id]    address_uid
     When I get access token for the customer:    ${yves_user_email}
@@ -213,7 +213,7 @@ Patch_another_customer_address_by_id_using_reference
 Patch_customer_address_with_no_reference
     [Setup]    Run keywords    I get access token for the customer:    ${yves_user_email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
-    ...    AND    I send a POST request:    /customers/${yves_user_reference}/addresses    {"data": {"type": "addresses","attributes": {"salutation": "${yves_second_user_salutation}","firstName": "${yves_second_user_first_name}","lastName": "${yves_second_user_last_name}","address1": "${default_address1}","address2": "${default_address2}","address3": "${default_address3}","zipCode": "${default_zipCode}","city": "${default_city}","country": "${default_country}","iso2Code": "${default_iso2Code}","company":"${default_company}","phone": "${default_phone}","isDefaultShipping": False,"isDefaultBilling": False}}}
+    ...    AND    I send a POST request:    /customers/${yves_user_reference}/addresses    {"data": {"type": "addresses","attributes": {"salutation": "${yves_second_user_salutation}","firstName": "${yves_second_user_first_name}","lastName": "${yves_second_user_last_name}","address1": "${default_address1}","address2": "${default_address2}","address3": "${default_address3}","zipCode": "${default_zipCode}","city": "${default_city}","country": "${default_country}","iso2Code": "${default_iso2Code}","company":"${default_company}","phone": "${default_phone}","isDefaultShipping": ${default_shipping_status},"isDefaultBilling": ${default_billing_status}}}}
     ...    AND    Response status code should be:    201
     ...    AND    Save value to a variable:    [data][id]    address_uid
     When I send a PATCH request:    /customers//addresses/${address_uid}    {"data": {"type": "addresses","attributes": {"address1": "${changed_address1}","address2": "${changed_address2}","address3": "${changed_address3}","phone": "${changed_phone}"}}}
@@ -226,7 +226,7 @@ Patch_customer_address_with_no_reference
 Patch_customer_address_with_wrong_reference
     [Setup]    Run keywords    I get access token for the customer:    ${yves_user_email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
-    ...    AND    I send a POST request:    /customers/${yves_user_reference}/addresses    {"data": {"type": "addresses","attributes": {"salutation": "${yves_second_user_salutation}","firstName": "${yves_second_user_first_name}","lastName": "${yves_second_user_last_name}","address1": "${default_address1}","address2": "${default_address2}","address3": "${default_address3}","zipCode": "${default_zipCode}","city": "${default_city}","country": "${default_country}","iso2Code": "${default_iso2Code}","company":"${default_company}","phone": "${default_phone}","isDefaultShipping": False,"isDefaultBilling": False}}}
+    ...    AND    I send a POST request:    /customers/${yves_user_reference}/addresses    {"data": {"type": "addresses","attributes": {"salutation": "${yves_second_user_salutation}","firstName": "${yves_second_user_first_name}","lastName": "${yves_second_user_last_name}","address1": "${default_address1}","address2": "${default_address2}","address3": "${default_address3}","zipCode": "${default_zipCode}","city": "${default_city}","country": "${default_country}","iso2Code": "${default_iso2Code}","company":"${default_company}","phone": "${default_phone}","isDefaultShipping": ${default_shipping_status},"isDefaultBilling": ${default_billing_status}}}}
     ...    AND    Response status code should be:    201
     ...    AND    Save value to a variable:    [data][id]    address_uid
     When I send a PATCH request:    /customers/DE--1/addresses/${address_uid}    {"data": {"type": "addresses","attributes": {"address1": "${changed_address1}","address2": "${changed_address2}","address3": "${changed_address3}","phone": "${changed_phone}"}}}
@@ -239,7 +239,7 @@ Patch_customer_address_with_wrong_reference
 Patch_customer_address_with_empty_required_fields
     [Setup]    Run keywords    I get access token for the customer:    ${yves_user_email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
-    ...    AND    I send a POST request:    /customers/${yves_user_reference}/addresses    {"data": {"type": "addresses","attributes": {"salutation": "${yves_second_user_salutation}","firstName": "${yves_second_user_first_name}","lastName": "${yves_second_user_last_name}","address1": "${default_address1}","address2": "${default_address2}","address3": "${default_address3}","zipCode": "${default_zipCode}","city": "${default_city}","country": "${default_country}","iso2Code": "${default_iso2Code}","company":"${default_company}","phone": "${default_phone}","isDefaultShipping": False,"isDefaultBilling": False}}}
+    ...    AND    I send a POST request:    /customers/${yves_user_reference}/addresses    {"data": {"type": "addresses","attributes": {"salutation": "${yves_second_user_salutation}","firstName": "${yves_second_user_first_name}","lastName": "${yves_second_user_last_name}","address1": "${default_address1}","address2": "${default_address2}","address3": "${default_address3}","zipCode": "${default_zipCode}","city": "${default_city}","country": "${default_country}","iso2Code": "${default_iso2Code}","company":"${default_company}","phone": "${default_phone}","isDefaultShipping": ${default_shipping_status},"isDefaultBilling": ${default_billing_status}}}}
     ...    AND    Response status code should be:    201
     ...    AND    Save value to a variable:    [data][id]    address_uid
     When I send a PATCH request:    /customers/${yves_user_reference}/addresses/${address_uid}    {"data": {"type": "addresses","attributes": {"salutation": None,"firstName": None,"lastName": None, "address1": None,"address2": None,"zipCode": None,"city": None,"iso2Code": None}}}
@@ -263,7 +263,7 @@ Patch_customer_address_with_empty_required_fields
 Patch_customer_address_with_invalid_salutation_bug_CC-15866
     [Setup]    Run keywords    I get access token for the customer:    ${yves_user_email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
-    ...    AND    I send a POST request:    /customers/${yves_user_reference}/addresses    {"data": {"type": "addresses","attributes": {"salutation": "${yves_second_user_salutation}","firstName": "${yves_second_user_first_name}","lastName": "${yves_second_user_last_name}","address1": "${default_address1}","address2": "${default_address2}","address3": "${default_address3}","zipCode": "${default_zipCode}","city": "${default_city}","country": "${default_country}","iso2Code": "${default_iso2Code}","company":"${default_company}","phone": "${default_phone}","isDefaultShipping": False,"isDefaultBilling": False}}}
+    ...    AND    I send a POST request:    /customers/${yves_user_reference}/addresses    {"data": {"type": "addresses","attributes": {"salutation": "${yves_second_user_salutation}","firstName": "${yves_second_user_first_name}","lastName": "${yves_second_user_last_name}","address1": "${default_address1}","address2": "${default_address2}","address3": "${default_address3}","zipCode": "${default_zipCode}","city": "${default_city}","country": "${default_country}","iso2Code": "${default_iso2Code}","company":"${default_company}","phone": "${default_phone}","isDefaultShipping": ${default_shipping_status},"isDefaultBilling": ${default_billing_status}}}}
     ...    AND    Response status code should be:    201
     ...    AND    Save value to a variable:    [data][id]    address_uid
     When I send a PATCH request:    /customers/${yves_user_reference}/addresses/${address_uid}    {"data": {"type": "addresses","attributes": {"salutation": "Fake"}}}
@@ -294,7 +294,7 @@ Delete_customer_address_with_no_id
 Delete_other_customer_address_by_id
     [Setup]    Run keywords    I get access token for the customer:    ${yves_second_user_email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
-    ...    AND    I send a POST request:    /customers/${yves_second_user_reference}/addresses    {"data": {"type": "addresses","attributes": {"salutation": "${yves_second_user_salutation}","firstName": "${yves_second_user_first_name}","lastName": "${yves_second_user_last_name}","address1": "${default_address1}","address2": "${default_address2}","address3": "${default_address3}","zipCode": "${default_zipCode}","city": "${default_city}","country": "${default_country}","iso2Code": "${default_iso2Code}","company":"${default_company}","phone": "${default_phone}","isDefaultShipping": False,"isDefaultBilling": False}}}
+    ...    AND    I send a POST request:    /customers/${yves_second_user_reference}/addresses    {"data": {"type": "addresses","attributes": {"salutation": "${yves_second_user_salutation}","firstName": "${yves_second_user_first_name}","lastName": "${yves_second_user_last_name}","address1": "${default_address1}","address2": "${default_address2}","address3": "${default_address3}","zipCode": "${default_zipCode}","city": "${default_city}","country": "${default_country}","iso2Code": "${default_iso2Code}","company":"${default_company}","phone": "${default_phone}","isDefaultShipping": ${default_shipping_status},"isDefaultBilling": ${default_billing_status}}}}
     ...    AND    Response status code should be:    201
     ...    AND    Save value to a variable:    [data][id]    address_uid
     When I get access token for the customer:    ${yves_user_email}

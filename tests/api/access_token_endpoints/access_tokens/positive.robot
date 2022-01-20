@@ -14,5 +14,7 @@ Get_access_token_for_customer
     And Response body parameter should be less than:    [data][attributes][expiresIn]    30000
     And Response body parameter should not be EMPTY:    [data][attributes][tokenType]
     And Response body parameter should not be EMPTY:    [data][attributes][accessToken]
+    And Response body parameter should not be EMPTY:    [data][attributes][refreshToken]
+    And Response body should contain:    idCompanyUser
     And Response body has correct self link internal
 

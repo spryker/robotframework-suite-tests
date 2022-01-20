@@ -39,6 +39,9 @@
         "default_company": "Spryker",
         "default_phone": "22111-3-4-5",
 
+        "default_shipping_status": "False",
+        "default_billing_status": "False",
+
         "changed_address1": "New Street 123",
         "changed_address2": "75d",
         "changed_address3": "third. address. line - changed",
