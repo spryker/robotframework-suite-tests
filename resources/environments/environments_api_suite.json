@@ -7,19 +7,48 @@
     },
 
     "users": {    
-        "yves_user_email": "george.freeman@spryker.com",
-        "yves_user_first_name": "George",
-        "yves_user_last_name": "Freeman",
+        "yves_user_email": "sonia@spryker.com",
+        "yves_user_first_name": "Sonia",
+        "yves_user_last_name": "Wagner",
         "yves_user_password": "change123",
+        "yves_user_reference": "DE--21",
+        "yves_user_salutation": "Ms",
 
         "yves_second_user_email": "bill.martin@spryker.com",
         "yves_second_user_first_name": "Martin",
         "yves_second_user_last_name": "Bill",
         "yves_second_user_password": "change123",
+        "yves_second_user_reference": "DE--4",
+        "yves_second_user_salutation": "Mr",
 
         "zed_admin_email": "admin@spryker.com",
-        "zed_admin_password": "change123"
+        "zed_admin_password": "change123",
+
+        "agent_email": "agent123@spryker.com",
+        "agent_password": "change123"
     },
+    
+    "address":{
+        "default_address1": "Third, 33, 11",
+        "default_address2": "33-B",
+        "default_address3": "third. address. line",
+        "default_zipCode": "12312",
+        "default_city": "Berlin",
+        "default_country": "Germany",
+        "default_iso2Code": "DE",
+        "default_company": "Spryker",
+        "default_phone": "22111-3-4-5",
+
+        "default_shipping_status": "False",
+        "default_billing_status": "False",
+
+        "changed_address1": "New Street 123",
+        "changed_address2": "75d",
+        "changed_address3": "third. address. line - changed",
+        "changed_phone": "555-555-55"
+
+    },
+
     "shop":{
         "currency_name": "Euro",
         "currency_code": "EUR",
