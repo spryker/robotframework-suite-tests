@@ -4,7 +4,7 @@ Resource    ../../../../resources/common/common_api.robot
 
 *** Test Cases ***
 Get_acess_token_with_invalid_password
-    When I send a POST request:    /access-tokens    {"data":{"type":"access-tokens","attributes":{"username":"${yves_second_user_email}","password":"${invalid_yves_user_password}"}}}
+    When I send a POST request:    /access-tokens    {"data":{"type":"access-tokens","attributes":{"username":"${yves_second_user_email}","password":"fake"}}}
     Then Response status code should be:    401
     And Response reason should be:    Unauthorized
     And Response should return error code:    003
