@@ -1,6 +1,7 @@
 *** Settings ***
 Suite Setup       SuiteSetup
 Resource    ../../../../resources/common/common_api.robot
+Test Setup    TestSetup
 
 *** Test Cases ***
 Get_acess_token_with_invalid_password
