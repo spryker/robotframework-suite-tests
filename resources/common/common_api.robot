@@ -67,7 +67,6 @@ TestSetup
     END
     Log    ${current_url}
 
-
 Load Variables
     [Documentation]    Keyword is used to load variable values from the environment file passed during execution. This Keyword is used during suite setup.
     ...    It accepts the name of the environment as specified at the beginning of an environment file e.g. ``"environment": "api_suite"``.
