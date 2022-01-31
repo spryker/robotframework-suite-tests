@@ -145,8 +145,8 @@ Page Should Contain Element
     Wait For Elements State    ${locator}    attached    ${timeout}    ${message}
 
 Get Location
-    ${current_url}=    Get URL
-    [Return]    ${current_url}
+    ${current_location}=    Get URL
+    [Return]    ${current_location}
     
 Wait Until Element Is Not Visible
     [Arguments]    ${locator}    ${message}=${EMPTY}    ${timeout}=0:00:20
