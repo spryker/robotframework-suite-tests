@@ -11,6 +11,7 @@ Library    ../../resources/libraries/common.py
 
 *** Variables ***
 # *** SUITE VARIABLES ***
+${current_url}                 http://glue.de.spryker.local
 ${glue_url}                    http://glue.de.spryker.local
 ${bapi_url}                    http://backend-api.de.spryker.local
 ${api_timeout}                 60
@@ -34,6 +35,38 @@ SuiteSetup
     Set Global Variable    ${today}
     [Teardown]
     [Return]    ${random}
+
+TestSetup
+    [Documentation]   This setup should be called in Settings of every test suite. It defines which url variable will be used in the test suite.
+    ...
+    ...    At the moment it is used to define if the test is for GLUE (``glue`` tag) or BAPI (``bapi`` tag) by checking for the default or test tag. 
+    ...    If the tag is there it replaces the domein URL with bapi url.
+    ...
+    ...    To set a tag to a test case use ``[Tags]`` under the test name. 
+    ...    To set default tags for the whole test suite (.robotframework file), use ``Default Tags`` keyword in the suite Settings.
+    ...
+    ...    *Notes*: 
+    ...    
+    ...    1. If a test suite has no Test Setup and/or tests in the suite have no bapi/glue tags, GLUE URL will be used by default as the current URL.
+    ...
+    ...    2. Do not set both tags to a suite, each suite/robot file should have tests only for GLUE or only for BAPI.
+    ...
+    ...    3. You can set other tags for tests and suites with no restrictions, they will be ignored in suite setup.
+    ...
+    ...    *Example:*
+    ...
+    ...    ``*** Settings ***``
+    ...    
+    ...    ``Test Setup    TestSetup``
+    ...
+    ...    ``Default Tags    bapi``
+    FOR  ${tag}  IN  @{Test Tags}
+    Log   ${tag}
+    Run Keyword if    '${tag}'=='bapi'    Set Suite Variable    ${current_url}    ${bapi_url}    
+    Run Keyword if    '${tag}'=='glue'    Set Suite Variable    ${current_url}    ${glue_url}   
+    END
+    Log    ${current_url}
+
 
 Load Variables
     [Documentation]    Keyword is used to load variable values from the environment file passed during execution. This Keyword is used during suite setup.
@@ -82,7 +115,7 @@ I get access token for the customer:
     ...    ``I get access token for the customer:    ${yves_user_email}``
     [Arguments]    ${email}    ${password}=${default_password}
     ${data}=    Evaluate    {"data":{"type":"access-tokens","attributes":{"username":"${email}","password":"${password}"}}}
-    ${response}=    POST    ${glue_url}/access-tokens    json=${data}
+    ${response}=    POST    ${current_url}/access-tokens    json=${data}
     ${token}=    Set Variable    Bearer ${response.json()['data']['attributes']['accessToken']}
     ${response_body}=    Set Variable    ${response.json()}
     ${response_headers}=    Set Variable    ${response.headers}
@@ -90,7 +123,7 @@ I get access token for the customer:
     Set Test Variable    ${response}    ${response}
     Set Test Variable    ${response_headers}    ${response_headers}
     Set Test Variable    ${response_body}    ${response_body}
-    Set Test Variable    ${expected_self_link}    ${glue_url}/access-tokens
+    Set Test Variable    ${expected_self_link}    ${current_url}/access-tokens
     Log    ${token}
     [Return]    ${token}
 
@@ -108,14 +141,14 @@ I send a POST request:
     [Arguments]   ${path}    ${json}    ${timeout}=${api_timeout}    ${allow_redirects}=${default_allow_redirects}    ${auth}=${default_auth}    ${expected_status}=ANY
     ${data}=    Evaluate    ${json}
     ${hasValue}    Run Keyword and return status     Should not be empty    ${headers}
-    ${response}=    Run Keyword if    ${hasValue}    POST    ${glue_url}${path}    json=${data}    headers=${headers}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}
-    ...    ELSE    POST    ${glue_url}${path}    json=${data}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=ANY
+    ${response}=    Run Keyword if    ${hasValue}    POST    ${current_url}${path}    json=${data}    headers=${headers}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}
+    ...    ELSE    POST    ${current_url}${path}    json=${data}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=ANY
     ${response_body}=    Set Variable    ${response.json()}
     ${response_headers}=    Set Variable    ${response.headers}
     Set Test Variable    ${response_headers}    ${response_headers}
     Set Test Variable    ${response_body}    ${response_body}
     Set Test Variable    ${response}    ${response}
-    Set Test Variable    ${expected_self_link}    ${glue_url}${path}
+    Set Test Variable    ${expected_self_link}    ${current_url}${path}
     [Return]    ${response_body}
 
 I send a POST request with data:
@@ -132,14 +165,14 @@ I send a POST request with data:
     [Arguments]   ${path}    ${data}    ${timeout}=${api_timeout}    ${allow_redirects}=${default_allow_redirects}    ${auth}=${default_auth}    ${expected_status}=ANY
     ${data}=    Evaluate    ${data}
     ${hasValue}    Run Keyword and return status     Should not be empty    ${headers}
-    ${response}=    Run Keyword if    ${hasValue}    POST    ${glue_url}${path}    data=${data}    headers=${headers}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}
-    ...    ELSE    POST    ${glue_url}${path}    data=${data}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}
+    ${response}=    Run Keyword if    ${hasValue}    POST    ${current_url}${path}    data=${data}    headers=${headers}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}
+    ...    ELSE    POST    ${current_url}${path}    data=${data}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}
     ${response_body}=    Set Variable    ${response.json()}
     ${response_headers}=    Set Variable    ${response.headers}
     Set Test Variable    ${response_headers}    ${response_headers}
     Set Test Variable    ${response_body}    ${response_body}
     Set Test Variable    ${response}    ${response}
-    Set Test Variable    ${expected_self_link}    ${glue_url}${path}
+    Set Test Variable    ${expected_self_link}    ${current_url}${path}
     [Return]    ${response_body}
 
 I send a PUT request:
@@ -156,14 +189,14 @@ I send a PUT request:
     [Arguments]   ${path}    ${json}    ${timeout}=${api_timeout}    ${allow_redirects}=${default_allow_redirects}    ${auth}=${default_auth}    ${expected_status}=ANY
     ${data}=    Evaluate    ${json}
     ${hasValue}    Run Keyword and return status     Should not be empty    ${headers}
-    ${response}=    Run Keyword if    ${hasValue}    PUT    ${glue_url}${path}    json=${data}    headers=${headers}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}
-    ...    ELSE    PUT    ${glue_url}${path}    json=${data}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}
+    ${response}=    Run Keyword if    ${hasValue}    PUT    ${current_url}${path}    json=${data}    headers=${headers}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}
+    ...    ELSE    PUT    ${current_url}${path}    json=${data}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}
     ${response_body}=    Set Variable    ${response.json()}
     ${response_headers}=    Set Variable    ${response.headers}
     Set Test Variable    ${response_headers}    ${response_headers}
     Set Test Variable    ${response_body}    ${response_body}
     Set Test Variable    ${response}    ${response}
-    Set Test Variable    ${expected_self_link}    ${glue_url}${path}
+    Set Test Variable    ${expected_self_link}    ${current_url}${path}
     [Return]    ${response_body}
 
 I send a PUT request with data:
@@ -180,14 +213,14 @@ I send a PUT request with data:
     [Arguments]   ${path}    ${data}    ${timeout}=${api_timeout}    ${allow_redirects}=${default_allow_redirects}    ${auth}=${default_auth}    ${expected_status}=ANY
     ${data}=    Evaluate    ${data}
     ${hasValue}    Run Keyword and return status     Should not be empty    ${headers}
-    ${response}=    Run Keyword if    ${hasValue}    PUT    ${glue_url}${path}    data=${data}    headers=${headers}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}
-    ...    ELSE    PUT    ${glue_url}${path}    data=${data}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}
+    ${response}=    Run Keyword if    ${hasValue}    PUT    ${current_url}${path}    data=${data}    headers=${headers}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}
+    ...    ELSE    PUT    ${current_url}${path}    data=${data}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}
     ${response_body}=    Set Variable    ${response.json()}
     ${response_headers}=    Set Variable    ${response.headers}
     Set Test Variable    ${response_headers}    ${response_headers}
     Set Test Variable    ${response_body}    ${response_body}
     Set Test Variable    ${response}    ${response}
-    Set Test Variable    ${expected_self_link}    ${glue_url}${path}
+    Set Test Variable    ${expected_self_link}    ${current_url}${path}
     [Return]    ${response_body}
 
 I send a PATCH request:
@@ -209,14 +242,14 @@ I send a PATCH request:
     [Arguments]   ${path}    ${json}    ${timeout}=${api_timeout}    ${allow_redirects}=${default_allow_redirects}    ${auth}=${default_auth}    ${expected_status}=ANY
     ${data}=    Evaluate    ${json}
     ${hasValue}    Run Keyword and return status     Should not be empty    ${headers}
-    ${response}=    Run Keyword if    ${hasValue}    PATCH    ${glue_url}${path}    json=${data}    headers=${headers}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}
-    ...    ELSE    PATCH    ${glue_url}${path}    json=${data}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}
+    ${response}=    Run Keyword if    ${hasValue}    PATCH   ${current_url}${path}    json=${data}    headers=${headers}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}
+    ...    ELSE    PATCH    ${current_url}${path}    json=${data}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}
     ${response_body}=    Set Variable    ${response.json()}
     ${response_headers}=    Set Variable    ${response.headers}
     Set Test Variable    ${response_headers}    ${response_headers}
     Set Test Variable    ${response_body}    ${response_body}
     Set Test Variable    ${response}    ${response}
-    Set Test Variable    ${expected_self_link}    ${glue_url}${path}
+    Set Test Variable    ${expected_self_link}    ${current_url}${path}
     [Return]    ${response_body}
 
 I send a PATCH request with data
@@ -239,14 +272,14 @@ I send a PATCH request with data
     [Arguments]   ${path}    ${data}    ${timeout}=${api_timeout}    ${allow_redirects}=${default_allow_redirects}    ${auth}=${default_auth}    ${expected_status}=ANY
     ${data}=    Evaluate    ${data}
     ${hasValue}    Run Keyword and return status     Should not be empty    ${headers}
-    ${response}=    Run Keyword if    ${hasValue}    PATCH    ${glue_url}${path}    data=${data}    headers=${headers}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}
-    ...    ELSE    PATCH    ${glue_url}${path}    data=${data}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}
+    ${response}=    Run Keyword if    ${hasValue}    PATCH    ${current_url}${path}    data=${data}    headers=${headers}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}
+    ...    ELSE    PATCH    ${current_url}${path}    data=${data}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}
     ${response_body}=    Set Variable    ${response.json()}
     ${response_headers}=    Set Variable    ${response.headers}
     Set Test Variable    ${response_headers}    ${response_headers}
     Set Test Variable    ${response_body}    ${response_body}
     Set Test Variable    ${response}    ${response}
-    Set Test Variable    ${expected_self_link}    ${glue_url}${path}
+    Set Test Variable    ${expected_self_link}    ${current_url}${path}
     [Return]    ${response_body}
 
 I send a GET request:
@@ -266,14 +299,14 @@ I send a GET request:
     ...    ``I send a GET request:    /abstract-products/${abstract_sku}``
     [Arguments]   ${path}    ${timeout}=${api_timeout}    ${allow_redirects}=${default_allow_redirects}    ${auth}=${default_auth}    ${expected_status}=ANY
     ${hasValue}    Run Keyword and return status     Should not be empty    ${headers}
-    ${response}=    Run Keyword if    ${hasValue}    GET    ${glue_url}${path}    headers=${headers}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}
-    ...    ELSE    GET    ${glue_url}${path}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}
+    ${response}=    Run Keyword if    ${hasValue}    GET    ${current_url}${path}    headers=${headers}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}
+    ...    ELSE    GET    ${current_url}${path}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}
     ${response_body}=    Set Variable    ${response.json()}
     ${response_headers}=    Set Variable    ${response.headers}
     Set Test Variable    ${response_headers}    ${response_headers}
     Set Test Variable    ${response_body}    ${response_body}
     Set Test Variable    ${response}    ${response}
-    Set Test Variable    ${expected_self_link}    ${glue_url}${path}
+    Set Test Variable    ${expected_self_link}    ${current_url}${path}
     [Return]    ${response_body}
 
 I send a DELETE request:
@@ -296,14 +329,14 @@ I send a DELETE request:
     ...    ``I send a DELETE request:    /customers/${customer_reference}/addresses/addressUID``
     [Arguments]   ${path}    ${timeout}=${api_timeout}    ${allow_redirects}=${default_allow_redirects}    ${auth}=${default_auth}    ${expected_status}=ANY
     ${hasValue}    Run Keyword and return status     Should not be empty    ${headers}
-    ${response}=    Run Keyword if    ${hasValue}    DELETE    ${glue_url}${path}    headers=${headers}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}
-    ...    ELSE    DELETE    ${glue_url}${path}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}
+    ${response}=    Run Keyword if    ${hasValue}    DELETE    ${current_url}${path}    headers=${headers}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}
+    ...    ELSE    DELETE    ${current_url}${path}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}
     ${response_headers}=    Set Variable    ${response.headers}
     Set Test Variable    ${response}    ${response}
     ${response_body}=    Run Keyword if    ${response.status_code} != 204    Set Variable    ${response.json()}
     Set Test Variable    ${response_headers}    ${response_headers}
     Set Test Variable    ${response_body}    ${response_body}
-    Set Test Variable    ${expected_self_link}    ${glue_url}${path}
+    Set Test Variable    ${expected_self_link}    ${current_url}${path}
     [Return]    ${response_body}
 
 Response reason should be:
@@ -771,7 +804,7 @@ Cleanup existing customer addresses:
     ...
     ...    ``Cleanup existing customer addresses:    ${yves_user_reference}``
     [Arguments]    ${customer_reference}
-    ${response}=    GET    ${glue_url}/customers/${customer_reference}/addresses    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}    expected_status=200
+    ${response}=    GET    ${current_url}/customers/${customer_reference}/addresses    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}    expected_status=200
     ${response_body}=    Set Variable    ${response.json()}
     Set Variable    ${response_body}    ${response_body}
     Set Variable    ${response}    ${response}
@@ -788,7 +821,7 @@ Cleanup existing customer addresses:
         ${address_uid}=    Replace String    ${address_uid}    '   ${EMPTY}
         ${address_uid}=    Replace String    ${address_uid}    [   ${EMPTY}
         ${address_uid}=    Replace String    ${address_uid}    ]   ${EMPTY}
-        ${response_delete}=    DELETE    ${glue_url}/customers/${customer_reference}/addresses/${address_uid}    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}    expected_status=204
+        ${response_delete}=    DELETE    ${current_url}/customers/${customer_reference}/addresses/${address_uid}    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}    expected_status=204
         Set Variable    ${response_delete}    ${response_delete}
         Should Be Equal As Strings    ${response_delete.status_code}    204    Could not delete a customer address
     END
