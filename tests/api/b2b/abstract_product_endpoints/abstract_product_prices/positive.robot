@@ -1,9 +1,11 @@
 *** Settings ***
 Suite Setup       SuiteSetup
-Resource    ../../../../../../resources/common/common_api.robot
+Resource    ../../../../../resources/common/common_api.robot
 
 *** Test Cases ***
 Abstract_prices_detault_only
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}  
     When I send a GET request:    /abstract-products/${abstract_available_product_with_3_concretes}/abstract-product-prices
     Then Response status code should be:    200
     And Response reason should be:    OK
@@ -21,7 +23,10 @@ Abstract_prices_detault_only
     And Response should contain the array of a certain size:    [data][0][attributes][prices][0][volumePrices]   0
     And Response body has correct self link
 
+# Bug in B2B - volume prices arre not shown in glue
 Abstract_volume_prices
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}  
     When I send a GET request:    /abstract-products/${abstract_product_with_volume_prices}/abstract-product-prices
     Then Response status code should be:    200
     And Response reason should be:    OK
@@ -46,6 +51,8 @@ Abstract_volume_prices
     And Response body has correct self link
 
 Abstract_prices_original_price
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}  
     When I send a GET request:    /abstract-products/${abstract_product_with_original_prices}/abstract-product-prices
     Then Response status code should be:    200
     And Response reason should be:    OK

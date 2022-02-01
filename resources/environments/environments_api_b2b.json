@@ -1,0 +1,130 @@
+{
+    "environment": "api_b2b", 
+
+    "env": {
+        "glue_url": "http://glue.de.spryker.local",
+        "bapi_url": "http://backend-api.de.spryker.local"
+    },
+
+    "users": {    
+        "yves_user_email": "sonia@spryker.com",
+        "yves_user_first_name": "Sonia",
+        "yves_user_last_name": "Wagner",
+        "yves_user_password": "change123",
+        "yves_user_reference": "DE--21",
+        "yves_user_salutation": "Ms",
+
+        "yves_second_user_email": "bill.martin@spryker.com",
+        "yves_second_user_first_name": "Martin",
+        "yves_second_user_last_name": "Bill",
+        "yves_second_user_password": "change123",
+        "yves_second_user_reference": "DE--4",
+        "yves_second_user_salutation": "Mr",
+
+        "zed_admin_email": "admin@spryker.com",
+        "zed_admin_password": "change123",
+
+        "agent_email": "agent123@spryker.com",
+        "agent_password": "change123"
+    },
+    
+    "address":{
+        "default_address1": "Third, 33, 11",
+        "default_address2": "33-B",
+        "default_address3": "third. address. line",
+        "default_zipCode": "12312",
+        "default_city": "Berlin",
+        "default_country": "Germany",
+        "default_iso2Code": "DE",
+        "default_company": "Spryker",
+        "default_phone": "22111-3-4-5",
+
+        "default_shipping_status": "False",
+        "default_billing_status": "False",
+
+        "changed_address1": "New Street 123",
+        "changed_address2": "75d",
+        "changed_address3": "third. address. line - changed",
+        "changed_phone": "555-555-55"
+
+    },
+
+    "shop":{
+        "currency_name_eur": "Euro",
+        "currency_code_eur": "EUR",
+        "currency_symbol_eur": "€"
+    },
+        
+    "products": {
+        
+        "bundle_product_abstract_sku": "B0001",
+        "bundle_product_product_name": "Our Favourite Workspace Bundle",
+        "bundled_product_1_abstract_sku": "M528",
+        "bundled_product_2_abstract_sku": "M1017905",
+        "bundled_product_3_abstract_sku": "426581",
+        "bundled_product_1_concrete_sku": "104939",
+        "bundled_product_2_concrete_sku": "574995",
+        "bundled_product_3_concrete_sku": "M24605",
+
+        "multi_variant_product_abstract_sku": "M58035",
+
+        "measurement_unit_product_abstract_sku": "M23723",
+        "packaging_unit_product_abstract_sku": "M21766",
+
+        "product_with_relations_related_products_sku": "M29529",
+        "product_with_relations_alternative_products_sku": "M21100",
+        "product_with_relations_upselling_sku": "M29502",
+
+        "concrete_product_with_alternative_sku": "420566",
+        "abstract_product_with_alternative_sku": "M21100",
+        "alternative_abstract_product": "M21099",
+
+        "abstract_available_product_with_stock": "M90799",
+        "abstract_available_product_with_stock_name": "Mauser sliding door cabinet - Sideboard with 2 shelves",
+        "abstract_available_product_with_stock_superattribute": "",
+
+        "abstract_available_with_stock_and_never_out_of_stock": "M87",
+        "abstract_available_product_never_out_of_stock": "",
+        "abstract_unavailable_product": "",
+
+        "abstract_available_product_with_3_concretes": "M29456",
+        "abstract_available_product_with_3_concretes_name": "Gmöhling aluminum data removal container - Exterior - LxWxH 435 x 385 x 650 mm",
+        "abstract_available_product_with_3_concretes_superattribute": "material",
+
+
+        "abstract_product_with_volume_prices": "M21189",
+        "abstract_product_with_volume_prices_name": "Post-it stick note Super Sticky Meeting Notes 6445-4SS 4 pieces/pack",
+        "abstract_product_with_original_prices": "M74972",
+
+        "abstract_product_with_label": "M21691",
+        "abstract_product_with_label_name": "Clairefontaine Collegeblock 8272C DIN A5, 90 sheets",
+
+        "abstract_product_with_concrete_offers": "",
+        "abstract_product_with_concrete_offers_name": "",
+
+        "abstract_product_with_reviews": "M719",
+        "abstract_product_with_reviews_name": "Rectangular table, rectangular tubing - 1600 x 800 mm",
+
+        "abstract_product_with_options": "M29501",
+        "abstract_product_with_options_name": "Safescan automatic banknote counter - UV counterfeit recognition"
+            
+    },
+    "content":{
+
+        "abstract_product_list_id": "",
+        "abstract_list_product1_sku": "",
+        "abstract_list_product1_name": "",
+        "abstract_list_product2_sku": "",
+        "abstract_list_product2_name": "",
+        "abstract_list_size": ""
+
+    },
+    "availability":{
+        "stock_is_0": "0.0000000000",
+        "stock_is_20": "20.0000000000"
+    },
+    "misc":{
+        "default_header_content_type": "application/vnd.api+json"
+    }
+
+}
