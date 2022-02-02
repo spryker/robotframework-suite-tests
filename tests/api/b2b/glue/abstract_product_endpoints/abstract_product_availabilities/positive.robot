@@ -1,6 +1,6 @@
 *** Settings ***
 Suite Setup       SuiteSetup
-Resource    ../../../../../resources/common/common_api.robot
+Resource    ../../../../../../resources/common/common_api.robot
 
 *** Test Cases ***
 Product_is_available_with_stock_and_never_out_of_stock

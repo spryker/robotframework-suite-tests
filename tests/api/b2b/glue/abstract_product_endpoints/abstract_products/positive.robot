@@ -1,6 +1,6 @@
 *** Settings ***
 Suite Setup       SuiteSetup
-Resource    ../../../../../resources/common/common_api.robot
+Resource    ../../../../../../resources/common/common_api.robot
 
 *** Test Cases ***
 Abstract_product_with_one_concrete
@@ -123,6 +123,8 @@ Abstract_product_with_abstract_includes_for_options
     And Response include element has self link:   product-options 
 
 Abstract_product_with_3_concrete_and_concrete_nested_includes
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}  
     When I send a GET request:    /abstract-products/${abstract_available_product_with_3_concretes}?include=concrete-products,concrete-product-prices,concrete-product-image-sets,concrete-product-availabilities
     Then Response status code should be:    200
     And Response reason should be:    OK

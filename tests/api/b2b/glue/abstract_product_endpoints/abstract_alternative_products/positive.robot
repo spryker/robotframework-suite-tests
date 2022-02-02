@@ -1,6 +1,6 @@
 *** Settings ***
 Suite Setup       SuiteSetup
-Resource    ../../../../../resources/common/common_api.robot
+Resource    ../../../../../../resources/common/common_api.robot
 
 *** Test Cases ***
 # fails in B2B - a bug

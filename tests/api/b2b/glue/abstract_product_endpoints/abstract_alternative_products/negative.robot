@@ -1,6 +1,6 @@
 *** Settings ***
 Suite Setup       SuiteSetup
-Resource    ../../../../../resources/common/common_api.robot
+Resource    ../../../../../../resources/common/common_api.robot
 
 *** Test Cases ***
 Get_alternative_abstract_with_nonexistant_SKU

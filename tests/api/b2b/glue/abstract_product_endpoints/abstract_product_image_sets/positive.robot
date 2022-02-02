@@ -1,6 +1,6 @@
 *** Settings ***
 Suite Setup       SuiteSetup
-Resource    ../../../../../resources/common/common_api.robot
+Resource    ../../../../../../resources/common/common_api.robot
 
 *** Test Cases ***
 Abstract_image_sets_with_1_concrete
