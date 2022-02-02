@@ -62,7 +62,7 @@ TestSetup
     ...    ``Default Tags    bapi``
     FOR  ${tag}  IN  @{Test Tags}
     Log   ${tag}
-    Run Keyword if    '${tag}'=='bapi'    Set Suite Variable    ${current_url}    ${bapi_url}    
+    Run Keyword if    '${tag}'=='bapi'    Set Suite Variable    ${current_url}    ${bapi_url}/api/rest    
     Run Keyword if    '${tag}'=='glue'    Set Suite Variable    ${current_url}    ${glue_url}   
     END
     Log    ${current_url}
@@ -82,7 +82,7 @@ Load Variables
     &{vars}=   Define Environment Variables From Json File    ${env}
     FOR    ${key}    ${value}    IN    &{vars}
         Log    Key is '${key}' and value is '${value}'.
-        ${var_value}=   Get Variable Value  ${${key}}   ${value}
+        ${var_value}=   Get Variable Value  ${${key}}   \${value}
         Set Global Variable    ${${key}}    ${var_value}
     END
 
