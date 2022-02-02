@@ -10,7 +10,7 @@ Create_customer_address_with_missing_required_fields
     And I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     And I send a POST request:    /customers/${yves_user_reference}/addresses    {"data": {"type": "addresses","attributes": {"address3": "${default_address3}"}}}
     Then Response status code should be:    422
-    And Response reason should be:    Unprocessable Content
+    And Response reason should be:    Unprocessable Entity
     And Each array element of array in response should contain property with value:    [errors]    code    901
     And Each array element of array in response should contain property with value:    [errors]    status    422
     And Array in response should contain property with value:    [errors]    detail    salutation => This field is missing.
@@ -29,7 +29,7 @@ Create_customer_address_with_empty_fields
     And I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     And I send a POST request:    /customers/${yves_user_reference}/addresses    {"data": {"type": "addresses","attributes": {"salutation": "","firstName": "","lastName": "","address1": "","address2": "","address3": "","zipCode": "","city": "","country": "","iso2Code": "","company":"","phone": "","isDefaultShipping": "","isDefaultBilling": ""}}}
     Then Response status code should be:    422
-    And Response reason should be:    Unprocessable Content
+    And Response reason should be:    Unprocessable Entity
     And Each array element of array in response should contain property with value:    [errors]    code    901
     And Each array element of array in response should contain property with value:    [errors]    status    422
     And Array in response should contain property with value:    [errors]    detail    salutation => This value should not be blank.
@@ -40,14 +40,13 @@ Create_customer_address_with_empty_fields
     And Array in response should contain property with value:    [errors]    detail    zipCode => This value should not be blank.
     And Array in response should contain property with value:    [errors]    detail    city => This value should not be blank.
 
-# Bug CC-15866
-Create_customer_address_with_invalid_salutation_bug_CC-15866
+Create_customer_address_with_invalid_salutation
     When I get access token for the customer:    ${yves_user_email}
     And I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     And I send a POST request:    /customers/${yves_user_reference}/addresses    {"data": {"type": "addresses","attributes": {"salutation": "Fake","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}","address1": "${default_address1}","address2": "${default_address2}","zipCode": "${default_zipCode}","city": "${default_city}","iso2Code": "${default_iso2Code}","isDefaultShipping": ${default_shipping_status},"isDefaultBilling": ${default_billing_status}}}}
-    Then Response status code should be:    400
-    And Response reason should be:    Bad Request
-    And Response should return error message:    Invalid value.
+    Then Response status code should be:    422
+    And Response reason should be:    Unprocessable Entity
+    And Response should return error message:    salutation =\u003E The value you selected is not a valid choice.
 
 Create_customer_address_with_customer_reference_not_matching_token
     When I get access token for the customer:    ${yves_user_email}
@@ -114,9 +113,9 @@ Get_address_list_for_non-existent_customer
     When I get access token for the customer:    ${yves_user_email}
     And I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     When I send a GET request:    /customers/fake/addresses
-    Then Response status code should be:    403
-    And Response reason should be:    Forbidden
-    And Response should return error message:    Unauthorized request.
+    Then Response status code should be:    404
+    And Response reason should be:    Not Found
+    And Response should return error message:    Customer not found.
 
 Get_address_list_with_no_token
     When I send a GET request:    /customers/${yves_user_reference}/addresses
@@ -244,7 +243,7 @@ Patch_customer_address_with_empty_required_fields
     ...    AND    Save value to a variable:    [data][id]    address_uid
     When I send a PATCH request:    /customers/${yves_user_reference}/addresses/${address_uid}    {"data": {"type": "addresses","attributes": {"salutation": None,"firstName": None,"lastName": None, "address1": None,"address2": None,"zipCode": None,"city": None,"iso2Code": None}}}
     Then Response status code should be:    422
-    And Response reason should be:    Unprocessable Content
+    And Response reason should be:    Unprocessable Entity
     And Each array element of array in response should contain property with value:    [errors]    code    901
     And Each array element of array in response should contain property with value:    [errors]    status    422
     And Array in response should contain property with value:    [errors]    detail    salutation => This value should not be blank.
@@ -259,17 +258,16 @@ Patch_customer_address_with_empty_required_fields
     ...    AND    Response status code should be:    204
 
 
-# Bug CC-15866
-Patch_customer_address_with_invalid_salutation_bug_CC-15866
+Patch_customer_address_with_invalid_salutation
     [Setup]    Run keywords    I get access token for the customer:    ${yves_user_email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     ...    AND    I send a POST request:    /customers/${yves_user_reference}/addresses    {"data": {"type": "addresses","attributes": {"salutation": "${yves_second_user_salutation}","firstName": "${yves_second_user_first_name}","lastName": "${yves_second_user_last_name}","address1": "${default_address1}","address2": "${default_address2}","address3": "${default_address3}","zipCode": "${default_zipCode}","city": "${default_city}","country": "${default_country}","iso2Code": "${default_iso2Code}","company":"${default_company}","phone": "${default_phone}","isDefaultShipping": ${default_shipping_status},"isDefaultBilling": ${default_billing_status}}}}
     ...    AND    Response status code should be:    201
     ...    AND    Save value to a variable:    [data][id]    address_uid
     When I send a PATCH request:    /customers/${yves_user_reference}/addresses/${address_uid}    {"data": {"type": "addresses","attributes": {"salutation": "Fake"}}}
-    Then Response status code should be:    400
-    And Response reason should be:    Bad Request
-    And Response should return error message:    Invalid value.
+    Then Response status code should be:    422
+    And Response reason should be:    Unprocessable Entity
+    And Response should return error message:    salutation =\u003E The value you selected is not a valid choice.
     [Teardown]    Run Keywords    I send a DELETE request:     /customers/${yves_user_reference}/addresses/${address_uid}
     ...    AND    Response status code should be:    204
 

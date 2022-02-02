@@ -4,7 +4,7 @@ Resource    ../../../../../../resources/common/common_api.robot
 
 *** Test Cases ***
 Get_agent_token_for_user_who_is_not_agent
-    When I send a POST request:    /agent-access-tokens    {"data": {"type": "agent-access-tokens","attributes": {"username": "${zed_admin_email}","password": "${zed_admin_password}"}}}
+    When I send a POST request:    /agent-access-tokens    {"data": {"type": "agent-access-tokens","attributes": {"username": "${non_agent_email}","password": "${non_agent_password}"}}}
     Then Response status code should be:    401
     And Response reason should be:    Unauthorized
     And Response should return error code:    4101
