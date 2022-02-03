@@ -56,7 +56,7 @@ All these browsers that cover more than 85% of the world wide used browsers, can
 
 `robot -v env:b2c -v browser:firefox -d results tests/smoke/smoke_b2c.robot`
 
-### API
+## API
 
 NOTE: the progress of the API automation can be found here https://spryker.atlassian.net/wiki/spaces/PS/pages/3104834019/Robot+Framework+API+automation+progress.
 If you are automating any endpoint, please mark it as WIP in this table, mark it as Done when finished.
