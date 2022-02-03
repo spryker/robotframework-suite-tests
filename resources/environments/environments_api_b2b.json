@@ -3,7 +3,7 @@
 
     "env": {
         "glue_url": "http://glue.de.spryker.local",
-        "bapi_url": "http://backend-api.de.spryker.local"
+        "bapi_url": "http://backend-api.de.spryker.local/api/rest"
     },
 
     "users": {    
@@ -28,7 +28,12 @@
         "agent_password": "change123",
 
         "non_agent_email": "admin_de@spryker.com",
-        "non_agent_password": "change123"
+        "non_agent_password": "change123",
+
+        "customer_reference_1_de": "DE--1",
+        "customer_reference_10_de": "DE--10",
+        "customer_reference_15_de": "DE--15",
+        "customer_reference_34_de": "DE--34"
     },
     
     "address":{
@@ -55,7 +60,10 @@
     "shop":{
         "currency_name_eur": "Euro",
         "currency_code_eur": "EUR",
-        "currency_symbol_eur": "€"
+        "currency_symbol_eur": "€",
+        "store_de": "DE",
+        "gross_mode": "GROSS_MODE",
+        "net_mode": "NET_MODE"
     },
         
     "products": {
@@ -87,6 +95,7 @@
         "abstract_available_product_with_stock_superattribute": "",
 
         "abstract_available_with_stock_and_never_out_of_stock": "M87",
+        "concrete_available_with_stock_and_never_out_of_stock": "657716",
         "abstract_available_product_never_out_of_stock": "",
         "abstract_unavailable_product": "",
 
