@@ -82,8 +82,7 @@ Load Variables
     &{vars}=   Define Environment Variables From Json File    ${env}
     FOR    ${key}    ${value}    IN    &{vars}
         Log    Key is '${key}' and value is '${value}'.
-        ${var_value}=   Get Variable Value  ${${key}}   ${value}
-        Set Global Variable    ${${key}}    ${var_value}
+        Set Global Variable    ${${key}}    ${value}
     END
 
 I set Headers:
