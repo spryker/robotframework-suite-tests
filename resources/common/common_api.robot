@@ -13,7 +13,7 @@ Library    ../../resources/libraries/common.py
 # *** SUITE VARIABLES ***
 ${current_url}                 http://glue.de.spryker.local
 ${glue_url}                    http://glue.de.spryker.local
-${bapi_url}                    http://backend-api.de.spryker.local
+${bapi_url}                    http://backend-api.de.spryker.local/api/rest 
 ${api_timeout}                 60
 ${default_password}            change123
 ${default_allow_redirects}     true
@@ -62,7 +62,7 @@ TestSetup
     ...    ``Default Tags    bapi``
     FOR  ${tag}  IN  @{Test Tags}
     Log   ${tag}
-    Run Keyword if    '${tag}'=='bapi'    Set Suite Variable    ${current_url}    ${bapi_url}/api/rest    
+    Run Keyword if    '${tag}'=='bapi'    Set Suite Variable    ${current_url}    ${bapi_url}   
     Run Keyword if    '${tag}'=='glue'    Set Suite Variable    ${current_url}    ${glue_url}   
     END
     Log    ${current_url}
@@ -82,8 +82,7 @@ Load Variables
     &{vars}=   Define Environment Variables From Json File    ${env}
     FOR    ${key}    ${value}    IN    &{vars}
         Log    Key is '${key}' and value is '${value}'.
-        ${var_value}=   Get Variable Value  ${${key}}   ${value}
-        Set Global Variable    ${${key}}    ${var_value}
+        Set Global Variable    ${${key}}    ${value}
     END
 
 I set Headers:
