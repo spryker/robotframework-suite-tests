@@ -92,11 +92,11 @@
 
         "abstract_available_product_with_stock": "M90799",
         "abstract_available_product_with_stock_name": "Mauser sliding door cabinet - Sideboard with 2 shelves",
-        "abstract_available_product_with_stock_superattribute": "",
+        "abstract_available_product_with_stock_superattribute": "material",
 
         "abstract_available_with_stock_and_never_out_of_stock": "M87",
         "concrete_available_with_stock_and_never_out_of_stock": "657716",
-        "abstract_available_product_never_out_of_stock": "",
+        "abstract_available_product_with_no_stock_and_never_out_of_stock": "",
         "abstract_unavailable_product": "",
 
         "abstract_available_product_with_3_concretes": "M29456",
