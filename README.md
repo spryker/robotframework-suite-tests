@@ -56,13 +56,16 @@ All these browsers that cover more than 85% of the world wide used browsers, can
 
 `robot -v env:b2c -v browser:firefox -d results tests/smoke/smoke_b2c.robot`
 
-### API
+## API
 
 NOTE: the progress of the API automation can be found here https://spryker.atlassian.net/wiki/spaces/PS/pages/3104834019/Robot+Framework+API+automation+progress.
 If you are automating any endpoint, please mark it as WIP in this table, mark it as Done when finished.
 
 Execute all tests in api folder (all API tests that exist).
 `robot -v env:api_suite -d results -s api .`
+
+Execute all tests in a specific folder (all API tests that exist inside the folder and sub-folders).
+`robot -v env:api_suite -d results -s path.to.the.folder .`, example:  `robot -v env:api_b2b -d results -s b2b.glue.access_token_endpoints .`
 
 Execute only positive tests in api folder (all positive API tests that exist, from all folders).
 `robot -v env:api_suite -d results -s positive .`
