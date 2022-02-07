@@ -50,9 +50,9 @@
     },
 
     "shop":{
-        "currency_name": "Euro",
-        "currency_code": "EUR",
-        "currency_symbol": "€"
+        "currency_name_eur": "Euro",
+        "currency_code_eur": "EUR",
+        "currency_symbol_eur": "€"
     },
         
     "products": {
