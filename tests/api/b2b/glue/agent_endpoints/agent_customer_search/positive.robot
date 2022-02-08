@@ -17,9 +17,9 @@ Agent_can_get_search_for_customers_without_search_parameters
     And Response should contain the array of a certain size:    [data][0][attributes][customers]    10
     And Response body parameter should be:    [data][0][attributes][customers][0][customerReference]    ${customer_reference_1_de}
     And Response body parameter should be:    [data][0][attributes][customers][9][customerReference]    ${customer_reference_10_de}
-    And Response body parameter should not be EMPTY:    [data][0][attributes][customers][0][email]
-    And Response body parameter should not be EMPTY:    [data][0][attributes][customers][0][firstName]
-    And Response body parameter should not be EMPTY:    [data][0][attributes][customers][0][lastName]
+    And Each array element of array in response should contain property:    [data][0][attributes][customers]    email
+    And Each array element of array in response should contain property:    [data][0][attributes][customers]    firstName
+    And Each array element of array in response should contain property:    [data][0][attributes][customers]    lastName
     And Response body parameter should not be EMPTY:    [links][last]
     And Response body parameter should not be EMPTY:    [links][first]
     And Response body parameter should not be EMPTY:    [links][next]
