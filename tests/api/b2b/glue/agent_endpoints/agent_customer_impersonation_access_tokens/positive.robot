@@ -33,4 +33,8 @@ Customer_impersonation_token_can_be_used
     Then Response status code should be:    201
     And Save value to a variable:    [data][id]    cart_uid
     And I send a POST request:    /carts/${cart_uid}/items    {"data": {"type": "items","attributes": {"sku": "${concrete_available_with_stock_and_never_out_of_stock}","quantity": 1}}}
-    Then Response status code should be:    201
+    And Response status code should be:    201
+    When I get access token for the customer:    ${yves_user_email}
+    And I Set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
+    Then I send a GET request:    /carts/${cart_uid}
+    And Response status code should be:    200
