@@ -36,6 +36,7 @@ Customer_impersonation_token_can_be_used
     And Response status code should be:    201
     When I get access token for the customer:    ${yves_user_email}
     And I Set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
-    Then I send a GET request:    /carts/${cart_uid}
+    Then I send a GET request:    /carts/${cart_uid}?include=items
     And Response status code should be:    200
     And Response body parameter should be:    [data][id]    ${cart_uid}
+    And Response body parameter should be:    [included][0][attributes][sku]    ${concrete_available_with_stock_and_never_out_of_stock}
