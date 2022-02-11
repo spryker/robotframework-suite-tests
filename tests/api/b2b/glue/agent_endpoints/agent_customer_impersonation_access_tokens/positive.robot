@@ -38,3 +38,4 @@ Customer_impersonation_token_can_be_used
     And I Set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     Then I send a GET request:    /carts/${cart_uid}
     And Response status code should be:    200
+    And Response body parameter should be:    [data][id]    ${cart_uid}
