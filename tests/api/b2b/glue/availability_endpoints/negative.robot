@@ -1,0 +1,147 @@
+*** Settings ***
+Suite Setup    SuiteSetup
+Test Setup    TestSetup
+Resource    ../../../../../resources/common/common_api.robot
+Default Tags    glue
+
+*** Test Cases ***
+#GET requests
+Get_availability_notifications_without_customerId
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    ...  AND    I set Headers:    Authorization=${token}
+    ...  AND    I send a POST request:    /availability-notifications    {"data": {"type": "availability-notifications","attributes": {"sku": "${concrete_product_with_alternative_sku}","email": "${yves_user_email}"}}}
+    ...  AND    Response status code should be:    201
+    ...  AND    Save value to a variable:    [data][id]    availability_notification_id
+    I send a GET request:    /customers//availability-notifications
+    Response status code should be:    403
+    And Response reason should be:    Forbidden
+    And Response should return error code:    4606
+    And Response should return error message:    Unauthorized request.
+    And Response status code should be:    403
+    [Teardown]    Run Keywords    I send a DELETE request:    /availability-notifications/${availability_notification_id}
+    ...  AND    Response status code should be:    204
+
+Get_availability_notifications_with_invalid_access_token
+    [Setup]    Run Keywords    I send a POST request:    /availability-notifications    {"data": {"type": "availability-notifications","attributes": {"sku": "${concrete_product_with_alternative_sku}","email": "${yves_user_email}"}}}
+    ...  AND    Response status code should be:    201
+    ...  AND    Save value to a variable:    [data][id]    availability_notification_id
+    ...  AND    I set Headers:    Authorization=325tr
+    I send a GET request:    /customers/${yves_user_reference}/availability-notifications
+    Response status code should be:    401
+    And Response reason should be:    Unauthorized
+    And Response should return error code:    001
+    And Response should return error message:    Invalid access token.
+    And Response status code should be:    401
+    [Teardown]    Run Keywords    I set Headers:    Authorization=
+    ...  AND    I send a DELETE request:    /availability-notifications/${availability_notification_id}
+    ...  AND    Response status code should be:    204
+
+Get_availability_notifications_without_access_token
+    [Setup]    Run Keywords    I send a POST request:    /availability-notifications    {"data": {"type": "availability-notifications","attributes": {"sku": "${concrete_product_with_alternative_sku}","email": "${yves_user_email}"}}}
+    ...  AND    Response status code should be:    201
+    ...  AND    Save value to a variable:    [data][id]    availability_notification_id
+    ...  AND    I set Headers:    Authorization=
+    I send a GET request:    /customers/${yves_user_reference}/availability-notifications
+    Response status code should be:    403
+    And Response reason should be:    Forbidden
+    And Response should return error code:    002
+    And Response should return error message:    Missing access token.
+    And Response status code should be:    403
+    [Teardown]    Run Keywords    I send a DELETE request:    /availability-notifications/${availability_notification_id}
+    ...  AND    Response status code should be:    204
+
+
+
+#POST requests
+Subscribe_to_availability_notifications_with_invalid_email
+    I send a POST request:    /availability-notifications    {"data": {"type": "availability-notifications","attributes": {"sku": "${concrete_product_with_alternative_sku}","email": "gmail"}}}
+    Response status code should be:    422
+    And Response reason should be:    Unprocessable Entity
+    And Response should return error code:    901
+    And Response should return error message:    email => This value is not a valid email address.
+    And Response status code should be:    422
+
+Subscribe_to_availability_notifications_with_empty_email
+    I send a POST request:    /availability-notifications    {"data": {"type": "availability-notifications","attributes": {"sku": "${concrete_product_with_alternative_sku}","email": ""}}}
+    Response status code should be:    422
+    And Response reason should be:    Unprocessable Entity
+    And Response should return error code:    901
+    And Response should return error message:    email => This value should not be blank.
+    And Response status code should be:    422
+
+Subscribe_to_availability_notifications_without_email
+    I send a POST request:    /availability-notifications    {"data": {"type": "availability-notifications","attributes": {"sku": "${concrete_product_with_alternative_sku}"}}}
+    Response status code should be:    422
+    And Response reason should be:    Unprocessable Entity
+    And Response should return error code:    901
+    And Response should return error message:    email => This field is missing.
+    And Response status code should be:    422
+
+Subscribe_to_availability_notifications_with_empty_type
+    I send a POST request:    /availability-notifications    {"data": {"type": "","attributes": {"sku": "${concrete_product_with_alternative_sku}","email": "${yves_user_email}"}}}
+    Response status code should be:    400
+    And Response reason should be:    Bad Request
+    And Response should return error message:    Invalid type.
+    And Response status code should be:    400
+
+Subscribe_to_availability_notifications_without_type
+    I send a POST request:    /availability-notifications    {"data": {"attributes": {"sku": "${concrete_product_with_alternative_sku}","email": "${yves_user_email}"}}}
+    Response status code should be:    400
+    And Response reason should be:    Bad Request
+    And Response should return error message:    Post data is invalid.
+    And Response status code should be:    400
+
+Subscribe_to_availability_notifications_with_empty_sku
+    I send a POST request:    /availability-notifications    {"data": {"type": "availability-notifications","attributes": {"sku": "","email": "${yves_user_email}"}}}
+    Response status code should be:    422
+    And Response reason should be:    Unprocessable Entity
+    And Response should return error code:    901
+    And Response should return error message:    sku => This value should not be blank.
+    And Response status code should be:    422
+
+Subscribe_to_availability_notifications_without_sku
+    I send a POST request:    /availability-notifications    {"data": {"type": "availability-notifications","attributes": {"email": "${yves_user_email}"}}}
+    Response status code should be:    422
+    And Response reason should be:    Unprocessable Entity
+    And Response should return error code:    901
+    And Response should return error message:    sku => This field is missing.
+    And Response status code should be:    422
+
+Subscribe_to_availability_notifications_with_existed_subscription
+    [Setup]    Run Keywords    I send a POST request:    /availability-notifications    {"data": {"type": "availability-notifications","attributes": {"sku": "${concrete_product_with_alternative_sku}","email": "${yves_user_email}"}}}
+    ...  AND    Response status code should be:    201
+    ...  AND    Save value to a variable:    [data][id]    availability_notification_id
+    I send a POST request:    /availability-notifications    {"data": {"type": "availability-notifications","attributes": {"sku": "${concrete_product_with_alternative_sku}","email": "${yves_user_email}"}}}
+    Response status code should be:    422
+    And Response reason should be:    Unprocessable Entity
+    And Response should return error code:    4602
+    And Response should return error message:    Subscription already exists.
+    And Response status code should be:    422
+    [Teardown]    Run Keywords    I send a DELETE request:    /availability-notifications/${availability_notification_id}
+    ...  AND    Response status code should be:    204
+
+#DELETE requests
+Delete_availability_notifications_without_availability_notification_id
+    [Setup]    Run Keywords    I send a POST request:    /availability-notifications    {"data": {"type": "availability-notifications","attributes": {"sku": "${concrete_product_with_alternative_sku}","email": "${yves_user_email}"}}}
+    ...  AND    Response status code should be:    201
+    ...  AND    Save value to a variable:    [data][id]    availability_notification_id
+    I send a DELETE request:    /availability-notifications/
+    Response status code should be:    400
+    And Response reason should be:    Bad Request
+    And Response should return error message:    Resource id is not specified.
+    And Response status code should be:    400
+    [Teardown]    Run Keywords    I send a DELETE request:    /availability-notifications/${availability_notification_id}
+    ...  AND    Response status code should be:    204
+
+Delete_availability_notifications_with_invalid_availability_notification_id
+    [Setup]    Run Keywords    I send a POST request:    /availability-notifications    {"data": {"type": "availability-notifications","attributes": {"sku": "${concrete_product_with_alternative_sku}","email": "${yves_user_email}"}}}
+    ...  AND    Response status code should be:    201
+    ...  AND    Save value to a variable:    [data][id]    availability_notification_id
+    I send a DELETE request:    /availability-notifications/7fc6ebf
+    Response status code should be:    404
+    And Response reason should be:    Not Found
+    And Response should return error code:    4603
+    And Response should return error message:    "Subscription doesnt exist."
+    And Response status code should be:    404
+    [Teardown]    Run Keywords    I send a DELETE request:    /availability-notifications/${availability_notification_id}
+    ...  AND    Response status code should be:    204
