@@ -132,8 +132,13 @@
         "abstract_list_size": "8",
 
         "banner_1_id": "br-1",
-        "banner_1_name": "Furniture - Upgrade Your Office"
+        "banner_1_name": "Furniture - Upgrade Your Office",
 
+        "cms_pages_qty": "5",
+        "first_cms_page_name": "Imprint",
+        "first_cms_page_url_en": "/en/imprint",
+        "cms_page_with_product_lists_id": "10014bd9-4bba-5a54-b84f-31b4b7efd064",
+        "cms_page_with_product_lists_name": "Demo Landing Page"
 
     },
     "availability":{
