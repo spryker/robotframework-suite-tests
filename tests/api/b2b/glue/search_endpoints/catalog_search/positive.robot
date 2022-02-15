@@ -84,3 +84,26 @@ Search_with_empty_search_criteria_all_default_values_check
     And Response body parameter should not be EMPTY:    [links][first]
     And Response body parameter should not be EMPTY:    [links][next]
 
+Search_by_concrete_sku
+    When I send a GET request:    /catalog-search?q=${concrete_product_with_alternative_sku}
+    Then Response status code should be:    200
+    And Response reason should be:    OK
+    And Response header parameter should be:    Content-Type    ${default_header_content_type}
+    And Response body parameter should be:    [data][0][type]    catalog-search
+    And Response body parameter should be:    [data][0][attributes][pagination][numFound]    1
+    And Response body parameter should be:    [data][0][attributes][pagination][currentPage]    1
+    And Response body parameter should be:    [data][0][attributes][pagination][maxPage]    1
+    And Response should contain the array of a certain size:    [data][0][attributes][abstractProducts]    1
+    And Response body parameter should be:    [data][0][attributes][abstractProducts][0][abstractSku]    ${abstract_product_with_alternative_sku}
+    And Response body parameter should be:    [data][0][attributes][abstractProducts][0][abstractName]    ${abstract_product_with_alternative_name}
+    And Response body parameter should be greater than:    [data][0][attributes][abstractProducts][0][prices][0][DEFAULT]    100
+    #categories
+    And Response should contain the array of a certain size:    [data][0][attributes][valueFacets][0][values]    4
+    #labels
+    And Response should contain the array of a certain size:    [data][0][attributes][valueFacets][1][values]    2
+    #brand
+    And Response should contain the array of a certain size:    [data][0][attributes][valueFacets][4][values]    1
+    And Response body has correct self link
+    And Response body parameter should not be EMPTY:    [links][last]
+    And Response body parameter should not be EMPTY:    [links][first]
+    And Response body parameter should not be EMPTY:    [links][last]
