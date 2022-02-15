@@ -127,7 +127,9 @@
         "concrete_product_one_image_set": "401768",
         "concrete_product_one_image_set_name": "EUROKRAFT aluminum hand truck - Load capacity 200 kg, with skids - load capacity 200 kg",
         "concrete_product_multiple_image_set": "212427",
-        "concrete_product_multiple_image_set_name": "Wood stackable chair, upholstered - VE 4 pieces, substructure chromed - upholstery black"
+        "concrete_product_multiple_image_set_name": "Wood stackable chair, upholstered - VE 4 pieces, substructure chromed - upholstery black",
+        "concrete_available_product_with_stock": "420566",
+        "concrete_available_product_without_stock": ""
             
     },
     "content":{
