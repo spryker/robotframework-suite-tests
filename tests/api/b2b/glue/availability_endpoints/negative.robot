@@ -62,12 +62,16 @@ Subscribe_to_availability_notifications_without_type
     And Response reason should be:    Bad Request
     And Response should return error message:    Post data is invalid.
 
-Subscribe_to_availability_notifications_with_invalid_email
+Subscribe_to_availability_notifications_with_invalid_sku_and_email
+#This test fails due to the bug https://spryker.atlassian.net/browse/CC-15970
     When I send a POST request:    /availability-notifications    {"data": {"type": "availability-notifications","attributes": {"sku": "${concrete_product_with_alternative_sku}","email": "gmail"}}}
     Then Response status code should be:    422
     And Response reason should be:    Unprocessable Entity
     And Response should return error code:    901
-    And Response should return error message:    email => This value is not a valid email address.
+    And Each array element of array in response should contain property with value:    [errors]    code    901
+    And Each array element of array in response should contain property with value:    [errors]    status    422
+    And Array in response should contain property with value:    [errors]    detail    sku => This value is not a valid sku.
+    And Array in response should contain property with value:    [errors]    detail    email => This value is not a valid email address.
 
 Subscribe_to_availability_notifications_with_empty_sku_and_email
     When I send a POST request:    /availability-notifications    {"data": {"type": "availability-notifications","attributes": {"sku": "","email": ""}}}
