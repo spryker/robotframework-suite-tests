@@ -3,7 +3,7 @@ Suite Setup       SuiteSetup
 Resource    ../../../../../../resources/common/common_api.robot
 
 *** Test Cases ***
-Get_abstract_product_alternative_for_ concrete_product_with_an_invalid_endpoint
+Get_abstract_product_alternative_for_concrete_product_with_an_invalid_endpoint
     When I send a GET request:    /concrete-products/${concrete_product_with_alternative_sku}/concrete-alternative-product
     Then Response status code should be:    404
     And Response body parameter should be:    [errors][0][detail]    Not Found
