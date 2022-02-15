@@ -67,7 +67,6 @@ Subscribe_to_availability_notifications_with_invalid_sku_and_email
     When I send a POST request:    /availability-notifications    {"data": {"type": "availability-notifications","attributes": {"sku": "${concrete_product_with_alternative_sku}","email": "gmail"}}}
     Then Response status code should be:    422
     And Response reason should be:    Unprocessable Entity
-    And Response should return error code:    901
     And Each array element of array in response should contain property with value:    [errors]    code    901
     And Each array element of array in response should contain property with value:    [errors]    status    422
     And Array in response should contain property with value:    [errors]    detail    sku => This value is not a valid sku.
