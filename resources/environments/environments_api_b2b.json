@@ -123,6 +123,14 @@
         "abstract_product_with_options_name": "Safescan automatic banknote counter - UV counterfeit recognition"
             
     },
+    "product_attributes":{
+        "brand_1": "Soennecken",
+        "brand_2": "edding",
+        "material_aluminum": "aluminum",
+        "material_metal": "metal",
+        "material_chipboard": "chipboard",
+        "color_purple": "purple"
+    },
     "content":{
 
         "abstract_product_list_id": "apl-1",
