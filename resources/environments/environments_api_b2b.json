@@ -65,6 +65,19 @@
         "gross_mode": "GROSS_MODE",
         "net_mode": "NET_MODE"
     },
+    "search":{
+        "total_number_of_products_in_search": "420",
+        "default_ipp": "12",
+        "ipp_middle": "24",
+        "ipp_biggest": "36",
+        "default_ipp_pages_qty": "35",
+        "default_categories_qty": "37",
+        "default_labels_qty": "5",
+        "default_brands_qty": "10",
+        "default_min_rating": "4",
+        "default_max_rating": "5"
+
+    },
         
     "products": {
         
