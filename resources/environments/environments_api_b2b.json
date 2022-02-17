@@ -148,6 +148,16 @@
     },
     "misc":{
         "default_header_content_type": "application/vnd.api+json"
+    },
+
+    "companies":{
+        "company_id": "62de4ab6-b768-5c21-8835-455d9f341625",
+        "company_name": "Spryker Systems GmbH",
+        "company_user_id": "2816dcbd-855e-567e-b26f-4d57f3310bb8",
+        "busines_unit_address_id": "2175cddd-f8af-5885-b161-227b5c93e72f",
+        "busines_unit_id": "d8943c86-4481-5c2a-b5f6-28c8dbdf1a23",
+        "busines_unit_name": "Spryker Systems Barcelona",
+        "company_role_id": "b5b4988f-4c29-568a-858b-a66b8784b5ac"
     }
 
 }
