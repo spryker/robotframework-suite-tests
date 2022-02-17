@@ -433,6 +433,16 @@ Response header parameter should be:
     ${actual_header_value}=    Get From Dictionary    ${response_headers}    ${header_parameter}
     Should Be Equal    ${actual_header_value}    ${header_value}
 
+Response header parameter should contain:
+    [Documentation]    This keyword checks that the response header saved previiously in ``${response_headers}`` test variable has the expected header with name ``${header_parameter}`` and this header contains substring ``${header_value}``
+    ...
+    ...    *Example:*
+    ...
+    ...    ``Response header parameter should be:    Content-Type    ${default_header_content_type}``
+    [Arguments]    ${header_parameter}    ${header_value}
+    ${actual_header_value}=    Get From Dictionary    ${response_headers}    ${header_parameter}
+    Should Contain    ${actual_header_value}    ${header_value}
+
 Response body has correct self link
     [Documentation]    This keyword checks that the actual selflink retrieved from the test variable ``${response_body}`` matches the self link recorded into the ``${expected_self_link}`` test variable on endpoint call.
     ...

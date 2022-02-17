@@ -75,7 +75,16 @@
         "default_labels_qty": "5",
         "default_brands_qty": "10",
         "default_min_rating": "4",
-        "default_max_rating": "5"
+        "default_max_rating": "5",
+        "sorting_options_qty": "5",
+
+        "new_label": "New",
+        "sale_label": "SALE %",
+        "manual_label": "Top",
+        "discontinued_label": "Discontinued",
+        "alternatives_label": "Alternatives available"
+
+
 
     },
         
