@@ -77,6 +77,8 @@
         "bundled_product_1_concrete_sku": "104939",
         "bundled_product_2_concrete_sku": "574995",
         "bundled_product_3_concrete_sku": "426581",
+        "qty_of_products_in_bundle": "3",
+        "qty_of_each_product_inside_bundle": "1",
 
         "multi_variant_product_abstract_sku": "M58035",
 
