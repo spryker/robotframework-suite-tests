@@ -69,13 +69,16 @@
     "products": {
         
         "bundle_product_abstract_sku": "B0001",
+        "bundle_product_concrete_sku":"000101",
         "bundle_product_product_name": "Our Favourite Workspace Bundle",
         "bundled_product_1_abstract_sku": "M528",
         "bundled_product_2_abstract_sku": "M1017905",
-        "bundled_product_3_abstract_sku": "426581",
+        "bundled_product_3_abstract_sku": "M24605",
         "bundled_product_1_concrete_sku": "104939",
         "bundled_product_2_concrete_sku": "574995",
-        "bundled_product_3_concrete_sku": "M24605",
+        "bundled_product_3_concrete_sku": "426581",
+        "qty_of_products_in_bundle": "3",
+        "qty_of_each_product_inside_bundle": "1",
 
         "multi_variant_product_abstract_sku": "M58035",
 
@@ -139,7 +142,16 @@
         "abstract_list_product1_name": "Clairefontaine Collegeblock 8272C DIN A5, 90 sheets",
         "abstract_list_product2_sku": "M23723",
         "abstract_list_product2_name": "Brennenstuhl extension cable 3 m",
-        "abstract_list_size": "8"
+        "abstract_list_size": "8",
+
+        "banner_1_id": "br-1",
+        "banner_1_name": "Furniture - Upgrade Your Office",
+
+        "cms_pages_qty": "5",
+        "first_cms_page_name": "Imprint",
+        "first_cms_page_url_en": "/en/imprint",
+        "cms_page_with_product_lists_id": "10014bd9-4bba-5a54-b84f-31b4b7efd064",
+        "cms_page_with_product_lists_name": "Demo Landing Page"
 
     },
     "availability":{
