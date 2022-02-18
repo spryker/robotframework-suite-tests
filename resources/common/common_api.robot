@@ -614,6 +614,9 @@ Each array element of array in response should contain property with value:
     ...
     ...    If at least one array element has this property with another value, the keyword will fail.
     ...
+    ...    *NOTE*: ``${expected_property}`` is a first level property in an array like this ``"data":[{"type": "some-type", "attributes": {"name": "some name", "sku": "1234"}},...] e.g. ``attributes``. 
+    ...    While second level property is `attributes.sku`` and it won't be identified with this keyword.
+    ...
     ...    *Example:*
     ...
     ...    ``Each array element of array in response should contain property with value:    [errors]    status    422``
@@ -626,6 +629,46 @@ Each array element of array in response should contain property with value:
     FOR    ${index}    IN RANGE    0    ${list_length}
         ${list_element}=    Get From List    @{data}    ${index}
         Dictionary Should Contain Item    ${list_element}    ${expected_property}    ${expected_value}
+    END
+
+Each array element of array in response should contain nested property with value:
+    [Documentation]    This keyword checks that each element in the array specified as ``${json_path}`` contains the specified property ``${expected_nested_property}`` with the specified value ``${expected_value}``.
+    ...
+    ...    If at least one array element has this property with another value, the keyword will fail.
+    ...
+    ...    *NOTES*: 
+    ...
+    ...    1. ``${expected_nested_property}`` is a second level property. In an array like this 
+    ...
+    ...    ``{"data":[{"type": "some-type", "attributes": {"name": "some name", "sku": "1234"}},...]}`` 
+    ...
+    ...    it will be ``attributes.sku``. 
+    ...
+    ...    2. The first level property in the above array is just ``attributes``, but it cannot be checked by this keyword.
+    ...
+    ...    3. Syntax for the second level property is ``[firstlevel][secondlevel]`` or ``firstlevel.secondlevel``.
+    ...
+    ...    4. This keyword supports any level of nesting.
+    ...
+    ...    *Example:*
+    ...
+    ...    ``Each array element of array in response should contain nested property with value:    [data]    [attributes][sku]    "M1234"``
+    ...
+    ...    ``Each array element of array in response should contain nested property with value:    [data]    attributes.sku    "M1234"``
+    ...
+    ...    ``Each array element of array in response should contain nested property with value:    [data]    [relationships][concrete-products][data][0][type]    concrete-products``
+    [Arguments]    ${json_path}    ${expected_nested_property}    ${expected_value}
+    @{data}=    Get Value From Json    ${response_body}    ${json_path}
+    ${list_length}=    Get Length    @{data}
+    ${log_list}=    Log List    @{data}
+    FOR    ${index}    IN RANGE    0    ${list_length}
+        ${list_element}=    Get From List    @{data}    ${index}
+        ${list_element}=    Get Value From Json    ${list_element}    $.${expected_nested_property}
+        ${list_element}=    Convert To String    ${list_element}
+        ${list_element}=    Replace String    ${list_element}    [   ${EMPTY}
+        ${list_element}=    Replace String    ${list_element}    '   ${EMPTY}
+        ${list_element}=    Replace String    ${list_element}    ]   ${EMPTY}
+        Should Be Equal    ${list_element}    ${expected_value}
     END
 
 Response should return error message:
