@@ -401,13 +401,15 @@ Response body parameter should NOT be:
 Response body parameter should have datatype:
     [Documentation]    This keyword checks that the response saved  in ``${response_body}`` test variable contsains the speficied parameter ``${parameter}`` and that parameter has the specified data type ``${expected_data_type}``.
     ...
-    ...    Some types that can be used are: ``int``, ``str``. It uses a custom keyword ``Evaluate datatype of a variable:`` to evaluate the datatype.
+    ...    Some types that can be used are: ``int``, ``str``, ``list``. It uses a custom keyword ``Evaluate datatype of a variable:`` to evaluate the datatype.
     ...
     ...    *Example:*
     ...
     ...    ``Response body parameter should have datatype:    [data][0][attributes][name]    str``
+    ...    ``Response body parameter should have datatype:    [data][0][attributes][sort][sortParamNames]    list``
     [Arguments]    ${parameter}    ${expected_data_type}
-    ${actual_data_type}=    Evaluate datatype of a variable:    ${parameter}
+    @{parameter}=    Get Value From Json    ${response_body}    ${parameter}
+    ${actual_data_type}=    Evaluate datatype of a variable:    @{parameter}
     Should Be Equal    ${actual_data_type}    ${expected_data_type}
 
 Evaluate datatype of a variable:
