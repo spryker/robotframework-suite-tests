@@ -3,7 +3,7 @@ Suite Setup       SuiteSetup
 Resource    ../../../../../../resources/common/common_api.robot
 
 *** Test Cases ***
-# there is a bug - request returns empty array instead of an error
+# there is a bug - https://spryker.atlassian.net/browse/CC-15994
 Get_bundled_products_with_nonexisting_concrete_sku
     When I send a GET request:    /concrete-products/fake/bundled-products
     Then Response status code should be:    404
@@ -11,7 +11,7 @@ Get_bundled_products_with_nonexisting_concrete_sku
     And Response should return error code:    302
     And Response should return error message:    Concrete product is not found.
 
-# there is a bug - request returns empty array instead of an error
+# there is a bug - https://spryker.atlassian.net/browse/CC-15994
 Get_bundled_products_with_invalid_concrete_sku
     When I send a GET request:    /concrete-products/:sku/bundled-products
     Then Response status code should be:    400

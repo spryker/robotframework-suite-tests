@@ -99,6 +99,8 @@
         "bundled_product_1_concrete_sku": "104939",
         "bundled_product_2_concrete_sku": "574995",
         "bundled_product_3_concrete_sku": "426581",
+        "qty_of_products_in_bundle": "3",
+        "qty_of_each_product_inside_bundle": "1",
 
         "multi_variant_product_abstract_sku": "M58035",
 
@@ -110,6 +112,7 @@
         "product_with_relations_upselling_sku": "M29502",
 
         "concrete_product_with_alternative_sku": "420566",
+        "concrete_product_with_alternative_sku_name": "Verbatim USB stick Store n Go V3 49173 32GB USB3.0 gray",
         "abstract_product_with_alternative_sku": "M21100",
         "abstract_product_with_alternative_name": "Verbatim USB stick Store n Go V3 49173 32GB USB3.0 gray",
         "alternative_abstract_product": "M21099",
@@ -131,6 +134,9 @@
         "abstract_product_with_volume_prices": "M21189",
         "abstract_product_with_volume_prices_name": "Post-it stick note Super Sticky Meeting Notes 6445-4SS 4 pieces/pack",
         "abstract_product_with_original_prices": "M74972",
+        "concrete_product_with_original_prices": "420687",
+        "concrete_product_with_original_prices_name": "Post-it Index Strong adhesive stripes, 686-F1EU 4 sheets sorted, 4 pieces/pack",
+        "concrete_product_with_volume_prices": "420685",    
 
         "abstract_product_with_label": "M21691",
         "abstract_product_with_label_name": "Clairefontaine Collegeblock 8272C DIN A5, 90 sheets",
@@ -142,7 +148,14 @@
         "abstract_product_with_reviews_name": "Rectangular table, rectangular tubing - 1600 x 800 mm",
 
         "abstract_product_with_options": "M29501",
-        "abstract_product_with_options_name": "Safescan automatic banknote counter - UV counterfeit recognition"
+        "abstract_product_with_options_name": "Safescan automatic banknote counter - UV counterfeit recognition",
+
+        "concrete_product_one_image_set": "401768",
+        "concrete_product_one_image_set_name": "EUROKRAFT aluminum hand truck - Load capacity 200 kg, with skids - load capacity 200 kg",
+        "concrete_product_multiple_image_set": "212427",
+        "concrete_product_multiple_image_set_name": "Wood stackable chair, upholstered - VE 4 pieces, substructure chromed - upholstery black",
+        "concrete_available_product_with_stock": "420566",
+        "concrete_available_product_without_stock": ""
             
     },
     "product_attributes":{
