@@ -396,6 +396,7 @@ Response body parameter should NOT be:
     ${data}=    Replace String    ${data}    [   ${EMPTY}
     ${data}=    Replace String    ${data}    ]   ${EMPTY}
     Log    ${data}
+    Should Not Be Empty    ${data} ${data} is empty but should not be
     Should Not Be Equal    ${data}    ${expected_value}
 
 Response body parameter should have datatype:
