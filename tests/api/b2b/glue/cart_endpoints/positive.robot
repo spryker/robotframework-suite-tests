@@ -63,12 +63,12 @@ Get_cart_by_cart_id_with_included_items
     And Response body parameter should be:    [data][attributes][store]    ${store_de}
     And Response body parameter should be:    [data][attributes][name]    Newcomers
     And Response body parameter should be:    [data][attributes][isDefault]    False
-    And Response body parameter should NOT be:    [data][attributes][totals][expenseTotal]    None
-    And Response body parameter should NOT be:    [data][attributes][totals][discountTotal]    None
-    And Response body parameter should NOT be:    [data][attributes][totals][taxTotal]    None
-    And Response body parameter should NOT be:    [data][attributes][totals][subtotal]    None
-    And Response body parameter should NOT be:    [data][attributes][totals][grandTotal]    None
-    And Response body parameter should NOT be:    [data][attributes][totals][priceToPay]    None
+    And Response body parameter should not be EMPTY:    [data][attributes][totals][expenseTotal]
+    And Response body parameter should not be EMPTY:    [data][attributes][totals][discountTotal]
+    And Response body parameter should not be EMPTY:    [data][attributes][totals][taxTotal]
+    And Response body parameter should not be EMPTY:    [data][attributes][totals][subtotal]
+    And Response body parameter should not be EMPTY:    [data][attributes][totals][grandTotal]
+    And Response body parameter should not be EMPTY:    [data][attributes][totals][priceToPay]
     And Response body should contain:    discounts
     And Response body has correct self link internal
     And Each array element of array in response should contain property with value:    [data][relationships][items][data]    type    items
