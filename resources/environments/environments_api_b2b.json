@@ -63,7 +63,42 @@
         "currency_symbol_eur": "€",
         "store_de": "DE",
         "gross_mode": "GROSS_MODE",
-        "net_mode": "NET_MODE"
+        "net_mode": "NET_MODE",
+        "currency_name_chf": "Swiss Franc",
+        "currency_code_chf": "CHF",
+        "currency_symbol_chf": "CHF"
+    },
+    "search":{
+        "total_number_of_products_in_search": "420",
+        "default_ipp": "12",
+        "ipp_middle": "24",
+        "ipp_biggest": "36",
+        "default_ipp_pages_qty": "35",
+        "default_categories_qty": "37",
+        "default_colors_qty": "10",
+        "default_labels_qty": "5",
+        "default_materials_qty": "10",
+        "default_brands_qty": "10",
+        "default_min_rating": "4",
+        "default_max_rating": "5",
+        "sorting_options_qty": "5",
+
+        "new_label": "New",
+        "sale_label": "SALE %",
+        "manual_label": "Top",
+        "discontinued_label": "Discontinued",
+        "alternatives_label": "Alternatives available",
+
+        "category_id_lvl1": "11",
+        "category_items_qty_lvl1": "172",
+        "category_id_lvl2": "12",
+        "category_items_qty_lvl2": "56",
+        "category_id_lvl3": "13",
+        "category_items_qty_lvl3": "28",
+        "category_tree_branches_qty": "6",
+
+        "abstract_sku_highest_rating": "M1016129"
+
     },
         
     "products": {
@@ -92,6 +127,7 @@
         "concrete_product_with_alternative_sku": "420566",
         "concrete_product_with_alternative_sku_name": "Verbatim USB stick Store n Go V3 49173 32GB USB3.0 gray",
         "abstract_product_with_alternative_sku": "M21100",
+        "abstract_product_with_alternative_name": "Verbatim USB stick Store n Go V3 49173 32GB USB3.0 gray",
         "alternative_abstract_product": "M21099",
 
         "abstract_available_product_with_stock": "M90799",
@@ -134,6 +170,16 @@
         "concrete_available_product_with_stock": "420566",
         "concrete_available_product_without_stock": ""
             
+    },
+    "product_attributes":{
+        "brand_1": "Soennecken",
+        "brand_2": "edding",
+        "material_1": "aluminum",
+        "material_2": "metal",
+        "material_3": "chipboard",
+        "color_3": "purple",
+        "color_1": "yellow",
+        "color_2": "blue"
     },
     "content":{
 
