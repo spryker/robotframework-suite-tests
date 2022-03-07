@@ -396,6 +396,7 @@ Response body parameter should NOT be:
     ${data}=    Replace String    ${data}    [   ${EMPTY}
     ${data}=    Replace String    ${data}    ]   ${EMPTY}
     Log    ${data}
+    Should Not Be Empty    ${data} ${data} is empty but should not be
     Should Not Be Equal    ${data}    ${expected_value}
 
 Response body parameter should have datatype:
@@ -822,6 +823,23 @@ Save value to a variable:
     ${var_value}=    Replace String    ${var_value}    [   ${EMPTY}
     ${var_value}=    Replace String    ${var_value}    ]   ${EMPTY}
     Set Test Variable    ${${name}}    ${var_value}  
+    [Return]    ${name}
+
+Save Header value to a variable:
+    [Documentation]    This keyword saves any value located in a response Header parameter ``${header_parameter}`` to a test variable called ``${name}``. 
+    ...
+    ...    It can be used to save a value returned by any request into a custom test variable.
+    ...    This variable, once created, can be used during the cpecific test where this keyword is used and can be re-used by the keywords that follow this keyword in the test. 
+    ...    It will not be visible to other tests.
+    ...
+    ...    *Examples:*
+    ...
+    ...    ``Save Header value to a variable:    ETag    header_tag``
+    ...
+    ...    The example above should be called after POST request for cart creation. It gets ETag from the ``${response_headers}`` test vatialbe and saves it into ``${header_tag}`` test variable which can then be used in other requests, e.g. in a PATCH request.    
+    [Arguments]    ${header_parameter}    ${name}
+    ${actual_header_value}=    Get From Dictionary    ${response_headers}    ${header_parameter}
+    Set Test Variable    ${${name}}    ${actual_header_value}
     [Return]    ${name}
 
 Response body parameter should contain:
