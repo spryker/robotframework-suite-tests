@@ -6,7 +6,7 @@ Default Tags    glue
 
 *** Test Cases ***
 #GET requests
-Get_category-trees
+Get_category_trees
     When I send a GET request:    /category-trees
     Then Response status code should be:    200
     And Response reason should be:    OK
@@ -19,4 +19,11 @@ Get_category-trees
     And Each array element of array in response should contain property:    [data][0][attributes][categoryNodesStorage]    name
     And Each array element of array in response should contain property:    [data][0][attributes][categoryNodesStorage]    url
     And Each array element of array in response should contain property:    [data][0][attributes][categoryNodesStorage]    children
+    And Response body parameter should be:    [data][0][attributes][categoryNodesStorage][1][children][0][nodeId]    36
+    And Response body parameter should be:    [data][0][attributes][categoryNodesStorage][1][children][0][order]    50
+    And Response body parameter should be:    [data][0][attributes][categoryNodesStorage][1][children][0][name]    Fish
+    And Response body parameter should be:    [data][0][attributes][categoryNodesStorage][1][children][0][url]    /en/foods/fish
+    And Response should contain the array of a certain size:    [data][0][attributes][categoryNodesStorage][1][children][0][children]    0
+    And Response should contain the array of a certain size:    [data][0][attributes][categoryNodesStorage]    ${qty_of_categories_in_category_trees}
+    And Response should contain the array of a certain size:    [data][0][attributes][categoryNodesStorage][1][children]    ${qty_of_subcategories_in_category_trees}
     And Response body has correct self link
