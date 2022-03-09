@@ -402,13 +402,15 @@ Response body parameter should NOT be:
 Response body parameter should have datatype:
     [Documentation]    This keyword checks that the response saved  in ``${response_body}`` test variable contsains the speficied parameter ``${parameter}`` and that parameter has the specified data type ``${expected_data_type}``.
     ...
-    ...    Some types that can be used are: ``int``, ``str``. It uses a custom keyword ``Evaluate datatype of a variable:`` to evaluate the datatype.
+    ...    Some types that can be used are: ``int``, ``str``, ``list``. It uses a custom keyword ``Evaluate datatype of a variable:`` to evaluate the datatype.
     ...
     ...    *Example:*
     ...
     ...    ``Response body parameter should have datatype:    [data][0][attributes][name]    str``
+    ...    ``Response body parameter should have datatype:    [data][0][attributes][sort][sortParamNames]    list``
     [Arguments]    ${parameter}    ${expected_data_type}
-    ${actual_data_type}=    Evaluate datatype of a variable:    ${parameter}
+    @{parameter}=    Get Value From Json    ${response_body}    ${parameter}
+    ${actual_data_type}=    Evaluate datatype of a variable:    @{parameter}
     Should Be Equal    ${actual_data_type}    ${expected_data_type}
 
 Evaluate datatype of a variable:
@@ -433,6 +435,16 @@ Response header parameter should be:
     [Arguments]    ${header_parameter}    ${header_value}
     ${actual_header_value}=    Get From Dictionary    ${response_headers}    ${header_parameter}
     Should Be Equal    ${actual_header_value}    ${header_value}
+
+Response header parameter should contain:
+    [Documentation]    This keyword checks that the response header saved previiously in ``${response_headers}`` test variable has the expected header with name ``${header_parameter}`` and this header contains substring ``${header_value}``
+    ...
+    ...    *Example:*
+    ...
+    ...    ``Response header parameter should be:    Content-Type    ${default_header_content_type}``
+    [Arguments]    ${header_parameter}    ${header_value}
+    ${actual_header_value}=    Get From Dictionary    ${response_headers}    ${header_parameter}
+    Should Contain    ${actual_header_value}    ${header_value}
 
 Response body has correct self link
     [Documentation]    This keyword checks that the actual selflink retrieved from the test variable ``${response_body}`` matches the self link recorded into the ``${expected_self_link}`` test variable on endpoint call.
@@ -484,9 +496,10 @@ Response body has correct self link for created entity:
     Log    ${response_body}  
     Should Be Equal    ${actual_self_link}    ${expected_self_link}/${url}
 
-
 Response body parameter should not be EMPTY:
     [Documentation]    This keyword checks that the body parameter sent in ``${json_path}`` argument is not empty. If the parameter value is other that ``null`` the keyword will fail.
+    ...
+    ...    This keyword checks both that the parameter does not have null value or that it does not have an empty string value and makes sure that the pagameter actually exists.
     ...
     ...    *Example:*
     ...
@@ -497,7 +510,8 @@ Response body parameter should not be EMPTY:
     ${data}=    Replace String    ${data}    '   ${EMPTY}
     ${data}=    Replace String    ${data}    [   ${EMPTY}
     ${data}=    Replace String    ${data}    ]   ${EMPTY}
-    Should Not Be Equal    ${data}    None    ${data} is not empty but shoud be
+    Should Not Be Empty    ${data}    ${data} is empty but shoud not be
+    Should Not Be Equal    ${data}    None    Propewrty value is ${data} which is null, but it shoud be a non-null value
 
 Response body parameter should be greater than:
     [Documentation]    This keyword checks that the body parameter sent in ``${json_path}`` argument is greater than a specific integer value ``${expected_value}``.
@@ -570,6 +584,25 @@ Response should contain the array larger than a certain size:
     ${result}=    Convert To String    ${result}
     Should Be Equal    ${result}    True    Actual array length is ${list_length} and it is not greater than expected ${expected_size}
     
+Response should contain the array smaller than a certain size:
+    [Documentation]    This keyword checks that the body array sent in ``${json_path}`` argument contains the number of items that is fewer than ``${expected_size}``. 
+    ...    The expected size should be an integer value that is less than you expect elements. So if you expect an array to have 0 or 1 elements, the ``${expected_size}`` should be 2.
+    ...
+    ...    It can be used to check how many elements were returned, if you know the exact number of emelents that should be returned, but know there should be fewer, than the default value for example.
+    ...    It is useful when you check search and know how many values are there if there is no filtering, but you also know that with filtering, there should be fewer values than without it.
+    ...
+    ...    *Example:*
+    ...
+    ...    ``Response should contain the array smaller than a certain size:    [data][0][attributes][valueFacets][1]    5``
+    [Arguments]    ${json_path}    ${expected_size}
+    @{data}=    Get Value From Json    ${response_body}    ${json_path}
+    Log    @{data}
+    ${list_length}=    Get Length    @{data}
+    ${list_length}=    Convert To Integer    ${list_length}
+    ${result}=    Evaluate   ${list_length} < ${expected_size}
+    ${result}=    Convert To String    ${result}
+    Should Be Equal    ${result}    True    Actual array length is ${list_length} and it is not greater than expected ${expected_size}
+
 Each array element of array in response should contain property:
     [Documentation]    This keyword checks whether the array ``${json_path}`` that is present in the ``${response_body}`` test variable contsains a property with ``${expected_property}`` name in every of it's array elements.
     ...
@@ -828,6 +861,23 @@ Response body parameter should contain:
     ${data}=    Replace String    ${data}    ]   ${EMPTY}
     Log    ${data}
     Should Contain   ${data}    ${expected_value}  
+
+Response body parameter should start with:
+    [Documentation]    This keyword checks that response parameter with name ``${json_path}`` starts with the specified substing ``${expected_value}``. 
+    ...
+    ...    *Example:*
+    ...
+    ...    ``Response body parameter should start with:    [data][attributes][name]    Comp``
+    ...
+    ...    The example above checks that ``name`` parameter starts with 'comp', e.g. as in Computer. 
+    [Arguments]    ${json_path}    ${expected_value}
+    ${data}=    Get Value From Json    ${response_body}    ${json_path}
+    ${data}=    Convert To String    ${data}
+    ${data}=    Replace String    ${data}    '   ${EMPTY}
+    ${data}=    Replace String    ${data}    [   ${EMPTY}
+    ${data}=    Replace String    ${data}    ]   ${EMPTY}
+    Log    ${data}
+    Should Start With   ${data}    ${expected_value}  
 
 Array in response should contain property with value:
     [Documentation]    This keyword checks is the specified array (usually error array) ``${json_path} `` contains the specified property name ``${expected_property}`` with the specified value ``${expected_value}``.
