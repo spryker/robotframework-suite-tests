@@ -49,6 +49,24 @@ Get_search_suggestions_with_non_existing_product_sku
     And Response should contain the array of a certain size:    [data][0][attributes][cmsPageCollection]    0
     And Response body has correct self link
 
+Get_search_suggestions_with_discontinued_product_sku
+    When I send a GET request:    /catalog-search-suggestions?q=${concrete_product_with_alternative_sku}
+    Then Response status code should be:    200
+    And Response reason should be:    OK
+    And Response body parameter should be:    [data][0][type]    catalog-search-suggestions
+    And Response body parameter should be:    [data][0][id]    None
+    And Response body parameter should be:    [data][0][attributes][completion]    ${concrete_product_with_alternative_sku}
+    And Response should contain the array of a certain size:    [data][0][attributes][categories]    0
+    And Response should contain the array of a certain size:    [data][0][attributes][cmsPages]    0
+    And Response body parameter should be greater than:    [data][0][attributes][abstractProducts][0][price]    0
+    And Response body parameter should be:    [data][0][attributes][abstractProducts][0][abstractName]    ${concrete_product_with_alternative_sku_name}
+    And Response body parameter should be:    [data][0][attributes][abstractProducts][0][abstractSku]    ${abstract_product_with_alternative_sku}
+    And Response body parameter should not be EMPTY:    [data][0][attributes][abstractProducts][0][url]
+    And Response body parameter should not be EMPTY:    [data][0][attributes][abstractProducts][0][images]
+    And Response should contain the array of a certain size:    [data][0][attributes][categoryCollection]    0
+    And Response should contain the array of a certain size:    [data][0][attributes][cmsPageCollection]    0
+    And Response body has correct self link
+
 Get_search_suggestions_with_all_attributes_data
     When I send a GET request:    /catalog-search-suggestions?q=${concrete_product_with_alternative_sku_name}
     Then Response status code should be:    200
