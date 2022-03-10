@@ -183,6 +183,7 @@ Get_search_suggestions_with_brand_and_currency
     And Each array element of array in response should contain value:    [data][0][attributes][completion]    ${brand_name}
     And Response should contain the array of a certain size:    [data][0][attributes][completion]    10
     And Response should contain the array of a certain size:    [data][0][attributes][abstractProducts]    10
+    And Response body parameter should be:    [data][0][attributes][abstractProducts][8][price]    ${alternative_abstract_product_price_eur}
     And Response body has correct self link
 
 Get_search_suggestions_with_color

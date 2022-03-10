@@ -130,6 +130,7 @@
         "abstract_product_with_alternative_sku": "M21100",
         "abstract_product_with_alternative_name": "Verbatim USB stick Store n Go V3 49173 32GB USB3.0 gray",
         "alternative_abstract_product": "M21099",
+        "alternative_abstract_product_price_eur": "992",
 
         "abstract_available_product_with_stock": "M90799",
         "abstract_available_product_with_stock_name": "Mauser sliding door cabinet - Sideboard with 2 shelves",
@@ -212,6 +213,11 @@
 
         "category_collection_name": "Sticky Notes",
         "category_collection_url": "/en/stationery/paper/sticky-notes",
+
+        "category_nodes_storage_name": "Foods",
+        "category_nodes_storage_url": "/en/foods",
+        "subcategory_nodes_storage_name": "Fish",
+        "subcategory_nodes_storage_url": "/en/foods/fish",
 
         "cms_page_collection_name": "GTC",
         "cms_page_collection_url": "/en/gtc",
