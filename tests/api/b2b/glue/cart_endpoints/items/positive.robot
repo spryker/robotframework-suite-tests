@@ -266,3 +266,63 @@ Add_product_with_options_to_cart
     Each array element of array in response should contain property:    [included][0][attributes][selectedProductOptions]    price
     [Teardown]    Run Keywords    I send a DELETE request:     /carts/${cart_uid}
     ...    AND    Response status code should be:    204
+
+####### PATCH #######
+Change_item_qty_in_cart
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
+    ...    AND    I send a POST request:    /carts    {"data":{"type":"carts","attributes":{"priceMode":"${gross_mode}","currency":"${currency_code_eur}","store":"${store_de}","name":"Cart-${random}"}}}
+    ...    AND    Save value to a variable:    [data][id]    cart_uid
+    ...    AND    I send a POST request:    /carts/${cart_uid}/items?include=items    {"data": {"type": "items","attributes": {"sku": "${concrete_available_with_stock_and_never_out_of_stock}","quantity": 1}}}
+    ...    AND    Save value to a variable:    [included][0][id]    item_uid
+    ...    AND    Save value to a variable:    [included][0][attributes][calculations][sumPriceToPayAggregation]    item_total_price
+    When I send a PATCH request:    /carts/${cart_uid}/items/${item_uid}?include=items  {"data":{"type": "items","attributes":{"quantity": 2}}}
+    Then Response status code should be:    200
+    And Response reason should be:    OK
+    And Response header parameter should be:    Content-Type    ${default_header_content_type}
+    And Response body parameter should be:    [data][id]    ${cart_uid}
+    And Response body parameter should be:    [data][type]    carts
+    And Response body parameter should be:    [included][0][id]    ${item_uid}
+    And Response body parameter should be:    [included][0][attributes][quantity]    2
+    And Response body parameter should be greater than:    [included][0][attributes][calculations][sumPriceToPayAggregation]    ${item_total_price}
+    [Teardown]    Run Keywords    I send a DELETE request:     /carts/${cart_uid}
+    ...    AND    Response status code should be:    204
+
+Change_item_amount_in_cart
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
+    ...    AND    I send a POST request:    /carts    {"data":{"type":"carts","attributes":{"priceMode":"${gross_mode}","currency":"${currency_code_eur}","store":"${store_de}","name":"Cart-${random}"}}}
+    ...    AND    Save value to a variable:    [data][id]    cart_uid
+    ...    AND    I send a GET request:    /concrete-products/${concrete_product_random_weight_sku}?include=sales-units
+    ...    AND    Save value to a variable:    [included][0][id]    sales_unit_id
+    ...    AND    I send a POST request:    /carts/${cart_uid}/items?include=items    {"data": {"type": "items","attributes": {"sku": "${concrete_product_random_weight_sku}","quantity": 1,"salesUnit": {"id": "${sales_unit_id}","amount": 2.5}}}}
+    ...    AND    Save value to a variable:    [included][0][id]    item_uid
+    ...    AND    Save value to a variable:    [included][0][attributes][calculations][sumPriceToPayAggregation]    item_total_price
+    When I send a PATCH request:    /carts/${cart_uid}/items/${item_uid}?include=items    {"data":{"type": "items","attributes":{"quantity": 2,"salesUnit": {"id": "${sales_unit_id}","amount": 5}}}}
+    Then Response status code should be:    200
+    And Response reason should be:    OK
+    And Response header parameter should be:    Content-Type    ${default_header_content_type}
+    And Response body parameter should be:    [data][id]    ${cart_uid}
+    And Response body parameter should be:    [data][type]    carts
+    And Response body parameter should be:    [included][0][id]    ${item_uid}
+    And Response body parameter should be:    [included][0][attributes][quantity]    2
+    And Response body parameter should be:    [included][0][attributes][amount]    5.0
+    And Response body parameter should be greater than:    [included][0][attributes][calculations][sumPriceToPayAggregation]    ${item_total_price}
+    [Teardown]    Run Keywords    I send a DELETE request:     /carts/${cart_uid}
+    ...    AND    Response status code should be:    204
+
+####### DELETE #######
+Delete_item_form_cart
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
+    ...    AND    I send a POST request:    /carts    {"data":{"type":"carts","attributes":{"priceMode":"${gross_mode}","currency":"${currency_code_eur}","store":"${store_de}","name":"Cart-${random}"}}}
+    ...    AND    Save value to a variable:    [data][id]    cart_uid
+    ...    AND    I send a POST request:    /carts/${cart_uid}/items?include=items    {"data": {"type": "items","attributes": {"sku": "${concrete_available_with_stock_and_never_out_of_stock}","quantity": 1}}}
+    ...    AND    Save value to a variable:    [included][0][id]    item_uid
+    When I send a DELETE request:    /carts/${cart_uid}/items/${item_uid}
+    Then Response status code should be:    204
+    And Response reason should be:    No Content
+    And I send a GET request:    /carts/${cart_uid}
+    And Response body parameter should be:    [data][attributes][totals][grandTotal]    0 
+    [Teardown]    Run Keywords    I send a DELETE request:     /carts/${cart_uid}
+    ...    AND    Response status code should be:    204
