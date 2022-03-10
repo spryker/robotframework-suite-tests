@@ -126,13 +126,19 @@
 
         "concrete_product_with_alternative_sku": "420566",
         "concrete_product_with_alternative_sku_name": "Verbatim USB stick Store n Go V3 49173 32GB USB3.0 gray",
+        "concrete_product_with_alternative_sku_name_in_lower_case": "verbatim usb stick store n go v3 49173 32gb usb3.0 gray",
         "abstract_product_with_alternative_sku": "M21100",
         "abstract_product_with_alternative_name": "Verbatim USB stick Store n Go V3 49173 32GB USB3.0 gray",
         "alternative_abstract_product": "M21099",
+        "alternative_abstract_product_price_chf": "1130",
 
         "abstract_available_product_with_stock": "M90799",
         "abstract_available_product_with_stock_name": "Mauser sliding door cabinet - Sideboard with 2 shelves",
+        "abstract_available_product_with_stock_description": " High-quality, stove-enameled steel sheet construction (0.8 mm). Body welded.<br/>Smooth-running sliding doors with push handle on coated rollers. Rubber buffer guarantees low-noise door movement. Central locking by cylinder lock with change core, including 2 keys.<br/>Graphite black shelves, RAL 9011, adjustable in 25-mm pattern, load strength per base approx. 50 kg. Base height 100 mm. Standard height adjustment screws.<br/><br/>Cabinets are delivered with a 25-mm-high covering plate in light gray RAL 7035. ",
         "abstract_available_product_with_stock_superattribute": "material",
+        "concrete_available_product_sku": "410075",
+        "concrete_available_product_meta_keywords": "Büroschrank,Mehrzweckschrank,Schiebetürschrank,Stahlschrank,Universalschrank,Aktenschrank,Schrankwand,Stahlbüroschrank",
+        "concrete_available_product_meta_description": " Hochwertige, einbrennlackierte Stahlblechkonstruktion (0,8 mm). Korpus verschweißt.<br/>Leichtgängige Schiebetüren mit Bügelgriff auf Kugellagerrollen. Gummipuffer garantieren geräuscharmes Anschlagen der Türen. Zentralverriegelung per Drehzylinderschloss mit Wechselkern inklusive 2 Schlüssel.<br/>Fachböden graphitschwarz RAL 9011, im 25-mm-Raster verstellbar, Tragkraft pro Boden ca. 50 kg. Sockelhöhe 100 mm. Serienmäßig Höhenausgleichsschrauben.<br/><br/>Schränke werden mit einer 25 mm hohen Abdeckplatte in Lichtgrau RAL 7035 geliefert. ",
 
         "abstract_available_with_stock_and_never_out_of_stock": "M87",
         "concrete_available_with_stock_and_never_out_of_stock": "657716",
@@ -174,12 +180,17 @@
     "product_attributes":{
         "brand_1": "Soennecken",
         "brand_2": "edding",
+        "brand_3": "Mauser",
         "material_1": "aluminum",
         "material_2": "metal",
         "material_3": "chipboard",
+        "material_4": "Steel sheets, stove-enameled",
+        "delivery_1": "assembled",
+        "price_unit_1": "piece",
         "color_3": "purple",
         "color_1": "yellow",
         "color_2": "blue"
+
     },
     "content":{
 
@@ -195,9 +206,23 @@
 
         "cms_pages_qty": "5",
         "first_cms_page_name": "Imprint",
+        "first_cms_page_name_in_lower_case": "imprint",
         "first_cms_page_url_en": "/en/imprint",
         "cms_page_with_product_lists_id": "10014bd9-4bba-5a54-b84f-31b4b7efd064",
-        "cms_page_with_product_lists_name": "Demo Landing Page"
+        "cms_page_with_product_lists_name": "Demo Landing Page",
+
+        "category_collection_name": "Sticky Notes",
+        "category_collection_url": "/en/stationery/paper/sticky-notes",
+
+        "category_nodes_storage_name": "Foods",
+        "category_nodes_storage_url": "/en/foods",
+        "subcategory_nodes_storage_name": "Fish",
+        "subcategory_nodes_storage_url": "/en/foods/fish",
+
+        "cms_page_collection_name": "GTC",
+        "cms_page_collection_url": "/en/gtc",
+
+        "brand_name": "verbatim"
 
     },
     "availability":{
@@ -206,7 +231,10 @@
     },
     "misc":{
         "default_header_content_type": "application/vnd.api+json",
-        "test_cart_name": "Test-cart"
+        "test_cart_name": "Test-cart",
+        "qty_of_categories_in_category_trees": "6",
+        "qty_of_subcategories_in_category_trees": "2",
+        "color_name": "black"
     }
 
 }
