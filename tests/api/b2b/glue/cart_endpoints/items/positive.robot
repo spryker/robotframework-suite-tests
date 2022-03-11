@@ -217,7 +217,6 @@ Add_random_weight_product_to_cart_with_included_sales_units
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response body parameter should be:    [data][id]    ${cart_uid}
     And Response body parameter should be:    [data][type]    carts
-    And Response body parameter should be:    [data][attributes][amount]    2.5
     And Response body parameter should not be EMPTY:    [data][attributes][totals][expenseTotal]
     And Response body parameter should not be EMPTY:   [data][attributes][totals][discountTotal]
     And Response body parameter should be greater than:    [data][attributes][totals][taxTotal]    1
