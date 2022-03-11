@@ -26,5 +26,3 @@ Request_business_unit_address_with_wrong_access_token
     And Response should return error code:    001
     And Response reason should be:    Unauthorized
     And Response body parameter should be:    [errors][0][detail]    Invalid access token.
-
-
