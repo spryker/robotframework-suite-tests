@@ -141,7 +141,7 @@ I send a POST request:
     ${hasValue}    Run Keyword and return status     Should not be empty    ${headers}
     ${response}=    Run Keyword if    ${hasValue}    POST    ${current_url}${path}    json=${data}    headers=${headers}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}
     ...    ELSE    POST    ${current_url}${path}    json=${data}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=ANY
-    ${response_body}=    Set Variable    ${response.json()}
+    ${response_body}=    Run Keyword if    ${response.status_code} != 204    Set Variable    ${response.json()}
     ${response_headers}=    Set Variable    ${response.headers}
     Set Test Variable    ${response_headers}    ${response_headers}
     Set Test Variable    ${response_body}    ${response_body}
@@ -165,7 +165,7 @@ I send a POST request with data:
     ${hasValue}    Run Keyword and return status     Should not be empty    ${headers}
     ${response}=    Run Keyword if    ${hasValue}    POST    ${current_url}${path}    data=${data}    headers=${headers}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}
     ...    ELSE    POST    ${current_url}${path}    data=${data}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}
-    ${response_body}=    Set Variable    ${response.json()}
+    ${response_body}=    Run Keyword if    ${response.status_code} != 204    Set Variable    ${response.json()}
     ${response_headers}=    Set Variable    ${response.headers}
     Set Test Variable    ${response_headers}    ${response_headers}
     Set Test Variable    ${response_body}    ${response_body}
@@ -189,7 +189,7 @@ I send a PUT request:
     ${hasValue}    Run Keyword and return status     Should not be empty    ${headers}
     ${response}=    Run Keyword if    ${hasValue}    PUT    ${current_url}${path}    json=${data}    headers=${headers}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}
     ...    ELSE    PUT    ${current_url}${path}    json=${data}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}
-    ${response_body}=    Set Variable    ${response.json()}
+    ${response_body}=    Run Keyword if    ${response.status_code} != 204    Set Variable    ${response.json()}
     ${response_headers}=    Set Variable    ${response.headers}
     Set Test Variable    ${response_headers}    ${response_headers}
     Set Test Variable    ${response_body}    ${response_body}
@@ -213,7 +213,7 @@ I send a PUT request with data:
     ${hasValue}    Run Keyword and return status     Should not be empty    ${headers}
     ${response}=    Run Keyword if    ${hasValue}    PUT    ${current_url}${path}    data=${data}    headers=${headers}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}
     ...    ELSE    PUT    ${current_url}${path}    data=${data}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}
-    ${response_body}=    Set Variable    ${response.json()}
+    ${response_body}=    Run Keyword if    ${response.status_code} != 204    Set Variable    ${response.json()}
     ${response_headers}=    Set Variable    ${response.headers}
     Set Test Variable    ${response_headers}    ${response_headers}
     Set Test Variable    ${response_body}    ${response_body}
@@ -242,7 +242,7 @@ I send a PATCH request:
     ${hasValue}    Run Keyword and return status     Should not be empty    ${headers}
     ${response}=    Run Keyword if    ${hasValue}    PATCH   ${current_url}${path}    json=${data}    headers=${headers}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}
     ...    ELSE    PATCH    ${current_url}${path}    json=${data}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}
-    ${response_body}=    Set Variable    ${response.json()}
+    ${response_body}=    Run Keyword if    ${response.status_code} != 204    Set Variable    ${response.json()}
     ${response_headers}=    Set Variable    ${response.headers}
     Set Test Variable    ${response_headers}    ${response_headers}
     Set Test Variable    ${response_body}    ${response_body}
@@ -272,7 +272,7 @@ I send a PATCH request with data
     ${hasValue}    Run Keyword and return status     Should not be empty    ${headers}
     ${response}=    Run Keyword if    ${hasValue}    PATCH    ${current_url}${path}    data=${data}    headers=${headers}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}
     ...    ELSE    PATCH    ${current_url}${path}    data=${data}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}
-    ${response_body}=    Set Variable    ${response.json()}
+    ${response_body}=    Run Keyword if    ${response.status_code} != 204    Set Variable    ${response.json()}
     ${response_headers}=    Set Variable    ${response.headers}
     Set Test Variable    ${response_headers}    ${response_headers}
     Set Test Variable    ${response_body}    ${response_body}
@@ -299,7 +299,7 @@ I send a GET request:
     ${hasValue}    Run Keyword and return status     Should not be empty    ${headers}
     ${response}=    Run Keyword if    ${hasValue}    GET    ${current_url}${path}    headers=${headers}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}
     ...    ELSE    GET    ${current_url}${path}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}
-    ${response_body}=    Set Variable    ${response.json()}
+    ${response_body}=    Run Keyword if    ${response.status_code} != 204    Set Variable    ${response.json()}
     ${response_headers}=    Set Variable    ${response.headers}
     Set Test Variable    ${response_headers}    ${response_headers}
     Set Test Variable    ${response_body}    ${response_body}
@@ -396,18 +396,21 @@ Response body parameter should NOT be:
     ${data}=    Replace String    ${data}    [   ${EMPTY}
     ${data}=    Replace String    ${data}    ]   ${EMPTY}
     Log    ${data}
+    Should Not Be Empty    ${data} ${data} is empty but should not be
     Should Not Be Equal    ${data}    ${expected_value}
 
 Response body parameter should have datatype:
     [Documentation]    This keyword checks that the response saved  in ``${response_body}`` test variable contsains the speficied parameter ``${parameter}`` and that parameter has the specified data type ``${expected_data_type}``.
     ...
-    ...    Some types that can be used are: ``int``, ``str``. It uses a custom keyword ``Evaluate datatype of a variable:`` to evaluate the datatype.
+    ...    Some types that can be used are: ``int``, ``str``, ``list``. It uses a custom keyword ``Evaluate datatype of a variable:`` to evaluate the datatype.
     ...
     ...    *Example:*
     ...
     ...    ``Response body parameter should have datatype:    [data][0][attributes][name]    str``
+    ...    ``Response body parameter should have datatype:    [data][0][attributes][sort][sortParamNames]    list``
     [Arguments]    ${parameter}    ${expected_data_type}
-    ${actual_data_type}=    Evaluate datatype of a variable:    ${parameter}
+    @{parameter}=    Get Value From Json    ${response_body}    ${parameter}
+    ${actual_data_type}=    Evaluate datatype of a variable:    @{parameter}
     Should Be Equal    ${actual_data_type}    ${expected_data_type}
 
 Evaluate datatype of a variable:
@@ -432,6 +435,16 @@ Response header parameter should be:
     [Arguments]    ${header_parameter}    ${header_value}
     ${actual_header_value}=    Get From Dictionary    ${response_headers}    ${header_parameter}
     Should Be Equal    ${actual_header_value}    ${header_value}
+
+Response header parameter should contain:
+    [Documentation]    This keyword checks that the response header saved previiously in ``${response_headers}`` test variable has the expected header with name ``${header_parameter}`` and this header contains substring ``${header_value}``
+    ...
+    ...    *Example:*
+    ...
+    ...    ``Response header parameter should be:    Content-Type    ${default_header_content_type}``
+    [Arguments]    ${header_parameter}    ${header_value}
+    ${actual_header_value}=    Get From Dictionary    ${response_headers}    ${header_parameter}
+    Should Contain    ${actual_header_value}    ${header_value}
 
 Response body has correct self link
     [Documentation]    This keyword checks that the actual selflink retrieved from the test variable ``${response_body}`` matches the self link recorded into the ``${expected_self_link}`` test variable on endpoint call.
@@ -483,9 +496,10 @@ Response body has correct self link for created entity:
     Log    ${response_body}  
     Should Be Equal    ${actual_self_link}    ${expected_self_link}/${url}
 
-
 Response body parameter should not be EMPTY:
     [Documentation]    This keyword checks that the body parameter sent in ``${json_path}`` argument is not empty. If the parameter value is other that ``null`` the keyword will fail.
+    ...
+    ...    This keyword checks both that the parameter does not have null value or that it does not have an empty string value and makes sure that the pagameter actually exists.
     ...
     ...    *Example:*
     ...
@@ -496,7 +510,8 @@ Response body parameter should not be EMPTY:
     ${data}=    Replace String    ${data}    '   ${EMPTY}
     ${data}=    Replace String    ${data}    [   ${EMPTY}
     ${data}=    Replace String    ${data}    ]   ${EMPTY}
-    Should Not Be Equal    ${data}    None    ${data} is not empty but shoud be
+    Should Not Be Empty    ${data}    ${data} is empty but shoud not be
+    Should Not Be Equal    ${data}    None    Propewrty value is ${data} which is null, but it shoud be a non-null value
 
 Response body parameter should be greater than:
     [Documentation]    This keyword checks that the body parameter sent in ``${json_path}`` argument is greater than a specific integer value ``${expected_value}``.
@@ -569,6 +584,25 @@ Response should contain the array larger than a certain size:
     ${result}=    Convert To String    ${result}
     Should Be Equal    ${result}    True    Actual array length is ${list_length} and it is not greater than expected ${expected_size}
     
+Response should contain the array smaller than a certain size:
+    [Documentation]    This keyword checks that the body array sent in ``${json_path}`` argument contains the number of items that is fewer than ``${expected_size}``. 
+    ...    The expected size should be an integer value that is less than you expect elements. So if you expect an array to have 0 or 1 elements, the ``${expected_size}`` should be 2.
+    ...
+    ...    It can be used to check how many elements were returned, if you know the exact number of emelents that should be returned, but know there should be fewer, than the default value for example.
+    ...    It is useful when you check search and know how many values are there if there is no filtering, but you also know that with filtering, there should be fewer values than without it.
+    ...
+    ...    *Example:*
+    ...
+    ...    ``Response should contain the array smaller than a certain size:    [data][0][attributes][valueFacets][1]    5``
+    [Arguments]    ${json_path}    ${expected_size}
+    @{data}=    Get Value From Json    ${response_body}    ${json_path}
+    Log    @{data}
+    ${list_length}=    Get Length    @{data}
+    ${list_length}=    Convert To Integer    ${list_length}
+    ${result}=    Evaluate   ${list_length} < ${expected_size}
+    ${result}=    Convert To String    ${result}
+    Should Be Equal    ${result}    True    Actual array length is ${list_length} and it is not greater than expected ${expected_size}
+
 Each array element of array in response should contain property:
     [Documentation]    This keyword checks whether the array ``${json_path}`` that is present in the ``${response_body}`` test variable contsains a property with ``${expected_property}`` name in every of it's array elements.
     ...
@@ -614,6 +648,9 @@ Each array element of array in response should contain property with value:
     ...
     ...    If at least one array element has this property with another value, the keyword will fail.
     ...
+    ...    *NOTE*: ``${expected_property}`` is a first level property in an array like this ``"data":[{"type": "some-type", "attributes": {"name": "some name", "sku": "1234"}},...] e.g. ``attributes``. 
+    ...    While second level property is `attributes.sku`` and it won't be identified with this keyword.
+    ...
     ...    *Example:*
     ...
     ...    ``Each array element of array in response should contain property with value:    [errors]    status    422``
@@ -626,6 +663,46 @@ Each array element of array in response should contain property with value:
     FOR    ${index}    IN RANGE    0    ${list_length}
         ${list_element}=    Get From List    @{data}    ${index}
         Dictionary Should Contain Item    ${list_element}    ${expected_property}    ${expected_value}
+    END
+
+Each array element of array in response should contain nested property with value:
+    [Documentation]    This keyword checks that each element in the array specified as ``${json_path}`` contains the specified property ``${expected_nested_property}`` with the specified value ``${expected_value}``.
+    ...
+    ...    If at least one array element has this property with another value, the keyword will fail.
+    ...
+    ...    *NOTES*: 
+    ...
+    ...    1. ``${expected_nested_property}`` is a second level property. In an array like this 
+    ...
+    ...    ``{"data":[{"type": "some-type", "attributes": {"name": "some name", "sku": "1234"}},...]}`` 
+    ...
+    ...    it will be ``attributes.sku``. 
+    ...
+    ...    2. The first level property in the above array is just ``attributes``, but it cannot be checked by this keyword.
+    ...
+    ...    3. Syntax for the second level property is ``[firstlevel][secondlevel]`` or ``firstlevel.secondlevel``.
+    ...
+    ...    4. This keyword supports any level of nesting.
+    ...
+    ...    *Example:*
+    ...
+    ...    ``Each array element of array in response should contain nested property with value:    [data]    [attributes][sku]    "M1234"``
+    ...
+    ...    ``Each array element of array in response should contain nested property with value:    [data]    attributes.sku    "M1234"``
+    ...
+    ...    ``Each array element of array in response should contain nested property with value:    [data]    [relationships][concrete-products][data][0][type]    concrete-products``
+    [Arguments]    ${json_path}    ${expected_nested_property}    ${expected_value}
+    @{data}=    Get Value From Json    ${response_body}    ${json_path}
+    ${list_length}=    Get Length    @{data}
+    ${log_list}=    Log List    @{data}
+    FOR    ${index}    IN RANGE    0    ${list_length}
+        ${list_element}=    Get From List    @{data}    ${index}
+        ${list_element}=    Get Value From Json    ${list_element}    $.${expected_nested_property}
+        ${list_element}=    Convert To String    ${list_element}
+        ${list_element}=    Replace String    ${list_element}    [   ${EMPTY}
+        ${list_element}=    Replace String    ${list_element}    '   ${EMPTY}
+        ${list_element}=    Replace String    ${list_element}    ]   ${EMPTY}
+        Should Be Equal    ${list_element}    ${expected_value}
     END
 
 Response should return error message:
@@ -748,6 +825,23 @@ Save value to a variable:
     Set Test Variable    ${${name}}    ${var_value}  
     [Return]    ${name}
 
+Save Header value to a variable:
+    [Documentation]    This keyword saves any value located in a response Header parameter ``${header_parameter}`` to a test variable called ``${name}``. 
+    ...
+    ...    It can be used to save a value returned by any request into a custom test variable.
+    ...    This variable, once created, can be used during the cpecific test where this keyword is used and can be re-used by the keywords that follow this keyword in the test. 
+    ...    It will not be visible to other tests.
+    ...
+    ...    *Examples:*
+    ...
+    ...    ``Save Header value to a variable:    ETag    header_tag``
+    ...
+    ...    The example above should be called after POST request for cart creation. It gets ETag from the ``${response_headers}`` test vatialbe and saves it into ``${header_tag}`` test variable which can then be used in other requests, e.g. in a PATCH request.    
+    [Arguments]    ${header_parameter}    ${name}
+    ${actual_header_value}=    Get From Dictionary    ${response_headers}    ${header_parameter}
+    Set Test Variable    ${${name}}    ${actual_header_value}
+    [Return]    ${name}
+
 Response body parameter should contain:
     [Documentation]    This keyword checks that response parameter with name ``${json_path}`` contains the specified substing ``${expected_value}``. 
     ...    It can check that a long value has the required substing without needing to know the whole value. It is a partial patch check.
@@ -767,6 +861,23 @@ Response body parameter should contain:
     ${data}=    Replace String    ${data}    ]   ${EMPTY}
     Log    ${data}
     Should Contain   ${data}    ${expected_value}  
+
+Response body parameter should start with:
+    [Documentation]    This keyword checks that response parameter with name ``${json_path}`` starts with the specified substing ``${expected_value}``. 
+    ...
+    ...    *Example:*
+    ...
+    ...    ``Response body parameter should start with:    [data][attributes][name]    Comp``
+    ...
+    ...    The example above checks that ``name`` parameter starts with 'comp', e.g. as in Computer. 
+    [Arguments]    ${json_path}    ${expected_value}
+    ${data}=    Get Value From Json    ${response_body}    ${json_path}
+    ${data}=    Convert To String    ${data}
+    ${data}=    Replace String    ${data}    '   ${EMPTY}
+    ${data}=    Replace String    ${data}    [   ${EMPTY}
+    ${data}=    Replace String    ${data}    ]   ${EMPTY}
+    Log    ${data}
+    Should Start With   ${data}    ${expected_value}  
 
 Array in response should contain property with value:
     [Documentation]    This keyword checks is the specified array (usually error array) ``${json_path} `` contains the specified property name ``${expected_property}`` with the specified value ``${expected_value}``.
