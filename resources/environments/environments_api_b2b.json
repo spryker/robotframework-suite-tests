@@ -174,6 +174,7 @@
 
         "concrete_product_random_weight_sku": "cable-vga-1-2",
         "concrete_product_random_weight_measurement_unit": "19",
+        "packaging_unit_m": "METR",
 
         "product_option_1": "OP_2_year_waranty",
         "product_option_2": "OP_insurance"

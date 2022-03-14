@@ -32,12 +32,12 @@ Add_one_item_to_cart
     [Teardown]    Run Keywords    I send a DELETE request:     /carts/${cart_uid}
     ...    AND    Response status code should be:    204
 
-Add_two_items_to_cart_with_included_items_and_concrete_products
+Add_two_items_to_cart_with_included_items_concrete_products_and_abstract_products
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     ...    AND    I send a POST request:    /carts    {"data":{"type":"carts","attributes":{"priceMode":"${gross_mode}","currency":"${currency_code_eur}","store":"${store_de}","name":"Cart-${random}"}}}
     ...    AND    Save value to a variable:    [data][id]    cart_uid
-    When I send a POST request:    /carts/${cart_uid}/items?include=items,concrete-products   {"data": {"type": "items","attributes": {"sku": "${concrete_available_with_stock_and_never_out_of_stock}","quantity": 2}}}
+    When I send a POST request:    /carts/${cart_uid}/items?include=items,concrete-products,abstract-products   {"data": {"type": "items","attributes": {"sku": "${concrete_available_with_stock_and_never_out_of_stock}","quantity": 2}}}
     Then Response status code should be:    201
     And Response reason should be:    Created
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
@@ -53,39 +53,41 @@ Add_two_items_to_cart_with_included_items_and_concrete_products
     And Response body parameter should not be EMPTY:    [data][attributes][thresholds]
     And Response body parameter should not be EMPTY:    [data][links][self]
     And Response should contain the array of a certain size:    [data][relationships][items][data]    1
-    And Response should contain the array of a certain size:    [included]    2
+    And Response should contain the array of a certain size:    [included]    3
     And Response include should contain certain entity type:    items
     And Response include should contain certain entity type:    concrete-products
+    And Response include should contain certain entity type:    abstract-products
     And Response include element has self link:   items
     And Response include element has self link:   concrete-products
-    And Response body parameter should be:    [included][1][type]    items
-    And Response body parameter should be:    [included][1][id]    ${concrete_available_with_stock_and_never_out_of_stock}
-    And Response body parameter should be:    [included][1][attributes][sku]    ${concrete_available_with_stock_and_never_out_of_stock}
-    And Response body parameter should be:    [included][1][attributes][quantity]    2
-    And Response body parameter should be:    [included][1][attributes][groupKey]    ${concrete_available_with_stock_and_never_out_of_stock}
-    And Response body parameter should be:    [included][1][attributes][abstractSku]    ${abstract_available_with_stock_and_never_out_of_stock}
-    And Response body parameter should be:    [included][1][attributes][amount]    None
-    And Response body parameter should not be EMPTY:    [included][1][attributes][calculations][unitPrice] 
-    And Response body parameter should not be EMPTY:    [included][1][attributes][calculations][sumPrice]
-    And Response body parameter should not be EMPTY:    [included][1][attributes][calculations][taxRate]
-    And Response body parameter should not be EMPTY:    [included][1][attributes][calculations][unitNetPrice]
-    And Response body parameter should not be EMPTY:    [included][1][attributes][calculations][sumNetPrice]
-    And Response body parameter should not be EMPTY:    [included][1][attributes][calculations][unitGrossPrice]
-    And Response body parameter should not be EMPTY:    [included][1][attributes][calculations][sumGrossPrice]
-    And Response body parameter should not be EMPTY:    [included][1][attributes][calculations][unitTaxAmountFullAggregation]
-    And Response body parameter should not be EMPTY:    [included][1][attributes][calculations][sumTaxAmountFullAggregation]
-    And Response body parameter should not be EMPTY:    [included][1][attributes][calculations][sumSubtotalAggregation]
-    And Response body parameter should not be EMPTY:    [included][1][attributes][calculations][unitSubtotalAggregation]
-    And Response body parameter should not be EMPTY:    [included][1][attributes][calculations][unitProductOptionPriceAggregation]
-    And Response body parameter should not be EMPTY:    [included][1][attributes][calculations][sumProductOptionPriceAggregation]   
-    And Response body parameter should not be EMPTY:    [included][1][attributes][calculations][unitDiscountAmountAggregation]  
-    And Response body parameter should not be EMPTY:    [included][1][attributes][calculations][sumDiscountAmountAggregation]  
-    And Response body parameter should not be EMPTY:    [included][1][attributes][calculations][unitDiscountAmountFullAggregation]  
-    And Response body parameter should not be EMPTY:    [included][1][attributes][calculations][sumDiscountAmountFullAggregation]  
-    And Response body parameter should not be EMPTY:    [included][1][attributes][calculations][unitPriceToPayAggregation] 
-    And Response body parameter should not be EMPTY:    [included][1][attributes][calculations][sumPriceToPayAggregation] 
-    And Response body parameter should be:    [included][1][attributes][salesUnit]    None 
-    And Response should contain the array of a certain size:    [included][1][attributes][selectedProductOptions]    0 
+    And Response include element has self link:   abstract-products
+    And Response body parameter should be:    [included][2][type]    items
+    And Response body parameter should be:    [included][2][id]    ${concrete_available_with_stock_and_never_out_of_stock}
+    And Response body parameter should be:    [included][2][attributes][sku]    ${concrete_available_with_stock_and_never_out_of_stock}
+    And Response body parameter should be:    [included][2][attributes][quantity]    2
+    And Response body parameter should be:    [included][2][attributes][groupKey]    ${concrete_available_with_stock_and_never_out_of_stock}
+    And Response body parameter should be:    [included][2][attributes][abstractSku]    ${abstract_available_with_stock_and_never_out_of_stock}
+    And Response body parameter should be:    [included][2][attributes][amount]    None
+    And Response body parameter should not be EMPTY:    [included][2][attributes][calculations][unitPrice] 
+    And Response body parameter should not be EMPTY:    [included][2][attributes][calculations][sumPrice]
+    And Response body parameter should not be EMPTY:    [included][2][attributes][calculations][taxRate]
+    And Response body parameter should not be EMPTY:    [included][2][attributes][calculations][unitNetPrice]
+    And Response body parameter should not be EMPTY:    [included][2][attributes][calculations][sumNetPrice]
+    And Response body parameter should not be EMPTY:    [included][2][attributes][calculations][unitGrossPrice]
+    And Response body parameter should not be EMPTY:    [included][2][attributes][calculations][sumGrossPrice]
+    And Response body parameter should not be EMPTY:    [included][2][attributes][calculations][unitTaxAmountFullAggregation]
+    And Response body parameter should not be EMPTY:    [included][2][attributes][calculations][sumTaxAmountFullAggregation]
+    And Response body parameter should not be EMPTY:    [included][2][attributes][calculations][sumSubtotalAggregation]
+    And Response body parameter should not be EMPTY:    [included][2][attributes][calculations][unitSubtotalAggregation]
+    And Response body parameter should not be EMPTY:    [included][2][attributes][calculations][unitProductOptionPriceAggregation]
+    And Response body parameter should not be EMPTY:    [included][2][attributes][calculations][sumProductOptionPriceAggregation]   
+    And Response body parameter should not be EMPTY:    [included][2][attributes][calculations][unitDiscountAmountAggregation]  
+    And Response body parameter should not be EMPTY:    [included][2][attributes][calculations][sumDiscountAmountAggregation]  
+    And Response body parameter should not be EMPTY:    [included][2][attributes][calculations][unitDiscountAmountFullAggregation]  
+    And Response body parameter should not be EMPTY:    [included][2][attributes][calculations][sumDiscountAmountFullAggregation]  
+    And Response body parameter should not be EMPTY:    [included][2][attributes][calculations][unitPriceToPayAggregation] 
+    And Response body parameter should not be EMPTY:    [included][2][attributes][calculations][sumPriceToPayAggregation] 
+    And Response body parameter should be:    [included][2][attributes][salesUnit]    None 
+    And Response should contain the array of a certain size:    [included][2][attributes][selectedProductOptions]    0 
     [Teardown]    Run Keywords    I send a DELETE request:     /carts/${cart_uid}
     ...    AND    Response status code should be:    204
 
@@ -172,12 +174,12 @@ Add_five_items_to_cart_with_included_cart_rules_and_promotional_items
     [Teardown]    Run Keywords    I send a DELETE request:     /carts/${cart_uid}
     ...    AND    Response status code should be:    204
 
-Add_bundle_to_cart_with_included_bundle_items
+Add_bundle_to_cart_with_included_bundle_items_and_bundled_items
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     ...    AND    I send a POST request:    /carts    {"data":{"type":"carts","attributes":{"priceMode":"${gross_mode}","currency":"${currency_code_eur}","store":"${store_de}","name":"Cart-${random}"}}}
     ...    AND    Save value to a variable:    [data][id]    cart_uid
-    When I send a POST request:    /carts/${cart_uid}/items?include=bundle-items    {"data": {"type": "items","attributes": {"sku": "${bundle_product_concrete_sku}","quantity": 1}}}
+    When I send a POST request:    /carts/${cart_uid}/items?include=bundle-items,bundled-items    {"data": {"type": "items","attributes": {"sku": "${bundle_product_concrete_sku}","quantity": 1}}}
     Then Response status code should be:    201
     And Response reason should be:    Created
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
@@ -191,27 +193,34 @@ Add_bundle_to_cart_with_included_bundle_items
     And Response body parameter should be greater than:    [data][attributes][totals][priceToPay]    1
     And Response body parameter should not be EMPTY:    [data][links][self]
     And Response should contain the array of a certain size:    [data][relationships][bundle-items][data]    1
-    And Response should contain the array of a certain size:    [included]    1
+    And Response should contain the array of a certain size:    [included]    4
     And Response include should contain certain entity type:    bundle-items
+    And Response include should contain certain entity type:    bundled-items
     And Response include element has self link:   bundle-items
-    And Response body parameter should be:    [included][0][type]    bundle-items
-    And Response body parameter should be:    [included][0][id]    ${bundle_product_concrete_sku}
-    And Response body parameter should be:    [included][0][attributes][sku]    ${bundle_product_concrete_sku}
-    And Response body parameter should be:    [included][0][attributes][quantity]    1
-    And Response body parameter should be:    [included][0][attributes][groupKey]    ${bundle_product_concrete_sku}
-    And Response body parameter should be:    [included][0][attributes][abstractSku]    ${bundle_product_abstract_sku}
+    And Response include element has self link:   bundled-items
+    And Response body parameter should be:    [included][0][type]    bundled-items
+    And Response body parameter should be:    [included][0][attributes][sku]    ${bundled_product_1_concrete_sku}
+    And Response body parameter should be:    [included][1][type]    bundled-items
+    And Response body parameter should be:    [included][1][attributes][sku]    ${bundled_product_2_concrete_sku}
+    And Response body parameter should be:    [included][2][type]    bundled-items
+    And Response body parameter should be:    [included][2][attributes][sku]    ${bundled_product_3_concrete_sku}
+    And Response body parameter should be:    [included][3][type]    bundle-items
+    And Response body parameter should be:    [included][3][attributes][sku]    ${bundle_product_concrete_sku}
+    And Response body parameter should be:    [included][3][attributes][quantity]    1
+    And Response body parameter should be:    [included][3][attributes][groupKey]    ${bundle_product_concrete_sku}
+    And Response body parameter should be:    [included][3][attributes][abstractSku]    ${bundle_product_abstract_sku}
     [Teardown]    Run Keywords    I send a DELETE request:     /carts/${cart_uid}
     ...    AND    Response status code should be:    204
 
 
-Add_random_weight_product_to_cart_with_included_sales_units
+Add_random_weight_product_to_cart_with_included_sales_units_and_measurenet_units
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     ...    AND    I send a POST request:    /carts    {"data":{"type":"carts","attributes":{"priceMode":"${gross_mode}","currency":"${currency_code_eur}","store":"${store_de}","name":"Cart-${random}"}}}
     ...    AND    Save value to a variable:    [data][id]    cart_uid
     ...    AND    I send a GET request:    /concrete-products/${concrete_product_random_weight_sku}?include=sales-units
     ...    AND    Save value to a variable:    [included][0][id]    sales_unit_id
-    When I send a POST request:    /carts/${cart_uid}/items?include=items,sales-units   {"data": {"type": "items","attributes": {"sku": "${concrete_product_random_weight_sku}","quantity": 1,"salesUnit": {"id": "${sales_unit_id}","amount": 2.5}}}}
+    When I send a POST request:    /carts/${cart_uid}/items?include=items,sales-units,product-measurement-units   {"data": {"type": "items","attributes": {"sku": "${concrete_product_random_weight_sku}","quantity": 1,"salesUnit": {"id": "${sales_unit_id}","amount": 2.5}}}}
     Then Response status code should be:    201
     And Response reason should be:    Created
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
@@ -225,15 +234,19 @@ Add_random_weight_product_to_cart_with_included_sales_units
     And Response body parameter should be greater than:    [data][attributes][totals][priceToPay]    1
     And Response body parameter should not be EMPTY:    [data][links][self]
     And Response should contain the array of a certain size:    [data][relationships][items][data]    1
-    And Response should contain the array of a certain size:    [included]    2
+    And Response should contain the array of a certain size:    [included]    3
     And Response include should contain certain entity type:    items
     And Response include should contain certain entity type:    sales-units
+    And Response include should contain certain entity type:    product-measurement-units 
     And Response include element has self link:   items
     And Response include element has self link:   sales-units
-    And Response body parameter should be:    [included][0][type]    sales-units
-    And Response body parameter should be:    [included][0][id]    ${sales_unit_id}
-    And Response body parameter should be:    [included][1][attributes][salesUnit][id]    ${sales_unit_id}
-    And Response body parameter should be:    [included][1][attributes][salesUnit][amount]    2.5
+    And Response include element has self link:   product-measurement-units
+    And Response body parameter should be:    [included][0][type]    product-measurement-units
+    And Response body parameter should be:    [included][0][id]    ${packaging_unit_m}
+    And Response body parameter should be:    [included][1][type]    sales-units
+    And Response body parameter should be:    [included][1][id]    ${sales_unit_id}
+    And Response body parameter should be:    [included][2][attributes][salesUnit][id]    ${sales_unit_id}
+    And Response body parameter should be:    [included][2][attributes][salesUnit][amount]    2.5
     [Teardown]    Run Keywords    I send a DELETE request:     /carts/${cart_uid}
     ...    AND    Response status code should be:    204
 
