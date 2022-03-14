@@ -14,14 +14,12 @@ Request_business_units_address_by_id
     And Response body parameter should be:    [data][type]    company-business-unit-addresses
     And Response body parameter should be:    [data][id]    ${busines_unit_address_id}
     And Response should contain the array of a certain size:    [data][attributes]  8  
-    And Response body parameter should be:    [data][attributes][address1]    Oderberger Str.
-    And Response body parameter should be:    [data][attributes][address2]    57
-    And Response body parameter should be:    [data][attributes][zipCode]    10115
-    And Response body parameter should be:    [data][attributes][city]    Berlin
-    And Response body parameter should be:    [data][attributes][iso2Code]    DE
-    And Response body parameter should be:    [data][attributes][comment]    HQ
+    And Response body parameter should not be EMPTY:    [data][attributes][address1]
+    And Response body parameter should not be EMPTY:    [data][attributes][address2]
+    And Response body parameter should not be EMPTY:    [data][attributes][zipCode]
+    And Response body parameter should not be EMPTY:    [data][attributes][city]
+    And Response body parameter should not be EMPTY:    [data][attributes][iso2Code]
+    And Response body parameter should not be EMPTY:    [data][attributes][comment]
     And Response body parameter should contain:   [data][attributes]    address3
-
-
 
 

@@ -26,3 +26,12 @@ Request_business_unit_address_with_wrong_access_token
     And Response should return error code:    001
     And Response reason should be:    Unauthorized
     And Response body parameter should be:    [errors][0][detail]    Invalid access token.
+
+Request_business_unit_address_with_mine
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}  
+    When I send a GET request:    /company-business-unit-addresses/mine
+    Then Response status code should be:    404
+    And Response should return error code:    2001
+    And Response reason should be:    Not Found
+    And Response body parameter should be:    [errors][0][detail]    Company business unit address not found.

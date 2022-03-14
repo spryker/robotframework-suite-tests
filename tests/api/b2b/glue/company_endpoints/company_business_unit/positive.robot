@@ -17,8 +17,8 @@ Request_business_unit_by_id
     And Response body parameter should be:    [data][attributes][name]    ${business_unit_name}
     And Response should contain the array of a certain size:    [data][attributes]  7  
     And Response body parameter should be:    [data][attributes][defaultBillingAddress]    None
-    And Response body parameter should be:    [data][attributes][email]    HR@spryker.com
-    And Response body parameter should be:    [data][attributes][phone]    4902890031
+    And Response body parameter should not be EMPTY:    [data][attributes][email]
+    And Response body parameter should not be EMPTY:    [data][attributes][phone]
     And Response body parameter should contain:   [data][attributes]    externalUrl
     And Response body parameter should contain:   [data][attributes]    bic
     And Response body parameter should contain:   [data][attributes]    iban
