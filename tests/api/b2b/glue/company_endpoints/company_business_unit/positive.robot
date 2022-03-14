@@ -32,7 +32,7 @@ Request_business_unit_by_mine
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response body parameter should be:    [data][0][type]    company-business-units
-    And Response body parameter should not be EMPTY:    [data][id]  
+    And Response body parameter should not be EMPTY:    [data][0][id]  
     And Response body parameter should be:    [data][0][attributes][name]    ${business_unit_name}
     And Response should contain the array of a certain size:    [data][0][attributes]  7  
 
