@@ -189,7 +189,10 @@
         "price_unit_1": "piece",
         "color_3": "purple",
         "color_1": "yellow",
-        "color_2": "blue"
+        "color_2": "blue",
+        "product_management_superattribute_id": "farbe",
+        "product_management_attribute_free_input_id": "verschlussart",
+        "product_management_attribute_no_input_id": "bundled_product"
 
     },
     "content":{

@@ -705,6 +705,26 @@ Each array element of array in response should contain nested property with valu
         Should Be Equal    ${list_element}    ${expected_value}
     END
 
+Each array element of array in response should contain nested property:
+    [Documentation]    This keyword checks that each element in the array specified as ``${json_path}`` contains the specified property ``${level1_property}``, that is not an array and contains a certain second level property ``${level2_property}``,.
+    ...
+    ...    *Example:*
+    ...
+    ...    ``Each array element of array in response should contain nested property:    [data]    [attributes]    sku``
+    ...
+    ...    The example above checks if inside [data] array there is property attributes and inside that there is sku property
+    [Arguments]    ${json_path}    ${level1_property}    ${level2_property}
+    @{data}=    Get Value From Json    ${response_body}    ${json_path}
+    ${list_length}=    Get Length    @{data}
+    ${log_list}=    Log List    @{data}
+    FOR    ${index}    IN RANGE    0    ${list_length}
+        ${list_element}=    Get From List    @{data}    ${index}
+        ${list_element}=    Get Value From Json    ${list_element}    ${level1_property}
+        ${list_element}=    Convert To String    ${list_element}
+        Should Contain    ${list_element}    ${level2_property}
+    END
+
+
 Response should return error message:
     [Documentation]    This keyword checks if the ``${response_body}`` test variable that contains the response of the previous request contains the specific  ``${error_message}``. 
     ...
