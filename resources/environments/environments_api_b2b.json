@@ -245,6 +245,18 @@
         "company_id": "62de4ab6-b768-5c21-8835-455d9f341625",
         "company_user_id": "2816dcbd-855e-567e-b26f-4d57f3310bb8"
 
+    },
+    "labels":{
+        "label_id_manual": "3",
+        "label_name_manual": "Top",
+        "label_id_sale": "5",
+        "label_name_sale": "SALE %",
+        "label_id_new": "4",
+        "label_name_new": "New",
+        "label_id_discontinued": "2",
+        "label_name_discontinued": "Discontinued",
+        "label_id_alternative": "1",
+        "label_name_alternative": "Alternatives available"
     }
 
 }
