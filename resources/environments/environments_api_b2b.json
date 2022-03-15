@@ -174,7 +174,16 @@
         "concrete_product_multiple_image_set": "212427",
         "concrete_product_multiple_image_set_name": "Wood stackable chair, upholstered - VE 4 pieces, substructure chromed - upholstery black",
         "concrete_available_product_with_stock": "420566",
-        "concrete_available_product_without_stock": ""
+        "concrete_available_product_without_stock": "",
+
+        "concrete_product_with_promotions": "212427",
+
+        "concrete_product_random_weight_sku": "cable-vga-1-2",
+        "concrete_product_random_weight_measurement_unit": "19",
+        "packaging_unit_m": "METR",
+
+        "product_option_1": "OP_2_year_waranty",
+        "product_option_2": "OP_insurance"
             
     },
     "product_attributes":{
