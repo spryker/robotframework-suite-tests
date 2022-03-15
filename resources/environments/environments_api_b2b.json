@@ -222,9 +222,12 @@
       "category_collection_name": "Sticky Notes",
       "category_collection_url": "/en/stationery/paper/sticky-notes",
 
-      "category_nodes_id": "11",
-      "category_nodes_invalid_id": "test",
-      "category_nodes_non_exists_id":"1111111111",
+      "category_node_is_root_id": "1",
+      "category_node_has_only_parent_id": "37",
+      "category_node_has_childrens_id": "11",
+      "category_node_invalid_id": "test",
+      "category_node_non_exists_id": "1111111111",
+      
       "category_nodes_storage_name": "Foods",
       "category_nodes_storage_url": "/en/foods",
       "subcategory_nodes_storage_name": "Fish",
