@@ -1,5 +1,5 @@
 {
-    "environment": "api_b2b", 
+    "environment": "api_b2c",
 
     "env": {
         "glue_url": "http://glue.de.spryker.local",
@@ -132,10 +132,10 @@
         "alternative_abstract_product": "M21099",
         "alternative_abstract_product_price_chf": "1130",
 
-        "abstract_available_product_with_stock": "M90799",
-        "abstract_available_product_with_stock_name": "Mauser sliding door cabinet - Sideboard with 2 shelves",
+        "abstract_available_product_with_stock": "183",
+        "abstract_available_product_with_stock_name": "Sony Xperia SGP512E1",
         "abstract_available_product_with_stock_description": " High-quality, stove-enameled steel sheet construction (0.8 mm). Body welded.<br/>Smooth-running sliding doors with push handle on coated rollers. Rubber buffer guarantees low-noise door movement. Central locking by cylinder lock with change core, including 2 keys.<br/>Graphite black shelves, RAL 9011, adjustable in 25-mm pattern, load strength per base approx. 50 kg. Base height 100 mm. Standard height adjustment screws.<br/><br/>Cabinets are delivered with a 25-mm-high covering plate in light gray RAL 7035. ",
-        "abstract_available_product_with_stock_superattribute": "material",
+        "abstract_available_product_with_stock_superattribute": "color",
         "concrete_available_product_sku": "410075",
         "concrete_available_product_meta_keywords": "Büroschrank,Mehrzweckschrank,Schiebetürschrank,Stahlschrank,Universalschrank,Aktenschrank,Schrankwand,Stahlbüroschrank",
         "concrete_available_product_meta_description": " Hochwertige, einbrennlackierte Stahlblechkonstruktion (0,8 mm). Korpus verschweißt.<br/>Leichtgängige Schiebetüren mit Bügelgriff auf Kugellagerrollen. Gummipuffer garantieren geräuscharmes Anschlagen der Türen. Zentralverriegelung per Drehzylinderschloss mit Wechselkern inklusive 2 Schlüssel.<br/>Fachböden graphitschwarz RAL 9011, im 25-mm-Raster verstellbar, Tragkraft pro Boden ca. 50 kg. Sockelhöhe 100 mm. Serienmäßig Höhenausgleichsschrauben.<br/><br/>Schränke werden mit einer 25 mm hohen Abdeckplatte in Lichtgrau RAL 7035 geliefert. ",
@@ -145,8 +145,8 @@
         "abstract_available_product_with_no_stock_and_never_out_of_stock": "",
         "abstract_unavailable_product": "",
 
-        "abstract_available_product_with_3_concretes": "M29456",
-        "abstract_available_product_with_3_concretes_name": "Gmöhling aluminum data removal container - Exterior - LxWxH 435 x 385 x 650 mm",
+        "abstract_available_product_with_3_concretes": "666",
+        "abstract_available_product_with_3_concretes_name": "Gift Card",
         "abstract_available_product_with_3_concretes_superattribute": "material",
 
 
@@ -174,16 +174,7 @@
         "concrete_product_multiple_image_set": "212427",
         "concrete_product_multiple_image_set_name": "Wood stackable chair, upholstered - VE 4 pieces, substructure chromed - upholstery black",
         "concrete_available_product_with_stock": "420566",
-        "concrete_available_product_without_stock": "",
-
-        "concrete_product_with_promotions": "212427",
-
-        "concrete_product_random_weight_sku": "cable-vga-1-2",
-        "concrete_product_random_weight_measurement_unit": "19",
-        "packaging_unit_m": "METR",
-
-        "product_option_1": "OP_2_year_waranty",
-        "product_option_2": "OP_insurance"
+        "concrete_available_product_without_stock": ""
             
     },
     "product_attributes":{
@@ -241,20 +232,9 @@
     "misc":{
         "default_header_content_type": "application/vnd.api+json",
         "test_cart_name": "Test-cart",
-        "restricted_content_qty": "5",
         "qty_of_categories_in_category_trees": "6",
         "qty_of_subcategories_in_category_trees": "2",
         "color_name": "black"
-    },
-
-    "companies":{
-        "company_name": "Spryker Systems GmbH",
-        "busines_unit_address_id": "2175cddd-f8af-5885-b161-227b5c93e72f",
-        "business_unit_name": "Spryker Systems HR department",
-        "user_with_multiple_companies": "anne.boleyn@spryker.com",
-        "company_id": "62de4ab6-b768-5c21-8835-455d9f341625",
-        "company_user_id": "2816dcbd-855e-567e-b26f-4d57f3310bb8"
-
     }
 
 }

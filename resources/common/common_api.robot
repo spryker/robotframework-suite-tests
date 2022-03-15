@@ -141,7 +141,7 @@ I send a POST request:
     ${hasValue}    Run Keyword and return status     Should not be empty    ${headers}
     ${response}=    Run Keyword if    ${hasValue}    POST    ${current_url}${path}    json=${data}    headers=${headers}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}
     ...    ELSE    POST    ${current_url}${path}    json=${data}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=ANY
-    ${response_body}=    Set Variable    ${response.json()}
+    ${response_body}=    Run Keyword if    ${response.status_code} != 204    Set Variable    ${response.json()}
     ${response_headers}=    Set Variable    ${response.headers}
     Set Test Variable    ${response_headers}    ${response_headers}
     Set Test Variable    ${response_body}    ${response_body}
@@ -165,7 +165,7 @@ I send a POST request with data:
     ${hasValue}    Run Keyword and return status     Should not be empty    ${headers}
     ${response}=    Run Keyword if    ${hasValue}    POST    ${current_url}${path}    data=${data}    headers=${headers}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}
     ...    ELSE    POST    ${current_url}${path}    data=${data}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}
-    ${response_body}=    Set Variable    ${response.json()}
+    ${response_body}=    Run Keyword if    ${response.status_code} != 204    Set Variable    ${response.json()}
     ${response_headers}=    Set Variable    ${response.headers}
     Set Test Variable    ${response_headers}    ${response_headers}
     Set Test Variable    ${response_body}    ${response_body}
@@ -189,7 +189,7 @@ I send a PUT request:
     ${hasValue}    Run Keyword and return status     Should not be empty    ${headers}
     ${response}=    Run Keyword if    ${hasValue}    PUT    ${current_url}${path}    json=${data}    headers=${headers}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}
     ...    ELSE    PUT    ${current_url}${path}    json=${data}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}
-    ${response_body}=    Set Variable    ${response.json()}
+    ${response_body}=    Run Keyword if    ${response.status_code} != 204    Set Variable    ${response.json()}
     ${response_headers}=    Set Variable    ${response.headers}
     Set Test Variable    ${response_headers}    ${response_headers}
     Set Test Variable    ${response_body}    ${response_body}
@@ -213,7 +213,7 @@ I send a PUT request with data:
     ${hasValue}    Run Keyword and return status     Should not be empty    ${headers}
     ${response}=    Run Keyword if    ${hasValue}    PUT    ${current_url}${path}    data=${data}    headers=${headers}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}
     ...    ELSE    PUT    ${current_url}${path}    data=${data}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}
-    ${response_body}=    Set Variable    ${response.json()}
+    ${response_body}=    Run Keyword if    ${response.status_code} != 204    Set Variable    ${response.json()}
     ${response_headers}=    Set Variable    ${response.headers}
     Set Test Variable    ${response_headers}    ${response_headers}
     Set Test Variable    ${response_body}    ${response_body}
@@ -242,7 +242,7 @@ I send a PATCH request:
     ${hasValue}    Run Keyword and return status     Should not be empty    ${headers}
     ${response}=    Run Keyword if    ${hasValue}    PATCH   ${current_url}${path}    json=${data}    headers=${headers}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}
     ...    ELSE    PATCH    ${current_url}${path}    json=${data}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}
-    ${response_body}=    Set Variable    ${response.json()}
+    ${response_body}=    Run Keyword if    ${response.status_code} != 204    Set Variable    ${response.json()}
     ${response_headers}=    Set Variable    ${response.headers}
     Set Test Variable    ${response_headers}    ${response_headers}
     Set Test Variable    ${response_body}    ${response_body}
@@ -272,7 +272,7 @@ I send a PATCH request with data
     ${hasValue}    Run Keyword and return status     Should not be empty    ${headers}
     ${response}=    Run Keyword if    ${hasValue}    PATCH    ${current_url}${path}    data=${data}    headers=${headers}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}
     ...    ELSE    PATCH    ${current_url}${path}    data=${data}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}
-    ${response_body}=    Set Variable    ${response.json()}
+    ${response_body}=    Run Keyword if    ${response.status_code} != 204    Set Variable    ${response.json()}
     ${response_headers}=    Set Variable    ${response.headers}
     Set Test Variable    ${response_headers}    ${response_headers}
     Set Test Variable    ${response_body}    ${response_body}
@@ -299,7 +299,7 @@ I send a GET request:
     ${hasValue}    Run Keyword and return status     Should not be empty    ${headers}
     ${response}=    Run Keyword if    ${hasValue}    GET    ${current_url}${path}    headers=${headers}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}
     ...    ELSE    GET    ${current_url}${path}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}
-    ${response_body}=    Set Variable    ${response.json()}
+    ${response_body}=    Run Keyword if    ${response.status_code} != 204    Set Variable    ${response.json()}
     ${response_headers}=    Set Variable    ${response.headers}
     Set Test Variable    ${response_headers}    ${response_headers}
     Set Test Variable    ${response_body}    ${response_body}
