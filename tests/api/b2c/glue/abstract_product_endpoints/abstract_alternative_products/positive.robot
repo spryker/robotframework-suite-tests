@@ -3,6 +3,7 @@ Suite Setup       SuiteSetup
 Resource    ../../../../../../resources/common/common_api.robot
 
 *** Test Cases ***
+# BUG CC-16484
 Product_has_abstract_alternative
     When I send a GET request:    /concrete-products/${concrete_product_with_alternative_sku}/abstract-alternative-products
     Then Response status code should be:    200
@@ -14,10 +15,8 @@ Product_has_abstract_alternative
     And Response body parameter should be:    [data][0][attributes][sku]    ${alternative_abstract_product}
     And Response body has correct self link
 
-
+# BUG CC-16484
 Product_has_abstract_alternative_with_includes
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
-    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}  
     When I send a GET request:    /concrete-products/${concrete_product_with_alternative_sku}/abstract-alternative-products?include=abstract-product-image-sets,abstract-product-availabilities,abstract-product-prices,category-nodes
     Then Response status code should be:    200
     And Response reason should be:    OK
