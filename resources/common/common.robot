@@ -8,6 +8,7 @@ Library    BuiltIn
 Library    DateTime
 Library    ../../resources/libraries/common.py
 Library    Telnet
+Library    RequestsLibrary
 Resource                  ../pages/yves/yves_header_section.robot
 Resource                  ../pages/yves/yves_login_page.robot
 
@@ -121,19 +122,19 @@ Remove element attribute with JavaScript:
 
 #Migration to the Browser Library    
 Wait Until Element Is Visible
-    [Arguments]    ${locator}    ${message}=${EMPTY}    ${timeout}=0:00:20
+    [Arguments]    ${locator}    ${message}=${EMPTY}    ${timeout}=0:00:30
     Wait For Elements State    ${locator}    visible    ${timeout}    ${message}
 
 Wait Until Page Contains Element
-    [Arguments]    ${locator}    ${message}=${EMPTY}    ${timeout}=0:00:20
+    [Arguments]    ${locator}    ${message}=${EMPTY}    ${timeout}=0:00:30
     Wait For Elements State    ${locator}    attached    ${timeout}    ${message}
 
 Wait Until Page Does Not Contain Element
-    [Arguments]    ${locator}    ${message}=${EMPTY}    ${timeout}=0:00:20
+    [Arguments]    ${locator}    ${message}=${EMPTY}    ${timeout}=0:00:30
     Wait For Elements State    ${locator}    detached    ${timeout}    ${message}
 
 Wait Until Element Is Enabled
-    [Arguments]    ${locator}    ${message}=${EMPTY}    ${timeout}=0:00:20
+    [Arguments]    ${locator}    ${message}=${EMPTY}    ${timeout}=0:00:30
     Wait For Elements State    ${locator}    enabled    ${timeout}    ${message}
 
 Element Should Be Visible
@@ -149,7 +150,7 @@ Get Location
     [Return]    ${current_location}
     
 Wait Until Element Is Not Visible
-    [Arguments]    ${locator}    ${message}=${EMPTY}    ${timeout}=0:00:20
+    [Arguments]    ${locator}    ${message}=${EMPTY}    ${timeout}=0:00:30
     Wait For Elements State    ${locator}    hidden    ${timeout}    ${message}
 
 Page Should Contain Link
@@ -178,7 +179,7 @@ Element Text Should Be
     Get Text    ${locator}    equal    ${expected}    ${message} 
 
 Wait Until Element Contains
-    [Arguments]    ${locator}    ${text}    ${timeout}=0:00:20    ${message}=${EMPTY}
+    [Arguments]    ${locator}    ${text}    ${timeout}=0:00:30    ${message}=${EMPTY}
     Get Text    ${locator}    contains    ${text}    ${message}
 
 Page Should Not Contain Element
@@ -232,3 +233,13 @@ Create New Context
 
 Switch back to the Main Context
     Switch Context    ${main_context}
+
+Verify the src attribute of the image is accessible:
+    [Arguments]    @{image_list}    ${element1}=${EMPTY}     ${element2}=${EMPTY}     ${element3}=${EMPTY}     ${element4}=${EMPTY}     ${element5}=${EMPTY}     ${element6}=${EMPTY}     ${element7}=${EMPTY}     ${element8}=${EMPTY}     ${element9}=${EMPTY}     ${element10}=${EMPTY}     ${element11}=${EMPTY}     ${element12}=${EMPTY}     ${element13}=${EMPTY}     ${element14}=${EMPTY}     ${element15}=${EMPTY}
+    ${image_list_count}=   get length  ${image_list}
+    FOR    ${index}    IN RANGE    0    ${image_list_count}
+        ${image_to_check}=    Get From List    ${image_list}    ${index}  
+        ${image_src}=    Get Element Attribute    ${image_to_check}    src
+        ${response}=    GET    ${image_src}
+        Should Be Equal    '${response.status_code}'    '200'
+    END    
