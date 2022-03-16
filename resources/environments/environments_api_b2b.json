@@ -103,7 +103,7 @@
         
     "products": {
         
-        "bundle_product_abstract_sku": "B0001",
+        "_product_abstract_bundlesku": "B0001",
         "bundle_product_concrete_sku":"000101",
         "bundle_product_product_name": "Our Favourite Workspace Bundle",
         "bundled_product_1_abstract_sku": "M528",
@@ -142,6 +142,7 @@
 
         "abstract_available_with_stock_and_never_out_of_stock": "M87",
         "concrete_available_with_stock_and_never_out_of_stock": "657716",
+        "concrete_available_with_stock_and_never_out_of_stock_name": "FRIWA stackable chair - with closed back",
         "abstract_available_product_with_no_stock_and_never_out_of_stock": "",
         "abstract_unavailable_product": "",
 
@@ -244,9 +245,13 @@
         "restricted_content_qty": "5",
         "qty_of_categories_in_category_trees": "6",
         "qty_of_subcategories_in_category_trees": "2",
-        "color_name": "black"
+        "color_name": "black",
+        "payment_provider_name": "DummyPayment",
+        "payment_method_name": "Invoice",
+        "carrier_name": "DHL",
+        "shipment_method_name": "Standard"
+        
     },
-
     "companies":{
         "company_name": "Spryker Systems GmbH",
         "busines_unit_address_id": "2175cddd-f8af-5885-b161-227b5c93e72f",
