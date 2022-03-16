@@ -19,19 +19,19 @@ Get_concrete_alternative_product
     And Response should contain the array of a certain size:    [data]    3
     And Response body parameter should be:    [data][0][type]    concrete-products
     And Response body should contain:    id
-    And Response body parameter should contain:    [data][0][attributes]    sku
+    And Response body parameter should not be EMPTY:    [data][0][attributes][sku]
     And Response body parameter should contain:    [data][0][attributes]    isDiscontinued
     And Response body parameter should contain:    [data][0][attributes]    discontinuedNote
     And Response body parameter should contain:    [data][0][attributes]    averageRating
     And Response body parameter should contain:    [data][0][attributes]    reviewCount
-    And Response body parameter should contain:    [data][0][attributes]    productAbstractSku
-    And Response body parameter should contain:    [data][0][attributes]    name
-    And Response body parameter should contain:    [data][0][attributes]    description
+    And Response body parameter should not be EMPTY:    [data][0][attributes][productAbstractSku]
+    And Response body parameter should not be EMPTY:    [data][0][attributes][name]
+    And Response body parameter should not be EMPTY:    [data][0][attributes][description]
     And Response body parameter should contain:    [data][0][attributes]    attributes
-    And Response body parameter should contain:    [data][0][attributes]    superAttributesDefinition
-    And Response body parameter should contain:    [data][0][attributes]    metaTitle
-    And Response body parameter should contain:    [data][0][attributes]    metaKeywords
-    And Response body parameter should contain:    [data][0][attributes]    metaDescription
+    Response should contain the array of a certain size:    [data][0][attributes][superAttributesDefinition]    3
+    And Response body parameter should not be EMPTY:    [data][0][attributes][metaTitle]
+    And Response body parameter should not be EMPTY:    [data][0][attributes][metaKeywords]
+    And Response body parameter should not be EMPTY:    [data][0][attributes][metaDescription]
     And Response body parameter should contain:    [data][0][attributes]    attributeNames
     And Response should contain the array of a certain size:    [data][0][attributes][attributes]    6
     And Response should contain the array of a certain size:    [data][0][attributes][attributeNames]    6
