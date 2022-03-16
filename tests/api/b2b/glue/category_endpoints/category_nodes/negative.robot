@@ -20,3 +20,11 @@ Get_category_node_by_non_exist_id
     Then Response status code should be:    404
     And Response should return error code:    703
     And Response should return error message:    "Cant find category node with the given id."
+
+
+# Missing category_node_id have response error
+Get_absent_category_node
+    When I send a GET request:    /category-nodes
+    Then Response status code should be:    400
+    And Response should return error code:    701
+    And Response should return error message:    Category node id has not been specified or invalid.
