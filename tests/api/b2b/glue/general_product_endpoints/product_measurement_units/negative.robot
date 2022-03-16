@@ -3,14 +3,14 @@ Suite Setup       SuiteSetup
 Resource    ../../../../../../resources/common/common_api.robot
 
 *** Test Cases ***
-Get_an_measurement_unit_with_non_existent_unit_id
+Get_a_measurement_unit_with_non_existent_unit_id
     When I send a GET request:    /product-measurement-units/fake
     Then Response status code should be:    404
     And Response reason should be:    Not Found
     And Response should return error code:    3402
     And Response should return error message:    Product measurement unit not found.
 
-Get_an_measurement_unit_with_empty
+Get_a_measurement_unit_with_empty
     When I send a GET request:    /product-measurement-units
     Then Response status code should be:    400
     And Response reason should be:    Bad Request
