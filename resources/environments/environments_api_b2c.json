@@ -217,10 +217,10 @@
         "category_collection_name": "Sticky Notes",
         "category_collection_url": "/en/stationery/paper/sticky-notes",
 
-        "category_nodes_storage_name": "Foods",
-        "category_nodes_storage_url": "/en/foods",
-        "subcategory_nodes_storage_name": "Fish",
-        "subcategory_nodes_storage_url": "/en/foods/fish",
+        "category_nodes_storage_name": "Cameras & Camcorders",
+        "category_nodes_storage_url": "/en/cameras-&-camcorders",
+        "subcategory_nodes_storage_name": "Digital Cameras",
+        "subcategory_nodes_storage_url": "/en/cameras-&-camcorders/digital-cameras",
 
         "cms_page_collection_name": "GTC",
         "cms_page_collection_url": "/en/gtc",
