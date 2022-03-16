@@ -6,7 +6,8 @@ Default Tags    glue
 
 *** Test Cases ***
 
-Get_category_node_that_is_root_node_by_id
+
+Get_category_node_is_root_by_id
     When I send a GET request:    /category-nodes/${category_node_is_root_id}
     Then Response status code should be:    200
     And Response reason should be:    OK
@@ -21,7 +22,7 @@ Get_category_node_that_is_root_node_by_id
     And Response should contain the array larger than a certain size:   [data][attributes][children]    1
     And Response body has correct self link internal
 
-Get_category_node_that_has_parent_and_childrens_by_id
+Get_category_node_has_children_by_id
     When I send a GET request:    /category-nodes/${category_node_has_childrens_id}
     Then Response status code should be:    200
     And Response reason should be:    OK
@@ -43,7 +44,7 @@ Get_category_node_that_has_parent_and_childrens_by_id
     And Response body has correct self link internal
 
 
-Get_category_node_that_has_only_parent_by_id
+Get_category_node_is_leaf_by_id
     When I send a GET request:    /category-nodes/${category_node_has_only_parent_id}
     Then Response status code should be:    200
     And Response reason should be:    OK
