@@ -12,8 +12,10 @@ Request_concrete_product_with_only_default_price
     And Response body parameter should be:    [data][0][id]    ${concrete_product_one_image_set}
     And Response body parameter should be:    [data][0][type]   concrete-product-prices
     And Response body parameter should not be EMPTY:    [data][0][attributes][price]
+    And Response body parameter should be greater than:    [data][0][attributes][price]    1
     And Response body parameter should contain:    [data][0][attributes][prices]    grossAmount
     And Response body parameter should contain:    [data][0][attributes][prices]    netAmount
+    And Response body parameter should be greater than:    [data][0][attributes][prices][0][grossAmount]    1
     And Response body parameter should contain:    [data][0][attributes][prices][0][currency][code]    ${currency_code_eur}
     And Response body parameter should contain:    [data][0][attributes][prices][0][currency][name]    ${currency_name_eur}
     And Response body parameter should contain:    [data][0][attributes][prices][0][currency][symbol]    ${currency_symbol_eur}
@@ -44,4 +46,7 @@ Request_concrete_product_with_volume_product_prices
     And Each array element of array in response should contain property:    [data][0][attributes][prices][0][volumePrices]    grossAmount
     And Each array element of array in response should contain property:    [data][0][attributes][prices][0][volumePrices]    netAmount
     And Each array element of array in response should contain property:    [data][0][attributes][prices][0][volumePrices]    quantity
+    And Response body parameter should be:    [data][0][attributes][prices][0][volumePrices][0][grossAmount]   165
+    And Response body parameter should be:    [data][0][attributes][prices][0][volumePrices][0][netAmount]   150
+    And Response body parameter should be:    [data][0][attributes][prices][0][volumePrices][0][quantity]   5
 
