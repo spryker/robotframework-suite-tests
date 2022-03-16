@@ -94,16 +94,11 @@ Provide_checkout_data_with_invalid_email
 Provide_checkout_data_with_invalid_cart_id
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
     ...  AND    I set Headers:    Authorization=${token}
-    ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${gross_mode}","currency": "${currency_code_eur}","store": "${store_de}","name": "${test_cart_name}-${random}"}}}
-    ...  AND    Save value to a variable:    [data][id]    cart_id
-    ...  AND    I send a POST request:    /carts/${cartId}/items    {"data": {"type": "items","attributes": {"sku": "${concrete_available_with_stock_and_never_out_of_stock}","quantity": 1}}}
     When I send a POST request:    /checkout-data    {"data": {"type": "checkout-data","attributes": {"customer": {"email": "${yves_user_email}","salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}"},"idCart": "fake_cart_id","billingAddress": {"salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}","address1": "${default_address1}","address2": "${default_address2}","address3": "${default_address3}","zipCode": "${default_zipCode}","city": "${default_city}","iso2Code": "${default_iso2Code}","company": "${default_company}","phone": "${default_phone}","isDefaultBilling": True,"isDefaultShipping": True},"shippingAddress": {"salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}","address1": "${default_address1}","address2": "${default_address2}","address3": "${default_address3}","zipCode": "${default_zipCode}","city": "${default_city}","iso2Code": "${default_iso2Code}","company": "${default_company}","phone": "${default_phone}","isDefaultBilling": True,"isDefaultShipping": True},"payments": [{"paymentProviderName": "${payment_provider_name}","paymentMethodName": "${payment_method_name}"}],"shipment": {"idShipmentMethod": 1},"items": ["${concrete_available_with_stock_and_never_out_of_stock}"]}}}
     Then Response status code should be:    422
     And Response reason should be:    Unprocessable Entity
     And Response should return error code:    1103
     And Response should return error message:    Cart not found.
-    [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cart_id}
-    ...  AND    Response status code should be:    204
 
 Provide_checkout_data_with_cart_id_from_another_customer
         [Setup]    Run Keywords    I get access token for the customer:    ${yves_second_user_email}
@@ -126,9 +121,6 @@ Provide_checkout_data_with_cart_id_from_another_customer
 Provide_checkout_data_with_empty_customer_attributes_and_cart_id
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
     ...  AND    I set Headers:    Authorization=${token}
-    ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${gross_mode}","currency": "${currency_code_eur}","store": "${store_de}","name": "${test_cart_name}-${random}"}}}
-    ...  AND    Save value to a variable:    [data][id]    cart_id
-    ...  AND    I send a POST request:    /carts/${cartId}/items    {"data": {"type": "items","attributes": {"sku": "${concrete_available_with_stock_and_never_out_of_stock}","quantity": 1}}}
     When I send a POST request:    /checkout-data    {"data": {"type": "checkout-data","attributes": {"customer": {"email": "","salutation": "","firstName": "","lastName": ""},"idCart": "","billingAddress": {"salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}","address1": "${default_address1}","address2": "${default_address2}","address3": "${default_address3}","zipCode": "${default_zipCode}","city": "${default_city}","iso2Code": "${default_iso2Code}","company": "${default_company}","phone": "${default_phone}","isDefaultBilling": True,"isDefaultShipping": True},"shippingAddress": {"salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}","address1": "${default_address1}","address2": "${default_address2}","address3": "${default_address3}","zipCode": "${default_zipCode}","city": "${default_city}","iso2Code": "${default_iso2Code}","company": "${default_company}","phone": "${default_phone}","isDefaultBilling": True,"isDefaultShipping": True},"payments": [{"paymentProviderName": "${payment_provider_name}","paymentMethodName": "${payment_method_name}"}],"shipment": {"idShipmentMethod": 1},"items": ["${concrete_available_with_stock_and_never_out_of_stock}"]}}}
     Then Response status code should be:    422
     And Response reason should be:    Unprocessable Entity
@@ -137,15 +129,10 @@ Provide_checkout_data_with_empty_customer_attributes_and_cart_id
     And Array in response should contain property with value:    [errors]    detail    idCart => This value should not be blank.
     And Array in response should contain property with value:    [errors]    detail    customer.salutation => This value should not be blank.
     And Array in response should contain property with value:    [errors]    detail    customer.email => Email is invalid.
-    [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cart_id}
-    ...  AND    Response status code should be:    204
 
 Provide_checkout_data_without_customer_attributes_and_cart_id
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
     ...  AND    I set Headers:    Authorization=${token}
-    ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${gross_mode}","currency": "${currency_code_eur}","store": "${store_de}","name": "${test_cart_name}-${random}"}}}
-    ...  AND    Save value to a variable:    [data][id]    cart_id
-    ...  AND    I send a POST request:    /carts/${cartId}/items    {"data": {"type": "items","attributes": {"sku": "${concrete_available_with_stock_and_never_out_of_stock}","quantity": 1}}}
     When I send a POST request:    /checkout-data    {"data": {"type": "checkout-data","attributes": {"customer": {},"billingAddress": {"salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}","address1": "${default_address1}","address2": "${default_address2}","address3": "${default_address3}","zipCode": "${default_zipCode}","city": "${default_city}","iso2Code": "${default_iso2Code}","company": "${default_company}","phone": "${default_phone}","isDefaultBilling": True,"isDefaultShipping": True},"shippingAddress": {"salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}","address1": "${default_address1}","address2": "${default_address2}","address3": "${default_address3}","zipCode": "${default_zipCode}","city": "${default_city}","iso2Code": "${default_iso2Code}","company": "${default_company}","phone": "${default_phone}","isDefaultBilling": True,"isDefaultShipping": True},"payments": [{"paymentProviderName": "${payment_provider_name}","paymentMethodName": "${payment_method_name}"}],"shipment": {"idShipmentMethod": 1},"items": ["${concrete_available_with_stock_and_never_out_of_stock}"]}}}
     Then Response status code should be:    422
     And Response reason should be:    Unprocessable Entity
@@ -154,8 +141,6 @@ Provide_checkout_data_without_customer_attributes_and_cart_id
     And Array in response should contain property with value:    [errors]    detail    idCart => This field is missing.
     And Array in response should contain property with value:    [errors]    detail    customer.salutation => This field is missing.
     And Array in response should contain property with value:    [errors]    detail    customer.email => This field is missing.
-    [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cart_id}
-    ...  AND    Response status code should be:    204
 
 Provide_checkout_data_with_empty_billing_address_data
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}

@@ -103,7 +103,7 @@
         
     "products": {
         
-        "_product_abstract_bundlesku": "B0001",
+        "bundle_product_abstract_sku": "B0001",
         "bundle_product_concrete_sku":"000101",
         "bundle_product_product_name": "Our Favourite Workspace Bundle",
         "bundled_product_1_abstract_sku": "M528",
