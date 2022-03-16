@@ -174,38 +174,6 @@ Create_order_include_orders
     And Response body parameter should contain:    [included][0][attributes][calculatedDiscounts]    voucherCode
     And Response body parameter should contain:    [included][0][attributes][calculatedDiscounts]    quantity
 
-Create_order_with_empty_include
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
-    ...  AND    I set Headers:    Authorization=${token}
-    ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${gross_mode}","currency": "${currency_code_eur}","store": "${store_de}","name": "${test_cart_name}-${random}"}}}
-    ...  AND    Save value to a variable:    [data][id]    cart_id
-    ...  AND    I send a POST request:    /carts/${cartId}/items    {"data": {"type": "items","attributes": {"sku": "${concrete_available_with_stock_and_never_out_of_stock}","quantity": 1}}}
-    When I send a POST request:    /checkout?include=    {"data": {"type": "checkout","attributes": {"customer": {"email": "${yves_user_email}","salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}"},"idCart": "${cart_id}","billingAddress": {"salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}","address1": "${default_address1}","address2": "${default_address2}","address3": "${default_address3}","zipCode": "${default_zipCode}","city": "${default_city}","iso2Code": "${default_iso2Code}","company": "${default_company}","phone": "${default_phone}","isDefaultBilling": True,"isDefaultShipping": True},"shippingAddress": {"salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}","address1": "${default_address1}","address2": "${default_address2}","address3": "${default_address3}","zipCode": "${default_zipCode}","city": "${default_city}","iso2Code": "${default_iso2Code}","company": "${default_company}","phone": "${default_phone}","isDefaultBilling": True,"isDefaultShipping": True},"payments": [{"paymentProviderName": "${payment_provider_name}","paymentMethodName": "${payment_method_name}"}],"shipment": {"idShipmentMethod": 1},"items": ["${concrete_available_with_stock_and_never_out_of_stock}"]}}}
-    Then Response status code should be:    201
-    And Response reason should be:    Created
-    And Response body parameter should be:    [data][type]    checkout
-    And Response body parameter should be:    [data][id]    None
-    And Response body parameter should contain:    [data][attributes][orderReference]    ${store_de}--
-    And Response body parameter should be:    [data][attributes][redirectUrl]    None
-    And Response body parameter should be:    [data][attributes][isExternalRedirect]    None
-    And Response body has correct self link internal
-
-Create_order_with_invalid_include
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
-    ...  AND    I set Headers:    Authorization=${token}
-    ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${gross_mode}","currency": "${currency_code_eur}","store": "${store_de}","name": "${test_cart_name}-${random}"}}}
-    ...  AND    Save value to a variable:    [data][id]    cart_id
-    ...  AND    I send a POST request:    /carts/${cartId}/items    {"data": {"type": "items","attributes": {"sku": "${concrete_available_with_stock_and_never_out_of_stock}","quantity": 1}}}
-    When I send a POST request:    /checkout?include=fake    {"data": {"type": "checkout","attributes": {"customer": {"email": "${yves_user_email}","salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}"},"idCart": "${cart_id}","billingAddress": {"salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}","address1": "${default_address1}","address2": "${default_address2}","address3": "${default_address3}","zipCode": "${default_zipCode}","city": "${default_city}","iso2Code": "${default_iso2Code}","company": "${default_company}","phone": "${default_phone}","isDefaultBilling": True,"isDefaultShipping": True},"shippingAddress": {"salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}","address1": "${default_address1}","address2": "${default_address2}","address3": "${default_address3}","zipCode": "${default_zipCode}","city": "${default_city}","iso2Code": "${default_iso2Code}","company": "${default_company}","phone": "${default_phone}","isDefaultBilling": True,"isDefaultShipping": True},"payments": [{"paymentProviderName": "${payment_provider_name}","paymentMethodName": "${payment_method_name}"}],"shipment": {"idShipmentMethod": 1},"items": ["${concrete_available_with_stock_and_never_out_of_stock}"]}}}
-    Then Response status code should be:    201
-    And Response reason should be:    Created
-    And Response body parameter should be:    [data][type]    checkout
-    And Response body parameter should be:    [data][id]    None
-    And Response body parameter should contain:    [data][attributes][orderReference]    ${store_de}--
-    And Response body parameter should be:    [data][attributes][redirectUrl]    None
-    And Response body parameter should be:    [data][attributes][isExternalRedirect]    None
-    And Response body has correct self link internal
-
 Create_order_with_bundle_product
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
     ...  AND    I set Headers:    Authorization=${token}
