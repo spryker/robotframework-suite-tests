@@ -66,7 +66,9 @@
         "net_mode": "NET_MODE",
         "currency_name_chf": "Swiss Franc",
         "currency_code_chf": "CHF",
-        "currency_symbol_chf": "CHF"
+        "currency_symbol_chf": "CHF",
+        "locale_DE": "de_DE",
+        "locale_EN": "en_US"
     },
     "search":{
         "total_number_of_products_in_search": "420",
@@ -180,7 +182,7 @@
         "concrete_product_with_promotions": "212427",
 
         "concrete_product_random_weight_sku": "cable-vga-1-2",
-        "concrete_product_random_weight_measurement_unit": "19",
+        "concrete_product_random_weight_packaging_unit": "19",
         "packaging_unit_m": "METR",
 
         "product_option_1": "OP_2_year_waranty",
@@ -248,7 +250,10 @@
         "restricted_content_qty": "5",
         "qty_of_categories_in_category_trees": "6",
         "qty_of_subcategories_in_category_trees": "2",
-        "color_name": "black"
+        "color_name": "black",
+        "review_title": "This is a review",
+        "review_text": "This is review text",
+        "default_review_rating": "5"
     },
 
     "companies":{

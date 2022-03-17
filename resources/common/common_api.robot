@@ -381,6 +381,23 @@ Response body parameter should be:
     Log    ${data}
     Should Be Equal    ${data}    ${expected_value}
 
+Response body parameter should be in:
+    [Documentation]    This keyword checks that the response saved  in ``${response_body}`` test variable contsains the speficied parameter ``${json_path}`` with the value that matches one of the parameters ``${expected_value1}``, ``${expected_value2}``.
+    ...
+    ...    The minimal number of arguments are 2, maximum is 4
+    ...
+    ...    *Example:*
+    ...
+    ...    ``Response body parameter should be:    [data][attributes][allowInput]    true    false``
+    [Arguments]    ${json_path}    ${expected_value1}    ${expected_value2}    ${expected_value3}=test    ${expected_value4}=test
+    ${data}=    Get Value From Json    ${response_body}    ${json_path}
+    ${data}=    Convert To String    ${data}
+    ${data}=    Replace String    ${data}    '   ${EMPTY}
+    ${data}=    Replace String    ${data}    [   ${EMPTY}
+    ${data}=    Replace String    ${data}    ]   ${EMPTY}
+    Log    ${data}
+    Should Contain Any   ${data}    ${expected_value1}    ${expected_value2}    ${expected_value3}    ${expected_value4}    ignore_case=True
+
 Response body parameter should NOT be:
     [Documentation]    This keyword checks that the response saved in ``${response_body}`` test variable contsains the speficied parameter ``${json_path}`` has a value that is DIFFERENT from the value passed as an argument ``${expected_value}``.
     ...
@@ -663,6 +680,108 @@ Each array element of array in response should contain property with value:
     FOR    ${index}    IN RANGE    0    ${list_length}
         ${list_element}=    Get From List    @{data}    ${index}
         Dictionary Should Contain Item    ${list_element}    ${expected_property}    ${expected_value}
+    END
+
+Each array element of array in response should contain property with value in:
+    [Documentation]    This keyword checks that each array element contsains the speficied parameter ``${expected_property}`` with the value that matches one of the parameters ``${expected_value1}``, ``${expected_value2}``, etc..
+    ...
+    ...    The minimal number of arguments are 2, maximum is 4
+    ...
+    ...    *Example:*
+    ...
+    ...    ``Each array element of array in response should contain property with value in:    [data]    [attributes][allowInput]    True    False``
+    [Arguments]    ${json_path}    ${expected_property}    ${expected_value1}    ${expected_value2}    ${expected_value3}=test    ${expected_value4}=test
+
+    @{data}=    Get Value From Json    ${response_body}    ${json_path}
+    ${list_length}=    Get Length    @{data}
+    ${log_list}=    Log List    @{data}
+    FOR    ${index}    IN RANGE    0    ${list_length}
+        ${list_element}=    Get From List    @{data}    ${index}
+        ${list_element}=    Get Value From Json    ${list_element}    ${expected_property}   
+        ${list_element}=    Convert To String    ${list_element}
+        ${list_element}=    Replace String    ${list_element}    '   ${EMPTY}
+        ${list_element}=    Replace String    ${list_element}    [   ${EMPTY}
+        ${list_element}=    Replace String    ${list_element}    ]   ${EMPTY}   
+        Should Contain Any   ${list_element}    ${expected_value1}    ${expected_value2}    ${expected_value3}    ${expected_value4}    ignore_case=True
+    END
+
+Each array element of array in response should contain property with value NOT in:
+    [Documentation]    This keyword checks that each array element contsains the speficied parameter ``${expected_property}`` with the value that does not match any of the parameters ``${expected_value1}``, ``${expected_value2}``, etc..
+    ...
+    ...    The minimal number of arguments is 1, maximum is 4
+    ...
+    ...    *Example:*
+    ...
+    ...    ``Each array element of array in response should contain property with value in:    [data]    [attributes][isSuper]    None``
+    [Arguments]    ${json_path}    ${expected_property}    ${expected_value1}    ${expected_value2}=test    ${expected_value3}=test    ${expected_value4}=test
+
+    @{data}=    Get Value From Json    ${response_body}    ${json_path}
+    ${list_length}=    Get Length    @{data}
+    ${log_list}=    Log List    @{data}
+    FOR    ${index}    IN RANGE    0    ${list_length}
+        ${list_element}=    Get From List    @{data}    ${index}
+        ${list_element}=    Get Value From Json    ${list_element}    ${expected_property}   
+        ${list_element}=    Convert To String    ${list_element}
+        ${list_element}=    Replace String    ${list_element}    '   ${EMPTY}
+        ${list_element}=    Replace String    ${list_element}    [   ${EMPTY}
+        ${list_element}=    Replace String    ${list_element}    ]   ${EMPTY}   
+        Should Not Contain Any   ${list_element}    ${expected_value1}    ${expected_value2}    ${expected_value3}    ${expected_value4}    ignore_case=True
+    END
+
+Each array element of nested array should contain property with value in:
+    [Documentation]    This keyword checks that each array element of ``${nested_array} that is inside the parent array ``${json_path}`` contsains the speficied parameter ``${expected_property}`` with the value that matches any of the parameters ``${expected_value1}``, ``${expected_value2}``, etc..
+    ...
+    ...    The minimal number of arguments is 1, maximum is 4
+    ...
+    ...    *Example:*
+    ...
+    ...    ``Each array element of nested array should contain property with value in:    [data]    [attributes][localizedKeys]    translation    en_US    de_DE``
+    [Arguments]    ${json_path}    ${nested_array}    ${expected_property}    ${expected_value1}    ${expected_value2}    ${expected_value3}=test    ${expected_value4}=test
+
+    @{data}=    Get Value From Json    ${response_body}    ${json_path}
+    ${list_length1}=    Get Length    @{data}
+    ${log_list}=    Log List    @{data}
+    FOR    ${index1}    IN RANGE    0    ${list_length1}
+        ${list_element}=    Get From List    @{data}    ${index1}
+        @{list_element2}=    Get Value From Json    ${list_element}    ${nested_array}
+        ${list_length2}=    Get Length    @{list_element2}
+        FOR    ${index2}    IN RANGE    0    ${list_length2}
+            ${list_element}=    Get From List    @{list_element2}    ${index2}
+            ${list_element}=    Get Value From Json    ${list_element}    ${expected_property}   
+            ${list_element}=    Convert To String    ${list_element}
+            ${list_element}=    Replace String    ${list_element}    '   ${EMPTY}
+            ${list_element}=    Replace String    ${list_element}    [   ${EMPTY}
+            ${list_element}=    Replace String    ${list_element}    ]   ${EMPTY}   
+            Should Contain Any   ${list_element}    ${expected_value1}    ${expected_value2}    ${expected_value3}    ${expected_value4}    ignore_case=True
+        END
+    END
+
+Each array element of nested array should contain property with value NOT in:
+    [Documentation]    This keyword checks that each array element of ``${nested_array} that is inside the parent array ``${json_path}`` contsains the speficied parameter ``${expected_property}`` with the value that does not match any of the parameters ``${expected_value1}``, ``${expected_value2}``, etc..
+    ...
+    ...    The minimal number of arguments is 1, maximum is 4
+    ...
+    ...    *Example:*
+    ...
+    ...    ``Each array element of nested array should contain property with value NOT in:    [data]    [attributes][localizedKeys]    translation    None``
+    [Arguments]    ${json_path}    ${nested_array}    ${expected_property}    ${expected_value1}    ${expected_value2}=test   ${expected_value3}=test    ${expected_value4}=test
+
+    @{data}=    Get Value From Json    ${response_body}    ${json_path}
+    ${list_length1}=    Get Length    @{data}
+    ${log_list}=    Log List    @{data}
+    FOR    ${index1}    IN RANGE    0    ${list_length1}
+        ${list_element}=    Get From List    @{data}    ${index1}
+        @{list_element2}=    Get Value From Json    ${list_element}    ${nested_array}
+        ${list_length2}=    Get Length    @{list_element2}
+        FOR    ${index2}    IN RANGE    0    ${list_length2}
+            ${list_element}=    Get From List    @{list_element2}    ${index2}
+            ${list_element}=    Get Value From Json    ${list_element}    ${expected_property}   
+            ${list_element}=    Convert To String    ${list_element}
+            ${list_element}=    Replace String    ${list_element}    '   ${EMPTY}
+            ${list_element}=    Replace String    ${list_element}    [   ${EMPTY}
+            ${list_element}=    Replace String    ${list_element}    ]   ${EMPTY}   
+            Should Not Contain Any   ${list_element}    ${expected_value1}    ${expected_value2}    ${expected_value3}    ${expected_value4}    ignore_case=True
+        END
     END
 
 Each array element of array in response should contain nested property with value:

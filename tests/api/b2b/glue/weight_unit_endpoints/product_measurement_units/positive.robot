@@ -13,4 +13,5 @@ Get_product_measurement_unit_by_id
     And Response body parameter should be:    [data][type]    product-measurement-units
     And Response body parameter should not be EMPTY:    [data][attributes][name]
     And Response body parameter should not be EMPTY:    [data][attributes][defaultPrecision]
+    And Response body parameter should have datatype:    [data][attributes][defaultPrecision]    int
     And Response body has correct self link internal
