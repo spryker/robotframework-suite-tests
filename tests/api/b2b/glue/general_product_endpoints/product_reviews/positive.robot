@@ -12,7 +12,6 @@ Get_product_reviews
     And Response should contain the array of a certain size:    [data]    ${abstract_product_with_reviews_qty}
     And Response body parameter should not be EMPTY:    [data][0][id]
     And Response body parameter should be:    [data][0][type]    product-reviews
-    And Response body parameter should not be EMPTY:    [data][0][attributes][rating]
     And Response body parameter should have datatype:    [data][0][attributes][rating]    int
     And Response body parameter should not be EMPTY:    [data][0][attributes][nickname]
     And Response body parameter should not be EMPTY:    [data][0][attributes][summary]
