@@ -124,9 +124,12 @@
         "product_with_relations_alternative_products_sku": "M21100",
         "product_with_relations_upselling_sku": "M29502",
 
-        "concrete_product_with_alternative_sku": "145_29885473",
-        "concrete_product_with_alternative_sku_name": "DELL Chromebook 13",
-        "concrete_product_with_alternative_sku_name_in_lower_case": "dell chromebook 13",
+        "concrete_product_with_abstract_product_alternative_sku": "138_30046855",
+        "concrete_product_with_abstract_product_alternative_sku_name": "Acer TravelMate P258-M",
+        "concrete_product_with_abstract_product_alternative_sku_name_in_lower_case": "acer travelmate p258-m",
+        "concrete_product_with_concrete_product_alternative_sku": "155_30149933",
+        "concrete_product_with_concrete_product_alternative_sku_name": "Lenovo IdeaPad Yoga 500",
+        "concrete_product_with_concrete_product_alternative_sku_name_in_lower_case": "lenovo ideaPad yoga 500",
         "abstract_product_with_alternative_sku": "M21100",
         "abstract_product_with_alternative_name": "Verbatim USB stick Store n Go V3 49173 32GB USB3.0 gray",
         "alternative_abstract_product": "134",
@@ -141,7 +144,7 @@
         "concrete_available_product_meta_description": " Hochwertige, einbrennlackierte Stahlblechkonstruktion (0,8 mm). Korpus verschweißt.<br/>Leichtgängige Schiebetüren mit Bügelgriff auf Kugellagerrollen. Gummipuffer garantieren geräuscharmes Anschlagen der Türen. Zentralverriegelung per Drehzylinderschloss mit Wechselkern inklusive 2 Schlüssel.<br/>Fachböden graphitschwarz RAL 9011, im 25-mm-Raster verstellbar, Tragkraft pro Boden ca. 50 kg. Sockelhöhe 100 mm. Serienmäßig Höhenausgleichsschrauben.<br/><br/>Schränke werden mit einer 25 mm hohen Abdeckplatte in Lichtgrau RAL 7035 geliefert. ",
 
         "abstract_available_with_stock_and_never_out_of_stock": "209",
-        "concrete_available_with_stock_and_never_out_of_stock": "657716",
+        "concrete_available_with_stock_and_never_out_of_stock": "004_30663302",
         "abstract_available_product_with_no_stock_and_never_out_of_stock": "154",
         "abstract_unavailable_product": "111",
 
@@ -153,9 +156,9 @@
         "abstract_product_with_volume_prices": "193",
         "abstract_product_with_volume_prices_name": "TomTom Golf",
         "abstract_product_with_original_prices": "072",
-        "concrete_product_with_original_prices": "420687",
-        "concrete_product_with_original_prices_name": "Post-it Index Strong adhesive stripes, 686-F1EU 4 sheets sorted, 4 pieces/pack",
-        "concrete_product_with_volume_prices": "420685",
+        "concrete_product_with_original_prices": "072_21927455",
+        "concrete_product_with_original_prices_name": "Samsung Galaxy Note 3",
+        "concrete_product_with_volume_prices": "193_32124735",
 
         "abstract_product_with_label": "145",
         "abstract_product_with_label_name": "DELL Chromebook 13",
@@ -169,12 +172,12 @@
         "abstract_product_with_options": "012",
         "abstract_product_with_options_name": "Canon IXUS 165",
 
-        "concrete_product_one_image_set": "401768",
-        "concrete_product_one_image_set_name": "EUROKRAFT aluminum hand truck - Load capacity 200 kg, with skids - load capacity 200 kg",
-        "concrete_product_multiple_image_set": "212427",
-        "concrete_product_multiple_image_set_name": "Wood stackable chair, upholstered - VE 4 pieces, substructure chromed - upholstery black",
-        "concrete_available_product_with_stock": "420566",
-        "concrete_available_product_without_stock": ""
+        "concrete_product_one_image_set": "666_133",
+        "concrete_product_one_image_set_name": "Gift Card 5000",
+        "concrete_product_multiple_image_set": "158_29885222",
+        "concrete_product_multiple_image_set_name": "Asus ZenPad Z170C",
+        "concrete_available_product_with_stock": "001_25904006",
+        "concrete_available_product_without_stock": "212_123"
             
     },
     "product_attributes":{
@@ -214,10 +217,10 @@
         "category_collection_name": "Sticky Notes",
         "category_collection_url": "/en/stationery/paper/sticky-notes",
 
-        "category_nodes_storage_name": "Foods",
-        "category_nodes_storage_url": "/en/foods",
-        "subcategory_nodes_storage_name": "Fish",
-        "subcategory_nodes_storage_url": "/en/foods/fish",
+        "category_nodes_storage_name": "Cameras & Camcorders",
+        "category_nodes_storage_url": "/en/cameras-&-camcorders",
+        "subcategory_nodes_storage_name": "Digital Cameras",
+        "subcategory_nodes_storage_url": "/en/cameras-&-camcorders/digital-cameras",
 
         "cms_page_collection_name": "GTC",
         "cms_page_collection_url": "/en/gtc",
