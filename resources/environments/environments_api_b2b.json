@@ -169,6 +169,8 @@
 
         "abstract_product_with_options": "M29501",
         "abstract_product_with_options_name": "Safescan automatic banknote counter - UV counterfeit recognition",
+        "concrete_product_with_options": "419871",
+        "concrete_product_with_options_name": "Safescan automatic banknote counter, UV Counterfeit recognition, SAFESCAN 2210",
 
         "concrete_product_one_image_set": "401768",
         "concrete_product_one_image_set_name": "EUROKRAFT aluminum hand truck - Load capacity 200 kg, with skids - load capacity 200 kg",
@@ -180,10 +182,13 @@
         "concrete_product_with_promotions": "212427",
 
         "concrete_product_random_weight_sku": "cable-vga-1-2",
+        "concrete_product_random_weight_name": "VGA cable as long as you want",
         "concrete_product_random_weight_measurement_unit": "19",
         "packaging_unit_m": "METR",
+        "packaging_unit_m_name": "Meter",
 
         "product_option_1": "OP_2_year_waranty",
+        "product_option_1_name": "Two (2) year limited warranty",
         "product_option_2": "OP_insurance"
             
     },
