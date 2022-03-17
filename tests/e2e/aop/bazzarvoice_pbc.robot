@@ -24,8 +24,6 @@ Bazzarvoice_E2E
 
 
 
-
-
     # App is moved to ‘Configuration pending’ status
     # ‘Connect’ button was replaced with ‘Configure’
     # Burger menu contains ‘disconnect’ link
