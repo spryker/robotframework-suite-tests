@@ -48,7 +48,7 @@ Get_specific_cms_with_includes
     And Response body parameter should be:    [data][type]    cms-pages
     And Response body parameter should be:    [data][attributes][name]    ${cms_page_with_product_lists_name}
     And Response body has correct self link internal
-    And Response should contain the array of a certain size:    [data][relationships][content-product-abstract-lists][data]    2
+    And Response should contain the array of a certain size:    [data][relationships][content-product-abstract-lists][data]    4
     And Response should contain the array larger than a certain size:    [included]    1
     And Response include should contain certain entity type:    content-product-abstract-lists
     And Response include element has self link:   content-product-abstract-lists
