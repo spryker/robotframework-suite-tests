@@ -245,3 +245,26 @@ Create_order_with_weight_product_&_product_options
     And Response body parameter should be:    [included][0][attributes][items][2][salesUnit][productMeasurementUnit][name]    ${packaging_unit_m_name}
     And Response body parameter should be:    [included][0][attributes][items][2][salesUnit][productMeasurementUnit][code]    ${packaging_unit_m}
     And Response body has correct self link internal
+
+Create_order_with_split_shipments
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    ...  AND    I set Headers:    Authorization=${token}
+    ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${gross_mode}","currency": "${currency_code_eur}","store": "${store_de}","name": "${test_cart_name}-${random}"}}}
+    ...  AND    Save value to a variable:    [data][id]    cart_id
+    ...  AND    I send a POST request:    /carts/${cartId}/items    {"data": {"type": "items","attributes": {"sku": "${concrete_available_with_stock_and_never_out_of_stock}","quantity": 1}}}
+    ...  AND    I send a POST request:    /carts/${cartId}/items    {"data": {"type": "items","attributes": {"sku": "${concrete_product_with_options}","quantity": 1}}}
+    When I send a POST request:    /checkout?include=orders    {"data": {"type": "checkout","attributes": {"customer": {"salutation": "${yves_user_salutation}","email": "${yves_user_email}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}"},"idCart": "${cart_id}","billingAddress": {"salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}","address1": "${default_address1}","address2": "${default_address2}","address3": "${default_address3}","zipCode": "${default_zipCode}","city": "${default_city}","iso2Code": "${default_iso2Code}","company": "${default_company}","phone": "${default_phone}","isDefaultBilling": False,"isDefaultShipping": False},"payments": [{"paymentMethodName": "${payment_method_name}","paymentProviderName": "${payment_provider_name}"}],"shipments": [{"items": ["${concrete_available_with_stock_and_never_out_of_stock}"],"shippingAddress": {"salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}","address1": "${default_address1}","address2": "${default_address2}","address3": "${default_address3}","zipCode": "${default_zipCode}","city": "${default_city}","iso2Code": "${default_iso2Code}","company": "${default_company}","phone": "${default_phone}"},"idShipmentMethod": 2,"requestedDeliveryDate": None},{"items": ["${concrete_product_with_options}"],"shippingAddress": {"salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}","address1": "${changed_address1}","address2": "${changed_address2}","address3": "${changed_address3}","zipCode": "${default_zipCode}","city": "${default_city}","iso2Code": "${default_iso2Code}","company": "${default_company}","phone": "${changed_phone}","isDefaultBilling": False,"isDefaultShipping": False},"idShipmentMethod": 4,"requestedDeliveryDate": None}]}}}
+    Then Response status code should be:    201
+    And Response reason should be:    Created
+    And Response body parameter should be:    [data][type]    checkout
+    And Response body parameter should be:    [data][id]    None
+    And Response body parameter should contain:    [data][attributes][orderReference]    ${store_de}--
+    And Response body parameter should be:    [data][attributes][redirectUrl]    None
+    And Response body parameter should be:    [data][attributes][isExternalRedirect]    None
+    And Response body has correct self link internal
+    And Response body parameter should be:    [included][0][attributes][items][0][name]    ${concrete_available_with_stock_and_never_out_of_stock_name}
+    And Response body parameter should be:    [included][0][attributes][items][0][sku]    ${concrete_available_with_stock_and_never_out_of_stock}
+    And Response body parameter should be:    [included][0][attributes][items][1][quantity]    1
+    And Response body parameter should be:    [included][0][attributes][items][1][name]    ${concrete_product_with_options_name}
+    And Response body parameter should be:    [included][0][attributes][items][1][sku]    ${concrete_product_with_options}
+    And Response body parameter should be:    [included][0][attributes][items][1][quantity]    1
