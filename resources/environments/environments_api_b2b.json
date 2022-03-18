@@ -223,6 +223,10 @@
         "category_collection_name": "Sticky Notes",
         "category_collection_url": "/en/stationery/paper/sticky-notes",
 
+        "category_node_is_root_id": "1",
+        "category_node_has_only_parent_id": "37",
+        "category_node_has_children_id": "11",
+        
         "category_nodes_storage_name": "Foods",
         "category_nodes_storage_url": "/en/foods",
         "subcategory_nodes_storage_name": "Fish",
