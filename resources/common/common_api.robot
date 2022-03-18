@@ -388,7 +388,7 @@ Response body parameter should be in:
     ...
     ...    *Example:*
     ...
-    ...    ``Response body parameter should be:    [data][attributes][allowInput]    true    false``
+    ...    ``Response body parameter should be in:    [data][attributes][allowInput]    true    false``
     [Arguments]    ${json_path}    ${expected_value1}    ${expected_value2}    ${expected_value3}=test    ${expected_value4}=test
     ${data}=    Get Value From Json    ${response_body}    ${json_path}
     ${data}=    Convert To String    ${data}
@@ -397,6 +397,24 @@ Response body parameter should be in:
     ${data}=    Replace String    ${data}    ]   ${EMPTY}
     Log    ${data}
     Should Contain Any   ${data}    ${expected_value1}    ${expected_value2}    ${expected_value3}    ${expected_value4}    ignore_case=True
+
+
+Response body parameter should be NOT in:
+    [Documentation]    This keyword checks that the response saved  in ``${response_body}`` test variable contsains the speficied parameter ``${json_path}`` with the value that matches one of the parameters ``${expected_value1}``, ``${expected_value2}``.
+    ...
+    ...    The minimal number of arguments is 1, maximum is 4
+    ...
+    ...    *Example:*
+    ...
+    ...    ``Response body parameter should be NOT in:    [data][attributes][allowInput]    None``
+    [Arguments]    ${json_path}    ${expected_value1}    ${expected_value2}=test    ${expected_value3}=test    ${expected_value4}=test
+    ${data}=    Get Value From Json    ${response_body}    ${json_path}
+    ${data}=    Convert To String    ${data}
+    ${data}=    Replace String    ${data}    '   ${EMPTY}
+    ${data}=    Replace String    ${data}    [   ${EMPTY}
+    ${data}=    Replace String    ${data}    ]   ${EMPTY}
+    Log    ${data}
+    Should NOT Contain Any   ${data}    ${expected_value1}    ${expected_value2}    ${expected_value3}    ${expected_value4}    ignore_case=True
 
 Response body parameter should NOT be:
     [Documentation]    This keyword checks that the response saved in ``${response_body}`` test variable contsains the speficied parameter ``${json_path}`` has a value that is DIFFERENT from the value passed as an argument ``${expected_value}``.
