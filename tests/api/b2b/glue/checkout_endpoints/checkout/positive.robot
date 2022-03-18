@@ -270,7 +270,7 @@ Create_order_with_split_shipments
     And Response body parameter should be:    [included][0][attributes][items][1][quantity]    1
     And Response should contain the array of a certain size:    [included][0][attributes][shipments]    0
 
-Create_order_with_split_shipments_with_same_shipping_address
+Create_order_with_split_shipments_&_same_shipping_address
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
     ...  AND    I set Headers:    Authorization=${token}
     ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${gross_mode}","currency": "${currency_code_eur}","store": "${store_de}","name": "${test_cart_name}-${random}"}}}
