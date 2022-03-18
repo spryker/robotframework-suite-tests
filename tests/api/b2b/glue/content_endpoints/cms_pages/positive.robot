@@ -34,7 +34,7 @@ Get_specific_cms_page
     And Response body parameter should be:    [data][type]    cms-pages
     And Response body parameter should not be EMPTY:    [data][attributes][name]
     And Response body parameter should not be EMPTY:    [data][attributes][url] 
-    And Response body parameter should not be EMPTY:    [data][isSearchable]
+    And Response body parameter should not be EMPTY:    [data][attributes][isSearchable]
     And Response body should contain:    pageKey
     And Response body should contain:    validTo
     And Response body has correct self link internal

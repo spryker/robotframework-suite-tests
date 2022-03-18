@@ -103,15 +103,15 @@
         
     "products": {
         
-        "bundle_product_abstract_sku": "B0001",
-        "bundle_product_concrete_sku":"000101",
-        "bundle_product_product_name": "Our Favourite Workspace Bundle",
-        "bundled_product_1_abstract_sku": "M528",
-        "bundled_product_2_abstract_sku": "M1017905",
-        "bundled_product_3_abstract_sku": "M24605",
-        "bundled_product_1_concrete_sku": "210_123",
-        "bundled_product_2_concrete_sku": "574995",
-        "bundled_product_3_concrete_sku": "426581",
+        "bundle_product_abstract_sku": "211",
+        "bundle_product_concrete_sku":"211_123",
+        "bundle_product_product_name": "HP Bundle",
+        "bundled_product_1_abstract_sku": "150",
+        "bundled_product_2_abstract_sku": "127",
+        "bundled_product_3_abstract_sku": "121",
+        "bundled_product_1_concrete_sku": "150_29554292",
+        "bundled_product_2_concrete_sku": "127_22828284",
+        "bundled_product_3_concrete_sku": "121_29406823",
         "qty_of_products_in_bundle": "3",
         "qty_of_each_product_inside_bundle": "1",
 
