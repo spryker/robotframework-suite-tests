@@ -132,3 +132,13 @@ Update_customer_password_with_missing_mandatory_fields
     And Array in response should contain property with value:    [errors]    detail    password => This field is missing.
     And Array in response should contain property with value:    [errors]    detail    confirmPassword => This field is missing.
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
+
+Update_customer_password_with_invalid_access_token
+    Run Keywords    I get access token for the customer:    ${yves_second_user_email}
+    ...  AND    I set Headers:    Authorization=${token}    
+    AND I send a PATCH request:    /customer-password/${yves_user_reference}   {"data":{"type":"customer-password","attributes":{"password":"${yves_user_password}","newPassword":"${yves_user_password}","confirmPassword":"${yves_user_password_new}"}}}
+    Response status code should be:    403
+    And Response reason should be:    Forbidden
+    And Response should return error code:    411
+    And Response should return error message:    Unauthorized request.
+    And Response header parameter should be:    Content-Type    ${default_header_content_type}

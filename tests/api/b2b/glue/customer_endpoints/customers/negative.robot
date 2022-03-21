@@ -3,7 +3,7 @@ Suite Setup       SuiteSetup
 Resource    ../../../../../../resources/common/common_api.robot
 
 *** Test Cases *** 
-Create_a_customer_with_already_exists_email
+Create_a_customer_with_already_existing_email
     I send a POST request:    /customers/    {"data":{"type":"customers","attributes":{"firstName":"Max","lastName":"Musterman","gender":"Male","salutation":"Mr","email":"${yves_user_email}","password":"${yves_user_password}","confirmPassword":"${yves_user_password}","acceptedTerms":True}}}
     Response status code should be:    422
     And Response reason should be:    Unprocessable Content
@@ -51,6 +51,69 @@ Create_a_customer_with_not_accepted_terms_and_coditions
     And Response should return error message:    acceptedTerms => This value should be true.
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
 
+Create_a_customer_with_empty_type
+    I send a POST request:    /customers/    {"data":{"type":"","attributes":{"firstName":"Max","lastName":"Musterman","gender":"Male","salutation":"Mr","email":"${yves_user_email}","password":"${yves_user_password}","confirmPassword":"${yves_user_password}","acceptedTerms":False}}}
+    Response status code should be:    400
+    And Response reason should be:   Bad Request 
+    And Response should return error message:    Invalid type.
+    And Response header parameter should be:    Content-Type    ${default_header_content_type} 
+
+Create_a_customer_with_empty_values_for_required_fields
+    I send a POST request:    /customers/    {"data":{"type":"customers","attributes":{"firstName":"","lastName":"","gender":"","salutation":"","email":"","password":"","confirmPassword":"","acceptedTerms":""}}}
+    Response status code should be:    422
+    And Response reason should be:   Unprocessable Content
+    And Response should return error code:    901
+    And Array in response should contain property with value:    [errors]    detail    firstName => This value should not be blank.
+    And Array in response should contain property with value:    [errors]    detail    lastName => This value should not be blank.
+    And Array in response should contain property with value:    [errors]    detail    gender => This value should not be blank.
+    And Array in response should contain property with value:    [errors]    detail    gender => The value you selected is not a valid choice.
+    And Array in response should contain property with value:    [errors]    detail    salutation => This value should not be blank.
+    And Array in response should contain property with value:    [errors]    detail    salutation => The value you selected is not a valid choice.
+    And Array in response should contain property with value:    [errors]    detail    email => This value should not be blank.
+    And Array in response should contain property with value:    [errors]    detail    password => This value is too short. It should have 8 characters or more.
+    And Array in response should contain property with value:    [errors]    detail    confirmPassword => This value is too short. It should have 8 characters or more.
+    And Array in response should contain property with value:    [errors]    detail    acceptedTerms => This value should be true.
+    And Response header parameter should be:    Content-Type    ${default_header_content_type}
+
+Create_a_customer_with_absent_type
+    I send a POST request:    /customers/    {"data":{"attributes":{"firstName":"Max","lastName":"Musterman","gender":"Male","salutation":"Mr","email":"max@spryker.com","password":"${yves_user_password}","confirmPassword":"${yves_user_password}","acceptedTerms":True}}}
+    Response status code should be:    400
+    And Response reason should be:   Bad Request
+    And Response should return error message:    Post data is invalid.
+    And Response header parameter should be:    Content-Type    ${default_header_content_type}
+
+Create_a_customer_with_wrong_email_format
+    I send a POST request:    /customers/    {"data":{"type":"customers","attributes":{"firstName":"Max","lastName":"Musterman","gender":"Male","salutation":"Mr","email":"test.com","password":"${yves_user_password}","confirmPassword":"${yves_user_password}","acceptedTerms":True}}}
+    Response status code should be:    422
+    And Response reason should be:   Unprocessable Content
+    And Response should return error code:    901
+    And Response should return error message:    email => This value is not a valid email address.
+    And Response header parameter should be:    Content-Type    ${default_header_content_type}
+
+Create_a_customer_with_missing_required_fields
+    I send a POST request:    /customers/    {"data":{"type":"customers","attributes":{}}}
+    Response status code should be:    422
+    And Response reason should be:   Unprocessable Content
+    And Response should return error code:    901
+    And Array in response should contain property with value:    [errors]    detail    email => This field is missing.
+    And Array in response should contain property with value:    [errors]    detail    salutation => This field is missing.
+    And Array in response should contain property with value:    [errors]    detail    firstName => This field is missing.
+    And Array in response should contain property with value:    [errors]    detail    lastName => This field is missing.
+    And Array in response should contain property with value:    [errors]    detail    password => This field is missing.
+    And Array in response should contain property with value:    [errors]    detail    confirmPassword => This field is missing.
+    And Array in response should contain property with value:    [errors]    detail    acceptedTerms => This field is missing.
+    And Array in response should contain property with value:    [errors]    detail    gender => This field is missing.
+    And Response header parameter should be:    Content-Type    ${default_header_content_type}
+
+Create_a_customer_with_absent_type
+    I send a POST request:    /customers/    {"data":{"type":"customers","attributes":{"firstName":"Max","lastName":"Musterman","gender":"test","salutation":"test","email":"max@spryker.com","password":"${yves_user_password}","confirmPassword":"${yves_user_password}","acceptedTerms":True}}}
+    Response status code should be:    422
+    And Response reason should be:   Unprocessable Content
+    And Response should return error code:    901
+    And Array in response should contain property with value:    [errors]    detail    gender => The value you selected is not a valid choice.
+    And Array in response should contain property with value:    [errors]    detail    salutation => The value you selected is not a valid choice.
+    And Response header parameter should be:    Content-Type    ${default_header_content_type}
+
 Get_a_customer_with_wrong_id
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}  
@@ -69,13 +132,72 @@ Get_a_cusomer_without_access_token
     And Response should return error message:    Missing access token.
     And Response header parameter should be:    Content-Type    ${default_header_content_type}    
 
+Get_a_customer_with_access_token_from_another_user
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}  
+    I send a GET request:    /customers/${yves_second_user_reference}
+    Response status code should be:    404
+    And Response reason should be:    Not Found
+    And Response should return error code:    402
+    And Response should return error message:    Customer not found.
+    And Response header parameter should be:    Content-Type    ${default_header_content_type}    
+
 Update_a_customer_with_wrong_id
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}  
-    I send a POST request:    /customers/DE--35    {"data":{"type":"customers","attributes":{"firstName":"Max","lastName":"Musterman","gender":"Male","salutation":"Mr","email":"max@spryker.com","password":"${yves_user_password}","confirmPassword":"${yves_user_password}","acceptedTerms":True}}}
-    Response status code should be:    404
-    And Response reason should be:    Not Found
+    I send a PATCH request:    /customers/DE--35    {"data":{"type":"customers","attributes":{"firstName":"Max","lastName":"Musterman","gender":"Male","salutation":"Mr","email":"max@spryker.com","password":"${yves_user_password}","confirmPassword":"${yves_user_password}","acceptedTerms":True}}}
+    Response status code should be:    403
+    And Response reason should be:    Forbidden
+    And Response should return error code:    411
+    And Response should return error message:    Unauthorized request.
     And Response header parameter should be:    Content-Type    ${default_header_content_type} 
+
+Update_a_customer_with_empty_type
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}  
+    I send a PATCH request:    /customers/${yves_user_reference}    {"data":{"type":"","attributes":{"firstName":"Max","lastName":"Musterman","gender":"Male","salutation":"Mr","email":"max@spryker.com","password":"${yves_user_password}","confirmPassword":"${yves_user_password}","acceptedTerms":True}}}
+    Response status code should be:    400
+    And Response reason should be:   Bad Request 
+    And Response should return error message:    Invalid type.
+    And Response header parameter should be:    Content-Type    ${default_header_content_type} 
+
+Update_a_customer_with_empty_values_for_required_fields
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}  
+    I send a PATCH request:    /customers/${yves_user_reference}    {"data":{"type":"customers","attributes":{"firstName":"","lastName":"","gender":"","salutation":"","email":"","password":"","confirmPassword":"","acceptedTerms":False}}}
+    Response status code should be:    422
+    And Response reason should be:   Unprocessable Content
+    And Response should return error code:    901
+    And Array in response should contain property with value:    [errors]    detail    firstName => This value should not be blank.
+    And Array in response should contain property with value:    [errors]    detail    lastName => This value should not be blank.
+    And Array in response should contain property with value:    [errors]    detail    gender => This value should not be blank.
+    And Array in response should contain property with value:    [errors]    detail    gender => The value you selected is not a valid choice.
+    And Array in response should contain property with value:    [errors]    detail    salutation => This value should not be blank.
+    And Array in response should contain property with value:    [errors]    detail    salutation => The value you selected is not a valid choice.
+    And Array in response should contain property with value:    [errors]    detail    email => This value should not be blank.
+    And Array in response should contain property with value:    [errors]    detail    password => This value is too short. It should have 8 characters or more.
+    And Array in response should contain property with value:    [errors]    detail    confirmPassword => This value is too short. It should have 8 characters or more.
+     And Response header parameter should be:    Content-Type    ${default_header_content_type}
+
+Update_a_customer_with_absent_type
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}  
+    I send a PATCH request:    /customers/${yves_user_reference}    {"data":{"attributes":{"firstName":"Max","lastName":"Musterman","gender":"Male","salutation":"Mr","email":"max@spryker.com","password":"${yves_user_password}","confirmPassword":"${yves_user_password}","acceptedTerms":True}}}
+    Response status code should be:    400
+    And Response reason should be:   Bad Request
+    And Response should return error message:    Post data is invalid.
+    And Response header parameter should be:    Content-Type    ${default_header_content_type}
+
+Update_a_customer_with_invalid_data
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}  
+    I send a PATCH request:    /customers/${yves_user_reference}    {"data":{"type":"customers","attributes":{"firstName":"Max","lastName":"Musterman","gender":"test","salutation":"test","email":"max@spryker.com","password":"${yves_user_password}","confirmPassword":"${yves_user_password}","acceptedTerms":True}}}
+    Response status code should be:    422
+    And Response reason should be:   Unprocessable Content
+    And Response should return error code:    901
+    And Array in response should contain property with value:    [errors]    detail    gender => The value you selected is not a valid choice.
+    And Array in response should contain property with value:    [errors]    detail    salutation => The value you selected is not a valid choice.
+    And Response header parameter should be:    Content-Type    ${default_header_content_type}
 
 Update_a_customer_without_access_token
     I send a PATCH request:    /customers/DE--35    {"data":{"type":"customers","attributes":{"firstName":"Max","lastName":"Musterman","gender":"Male","salutation":"Mr","email":"max@spryker.com","password":"${yves_user_password}","confirmPassword":"${yves_user_password}","acceptedTerms":True}}}
@@ -119,4 +241,14 @@ Delete_a_customer_with_wrong_id
     And Response reason should be:    Not Found
     And Response should return error code:    402
     And Response should return error message:    Customer not found.
+    And Response header parameter should be:    Content-Type    ${default_header_content_type}
+
+Delete_a_customer_with_access_token_from_another
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}  
+    I send a DELETE request:    /customers/DE--35
+    Response status code should be:    403
+    And Response reason should be:    Forbidden
+    And Response should return error code:    411
+    And Response should return error message:    Unauthorized request.
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
