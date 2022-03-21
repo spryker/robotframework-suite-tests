@@ -15,7 +15,7 @@ Resource                  ../pages/yves/yves_login_page.robot
 *** Variables ***
 # *** SUITE VARIABLES ***
 ${env}                 b2b
-${headless}            true
+${headless}            false
 ${browser}             chromium
 ${browser_timeout}     60 seconds
 ${email_domain}        @spryker.com
@@ -243,3 +243,19 @@ Verify the src attribute of the image is accessible:
         ${response}=    GET    ${image_src}
         Should Be Equal    '${response.status_code}'    '200'
     END    
+
+Conver string to List by separator:
+    [Arguments]    ${string}    ${separator}=,
+    ${covertedList}=    Split String    ${string}    ${separator}
+    ${covertedList}=    Set Test Variable    ${covertedList}
+    [Return]    ${covertedList}
+
+Try reloading page until element is/not appear:
+    [Documentation]    will reload page until element is shown/disappear. Secon argument is the expected condition (true/false) for the element.
+    [Arguments]    ${element}    ${shouldBeDisplayed}
+    FOR    ${index}    IN RANGE    0    21
+        ${elementAppears}=    Run Keyword And Return Status    Page Should Contain Element    ${element}
+        Run Keyword If    '${shouldBeDisplayed}'=='true' and '${elementAppears}'=='False'    Run Keywords    Sleep    1s    AND    Reload
+        ...    ELSE    Run Keyword If    '${shouldBeDisplayed}'=='false' and '${elementAppears}'=='True'    Run Keywords    Sleep    1s    AND    Reload
+        ...    ELSE    Exit For Loop
+    END

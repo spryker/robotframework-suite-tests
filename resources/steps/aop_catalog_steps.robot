@@ -9,9 +9,10 @@ ${appShortDescription}    ${pbc_datails_short_description_locator}
 ${appLogo}    ${pbc_datails_app_logo_locator}
 ${appAuthor}   ${pbc_datails_author_link_locator}
 ${appPendingStatus}    ${pbc_details_pending_status_locator}
+${appConnectedStatus}    ${pbc_details_connected_status_locator}
 
 *** Keywords ***
-Zed: AOP catalog page should contain the following:
+Zed: AOP catalog page should contain the following apps:
     [Documentation]    check that pbc is displayed in the aop catalog page. Possible arguments: pbc title (multiple titles are supported, case sensitive)
     [Arguments]    @{pbc_title_list}    ${element1}=${EMPTY}     ${element2}=${EMPTY}     ${element3}=${EMPTY}     ${element4}=${EMPTY}     ${element5}=${EMPTY}     ${element6}=${EMPTY}     ${element7}=${EMPTY}     ${element8}=${EMPTY}     ${element9}=${EMPTY}     ${element10}=${EMPTY}     ${element11}=${EMPTY}     ${element12}=${EMPTY}     ${element13}=${EMPTY}     ${element14}=${EMPTY}     ${element15}=${EMPTY}
     ${pbc_titles_list_count}=   get length  ${pbc_title_list}
@@ -47,7 +48,20 @@ Zed: click button on the PBC details page:
     [Arguments]    ${buttonName}
     Run Keyword If    '${buttonName}'=='connect'    Run keywords
     ...    Click    ${pbc_details_connect_button_locator}
+    ...    AND    Reload
     ...    AND    Wait Until Element Is Visible    ${pbc_details_configure_button_locator}
     Run Keyword If    '${buttonName}'=='configure'    Run keywords
     ...    Click    ${pbc_details_configure_button_locator}
     ...    AND    Wait Until Element Is Visible    ${pbc_configuration_form_main_content_locator}
+
+Zed: submit pbc configuration form
+    Click    ${pbc_configuration_form_save_button}
+
+Zed: Disconnect pbc
+    Click    ${pbc_common_details_actions_menu_button}
+    Wait Until Element Is Visible    ${pbc_actions_menu_disconnect_button}
+    Click    ${pbc_actions_menu_disconnect_button}
+    Wait Until Element Is Visible    ${pbc_actions_menu_confirm_disconnect_button}
+    Click    ${pbc_actions_menu_confirm_disconnect_button}
+    Reload
+    Wait Until Element Is Visible    ${pbc_details_connect_button_locator}

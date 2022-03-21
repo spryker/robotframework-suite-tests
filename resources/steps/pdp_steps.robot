@@ -12,9 +12,10 @@ ${packagingUnitSuggestion}    ${pdp_packaging_unit_notification}
 ${bundleItemsSmall}    ${pdp_product_bundle_include_small}[${env}]
 ${bundleItemsLarge}    ${pdp_product_bundle_include_large}
 ${relatedProducts}    ${pdp_related_products}[${env}]
+${bazaarvoiceWriteReview}    ${pdp_bazaarvoice_write_review_button}
 
 *** Keywords ***
-Yves: PDP contains/doesn't contain: 
+Yves: PDP contains/doesn't contain:
     [Arguments]    ${condition}    @{pdp_elements_list}
     ${pdp_elements_list_count}=   get length    ${pdp_elements_list}
     FOR    ${index}    IN RANGE    0    ${pdp_elements_list_count}
