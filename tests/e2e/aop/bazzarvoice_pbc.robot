@@ -7,6 +7,7 @@ Resource    ../../../resources/common/common.robot
 Resource    ../../../resources/common/common_yves.robot
 Resource    ../../../resources/common/common_zed.robot
 Resource    ../../../resources/steps/aop_catalog_steps.robot
+Resource    ../../../resources/steps/bazzarvoice_steps.robot
 
 *** Test Cases ***
 Bazzarvoice_E2E
@@ -19,6 +20,10 @@ Bazzarvoice_E2E
     # Zed: click button on the PBC details page:    connect
     # Zed: PBC details page should contain the following elements:    ${appPendingStatus}
     Zed: click button on the PBC details page:    configure
+    Zed: fill in new delivery address for a product:
+    ...    || product | salutation | firstName | lastName | street       | houseNumber | postCode | city   | country | company | phone     | additionalAddress ||
+    ...    || 403125  | Dr.        | First     | Last     | First Street | 1           | 10247    | Berlin | Germany | Spryker | 123456789 | Additional street ||
+   
     
 
 
