@@ -28,9 +28,13 @@ Bazzarvoice_E2E
     Zed: submit pbc configuration form
     Zed: PBC details page should contain the following elements:    ${appConnectedStatus}
     Yves: go to the 'Home' page
+    Yves: page should contain the following script:    bazaar-voice
+    Yves: perform search by:    150
+    Yves: page should contain the following script:    bazaar-voice
+    Yves: 1st product card in the catalog should contains bv inline rating
     Yves: go to PDP of the product with sku:    150
     Yves: page should contain the following script:    bazaar-voice
-    Yves: PDP contains/doesn't contain:    ${bazaarvoiceWriteReview}
+    Yves: PDP contains/doesn't contain:    true    ${bazaarvoiceWriteReview}    ${bazaarvoiceQuestions}    ${bazaarvoiceInlineRating}
     Yves: post bazaarvoice review with the following data:
     ...    || overallRating | reviewTitle            | review                                               | recommendProduct | nickname        | location | email                       | age      | gender | qualityRating | valueRating ||
     ...    || 5             | Robot Review ${random} | I bought this a month ago and am so happy that I did | yes              | Robot ${random} | New York | sonia+${random}@spryker.com | 25 to 34 | Female | 5             | 1           ||
@@ -38,7 +42,4 @@ Bazzarvoice_E2E
     ...    AND    Zed: go to first navigation item level:    Apps
     ...    AND    Zed: go to the PBC details page:    BazaarVoice
     ...    AND    Zed: Disconnect pbc
-
-    # BV ratings & Reviews is displayed
-    # BV questions & Answers is displayed (could be checked in elements)
-    # BV inline Ratings is displayed 
+    

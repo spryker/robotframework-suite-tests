@@ -69,3 +69,6 @@ Yves: page should contain the following script:
     #     ...    ELSE    Exit For Loop
     # END 
     Page Should Contain Element    xpath=//head//script[@id='${scriptId}']
+
+Yves: 1st product card in the catalog should contains bv inline rating
+    Page Should Contain Element    xpath=//div[contains(@class,'grid grid')]/div[1]/product-item//*[@data-bv-show='inline_rating']

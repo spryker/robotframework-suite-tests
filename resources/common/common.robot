@@ -15,7 +15,7 @@ Resource                  ../pages/yves/yves_login_page.robot
 *** Variables ***
 # *** SUITE VARIABLES ***
 ${env}                 b2b
-${headless}            false
+${headless}            true
 ${browser}             chromium
 ${browser_timeout}     60 seconds
 ${email_domain}        @spryker.com
@@ -138,11 +138,11 @@ Wait Until Element Is Enabled
     Wait For Elements State    ${locator}    enabled    ${timeout}    ${message}
 
 Element Should Be Visible
-    [Arguments]    ${locator}    ${message}=${EMPTY}    ${timeout}=0:00:03
+    [Arguments]    ${locator}    ${message}=${EMPTY}    ${timeout}=0:00:05
     Wait For Elements State    ${locator}    visible    ${timeout}    ${message}
 
 Page Should Contain Element
-    [Arguments]    ${locator}    ${message}=${EMPTY}    ${timeout}=0:00:03
+    [Arguments]    ${locator}    ${message}=${EMPTY}    ${timeout}=0:00:05
     Wait For Elements State    ${locator}    attached    ${timeout}    ${message}
 
 Get Location
@@ -183,7 +183,7 @@ Wait Until Element Contains
     Get Text    ${locator}    contains    ${text}    ${message}
 
 Page Should Not Contain Element
-    [Arguments]    ${locator}    ${message}=${EMPTY}    ${timeout}=0:00:03
+    [Arguments]    ${locator}    ${message}=${EMPTY}    ${timeout}=0:00:05
     Wait For Elements State    ${locator}    detached    ${timeout}    ${message}
 
 Element Should Not Contain
@@ -203,7 +203,7 @@ Mouse Over
     Hover    ${locator}
 
 Element Should Not Be Visible
-    [Arguments]    ${locator}    ${message}=${EMPTY}    ${timeout}=0:00:03
+    [Arguments]    ${locator}    ${message}=${EMPTY}    ${timeout}=0:00:05
     Wait For Elements State    ${locator}    hidden    ${timeout}    ${message}
 
 Get Element Attribute

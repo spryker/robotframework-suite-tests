@@ -13,6 +13,8 @@ ${bundleItemsSmall}    ${pdp_product_bundle_include_small}[${env}]
 ${bundleItemsLarge}    ${pdp_product_bundle_include_large}
 ${relatedProducts}    ${pdp_related_products}[${env}]
 ${bazaarvoiceWriteReview}    ${pdp_bazaarvoice_write_review_button}
+${bazaarvoiceQuestions}    ${pdp_bazaarvoice_questions_locator}
+${bazaarvoiceInlineRating}    ${pdp_bazaarvoice_intine_rating_locator}
 
 *** Keywords ***
 Yves: PDP contains/doesn't contain:
