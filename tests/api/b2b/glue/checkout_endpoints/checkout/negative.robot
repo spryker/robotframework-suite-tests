@@ -89,6 +89,7 @@ Create_order_with_invalid_email_&_salutation
     And Response reason should be:    Unprocessable Entity
     And Response should return error code:    901
     And Response should return error message:    customer.email => Email is invalid.
+    And Response should return error message:    customer.salutation => Salutation is invalid.
     [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cart_id}
     ...  AND    Response status code should be:    204
 
