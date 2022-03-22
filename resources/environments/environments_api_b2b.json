@@ -144,6 +144,7 @@
 
         "abstract_available_with_stock_and_never_out_of_stock": "M87",
         "concrete_available_with_stock_and_never_out_of_stock": "657716",
+        "concrete_available_with_stock_and_never_out_of_stock_name": "FRIWA stackable chair - with closed back",
         "abstract_available_product_with_no_stock_and_never_out_of_stock": "",
         "abstract_unavailable_product": "",
 
@@ -171,6 +172,8 @@
 
         "abstract_product_with_options": "M29501",
         "abstract_product_with_options_name": "Safescan automatic banknote counter - UV counterfeit recognition",
+        "concrete_product_with_options": "419871",
+        "concrete_product_with_options_name": "Safescan automatic banknote counter, UV Counterfeit recognition, SAFESCAN 2210",
 
         "concrete_product_one_image_set": "401768",
         "concrete_product_one_image_set_name": "EUROKRAFT aluminum hand truck - Load capacity 200 kg, with skids - load capacity 200 kg",
@@ -182,10 +185,16 @@
         "concrete_product_with_promotions": "212427",
 
         "concrete_product_random_weight_sku": "cable-vga-1-2",
+        "concrete_product_random_weight_name": "VGA cable as long as you want",
+        "concrete_product_random_weight_measurement_unit": "19",
+        "packaging_unit_m": "METR",
+        "packaging_unit_m_name": "Meter",
+
         "concrete_product_random_weight_packaging_unit": "19",
         "measurement_unit_m": "METR",
 
         "product_option_1": "OP_2_year_waranty",
+        "product_option_1_name": "Two (2) year limited warranty",
         "product_option_2": "OP_insurance"
             
     },
@@ -255,11 +264,18 @@
         "qty_of_categories_in_category_trees": "6",
         "qty_of_subcategories_in_category_trees": "2",
         "color_name": "black",
+
+        "payment_provider_name": "DummyPayment",
+        "payment_method_name": "Invoice",
+        "carrier_name": "DHL",
+        "shipment_method_name": "Standard",
+        "delivery_date": "2030-12-31",
+        
         "review_title": "This is a review",
         "review_text": "This is review text",
         "default_review_rating": "5"
-    },
 
+    },
     "companies":{
         "company_name": "Spryker Systems GmbH",
         "busines_unit_address_id": "2175cddd-f8af-5885-b161-227b5c93e72f",
