@@ -269,6 +269,7 @@
         "payment_method_name": "Invoice",
         "carrier_name": "DHL",
         "shipment_method_name": "Standard",
+        "delivery_date": "2030-12-31",
         
         "review_title": "This is a review",
         "review_text": "This is review text",
