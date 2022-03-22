@@ -22,6 +22,16 @@
         "yves_second_user_reference": "DE--4",
         "yves_second_user_salutation": "Mr",
 
+        "yves_third_user_email": "maxmusterman@spryker.com",
+        "yves_third_user_first_name": "Max",
+        "yves_third_user_last_name": "Musterman",
+        "yves_third_user_password": "change123",
+        "yves_third_user_salutation": "Mr",
+        "yves_third_user_gender": "Male",
+
+        "email_name": "maxmusterman",
+        "email_domain": "@spryker.com",
+
         "zed_admin_email": "admin@spryker.com",
         "zed_admin_password": "change123",
 

@@ -4,7 +4,7 @@ Resource    ../../../../../../resources/common/common_api.robot
 
 *** Test Cases *** 
 Create_a_customer_with_already_existing_email
-    I send a POST request:    /customers/    {"data":{"type":"customers","attributes":{"firstName":"Max","lastName":"Musterman","gender":"Male","salutation":"Mr","email":"${yves_user_email}","password":"${yves_user_password}","confirmPassword":"${yves_user_password}","acceptedTerms":True}}}
+    I send a POST request:    /customers/    {"data":{"type":"customers","attributes":{"firstName":"${yves_third_user_first_name}","lastName":"${yves_third_user_last_name}","gender":"${yves_third_user_gender}","salutation":"${yves_third_user_salutation}","email":"${yves_user_email}","password":"${yves_user_password}","confirmPassword":"${yves_user_password}","acceptedTerms":True}}}
     Response status code should be:    422
     And Response reason should be:    Unprocessable Content
     And Response should return error code:    400
@@ -12,7 +12,7 @@ Create_a_customer_with_already_existing_email
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
 
 Create_a_customer_with_too_short_password
-    I send a POST request:    /customers/    {"data":{"type":"customers","attributes":{"firstName":"Max","lastName":"Musterman","gender":"Male","salutation":"Mr","email":"${yves_user_email}","password":"Test12!","confirmPassword":"Test12!","acceptedTerms":True}}}
+    I send a POST request:    /customers/    {"data":{"type":"customers","attributes":{"firstName":"${yves_third_user_first_name}","lastName":"${yves_third_user_last_name}","gender":"${yves_third_user_gender}","salutation":"${yves_third_user_salutation}","email":"${yves_user_email}","password":"Test12!","confirmPassword":"Test12!","acceptedTerms":True}}}
     Response status code should be:    422
     And Response reason should be:    Unprocessable Content
     And Response should return error code:    901
@@ -20,7 +20,7 @@ Create_a_customer_with_too_short_password
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
 
 Create_a_customer_with_too_long_password
-    I send a POST request:    /customers/    {"data":{"type":"customers","attributes":{"firstName":"Max","lastName":"Musterman","gender":"Male","salutation":"Mr","email":"${yves_user_email}","password":"tests1234567890tests1234567890tests1234567890tests1234567890tests1234567890","confirmPassword":"tests1234567890tests1234567890tests1234567890tests1234567890tests1234567890","acceptedTerms":True}}}
+    I send a POST request:    /customers/    {"data":{"type":"customers","attributes":{"firstName":"${yves_third_user_first_name}","lastName":"${yves_third_user_last_name}","gender":"${yves_third_user_gender}","salutation":"${yves_third_user_salutation}","email":"${yves_user_email}","password":"tests1234567890tests1234567890tests1234567890tests1234567890tests1234567890","confirmPassword":"tests1234567890tests1234567890tests1234567890tests1234567890tests1234567890","acceptedTerms":True}}}
     Response status code should be:    422
     And Response reason should be:    Unprocessable Content
     And Response should return error code:    901
@@ -28,7 +28,7 @@ Create_a_customer_with_too_long_password
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
 
 Create_a_customer_with_too_weak_password
-    I send a POST request:    /customers/    {"data":{"type":"customers","attributes":{"firstName":"Max","lastName":"Musterman","gender":"Male","salutation":"Mr","email":"${yves_user_email}","password":"12345678","confirmPassword":"12345678","acceptedTerms":True}}}
+    I send a POST request:    /customers/    {"data":{"type":"customers","attributes":{"firstName":"${yves_third_user_first_name}","lastName":"${yves_third_user_last_name}","gender":"${yves_third_user_gender}","salutation":"${yves_third_user_salutation}","email":"${yves_user_email}","password":"12345678","confirmPassword":"12345678","acceptedTerms":True}}}
     Response status code should be:    400
     And Response reason should be:    Bad Request
     And Response should return error code:    420
@@ -36,7 +36,7 @@ Create_a_customer_with_too_weak_password
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
 
 Create_a_customer_with_not_equal_passwords
-    I send a POST request:    /customers/    {"data":{"type":"customers","attributes":{"firstName":"Max","lastName":"Musterman","gender":"Male","salutation":"Mr","email":"${yves_user_email}","password":"${yves_user_password}","confirmPassword":"12345678","acceptedTerms":True}}}
+    I send a POST request:    /customers/    {"data":{"type":"customers","attributes":{"firstName":"${yves_third_user_first_name}","lastName":"${yves_third_user_last_name}","gender":"${yves_third_user_gender}","salutation":"${yves_third_user_salutation}","email":"${yves_user_email}","password":"${yves_user_password}","confirmPassword":"12345678","acceptedTerms":True}}}
     Response status code should be:    422
     And Response reason should be:    Unprocessable Content
     And Response should return error code:    406
@@ -44,7 +44,7 @@ Create_a_customer_with_not_equal_passwords
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
 
 Create_a_customer_with_not_accepted_terms_and_coditions
-    I send a POST request:    /customers/    {"data":{"type":"customers","attributes":{"firstName":"Max","lastName":"Musterman","gender":"Male","salutation":"Mr","email":"${yves_user_email}","password":"${yves_user_password}","confirmPassword":"${yves_user_password}","acceptedTerms":False}}}
+    I send a POST request:    /customers/    {"data":{"type":"customers","attributes":{"firstName":"${yves_third_user_first_name}","lastName":"${yves_third_user_last_name}","gender":"${yves_third_user_gender}","salutation":"${yves_third_user_salutation}","email":"${yves_user_email}","password":"${yves_user_password}","confirmPassword":"${yves_user_password}","acceptedTerms":False}}}
     Response status code should be:    422
     And Response reason should be:    Unprocessable Content
     And Response should return error code:    901
@@ -52,7 +52,7 @@ Create_a_customer_with_not_accepted_terms_and_coditions
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
 
 Create_a_customer_with_empty_type
-    I send a POST request:    /customers/    {"data":{"type":"","attributes":{"firstName":"Max","lastName":"Musterman","gender":"Male","salutation":"Mr","email":"${yves_user_email}","password":"${yves_user_password}","confirmPassword":"${yves_user_password}","acceptedTerms":False}}}
+    I send a POST request:    /customers/    {"data":{"type":"","attributes":{"firstName":"${yves_third_user_first_name}","lastName":"${yves_third_user_last_name}","gender":"${yves_third_user_gender}","salutation":"${yves_third_user_salutation}","email":"${yves_user_email}","password":"${yves_user_password}","confirmPassword":"${yves_user_password}","acceptedTerms":False}}}
     Response status code should be:    400
     And Response reason should be:   Bad Request 
     And Response should return error message:    Invalid type.
@@ -76,14 +76,14 @@ Create_a_customer_with_empty_values_for_required_fields
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
 
 Create_a_customer_with_absent_type
-    I send a POST request:    /customers/    {"data":{"attributes":{"firstName":"Max","lastName":"Musterman","gender":"Male","salutation":"Mr","email":"max@spryker.com","password":"${yves_user_password}","confirmPassword":"${yves_user_password}","acceptedTerms":True}}}
+    I send a POST request:    /customers/    {"data":{"attributes":{"firstName":"${yves_third_user_first_name}","lastName":"${yves_third_user_last_name}","gender":"${yves_third_user_gender}","salutation":"${yves_third_user_salutation}","email":"${yves_third_user_first_name}@spryker.com","password":"${yves_user_password}","confirmPassword":"${yves_user_password}","acceptedTerms":True}}}
     Response status code should be:    400
     And Response reason should be:   Bad Request
     And Response should return error message:    Post data is invalid.
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
 
 Create_a_customer_with_wrong_email_format
-    I send a POST request:    /customers/    {"data":{"type":"customers","attributes":{"firstName":"Max","lastName":"Musterman","gender":"Male","salutation":"Mr","email":"test.com","password":"${yves_user_password}","confirmPassword":"${yves_user_password}","acceptedTerms":True}}}
+    I send a POST request:    /customers/    {"data":{"type":"customers","attributes":{"firstName":"${yves_third_user_first_name}","lastName":"${yves_third_user_last_name}","gender":"${yves_third_user_gender}","salutation":"${yves_third_user_salutation}","email":"test.com","password":"${yves_user_password}","confirmPassword":"${yves_user_password}","acceptedTerms":True}}}
     Response status code should be:    422
     And Response reason should be:   Unprocessable Content
     And Response should return error code:    901
@@ -106,7 +106,7 @@ Create_a_customer_with_missing_required_fields
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
 
 Create_a_customer_with_absent_type
-    I send a POST request:    /customers/    {"data":{"type":"customers","attributes":{"firstName":"Max","lastName":"Musterman","gender":"test","salutation":"test","email":"max@spryker.com","password":"${yves_user_password}","confirmPassword":"${yves_user_password}","acceptedTerms":True}}}
+    I send a POST request:    /customers/    {"data":{"type":"customers","attributes":{"firstName":"${yves_third_user_first_name}","lastName":"${yves_third_user_last_name}","gender":"test","salutation":"test","email":"${yves_third_user_first_name}@spryker.com","password":"${yves_user_password}","confirmPassword":"${yves_user_password}","acceptedTerms":True}}}
     Response status code should be:    422
     And Response reason should be:   Unprocessable Content
     And Response should return error code:    901
@@ -145,7 +145,7 @@ Get_a_customer_with_access_token_from_another_user
 Update_a_customer_with_wrong_id
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}  
-    I send a PATCH request:    /customers/DE--35    {"data":{"type":"customers","attributes":{"firstName":"Max","lastName":"Musterman","gender":"Male","salutation":"Mr","email":"max@spryker.com","password":"${yves_user_password}","confirmPassword":"${yves_user_password}","acceptedTerms":True}}}
+    I send a PATCH request:    /customers/DE--35    {"data":{"type":"customers","attributes":{"firstName":"${yves_third_user_first_name}","lastName":"${yves_third_user_last_name}","gender":"${yves_third_user_gender}","salutation":"${yves_third_user_salutation}","email":"${yves_third_user_first_name}@spryker.com","password":"${yves_user_password}","confirmPassword":"${yves_user_password}","acceptedTerms":True}}}
     Response status code should be:    403
     And Response reason should be:    Forbidden
     And Response should return error code:    411
@@ -155,7 +155,7 @@ Update_a_customer_with_wrong_id
 Update_a_customer_with_empty_type
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}  
-    I send a PATCH request:    /customers/${yves_user_reference}    {"data":{"type":"","attributes":{"firstName":"Max","lastName":"Musterman","gender":"Male","salutation":"Mr","email":"max@spryker.com","password":"${yves_user_password}","confirmPassword":"${yves_user_password}","acceptedTerms":True}}}
+    I send a PATCH request:    /customers/${yves_user_reference}    {"data":{"type":"","attributes":{"firstName":"${yves_third_user_first_name}","lastName":"${yves_third_user_last_name}","gender":"${yves_third_user_gender}","salutation":"${yves_third_user_salutation}","email":"${yves_third_user_first_name}@spryker.com","password":"${yves_user_password}","confirmPassword":"${yves_user_password}","acceptedTerms":True}}}
     Response status code should be:    400
     And Response reason should be:   Bad Request 
     And Response should return error message:    Invalid type.
@@ -182,7 +182,7 @@ Update_a_customer_with_empty_values_for_required_fields
 Update_a_customer_with_absent_type
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}  
-    I send a PATCH request:    /customers/${yves_user_reference}    {"data":{"attributes":{"firstName":"Max","lastName":"Musterman","gender":"Male","salutation":"Mr","email":"max@spryker.com","password":"${yves_user_password}","confirmPassword":"${yves_user_password}","acceptedTerms":True}}}
+    I send a PATCH request:    /customers/${yves_user_reference}    {"data":{"attributes":{"firstName":"${yves_third_user_first_name}","lastName":"${yves_third_user_last_name}","gender":"${yves_third_user_gender}","salutation":"${yves_third_user_salutation}","email":"${yves_third_user_first_name}@spryker.com","password":"${yves_user_password}","confirmPassword":"${yves_user_password}","acceptedTerms":True}}}
     Response status code should be:    400
     And Response reason should be:   Bad Request
     And Response should return error message:    Post data is invalid.
@@ -191,7 +191,7 @@ Update_a_customer_with_absent_type
 Update_a_customer_with_invalid_data
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}  
-    I send a PATCH request:    /customers/${yves_user_reference}    {"data":{"type":"customers","attributes":{"firstName":"Max","lastName":"Musterman","gender":"test","salutation":"test","email":"max@spryker.com","password":"${yves_user_password}","confirmPassword":"${yves_user_password}","acceptedTerms":True}}}
+    I send a PATCH request:    /customers/${yves_user_reference}    {"data":{"type":"customers","attributes":{"firstName":"${yves_third_user_first_name}","lastName":"${yves_third_user_last_name}","gender":"test","salutation":"test","email":"${yves_third_user_first_name}@spryker.com","password":"${yves_user_password}","confirmPassword":"${yves_user_password}","acceptedTerms":True}}}
     Response status code should be:    422
     And Response reason should be:   Unprocessable Content
     And Response should return error code:    901
@@ -200,7 +200,7 @@ Update_a_customer_with_invalid_data
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
 
 Update_a_customer_without_access_token
-    I send a PATCH request:    /customers/DE--35    {"data":{"type":"customers","attributes":{"firstName":"Max","lastName":"Musterman","gender":"Male","salutation":"Mr","email":"max@spryker.com","password":"${yves_user_password}","confirmPassword":"${yves_user_password}","acceptedTerms":True}}}
+    I send a PATCH request:    /customers/DE--35    {"data":{"type":"customers","attributes":{"firstName":"${yves_third_user_first_name}","lastName":"${yves_third_user_last_name}","gender":"${yves_third_user_gender}","salutation":"${yves_third_user_salutation}","email":"${yves_third_user_first_name}@spryker.com","password":"${yves_user_password}","confirmPassword":"${yves_user_password}","acceptedTerms":True}}}
     Response status code should be:    403
     And Response reason should be:    Forbidden
     And Response should return error code:    002
@@ -210,7 +210,7 @@ Update_a_customer_without_access_token
 Update_a_customer_without_id
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}  
-    I send a PATCH request:    /customers/    {"data":{"type":"customers","attributes":{"firstName":"Max","lastName":"Musterman","gender":"Male","salutation":"Mr","email":"max@spryker.com","password":"${yves_user_password}","confirmPassword":"${yves_user_password}","acceptedTerms":True}}}
+    I send a PATCH request:    /customers/    {"data":{"type":"customers","attributes":{"firstName":"${yves_third_user_first_name}","lastName":"${yves_third_user_last_name}","gender":"${yves_third_user_gender}","salutation":"${yves_third_user_salutation}","email":"${yves_third_user_first_name}@spryker.com","password":"${yves_user_password}","confirmPassword":"${yves_user_password}","acceptedTerms":True}}}
     Response status code should be:    400
     And Response reason should be:    Bad Request
     And Response should return error message:    Resource id is not specified.
