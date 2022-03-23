@@ -125,8 +125,8 @@
         "product_with_relations_related_products_sku": "M29529",
         "product_with_relations_alternative_products_sku": "M21100",
         "product_with_relations_upselling_sku": "M29502",
-        "product_related_to_abstract": "M29501",
-        "product_related_to_abstract_name": "Safescan automatic banknote counter - UV counterfeit recognition",
+        "product_related_product_with_related_relation_sku": "M29501",
+        "product_related_product_with_related_relation_name": "Safescan automatic banknote counter - UV counterfeit recognition",
 
         "concrete_product_with_alternative_sku": "420566",
         "concrete_product_with_alternative_sku_name": "Verbatim USB stick Store n Go V3 49173 32GB USB3.0 gray",
