@@ -66,7 +66,9 @@
         "net_mode": "NET_MODE",
         "currency_name_chf": "Swiss Franc",
         "currency_code_chf": "CHF",
-        "currency_symbol_chf": "CHF"
+        "currency_symbol_chf": "CHF",
+        "locale_DE": "de_DE",
+        "locale_EN": "en_US"
     },
     "search":{
         "total_number_of_products_in_search": "420",
@@ -142,6 +144,7 @@
 
         "abstract_available_with_stock_and_never_out_of_stock": "M87",
         "concrete_available_with_stock_and_never_out_of_stock": "657716",
+        "concrete_available_with_stock_and_never_out_of_stock_name": "FRIWA stackable chair - with closed back",
         "abstract_available_product_with_no_stock_and_never_out_of_stock": "",
         "abstract_unavailable_product": "",
 
@@ -165,9 +168,12 @@
 
         "abstract_product_with_reviews": "M719",
         "abstract_product_with_reviews_name": "Rectangular table, rectangular tubing - 1600 x 800 mm",
+        "abstract_product_with_reviews_qty": "4",
 
         "abstract_product_with_options": "M29501",
         "abstract_product_with_options_name": "Safescan automatic banknote counter - UV counterfeit recognition",
+        "concrete_product_with_options": "419871",
+        "concrete_product_with_options_name": "Safescan automatic banknote counter, UV Counterfeit recognition, SAFESCAN 2210",
 
         "concrete_product_one_image_set": "401768",
         "concrete_product_one_image_set_name": "EUROKRAFT aluminum hand truck - Load capacity 200 kg, with skids - load capacity 200 kg",
@@ -179,10 +185,16 @@
         "concrete_product_with_promotions": "212427",
 
         "concrete_product_random_weight_sku": "cable-vga-1-2",
+        "concrete_product_random_weight_name": "VGA cable as long as you want",
         "concrete_product_random_weight_measurement_unit": "19",
         "packaging_unit_m": "METR",
+        "packaging_unit_m_name": "Meter",
+
+        "concrete_product_random_weight_packaging_unit": "19",
+        "measurement_unit_m": "METR",
 
         "product_option_1": "OP_2_year_waranty",
+        "product_option_1_name": "Two (2) year limited warranty",
         "product_option_2": "OP_insurance"
             
     },
@@ -198,7 +210,10 @@
         "price_unit_1": "piece",
         "color_3": "purple",
         "color_1": "yellow",
-        "color_2": "blue"
+        "color_2": "blue",
+        "product_management_superattribute_id": "farbe",
+        "product_management_attribute_free_input_id": "verschlussart",
+        "product_management_attribute_no_input_id": "bundled_product"
 
     },
     "content":{
@@ -248,9 +263,19 @@
         "restricted_content_qty": "5",
         "qty_of_categories_in_category_trees": "6",
         "qty_of_subcategories_in_category_trees": "2",
-        "color_name": "black"
-    },
+        "color_name": "black",
 
+        "payment_provider_name": "DummyPayment",
+        "payment_method_name": "Invoice",
+        "carrier_name": "DHL",
+        "shipment_method_name": "Standard",
+        "delivery_date": "2030-12-31",
+        
+        "review_title": "This is a review",
+        "review_text": "This is review text",
+        "default_review_rating": "5"
+
+    },
     "companies":{
         "company_name": "Spryker Systems GmbH",
         "busines_unit_address_id": "2175cddd-f8af-5885-b161-227b5c93e72f",
@@ -259,6 +284,18 @@
         "company_id": "62de4ab6-b768-5c21-8835-455d9f341625",
         "company_user_id": "2816dcbd-855e-567e-b26f-4d57f3310bb8"
 
+    },
+    "labels":{
+        "label_id_manual": "3",
+        "label_name_manual": "Top",
+        "label_id_sale": "5",
+        "label_name_sale": "SALE %",
+        "label_id_new": "4",
+        "label_name_new": "New",
+        "label_id_discontinued": "2",
+        "label_name_discontinued": "Discontinued",
+        "label_id_alternative": "1",
+        "label_name_alternative": "Alternatives available"
     }
 
 }

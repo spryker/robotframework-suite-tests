@@ -51,7 +51,7 @@ Get_category_node_is_leaf_by_id
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response body parameter should be:    [data][type]    category-nodes
     And Response body parameter should be:    [data][id]    ${category_node_has_only_parent_id}
-     And Response Body parameter should have datatype:    [data][attributes][name]    str
+    And Response Body parameter should have datatype:    [data][attributes][name]    str
     And Response Body parameter should have datatype:    [data][attributes][nodeId]    int
     And Response Body parameter should have datatype:    [data][attributes][order]    int
     And Response Body parameter should have datatype:    [data][attributes][url]    str
