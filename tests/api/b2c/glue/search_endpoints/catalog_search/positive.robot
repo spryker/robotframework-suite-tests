@@ -83,7 +83,7 @@ Search_with_empty_search_criteria_all_default_values_check
     And Response should contain the array of a certain size:    [data][0][attributes][valueFacets][6][values]    ${default_weight_qty}
     And Response body parameter should be:    [data][0][attributes][valueFacets][6][activeValue]    None
     And Response body parameter should be:    [data][0][attributes][valueFacets][6][config][isMultiValued]    True
-    #Filters - rating
+    #Filters - price
     And Response body parameter should be:    [data][0][attributes][rangeFacets][0][name]    price-DEFAULT-EUR-GROSS_MODE
     And Response body parameter should be:    [data][0][attributes][rangeFacets][0][localizedName]    Price
     And Response body parameter should be:    [data][0][attributes][rangeFacets][0][min]    ${default_min_price}
@@ -301,6 +301,48 @@ Filter_by_rating_Min_max
     #rating facets
     And Response body parameter should be:    [data][0][attributes][rangeFacets][1][activeMin]    3
     And Response body parameter should be:    [data][0][attributes][rangeFacets][1][activeMax]    3
+
+Filter_by_price_only_min
+    When I send a GET request:    /catalog-search?q=&price[min]=1000
+    Then Response status code should be:    200
+    And Response reason should be:    OK
+    And Response header parameter should be:    Content-Type    ${default_header_content_type}
+    And Response body parameter should be:    [data][0][type]    catalog-search
+    And Response body parameter should be:    [data][0][attributes][pagination][numFound]    3
+    And Response body parameter should be:    [data][0][attributes][pagination][currentPage]    1
+    And Response body parameter should be:    [data][0][attributes][pagination][maxPage]    1
+    And Response should contain the array of a certain size:    [data][0][attributes][abstractProducts]    3
+    #rating facets
+    And Response body parameter should be:    [data][0][attributes][rangeFacets][0][activeMin]    100000
+    And Response body parameter should be:    [data][0][attributes][rangeFacets][0][activeMax]    ${default_max_price}
+
+Filter_by_price_only_max
+    When I send a GET request:    /catalog-search?q=&price[max]=3000
+    Then Response status code should be:    200
+    And Response reason should be:    OK
+    And Response header parameter should be:    Content-Type    ${default_header_content_type}
+    And Response body parameter should be:    [data][0][type]    catalog-search
+    And Response body parameter should be:    [data][0][attributes][pagination][numFound]    213
+    And Response body parameter should be:    [data][0][attributes][pagination][currentPage]    1
+    And Response body parameter should be:    [data][0][attributes][pagination][maxPage]    18
+    And Response should contain the array of a certain size:    [data][0][attributes][abstractProducts]    12
+    #rating facets
+    And Response body parameter should be:    [data][0][attributes][rangeFacets][0][activeMin]    ${default_min_price}
+    And Response body parameter should be:    [data][0][attributes][rangeFacets][0][activeMax]    300000
+
+Filter_by_price_Min_max
+    When I send a GET request:    /catalog-search?q=&price[min]=1000&price[max]=3000
+    Then Response status code should be:    200
+    And Response reason should be:    OK
+    And Response header parameter should be:    Content-Type    ${default_header_content_type}
+    And Response body parameter should be:    [data][0][type]    catalog-search
+    And Response body parameter should be:    [data][0][attributes][pagination][numFound]    1
+    And Response body parameter should be:    [data][0][attributes][pagination][currentPage]    1
+    And Response body parameter should be:    [data][0][attributes][pagination][maxPage]    1
+    And Response should contain the array of a certain size:    [data][0][attributes][abstractProducts]    1
+    #rating facets
+    And Response body parameter should be:    [data][0][attributes][rangeFacets][0][activeMin]    100000
+    And Response body parameter should be:    [data][0][attributes][rangeFacets][0][activeMax]    300000
 
 Filter_by_brand_one_brand
     When I send a GET request:    /catalog-search?q=&brand=${brand_4}
