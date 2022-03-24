@@ -28,13 +28,13 @@ Yves: login on Yves with provided credentials:
     [Arguments]    ${email}    ${password}=${default_password}
     ${currentURL}=    Get Url
     Run Keyword Unless    '/login' in '${currentURL}'
-    ...    Run keyword if    '${env}'=='b2b'
+    ...    Run keyword if    '${env}' in ['b2b','suite-nonsplit']
     ...    Run Keywords
     ...    Go To    ${host}
     ...    AND    delete all cookies
     ...    AND    Reload
-    ...    AND    Wait Until Element Is Visible    ${header_login_button}
-    ...    AND    Click    ${header_login_button}
+    ...    AND    Wait Until Element Is Visible    ${header_login_button}[${env}]
+    ...    AND    Click    ${header_login_button}[${env}]
     ...    AND    Wait Until Element Is Visible    ${email_field}
     ...    ELSE    Run Keywords
     ...    Go To    ${host}

@@ -2,10 +2,8 @@
     "environment": "suite-nonsplit",
 
     "env": {
-        "host1": "http://yves.de.spryker.local/",
-        "zed_url1": "http://backoffice.de.spryker.local/",
-        "host": "https://www.de.app-store-staging.demo-spryker.com/",
-        "zed_url": "https://os.de.app-store-staging.demo-spryker.com/"
+        "host": "http://yves.de.spryker.local/",
+        "zed_url": "http://backoffice.de.spryker.local/"
     },
 
     "users": { 
