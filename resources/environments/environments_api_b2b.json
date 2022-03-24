@@ -11,6 +11,7 @@
         "yves_user_first_name": "Sonia",
         "yves_user_last_name": "Wagner",
         "yves_user_password": "change123",
+        "yves_user_password_new": "qweRTY_123",
         "yves_user_reference": "DE--21",
         "yves_user_salutation": "Ms",
 
@@ -20,6 +21,18 @@
         "yves_second_user_password": "change123",
         "yves_second_user_reference": "DE--4",
         "yves_second_user_salutation": "Mr",
+
+        "yves_third_user_email": "maxmusterman@spryker.com",
+        "yves_third_user_first_name": "Max",
+        "yves_third_user_last_name": "Musterman",
+        "yves_third_user_password": "change123",
+        "yves_third_user_salutation": "Mr",
+
+        "gender_female": "Female",
+        "gender_male": "Male",
+        
+        "email_name": "maxmusterman",
+        "email_domain": "@spryker.com",
 
         "zed_admin_email": "admin@spryker.com",
         "zed_admin_password": "change123",
@@ -54,7 +67,6 @@
         "changed_address2": "75d",
         "changed_address3": "third. address. line - changed",
         "changed_phone": "555-555-55"
-
     },
 
     "shop":{
@@ -70,6 +82,7 @@
         "locale_DE": "de_DE",
         "locale_EN": "en_US"
     },
+    
     "search":{
         "total_number_of_products_in_search": "420",
         "default_ipp": "12",
@@ -125,6 +138,8 @@
         "product_with_relations_related_products_sku": "M29529",
         "product_with_relations_alternative_products_sku": "M21100",
         "product_with_relations_upselling_sku": "M29502",
+        "product_related_product_with_related_relation_sku": "M29501",
+        "product_related_product_with_related_relation_name": "Safescan automatic banknote counter - UV counterfeit recognition",
 
         "concrete_product_with_alternative_sku": "420566",
         "concrete_product_with_alternative_sku_name": "Verbatim USB stick Store n Go V3 49173 32GB USB3.0 gray",
@@ -144,6 +159,7 @@
 
         "abstract_available_with_stock_and_never_out_of_stock": "M87",
         "concrete_available_with_stock_and_never_out_of_stock": "657716",
+        "concrete_available_with_stock_and_never_out_of_stock_name": "FRIWA stackable chair - with closed back",
         "abstract_available_product_with_no_stock_and_never_out_of_stock": "",
         "abstract_unavailable_product": "",
 
@@ -171,6 +187,8 @@
 
         "abstract_product_with_options": "M29501",
         "abstract_product_with_options_name": "Safescan automatic banknote counter - UV counterfeit recognition",
+        "concrete_product_with_options": "419871",
+        "concrete_product_with_options_name": "Safescan automatic banknote counter, UV Counterfeit recognition, SAFESCAN 2210",
 
         "concrete_product_one_image_set": "401768",
         "concrete_product_one_image_set_name": "EUROKRAFT aluminum hand truck - Load capacity 200 kg, with skids - load capacity 200 kg",
@@ -182,10 +200,16 @@
         "concrete_product_with_promotions": "212427",
 
         "concrete_product_random_weight_sku": "cable-vga-1-2",
+        "concrete_product_random_weight_name": "VGA cable as long as you want",
+        "concrete_product_random_weight_measurement_unit": "19",
+        "packaging_unit_m": "METR",
+        "packaging_unit_m_name": "Meter",
+
         "concrete_product_random_weight_packaging_unit": "19",
         "measurement_unit_m": "METR",
 
         "product_option_1": "OP_2_year_waranty",
+        "product_option_1_name": "Two (2) year limited warranty",
         "product_option_2": "OP_insurance"
             
     },
@@ -255,11 +279,18 @@
         "qty_of_categories_in_category_trees": "6",
         "qty_of_subcategories_in_category_trees": "2",
         "color_name": "black",
+
+        "payment_provider_name": "DummyPayment",
+        "payment_method_name": "Invoice",
+        "carrier_name": "DHL",
+        "shipment_method_name": "Standard",
+        "delivery_date": "2030-12-31",
+        
         "review_title": "This is a review",
         "review_text": "This is review text",
         "default_review_rating": "5"
-    },
 
+    },
     "companies":{
         "company_name": "Spryker Systems GmbH",
         "busines_unit_address_id": "2175cddd-f8af-5885-b161-227b5c93e72f",

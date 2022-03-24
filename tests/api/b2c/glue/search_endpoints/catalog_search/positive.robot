@@ -25,11 +25,11 @@ Search_with_empty_search_criteria_all_default_values_check
     And Response body parameter should be:    [data][0][attributes][pagination][currentItemsPerPage]    ${default_ipp}
     And Response body parameter should be:    [data][0][attributes][pagination][config][defaultItemsPerPage]    ${default_ipp}
     And Response should contain the array of a certain size:    [data][0][attributes][pagination][config][validItemsPerPageOptions]    3
-    And Response body parameter should contain:    [data][0][attributes][pagination][config][validItemsPerPageOptions]    ${default_ipp}
+    And Response body parameter should contain:    [data][0][attributes][pagination][config][validItemsPerPageOptions]     ${default_ipp}
     And Response body parameter should contain:    [data][0][attributes][pagination][config][validItemsPerPageOptions]    ${ipp_middle}
     And Response body parameter should contain:    [data][0][attributes][pagination][config][validItemsPerPageOptions]    ${ipp_biggest}
     #Abstract products
-    And Response should contain the array of a certain size:    [data][0][attributes][abstractProducts]    ${default_ipp}
+    And Response should contain the array of a certain size:    [data][0][attributes][abstractProducts]     ${default_ipp}
     And Each array element of array in response should contain value:    [data][0][attributes][abstractProducts]    abstractSku
     And Each array element of array in response should contain value:    [data][0][attributes][abstractProducts]    price
     And Each array element of array in response should contain value:    [data][0][attributes][abstractProducts]    abstractName
@@ -49,20 +49,20 @@ Search_with_empty_search_criteria_all_default_values_check
     And Response body parameter should be:    [data][0][attributes][valueFacets][0][config][isMultiValued]    False
     #Filters - labels
     And Response body parameter should be:    [data][0][attributes][valueFacets][1][name]    label
-    And Response body parameter should be:    [data][0][attributes][valueFacets][1][localizedName]    Product Labels
+    And Response body parameter should be:    [data][0][attributes][valueFacets][1][localizedName]    Label
     And Response should contain the array of a certain size:    [data][0][attributes][valueFacets][1][values]    ${default_labels_qty}
     And Response body parameter should be:    [data][0][attributes][valueFacets][1][activeValue]    None
     And Response body parameter should be:    [data][0][attributes][valueFacets][1][config][isMultiValued]    True
     #Filters - color
-    And Response body parameter should be:    [data][0][attributes][valueFacets][2][name]    farbe
+    And Response body parameter should be:    [data][0][attributes][valueFacets][2][name]    color
     And Response body parameter should be:    [data][0][attributes][valueFacets][2][localizedName]    Color
     And Response should contain the array of acertain size:    [data][0][attributes][valueFacets][2][values]    ${default_colors_qty}
     And Response body parameter should be:    [data][0][attributes][valueFacets][2][activeValue]    None
     And Response body parameter should be:    [data][0][attributes][valueFacets][2][config][isMultiValued]    True
     #Filters - material
-    And Response body parameter should be:    [data][0][attributes][valueFacets][3][name]    material
-    And Response body parameter should be:    [data][0][attributes][valueFacets][3][localizedName]    Material
-    And Response should contain the array of a certain size:    [data][0][attributes][valueFacets][3][values]    ${default_materials_qty}
+    And Response body parameter should be:    [data][0][attributes][valueFacets][3][name]    storage_capacity
+    And Response body parameter should be:    [data][0][attributes][valueFacets][3][localizedName]    Storage Capacity
+    And Response should contain the array of a certain size:    [data][0][attributes][valueFacets][3][values]    ${default_storage_capacity_qty}
     And Response body parameter should be:    [data][0][attributes][valueFacets][3][activeValue]    None
     And Response body parameter should be:    [data][0][attributes][valueFacets][3][config][isMultiValued]    True
     #Filters - brand
@@ -71,14 +71,34 @@ Search_with_empty_search_criteria_all_default_values_check
     And Response should contain the array of a certain size:    [data][0][attributes][valueFacets][4][values]    ${default_brands_qty}
     And Response body parameter should be:    [data][0][attributes][valueFacets][4][activeValue]    None
     And Response body parameter should be:    [data][0][attributes][valueFacets][4][config][isMultiValued]    False
-    #Filters - rating
-    And Response body parameter should be:    [data][0][attributes][rangeFacets][0][name]    rating
-    And Response body parameter should be:    [data][0][attributes][rangeFacets][0][localizedName]    Product Ratings
-    And Response body parameter should be:    [data][0][attributes][rangeFacets][0][min]    ${default_min_rating}
-    And Response body parameter should be:    [data][0][attributes][rangeFacets][0][max]    ${default_max_rating}
-    And Response body parameter should be:    [data][0][attributes][rangeFacets][0][activeMin]    ${default_min_rating}
-    And Response body parameter should be:    [data][0][attributes][rangeFacets][0][activeMax]    ${default_max_rating}
+    #Filters - touchscreen
+    And Response body parameter should be:    [data][0][attributes][valueFacets][5][name]    touchscreen
+    And Response body parameter should be:    [data][0][attributes][valueFacets][5][localizedName]    Touchscreen
+    And Response should contain the array of a certain size:    [data][0][attributes][valueFacets][5][values]    ${default_touchscreen_qty}
+    And Response body parameter should be:    [data][0][attributes][valueFacets][5][activeValue]    None
+    And Response body parameter should be:    [data][0][attributes][valueFacets][5][config][isMultiValued]    False
+    #Filters - weight
+    And Response body parameter should be:    [data][0][attributes][valueFacets][6][name]    weight
+    And Response body parameter should be:    [data][0][attributes][valueFacets][6][localizedName]    Weight
+    And Response should contain the array of a certain size:    [data][0][attributes][valueFacets][6][values]    ${default_weight_qty}
+    And Response body parameter should be:    [data][0][attributes][valueFacets][6][activeValue]    None
+    And Response body parameter should be:    [data][0][attributes][valueFacets][6][config][isMultiValued]    True
+    #Filters - price
+    And Response body parameter should be:    [data][0][attributes][rangeFacets][0][name]    price-DEFAULT-EUR-GROSS_MODE
+    And Response body parameter should be:    [data][0][attributes][rangeFacets][0][localizedName]    Price
+    And Response body parameter should be:    [data][0][attributes][rangeFacets][0][min]    ${default_min_price}
+    And Response body parameter should be:    [data][0][attributes][rangeFacets][0][max]    ${default_max_price}
+    And Response body parameter should be:    [data][0][attributes][rangeFacets][0][activeMin]    ${default_min_price}
+    And Response body parameter should be:    [data][0][attributes][rangeFacets][0][activeMax]    ${default_max_price}
     And Response body parameter should be:    [data][0][attributes][rangeFacets][0][config][isMultiValued]    False
+    #Filters - rating
+    And Response body parameter should be:    [data][0][attributes][rangeFacets][1][name]    rating
+    And Response body parameter should be:    [data][0][attributes][rangeFacets][1][localizedName]    Ratings
+    And Response body parameter should be:    [data][0][attributes][rangeFacets][1][min]    ${default_min_rating}
+    And Response body parameter should be:    [data][0][attributes][rangeFacets][1][max]    ${default_max_rating}
+    And Response body parameter should be:    [data][0][attributes][rangeFacets][1][activeMin]    ${default_min_rating}
+    And Response body parameter should be:    [data][0][attributes][rangeFacets][1][activeMax]    ${default_max_rating}
+    And Response body parameter should be:    [data][0][attributes][rangeFacets][1][config][isMultiValued]    False
     #Filters - category tree
     And Response should contain the array of a certain size:    [data][0][attributes][categoryTreeFilter]    ${category_tree_branches_qty}
     And Each array element of array in response should contain value:    [data][0][attributes][categoryTreeFilter]   nodeId
@@ -110,7 +130,7 @@ Search_by_attribute_that_does_not_return_products
     And Response body has correct self link
 
 Search_by_concrete_sku
-    When I send a GET request:    /catalog-search?q=${concrete_product_with_alternative_sku}
+    When I send a GET request:    /catalog-search?q=${concrete_product_with_concrete_product_alternative_sku}
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
@@ -125,9 +145,17 @@ Search_by_concrete_sku
     #categories
     And Response should contain the array of a certain size:    [data][0][attributes][valueFacets][0][values]    4
     #labels
-    And Response should contain the array of a certain size:    [data][0][attributes][valueFacets][1][values]    2
+    And Response should contain the array of a certain size:    [data][0][attributes][valueFacets][1][values]    0
+    #color
+    And Response should contain the array of a certain size:    [data][0][attributes][valueFacets][2][values]    1
+    #storage_capacity
+    And Response should contain the array of a certain size:    [data][0][attributes][valueFacets][3][values]    0
     #brand
     And Response should contain the array of a certain size:    [data][0][attributes][valueFacets][4][values]    1
+    #touchscreen
+    And Response should contain the array of a certain size:    [data][0][attributes][valueFacets][5][values]    0
+    #weight
+    And Response should contain the array of a certain size:    [data][0][attributes][valueFacets][6][values]    0
     And Response body has correct self link
 
 Search_by_abstract_sku
@@ -136,19 +164,27 @@ Search_by_abstract_sku
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response body parameter should be:    [data][0][type]    catalog-search
-    And Response body parameter should be:    [data][0][attributes][pagination][numFound]    1
+    And Response body parameter should be:    [data][0][attributes][pagination][numFound]    3
     And Response body parameter should be:    [data][0][attributes][pagination][currentPage]    1
     And Response body parameter should be:    [data][0][attributes][pagination][maxPage]    1
-    And Response should contain the array of a certain size:    [data][0][attributes][abstractProducts]    1
-    And Response body parameter should be:    [data][0][attributes][abstractProducts][0][abstractSku]    ${abstract_product_with_alternative_sku}
-    And Response body parameter should be:    [data][0][attributes][abstractProducts][0][abstractName]    ${abstract_product_with_alternative_name}
+    And Response should contain the array of a certain size:    [data][0][attributes][abstractProducts]    3
+    And Response body parameter should be:    [data][0][attributes][abstractProducts][2][abstractSku]    ${abstract_product_with_alternative_sku}
+    And Response body parameter should be:    [data][0][attributes][abstractProducts][2][abstractName]    ${abstract_product_with_alternative_name}
     And Response body parameter should be greater than:    [data][0][attributes][abstractProducts][0][prices][0][DEFAULT]    10
     #categories
-    And Response should contain the array of a certain size:    [data][0][attributes][valueFacets][0][values]    4
+    And Response should contain the array of a certain size:    [data][0][attributes][valueFacets][0][values]    6
     #labels
-    And Response should contain the array of a certain size:    [data][0][attributes][valueFacets][1][values]    2
+    And Response should contain the array of a certain size:    [data][0][attributes][valueFacets][1][values]    0
+    #color
+    And Response should contain the array of a certain size:    [data][0][attributes][valueFacets][2][values]    2
+    #storage_capacity
+    And Response should contain the array of a certain size:    [data][0][attributes][valueFacets][3][values]    0
     #brand
-    And Response should contain the array of a certain size:    [data][0][attributes][valueFacets][4][values]    1
+    And Response should contain the array of a certain size:    [data][0][attributes][valueFacets][4][values]    2
+    #touchscreen
+    And Response should contain the array of a certain size:    [data][0][attributes][valueFacets][5][values]    0
+    #weight
+    And Response should contain the array of a certain size:    [data][0][attributes][valueFacets][6][values]    1
     And Response body has correct self link
 
 Search_by_full_name
@@ -157,67 +193,67 @@ Search_by_full_name
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response body parameter should be:    [data][0][type]    catalog-search
-    And Response body parameter should be greater than:    [data][0][attributes][pagination][numFound]    ${default_ipp}
+    And Response body parameter should be greater than:    [data][0][attributes][pagination][numFound]    11
     And Response body parameter should be:    [data][0][attributes][pagination][currentPage]    1
     And Response body parameter should be greater than:    [data][0][attributes][pagination][maxPage]    1
-    And Response should contain the array of a certain size:    [data][0][attributes][abstractProducts]    ${default_ipp}
+    And Response should contain the array of a certain size:    [data][0][attributes][abstractProducts]    12
     And Response body parameter should be:    [data][0][attributes][abstractProducts][0][abstractSku]    ${abstract_product_with_alternative_sku}
     And Response body parameter should be:    [data][0][attributes][abstractProducts][0][abstractName]    ${abstract_product_with_alternative_name}
     And Response body parameter should be greater than:    [data][0][attributes][abstractProducts][0][prices][0][DEFAULT]    10
     #categories
     And Response should contain the array larger than a certain size:    [data][0][attributes][valueFacets][0][values]    4
     #labels
-    And Response should contain the array larger than a certain size:    [data][0][attributes][valueFacets][1][values]    2
+    And Response should contain the array larger than a certain size:    [data][0][attributes][valueFacets][1][values]    1
     #brand
     And Response should contain the array larger than a certain size:    [data][0][attributes][valueFacets][4][values]    1
     And Response body has correct self link
 
 Search_by_name_substring
-    When I send a GET request:    /catalog-search?q=USB
+    When I send a GET request:    /catalog-search?q=Lenovo
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response body parameter should be:    [data][0][type]    catalog-search
-    And Response body parameter should be greater than:    [data][0][attributes][pagination][numFound]    ${default_ipp}
+    And Response body parameter should be:    [data][0][attributes][pagination][numFound]    11
     And Response body parameter should be:    [data][0][attributes][pagination][currentPage]    1
-    And Response body parameter should be greater than:    [data][0][attributes][pagination][maxPage]    1
-    And Response should contain the array of a certain size:    [data][0][attributes][abstractProducts]    ${default_ipp}
+    And Response body parameter should be:    [data][0][attributes][pagination][maxPage]    1
+    And Response should contain the array of a certain size:    [data][0][attributes][abstractProducts]    11
     And Response body parameter should NOT be:    [data][0][attributes][abstractProducts][0][abstractSku]    ${abstract_product_with_alternative_sku}
     And Response body parameter should NOT be:   [data][0][attributes][abstractProducts][0][abstractName]    ${abstract_product_with_alternative_name}
     #categories
     And Response should contain the array larger than a certain size:    [data][0][attributes][valueFacets][0][values]    4
     #labels
-    And Response should contain the array larger than a certain size:    [data][0][attributes][valueFacets][1][values]    2
+    Response should contain the array of a certain size:    [data][0][attributes][valueFacets][1][values]    1
     #brand
-    And Response should contain the array larger than a certain size:    [data][0][attributes][valueFacets][4][values]    1
+    Response should contain the array of a certain size:    [data][0][attributes][valueFacets][4][values]    1
     And Response body has correct self link
 
 Search_by_attribute_(brand)
-    When I send a GET request:    /catalog-search?q=${brand_1}
+    When I send a GET request:    /catalog-search?q=${brand_4}
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response body parameter should be:    [data][0][type]    catalog-search
-    And Response body parameter should be:    [data][0][attributes][pagination][numFound]    18
+    And Response body parameter should be:    [data][0][attributes][pagination][numFound]    43
     And Response body parameter should be:    [data][0][attributes][pagination][currentPage]    1
-    And Response body parameter should be greater than:    [data][0][attributes][pagination][maxPage]    1
+    And Response body parameter should be:    [data][0][attributes][pagination][maxPage]    4
     And Response should contain the array of a certain size:    [data][0][attributes][abstractProducts]    ${default_ipp}
-    And Response body parameter should contain:   [data][0][attributes][abstractProducts][0][abstractName]    ${brand_1}
+    And Response body parameter should contain:   [data][0][attributes][abstractProducts][0][abstractName]    ${brand_4}
     #brand
     And Response should contain the array of a certain size:    [data][0][attributes][valueFacets][4][values]    1
     And Response body parameter should be:    [data][0][attributes][valueFacets][4][activeValue]    None
-    And Response body parameter should be:    [data][0][attributes][valueFacets][4][values][0][value]    ${brand_1}
+    And Response body parameter should be:    [data][0][attributes][valueFacets][4][values][0][value]    ${brand_4}
     And Response body has correct self link
 
 Search_by_several_attributes
-    When I send a GET request:    /catalog-search?q=${color_3}+${material_3}
+    When I send a GET request:    /catalog-search?q=${color_3}+${aspect_ratio}
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response body parameter should be:    [data][0][type]    catalog-search
-    And Response body parameter should be:    [data][0][attributes][pagination][numFound]    20
+    And Response body parameter should be:    [data][0][attributes][pagination][numFound]    62
     And Response body parameter should be:    [data][0][attributes][pagination][currentPage]    1
-    And Response body parameter should be greater than:    [data][0][attributes][pagination][maxPage]    1
+    And Response body parameter should be:    [data][0][attributes][pagination][maxPage]    6
     And Response should contain the array of a certain size:    [data][0][attributes][abstractProducts]    ${default_ipp}
 
 ##### FILTERING #####
@@ -228,28 +264,28 @@ Filter_by_rating_only_min
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response body parameter should be:    [data][0][type]    catalog-search
-    And Response body parameter should be:    [data][0][attributes][pagination][numFound]    20
+    And Response body parameter should be:    [data][0][attributes][pagination][numFound]    6
     And Response body parameter should be:    [data][0][attributes][pagination][currentPage]    1
-    And Response body parameter should be greater than:    [data][0][attributes][pagination][maxPage]    1
-    And Response should contain the array of a certain size:    [data][0][attributes][abstractProducts]    ${default_ipp}
+    And Response body parameter should be:    [data][0][attributes][pagination][maxPage]    1
+    And Response should contain the array of a certain size:    [data][0][attributes][abstractProducts]    6
     #rating facets
     And Response body parameter should be:    [data][0][attributes][rangeFacets][1][activeMin]    3
     And Response body parameter should be:    [data][0][attributes][rangeFacets][1][activeMax]    ${default_max_rating}
 
 
 Filter_by_rating_only_max
-    When I send a GET request:    /catalog-search?q=&rating[max]=${default_min_rating}
+    When I send a GET request:    /catalog-search?q=rating[max]=${default_min_rating}
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response body parameter should be:    [data][0][type]    catalog-search
-    And Response body parameter should be:    [data][0][attributes][pagination][numFound]    18
+    And Response body parameter should be:    [data][0][attributes][pagination][numFound]    19
     And Response body parameter should be:    [data][0][attributes][pagination][currentPage]    1
-    And Response body parameter should be greater than:    [data][0][attributes][pagination][maxPage]    1
+    And Response body parameter should be:    [data][0][attributes][pagination][maxPage]    2
     And Response should contain the array of a certain size:    [data][0][attributes][abstractProducts]    ${default_ipp}
     #rating facets
-    And Response body parameter should be:    [data][0][attributes][rangeFacets][0][activeMin]    ${default_min_rating}
-    And Response body parameter should be:    [data][0][attributes][rangeFacets][0][activeMax]    ${default_min_rating}
+    And Response body parameter should be:    [data][0][attributes][rangeFacets][1][activeMin]    ${default_min_rating}
+    And Response body parameter should be:    [data][0][attributes][rangeFacets][1][activeMax]    ${default_min_rating}
 
 
 Filter_by_rating_Min_max
@@ -263,34 +299,76 @@ Filter_by_rating_Min_max
     And Response body parameter should be:    [data][0][attributes][pagination][maxPage]    0
     And Response should contain the array of a certain size:    [data][0][attributes][abstractProducts]    0
     #rating facets
-    And Response body parameter should be:    [data][0][attributes][rangeFacets][0][activeMin]    3
-    And Response body parameter should be:    [data][0][attributes][rangeFacets][0][activeMax]    3
+    And Response body parameter should be:    [data][0][attributes][rangeFacets][1][activeMin]    3
+    And Response body parameter should be:    [data][0][attributes][rangeFacets][1][activeMax]    3
 
-Filter_by_brand_one_brand
-    When I send a GET request:    /catalog-search?q=&brand=${brand_1}
+Filter_by_price_only_min
+    When I send a GET request:    /catalog-search?q=&price[min]=1000
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response body parameter should be:    [data][0][type]    catalog-search
-    And Response body parameter should be:    [data][0][attributes][pagination][numFound]    18
+    And Response body parameter should be:    [data][0][attributes][pagination][numFound]    3
+    And Response body parameter should be:    [data][0][attributes][pagination][currentPage]    1
+    And Response body parameter should be:    [data][0][attributes][pagination][maxPage]    1
+    And Response should contain the array of a certain size:    [data][0][attributes][abstractProducts]    3
+    #rating facets
+    And Response body parameter should be:    [data][0][attributes][rangeFacets][0][activeMin]    100000
+    And Response body parameter should be:    [data][0][attributes][rangeFacets][0][activeMax]    ${default_max_price}
+
+Filter_by_price_only_max
+    When I send a GET request:    /catalog-search?q=&price[max]=3000
+    Then Response status code should be:    200
+    And Response reason should be:    OK
+    And Response header parameter should be:    Content-Type    ${default_header_content_type}
+    And Response body parameter should be:    [data][0][type]    catalog-search
+    And Response body parameter should be:    [data][0][attributes][pagination][numFound]    213
+    And Response body parameter should be:    [data][0][attributes][pagination][currentPage]    1
+    And Response body parameter should be:    [data][0][attributes][pagination][maxPage]    18
+    And Response should contain the array of a certain size:    [data][0][attributes][abstractProducts]    12
+    #rating facets
+    And Response body parameter should be:    [data][0][attributes][rangeFacets][0][activeMin]    ${default_min_price}
+    And Response body parameter should be:    [data][0][attributes][rangeFacets][0][activeMax]    300000
+
+Filter_by_price_Min_max
+    When I send a GET request:    /catalog-search?q=&price[min]=1000&price[max]=3000
+    Then Response status code should be:    200
+    And Response reason should be:    OK
+    And Response header parameter should be:    Content-Type    ${default_header_content_type}
+    And Response body parameter should be:    [data][0][type]    catalog-search
+    And Response body parameter should be:    [data][0][attributes][pagination][numFound]    1
+    And Response body parameter should be:    [data][0][attributes][pagination][currentPage]    1
+    And Response body parameter should be:    [data][0][attributes][pagination][maxPage]    1
+    And Response should contain the array of a certain size:    [data][0][attributes][abstractProducts]    1
+    #rating facets
+    And Response body parameter should be:    [data][0][attributes][rangeFacets][0][activeMin]    100000
+    And Response body parameter should be:    [data][0][attributes][rangeFacets][0][activeMax]    300000
+
+Filter_by_brand_one_brand
+    When I send a GET request:    /catalog-search?q=&brand=${brand_4}
+    Then Response status code should be:    200
+    And Response reason should be:    OK
+    And Response header parameter should be:    Content-Type    ${default_header_content_type}
+    And Response body parameter should be:    [data][0][type]    catalog-search
+    And Response body parameter should be:    [data][0][attributes][pagination][numFound]    43
     And Response body parameter should be:    [data][0][attributes][pagination][currentPage]    1
     And Response body parameter should be greater than:    [data][0][attributes][pagination][maxPage]    1
     And Response should contain the array of a certain size:    [data][0][attributes][abstractProducts]    ${default_ipp}
-    And Response body parameter should be:    [data][0][attributes][valueFacets][4][activeValue]    ${brand_1}
+    And Response body parameter should be:    [data][0][attributes][valueFacets][4][activeValue]    ${brand_4}
     And Response body has correct self link
 
 Filter_by_brand_two_brands
-    When I send a GET request:    /catalog-search?q=&brand[]=${brand_2}&brand[]=${brand_1}
+    When I send a GET request:    /catalog-search?q=&brand[]=${brand_4}&brand[]=${brand_5}
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response body parameter should be:    [data][0][type]    catalog-search
-    And Response body parameter should be:    [data][0][attributes][pagination][numFound]    38
+    And Response body parameter should be:    [data][0][attributes][pagination][numFound]    54
     And Response body parameter should be:    [data][0][attributes][pagination][currentPage]    1
-    And Response body parameter should be greater than:    [data][0][attributes][pagination][maxPage]    1
+    And Response body parameter should be:    [data][0][attributes][pagination][maxPage]    5
     And Response should contain the array of a certain size:    [data][0][attributes][abstractProducts]    ${default_ipp}
-    And Response body parameter should be:    [data][0][attributes][valueFacets][4][activeValue][0]    ${brand_2}
-    And Response body parameter should be:    [data][0][attributes][valueFacets][4][activeValue][1]    ${brand_1}
+    And Response body parameter should be:    [data][0][attributes][valueFacets][4][activeValue][0]    ${brand_4}
+    And Response body parameter should be:    [data][0][attributes][valueFacets][4][activeValue][1]    ${brand_5}
 
 Filter_by_brand_empty_brand
     When I send a GET request:    /catalog-search?q=&brand=
@@ -319,30 +397,30 @@ Filter_by_brand_non_existing_brand
     And Response body has correct self link
 
 Filter_by_label_one_label
-    When I send a GET request:    /catalog-search?q=&label=${manual_label}
+    When I send a GET request:    /catalog-search?q=&label=${new_label}
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response body parameter should be:    [data][0][type]    catalog-search
-    And Response body parameter should be:    [data][0][attributes][pagination][numFound]    5
+    And Response body parameter should be:    [data][0][attributes][pagination][numFound]    7
     And Response body parameter should be:    [data][0][attributes][pagination][currentPage]    1
     And Response body parameter should be:    [data][0][attributes][pagination][maxPage]    1
-    And Response should contain the array of a certain size:    [data][0][attributes][abstractProducts]    5
-    And Response body parameter should be:    [data][0][attributes][valueFacets][1][activeValue]    ${manual_label}
+    And Response should contain the array of a certain size:    [data][0][attributes][abstractProducts]    7
+    And Response body parameter should be:    [data][0][attributes][valueFacets][1][activeValue]    ${new_label}
     And Response body has correct self link
 
 Filter_by_label_two_labels
-    When I send a GET request:    /catalog-search?q=&label[]=${new_label}&label[]=${manual_label}
+    When I send a GET request:    /catalog-search?q=&label[]=${new_label}&label[]=${sale_label}
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response body parameter should be:    [data][0][type]    catalog-search
-    And Response body parameter should be:    [data][0][attributes][pagination][numFound]    39
+    And Response body parameter should be:    [data][0][attributes][pagination][numFound]    67
     And Response body parameter should be:    [data][0][attributes][pagination][currentPage]    1
     And Response body parameter should be greater than:    [data][0][attributes][pagination][maxPage]    1
     And Response should contain the array of a certain size:    [data][0][attributes][abstractProducts]    ${default_ipp}
     And Response body parameter should be:    [data][0][attributes][valueFacets][1][activeValue][0]    ${new_label}
-    And Response body parameter should be:    [data][0][attributes][valueFacets][1][activeValue][1]    ${manual_label}
+    And Response body parameter should be:    [data][0][attributes][valueFacets][1][activeValue][1]    ${sale_label}
 
 Filter_by_label_non_existing_label
     When I send a GET request:    /catalog-search?q=&label[]=test123
@@ -369,37 +447,36 @@ Filter_by_label_empty_label
     And Response body parameter should be:    [data][0][attributes][valueFacets][1][activeValue][0]    ${EMPTY}
 
 Filter_by_color_one_color
-    When I send a GET request:    /catalog-search?q=&farbe=${color_1}
+    When I send a GET request:    /catalog-search?q=&color=${color_4}
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response body parameter should be:    [data][0][type]    catalog-search
-    And Response body parameter should be:    [data][0][attributes][pagination][numFound]    4
+    And Response body parameter should be:    [data][0][attributes][pagination][numFound]    79
     And Response body parameter should be:    [data][0][attributes][pagination][currentPage]    1
-    And Response body parameter should be:    [data][0][attributes][pagination][maxPage]    1
-    And Response should contain the array of a certain size:    [data][0][attributes][abstractProducts]    4
-    And Response body parameter should be:    [data][0][attributes][valueFacets][2][activeValue]    ${color_1}
+    And Response body parameter should be:    [data][0][attributes][pagination][maxPage]    7
+    And Response should contain the array of a certain size:    [data][0][attributes][abstractProducts]    12
+    And Response body parameter should be:    [data][0][attributes][valueFacets][2][activeValue]    ${color_4}
     #additional checks that other filers react accordingly and reduce the number of available facets to match facets present for the found products
     And Response should contain the array smaller than a certain size:   [data][0][attributes][valueFacets][0]    ${default_categories_qty}
-    And Response should contain the array smaller than a certain size:   [data][0][attributes][valueFacets][3]    ${default_materials_qty}
-    And Response should contain the array smaller than a certain size:    [data][0][attributes][valueFacets][4]    ${default_brands_qty}
+    And Response should contain the array smaller than a certain size:    [data][0][attributes][valueFacets][2]    ${default_brands_qty}
     And Response body has correct self link
 
 Filter_by_color_two_colors
-    When I send a GET request:    /catalog-search?q=&farbe[]=${color_1}&farbe[]=${color_2}
+    When I send a GET request:    /catalog-search?q=&color[]=${color_2}&color[]=${color_4}
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response body parameter should be:    [data][0][type]    catalog-search
-    And Response body parameter should be:    [data][0][attributes][pagination][numFound]    10
+    And Response body parameter should be:    [data][0][attributes][pagination][numFound]    89
     And Response body parameter should be:    [data][0][attributes][pagination][currentPage]    1
-    And Response body parameter should be:    [data][0][attributes][pagination][maxPage]    1
-    And Response should contain the array of a certain size:    [data][0][attributes][abstractProducts]    10
-    And Response body parameter should be:    [data][0][attributes][valueFacets][2][activeValue][0]    ${color_1}
-    And Response body parameter should be:    [data][0][attributes][valueFacets][2][activeValue][1]    ${color_2}
+    And Response body parameter should be:    [data][0][attributes][pagination][maxPage]    8
+    And Response should contain the array of a certain size:    [data][0][attributes][abstractProducts]    12
+    And Response body parameter should be:    [data][0][attributes][valueFacets][2][activeValue][0]    ${color_2}
+    And Response body parameter should be:    [data][0][attributes][valueFacets][2][activeValue][1]    ${color_4}
 
 Filter_by_color_non_existing_color
-    When I send a GET request:    /catalog-search?q=&farbe[]=test123
+    When I send a GET request:    /catalog-search?q=&color[]=test123
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
@@ -411,7 +488,7 @@ Filter_by_color_non_existing_color
     And Response body parameter should be:    [data][0][attributes][valueFacets][2][activeValue][0]    test123
 
 Filter_by_color_empty_color
-    When I send a GET request:    /catalog-search?q=&farbe[]=
+    When I send a GET request:    /catalog-search?q=&color[]=
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
@@ -421,60 +498,6 @@ Filter_by_color_empty_color
     And Response body parameter should be:    [data][0][attributes][pagination][maxPage]    ${default_ipp_pages_qty}
     And Response should contain the array of a certain size:    [data][0][attributes][abstractProducts]    ${default_ipp}
     And Response body parameter should be:    [data][0][attributes][valueFacets][2][activeValue][0]    ${EMPTY}
-
-Filter_by_material_one_material
-    When I send a GET request:    /catalog-search?q=&material=${material_1}
-    Then Response status code should be:    200
-    And Response reason should be:    OK
-    And Response header parameter should be:    Content-Type    ${default_header_content_type}
-    And Response body parameter should be:    [data][0][type]    catalog-search
-    And Response body parameter should be:    [data][0][attributes][pagination][numFound]    4
-    And Response body parameter should be:    [data][0][attributes][pagination][currentPage]    1
-    And Response body parameter should be:    [data][0][attributes][pagination][maxPage]    1
-    And Response should contain the array of a certain size:    [data][0][attributes][abstractProducts]    4
-    And Response body parameter should be:    [data][0][attributes][valueFacets][3][activeValue]    ${material_1}
-    #additional checks that other filers react accordingly and reduce the number of available facets to match facets present for the found products
-    And Response should contain the array smaller than a certain size:   [data][0][attributes][valueFacets][0]    ${default_categories_qty}
-    And Response should contain the array smaller than a certain size:   [data][0][attributes][valueFacets][2]    ${default_colors_qty}
-    And Response should contain the array smaller than a certain size:    [data][0][attributes][valueFacets][4]    ${default_brands_qty}
-    And Response body has correct self link
-
-Filter_by_material_two_materails
-    When I send a GET request:    /catalog-search?q=&material[]=${material_1}&material[]=${material_2}
-    Then Response status code should be:    200
-    And Response reason should be:    OK
-    And Response header parameter should be:    Content-Type    ${default_header_content_type}
-    And Response body parameter should be:    [data][0][type]    catalog-search
-    And Response body parameter should be:    [data][0][attributes][pagination][numFound]    15
-    And Response body parameter should be:    [data][0][attributes][pagination][currentPage]    1
-    And Response body parameter should be greater than:    [data][0][attributes][pagination][maxPage]    1
-    And Response should contain the array of a certain size:    [data][0][attributes][abstractProducts]    ${default_ipp}
-    And Response body parameter should be:    [data][0][attributes][valueFacets][3][activeValue][0]    ${material_1}
-    And Response body parameter should be:    [data][0][attributes][valueFacets][3][activeValue][1]    ${material_2}
-
-Filter_by_material_non_existing_materail
-    When I send a GET request:    /catalog-search?q=&material[]=test123
-    Then Response status code should be:    200
-    And Response reason should be:    OK
-    And Response header parameter should be:    Content-Type    ${default_header_content_type}
-    And Response body parameter should be:    [data][0][type]    catalog-search
-    And Response body parameter should be:    [data][0][attributes][pagination][numFound]    0
-    And Response body parameter should be:    [data][0][attributes][pagination][currentPage]    0
-    And Response body parameter should be:    [data][0][attributes][pagination][maxPage]    0
-    And Response should contain the array of a certain size:    [data][0][attributes][abstractProducts]    0
-    And Response body parameter should be:    [data][0][attributes][valueFacets][3][activeValue][0]    test123
-
-Filter_by_material_empty_material
-    When I send a GET request:    /catalog-search?q=&material[]=
-    Then Response status code should be:    200
-    And Response reason should be:    OK
-    And Response header parameter should be:    Content-Type    ${default_header_content_type}
-    And Response body parameter should be:    [data][0][type]    catalog-search
-    And Response body parameter should be:    [data][0][attributes][pagination][numFound]    ${total_number_of_products_in_search}
-    And Response body parameter should be:    [data][0][attributes][pagination][currentPage]    1
-    And Response body parameter should be:    [data][0][attributes][pagination][maxPage]    ${default_ipp_pages_qty}
-    And Response should contain the array of a certain size:    [data][0][attributes][abstractProducts]    ${default_ipp}
-    And Response body parameter should be:    [data][0][attributes][valueFacets][3][activeValue][0]    ${EMPTY}
 
 Filter_by_valid_main_category
     When I send a GET request:    /catalog-search?q=&category=${category_id_lvl1}
@@ -490,10 +513,7 @@ Filter_by_valid_main_category
     # check that category tree is correctly updated
     And Response should contain the array of a certain size:    [data][0][attributes][categoryTreeFilter]    ${category_tree_branches_qty}
     And Response body parameter should be:    [data][0][attributes][categoryTreeFilter][0][docCount]    0
-    And Response body parameter should be:    [data][0][attributes][categoryTreeFilter][3][docCount]    ${category_items_qty_lvl1}  
-    And Response body parameter should be greater than:    [data][0][attributes][categoryTreeFilter][3][children][0][docCount]    0  
-    And Response body parameter should be greater than:    [data][0][attributes][categoryTreeFilter][3][children][1][docCount]    0   
-    And Response body parameter should be greater than:    [data][0][attributes][categoryTreeFilter][3][children][0][children][0][docCount]    0  
+    And Response body parameter should be:    [data][0][attributes][categoryTreeFilter][2][docCount]    ${category_items_qty_lvl1}
     And Response body has correct self link
 
 Filter_by_valid_subcategory
@@ -510,32 +530,8 @@ Filter_by_valid_subcategory
     # check that category tree is correctly updated
     And Response should contain the array of a certain size:    [data][0][attributes][categoryTreeFilter]    ${category_tree_branches_qty}
     And Response body parameter should be:    [data][0][attributes][categoryTreeFilter][0][docCount]    0
-    And Response body parameter should be:    [data][0][attributes][categoryTreeFilter][3][docCount]    ${category_items_qty_lvl2}  
-    And Response body parameter should be:    [data][0][attributes][categoryTreeFilter][3][children][0][docCount]    ${category_items_qty_lvl2}  
-    And Response body parameter should be:    [data][0][attributes][categoryTreeFilter][3][children][1][docCount]    0   
-    And Response body parameter should be greater than:    [data][0][attributes][categoryTreeFilter][3][children][0][children][0][docCount]    0  
-    And Response body parameter should be less than:    [data][0][attributes][categoryTreeFilter][3][children][0][children][0][docCount]    ${category_items_qty_lvl2} 
-    And Response body has correct self link
-
-Filter_by_valid_sub_subcategory
-    When I send a GET request:    /catalog-search?q=&category=${category_id_lvl3}
-    Then Response status code should be:    200
-    And Response reason should be:    OK
-    And Response header parameter should be:    Content-Type    ${default_header_content_type}
-    And Response body parameter should be:    [data][0][type]    catalog-search
-    And Response body parameter should be:    [data][0][attributes][pagination][numFound]    ${category_items_qty_lvl3}
-    And Response body parameter should be:    [data][0][attributes][pagination][currentPage]    1
-    And Response body parameter should be greater than:    [data][0][attributes][pagination][maxPage]    1
-    And Response should contain the array of a certain size:    [data][0][attributes][abstractProducts]    ${default_ipp}
-    And Response body parameter should be:    [data][0][attributes][valueFacets][0][activeValue]    ${category_id_lvl3}
-    # check that category tree is correctly updated
-    And Response should contain the array of a certain size:    [data][0][attributes][categoryTreeFilter]    ${category_tree_branches_qty}
-    And Response body parameter should be:    [data][0][attributes][categoryTreeFilter][0][docCount]    0
-    And Response body parameter should be:    [data][0][attributes][categoryTreeFilter][3][docCount]    ${category_items_qty_lvl3}  
-    And Response body parameter should be:    [data][0][attributes][categoryTreeFilter][3][children][0][docCount]    ${category_items_qty_lvl3}  
-    And Response body parameter should be:    [data][0][attributes][categoryTreeFilter][3][children][1][docCount]    0   
-    And Response body parameter should be:    [data][0][attributes][categoryTreeFilter][3][children][0][children][0][docCount]    ${category_items_qty_lvl3} 
-    And Response body parameter should be:    [data][0][attributes][categoryTreeFilter][3][children][0][children][1][docCount]    0
+    And Response body parameter should be:    [data][0][attributes][categoryTreeFilter][2][docCount]    ${category_items_qty_lvl2}
+    And Response body parameter should be:    [data][0][attributes][categoryTreeFilter][2][children][0][docCount]    ${category_items_qty_lvl2}
     And Response body has correct self link
 
 Search_with_specific_currency
@@ -544,7 +540,7 @@ Search_with_specific_currency
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response body parameter should be:    [data][0][type]    catalog-search
-    And Response body parameter should be less than:    [data][0][attributes][pagination][numFound]    ${total_number_of_products_in_search}
+    And Response body parameter should be:    [data][0][attributes][pagination][numFound]    ${total_number_of_products_in_search}
     And Response body parameter should be greater than:    [data][0][attributes][pagination][numFound]    1
     And Response body parameter should be:    [data][0][attributes][pagination][currentPage]    1
     And Response body parameter should be greater than:    [data][0][attributes][pagination][maxPage]    1
@@ -584,7 +580,7 @@ Search_set_specific_page_and_nondefault_ipp
     And Response body parameter should be:    [data][0][type]    catalog-search
     And Response body parameter should be:    [data][0][attributes][pagination][numFound]    ${total_number_of_products_in_search}
     And Response body parameter should be:    [data][0][attributes][pagination][currentPage]    2
-    And Response body parameter should be:    [data][0][attributes][pagination][maxPage]    18
+    And Response body parameter should be:    [data][0][attributes][pagination][maxPage]    9
     And Response body parameter should be:    [data][0][attributes][pagination][config][defaultItemsPerPage]    ${default_ipp}
     And Response should contain the array of a certain size:    [data][0][attributes][abstractProducts]    ${ipp_middle}
     And Response body parameter should not be EMPTY:    [links][self]
@@ -600,8 +596,8 @@ Search_set_last_page_and_nondefault_ipp
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response body parameter should be:    [data][0][type]    catalog-search
     And Response body parameter should be:    [data][0][attributes][pagination][numFound]    ${total_number_of_products_in_search}
-    And Response body parameter should be:    [data][0][attributes][pagination][currentPage]    12
-    And Response body parameter should be:    [data][0][attributes][pagination][maxPage]    12
+    And Response body parameter should be:    [data][0][attributes][pagination][currentPage]    6
+    And Response body parameter should be:    [data][0][attributes][pagination][maxPage]    6
     And Response body parameter should be:    [data][0][attributes][pagination][config][defaultItemsPerPage]    ${default_ipp}
     And Response should contain the array larger than a certain size:    [data][0][attributes][abstractProducts]    1
     And Response body parameter should not be EMPTY:    [links][self]
@@ -644,7 +640,7 @@ Search_sort_by_name_desc
     And Response body parameter should be:    [data][0][type]    catalog-search
     And Response body parameter should be:    [data][0][attributes][sort][currentSortParam]    name_desc
     And Response body parameter should be:    [data][0][attributes][sort][currentSortOrder]    desc
-    And Response body parameter should start with:    [data][0][attributes][abstractProducts][0][abstractName]    r
+    And Response body parameter should start with:    [data][0][attributes][abstractProducts][0][abstractName]    Toshiba
     And Response body has correct self link
 
 Search_sort_by_rating
@@ -682,19 +678,19 @@ Search_sort_by_price_desc
     And Response body has correct self link
 
 Search_sort_by_price_filter_query_parameter_and_pagination
-    When I send a GET request:    /catalog-search?q=soe&sort=price_desc&brand=${brand_1}&page[limit]=${ipp_middle}&page[offset]=1
+    When I send a GET request:    /catalog-search?q=son&sort=price_desc&brand=${brand_4}&page[limit]=${ipp_middle}&page[offset]=1
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response body parameter should be:    [data][0][type]    catalog-search
     And Response body parameter should be:    [data][0][attributes][sort][currentSortParam]    price_desc
     And Response body parameter should be:    [data][0][attributes][sort][currentSortOrder]    desc
-    And Response body parameter should be:    [data][0][attributes][pagination][numFound]    18
+    And Response body parameter should be:    [data][0][attributes][pagination][numFound]    43
     And Response body parameter should be:    [data][0][attributes][pagination][currentPage]    1
-    And Response body parameter should be:    [data][0][attributes][pagination][maxPage]    1
-    And Response should contain the array of a certain size:    [data][0][attributes][abstractProducts]    18
-    And Response body parameter should be:    [data][0][attributes][valueFacets][4][activeValue]    ${brand_1}
-    And Response body parameter should be greater than:    [data][0][attributes][abstractProducts][0][prices][0][DEFAULT]    5000
+    And Response body parameter should be:    [data][0][attributes][pagination][maxPage]    2
+    And Response should contain the array of a certain size:    [data][0][attributes][abstractProducts]    24
+    And Response body parameter should be:    [data][0][attributes][valueFacets][4][activeValue]    ${brand_4}
+    And Response body parameter should be:    [data][0][attributes][abstractProducts][0][prices][0][DEFAULT]    345699
 
 Search_by_abstract_sku_with_abstract_include
     When I send a GET request:    /catalog-search?q=${abstract_product_with_alternative_sku}&include=abstract-products
@@ -702,12 +698,12 @@ Search_by_abstract_sku_with_abstract_include
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response body parameter should be:    [data][0][type]    catalog-search
-    And Response should contain the array of a certain size:    [data][0][attributes][abstractProducts]    1
-    And Response body parameter should be:    [data][0][attributes][abstractProducts][0][abstractSku]    ${abstract_product_with_alternative_sku}
-    And Response body parameter should be:    [data][0][attributes][abstractProducts][0][abstractName]    ${abstract_product_with_alternative_name}
-    And Response should contain the array of a certain size:    [data][0][relationships][abstract-products][data]    1
-    And Response should contain the array of a certain size:    [included]    1
+    And Response should contain the array of a certain size:    [data][0][attributes][abstractProducts]    3
+    And Response body parameter should be:    [data][0][attributes][abstractProducts][2][abstractSku]    ${abstract_product_with_alternative_sku}
+    And Response body parameter should be:    [data][0][attributes][abstractProducts][2][abstractName]    ${abstract_product_with_alternative_name}
+    And Response should contain the array of a certain size:    [data][0][relationships][abstract-products][data]    3
+    And Response should contain the array of a certain size:    [included]    3
     And Response include should contain certain entity type:    abstract-products
     And Response include element has self link:   abstract-products
-    And Response body parameter should be:    [included][0][id]  ${abstract_product_with_alternative_sku}
+    And Response body parameter should be:    [included][2][id]  ${abstract_product_with_alternative_sku}
     And Response body has correct self link
