@@ -252,7 +252,10 @@
         "cms_page_collection_name": "GTC",
         "cms_page_collection_url": "/en/gtc",
 
-        "brand_name": "verbatim"
+        "brand_name": "verbatim",
+
+        "cart_permission_group_id":"1",
+        "cart_permission_group_type":"cart-permission-groups"
 
     },
     "availability":{

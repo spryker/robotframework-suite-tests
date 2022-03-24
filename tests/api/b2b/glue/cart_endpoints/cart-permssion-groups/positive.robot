@@ -6,6 +6,7 @@ Default Tags    glue
 
 *** Test Cases ***
 
+# This test is not working regarding to this bug https://spryker.atlassian.net/browse/CC-16527
 # Get_cart_permission_groups_by_cart_id
 #     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
 #     ...  AND    I set Headers:    Authorization=${token}
@@ -43,11 +44,12 @@ Get_all_cart_permission_groups
     When I send a GET request:    /cart-permission-groups
     Then Response status code should be:    200
     And Response reason should be:    OK
-    And Each Array Element Of Array In Response Should Contain Property With Value:    [data]    type    cart-permission-groups
+    And Each Array Element Of Array In Response Should Contain Property With Value:    [data]    type    ${cart_permission_group_type}
     And Each Array Element Of Array In Response Should Contain Property:    [data]    type
     And Each Array Element Of Array In Response Should Contain Property:    [data]    id
     And Each Array Element Of Array In Response Should Contain Nested Property:    [data]    [attributes]    name
     And Each Array Element Of Array In Response Should Contain Nested Property:    [data]    [attributes]    isDefault
+    And Each array element of array in response should contain property with value in:    [data]    [attributes][isDefault]    True    False
     And Each Array Element Of Array In Response Should Contain Nested Property:    [data]    [links]    self
     And Response Body Has Correct Self Link
 
@@ -55,12 +57,14 @@ Get_all_cart_permission_groups
 Get_cart_permission_groups_by_id
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
     ...  AND    I set Headers:    Authorization=${token}
-    When I send a GET request:    /cart-permission-groups/1
+    When I send a GET request:    /cart-permission-groups/${cart_permission_group_id}
     Then Response status code should be:    200
     And Response reason should be:    OK
-    And Response Body Parameter Should Be:    [data][type]    cart-permission-groups
+    And Response Body Parameter Should Be:    [data][type]    ${cart_permission_group_type}
+    And Response body parameter should Be:    [data][id]    ${cart_permission_group_id}
     And Response Body Parameter should Not Be EMPTY:   [data][type]
     And Response Body Parameter should Not Be EMPTY:   [data][id]
     And Response Body Parameter should Not Be EMPTY:   [data][attributes][name]
     And Response Body Parameter should Not Be EMPTY:   [data][attributes][isDefault]
+    And Response body parameter should be in:    [data][attributes][isDefault]    True    False
     And Response Body Has Correct Self Link Internal
