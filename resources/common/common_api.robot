@@ -768,7 +768,7 @@ Each array element of array in response should contain property with value NOT i
     END
 
 Each array element of nested array should contain property with value in:
-    [Documentation]    This keyword checks that each array element of ``${nested_array} that is inside the parent array ``${json_path}`` contsains the speficied parameter ``${expected_property}`` with the value that matches any of the parameters ``${expected_value1}``, ``${expected_value2}``, etc..
+    [Documentation]    This keyword checks that each array element of ``${nested_array} that is inside the parent array ``${json_path}`` contains the speficied parameter ``${expected_property}`` with the value that matches any of the parameters ``${expected_value1}``, ``${expected_value2}``, etc..
     ...
     ...    The minimal number of arguments is 1, maximum is 4
     ...
