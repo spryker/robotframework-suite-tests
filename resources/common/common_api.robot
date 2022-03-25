@@ -678,6 +678,27 @@ Each array element of array in response should contain value:
         Should Contain    : ${sub_list_element}    ${expected_value}
     END
 
+Each array element of array in response should a nested array of a certain size:
+        [Documentation]    This keyword checks whether the array ``${paret_array}`` that is present in the ``${response_body}`` test variable contsains an array ``${nested_array}`` in every of it's array elements and for every its occurrence that nested array has sixe ``${array_expected_size}``.
+    ...    
+    ...    If the nested arrays are of different sizes, this keyword will fail.
+    ...
+    ...    *Example:*
+    ...
+    ...   ``Each array element of array in response should a nested array of a certain size:    [data]    [prices]    2``
+
+    [Arguments]    ${parent_array}    ${nested_array}    ${array_expected_size}
+    @{data}=    Get Value From Json    ${response_body}    ${parent_array}
+    ${list_length}=    Get Length    @{data}
+    ${log_list}=    Log List    @{data}
+    FOR    ${index}    IN RANGE    0    ${list_length}
+        ${list_element}=    Get From List    @{data}    ${index}
+        @{list_element2}=    Get Value From Json    ${list_element}    ${nested_array}
+        ${list_length2}=    Get Length    @{list_element2}
+        ${list_length2}=    Convert To String    ${list_length2}
+        Should Be Equal    ${list_length2}    ${array_expected_size}    Actual array length is ${list_length2} and it is not the same as than expected ${array_expected_size}
+    END
+
 Each array element of array in response should contain property with value:
     [Documentation]    This keyword checks that each element in the array specified as ``${json_path}`` contains the specified property ``${expected_property}`` with the specified value ``${expected_value}``.
     ...
@@ -840,6 +861,74 @@ Each array element of array in response should contain nested property with valu
         ${list_element}=    Replace String    ${list_element}    '   ${EMPTY}
         ${list_element}=    Replace String    ${list_element}    ]   ${EMPTY}
         Should Be Equal    ${list_element}    ${expected_value}
+    END
+
+Each array element of array in response should contain nested property with datatype:
+    [Documentation]    This keyword checks that each element in the array specified as ``${json_path}`` contains the specified property ``${expected_nested_property}`` with the value of the specified data type ``${expected_type}``.
+    ...
+    ...    If at least one array element has this property with another value, the keyword will fail.
+    ...
+    ...    *NOTES*: 
+    ...
+    ...    1. ``${expected_nested_property}`` is a second level property. In an array like this 
+    ...
+    ...    ``{"data":[{"type": "some-type", "attributes": {"name": "some name", "sku": "1234"}},...]}`` 
+    ...
+    ...    it will be ``attributes.sku``. 
+    ...
+    ...    2. The first level property in the above array is just ``attributes``, but it cannot be checked by this keyword.
+    ...
+    ...    3. Syntax for the second level property is ``[firstlevel][secondlevel]`` or ``firstlevel.secondlevel``.
+    ...
+    ...    4. This keyword supports any level of nesting.
+    ...
+    ...    *Example:*
+    ...
+    ...    ``Each array element of array in response should contain nested property with datatype:    [data]    [attributes][sku]    str``
+    ...
+    ...    ``Each array element of array in response should contain nested property with datatype:    [data]    attributes.price    int``
+    [Arguments]    ${json_path}    ${expected_nested_property}    ${expected_type}
+    @{data}=    Get Value From Json    ${response_body}    ${json_path}
+    ${list_length}=    Get Length    @{data}
+    ${log_list}=    Log List    @{data}
+    FOR    ${index}    IN RANGE    0    ${list_length}
+        ${list_element}=    Get From List    @{data}    ${index}
+        @{list_element}=    Get Value From Json    ${list_element}    $.${expected_nested_property}
+        ${actual_data_type}=    Evaluate datatype of a variable:    @{list_element}
+        Should Be Equal    ${actual_data_type}    ${expected_type}
+    END
+
+Each array element of array in response should contain nested property with datatype in:
+    [Documentation]    This keyword checks that each element in the array specified as ``${json_path}`` contains the specified property ``${expected_nested_property}`` with the value of one of the specified data types ``${expected_type1}``, ``${expected_type1}``, etc..
+    ...
+    ...    This keyword requires 2 parameters and may optionally use up to 4 datatypes
+    ...
+    ...    *NOTES*: 
+    ...
+    ...    1. ``${expected_nested_property}`` is a second level property. In an array like this 
+    ...
+    ...    ``{"data":[{"type": "some-type", "attributes": {"name": "some name", "sku": "1234"}},...]}`` 
+    ...
+    ...    it will be ``attributes.sku``. 
+    ...
+    ...    2. The first level property in the above array is just ``attributes``, but it cannot be checked by this keyword.
+    ...
+    ...    3. Syntax for the second level property is ``[firstlevel][secondlevel]`` or ``firstlevel.secondlevel``.
+    ...
+    ...    4. This keyword supports any level of nesting.
+    ...
+    ...    *Example:*
+    ...
+    ...    ``Each array element of array in response should contain nested property with datatype in:    [data]    attributes.price    int    float``
+    [Arguments]    ${json_path}    ${expected_nested_property}    ${expected_type1}    ${expected_type2}    ${expected_type3}=test    ${expected_type4}=test
+    @{data}=    Get Value From Json    ${response_body}    ${json_path}
+    ${list_length}=    Get Length    @{data}
+    ${log_list}=    Log List    @{data}
+    FOR    ${index}    IN RANGE    0    ${list_length}
+        ${list_element}=    Get From List    @{data}    ${index}
+        @{list_element}=    Get Value From Json    ${list_element}    $.${expected_nested_property}
+        ${actual_data_type}=    Evaluate datatype of a variable:    @{list_element}
+        Should Contain Any    ${actual_data_type}    ${expected_type1}    ${expected_type2}    ${expected_type3}    ${expected_type4}
     END
 
 Each array element of array in response should contain nested property:
