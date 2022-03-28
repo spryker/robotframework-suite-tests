@@ -125,8 +125,11 @@
         "bundled_product_2_abstract_sku": "M1017905",
         "bundled_product_3_abstract_sku": "M24605",
         "bundled_product_1_concrete_sku": "104939",
+        "bundled_product_1_concrete_name": "Dauphin vertebral disc swivel chair, synchronous mechanism",
         "bundled_product_2_concrete_sku": "574995",
+        "bundled_product_2_concrete_name": "UPLINER standing desk, electric - without traverse, WxD 1800 x 800 mm - substructure silver, light gray",
         "bundled_product_3_concrete_sku": "426581",
+        "bundled_product_3_concrete_name": "Cherry keyboard Strait JK-0300DE metal-look, corded, USB, silver",
         "qty_of_products_in_bundle": "3",
         "qty_of_each_product_inside_bundle": "1",
 
@@ -206,6 +209,9 @@
         "packaging_unit_cm": "CMET",
         "packaging_unit_m_name": "Meter",
         "concrete_product_random_weight_qty_of_units": "2",
+        "concrete_product_random_weight_amount": "5.0000000000",
+        "concrete_product_random_weight_conversion": "1",
+        "concrete_product_random_weight_precision": "100",
 
         "concrete_product_random_weight_packaging_unit": "19",
         "measurement_unit_m": "METR",
@@ -289,6 +295,7 @@
         "payment_method_name": "Invoice",
         "carrier_name": "DHL",
         "shipment_method_name": "Standard",
+        "shipment_method_name_2": "Express",
         "delivery_date": "2030-12-31",
         
         "review_title": "This is a review",
