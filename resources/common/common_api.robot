@@ -389,7 +389,7 @@ Response body parameter should be in:
     ...    *Example:*
     ...
     ...    ``Response body parameter should be in:    [data][attributes][allowInput]    true    false``
-    [Arguments]    ${json_path}    ${expected_value1}    ${expected_value2}    ${expected_value3}=test    ${expected_value4}=test
+    [Arguments]    ${json_path}    ${expected_value1}    ${expected_value2}    ${expected_value3}=robotframework-dummy-value    ${expected_value4}=robotframework-dummy-value
     ${data}=    Get Value From Json    ${response_body}    ${json_path}
     ${data}=    Convert To String    ${data}
     ${data}=    Replace String    ${data}    '   ${EMPTY}
@@ -407,7 +407,7 @@ Response body parameter should be NOT in:
     ...    *Example:*
     ...
     ...    ``Response body parameter should be NOT in:    [data][attributes][allowInput]    None``
-    [Arguments]    ${json_path}    ${expected_value1}    ${expected_value2}=test    ${expected_value3}=test    ${expected_value4}=test
+    [Arguments]    ${json_path}    ${expected_value1}    ${expected_value2}=robotframework-dummy-value    ${expected_value3}=robotframework-dummy-value    ${expected_value4}=robotframework-dummy-value
     ${data}=    Get Value From Json    ${response_body}    ${json_path}
     ${data}=    Convert To String    ${data}
     ${data}=    Replace String    ${data}    '   ${EMPTY}
@@ -708,7 +708,7 @@ Each array element of array in response should contain property with value in:
     ...    *Example:*
     ...
     ...    ``Each array element of array in response should contain property with value in:    [data]    [attributes][allowInput]    True    False``
-    [Arguments]    ${json_path}    ${expected_property}    ${expected_value1}    ${expected_value2}    ${expected_value3}=test    ${expected_value4}=test
+    [Arguments]    ${json_path}    ${expected_property}    ${expected_value1}    ${expected_value2}    ${expected_value3}=robotframework-dummy-value    ${expected_value4}=robotframework-dummy-value
 
     @{data}=    Get Value From Json    ${response_body}    ${json_path}
     ${list_length}=    Get Length    @{data}
@@ -731,7 +731,7 @@ Each array element of array in response should contain property with value NOT i
     ...    *Example:*
     ...
     ...    ``Each array element of array in response should contain property with value in:    [data]    [attributes][isSuper]    None``
-    [Arguments]    ${json_path}    ${expected_property}    ${expected_value1}    ${expected_value2}=test    ${expected_value3}=test    ${expected_value4}=test
+    [Arguments]    ${json_path}    ${expected_property}    ${expected_value1}    ${expected_value2}=robotframework-dummy-value    ${expected_value3}=robotframework-dummy-value    ${expected_value4}=robotframework-dummy-value
 
     @{data}=    Get Value From Json    ${response_body}    ${json_path}
     ${list_length}=    Get Length    @{data}
@@ -754,7 +754,7 @@ Each array element of nested array should contain property with value in:
     ...    *Example:*
     ...
     ...    ``Each array element of nested array should contain property with value in:    [data]    [attributes][localizedKeys]    translation    en_US    de_DE``
-    [Arguments]    ${json_path}    ${nested_array}    ${expected_property}    ${expected_value1}    ${expected_value2}    ${expected_value3}=test    ${expected_value4}=test
+    [Arguments]    ${json_path}    ${nested_array}    ${expected_property}    ${expected_value1}    ${expected_value2}    ${expected_value3}=robotframework-dummy-value    ${expected_value4}=robotframework-dummy-value
 
     @{data}=    Get Value From Json    ${response_body}    ${json_path}
     ${list_length1}=    Get Length    @{data}
@@ -782,7 +782,7 @@ Each array element of nested array should contain property with value NOT in:
     ...    *Example:*
     ...
     ...    ``Each array element of nested array should contain property with value NOT in:    [data]    [attributes][localizedKeys]    translation    None``
-    [Arguments]    ${json_path}    ${nested_array}    ${expected_property}    ${expected_value1}    ${expected_value2}=test   ${expected_value3}=test    ${expected_value4}=test
+    [Arguments]    ${json_path}    ${nested_array}    ${expected_property}    ${expected_value1}    ${expected_value2}=robotframework-dummy-value   ${expected_value3}=robotframework-dummy-value    ${expected_value4}=robotframework-dummy-value
 
     @{data}=    Get Value From Json    ${response_body}    ${json_path}
     ${list_length1}=    Get Length    @{data}
