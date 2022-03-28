@@ -245,11 +245,11 @@ Get_order_by_order_id_with_sales_unit
     And Response body parameter should be:    [data][attributes][items][0][sku]    ${concrete_product_random_weight_sku}
     And Response body parameter should be:    [data][attributes][items][0][quantity]    1
     And Response should contain the array of a certain size:    [data][attributes][items]    1
-    And Response body parameter should be:    [data][attributes][items][0][salesUnit][conversion]    1
-    And Response body parameter should be:    [data][attributes][items][0][salesUnit][precision]    100
+    And Response body parameter should be:    [data][attributes][items][0][salesUnit][conversion]    ${concrete_product_random_weight_conversion}
+    And Response body parameter should be:    [data][attributes][items][0][salesUnit][precision]    ${concrete_product_random_weight_precision}
     And Response body parameter should be:    [data][attributes][items][0][salesUnit][productMeasurementUnit][name]    ${packaging_unit_m_name}
     And Response body parameter should be:    [data][attributes][items][0][salesUnit][productMeasurementUnit][code]    ${packaging_unit_m}
-    And Response body parameter should be:    [data][attributes][items][0][amount]    5.0000000000
+    And Response body parameter should be:    [data][attributes][items][0][amount]    ${concrete_product_random_weight_amount}
 
 Get_order_by_order_id_with_different_items_and_quantity
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
@@ -280,7 +280,7 @@ Get_order_by_order_id_with_different_items_and_quantity
     And Response body parameter should be:    [data][attributes][items][2][sku]    ${concrete_product_with_options}
     And Response body parameter should be:    [data][attributes][items][2][quantity]    1
 
-Get_order_by_order_id_with_item_&_quantity>10
+Get_order_by_order_id_with_nonsplit_item
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
     ...  AND    I set Headers:    Authorization=${token}
     ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${gross_mode}","currency": "${currency_code_eur}","store": "${store_de}","name": "${test_cart_name}-${random}"}}}
