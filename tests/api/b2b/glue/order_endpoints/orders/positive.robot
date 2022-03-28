@@ -444,6 +444,87 @@ Get_order_by_order_id_with_split_shipment_&_include
     And Response body parameter should be:    [included][1][attributes][shippingAddress][iso2Code]    ${default_iso2Code}
     And Response body parameter should not be EMPTY:    [included][1][links]
 
+Get_order_by_order_id_with_product_discounts
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    ...  AND    I set Headers:    Authorization=${token}
+    ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${gross_mode}","currency": "${currency_code_eur}","store": "${store_de}","name": "${test_cart_name}-${random}"}}}
+    ...  AND    Save value to a variable:    [data][id]    cart_id
+    ...  AND    I send a POST request:    /carts/${cartId}/items    {"data": {"type": "items","attributes": {"sku": "${discount_concrete_product_1_sku}","quantity": 1}}}
+    ...  AND    I send a POST request:    /carts/${cartId}/items    {"data": {"type": "items","attributes": {"sku": "${discount_concrete_product_2_sku}","quantity": 1}}}
+    ...  AND    I send a POST request:    /carts/${cartId}/items    {"data": {"type": "items","attributes": {"sku": "${discount_concrete_product_3_sku}","quantity": 1}}}    
+    ...  AND    When I send a POST request:    /checkout?include=orders    {"data": {"type": "checkout","attributes": {"customer": {"email": "${yves_user_email}","salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}"},"idCart": "${cart_id}","billingAddress": {"salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}","address1": "${default_address1}","address2": "${default_address2}","address3": "${default_address3}","zipCode": "${default_zipCode}","city": "${default_city}","iso2Code": "${default_iso2Code}","company": "${default_company}","phone": "${default_phone}","isDefaultBilling": False,"isDefaultShipping": False},"shippingAddress": {"salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}","address1": "${default_address1}","address2": "${default_address2}","address3": "${default_address3}","zipCode": "${default_zipCode}","city": "${default_city}","iso2Code": "${default_iso2Code}","company": "${default_company}","phone": "${default_phone}","isDefaultBilling": False,"isDefaultShipping": False},"payments": [{"paymentProviderName": "${payment_provider_name}","paymentMethodName": "${payment_method_name}"}],"shipment": {"idShipmentMethod": 1},"items": ["${discount_concrete_product_1_sku}", "${discount_concrete_product_2_sku}", "${discount_concrete_product_3_sku}"]}}}
+    ...  AND    Save value to a variable:    [data][attributes][orderReference]    order_id
+    When I send a GET request:    /orders/${order_id}
+    Then Response status code should be:    200
+    And Response reason should be:    OK
+    And Response body parameter should be:    [data][type]    orders
+    And Response body parameter should be:    [data][id]    ${order_id}
+    And Response body parameter should not be EMPTY:    [data][attributes][createdAt]
+    And Response body parameter should be:    [data][attributes][currencyIsoCode]    ${currency_code_eur}
+    And Response body parameter should be:    [data][attributes][priceMode]    ${GROSS_MODE}
+    #item 1 - "20% off storage" discount
+    And Response body parameter should be:    [data][attributes][items][0][name]    ${discount_concrete_product_1_name}
+    And Response body parameter should be:    [data][attributes][items][0][sku]    ${discount_concrete_product_1_sku}
+    And Response body parameter should be:    [data][attributes][items][0][calculatedDiscounts][0][unitAmount]    ${discount_concrete_product_1_discount_1_unit_amount}
+    And Response body parameter should be:    [data][attributes][items][0][calculatedDiscounts][0][sumAmount]    ${discount_concrete_product_1_discount_1_unit_amount}
+    And Response body parameter should be:    [data][attributes][items][0][calculatedDiscounts][0][displayName]    ${discount_1_name}
+    And Response body parameter should be:    [data][attributes][items][0][calculatedDiscounts][0][description]    ${discount_1_description}
+    And Response body parameter should be:    [data][attributes][items][0][calculatedDiscounts][0][voucherCode]    None
+    And Response body parameter should be:    [data][attributes][items][0][calculatedDiscounts][0][quantity]    1
+    #item 1 - "10% off minimum order" discount
+    And Response body parameter should be:    [data][attributes][items][0][calculatedDiscounts][1][unitAmount]    ${discount_concrete_product_1_discount_2_unit_amount}
+    And Response body parameter should be:    [data][attributes][items][0][calculatedDiscounts][1][sumAmount]    ${discount_concrete_product_1_discount_2_unit_amount}
+    And Response body parameter should be:    [data][attributes][items][0][calculatedDiscounts][1][displayName]    ${discount_2_name}
+    And Response body parameter should be:    [data][attributes][items][0][calculatedDiscounts][1][description]    ${discount_2_description}
+    And Response body parameter should be:    [data][attributes][items][0][calculatedDiscounts][1][voucherCode]    None
+    And Response body parameter should be:    [data][attributes][items][0][calculatedDiscounts][1][quantity]    1
+    #item 2 - "20% off storage" discount
+    And Response body parameter should be:    [data][attributes][items][1][name]    ${discount_concrete_product_2_name}
+    And Response body parameter should be:    [data][attributes][items][1][sku]    ${discount_concrete_product_2_sku}
+    And Response body parameter should be:    [data][attributes][items][1][calculatedDiscounts][0][unitAmount]    ${discount_concrete_product_2_discount_1_unit_amount}
+    And Response body parameter should be:    [data][attributes][items][1][calculatedDiscounts][0][sumAmount]    ${discount_concrete_product_2_discount_1_unit_amount}
+    And Response body parameter should be:    [data][attributes][items][1][calculatedDiscounts][0][displayName]    ${discount_1_name}
+    And Response body parameter should be:    [data][attributes][items][1][calculatedDiscounts][0][description]    ${discount_1_description}
+    And Response body parameter should be:    [data][attributes][items][1][calculatedDiscounts][0][voucherCode]    None
+    And Response body parameter should be:    [data][attributes][items][1][calculatedDiscounts][0][quantity]    1
+    #item 2 - "10% off minimum order" discount
+    And Response body parameter should be:    [data][attributes][items][1][calculatedDiscounts][1][unitAmount]    ${discount_concrete_product_2_discount_2_unit_amount}
+    And Response body parameter should be:    [data][attributes][items][1][calculatedDiscounts][1][sumAmount]    ${discount_concrete_product_2_discount_2_unit_amount}
+    And Response body parameter should be:    [data][attributes][items][1][calculatedDiscounts][1][displayName]    ${discount_2_name}
+    And Response body parameter should be:    [data][attributes][items][1][calculatedDiscounts][1][description]    ${discount_2_description}
+    And Response body parameter should be:    [data][attributes][items][1][calculatedDiscounts][1][voucherCode]    None
+    And Response body parameter should be:    [data][attributes][items][1][calculatedDiscounts][1][quantity]    1
+    #item 3 - "20% off storage" discount
+    And Response body parameter should be:    [data][attributes][items][2][name]    ${discount_concrete_product_3_name}
+    And Response body parameter should be:    [data][attributes][items][2][sku]    ${discount_concrete_product_3_sku}
+    And Response body parameter should be:    [data][attributes][items][2][calculatedDiscounts][0][unitAmount]    ${discount_concrete_product_3_discount_1_unit_amount}
+    And Response body parameter should be:    [data][attributes][items][2][calculatedDiscounts][0][sumAmount]    ${discount_concrete_product_3_discount_1_unit_amount}
+    And Response body parameter should be:    [data][attributes][items][2][calculatedDiscounts][0][displayName]    ${discount_1_name}
+    And Response body parameter should be:    [data][attributes][items][2][calculatedDiscounts][0][description]    ${discount_1_description}
+    And Response body parameter should be:    [data][attributes][items][2][calculatedDiscounts][0][voucherCode]    None
+    And Response body parameter should be:    [data][attributes][items][2][calculatedDiscounts][0][quantity]    1
+    #item 3 - "10% off minimum order" discount
+    And Response body parameter should be:    [data][attributes][items][2][calculatedDiscounts][1][unitAmount]    ${discount_concrete_product_3_discount_2_unit_amount}
+    And Response body parameter should be:    [data][attributes][items][2][calculatedDiscounts][1][sumAmount]    ${discount_concrete_product_3_discount_2_unit_amount}
+    And Response body parameter should be:    [data][attributes][items][2][calculatedDiscounts][1][displayName]    ${discount_1_name}
+    And Response body parameter should be:    [data][attributes][items][2][calculatedDiscounts][1][description]    ${discount_1_description}
+    And Response body parameter should be:    [data][attributes][items][2][calculatedDiscounts][1][voucherCode]    None
+    And Response body parameter should be:    [data][attributes][items][2][calculatedDiscounts][1][quantity]    1
+    #calculatedDiscounts - "20% off storage" discount
+    And Response body parameter should contain:    [data][attributes][calculatedDiscounts]    unitAmount: None
+    And Response body parameter should contain:    [data][attributes][calculatedDiscounts]    sumAmount: ${discount_1_sum_amount}
+    And Response body parameter should contain:    [data][attributes][calculatedDiscounts]    displayName: ${discount_1_name}
+    And Response body parameter should contain:    [data][attributes][calculatedDiscounts]    description: ${discount_1_description}
+    And Response body parameter should contain:    [data][attributes][calculatedDiscounts]    voucherCode: None
+    And Response body parameter should contain:    [data][attributes][calculatedDiscounts]    quantity: 3
+    #calculatedDiscounts - "10% off minimum order" discount
+    And Response body parameter should contain:    [data][attributes][calculatedDiscounts]    unitAmount: None
+    And Response body parameter should contain:    [data][attributes][calculatedDiscounts]    sumAmount: ${discount_2_sum_amount}
+    And Response body parameter should contain:    [data][attributes][calculatedDiscounts]    displayName: ${discount_2_name}
+    And Response body parameter should contain:    [data][attributes][calculatedDiscounts]    description: ${discount_2_description}
+    And Response body parameter should contain:    [data][attributes][calculatedDiscounts]    voucherCode: None
+    And Response body parameter should contain:    [data][attributes][calculatedDiscounts]    quantity: 3
+
 Get_customer_orders_list_without_order_id
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
     ...  AND    I set Headers:    Authorization=${token}
