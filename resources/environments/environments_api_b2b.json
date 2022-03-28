@@ -206,7 +206,9 @@
         "concrete_product_random_weight_name": "VGA cable as long as you want",
         "concrete_product_random_weight_measurement_unit": "19",
         "packaging_unit_m": "METR",
+        "packaging_unit_cm": "CMET",
         "packaging_unit_m_name": "Meter",
+        "concrete_product_random_weight_qty_of_units": "2",
 
         "concrete_product_random_weight_packaging_unit": "19",
         "measurement_unit_m": "METR",
@@ -268,7 +270,10 @@
         "cms_page_collection_name": "GTC",
         "cms_page_collection_url": "/en/gtc",
 
-        "brand_name": "verbatim"
+        "brand_name": "verbatim",
+
+        "cart_permission_group_id":"1",
+        "cart_permission_group_type":"cart-permission-groups"
 
     },
     "availability":{
