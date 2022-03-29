@@ -68,6 +68,12 @@
         "currency_code_chf": "CHF",
         "currency_symbol_chf": "CHF"
     },
+    "returns":{
+        "salesOrderItemUuid":"14d86bb2-ea23-57ed-904c-eecc63ef10ac",
+        "return_resaon":"Custome reason - Not Fit",
+        "return_type":"returns",
+        "403_error_detail":"Missing access token."
+},
     "search":{
         "total_number_of_products_in_search": "215",
         "default_ipp": "12",
