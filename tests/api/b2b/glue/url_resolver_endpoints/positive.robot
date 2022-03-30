@@ -1,0 +1,19 @@
+*** Settings ***
+Suite Setup    SuiteSetup
+Test Setup    TestSetup
+Resource    ../../../../../resources/common/common_api.robot
+Default Tags    glue
+
+*** Test Cases ***
+
+Get_url_collections_by_url_paramater
+    When I send a GET request:    /url-resolver?url=${url_resolver_example}
+    Then Response status code should be:    200
+    And Response reason should be:    OK
+    Each array element of array in response should contain property:    [data]    type
+    Each array element of array in response should contain property:    [data]    id
+    Each array element of array in response should contain property:    [data]    attributes
+    Each array element of array in response should contain nested property:    [data]     attributes    entityType
+    Each array element of array in response should contain nested property:    [data]     attributes    entityId
+    Each array element of array in response should contain nested property:    [data]     links    self
+    Response body has correct self link
