@@ -46,7 +46,19 @@ Get_cart_without_cart_id
     And Each array element of array in response should contain property:    [data]    type
     And Each array element of array in response should contain property:    [data]    id
     And Each array element of array in response should contain property:    [data]    attributes
-    And Response body parameter should not be EMPTY:    [data][attributes]
+    And Each array element of array in response should contain nested property:    [data]    attributes    priceMode
+    And Each array element of array in response should contain nested property:    [data]    attributes    currency
+    And Each array element of array in response should contain nested property:    [data]    attributes    store
+    And Each array element of array in response should contain nested property:    [data]    attributes    name
+    And Each array element of array in response should contain nested property:    [data]    attributes    isDefault
+    And Each array element of array in response should contain nested property:    [data]    [attributes][totals]    expenseTotal
+    And Each array element of array in response should contain nested property:    [data]    [attributes][totals]    discountTotal
+    And Each array element of array in response should contain nested property:    [data]    [attributes][totals]    taxTotal
+    And Each array element of array in response should contain nested property:    [data]    [attributes][totals]    subtotal
+    And Each array element of array in response should contain nested property:    [data]    [attributes][totals]    grandTotal
+    And Each array element of array in response should contain nested property:    [data]    [attributes][totals]    priceToPay
+    And Each array element of array in response should contain nested property:    [data]    attributes    discounts
+    And Each array element of array in response should contain property:    [data]    links
     [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cart_id}
     ...  AND    Response status code should be:    204
 

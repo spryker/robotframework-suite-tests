@@ -27,7 +27,6 @@ Add_one_item_to_cart
     And Response body parameter should be greater than:    [data][attributes][totals][grandTotal]    1
     And Response body parameter should be greater than:    [data][attributes][totals][priceToPay]    1
     And Response body parameter should not be EMPTY:    [data][attributes][discounts]
-    And Response body parameter should not be EMPTY:    [data][attributes][thresholds]
     And Response body parameter should not be EMPTY:    [data][links][self]
     [Teardown]    Run Keywords    I send a DELETE request:     /carts/${cart_uid}
     ...    AND    Response status code should be:    204
@@ -50,7 +49,6 @@ Add_two_items_to_cart_with_included_items_concrete_products_and_abstract_product
     And Response body parameter should be:    [data][attributes][isDefault]    True
     And Response body parameter should not be EMPTY:    [data][attributes][totals][grandTotal]
     And Response body parameter should not be EMPTY:    [data][attributes][discounts]
-    And Response body parameter should not be EMPTY:    [data][attributes][thresholds]
     And Response body parameter should not be EMPTY:    [data][links][self]
     And Response should contain the array of a certain size:    [data][relationships][items][data]    1
     And Response should contain the array of a certain size:    [included]    3
@@ -111,7 +109,6 @@ Get_a_cart_with_included_items_and_concrete_products
     And Response body parameter should be:    [data][attributes][isDefault]    True
     And Response body parameter should not be EMPTY:    [data][attributes][totals][grandTotal]
     And Response body parameter should not be EMPTY:    [data][attributes][discounts]
-    And Response body parameter should not be EMPTY:    [data][attributes][thresholds]
     And Response body parameter should not be EMPTY:    [data][links][self]
     And Response should contain the array of a certain size:    [data][relationships][items][data]    1
     And Response should contain the array of a certain size:    [included]    2
@@ -164,9 +161,9 @@ Add_five_items_to_cart_with_included_cart_rules_and_promotional_items
     And Response body parameter should be:    [data][id]    ${cart_uid}
     And Response body parameter should be:    [data][type]    carts
     And Response body parameter should not be EMPTY:    [data][links][self]
-    And Response should contain the array of a certain size:    [data][relationships][cart-rules][data]    1
+    And Response should contain the array of a certain size:    [data][relationships][cart-rules][data]    2
     And Response should contain the array of a certain size:    [data][relationships][promotional-items][data]    1
-    And Response should contain the array of a certain size:    [included]    3
+    And Response should contain the array of a certain size:    [included]    4
     And Response include should contain certain entity type:    cart-rules
     And Response include should contain certain entity type:    items
     And Response include element has self link:   cart-rules
