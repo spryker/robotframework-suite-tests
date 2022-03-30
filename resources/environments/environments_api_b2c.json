@@ -2,7 +2,7 @@
     "environment": "api_b2c",
 
     "env": {
-        "glue_url": "http://glue.de.spryker.local",
+        "glue_url": "https://glue.de.b2c.internal-testing.demo-spryker.com",
         "bapi_url": "http://backend-api.de.spryker.local/api/rest"
     },
 
@@ -69,10 +69,7 @@
         "currency_symbol_chf": "CHF"
     },
     "returns":{
-        "salesOrderItemUuid":"14d86bb2-ea23-57ed-904c-eecc63ef10ac",
-        "return_resaon":"Custome reason - Not Fit",
-        "return_type":"returns",
-        "403_error_detail":"Missing access token."
+        "return_resaon":"Custome reason - Not Fit"
 },
     "search":{
         "total_number_of_products_in_search": "215",
