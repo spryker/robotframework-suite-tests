@@ -34,12 +34,6 @@ Create_a_shopping_list_with_absent_type
     And Response should return error message:    Post data is invalid.
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
 
-Create_a_shopping_list_with_incorrect_url
-    I send a POST request:    /shopping-list    {"data":{"attributes":{"name":"${shopping_list_name}${random}"}}}
-    And Response status code should be:    404
-    And Response reason should be:    Not Found
-    And Response header parameter should be:    Content-Type    ${default_header_content_type}
-
 Create_a_shopping_list_with_already_existing_name
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}  
@@ -73,41 +67,41 @@ Delete_not_existing_shopping_list
     And Response should return error code:    1503
     And Array in response should contain property with value:    [errors]    detail    Shopping list not found.
 
-# need other user with shopping lists
+# need receive the confirmation key from email
 # Delete_existing_shopping_list_of_another_customer
 #     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
 #     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
 #     ...    AND    I send a GET request:    /shopping-lists
 #     ...    AND    Save value to a variable:    [data][0][id]    shoppingListId
-#     ...    AND    I get access token for the customer:    ${yves_second_user_email}
-#     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
+#     ...    I send a POST request:    /customers/    {"data":{"type":"customers","attributes":{"firstName":"${yves_third_user_first_name}","lastName":"${yves_third_user_last_name}","gender":"${gender_male}","salutation":"${yves_third_user_salutation}","email":"${yves_third_user_email}","password":"${yves_user_password}","confirmPassword":"${yves_user_password}","acceptedTerms":True}}}
+#     ...    AND    Response status code should be:    201
+#     ...    AND    Save value to a variable:    [data][id]    userId
+#     ...    AND    I get access token for the customer:    ${yves_third_user_email}
+#     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token} 
 #     I send a DELETE request:    /shopping-lists/${shoppingListId}
 #     And Response status code should be:    404
 #     And Response reason should be:   Not Found
 #     And Response should return error code:    1503
 #     And Array in response should contain property with value:    [errors]    detail    Shopping list not found.
+#     [Teardown]    Run Keywords    I send a DELETE request:    /customers/${userId}
+#     ...    AND    Response status code should be:    204
+#     ...    AND    Response reason should be:    No Content
 
-Delete_existing_shopping_list_without_access_token
-    I send a DELETE request:    /shopping-lists/${yves_user_1st_shopping_list_id}
+Delete_shopping_list_without_access_token
+    I send a DELETE request:    /shopping-lists/shoppingListId
     Response status code should be:    403
     And Response reason should be:   Forbidden
     And Response should return error code:    002
     And Array in response should contain property with value:    [errors]    detail    Missing access token.
 
-Delete_existing_shopping_list_with_wrong_access_token
+Delete_shopping_list_with_wrong_access_token
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}1
-    I send a DELETE request:    /shopping-lists/${yves_user_1st_shopping_list_id}
+    I send a DELETE request:    /shopping-lists/shoppingListId
     And Response status code should be:    401
     And Response reason should be:   Unauthorized
     And Response should return error code:    001
     And Array in response should contain property with value:    [errors]    detail    Invalid access token.
-
-Delete_a_shopping_list_with_incorrect_url
-    I send a DELETE request:    /shoppinglists/${yves_user_1st_shopping_list_id}
-    And Response status code should be:    404
-    And Response reason should be:    Not Found
-    And Response header parameter should be:    Content-Type    ${default_header_content_type}
 
 Delete_a_shopping_list_withouth_shopping_list_id
     I send a DELETE request:    /shopping-lists
@@ -118,7 +112,7 @@ Delete_a_shopping_list_withouth_shopping_list_id
 Update_shopping_list_for_the_customer_with_empty_attribute_section
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}  
-    I send a PATCH request:    /shopping-lists/${yves_user_1st_shopping_list_id}    {"data":{"type":"shopping-lists","attributes":{}}}
+    I send a PATCH request:    /shopping-lists/shoppingListId    {"data":{"type":"shopping-lists","attributes":{}}}
     And Response status code should be:    422
     And Response reason should be:   Unprocessable Content
     And Response should return error code:    901
@@ -128,8 +122,9 @@ Update_shopping_list_with_existing_name_of_another_available_shopping_list
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}  
     ...    AND    I send a GET request:    /shopping-lists
-    ...    AND    Save value to a variable:    [data][1][attributes][name]    2nd_shopping_list_name
-    I send a PATCH request:    /shopping-lists/${yves_user_1st_shopping_list_id}    {"data":{"type":"shopping-lists","attributes":{"name":"${2nd_shopping_list_name}"}}}
+    ...    AND    Save value to a variable:    [data][0][id]    shoppingListId
+    ...    AND    Save value to a variable:    [data][1][attributes][name]    2ndShoppingListName
+    I send a PATCH request:    /shopping-lists/${shoppingListId}    {"data":{"type":"shopping-lists","attributes":{"name":"${2ndShoppingListName}"}}}
     And Response status code should be:    422
     And Response reason should be:   Unprocessable Content
     And Response should return error code:    1506
@@ -138,7 +133,7 @@ Update_shopping_list_with_existing_name_of_another_available_shopping_list
 Update_shopping_list_with_empty_name
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}  
-    I send a PATCH request:    /shopping-lists/${yves_user_1st_shopping_list_id}    {"data":{"type":"shopping-lists","attributes":{"name":""}}}
+    I send a PATCH request:    /shopping-lists/shoppingListId    {"data":{"type":"shopping-lists","attributes":{"name":""}}}
     And Response status code should be:    422
     And Response reason should be:   Unprocessable Content
     And Response should return error code:    901
@@ -147,7 +142,7 @@ Update_shopping_list_with_empty_name
 Update_shopping_list_name_with_too_long_value
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}  
-    I send a PATCH request:    /shopping-lists/${yves_user_1st_shopping_list_id}    {"data":{"type":"shopping-lists","attributes":{"name":"12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890"}}}
+    I send a PATCH request:    /shopping-lists/shoppingListId    {"data":{"type":"shopping-lists","attributes":{"name":"12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890"}}}
     And Response status code should be:    422
     And Response reason should be:   Unprocessable Content
     And Response should return error code:    901
@@ -164,73 +159,59 @@ Update_shopping_list_withouth_shopping_list_id
 Update_shopping_list_with_wrong_shopping_list_id
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}  
-    I send a PATCH request:    /shopping-lists/${yves_user_1st_shopping_list_id}1     {"data":{"type":"shopping-lists","attributes":{"name":"${shopping_list_name}${random}"}}}
+    I send a PATCH request:    /shopping-lists/shoppingListId     {"data":{"type":"shopping-lists","attributes":{"name":"${shopping_list_name}${random}"}}}
     And Response status code should be:    404
     And Response reason should be:   Not Found
     And Response should return error code:    1503
     And Array in response should contain property with value:    [errors]    detail    Shopping list not found.
 
 Update_shopping_list_with_non_autorized_user
-    I send a PATCH request:    /shopping-lists/${yves_user_1st_shopping_list_id}    {"data":{"type":"shopping-lists","attributes":{"name":"${shopping_list_name}"}}}
+    I send a PATCH request:    /shopping-lists/shoppingListId    {"data":{"type":"shopping-lists","attributes":{"name":"${shopping_list_name}"}}}
     Response status code should be:    403
     And Response reason should be:   Forbidden
     And Response should return error code:    002
     And Array in response should contain property with value:    [errors]    detail    Missing access token.
 
-# need other user with shopping lists
+# need receive the confirmation key from email
 # Update_existing_shopping_list_of_another_customer
-#     [Setup]    Run Keywords    I get access token for the customer:    ${yves_second_user_email}
+#     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
 #     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
 #     ...    AND    I send a GET request:    /shopping-lists
 #     ...    AND    Save value to a variable:    [data][0][id]    shoppingListId
-#     ...    AND    I get access token for the customer:    ${yves_user_email}
-#     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
+#     ...    I send a POST request:    /customers/    {"data":{"type":"customers","attributes":{"firstName":"${yves_third_user_first_name}","lastName":"${yves_third_user_last_name}","gender":"${gender_male}","salutation":"${yves_third_user_salutation}","email":"${yves_third_user_email}","password":"${yves_user_password}","confirmPassword":"${yves_user_password}","acceptedTerms":True}}}
+#     ...    AND    Response status code should be:    201
+#     ...    AND    Save value to a variable:    [data][id]    userId
+#     ...    AND    I get access token for the customer:    ${yves_third_user_email}
+#     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token} 
 #     I send a PATCH request:    /shopping-lists/${shoppingListId}    {"data":{"type":"shopping-lists","attributes":{"name":"${shopping_list_name}"}}}
 #     And Response status code should be:    404
 #     And Response reason should be:   Not Found
 #     And Response should return error code:    1503
 #     And Array in response should contain property with value:    [errors]    detail    Shopping list not found.
+#     [Teardown]    Run Keywords    I send a DELETE request:    /customers/${userId}
+#     ...    AND    Response status code should be:    204
+#     ...    AND    Response reason should be:    No Content
 
 Update_a_shopping_list_with_absent_type
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
-    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
-    I send a PATCH request:    /shopping-lists/${yves_user_1st_shopping_list_id}    {"data":{"attributes":{"name":"${shopping_list_name}${random}"}}}
+    I send a PATCH request:    /shopping-lists/shoppingListId    {"data":{"attributes":{"name":"${shopping_list_name}${random}"}}}
     Response status code should be:    400
     And Response reason should be:   Bad Request
     And Response should return error message:    Post data is invalid.
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
 
 Update_a_shopping_list_with_invalid_type
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
-    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
-    I send a PATCH request:    /shopping-lists/${yves_user_1st_shopping_list_id}    {"data":{"type":"shoppinglists","attributes":{"name":"${shopping_list_name}${random}"}}}
+    I send a PATCH request:    /shopping-lists/shoppingListId    {"data":{"type":"shoppinglists","attributes":{"name":"${shopping_list_name}${random}"}}}
     Response status code should be:    400
     And Response reason should be:   Bad Request
     And Response should return error message:    Invalid type.
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
 
-Update_a_shopping_list_with_incorrect_url
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
-    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
-    I send a PATCH request:    /shoppinglists/${yves_user_1st_shopping_list_id}    {"data":{"type":"shopping-lists","attributes":{"name":"${shopping_list_name}"}}}
-    And Response status code should be:    404
-    And Response reason should be:    Not Found
-    And Response header parameter should be:    Content-Type    ${default_header_content_type}
-
 Get_shopping_list_with_non_autorized_user
-    I send a GET request:    /shopping-lists/${yves_user_1st_shopping_list_id}
+    I send a GET request:    /shopping-lists/shoppingListId
     Response status code should be:    403
     And Response reason should be:   Forbidden
     And Response should return error code:    002
     And Array in response should contain property with value:    [errors]    detail    Missing access token.
-
-Get_a_shopping_list_with_incorrect_url
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
-    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
-    I send a GET request:    /shoppinglist
-    And Response status code should be:    404
-    And Response reason should be:    Not Found
-    And Response header parameter should be:    Content-Type    ${default_header_content_type}
 
 Get_not_existing_shopping_list
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
@@ -241,24 +222,23 @@ Get_not_existing_shopping_list
     And Response should return error code:    1503
     And Array in response should contain property with value:    [errors]    detail    Shopping list not found.
 
-# need other user with shopping lists
-# Get_existing_shopping_list_of_another_customer
-#     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
-#     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
-#     ...    AND    I send a GET request:    /shopping-lists
-#     ...    AND    Save value to a variable:    [data][0][id]    shoppingListId
-#     ...    AND    I get access token for the customer:    ${yves_second_user_email}
-#     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
-#     I send a GET request:    /shopping-lists/${shoppingListId}
-#     And Response status code should be:    404
-#     And Response reason should be:   Not Found
-#     And Response should return error code:    1503
-#     And Array in response should contain property with value:    [errors]    detail    Shopping list not found.
+Get_existing_shopping_list_of_another_customer
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
+    ...    AND    I send a GET request:    /shopping-lists
+    ...    AND    Save value to a variable:    [data][0][id]    shoppingListId
+    ...    AND    I get access token for the customer:    ${yves_second_user_email}
+    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
+    I send a GET request:    /shopping-lists/${shoppingListId}
+    And Response status code should be:    404
+    And Response reason should be:   Not Found
+    And Response should return error code:    1503
+    And Array in response should contain property with value:    [errors]    detail    Shopping list not found.
 
 Get_existing_shopping_list_with_wrong_access_token
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}1
-    I send a GET request:    /shopping-lists/${yves_user_1st_shopping_list_id}
+    I send a GET request:    /shopping-lists/shoppingListId
     And Response status code should be:    401
     And Response reason should be:   Unauthorized
     And Response should return error code:    001
