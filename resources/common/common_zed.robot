@@ -106,3 +106,19 @@ Zed: click Action Button(without search) in a table for row that contains:
     [Arguments]    ${row_content}    ${zed_table_action_button_locator}
     wait until element is visible    xpath=//table[contains(@class,'dataTable')]/tbody//td[contains(text(),'${row_content}')]/../td[contains(@class,'column-Action') or contains(@class,'column-action')]/*[contains(.,'${zed_table_action_button_locator}')]
     Click    xpath=//table[contains(@class,'dataTable')]/tbody//td[contains(text(),'${row_content}')]/../td[contains(@class,'column-Action') or contains(@class,'column-action')]/*[contains(.,'${zed_table_action_button_locator}')]
+
+Zed:Payone_connect_application:
+    #[Arguments]    ${row_content}    ${zed_table_action_button_locator}
+    Open Browser    ${zed_url}    chromium
+    delete all cookies
+    Reload    
+    Wait Until Element Is Visible    ${zed_user_name_field}
+    Type Text    ${zed_user_name_field}    admin@spryker.com
+    Type Text    ${zed_password_field}    change123
+    Click    ${zed_login_button}
+    Click    xpath=//*[@id="side-menu"]/li[10]/a
+    Wait For Elements State    ${App_ocrchestration_platform_catalog}
+    Sleep    5s
+    Click    ${App_Payone} 
+    Sleep    5s
+    click    ${connect_pbc_payone}
