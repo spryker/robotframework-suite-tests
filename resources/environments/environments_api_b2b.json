@@ -82,6 +82,14 @@
         "locale_DE": "de_DE",
         "locale_EN": "en_US"
     },
+
+    "shopping-list":{
+        "shopping_list_name": "My Shopping List",
+        "yves_user_1st_shopping_list_id": "cf032865-d1ad-5e27-803a-423bd15ced66",
+        "yves_user_1st_shopping_list_name": "Newcomers",
+        "yves_user_2nd_shopping_list_name": "Weekly office",
+        "yves_user_3rd_shopping_list_name": "Monthly office"
+    },
     
     "search":{
         "total_number_of_products_in_search": "420",
@@ -212,7 +220,9 @@
 
         "product_option_1": "OP_2_year_waranty",
         "product_option_1_name": "Two (2) year limited warranty",
-        "product_option_2": "OP_insurance"
+        "product_option_2": "OP_insurance",
+
+        "unavailable_product_concrete_sku": ""
             
     },
     "product_attributes":{
