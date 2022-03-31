@@ -156,6 +156,10 @@
         "product_with_relations_related_products_sku": "M29529",
         "product_with_relations_alternative_products_sku": "M21100",
         "product_with_relations_upselling_sku": "M29502",
+        "concrete_of_product_with_relations_upselling_sku": "419872",
+        "concrete_of_alternative_product_with_relations_upselling_sku": "419880",
+        "product_related_product_with_upselling_relation_sku": "M29499",
+        "product_related_product_with_upselling_relation_name": "Safescan counterfeit test device - SAFESCAN 45 UV",
         "product_related_product_with_related_relation_sku": "M29501",
         "product_related_product_with_related_relation_name": "Safescan automatic banknote counter - UV counterfeit recognition",
 
