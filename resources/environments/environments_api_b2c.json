@@ -250,6 +250,10 @@
         "qty_of_categories_in_category_trees": "6",
         "qty_of_subcategories_in_category_trees": "2",
         "color_name": "black"
+    },
+    "wishlists":{
+        "wishlist_name1":"HS",
+        "wishlist_name2":"NP",
+        "Product_sku":"204_29851280"
     }
-
-}
+ }
