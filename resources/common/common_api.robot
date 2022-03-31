@@ -653,7 +653,7 @@ Each array element of array in response should contain property:
     ${list_length}=    Get Length    @{data}
     ${log_list}=    Log List    @{data}
     FOR    ${index}    IN RANGE    0    ${list_length}
-        ${list_element}=    Get From List    @{data}    ${index}
+        ${list_element}=    Get From List    @{data}    ${index}       
         List Should Contain Value    ${list_element}    ${expected_property}
     END
 
@@ -1091,3 +1091,21 @@ Cleanup existing customer addresses:
         Set Variable    ${response_delete}    ${response_delete}
         Should Be Equal As Strings    ${response_delete.status_code}    204    Could not delete a customer address
     END
+
+Get length of array:
+       [Documentation]   This is a helper keyword which helps get length of array. 
+    ...
+    ...    It gets the length for the specified json path ``${json_path}`` and saves it into the test variable ``${list_length}``, which can then be used within the scope of the test where this keyword was called.
+    
+    ...    *Example:*
+    ...    This keyword 
+    ...
+    ...   ``Get length of array:    [data]``
+    ...
+    ...    The example above gets length of data array.
+    [Arguments]    ${json_path}
+    @{data}=    Get Value From Json    ${response_body}    ${json_path}
+    ${list_length}=    Get Length    @{data}
+    ${log_list}=    Log List    @{data}
+    ${list_length}=    Convert To String    ${list_length}
+    [Return]    ${list_length}
