@@ -14,11 +14,11 @@
         "yves_user_reference": "DE--21",
         "yves_user_salutation": "Ms",
 
-        "yves_second_user_email": "bill.martin@spryker.com",
-        "yves_second_user_first_name": "Martin",
-        "yves_second_user_last_name": "Bill",
+        "yves_second_user_email": "spencor.hopkin@spryker.com",
+        "yves_second_user_first_name": "Hopkin",
+        "yves_second_user_last_name": "Spencor",
         "yves_second_user_password": "change123",
-        "yves_second_user_reference": "DE--4",
+        "yves_second_user_reference": "DE--1",
         "yves_second_user_salutation": "Mr",
 
         "zed_admin_email": "admin@spryker.com",
@@ -182,8 +182,10 @@
         "concrete_product_multiple_image_set": "158_29885222",
         "concrete_product_multiple_image_set_name": "Asus ZenPad Z170C",
         "concrete_available_product_with_stock": "001_25904006",
-        "concrete_available_product_without_stock": "212_123"
-            
+        "concrete_available_product_without_stock": "212_123",
+        "product_option_1": "OP_2_year_waranty",
+        "product_option_1_name": "Two (2) year limited warranty",
+        "product_option_2": "OP_insurance"
     },
     "product_attributes":{
         "brand_1": "Soennecken",
@@ -239,6 +241,10 @@
 
         "brand_name": "canon"
 
+    },
+    "cart":{
+        "add_cart_item_sku": "012_25904598",
+        "add_cart_item_abstract_sku": "012"
     },
     "availability":{
         "stock_is_0": "0.0000000000",
