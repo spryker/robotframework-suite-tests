@@ -69,25 +69,18 @@ Delete_not_existing_shopping_list
     And Response should return error code:    1503
     And Array in response should contain property with value:    [errors]    detail    Shopping list not found.
 
-# need receive the confirmation key from email
-# Delete_existing_shopping_list_of_another_customer
-#     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
-#     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
-#     ...    AND    I send a GET request:    /shopping-lists
-#     ...    AND    Save value to a variable:    [data][0][id]    shoppingListId
-#     ...    I send a POST request:    /customers/    {"data":{"type":"customers","attributes":{"firstName":"${yves_third_user_first_name}","lastName":"${yves_third_user_last_name}","gender":"${gender_male}","salutation":"${yves_third_user_salutation}","email":"${yves_third_user_email}","password":"${yves_user_password}","confirmPassword":"${yves_user_password}","acceptedTerms":True}}}
-#     ...    AND    Response status code should be:    201
-#     ...    AND    Save value to a variable:    [data][id]    userId
-#     ...    AND    I get access token for the customer:    ${yves_third_user_email}
-#     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token} 
-#     I send a DELETE request:    /shopping-lists/${shoppingListId}
-#     And Response status code should be:    404
-#     And Response reason should be:   Not Found
-#     And Response should return error code:    1503
-#     And Array in response should contain property with value:    [errors]    detail    Shopping list not found.
-#     [Teardown]    Run Keywords    I send a DELETE request:    /customers/${userId}
-#     ...    AND    Response status code should be:    204
-#     ...    AND    Response reason should be:    No Content
+Delete_existing_shopping_list_of_another_customer
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
+    ...    AND    I send a GET request:    /shopping-lists
+    ...    AND    Save value to a variable:    [data][0][id]    shoppingListId
+    ...    AND    I get access token for the customer:    ${yves_second_user_email}
+    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token} 
+    I send a DELETE request:    /shopping-lists/${shoppingListId}
+    And Response status code should be:    404
+    And Response reason should be:   Not Found
+    And Response should return error code:    1503
+    And Array in response should contain property with value:    [errors]    detail    Shopping list not found.
 
 Delete_shopping_list_without_access_token
     I send a DELETE request:    /shopping-lists/shoppingListId
@@ -174,25 +167,18 @@ Update_shopping_list_with_non_autorized_user
     And Response should return error code:    002
     And Array in response should contain property with value:    [errors]    detail    Missing access token.
 
-# need receive the confirmation key from email
-# Update_existing_shopping_list_of_another_customer
-#     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
-#     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
-#     ...    AND    I send a GET request:    /shopping-lists
-#     ...    AND    Save value to a variable:    [data][0][id]    shoppingListId
-#     ...    I send a POST request:    /customers/    {"data":{"type":"customers","attributes":{"firstName":"${yves_third_user_first_name}","lastName":"${yves_third_user_last_name}","gender":"${gender_male}","salutation":"${yves_third_user_salutation}","email":"${yves_third_user_email}","password":"${yves_user_password}","confirmPassword":"${yves_user_password}","acceptedTerms":True}}}
-#     ...    AND    Response status code should be:    201
-#     ...    AND    Save value to a variable:    [data][id]    userId
-#     ...    AND    I get access token for the customer:    ${yves_third_user_email}
-#     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token} 
-#     I send a PATCH request:    /shopping-lists/${shoppingListId}    {"data":{"type":"shopping-lists","attributes":{"name":"${shopping_list_name}"}}}
-#     And Response status code should be:    404
-#     And Response reason should be:   Not Found
-#     And Response should return error code:    1503
-#     And Array in response should contain property with value:    [errors]    detail    Shopping list not found.
-#     [Teardown]    Run Keywords    I send a DELETE request:    /customers/${userId}
-#     ...    AND    Response status code should be:    204
-#     ...    AND    Response reason should be:    No Content
+Update_existing_shopping_list_of_another_customer
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
+    ...    AND    I send a GET request:    /shopping-lists
+    ...    AND    Save value to a variable:    [data][0][id]    shoppingListId
+    ...    AND    I get access token for the customer:    ${yves_second_user_email}
+    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token} 
+    I send a PATCH request:    /shopping-lists/${shoppingListId}    {"data":{"type":"shopping-lists","attributes":{"name":"${shopping_list_name}"}}}
+    And Response status code should be:    404
+    And Response reason should be:   Not Found
+    And Response should return error code:    1503
+    And Array in response should contain property with value:    [errors]    detail    Shopping list not found.
 
 Update_a_shopping_list_with_absent_type
     I send a PATCH request:    /shopping-lists/shoppingListId    {"data":{"attributes":{"name":"${shopping_list_name}${random}"}}}
