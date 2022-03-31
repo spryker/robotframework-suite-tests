@@ -11,7 +11,7 @@ Resource    ../common/common.robot
 ${cancelRequestButton}    ${checkout_summary_cancel_request_button}  
 ${alertWarning}    ${checkout_summary_alert_warning}
 ${quoteStatus}    ${checkout_summary_quote_status}
-${submit_checkout_form_button}    xpath=//div[contains(@class,'form--checkout-form')]//button[@data-qa='submit-button']
+&{submit_checkout_form_button}    b2b=xpath=//div[contains(@class,'form--checkout-form')]//button[@data-qa='submit-button']    b2c=b2b=xpath=//div[contains(@class,'form--checkout-form')]//button[@data-qa='submit-button']    suite-nonsplit=xpath=//button[@data-qa='submit-button']
 
 *** Keywords ***
 Yves: billing address same as shipping address:
@@ -32,7 +32,7 @@ Yves: select the following existing address on the checkout as 'shipping' addres
     [Arguments]    ${addressToUse}
     Wait Until Element Is Visible    ${checkout_address_delivery_selector}[${env}]
     Select From List By Label    ${checkout_address_delivery_selector}[${env}]    ${addressToUse}
-    Click    ${submit_checkout_form_button}
+    Click    ${submit_checkout_form_button}[${env}]
         
 Yves: fill in the following new shipping address:
     [Documentation]    Possible argument names: salutation, firstName, lastName, street, houseNumber, postCode, city, country, company, phone, additionalAddress
@@ -107,11 +107,12 @@ Yves: fill in new delivery address for a product:
 
 Yves: select the following shipping method on the checkout and go next:
     [Arguments]    ${shippingMethod}
-    Click    xpath=//div[@data-qa='component shipment-sidebar']//*[contains(.,'Shipping Method')]/../ul//label[contains(.,'${shippingMethod}')]/span[contains(@class,'radio__box')]
-    Click    ${submit_checkout_form_button}
+    Run Keyword If    '${env}'=='suite-nonsplit'    Click    xpath=//input[contains(@id,'shipmentSelection')]/following-sibling::span[contains(@class,'label')][contains(text(),'${shippingMethod}')]/../span[contains(@class,'radio__box')]
+    ...    ELSE    Click    xpath=//div[@data-qa='component shipment-sidebar']//*[contains(.,'Shipping Method')]/../ul//label[contains(.,'${shippingMethod}')]/span[contains(@class,'radio__box')]
+    Click    ${submit_checkout_form_button}[${env}]
 
 Yves: submit form on the checkout
-    Click    ${submit_checkout_form_button}
+    Click    ${submit_checkout_form_button}[${env}]
         
 Yves: select the following shipping method for the shipment:
     [Arguments]    ${shipment}    ${shippingProvider}    ${shippingMethod}
@@ -119,16 +120,17 @@ Yves: select the following shipping method for the shipment:
 
 Yves: select the following payment method on the checkout and go next:
     [Arguments]    ${paymentMethod}
-    BuiltIn.Run Keyword If    '${env}'=='b2b'    Run keywords
+    Run Keyword If    '${env}'=='b2b'    Run keywords
     ...    Click    //form[@id='payment-form']//li[@class='checkout-list__item'][contains(.,'${paymentMethod}')]//span[contains(@class,'toggler-radio__box')]
-    ...    AND    Click    ${submit_checkout_form_button}
+    ...    AND    Click    ${submit_checkout_form_button}[${env}]
     ...    ELSE    Run keywords
     ...    Click    //form[@name='paymentForm']//span[contains(@class,'toggler') and contains(text(),'${paymentMethod}')]/preceding-sibling::span[@class='toggler-radio__box']
     ...    AND    Type Text    ${checkout_payment_invoice_date_of_birth_field}    11.11.1111    
-    ...    AND    Click    ${submit_checkout_form_button}
+    ...    AND    Click    ${submit_checkout_form_button}[${env}]
         
 
 Yves: '${checkoutAction}' on the summary page
+    [Documentation]    Possible supported actions: 'submit the order', 'send the request' and 'approve the cart'
     Run Keyword If    '${checkoutAction}' == 'submit the order'    Click    ${checkout_summary_submit_order_button}
     ...    ELSE IF    '${checkoutAction}' == 'send the request'    Click    ${checkout_summary_send_request_button}
     ...    ELSE IF    '${checkoutAction}' == 'approve the cart'    Click    ${checkout_summary_approve_request_button}
