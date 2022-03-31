@@ -2,7 +2,7 @@
     "environment": "api_b2c",
 
     "env": {
-        "glue_url": "http://glue.de.spryker.local",
+        "glue_url": "https://glue.de.b2c.internal-testing.demo-spryker.com",
         "bapi_url": "http://backend-api.de.spryker.local/api/rest"
     },
 
@@ -250,6 +250,14 @@
         "qty_of_categories_in_category_trees": "6",
         "qty_of_subcategories_in_category_trees": "2",
         "color_name": "black"
+    },
+    "wishlist":{
+        "product_sku_1":  "056_31714843",
+        "product_sku_2":  "swewewewew",
+        "product_sku_3": "1000_11",
+        "product_sku_4":    "191_17681791",
+        "product_sku_5":    "",
+        "wishlist_name":    "New Collection"
     }
 
 }
