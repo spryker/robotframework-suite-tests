@@ -27,13 +27,19 @@
         "yves_third_user_last_name": "Musterman",
         "yves_third_user_password": "change123",
         "yves_third_user_salutation": "Mr",
-
+      
         "yves_fourth_user_email": "Lilu@ottom.de",
         "yves_fourth_user_first_name": "Lilu",
         "yves_fourth_user_last_name": "Dallas",
         "yves_fourth_user_password": "change123",
         "yves_fourth_user_reference": "DE-30",
         "yves_fourth_user_salutation": "Ms",
+
+        "yves_shared_shopping_list_user_email": "Trever.m@spryker.com",
+        "yves_shared_shopping_list_user_first_name": "Trever",
+        "yves_shared_shopping_list_user_last_name": "Meier",
+        "yves_shared_shopping_list_user_password": "change123",
+        "yves_shared_shopping_list_user_salutation": "Mr",        
 
         "gender_female": "Female",
         "gender_male": "Male",
@@ -98,6 +104,14 @@
       "locale_code_DE": "de",
       "locale_name_EN": "en_US",
       "locale_code_EN": "en"
+    },
+
+    "shopping-list":{
+        "shopping_list_name": "My Shopping List",
+        "yves_user_1st_shopping_list_id": "cf032865-d1ad-5e27-803a-423bd15ced66",
+        "yves_user_1st_shopping_list_name": "Newcomers",
+        "yves_user_2nd_shopping_list_name": "Weekly office",
+        "yves_user_3rd_shopping_list_name": "Monthly office"
     },
 
     "shopping-list":{
@@ -194,11 +208,11 @@
         "concrete_available_with_stock_and_never_out_of_stock_name": "FRIWA stackable chair - with closed back",
         "abstract_available_product_with_no_stock_and_never_out_of_stock": "",
         "abstract_unavailable_product": "",
+        "concrete_unavailable_product_sku": "",
 
         "abstract_available_product_with_3_concretes": "M29456",
         "abstract_available_product_with_3_concretes_name": "Gmöhling aluminum data removal container - Exterior - LxWxH 435 x 385 x 650 mm",
         "abstract_available_product_with_3_concretes_superattribute": "material",
-
 
         "abstract_product_with_volume_prices": "M21189",
         "abstract_product_with_volume_prices_name": "Post-it stick note Super Sticky Meeting Notes 6445-4SS 4 pieces/pack",
@@ -248,7 +262,7 @@
         "product_option_1": "OP_2_year_waranty",
         "product_option_1_name": "Two (2) year limited warranty",
         "product_option_2": "OP_insurance"
-            
+
     },
     "product_attributes":{
         "brand_1": "Soennecken",
