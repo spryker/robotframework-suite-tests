@@ -134,7 +134,7 @@ Add_a_concrete_product_to_the_shared_shopping_list
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}  
     ...    AND    I send a GET request:    /shopping-lists/
     ...    AND    Save value to a variable:    [data][0][id]    sharedShoppingListId
-    ...    AND    I get access token for the customer:    ${yves_fifth_user_email}
+    ...    AND    I get access token for the customer:    ${yves_shared_shopping_list_user_email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token} 
     I send a POST request:    /shopping-lists/${sharedShoppingListId}/shopping-list-items    {"data":{"type":"shopping-list-items","attributes":{"sku":"${concrete_available_product_sku}","quantity":1}}}
     And Response status code should be:    201
@@ -213,7 +213,7 @@ Change_quantity_of_a_concrete_product_at_the_shared_shopping_list
     ...    AND    I send a POST request:    /shopping-lists/${sharedShoppingListId}/shopping-list-items    {"data":{"type":"shopping-list-items","attributes":{"sku":"${concrete_available_product_sku}","quantity":1}}}
     ...    AND    Response status code should be:    201
     ...    AND    Save value to a variable:    [data][id]    shoppingListItemId
-    ...    AND    I get access token for the customer:    ${yves_fifth_user_email}
+    ...    AND    I get access token for the customer:    ${yves_shared_shopping_list_user_email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token} 
     I send a PATCH request:    /shopping-lists/${sharedShoppingListId}/shopping-list-items/${shoppingListItemId}    {"data":{"type":"shopping-list-items","attributes":{"quantity":2}}}
     And Response status code should be:    200
@@ -281,7 +281,7 @@ Remove_a_concrete_product_from_the_shared_shopping_list
     ...    AND    I send a POST request:    /shopping-lists/${sharedShoppingListId}/shopping-list-items    {"data":{"type":"shopping-list-items","attributes":{"sku":"${concrete_available_product_sku}","quantity":1}}}
     ...    AND    Response status code should be:    201
     ...    AND    Save value to a variable:    [data][id]    shoppingListItemId
-    ...    AND    I get access token for the customer:    ${yves_fifth_user_email}
+    ...    AND    I get access token for the customer:    ${yves_shared_shopping_list_user_email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token} 
     I send a DELETE request:    /shopping-lists/${sharedShoppingListId}/shopping-list-items/${shoppingListItemId}
     And Response status code should be:    204

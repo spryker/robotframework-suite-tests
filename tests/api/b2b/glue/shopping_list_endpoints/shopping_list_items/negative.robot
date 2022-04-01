@@ -45,7 +45,7 @@ Add_a_product_with_non_existing_sku_to_the_shopping_list
     ...    AND    Response status code should be:    204
     ...    AND    Response reason should be:    No Content
 
-Add_a_product_with_zero_quantity_of_to_the_shopping_list  
+Add_a_product_with_zero_quantity_to_the_shopping_list  
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}  
     ...    AND    I send a POST request:    /shopping-lists    {"data":{"type":"shopping-lists","attributes":{"name":"${shopping_list_name}${random}"}}}
@@ -238,7 +238,7 @@ Add_a_concrete_product_to_the_shared_shopping_list_without_write_access_permissi
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}  
     ...    AND    I send a GET request:    /shopping-lists/
     ...    AND    Save value to a variable:    [data][1][id]    sharedShoppingListId
-    ...    AND    I get access token for the customer:    ${yves_fifth_user_email}
+    ...    AND    I get access token for the customer:    ${yves_shared_shopping_list_user_email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token} 
     I send a POST request:    /shopping-lists/${sharedShoppingListId}/shopping-list-items    {"data":{"type":"shopping-list-items","attributes":{"sku":"${concrete_available_product_sku}","quantity":1}}}
     And Response status code should be:    403
@@ -353,7 +353,7 @@ Change_quantity_of_a_concrete_product_at_the_shared_shopping_list_without_write_
     ...    AND    I send a POST request:    /shopping-lists/${sharedShoppingListId}/shopping-list-items    {"data":{"type":"shopping-list-items","attributes":{"sku":"${concrete_available_product_sku}","quantity":1}}}
     ...    AND    Response status code should be:    201
     ...    AND    Save value to a variable:    [data][id]    shoppingListItemId
-    ...    AND    I get access token for the customer:    ${yves_fifth_user_email}
+    ...    AND    I get access token for the customer:    ${yves_shared_shopping_list_user_email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token} 
     I send a PATCH request:    /shopping-lists/${sharedShoppingListId}/shopping-list-items/${shoppingListItemId}    {"data":{"type":"shopping-list-items","attributes":{"quantity":2}}}
     And Response status code should be:    403
@@ -435,7 +435,7 @@ Remove_a_concrete_product_from_the_shared_shopping_list_without_write_access_per
     ...    AND    I send a POST request:    /shopping-lists/${sharedShoppingListId}/shopping-list-items    {"data":{"type":"shopping-list-items","attributes":{"sku":"${concrete_available_product_sku}","quantity":1}}}
     ...    AND    Response status code should be:    201
     ...    AND    Save value to a variable:    [data][id]    shoppingListItemId
-    ...    AND    I get access token for the customer:    ${yves_fifth_user_email}
+    ...    AND    I get access token for the customer:    ${yves_shared_shopping_list_user_email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token} 
     I send a DELETE request:    /shopping-lists/${sharedShoppingListId}/shopping-list-items/${shoppingListItemId}
     And Response status code should be:    403

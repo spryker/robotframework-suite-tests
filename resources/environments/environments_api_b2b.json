@@ -29,11 +29,11 @@
         "yves_third_user_salutation": "Mr",
 
 
-        "yves_fifth_user_email": "Trever.m@spryker.com",
-        "yves_fifth_user_first_name": "Trever",
-        "yves_fifth_user_last_name": "Meier",
-        "yves_fifth_user_password": "change123",
-        "yves_fifth_user_salutation": "Mr",        
+        "yves_shared_shopping_list_user_email": "Trever.m@spryker.com",
+        "yves_shared_shopping_list_user_first_name": "Trever",
+        "yves_shared_shopping_list_user_last_name": "Meier",
+        "yves_shared_shopping_list_user_password": "change123",
+        "yves_shared_shopping_list_user_salutation": "Mr",        
 
         "gender_female": "Female",
         "gender_male": "Male",
