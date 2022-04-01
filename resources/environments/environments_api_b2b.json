@@ -319,8 +319,11 @@
         
         "review_title": "This is a review",
         "review_text": "This is review text",
-        "default_review_rating": "5"
+        "default_review_rating": "5",
 
+        "url_resolver_example": "/en/clairefontaine-collegeblock-8272c-din-a5-90blatt-kariert-M21692",
+        "url_resolver_entity_type": "abstract-products",
+        "url_resolver_entity_id": "M21692"
     },
     "companies":{
         "company_name": "Spryker Systems GmbH",
