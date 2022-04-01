@@ -11,9 +11,6 @@ Library    ../../resources/libraries/common.py
 
 *** Variables ***
 # *** SUITE VARIABLES ***
-${current_url}                 http://glue.de.spryker.local
-${glue_url}                    http://glue.de.spryker.local
-${bapi_url}                    http://backend-api.de.spryker.local
 ${api_timeout}                 60
 ${default_password}            change123
 ${default_allow_redirects}     true

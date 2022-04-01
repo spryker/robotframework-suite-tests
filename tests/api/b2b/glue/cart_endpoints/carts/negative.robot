@@ -1,10 +1,13 @@
 *** Settings ***
 Suite Setup    SuiteSetup
-Test Setup    TestSetup
+Test Setup     TestSetup
 Resource    ../../../../../../resources/common/common_api.robot
 Default Tags    glue
 
 *** Test Cases ***
+ENABLER
+    TestSetup
+
 #GET requests
 Get_cart_by_cart_id_with_invalid_access_token
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
@@ -186,7 +189,7 @@ Create_cart_with_invalid_store
     ...  AND    I set Headers:    Authorization=${token}
     When I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${gross_mode}","currency": "${currency_code_eur}","store": "D","name": "${test_cart_name}"}}}
     Then Response status code should be:    422
-    And Response reason should be:    Unprocessable Entity
+    And Response reason should be:    Unprocessable Content
     And Response should return error code:    112
     And Response should return error message:    Store data is invalid.
 
@@ -195,7 +198,7 @@ Create_cart_with_invalid_priceMod_and_currency
     ...  AND    I set Headers:    Authorization=${token}
     When I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "GROSS","currency": "EU","store": "${store_de}","name": "${test_cart_name}"}}}
     Then Response status code should be:    422
-    And Response reason should be:    Unprocessable Entity
+    And Response reason should be:    Unprocessable Content
     And Each array element of array in response should contain property with value:    [errors]    status    422
     And Response body parameter should be:    [errors][0][code]    117
     And Response body parameter should be:    [errors][0][detail]    Currency is incorrect.
@@ -209,7 +212,7 @@ Create_cart_with_empty_attributes
     ...  AND    I set Headers:    Authorization=${token}
     When I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "","currency": "","store": "","name": ""}}}
     Then Response status code should be:    422
-    And Response reason should be:    Unprocessable Entity
+    And Response reason should be:    Unprocessable Content
     And Each array element of array in response should contain property with value:    [errors]    code    901
     And Each array element of array in response should contain property with value:    [errors]    status    422
     And Array in response should contain property with value:    [errors]    detail    priceMode => This value should not be blank.
@@ -222,7 +225,7 @@ Create_cart_without_attributes
     ...  AND    I set Headers:    Authorization=${token}
     When I send a POST request:    /carts    {"data": {"type": "carts","attributes": {}}}
     Then Response status code should be:    422
-    And Response reason should be:    Unprocessable Entity
+    And Response reason should be:    Unprocessable Content
     And Each array element of array in response should contain property with value:    [errors]    code    901
     And Each array element of array in response should contain property with value:    [errors]    status    422
     And Array in response should contain property with value:    [errors]    detail    priceMode => This field is missing.
@@ -386,7 +389,7 @@ Update_cart_with_empty_name
     ...  AND    I set Headers:    Authorization=${token}    If-Match=${header_tag}
     When I send a PATCH request:    /carts/${cart_id}    {"data": {"type": "carts","attributes": {"name": ""}}}
     Then Response status code should be:    422
-    And Response reason should be:    Unprocessable Entity
+    And Response reason should be:    Unprocessable Content
     And Response should return error code:    901
     And Response should return error message:    name => This value should not be blank.
     [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cart_id}
@@ -402,7 +405,7 @@ Update_cart_with_invalid_priceMod_currency_store
     ...  AND    I set Headers:    Authorization=${token}    If-Match=${header_tag}
     When I send a PATCH request:    /carts/${cart_id}    {"data": {"type": "carts","attributes": {"priceMode": "GROSS","currency": "EU","store": "DEK"}}}
     Then Response status code should be:    422
-    And Response reason should be:    Unprocessable Entity
+    And Response reason should be:    Unprocessable Content
     And Each array element of array in response should contain property with value:    [errors]    status    422
     And Response body parameter should be:    [errors][0][code]    117
     And Response body parameter should be:    [errors][0][detail]    Currency is incorrect.

@@ -11,7 +11,7 @@ Add_item_to_cart_non_existing_sku
     ...    AND    Save value to a variable:    [data][id]    cart_uid
     When I send a POST request:    /carts/${cart_uid}/items    {"data": {"type": "items","attributes": {"sku": "fake","quantity": 1}}}
     Then Response status code should be:    422
-    And Response reason should be:    Unprocessable Entity
+    And Response reason should be:    Unprocessable Content
     And Response should return error code:    102
     And Response should return error message:    Product "fake" not found
     [Teardown]    Run Keywords    I send a DELETE request:     /carts/${cart_uid}
@@ -77,7 +77,7 @@ Add_item_to_cart_with_missing_properties
     ...    AND    Save value to a variable:    [data][id]    cart_uid
     When I send a POST request:    /carts/${cart_uid}/items    {"data": {"type": "items","attributes": {}}}
     Then Response status code should be:    422
-    And Response reason should be:    Unprocessable Entity
+    And Response reason should be:    Unprocessable Content
     And Response should return error code:    901
     And Array in response should contain property with value:    [errors]    detail    sku => This field is missing.
     And Array in response should contain property with value:    [errors]    detail    quantity => This field is missing.
@@ -91,7 +91,7 @@ Add_item_to_cart_with_invalid_properties
     ...    AND    Save value to a variable:    [data][id]    cart_uid
     When I send a POST request:    /carts/${cart_uid}/items    {"data": {"type": "items","attributes": {"sku": "","quantity": "" }}}
     Then Response status code should be:    422
-    And Response reason should be:    Unprocessable Entity
+    And Response reason should be:    Unprocessable Content
     And Response should return error code:    901
     And Array in response should contain property with value:    [errors]    detail    sku => This value should not be blank.
     And Array in response should contain property with value:    [errors]    detail    quantity => This value should not be blank.
@@ -177,7 +177,7 @@ Update_item_without_changing_qty
     ...    AND    Save value to a variable:    [included][0][id]    item_uid
     When I send a PATCH request:    /carts/${cart_uid}/items/${item_uid}    {"data": {"type": "items","attributes": {"quantity": 1}}}
     Then Response status code should be:    422
-    And Response reason should be:    Unprocessable Entity
+    And Response reason should be:    Unprocessable Content
     And Response should return error code:    114
     And Response should return error message:    Cart item could not be updated.
     [Teardown]    Run Keywords    I send a DELETE request:     /carts/${cart_uid}
@@ -192,7 +192,7 @@ Update_item_with_invalid_parameters
     ...    AND    Save value to a variable:    [included][0][id]    item_uid
     When I send a PATCH request:    /carts/${cart_uid}/items/${item_uid}    {"data": {"type": "items","attributes": {"quantity": ""}}}
     Then Response status code should be:    422
-    And Response reason should be:    Unprocessable Entity
+    And Response reason should be:    Unprocessable Content
     And Response should return error code:    901
     And Array in response should contain property with value:    [errors]    detail    quantity => This value should not be blank.
     And Array in response should contain property with value:    [errors]    detail    quantity => This value should be of type numeric.

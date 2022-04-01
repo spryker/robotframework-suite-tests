@@ -1,9 +1,14 @@
 *** Settings ***
 Suite Setup       SuiteSetup
+Test Setup        TestSetup
 Resource    ../../../../../../resources/common/common_api.robot
+Default Tags    glue
 
 *** Test Cases ***
-# fails in B2B - a bug
+ENABLER
+    TestSetup
+    
+# fails in B2B - CC-16536
 Product_has_abstract_alternative
     When I send a GET request:    /concrete-products/${concrete_product_with_alternative_sku}/abstract-alternative-products
     Then Response status code should be:    200
@@ -15,7 +20,7 @@ Product_has_abstract_alternative
     And Response body parameter should be:    [data][0][attributes][sku]    ${alternative_abstract_product}
     And Response body has correct self link
 
-# fails in B2B - a bug
+# fails in B2B - CC-16536
 Product_has_abstract_alternative_with_includes
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}  

@@ -2,6 +2,7 @@
     "environment": "api_b2b", 
 
     "env": {
+        "glue_url1": "https://glue.de.b2b.internal-testing.demo-spryker.com",
         "glue_url": "http://glue.de.spryker.local",
         "bapi_url": "http://backend-api.de.spryker.local/api/rest"
     },
@@ -152,19 +153,19 @@
         "alternative_abstract_product": "M21099",
         "alternative_abstract_product_price_chf": "1130",
 
-        "abstract_available_product_with_stock": "M90799",
-        "abstract_available_product_with_stock_name": "Mauser sliding door cabinet - Sideboard with 2 shelves",
-        "abstract_available_product_with_stock_description": " High-quality, stove-enameled steel sheet construction (0.8 mm). Body welded.<br/>Smooth-running sliding doors with push handle on coated rollers. Rubber buffer guarantees low-noise door movement. Central locking by cylinder lock with change core, including 2 keys.<br/>Graphite black shelves, RAL 9011, adjustable in 25-mm pattern, load strength per base approx. 50 kg. Base height 100 mm. Standard height adjustment screws.<br/><br/>Cabinets are delivered with a 25-mm-high covering plate in light gray RAL 7035. ",
-        "abstract_available_product_with_stock_superattribute": "material",
-        "concrete_available_product_sku": "410075",
-        "concrete_available_product_meta_keywords": "Büroschrank,Mehrzweckschrank,Schiebetürschrank,Stahlschrank,Universalschrank,Aktenschrank,Schrankwand,Stahlbüroschrank",
-        "concrete_available_product_meta_description": " Hochwertige, einbrennlackierte Stahlblechkonstruktion (0,8 mm). Korpus verschweißt.<br/>Leichtgängige Schiebetüren mit Bügelgriff auf Kugellagerrollen. Gummipuffer garantieren geräuscharmes Anschlagen der Türen. Zentralverriegelung per Drehzylinderschloss mit Wechselkern inklusive 2 Schlüssel.<br/>Fachböden graphitschwarz RAL 9011, im 25-mm-Raster verstellbar, Tragkraft pro Boden ca. 50 kg. Sockelhöhe 100 mm. Serienmäßig Höhenausgleichsschrauben.<br/><br/>Schränke werden mit einer 25 mm hohen Abdeckplatte in Lichtgrau RAL 7035 geliefert. ",
+        "abstract_available_product_with_stock": "M61125",
+        "abstract_available_product_with_stock_name": "Prosedia vertebral disc swivel chair with synchronous mechanics and contoured seat - backrest height 660 mm",
+        "abstract_available_product_with_stock_description": " Easy-to-care-for fabric cover. Substructure in graphite black RAL 9011.<br/>Standard rolling for soft floors.<br/>The backrest has height-adjustable lumbar support.  ",
+        "abstract_available_product_with_stock_superattribute": "bezugsfarbe",
+        "concrete_available_product_sku": "102712",
+        "concrete_available_product_meta_keywords": "Prosedia vertebral disc swivel chair with synchronous mechanics and contoured seat - backrest height 660 mm",
+        "concrete_available_product_meta_description": " Easy-to-care-for fabric cover. Substructure in graphite black RAL 9011.<br/>Standard rolling for soft floors.<br/>The backrest has height-adjustable lumbar support.  ",
 
         "abstract_available_with_stock_and_never_out_of_stock": "M87",
         "concrete_available_with_stock_and_never_out_of_stock": "657716",
         "concrete_available_with_stock_and_never_out_of_stock_name": "FRIWA stackable chair - with closed back",
-        "abstract_available_product_with_no_stock_and_never_out_of_stock": "",
-        "abstract_unavailable_product": "",
+        "abstract_available_product_with_no_stock_and_never_out_of_stock": "M90851",
+        "abstract_unavailable_product": "M1014948",
 
         "abstract_available_product_with_3_concretes": "M29456",
         "abstract_available_product_with_3_concretes_name": "Gmöhling aluminum data removal container - Exterior - LxWxH 435 x 385 x 650 mm",
