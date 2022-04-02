@@ -1,6 +1,8 @@
 *** Settings ***
 Suite Setup       SuiteSetup
+Test Setup    TestSetup
 Resource    ../../../../../../resources/common/common_api.robot
+Default Tags    glue
 
 *** Test Cases ***
 
@@ -14,3 +16,20 @@ Get_token_for_customer
     And Response body parameter should be less than:    [expires_in]    30000
     And Response body parameter should not be EMPTY:    [access_token]
     And Response body parameter should not be EMPTY:    [refresh_token]
+
+
+Get_token_using_refresh_token_for_customer
+    [Setup]    Run Keywords    I set Headers:    Content-Type=${urlencoded_header_content_type}
+    ...  AND    I send a POST request with data:    /token    {"grant_type": "${grant_type_password}","username": "${yves_user_email}","password": "${yves_user_password}"}
+    ...  AND    Response status code should be:    200
+    ...  AND    Save value to a variable:    [refresh_token]    refresh_token
+    When I set Headers:    Content-Type=${urlencoded_header_content_type}
+    And I send a POST request with data:    /token    {"grant_type": "${grant_type_refresh_token}","refresh_token": "${refresh_token}"}
+    Then Response status code should be:    200
+    And Response reason should be:    OK
+    And Response body parameter should be:    [token_type]    Bearer
+    And Response body parameter should be greater than:    [expires_in]    0
+    And Response body parameter should be less than:    [expires_in]    30000
+    And Response body parameter should not be EMPTY:    [access_token]
+    And Response body parameter should not be EMPTY:    [refresh_token]
+
