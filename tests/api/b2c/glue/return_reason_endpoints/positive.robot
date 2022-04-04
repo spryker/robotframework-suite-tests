@@ -14,5 +14,8 @@ Get_return_reason
     And Each array element of array in response should contain property with value:    [data]    type    ${reason_type}
     And Each array element of array in response should contain nested property:    [data]    [attributes]    reason    
     And Response should contain the array of a certain size:    [data]    ${return_reasons_qty}
+    #CC-16554
+    And Each array element of array in response should contain property with value NOT in:    [data]    [id]    None    
     And Each array element of array in response should contain nested property with value:    [data]    [links][self]    ${return_reason_url}
     And Response body has correct self link
+    
