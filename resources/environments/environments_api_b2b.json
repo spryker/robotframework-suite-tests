@@ -114,14 +114,6 @@
         "yves_user_3rd_shopping_list_name": "Monthly office"
     },
 
-    "shopping-list":{
-        "shopping_list_name": "My Shopping List",
-        "yves_user_1st_shopping_list_id": "cf032865-d1ad-5e27-803a-423bd15ced66",
-        "yves_user_1st_shopping_list_name": "Newcomers",
-        "yves_user_2nd_shopping_list_name": "Weekly office",
-        "yves_user_3rd_shopping_list_name": "Monthly office"
-    },
-    
     "search":{
         "total_number_of_products_in_search": "420",
         "default_ipp": "12",
@@ -265,16 +257,18 @@
 
         "discount_concrete_product_1_sku": "108298",
         "discount_concrete_product_1_name": "Mauser hinged door cabinet - sideboard, 4 compartments, center separating wall - HxWxD 1225 x 1600 x 420 mm - light gray / ultramarine blue",
+        "individual_concrete_product_1_discount_amount": "14840",
         "discount_concrete_product_1_discount_1_unit_amount": "10600",
         "discount_concrete_product_1_discount_2_unit_amount": "4240",
         "discount_concrete_product_2_sku": "213216",
         "discount_concrete_product_2_name": "office akktiv base cabinet - HxWxD 942 x 913 x 420 mm - light gray, RAL 7035",
-        "discount_concrete_product_2_discount_1_unit_amount": "16383",
-        "discount_concrete_product_2_discount_2_unit_amount": "6554",
+        "individual_concrete_product_2_discount_amount": "8096",
+        "discount_concrete_product_2_discount_1_unit_amount": "5783",
+        "discount_concrete_product_2_discount_2_unit_amount": "2313",
         "discount_concrete_product_3_sku": "401768",
         "discount_concrete_product_3_name": "EUROKRAFT aluminum hand truck - Load capacity 200 kg, with skids - load capacity 200 kg",
         "discount_concrete_product_3_discount_1_unit_amount": "16383",
-        "discount_concrete_product_3_discount_2_unit_amount": "8435"
+        "discount_concrete_product_3_discount_2_unit_amount": "1882"
 
     },
     "product_attributes":{
@@ -359,11 +353,11 @@
         "default_review_rating": "5",
 
         "discount_1_name": "20% off storage",
-        "discount_1_description": "",
+        "discount_1_description": "Storage sale: 20% off all office storage products",
         "discount_1_sum_amount": "16383",
         "discount_2_name": "10% off minimum order",
-        "discount_2_description": "",
-        "discount_2_sum_amount": "8435",
+        "discount_2_description": "Get a 10% discount on all orders above a certain value depending on currency and gross/net price mode",
+        "discount_2_sum_amount": "490",
 
         "url_resolver_example": "/en/clairefontaine-collegeblock-8272c-din-a5-90blatt-kariert-M21692",
         "url_resolver_entity_type": "abstract-products",

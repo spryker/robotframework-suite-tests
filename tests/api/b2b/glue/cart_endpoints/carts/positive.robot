@@ -134,7 +134,7 @@ Get_cart_by_cart_id_with_included_items
     [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cart_id}
     ...  AND    Response status code should be:    204
 
-Get_cart_by_cart_id_with_product_discounts
+Get_cart_by_cart_id_with_2_product_discounts
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
     ...  AND    I set Headers:    Authorization=${token}
     ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${gross_mode}","currency": "${currency_code_eur}","store": "${store_de}","name": "${test_cart_name}-${random}"}}}
@@ -154,18 +154,19 @@ Get_cart_by_cart_id_with_product_discounts
     And Response body parameter should be:    [data][attributes][isDefault]    True
     #totals
     And Response body parameter should be:    [data][attributes][totals][expenseTotal]    0
-    And Response body parameter should be:    [data][attributes][totals][discountTotal]    10073
-    And Response body parameter should be:    [data][attributes][totals][taxTotal]    14475
-    And Response body parameter should be:    [data][attributes][totals][subtotal]    100730
-    And Response body parameter should be:    [data][attributes][totals][grandTotal]    90657
-    And Response body parameter should be:    [data][attributes][totals][priceToPay]    90657
+    And Response body parameter should be greater than:    [data][attributes][totals][discountTotal]    0
+    And Response body parameter should be greater than:    [data][attributes][totals][taxTotal]    0
+    And Response body parameter should be greater than:    [data][attributes][totals][subtotal]    0
+    And Response body parameter should be greater than:    [data][attributes][totals][grandTotal]    0
+    And Response body parameter should be greater than:    [data][attributes][totals][priceToPay]    0
     #discounts
+    And Response should contain the array of a certain size:    [data][attributes][discounts]    2
     And Response body parameter should be:    [data][attributes][discounts][0][displayName]    ${discount_1_name}
     And Response body parameter should be:    [data][attributes][discounts][0][amount]    ${discount_1_sum_amount}
     And Response body parameter should be:    [data][attributes][discounts][0][code]    None
-    And Response body parameter should be:    [data][attributes][discounts][0][displayName]    ${discount_2_name}
-    And Response body parameter should be:    [data][attributes][discounts][0][amount]    ${discount_2_sum_amount}
-    And Response body parameter should be:    [data][attributes][discounts][0][code]    None
+    And Response body parameter should be:    [data][attributes][discounts][1][displayName]    ${discount_2_name}
+    And Response body parameter should be greater than:    [data][attributes][discounts][1][amount]    0
+    And Response body parameter should be:    [data][attributes][discounts][1][code]    None
     And Response body has correct self link internal
     #items
     And Response should contain the array of a certain size:    [data][relationships][items][data]    3
@@ -176,27 +177,30 @@ Get_cart_by_cart_id_with_product_discounts
     #included
     And Response should contain the array of a certain size:    [included]    3
     And Each array element of array in response should contain property with value:    [included]    type    items
+    #item 1
     And Response body parameter should be:    [included][0][id]    ${discount_concrete_product_1_sku}
-    And Response body parameter should be:    [included][1][id]    ${discount_concrete_product_2_sku}
-    And Response body parameter should be:    [included][2][id]    ${discount_concrete_product_3_sku}
     And Response body parameter should be:    [included][0][attributes][sku]    ${discount_concrete_product_1_sku}
     And Response body parameter should be:    [included][0][attributes][quantity]    1
-    And Response body parameter should be:    [included][0][attributes][calculations][unitDiscountAmountAggregation]    ${discount_concrete_product_1_discount_1_unit_amount}
-    And Response body parameter should be:    [included][0][attributes][calculations][sumDiscountAmountAggregation]    ${discount_concrete_product_1_discount_1_unit_amount}
-    And Response body parameter should be:    [included][0][attributes][calculations][unitDiscountAmountFullAggregation]    ${discount_concrete_product_1_discount_1_unit_amount}
-    And Response body parameter should be:    [included][0][attributes][calculations][sumDiscountAmountFullAggregation]    ${discount_concrete_product_1_discount_1_unit_amount}
+    And Response body parameter should be:    [included][0][attributes][calculations][unitDiscountAmountAggregation]    ${individual_concrete_product_1_discount_amount}
+    And Response body parameter should be:    [included][0][attributes][calculations][sumDiscountAmountAggregation]    ${individual_concrete_product_1_discount_amount}
+    And Response body parameter should be:    [included][0][attributes][calculations][unitDiscountAmountFullAggregation]    ${individual_concrete_product_1_discount_amount}
+    And Response body parameter should be:    [included][0][attributes][calculations][sumDiscountAmountFullAggregation]    ${individual_concrete_product_1_discount_amount}
+    #item 2
+    And Response body parameter should be:    [included][1][id]    ${discount_concrete_product_2_sku}
     And Response body parameter should be:    [included][1][attributes][sku]    ${discount_concrete_product_2_sku}
     And Response body parameter should be:    [included][1][attributes][quantity]    1
-    And Response body parameter should be:    [included][1][attributes][calculations][unitDiscountAmountAggregation]    ${discount_concrete_product_2_discount_1_unit_amount}
-    And Response body parameter should be:    [included][1][attributes][calculations][sumDiscountAmountAggregation]    ${discount_concrete_product_2_discount_1_unit_amount}
-    And Response body parameter should be:    [included][1][attributes][calculations][unitDiscountAmountFullAggregation]    ${discount_concrete_product_2_discount_1_unit_amount}
-    And Response body parameter should be:    [included][1][attributes][calculations][sumDiscountAmountFullAggregation]    ${discount_concrete_product_2_discount_1_unit_amount}
+    And Response body parameter should be:    [included][1][attributes][calculations][unitDiscountAmountAggregation]    ${individual_concrete_product_2_discount_amount}
+    And Response body parameter should be:    [included][1][attributes][calculations][sumDiscountAmountAggregation]    ${individual_concrete_product_2_discount_amount}
+    And Response body parameter should be:    [included][1][attributes][calculations][unitDiscountAmountFullAggregation]    ${individual_concrete_product_2_discount_amount}
+    And Response body parameter should be:    [included][1][attributes][calculations][sumDiscountAmountFullAggregation]    ${individual_concrete_product_2_discount_amount}
+    #item 3
+    And Response body parameter should be:    [included][2][id]    ${discount_concrete_product_3_sku}
     And Response body parameter should be:    [included][2][attributes][sku]    ${discount_concrete_product_3_sku}
     And Response body parameter should be:    [included][2][attributes][quantity]    1
-    And Response body parameter should be:    [included][2][attributes][calculations][unitDiscountAmountAggregation]    ${discount_concrete_product_3_discount_1_unit_amount}
-    And Response body parameter should be:    [included][2][attributes][calculations][sumDiscountAmountAggregation]    ${discount_concrete_product_3_discount_1_unit_amount}
-    And Response body parameter should be:    [included][2][attributes][calculations][unitDiscountAmountFullAggregation]    ${discount_concrete_product_3_discount_1_unit_amount}
-    And Response body parameter should be:    [included][2][attributes][calculations][sumDiscountAmountFullAggregation]    ${discount_concrete_product_3_discount_1_unit_amount}
+    And Response body parameter should be:    [included][2][attributes][calculations][unitDiscountAmountAggregation]    ${individual_concrete_product_3_discount_amount}
+    And Response body parameter should be:    [included][2][attributes][calculations][sumDiscountAmountAggregation]    ${individual_concrete_product_3_discount_amount}
+    And Response body parameter should be:    [included][2][attributes][calculations][unitDiscountAmountFullAggregation]    ${individual_concrete_product_3_discount_amount}
+    And Response body parameter should be:    [included][2][attributes][calculations][sumDiscountAmountFullAggregation]    ${individual_concrete_product_3_discount_amount}
     [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cart_id}
     ...  AND    Response status code should be:    204
 
