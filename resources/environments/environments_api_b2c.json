@@ -2,7 +2,7 @@
     "environment": "api_b2c",
 
     "env": {
-        "glue_url": "https://glue.de.b2c.internal-testing.demo-spryker.com",
+        "glue_url": "http://glue.de.spryker.local",
         "bapi_url": "http://backend-api.de.spryker.local/api/rest"
     },
 
@@ -69,7 +69,7 @@
         "currency_symbol_chf": "CHF"
     },
     "returns":{
-        "return_resaon":"Custome reason - Not Fit"
+        "return_resaon":"Custom reason - Not Fit"
 },
     "search":{
         "total_number_of_products_in_search": "215",
