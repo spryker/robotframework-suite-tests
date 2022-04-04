@@ -7,50 +7,29 @@ Default Tags    glue
 *** Test Cases ***
 #GET requests
 Get_cart_by_cart_id_with_invalid_access_token
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
-    ...  AND    I set Headers:    Authorization=${token}
-    ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${gross_mode}","currency": "${currency_code_eur}","store": "${store_de}","name": "${test_cart_name}"}}}
-    ...  AND    Save value to a variable:    [data][id]    cart_id
-    ...  AND    Response status code should be:    201
-    ...  AND    I set Headers:    Authorization=3485h7
-    When I send a GET request:    /carts/${cart_id}
+    [Setup]    I set Headers:    Authorization=3485h7
+    When I send a GET request:    /carts/not-existing-cart
     Then Response status code should be:    401
     And Response reason should be:    Unauthorized
     And Response should return error message:    Invalid access token.
     And Response should return error code:    001
-    [Teardown]    Run Keywords    I set Headers:    Authorization=${token}
-    ...  AND    I send a DELETE request:    /carts/${cart_id}
-    ...  AND    Response status code should be:    204
 
 Get_cart_by_cart_id_without_access_token
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
-    ...  AND    I set Headers:    Authorization=${token}
-    ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${gross_mode}","currency": "${currency_code_eur}","store": "${store_de}","name": "${test_cart_name}"}}}
-    ...  AND    Save value to a variable:    [data][id]    cart_id
-    ...  AND    Response status code should be:    201
-    ...  AND    I set Headers:    Authorization=
-    When I send a GET request:    /carts/${cart_id}
+    [Setup]    I set Headers:    Authorization=
+    When I send a GET request:    /carts/not-existing-cart
     Then Response status code should be:    403
     And Response reason should be:    Forbidden
     And Response should return error message:    Missing access token.
     And Response should return error code:    002
-    [Teardown]    Run Keywords    I set Headers:    Authorization=${token}
-    ...  AND    I send a DELETE request:    /carts/${cart_id}
-    ...  AND    Response status code should be:    204
 
 Get_cart_with_non_existing_cart_id
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
     ...  AND    I set Headers:    Authorization=${token}
-    ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${gross_mode}","currency": "${currency_code_eur}","store": "${store_de}","name": "${test_cart_name}"}}}
-    ...  AND    Save value to a variable:    [data][id]    cart_id
-    ...  AND    Response status code should be:    201
     When I send a GET request:    /carts/12345678
     Then Response status code should be:    404
     And Response reason should be:    Not Found
     And Response should return error code:    101
     And Response should return error message:    Cart with given uuid not found.
-    [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cart_id}
-    ...  AND    Response status code should be:    204
 
 Get_cart_by_cart_id_from_another_customer
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
@@ -71,64 +50,38 @@ Get_cart_by_cart_id_from_another_customer
     ...  AND    Response status code should be:    204
 
 Get_cart_by_customer_id_with_invalid_access_token
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
-    ...  AND    I set Headers:    Authorization=${token}
-    ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${gross_mode}","currency": "${currency_code_eur}","store": "${store_de}","name": "${test_cart_name}"}}}
-    ...  AND    Save value to a variable:    [data][id]    cart_id
-    ...  AND    Response status code should be:    201
-    ...  AND    I set Headers:    Authorization=234567thgf
+    [Setup]    I set Headers:    Authorization=234567thgf
     When I send a GET request:    /customers/${yves_user_reference}/carts
     Then Response status code should be:    401
     And Response reason should be:    Unauthorized
     And Response should return error message:    Invalid access token.
     And Response should return error code:    001
-    [Teardown]    Run Keywords    I set Headers:    Authorization=${token}
-    ...  AND    I send a DELETE request:    /carts/${cart_id}
-    ...  AND    Response status code should be:    204
 
 Get_cart_by_customer_id_without_access_token
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
-    ...  AND    I set Headers:    Authorization=${token}
-    ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${gross_mode}","currency": "${currency_code_eur}","store": "${store_de}","name": "${test_cart_name}"}}}
-    ...  AND    Save value to a variable:    [data][id]    cart_id
-    ...  AND    Response status code should be:    201
-    ...  AND    I set Headers:    Authorization=
+    [Setup]   I set Headers:    Authorization=
     When I send a GET request:    /customers/${yves_user_reference}/carts
     Then Response status code should be:    403
     And Response reason should be:    Forbidden
     And Response should return error message:    Missing access token.
     And Response should return error code:    002
-    [Teardown]    Run Keywords    I set Headers:    Authorization=${token}
-    ...  AND    I send a DELETE request:    /carts/${cart_id}
-    ...  AND    Response status code should be:    204
 
 Get_cart_with_non_existing_customer_id
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
     ...  AND    I set Headers:    Authorization=${token}
-    ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${gross_mode}","currency": "${currency_code_eur}","store": "${store_de}","name": "${test_cart_name}"}}}
-    ...  AND    Save value to a variable:    [data][id]    cart_id
-    ...  AND    Response status code should be:    201
     When I send a GET request:    /customers/user-01/carts
     Then Response status code should be:    403
     And Response reason should be:    Forbidden
     And Response should return error code:    802
     And Response should return error message:    Unauthorized request.
-    [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cart_id}
-    ...  AND    Response status code should be:    204
 
 Get_cart_without_customer_id
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
     ...  AND    I set Headers:    Authorization=${token}
-    ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${gross_mode}","currency": "${currency_code_eur}","store": "${store_de}","name": "${test_cart_name}"}}}
-    ...  AND    Save value to a variable:    [data][id]    cart_id
-    ...  AND    Response status code should be:    201
     When I send a GET request:    /customers//carts
     Then Response status code should be:    403
     And Response reason should be:    Forbidden
     And Response should return error code:    802
     And Response should return error message:    Unauthorized request.
-    [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cart_id}
-    ...  AND    Response status code should be:    204
 
 Get_cart_from_another_customer_id
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
@@ -234,38 +187,21 @@ Create_cart_without_attributes
 
 #PATCH requests
 Update_cart_with_invalid_access_token
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
-    ...  AND    I set Headers:    Authorization=${token}
-    ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${gross_mode}","currency": "${currency_code_eur}","store": "${store_de}","name": "${test_cart_name}"}}}
-    ...  AND    Save value to a variable:    [data][id]    cart_id
-    ...  AND    Save Header value to a variable:    ETag    header_tag
-    ...  AND    Response status code should be:    201
-    ...  AND    I set Headers:    Authorization=u2g3v4b6jk55b    If-Match=${header_tag}
-    When I send a PATCH request:    /carts/${cart_id}    {"data": {"type": "carts","attributes": {"priceMode": "${net_mode}","currency": "${currency_code_eur}","store": "${store_de}","name": "${test_cart_name}-${random}"}}}
+    [Setup]    I set Headers:    Authorization=u2g3v4b6jk55b    If-Match=ETag
+    When I send a PATCH request:    /carts/not-existing-cart    {"data": {"type": "carts","attributes": {"priceMode": "${net_mode}","currency": "${currency_code_eur}","store": "${store_de}","name": "${test_cart_name}-${random}"}}}
     Then Response status code should be:    401
     And Response reason should be:    Unauthorized
     And Response should return error message:    Invalid access token.
     And Response should return error code:    001
-    [Teardown]    Run Keywords    I set Headers:    Authorization=${token}
-    ...  AND    I send a DELETE request:    /carts/${cart_id}
-    ...  AND    Response status code should be:    204
 
 Update_cart_without_access_token
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
-    ...  AND    I set Headers:    Authorization=${token}
-    ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${gross_mode}","currency": "${currency_code_eur}","store": "${store_de}","name": "${test_cart_name}"}}}
-    ...  AND    Save value to a variable:    [data][id]    cart_id
-    ...  AND    Save Header value to a variable:    ETag    header_tag
-    ...  AND    Response status code should be:    201
-    ...  AND    I set Headers:    Authorization=    If-Match=${header_tag}
-    When I send a PATCH request:    /carts/${cart_id}    {"data": {"type": "carts","attributes": {"priceMode": "${net_mode}","currency": "${currency_code_eur}","store": "${store_de}","name": "${test_cart_name}-${random}"}}}
+    [Setup]    I set Headers:    Authorization=    If-Match=If-Match=ETag
+    When I send a PATCH request:    /carts/not-existing-cart    {"data": {"type": "carts","attributes": {"priceMode": "${net_mode}","currency": "${currency_code_eur}","store": "${store_de}","name": "${test_cart_name}-${random}"}}}
     Then Response status code should be:    403
     And Response reason should be:    Forbidden
     And Response should return error message:    Missing access token.
     And Response should return error code:    002
-    [Teardown]    Run Keywords    I set Headers:    Authorization=${token}
-    ...  AND    I send a DELETE request:    /carts/${cart_id}
-    ...  AND    Response status code should be:    204
+
 
 Update_cart_with_non_existing_cart_id
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
@@ -419,63 +355,37 @@ Update_cart_with_invalid_priceMod_currency_store
 
 #DELETE requests
 Delete_cart_with_invalid_access_token
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
-    ...  AND    I set Headers:    Authorization=${token}
-    ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${gross_mode}","currency": "${currency_code_eur}","store": "${store_de}","name": "${test_cart_name}"}}}
-    ...  AND    Save value to a variable:    [data][id]    cart_id
-    ...  AND    Response status code should be:    201
-    ...  AND    I set Headers:    Authorization=iuhiu6gi7
-    When I send a DELETE request:    /carts/${cart_id}
+    [Setup]    I set Headers:    Authorization=iuhiu6gi7
+    When I send a DELETE request:    /carts/not-existing-cart
     Then Response status code should be:    401
     And Response reason should be:    Unauthorized
     And Response should return error message:    Invalid access token.
     And Response should return error code:    001
-    [Teardown]    Run Keywords    I set Headers:    Authorization=${token}
-    ...  AND    I send a DELETE request:    /carts/${cart_id}
-    ...  AND    Response status code should be:    204
 
 Delete_cart_without_access_token
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
-    ...  AND    I set Headers:    Authorization=${token}
-    ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${gross_mode}","currency": "${currency_code_eur}","store": "${store_de}","name": "${test_cart_name}"}}}
-    ...  AND    Save value to a variable:    [data][id]    cart_id
-    ...  AND    Response status code should be:    201
-    ...  AND    I set Headers:    Authorization=
-    When I send a DELETE request:    /carts/${cart_id}
+    [Setup]   I set Headers:    Authorization=
+    When I send a DELETE request:    /carts/not-existing-cart
     Then Response status code should be:    403
     And Response reason should be:    Forbidden
     And Response should return error message:    Missing access token.
     And Response should return error code:    002
-    [Teardown]    Run Keywords    I set Headers:    Authorization=${token}
-    ...  AND    I send a DELETE request:    /carts/${cart_id}
-    ...  AND    Response status code should be:    204
 
 Delete_cart_with_invalid_cart_id
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
     ...  AND    I set Headers:    Authorization=${token}
-    ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${gross_mode}","currency": "${currency_code_eur}","store": "${store_de}","name": "${test_cart_name}"}}}
-    ...  AND    Save value to a variable:    [data][id]    cart_id
-    ...  AND    Response status code should be:    201
     When I send a DELETE request:    /carts/88ca6f79
     Then Response status code should be:    404
     And Response reason should be:    Not Found
     And Response should return error message:    Cart with given uuid not found.
     And Response should return error code:    101
-    [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cart_id}
-    ...  AND    Response status code should be:    204
 
 Delete_cart_without_cart_id
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
     ...  AND    I set Headers:    Authorization=${token}
-    ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${gross_mode}","currency": "${currency_code_eur}","store": "${store_de}","name": "${test_cart_name}"}}}
-    ...  AND    Save value to a variable:    [data][id]    cart_id
-    ...  AND    Response status code should be:    201
     When I send a DELETE request:    /carts/
     Then Response status code should be:    400
     And Response reason should be:    Bad Request
     And Response should return error message:    Resource id is not specified.
-    [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cart_id}
-    ...  AND    Response status code should be:    204
 
 Delete_cart_from_another_customer_id
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}

@@ -182,8 +182,10 @@
         "concrete_product_multiple_image_set": "158_29885222",
         "concrete_product_multiple_image_set_name": "Asus ZenPad Z170C",
         "concrete_available_product_with_stock": "001_25904006",
-        "concrete_available_product_without_stock": "212_123"
-            
+        "concrete_available_product_without_stock": "212_123",
+        "product_option_1": "OP_2_year_waranty",
+        "product_option_1_name": "Two (2) year limited warranty",
+        "product_option_2": "OP_insurance"
     },
     "product_attributes":{
         "brand_1": "Soennecken",
@@ -239,6 +241,9 @@
 
         "brand_name": "canon"
 
+    },
+    "cart":{
+        "x_anonymous_prefix": "anonymous"
     },
     "availability":{
         "stock_is_0": "0.0000000000",
