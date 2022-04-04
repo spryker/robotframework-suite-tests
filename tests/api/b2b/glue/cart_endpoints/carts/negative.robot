@@ -361,9 +361,6 @@ Delete_cart_with_invalid_access_token
     And Response reason should be:    Unauthorized
     And Response should return error message:    Invalid access token.
     And Response should return error code:    001
-    [Teardown]    Run Keywords    I set Headers:    Authorization=${token}
-    ...  AND    I send a DELETE request:    /carts/${cart_id}
-    ...  AND    Response status code should be:    204
 
 Delete_cart_without_access_token
     [Setup]   I set Headers:    Authorization=
@@ -372,9 +369,6 @@ Delete_cart_without_access_token
     And Response reason should be:    Forbidden
     And Response should return error message:    Missing access token.
     And Response should return error code:    002
-    [Teardown]    Run Keywords    I set Headers:    Authorization=${token}
-    ...  AND    I send a DELETE request:    /carts/${cart_id}
-    ...  AND    Response status code should be:    204
 
 Delete_cart_with_invalid_cart_id
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
@@ -384,8 +378,6 @@ Delete_cart_with_invalid_cart_id
     And Response reason should be:    Not Found
     And Response should return error message:    Cart with given uuid not found.
     And Response should return error code:    101
-    [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cart_id}
-    ...  AND    Response status code should be:    204
 
 Delete_cart_without_cart_id
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
@@ -394,8 +386,6 @@ Delete_cart_without_cart_id
     Then Response status code should be:    400
     And Response reason should be:    Bad Request
     And Response should return error message:    Resource id is not specified.
-    [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cart_id}
-    ...  AND    Response status code should be:    204
 
 Delete_cart_from_another_customer_id
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
