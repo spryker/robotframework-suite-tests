@@ -2,7 +2,7 @@
     "environment": "api_b2c",
 
     "env": {
-        "glue_url": "https://glue.de.b2c.internal-testing.demo-spryker.com",
+        "glue_url": "http://glue.de.spryker.local",
         "bapi_url": "http://backend-api.de.spryker.local/api/rest"
     },
 
@@ -252,8 +252,6 @@
         "color_name": "black"
     },
     "wishlists":{
-        "wishlist_name1":"HS",
-        "wishlist_name2":"NP",
-        "Product_sku":"204_29851280"
-    }
+        "wishlist_name":"HS"
+       }
  }
