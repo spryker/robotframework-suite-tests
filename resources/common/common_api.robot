@@ -1205,3 +1205,40 @@ Cleanup existing customer addresses:
         Set Variable    ${response_delete}    ${response_delete}
         Should Be Equal As Strings    ${response_delete.status_code}    204    Could not delete a customer address
     END
+
+Find or create customer cart
+    [Documentation]    This keyword creates or retrieves cart for the current customer token. This keyword sets ``${cart_id} `` variable
+        ...                and it can be re-used by the keywords that follow this keyword in the test
+        ...
+        ...     This keyword does not accept any arguments. Makes GET request in order to fetch cart for the customer or creates it otherwise.
+        ...
+        ${response}=    I send a GET request:    /carts
+        Save value to a variable:    [data][0][id]    cart_id
+        ${hasCart}    Run Keyword and return status     Should not be empty    ${cart_id}
+        Log    cart_id:${cart_id}
+        Run Keyword Unless    ${hasCart}    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${gross_mode}","currency": "${currency_code_eur}","store": "${store_de}"}}}
+        Run Keyword Unless    ${hasCart}    Save value to a variable:    [data][id]    cart_id
+
+Cleanup all items in the cart:
+    [Documentation]    This keyword deletes any and all items in the given cart uid.
+        ...
+        ...    Before using this method you should get customer token and set it into the headers with the help of ``I get access token for the customer:`` and ``I set Headers:``
+        ...
+        ...    *Example:*
+        ...
+        ...    ``Cleanup items in the cart:    ${cart_id}``
+        [Arguments]    ${cart_id}
+        ${response}=    GET    ${current_url}/carts/${cart_id}    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}  params=include=items,bundle-items     expected_status=200
+        ${response_body}=    Set Variable    ${response.json()}
+        @{included}=    Get Value From Json    ${response_body}    [included]
+        ${list_length}=    Evaluate    len(@{included})
+        Log    list_length: ${list_length}
+        FOR    ${index}    IN RANGE    0    ${list_length}
+                ${list_element}=    Get From List    @{included}    ${index}
+                ${cart_item_uid}=    Get Value From Json    ${list_element}    [id]
+                ${cart_item_uid}=    Convert To String    ${cart_item_uid}
+                ${cart_item_uid}=    Replace String    ${cart_item_uid}    '   ${EMPTY}
+                ${cart_item_uid}=    Replace String    ${cart_item_uid}    [   ${EMPTY}
+                ${cart_item_uid}=    Replace String    ${cart_item_uid}    ]   ${EMPTY}
+                ${response_delete}=    DELETE    ${current_url}/carts/${cart_id}/items/${cart_item_uid}    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}    expected_status=204
+        END
