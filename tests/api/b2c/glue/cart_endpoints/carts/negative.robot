@@ -6,11 +6,8 @@ Default Tags    glue
 
 *** Test Cases ***
 Get_cart_by_cart_id_with_invalid_access_token
-   [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
-    ...  AND    I set Headers:    Authorization=${token}
-    ...  AND    Find or create customer cart
-    ...  AND    I set Headers:    Authorization=3485h7
-    When I send a GET request:    /carts/${cart_id}
+   [Setup]    I set Headers:    Authorization=3485h7
+    When I send a GET request:    /carts/not-existing-cart
     Then Response status code should be:    401
     And Response reason should be:    Unauthorized
     And Response should return error message:    Invalid access token.
