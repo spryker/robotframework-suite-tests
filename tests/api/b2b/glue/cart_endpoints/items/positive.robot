@@ -299,10 +299,10 @@ Add_item_with_storage_category_and_2_discounts
     And Response body parameter should be greater than:    [data][attributes][totals][grandTotal]    0
     And Response body parameter should be greater than:    [data][attributes][totals][priceToPay]    0
     And Response body parameter should be:    [data][attributes][discounts][0][displayName]    ${discount_1_name}
-    And Response body parameter should be:    [data][attributes][discounts][0][amount]    ${discount_concrete_product_1_price_with_discount_20%_off_storage}
+    And Response body parameter should be:    [data][attributes][discounts][0][amount]    ${discount_amount_for_product_1_with_discount_20%_off_storage}
     And Response body parameter should be:    [data][attributes][discounts][0][code]    None
     And Response body parameter should be:    [data][attributes][discounts][1][displayName]    ${discount_2_name}
-    And Response body parameter should be:    [data][attributes][discounts][1][amount]    ${discount_concrete_product_1_price_with_discount_10%_off_minimum_order}
+    And Response body parameter should be:    [data][attributes][discounts][1][amount]    ${discount_amount_for_product_1_with_discount_10%_off_minimum_order}
     And Response body parameter should be:    [data][attributes][discounts][1][code]    None
     And Response body parameter should not be EMPTY:    [data][links][self]
     [Teardown]    Run Keywords    I send a DELETE request:     /carts/${cart_uid}
@@ -332,7 +332,7 @@ Add_item_without_storage_category_and_2_discounts
     And Response body parameter should be greater than:    [data][attributes][totals][priceToPay]    0
     And Response should contain the array of a certain size:    [data][attributes][discounts]    1
     And Response body parameter should be:    [data][attributes][discounts][0][displayName]    ${discount_2_name}
-    And Response body parameter should be in range:    [data][attributes][discounts][0][amount]    ${discount_concrete_product_3_price_with_discount_10%_off_minimum_order}    -1    1
+    And Response body parameter with rounding should be:    [data][attributes][discounts][0][amount]    ${discount_amount_for_product_3_with_10%_discount}
     And Response body parameter should be:    [data][attributes][discounts][0][code]    None
     And Response body parameter should not be EMPTY:    [data][links][self]
     [Teardown]    Run Keywords    I send a DELETE request:     /carts/${cart_uid}

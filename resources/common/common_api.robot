@@ -398,25 +398,27 @@ Response body parameter should be in:
     Log    ${data}
     Should Contain Any   ${data}    ${expected_value1}    ${expected_value2}    ${expected_value3}    ${expected_value4}    ignore_case=True
 
-Response body parameter should be in range:
-    [Documentation]    This keyword checks that the response saved  in ``${response_body}`` test variable contains the speficied parameter ``${json_path}`` with the value that matches of the parameter ``${expected_value1}`` in custom range with  ``${range_value_min}``, ``${range_value_max}``.
-    ...
-    ...    Minimal range value is calculated as ``${expected_value}`` - ``${range_value_min}``
-    ...
-    ...    Maximum range value is calculated as ``${expected_value}`` + ``${range_value_max}``
+Response body parameter with rounding should be:
+    [Documentation]    This keyword checks that the response saved  in ``${response_body}`` test variable contains the speficied parameter ``${json_path}`` that has rounding from -1 to +1.
+    ...    It can be used if you need to check value with rounding for prices etg.
+    ...    
+    ...    Range is calculated as
+    ...    
+    ...    Minimal range: ``${expected_value}`` - ``1``
+    ...    Maximum range: ``${expected_value}`` + ``1``
     ...
     ...    *Example:*
     ...
-    ...    ``Response body parameter should be in range:    [data][attributes][discounts][0][amount]    ${discount_concrete_product_3_discount_2_unit_amount}    -1    1``
-    [Arguments]    ${json_path}    ${expected_value}    ${range_value_min}    ${range_value_max}
+    ...    ``Response body parameter with rounding should be:    [data][attributes][discounts][0][amount]    ${discount_amount_for_product_3_with_10%_discount}``
+    [Arguments]    ${json_path}    ${expected_value}
     ${data}=    Get Value From Json    ${response_body}    ${json_path}
     ${data}=    Convert To String    ${data}
     ${data}=    Replace String    ${data}    '   ${EMPTY}
     ${data}=    Replace String    ${data}    [   ${EMPTY}
     ${data}=    Replace String    ${data}    ]   ${EMPTY}
     Log    ${data}
-    ${range_value_min}=    Evaluate    ${expected_value} + ${range_value_min}
-    ${range_value_max}=    Evaluate    ${expected_value} + ${range_value_max}
+    ${range_value_min}=    Evaluate    ${expected_value} - 1
+    ${range_value_max}=    Evaluate    ${expected_value} + 1
     IF    ${data} >= ${range_value_min} and ${data} <= ${range_value_max}
         ${result}    Set Variable    True
     ELSE

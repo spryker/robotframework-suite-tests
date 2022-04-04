@@ -197,10 +197,10 @@ Get_cart_by_cart_id_with_2_product_discounts
     And Response body parameter should be:    [included][2][id]    ${discount_concrete_product_3_sku}
     And Response body parameter should be:    [included][2][attributes][sku]    ${discount_concrete_product_3_sku}
     And Response body parameter should be:    [included][2][attributes][quantity]    1
-    And Response body parameter should be:    [included][2][attributes][calculations][unitDiscountAmountAggregation]    ${discount_concrete_product_3_price_with_discount_10%_off_minimum_order}
-    And Response body parameter should be:    [included][2][attributes][calculations][sumDiscountAmountAggregation]    ${discount_concrete_product_3_price_with_discount_10%_off_minimum_order}
-    And Response body parameter should be:    [included][2][attributes][calculations][unitDiscountAmountFullAggregation]    ${discount_concrete_product_3_price_with_discount_10%_off_minimum_order}
-    And Response body parameter should be:    [included][2][attributes][calculations][sumDiscountAmountFullAggregation]    ${discount_concrete_product_3_price_with_discount_10%_off_minimum_order}
+    And Response body parameter should be:    [included][2][attributes][calculations][unitDiscountAmountAggregation]    ${discount_amount_for_product_3_with_10%_discount}
+    And Response body parameter should be:    [included][2][attributes][calculations][sumDiscountAmountAggregation]    ${discount_amount_for_product_3_with_10%_discount}
+    And Response body parameter should be:    [included][2][attributes][calculations][unitDiscountAmountFullAggregation]    ${discount_amount_for_product_3_with_10%_discount}
+    And Response body parameter should be:    [included][2][attributes][calculations][sumDiscountAmountFullAggregation]    ${discount_amount_for_product_3_with_10%_discount}
     [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cart_id}
     ...  AND    Response status code should be:    204
 

@@ -260,18 +260,18 @@
 
         "discount_concrete_product_1_sku": "108298",
         "discount_concrete_product_1_name": "Mauser hinged door cabinet - sideboard, 4 compartments, center separating wall - HxWxD 1225 x 1600 x 420 mm - light gray / ultramarine blue",
-        "discount_concrete_product_1_price_with_discount_20%_off_storage": "10600",
-        "discount_concrete_product_1_price_with_discount_10%_off_minimum_order": "4240",
+        "discount_amount_for_product_1_with_discount_20%_off_storage": "10600",
+        "discount_amount_for_product_1_with_discount_10%_off_minimum_order": "4240",
         "discount_concrete_product_1_total_sum_of_discounts": "14840",
         "discount_concrete_product_2_sku": "213216",
         "discount_concrete_product_2_name": "office akktiv base cabinet - HxWxD 942 x 913 x 420 mm - light gray, RAL 7035",
-        "discount_concrete_product_2_price_with_discount_20%_off_storage": "5783",
-        "discount_concrete_product_2_price_with_discount_10%_off_minimum_order": "2313",
+        "discount_amount_for_product_2_with_discount_20%_off_storage": "5783",
+        "discount_amount_for_product_2_with_discount_10%_off_minimum_order": "2313",
         "discount_concrete_product_2_total_sum_of_discounts": "8096",
         "discount_concrete_product_3_sku": "401768",
         "discount_concrete_product_3_name": "EUROKRAFT aluminum hand truck - Load capacity 200 kg, with skids - load capacity 200 kg",
-        "discount_concrete_product_3_price_with_discount_20%_off_storage": "16383",
-        "discount_concrete_product_3_price_with_discount_10%_off_minimum_order": "1882"
+        "discount_amount_for_product_3_with_discount_20%_off_storage": "16383",
+        "discount_amount_for_product_3_with_10%_discount": "1882"
 
     },
     "product_attributes":{
