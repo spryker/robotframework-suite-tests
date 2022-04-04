@@ -1182,7 +1182,8 @@ Cleanup existing customer addresses:
     END
 
 Find or create customer cart
-    [Documentation]    This keyword creates or retrieves cart for the current customer token.
+    [Documentation]    This keyword creates or retrieves cart for the current customer token. This keyword sets ``${cart_id} `` variable
+        ...                and it can be re-used by the keywords that follow this keyword in the test
         ...
         ...     This keyword does not accept any arguments. Makes GET request in order to fetch cart for the customer or creates it otherwise.
         ...

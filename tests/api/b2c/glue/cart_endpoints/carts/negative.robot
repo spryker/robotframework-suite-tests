@@ -17,11 +17,8 @@ Get_cart_by_cart_id_with_invalid_access_token
     And Response should return error code:    001
 
 Get_cart_by_cart_id_without_access_token
-     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
-      ...  AND    I set Headers:    Authorization=${token}
-      ...  AND    Find or create customer cart
-      ...  AND    I set Headers:    Authorization=
-    When I send a GET request:    /carts/${cart_id}
+     [Setup]    I set Headers:    Authorization=
+    When I send a GET request:    /carts/not-existing-cart
     Then Response status code should be:    403
     And Response reason should be:    Forbidden
     And Response should return error message:    Missing access token.
@@ -30,7 +27,6 @@ Get_cart_by_cart_id_without_access_token
 Get_cart_with_non_existing_cart_id
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
        ...  AND    I set Headers:    Authorization=${token}
-       ...  AND    Find or create customer cart
     When I send a GET request:    /carts/12345678
     Then Response status code should be:    404
     And Response reason should be:    Not Found
@@ -125,24 +121,16 @@ Create_cart_when_cart_already_exist
 
 #PATCH requests
 Update_cart_with_invalid_access_token
-      [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
-         ...  AND    I set Headers:    Authorization=${token}
-         ...  AND    Find or create customer cart
-         ...  AND    Save Header value to a variable:    ETag    header_tag
-         ...  AND    I set Headers:    Authorization=u2g3v4b6jk55b    If-Match=${header_tag}
-    When I send a PATCH request:    /carts/${cart_id}    {"data": {"type": "carts","attributes": {"priceMode": "${net_mode}","currency": "${currency_code_eur}","store": "${store_de}"}}}
+      [Setup]    I set Headers:    Authorization=u2g3v4b6jk55b    If-Match=wrong_tag
+    When I send a PATCH request:    /carts/not-existing-cart    {"data": {"type": "carts","attributes": {"priceMode": "${net_mode}","currency": "${currency_code_eur}","store": "${store_de}"}}}
     Then Response status code should be:    401
     And Response reason should be:    Unauthorized
     And Response should return error message:    Invalid access token.
     And Response should return error code:    001
 
 Update_cart_without_access_token
-      [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
-        ...  AND    I set Headers:    Authorization=${token}
-        ...  AND    Find or create customer cart
-        ...  AND    Save Header value to a variable:    ETag    header_tag
-        ...  AND    I set Headers:    Authorization=    If-Match=${header_tag}
-    When I send a PATCH request:    /carts/${cart_id}    {"data": {"type": "carts","attributes": {"priceMode": "${net_mode}","currency": "${currency_code_eur}","store": "${store_de}"}}}
+     [Setup]    I set Headers:    Authorization=    If-Match=wrong_tag
+    When I send a PATCH request:    /carts/not-existing-cart    {"data": {"type": "carts","attributes": {"priceMode": "${net_mode}","currency": "${currency_code_eur}","store": "${store_de}"}}}
     Then Response status code should be:    403
     And Response reason should be:    Forbidden
     And Response should return error message:    Missing access token.
@@ -161,11 +149,7 @@ Update_cart_with_non_existing_cart_id
     And Response should return error code:    006
 
 Update_cart_without_cart_id
-      [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
-        ...  AND    I set Headers:    Authorization=${token}
-        ...  AND    Find or create customer cart
-        ...  AND    Save Header value to a variable:    ETag    header_tag
-        ...  AND    I set Headers:    Authorization=${token}    If-Match=${header_tag}
+      [Setup]    I set Headers:    Authorization=u2g3v4b6jk55b    If-Match=wrong_tag
     When I send a PATCH request:    /carts/    {"data": {"type": "carts","attributes": {"priceMode": "${net_mode}","currency": "${currency_code_eur}","store": "${store_de}"}}}
     Then Response status code should be:    400
     And Response reason should be:    Bad Request
@@ -188,7 +172,6 @@ Update_cart_with_invalid_header_tag
      [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
         ...  AND    I set Headers:    Authorization=${token}
         ...  AND    Find or create customer cart
-        ...  AND    Save Header value to a variable:    ETag    header_tag
         ...  AND    I set Headers:    Authorization=${token}    If-Match="3278654tv3"
     When I send a PATCH request:    /carts/${cart_id}    {"data": {"type": "carts","attributes": {"priceMode": "${net_mode}","currency": "${currency_code_eur}","store": "${store_de}"}}}
     Then Response status code should be:    412
@@ -200,7 +183,6 @@ Update_cart_without_header_tag
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
         ...  AND    I set Headers:    Authorization=${token}
         ...  AND    Find or create customer cart
-        ...  AND    Save Header value to a variable:    ETag    header_tag
     When I send a PATCH request:    /carts/${cart_id}    {"data": {"type": "carts","attributes": {"priceMode": "${net_mode}","currency": "${currency_code_eur}","store": "${store_de}"}}}
     Then Response status code should be:    428
     And Response reason should be:    Precondition Required
@@ -246,6 +228,8 @@ Update_cart_with_invalid_priceMod_currency_store
     When I send a GET request:    /carts/${cart_id}
     Then Response status code should be:    200
     And Response reason should be:    OK
+    And Response body parameter should be:    [data][attributes][priceMode]    ${gross_mode}
+    And Response body parameter should be:    [data][attributes][currency]    ${currency_code_eur}
     And Response body parameter should be:    [data][attributes][store]    ${store_de}
 
 Delete_cart_by_cart_id

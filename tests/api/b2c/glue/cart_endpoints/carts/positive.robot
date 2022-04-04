@@ -45,7 +45,7 @@ Get_cart_by_cart_id_with_included_items
        ...  AND    I set Headers:    Authorization=${token}
        ...  AND    Find or create customer cart
        ...  AND    Cleanup all items in the cart:    ${cart_id}
-       ...  AND    I send a POST request:    /carts/${cart_id}/items    {"data": {"type": "items","attributes": {"sku": "${add_cart_item_sku}", "quantity": "1"}}}
+       ...  AND    I send a POST request:    /carts/${cart_id}/items    {"data": {"type": "items","attributes": {"sku": "${concrete_product_with_concrete_product_alternative_sku}", "quantity": "1"}}}
        ...  AND    Response status code should be:    201
     When I send a GET request:    /carts/${cart_id}?include=items
     Then Response status code should be:    200
@@ -114,7 +114,7 @@ Get_cart_with_included_cart_rules
        ...  AND    I set Headers:    Authorization=${token}
        ...  AND    Find or create customer cart
        ...  AND    Cleanup all items in the cart:    ${cart_id}
-       ...  AND    I send a POST request:    /carts/${cart_id}/items    {"data": {"type": "items","attributes": {"sku": "${add_cart_item_sku}", "quantity": "1"}}}
+       ...  AND    I send a POST request:    /carts/${cart_id}/items    {"data": {"type": "items","attributes": {"sku": "${concrete_product_with_concrete_product_alternative_sku}", "quantity": "4"}}}
        ...  AND    Response status code should be:    201
     When I send a GET request:    /carts?include=cart-rules
     Then Response status code should be:    200
@@ -132,10 +132,10 @@ Get_cart_with_included_cart_rules
     And Response body parameter should not be EMPTY:    [data][0][attributes][totals][priceToPay]
     And Response body should contain:    discounts
     And Response body parameter should be:    [data][0][attributes][discounts][0][displayName]    10% Discount for all orders above
-    And Response body parameter should be:    [data][0][attributes][discounts][0][amount]    3660
+    And Response body parameter should be:    [data][0][attributes][discounts][0][amount]    3202
     And Each array element of array in response should contain property with value:    [data][0][relationships][cart-rules][data]    type    cart-rules
     And Each array element of array in response should contain property:    [data][0][relationships][cart-rules][data]    id
-    And Response body parameter should be:     [included][0][attributes][amount]    3660
+    And Response body parameter should be:     [included][0][attributes][amount]    3202
     And Each array element of array in response should contain property with value:    [included]    type    cart-rules
     And Each array element of array in response should contain property:    [included]    id
     And Each array element of array in response should contain property:    [included]    attributes
@@ -154,7 +154,7 @@ Get_cart_with_included_promotional_items
        ...  AND    I set Headers:    Authorization=${token}
        ...  AND    Find or create customer cart
        ...  AND    Cleanup all items in the cart:    ${cart_id}
-       ...  AND    I send a POST request:    /carts/${cart_id}/items    {"data": {"type": "items","attributes": {"sku": "${add_cart_item_sku}", "quantity": "2"}}}
+       ...  AND    I send a POST request:    /carts/${cart_id}/items    {"data": {"type": "items","attributes": {"sku": "${concrete_product_with_concrete_product_alternative_sku}", "quantity": "8"}}}
        ...  AND    Response status code should be:    201
     When I send a GET request:    /carts?include=promotional-items
     Then Response status code should be:    200
@@ -172,7 +172,7 @@ Get_cart_with_included_promotional_items
     And Response body parameter should not be EMPTY:    [data][0][attributes][totals][priceToPay]
     And Response body should contain:    discounts
     And Response body parameter should be:    [data][0][attributes][discounts][0][displayName]    10% Discount for all orders above
-    And Response body parameter should be:    [data][0][attributes][discounts][0][amount]    7320
+    And Response body parameter should be:    [data][0][attributes][discounts][0][amount]    6404
     And Each array element of array in response should contain property with value:    [data][0][relationships][promotional-items][data]    type    promotional-items
     And Each array element of array in response should contain property:    [data][0][relationships][promotional-items][data]    id
     And Each array element of array in response should contain property with value:    [included]    type    promotional-items

@@ -14,11 +14,11 @@
         "yves_user_reference": "DE--21",
         "yves_user_salutation": "Ms",
 
-        "yves_second_user_email": "spencor.hopkin@spryker.com",
-        "yves_second_user_first_name": "Hopkin",
-        "yves_second_user_last_name": "Spencor",
+        "yves_second_user_email": "bill.martin@spryker.com",
+        "yves_second_user_first_name": "Martin",
+        "yves_second_user_last_name": "Bill",
         "yves_second_user_password": "change123",
-        "yves_second_user_reference": "DE--1",
+        "yves_second_user_reference": "DE--4",
         "yves_second_user_salutation": "Mr",
 
         "zed_admin_email": "admin@spryker.com",
@@ -243,8 +243,7 @@
 
     },
     "cart":{
-        "add_cart_item_sku": "012_25904598",
-        "add_cart_item_abstract_sku": "012"
+        "x_anonymous_prefix": "anonymous"
     },
     "availability":{
         "stock_is_0": "0.0000000000",

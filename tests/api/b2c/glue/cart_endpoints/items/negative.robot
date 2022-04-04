@@ -18,7 +18,6 @@ Add_item_to_cart_non_existing_sku
 Add_item_to_non_existing_cart
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
             ...  AND    I set Headers:    Authorization=${token}
-            ...  AND    Find or create customer cart
     When I send a POST request:    /carts/fake/items    {"data": {"type": "items","attributes": {"sku": "${concrete_available_with_stock_and_never_out_of_stock}","quantity": 1}}}
     Then Response status code should be:    404
     And Response reason should be:    Not Found
@@ -26,11 +25,8 @@ Add_item_to_non_existing_cart
     And Response should return error message:    Cart with given uuid not found.
 
 Add_item_to_cart_with_invalid_token
-     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
-        ...  AND    I set Headers:    Authorization=${token}
-        ...  AND    Find or create customer cart
-        ...  AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization="fake"
-    When I send a POST request:    /carts/${cart_id}/items    {"data": {"type": "items","attributes": {"sku": "${concrete_available_with_stock_and_never_out_of_stock}","quantity": 1}}}
+     [Setup]    I set Headers:    Content-Type=${default_header_content_type}    Authorization="fake"
+    When I send a POST request:    /carts/not-existing-cart/items    {"data": {"type": "items","attributes": {"sku": "${concrete_available_with_stock_and_never_out_of_stock}","quantity": 1}}}
     Then Response status code should be:    401
     And Response reason should be:    Unauthorized
     And Response should return error code:    001
@@ -79,7 +75,6 @@ Add_item_to_cart_with_invalid_properties
 Add_item_to_missing_cart
      [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
         ...  AND    I set Headers:    Authorization=${token}
-        ...  AND    Find or create customer cart
     When I send a POST request:    /carts//items    {"data": {"type": "items","attributes": {"sku": "${concrete_available_with_stock_and_never_out_of_stock}","quantity": 1}}}
     Then Response status code should be:    400
     And Response reason should be:    Bad Request
@@ -120,8 +115,7 @@ Update_item_in_cart_with_non_existing_cart_id
 Update_item_in_cart_with_no_cart_id
      [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
        ...  AND    I set Headers:    Authorization=${token}
-       ...  AND    Find or create customer cart
-       ...  AND    I send a POST request:    /carts/${cart_id}/items    {"data": {"type": "items","attributes": {"sku": "${concrete_available_with_stock_and_never_out_of_stock}","quantity": 1}}}
+       ...  AND    I send a POST request:    /carts/not-existing-cart/items    {"data": {"type": "items","attributes": {"sku": "${concrete_available_with_stock_and_never_out_of_stock}","quantity": 1}}}
     When I send a PATCH request:    /carts//items/${concrete_available_with_stock_and_never_out_of_stock}    {"data": {"type": "items","attributes": {"quantity": 1}}}
     Then Response status code should be:    400
     And Response reason should be:    Bad Request
@@ -188,7 +182,6 @@ Delete_cart_item_with_empty_item_id
 Delete_cart_item_with_non_existing_cart
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
        ...  AND    I set Headers:    Authorization=${token}
-       ...  AND    Find or create customer cart
     When I send a DELETE request:    /carts/fake/items/fake
     Then Response status code should be:    404
     And Response reason should be:    Not Found
