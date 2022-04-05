@@ -33,3 +33,5 @@ ${pdp_reset_selected_variant_locator}    xpath=//div[@class='variant']//button |
 ${pdp_back_in_stock_subscribe_button}    xpath=//form[@id='availability_notification_subscription']//button[@data-qa='submit-button']
 ${pdp_back_in_stock_unsubscribe_button}    xpath=//form[@id='availability_unsubscribe']//button[@type='submit']
 ${pdp_bazaarvoice_write_review_button}    xpath=//button[contains(@class,'bv-write-review')]
+${pdp_bazaarvoice_questions_locator}    xpath=//div[@data-bv-show='questions']
+${pdp_bazaarvoice_intine_rating_locator}    xpath=//section[@data-bv-show='inline_rating']

@@ -69,18 +69,23 @@
         "currency_symbol_chf": "CHF"
     },
     "search":{
-        "total_number_of_products_in_search": "420",
+        "total_number_of_products_in_search": "215",
         "default_ipp": "12",
         "ipp_middle": "24",
         "ipp_biggest": "36",
-        "default_ipp_pages_qty": "35",
-        "default_categories_qty": "37",
+        "default_ipp_pages_qty": "18",
+        "default_categories_qty": "15",
         "default_colors_qty": "10",
-        "default_labels_qty": "5",
+        "default_weight_qty": "10",
+        "default_labels_qty": "4",
         "default_materials_qty": "10",
+        "default_storage_capacity_qty": "5",
+        "default_touchscreen_qty": "2",
         "default_brands_qty": "10",
         "default_min_rating": "4",
         "default_max_rating": "5",
+        "default_min_price": "0",
+        "default_max_price": "345699",
         "sorting_options_qty": "5",
 
         "new_label": "New",
@@ -90,28 +95,28 @@
         "alternatives_label": "Alternatives available",
 
         "category_id_lvl1": "11",
-        "category_items_qty_lvl1": "172",
+        "category_items_qty_lvl1": "39",
         "category_id_lvl2": "12",
-        "category_items_qty_lvl2": "56",
+        "category_items_qty_lvl2": "38",
         "category_id_lvl3": "13",
         "category_items_qty_lvl3": "28",
         "category_tree_branches_qty": "6",
 
-        "abstract_sku_highest_rating": "M1016129"
+        "abstract_sku_highest_rating": "035"
 
     },
         
     "products": {
         
-        "bundle_product_abstract_sku": "B0001",
-        "bundle_product_concrete_sku":"000101",
-        "bundle_product_product_name": "Our Favourite Workspace Bundle",
-        "bundled_product_1_abstract_sku": "M528",
-        "bundled_product_2_abstract_sku": "M1017905",
-        "bundled_product_3_abstract_sku": "M24605",
-        "bundled_product_1_concrete_sku": "210_123",
-        "bundled_product_2_concrete_sku": "574995",
-        "bundled_product_3_concrete_sku": "426581",
+        "bundle_product_abstract_sku": "211",
+        "bundle_product_concrete_sku":"211_123",
+        "bundle_product_product_name": "HP Bundle",
+        "bundled_product_1_abstract_sku": "150",
+        "bundled_product_2_abstract_sku": "127",
+        "bundled_product_3_abstract_sku": "121",
+        "bundled_product_1_concrete_sku": "150_29554292",
+        "bundled_product_2_concrete_sku": "127_22828284",
+        "bundled_product_3_concrete_sku": "121_29406823",
         "qty_of_products_in_bundle": "3",
         "qty_of_each_product_inside_bundle": "1",
 
@@ -129,19 +134,19 @@
         "concrete_product_with_abstract_product_alternative_sku_name_in_lower_case": "acer travelmate p258-m",
         "concrete_product_with_concrete_product_alternative_sku": "155_30149933",
         "concrete_product_with_concrete_product_alternative_sku_name": "Lenovo IdeaPad Yoga 500",
-        "concrete_product_with_concrete_product_alternative_sku_name_in_lower_case": "lenovo ideaPad yoga 500",
-        "abstract_product_with_alternative_sku": "M21100",
-        "abstract_product_with_alternative_name": "Verbatim USB stick Store n Go V3 49173 32GB USB3.0 gray",
+        "concrete_product_with_concrete_product_alternative_sku_name_in_lower_case": "lenovo ideapad yoga 500",
+        "abstract_product_with_alternative_sku": "155",
+        "abstract_product_with_alternative_name": "Lenovo IdeaPad Yoga 500",
         "alternative_abstract_product": "134",
-        "alternative_abstract_product_price_chf": "1130",
+        "alternative_abstract_product_price_chf": "11345",
 
         "abstract_available_product_with_stock": "183",
         "abstract_available_product_with_stock_name": "Sony Xperia SGP512E1",
-        "abstract_available_product_with_stock_description": " High-quality, stove-enameled steel sheet construction (0.8 mm). Body welded.<br/>Smooth-running sliding doors with push handle on coated rollers. Rubber buffer guarantees low-noise door movement. Central locking by cylinder lock with change core, including 2 keys.<br/>Graphite black shelves, RAL 9011, adjustable in 25-mm pattern, load strength per base approx. 50 kg. Base height 100 mm. Standard height adjustment screws.<br/><br/>Cabinets are delivered with a 25-mm-high covering plate in light gray RAL 7035. ",
+        "abstract_available_product_with_stock_description": "Enjoy greater flexibility  ...than ever before with the Galaxy Tab S2. Remarkably slim and ultra-lightweight, use this device to take your e-books, photos, videos and work-related files with you wherever you need to go. The Galaxy Tab S2’s 4:3 ratio display is optimised for magazine reading and web use. Switch to Reading Mode to adjust screen brightness and change wallpaper - create an ideal eBook reading environment designed to reduce the strain on your eyes. Get greater security with convenient and accurate fingerprint functionality. Activate fingerprint lock by pressing the home button. Use fingerprint verification to restrict / allow access to your web browser, screen lock mode and your Samsung account.        ",
         "abstract_available_product_with_stock_superattribute": "color",
-        "concrete_available_product_sku": "410075",
-        "concrete_available_product_meta_keywords": "Büroschrank,Mehrzweckschrank,Schiebetürschrank,Stahlschrank,Universalschrank,Aktenschrank,Schrankwand,Stahlbüroschrank",
-        "concrete_available_product_meta_description": " Hochwertige, einbrennlackierte Stahlblechkonstruktion (0,8 mm). Korpus verschweißt.<br/>Leichtgängige Schiebetüren mit Bügelgriff auf Kugellagerrollen. Gummipuffer garantieren geräuscharmes Anschlagen der Türen. Zentralverriegelung per Drehzylinderschloss mit Wechselkern inklusive 2 Schlüssel.<br/>Fachböden graphitschwarz RAL 9011, im 25-mm-Raster verstellbar, Tragkraft pro Boden ca. 50 kg. Sockelhöhe 100 mm. Serienmäßig Höhenausgleichsschrauben.<br/><br/>Schränke werden mit einer 25 mm hohen Abdeckplatte in Lichtgrau RAL 7035 geliefert. ",
+        "concrete_available_product_sku": "183_21811723",
+        "concrete_available_product_meta_keywords": "Sony,Communication Electronics",
+        "concrete_available_product_meta_description": "Enjoy greater flexibility  ...than ever before with the Galaxy Tab S2. Remarkably slim and ultra-lightweight, use this device to take your e-books, photos,",
 
         "abstract_available_with_stock_and_never_out_of_stock": "209",
         "concrete_available_with_stock_and_never_out_of_stock": "004_30663302",
@@ -177,35 +182,44 @@
         "concrete_product_multiple_image_set": "158_29885222",
         "concrete_product_multiple_image_set_name": "Asus ZenPad Z170C",
         "concrete_available_product_with_stock": "001_25904006",
-        "concrete_available_product_without_stock": "212_123"
-            
+        "concrete_available_product_without_stock": "212_123",
+        "product_option_1": "OP_2_year_waranty",
+        "product_option_1_name": "Two (2) year limited warranty",
+        "product_option_2": "OP_insurance"
     },
     "product_attributes":{
         "brand_1": "Soennecken",
         "brand_2": "edding",
         "brand_3": "Mauser",
+        "brand_4": "Sony",
+        "brand_5": "Lenovo",
         "material_1": "aluminum",
         "material_2": "metal",
         "material_3": "chipboard",
         "material_4": "Steel sheets, stove-enameled",
+        "internal_memory": "3 GB",
+        "aspect_ratio": "16:10",
+        "storage_media": "flash",
+        "display_technology": "TFT",
         "delivery_1": "assembled",
         "price_unit_1": "piece",
+        "color_4": "Black",
         "color_3": "purple",
         "color_1": "yellow",
-        "color_2": "blue"
+        "color_2": "Blue"
 
     },
     "content":{
 
-        "abstract_product_list_id": "apl-1",
-        "abstract_list_product1_sku": "M21692",
-        "abstract_list_product1_name": "Clairefontaine Collegeblock 8272C DIN A5, 90 sheets",
-        "abstract_list_product2_sku": "M23723",
-        "abstract_list_product2_name": "Brennenstuhl extension cable 3 m",
-        "abstract_list_size": "8",
+        "abstract_product_list_id": "apl-watches",
+        "abstract_list_product1_sku": "083",
+        "abstract_list_product1_name": "Samsung Gear 2 Classic",
+        "abstract_list_product2_sku": "087",
+        "abstract_list_product2_name": "Samsung Gear S2",
+        "abstract_list_size": "4",
 
-        "banner_1_id": "br-1",
-        "banner_1_name": "Furniture - Upgrade Your Office",
+        "banner_1_id": "br-smartwatches",
+        "banner_1_name": "The freedom of cellular",
 
         "cms_pages_qty": "5",
         "first_cms_page_name": "Imprint",
@@ -214,8 +228,8 @@
         "cms_page_with_product_lists_id": "10014bd9-4bba-5a54-b84f-31b4b7efd064",
         "cms_page_with_product_lists_name": "Demo Landing Page",
 
-        "category_collection_name": "Sticky Notes",
-        "category_collection_url": "/en/stationery/paper/sticky-notes",
+        "category_collection_name": "Digital Cameras",
+        "category_collection_url": "/en/cameras-&-camcorders/digital-cameras",
 
         "category_nodes_storage_name": "Cameras & Camcorders",
         "category_nodes_storage_url": "/en/cameras-&-camcorders",
@@ -225,8 +239,11 @@
         "cms_page_collection_name": "GTC",
         "cms_page_collection_url": "/en/gtc",
 
-        "brand_name": "verbatim"
+        "brand_name": "canon"
 
+    },
+    "cart":{
+        "x_anonymous_prefix": "anonymous"
     },
     "availability":{
         "stock_is_0": "0.0000000000",

@@ -338,7 +338,7 @@ Split_Delivery
     Yves: select the following shipping method for product:    Canon IXUS 285    Express
     Yves: select the following shipping method for product:    Canon IXUS 180    Same Day
     Yves: select the following shipping method for product:    Canon IXUS 165    Express
-    Click    ${submit_checkout_form_button}
+    Click    ${submit_checkout_form_button}[${env}]
         
     Yves: select the following payment method on the checkout and go next:    Invoice
     Yves: accept the terms and conditions:    true
