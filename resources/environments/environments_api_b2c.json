@@ -68,9 +68,6 @@
         "currency_code_chf": "CHF",
         "currency_symbol_chf": "CHF"
     },
-    "returns":{
-        "return_resaon":"Custom reason - Not Fit"
-},
     "search":{
         "total_number_of_products_in_search": "215",
         "default_ipp": "12",
