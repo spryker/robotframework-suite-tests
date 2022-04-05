@@ -1,8 +1,8 @@
 *** Settings ***
 Suite Setup    SuiteSetup
 Test Setup    TestSetup
-Resource    ../../../../../resources/common/common_api.robot
 Default Tags    glue
+Resource    ../../../../../../resources/common/common_api.robot
 
 *** Test Cases ***
 Forgot_password_with_all_required_fields_and_valid_data
