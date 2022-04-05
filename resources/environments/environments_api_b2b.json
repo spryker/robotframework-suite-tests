@@ -358,10 +358,10 @@
 
         "discount_1_name": "20% off storage",
         "discount_1_description": "Storage sale: 20% off all office storage products",
-        "discount_1_total_sum_for_discount_concrete_product_1_and_2": "16383",
+        "discount_1_total_sum_for_discounts_for_products_1_and_2": "16383",
         "discount_2_name": "10% off minimum order",
         "discount_2_description": "Get a 10% discount on all orders above a certain value depending on currency and gross/net price mode",
-        "discount_2_total_sum_for_discount_concrete_product_1_and_2_and_3": "8435",
+        "discount_2_total_sum_for_discounts_for_products_1_2_and_3": "8435",
 
         "url_resolver_example": "/en/clairefontaine-collegeblock-8272c-din-a5-90blatt-kariert-M21692",
         "url_resolver_entity_type": "abstract-products",

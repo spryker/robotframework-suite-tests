@@ -452,16 +452,25 @@ Get_order_by_order_id_with_2_product_discounts
     ...  AND    I send a POST request:    /carts/${cartId}/items    {"data": {"type": "items","attributes": {"sku": "${discount_concrete_product_1_sku}","quantity": 1}}}
     ...  AND    I send a POST request:    /carts/${cartId}/items    {"data": {"type": "items","attributes": {"sku": "${discount_concrete_product_2_sku}","quantity": 1}}}
     ...  AND    I send a POST request:    /carts/${cartId}/items    {"data": {"type": "items","attributes": {"sku": "${discount_concrete_product_3_sku}","quantity": 1}}}    
-    ...  AND    When I send a POST request:    /checkout?include=orders    {"data": {"type": "checkout","attributes": {"customer": {"email": "${yves_user_email}","salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}"},"idCart": "${cart_id}","billingAddress": {"salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}","address1": "${default_address1}","address2": "${default_address2}","address3": "${default_address3}","zipCode": "${default_zipCode}","city": "${default_city}","iso2Code": "${default_iso2Code}","company": "${default_company}","phone": "${default_phone}","isDefaultBilling": False,"isDefaultShipping": False},"shippingAddress": {"salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}","address1": "${default_address1}","address2": "${default_address2}","address3": "${default_address3}","zipCode": "${default_zipCode}","city": "${default_city}","iso2Code": "${default_iso2Code}","company": "${default_company}","phone": "${default_phone}","isDefaultBilling": False,"isDefaultShipping": False},"payments": [{"paymentProviderName": "${payment_provider_name}","paymentMethodName": "${payment_method_name}"}],"shipment": {"idShipmentMethod": 1},"items": ["${discount_concrete_product_1_sku}", "${discount_concrete_product_2_sku}", "${discount_concrete_product_3_sku}"]}}}
+    ...  AND    I send a POST request:    /checkout?include=orders    {"data": {"type": "checkout","attributes": {"customer": {"email": "${yves_user_email}","salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}"},"idCart": "${cart_id}","billingAddress": {"salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}","address1": "${default_address1}","address2": "${default_address2}","address3": "${default_address3}","zipCode": "${default_zipCode}","city": "${default_city}","iso2Code": "${default_iso2Code}","company": "${default_company}","phone": "${default_phone}","isDefaultBilling": False,"isDefaultShipping": False},"shippingAddress": {"salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}","address1": "${default_address1}","address2": "${default_address2}","address3": "${default_address3}","zipCode": "${default_zipCode}","city": "${default_city}","iso2Code": "${default_iso2Code}","company": "${default_company}","phone": "${default_phone}","isDefaultBilling": False,"isDefaultShipping": False},"payments": [{"paymentProviderName": "${payment_provider_name}","paymentMethodName": "${payment_method_name}"}],"shipment": {"idShipmentMethod": 1},"items": ["${discount_concrete_product_1_sku}", "${discount_concrete_product_2_sku}", "${discount_concrete_product_3_sku}"]}}}
     ...  AND    Save value to a variable:    [data][attributes][orderReference]    order_id
     When I send a GET request:    /orders/${order_id}
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response body parameter should be:    [data][type]    orders
     And Response body parameter should be:    [data][id]    ${order_id}
-    And Response body parameter should not be EMPTY:    [data][attributes][createdAt]
-    And Response body parameter should be:    [data][attributes][currencyIsoCode]    ${currency_code_eur}
-    And Response body parameter should be:    [data][attributes][priceMode]    ${GROSS_MODE}
+    And Save value to a variable:    [data][attributes][totals][expenseTotal]    expense_total_sum
+    And Save value to a variable:    [data][attributes][totals][discountTotal]    discount_total_sum
+    And Save value to a variable:    [data][attributes][totals][subtotal]    sub_total_sum
+    #discountTotal
+    And Perform arithmetical calculation with two arguments:    discount_total_sum    ${discount_concrete_product_1_total_sum_of_discounts}    +    ${discount_concrete_product_2_total_sum_of_discounts}
+    And Perform arithmetical calculation with two arguments:    discount_total_sum    ${discount_total_sum}    +    ${discount_amount_for_product_3_with_10%_discount}
+    And Perform arithmetical calculation with two arguments:    discount_total_sum    ${discount_total_sum}    +    ${expense_total_sum}
+    And Response body parameter with rounding should be:    [data][attributes][totals][discountTotal]    ${discount_total_sum}
+    #grandTotal
+    And Perform arithmetical calculation with two arguments:    grand_total_sum    ${sub_total_sum}    -    ${discount_total_sum}
+    And Perform arithmetical calculation with two arguments:    grand_total_sum    ${grand_total_sum}    +    ${expense_total_sum}
+    And Response body parameter with rounding should be:    [data][attributes][totals][grandTotal]    ${grand_total_sum}
     #item 1 - "20% off storage" discount
     And Response should contain the array of a certain size:    [data][attributes][items][0][calculatedDiscounts]    2
     And Response body parameter should be:    [data][attributes][items][0][name]    ${discount_concrete_product_1_name}
@@ -508,14 +517,14 @@ Get_order_by_order_id_with_2_product_discounts
     And Response body parameter should be:    [data][attributes][items][2][calculatedDiscounts][0][quantity]    1
     #calculatedDiscounts - "20% off storage" discount
     And Response body parameter should contain:    [data][attributes][calculatedDiscounts]    unitAmount: None
-    And Response body parameter should contain:    [data][attributes][calculatedDiscounts]    sumAmount: ${discount_1_total_sum_for_discount_concrete_product_1_and_2}
+    And Response body parameter should contain:    [data][attributes][calculatedDiscounts]    sumAmount: ${discount_1_total_sum_for_discounts_for_products_1_and_2}
     And Response body parameter should contain:    [data][attributes][calculatedDiscounts]    displayName: ${discount_2_name}
     And Response body parameter should contain:    [data][attributes][calculatedDiscounts]    description: ${discount_2_description}
     And Response body parameter should contain:    [data][attributes][calculatedDiscounts]    voucherCode: None
     And Response body parameter should contain:    [data][attributes][calculatedDiscounts]    quantity: 3
     #calculatedDiscounts - "10% off minimum order" discount
     And Response body parameter should contain:    [data][attributes][calculatedDiscounts]    unitAmount: None
-    And Response body parameter should contain:    [data][attributes][calculatedDiscounts]    sumAmount: ${discount_2_total_sum_for_discount_concrete_product_1_and_2_and_3}
+    And Response body parameter should contain:    [data][attributes][calculatedDiscounts]    sumAmount: ${discount_2_total_sum_for_discounts_for_products_1_2_and_3}
     And Response body parameter should contain:    [data][attributes][calculatedDiscounts]    displayName: ${discount_2_name}
     And Response body parameter should contain:    [data][attributes][calculatedDiscounts]    description: ${discount_2_description}
     And Response body parameter should contain:    [data][attributes][calculatedDiscounts]    voucherCode: None

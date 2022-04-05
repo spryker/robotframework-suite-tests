@@ -346,10 +346,19 @@ Create_order_with_2_product_discounts
     And Response reason should be:    Created
     And Response body parameter should be:    [data][type]    checkout
     And Response body parameter should be:    [data][id]    None
-    And Response body parameter should contain:    [data][attributes][orderReference]    ${store_de}--
-    And Response body parameter should be:    [data][attributes][redirectUrl]    None
-    And Response body parameter should be:    [data][attributes][isExternalRedirect]    None
     And Response body has correct self link internal
+    And Save value to a variable:    [included][0][attributes][totals][expenseTotal]    expense_total_sum
+    And Save value to a variable:    [included][0][attributes][totals][discountTotal]    discount_total_sum
+    And Save value to a variable:    [included][0][attributes][totals][subtotal]    sub_total_sum
+    #discountTotal
+    And Perform arithmetical calculation with two arguments:    discount_total_sum    ${discount_concrete_product_1_total_sum_of_discounts}    +    ${discount_concrete_product_2_total_sum_of_discounts}
+    And Perform arithmetical calculation with two arguments:    discount_total_sum    ${discount_total_sum}    +    ${discount_amount_for_product_3_with_10%_discount}
+    And Perform arithmetical calculation with two arguments:    discount_total_sum    ${discount_total_sum}    +    ${expense_total_sum}
+    And Response body parameter with rounding should be:    [included][0][attributes][totals][discountTotal]    ${discount_total_sum}
+    #grandTotal
+    And Perform arithmetical calculation with two arguments:    grand_total_sum    ${sub_total_sum}    -    ${discount_total_sum}
+    And Perform arithmetical calculation with two arguments:    grand_total_sum    ${grand_total_sum}    +    ${expense_total_sum}
+    And Response body parameter with rounding should be:    [included][0][attributes][totals][grandTotal]    ${grand_total_sum}
     #item 1 - "20% off storage" discount
     And Response should contain the array of a certain size:    [included][0][attributes][items][0][calculatedDiscounts]    2
     And Response body parameter should be:    [included][0][attributes][items][0][name]    ${discount_concrete_product_1_name}
@@ -394,14 +403,14 @@ Create_order_with_2_product_discounts
     And Response body parameter should be:    [included][0][attributes][items][2][calculatedDiscounts][0][quantity]    1
     #calculatedDiscounts - "20% off storage" discount
     And Response body parameter should contain:    [included][0][attributes][calculatedDiscounts]    unitAmount: None
-    And Response body parameter should contain:    [included][0][attributes][calculatedDiscounts]    sumAmount: ${discount_1_total_sum_for_discount_concrete_product_1_and_2}
+    And Response body parameter should contain:    [included][0][attributes][calculatedDiscounts]    sumAmount: ${discount_1_total_sum_for_discounts_for_products_1_and_2}
     And Response body parameter should contain:    [included][0][attributes][calculatedDiscounts]    displayName: ${discount_1_name}
     And Response body parameter should contain:    [included][0][attributes][calculatedDiscounts]    description: ${discount_1_description}
     And Response body parameter should contain:    [included][0][attributes][calculatedDiscounts]    voucherCode: None
     And Response body parameter should contain:    [included][0][attributes][calculatedDiscounts]    quantity: 3
     #calculatedDiscounts - "10% off minimum order" discount
     And Response body parameter should contain:    [included][0][attributes][calculatedDiscounts]    unitAmount: None
-    And Response body parameter should contain:    [included][0][attributes][calculatedDiscounts]    sumAmount: ${discount_2_total_sum_for_discount_concrete_product_1_and_2_and_3}
+    And Response body parameter should contain:    [included][0][attributes][calculatedDiscounts]    sumAmount: ${discount_2_total_sum_for_discounts_for_products_1_2_and_3}
     And Response body parameter should contain:    [included][0][attributes][calculatedDiscounts]    displayName: ${discount_2_name}
     And Response body parameter should contain:    [included][0][attributes][calculatedDiscounts]    description: ${discount_2_description}
     And Response body parameter should contain:    [included][0][attributes][calculatedDiscounts]    voucherCode: None

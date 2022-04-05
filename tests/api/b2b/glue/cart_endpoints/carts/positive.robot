@@ -147,25 +147,24 @@ Get_cart_by_cart_id_with_2_product_discounts
     And Response reason should be:    OK
     And Response body parameter should be:    [data][type]    carts
     And Response body parameter should be:    [data][id]    ${cart_id}
-    And Response body parameter should be:    [data][attributes][priceMode]    ${gross_mode}
-    And Response body parameter should be:    [data][attributes][currency]    ${currency_code_eur}
-    And Response body parameter should be:    [data][attributes][store]    ${store_de}
-    And Response body parameter should be:    [data][attributes][name]    ${test_cart_name}-${random}
-    And Response body parameter should be:    [data][attributes][isDefault]    True
     #totals
-    And Response body parameter should be:    [data][attributes][totals][expenseTotal]    0
-    And Response body parameter should be greater than:    [data][attributes][totals][discountTotal]    0
+    And Save value to a variable:    [data][attributes][totals][subtotal]    sub_total_sum
+    And Save value to a variable:    [data][attributes][totals][discountTotal]    discount_total_sum
+    And Response body parameter should be:    [data][attributes][totals][expenseTotal]    0    
+    And Perform arithmetical calculation with two arguments:    discount_total_sum    ${discount_1_total_sum_for_discounts_for_products_1_and_2}    +    ${discount_2_total_sum_for_discounts_for_products_1_2_and_3}
+    And Response body parameter with rounding should be:    [data][attributes][totals][discountTotal]    ${discount_total_sum}
     And Response body parameter should be greater than:    [data][attributes][totals][taxTotal]    0
     And Response body parameter should be greater than:    [data][attributes][totals][subtotal]    0
-    And Response body parameter should be greater than:    [data][attributes][totals][grandTotal]    0
+    And Perform arithmetical calculation with two arguments:    grand_total_sum    ${sub_total_sum}    -    ${discount_total_sum}
+    And Response body parameter with rounding should be:    [data][attributes][totals][grandTotal]    ${grand_total_sum}
     And Response body parameter should be greater than:    [data][attributes][totals][priceToPay]    0
     #discounts
     And Response should contain the array of a certain size:    [data][attributes][discounts]    2
     And Response body parameter should be:    [data][attributes][discounts][0][displayName]    ${discount_1_name}
-    And Response body parameter should be:    [data][attributes][discounts][0][amount]    ${discount_1_total_sum_for_discount_concrete_product_1_and_2}
+    And Response body parameter should be:    [data][attributes][discounts][0][amount]    ${discount_1_total_sum_for_discounts_for_products_1_and_2}
     And Response body parameter should be:    [data][attributes][discounts][0][code]    None
     And Response body parameter should be:    [data][attributes][discounts][1][displayName]    ${discount_2_name}
-    And Response body parameter should be:    [data][attributes][discounts][1][amount]    ${discount_2_total_sum_for_discount_concrete_product_1_and_2_and_3}
+    And Response body parameter should be:    [data][attributes][discounts][1][amount]    ${discount_2_total_sum_for_discounts_for_products_1_2_and_3}
     And Response body parameter should be:    [data][attributes][discounts][1][code]    None
     And Response body has correct self link internal
     #items

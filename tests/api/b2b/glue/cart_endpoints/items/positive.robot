@@ -287,13 +287,8 @@ Add_item_with_storage_category_and_2_discounts
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response body parameter should be:    [data][id]    ${cart_uid}
     And Response body parameter should be:    [data][type]    carts
-    And Response body parameter should be:    [data][attributes][priceMode]    ${gross_mode}
-    And Response body parameter should be:    [data][attributes][currency]    ${currency_code_eur}
-    And Response body parameter should be:    [data][attributes][store]    ${store_de}
-    And Response body parameter should be:    [data][attributes][name]    Cart-${random}
-    And Response body parameter should be:    [data][attributes][isDefault]    True
     And Response body parameter should be:    [data][attributes][totals][expenseTotal]    0
-    And Response body parameter should be greater than:    [data][attributes][totals][discountTotal]    0
+    And Response body parameter should be:    [data][attributes][totals][discountTotal]    ${discount_concrete_product_1_total_sum_of_discounts}
     And Response body parameter should be greater than:    [data][attributes][totals][taxTotal]    0
     And Response body parameter should be greater than:    [data][attributes][totals][subtotal]    0
     And Response body parameter should be greater than:    [data][attributes][totals][grandTotal]    0
@@ -319,13 +314,8 @@ Add_item_without_storage_category_and_2_discounts
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response body parameter should be:    [data][id]    ${cart_uid}
     And Response body parameter should be:    [data][type]    carts
-    And Response body parameter should be:    [data][attributes][priceMode]    ${gross_mode}
-    And Response body parameter should be:    [data][attributes][currency]    ${currency_code_eur}
-    And Response body parameter should be:    [data][attributes][store]    ${store_de}
-    And Response body parameter should be:    [data][attributes][name]    Cart-${random}
-    And Response body parameter should be:    [data][attributes][isDefault]    True
     And Response body parameter should be:    [data][attributes][totals][expenseTotal]    0
-    And Response body parameter should be greater than:    [data][attributes][totals][discountTotal]    0
+    And Response body parameter with rounding should be:    [data][attributes][totals][discountTotal]    ${discount_amount_for_product_3_with_10%_discount}
     And Response body parameter should be greater than:    [data][attributes][totals][taxTotal]    0
     And Response body parameter should be greater than:    [data][attributes][totals][subtotal]    0
     And Response body parameter should be greater than:    [data][attributes][totals][grandTotal]    0
