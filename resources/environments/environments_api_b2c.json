@@ -230,9 +230,7 @@
     },
     "availability":{
         "stock_is_0": "0.0000000000",
-        "stock_is_20": "20.0000000000",
-        "product_sku4": "090_24495844"
-        
+        "stock_is_20": "20.0000000000"
     },
     "misc":{
         "default_header_content_type": "application/vnd.api+json",
@@ -241,13 +239,7 @@
         "qty_of_subcategories_in_category_trees": "2",
         "color_name": "black"
     },
-    "wishlist":{
-        "wishlist_name1": "abcd",
-        "wishlist_name2": "abcde"
-    },
     "return_reason":{
-        "reason_type": "return-reasons",
-        "return_reasons_qty": "3",
-        "return_reason_url": "http://glue.de.spryker.local/return-reasons"
+        "return_reasons_qty": "3"
     }
 }
