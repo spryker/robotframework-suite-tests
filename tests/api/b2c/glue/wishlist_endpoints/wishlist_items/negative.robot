@@ -1,14 +1,14 @@
 *** Settings ***
 Suite Setup       SuiteSetup
 Resource    ../../../../../../resources/common/common_api.robot
+Test Setup     TestSetup
 Default Tags    glue
 
 *** Test Cases ***
 #Post
 
 Adding_item_in_wishlist_by_invalid_Access_Token
-     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
-    ...    AND    I set Headers:    Authorization=3485h7
+    [Setup]    I set Headers:    Authorization=3485h7
     When I send a POST request:    /wishlists    {"data": { "type": "wishlists","attributes": { "name": "${wishlist_name}"} }}
     Then Response status code should be:    401
     And Response reason should be:    Unauthorized
@@ -16,8 +16,7 @@ Adding_item_in_wishlist_by_invalid_Access_Token
     And Response should return error message:    Invalid access token.
     
 Adding_item_in_wishlist_by_without_Access_Token
-        [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
-    ...    AND    I set Headers:    Authorization=
+    [Setup]    I set Headers:    Authorization=   
     When I send a POST request:    /wishlists    {"data": { "type": "wishlists","attributes": { "name": "${wishlist_name}"} }}
     Then Response status code should be:    403
     And Response reason should be:    Forbidden
@@ -122,7 +121,7 @@ Adding_item_with_deactivated_item_sku
     ...    AND    Response status code should be:    201 
     ...    AND    Response reason should be:    Created
     ...    AND    Save value to a variable:    [data][id]    wishlist_reference_id
-    When I send a POST request:   /wishlists/${wishlist_reference_id}/wishlist-items    {"data": {"type": "wishlist-items","attributes": {"sku": "${concrete_product_id_third}"}}}
+    When I send a POST request:   /wishlists/${wishlist_reference_id}/wishlist-items    {"data": {"type": "wishlist-items","attributes": {"sku": "${concrete_product_sku_with_deactivated_status}"}}}
     Then Response status code should be:    422
     And Response reason should be:    Unprocessable Entity
     And Response should return error code:    206
@@ -132,8 +131,7 @@ Adding_item_with_deactivated_item_sku
 
 #Delete
 Deleting_item_in_wishlist_by_invalid_Access_Token
-     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
-    ...    AND    I set Headers:    Authorization=3485h7
+    [Setup]    I set Headers:    Authorization=3485h7
     When I send a DELETE request:    /wishlists/mywishlist/wishlist-items/${concrete_available_product_with_stock}
     Then Response status code should be:    401 
     And Response reason should be:    Unauthorized
@@ -141,8 +139,7 @@ Deleting_item_in_wishlist_by_invalid_Access_Token
     And Response should return error message:    Invalid access token.
  
 Deleting_item_in_wishlist_by_without_Access_Token
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
-    ...    AND    I set Headers:    Authorization=
+    [Setup]    I set Headers:    Authorization=
     When I send a DELETE request:    /wishlists/mywishlist/wishlist-items/${concrete_available_product_with_stock}
     Then Response status code should be:    403
     And Response reason should be:    Forbidden

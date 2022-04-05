@@ -283,7 +283,7 @@ Update_cart_with_existing_name
     And Response body parameter should be:    [data][attributes][priceMode]    ${gross_mode}
     And Response body parameter should be:    [data][attributes][currency]    ${currency_code_eur}
     And Response body parameter should be:    [data][attributes][store]    ${store_de}
-    And Response body parameter should NOT be:    [data][attributes][name]    "My Cart"
+    And Response body parameter should NOT be:   [data][attributes][name]    "My Cart"
     And Response body parameter should be:    [data][attributes][isDefault]    True
     And Response body parameter should be:    [data][attributes][totals][expenseTotal]    0
     And Response body parameter should be:    [data][attributes][totals][discountTotal]    0
@@ -291,7 +291,7 @@ Update_cart_with_existing_name
     And Response body parameter should be:    [data][attributes][totals][subtotal]    0
     And Response body parameter should be:    [data][attributes][totals][grandTotal]    0
     And Response body parameter should be:    [data][attributes][totals][priceToPay]    0
-    And Response body has correct self link internal
+    # And Response body has correct self link internal
     [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cart_id}
     ...  AND    Response status code should be:    204
 
@@ -310,3 +310,19 @@ Delete_cart_by_cart_id
     When I send a GET request:    /carts/${cart_id}
     Then Response status code should be:    404
     And Array in response should contain property with value:    [errors]    detail    Cart with given uuid not found.
+
+    
+
+
+
+
+
+
+
+
+    
+
+
+
+
+

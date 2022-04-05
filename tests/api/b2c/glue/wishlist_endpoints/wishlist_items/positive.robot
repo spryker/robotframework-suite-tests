@@ -1,6 +1,7 @@
 *** Settings ***
 Suite Setup       SuiteSetup
 Resource    ../../../../../../resources/common/common_api.robot
+Test Setup     TestSetup
 Default Tags    glue
 
 *** Test Cases ***
@@ -36,12 +37,25 @@ Adding_multiple_variant_of_abstract_product_in_wishlist
     ...    AND    Response status code should be:    201 
     ...    AND    Response reason should be:    Created
     ...    AND    Save value to a variable:    [data][id]        wishlist_id
-    When I send a POST request:    /wishlists/${wishlist_id}/wishlist-items    {"data": {"type": "wishlist-items","attributes": {"sku": "${concrete_product_id_first}"}}}
-    AND I send a POST request:    /wishlists/${wishlist_id}/wishlist-items    {"data": {"type": "wishlist-items","attributes": {"sku": "${concrete_product_id_second}"}}}
+    When I send a POST request:    /wishlists/${wishlist_id}/wishlist-items    {"data": {"type": "wishlist-items","attributes": {"sku": "${concrete_product_sku_multivariant_variant1}"}}}
+    Then Response status code should be:    201 
+    And Response reason should be:    Created
+    When I send a POST request:    /wishlists/${wishlist_id}/wishlist-items    {"data": {"type": "wishlist-items","attributes": {"sku": "${concrete_product_sku_multivariant_variant2}"}}}
     Then Response status code should be:    201 
     And Response reason should be:    Created
     And Save value to a variable:    [data][id]    wishlist_items_id
     And Response body parameter should not be EMPTY:    [data][attributes][sku]
+    And I send a GET request:    /wishlists/${wishlist_id}?include=wishlist-items
+    Then Response status code should be:    200 
+    And Response reason should be:    OK
+    And Response body parameter should be:    [data][type]    wishlists
+    And Response body parameter should be:    [data][id]    ${wishlist_id}
+    And Response body parameter should be:    [data][attributes][name]    ${wishlist_name}
+    And Response body parameter should be:    [data][attributes][numberOfItems]    2
+    And Response body parameter should not be EMPTY:    [data][relationships]
+    And Response body parameter should not be EMPTY:    [data][relationships][wishlist-items][data][0]
+    And Response body parameter should not be EMPTY:    [data][relationships][wishlist-items][data][1]
+    And Response body has correct self link internal
     [Teardown]    Run Keywords    I send a DELETE request:    /wishlists/${wishlist_id}
     ...    AND    Response status code should be:    204
 
