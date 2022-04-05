@@ -102,6 +102,10 @@
         "category_items_qty_lvl3": "28",
         "category_tree_branches_qty": "6",
 
+        "category_node_is_root_id": "1",
+        "category_node_has_only_parent_id": "6",
+        "category_node_has_children_id": "5",
+
         "abstract_sku_highest_rating": "035"
 
     },
