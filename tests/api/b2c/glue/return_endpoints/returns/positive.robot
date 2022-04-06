@@ -15,6 +15,8 @@ Create_a_return
     ...    AND    I send a POST request:    /carts/${CartId}/items    {"data":{"type":"items","attributes":{"sku":"${concrete_available_with_stock_and_never_out_of_stock}","quantity":"1"}}}
     ...    AND    I send a POST request:    /checkout?include=orders    {"data": {"type": "checkout","attributes": {"customer": {"email": "${yves_user_email}","salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}"},"idCart": "${CartId}","billingAddress": {"salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}","address1": "${default_address1}","address2": "${default_address2}","address3": "${default_address3}","zipCode": "${default_zipCode}","city": "${default_city}","iso2Code": "${default_iso2Code}","company": "${default_company}","phone": "${default_phone}","isDefaultBilling": False,"isDefaultShipping": False},"shippingAddress": {"salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}","address1": "${default_address1}","address2": "${default_address2}","address3": "${default_address3}","zipCode": "${default_zipCode}","city": "${default_city}","iso2Code": "${default_iso2Code}","company": "${default_company}","phone": "${default_phone}","isDefaultBilling": False,"isDefaultShipping": False},"payments": [{"paymentProviderName": "DummyPayment","paymentMethodName": "Credit Card"}],"shipment": {"idShipmentMethod": 1},"items": ["${concrete_available_product_sku}"]}}}
     ...    AND    Save value to a variable:    [included][0][attributes][items][0][uuid]    Uuid
+    ...    AND    Save value to a variable:    [included][0][attributes][items][0][unitPrice]    productPrice
+
     When I send a POST request:     /returns     {"data":{"type":"returns","attributes":{"store":"DE","returnItems":[{"salesOrderItemUuid":"${Uuid}","reason":"${return_resaon}"}]}}}
     Then Response status code should be:     201
     And Response reason should be:     Created
@@ -24,8 +26,7 @@ Create_a_return
     And Response body parameter should be:    [data][attributes][store]    ${store_de}
     And Response body parameter should be:    [data][attributes][customerReference]    ${yves_second_user_reference}
     And Response body parameter should not be EMPTY:     [data][attributes][returnTotals][refundTotal]
-    And Response body parameter should not be EMPTY:     [data][attributes][returnTotals][remunerationTotal]
-    And Response body parameter should be greater than:    [data][attributes][returnTotals][remunerationTotal]    1
+    And Response body parameter should be:    [data][attributes][returnTotals][remunerationTotal]    ${productPrice}
     And Response body has correct self link
 
 Create_a_return_include_return-items
@@ -37,6 +38,8 @@ Create_a_return_include_return-items
     ...    AND    I send a POST request:    /carts/${CartId}/items    {"data":{"type":"items","attributes":{"sku":"${concrete_available_with_stock_and_never_out_of_stock}","quantity":"1"}}}
     ...    AND    I send a POST request:    /checkout?include=orders    {"data": {"type": "checkout","attributes": {"customer": {"email": "${yves_user_email}","salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}"},"idCart": "${CartId}","billingAddress": {"salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}","address1": "${default_address1}","address2": "${default_address2}","address3": "${default_address3}","zipCode": "${default_zipCode}","city": "${default_city}","iso2Code": "${default_iso2Code}","company": "${default_company}","phone": "${default_phone}","isDefaultBilling": False,"isDefaultShipping": False},"shippingAddress": {"salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}","address1": "${default_address1}","address2": "${default_address2}","address3": "${default_address3}","zipCode": "${default_zipCode}","city": "${default_city}","iso2Code": "${default_iso2Code}","company": "${default_company}","phone": "${default_phone}","isDefaultBilling": False,"isDefaultShipping": False},"payments": [{"paymentProviderName": "DummyPayment","paymentMethodName": "Credit Card"}],"shipment": {"idShipmentMethod": 1},"items": ["${concrete_available_product_sku}"]}}}
     ...    AND    Save value to a variable:    [included][0][attributes][items][0][uuid]    Uuid
+    ...    AND    Save value to a variable:    [included][0][attributes][items][0][unitPrice]    productPrice
+
     When I send a POST request:     /returns?include=return-items     {"data":{"type":"returns","attributes":{"store":"DE","returnItems":[{"salesOrderItemUuid":"${Uuid}","reason":"${return_resaon}"}]}}}
     Then Response status code should be:     201
     And Response reason should be:     Created
@@ -46,14 +49,13 @@ Create_a_return_include_return-items
     And Response body parameter should be:    [data][attributes][store]    ${store_de}
     And Response body parameter should be:    [data][attributes][customerReference]    ${yves_second_user_reference}
     And Response body parameter should not be EMPTY:     [data][attributes][returnTotals][refundTotal]
-    And Response body parameter should not be EMPTY:     [data][attributes][returnTotals][remunerationTotal]
-    And Response body parameter should be greater than:    [data][attributes][returnTotals][remunerationTotal]    0
+    And Response body parameter should be:    [data][attributes][returnTotals][remunerationTotal]    ${productPrice}
     And Response body parameter should contain:    [data]    relationships
     And Response body parameter should be:    [data][relationships][return-items][data][0][type]    return-items
     And Response body parameter should contain:    [data][relationships][return-items][data][0]    id
+    And Response should contain the array of a certain size:    [included]    1
     And Response body parameter should be:    [included][0][type]    return-items
     And Response body parameter should contain:    [included][0]    id
-    And Response body parameter should contain:    [included][0][attributes]    uuid
     And Response body parameter should be:    [included][0][attributes][uuid]    ${Uuid}
     And Response body parameter should be:    [included][0][attributes][reason]    ${return_resaon}
     And Response body parameter should contain:    [included][0][attributes]    orderItemUuid
@@ -116,6 +118,8 @@ Get_lists_of_returns_include_return-items
     And Each array element of array in response should contain nested property:    [data]    [relationships][return-items][data][0]    type
     And Each array element of array in response should contain nested property:    [data]    [relationships][return-items][data][0]    id
     And Each array element of array in response should contain nested property with value:    [data]    [relationships][return-items][data][0][type]    return-items
+    And Response include element has self link:    return-items
+    And Response include should contain certain entity type:    return-items
     And Response body has correct self link
 
 ####GET####
@@ -128,21 +132,24 @@ Get_return_by_Id
     ...    AND    I send a POST request:    /carts/${CartId}/items    {"data":{"type":"items","attributes":{"sku":"${concrete_available_with_stock_and_never_out_of_stock}","quantity":"1"}}}
     ...    AND    I send a POST request:    /checkout?include=orders    {"data": {"type": "checkout","attributes": {"customer": {"email": "${yves_user_email}","salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}"},"idCart": "${CartId}","billingAddress": {"salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}","address1": "${default_address1}","address2": "${default_address2}","address3": "${default_address3}","zipCode": "${default_zipCode}","city": "${default_city}","iso2Code": "${default_iso2Code}","company": "${default_company}","phone": "${default_phone}","isDefaultBilling": False,"isDefaultShipping": False},"shippingAddress": {"salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}","address1": "${default_address1}","address2": "${default_address2}","address3": "${default_address3}","zipCode": "${default_zipCode}","city": "${default_city}","iso2Code": "${default_iso2Code}","company": "${default_company}","phone": "${default_phone}","isDefaultBilling": False,"isDefaultShipping": False},"payments": [{"paymentProviderName": "DummyPayment","paymentMethodName": "Credit Card"}],"shipment": {"idShipmentMethod": 1},"items": ["${concrete_available_product_sku}"]}}}
     ...    AND    Save value to a variable:    [included][0][attributes][items][0][uuid]    Uuid
+    ...    AND    Save value to a variable:    [included][0][attributes][items][0][unitPrice]    productPrice
     ...    AND    I send a POST request:    /returns    {"data":{"type":"returns","attributes":{"store":"DE","returnItems":[{"salesOrderItemUuid":"${Uuid}","reason":"${return_resaon}"}]}}}
-    ...    AND    Save value to a variable:    [data][0][id]    returnOrderId
     ...    AND    Save value to a variable:    [data][attributes][returnReference]    returnReference
-    When I send a GET request:     /returns/${returnOrderId}
+
+    When I send a GET request:     /returns/${returnReference}
     Then Response status code should be:     200
     And Response reason should be:     OK
     And Response header parameter should be:     Content-Type     ${default_header_content_type}
     And Response body parameter should be:    [data][type]    returns
-    And Response body parameter should be:    [data][id]    ${returnOrderId}
+    And Response body parameter should be:    [data][id]    ${returnReference}
     And Response body parameter should be:    [data][attributes][returnReference]    ${returnReference}
     And Response body parameter should be:    [data][attributes][store]    ${store_de}
     And Response body parameter should be:    [data][attributes][customerReference]    ${yves_second_user_reference}
     And Response body parameter should not be EMPTY:     [data][attributes][returnTotals][refundTotal]
     And Response body parameter should not be EMPTY:     [data][attributes][returnTotals][remunerationTotal]
-    And Response body parameter should be greater than:    [data][attributes][returnTotals][remunerationTotal]    1
+    And Response body parameter should be:    [data][attributes][returnTotals][remunerationTotal]    ${productPrice}
+    And Response body has correct self link
+
 
 
 Get_return_by_Id_include_return-items
@@ -154,15 +161,15 @@ Get_return_by_Id_include_return-items
     ...    AND    I send a POST request:    /carts/${CartId}/items    {"data":{"type":"items","attributes":{"sku":"${concrete_available_with_stock_and_never_out_of_stock}","quantity":"1"}}}
     ...    AND    I send a POST request:    /checkout?include=orders    {"data": {"type": "checkout","attributes": {"customer": {"email": "${yves_user_email}","salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}"},"idCart": "${CartId}","billingAddress": {"salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}","address1": "${default_address1}","address2": "${default_address2}","address3": "${default_address3}","zipCode": "${default_zipCode}","city": "${default_city}","iso2Code": "${default_iso2Code}","company": "${default_company}","phone": "${default_phone}","isDefaultBilling": False,"isDefaultShipping": False},"shippingAddress": {"salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}","address1": "${default_address1}","address2": "${default_address2}","address3": "${default_address3}","zipCode": "${default_zipCode}","city": "${default_city}","iso2Code": "${default_iso2Code}","company": "${default_company}","phone": "${default_phone}","isDefaultBilling": False,"isDefaultShipping": False},"payments": [{"paymentProviderName": "DummyPayment","paymentMethodName": "Credit Card"}],"shipment": {"idShipmentMethod": 1},"items": ["${concrete_available_product_sku}"]}}}
     ...    AND    Save value to a variable:    [included][0][attributes][items][0][uuid]    Uuid
-    ...    AND    I send a POST request:    /returns    {"data":{"type":"returns","attributes":{"store":"DE","returnItems":[{"salesOrderItemUuid":"${Uuid}","reason":"${return_resaon}"}]}}}
-    ...    AND    Save value to a variable:    [data][0][id]    returnOrderId
+    ...    AND    I send a POST request:    /returns?include=return-items    {"data":{"type":"returns","attributes":{"store":"DE","returnItems":[{"salesOrderItemUuid":"${Uuid}","reason":"${return_resaon}"}]}}}
     ...    AND    Save value to a variable:    [data][attributes][returnReference]    returnReference
-    When I send a GET request:     /returns/${returnOrderId}?include=return-items 
+    ...    AND    Save value to a variable:    [included][0][attributes][orderItemUuid]    orderItemUuid
+    When I send a GET request:     /returns/${returnReference}?include=return-items 
     Then Response status code should be:     200
     And Response reason should be:     OK
     And Response header parameter should be:     Content-Type     ${default_header_content_type}
     And Response body parameter should be:    [data][type]    returns
-    And Response body parameter should be:    [data][id]    ${returnOrderId}
+    And Response body parameter should be:    [data][id]    ${returnReference}
     And Response body parameter should be:    [data][attributes][returnReference]    ${returnReference}
     And Response body parameter should be:    [data][attributes][store]    ${store_de}
     And Response body parameter should be:    [data][attributes][customerReference]    ${yves_second_user_reference}
@@ -171,12 +178,12 @@ Get_return_by_Id_include_return-items
     And Response body parameter should contain:    [data]    relationships
     And Response body parameter should be:    [data][relationships][return-items][data][0][type]    return-items
     And Response body parameter should contain:    [data][relationships][return-items][data][0]    id
+    And Response should contain the array of a certain size:    [included]    1
     And Response body parameter should be:    [included][0][type]    return-items
     And Response body parameter should contain:    [included][0]    id
     And Response body parameter should be:    [included][0][type]    return-items
     And Response body parameter should contain:    [included][0]    id
-    And Response body parameter should contain:    [included][0][attributes]    uuid
     And Response body parameter should be:    [included][0][attributes][uuid]    ${Uuid}
     And Response body parameter should be:    [included][0][attributes][reason]    ${return_resaon}
-    And Response body parameter should contain:    [included][0][attributes]    orderItemUuid
+    And Response body parameter should be:    [included][0][attributes][orderItemUuid]    ${orderItemUuid}
     And Response body has correct self link

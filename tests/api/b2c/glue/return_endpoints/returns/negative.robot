@@ -59,7 +59,7 @@ Create_return_without_returnItems_uuid
 Create_return_without_returnItems_reason
      [Setup]    Run Keywords    I get access token for the customer:    ${yves_second_user_email}
     ...    AND    I set Headers:    Authorization=${token}
-    When I send a POST request:     /returns     {"data":{"type":"returns","attributes":{"store":"DE","returnItems":[{"salesOrderItemUuid":"${random}","reason":""}]}}}
+    When I send a POST request:     /returns     {"data":{"type":"returns","attributes":{"store":"DE","returnItems":[{"salesOrderItemUuid":"920fc22f-3fb6-53ec-bc5e-c4d321115462","reason":""}]}}}
     Then Response status code should be:     422
     And Response reason should be:     Unprocessable Entity
     And Response should return error message:    "Return cant be created."    
