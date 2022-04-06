@@ -362,6 +362,9 @@
         "discount_2_name": "10% off minimum order",
         "discount_2_description": "Get a 10% discount on all orders above a certain value depending on currency and gross/net price mode",
         "discount_2_total_sum_for_discounts_for_products_1_2_and_3": "8435",
+        "discount_3_name": "Free standard delivery",
+        "discount_3_description": "Free standard delivery for all orders above certain value depending on the currency and net/gross price. This discount is not exclusive and can be combined with other discounts.",
+        "discount_3_total_sum": "490",
 
         "url_resolver_example": "/en/clairefontaine-collegeblock-8272c-din-a5-90blatt-kariert-M21692",
         "url_resolver_entity_type": "abstract-products",

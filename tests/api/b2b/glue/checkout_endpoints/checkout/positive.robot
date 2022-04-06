@@ -333,6 +333,44 @@ Create_order_with_same_items_in_different_shipments
     And Response body parameter should be:    [included][0][attributes][shipments][0][currencyIsoCode]    ${currency_code_eur}
     And Response should contain certain number of values:    [included][0][attributes][expenses]    idShipment    1
 
+Create_order_with_free_shipping_discount
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    ...  AND    I set Headers:    Authorization=${token}
+    ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${gross_mode}","currency": "${currency_code_eur}","store": "${store_de}","name": "${test_cart_name}-${random}"}}}
+    ...  AND    Save value to a variable:    [data][id]    cart_id
+    ...  AND    I send a POST request:    /carts/${cartId}/items    {"data": {"type": "items","attributes": {"sku": "${concrete_available_with_stock_and_never_out_of_stock}","quantity": 3}}}
+    When I send a POST request:    /checkout?include=orders    {"data": {"type": "checkout","attributes": {"customer": {"email": "${yves_user_email}","salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}"},"idCart": "${cart_id}","billingAddress": {"salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}","address1": "${default_address1}","address2": "${default_address2}","address3": "${default_address3}","zipCode": "${default_zipCode}","city": "${default_city}","iso2Code": "${default_iso2Code}","company": "${default_company}","phone": "${default_phone}","isDefaultBilling": False,"isDefaultShipping": False},"shippingAddress": {"salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}","address1": "${default_address1}","address2": "${default_address2}","address3": "${default_address3}","zipCode": "${default_zipCode}","city": "${default_city}","iso2Code": "${default_iso2Code}","company": "${default_company}","phone": "${default_phone}","isDefaultBilling": False,"isDefaultShipping": False},"payments": [{"paymentProviderName": "${payment_provider_name}","paymentMethodName": "${payment_method_name}"}],"shipment": {"idShipmentMethod": 1},"items": ["${concrete_available_with_stock_and_never_out_of_stock}"]}}}
+    Then Response status code should be:    201
+    And Response reason should be:    Created
+    And Response body parameter should be:    [data][type]    checkout
+    And Response body parameter should be:    [data][id]    None
+    And Response body parameter should be:    [included][0][attributes][totals][expenseTotal]    ${discount_3_total_sum}
+    And Response body parameter should be greater than:    [included][0][attributes][totals][discountTotal]    0
+    And Response body parameter should be greater than:    [included][0][attributes][totals][taxTotal]    0
+    And Response body parameter should be greater than:    [included][0][attributes][totals][subtotal]    30000
+    And Save value to a variable:    [included][0][attributes][totals][discountTotal]    discount_total_sum
+    And Save value to a variable:    [included][0][attributes][totals][subtotal]    sub_total_sum
+    And Perform arithmetical calculation with two arguments:    grand_total_sum    ${sub_total_sum}    -    ${discount_total_sum}
+    And Perform arithmetical calculation with two arguments:    grand_total_sum    ${grand_total_sum}    +    ${discount_3_total_sum}
+    And Response body parameter with rounding should be:    [included][0][attributes][totals][grandTotal]    ${grand_total_sum}
+    And Response body parameter should be:    [included][0][attributes][totals][canceledTotal]    0
+    And Response body parameter should be:    [included][0][attributes][totals][remunerationTotal]    0
+    And Response should contain the array of a certain size:    [included][0][attributes][items]    3
+    #shipments
+    And Response body parameter should be:    [included][0][attributes][shipments][0][shipmentMethodName]    ${shipment_method_name}
+    And Response body parameter should be:    [included][0][attributes][shipments][0][carrierName]    ${carrier_name}
+    And Response body parameter should be:    [included][0][attributes][shipments][0][deliveryTime]    None
+    And Response body parameter should be:    [included][0][attributes][shipments][0][defaultGrossPrice]    ${discount_3_total_sum}
+    And Response body parameter should be:    [included][0][attributes][shipments][0][defaultNetPrice]    0
+    And Response body parameter should be:    [included][0][attributes][shipments][0][currencyIsoCode]    ${currency_code_eur}
+    #calculatedDiscounts - "Free standard delivery" discount
+    And Response body parameter should contain:    [included][0][attributes][calculatedDiscounts]    unitAmount: None
+    And Response body parameter should contain:    [included][0][attributes][calculatedDiscounts]    sumAmount: ${discount_3_total_sum}
+    And Response body parameter should contain:    [included][0][attributes][calculatedDiscounts]    displayName: ${discount_3_name}
+    And Response body parameter should contain:    [included][0][attributes][calculatedDiscounts]    description: ${discount_3_description}
+    And Response body parameter should contain:    [included][0][attributes][calculatedDiscounts]    voucherCode: None
+    And Response body parameter should contain:    [included][0][attributes][calculatedDiscounts]    quantity: 1
+
 Create_order_with_2_product_discounts
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
     ...  AND    I set Headers:    Authorization=${token}
