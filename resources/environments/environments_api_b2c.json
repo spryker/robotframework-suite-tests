@@ -242,9 +242,6 @@
         "brand_name": "canon"
 
     },
-    "cart":{
-        "x_anonymous_prefix": "anonymous"
-    },
     "availability":{
         "stock_is_0": "0.0000000000",
         "stock_is_20": "20.0000000000"

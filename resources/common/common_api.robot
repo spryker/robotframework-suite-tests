@@ -112,8 +112,10 @@ I get access token for the customer:
     ...
     ...    ``I get access token for the customer:    ${yves_user_email}``
     [Arguments]    ${email}    ${password}=${default_password}
+    ${hasValue}    Run Keyword and return status     Should not be empty    ${headers}
     ${data}=    Evaluate    {"data":{"type":"access-tokens","attributes":{"username":"${email}","password":"${password}"}}}
-    ${response}=    POST    ${current_url}/access-tokens    json=${data}
+    ${response}=    Run Keyword if    ${hasValue}    POST    ${current_url}/access-tokens    json=${data}    headers=${headers}
+    ...    ELSE    POST    ${current_url}/access-tokens    json=${data}
     ${token}=    Set Variable    Bearer ${response.json()['data']['attributes']['accessToken']}
     ${response_body}=    Set Variable    ${response.json()}
     ${response_headers}=    Set Variable    ${response.headers}
@@ -1193,6 +1195,22 @@ Find or create customer cart
         Log    cart_id:${cart_id}
         Run Keyword Unless    ${hasCart}    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${gross_mode}","currency": "${currency_code_eur}","store": "${store_de}"}}}
         Run Keyword Unless    ${hasCart}    Save value to a variable:    [data][id]    cart_id
+
+Create guest cart:
+    [Documentation]    This keyword creates guest cart and sets ``${x_anonymous_customer_unique_id}`` that specify guest reference
+        ...             and ``${guest_cart_id}`` that specify guest cart, variables
+        ...             can be re-used by the keywords that follow this keyword in the test
+        ...
+        ...     This keyword does not accept any arguments. Makes POST request in order to create cart for the guest.
+        ...    *Example:*
+        ...
+        ...    ``Create guest cart: ${random}    ${concrete_product_with_concrete_product_alternative_sku}    1``
+        [Arguments]    ${x_anonymous_customer_unique_id}    ${product_sku}    ${product_quantity}
+        Set Test Variable    ${x_anonymous_customer_unique_id}    ${x_anonymous_customer_unique_id}
+        I set Headers:     X-Anonymous-Customer-Unique-Id=${x_anonymous_customer_unique_id}    Content-Type=${default_header_content_type}
+        ${response}=    I send a POST request:    /guest-cart-items    {"data": {"type": "guest-cart-items","attributes": {"sku": "${product_sku}","quantity": ${product_quantity}}}}
+        Save value to a variable:    [data][id]    guest_cart_id
+        Log    x_anonymous_customer_unique_id:${x_anonymous_customer_unique_id} guest_cart_id:${guest_cart_id}
 
 Cleanup all items in the cart:
     [Documentation]    This keyword deletes any and all items in the given cart uid.
