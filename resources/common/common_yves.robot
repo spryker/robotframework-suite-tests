@@ -17,6 +17,8 @@ Resource    ../pages/yves/yves_quote_request_page.robot
 Resource    ../pages/yves/yves_choose_bundle_to_configure_page.robot
 Resource    ../pages/yves/yves_create_return_page.robot
 Resource    ../pages/yves/yves_return_details_page.robot
+Resource    ../pages/yves/yves_checkout_summary_page.robot
+Resource    ../pages/yves/yves_checkout_cancel_payment_page.robot
 Resource    ../steps/header_steps.robot
 
 *** Variable ***
@@ -75,6 +77,7 @@ Yves: '${pageName}' page is displayed
     ...    ELSE IF    '${pageName}' == 'Choose Bundle to configure'    Page Should Contain Element    ${choose_bundle_main_content_locator}    ${pageName} page is not displayed
     ...    ELSE IF    '${pageName}' == 'Create Return'    Page Should Contain Element    ${create_return_main_content_locator}    ${pageName} page is not displayed
     ...    ELSE IF    '${pageName}' == 'Return Details'    Page Should Contain Element    ${return_details_main_content_locator}    ${pageName} page is not displayed
+    ...    ELSE IF    '${pageName}' == 'Payment cancellation'    Page Should Contain Element    ${cancel_payment_page_main_container_locator}    ${pageName} page is not displayed
 
 Yves: remove flash messages    ${flash_massage_state}=    Run Keyword And Ignore Error    Page Should Contain Element    ${notification_area}    1s
     Log    ${flash_massage_state}
@@ -169,7 +172,7 @@ Yves: get index of the first available product
     ${productsCount}=    Get Element Count    xpath=//product-item[@data-qa='component product-item']
     Log    ${productsCount}
     FOR    ${index}    IN RANGE    1    ${productsCount}+1
-        ${status}=    Run Keyword And Ignore Error    
+        ${status}=    Run Keyword And Ignore Error
         ...    Run keyword if    '${env}'=='b2b'    Page should contain element    xpath=//product-item[@data-qa='component product-item'][${index}]//*[@class='product-item__actions']//ajax-add-to-cart//button[@disabled='']
         ...    ELSE    Run keyword if    '${env}'=='b2c'    Page should contain element    xpath=//product-item[@data-qa='component product-item'][${index}]//ajax-add-to-cart//button
         Log    ${index}
@@ -188,7 +191,7 @@ Yves: get index of the first available product
     END
         ${productIndex}=    Set Variable    ${index}
         Return From Keyword    ${productIndex}
-    
+
 Yves: go to the PDP of the first available product
     ${index}=    Yves: get index of the first available product
     Click    xpath=//product-item[@data-qa='component product-item'][${index}]//a[contains(@class,'link-detail-page') and (contains(@class,'info')) or (contains(@class,'name'))]

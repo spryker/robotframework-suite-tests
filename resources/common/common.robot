@@ -39,7 +39,7 @@ Set Up Keyword Arguments
     FOR    ${key}    ${value}    IN    &{arguments}
         Log    Key is '${key}' and value is '${value}'.
         ${var_value}=   Get Variable Value  ${${key}}   ${value}
-        Set Test Variable    ${${key}}    ${var_value}    
+        Set Test Variable    ${${key}}    ${var_value}
     END
     [Return]    &{arguments}
 
@@ -78,7 +78,7 @@ Create default Main Context
     ${main_context}=    New Context    viewport={'width': 1440, 'height': 1080}
     Set Suite Variable    ${main_context}
 
-Variable datatype should be:    
+Variable datatype should be:
     [Arguments]    ${variable}    ${expected_data_type}
     ${actual_data_type}=    Evaluate datatype of a variable:    ${variable}
     Should Be Equal    ${actual_data_type}    ${expected_data_type}
@@ -120,7 +120,7 @@ Remove element attribute with JavaScript:
     [Arguments]    ${xpath}    ${attribute}
     Execute Javascript    var element=document.evaluate("${xpath}", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;element.removeAttribute("${attribute}"");
 
-#Migration to the Browser Library    
+#Migration to the Browser Library
 Wait Until Element Is Visible
     [Arguments]    ${locator}    ${message}=${EMPTY}    ${timeout}=0:00:30
     Wait For Elements State    ${locator}    visible    ${timeout}    ${message}
@@ -148,7 +148,7 @@ Page Should Contain Element
 Get Location
     ${current_location}=    Get URL
     [Return]    ${current_location}
-    
+
 Wait Until Element Is Not Visible
     [Arguments]    ${locator}    ${message}=${EMPTY}    ${timeout}=0:00:30
     Wait For Elements State    ${locator}    hidden    ${timeout}    ${message}
@@ -176,7 +176,7 @@ Element Should Contain
 
 Element Text Should Be
     [Arguments]    ${locator}    ${expected}    ${message}=${EMPTY}    ${ignore_case}=${EMPTY}
-    Get Text    ${locator}    equal    ${expected}    ${message} 
+    Get Text    ${locator}    equal    ${expected}    ${message}
 
 Wait Until Element Contains
     [Arguments]    ${locator}    ${text}    ${timeout}=0:00:30    ${message}=${EMPTY}
@@ -187,7 +187,7 @@ Page Should Not Contain Element
     Wait For Elements State    ${locator}    detached    ${timeout}    ${message}
 
 Element Should Not Contain
-    [Arguments]    ${locator}    ${text}    
+    [Arguments]    ${locator}    ${text}
     Get Text    ${locator}    validate    "${text}" not in value
 
 Checkbox Should Be Selected
@@ -238,11 +238,11 @@ Verify the src attribute of the image is accessible:
     [Arguments]    @{image_list}    ${element1}=${EMPTY}     ${element2}=${EMPTY}     ${element3}=${EMPTY}     ${element4}=${EMPTY}     ${element5}=${EMPTY}     ${element6}=${EMPTY}     ${element7}=${EMPTY}     ${element8}=${EMPTY}     ${element9}=${EMPTY}     ${element10}=${EMPTY}     ${element11}=${EMPTY}     ${element12}=${EMPTY}     ${element13}=${EMPTY}     ${element14}=${EMPTY}     ${element15}=${EMPTY}
     ${image_list_count}=   get length  ${image_list}
     FOR    ${index}    IN RANGE    0    ${image_list_count}
-        ${image_to_check}=    Get From List    ${image_list}    ${index}  
+        ${image_to_check}=    Get From List    ${image_list}    ${index}
         ${image_src}=    Get Element Attribute    ${image_to_check}    src
         ${response}=    GET    ${image_src}
         Should Be Equal    '${response.status_code}'    '200'
-    END    
+    END
 
 Conver string to List by separator:
     [Arguments]    ${string}    ${separator}=,
@@ -252,10 +252,25 @@ Conver string to List by separator:
 
 Try reloading page until element is/not appear:
     [Documentation]    will reload page until element is shown/disappear. Secon argument is the expected condition (true/false) for the element.
-    [Arguments]    ${element}    ${shouldBeDisplayed}
-    FOR    ${index}    IN RANGE    0    21
+    [Arguments]    ${element}    ${shouldBeDisplayed}    ${tries}=20    ${timeout}=1s
+    FOR    ${index}    IN RANGE    0    ${tries}
         ${elementAppears}=    Run Keyword And Return Status    Page Should Contain Element    ${element}
-        Run Keyword If    '${shouldBeDisplayed}'=='true' and '${elementAppears}'=='False'    Run Keywords    Sleep    1s    AND    Reload
-        ...    ELSE    Run Keyword If    '${shouldBeDisplayed}'=='false' and '${elementAppears}'=='True'    Run Keywords    Sleep    1s    AND    Reload
+        Run Keyword If    '${shouldBeDisplayed}'=='true' and '${elementAppears}'=='False'    Run Keywords    Sleep    ${timeout}    AND    Reload
+        ...    ELSE    Run Keyword If    '${shouldBeDisplayed}'=='false' and '${elementAppears}'=='True'    Run Keywords    Sleep    ${timeout}    AND    Reload
         ...    ELSE    Exit For Loop
     END
+    IF    ('${shouldBeDisplayed}'=='true' and '${elementAppears}'=='False') or ('${shouldBeDisplayed}'=='false' and '${elementAppears}'=='True')
+        Fail    'Timeout exceeded'
+    END
+
+Type Text When Element Is Visible
+    [Arguments]    ${selector}    ${text}
+    Run keywords
+        ...    Wait Until Element Is Visible    ${selector}
+        ...    AND    Type Text    ${selector}     ${text}
+
+Select From List By Value When Element Is Visible
+    [Arguments]    ${selector}    ${value}
+    Run keywords
+        ...    Wait Until Element Is Visible    ${selector}
+        ...    AND    Select From List By Value    ${selector}     ${value}
