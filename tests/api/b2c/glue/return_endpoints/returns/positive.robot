@@ -5,41 +5,8 @@ Test Setup        TestSetup
 Resource    ../../../../../../resources/common/common_api.robot
 
 *** Test Cases ***
-
- ####POST####
-Create_a_return_with_Invalid_access_token
-     [Setup]    Run Keywords    I get access token for the customer:    ${yves_second_user_email}
-    ...    AND    I set Headers:    Authorization=${token}
-    ...    AND    I send a POST request:    /carts    {"data":{"type":"carts","attributes":{"priceMode":"GROSS_MODE","currency":"EUR","store":"DE"}}}
-    ...    AND    I send a GET request:    /customers/${yves_second_user_reference}/carts
-    ...    AND    Save value to a variable:    [data][0][id]    CartId
-    ...    AND    I send a POST request:    /carts/${CartId}/items    {"data":{"type":"items","attributes":{"sku":"${concrete_available_with_stock_and_never_out_of_stock}","quantity":"1"}}}
-    ...    AND    I send a POST request:    /checkout?include=orders    {"data": {"type": "checkout","attributes": {"customer": {"email": "${yves_user_email}","salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}"},"idCart": "${CartId}","billingAddress": {"salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}","address1": "${default_address1}","address2": "${default_address2}","address3": "${default_address3}","zipCode": "${default_zipCode}","city": "${default_city}","iso2Code": "${default_iso2Code}","company": "${default_company}","phone": "${default_phone}","isDefaultBilling": False,"isDefaultShipping": False},"shippingAddress": {"salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}","address1": "${default_address1}","address2": "${default_address2}","address3": "${default_address3}","zipCode": "${default_zipCode}","city": "${default_city}","iso2Code": "${default_iso2Code}","company": "${default_company}","phone": "${default_phone}","isDefaultBilling": False,"isDefaultShipping": False},"payments": [{"paymentProviderName": "DummyPayment","paymentMethodName": "Credit Card"}],"shipment": {"idShipmentMethod": 1},"items": ["${concrete_available_product_sku}"]}}}
-    ...    AND    Save value to a variable:    [included][0][attributes][items][0][uuid]    Uuid
-    ...    AND    I set Headers:    Authorization=3485h7
-    When I send a POST request:     /returns     {"data":{"type":"returns","attributes":{"store":"DE","returnItems":[{"salesOrderItemUuid":"${Uuid}","reason":"${return_resaon}"}]}}}
-    Then Response status code should be:     401
-    And Response reason should be:     Unauthorized
-    And Response should return error message:    Invalid access token.
-    And Response should return error code:    001
-
-Create_a_return_with_without_access_token
-     [Setup]    Run Keywords    I get access token for the customer:    ${yves_second_user_email}
-    ...    AND    I set Headers:    Authorization=${token}
-    ...    AND    I send a POST request:    /carts    {"data":{"type":"carts","attributes":{"priceMode":"GROSS_MODE","currency":"EUR","store":"DE"}}}
-    ...    AND    I send a GET request:    /customers/${yves_second_user_reference}/carts
-    ...    AND    Save value to a variable:    [data][0][id]    CartId
-    ...    AND    I send a POST request:    /carts/${CartId}/items    {"data":{"type":"items","attributes":{"sku":"${concrete_available_with_stock_and_never_out_of_stock}","quantity":"1"}}}
-    ...    AND    I send a POST request:    /checkout?include=orders    {"data": {"type": "checkout","attributes": {"customer": {"email": "${yves_user_email}","salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}"},"idCart": "${CartId}","billingAddress": {"salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}","address1": "${default_address1}","address2": "${default_address2}","address3": "${default_address3}","zipCode": "${default_zipCode}","city": "${default_city}","iso2Code": "${default_iso2Code}","company": "${default_company}","phone": "${default_phone}","isDefaultBilling": False,"isDefaultShipping": False},"shippingAddress": {"salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}","address1": "${default_address1}","address2": "${default_address2}","address3": "${default_address3}","zipCode": "${default_zipCode}","city": "${default_city}","iso2Code": "${default_iso2Code}","company": "${default_company}","phone": "${default_phone}","isDefaultBilling": False,"isDefaultShipping": False},"payments": [{"paymentProviderName": "DummyPayment","paymentMethodName": "Credit Card"}],"shipment": {"idShipmentMethod": 1},"items": ["${concrete_available_product_sku}"]}}}
-    ...    AND    Save value to a variable:    [included][0][attributes][items][0][uuid]    Uuid
-    ...    AND    I set Headers:    Authorization=
-    When I send a POST request:     /returns     {"data":{"type":"returns","attributes":{"store":"DE","returnItems":[{"salesOrderItemUuid":"${Uuid}","reason":"${return_resaon}"}]}}}
-    Then Response status code should be:     403
-    And Response reason should be:     Forbidden
-    And Response should return error message:    Missing access token.
-    And Response should return error code:    002
-
-Return_Can't_be_created
+####POST####
+Create_a_return
      [Setup]    Run Keywords    I get access token for the customer:    ${yves_second_user_email}
     ...    AND    I set Headers:    Authorization=${token}
     ...    AND    I send a POST request:    /carts    {"data":{"type":"carts","attributes":{"priceMode":"GROSS_MODE","currency":"EUR","store":"DE"}}}
@@ -49,13 +16,52 @@ Return_Can't_be_created
     ...    AND    I send a POST request:    /checkout?include=orders    {"data": {"type": "checkout","attributes": {"customer": {"email": "${yves_user_email}","salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}"},"idCart": "${CartId}","billingAddress": {"salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}","address1": "${default_address1}","address2": "${default_address2}","address3": "${default_address3}","zipCode": "${default_zipCode}","city": "${default_city}","iso2Code": "${default_iso2Code}","company": "${default_company}","phone": "${default_phone}","isDefaultBilling": False,"isDefaultShipping": False},"shippingAddress": {"salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}","address1": "${default_address1}","address2": "${default_address2}","address3": "${default_address3}","zipCode": "${default_zipCode}","city": "${default_city}","iso2Code": "${default_iso2Code}","company": "${default_company}","phone": "${default_phone}","isDefaultBilling": False,"isDefaultShipping": False},"payments": [{"paymentProviderName": "DummyPayment","paymentMethodName": "Credit Card"}],"shipment": {"idShipmentMethod": 1},"items": ["${concrete_available_product_sku}"]}}}
     ...    AND    Save value to a variable:    [included][0][attributes][items][0][uuid]    Uuid
     When I send a POST request:     /returns     {"data":{"type":"returns","attributes":{"store":"DE","returnItems":[{"salesOrderItemUuid":"${Uuid}","reason":"${return_resaon}"}]}}}
-    Then Response status code should be:     422
-    And Response reason should be:     Unprocessable Entity
-    And Response should return error message:    "Return cant be created."    
-    And Response should return error code:    3601
+    Then Response status code should be:     201
+    And Response reason should be:     Created
+    And Response header parameter should be:    Content-Type    ${default_header_content_type}
+    And Response body parameter should be:    [data][type]    returns
+    And Response body parameter should contain:    [data]    id
+    And Response body parameter should be:    [data][attributes][store]    ${store_de}
+    And Response body parameter should be:    [data][attributes][customerReference]    ${yves_second_user_reference}
+    And Response body parameter should not be EMPTY:     [data][attributes][returnTotals][refundTotal]
+    And Response body parameter should not be EMPTY:     [data][attributes][returnTotals][remunerationTotal]
+    And Response body parameter should be greater than:    [data][attributes][returnTotals][remunerationTotal]    1
+    And Response body has correct self link
+
+Create_a_return_include_return-items
+     [Setup]    Run Keywords    I get access token for the customer:    ${yves_second_user_email}
+    ...    AND    I set Headers:    Authorization=${token}
+    ...    AND    I send a POST request:    /carts    {"data":{"type":"carts","attributes":{"priceMode":"GROSS_MODE","currency":"EUR","store":"DE"}}}
+    ...    AND    I send a GET request:    /customers/${yves_second_user_reference}/carts
+    ...    AND    Save value to a variable:    [data][0][id]    CartId
+    ...    AND    I send a POST request:    /carts/${CartId}/items    {"data":{"type":"items","attributes":{"sku":"${concrete_available_with_stock_and_never_out_of_stock}","quantity":"1"}}}
+    ...    AND    I send a POST request:    /checkout?include=orders    {"data": {"type": "checkout","attributes": {"customer": {"email": "${yves_user_email}","salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}"},"idCart": "${CartId}","billingAddress": {"salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}","address1": "${default_address1}","address2": "${default_address2}","address3": "${default_address3}","zipCode": "${default_zipCode}","city": "${default_city}","iso2Code": "${default_iso2Code}","company": "${default_company}","phone": "${default_phone}","isDefaultBilling": False,"isDefaultShipping": False},"shippingAddress": {"salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}","address1": "${default_address1}","address2": "${default_address2}","address3": "${default_address3}","zipCode": "${default_zipCode}","city": "${default_city}","iso2Code": "${default_iso2Code}","company": "${default_company}","phone": "${default_phone}","isDefaultBilling": False,"isDefaultShipping": False},"payments": [{"paymentProviderName": "DummyPayment","paymentMethodName": "Credit Card"}],"shipment": {"idShipmentMethod": 1},"items": ["${concrete_available_product_sku}"]}}}
+    ...    AND    Save value to a variable:    [included][0][attributes][items][0][uuid]    Uuid
+    When I send a POST request:     /returns?include=return-items     {"data":{"type":"returns","attributes":{"store":"DE","returnItems":[{"salesOrderItemUuid":"${Uuid}","reason":"${return_resaon}"}]}}}
+    Then Response status code should be:     201
+    And Response reason should be:     Created
+    And Response header parameter should be:    Content-Type    ${default_header_content_type}
+    And Response body parameter should be:    [data][type]    returns
+    And Response body parameter should contain:    [data]    id
+    And Response body parameter should be:    [data][attributes][store]    ${store_de}
+    And Response body parameter should be:    [data][attributes][customerReference]    ${yves_second_user_reference}
+    And Response body parameter should not be EMPTY:     [data][attributes][returnTotals][refundTotal]
+    And Response body parameter should not be EMPTY:     [data][attributes][returnTotals][remunerationTotal]
+    And Response body parameter should be greater than:    [data][attributes][returnTotals][remunerationTotal]    0
+    And Response body parameter should contain:    [data]    relationships
+    And Response body parameter should be:    [data][relationships][return-items][data][0][type]    return-items
+    And Response body parameter should contain:    [data][relationships][return-items][data][0]    id
+    And Response body parameter should be:    [included][0][type]    return-items
+    And Response body parameter should contain:    [included][0]    id
+    And Response body parameter should contain:    [included][0][attributes]    uuid
+    And Response body parameter should be:    [included][0][attributes][uuid]    ${Uuid}
+    And Response body parameter should be:    [included][0][attributes][reason]    ${return_resaon}
+    And Response body parameter should contain:    [included][0][attributes]    orderItemUuid
+    And Response body has correct self link
+
 
 ####GET####
-Get_lists_of_returns_with_Invalid_access_token
+Get_lists_of_returns
      [Setup]    Run Keywords    I get access token for the customer:    ${yves_second_user_email}
     ...    AND    I set Headers:    Authorization=${token}
     ...    AND    I send a POST request:    /carts    {"data":{"type":"carts","attributes":{"priceMode":"GROSS_MODE","currency":"EUR","store":"DE"}}}
@@ -65,15 +71,23 @@ Get_lists_of_returns_with_Invalid_access_token
     ...    AND    I send a POST request:    /checkout?include=orders    {"data": {"type": "checkout","attributes": {"customer": {"email": "${yves_user_email}","salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}"},"idCart": "${CartId}","billingAddress": {"salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}","address1": "${default_address1}","address2": "${default_address2}","address3": "${default_address3}","zipCode": "${default_zipCode}","city": "${default_city}","iso2Code": "${default_iso2Code}","company": "${default_company}","phone": "${default_phone}","isDefaultBilling": False,"isDefaultShipping": False},"shippingAddress": {"salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}","address1": "${default_address1}","address2": "${default_address2}","address3": "${default_address3}","zipCode": "${default_zipCode}","city": "${default_city}","iso2Code": "${default_iso2Code}","company": "${default_company}","phone": "${default_phone}","isDefaultBilling": False,"isDefaultShipping": False},"payments": [{"paymentProviderName": "DummyPayment","paymentMethodName": "Credit Card"}],"shipment": {"idShipmentMethod": 1},"items": ["${concrete_available_product_sku}"]}}}
     ...    AND    Save value to a variable:    [included][0][attributes][items][0][uuid]    Uuid
     ...    AND    I send a POST request:    /returns    {"data":{"type":"returns","attributes":{"store":"DE","returnItems":[{"salesOrderItemUuid":"${Uuid}","reason":"${return_resaon}"}]}}}
-    ...    AND    I set Headers:    Authorization=3485h7
     When I send a GET request:     /returns
-    Then Response status code should be:     401
-    And Response reason should be:     Unauthorized
-    And Response should return error message:    Invalid access token.
-    And Response should return error code:    001
+    Then Response status code should be:     200
+    And Response reason should be:     OK
+    And Each array element of array in response should contain property with value:    [data]    type    returns
+    And Each array element of array in response should contain property:    [data]    id
+    And Each array element of array in response should contain property:    [data]    attributes
+    And Each array element of array in response should contain property:    [data]    links
+    And Each array element of array in response should contain nested property:    [data]    [attributes]    returnReference
+    And Each array element of array in response should contain nested property:    [data]    [attributes]    store
+    And Each array element of array in response should contain nested property:    [data]    [attributes]    customerReference
+    And Each array element of array in response should contain nested property:    [data]    [attributes]    returnTotals
+    And Each array element of array in response should contain nested property:    [data]    [attributes][returnTotals]    refundTotal
+    And Each array element of array in response should contain nested property:    [data]    [attributes][returnTotals]    remunerationTotal
+    And Each array element of array in response should contain nested property:    [data]    [links]    self
 
 
-Get_lists_of_returns_without_access_token
+Get_lists_of_returns_include_return-items
      [Setup]    Run Keywords    I get access token for the customer:    ${yves_second_user_email}
     ...    AND    I set Headers:    Authorization=${token}
     ...    AND    I send a POST request:    /carts    {"data":{"type":"carts","attributes":{"priceMode":"GROSS_MODE","currency":"EUR","store":"DE"}}}
@@ -83,15 +97,29 @@ Get_lists_of_returns_without_access_token
     ...    AND    I send a POST request:    /checkout?include=orders    {"data": {"type": "checkout","attributes": {"customer": {"email": "${yves_user_email}","salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}"},"idCart": "${CartId}","billingAddress": {"salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}","address1": "${default_address1}","address2": "${default_address2}","address3": "${default_address3}","zipCode": "${default_zipCode}","city": "${default_city}","iso2Code": "${default_iso2Code}","company": "${default_company}","phone": "${default_phone}","isDefaultBilling": False,"isDefaultShipping": False},"shippingAddress": {"salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}","address1": "${default_address1}","address2": "${default_address2}","address3": "${default_address3}","zipCode": "${default_zipCode}","city": "${default_city}","iso2Code": "${default_iso2Code}","company": "${default_company}","phone": "${default_phone}","isDefaultBilling": False,"isDefaultShipping": False},"payments": [{"paymentProviderName": "DummyPayment","paymentMethodName": "Credit Card"}],"shipment": {"idShipmentMethod": 1},"items": ["${concrete_available_product_sku}"]}}}
     ...    AND    Save value to a variable:    [included][0][attributes][items][0][uuid]    Uuid
     ...    AND    I send a POST request:    /returns    {"data":{"type":"returns","attributes":{"store":"DE","returnItems":[{"salesOrderItemUuid":"${Uuid}","reason":"${return_resaon}"}]}}}
-    ...    AND    I set Headers:    Authorization=
-    When I send a GET request:     /returns
-    Then Response status code should be:     403
-    And Response reason should be:     Forbidden
-    And Response should return error message:    Missing access token.
-    And Response should return error code:    002
+    When I send a GET request:     /returns?include=return-items 
+    Then Response status code should be:     200
+    And Response reason should be:     OK
+    And Each array element of array in response should contain property with value:    [data]    type    returns
+    And Each array element of array in response should contain property:    [data]    id
+    And Each array element of array in response should contain property:    [data]    attributes
+    And Each array element of array in response should contain property:    [data]    links
+    And Each array element of array in response should contain nested property:    [data]    [attributes]    returnReference
+    And Each array element of array in response should contain nested property:    [data]    [attributes]    store
+    And Each array element of array in response should contain nested property:    [data]    [attributes]    customerReference
+    And Each array element of array in response should contain nested property:    [data]    [attributes]    returnTotals
+    And Each array element of array in response should contain nested property:    [data]    [attributes][returnTotals]    refundTotal
+    And Each array element of array in response should contain nested property:    [data]    [attributes][returnTotals]    remunerationTotal
+    And Each array element of array in response should contain nested property:    [data]    [links]    self
+    And Each array element of array in response should contain property:    [data]    relationships
+    And Each array element of array in response should contain nested property:    [data]    [relationships]    return-items
+    And Each array element of array in response should contain nested property:    [data]    [relationships][return-items][data][0]    type
+    And Each array element of array in response should contain nested property:    [data]    [relationships][return-items][data][0]    id
+    And Each array element of array in response should contain nested property with value:    [data]    [relationships][return-items][data][0][type]    return-items
+    And Response body has correct self link
 
-
-Get_return_by_Id_with_Invalid_access_token
+####GET####
+Get_return_by_Id
      [Setup]    Run Keywords    I get access token for the customer:    ${yves_second_user_email}
     ...    AND    I set Headers:    Authorization=${token}
     ...    AND    I send a POST request:    /carts    {"data":{"type":"carts","attributes":{"priceMode":"GROSS_MODE","currency":"EUR","store":"DE"}}}
@@ -103,16 +131,22 @@ Get_return_by_Id_with_Invalid_access_token
     ...    AND    I send a POST request:    /returns    {"data":{"type":"returns","attributes":{"store":"DE","returnItems":[{"salesOrderItemUuid":"${Uuid}","reason":"${return_resaon}"}]}}}
     ...    AND    Save value to a variable:    [data][0][id]    returnOrderId
     ...    AND    Save value to a variable:    [data][attributes][returnReference]    returnReference
-    ...    AND    I set Headers:    Authorization=3485h7
     When I send a GET request:     /returns/${returnOrderId}
-    Then Response status code should be:     401
-    And Response reason should be:     Unauthorized
-    And Response should return error message:    Invalid access token.
-    And Response should return error code:    001
+    Then Response status code should be:     200
+    And Response reason should be:     OK
+    And Response header parameter should be:     Content-Type     ${default_header_content_type}
+    And Response body parameter should be:    [data][type]    returns
+    And Response body parameter should be:    [data][id]    ${returnOrderId}
+    And Response body parameter should be:    [data][attributes][returnReference]    ${returnReference}
+    And Response body parameter should be:    [data][attributes][store]    ${store_de}
+    And Response body parameter should be:    [data][attributes][customerReference]    ${yves_second_user_reference}
+    And Response body parameter should not be EMPTY:     [data][attributes][returnTotals][refundTotal]
+    And Response body parameter should not be EMPTY:     [data][attributes][returnTotals][remunerationTotal]
+    And Response body parameter should be greater than:    [data][attributes][returnTotals][remunerationTotal]    1
 
 
-Get_return_by_Id_without_access_token
-     [Setup]    Run Keywords    I get access token for the customer:    ${yves_second_user_email}
+Get_return_by_Id_include_return-items
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_second_user_email}
     ...    AND    I set Headers:    Authorization=${token}
     ...    AND    I send a POST request:    /carts    {"data":{"type":"carts","attributes":{"priceMode":"GROSS_MODE","currency":"EUR","store":"DE"}}}
     ...    AND    I send a GET request:    /customers/${yves_second_user_reference}/carts
@@ -122,27 +156,27 @@ Get_return_by_Id_without_access_token
     ...    AND    Save value to a variable:    [included][0][attributes][items][0][uuid]    Uuid
     ...    AND    I send a POST request:    /returns    {"data":{"type":"returns","attributes":{"store":"DE","returnItems":[{"salesOrderItemUuid":"${Uuid}","reason":"${return_resaon}"}]}}}
     ...    AND    Save value to a variable:    [data][0][id]    returnOrderId
-    ...    AND    I set Headers:    Authorization=
-    When I send a GET request:     /returns/${returnOrderId}
-    Then Response status code should be:     403
-    And Response reason should be:     Forbidden
-    And Response should return error message:    Missing access token.
-    And Response should return error code:    002
-
-
-Get_return_by_Id_with_Invalid_return_reference
-     [Setup]    Run Keywords    I get access token for the customer:    ${yves_second_user_email}
-    ...    AND    I set Headers:    Authorization=${token}
-    ...    AND    I send a POST request:    /carts    {"data":{"type":"carts","attributes":{"priceMode":"GROSS_MODE","currency":"EUR","store":"DE"}}}
-    ...    AND    I send a GET request:    /customers/${yves_second_user_reference}/carts
-    ...    AND    Save value to a variable:    [data][0][id]    CartId
-    ...    AND    I send a POST request:    /carts/${CartId}/items    {"data":{"type":"items","attributes":{"sku":"${concrete_available_with_stock_and_never_out_of_stock}","quantity":"1"}}}
-    ...    AND    I send a POST request:    /checkout?include=orders    {"data": {"type": "checkout","attributes": {"customer": {"email": "${yves_user_email}","salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}"},"idCart": "${CartId}","billingAddress": {"salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}","address1": "${default_address1}","address2": "${default_address2}","address3": "${default_address3}","zipCode": "${default_zipCode}","city": "${default_city}","iso2Code": "${default_iso2Code}","company": "${default_company}","phone": "${default_phone}","isDefaultBilling": False,"isDefaultShipping": False},"shippingAddress": {"salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}","address1": "${default_address1}","address2": "${default_address2}","address3": "${default_address3}","zipCode": "${default_zipCode}","city": "${default_city}","iso2Code": "${default_iso2Code}","company": "${default_company}","phone": "${default_phone}","isDefaultBilling": False,"isDefaultShipping": False},"payments": [{"paymentProviderName": "DummyPayment","paymentMethodName": "Credit Card"}],"shipment": {"idShipmentMethod": 1},"items": ["${concrete_available_product_sku}"]}}}
-    ...    AND    Save value to a variable:    [included][0][attributes][items][0][uuid]    Uuid
-    ...    AND    I send a POST request:    /returns    {"data":{"type":"returns","attributes":{"store":"DE","returnItems":[{"salesOrderItemUuid":"${Uuid}","reason":"${return_resaon}"}]}}}
-    When I send a GET request:     /returns/fake001
-    Then Response status code should be:     404
-    And Response reason should be:     Not Found
-    And Response should return error message:    "Cant find return by the given return reference."
-    And Response should return error code:    3602
-
+    ...    AND    Save value to a variable:    [data][attributes][returnReference]    returnReference
+    When I send a GET request:     /returns/${returnOrderId}?include=return-items 
+    Then Response status code should be:     200
+    And Response reason should be:     OK
+    And Response header parameter should be:     Content-Type     ${default_header_content_type}
+    And Response body parameter should be:    [data][type]    returns
+    And Response body parameter should be:    [data][id]    ${returnOrderId}
+    And Response body parameter should be:    [data][attributes][returnReference]    ${returnReference}
+    And Response body parameter should be:    [data][attributes][store]    ${store_de}
+    And Response body parameter should be:    [data][attributes][customerReference]    ${yves_second_user_reference}
+    And Response body parameter should not be EMPTY:     [data][attributes][returnTotals][refundTotal]
+    And Response body parameter should not be EMPTY:     [data][attributes][returnTotals][remunerationTotal]
+    And Response body parameter should contain:    [data]    relationships
+    And Response body parameter should be:    [data][relationships][return-items][data][0][type]    return-items
+    And Response body parameter should contain:    [data][relationships][return-items][data][0]    id
+    And Response body parameter should be:    [included][0][type]    return-items
+    And Response body parameter should contain:    [included][0]    id
+    And Response body parameter should be:    [included][0][type]    return-items
+    And Response body parameter should contain:    [included][0]    id
+    And Response body parameter should contain:    [included][0][attributes]    uuid
+    And Response body parameter should be:    [included][0][attributes][uuid]    ${Uuid}
+    And Response body parameter should be:    [included][0][attributes][reason]    ${return_resaon}
+    And Response body parameter should contain:    [included][0][attributes]    orderItemUuid
+    And Response body has correct self link
