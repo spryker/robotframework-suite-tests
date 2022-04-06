@@ -1,10 +1,10 @@
 *** Settings ***
 Suite Setup       SuiteSetup
+Test Setup    TestSetup
 Resource    ../../../../../../resources/common/common_api.robot
 Default Tags    glue
 
 *** Test Cases ***
-
 #GET Request
 Retrieves_all_customer_wishlists
     [Setup]    Run Keywords    I GET access token for the customer:    ${yves_user_email}
@@ -99,7 +99,7 @@ Wishlist_Product_Labels
     ...    AND    Response status code should be:    201
     ...    AND    I send a Post request:    /wishlists/${wishlist_id}/wishlist-items    {"data": {"type": "wishlist-items","attributes": {"sku": "${concrete_available_product_with_stock}"}}}
     ...    AND    Response status code should be:    201
-    when I send a GET request:    /wishlists/${wishlist_id}?include=wishlist-items,concrete-products,product-labels
+     when I send a GET request:    /wishlists/${wishlist_id}?include=wishlist-items,concrete-products,product-labels
      then Response status code should be:    200
      AND Response reason should be:    OK
      And Response body has correct self link internal

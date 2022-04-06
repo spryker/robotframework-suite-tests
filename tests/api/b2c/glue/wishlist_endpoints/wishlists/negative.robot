@@ -1,24 +1,21 @@
 *** Settings ***
 Suite Setup       SuiteSetup
+Test Setup    TestSetup
 Resource    ../../../../../../resources/common/common_api.robot
 Default Tags    glue
 
 *** Test Cases ***
-
 #Get_request
 Getting_wishlist_by_invalid_Access_Token
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
-    ...    AND    I set Headers:    Authorization=3485h7
+    [Setup]    I set Headers:    Authorization=3485h7
     When I send a GET request:    /wishlists
     Then Response status code should be:    401 
     And Response reason should be:    Unauthorized
     And Response should return error code:    001
     And Response should return error message:    Invalid access token.
     
-
 Getting_wishlist_without_Access_Token
-     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
-    ...    AND    I set Headers:    Authorization=
+     [Setup]    I set Headers:    Authorization=
     When I send a GET request:    /wishlists
     Then Response status code should be:    403 
     And Response reason should be:    Forbidden
@@ -33,9 +30,8 @@ Getting_wishlist_with_invalid_id
     And Response reason should be:    Not Found
 
 ######POST#####
-creating_wishlist_by_invalid_Access_Token
-     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
-    ...    AND    I set Headers:    Authorization=3485h7
+Creating_wishlist_by_invalid_Access_Token
+     [Setup]    I set Headers:    Authorization=3485h7
     When I send a Post request:    /wishlists    {"data": {"type": "wishlists","attributes": {"name": ""}}}
     Then Response status code should be:    401 
     And Response reason should be:    Unauthorized
@@ -43,7 +39,7 @@ creating_wishlist_by_invalid_Access_Token
     And Response should return error message:    Invalid access token.
 
 #Post Request CC-16553
-Creates_wishlist_with_space_in_name
+Creating_wishlist_with_space_in_name
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
     ...        AND    I set Headers:    Authorization=${token}
     When I send a POST request:    /wishlists    {"data": {"type": "wishlists","attributes": {"name":" "}}}
@@ -51,9 +47,8 @@ Creates_wishlist_with_space_in_name
     And Response should return error message:   Please enter name using only letters, numbers, underscores, spaces or dashes.
     And Response should return error code:    210
 
-creating_wishlist_without_Access_Token
-     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
-    ...    AND    I set Headers:    Authorization=
+Creating_wishlist_without_Access_Token
+     [Setup]    I set Headers:    Authorization=
     When I send a Post request:    /wishlists    {"data": {"type": "wishlists","attributes": {"name": ""}}}
     Then Response status code should be:    403 
     And Response reason should be:    Forbidden
@@ -106,8 +101,7 @@ Delete_already_deleted_wishlist
     And Response should return error message:    Resource id is not specified.
 
 Deleting_wishlist_by_invalid_Access_Token
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
-    ...    AND    I set Headers:    Authorization=3485h7
+    [Setup]    I set Headers:    Authorization=3485h7
     When I send a Delete request:    /wishlists/123    
     Then Response status code should be:    401 
     And Response reason should be:    Unauthorized
@@ -115,8 +109,7 @@ Deleting_wishlist_by_invalid_Access_Token
     And Response should return error message:    Invalid access token.
 
 Deleting_wishlist_without_Access_Token
-     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
-    ...    AND    I set Headers:    Authorization=
+     [Setup]    I set Headers:    Authorization=
     When I send a Delete request:    /wishlists/123
     Then Response status code should be:    403 
     And Response reason should be:    Forbidden
@@ -132,7 +125,7 @@ Wishlist_id_not_specified
     And Response status code should be:    400
 
 #Patch_request
-updating_wishlist_with_missing_name
+Updating_wishlist_with_missing_name
     [Setup]    Run Keywords    I GET access token for the customer:    ${yves_user_email}
     ...    AND     I set headers:    authorization=${token}
     ...    AND     I send a Post request:    /wishlists    {"data": {"type": "wishlists","attributes": {"name": "${wishlist_name}"}}}
@@ -144,7 +137,7 @@ updating_wishlist_with_missing_name
     [Teardown]    Run Keywords    I send a DELETE request:    /wishlists/${wishlist_id}
     ...  AND    Response status code should be:    204
 
-updating_wishlist_with_invalid_name
+Updating_wishlist_with_invalid_name
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
     ...    AND    I set Headers:    Authorization=${token}
     ...    AND    I send a Post request:    /wishlists    {"data": {"type": "wishlists","attributes": {"name": "${wishlist_name}"}}}
@@ -157,18 +150,16 @@ updating_wishlist_with_invalid_name
     [Teardown]    Run Keywords    I send a DELETE request:    /wishlists/${wishlist_id}
     ...  AND    Response status code should be:    204
 
-updating_wishlist_by_invalid_Access_Token
-     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
-    ...    AND    I set Headers:    Authorization=3485h7
+Updating_wishlist_by_invalid_Access_Token
+     [Setup]    I set Headers:    Authorization=3485h7
     When I send a Patch request:    /wishlists/123    {"data": {"type": "wishlists","attributes": {"name": "${wishlist_name}"}}}  
     Then Response status code should be:    401 
     And Response reason should be:    Unauthorized
     And Response should return error code:    001
     And Response should return error message:    Invalid access token.
     
-updating_wishlist_without_Access_Token
-     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
-    ...    AND    I set Headers:    Authorization=
+Updating_wishlist_without_Access_Token
+     [Setup]    I set Headers:    Authorization=
     When I send a Patch request:    /wishlists/123   {"data": {"type": "wishlists","attributes": {"name": "${wishlist_name}"}}}  
     Then Response status code should be:    403 
     And Response reason should be:    Forbidden
