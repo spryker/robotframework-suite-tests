@@ -1,8 +1,8 @@
 *** Settings ***
 Suite Setup    SuiteSetup
 Test Setup    TestSetup
-Resource    ../../../../../resources/common/common_api.robot
 Default Tags    glue
+Resource    ../../../../../../resources/common/common_api.robot
 
 *** Test Cases ***
 Get_navigations_by_non_exist_id

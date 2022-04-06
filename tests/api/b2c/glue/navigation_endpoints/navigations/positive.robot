@@ -1,8 +1,8 @@
 *** Settings ***
-Resource    ../../../../../resources/common/common_api.robot
 Suite Setup    SuiteSetup
 Test Setup    TestSetup
 Default Tags    glue
+Resource    ../../../../../../resources/common/common_api.robot
 
 *** Test Cases ***
 To_retrieve_a_navigation_tree
