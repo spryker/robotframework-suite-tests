@@ -32,7 +32,7 @@ Adding_item_with_abstract_sku
     ...    AND    Save value to a variable:    [data][id]    wishlist_reference_id
     When I send a POST request:   /wishlists/${wishlist_reference_id}/wishlist-items    {"data": {"type": "wishlist-items","attributes": {"sku": "${abstract_available_product_with_stock}"}}}
     Then Response status code should be:    422
-    And Response reason should be:    Unprocessable Entity  
+    And Response reason should be:    Unprocessable Content  
     And Response should return error code:    206
     And Response should return error message:        "Cant add an item."
     [Teardown]    Run Keywords    I send a DELETE request:    /wishlists/${wishlist_reference_id}
@@ -47,7 +47,7 @@ Adding_item_with_invalid_sku
     ...    AND    Save value to a variable:    [data][id]    wishlist_reference_id
     When I send a POST request:   /wishlists/${wishlist_reference_id}/wishlist-items    {"data": {"type": "wishlist-items","attributes": {"sku": "SK123445666"}}}
     Then Response status code should be:    422
-    And Response reason should be:    Unprocessable Entity  
+    And Response reason should be:    Unprocessable Content  
     And Response should return error code:    206 
     And Response should return error message:        "Cant add an item."
     [Teardown]    Run Keywords    I send a DELETE request:    /wishlists/${wishlist_reference_id}
@@ -62,7 +62,7 @@ Adding_item_with_empty_sku
     ...    AND    Save value to a variable:    [data][id]    wishlist_reference_id
     When I send a POST request:   /wishlists/${wishlist_reference_id}/wishlist-items    {"data": {"type": "wishlist-items","attributes": {"sku": ""}}}
     Then Response status code should be:    422
-    And Response reason should be:    Unprocessable Entity  
+    And Response reason should be:    Unprocessable Content  
     And Response should return error code:    901 
     And Response should return error message:        sku => This value should not be blank.
     [Teardown]    Run Keywords    I send a DELETE request:    /wishlists/${wishlist_reference_id}
@@ -77,7 +77,7 @@ Adding_item_after_enter_space_in_sku
     ...    AND    Save value to a variable:    [data][id]    wishlist_reference_id
     When I send a POST request:   /wishlists/${wishlist_reference_id}/wishlist-items    {"data": {"type": "wishlist-items","attributes": {"sku": " "}}}
     Then Response status code should be:    422
-    And Response reason should be:    Unprocessable Entity  
+    And Response reason should be:    Unprocessable Content  
     And Response should return error code:    206 
     And Response should return error message:        "Cant add an item."
     [Teardown]    Run Keywords    I send a DELETE request:    /wishlists/${wishlist_reference_id}
@@ -88,7 +88,7 @@ Adding_item_with_invalid_wishilist_id
     ...    AND    I set Headers:    Authorization=${token}
     When I send a POST request:   /wishlists/Mywishlist/wishlist-items    {"data": {"type": "wishlist-items","attributes": {"sku": "${concrete_available_product_with_stock}"}}}
     Then Response status code should be:    422
-    And Response reason should be:    Unprocessable Entity  
+    And Response reason should be:    Unprocessable Content  
     And Response should return error code:    206 
     And Response should return error message:        "Cant add an item."
  
@@ -113,21 +113,6 @@ Adding_items_in_wishlist_by_another_customer_wishlist
     And Response reason should be:    Not Found
     And Response should return error code:    201
     And Response should return error message:    "Cant find wishlist."
-
-Adding_item_with_deactivated_item_sku
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
-    ...    AND    I set Headers:    Authorization=${token}
-    ...    AND    I send a POST request:    /wishlists    {"data": { "type": "wishlists","attributes": { "name": "${wishlist_name}"} }}
-    ...    AND    Response status code should be:    201 
-    ...    AND    Response reason should be:    Created
-    ...    AND    Save value to a variable:    [data][id]    wishlist_reference_id
-    When I send a POST request:   /wishlists/${wishlist_reference_id}/wishlist-items    {"data": {"type": "wishlist-items","attributes": {"sku": "${concrete_product_sku_with_deactivated_status}"}}}
-    Then Response status code should be:    422
-    And Response reason should be:    Unprocessable Entity
-    And Response should return error code:    206
-    And Response should return error message:    "Cant add an item."
-    [Teardown]    Run Keywords    I send a DELETE request:    /wishlists/${wishlist_reference_id}
-    ...    AND    Response status code should be:    204
 
 #Delete
 Deleting_item_in_wishlist_by_invalid_Access_Token

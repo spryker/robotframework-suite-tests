@@ -192,9 +192,7 @@
 
         "abstract_product_with_multiple_variants": "130",
         "concrete_product_sku_multivariant_variant1": "130_29285281",
-        "concrete_product_sku_multivariant_variant2": "130_24326086",
-
-        "concrete_product_sku_with_deactivated_status": "008_30692992"
+        "concrete_product_sku_multivariant_variant2": "130_24326086"
 
     },
 
