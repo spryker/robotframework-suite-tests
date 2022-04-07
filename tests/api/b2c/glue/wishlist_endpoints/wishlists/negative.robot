@@ -133,7 +133,7 @@ Updating_wishlist_with_missing_name
     ...    AND    Response status code should be:    201
     When I send a Patch request:    /wishlists/${wishlist_id}    {"data": {"type": "wishlists","attributes": {"name": ""}}}
     Then Response status code should be:    422
-    AND Response reason should be:    Unprocessable Entity
+    AND Response reason should be:    Unprocessable Content
     [Teardown]    Run Keywords    I send a DELETE request:    /wishlists/${wishlist_id}
     ...  AND    Response status code should be:    204
 
