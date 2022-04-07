@@ -233,8 +233,8 @@ Filter_by_rating_only_min
     And Response body parameter should be greater than:    [data][0][attributes][pagination][maxPage]    1
     And Response should contain the array of a certain size:    [data][0][attributes][abstractProducts]    ${default_ipp}
     #rating facets
-    And Response body parameter should be:    [data][0][attributes][rangeFacets][0][activeMin]    3
-    And Response body parameter should be:    [data][0][attributes][rangeFacets][0][activeMax]    ${default_max_rating}
+    And Response body parameter should be:    [data][0][attributes][rangeFacets][1][activeMin]    3
+    And Response body parameter should be:    [data][0][attributes][rangeFacets][1][activeMax]    ${default_max_rating}
 
 
 Filter_by_rating_only_max

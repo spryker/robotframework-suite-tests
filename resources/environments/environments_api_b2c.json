@@ -129,10 +129,12 @@
         "measurement_unit_product_abstract_sku": "M23723",
         "packaging_unit_product_abstract_sku": "M21766",
 
-        "product_with_relations_related_products_sku": "M29529",
+        "product_with_relations_related_products_sku": "204",
+        "product_related_product_with_related_relation_sku": "016",
+        "product_related_product_with_related_relation_name": "Sony Cyber-shot DSC-W800",
         "product_with_relations_alternative_products_sku": "M21100",
         "product_with_relations_upselling_sku": "M29502",
-
+        
         "concrete_product_with_abstract_product_alternative_sku": "138_30046855",
         "concrete_product_with_abstract_product_alternative_sku_name": "Acer TravelMate P258-M",
         "concrete_product_with_abstract_product_alternative_sku_name_in_lower_case": "acer travelmate p258-m",
@@ -262,5 +264,8 @@
     },
     "return_reason":{
         "return_reasons_qty": "3"
-    }
-}
+    },
+    "wishlists":{
+        "wishlist_name":"HS"
+       }
+ }
