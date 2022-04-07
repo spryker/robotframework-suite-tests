@@ -1,11 +1,14 @@
 *** Settings ***
 Suite Setup    SuiteSetup
-Test Setup    TestSetup
+Test Setup     TestSetup
 Resource    ../../../../../../resources/common/common_api.robot
 Default Tags    glue
 
 *** Test Cases ***
-#GET requests
+ENABLER
+    TestSetup
+
+# GET requests
 Get_cart_by_cart_id
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
     ...  AND    I set Headers:    Authorization=${token}
@@ -22,12 +25,12 @@ Get_cart_by_cart_id
     And Response body parameter should be:    [data][attributes][store]    ${store_de}
     And Response body parameter should be:    [data][attributes][name]    ${test_cart_name}-${random}
     And Response body parameter should be:    [data][attributes][isDefault]    True
-    And Response body parameter should be:    [data][attributes][totals][expenseTotal]    None
-    And Response body parameter should be:    [data][attributes][totals][discountTotal]    None
-    And Response body parameter should be:    [data][attributes][totals][taxTotal]    None
-    And Response body parameter should be:    [data][attributes][totals][subtotal]    None
-    And Response body parameter should be:    [data][attributes][totals][grandTotal]    None
-    And Response body parameter should be:    [data][attributes][totals][priceToPay]    None
+    And Response body parameter should be:    [data][attributes][totals][expenseTotal]    0
+    And Response body parameter should be:    [data][attributes][totals][discountTotal]    0
+    And Response body parameter should be:    [data][attributes][totals][taxTotal]    0
+    And Response body parameter should be:    [data][attributes][totals][subtotal]    0
+    And Response body parameter should be:    [data][attributes][totals][grandTotal]    0
+    And Response body parameter should be:    [data][attributes][totals][priceToPay]    0
     And Response body has correct self link internal
     [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cart_id}
     ...  AND    Response status code should be:    204
