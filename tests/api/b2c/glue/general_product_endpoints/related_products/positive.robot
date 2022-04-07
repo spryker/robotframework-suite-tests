@@ -20,19 +20,17 @@ Product_has_related_products
     And Response body parameter should be:    [data][0][attributes][name]    ${product_related_product_with_related_relation_name}
     And Response body parameter should not be EMPTY:    [data][0][attributes][description]
     And Response body parameter should not be EMPTY:    [data][0][attributes][attributes]
-    And Response body parameter should not be EMPTY:    [data][0][attributes][attributes][brand]
-    And Response should contain the array of a certain size:    [data][0][attributes][superAttributesDefinition]    0
-    And Response should contain the array of a certain size:    [data][0][attributes][superAttributes]    0
+    And Response should contain the array larger than a certain size:    [data][0][attributes][superAttributesDefinition]    0
+    And Response should contain the array larger than a certain size:    [data][0][attributes][superAttributes]    0
     And Response should contain the array larger than a certain size:    [data][0][attributes][attributeMap]    0
-    And Response should contain the array of a certain size:    [data][0][attributes][attributeMap][super_attributes]   0
+    And Response should contain the array larger than a certain size:    [data][0][attributes][attributeMap][super_attributes]   0
     And Response should contain the array larger than a certain size:    [data][0][attributes][attributeMap][product_concrete_ids]   0
-    And Response should contain the array of a certain size:    [data][0][attributes][attributeMap][attribute_variants]   0
-    And Response should contain the array of a certain size:    [data][0][attributes][attributeMap][attribute_variant_map]   0 
-    And Response should contain the array of a certain size:    [data][0][attributes][metaTitle]    0  
+    And Response should contain the array of a certain size:    [data][0][attributes][attributeMap][attribute_variants]    0
+    And Response should contain the array larger than a certain size:    [data][0][attributes][attributeMap][attribute_variant_map]    0
+    And Response should contain the array larger than a certain size:    [data][0][attributes][metaTitle]    0  
     And Response body parameter should not be EMPTY:    [data][0][attributes][metaKeywords]
     And Response body parameter should not be EMPTY:    [data][0][attributes][metaDescription]
     And Response body parameter should not be EMPTY:    [data][0][attributes][attributeNames]
-    And Response body parameter should not be EMPTY:    [data][0][attributes][attributeNames][brand]
     And Response body parameter should not be EMPTY:    [data][0][attributes][url]     
     And Each array element of array in response should contain property:    [data]    id
     And Each array element of array in response should contain property:    [data]    attributes   
@@ -99,5 +97,5 @@ Product_has_no_related_products
     When I send a GET request:    /abstract-products/${abstract_available_product_with_stock}/related-products
     Then Response status code should be:    200
     And Response reason should be:    OK
-    And Response should contain the array of a certain size:    [data]    0
+    And Response should contain the array larger than a certain size:    [data]    0
     And Response body has correct self link
