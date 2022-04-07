@@ -1,10 +1,13 @@
 *** Settings ***
 Suite Setup    SuiteSetup
-Test Setup    TestSetup
+Test Setup     TestSetup
 Resource    ../../../../../../resources/common/common_api.robot
 Default Tags    glue
 
 *** Test Cases ***
+ENABLER
+    TestSetup
+
 #POST requests
 Create_order_with_invalid_access_token
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
