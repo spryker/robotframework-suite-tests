@@ -1,8 +1,13 @@
 *** Settings ***
 Suite Setup       SuiteSetup
+Test Setup        TestSetup
 Resource    ../../../../../../resources/common/common_api.robot
+Default Tags    glue
 
 *** Test Cases ***
+ENABLER
+    TestSetup
+    
 #####POST#####
 Add_one_item_to_cart
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
@@ -27,7 +32,6 @@ Add_one_item_to_cart
     And Response body parameter should be greater than:    [data][attributes][totals][grandTotal]    1
     And Response body parameter should be greater than:    [data][attributes][totals][priceToPay]    1
     And Response body parameter should not be EMPTY:    [data][attributes][discounts]
-    And Response body parameter should not be EMPTY:    [data][attributes][thresholds]
     And Response body parameter should not be EMPTY:    [data][links][self]
     [Teardown]    Run Keywords    I send a DELETE request:     /carts/${cart_uid}
     ...    AND    Response status code should be:    204
@@ -50,7 +54,6 @@ Add_two_items_to_cart_with_included_items_concrete_products_and_abstract_product
     And Response body parameter should be:    [data][attributes][isDefault]    True
     And Response body parameter should not be EMPTY:    [data][attributes][totals][grandTotal]
     And Response body parameter should not be EMPTY:    [data][attributes][discounts]
-    And Response body parameter should not be EMPTY:    [data][attributes][thresholds]
     And Response body parameter should not be EMPTY:    [data][links][self]
     And Response should contain the array of a certain size:    [data][relationships][items][data]    1
     And Response should contain the array of a certain size:    [included]    3
@@ -111,7 +114,6 @@ Get_a_cart_with_included_items_and_concrete_products
     And Response body parameter should be:    [data][attributes][isDefault]    True
     And Response body parameter should not be EMPTY:    [data][attributes][totals][grandTotal]
     And Response body parameter should not be EMPTY:    [data][attributes][discounts]
-    And Response body parameter should not be EMPTY:    [data][attributes][thresholds]
     And Response body parameter should not be EMPTY:    [data][links][self]
     And Response should contain the array of a certain size:    [data][relationships][items][data]    1
     And Response should contain the array of a certain size:    [included]    2
@@ -276,6 +278,58 @@ Add_product_with_options_to_cart
     Each array element of array in response should contain property:    [included][0][attributes][selectedProductOptions]    sku
     Each array element of array in response should contain property:    [included][0][attributes][selectedProductOptions]    optionName
     Each array element of array in response should contain property:    [included][0][attributes][selectedProductOptions]    price
+    [Teardown]    Run Keywords    I send a DELETE request:     /carts/${cart_uid}
+    ...    AND    Response status code should be:    204
+
+Add_item_with_storage_category_and_2_discounts
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
+    ...    AND    I send a POST request:    /carts    {"data":{"type":"carts","attributes":{"priceMode":"${gross_mode}","currency":"${currency_code_eur}","store":"${store_de}","name":"Cart-${random}"}}}
+    ...    AND    Save value to a variable:    [data][id]    cart_uid
+    When I send a POST request:    /carts/${cart_uid}/items    {"data": {"type": "items","attributes": {"sku": "${discount_concrete_product_1_sku}","quantity": 1}}}
+    Then Response status code should be:    201
+    And Response reason should be:    Created
+    And Response header parameter should be:    Content-Type    ${default_header_content_type}
+    And Response body parameter should be:    [data][id]    ${cart_uid}
+    And Response body parameter should be:    [data][type]    carts
+    And Response body parameter should be:    [data][attributes][totals][expenseTotal]    0
+    And Response body parameter should be:    [data][attributes][totals][discountTotal]    ${discount_concrete_product_1_total_sum_of_discounts}
+    And Response body parameter should be greater than:    [data][attributes][totals][taxTotal]    0
+    And Response body parameter should be greater than:    [data][attributes][totals][subtotal]    0
+    And Response body parameter should be greater than:    [data][attributes][totals][grandTotal]    0
+    And Response body parameter should be greater than:    [data][attributes][totals][priceToPay]    0
+    And Response body parameter should be:    [data][attributes][discounts][0][displayName]    ${discount_1_name}
+    And Response body parameter should be:    [data][attributes][discounts][0][amount]    ${discount_amount_for_product_1_with_discount_20%_off_storage}
+    And Response body parameter should be:    [data][attributes][discounts][0][code]    None
+    And Response body parameter should be:    [data][attributes][discounts][1][displayName]    ${discount_2_name}
+    And Response body parameter should be:    [data][attributes][discounts][1][amount]    ${discount_amount_for_product_1_with_discount_10%_off_minimum_order}
+    And Response body parameter should be:    [data][attributes][discounts][1][code]    None
+    And Response body parameter should not be EMPTY:    [data][links][self]
+    [Teardown]    Run Keywords    I send a DELETE request:     /carts/${cart_uid}
+    ...    AND    Response status code should be:    204
+
+Add_item_without_storage_category_and_2_discounts
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
+    ...    AND    I send a POST request:    /carts    {"data":{"type":"carts","attributes":{"priceMode":"${gross_mode}","currency":"${currency_code_eur}","store":"${store_de}","name":"Cart-${random}"}}}
+    ...    AND    Save value to a variable:    [data][id]    cart_uid
+    When I send a POST request:    /carts/${cart_uid}/items    {"data": {"type": "items","attributes": {"sku": "${discount_concrete_product_3_sku}","quantity": 1}}}
+    Then Response status code should be:    201
+    And Response reason should be:    Created
+    And Response header parameter should be:    Content-Type    ${default_header_content_type}
+    And Response body parameter should be:    [data][id]    ${cart_uid}
+    And Response body parameter should be:    [data][type]    carts
+    And Response body parameter should be:    [data][attributes][totals][expenseTotal]    0
+    And Response body parameter with rounding should be:    [data][attributes][totals][discountTotal]    ${discount_amount_for_product_3_with_10%_discount}
+    And Response body parameter should be greater than:    [data][attributes][totals][taxTotal]    0
+    And Response body parameter should be greater than:    [data][attributes][totals][subtotal]    0
+    And Response body parameter should be greater than:    [data][attributes][totals][grandTotal]    0
+    And Response body parameter should be greater than:    [data][attributes][totals][priceToPay]    0
+    And Response should contain the array of a certain size:    [data][attributes][discounts]    1
+    And Response body parameter should be:    [data][attributes][discounts][0][displayName]    ${discount_2_name}
+    And Response body parameter with rounding should be:    [data][attributes][discounts][0][amount]    ${discount_amount_for_product_3_with_10%_discount}
+    And Response body parameter should be:    [data][attributes][discounts][0][code]    None
+    And Response body parameter should not be EMPTY:    [data][links][self]
     [Teardown]    Run Keywords    I send a DELETE request:     /carts/${cart_uid}
     ...    AND    Response status code should be:    204
 

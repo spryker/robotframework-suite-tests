@@ -37,7 +37,7 @@ Get_order_with_invalid_order_id
 #    ...  AND    I set Headers:    Authorization=${token}
 #    When I send a GET request:    /orders/
 #    Then Response status code should be:    404
-#    And Response reason should be:    Unprocessable Entity
+#    And Response reason should be:    Unprocessable Content
 #    And Response should return error message:    Missing order id
 #    And Response should return error code:    1100
 

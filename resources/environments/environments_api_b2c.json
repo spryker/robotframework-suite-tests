@@ -68,9 +68,6 @@
         "currency_code_chf": "CHF",
         "currency_symbol_chf": "CHF"
     },
-    "returns":{
-        "return_resaon":"Custom reason - Not Fit"
-},
     "search":{
         "total_number_of_products_in_search": "215",
         "default_ipp": "12",
@@ -105,6 +102,10 @@
         "category_items_qty_lvl3": "28",
         "category_tree_branches_qty": "6",
 
+        "category_node_is_root_id": "1",
+        "category_node_has_only_parent_id": "6",
+        "category_node_has_children_id": "5",
+
         "abstract_sku_highest_rating": "035"
 
     },
@@ -128,10 +129,12 @@
         "measurement_unit_product_abstract_sku": "M23723",
         "packaging_unit_product_abstract_sku": "M21766",
 
-        "product_with_relations_related_products_sku": "M29529",
+        "product_with_relations_related_products_sku": "204",
+        "product_related_product_with_related_relation_sku": "016",
+        "product_related_product_with_related_relation_name": "Sony Cyber-shot DSC-W800",
         "product_with_relations_alternative_products_sku": "M21100",
         "product_with_relations_upselling_sku": "M29502",
-
+        
         "concrete_product_with_abstract_product_alternative_sku": "138_30046855",
         "concrete_product_with_abstract_product_alternative_sku_name": "Acer TravelMate P258-M",
         "concrete_product_with_abstract_product_alternative_sku_name_in_lower_case": "acer travelmate p258-m",
@@ -185,8 +188,10 @@
         "concrete_product_multiple_image_set": "158_29885222",
         "concrete_product_multiple_image_set_name": "Asus ZenPad Z170C",
         "concrete_available_product_with_stock": "001_25904006",
-        "concrete_available_product_without_stock": "212_123"
-            
+        "concrete_available_product_without_stock": "212_123",
+        "product_option_1": "OP_2_year_waranty",
+        "product_option_1_name": "Two (2) year limited warranty",
+        "product_option_2": "OP_insurance"
     },
     "product_attributes":{
         "brand_1": "Soennecken",
@@ -243,6 +248,9 @@
         "brand_name": "canon"
 
     },
+    "cart":{
+        "x_anonymous_prefix": "anonymous"
+    },
     "availability":{
         "stock_is_0": "0.0000000000",
         "stock_is_20": "20.0000000000"
@@ -253,6 +261,8 @@
         "qty_of_categories_in_category_trees": "6",
         "qty_of_subcategories_in_category_trees": "2",
         "color_name": "black"
-    }
-
-}
+    },
+    "wishlists":{
+        "wishlist_name":"HS"
+       }
+ }
