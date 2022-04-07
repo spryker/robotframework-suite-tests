@@ -2,7 +2,6 @@
     "environment": "api_b2b", 
 
     "env": {
-        "glue_url1": "https://glue.de.b2b.internal-testing.demo-spryker.com",
         "glue_url": "http://glue.de.spryker.local",
         "bapi_url": "http://backend-api.de.spryker.local/api/rest"
     },
