@@ -5,6 +5,8 @@ Test Setup        TestSetup
 Resource    ../../../../../../resources/common/common_api.robot
 
 *** Test Cases ***
+ENABLER
+    TestSetup
 
  ####POST####
 Create_a_return_with_Invalid_access_token
@@ -34,7 +36,7 @@ Create_return_for_order_item_that_cannot_be_returned
     ...    AND    Save value to a variable:    [included][0][attributes][items][0][uuid]    Uuid
     When I send a POST request:     /returns     {"data":{"type":"returns","attributes":{"store":"DE","returnItems":[{"salesOrderItemUuid":"${Uuid}","reason":"${return_resaon}"}]}}}
     Then Response status code should be:     422
-    And Response reason should be:     Unprocessable Entity
+    And Response reason should be:     Unprocessable Content
     And Response should return error message:    "Return cant be created."    
     And Response should return error code:    3601
 
@@ -43,7 +45,7 @@ Create_return_with_invalid_returnItems_uuid
     ...    AND    I set Headers:    Authorization=${token}
     When I send a POST request:     /returns     {"data":{"type":"returns","attributes":{"store":"DE","returnItems":[{"salesOrderItemUuid":"${random}","reason":"${return_resaon}"}]}}}
     Then Response status code should be:     422
-    And Response reason should be:     Unprocessable Entity
+    And Response reason should be:     Unprocessable Content
     And Response should return error message:    "Return cant be created."    
     And Response should return error code:    3601
 
@@ -52,7 +54,7 @@ Create_return_without_returnItems_uuid
     ...    AND    I set Headers:    Authorization=${token}
     When I send a POST request:     /returns     {"data":{"type":"returns","attributes":{"store":"DE","returnItems":[{"salesOrderItemUuid":"","reason":"${return_resaon}"}]}}}
     Then Response status code should be:     422
-    And Response reason should be:     Unprocessable Entity
+    And Response reason should be:     Unprocessable Content
     And Response should return error message:    "Return cant be created."    
     And Response should return error code:    3601
 
@@ -61,7 +63,7 @@ Create_return_without_returnItems_reason
     ...    AND    I set Headers:    Authorization=${token}
     When I send a POST request:     /returns     {"data":{"type":"returns","attributes":{"store":"DE","returnItems":[{"salesOrderItemUuid":"920fc22f-3fb6-53ec-bc5e-c4d321115462","reason":""}]}}}
     Then Response status code should be:     422
-    And Response reason should be:     Unprocessable Entity
+    And Response reason should be:     Unprocessable Content
     And Response should return error message:    "Return cant be created."    
     And Response should return error code:    3601
 
