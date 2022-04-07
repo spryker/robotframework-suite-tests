@@ -2,7 +2,7 @@
     "environment": "api_b2c",
 
     "env": {
-        "glue_url": "http://glue.de.spryker.local",
+        "glue_url": "https://glue.de.b2c.internal-testing.demo-spryker.com",
         "bapi_url": "http://backend-api.de.spryker.local/api/rest"
     },
 
@@ -11,6 +11,7 @@
         "yves_user_first_name": "Sonia",
         "yves_user_last_name": "Wagner",
         "yves_user_password": "change123",
+        "yves_user_password_new": "check@123",
         "yves_user_reference": "DE--21",
         "yves_user_salutation": "Ms",
 
@@ -182,7 +183,8 @@
         "concrete_product_multiple_image_set": "158_29885222",
         "concrete_product_multiple_image_set_name": "Asus ZenPad Z170C",
         "concrete_available_product_with_stock": "001_25904006",
-        "concrete_available_product_without_stock": "212_123"
+        "concrete_available_product_without_stock": "212_123",
+        "concrete_available_product_with_label": "204_29851280"
             
     },
     "product_attributes":{

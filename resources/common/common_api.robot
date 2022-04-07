@@ -11,7 +11,7 @@ Library    ../../resources/libraries/common.py
 
 *** Variables ***
 # *** SUITE VARIABLES ***
-${current_url}                 http://glue.de.spryker.local
+${current_url}                 https://glue.de.b2c.internal-testing.demo-spryker.com
 ${glue_url}                    http://glue.de.spryker.local
 ${bapi_url}                    http://backend-api.de.spryker.local
 ${api_timeout}                 60
@@ -752,7 +752,7 @@ Each array element of array in response should contain property with value NOT i
     ...    *Example:*
     ...
     ...    ``Each array element of array in response should contain property with value in:    [data]    [attributes][isSuper]    None``
-    [Arguments]    ${json_path}    ${expected_property}    ${expected_value1}    ${expected_value2}=test    ${expected_value3}=test    ${expected_value4}=test
+    [Arguments]    ${json_path}    ${expected_property}    ${expected_value1}    ${expected_value2}=test1    ${expected_value3}=test1    ${expected_value4}=test1
 
     @{data}=    Get Value From Json    ${response_body}    ${json_path}
     ${list_length}=    Get Length    @{data}
