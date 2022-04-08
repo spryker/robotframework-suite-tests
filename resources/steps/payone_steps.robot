@@ -1,7 +1,8 @@
 *** Settings ***
-Library    Browser
-Resource    ../common/common_zed.robot
+Library     Browser
+Resource    ../common/common_aop.robot
 Resource    ../common/common.robot
+Resource    ../common/common_zed.robot
 Resource    ../pages/zed/zed_aop_pbc_details_page.robot
 Resource    ../pages/zed/zed_aop_payone_datails_page.robot
 Resource    ../pages/yves/yves_product_details_page.robot
@@ -54,3 +55,49 @@ Payone: submit credit card form with the following data:
         Run keyword if    '${key}'=='cvc' and '${value}' != '${EMPTY}'    Type Text When Element Is Visible    ${apps_payone_payment_cc_cvc}    ${value}
     END
     Click    ${apps_payone_payment_pay_btn}
+
+Payone: create Beeceptor relay
+    [Documentation]    Create separate tab, open Beeceptor and start listening and forwarding notifications from Payone to PBC
+    ${oldPage}=    Switch Page    CURRENT
+    ${beeceptorPage}=    New Page    ${aop_payone_beeceptor}
+    Set Suite Variable    ${beeceptorPage}    ${beeceptorPage}
+    injectRequestApiIntoPage
+    Evaluate JavaScript    id=app
+    ...    (app, args) => {
+    ...        let data = JSON.parse(args);
+    ...        window.sent = {}
+    ...        new MutationObserver(() => {
+    ...            document.querySelectorAll('.event-row').forEach((request) => {
+    ...                if (window.sent[request.id]) return;
+    ...
+    ...                let url = request.querySelector('code')?.innerText
+    ...                let body = request.querySelector('textarea')?.innerText
+    ...
+    ...                if (url && body) {
+    ...                    console.log(window.sent[request.id] = {url, body});
+    ...                    _request({
+    ...                        method: 'post',
+    ...                        url: data.aop_url + data.payone_url,
+    ...                        options: {
+    ...                            data: body,
+    ...                            headers: {
+    ...                                'X-Store-Reference': data.reference,
+    ...                                'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+    ...                            }
+    ...                        }
+    ...                    }).then(console.log).catch(console.error)
+    ...                }
+    ...            })
+    ...        }).observe(app, {childList: true, subtree: true})
+    ...    }
+    ...    arg={"aop_url": "${apps_url}", "reference": "${aop_store_reference}", "payone_url": "${aop_payone_notifications_url}"}
+    Switch Page    ${oldPage}
+
+Payone: close Beeceptor relay
+    [Documentation]    Close separate Beeceptor tab
+    TRY
+        Variable Should Exist    ${beeceptorPage}
+        Close Page    ${beeceptorPage.page_id}
+    EXCEPT    AS    ${error_message}
+        Log    Could not close Beeceptor relay: ${error_message}
+    END

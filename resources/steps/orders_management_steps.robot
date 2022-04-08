@@ -35,7 +35,7 @@ Zed: trigger all matching states inside this order:
 Zed: trigger matching state of order item inside xxx shipment:
     [Arguments]    ${sku}    ${event}    ${shipment}=1
     ${elementSelector}=    Set Variable    xpath=//table[@data-qa='order-item-list'][${shipment}]/tbody//td/div[@class='sku'][contains(text(),'${sku}')]/ancestor::tr/td/form[@class='oms-trigger-form']//button[contains(text(),'${event}')]
-    Try reloading page until element is/not appear:    ${elementSelector}    true    20    3s
+    Try reloading page until element is/not appear:    ${elementSelector}    true    20    10s
     Click    ${elementSelector}
     ${order_changed_status}=    Run Keyword And Ignore Error    Element Should Not Be Visible    ${elementSelector}
     Run Keyword If    'FAIL' in ${order_changed_status}    Run Keywords
@@ -45,7 +45,7 @@ Zed: trigger matching state of order item inside xxx shipment:
 Zed: wait for order item to be in state:
     [Arguments]    ${sku}    ${state}    ${shipment}=1
     ${elementSelector}=    xpath=//table[@data-qa='order-item-list'][${shipment}]/tbody//td/div[@class='sku'][contains(text(),'${sku}')]/ancestor::tr/td[@class='state-history']//a[contains(text(),'${state}')]
-    Try reloading page until element is/not appear:    ${elementSelector}    true    20    3s
+    Try reloading page until element is/not appear:    ${elementSelector}    true    20    10s
 
 Yves: create return for the following products:
     [Arguments]    @{sku_list}    ${element1}=${EMPTY}     ${element2}=${EMPTY}     ${element3}=${EMPTY}     ${element4}=${EMPTY}     ${element5}=${EMPTY}     ${element6}=${EMPTY}     ${element7}=${EMPTY}     ${element8}=${EMPTY}     ${element9}=${EMPTY}     ${element10}=${EMPTY}     ${element11}=${EMPTY}     ${element12}=${EMPTY}     ${element13}=${EMPTY}     ${element14}=${EMPTY}     ${element15}=${EMPTY}

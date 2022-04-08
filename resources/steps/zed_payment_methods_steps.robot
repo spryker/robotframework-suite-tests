@@ -6,7 +6,7 @@ Resource    ../common/common.robot
 *** Keywords ***
 Zed: wait for payment method:
     [Arguments]    ${provider}    ${name}
-    Try reloading page until element is/not appear:    xpath=//table//tr/td[text()='${provider}']/../td[text()='${name}']/..//a[contains(@class,'btn-edit')]    true    20    20s
+    Try reloading page until element is/not appear:    xpath=//table//tr/td[text()='${provider}']/../td[text()='${name}']/..//a[contains(@class,'btn-edit')]    true    20    10s
 
 Zed: activate payment method:
     [Arguments]    ${provider}    ${name}

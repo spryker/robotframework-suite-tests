@@ -1,9 +1,9 @@
 *** Settings ***
-Library    Browser
 Suite Setup       SuiteSetup
 Test Setup        TestSetup
 Test Teardown     TestTeardown
 Suite Teardown    SuiteTeardown
+Resource    ../../../resources/common/common_aop.robot
 Resource    ../../../resources/common/common.robot
 Resource    ../../../resources/common/common_yves.robot
 Resource    ../../../resources/common/common_zed.robot
@@ -19,7 +19,8 @@ Resource    ../../../resources/steps/orders_management_steps.robot
 *** Test Cases ***
 Payone_E2E
     [Documentation]    Checks that payone pbc can be connected in the backoffice and is reflected to the storefront
-    [Setup]    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    [Setup]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    ...    AND    Payone: create Beeceptor relay
     Zed: go to first navigation item level:    Apps
     Zed: AOP catalog page should contain the following apps:    Payone    BazaarVoice
     Zed: go to the PBC details page:    Payone
@@ -119,3 +120,5 @@ Payone_E2E
     ...    AND    Zed: go to first navigation item level:    Apps
     ...    AND    Zed: go to the PBC details page:    Payone
     ...    AND    Zed: Disconnect pbc
+    ...    AND    Payone: close Beeceptor relay
+
