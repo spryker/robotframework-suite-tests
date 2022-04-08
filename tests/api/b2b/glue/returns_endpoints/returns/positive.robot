@@ -5,7 +5,9 @@ Resource    ../../../../../../resources/common/common_api.robot
 Default Tags    glue
 
 *** Test Cases ***
-
+ENABLER
+    TestSetup
+    
 Create_a_return
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
     ...  AND    I set Headers:    Authorization=${token}
