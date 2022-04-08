@@ -24,7 +24,7 @@ Create_guest_cart
     Response body parameter should be greater than:    [data][attributes][totals][priceToPay]    0
 
 Retrieve_guest_cart
-    [Setup]    Create guest cart:    ${random}    ${concrete_product_with_concrete_product_alternative_sku}    7
+    [Setup]    Create a guest cart:    ${random}    ${concrete_product_with_concrete_product_alternative_sku}    7
     When I send a GET request:    /guest-carts
     Then Response status code should be:    200
     And Response reason should be:    OK
@@ -41,7 +41,7 @@ Retrieve_guest_cart
     Response body parameter should be greater than:    [data][0][attributes][totals][priceToPay]    0
 
 Retrieve_guest_cart_by_id
-    [Setup]    Create guest cart:    ${random}    ${concrete_product_with_concrete_product_alternative_sku}    7
+    [Setup]    Create a guest cart:    ${random}    ${concrete_product_with_concrete_product_alternative_sku}    7
     When I send a GET request:    /guest-carts/${guest_cart_id}
     Then Response status code should be:    200
     And Response reason should be:    OK
@@ -58,7 +58,7 @@ Retrieve_guest_cart_by_id
     Response body parameter should be greater than:    [data][attributes][totals][priceToPay]    0
 
 Retrieve_guest_cart_including_cart_items
-    [Setup]    Create guest cart:    ${random}    ${concrete_product_with_concrete_product_alternative_sku}    7
+    [Setup]    Create a guest cart:    ${random}    ${concrete_product_with_concrete_product_alternative_sku}    7
     When I send a GET request:    /guest-carts/${guest_cart_id}?include=guest-cart-items
     Then Response status code should be:    200
     And Response reason should be:    OK
@@ -102,7 +102,7 @@ Retrieve_guest_cart_including_cart_items
     And Each array element of array in response should contain value:    [included]    selectedProductOptions
 
 Retrieve_guest_cart_including_cart_rules
-    [Setup]    Create guest cart:    ${random}    ${concrete_product_with_concrete_product_alternative_sku}    7
+    [Setup]    Create a guest cart:    ${random}    ${concrete_product_with_concrete_product_alternative_sku}    7
     When I send a GET request:    /guest-carts/${guest_cart_id}?include=cart-rules
     Then Response status code should be:    200
     And Response reason should be:    OK
@@ -131,7 +131,7 @@ Converting_guest_cart_to_regular
         ...   AND    I set Headers:    Authorization=${token}
         ...   AND    Find or create customer cart
         ...   AND    Cleanup all items in the cart:    ${cart_id}
-        ...   AND    Create guest cart:    ${random}    ${concrete_product_with_concrete_product_alternative_sku}    1
+        ...   AND    Create a guest cart:    ${random}    ${concrete_product_with_concrete_product_alternative_sku}    1
         ...   AND    I set Headers:     X-Anonymous-Customer-Unique-Id=${x_anonymous_customer_unique_id}
         ...   AND    I get access token for the customer:    ${yves_user_email}
         ...   AND    I set Headers:    Authorization=${token}
