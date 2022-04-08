@@ -1,10 +1,13 @@
 *** Settings ***
 Suite Setup    SuiteSetup
-Test Setup    TestSetup
+Test Setup     TestSetup
 Resource    ../../../../../../resources/common/common_api.robot
 Default Tags    glue
 
 *** Test Cases ***
+ENABLER
+    TestSetup
+
 #GET requests
 Get_category_trees
     When I send a GET request:    /category-trees

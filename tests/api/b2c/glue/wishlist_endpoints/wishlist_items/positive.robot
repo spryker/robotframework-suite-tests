@@ -5,6 +5,8 @@ Test Setup     TestSetup
 Default Tags    glue
 
 *** Test Cases ***
+ENABLER
+        TestSetup
 
 #Post
 #CC-16555 API: JSON response is missing product availability and price

@@ -5,6 +5,8 @@ Test Setup     TestSetup
 Default Tags    glue
 
 *** Test Cases ***
+ENABLER
+        TestSetup
 #Post
 
 Adding_item_in_wishlist_by_invalid_Access_Token
@@ -109,10 +111,14 @@ Adding_items_in_wishlist_by_another_customer_wishlist
     ...    AND    I get access token for the customer:   ${yves_user_email}
     ...    AND    I set Headers:    Authorization=${token}
     When I send a POST request:   /wishlists/${wishlist_id}/wishlist-items    {"data": {"type": "wishlist-items","attributes": {"sku": "${concrete_available_product_with_stock}"}}}
-    Then Response status code should be:    404
-    And Response reason should be:    Not Found
-    And Response should return error code:    201
-    And Response should return error message:    "Cant find wishlist."
+    Then Response status code should be:    422
+    And Response reason should be:    Unprocessable Content
+    And Response should return error code:    206
+    And Response should return error message:    "Cant add an item."
+    [Teardown]    Run Keywords     I get access token for the customer:    ${yves_second_user_email}
+    ...     AND    I set Headers:    Authorization=${token}   
+    ...    AND    I send a DELETE request:    /wishlists/${wishlist_id}
+    ...    AND    Response status code should be:    204
 
 # There is no demo data for this test case
 Adding_item_with_deactivated_item_sku
@@ -239,9 +245,14 @@ Deleting_items_in_wishlist_by_another_customer_wishlist
     ...    AND    I get access token for the customer:   ${yves_user_email}
     ...    AND    I set Headers:    Authorization=${token}
     When I send a DELETE request:   /wishlists/${wishlist_id}/wishlist-items/${wishlist_item_id}
-    Then Response status code should be:    400
-    And Response reason should be:    Bad Request
-    And Response should return error message:    Resource id is not specified.
+    Then Response status code should be:    404
+    And Response reason should be:    Not Found
+    And Response should return error code:    201
+    And Response should return error message:        "Cant find wishlist."
+    [Teardown]    Run Keywords     I get access token for the customer:    ${yves_second_user_email}
+    ...    AND    I set Headers:    Authorization=${token}   
+    ...    AND    I send a DELETE request:    /wishlists/${wishlist_id}
+    ...    AND    Response status code should be:    204
 
 Deleting_concrete_product_by_abstract_product_sku
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
