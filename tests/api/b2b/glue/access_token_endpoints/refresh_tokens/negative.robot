@@ -1,8 +1,13 @@
 *** Settings ***
 Suite Setup       SuiteSetup
+Test Setup        TestSetup
 Resource    ../../../../../../resources/common/common_api.robot
+Default Tags    glue
 
 *** Test Cases ***
+ENABLER
+    TestSetup
+    
 #######POST#######
 Refresh_token_with_access_token
     [Setup]    I get access token for the customer:    ${yves_user_email}
@@ -22,7 +27,7 @@ Refresh_token_with_invalid_refresh_token
 Refresh_token_with_empty_refresh_token
     When I send a POST request:    /refresh-tokens    {"data": {"type": "refresh-tokens","attributes": {"refreshToken": ""}}}
     And Response status code should be:    422
-    And Response reason should be:    Unprocessable Entity
+    And Response reason should be:    Unprocessable Content
     And Response should return error code:    901
     And Response should return error message:    refreshToken => This value should not be blank.
 

@@ -5,7 +5,9 @@ Resource    ../../../../../../resources/common/common_api.robot
 Default Tags    glue
 
 *** Test Cases ***
-
+ENABLER
+    TestSetup
+    
 Get_cart_permission_group_with_unauthenicated_user
     When I send a GET request:    /cart-permission-groups/1
     Then Response status code should be:    403

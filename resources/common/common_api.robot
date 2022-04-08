@@ -11,9 +11,6 @@ Library    ../../resources/libraries/common.py
 
 *** Variables ***
 # *** SUITE VARIABLES ***
-${current_url}                 http://glue.de.spryker.local
-${glue_url}                    http://glue.de.spryker.local
-${bapi_url}                    http://backend-api.de.spryker.local
 ${api_timeout}                 60
 ${default_password}            change123
 ${default_allow_redirects}     true
@@ -383,6 +380,31 @@ Response body parameter should be:
     Log    ${data}
     Should Be Equal    ${data}    ${expected_value}
 
+Perform arithmetical calculation with two arguments:
+    [Documentation]    This keyword calculates ``${expected_value1}``, ``${expected_value2}`` and saves  in ``${variable_name}`` variable.
+    ...
+    ...    First you need to set variable name. You can use also existing variable name, in this case variable should be overwritten.
+    ...    Set integer values for ${expected_value1} and ${expected_value2}, add supported math symbol {'+', '-', '*', '/'} for ``${math_symbol}``.
+    ...
+    ...    *Example:*
+    ...
+    ...    ``Perform arithmetical calculation with two arguments:    discount_total_sum    ${discount_total_sum}    +    ${discount_amount_for_product_3_with_10%_discount}``
+    [Arguments]    ${variable_name}    ${expected_value1}    ${math_symbol}    ${expected_value2}
+    IF    '${math_symbol}' == '+'
+        ${result}    Evaluate    ${expected_value1} + ${expected_value2}
+    ELSE IF    '${math_symbol}' == '-'
+        ${result}    Evaluate    ${expected_value1} - ${expected_value2}
+    ELSE IF    '${math_symbol}' == '*'
+        ${result}    Evaluate    ${expected_value1} * ${expected_value2}
+    ELSE IF    '${math_symbol}' == '/'
+        ${result}    Evaluate    ${expected_value1} / ${expected_value2}
+    ELSE
+        ${result}    Set Variable    None
+    END
+    ${result}=    Convert To String    ${result}
+    Set Test Variable    ${${variable_name}}    ${result}
+    [Return]    ${variable_name}
+
 Response body parameter should be in:
     [Documentation]    This keyword checks that the response saved  in ``${response_body}`` test variable contsains the speficied parameter ``${json_path}`` with the value that matches one of the parameters ``${expected_value1}``, ``${expected_value2}``.
     ...
@@ -391,7 +413,7 @@ Response body parameter should be in:
     ...    *Example:*
     ...
     ...    ``Response body parameter should be in:    [data][attributes][allowInput]    true    false``
-    [Arguments]    ${json_path}    ${expected_value1}    ${expected_value2}    ${expected_value3}=test    ${expected_value4}=test
+    [Arguments]    ${json_path}    ${expected_value1}    ${expected_value2}    ${expected_value3}=robotframework-dummy-value    ${expected_value4}=robotframework-dummy-value
     ${data}=    Get Value From Json    ${response_body}    ${json_path}
     ${data}=    Convert To String    ${data}
     ${data}=    Replace String    ${data}    '   ${EMPTY}
@@ -400,6 +422,33 @@ Response body parameter should be in:
     Log    ${data}
     Should Contain Any   ${data}    ${expected_value1}    ${expected_value2}    ${expected_value3}    ${expected_value4}    ignore_case=True
 
+Response body parameter with rounding should be:
+    [Documentation]    This keyword checks that the response saved  in ``${response_body}`` test variable contains the speficied parameter ``${json_path}`` that was rounded and can differ from the expected value by 1 more cent or 1 less cent.
+    ...    It can be used if you need to check value with rounding for prices etg.
+    ...    
+    ...    Range is calculated as
+    ...    
+    ...    Minimal range: ``${expected_value}`` - ``1``
+    ...    Maximum range: ``${expected_value}`` + ``1``
+    ...
+    ...    *Example:*
+    ...
+    ...    ``Response body parameter with rounding should be:    [data][attributes][discounts][0][amount]    ${discount_amount_for_product_3_with_10%_discount}``
+    [Arguments]    ${json_path}    ${expected_value}
+    ${data}=    Get Value From Json    ${response_body}    ${json_path}
+    ${data}=    Convert To String    ${data}
+    ${data}=    Replace String    ${data}    '   ${EMPTY}
+    ${data}=    Replace String    ${data}    [   ${EMPTY}
+    ${data}=    Replace String    ${data}    ]   ${EMPTY}
+    Log    ${data}
+    ${range_value_min}=    Evaluate    ${expected_value} - 1
+    ${range_value_max}=    Evaluate    ${expected_value} + 1
+    IF    ${data} >= ${range_value_min} and ${data} <= ${range_value_max}
+        ${result}    Set Variable    True
+    ELSE
+        ${result}    Set Variable    False
+    END
+    Should Be Equal    ${result}    True    Actual ${data} is not in expected Range [${range_value_min}; ${range_value_max}]
 
 Response body parameter should be NOT in:
     [Documentation]    This keyword checks that the response saved  in ``${response_body}`` test variable contsains the speficied parameter ``${json_path}`` with the value that matches one of the parameters ``${expected_value1}``, ``${expected_value2}``.
@@ -409,7 +458,7 @@ Response body parameter should be NOT in:
     ...    *Example:*
     ...
     ...    ``Response body parameter should be NOT in:    [data][attributes][allowInput]    None``
-    [Arguments]    ${json_path}    ${expected_value1}    ${expected_value2}=test    ${expected_value3}=test    ${expected_value4}=test
+    [Arguments]    ${json_path}    ${expected_value1}    ${expected_value2}=robotframework-dummy-value    ${expected_value3}=robotframework-dummy-value    ${expected_value4}=robotframework-dummy-value
     ${data}=    Get Value From Json    ${response_body}    ${json_path}
     ${data}=    Convert To String    ${data}
     ${data}=    Replace String    ${data}    '   ${EMPTY}
@@ -731,7 +780,7 @@ Each array element of array in response should contain property with value in:
     ...    *Example:*
     ...
     ...    ``Each array element of array in response should contain property with value in:    [data]    [attributes][allowInput]    True    False``
-    [Arguments]    ${json_path}    ${expected_property}    ${expected_value1}    ${expected_value2}    ${expected_value3}=test    ${expected_value4}=test
+    [Arguments]    ${json_path}    ${expected_property}    ${expected_value1}    ${expected_value2}    ${expected_value3}=robotframework-dummy-value    ${expected_value4}=robotframework-dummy-value
 
     @{data}=    Get Value From Json    ${response_body}    ${json_path}
     ${list_length}=    Get Length    @{data}
@@ -754,7 +803,7 @@ Each array element of array in response should contain property with value NOT i
     ...    *Example:*
     ...
     ...    ``Each array element of array in response should contain property with value in:    [data]    [attributes][isSuper]    None``
-    [Arguments]    ${json_path}    ${expected_property}    ${expected_value1}    ${expected_value2}=test    ${expected_value3}=test    ${expected_value4}=test
+    [Arguments]    ${json_path}    ${expected_property}    ${expected_value1}    ${expected_value2}=robotframework-dummy-value    ${expected_value3}=robotframework-dummy-value    ${expected_value4}=robotframework-dummy-value
 
     @{data}=    Get Value From Json    ${response_body}    ${json_path}
     ${list_length}=    Get Length    @{data}
@@ -777,7 +826,7 @@ Each array element of nested array should contain property with value in:
     ...    *Example:*
     ...
     ...    ``Each array element of nested array should contain property with value in:    [data]    [attributes][localizedKeys]    translation    en_US    de_DE``
-    [Arguments]    ${json_path}    ${nested_array}    ${expected_property}    ${expected_value1}    ${expected_value2}    ${expected_value3}=test    ${expected_value4}=test
+    [Arguments]    ${json_path}    ${nested_array}    ${expected_property}    ${expected_value1}    ${expected_value2}    ${expected_value3}=robotframework-dummy-value    ${expected_value4}=robotframework-dummy-value
 
     @{data}=    Get Value From Json    ${response_body}    ${json_path}
     ${list_length1}=    Get Length    @{data}
@@ -805,7 +854,7 @@ Each array element of nested array should contain property with value NOT in:
     ...    *Example:*
     ...
     ...    ``Each array element of nested array should contain property with value NOT in:    [data]    [attributes][localizedKeys]    translation    None``
-    [Arguments]    ${json_path}    ${nested_array}    ${expected_property}    ${expected_value1}    ${expected_value2}=test   ${expected_value3}=test    ${expected_value4}=test
+    [Arguments]    ${json_path}    ${nested_array}    ${expected_property}    ${expected_value1}    ${expected_value2}=robotframework-dummy-value   ${expected_value3}=robotframework-dummy-value    ${expected_value4}=robotframework-dummy-value
 
     @{data}=    Get Value From Json    ${response_body}    ${json_path}
     ${list_length1}=    Get Length    @{data}
