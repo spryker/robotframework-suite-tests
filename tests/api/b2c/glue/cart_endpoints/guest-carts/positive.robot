@@ -173,7 +173,7 @@ Convert_guest_cart_to_customer_cart
         ...   AND    I set Headers:    Authorization=${token}
         ...   AND    Find or create customer cart
         ...   AND    Cleanup all items in the cart:    ${cart_id}
-        ...   AND    Create a guest cart:    ${random}    ${concrete_product_with_concrete_product_alternative_sku}    1
+        ...   AND    Create a guest cart:    ${random}-convert-guest-cart    ${concrete_product_with_concrete_product_alternative_sku}    1
         ...   AND    I set Headers:     X-Anonymous-Customer-Unique-Id=${x_anonymous_customer_unique_id}
         ...   AND    I get access token for the customer:    ${yves_user_email}
         ...   AND    I set Headers:    Authorization=${token}
@@ -193,3 +193,4 @@ Convert_guest_cart_to_customer_cart
     Response body parameter should be greater than:    [data][0][attributes][totals][grandTotal]    0
     And Response body parameter should be:    [included][0][type]    items
     And Response body parameter should be:    [included][0][attributes][sku]    ${concrete_product_with_concrete_product_alternative_sku}
+    And Response body parameter should be:    [included][0][attributes][quantity]    1
