@@ -5,7 +5,10 @@ Resource    ../../../../../../resources/common/common_api.robot
 Default Tags    glue
 
 *** Test Cases ***
-#POST requests
+ENABLER
+    TestSetup
+
+
 Create_guest_cart
     [Setup]    I set Headers:    Content-Type=${default_header_content_type}    X-Anonymous-Customer-Unique-Id=${random}
     When I send a POST request:    /guest-cart-items    {"data": {"type": "guest-cart-items","attributes": {"sku": "${concrete_product_with_concrete_product_alternative_sku}","quantity": 1}}}
@@ -71,6 +74,7 @@ Retrieve_guest_cart_including_cart_items
     And Response body parameter should be:    [data][relationships][guest-cart-items][data][0][id]    ${concrete_product_with_concrete_product_alternative_sku}
     And Response body parameter should be:    [included][0][type]    guest-cart-items
     And Response body parameter should not be EMPTY:    [included][0][id]
+    Response should contain the array of a certain size:    [included]    1
     And Each array element of array in response should contain property:    [included]    id
     And Each array element of array in response should contain property:    [included]    attributes
     And Each array element of array in response should contain property:    [included]    links
@@ -126,7 +130,45 @@ Retrieve_guest_cart_including_cart_rules
     And Each array element of array in response should contain value:    [included]    discountPromotionAbstractSku
     And Each array element of array in response should contain value:    [included]    discountPromotionQuantity
 
-Converting_guest_cart_to_regular
+Update_guest_cart_with_all_attributes
+      [Setup]    Run Keywords    Create a guest cart:    ${random}    ${concrete_product_with_concrete_product_alternative_sku}    1
+            ...   AND    I set Headers:     X-Anonymous-Customer-Unique-Id=${x_anonymous_customer_unique_id}
+    When I send a PATCH request:    /guest-carts/${guest_cart_id}    {"data": {"type": "guest-carts","attributes": {"priceMode": "${gross_mode}","currency": "${currency_code_eur}","store": "${store_de}"}}}
+    Then Response status code should be:    200
+    And Response reason should be:    OK
+    And Response body parameter should be:    [data][type]    guest-carts
+    And Response body parameter should be:    [data][id]    ${guest_cart_id}
+    And Response body parameter should be:    [data][attributes][priceMode]    ${gross_mode}
+    And Response body parameter should be:    [data][attributes][currency]    ${currency_code_eur}
+    And Response body parameter should be:    [data][attributes][store]    ${store_de}
+    And Response body parameter should not be EMPTY:    [data][attributes][totals][expenseTotal]
+    And Response body parameter should not be EMPTY:    [data][attributes][totals][discountTotal]
+    And Response body parameter should not be EMPTY:    [data][attributes][totals][taxTotal]
+    And Response body parameter should not be EMPTY:    [data][attributes][totals][subtotal]
+    And Response body parameter should not be EMPTY:    [data][attributes][totals][grandTotal]
+    And Response body parameter should not be EMPTY:    [data][attributes][totals][priceToPay]
+    And Response body has correct self link internal
+
+Update_guest_cart_with_empty_priceMod_currency_store
+      [Setup]    Run Keywords    Create a guest cart:    ${random}    ${concrete_product_with_concrete_product_alternative_sku}    1
+            ...   AND    I set Headers:     X-Anonymous-Customer-Unique-Id=${x_anonymous_customer_unique_id}
+    When I send a PATCH request:    /guest-carts/${guest_cart_id}    {"data": {"type": "guest-carts","attributes": {"priceMode": "","currency": "","store": ""}}}
+    Then Response status code should be:    200
+    And Response reason should be:    OK
+    And Response body parameter should be:    [data][type]    guest-carts
+    And Response body parameter should be:    [data][id]    ${guest_cart_id}
+    And Response body parameter should be:    [data][attributes][priceMode]    ${gross_mode}
+    And Response body parameter should be:    [data][attributes][currency]    ${currency_code_eur}
+    And Response body parameter should be:    [data][attributes][store]    ${store_de}
+    And Response body parameter should not be EMPTY:    [data][attributes][totals][expenseTotal]
+    And Response body parameter should not be EMPTY:    [data][attributes][totals][discountTotal]
+    And Response body parameter should not be EMPTY:    [data][attributes][totals][taxTotal]
+    And Response body parameter should not be EMPTY:    [data][attributes][totals][subtotal]
+    And Response body parameter should not be EMPTY:    [data][attributes][totals][grandTotal]
+    And Response body parameter should not be EMPTY:    [data][attributes][totals][priceToPay]
+    And Response body has correct self link internal
+
+Convert_guest_cart_to_customer_cart
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
         ...   AND    I set Headers:    Authorization=${token}
         ...   AND    Find or create customer cart
@@ -151,3 +193,4 @@ Converting_guest_cart_to_regular
     Response body parameter should be greater than:    [data][0][attributes][totals][grandTotal]    0
     And Response body parameter should be:    [included][0][type]    items
     And Response body parameter should be:    [included][0][attributes][sku]    ${concrete_product_with_concrete_product_alternative_sku}
+    And Response body parameter should be:    [included][0][attributes][quantity]    1
