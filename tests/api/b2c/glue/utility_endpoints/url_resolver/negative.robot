@@ -5,6 +5,9 @@ Default Tags    glue
 Resource    ../../../../../../resources/common/common_api.robot
 
 *** Test Cases ***
+ENABLER
+        TestSetup
+        
 Get_url_collection_by_empty_url
     When I send a GET request:    /url-resolver
     Then Response status code should be:    422
