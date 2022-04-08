@@ -2,7 +2,7 @@
     "environment": "api_b2c",
 
     "env": {
-        "glue_url": "https://glue.de.b2c.internal-testing.demo-spryker.com",
+        "glue_url": "http://glue.de.spryker.local",
         "bapi_url": "http://backend-api.de.spryker.local/api/rest"
     },
 
@@ -66,7 +66,17 @@
         "net_mode": "NET_MODE",
         "currency_name_chf": "Swiss Franc",
         "currency_code_chf": "CHF",
-        "currency_symbol_chf": "CHF"
+        "currency_symbol_chf": "CHF",
+
+        "currency_name_dollar": "US Dollar",
+        "currency_code_dollar": "USD",
+        "currency_symbol_dollar": "$",
+        "store_us": "US",
+
+        "locale_name_DE": "de_DE",
+        "locale_code_DE": "de",
+        "locale_name_EN": "en_US",
+        "locale_code_EN": "en"
     },
     "search":{
         "total_number_of_products_in_search": "215",
@@ -261,9 +271,6 @@
         "qty_of_categories_in_category_trees": "6",
         "qty_of_subcategories_in_category_trees": "2",
         "color_name": "black"
-    },
-    "return_reason":{
-        "return_reasons_qty": "3"
     },
     "wishlists":{
         "wishlist_name":"HS"

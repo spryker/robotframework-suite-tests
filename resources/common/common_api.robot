@@ -702,7 +702,7 @@ Each array element of array in response should contain property:
     ${list_length}=    Get Length    @{data}
     ${log_list}=    Log List    @{data}
     FOR    ${index}    IN RANGE    0    ${list_length}
-        ${list_element}=    Get From List    @{data}    ${index}       
+        ${list_element}=    Get From List    @{data}    ${index}
         List Should Contain Value    ${list_element}    ${expected_property}
     END
 
