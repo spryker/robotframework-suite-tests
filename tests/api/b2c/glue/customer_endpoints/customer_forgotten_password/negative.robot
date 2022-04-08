@@ -5,6 +5,8 @@ Default Tags    glue
 Resource    ../../../../../../resources/common/common_api.robot
 
 *** Test Cases ***
+ENABLER
+    TestSetup
 Forgot_password_wrong_email_format
     I send a POST request:    /customer-forgotten-password    {"data":{"type":"customer-forgotten-password","attributes":{"email":"xyz"}}}
     Response status code should be:    422
