@@ -1,8 +1,13 @@
 *** Settings ***
 Suite Setup       SuiteSetup
+Test Setup        TestSetup
 Resource    ../../../../../../resources/common/common_api.robot
+Default Tags    glue
 
 *** Test Cases ***
+ENABLER
+    TestSetup
+    
 Get_alternative_abstract_with_nonexistant_SKU
     When I send a GET request:    /concrete-products/fake/abstract-alternative-products
     Then Response status code should be:    404

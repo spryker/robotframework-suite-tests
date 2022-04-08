@@ -1,8 +1,13 @@
 *** Settings ***
 Suite Setup       SuiteSetup
+Test Setup        TestSetup
 Resource    ../../../../../../resources/common/common_api.robot
+Default Tags    glue
 
 *** Test Cases ***
+ENABLER
+    TestSetup
+    
 Agent_can_get_search_for_customers_without_search_parameters
     [Setup]    Run Keywords    I send a POST request:    /agent-access-tokens    {"data": {"type": "agent-access-tokens","attributes": {"username": "${agent_email}","password": "${agent_password}"}}}
     ...    AND    Response status code should be:    201
@@ -149,6 +154,5 @@ Agent_can_get_search_for_customers_from_last_page
     And Response body parameter should be:    [data][0][attributes][customers][5][customerReference]    ${customer_reference_34_de}
     And Response body parameter should not be EMPTY:    [links][last]
     And Response body parameter should not be EMPTY:    [links][first]
-    And Response body parameter should not be EMPTY:    [links][next]
     And Response body parameter should not be EMPTY:    [links][prev]
     And Response body parameter should not be EMPTY:    [links][self]
