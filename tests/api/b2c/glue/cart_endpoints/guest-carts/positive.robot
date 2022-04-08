@@ -193,4 +193,3 @@ Convert_guest_cart_to_customer_cart
     Response body parameter should be greater than:    [data][0][attributes][totals][grandTotal]    0
     And Response body parameter should be:    [included][0][type]    items
     And Response body parameter should be:    [included][0][attributes][sku]    ${concrete_product_with_concrete_product_alternative_sku}
-    And Response body parameter should be:    [included][0][attributes][quantity]    1
