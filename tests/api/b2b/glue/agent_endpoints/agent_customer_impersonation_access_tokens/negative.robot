@@ -1,8 +1,13 @@
 *** Settings ***
 Suite Setup       SuiteSetup
+Test Setup        TestSetup
 Resource    ../../../../../../resources/common/common_api.robot
+Default Tags    glue
 
 *** Test Cases ***
+ENABLER
+    TestSetup
+    
 Agent_cannot_impersonate_customer_with_no_agent_token
     When I send a POST request:    /agent-customer-impersonation-access-tokens    {"data": {"type": "agent-customer-impersonation-access-tokens","attributes":{"customerReference": "${yves_user_reference}"}}}
     Then Response status code should be:    401
