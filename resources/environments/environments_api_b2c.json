@@ -2,7 +2,7 @@
     "environment": "api_b2c",
 
     "env": {
-        "glue_url": "http://glue.de.spryker.local",
+        "glue_url": "https://glue.de.b2c.internal-testing.demo-spryker.com",
         "bapi_url": "http://backend-api.de.spryker.local/api/rest"
     },
 
@@ -191,7 +191,12 @@
         "concrete_available_product_without_stock": "212_123",
         "product_option_1": "OP_2_year_waranty",
         "product_option_1_name": "Two (2) year limited warranty",
-        "product_option_2": "OP_insurance"
+        "product_option_2": "OP_insurance",
+
+
+        "review_title": "This is a review",
+        "review_text": "This is review text",
+        "default_review_rating": "5"
     },
     "product_attributes":{
         "brand_1": "Soennecken",
