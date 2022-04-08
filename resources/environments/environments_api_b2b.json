@@ -327,8 +327,8 @@
 
         "brand_name": "verbatim",
 
-        "cart_permission_group_id":"1",
-        "cart_permission_group_type":"cart-permission-groups"
+        "cart_permission_group_id":"1"
+        
 
     },
     "availability":{
