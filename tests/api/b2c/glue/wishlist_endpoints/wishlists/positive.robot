@@ -5,6 +5,8 @@ Resource    ../../../../../../resources/common/common_api.robot
 Default Tags    glue
 
 *** Test Cases ***
+ENABLER
+    TestSetup
 #GET Request
 Retrieves_all_customer_wishlists
     [Setup]    Run Keywords    I GET access token for the customer:    ${yves_user_email}
@@ -46,7 +48,7 @@ Retrieves_wishlist_with_items
     ...    AND    I send a Post request:    /wishlists    {"data": {"type": "wishlists","attributes": {"name": "${wishlist_name}"}}}
     ...    AND    Save value to a variable:    [data][id]    wishlist_id
     ...    AND    Response status code should be:    201
-    ...    AND    I send a Post request:    /wishlists/${wishlist_id}/wishlist-items    {"data": {"type": "wishlist-items","attributes": {"sku": "${concrete_available_product_with_stock}"}}}
+    ...    AND    I send a Post request:    /wishlists/${wishlist_id}/wishlist-items    {"data": {"type": "wishlist-items","attributes": {"sku": "${concrete_available_product_with_label}"}}}
     ...    AND    Response status code should be:    201
     when I send a GET request:    /wishlists/${wishlist_id}?include=wishlist-items
      then Response status code should be:    200
@@ -71,7 +73,7 @@ Retrieves_wishlist_with_items_in_concreate
     ...    AND    I send a Post request:    /wishlists    {"data": {"type": "wishlists","attributes": {"name": "${wishlist_name}"}}}
     ...    AND    Save value to a variable:    [data][id]    wishlist_id
     ...    AND    Response status code should be:    201
-    ...    AND    I send a Post request:    /wishlists/${wishlist_id}/wishlist-items    {"data": {"type": "wishlist-items","attributes": {"sku": "${concrete_available_product_with_stock}"}}}
+    ...    AND    I send a Post request:    /wishlists/${wishlist_id}/wishlist-items    {"data": {"type": "wishlist-items","attributes": {"sku": "${concrete_available_product_with_label}"}}}
     ...    AND    Response status code should be:    201
      when I send a GET request:    /wishlists/${wishlist_id}?include=wishlist-items,concrete-products
      then Response status code should be:    200
@@ -97,7 +99,7 @@ Wishlist_Product_Labels
     ...    AND    I send a Post request:    /wishlists    {"data": {"type": "wishlists","attributes": {"name": "${wishlist_name}"}}}
     ...    AND    Save value to a variable:    [data][id]    wishlist_id
     ...    AND    Response status code should be:    201
-    ...    AND    I send a Post request:    /wishlists/${wishlist_id}/wishlist-items    {"data": {"type": "wishlist-items","attributes": {"sku": "${concrete_available_product_with_stock}"}}}
+    ...    AND    I send a Post request:    /wishlists/${wishlist_id}/wishlist-items    {"data": {"type": "wishlist-items","attributes": {"sku": "${concrete_available_product_with_label}"}}}
     ...    AND    Response status code should be:    201
      when I send a GET request:    /wishlists/${wishlist_id}?include=wishlist-items,concrete-products,product-labels
      then Response status code should be:    200
