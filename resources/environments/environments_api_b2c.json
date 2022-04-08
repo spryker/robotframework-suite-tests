@@ -11,6 +11,7 @@
         "yves_user_first_name": "Sonia",
         "yves_user_last_name": "Wagner",
         "yves_user_password": "change123",
+        "yves_user_password_new":"Change@123",
         "yves_user_reference": "DE--21",
         "yves_user_salutation": "Ms",
 
