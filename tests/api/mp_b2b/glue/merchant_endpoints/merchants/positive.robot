@@ -5,7 +5,8 @@ Resource    ../../../../../../resources/common/common_api.robot
 Default Tags    glue
 
 *** Test Cases ***
-
+ENABLER
+    TestSetup
 
 Retrieves_list_of_merchants
     When I send a GET request:  /merchants
