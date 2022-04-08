@@ -114,6 +114,22 @@ Adding_items_in_wishlist_by_another_customer_wishlist
     And Response should return error code:    201
     And Response should return error message:    "Cant find wishlist."
 
+# There is no demo data for this test case
+Adding_item_with_deactivated_item_sku
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    ...    AND    I set Headers:    Authorization=${token}
+    ...    AND    I send a POST request:    /wishlists    {"data": { "type": "wishlists","attributes": { "name": "${wishlist_name}"} }}
+    ...    AND    Response status code should be:    201 
+    ...    AND    Response reason should be:    Created
+    ...    AND    Save value to a variable:    [data][id]    wishlist_reference_id
+    When I send a POST request:   /wishlists/${wishlist_reference_id}/wishlist-items    {"data": {"type": "wishlist-items","attributes": {"sku": "Demo-SKU-Id"}}}
+    Then Response status code should be:    422
+    And Response reason should be:    Unprocessable Content
+    And Response should return error code:    206
+    And Response should return error message:    "Cant add an item."
+    [Teardown]    Run Keywords    I send a DELETE request:    /wishlists/${wishlist_reference_id}
+    ...    AND    Response status code should be:    204
+
 #Delete
 Deleting_item_in_wishlist_by_invalid_Access_Token
     [Setup]    I set Headers:    Authorization=3485h7
