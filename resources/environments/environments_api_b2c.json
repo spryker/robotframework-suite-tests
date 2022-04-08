@@ -268,11 +268,33 @@
         "qty_of_categories_in_category_trees": "6",
         "qty_of_subcategories_in_category_trees": "2",
         "color_name": "black"
+        
     },
+
+
+    "url_resolver":{
+
+        "url_resolver_abstract_product": "/en/canon-ixus-160-1",
+        "url_resolver_product_entity": "abstract-products",
+        "url_resolver_product_id": "001",
+
+        "url_resolver_category_nodes": "/en/computers",
+        "url_resolver_category_nodes_entity": "category-nodes",
+        "url_resolver_category_nodes_id": "5",
+
+        "url_resolver_cms": "/en/privacy",
+        "url_resolver_cms_entity": "cms-pages",
+        "url_resolver_cms_id": "1e9fb640-9073-55f4-a2d2-535090c92025"
+
+    },
+
+
     "return_reason":{
         "return_reasons_qty": "3"
     },
+
     "wishlists":{
         "wishlist_name":"HS"
+        
        }
  }
