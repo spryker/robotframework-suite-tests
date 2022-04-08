@@ -1,12 +1,11 @@
 *** Settings ***
+Resource    ../../../../../../resources/common/common_api.robot
 Suite Setup    SuiteSetup
 Test Setup     TestSetup
-Resource    ../../../../../../resources/common/common_api.robot
+
 Default Tags    glue
 
 *** Test Cases ***
-ENABLER
-    TestSetup
 
 Get_category_node_is_root_by_id
     When I send a GET request:    /category-nodes/${category_node_is_root_id}
@@ -45,7 +44,7 @@ Get_category_node_has_children_by_id
     And Response body has correct self link internal
 
 
-Get_category_node_is_leaf_by_id
+Get_category_node_that_has_only_parents_by_id
     When I send a GET request:    /category-nodes/${category_node_has_only_parent_id}
     Then Response status code should be:    200
     And Response reason should be:    OK

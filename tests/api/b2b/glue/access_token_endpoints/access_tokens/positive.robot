@@ -1,10 +1,12 @@
 *** Settings ***
 Suite Setup       SuiteSetup
-Test Setup    TestSetup
+Test Setup        TestSetup
 Resource    ../../../../../../resources/common/common_api.robot
 Default Tags    glue
 
 *** Test Cases ***
+ENABLER
+    TestSetup
 
 Get_access_token_for_customer
     When I send a POST request:    /access-tokens    {"data":{"type":"access-tokens","attributes":{"username":"${yves_user_email}","password":"${yves_user_password}"}}}
