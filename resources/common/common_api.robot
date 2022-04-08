@@ -112,8 +112,10 @@ I get access token for the customer:
     ...
     ...    ``I get access token for the customer:    ${yves_user_email}``
     [Arguments]    ${email}    ${password}=${default_password}
+    ${hasValue}    Run Keyword and return status     Should not be empty    ${headers}
     ${data}=    Evaluate    {"data":{"type":"access-tokens","attributes":{"username":"${email}","password":"${password}"}}}
-    ${response}=    POST    ${current_url}/access-tokens    json=${data}
+    ${response}=    Run Keyword if    ${hasValue}    POST    ${current_url}/access-tokens    json=${data}    headers=${headers}
+    ...    ELSE    POST    ${current_url}/access-tokens    json=${data}
     ${token}=    Set Variable    Bearer ${response.json()['data']['attributes']['accessToken']}
     ${response_body}=    Set Variable    ${response.json()}
     ${response_headers}=    Set Variable    ${response.headers}
@@ -1180,3 +1182,56 @@ Cleanup existing customer addresses:
         Set Variable    ${response_delete}    ${response_delete}
         Should Be Equal As Strings    ${response_delete.status_code}    204    Could not delete a customer address
     END
+
+Find or create customer cart
+    [Documentation]    This keyword creates or retrieves cart for the current customer token. This keyword sets ``${cart_id} `` variable
+        ...                and it can be re-used by the keywords that follow this keyword in the test
+        ...
+        ...     This keyword does not accept any arguments. Makes GET request in order to fetch cart for the customer or creates it otherwise.
+        ...
+        ${response}=    I send a GET request:    /carts
+        Save value to a variable:    [data][0][id]    cart_id
+        ${hasCart}    Run Keyword and return status     Should not be empty    ${cart_id}
+        Log    cart_id:${cart_id}
+        Run Keyword Unless    ${hasCart}    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${gross_mode}","currency": "${currency_code_eur}","store": "${store_de}"}}}
+        Run Keyword Unless    ${hasCart}    Save value to a variable:    [data][id]    cart_id
+
+Create a guest cart:
+    [Documentation]    This keyword creates guest cart and sets ``${x_anonymous_customer_unique_id}`` that specify guest reference
+        ...             and ``${guest_cart_id}`` that specify guest cart, variables
+        ...             can be re-used by the keywords that follow this keyword in the test
+        ...
+        ...     This keyword does not accept any arguments. Makes POST request in order to create cart for the guest.
+        ...    *Example:*
+        ...
+        ...    ``Create guest cart: ${random}    ${concrete_product_with_concrete_product_alternative_sku}    1``
+        [Arguments]    ${x_anonymous_customer_unique_id}    ${product_sku}    ${product_quantity}
+        Set Test Variable    ${x_anonymous_customer_unique_id}    ${x_anonymous_customer_unique_id}
+        I set Headers:     X-Anonymous-Customer-Unique-Id=${x_anonymous_customer_unique_id}    Content-Type=${default_header_content_type}
+        ${response}=    I send a POST request:    /guest-cart-items    {"data": {"type": "guest-cart-items","attributes": {"sku": "${product_sku}","quantity": ${product_quantity}}}}
+        Save value to a variable:    [data][id]    guest_cart_id
+        Log    x_anonymous_customer_unique_id:${x_anonymous_customer_unique_id} guest_cart_id:${guest_cart_id}
+
+Cleanup all items in the cart:
+    [Documentation]    This keyword deletes any and all items in the given cart uid.
+        ...
+        ...    Before using this method you should get customer token and set it into the headers with the help of ``I get access token for the customer:`` and ``I set Headers:``
+        ...
+        ...    *Example:*
+        ...
+        ...    ``Cleanup items in the cart:    ${cart_id}``
+        [Arguments]    ${cart_id}
+        ${response}=    GET    ${current_url}/carts/${cart_id}    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}  params=include=items,bundle-items     expected_status=200
+        ${response_body}=    Set Variable    ${response.json()}
+        @{included}=    Get Value From Json    ${response_body}    [included]
+        ${list_length}=    Evaluate    len(@{included})
+        Log    list_length: ${list_length}
+        FOR    ${index}    IN RANGE    0    ${list_length}
+                ${list_element}=    Get From List    @{included}    ${index}
+                ${cart_item_uid}=    Get Value From Json    ${list_element}    [id]
+                ${cart_item_uid}=    Convert To String    ${cart_item_uid}
+                ${cart_item_uid}=    Replace String    ${cart_item_uid}    '   ${EMPTY}
+                ${cart_item_uid}=    Replace String    ${cart_item_uid}    [   ${EMPTY}
+                ${cart_item_uid}=    Replace String    ${cart_item_uid}    ]   ${EMPTY}
+                ${response_delete}=    DELETE    ${current_url}/carts/${cart_id}/items/${cart_item_uid}    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}    expected_status=204
+        END
