@@ -1,8 +1,13 @@
 *** Settings ***
 Suite Setup       SuiteSetup
+Test Setup        TestSetup
 Resource    ../../../../../../resources/common/common_api.robot
+Default Tags    glue
 
 *** Test Cases ***
+ENABLER
+    TestSetup
+    
 Abstract_image_sets_with_1_concrete
     When I send a GET request:    /abstract-products/${abstract_available_with_stock_and_never_out_of_stock}/abstract-product-image-sets
     Then Response status code should be:    200
