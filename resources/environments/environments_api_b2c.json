@@ -269,6 +269,9 @@
         "qty_of_subcategories_in_category_trees": "2",
         "color_name": "black"
     },
+    "return_reason":{
+        "return_reasons_qty": "3"
+    },
     "wishlists":{
         "wishlist_name":"HS"
        }
