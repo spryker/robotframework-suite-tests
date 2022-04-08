@@ -389,6 +389,11 @@
         "label_name_discontinued": "Discontinued",
         "label_id_alternative": "1",
         "label_name_alternative": "Alternatives available"
+    },
+    "return_reasons":{
+      "return_reason_damaged": "Damaged",
+      "return_reason_wrong_item": "Wrong Item",
+      "return_reason_no_longer_needed": "No longer needed"
     }
 
 }
