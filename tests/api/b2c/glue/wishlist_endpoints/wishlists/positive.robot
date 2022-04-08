@@ -5,6 +5,8 @@ Resource    ../../../../../../resources/common/common_api.robot
 Default Tags    glue
 
 *** Test Cases ***
+ENABLER
+    TestSetup
 #GET Request
 Retrieves_all_customer_wishlists
     [Setup]    Run Keywords    I GET access token for the customer:    ${yves_user_email}
