@@ -1,10 +1,13 @@
 *** Settings ***
-Suite Setup       SuiteSetup
-Test Setup    TestSetup
-Resource    ../../../../../../resources/common/common_api.robot
+Suite Setup    SuiteSetup
+Test Setup     TestSetup
+Resource       ../../../../../../resources/common/common_api.robot
 Default Tags    glue
 
 *** Test Cases ***
+ENABLER
+    TestSetup
+    
 #GET requests
 Get_availability_notifications_for_customer
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
@@ -31,8 +34,6 @@ Get_empty_list_of_availability_notifications_for_customer
     And Response reason should be:    OK
     And Response should contain the array of a certain size:    [data]    0
     And Response body has correct self link
-
-
 
 #POST requests
 Subscribe_to_availability_notifications_for_customer
@@ -62,8 +63,6 @@ Subscribe_to_availability_notifications_with_non_existing_email
     And Response body has correct self link for created entity:    ${availability_notification_id}
     [Teardown]    Run Keywords    I send a DELETE request:    /availability-notifications/${availability_notification_id}
     ...  AND    Response status code should be:    204
-
-
 
 #DELETE requests
 Delete_availability_notifications_for_customer
