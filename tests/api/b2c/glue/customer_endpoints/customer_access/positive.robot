@@ -5,7 +5,7 @@ Default Tags    glue
 Resource    ../../../../../../resources/common/common_api.robot
 
 *** Test Cases ***
-Resources_customer_can_access
+Resources_list_which_customer_can_access
     I send a GET request:    /customer-access
     Response status code should be:    200
     And Response reason should be:    OK
@@ -24,5 +24,5 @@ Access_restricted_resource_as_authorized_customer
     And Response reason should be:    OK
     And Response body parameter should contain:    [data][0][type]    wishlists
     And Response body parameter should be:    [data][0][attributes][numberOfItems]    1
-    And Response body parameter should be:    [data][0][attributes][name]    wishlist-1
+    And Response body parameter should not be EMPTY:    [data][0][attributes][name]
     And Response body has correct self link
