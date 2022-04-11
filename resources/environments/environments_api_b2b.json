@@ -27,13 +27,19 @@
         "yves_third_user_last_name": "Musterman",
         "yves_third_user_password": "change123",
         "yves_third_user_salutation": "Mr",
-
+      
         "yves_fourth_user_email": "Lilu@ottom.de",
         "yves_fourth_user_first_name": "Lilu",
         "yves_fourth_user_last_name": "Dallas",
         "yves_fourth_user_password": "change123",
         "yves_fourth_user_reference": "DE-30",
         "yves_fourth_user_salutation": "Ms",
+
+        "yves_shared_shopping_list_user_email": "Trever.m@spryker.com",
+        "yves_shared_shopping_list_user_first_name": "Trever",
+        "yves_shared_shopping_list_user_last_name": "Meier",
+        "yves_shared_shopping_list_user_password": "change123",
+        "yves_shared_shopping_list_user_salutation": "Mr",        
 
         "gender_female": "Female",
         "gender_male": "Male",
@@ -53,7 +59,10 @@
         "customer_reference_1_de": "DE--1",
         "customer_reference_10_de": "DE--10",
         "customer_reference_15_de": "DE--15",
-        "customer_reference_34_de": "DE--34"
+        "customer_reference_34_de": "DE--34",
+
+        "grant_type_password": "password",
+        "grant_type_refresh_token": "refresh_token"
     },
     
     "address":{
@@ -107,7 +116,7 @@
         "yves_user_2nd_shopping_list_name": "Weekly office",
         "yves_user_3rd_shopping_list_name": "Monthly office"
     },
-    
+
     "search":{
         "total_number_of_products_in_search": "420",
         "default_ipp": "12",
@@ -181,24 +190,23 @@
         "alternative_abstract_product": "M21099",
         "alternative_abstract_product_price_chf": "1130",
 
-        "abstract_available_product_with_stock": "M90799",
-        "abstract_available_product_with_stock_name": "Mauser sliding door cabinet - Sideboard with 2 shelves",
-        "abstract_available_product_with_stock_description": " High-quality, stove-enameled steel sheet construction (0.8 mm). Body welded.<br/>Smooth-running sliding doors with push handle on coated rollers. Rubber buffer guarantees low-noise door movement. Central locking by cylinder lock with change core, including 2 keys.<br/>Graphite black shelves, RAL 9011, adjustable in 25-mm pattern, load strength per base approx. 50 kg. Base height 100 mm. Standard height adjustment screws.<br/><br/>Cabinets are delivered with a 25-mm-high covering plate in light gray RAL 7035. ",
-        "abstract_available_product_with_stock_superattribute": "material",
-        "concrete_available_product_sku": "410075",
-        "concrete_available_product_meta_keywords": "Büroschrank,Mehrzweckschrank,Schiebetürschrank,Stahlschrank,Universalschrank,Aktenschrank,Schrankwand,Stahlbüroschrank",
-        "concrete_available_product_meta_description": " Hochwertige, einbrennlackierte Stahlblechkonstruktion (0,8 mm). Korpus verschweißt.<br/>Leichtgängige Schiebetüren mit Bügelgriff auf Kugellagerrollen. Gummipuffer garantieren geräuscharmes Anschlagen der Türen. Zentralverriegelung per Drehzylinderschloss mit Wechselkern inklusive 2 Schlüssel.<br/>Fachböden graphitschwarz RAL 9011, im 25-mm-Raster verstellbar, Tragkraft pro Boden ca. 50 kg. Sockelhöhe 100 mm. Serienmäßig Höhenausgleichsschrauben.<br/><br/>Schränke werden mit einer 25 mm hohen Abdeckplatte in Lichtgrau RAL 7035 geliefert. ",
+        "abstract_available_product_with_stock": "M61125",
+        "abstract_available_product_with_stock_name": "Prosedia vertebral disc swivel chair with synchronous mechanics and contoured seat - backrest height 660 mm",
+        "abstract_available_product_with_stock_description": " Easy-to-care-for fabric cover. Substructure in graphite black RAL 9011.<br/>Standard rolling for soft floors.<br/>The backrest has height-adjustable lumbar support.  ",
+        "abstract_available_product_with_stock_superattribute": "bezugsfarbe",
+        "concrete_available_product_sku": "102712",
+        "concrete_available_product_meta_keywords": "Prosedia vertebral disc swivel chair with synchronous mechanics and contoured seat - backrest height 660 mm",
+        "concrete_available_product_meta_description": " Easy-to-care-for fabric cover. Substructure in graphite black RAL 9011.<br/>Standard rolling for soft floors.<br/>The backrest has height-adjustable lumbar support.  ",
 
         "abstract_available_with_stock_and_never_out_of_stock": "M87",
         "concrete_available_with_stock_and_never_out_of_stock": "657716",
         "concrete_available_with_stock_and_never_out_of_stock_name": "FRIWA stackable chair - with closed back",
-        "abstract_available_product_with_no_stock_and_never_out_of_stock": "",
-        "abstract_unavailable_product": "",
+        "abstract_available_product_with_no_stock_and_never_out_of_stock": "M90851",
+        "abstract_unavailable_product": "M1014948",
 
         "abstract_available_product_with_3_concretes": "M29456",
         "abstract_available_product_with_3_concretes_name": "Gmöhling aluminum data removal container - Exterior - LxWxH 435 x 385 x 650 mm",
         "abstract_available_product_with_3_concretes_superattribute": "material",
-
 
         "abstract_product_with_volume_prices": "M21189",
         "abstract_product_with_volume_prices_name": "Post-it stick note Super Sticky Meeting Notes 6445-4SS 4 pieces/pack",
@@ -247,8 +255,23 @@
 
         "product_option_1": "OP_2_year_waranty",
         "product_option_1_name": "Two (2) year limited warranty",
-        "product_option_2": "OP_insurance"
-            
+        "product_option_2": "OP_insurance",
+
+        "discount_concrete_product_1_sku": "108298",
+        "discount_concrete_product_1_name": "Mauser hinged door cabinet - sideboard, 4 compartments, center separating wall - HxWxD 1225 x 1600 x 420 mm - light gray / ultramarine blue",
+        "discount_amount_for_product_1_with_discount_20%_off_storage": "10600",
+        "discount_amount_for_product_1_with_discount_10%_off_minimum_order": "4240",
+        "discount_concrete_product_1_total_sum_of_discounts": "14840",
+        "discount_concrete_product_2_sku": "213216",
+        "discount_concrete_product_2_name": "office akktiv base cabinet - HxWxD 942 x 913 x 420 mm - light gray, RAL 7035",
+        "discount_amount_for_product_2_with_discount_20%_off_storage": "5783",
+        "discount_amount_for_product_2_with_discount_10%_off_minimum_order": "2313",
+        "discount_concrete_product_2_total_sum_of_discounts": "8096",
+        "discount_concrete_product_3_sku": "401768",
+        "discount_concrete_product_3_name": "EUROKRAFT aluminum hand truck - Load capacity 200 kg, with skids - load capacity 200 kg",
+        "discount_amount_for_product_3_with_discount_20%_off_storage": "16383",
+        "discount_amount_for_product_3_with_10%_discount": "1882"
+
     },
     "product_attributes":{
         "brand_1": "Soennecken",
@@ -314,6 +337,7 @@
     },
     "misc":{
         "default_header_content_type": "application/vnd.api+json",
+        "urlencoded_header_content_type": "application/x-www-form-urlencoded",
         "test_cart_name": "Test-cart",
         "restricted_content_qty": "5",
         "qty_of_categories_in_category_trees": "6",
@@ -330,6 +354,16 @@
         "review_title": "This is a review",
         "review_text": "This is review text",
         "default_review_rating": "5",
+
+        "discount_1_name": "20% off storage",
+        "discount_1_description": "Storage sale: 20% off all office storage products",
+        "discount_1_total_sum_for_discounts_for_products_1_and_2": "16383",
+        "discount_2_name": "10% off minimum order",
+        "discount_2_description": "Get a 10% discount on all orders above a certain value depending on currency and gross/net price mode",
+        "discount_2_total_sum_for_discounts_for_products_1_2_and_3": "8435",
+        "discount_3_name": "Free standard delivery",
+        "discount_3_description": "Free standard delivery for all orders above certain value depending on the currency and net/gross price. This discount is not exclusive and can be combined with other discounts.",
+        "discount_3_total_sum": "490",
 
         "url_resolver_example": "/en/clairefontaine-collegeblock-8272c-din-a5-90blatt-kariert-M21692",
         "url_resolver_entity_type": "abstract-products",
@@ -355,6 +389,11 @@
         "label_name_discontinued": "Discontinued",
         "label_id_alternative": "1",
         "label_name_alternative": "Alternatives available"
+    },
+    "return_reasons":{
+      "return_reason_damaged": "Damaged",
+      "return_reason_wrong_item": "Wrong Item",
+      "return_reason_no_longer_needed": "No longer needed"
     }
 
 }
