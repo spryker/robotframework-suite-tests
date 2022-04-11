@@ -365,9 +365,21 @@
         "discount_3_description": "Free standard delivery for all orders above certain value depending on the currency and net/gross price. This discount is not exclusive and can be combined with other discounts.",
         "discount_3_total_sum": "490",
 
-        "url_resolver_example": "/en/clairefontaine-collegeblock-8272c-din-a5-90blatt-kariert-M21692",
-        "url_resolver_entity_type": "abstract-products",
-        "url_resolver_entity_id": "M21692"
+        "url_resolver_abstract_product": "/en/clairefontaine-collegeblock-8272c-din-a5-90blatt-kariert-M21692",
+        "url_resolver_product_entity": "abstract-products",
+        "url_resolver_product_id": "M21692",
+
+        "url_resolver_category_nodes": "/en/stationery",
+        "url_resolver_category_nodes_entity": "category-nodes",
+        "url_resolver_category_nodes_id": "2",
+
+        "url_resolver_cms": "/en/privacy",
+        "url_resolver_cms_entity": "cms-pages",
+        "url_resolver_cms_id": "1e9fb640-9073-55f4-a2d2-535090c92025",
+
+        "url_resolver_merchant": "/en/merchant/spryker",
+        "url_resolver_merchant_entity": "merchants",
+        "url_resolver_merchant_id": "MER000008"
     },
     "companies":{
         "company_name": "Spryker Systems GmbH",
