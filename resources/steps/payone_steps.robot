@@ -41,7 +41,7 @@ Payone: cancel payment
     Wait Until Element Is Visible    ${apps_payone_payment_cancel_btn}
     Click    ${apps_payone_payment_cancel_btn}
 
-Payone: submit credit card form with the following data:
+Payone: submit credit card with data:
     [Documentation]    Possible argument names: cardType (V, M), cardNumber, nameOnCard, expireYear, expireMonth, cvc
     [Arguments]    @{args}
     ${cardData}=    Set Up Keyword Arguments    @{args}
@@ -92,12 +92,3 @@ Payone: create Beeceptor relay
     ...    }
     ...    arg={"aop_url": "${apps_url}", "reference": "${aop_store_reference}", "payone_url": "${aop_payone_notifications_url}"}
     Switch Page    ${oldPage}
-
-Payone: close Beeceptor relay
-    [Documentation]    Close separate Beeceptor tab
-    TRY
-        Variable Should Exist    ${beeceptorPage}
-        Close Page    ${beeceptorPage.page_id}
-    EXCEPT    AS    ${error_message}
-        Log    Could not close Beeceptor relay: ${error_message}
-    END

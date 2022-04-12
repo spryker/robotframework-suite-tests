@@ -1,12 +1,14 @@
 *** Settings ***
 Resource    ../common/common.robot
+Resource    ../common/common_yves.robot
 Resource    ../steps/header_steps.robot
 Resource    ../steps/quick_order_steps.robot
 Resource    ../pages/yves/yves_customer_account_page.robot
 
 *** Keywords ***
 Yves: go to 'Customer Account' page
-    Yves: go to URL:    en/customer/overview
+    ${lang}=    Yves: get current lang
+    Yves: go to URL:    ${lang}/customer/overview
 
 Yves: go to user menu item in the left bar:
     [Documentation]    Case sensitive, accepts: Overview, Profile, Addresses, Order History, Newsletter, Shopping lists, Shopping carts, Quote Requests

@@ -120,7 +120,7 @@ Remove element attribute with JavaScript:
     [Arguments]    ${xpath}    ${attribute}
     Execute Javascript    var element=document.evaluate("${xpath}", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;element.removeAttribute("${attribute}"");
 
-#Migration to the Browser Library
+# Helper keywords for migration from Selenium Library to Browser Library
 Wait Until Element Is Visible
     [Arguments]    ${locator}    ${message}=${EMPTY}    ${timeout}=0:00:30
     Wait For Elements State    ${locator}    visible    ${timeout}    ${message}
@@ -251,7 +251,7 @@ Conver string to List by separator:
     [Return]    ${covertedList}
 
 Try reloading page until element is/not appear:
-    [Documentation]    will reload page until element is shown/disappear. Secon argument is the expected condition (true/false) for the element.
+    [Documentation]    will reload the page until an element is shown or disappears. The second argument is the expected condition (true[shown]/false[disappeared]) for the element.
     [Arguments]    ${element}    ${shouldBeDisplayed}    ${tries}=20    ${timeout}=1s
     FOR    ${index}    IN RANGE    0    ${tries}
         ${elementAppears}=    Run Keyword And Return Status    Page Should Contain Element    ${element}

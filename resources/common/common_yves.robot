@@ -223,3 +223,14 @@ Yves: try reloading page if element is/not appear:
         ...    ELSE    Run Keyword If    '${isDisplayed}'=='False' and '${elementAppears}'=='True'    Run Keywords    Sleep    1s    AND    Reload
         ...    ELSE    Exit For Loop
     END
+
+Yves: get current lang
+    ${logoUrl}=    get element attribute    xpath=//*[@data-qa='component logo']/a[@href]    href
+    ${logoUrl}=    get url without starting slash    ${logoUrl}
+    run keyword if    '${logoUrl}'!='${EMPTY}'
+    ...    run keywords    set suite variable    ${currentLang}    ${logoUrl}
+    ...    AND    return from keyword    ${currentLang}
+    ${lang}=    get variable value    ${currentLang}    '${EMPTY}'
+    run keyword if    '${lang}'!='${EMPTY}'
+    ...    return from keyword    ${currentLang}
+    return from keyword    '${EMPTY}'

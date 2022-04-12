@@ -71,14 +71,12 @@ Payone_E2E
     Yves: select the following payment method on the checkout and go next:    Credit Card    Payone
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
-    Payone: submit credit card form with the following data:
+    Payone: submit credit card with data:
     ...    || cardType | cardNumber       | nameOnCard | expireYear | expireMonth | cvc ||
     ...    || V        | 4111111111111111 | Robot      | 2030       | 1           | 111 ||
     Wait Until Page Contains Element    ${success_page_main_container_locator}[${env}]
     Yves: 'Thank you' page is displayed
-
-    ${lastPlacedOrder}=    Yves: get the last placed order ID
-
+    Yves: get the last placed order ID
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to order page:    ${lastPlacedOrder}
     Zed: trigger matching state of order item inside xxx shipment:    136    invoice customer
@@ -120,5 +118,3 @@ Payone_E2E
     ...    AND    Zed: go to first navigation item level:    Apps
     ...    AND    Zed: go to the PBC details page:    Payone
     ...    AND    Zed: Disconnect pbc
-    ...    AND    Payone: close Beeceptor relay
-
