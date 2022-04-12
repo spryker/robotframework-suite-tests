@@ -14,7 +14,6 @@
         "yves_user_last_name": "Wagner",
         "yves_user_password": "change123",
         "yves_user_password_new":"Change@123",
-
         "yves_user_reference": "DE--21",
         "yves_user_salutation": "Ms",
 
@@ -173,7 +172,6 @@
         "concrete_available_product_meta_keywords": "Sony,Communication Electronics",
         "concrete_available_product_meta_description": "Enjoy greater flexibility  ...than ever before with the Galaxy Tab S2. Remarkably slim and ultra-lightweight, use this device to take your e-books, photos,",
         "concrete_available_product_with_label": "204_29851280",
-
         "abstract_available_with_stock_and_never_out_of_stock": "209",
         "concrete_available_with_stock_and_never_out_of_stock": "004_30663302",
         "abstract_available_product_with_no_stock_and_never_out_of_stock": "154",
