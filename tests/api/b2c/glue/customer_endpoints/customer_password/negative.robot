@@ -146,7 +146,7 @@ Update_customer_password_with_invalid_access_token
     And Response should return error message:    Unauthorized request.
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
 
-Update_customer_password_with_Invalid_Character_Set
+Update_customer_password_with_value_not_matching_password_policy
     [Setup]    Run Keywords    I send a POST request:    /access-tokens    {"data":{"type":"access-tokens","attributes":{"username":"${yves_user_email}","password":"${yves_user_password}"}}}
     ...    AND    Response status code should be:    201
     ...    AND    Save value to a variable:    [data][attributes][accessToken]    token
