@@ -11,9 +11,6 @@ Library    ../../resources/libraries/common.py
 
 *** Variables ***
 # *** SUITE VARIABLES ***
-${current_url}                 http://glue.de.spryker.local
-${glue_url}                    http://glue.de.spryker.local
-${bapi_url}                    http://backend-api.de.spryker.local
 ${api_timeout}                 60
 ${default_password}            change123
 ${default_allow_redirects}     true
@@ -112,8 +109,10 @@ I get access token for the customer:
     ...
     ...    ``I get access token for the customer:    ${yves_user_email}``
     [Arguments]    ${email}    ${password}=${default_password}
+    ${hasValue}    Run Keyword and return status     Should not be empty    ${headers}
     ${data}=    Evaluate    {"data":{"type":"access-tokens","attributes":{"username":"${email}","password":"${password}"}}}
-    ${response}=    POST    ${current_url}/access-tokens    json=${data}
+    ${response}=    Run Keyword if    ${hasValue}    POST    ${current_url}/access-tokens    json=${data}    headers=${headers}
+    ...    ELSE    POST    ${current_url}/access-tokens    json=${data}
     ${token}=    Set Variable    Bearer ${response.json()['data']['attributes']['accessToken']}
     ${response_body}=    Set Variable    ${response.json()}
     ${response_headers}=    Set Variable    ${response.headers}
@@ -381,6 +380,31 @@ Response body parameter should be:
     Log    ${data}
     Should Be Equal    ${data}    ${expected_value}
 
+Perform arithmetical calculation with two arguments:
+    [Documentation]    This keyword calculates ``${expected_value1}``, ``${expected_value2}`` and saves  in ``${variable_name}`` variable.
+    ...
+    ...    First you need to set variable name. You can use also existing variable name, in this case variable should be overwritten.
+    ...    Set integer values for ${expected_value1} and ${expected_value2}, add supported math symbol {'+', '-', '*', '/'} for ``${math_symbol}``.
+    ...
+    ...    *Example:*
+    ...
+    ...    ``Perform arithmetical calculation with two arguments:    discount_total_sum    ${discount_total_sum}    +    ${discount_amount_for_product_3_with_10%_discount}``
+    [Arguments]    ${variable_name}    ${expected_value1}    ${math_symbol}    ${expected_value2}
+    IF    '${math_symbol}' == '+'
+        ${result}    Evaluate    ${expected_value1} + ${expected_value2}
+    ELSE IF    '${math_symbol}' == '-'
+        ${result}    Evaluate    ${expected_value1} - ${expected_value2}
+    ELSE IF    '${math_symbol}' == '*'
+        ${result}    Evaluate    ${expected_value1} * ${expected_value2}
+    ELSE IF    '${math_symbol}' == '/'
+        ${result}    Evaluate    ${expected_value1} / ${expected_value2}
+    ELSE
+        ${result}    Set Variable    None
+    END
+    ${result}=    Convert To String    ${result}
+    Set Test Variable    ${${variable_name}}    ${result}
+    [Return]    ${variable_name}
+
 Response body parameter should be in:
     [Documentation]    This keyword checks that the response saved  in ``${response_body}`` test variable contsains the speficied parameter ``${json_path}`` with the value that matches one of the parameters ``${expected_value1}``, ``${expected_value2}``.
     ...
@@ -389,7 +413,7 @@ Response body parameter should be in:
     ...    *Example:*
     ...
     ...    ``Response body parameter should be in:    [data][attributes][allowInput]    true    false``
-    [Arguments]    ${json_path}    ${expected_value1}    ${expected_value2}    ${expected_value3}=test    ${expected_value4}=test
+    [Arguments]    ${json_path}    ${expected_value1}    ${expected_value2}    ${expected_value3}=robotframework-dummy-value    ${expected_value4}=robotframework-dummy-value
     ${data}=    Get Value From Json    ${response_body}    ${json_path}
     ${data}=    Convert To String    ${data}
     ${data}=    Replace String    ${data}    '   ${EMPTY}
@@ -398,6 +422,33 @@ Response body parameter should be in:
     Log    ${data}
     Should Contain Any   ${data}    ${expected_value1}    ${expected_value2}    ${expected_value3}    ${expected_value4}    ignore_case=True
 
+Response body parameter with rounding should be:
+    [Documentation]    This keyword checks that the response saved  in ``${response_body}`` test variable contains the speficied parameter ``${json_path}`` that was rounded and can differ from the expected value by 1 more cent or 1 less cent.
+    ...    It can be used if you need to check value with rounding for prices etg.
+    ...    
+    ...    Range is calculated as
+    ...    
+    ...    Minimal range: ``${expected_value}`` - ``1``
+    ...    Maximum range: ``${expected_value}`` + ``1``
+    ...
+    ...    *Example:*
+    ...
+    ...    ``Response body parameter with rounding should be:    [data][attributes][discounts][0][amount]    ${discount_amount_for_product_3_with_10%_discount}``
+    [Arguments]    ${json_path}    ${expected_value}
+    ${data}=    Get Value From Json    ${response_body}    ${json_path}
+    ${data}=    Convert To String    ${data}
+    ${data}=    Replace String    ${data}    '   ${EMPTY}
+    ${data}=    Replace String    ${data}    [   ${EMPTY}
+    ${data}=    Replace String    ${data}    ]   ${EMPTY}
+    Log    ${data}
+    ${range_value_min}=    Evaluate    ${expected_value} - 1
+    ${range_value_max}=    Evaluate    ${expected_value} + 1
+    IF    ${data} >= ${range_value_min} and ${data} <= ${range_value_max}
+        ${result}    Set Variable    True
+    ELSE
+        ${result}    Set Variable    False
+    END
+    Should Be Equal    ${result}    True    Actual ${data} is not in expected Range [${range_value_min}; ${range_value_max}]
 
 Response body parameter should be NOT in:
     [Documentation]    This keyword checks that the response saved  in ``${response_body}`` test variable contsains the speficied parameter ``${json_path}`` with the value that matches one of the parameters ``${expected_value1}``, ``${expected_value2}``.
@@ -407,7 +458,7 @@ Response body parameter should be NOT in:
     ...    *Example:*
     ...
     ...    ``Response body parameter should be NOT in:    [data][attributes][allowInput]    None``
-    [Arguments]    ${json_path}    ${expected_value1}    ${expected_value2}=test    ${expected_value3}=test    ${expected_value4}=test
+    [Arguments]    ${json_path}    ${expected_value1}    ${expected_value2}=robotframework-dummy-value    ${expected_value3}=robotframework-dummy-value    ${expected_value4}=robotframework-dummy-value
     ${data}=    Get Value From Json    ${response_body}    ${json_path}
     ${data}=    Convert To String    ${data}
     ${data}=    Replace String    ${data}    '   ${EMPTY}
@@ -678,6 +729,27 @@ Each array element of array in response should contain value:
         Should Contain    : ${sub_list_element}    ${expected_value}
     END
 
+Each array element of array in response should a nested array of a certain size:
+        [Documentation]    This keyword checks whether the array ``${paret_array}`` that is present in the ``${response_body}`` test variable contsains an array ``${nested_array}`` in every of it's array elements and for every its occurrence that nested array has sixe ``${array_expected_size}``.
+    ...    
+    ...    If the nested arrays are of different sizes, this keyword will fail.
+    ...
+    ...    *Example:*
+    ...
+    ...   ``Each array element of array in response should a nested array of a certain size:    [data]    [prices]    2``
+
+    [Arguments]    ${parent_array}    ${nested_array}    ${array_expected_size}
+    @{data}=    Get Value From Json    ${response_body}    ${parent_array}
+    ${list_length}=    Get Length    @{data}
+    ${log_list}=    Log List    @{data}
+    FOR    ${index}    IN RANGE    0    ${list_length}
+        ${list_element}=    Get From List    @{data}    ${index}
+        @{list_element2}=    Get Value From Json    ${list_element}    ${nested_array}
+        ${list_length2}=    Get Length    @{list_element2}
+        ${list_length2}=    Convert To String    ${list_length2}
+        Should Be Equal    ${list_length2}    ${array_expected_size}    Actual array length is ${list_length2} and it is not the same as than expected ${array_expected_size}
+    END
+
 Each array element of array in response should contain property with value:
     [Documentation]    This keyword checks that each element in the array specified as ``${json_path}`` contains the specified property ``${expected_property}`` with the specified value ``${expected_value}``.
     ...
@@ -708,7 +780,7 @@ Each array element of array in response should contain property with value in:
     ...    *Example:*
     ...
     ...    ``Each array element of array in response should contain property with value in:    [data]    [attributes][allowInput]    True    False``
-    [Arguments]    ${json_path}    ${expected_property}    ${expected_value1}    ${expected_value2}    ${expected_value3}=test    ${expected_value4}=test
+    [Arguments]    ${json_path}    ${expected_property}    ${expected_value1}    ${expected_value2}    ${expected_value3}=robotframework-dummy-value    ${expected_value4}=robotframework-dummy-value
 
     @{data}=    Get Value From Json    ${response_body}    ${json_path}
     ${list_length}=    Get Length    @{data}
@@ -731,7 +803,7 @@ Each array element of array in response should contain property with value NOT i
     ...    *Example:*
     ...
     ...    ``Each array element of array in response should contain property with value in:    [data]    [attributes][isSuper]    None``
-    [Arguments]    ${json_path}    ${expected_property}    ${expected_value1}    ${expected_value2}=test    ${expected_value3}=test    ${expected_value4}=test
+    [Arguments]    ${json_path}    ${expected_property}    ${expected_value1}    ${expected_value2}=robotframework-dummy-value    ${expected_value3}=robotframework-dummy-value    ${expected_value4}=robotframework-dummy-value
 
     @{data}=    Get Value From Json    ${response_body}    ${json_path}
     ${list_length}=    Get Length    @{data}
@@ -747,14 +819,14 @@ Each array element of array in response should contain property with value NOT i
     END
 
 Each array element of nested array should contain property with value in:
-    [Documentation]    This keyword checks that each array element of ``${nested_array} that is inside the parent array ``${json_path}`` contsains the speficied parameter ``${expected_property}`` with the value that matches any of the parameters ``${expected_value1}``, ``${expected_value2}``, etc..
+    [Documentation]    This keyword checks that each array element of ``${nested_array} that is inside the parent array ``${json_path}`` contains the speficied parameter ``${expected_property}`` with the value that matches any of the parameters ``${expected_value1}``, ``${expected_value2}``, etc..
     ...
     ...    The minimal number of arguments is 1, maximum is 4
     ...
     ...    *Example:*
     ...
     ...    ``Each array element of nested array should contain property with value in:    [data]    [attributes][localizedKeys]    translation    en_US    de_DE``
-    [Arguments]    ${json_path}    ${nested_array}    ${expected_property}    ${expected_value1}    ${expected_value2}    ${expected_value3}=test    ${expected_value4}=test
+    [Arguments]    ${json_path}    ${nested_array}    ${expected_property}    ${expected_value1}    ${expected_value2}    ${expected_value3}=robotframework-dummy-value    ${expected_value4}=robotframework-dummy-value
 
     @{data}=    Get Value From Json    ${response_body}    ${json_path}
     ${list_length1}=    Get Length    @{data}
@@ -782,7 +854,7 @@ Each array element of nested array should contain property with value NOT in:
     ...    *Example:*
     ...
     ...    ``Each array element of nested array should contain property with value NOT in:    [data]    [attributes][localizedKeys]    translation    None``
-    [Arguments]    ${json_path}    ${nested_array}    ${expected_property}    ${expected_value1}    ${expected_value2}=test   ${expected_value3}=test    ${expected_value4}=test
+    [Arguments]    ${json_path}    ${nested_array}    ${expected_property}    ${expected_value1}    ${expected_value2}=robotframework-dummy-value   ${expected_value3}=robotframework-dummy-value    ${expected_value4}=robotframework-dummy-value
 
     @{data}=    Get Value From Json    ${response_body}    ${json_path}
     ${list_length1}=    Get Length    @{data}
@@ -840,6 +912,74 @@ Each array element of array in response should contain nested property with valu
         ${list_element}=    Replace String    ${list_element}    '   ${EMPTY}
         ${list_element}=    Replace String    ${list_element}    ]   ${EMPTY}
         Should Be Equal    ${list_element}    ${expected_value}
+    END
+
+Each array element of array in response should contain nested property with datatype:
+    [Documentation]    This keyword checks that each element in the array specified as ``${json_path}`` contains the specified property ``${expected_nested_property}`` with the value of the specified data type ``${expected_type}``.
+    ...
+    ...    If at least one array element has this property with another value, the keyword will fail.
+    ...
+    ...    *NOTES*: 
+    ...
+    ...    1. ``${expected_nested_property}`` is a second level property. In an array like this 
+    ...
+    ...    ``{"data":[{"type": "some-type", "attributes": {"name": "some name", "sku": "1234"}},...]}`` 
+    ...
+    ...    it will be ``attributes.sku``. 
+    ...
+    ...    2. The first level property in the above array is just ``attributes``, but it cannot be checked by this keyword.
+    ...
+    ...    3. Syntax for the second level property is ``[firstlevel][secondlevel]`` or ``firstlevel.secondlevel``.
+    ...
+    ...    4. This keyword supports any level of nesting.
+    ...
+    ...    *Example:*
+    ...
+    ...    ``Each array element of array in response should contain nested property with datatype:    [data]    [attributes][sku]    str``
+    ...
+    ...    ``Each array element of array in response should contain nested property with datatype:    [data]    attributes.price    int``
+    [Arguments]    ${json_path}    ${expected_nested_property}    ${expected_type}
+    @{data}=    Get Value From Json    ${response_body}    ${json_path}
+    ${list_length}=    Get Length    @{data}
+    ${log_list}=    Log List    @{data}
+    FOR    ${index}    IN RANGE    0    ${list_length}
+        ${list_element}=    Get From List    @{data}    ${index}
+        @{list_element}=    Get Value From Json    ${list_element}    $.${expected_nested_property}
+        ${actual_data_type}=    Evaluate datatype of a variable:    @{list_element}
+        Should Be Equal    ${actual_data_type}    ${expected_type}
+    END
+
+Each array element of array in response should contain nested property with datatype in:
+    [Documentation]    This keyword checks that each element in the array specified as ``${json_path}`` contains the specified property ``${expected_nested_property}`` with the value of one of the specified data types ``${expected_type1}``, ``${expected_type1}``, etc..
+    ...
+    ...    This keyword requires 2 parameters and may optionally use up to 4 datatypes
+    ...
+    ...    *NOTES*: 
+    ...
+    ...    1. ``${expected_nested_property}`` is a second level property. In an array like this 
+    ...
+    ...    ``{"data":[{"type": "some-type", "attributes": {"name": "some name", "sku": "1234"}},...]}`` 
+    ...
+    ...    it will be ``attributes.sku``. 
+    ...
+    ...    2. The first level property in the above array is just ``attributes``, but it cannot be checked by this keyword.
+    ...
+    ...    3. Syntax for the second level property is ``[firstlevel][secondlevel]`` or ``firstlevel.secondlevel``.
+    ...
+    ...    4. This keyword supports any level of nesting.
+    ...
+    ...    *Example:*
+    ...
+    ...    ``Each array element of array in response should contain nested property with datatype in:    [data]    attributes.price    int    float``
+    [Arguments]    ${json_path}    ${expected_nested_property}    ${expected_type1}    ${expected_type2}    ${expected_type3}=test    ${expected_type4}=test
+    @{data}=    Get Value From Json    ${response_body}    ${json_path}
+    ${list_length}=    Get Length    @{data}
+    ${log_list}=    Log List    @{data}
+    FOR    ${index}    IN RANGE    0    ${list_length}
+        ${list_element}=    Get From List    @{data}    ${index}
+        @{list_element}=    Get Value From Json    ${list_element}    $.${expected_nested_property}
+        ${actual_data_type}=    Evaluate datatype of a variable:    @{list_element}
+        Should Contain Any    ${actual_data_type}    ${expected_type1}    ${expected_type2}    ${expected_type3}    ${expected_type4}
     END
 
 Each array element of array in response should contain nested property:
@@ -1091,3 +1231,56 @@ Cleanup existing customer addresses:
         Set Variable    ${response_delete}    ${response_delete}
         Should Be Equal As Strings    ${response_delete.status_code}    204    Could not delete a customer address
     END
+
+Find or create customer cart
+    [Documentation]    This keyword creates or retrieves cart for the current customer token. This keyword sets ``${cart_id} `` variable
+        ...                and it can be re-used by the keywords that follow this keyword in the test
+        ...
+        ...     This keyword does not accept any arguments. Makes GET request in order to fetch cart for the customer or creates it otherwise.
+        ...
+        ${response}=    I send a GET request:    /carts
+        Save value to a variable:    [data][0][id]    cart_id
+        ${hasCart}    Run Keyword and return status     Should not be empty    ${cart_id}
+        Log    cart_id:${cart_id}
+        Run Keyword Unless    ${hasCart}    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${gross_mode}","currency": "${currency_code_eur}","store": "${store_de}"}}}
+        Run Keyword Unless    ${hasCart}    Save value to a variable:    [data][id]    cart_id
+
+Create a guest cart:
+    [Documentation]    This keyword creates guest cart and sets ``${x_anonymous_customer_unique_id}`` that specify guest reference
+        ...             and ``${guest_cart_id}`` that specify guest cart, variables
+        ...             can be re-used by the keywords that follow this keyword in the test
+        ...
+        ...     This keyword does not accept any arguments. Makes POST request in order to create cart for the guest.
+        ...    *Example:*
+        ...
+        ...    ``Create guest cart: ${random}    ${concrete_product_with_concrete_product_alternative_sku}    1``
+        [Arguments]    ${x_anonymous_customer_unique_id}    ${product_sku}    ${product_quantity}
+        Set Test Variable    ${x_anonymous_customer_unique_id}    ${x_anonymous_customer_unique_id}
+        I set Headers:     X-Anonymous-Customer-Unique-Id=${x_anonymous_customer_unique_id}    Content-Type=${default_header_content_type}
+        ${response}=    I send a POST request:    /guest-cart-items    {"data": {"type": "guest-cart-items","attributes": {"sku": "${product_sku}","quantity": ${product_quantity}}}}
+        Save value to a variable:    [data][id]    guest_cart_id
+        Log    x_anonymous_customer_unique_id:${x_anonymous_customer_unique_id} guest_cart_id:${guest_cart_id}
+
+Cleanup all items in the cart:
+    [Documentation]    This keyword deletes any and all items in the given cart uid.
+        ...
+        ...    Before using this method you should get customer token and set it into the headers with the help of ``I get access token for the customer:`` and ``I set Headers:``
+        ...
+        ...    *Example:*
+        ...
+        ...    ``Cleanup items in the cart:    ${cart_id}``
+        [Arguments]    ${cart_id}
+        ${response}=    GET    ${current_url}/carts/${cart_id}    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}  params=include=items,bundle-items     expected_status=200
+        ${response_body}=    Set Variable    ${response.json()}
+        @{included}=    Get Value From Json    ${response_body}    [included]
+        ${list_length}=    Evaluate    len(@{included})
+        Log    list_length: ${list_length}
+        FOR    ${index}    IN RANGE    0    ${list_length}
+                ${list_element}=    Get From List    @{included}    ${index}
+                ${cart_item_uid}=    Get Value From Json    ${list_element}    [id]
+                ${cart_item_uid}=    Convert To String    ${cart_item_uid}
+                ${cart_item_uid}=    Replace String    ${cart_item_uid}    '   ${EMPTY}
+                ${cart_item_uid}=    Replace String    ${cart_item_uid}    [   ${EMPTY}
+                ${cart_item_uid}=    Replace String    ${cart_item_uid}    ]   ${EMPTY}
+                ${response_delete}=    DELETE    ${current_url}/carts/${cart_id}/items/${cart_item_uid}    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}    expected_status=204
+        END

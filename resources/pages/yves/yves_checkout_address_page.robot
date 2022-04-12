@@ -1,11 +1,11 @@
 *** Variables ***
 ${checkout_address_billing_same_as_shipping_checkbox}    id=addressesForm_billingSameAsShipping
 &{checkout_address_delivery_dropdown}    b2b=xpath=//span[@id='select2-checkout-full-addresses-ct-container']    b2c=xpath=//span[@id='select2-addressesForm_shippingAddress_id_customer_address-container']
-&{checkout_address_delivery_selector}    b2c=xpath=//select[@id='addressesForm_shippingAddress_id_customer_address']    b2b=xpath=//div[contains(@class,'shippingAddress')]//select[@name='checkout-full-addresses'][contains(@class,'address__form')]
+&{checkout_address_delivery_selector}    b2c=xpath=//select[@id='addressesForm_shippingAddress_id_customer_address']    b2b=xpath=//div[contains(@class,'shippingAddress')]//select[@name='checkout-full-addresses'][contains(@class,'address__form')]    suite-nonsplit=xpath=//div[contains(@class,'shippingAddress')]//select[@name='checkout-full-addresses'][contains(@class,'address__form')]
 ${checkout_shipping_address_item_form}    xpath=//div[@data-qa='component address-item-form']
 ${checkout_new_billing_address_form}    xpath=//div[contains(@class,'address__billing')][@data-qa='component form']
 ${checkout_new_shipping_address_form}    xpath=//div[contains(@class,'address__shipping')][@data-qa='component form']
-&{checkout_shipping_address_first_name_field}    b2b=id=checkout_shipping_address_first_name_field    b2c=id=addressesForm_shippingAddress_first_name
+&{checkout_shipping_address_first_name_field}    b2b=id=checkout_shipping_address_first_name_field    b2c=id=addressesForm_shippingAddress_first_name    suite-nonsplit=id=addressesForm_shippingAddress_first_name
 ${checkout_shipping_address_last_name_field}    id=addressesForm_shippingAddress_last_name
 ${checkout_shipping_address_company_name_field}    id=addressesForm_shippingAddress_company
 ${checkout_shipping_address_street_field}    id=addressesForm_shippingAddress_address1
