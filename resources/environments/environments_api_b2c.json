@@ -13,6 +13,7 @@
         "yves_user_first_name": "Sonia",
         "yves_user_last_name": "Wagner",
         "yves_user_password": "change123",
+        "yves_user_password_new":"Change@123",
         "yves_user_reference": "DE--21",
         "yves_user_salutation": "Ms",
 
@@ -213,7 +214,12 @@
 
         "product_option_1": "OP_2_year_waranty",
         "product_option_1_name": "Two (2) year limited warranty",
-        "product_option_2": "OP_insurance"
+        "product_option_2": "OP_insurance",
+
+
+        "review_title": "This is a review",
+        "review_text": "This is review text",
+        "default_review_rating": "5"
     },
 
     "product_attributes": {
@@ -309,7 +315,6 @@
         "url_resolver_cms_id": "1e9fb640-9073-55f4-a2d2-535090c92025"
 
     },
-
 
     "return_reason":{
         "return_reasons_qty": "3"
