@@ -5,6 +5,8 @@ Resource    ../../../../../../resources/common/common_api.robot
 Default Tags    glue
 
 *** Test Cases ***
+ENABLER
+    TestSetup
 
 # This test is not working regarding to this bug https://spryker.atlassian.net/browse/CC-16527
 Get_cart_permission_groups_by_cart_id
@@ -36,8 +38,6 @@ Get_cart_permission_groups_by_cart_id
     And Each array element of array in response should contain property with value in:    [included]    [attributes][isDefault]    True    False    
     [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cart_id}
     ...  AND    Response status code should be:    204
-
-
 
 Get_all_cart_permission_groups
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}

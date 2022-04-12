@@ -67,7 +67,17 @@
         "net_mode": "NET_MODE",
         "currency_name_chf": "Swiss Franc",
         "currency_code_chf": "CHF",
-        "currency_symbol_chf": "CHF"
+        "currency_symbol_chf": "CHF",
+
+        "currency_name_dollar": "US Dollar",
+        "currency_code_dollar": "USD",
+        "currency_symbol_dollar": "$",
+        "store_us": "US",
+  
+        "locale_name_DE": "de_DE",
+        "locale_code_DE": "de",
+        "locale_name_EN": "en_US",
+        "locale_code_EN": "en"
     },
     "search":{
         "total_number_of_products_in_search": "215",
@@ -102,6 +112,10 @@
         "category_id_lvl3": "13",
         "category_items_qty_lvl3": "28",
         "category_tree_branches_qty": "6",
+
+        "category_node_is_root_id": "1",
+        "category_node_has_only_parent_id": "6",
+        "category_node_has_children_id": "5",
 
         "abstract_sku_highest_rating": "035"
 
@@ -150,6 +164,7 @@
         "concrete_available_product_sku": "183_21811723",
         "concrete_available_product_meta_keywords": "Sony,Communication Electronics",
         "concrete_available_product_meta_description": "Enjoy greater flexibility  ...than ever before with the Galaxy Tab S2. Remarkably slim and ultra-lightweight, use this device to take your e-books, photos,",
+        "concrete_available_product_with_label": "204_29851280",
 
         "abstract_available_with_stock_and_never_out_of_stock": "209",
         "concrete_available_with_stock_and_never_out_of_stock": "004_30663302",
@@ -190,7 +205,12 @@
             
         "product_option_1": "OP_2_year_waranty",
         "product_option_1_name": "Two (2) year limited warranty",
-        "product_option_2": "OP_insurance"
+        "product_option_2": "OP_insurance",
+
+
+        "review_title": "This is a review",
+        "review_text": "This is review text",
+        "default_review_rating": "5"
     },
     "product_attributes":{
         "brand_1": "Soennecken",
@@ -247,9 +267,6 @@
         "brand_name": "canon"
 
     },
-    "cart":{
-        "x_anonymous_prefix": "anonymous"
-    },
     "availability":{
         "stock_is_0": "0.0000000000",
         "stock_is_20": "20.0000000000"
@@ -260,8 +277,33 @@
         "qty_of_categories_in_category_trees": "6",
         "qty_of_subcategories_in_category_trees": "2",
         "color_name": "black"
+        
     },
+
+
+    "url_resolver":{
+
+        "url_resolver_abstract_product": "/en/canon-ixus-160-1",
+        "url_resolver_product_entity": "abstract-products",
+        "url_resolver_product_id": "001",
+
+        "url_resolver_category_nodes": "/en/computers",
+        "url_resolver_category_nodes_entity": "category-nodes",
+        "url_resolver_category_nodes_id": "5",
+
+        "url_resolver_cms": "/en/privacy",
+        "url_resolver_cms_entity": "cms-pages",
+        "url_resolver_cms_id": "1e9fb640-9073-55f4-a2d2-535090c92025"
+
+    },
+
+
+    "return_reason":{
+        "return_reasons_qty": "3"
+    },
+
     "wishlists":{
         "wishlist_name":"HS"
+        
        }
  }
