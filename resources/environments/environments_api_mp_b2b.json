@@ -1,5 +1,5 @@
 {
-    "environment": "api_b2b_mp",
+    "environment": "api_mp_b2b",
 
     "env": {
         "glue_url": "http://glue.de.spryker.local",
