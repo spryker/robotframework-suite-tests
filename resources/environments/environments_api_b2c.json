@@ -33,7 +33,9 @@
         "customer_reference_1_de": "DE--1",
         "customer_reference_10_de": "DE--10",
         "customer_reference_15_de": "DE--15",
-        "customer_reference_34_de": "DE--34"
+        "customer_reference_34_de": "DE--34",
+
+        "anonymous_customer_static_id": "111"
     },
     
     "address":{
@@ -133,7 +135,12 @@
         "product_related_product_with_related_relation_sku": "016",
         "product_related_product_with_related_relation_name": "Sony Cyber-shot DSC-W800",
         "product_with_relations_alternative_products_sku": "M21100",
-        "product_with_relations_upselling_sku": "M29502",
+        "product_with_relations_upselling_sku": "063",
+        "concrete_of_product_with_relations_upselling_sku": "063_29231675",      
+        "concrete_of_alternative_product_with_relations_upselling_sku": "007_30691822",
+        "product_related_product_with_upselling_relation_sku": "042",
+        "product_related_product_with_upselling_relation_name": "Samsung Galaxy S7",
+        "concrete_of_product_without_relations": "019_21081473",
         
         "concrete_product_with_abstract_product_alternative_sku": "138_30046855",
         "concrete_product_with_abstract_product_alternative_sku_name": "Acer TravelMate P258-M",

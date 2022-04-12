@@ -1269,3 +1269,27 @@ Cleanup all items in the cart:
                 ${cart_item_uid}=    Replace String    ${cart_item_uid}    ]   ${EMPTY}
                 ${response_delete}=    DELETE    ${current_url}/carts/${cart_id}/items/${cart_item_uid}    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}    expected_status=204
         END
+
+Cleanup all items in the guest cart:
+    [Documentation]    This keyword deletes any and all items in the given GUEST cart uid.
+        ...
+        ...    Before using this method you should set any value as X-Anonymous-Customer-Unique-Id into the headers with the help of ``I set Headers:``
+        ...
+        ...    *Example:*
+        ...
+        ...    ``Cleanup items in the guest cart:    ${cart_id}``
+        [Arguments]    ${cart_id}
+        ${response}=    GET    ${current_url}/guest-carts/${cart_id}    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}  params=include=guest-cart-items     expected_status=200
+        ${response_body}=    Set Variable    ${response.json()}
+        @{included}=    Get Value From Json    ${response_body}    [included]
+        ${list_length}=    Get length    @{included}
+        Log    list_length: ${list_length}
+        FOR    ${index}    IN RANGE    0    ${list_length}
+                ${list_element}=    Get From List    @{included}    ${index}
+                ${cart_item_uid}=    Get Value From Json    ${list_element}    [id]
+                ${cart_item_uid}=    Convert To String    ${cart_item_uid}
+                ${cart_item_uid}=    Replace String    ${cart_item_uid}    '   ${EMPTY}
+                ${cart_item_uid}=    Replace String    ${cart_item_uid}    [   ${EMPTY}
+                ${cart_item_uid}=    Replace String    ${cart_item_uid}    ]   ${EMPTY}
+                ${response_delete}=    DELETE    ${current_url}/guest-carts/${cart_id}/guest-cart-items/${cart_item_uid}    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}    expected_status=204
+        END
