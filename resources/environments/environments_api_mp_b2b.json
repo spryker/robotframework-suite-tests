@@ -195,8 +195,9 @@
         "abstract_available_product_with_stock_description": " Easy-to-care-for fabric cover. Substructure in graphite black RAL 9011.<br/>Standard rolling for soft floors.<br/>The backrest has height-adjustable lumbar support.  ",
         "abstract_available_product_with_stock_superattribute": "bezugsfarbe",
         "concrete_available_product_sku": "102712",
-        "concrete_available_product_meta_keywords": "Prosedia vertebral disc swivel chair with synchronous mechanics and contoured seat - backrest height 660 mm",
-        "concrete_available_product_meta_description": " Easy-to-care-for fabric cover. Substructure in graphite black RAL 9011.<br/>Standard rolling for soft floors.<br/>The backrest has height-adjustable lumbar support.  ",
+        "concrete_available_product_meta_title": "Prosedia vertebral disc swivel chair with synchronous mechanics and contoured seat - backrest height 660 mm",
+        "concrete_available_product_meta_keywords": "Arbeitsdrehstuhl,Bandscheibendrehstuhl,Bandschreibendrehstuhl,Bürodrehstuhl,Bürostuhl,Drehstuhl,Schreibtischstuhl,Universalstuhl",
+        "concrete_available_product_meta_description": " Pflegeleichter Stoffbezug. Gestell in Graphitschwarz RAL 9011.<br/>Standardmäßig Rollen für weiche Böden.<br/>Die Rückenlehne verfügt über eine höhenverstellbare Lendenwirbelstütze.  ",
 
         "abstract_available_with_stock_and_never_out_of_stock": "M87",
         "concrete_available_with_stock_and_never_out_of_stock": "657716",
@@ -283,9 +284,10 @@
         "material_4": "Steel sheets, stove-enameled",
         "delivery_1": "assembled",
         "price_unit_1": "piece",
-        "color_3": "purple",
         "color_1": "yellow",
         "color_2": "blue",
+        "color_3": "purple",
+        "color_4": "orange",
         "product_management_superattribute_id": "farbe",
         "product_management_attribute_free_input_id": "verschlussart",
         "product_management_attribute_no_input_id": "bundled_product"
