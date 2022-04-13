@@ -7,7 +7,7 @@ Default Tags    glue
 *** Test Cases ***
 ENABLER
     TestSetup
-    
+
 #GET requests
 Get_availability_notifications_without_customerId
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
