@@ -61,8 +61,6 @@
         "customer_reference_15_de": "DE--15",
         "customer_reference_34_de": "DE--34",
 
-        "merchant_id":"MER000011",
-
         "grant_type_password": "password",
         "grant_type_refresh_token": "refresh_token"
     },
@@ -392,6 +390,20 @@
         "label_name_discontinued": "Discontinued",
         "label_id_alternative": "1",
         "label_name_alternative": "Alternatives available"
+    },
+
+    "merchants":{
+        "merchant_id": "MER000011",
+        "merchant_name": "Computer Experts",
+        "merchant_url": "/en/merchant/computer-experts",
+        "merchant_contact_person_role": "Brand Manager",
+        "merchant_contact_person_title": "Ms",
+        "merchant_contact_person_first_name": "Michele",
+        "merchant_contact_person_last_name": "Nemeth",
+        "merchant_contact_person_phone": "030/123456789",
+        "merchant_public_email": "support@computer-experts.com",
+        "merchant_public_phone": "+49 30 234567691",
+        "merchant_description": "Computer Experts offer products that enhance your work environment with computer accessories that improve how you work, communicate, and interact. Computer Experts founded in 2013 and continuously growing, acquiring deep industry experience."
     }
 
 }

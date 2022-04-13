@@ -36,6 +36,7 @@ Retrieves_list_of_merchants
     And Each array element of array in response should contain nested property:    [data]    [attributes][legalInformation]    dataPrivacy
     And Each array element of array in response should contain nested property:    [data]    [attributes]    categories
     And Each array element of array in response should contain nested property:    [data]    [links]    self
+    And Response body has correct self link
 
 
 
@@ -47,18 +48,18 @@ Retrieves_a_merchant_by_id
     And Response body parameter should not be EMPTY:    [data][id]    
     And Response body parameter should be:    [data][id]    ${merchant_id}
     And Response body parameter should be:    [data][type]    merchants
+    And Response body parameter should be:    [data][attributes][merchantName]    ${merchant_name}
+    And Response body parameter should be:    [data][attributes][merchantUrl]    ${merchant_url}
+    And Response body parameter should be:    [data][attributes][contactPersonRole]    ${merchant_contact_person_role}
+    And Response body parameter should be:    [data][attributes][contactPersonTitle]    ${merchant_contact_person_title}
+    And Response body parameter should be:    [data][attributes][contactPersonFirstName]    ${merchant_contact_person_first_name}
+    And Response body parameter should be:    [data][attributes][contactPersonLastName]    ${merchant_contact_person_last_name}
+    And Response body parameter should be:    [data][attributes][contactPersonPhone]    ${merchant_contact_person_phone}
+    And Response body parameter should be:    [data][attributes][publicEmail]    ${merchant_public_email}
+    And Response body parameter should be:    [data][attributes][publicPhone]    ${merchant_public_phone}
+    And Response body parameter should be:    [data][attributes][description]    ${merchant_description}
     And Response body parameter should not be EMPTY:    [data][attributes]
-    And Response body parameter should not be EMPTY:    [data][attributes][merchantName]
-    And Response body parameter should not be EMPTY:    [data][attributes][merchantUrl]
-    And Response body parameter should not be EMPTY:    [data][attributes][contactPersonRole]
-    And Response body parameter should not be EMPTY:    [data][attributes][contactPersonTitle]
-    And Response body parameter should not be EMPTY:    [data][attributes][contactPersonFirstName]
-    And Response body parameter should not be EMPTY:    [data][attributes][contactPersonLastName]
-    And Response body parameter should not be EMPTY:    [data][attributes][contactPersonPhone]
     And Response body parameter should not be EMPTY:    [data][attributes][logoUrl]
-    And Response body parameter should not be EMPTY:    [data][attributes][publicEmail]
-    And Response body parameter should not be EMPTY:    [data][attributes][publicPhone]
-    And Response body parameter should not be EMPTY:    [data][attributes][description]
     And Response body parameter should not be EMPTY:    [data][attributes][bannerUrl]
     And Response body parameter should not be EMPTY:    [data][attributes][deliveryTime]
     And Response body parameter should not be EMPTY:    [data][attributes][faxNumber]
@@ -66,5 +67,5 @@ Retrieves_a_merchant_by_id
     And Response body parameter should not be EMPTY:    [data][attributes][legalInformation][cancellationPolicy]
     And Response body parameter should not be EMPTY:    [data][attributes][legalInformation][imprint]
     And Response body parameter should not be EMPTY:    [data][attributes][legalInformation][dataPrivacy]
-    And Response body parameter should not be EMPTY:    [data][links][self]
     And Response body parameter should have datatype:    [data][attributes][categories]    list
+    And Response body has correct self link internal
