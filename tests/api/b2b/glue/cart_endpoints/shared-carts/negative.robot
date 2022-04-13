@@ -52,8 +52,8 @@ Share_shopping_cart_with_empty_permission_group_value_and_company_user_value
     ...    AND    I send a GET request:    /company-users
     ...    AND    Save value to a variable:    [data][0][id]    companyUserId
     When I send a POST request:    /carts/${cartId}/shared-carts    {"data":{"type":"shared-carts","attributes":{"idCompanyUser":"","idCartPermissionGroup":""}}}
-    Then Response status code should be:    422
-    And Response should return error code:    901
+    Then Each array element of array in response should contain property with value:    [errors]    code    901
+    And Each array element of array in response should contain property with value:    [errors]    status    422
     And Response reason should be:    Unprocessable Entity
     And Array in response should contain property with value:    [errors]    detail    idCartPermissionGroup => This value should not be blank.
     And Array in response should contain property with value:    [errors]    detail    idCompanyUser => This value should not be blank.
@@ -66,8 +66,8 @@ Share_shopping_cart_without_company_user_attribute_and_cart_permission_group_att
     ...    AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${gross_mode}","currency": "${currency_code_eur}","store": "${store_de}","name": "${test_cart_name}-${random}"}}}
     ...    AND    Save value to a variable:    [data][id]    cartId
     When I send a POST request:    /carts/${cartId}/shared-carts    {"data":{"type":"shared-carts","attributes":{}}}
-    Then Response status code should be:    422
-    And Response should return error code:    901
+    Then Each array element of array in response should contain property with value:    [errors]    code    901
+    And Each array element of array in response should contain property with value:    [errors]    status    422
     And Response reason should be:    Unprocessable Entity
     And Array in response should contain property with value:    [errors]    detail    idCompanyUser => This field is missing.
     And Array in response should contain property with value:    [errors]    detail    idCartPermissionGroup => This field is missing.
