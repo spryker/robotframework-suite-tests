@@ -367,7 +367,19 @@
 
         "url_resolver_example": "/en/clairefontaine-collegeblock-8272c-din-a5-90blatt-kariert-M21692",
         "url_resolver_entity_type": "abstract-products",
-        "url_resolver_entity_id": "M21692"
+        "url_resolver_entity_id": "M21692",
+
+        "url_resolver_category_nodes": "/en/stationery",
+        "url_resolver_category_nodes_entity": "category-nodes",
+        "url_resolver_category_nodes_id": "2",
+
+        "url_resolver_cms": "/en/privacy",
+        "url_resolver_cms_entity": "cms-pages",
+        "url_resolver_cms_id": "1e9fb640-9073-55f4-a2d2-535090c92025",
+
+        "url_resolver_merchant": "/en/merchant/spryker",
+        "url_resolver_merchant_entity": "merchants",
+        "url_resolver_merchant_id": "MER000008"
     },
     "companies":{
         "company_name": "Spryker Systems GmbH",
@@ -393,7 +405,8 @@
     "return_reasons":{
       "return_reason_damaged": "Damaged",
       "return_reason_wrong_item": "Wrong Item",
-      "return_reason_no_longer_needed": "No longer needed"
+      "return_reason_no_longer_needed": "No longer needed",
+      "return_reasons_qty": "3"
     }
 
 }
