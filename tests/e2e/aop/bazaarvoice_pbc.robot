@@ -1,18 +1,16 @@
 *** Settings ***
-Suite Setup       SuiteSetup
-Test Setup        TestSetup
-Test Teardown     TestTeardown
+Suite Setup    SuiteSetup
+Test Setup    TestSetup
+Test Teardown    TestTeardown
 Suite Teardown    SuiteTeardown
 Resource    ../../../resources/common/common.robot
 Resource    ../../../resources/common/common_yves.robot
 Resource    ../../../resources/common/common_zed.robot
 Resource    ../../../resources/steps/aop_catalog_steps.robot
 Resource    ../../../resources/steps/bazaarvoice_steps.robot
-Resource    ../../../resources/steps/bazaarvoice_steps.robot
 Resource    ../../../resources/steps/pdp_steps.robot
 Resource    ../../../resources/steps/shopping_carts_steps.robot
 Resource    ../../../resources/steps/checkout_steps.robot
-
 
 *** Test Cases ***
 Bazaarvoice_E2E
@@ -25,25 +23,27 @@ Bazaarvoice_E2E
     Zed: click button on the PBC details page:    connect
     Zed: PBC details page should contain the following elements:    ${appPendingStatus}
     Zed: click button on the PBC details page:    configure
-    Zed: configure bazaarvoice pbc with the following data:
-    ...    || clientName      | siteId    | environment | services                                                                              | stores ||
-    ...    || partner-spryker | main_site | Staging     | Ratings & Reviews,Questions & Answers,Inline Ratings,Bazaarvoice Pixel,Container Page | EN,DE  ||
+    Zed: configure bazaarvoice pbc:
+    ...    || clientName      | siteId    | environment | services                                                                              ||
+    ...    || partner-spryker | main_site | Staging     | Ratings & Reviews,Questions & Answers,Inline Ratings,Bazaarvoice Pixel,Container Page ||
     Zed: submit pbc configuration form
     Zed: PBC details page should contain the following elements:    ${appConnectedStatus}
     Yves: go to the 'Home' page
-    Yves: page should contain the following script:    bazaar-voice
+    Yves: page should contain script with id:    bazaar-voice
     Yves: perform search by:    150
-    Yves: page should contain the following script:    bazaar-voice
-    Yves: 1st product card in the catalog should contains bv inline rating
+    Yves: page should contain script with id:    bazaar-voice
+    Yves: first product card in the catalog should contain bazaarvoice inline rating
     Yves: go to PDP of the product with sku:    150
-    Yves: page should contain the following script:    bazaar-voice
+    Yves: page should contain script with id:    bazaar-voice
+    Yves: bazaarvoice should send an event:    Product
     Yves: PDP contains/doesn't contain:    true    ${bazaarvoiceWriteReview}    ${bazaarvoiceQuestions}    ${bazaarvoiceInlineRating}
-    Yves: post bazaarvoice review with the following data:
+    Yves: post bazaarvoice review:
     ...    || overallRating | reviewTitle            | review                                               | recommendProduct | nickname        | location | email                       | age      | gender | qualityRating | valueRating ||
     ...    || 5             | Robot Review ${random} | I bought this a month ago and am so happy that I did | yes              | Robot ${random} | New York | sonia+${random}@spryker.com | 25 to 34 | Female | 5             | 1           ||
     Yves: login on Yves with provided credentials:    ${yves_company_user_manager_and_buyer_email}
     Yves: create new 'Shopping Cart' with name:    bazaarvoice+${random}
     Yves: go to PDP of the product with sku:    136
+    Yves: bazaarvoice should send an event:    Product
     Yves: add product to the shopping cart
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: billing address same as shipping address:    true
@@ -55,8 +55,8 @@ Bazaarvoice_E2E
     Yves: select the following payment method on the checkout and go next:    Invoice
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
-    #TODO: create an assertion for bv pixer request on the checkout
     Yves: 'Thank you' page is displayed
+    Yves: bazaarvoice should send an event:    Transaction
     [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: go to first navigation item level:    Apps
     ...    AND    Zed: go to the PBC details page:    BazaarVoice
