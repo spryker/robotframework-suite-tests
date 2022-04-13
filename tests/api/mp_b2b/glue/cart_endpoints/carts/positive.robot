@@ -32,7 +32,6 @@ Get_cart_by_cart_id
     And Response body parameter should be:    [data][attributes][totals][grandTotal]    None
     And Response body parameter should be:    [data][attributes][totals][priceToPay]    None
     And Response should contain the array of a certain size:    [data][attributes][discounts]    0
-    And Response should contain the array of a certain size:    [data][attributes][thresholds]    0
     And Response body has correct self link internal
     [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cart_id}
     ...  AND    Response status code should be:    204
@@ -63,7 +62,6 @@ Get_cart_without_cart_id
     And Each array element of array in response should contain nested property:    [data]    [attributes][totals]    grandTotal
     And Each array element of array in response should contain nested property:    [data]    [attributes][totals]    priceToPay
     And Each array element of array in response should contain nested property:    [data]    [attributes]    discounts
-    And Each array element of array in response should contain nested property:    [data]    [attributes]    thresholds
     And Each array element of array in response should contain property:    [data]    links
     [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cart_id}
     ...  AND    Response status code should be:    204
@@ -236,7 +234,6 @@ Get_cart_by_customer_id
     And Each array element of array in response should contain nested property:    [data]    [attributes][totals]    grandTotal
     And Each array element of array in response should contain nested property:    [data]    [attributes][totals]    priceToPay
     And Each array element of array in response should contain nested property:    [data]    [attributes]    discounts
-    And Each array element of array in response should contain nested property:    [data]    [attributes]    thresholds
     [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cart_id}
     ...  AND    Response status code should be:    204
 
@@ -264,7 +261,6 @@ Create_cart
     And Response body parameter should be:    [data][attributes][totals][grandTotal]    None
     And Response body parameter should be:    [data][attributes][totals][priceToPay]    None
     And Response should contain the array of a certain size:    [data][attributes][discounts]    0
-    And Response should contain the array of a certain size:    [data][attributes][thresholds]    0
     And Response body has correct self link for created entity:    ${cart_id}
     [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cart_id}
     ...  AND    Response status code should be:    204
@@ -293,7 +289,6 @@ Create_cart_with_existing_name
     And Response body parameter should be:    [data][attributes][totals][grandTotal]    None
     And Response body parameter should be:    [data][attributes][totals][priceToPay]    None
     And Response should contain the array of a certain size:    [data][attributes][discounts]    0
-    And Response should contain the array of a certain size:    [data][attributes][thresholds]    0
     And Response body has correct self link for created entity:    ${cart_id_2}
     [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cart_id}
     ...  AND    Response status code should be:    204
@@ -328,7 +323,6 @@ Update_cart_by_cart_id_with_all_attributes
     And Response body parameter should be:    [data][attributes][totals][grandTotal]    None
     And Response body parameter should be:    [data][attributes][totals][priceToPay]    None
     And Response should contain the array of a certain size:    [data][attributes][discounts]    0
-    And Response should contain the array of a certain size:    [data][attributes][thresholds]    0
     And Response body has correct self link internal
     [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cart_id}
     ...  AND    Response status code should be:    204
@@ -359,7 +353,6 @@ Update_cart_with_empty_priceMod_currency_store
     And Response body parameter should be:    [data][attributes][totals][grandTotal]    None
     And Response body parameter should be:    [data][attributes][totals][priceToPay]    None
     And Response should contain the array of a certain size:    [data][attributes][discounts]    0
-    And Response should contain the array of a certain size:    [data][attributes][thresholds]    0
     And Response body has correct self link internal
     [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cart_id}
     ...  AND    Response status code should be:    204
@@ -389,7 +382,6 @@ Update_cart_with_name_attribute
     And Response body parameter should be:    [data][attributes][totals][grandTotal]    None
     And Response body parameter should be:    [data][attributes][totals][priceToPay]    None
     And Response should contain the array of a certain size:    [data][attributes][discounts]    0
-    And Response should contain the array of a certain size:    [data][attributes][thresholds]    0
     And Response body has correct self link internal
     [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cart_id}
     ...  AND    Response status code should be:    204
@@ -420,7 +412,6 @@ Update_cart_with_existing_name
     And Response body parameter should be:    [data][attributes][totals][grandTotal]    None
     And Response body parameter should be:    [data][attributes][totals][priceToPay]    None
     And Response should contain the array of a certain size:    [data][attributes][discounts]    0
-    And Response should contain the array of a certain size:    [data][attributes][thresholds]    0
     And Response body has correct self link internal
     [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cart_id}
     ...  AND    Response status code should be:    204
