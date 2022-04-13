@@ -272,7 +272,21 @@
         "discount_amount_for_product_3_with_discount_20%_off_storage": "16383",
         "discount_amount_for_product_3_with_10%_discount": "1882"
 
+    },    
+
+    "product_offers":{  
+
+        "inactive_offer_with_vp": "offer3",
+        "wfa_offer_with_vp": "offer4",
+        "denied_offer_with_vp": "offer404",
+        "offer": "offer2",
+        "offer_without_vp": "offer359",
+        "offer_without_original_price": "offer6",
+        "offer_with_vp": "offer10",
+        "offer_with_vp_gross_net_prices": "offer48"
+
     },
+    
     "product_attributes":{
         "brand_1": "Soennecken",
         "brand_2": "edding",
