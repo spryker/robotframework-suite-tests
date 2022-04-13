@@ -15,13 +15,12 @@ Get_resources_customer_can_access
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response body parameter should be:    [data][0][type]    customer-access
-    And Response should contain the array of a certain size:    [data][attributes][resourceTypes]    ${restricted_content_qty}
-    And Response body parameter should be:    [data][attributes][resourceTypes][0]    abstract-product-prices
-    And Response body parameter should be:    [data][attributes][resourceTypes][0]    concrete-product-prices
-    And Response body parameter should be:    [data][attributes][resourceTypes][0]    checkout
-    And Response body parameter should be:    [data][attributes][resourceTypes][0]    checkout-data
-    And Response body parameter should be:    [data][attributes][resourceTypes][0]    guest-cart-items
-    And Response body has correct self link internal
+    And Response should contain the array of a certain size:    [data][0][attributes][resourceTypes]    ${restricted_content_qty}
+    And Response body parameter should be:    [data][0][attributes][resourceTypes][0]    abstract-product-prices
+    And Response body parameter should be:    [data][0][attributes][resourceTypes][1]    concrete-product-prices
+    And Response body parameter should be:    [data][0][attributes][resourceTypes][2]    checkout
+    And Response body parameter should be:    [data][0][attributes][resourceTypes][3]    checkout-data
+    And Response body parameter should be:    [data][0][attributes][resourceTypes][4]    guest-cart-items
 
 Access_restricted_resource_as_authorized_customer
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}

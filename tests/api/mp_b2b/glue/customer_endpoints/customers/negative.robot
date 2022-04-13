@@ -110,7 +110,7 @@ Create_a_customer_with_missing_required_fields
     And Array in response should contain property with value:    [errors]    detail    gender => This field is missing.
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
 
-Create_a_customer_with_absent_type
+Create_a_customer_with_wrong_gender
     I send a POST request:    /customers/    {"data":{"type":"customers","attributes":{"firstName":"${yves_third_user_first_name}","lastName":"${yves_third_user_last_name}","gender":"test","salutation":"test","email":"${yves_third_user_first_name}@spryker.com","password":"${yves_user_password}","confirmPassword":"${yves_user_password}","acceptedTerms":True}}}
     Response status code should be:    422
     And Response reason should be:   Unprocessable Content
@@ -150,7 +150,7 @@ Get_a_customer_with_access_token_from_another_user
 Update_a_customer_with_wrong_id
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
-    I send a PATCH request:    /customers/DE--35    {"data":{"type":"customers","attributes":{"firstName":"${yves_third_user_first_name}","lastName":"${yves_third_user_last_name}","gender":"${gender_male}","salutation":"${yves_third_user_salutation}","email":"${yves_third_user_first_name}@spryker.com","password":"${yves_user_password}","confirmPassword":"${yves_user_password}","acceptedTerms":True}}}
+    I send a PATCH request:    /customers/DE--35   {"data":{"type":"customers","attributes":{"firstName":"${yves_third_user_first_name}","lastName":"${yves_third_user_last_name}","gender":"${gender_male}","salutation":"${yves_third_user_salutation}","email":"${yves_third_user_first_name}@spryker.com","password":"${yves_user_password}","confirmPassword":"${yves_user_password}","acceptedTerms":True}}}
     Response status code should be:    403
     And Response reason should be:    Forbidden
     And Response should return error code:    411
