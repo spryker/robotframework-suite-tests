@@ -9,9 +9,16 @@ ENABLER
     TestSetup
 
 Get_concrete_product_offers
-    When I send a GET request:    /concrete-products/091_25873091/product-offers
+    When I send a GET request:    /concrete-products/420685/product-offers
     Then Response status code should be:    200
     And Response reason should be:    OK
+    And Response header parameter should be:    Content-Type    ${default_header_content_type}
+    And Response body parameter should not be EMPTY:    [data][0][id]
+    And Response body parameter should be:    [data][0][type]    product-offers
+    And Response body parameter should be:    [data][0][attributes][isDefault]    True
+    And Response body parameter should not be EMPTY:    [data][0][attributes][merchantReference]
+    And Response body parameter should not be EMPTY:    [data][0][links][self]
+    And Response body parameter should contain:    [data][0][attributes]    merchantSku
 
 Get_all_product_offer_info_product_offer_prices_included
     When I send a GET request:    /product-offers/${offer}?include=product-offer-prices
