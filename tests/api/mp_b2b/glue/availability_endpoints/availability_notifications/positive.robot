@@ -52,14 +52,15 @@ Subscribe_to_availability_notifications_for_customer
     ...  AND    Response status code should be:    204
 
 Subscribe_to_availability_notifications_with_non_existing_email
-    When I send a POST request:    /availability-notifications    {"data": {"type": "availability-notifications","attributes": {"sku": "${concrete_product_with_alternative_sku}","email": "test1234546@gmail.com"}}}
+#This test fails due to the bug https://spryker.atlassian.net/browse/CC-16611
+    When I send a POST request:    /availability-notifications    {"data": {"type": "availability-notifications","attributes": {"sku": "${concrete_product_with_alternative_sku}","email": "test-${random}@gmail.com"}}}
     And Save value to a variable:    [data][id]    availability_notification_id
     Then Response status code should be:    201
     And Response reason should be:    Created
     And Response body parameter should be:    [data][type]    availability-notifications
     And Response body parameter should be:    [data][id]    ${availability_notification_id}
     And Response body parameter should be:    [data][attributes][localeName]    ${locale_name_EN}
-    And Response body parameter should be:    [data][attributes][email]    test1234546@gmail.com
+    And Response body parameter should be:    [data][attributes][email]    test-${random}@gmail.com
     And Response body parameter should be:    [data][attributes][sku]    ${concrete_product_with_alternative_sku}
     And Response body has correct self link for created entity:    ${availability_notification_id}
     [Teardown]    Run Keywords    I send a DELETE request:    /availability-notifications/${availability_notification_id}
