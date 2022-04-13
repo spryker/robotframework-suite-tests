@@ -8,8 +8,8 @@ Default Tags    glue
 ENABLER
     TestSetup
 
-Get_concrete_product_offers
-    When I send a GET request:    /concrete-products/420685/product-offers
+Get_all_concrete_product_offer_info_with_product_offer_prices_included
+    When I send a GET request:    /concrete-products/420685/product-offers?include=product-offer-prices
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
@@ -19,8 +19,24 @@ Get_concrete_product_offers
     And Response body parameter should not be EMPTY:    [data][0][attributes][merchantReference]
     And Response body parameter should not be EMPTY:    [data][0][links][self]
     And Response body parameter should contain:    [data][0][attributes]    merchantSku
+    And Response should contain the array of a certain size:    [data][0][relationships][product-offer-prices][data]    1
+    And Response body parameter should not be EMPTY:    [data][0][relationships][product-offer-prices][data][0][id]
+    And Response body parameter should be:    [data][0][relationships][product-offer-prices][data][0][type]    product-offer-prices
+    And Response should contain the array of a certain size:    [included]    1
+    And Response include should contain certain entity type:    product-offer-prices
+    And Response body parameter should not be EMPTY:    [included][0][id]
+    And Response body parameter should be:    [included][0][type]    product-offer-prices
+    And Response body parameter should be greater than:    [included][0][attributes][price]    0
+    And Response body parameter should be:    [included][0][attributes][prices][0][priceTypeName]    DEFAULT
+    And Response body parameter should be greater than:    [included][0][attributes][prices][0][netAmount]    1
+    And Response body parameter should be greater than:    [included][0][attributes][prices][0][grossAmount]    0
+    And Response should contain the array of a certain size:    [included][0][attributes][prices][0][currency]    3
+    And Response body parameter should not be EMPTY:    [included][0][attributes][prices][0][currency][code]
+    And Response body parameter should not be EMPTY:    [included][0][attributes][prices][0][currency][name]
+    And Response body parameter should not be EMPTY:    [included][0][attributes][prices][0][currency][symbol]
+    And Response should contain the array of a certain size:    [included][0][attributes][prices][0][volumePrices]    3
 
-Get_all_product_offer_info_product_offer_prices_included
+Get_all_product_offer_info_with_product_offer_prices_included
     When I send a GET request:    /product-offers/${offer}?include=product-offer-prices
     Then Response status code should be:    200
     And Response reason should be:    OK
