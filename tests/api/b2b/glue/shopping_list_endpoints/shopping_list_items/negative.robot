@@ -60,7 +60,7 @@ Add_a_product_with_zero_quantity_to_the_shopping_list
     ...    AND    Response status code should be:    204
     ...    AND    Response reason should be:    No Content
 
-Add_a_product_with_negaive_quantity_of_to_the_shopping_list  
+Add_a_product_with_negaive_quantity_to_the_shopping_list  
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}  
     ...    AND    I send a POST request:    /shopping-lists    {"data":{"type":"shopping-lists","attributes":{"name":"${shopping_list_name}${random}"}}}
