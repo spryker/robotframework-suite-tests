@@ -1,5 +1,5 @@
 {
-    "environment": "api_b2b", 
+    "environment": "api_mp_b2b",
 
     "env": {
         "glue_url": "http://glue.de.spryker.local",
@@ -44,7 +44,7 @@
         "gender_female": "Female",
         "gender_male": "Male",
         
-        "email_name": "maxmusterman",
+        "email_name": "sonia",
         "email_domain": "@spryker.com",
 
         "zed_admin_email": "admin@spryker.com",
@@ -60,8 +60,6 @@
         "customer_reference_10_de": "DE--10",
         "customer_reference_15_de": "DE--15",
         "customer_reference_34_de": "DE--34",
-
-        "merchant_id":"MER000011",
 
         "grant_type_password": "password",
         "grant_type_refresh_token": "refresh_token"
@@ -369,7 +367,19 @@
 
         "url_resolver_example": "/en/clairefontaine-collegeblock-8272c-din-a5-90blatt-kariert-M21692",
         "url_resolver_entity_type": "abstract-products",
-        "url_resolver_entity_id": "M21692"
+        "url_resolver_entity_id": "M21692",
+
+        "url_resolver_category_nodes": "/en/stationery",
+        "url_resolver_category_nodes_entity": "category-nodes",
+        "url_resolver_category_nodes_id": "2",
+
+        "url_resolver_cms": "/en/privacy",
+        "url_resolver_cms_entity": "cms-pages",
+        "url_resolver_cms_id": "1e9fb640-9073-55f4-a2d2-535090c92025",
+
+        "url_resolver_merchant": "/en/merchant/spryker",
+        "url_resolver_merchant_entity": "merchants",
+        "url_resolver_merchant_id": "MER000008"
     },
     "companies":{
         "company_name": "Spryker Systems GmbH",
@@ -391,6 +401,13 @@
         "label_name_discontinued": "Discontinued",
         "label_id_alternative": "1",
         "label_name_alternative": "Alternatives available"
+    },
+    
+    "return_reasons":{
+      "return_reason_damaged": "Damaged",
+      "return_reason_wrong_item": "Wrong Item",
+      "return_reason_no_longer_needed": "No longer needed",
+      "return_reasons_qty": "3"
     }
 
 }
