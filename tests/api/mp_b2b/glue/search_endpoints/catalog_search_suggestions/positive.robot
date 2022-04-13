@@ -234,7 +234,7 @@ Get_search_suggestions_with_abstract_product_sku_and_included_abstract_products
     And Response body parameter should contain:    [included][0][attributes][attributeMap][product_concrete_ids]    ${concrete_available_product_sku}
     And Response should contain the array of a certain size:    [included][0][attributes][attributeMap][attribute_variants]    0
     And Response body parameter should not be EMPTY:    [included][0][attributes][attributeMap][attribute_variant_map]
-    And Response body parameter should be:    [included][0][attributes][metaTitle]    ${concrete_available_product_meta_title}
+    And Response body parameter should contain:    [included][0][attributes]    metaTitle
     And Response body parameter should be:    [included][0][attributes][metaKeywords]    ${concrete_available_product_meta_keywords}
     And Response body parameter should be:    [included][0][attributes][metaDescription]    ${concrete_available_product_meta_description}
     And Response body parameter should not be EMPTY:    [included][0][attributes][attributeNames]
