@@ -10,6 +10,7 @@ ENABLER
 
 Share_not_owned_shopping_cart
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    ...    AND    Save value to a variable:    [data][attributes][accessToken]    userToken
     ...    AND    I set Headers:    Authorization=${token}  
     ...    AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${gross_mode}","currency": "${currency_code_eur}","store": "${store_de}","name": "${test_cart_name}-${random}"}}}
     ...    AND    Save value to a variable:    [data][id]    cartId
@@ -22,13 +23,12 @@ Share_not_owned_shopping_cart
     And Response should return error code:    2701
     And Response reason should be:    Forbidden
     And Response should return error message:    Action is forbidden.
-    [Teardown]    Run Keywords    I get access token for the customer:    ${yves_user_email}
-    ...    AND    I set Headers:    Authorization=${token}
+    [Teardown]    Run Keywords    I set Headers:    Authorization=Bearer ${userToken}
     ...    AND    I send a DELETE request:    /carts/${cartId}
     ...    AND    Response status code should be:    204
     ...    AND    Response reason should be:    No Content
 
-Share_shopping_cart_with_incorrect_permission_group
+Share_shopping_cart_with_non_existing_permission_group
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
     ...    AND    I set Headers:    Authorization=${token}  
     ...    AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${gross_mode}","currency": "${currency_code_eur}","store": "${store_de}","name": "${test_cart_name}-${random}"}}}
@@ -38,52 +38,39 @@ Share_shopping_cart_with_incorrect_permission_group
     When I send a POST request:    /carts/${cartId}/shared-carts    {"data":{"type":"shared-carts","attributes":{"idCompanyUser":"${companyUserId}","idCartPermissionGroup":3}}}
     Then Response status code should be:    422
     And Response should return error code:    2501
-    And Response reason should be:    Unprocessable Content
+    And Response reason should be:    Unprocessable Entity
     And Response should return error message:    Cart permission group not found.
     [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cartId}
     ...    AND    Response status code should be:    204
     ...    AND    Response reason should be:    No Content
 
-Share_shopping_cart_with_empty_permission_group_value
+Share_shopping_cart_with_empty_permission_group_value_and_company_user_value
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
     ...    AND    I set Headers:    Authorization=${token}  
     ...    AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${gross_mode}","currency": "${currency_code_eur}","store": "${store_de}","name": "${test_cart_name}-${random}"}}}
     ...    AND    Save value to a variable:    [data][id]    cartId
     ...    AND    I send a GET request:    /company-users
     ...    AND    Save value to a variable:    [data][0][id]    companyUserId
-    When I send a POST request:    /carts/${cartId}/shared-carts    {"data":{"type":"shared-carts","attributes":{"idCompanyUser":"${companyUserId}","idCartPermissionGroup":""}}}
+    When I send a POST request:    /carts/${cartId}/shared-carts    {"data":{"type":"shared-carts","attributes":{"idCompanyUser":"","idCartPermissionGroup":""}}}
     Then Response status code should be:    422
     And Response should return error code:    901
-    And Response reason should be:    Unprocessable Content
-    And Response should return error message:    idCartPermissionGroup => This value should not be blank.
+    And Response reason should be:    Unprocessable Entity
+    And Array in response should contain property with value:    [errors]    detail    idCartPermissionGroup => This value should not be blank.
+    And Array in response should contain property with value:    [errors]    detail    idCompanyUser => This value should not be blank.
     [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cartId}
     ...    AND    Response status code should be:    204
-    ...    AND    Response reason should be:    No Content
 
-Share_shopping_cart_with_empty_company_user_value
+Share_shopping_cart_without_company_user_attribute_and_cart_permission_group_attribute
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
     ...    AND    I set Headers:    Authorization=${token}  
     ...    AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${gross_mode}","currency": "${currency_code_eur}","store": "${store_de}","name": "${test_cart_name}-${random}"}}}
     ...    AND    Save value to a variable:    [data][id]    cartId
-    When I send a POST request:    /carts/${cartId}/shared-carts    {"data":{"type":"shared-carts","attributes":{"idCompanyUser":"","idCartPermissionGroup":2}}}
+    When I send a POST request:    /carts/${cartId}/shared-carts    {"data":{"type":"shared-carts","attributes":{}}}
     Then Response status code should be:    422
     And Response should return error code:    901
-    And Response reason should be:    Unprocessable Content
-    And Response should return error message:    idCompanyUser => This value should not be blank.
-    [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cartId}
-    ...    AND    Response status code should be:    204
-    ...    AND    Response reason should be:    No Content
-
-Share_shopping_cart_without_company_user_attribute
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
-    ...    AND    I set Headers:    Authorization=${token}  
-    ...    AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${gross_mode}","currency": "${currency_code_eur}","store": "${store_de}","name": "${test_cart_name}-${random}"}}}
-    ...    AND    Save value to a variable:    [data][id]    cartId
-    When I send a POST request:    /carts/${cartId}/shared-carts    {"data":{"type":"shared-carts","attributes":{"idCartPermissionGroup":2}}}
-    Then Response status code should be:    422
-    And Response should return error code:    901
-    And Response reason should be:    Unprocessable Content
-    And Response should return error message:    idCompanyUser => This field is missing.
+    And Response reason should be:    Unprocessable Entity
+    And Array in response should contain property with value:    [errors]    detail    idCompanyUser => This field is missing.
+    And Array in response should contain property with value:    [errors]    detail    idCartPermissionGroup => This field is missing.
     [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cartId}
     ...    AND    Response status code should be:    204
     ...    AND    Response reason should be:    No Content
@@ -131,15 +118,6 @@ Share_shopping_cart_with_empty_cart_id
     And Response reason should be:    Bad Request
     And Response should return error message:    Cart uuid is missing.
 
-Share_shopping_cart_with_empty_company_user_id
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
-    ...    AND    I set Headers:    Authorization=${token}
-    When I send a POST request:    /carts/shoppingCartId/shared-carts    {"data":{"type":"shared-carts","attributes":{"idCompanyUser":"","idCartPermissionGroup":1}}}
-    Then Response status code should be:    422
-    And Response should return error code:    901
-    And Response reason should be:    Unprocessable Content
-    And Response should return error message:    idCompanyUser => This value should not be blank.
-
 Share_shopping_cart_with_incorrect_cart_permission_id
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
     ...    AND    I set Headers:    Authorization=${token}
@@ -150,7 +128,7 @@ Share_shopping_cart_with_incorrect_cart_permission_id
     When I send a POST request:    /carts/${cartId}/shared-carts    {"data":{"type":"shared-carts","attributes":{"idCompanyUser":"${companyUserId}","idCartPermissionGroup":3}}}
     Then Response status code should be:    422
     And Response should return error code:    2501
-    And Response reason should be:    Unprocessable Content
+    And Response reason should be:    Unprocessable Entity
     And Response should return error message:    Cart permission group not found.
     [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cartId}
     ...    AND    Response status code should be:    204
@@ -208,8 +186,25 @@ Update_permissions_of_shared_shopping_cart_with_incorrect_permission_group
     When I send a PATCH request:    /shared-carts/${sharedCardId}    {"data":{"type":"shared-carts","attributes":{"idCartPermissionGroup":3}}}
     Then Response status code should be:    422
     And Response should return error code:    2501
-    And Response reason should be:    Unprocessable Content
+    And Response reason should be:    Unprocessable Entity
     And Response should return error message:    Cart permission group not found.
+    [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cartId}
+    ...    AND    Response status code should be:    204
+    ...    AND    Response reason should be:    No Content
+
+Update_permissions_of_shared_shopping_cart_with_extra_attribute
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    ...    AND    I set Headers:    Authorization=${token}  
+    ...    AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${gross_mode}","currency": "${currency_code_eur}","store": "${store_de}","name": "${test_cart_name}-${random}"}}}
+    ...    AND    Save value to a variable:    [data][id]    cartId
+    ...    AND    I send a GET request:    /company-users
+    ...    AND    Save value to a variable:    [data][0][id]    companyUserId
+    ...    AND    I send a POST request:    /carts/${cartId}/shared-carts    {"data":{"type":"shared-carts","attributes":{"idCompanyUser":"${companyUserId}","idCartPermissionGroup":2}}}
+    ...    AND    Save value to a variable:    [data][id]    sharedCardId
+    When I send a PATCH request:    /shared-carts/${sharedCardId}    {"data":{"type":"shared-carts","attributes":{"idCompanyUser":"test123456","idCartPermissionGroup":1}}}
+    Then Response status code should be:    200
+    And Response reason should be:    OK
+    And Response header parameter should be:    Content-Type    ${default_header_content_type}
     [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cartId}
     ...    AND    Response status code should be:    204
     ...    AND    Response reason should be:    No Content
@@ -228,7 +223,7 @@ Update_permissions_of_shared_shopping_cart_with_empty_permission_group_value
     When I send a PATCH request:    /shared-carts/${sharedCardId}    {"data":{"type":"shared-carts","attributes":{"idCartPermissionGroup":""}}}
     Then Response status code should be:    422
     And Response should return error code:    901
-    And Response reason should be:    Unprocessable Content
+    And Response reason should be:    Unprocessable Entity
     And Response should return error message:    idCartPermissionGroup => This value should not be blank.
     [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cartId}
     ...    AND    Response status code should be:    204
@@ -248,7 +243,7 @@ Update_permissions_of_shared_shopping_cart_without_permission_group_attribute
     When I send a PATCH request:    /shared-carts/${sharedCardId}    {"data":{"type":"shared-carts","attributes":{}}}
     Then Response status code should be:    422
     And Response should return error code:    901
-    And Response reason should be:    Unprocessable Content
+    And Response reason should be:    Unprocessable Entity
     And Response should return error message:    idCartPermissionGroup => This field is missing.
     [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cartId}
     ...    AND    Response status code should be:    204
@@ -256,6 +251,7 @@ Update_permissions_of_shared_shopping_cart_without_permission_group_attribute
 
 Add_an_item_to_the_shared_shopping_cart_by_user_without_access
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    ...    AND    Save value to a variable:    [data][attributes][accessToken]    userToken
     ...    AND    I set Headers:    Authorization=${token}  
     ...    AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${gross_mode}","currency": "${currency_code_eur}","store": "${store_de}","name": "${test_cart_name}-${random}"}}}
     ...    AND    Save value to a variable:    [data][id]    cartId
@@ -270,14 +266,14 @@ Add_an_item_to_the_shared_shopping_cart_by_user_without_access
     And Response reason should be:    Forbidden
     And Response should return error message:    Unauthorized cart action.
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
-    [Teardown]    Run Keywords    I get access token for the customer:    ${yves_user_email}
-    ...    AND    I set Headers:    Authorization=${token}
+    [Teardown]    Run Keywords    I set Headers:    Authorization=Bearer ${userToken}
     ...    AND    I send a DELETE request:    /carts/${cartId}
     ...    AND    Response status code should be:    204
     ...    AND    Response reason should be:    No Content
 
 Update_an_item_quantity_at_the_shared_shopping_cart_by_user_without_access
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    ...    AND    Save value to a variable:    [data][attributes][accessToken]    userToken
     ...    AND    I set Headers:    Authorization=${token}  
     ...    AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${gross_mode}","currency": "${currency_code_eur}","store": "${store_de}","name": "${test_cart_name}-${random}"}}}
     ...    AND    Save value to a variable:    [data][id]    cartId
@@ -294,14 +290,14 @@ Update_an_item_quantity_at_the_shared_shopping_cart_by_user_without_access
     And Response should return error code:    115
     And Response reason should be:    Forbidden
     And Response should return error message:    Unauthorized cart action.
-    [Teardown]    Run Keywords    I get access token for the customer:    ${yves_user_email}
-    ...    AND    I set Headers:    Authorization=${token}
+    [Teardown]    Run Keywords    I set Headers:    Authorization=Bearer ${userToken}
     ...    AND    I send a DELETE request:    /carts/${cartId}
     ...    AND    Response status code should be:    204
     ...    AND    Response reason should be:    No Content
 
 Remove_an_item_from_the_shared_shopping_cart_by_user_without_access
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    ...    AND    Save value to a variable:    [data][attributes][accessToken]    userToken
     ...    AND    I set Headers:    Authorization=${token}  
     ...    AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${gross_mode}","currency": "${currency_code_eur}","store": "${store_de}","name": "${test_cart_name}-${random}"}}}
     ...    AND    Save value to a variable:    [data][id]    cartId
@@ -319,14 +315,14 @@ Remove_an_item_from_the_shared_shopping_cart_by_user_without_access
     And Response reason should be:    Forbidden
     And Response should return error message:    Unauthorized cart action.
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
-    [Teardown]    Run Keywords    I get access token for the customer:    ${yves_user_email}
-    ...    AND    I set Headers:    Authorization=${token}
+    [Teardown]    Run Keywords    I set Headers:    Authorization=Bearer ${userToken}
     ...    AND    I send a DELETE request:    /carts/${cartId}
     ...    AND    Response status code should be:    204
     ...    AND    Response reason should be:    No Content
 
 Remove_the_shared_shopping_cart_by_user_without_access
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    ...    AND    Save value to a variable:    [data][attributes][accessToken]    userToken
     ...    AND    I set Headers:    Authorization=${token}  
     ...    AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${gross_mode}","currency": "${currency_code_eur}","store": "${store_de}","name": "${test_cart_name}-${random}"}}}
     ...    AND    Save value to a variable:    [data][id]    cartId
@@ -343,8 +339,7 @@ Remove_the_shared_shopping_cart_by_user_without_access
     And Response should return error code:    2701
     And Response reason should be:    Forbidden
     And Response should return error message:    Action is forbidden.
-    [Teardown]    Run Keywords    I get access token for the customer:    ${yves_user_email}
-    ...    AND    I set Headers:    Authorization=${token}
+    [Teardown]    Run Keywords    I set Headers:    Authorization=Bearer ${userToken}
     ...    AND    I send a DELETE request:    /carts/${cartId}
     ...    AND    Response status code should be:    204
     ...    AND    Response reason should be:    No Content

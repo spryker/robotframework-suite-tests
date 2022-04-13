@@ -8,8 +8,9 @@ Default Tags    glue
 ENABLER
     TestSetup
 
-Create_a_shared_shopping_cart_with_read_only_permissions
+Create_a_shared_shopping_cart_with_read_only_permissions_with_includes
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    ...    AND    Save value to a variable:    [data][attributes][accessToken]    userToken
     ...    AND    I set Headers:    Authorization=${token}  
     ...    AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${gross_mode}","currency": "${currency_code_eur}","store": "${store_de}","name": "${test_cart_name}-${random}"}}}
     ...    AND    Save value to a variable:    [data][id]    cartId
@@ -19,18 +20,33 @@ Create_a_shared_shopping_cart_with_read_only_permissions
     ...    AND    Save value to a variable:    [data][0][id]    companyUserId
     When I send a POST request:    /carts/${cartId}/shared-carts    {"data":{"type":"shared-carts","attributes":{"idCompanyUser":"${companyUserId}","idCartPermissionGroup":1}}}
     Then Response status code should be:    201
+    And Save value to a variable:    [data][id]    sharedCartId
     And Response body parameter should be:    [data][type]    shared-carts
     And Response body parameter should be:    [data][attributes][idCompanyUser]    ${companyUserId}
     And Response body parameter should be:    [data][attributes][idCartPermissionGroup]    1
+    And I send a GET request:    /carts/${cartId}?include=shared-carts
+    Then Response status code should be:    200
+    And Response body parameter should be:    [data][relationships][shared-carts][data][0][type]    shared-carts
+    And Response body parameter should be:    [data][relationships][shared-carts][data][0][id]    ${sharedCartId}
+    And Response should contain the array of a certain size:    [included]    1
+    And Response should contain the array of a certain size:    [data][relationships]    1
+    And Response body parameter should be:    [included][0][type]    shared-carts
+    And Response body parameter should be:    [included][0][id]    ${sharedCartId}
+    And Response body parameter should be:    [included][0][attributes][idCompanyUser]    ${companyUserId}
+    And Response body parameter should be:    [included][0][attributes][idCartPermissionGroup]    1
     Then I get access token for the customer:    ${yves_shared_shopping_cart_user_email}
     And I set Headers:    Authorization=${token}
     And I send a GET request:    /carts/${cartId}?include=cart-permission-groups
     And Response status code should be:    200
+    And Response body parameter should be:    [data][relationships][cart-permission-groups][data][0][type]    cart-permission-groups
+    And Response body parameter should be:    [data][relationships][cart-permission-groups][data][0][id]    1
     And Response should contain the array of a certain size:    [included]    1
     And Response should contain the array of a certain size:    [data][relationships]    1
+    And Response body parameter should be:    [included][0][type]    cart-permission-groups
+    And Response body parameter should be:    [included][0][id]    1
+    And Response body parameter should be:    [included][0][attributes][isDefault]    True
     And Response body parameter should be:    [included][0][attributes][name]    READ_ONLY
-    [Teardown]    Run Keywords    I get access token for the customer:    ${yves_user_email}
-    ...    AND    I set Headers:    Authorization=${token}
+    [Teardown]    Run Keywords    I set Headers:    Authorization=Bearer ${userToken}
     ...    AND    I send a DELETE request:    /carts/${cartId}
     ...    AND    Response status code should be:    204
     ...    AND    Response reason should be:    No Content
@@ -46,7 +62,7 @@ Create_a_shared_shopping_cart_with_full_access_permissions
     ...    AND    Save value to a variable:    [data][0][id]    companyUserId
     When I send a POST request:    /carts/${cartId}/shared-carts    {"data":{"type":"shared-carts","attributes":{"idCompanyUser":"${companyUserId}","idCartPermissionGroup":2}}}
     Then Response status code should be:    201
-    And Save value to a variable:    [data][id]    sharedCardId
+    And Save value to a variable:    [data][id]    sharedCartId
     And Response body parameter should be:    [data][type]    shared-carts
     And Response body parameter should be:    [data][attributes][idCompanyUser]    ${companyUserId}
     And Response body parameter should be:    [data][attributes][idCartPermissionGroup]    2
@@ -61,8 +77,9 @@ Create_a_shared_shopping_cart_with_full_access_permissions
     ...    AND    Response status code should be:    204
     ...    AND    Response reason should be:    No Content
 
-Update_permissions_of_shared_shopping_cart_by_card_owner
+Update_permissions_of_shared_shopping_cart_by_Cart_owner
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    ...    AND    Save value to a variable:    [data][attributes][accessToken]    userToken
     ...    AND    I set Headers:    Authorization=${token}  
     ...    AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${gross_mode}","currency": "${currency_code_eur}","store": "${store_de}","name": "${test_cart_name}-${random}"}}}
     ...    AND    Save value to a variable:    [data][id]    cartId
@@ -71,8 +88,8 @@ Update_permissions_of_shared_shopping_cart_by_card_owner
     ...    AND    I send a GET request:    /company-users
     ...    AND    Save value to a variable:    [data][0][id]    companyUserId
     ...    AND    I send a POST request:    /carts/${cartId}/shared-carts    {"data":{"type":"shared-carts","attributes":{"idCompanyUser":"${companyUserId}","idCartPermissionGroup":2}}}
-    ...    AND    Save value to a variable:    [data][id]    sharedCardId
-    When I send a PATCH request:    /shared-carts/${sharedCardId}    {"data":{"type":"shared-carts","attributes":{"idCartPermissionGroup":1}}}
+    ...    AND    Save value to a variable:    [data][id]    sharedCartId
+    When I send a PATCH request:    /shared-carts/${sharedCartId}    {"data":{"type":"shared-carts","attributes":{"idCartPermissionGroup":1}}}
     And Response status code should be:    200
     And Response body parameter should be:    [data][type]    shared-carts
     And Response body parameter should be:    [data][attributes][idCompanyUser]    ${companyUserId}
@@ -88,8 +105,7 @@ Update_permissions_of_shared_shopping_cart_by_card_owner
     And Response should contain the array of a certain size:    [included]    1
     And Response should contain the array of a certain size:    [data][relationships]    1
     And Response body parameter should be:    [included][0][attributes][name]    READ_ONLY
-    [Teardown]    Run Keywords    I get access token for the customer:    ${yves_user_email}
-    ...    AND    I set Headers:    Authorization=${token}
+    [Teardown]    Run Keywords    I set Headers:    Authorization=Bearer ${userToken}
     ...    AND    I send a DELETE request:    /carts/${cartId}
     ...    AND    Response status code should be:    204
     ...    AND    Response reason should be:    No Content
@@ -192,7 +208,7 @@ Delete_a_shared_shopping_cart_by_cart_owner
     ...    AND    I send a GET request:    /company-users
     ...    AND    Save value to a variable:    [data][0][id]    companyUserId
     ...    AND    I send a POST request:    /carts/${cartId}/shared-carts    {"data":{"type":"shared-carts","attributes":{"idCompanyUser":"${companyUserId}","idCartPermissionGroup":2}}}
-    ...    AND    Save value to a variable:    [data][id]    sharedCardId
-    When I send a DELETE request:    /shared-carts/${sharedCardId}
+    ...    AND    Save value to a variable:    [data][id]    sharedCartId
+    When I send a DELETE request:    /shared-carts/${sharedCartId}
     Then Response status code should be:    204
     And Response reason should be:    No Content
