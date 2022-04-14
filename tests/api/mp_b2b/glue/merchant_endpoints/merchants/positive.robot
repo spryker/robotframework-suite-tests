@@ -12,7 +12,6 @@ Retrieves_list_of_merchants
     When I send a GET request:  /merchants
     Then Response status code should be:    200
     And Response reason should be:    OK
-    And Each array element of array in response should contain property:    [data]    type
     And Each array element of array in response should contain property:    [data]    id
     And Each array element of array in response should contain property:    [data]    attributes
     And Each array element of array in response should contain property with value:    [data]    type    merchants
