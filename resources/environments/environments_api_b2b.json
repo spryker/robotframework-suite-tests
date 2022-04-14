@@ -398,7 +398,8 @@
     "return_reasons":{
       "return_reason_damaged": "Damaged",
       "return_reason_wrong_item": "Wrong Item",
-      "return_reason_no_longer_needed": "No longer needed"
+      "return_reason_no_longer_needed": "No longer needed",
+      "return_reasons_qty": "3"
     }
 
 }
