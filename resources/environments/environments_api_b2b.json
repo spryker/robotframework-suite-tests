@@ -376,7 +376,7 @@
     },
     "companies":{
         "company_name": "Spryker Systems GmbH",
-        "business_unit_address_id": "2175cddd-f8af-5885-b161-227b5c93e72f",
+        "busines_unit_address_id": "2175cddd-f8af-5885-b161-227b5c93e72f",
         "business_unit_name": "Spryker Systems HR department",
         "user_with_multiple_companies": "anne.boleyn@spryker.com",
         "company_id": "62de4ab6-b768-5c21-8835-455d9f341625",
