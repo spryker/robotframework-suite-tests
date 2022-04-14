@@ -1,4 +1,6 @@
 *** Settings ***
+Library    String
+Library    Browser
 Library    ../../resources/libraries/common.py
 Resource    common.robot
 Resource    ../pages/yves/yves_catalog_page.robot
@@ -79,7 +81,8 @@ Yves: '${pageName}' page is displayed
     ...    ELSE IF    '${pageName}' == 'Return Details'    Page Should Contain Element    ${return_details_main_content_locator}    ${pageName} page is not displayed
     ...    ELSE IF    '${pageName}' == 'Payment cancellation'    Page Should Contain Element    ${cancel_payment_page_main_container_locator}    ${pageName} page is not displayed
 
-Yves: remove flash messages    ${flash_massage_state}=    Run Keyword And Ignore Error    Page Should Contain Element    ${notification_area}    1s
+Yves: remove flash messages
+    ${flash_massage_state}=    Run Keyword And Ignore Error    Page Should Contain Element    ${notification_area}    1s
     Log    ${flash_massage_state}
     Run Keyword If    'PASS' in ${flash_massage_state}     Remove element from HTML with JavaScript    //section[@data-qa='component notification-area']
 
@@ -102,6 +105,7 @@ Yves: go to the 'Home' page
 
 Yves: get the last placed order ID by current customer
     [Documentation]    Returns orderID of the last order from customer account
+    Run Keyword If    '${env}'=='suite-nonsplit'    Yves: go to URL:    /customer/order
     ${currentURL}=    Get Location
     Run Keyword If    '${env}'=='b2b'    Set Test Variable    ${menuItem}    Order History
     ...    ELSE    Set Test Variable    ${menuItem}    Orders History
@@ -225,12 +229,5 @@ Yves: try reloading page if element is/not appear:
     END
 
 Yves: get current lang
-    ${logoUrl}=    get element attribute    xpath=//*[@data-qa='component logo']/a[@href]    href
-    ${logoUrl}=    get url without starting slash    ${logoUrl}
-    run keyword if    '${logoUrl}'!='${EMPTY}'
-    ...    run keywords    set suite variable    ${currentLang}    ${logoUrl}
-    ...    AND    return from keyword    ${currentLang}
-    ${lang}=    get variable value    ${currentLang}    '${EMPTY}'
-    run keyword if    '${lang}'!='${EMPTY}'
-    ...    return from keyword    ${currentLang}
-    return from keyword    '${EMPTY}'
+    ${lang}=    get attribute    xpath=//html    lang
+    return from keyword   ${lang}

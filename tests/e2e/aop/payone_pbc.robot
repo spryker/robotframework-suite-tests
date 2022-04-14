@@ -33,10 +33,11 @@ Payone_E2E
     ...    || s6RUCzClrUaHQcDH | 32481      | 32893        | 2024080         | Test | Credit Card,PayPal ||
     Zed: submit pbc configuration form
     Zed: PBC details page should contain the following elements:    ${appConnectedStatus}
-    Zed: activate payment method:    Payone    Credit Card
+    Zed: activate/deactivate payment method:    Payone    Credit Card
+
+    Yves: login on Yves with provided credentials:    ${yves_company_user_manager_and_buyer_email}
 
     # Cancel order scenario
-    Yves: login on Yves with provided credentials:    ${yves_company_user_manager_and_buyer_email}
     Yves: create new 'Shopping Cart' with name:    payone+${random}
     Yves: go to PDP of the product with sku:    136
     Yves: add product to the shopping cart
@@ -76,7 +77,7 @@ Payone_E2E
     ...    || V        | 4111111111111111 | Robot      | 2030       | 1           | 111 ||
     Wait Until Page Contains Element    ${success_page_main_container_locator}[${env}]
     Yves: 'Thank you' page is displayed
-    Yves: get the last placed order ID
+    Yves: get the last placed order ID by current customer
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to order page:    ${lastPlacedOrder}
     Zed: trigger matching state of order item inside xxx shipment:    136    invoice customer
@@ -100,7 +101,6 @@ Payone_E2E
     Yves: 'Create Return' page is displayed
     Yves: create return for the following products:    136
     Yves: 'Return Details' page is displayed
-    Yves: check that 'Print Slip' contains the following products:    136
 
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to order page:    ${lastPlacedOrder}
@@ -112,7 +112,7 @@ Payone_E2E
     Zed: wait for order item to be in state:    136    canceled
     Zed: trigger matching state of order item inside xxx shipment:    150    deliver
     Zed: trigger matching state of order item inside xxx shipment:    150    Close
-    Zed: wait for order item to be in state:    136    close
+    Zed: wait for order item to be in state:    150    closed
 
     [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: go to first navigation item level:    Apps

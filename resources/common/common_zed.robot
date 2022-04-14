@@ -102,6 +102,11 @@ Zed: message should be shown:
     [Arguments]    ${text}
     Wait Until Element Is Visible    xpath=//div[contains(@class,'alert alert-success')]//*[contains(text(),'${text}')]    message=Success message is not shown
 
+Zed: flash message should be shown:
+    [Documentation]    Possible values: 'success', 'info' and 'danger'
+    [Arguments]    ${type}=success
+    Wait Until Element Is Visible    xpath=//div[contains(@class, 'flash-messages')]//div[contains(@class,'alert-${type}')]    message=Flash message is not shown
+
 Zed: click Action Button(without search) in a table for row that contains:
     [Arguments]    ${row_content}    ${zed_table_action_button_locator}
     wait until element is visible    xpath=//table[contains(@class,'dataTable')]/tbody//td[contains(text(),'${row_content}')]/../td[contains(@class,'column-Action') or contains(@class,'column-action')]/*[contains(.,'${zed_table_action_button_locator}')]

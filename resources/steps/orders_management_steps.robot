@@ -44,7 +44,7 @@ Zed: trigger matching state of order item inside xxx shipment:
 
 Zed: wait for order item to be in state:
     [Arguments]    ${sku}    ${state}    ${shipment}=1
-    ${elementSelector}=    xpath=//table[@data-qa='order-item-list'][${shipment}]/tbody//td/div[@class='sku'][contains(text(),'${sku}')]/ancestor::tr/td[@class='state-history']//a[contains(text(),'${state}')]
+    ${elementSelector}=    Set Variable    xpath=//table[@data-qa='order-item-list'][${shipment}]/tbody//td/div[@class='sku'][contains(text(),'${sku}')]/ancestor::tr/td[@class='state-history']//a[contains(text(),'${state}')]
     Try reloading page until element is/not appear:    ${elementSelector}    true    20    10s
 
 Yves: create return for the following products:
@@ -106,11 +106,3 @@ Zed: order has the following number of shipments:
     Wait Until Element Is Visible    xpath=//table[@data-qa='order-item-list'][1]
     ${actualShipments}=    Get Element Count    xpath=//table[@data-qa='order-item-list']
     Should Be Equal    '${expectedShipments}'    '${actualShipments}'
-
-Yves: get the last placed order ID
-    [Documentation]    Returns orderID of the last order from customer account
-    ${currentURL}=    Get Location
-    Run Keyword Unless    '/customer/order' in '${currentURL}'    Yves: go to 'Order History' page
-    ${lastPlacedOrder}=    Get Text    xpath=//div[contains(@data-qa,'component order-table')]//tr[1]//td[1]
-    Set Suite Variable    ${lastPlacedOrder}    ${lastPlacedOrder}
-    [Return]    ${lastPlacedOrder}
