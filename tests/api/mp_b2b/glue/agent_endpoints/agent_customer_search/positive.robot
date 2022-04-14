@@ -40,7 +40,7 @@ Agent_can_get_search_for_customers_by_first_name
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response body parameter should be:    [data][0][id]    None
     And Response body parameter should be:    [data][0][type]    agent-customer-search
-    And Response should contain the array of a certain size:    [data][0][attributes][customers]    1
+    And Response body parameter should be:     [data][0][attributes][customers][0][firstName]  ${yves_user_first_name}
     And Response body parameter should be:    [data][0][attributes][customers][0][customerReference]    ${yves_user_reference}
     And Response body parameter should be:    [data][0][attributes][customers][0][email]    ${yves_user_email}
     And Response body parameter should be:     [data][0][attributes][customers][0][firstName]     ${yves_user_first_name}
@@ -100,7 +100,6 @@ Agent_can_get_search_for_customers_by_substring
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response body parameter should be:    [data][0][id]    None
     And Response body parameter should be:    [data][0][type]    agent-customer-search
-    And Response should contain the array of a certain size:    [data][0][attributes][customers]    2
     And Response body parameter should not be EMPTY:    [links][last]
     And Response body parameter should not be EMPTY:    [links][first]
     And Response body has correct self link
@@ -149,8 +148,7 @@ Agent_can_get_search_for_customers_from_last_page
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response body parameter should be:    [data][0][id]    None
     And Response body parameter should be:    [data][0][type]    agent-customer-search
-    And Response should contain the array of a certain size:    [data][0][attributes][customers]    6
-    And Response body parameter should be:    [data][0][attributes][customers][5][customerReference]    ${customer_reference_34_de}
+    And Response body parameter should be:    [data][0][attributes][customers][5][customerReference]    ${customer_reference_44_de}
     And Response body parameter should not be EMPTY:    [links][last]
     And Response body parameter should not be EMPTY:    [links][first]
     And Response body parameter should not be EMPTY:    [links][prev]
