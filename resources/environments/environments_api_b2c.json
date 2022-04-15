@@ -2,15 +2,18 @@
     "environment": "api_b2c",
 
     "env": {
+
         "glue_url": "http://glue.de.spryker.local",
         "bapi_url": "http://backend-api.de.spryker.local/api/rest"
     },
 
-    "users": {    
+    "users": {
+
         "yves_user_email": "sonia@spryker.com",
         "yves_user_first_name": "Sonia",
         "yves_user_last_name": "Wagner",
         "yves_user_password": "change123",
+        "yves_user_password_new":"Change@123",
         "yves_user_reference": "DE--21",
         "yves_user_salutation": "Ms",
 
@@ -33,12 +36,12 @@
         "customer_reference_1_de": "DE--1",
         "customer_reference_10_de": "DE--10",
         "customer_reference_15_de": "DE--15",
-        "customer_reference_34_de": "DE--34",
+        "customer_reference_34_de": "DE--34"
 
-        "anonymous_customer_static_id": "111"
     },
-    
-    "address":{
+
+    "address": {
+
         "default_address1": "Third, 33, 11",
         "default_address2": "33-B",
         "default_address3": "third. address. line",
@@ -56,10 +59,11 @@
         "changed_address2": "75d",
         "changed_address3": "third. address. line - changed",
         "changed_phone": "555-555-55"
-
+        
     },
 
-    "shop":{
+    "shop": {
+
         "currency_name_eur": "Euro",
         "currency_code_eur": "EUR",
         "currency_symbol_eur": "€",
@@ -68,9 +72,21 @@
         "net_mode": "NET_MODE",
         "currency_name_chf": "Swiss Franc",
         "currency_code_chf": "CHF",
-        "currency_symbol_chf": "CHF"
+        "currency_symbol_chf": "CHF",
+
+        "currency_name_dollar": "US Dollar",
+        "currency_code_dollar": "USD",
+        "currency_symbol_dollar": "$",
+        "store_us": "US",
+  
+        "locale_name_DE": "de_DE",
+        "locale_code_DE": "de",
+        "locale_name_EN": "en_US",
+        "locale_code_EN": "en"
     },
-    "search":{
+
+    "search": {
+
         "total_number_of_products_in_search": "215",
         "default_ipp": "12",
         "ipp_middle": "24",
@@ -111,11 +127,11 @@
         "abstract_sku_highest_rating": "035"
 
     },
-        
+
     "products": {
-        
+
         "bundle_product_abstract_sku": "211",
-        "bundle_product_concrete_sku":"211_123",
+        "bundle_product_concrete_sku": "211_123",
         "bundle_product_product_name": "HP Bundle",
         "bundled_product_1_abstract_sku": "150",
         "bundled_product_2_abstract_sku": "127",
@@ -135,12 +151,7 @@
         "product_related_product_with_related_relation_sku": "016",
         "product_related_product_with_related_relation_name": "Sony Cyber-shot DSC-W800",
         "product_with_relations_alternative_products_sku": "M21100",
-        "product_with_relations_upselling_sku": "063",
-        "concrete_of_product_with_relations_upselling_sku": "063_29231675",      
-        "concrete_of_alternative_product_with_relations_upselling_sku": "007_30691822",
-        "product_related_product_with_upselling_relation_sku": "042",
-        "product_related_product_with_upselling_relation_name": "Samsung Galaxy S7",
-        "concrete_of_product_without_relations": "019_21081473",
+        "product_with_relations_upselling_sku": "M29502",
         
         "concrete_product_with_abstract_product_alternative_sku": "138_30046855",
         "concrete_product_with_abstract_product_alternative_sku_name": "Acer TravelMate P258-M",
@@ -160,7 +171,7 @@
         "concrete_available_product_sku": "183_21811723",
         "concrete_available_product_meta_keywords": "Sony,Communication Electronics",
         "concrete_available_product_meta_description": "Enjoy greater flexibility  ...than ever before with the Galaxy Tab S2. Remarkably slim and ultra-lightweight, use this device to take your e-books, photos,",
-
+        "concrete_available_product_with_label": "204_29851280",
         "abstract_available_with_stock_and_never_out_of_stock": "209",
         "concrete_available_with_stock_and_never_out_of_stock": "004_30663302",
         "abstract_available_product_with_no_stock_and_never_out_of_stock": "154",
@@ -169,7 +180,6 @@
         "abstract_available_product_with_3_concretes": "127",
         "abstract_available_product_with_3_concretes_name": "HP Z 620",
         "abstract_available_product_with_3_concretes_superattribute": "total_storage_capacity",
-
 
         "abstract_product_with_volume_prices": "193",
         "abstract_product_with_volume_prices_name": "TomTom Golf",
@@ -196,11 +206,23 @@
         "concrete_product_multiple_image_set_name": "Asus ZenPad Z170C",
         "concrete_available_product_with_stock": "001_25904006",
         "concrete_available_product_without_stock": "212_123",
+
+        "abstract_product_with_multiple_variants": "130",
+        "concrete_product_sku_multivariant_variant1": "130_29285281",
+        "concrete_product_sku_multivariant_variant2": "130_24326086",
+
         "product_option_1": "OP_2_year_waranty",
         "product_option_1_name": "Two (2) year limited warranty",
-        "product_option_2": "OP_insurance"
+        "product_option_2": "OP_insurance",
+
+
+        "review_title": "This is a review",
+        "review_text": "This is review text",
+        "default_review_rating": "5"
     },
-    "product_attributes":{
+
+    "product_attributes": {
+
         "brand_1": "Soennecken",
         "brand_2": "edding",
         "brand_3": "Mauser",
@@ -222,7 +244,8 @@
         "color_2": "Blue"
 
     },
-    "content":{
+
+    "content": {
 
         "abstract_product_list_id": "apl-watches",
         "abstract_list_product1_sku": "083",
@@ -255,21 +278,51 @@
         "brand_name": "canon"
 
     },
+
     "cart":{
         "x_anonymous_prefix": "anonymous"
     },
     "availability":{
         "stock_is_0": "0.0000000000",
         "stock_is_20": "20.0000000000"
+
     },
-    "misc":{
+
+    "misc": {
+
         "default_header_content_type": "application/vnd.api+json",
         "test_cart_name": "Test-cart",
         "qty_of_categories_in_category_trees": "6",
         "qty_of_subcategories_in_category_trees": "2",
         "color_name": "black"
+        
     },
+
+
+    "url_resolver":{
+
+        "url_resolver_abstract_product": "/en/canon-ixus-160-1",
+        "url_resolver_product_entity": "abstract-products",
+        "url_resolver_product_id": "001",
+
+        "url_resolver_category_nodes": "/en/computers",
+        "url_resolver_category_nodes_entity": "category-nodes",
+        "url_resolver_category_nodes_id": "5",
+
+        "url_resolver_cms": "/en/privacy",
+        "url_resolver_cms_entity": "cms-pages",
+        "url_resolver_cms_id": "1e9fb640-9073-55f4-a2d2-535090c92025"
+
+    },
+
+    "return_reason":{
+        "return_reasons_qty": "3"
+    },
+
     "wishlists":{
+
         "wishlist_name":"HS"
+        
        }
+
  }

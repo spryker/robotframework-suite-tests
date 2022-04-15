@@ -1,10 +1,13 @@
 *** Settings ***
 Suite Setup    SuiteSetup
-Test Setup    TestSetup
+Test Setup     TestSetup
 Resource    ../../../../../../resources/common/common_api.robot
 Default Tags    glue
 
 *** Test Cases ***
+ENABLER
+    TestSetup
+    
 # endpoint receive category_node_id as int 
 # here I use str type of the id and test response body
 Get_category_node_by_invalid_id
