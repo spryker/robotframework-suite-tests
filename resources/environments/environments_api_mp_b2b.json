@@ -86,27 +86,27 @@
     },
 
     "shop":{
-      "currency_name_eur": "Euro",
-      "currency_code_eur": "EUR",
-      "currency_symbol_eur": "€",
-      "store_de": "DE",
+        "currency_name_eur": "Euro",
+        "currency_code_eur": "EUR",
+        "currency_symbol_eur": "€",
+        "store_de": "DE",
 
-      "currency_name_dollar": "US Dollar",
-      "currency_code_dollar": "USD",
-      "currency_symbol_dollar": "$",
-      "store_us": "US",
+        "currency_name_dollar": "US Dollar",
+        "currency_code_dollar": "USD",
+        "currency_symbol_dollar": "$",
+        "store_us": "US",
 
-      "currency_name_chf": "Swiss Franc",
-      "currency_code_chf": "CHF",
-      "currency_symbol_chf": "CHF",
+        "currency_name_chf": "Swiss Franc",
+        "currency_code_chf": "CHF",
+        "currency_symbol_chf": "CHF",
 
-      "gross_mode": "GROSS_MODE",
-      "net_mode": "NET_MODE",
+        "gross_mode": "GROSS_MODE",
+        "net_mode": "NET_MODE",
 
-      "locale_name_DE": "de_DE",
-      "locale_code_DE": "de",
-      "locale_name_EN": "en_US",
-      "locale_code_EN": "en"
+        "locale_name_DE": "de_DE",
+        "locale_code_DE": "de",
+        "locale_name_EN": "en_US",
+        "locale_code_EN": "en"
     },
 
     "shopping-list":{
@@ -404,18 +404,41 @@
         "label_name_alternative": "Alternatives available"
     },
 
-    "merchants":{
-        "merchant_id": "MER000011",
-        "merchant_name": "Computer Experts",
-        "merchant_url": "/en/merchant/computer-experts",
-        "merchant_contact_person_role": "Brand Manager",
-        "merchant_contact_person_title": "Ms",
-        "merchant_contact_person_first_name": "Michele",
-        "merchant_contact_person_last_name": "Nemeth",
-        "merchant_contact_person_phone": "030/123456789",
-        "merchant_public_email": "support@computer-experts.com",
-        "merchant_public_phone": "+49 30 234567691",
-        "merchant_description": "Computer Experts offer products that enhance your work environment with computer accessories that improve how you work, communicate, and interact. Computer Experts founded in 2013 and continuously growing, acquiring deep industry experience."
+     "merchants":{
+
+        "merchants":{
+            "spryker": {
+                "merchant_id": "MER000008",
+                "merchant_name": "Spryker",
+                "merchant_url": "/en/merchant/spryker",
+                "contact_person_role": "E-Commerce Manager",
+                "contact_person_title": "Mr",
+                "contact_person_first_name": "Harald",
+                "contact_person_last_name": "Schmidt",
+                "contact_person_phone": "+49 30 208498350",
+                "public_email": "info@spryker.com",
+                "public_phone": "+49 30 234567891",
+                "description": "Spryker is the main merchant on the B2B Demo Marketplace."
+            },
+            "computer_experts": {
+                "merchant_id": "MER000011",
+                "merchant_name": "Computer Experts",
+                "merchant_url": "/en/merchant/computer-experts",
+                "contact_person_role": "Brand Manager",
+                "contact_person_title": "Ms",
+                "contact_person_first_name": "Michele",
+                "contact_person_last_name": "Nemeth",
+                "contact_person_phone": "030/123456789",
+                "public_email": "support@computer-experts.com",
+                "public_phone": "+49 30 234567691",
+                "description": "Computer Experts offer products that enhance your work environment with computer accessories that improve how you work, communicate, and interact. Computer Experts founded in 2013 and continuously growing, acquiring deep industry experience.",
+                "addresses":{
+                    "city_munchen":"München",
+                    "address1": "Matthias-Pschorr-Straße"
+                }
+            }
+        }
+
     },
     
     "return_reasons":{

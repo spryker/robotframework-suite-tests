@@ -9,13 +9,13 @@ ENABLER
     TestSetup
 
 Retrieves_merchant_addresses
-    When I send a GET request:  /merchants/${merchant_id}/merchant-addresses
+    When I send a GET request:  /merchants/${merchants.computer_experts.merchant_id}/merchant-addresses
     Then Response status code should be:    200
     And Response reason should be:    OK
-    And Response body parameter should be:    [data][0][id]    ${merchant_id}
+    And Response body parameter should be:    [data][0][id]    ${merchants.computer_experts.merchant_id}
     And Response body parameter should be:    [data][0][type]    merchant-addresses
     And Response body parameter should be:    [data][0][attributes][addresses][0][countryName]    ${default_country}
-    And Response body parameter should be:    [data][0][attributes][addresses][0][city]    München
+    And Response body parameter should be:    [data][0][attributes][addresses][0][city]    ${merchants.computer_experts.addresses.city_munchen}
     And Each array element of array in response should contain property:    [data]    type
     And Each array element of array in response should contain property:    [data]    id
     And Each array element of array in response should contain property:    [data]    attributes
@@ -33,22 +33,22 @@ Retrieves_merchant_addresses
 
 
 Retrieves_merchant_with_include_merchant_addresses
-    When I send a GET request:  /merchants/${merchant_id}?include=merchant-addresses
+    When I send a GET request:    /merchants/${merchants.computer_experts.merchant_id}?include=merchant-addresses
     Then Response status code should be:    200
     And Response reason should be:    OK    
     And Response body parameter should be:    [data][type]    merchants
-    And Response body parameter should be:    [data][id]    ${merchant_id}
-    And Response Should Contain The Array Larger Than a Certain Size:    [included]    0
-    And Response Should Contain The Array Larger Than a Certain Size:    [data][relationships]    0
+    And Response body parameter should be:    [data][id]    ${merchants.computer_experts.merchant_id}
+    And Response should contain the array of a certain size:    [included]    1
+    And Response body parameter should have datatype:    [data][relationships]    dict
     And Response body parameter should not be EMPTY:    [data][relationships]
     And Response body parameter should not be EMPTY:    [data][relationships][merchant-addresses]
-    And Each Array Element Of Array In Response Should Contain Property:    [data][relationships][merchant-addresses][data]    type
-    And Each Array Element Of Array In Response Should Contain Property:    [data][relationships][merchant-addresses][data]    id
+    And Each array element of array in response should contain property:    [data][relationships][merchant-addresses][data]    type
+    And Each array element of array in response should contain property:    [data][relationships][merchant-addresses][data]    id
     And Response body parameter should not be EMPTY:    [included]
-    And Each Array Element Of Array In Response Should Contain Property:    [included]    type
-    And Each Array Element Of Array In Response Should Contain Property:    [included]    id
-    And Each Array Element Of Array In Response Should Contain Property:    [included]    attributes
-    And Each Array Element Of Array In Response Should Contain Property:    [included]    links
+    And Each array element of array in response should contain property:    [included]    type
+    And Each array element of array in response should contain property:    [included]    id
+    And Each array element of array in response should contain property:    [included]    attributes
+    And Each array element of array in response should contain property:    [included]    links
     And Each array element of array in response should contain nested property:    [included]    [links]    self
     And Each array element of array in response should contain property with value:    [included]    type    merchant-addresses
     And Each array element of array in response should contain nested property:    [included]    [attributes][addresses]    countryName
@@ -59,3 +59,6 @@ Retrieves_merchant_with_include_merchant_addresses
     And Each array element of array in response should contain nested property:    [included]    [attributes][addresses]    zipCode
     And Each array element of array in response should contain nested property:    [included]    [attributes][addresses]    latitude
     And Each array element of array in response should contain nested property:    [included]    [attributes][addresses]    longitude
+    And Response body parameter should be:    [included][0][attributes][addresses][0][countryName]    ${default_country}
+    And Response body parameter should be:    [included][0][attributes][addresses][0][city]    ${merchants.computer_experts.addresses.city_munchen}
+    And Response body parameter should be:    [included][0][attributes][addresses][0][address1]    ${merchants.computer_experts.addresses.address1}
