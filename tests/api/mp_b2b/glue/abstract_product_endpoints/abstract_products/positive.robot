@@ -168,6 +168,7 @@ Get_abstract_product_with_merchants_included
     And Each array element of array in response should contain property:    [included]    id
     And Each array element of array in response should contain property:    [included]    attributes
     And Each array element of array in response should contain property:    [included]    links
+    And Response body parameter should be:    [included][0][id]    ${merchants.spryker.merchant_id}
     And Response body parameter should be:    [included][0][attributes][merchantName]    ${merchants.spryker.merchant_name}
     And Response body parameter should be:    [included][0][attributes][merchantUrl]    ${merchants.spryker.merchant_url}
     And Response body parameter should be:    [included][0][attributes][contactPersonRole]    ${merchants.spryker.contact_person_role}
