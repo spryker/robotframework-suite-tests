@@ -15,4 +15,8 @@ Get_products_with_invalid_label_id
     And Response body parameter should be:    [data][type]    product-labels
     And Response body parameter should be:    [data][id]    ${label_id_manual}
     And Response body parameter should be:    [data][attributes][name]    ${label_name_manual}
+    And Response body parameter should have datatype:    [data][attributes][isExclusive]    bool
+    And Response body parameter should have datatype:    [data][attributes][position]    int
+    And Response body parameter should have datatype:    [data][attributes][frontEndReference]    str
+    And Response body parameter should be greater than:    [data][attributes][position]    0
     And Response body has correct self link internal
