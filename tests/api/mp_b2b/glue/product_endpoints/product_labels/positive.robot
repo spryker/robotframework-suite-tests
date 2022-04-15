@@ -8,7 +8,7 @@ Default Tags    glue
 ENABLER
     TestSetup
     
-Get_products_with_invalid_label_id
+Get_label_with_label_id
     When I send a GET request:    /product-labels/${label_id_manual}
     Then Response status code should be:    200
     And Response reason should be:    OK
