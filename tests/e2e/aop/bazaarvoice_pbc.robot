@@ -35,7 +35,7 @@ Bazaarvoice_E2E
     Yves: first product card in the catalog should contain bazaarvoice inline rating
     Yves: go to PDP of the product with sku:    150
     Yves: page should contain script with id:    bazaar-voice
-    Yves: bazaarvoice should send an event:    Product
+    Yves: bazaarvoice successfully sent an event:    Product
     Yves: PDP contains/doesn't contain:    true    ${bazaarvoiceWriteReview}    ${bazaarvoiceQuestions}    ${bazaarvoiceInlineRating}
     Yves: post bazaarvoice review:
     ...    || overallRating | reviewTitle            | review                                               | recommendProduct | nickname        | location | email                       | age      | gender | qualityRating | valueRating ||
@@ -43,7 +43,7 @@ Bazaarvoice_E2E
     Yves: login on Yves with provided credentials:    ${yves_company_user_manager_and_buyer_email}
     Yves: create new 'Shopping Cart' with name:    bazaarvoice+${random}
     Yves: go to PDP of the product with sku:    136
-    Yves: bazaarvoice should send an event:    Product
+    Yves: bazaarvoice successfully sent an event:    Product
     Yves: add product to the shopping cart
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: billing address same as shipping address:    true
@@ -56,7 +56,7 @@ Bazaarvoice_E2E
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
-    Yves: bazaarvoice should send an event:    Transaction
+    Yves: bazaarvoice successfully sent an event:    Transaction
     [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: go to first navigation item level:    Apps
     ...    AND    Zed: go to the PBC details page:    BazaarVoice

@@ -68,6 +68,7 @@ Yves: page should contain script with id:
 Yves: first product card in the catalog should contain bazaarvoice inline rating
     Page Should Contain Element    xpath=//div[contains(@class,'grid grid')]/div[1]/product-item//*[@data-bv-show='inline_rating']
 
-Yves: bazaarvoice should send an event:
+Yves: bazaarvoice successfully sent an event:
     [Arguments]    ${eventName}    ${timeout}=30s
-    Wait For Request    matcher=bazaarvoice\\.com\\/\\w+\\.gif\\?.*type=${eventName}    timeout=${timeout}
+    ${response}=    Wait for response    matcher=bazaarvoice\\.com\\/\\w+\\.gif\\?.*type=${eventName}    timeout=${timeout}
+    Should be true    ${response}[ok]
