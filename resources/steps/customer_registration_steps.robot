@@ -17,11 +17,9 @@ Register a new customer with data:
         Run keyword if    '${key}'=='first name'    Type Text    ${registration_first_name_field}    ${value}
         Run keyword if    '${key}'=='last name'    Type Text    ${registration_last_name_field}    ${value}
         Run keyword if    '${key}'=='e-mail'    Type Text    ${registration_email_field}     ${value}
-        Run keyword if    '${key}'=='password'    Run keywords    
+        Run keyword if    '${key}'=='password'    Run keywords
         ...    Type Text    ${registration_password_field}     ${value}   AND
         ...    Type Text    ${registration_password_confirmation_field}     ${value}
-#        Run keyword if    '${key}'=='salutation'    Type Text    ${checkout_shipping_address_company_name_field}     ${company}
     END
     Click Element by id with JavaScript    registerForm_accept_terms
     Click    ${registration_submit_button}
-    

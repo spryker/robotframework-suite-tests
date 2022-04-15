@@ -22,11 +22,11 @@ Yves: PDP contains/doesn't contain:
     ${pdp_elements_list_count}=   get length    ${pdp_elements_list}
     FOR    ${index}    IN RANGE    0    ${pdp_elements_list_count}
         ${pdp_element_to_check}=    Get From List    ${pdp_elements_list}    ${index}
-        Run Keyword If    '${condition}' == 'true'    
+        Run Keyword If    '${condition}' == 'true'
         ...    Run Keywords
         ...    Log    ${pdp_element_to_check}    #Left as an example of multiple actions in Condition
         ...    AND    Page Should Contain Element    ${pdp_element_to_check}    message=${pdp_element_to_check} is not displayed
-        Run Keyword If    '${condition}' == 'false'    
+        Run Keyword If    '${condition}' == 'false'
         ...    Run Keywords
         ...    Log    ${pdp_element_to_check}    #Left as an example of multiple actions in Condition
         ...    AND    Page Should Not Contain Element    ${pdp_element_to_check}    message=${pdp_element_to_check} should not be displayed
@@ -42,19 +42,18 @@ Yves: change quantity on PDP:
     [Arguments]    ${qtyToSet}
     Run Keyword If    '${env}'=='b2b'
     ...    Type Text    ${pdp_quantity_input_filed}[${env}]    ${qtyToSet}
-    ...    ELSE    Add/Edit element attribute with JavaScript:    ${pdp_quantity_input_filed}[${env}]    value    ${qtyToSet}    
+    ...    ELSE    Add/Edit element attribute with JavaScript:    ${pdp_quantity_input_filed}[${env}]    value    ${qtyToSet}
 
 Yves: select the following 'Sales Unit' on PDP:
     [Arguments]    ${salesUnit}
     Wait Until Element Is Visible    ${pdp_measurement_sales_unit_selector}
     Select From List By Label    ${pdp_measurement_sales_unit_selector}    ${salesUnit}
-        
 
 Yves: change quantity using '+' or '-' button № times:
     [Arguments]    ${action}    ${clicksCount}
     FOR    ${index}    IN RANGE    0    ${clicksCount}
         Run Keyword If    '${action}' == '+'    Click    ${pdp_increase_quantity_button}
-        ...    ELSE IF    '${action}' == '-'    Click    ${pdp_decrease_quantity_button} 
+        ...    ELSE IF    '${action}' == '-'    Click    ${pdp_decrease_quantity_button}
     END
 
 Yves: change variant of the product on PDP on:
@@ -81,13 +80,11 @@ Yves: add product to the shopping list:
     Run Keyword If    ('${shoppingListName}' != '${EMPTY}' and 'PASS' in ${shopping_list_dropdown_status})    Select From List By Label    ${pdp_shopping_list_selector}    ${shoppingListName}
     Wait Until Element Is Visible    ${pdp_add_to_shopping_list_button}
     Click    ${pdp_add_to_shopping_list_button}
-         
     Yves: remove flash messages
 
 Yves: change variant of the product on PDP on random value
     Wait Until Element Is Visible    ${pdp_variant_selector}
     Select Random Option From List    ${pdp_variant_selector}    xpath=//*[@data-qa='component variant']//select//option[@value]
-    
 
 Yves: get sku of the concrete product on PDP
     Wait Until Element Is Visible    ${pdp_product_sku}[${env}]
@@ -99,14 +96,14 @@ Yves: get sku of the concrete product on PDP
 
 Yves: get sku of the abstract product on PDP
     ${currentURL}=    Get Url
-    Log    current url: ${currentURL}       
+    Log    current url: ${currentURL}
     ${got_abstract_product_sku}=    Get Regexp Matches    ${currentURL}    ([^-]+$)
     ${got_abstract_product_sku}=    Convert To String    ${got_abstract_product_sku}
     ${got_abstract_product_sku}=    Replace String    ${got_abstract_product_sku}    '    ${EMPTY}
     ${got_abstract_product_sku}=    Replace String    ${got_abstract_product_sku}    [    ${EMPTY}
     ${got_abstract_product_sku}=    Replace String    ${got_abstract_product_sku}    ]    ${EMPTY}
     ${sku_length}=    Get Length    ${got_abstract_product_sku}
-    ${got_abstract_product_sku}=    Set Variable If    '${env}'!='b2b' and '${sku_length}'=='2'    0${got_abstract_product_sku}    ${got_abstract_product_sku}   
+    ${got_abstract_product_sku}=    Set Variable If    '${env}'!='b2b' and '${sku_length}'=='2'    0${got_abstract_product_sku}    ${got_abstract_product_sku}
     Set Global Variable    ${got_abstract_product_sku}
     [Return]    ${got_abstract_product_sku}
 
@@ -118,21 +115,21 @@ Yves: add product to wishlist:
     Run Keyword If    '${selectWishlist}'=='select'    Run keywords
     ...    Wait Until Element Is Visible    xpath=//select[contains(@name,'wishlist-name')]
     ...    AND    Wait Until Element Is Enabled    xpath=//select[contains(@name,'wishlist-name')]
-    ...    AND    Select From List By Value    xpath=//select[contains(@name,'wishlist-name')]    ${wishlistName}      
+    ...    AND    Select From List By Value    xpath=//select[contains(@name,'wishlist-name')]    ${wishlistName}
     Click    ${pdp_add_to_wishlist_button}
     Yves: flash message should be shown:    success    Items added successfully
     Yves: remove flash messages
 
 Yves: check if product is available on PDP:
     [Arguments]    ${abstractSku}    ${isAvailable}
-    Reload    
+    Reload
     Run Keyword If    '${isAvailable}'=='false'    Run keywords    Element Should Be Visible    ${pdp_product_not_available_text}
     ...    AND    Element Should Be Visible    ${pdp_add_to_cart_disabled_button}[${env}]
     ...    AND    Element Should Be Visible    ${pdp_availability_notification_email_field}
     ...    ELSE    Run keywords    Element Should Not Be Visible    ${pdp_product_not_available_text}
     ...    AND    Element Should Not Be Visible    ${pdp_add_to_cart_disabled_button}[${env}]
     ...    AND    Element Should Not Be Visible    ${pdp_availability_notification_email_field}
-    ...    AND    Element Should Be Visible    ${pdp_add_to_cart_button}      
+    ...    AND    Element Should Be Visible    ${pdp_add_to_cart_button}
 
 Yves: submit back in stock notification request for email:
     [Arguments]    ${email}
@@ -141,7 +138,7 @@ Yves: submit back in stock notification request for email:
     Yves: flash message should be shown:    success    Successfully subscribed
     Yves: remove flash messages
     Element Should Be Visible    xpath=//button[contains(text(),'Do not notify me when back in stock')]
-    
+
 Yves: unsubscribe from availability notifications
     Click    ${pdp_back_in_stock_unsubscribe_button}
     Yves: flash message should be shown:    success    Successfully unsubscribed

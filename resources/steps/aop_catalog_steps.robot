@@ -17,13 +17,12 @@ Zed: AOP catalog page should contain the following apps:
     [Arguments]    @{pbc_title_list}    ${element1}=${EMPTY}     ${element2}=${EMPTY}     ${element3}=${EMPTY}     ${element4}=${EMPTY}     ${element5}=${EMPTY}     ${element6}=${EMPTY}     ${element7}=${EMPTY}     ${element8}=${EMPTY}     ${element9}=${EMPTY}     ${element10}=${EMPTY}     ${element11}=${EMPTY}     ${element12}=${EMPTY}     ${element13}=${EMPTY}     ${element14}=${EMPTY}     ${element15}=${EMPTY}
     ${pbc_titles_list_count}=   get length  ${pbc_title_list}
     FOR    ${index}    IN RANGE    0    ${pbc_titles_list_count}
-        ${pbc_title_to_check}=    Get From List    ${pbc_title_list}    ${index}  
+        ${pbc_title_to_check}=    Get From List    ${pbc_title_list}    ${index}
         Run Keywords
-        ...    Log    ${pbc_title_to_check}    
+        ...    Log    ${pbc_title_to_check}
         ...    AND    Wait Until Element Is Visible    xpath=//app-application-card//*[contains(@class,'application-card')][contains(@class,'title')][text()='${pbc_title_to_check}']
         ...    AND    Page Should Contain Element    xpath=//app-application-card//*[contains(@class,'application-card')][contains(@class,'title')][text()='${pbc_title_to_check}']
-
-    END    
+    END
 
 Zed: go to the PBC details page:
     [Arguments]    ${pbc_title}
@@ -32,12 +31,12 @@ Zed: go to the PBC details page:
     Wait Until Element Is Visible    ${pbc_details_main_content_locator}
     Page Should Contain Element    ${pbc_details_main_content_locator}
 
-Zed: PBC details page should contain the following elements: 
+Zed: PBC details page should contain the following elements:
     [Arguments]    @{pbc_elements_list}    ${element1}=${EMPTY}     ${element2}=${EMPTY}     ${element3}=${EMPTY}     ${element4}=${EMPTY}     ${element5}=${EMPTY}     ${element6}=${EMPTY}     ${element7}=${EMPTY}     ${element8}=${EMPTY}     ${element9}=${EMPTY}     ${element10}=${EMPTY}     ${element11}=${EMPTY}     ${element12}=${EMPTY}     ${element13}=${EMPTY}     ${element14}=${EMPTY}     ${element15}=${EMPTY}
     ${pbc_elements_list_coumt}=   get length  ${pbc_elements_list}
     FOR    ${index}    IN RANGE    0    ${pbc_elements_list_coumt}
-        ${pbc_element_to_check}=    Get From List    ${pbc_elements_list}    ${index}  
-        Log    ${pbc_element_to_check}   
+        ${pbc_element_to_check}=    Get From List    ${pbc_elements_list}    ${index}
+        Log    ${pbc_element_to_check}
         ${is_element_image}=    Run Keyword And Ignore Error     Should Be Equal    ${pbc_element_to_check}    ${pbc_datails_app_logo_locator}
         Run Keyword if    'FAIL' in ${is_element_image}    Page Should Contain Element    ${pbc_element_to_check}
         Run Keyword if    'PASS' in ${is_element_image}    Verify the src attribute of the image is accessible:    ${pbc_element_to_check}

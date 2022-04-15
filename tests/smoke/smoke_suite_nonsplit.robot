@@ -31,18 +31,18 @@ Test Teardown     TestTeardown
 *** Test Cases ***
 New_Customer_Registration
     [Documentation]    Check that a new user can be registered in the system
-    Register a new customer with data:    
+    Register a new customer with data:
     ...    || salutation | first name          | last name | e-mail                         | password           ||
-    ...    || Mr.        | Test${random}       | User      | ${random}test.user@spryker.com | Change123!${random} || 
+    ...    || Mr.        | Test${random}       | User      | ${random}test.user@spryker.com | Change123!${random} ||
     Yves: flash message should be shown:    success    Almost there! We send you an email to validate your email address. Please confirm it to be able to log in.
     [Teardown]    Zed: delete customer:
-    ...    || email                          || 
+    ...    || email                          ||
     ...    || ${random}test.user@spryker.com ||
 
 Authorized_User_Access
     [Documentation]    Checks that authorized users see products info, cart and profile
     Yves: login on Yves with provided credentials:    ${yves_second_user_email}
-    Yves: header contains/doesn't contain:    true    ${currencySwitcher}[${env}]    ${accountIcon}     ${wishlistIcon}    ${shoppingCartIcon} 
+    Yves: header contains/doesn't contain:    true    ${currencySwitcher}[${env}]    ${accountIcon}     ${wishlistIcon}    ${shoppingCartIcon}
     Yves: go to PDP of the product with sku:    002
     Yves: PDP contains/doesn't contain:     true    ${pdpPriceLocator}     ${addToCartButton}
     Yves: add product to the shopping cart
@@ -76,13 +76,13 @@ UserAccount
     Yves: create a new customer address in profile:     Mr    ${yves_second_user_first_name}    ${yves_second_user_last_name}    Kirncher Str.    7    10247    Berlin    Germany
     Yves: go to user menu item in the left bar:    Addresses
     Yves: 'Addresses' page is displayed
-    Yves: check that user has address exists/doesn't exist:    true    Mr    ${yves_second_user_first_name}    ${yves_second_user_last_name}    Kirncher Str.    7    10247    Berlin    Germany
+    Yves: check that user address does/doesn't exist:    true    Mr    ${yves_second_user_first_name}    ${yves_second_user_last_name}    Kirncher Str.    7    10247    Berlin    Germany
     Yves: delete user address:    Mr    ${yves_second_user_first_name}    ${yves_second_user_last_name}    Kirncher Str.    7    10247    Berlin    Germany
     Yves: go to user menu item in the left bar:    Addresses
     Yves: 'Addresses' page is displayed
-    Yves: check that user has address exists/doesn't exist:    false    Mr    ${yves_second_user_first_name}    ${yves_second_user_last_name}    Kirncher Str.    7    10247    Berlin    Germany
-    
-    
+    Yves: check that user address does/doesn't exist:    false    Mr    ${yves_second_user_first_name}    ${yves_second_user_last_name}    Kirncher Str.    7    10247    Berlin    Germany
+
+
 Catalog
     [Documentation]    Checks that catalog options and search work
     Yves: perform search by:    canon
@@ -131,13 +131,13 @@ Product_PDP
     [Documentation]    Checks that PDP contains required elements
     Yves: go to PDP of the product with sku:    135
     Yves: change variant of the product on PDP on:    Flash
-    Yves: PDP contains/doesn't contain:    true    ${pdpPriceLocator}   ${addToCartButton}    ${pdp_warranty_option}    ${pdp_gift_wrapping_option}    ${relatedProducts} 
+    Yves: PDP contains/doesn't contain:    true    ${pdpPriceLocator}   ${addToCartButton}    ${pdp_warranty_option}    ${pdp_gift_wrapping_option}    ${relatedProducts}
     Yves: PDP contains/doesn't contain:    false    ${pdp_add_to_wishlist_button}
     Yves: login on Yves with provided credentials:    ${yves_user_email}
     Yves: go to PDP of the product with sku:    135
-    Yves: PDP contains/doesn't contain:    true    ${pdpPriceLocator}   ${pdp_add_to_cart_disabled_button}    ${pdp_warranty_option}    ${pdp_gift_wrapping_option}     ${pdp_add_to_wishlist_button}    ${relatedProducts} 
+    Yves: PDP contains/doesn't contain:    true    ${pdpPriceLocator}   ${pdp_add_to_cart_disabled_button}    ${pdp_warranty_option}    ${pdp_gift_wrapping_option}     ${pdp_add_to_wishlist_button}    ${relatedProducts}
     Yves: change variant of the product on PDP on:    Flash
-    Yves: PDP contains/doesn't contain:    true    ${pdpPriceLocator}    ${addToCartButton}    ${pdp_warranty_option}    ${pdp_gift_wrapping_option}     ${pdp_add_to_wishlist_button}    ${relatedProducts} 
+    Yves: PDP contains/doesn't contain:    true    ${pdpPriceLocator}    ${addToCartButton}    ${pdp_warranty_option}    ${pdp_gift_wrapping_option}     ${pdp_add_to_wishlist_button}    ${relatedProducts}
 
 
 Volume_Prices
@@ -195,14 +195,14 @@ Back_in_Stock_Notification
     Yves: unsubscribe from availability notifications
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Catalog    Availability
-    Zed: change product stock:    009    009_30692991    true    0  
-    Zed: go to second navigation item level:    Catalog    Availability  
+    Zed: change product stock:    009    009_30692991    true    0
+    Zed: go to second navigation item level:    Catalog    Availability
     Zed: check if product is/not in stock:    009    true
     Yves: login on Yves with provided credentials:    ${yves_second_user_email}
     Yves: go to PDP of the product with sku:  009
     Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    False
     Yves: check if product is available on PDP:    009    true
-    [Teardown]    Zed: check and restore product availability in Zed:    009    Available    009_30692991 
+    [Teardown]    Zed: check and restore product availability in Zed:    009    Available    009_30692991
 
 Add_to_Wishlist
     [Documentation]    Check creation of wishlist and adding to different wishlists
@@ -235,7 +235,7 @@ Product_Sets
     Yves: go to the shopping cart
     Yves: shopping cart contains the following products:    HP Elite x2 1012 G1    HP Pro Tablet 608 G1    HP EliteDesk 800 G1 Mini
     Yves: delete from the cart products with name:    HP Elite x2 1012 G1    HP Pro Tablet 608 G1    HP EliteDesk 800 G1 Mini
-    [Teardown]    Yves: check if cart is not empty and clear it 
+    [Teardown]    Yves: check if cart is not empty and clear it
 
 
 Configurable_Bundle
@@ -260,9 +260,9 @@ Configurable_Bundle
     Yves: flash message should be shown:    success    Configured bundle updated successfully.
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: billing address same as shipping address:    true
-    Yves: fill in the following new shipping address:    Mr    ${yves_second_user_first_name}    ${yves_second_user_last_name}    Kirncher Str.    7    10247    Berlin    Germany
-    Yves: select the following shipping method on the checkout and go next:    Express
-    Yves: select the following payment method on the checkout and go next:    Invoice
+    Yves: fill in a new shipping address:    Mr    ${yves_second_user_first_name}    ${yves_second_user_last_name}    Kirncher Str.    7    10247    Berlin    Germany
+    Yves: select shipping method on the checkout page and go next:    Express
+    Yves: select payment method on the checkout page and go next:    Invoice
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
@@ -293,18 +293,18 @@ Discounts
     Yves: shopping cart contains the following products:    Canon IXUS 285
     Yves: discount is applied:    cart rule    Promotional Product 100% ${random}    - €199.98
     Yves: click on the 'Checkout' button in the guest shopping cart
-    Yves: proceed with checkout as guest:    Mr    Guest    user    guest@user.com    
+    Yves: proceed with checkout as guest:    Mr    Guest    user    guest@user.com
     Yves: billing address same as shipping address:    true
-    Yves: fill in the following new shipping address:    Mr    Guest    user    Kirncher Str.    7    10247    Berlin    Germany
-    Yves: select the following shipping method on the checkout and go next:    Express
-    Yves: select the following payment method on the checkout and go next:    Invoice
+    Yves: fill in a new shipping address:    Mr    Guest    user    Kirncher Str.    7    10247    Berlin    Germany
+    Yves: select shipping method on the checkout page and go next:    Express
+    Yves: select payment method on the checkout page and go next:    Invoice
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
-    [Teardown]    Run keywords    Yves: check if cart is not empty and clear it    
+    [Teardown]    Run keywords    Yves: check if cart is not empty and clear it
     ...    AND    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: go to second navigation item level:    Merchandising    Discount
-    ...    AND    Zed: Deactivate Following Discounts From Overview Page:    Voucher Code 5% ${random}    Cart Rule 10% ${random}    Promotional Product 100% ${random}        
+    ...    AND    Zed: Deactivate Following Discounts From Overview Page:    Voucher Code 5% ${random}    Cart Rule 10% ${random}    Promotional Product 100% ${random}
 
 Recommendations
     [Documentation]    Checks similar products section in cart
@@ -333,14 +333,14 @@ Split_Delivery
     Yves: select new delivery address for a product:    Canon IXUS 285    true    no    Mr    Product    285    Kirncher Str.    7    10247    Berlin    Germany
     Yves: select new delivery address for a product:    Canon IXUS 180    true    no    Mr    Product    180    Kirncher Str.    7    10247    Berlin    Germany
     Yves: select new delivery address for a product:    Canon IXUS 165    true    no    Mr    Product    165    Kirncher Str.    7    10247    Berlin    Germany
-    Yves: fill in the following new billing address:    Mr    Product    165    Kirncher Str.    7    10247    Berlin    Germany
+    Yves: fill in a new billing address:    Mr    Product    165    Kirncher Str.    7    10247    Berlin    Germany
     Yves: click checkout button:    Next
     Yves: select the following shipping method for product:    Canon IXUS 285    Express
     Yves: select the following shipping method for product:    Canon IXUS 180    Same Day
     Yves: select the following shipping method for product:    Canon IXUS 165    Express
     Click    ${submit_checkout_form_button}[${env}]
-        
-    Yves: select the following payment method on the checkout and go next:    Invoice
+
+    Yves: select payment method on the checkout page and go next:    Invoice
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
@@ -378,9 +378,9 @@ Return_Management
     Yves: go to b2c shopping cart
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: billing address same as shipping address:    true
-    Yves: fill in the following new shipping address:    Mr    Guest    User    Kirncher Str.    7    10247    Berlin    Germany
-    Yves: select the following shipping method on the checkout and go next:    Express
-    Yves: select the following payment method on the checkout and go next:    Invoice
+    Yves: fill in a new shipping address:    Mr    Guest    User    Kirncher Str.    7    10247    Berlin    Germany
+    Yves: select shipping method on the checkout page and go next:    Express
+    Yves: select payment method on the checkout page and go next:    Invoice
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
@@ -420,14 +420,14 @@ Return_Management
     Yves: login on Yves with provided credentials:    ${yves_user_email}
     Yves: go to user menu item in header:    Orders History
     Yves: 'Order History' page is displayed
-    Yves: 'Order History' page contains the following order with a status:    ${lastPlacedOrder}    Returned
+    Yves: 'Order History' page contains an order with a status:    ${lastPlacedOrder}    Returned
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: delete Zed user with the following email:    agent+${random}@spryker.com
     [Teardown]    Yves: check if cart is not empty and clear it
 
 
 Content_Management
-    [Documentation]    Checks cms content can be edited in zed and that correct cms elements are present on homepage   
+    [Documentation]    Checks cms content can be edited in zed and that correct cms elements are present on homepage
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Content   Pages
     Zed: create a cms page and publish it:    Test Page${random}    test-page${random}    Page Title    Page text
@@ -483,9 +483,9 @@ Share_Shopping_Carts
     Yves: shopping cart contains the following products:    013_25904584
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: billing address same as shipping address:    true
-    Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${yves_company_user_shared_permission_receiver_address}
-    Yves: select the following shipping method on the checkout and go next:    Express
-    Yves: select the following payment method on the checkout and go next:    Invoice
+    Yves: select an existing address on the checkout page as 'shipping' address and go next:    ${yves_company_user_shared_permission_receiver_address}
+    Yves: select shipping method on the checkout page and go next:    Express
+    Yves: select payment method on the checkout page and go next:    Invoice
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
@@ -518,9 +518,9 @@ Quick_Order
     ### Order placement ###
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: billing address same as shipping address:    true
-    Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${yves_company_user_buyer_address}
-    Yves: select the following shipping method on the checkout and go next:    Express
-    Yves: select the following payment method on the checkout and go next:    Invoice
+    Yves: select an existing address on the checkout page as 'shipping' address and go next:    ${yves_company_user_buyer_address}
+    Yves: select shipping method on the checkout page and go next:    Express
+    Yves: select payment method on the checkout page and go next:    Invoice
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
@@ -552,9 +552,9 @@ Packaging_Units
     Yves: shopping cart contains the following products:    218_1230
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: billing address same as shipping address:    true
-    Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${yves_company_user_manager_and_buyer_address}
-    Yves: select the following shipping method on the checkout and go next:    Express
-    Yves: select the following payment method on the checkout and go next:    Invoice
+    Yves: select an existing address on the checkout page as 'shipping' address and go next:    ${yves_company_user_manager_and_buyer_address}
+    Yves: select shipping method on the checkout page and go next:    Express
+    Yves: select payment method on the checkout page and go next:    Invoice
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
@@ -629,9 +629,9 @@ Business_Unit_Address_on_Checkout
     Yves: go to the shopping cart through the header with name:    businessAddressCart+${random}
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: billing address same as shipping address:    true
-    Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${yves_company_user_buyer_address}
-    Yves: select the following shipping method on the checkout and go next:    Express
-    Yves: select the following payment method on the checkout and go next:    Invoice
+    Yves: select an existing address on the checkout page as 'shipping' address and go next:    ${yves_company_user_buyer_address}
+    Yves: select shipping method on the checkout page and go next:    Express
+    Yves: select payment method on the checkout page and go next:    Invoice
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
@@ -650,9 +650,9 @@ Approval_Process
     Yves: go to the shopping cart through the header with name:    approvalCart+${random}
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: billing address same as shipping address:    true
-    Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${yves_company_user_buyer_with_limit_address}
-    Yves: select the following shipping method on the checkout and go next:    Express
-    Yves: select the following payment method on the checkout and go next:    Invoice
+    Yves: select an existing address on the checkout page as 'shipping' address and go next:    ${yves_company_user_buyer_with_limit_address}
+    Yves: select shipping method on the checkout page and go next:    Express
+    Yves: select payment method on the checkout page and go next:    Invoice
     Yves: select approver on the 'Summary' page:    Lilu Dallas (€1,000.00)
     Yves: 'send the request' on the summary page
     Yves: 'Summary' page is displayed
@@ -666,9 +666,9 @@ Approval_Process
     Yves: go to the shopping cart through the header with name:    newApprovalCart+${random}
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: billing address same as shipping address:    true
-    Yves: select the following existing address on the checkout as 'shipping' address and go next:            ${yves_company_user_buyer_with_limit_address}
-    Yves: select the following shipping method on the checkout and go next:    Express
-    Yves: select the following payment method on the checkout and go next:    Invoice
+    Yves: select an existing address on the checkout page as 'shipping' address and go next:            ${yves_company_user_buyer_with_limit_address}
+    Yves: select shipping method on the checkout page and go next:    Express
+    Yves: select payment method on the checkout page and go next:    Invoice
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
@@ -678,9 +678,9 @@ Approval_Process
     Yves: go to the shopping cart through the header with name:    anotherApprovalCart+${random}
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: billing address same as shipping address:    true
-    Yves: select the following existing address on the checkout as 'shipping' address and go next:            ${yves_company_user_buyer_with_limit_address}
-    Yves: select the following shipping method on the checkout and go next:    Express
-    Yves: select the following payment method on the checkout and go next:    Invoice
+    Yves: select an existing address on the checkout page as 'shipping' address and go next:            ${yves_company_user_buyer_with_limit_address}
+    Yves: select shipping method on the checkout page and go next:    Express
+    Yves: select payment method on the checkout page and go next:    Invoice
     Yves: select approver on the 'Summary' page:    Lilu Dallas (€1,000.00)
     Yves: 'send the request' on the summary page
     Yves: 'Summary' page is displayed
@@ -782,9 +782,9 @@ Request_for_Quote
     Yves: shopping cart doesn't contain the following products:    011_30775359
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: billing address same as shipping address:    true
-    Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${yves_company_user_buyer_address}
-    Yves: select the following shipping method on the checkout and go next:    Express
-    Yves: select the following payment method on the checkout and go next:    Invoice
+    Yves: select an existing address on the checkout page as 'shipping' address and go next:    ${yves_company_user_buyer_address}
+    Yves: select shipping method on the checkout page and go next:    Express
+    Yves: select payment method on the checkout page and go next:    Invoice
     Yves: shopping cart contains product with unit price:    009_30692991    Canon IXUS 180    500
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page

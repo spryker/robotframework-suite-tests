@@ -1,7 +1,7 @@
 *** Settings ***
 Library    BuiltIn
-Resource                  common.robot
-Resource                  ../pages/zed/zed_login_page.robot
+Resource    common.robot
+Resource    ../pages/zed/zed_login_page.robot
 Resource    ../pages/zed/zed_edit_product_page.robot
 
 *** Variable ***
@@ -13,13 +13,12 @@ ${zed_search_field_locator}     xpath=//input[@type='search']
 ${zed_variant_search_field_locator}     xpath=//*[@id='product-variant-table_filter']//input[@type='search']
 ${zed_processing_block_locator}     xpath=//div[contains(@id,'processing')][contains(@class,'dataTables_processing')]
 
-
 *** Keywords ***
 Zed: login on Zed with provided credentials:
     [Arguments]    ${email}    ${password}=${default_password}
     go to    ${zed_url}
     delete all cookies
-    Reload    
+    Reload
     Wait Until Element Is Visible    ${zed_user_name_field}
     Type Text    ${zed_user_name_field}    ${email}
     Type Text    ${zed_password_field}    ${password}
@@ -47,7 +46,7 @@ Zed: click button in Header:
     [Arguments]    ${button_name}
     wait until element is visible    xpath=//div[@class='title-action']/a[contains(.,'${button_name}')]
     Click    xpath=//div[@class='title-action']/a[contains(.,'${button_name}')]
-        
+
 Zed: click Action Button in a table for row that contains:
     [Arguments]    ${row_content}    ${zed_table_action_button_locator}
     Zed: perform search by:    ${row_content}
@@ -79,14 +78,14 @@ Zed: perform search by:
     Type Text    ${zed_search_field_locator}    ${search_key}
     Keyboard Key    press    Enter
     Wait Until Element Is Visible    ${zed_processing_block_locator}
-    Wait Until Element Is Not Visible    ${zed_processing_block_locator} 
+    Wait Until Element Is Not Visible    ${zed_processing_block_locator}
     Sleep    3s
 
 Zed: perform variant search by:
     [Arguments]    ${search_key}
     Type Text    ${zed_variant_search_field_locator}    ${search_key}
     Wait Until Element Is Visible    ${zed_product_variant_table_processing_locator}
-    Wait Until Element Is Not Visible    ${zed_product_variant_table_processing_locator}  
+    Wait Until Element Is Not Visible    ${zed_product_variant_table_processing_locator}
     Sleep    3s
 
 Zed: table should contain:
@@ -97,7 +96,7 @@ Zed: table should contain:
 Zed: go to tab:
     [Arguments]    ${tabName}
     Click    xpath=//*[contains(@data-toggle,'tab') and contains(text(),'${tabName}')]
-        
+
 Zed: message should be shown:
     [Arguments]    ${text}
     Wait Until Element Is Visible    xpath=//div[contains(@class,'alert alert-success')]//*[contains(text(),'${text}')]    message=Success message is not shown

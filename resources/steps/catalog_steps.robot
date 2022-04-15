@@ -31,13 +31,11 @@ Yves: page contains CMS element:
     ...    ELSE    Run Keyword If    '${type}'=='CMS Page Content' and '${env}'=='b2b'    Element Should Be Visible    xpath=//main[contains(@class,'cms-page')]//*[contains(text(),'${text}')]
     ...    ELSE    Run Keyword If    '${type}'=='CMS Block'    Element Should Be Visible    xpath=//div[contains(@class,'catalog-cms-block')]//*[.="${text}"]
 
-
 Yves: change sorting order on catalog page:
     [Arguments]    ${sortingOption}
     Click    xpath=//span[contains(@id,'select2-sort')]
     Wait Until Element Is Visible    xpath=//ul[contains(@role,'listbox')]//li[contains(@id,'select2-sort') and contains(text(),'${sortingOption}')]
     Click    xpath=//ul[contains(@role,'listbox')]//li[contains(@id,'select2-sort') and contains(text(),'${sortingOption}')]
-        
 
 Yves: 1st product card in catalog (not)contains:
     [Documentation]    ${elementName} can be: Price, Name, Add to Cart, Color selector, Sale label, New label

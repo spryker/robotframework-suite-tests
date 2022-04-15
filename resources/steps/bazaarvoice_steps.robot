@@ -6,7 +6,6 @@ Resource    ../pages/zed/zed_aop_bazaarvoice_details_page.robot
 Resource    ../pages/yves/yves_product_details_page.robot
 Resource    ../pages/yves/yves_bazaarvoice_review_popup_form.robot
 
-
 *** Keywords ***
 Zed: configure bazaarvoice pbc with the following data:
     [Documentation]    Possible argument names: clientName, siteId, environment, services, stores
@@ -17,11 +16,11 @@ Zed: configure bazaarvoice pbc with the following data:
         Run keyword if    '${key}'=='clientName' and '${value}' != '${EMPTY}'    Type Text    ${pbc_bazzarvoice_client_name_input}    ${value}
         Run keyword if    '${key}'=='siteId' and '${value}' != '${EMPTY}'    Type Text    ${pbc_bazzarvoice_side_id_input}    ${value}
         Run keyword if    '${key}'=='environment' and '${value}' != '${EMPTY}'    Click    //spy-radio-group[@id='settings_environment']//label//span[contains(text(),'${value}')]/ancestor::label
-        Run keyword if    '${key}'=='services' and '${value}' != '${EMPTY}'    Run Keywords    
+        Run keyword if    '${key}'=='services' and '${value}' != '${EMPTY}'    Run Keywords
         ...    Conver string to List by separator:    ${value}
         ...    AND    Log    ${covertedList}
         ...    AND    Check bazaarvoice configuration checkbox:    ${covertedList}
-        Run keyword if    '${key}'=='stores' and '${value}' != '${EMPTY}'    Run Keywords    
+        Run keyword if    '${key}'=='stores' and '${value}' != '${EMPTY}'    Run Keywords
         ...    Conver string to List by separator:    ${value}
         ...    AND    Log    ${covertedList}
         ...    AND    Check bazaarvoice configuration checkbox:    ${covertedList}
@@ -31,7 +30,7 @@ Check bazaarvoice configuration checkbox:
     [Arguments]    ${bazaarvoice_checkboxes}
     ${bazaarvoice_checkbox_count}=   get length  ${bazaarvoice_checkboxes}
     FOR    ${index}    IN RANGE    0    ${bazaarvoice_checkbox_count}
-        ${checkbox_to_check}=    Get From List    ${bazaarvoice_checkboxes}    ${index}  
+        ${checkbox_to_check}=    Get From List    ${bazaarvoice_checkboxes}    ${index}
         Run Keywords
         ...    Log    ${checkbox_to_check}
         ...    AND    Click    xpath=//spy-checkbox/label//span[contains(text(),'${checkbox_to_check}')]/ancestor::label
@@ -60,14 +59,10 @@ Yves: post bazaarvoice review with the following data:
     END
     Check Checkbox    ${bv_terms_and_conditions_checkbox}
     Click    ${bv_submit_button}
+
 Yves: page should contain the following script:
     [Arguments]    ${scriptId}
     Try reloading page until element is/not appear:    xpath=//head//script[@id='${scriptId}']    true
-    # FOR    ${index}    IN RANGE    0    21
-    #     ${script_applied}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//head//script[@id='${scriptId}']
-    #     Run Keyword If    '${script_applied}'=='False'    Run Keywords    Sleep    1s    AND    Reload
-    #     ...    ELSE    Exit For Loop
-    # END 
     Page Should Contain Element    xpath=//head//script[@id='${scriptId}']
 
 Yves: 1st product card in the catalog should contains bv inline rating

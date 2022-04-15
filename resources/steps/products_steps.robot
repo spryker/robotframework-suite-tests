@@ -16,8 +16,6 @@ Zed: discontinue the following product:
     Zed: switch to the tab on 'Edit product' page:    Discontinue
     ${can_be_discontinued}=    Run Keyword And Return Status    Page Should Contain Element    ${zed_pdp_discontinue_button}
     Run Keyword If    '${can_be_discontinued}'=='True'    Click    ${zed_pdp_discontinue_button}
-    
-    
 
 Zed: undo discontinue the following product:
     [Arguments]    ${productAbstract}    ${productConcrete}
@@ -34,7 +32,7 @@ Zed: undo discontinue the following product:
 
 Zed: check if at least one price exists for concrete and add if doesn't:
     [Arguments]    ${price}
-    ${currentURL}=    Get Location  
+    ${currentURL}=    Get Location
     Run Keyword Unless    'content-price' in '${currentURL}'    Zed: switch to the tab on 'Edit product' page:    Price & Stock
     ${exists}=    BuiltIn.Run Keyword And Return Status    Element Should Exist    xpath=///table[@id='price-table-collection']//input[@id='product_concrete_form_edit_prices_1-93-DEFAULT-BOTH_moneyValue_gross_amount']
     Run Keyword If        '${exists}'=='False'    Type Text    xpath=//table[@id='price-table-collection']//input[@id='product_concrete_form_edit_prices_1-93-DEFAULT-BOTH_moneyValue_gross_amount']    ${price}
@@ -42,7 +40,7 @@ Zed: check if at least one price exists for concrete and add if doesn't:
 
 Zed: add following alternative products to the concrete:
     [Arguments]    @{alternative_products_list}
-    ${currentURL}=    Get Location        
+    ${currentURL}=    Get Location
     Run Keyword Unless    'content-alternatives' in '${currentURL}'    Zed: switch to the tab on 'Edit product' page:    Product Alternatives
     ${alternative_products_list_count}=   get length  ${alternative_products_list}
     FOR    ${index}    IN RANGE    0    ${alternative_products_list_count}
@@ -58,6 +56,6 @@ Zed: switch to the tab on 'Edit product' page:
     Click    xpath=//form[contains(@name,'form_edit')]/div[@class='tabs-container']/ul[contains(@class,'nav-tabs')]//a[@data-toggle='tab'][text()='${tabToUse}']
 
 Zed: product is successfully discontinued
-    ${currentURL}=    Get Location        
+    ${currentURL}=    Get Location
     Run Keyword Unless    'discontinue' in '${currentURL}'    Zed: switch to the tab on 'Edit product' page:    Discontinue
     Page Should Contain Element    ${zed_pdp_restore_button}

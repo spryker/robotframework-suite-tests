@@ -9,7 +9,7 @@ Resource    ../../resources/pages/yves/yves_shopping_cart_page.robot
 *** Keywords ***
 Yves: Go to 'Quote Requests' page
     Click    ${agent_quote_requests_header_item}
-        
+
 Yves: convert a cart to a quote request
     Click    ${request_a_quote_button}
     Click    ${quote_request_convert_from_cart_confirm_button}
@@ -25,7 +25,6 @@ Yves: view quote request with reference:
     Click    xpath=//div[contains(@data-qa,'component quote-request')]//td[contains(.,'${quoteReference}')]/..//*[text()='View']/ancestor::a[contains(@class,'table-action-link')]
 
 Yves: click '${buttonName}' button on the 'Quote Request Details' page
-        
     Run Keyword If    '${buttonName}' == 'Back to List'    Click    ${quote_request_back_to_list_button}
     ...    ELSE IF    '${buttonName}' == 'Cancel'    Click    ${quote_request_cancel_button}
     ...    ELSE IF    '${buttonName}' == 'Revise'    Click    ${quote_request_revise_button}
@@ -36,12 +35,11 @@ Yves: click '${buttonName}' button on the 'Quote Request Details' page
     ...    ELSE IF    '${buttonName}' == 'Save'    Click    ${quote_request_save_button}
     ...    ELSE IF    '${buttonName}' == 'Save and Back to Edit'    Click    ${quote_request_save_and_back_to_edit_button}
     ...    ELSE IF    '${buttonName}' == 'Send to Agent'    Click    ${quote_request_send_to_agent_button}
-      
-    Yves: remove flash messages  
+    Yves: remove flash messages
 
 Yves: change price for the product in the quote request with sku xxx on:
     [Arguments]    ${sku}    ${priceToSet}
-    ${use_default_price_state}=    Set Variable    ${EMPTY} 
+    ${use_default_price_state}=    Set Variable    ${EMPTY}
     ${use_default_price_state}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//article[@data-qa='component quote-request-cart-item']//div[contains(@class,'quote-request-cart-item__column--content')][contains(.,'${sku}')]/ancestor::article//*[contains(@class,'quote-request-cart-item__column--total')]//input[@type='checkbox'][@checked]
     Run Keyword If    '${use_default_price_state}'=='True'    Click Element by xpath with JavaScript    xpath=//article[@data-qa='component quote-request-cart-item']//div[contains(@class,'quote-request-cart-item__column--content')][contains(.,'${sku}')]/ancestor::article//*[contains(@class,'quote-request-cart-item__column--total')]//input[@name='use_default_price']
     Type Text    xpath=//article[@data-qa='component quote-request-cart-item']//div[contains(@class,'quote-request-cart-item__column--content')][contains(.,'${sku}')]/ancestor::article//*[contains(@class,'quote-request-cart-item__column--total')]//input[@type='text']    ${priceToSet}

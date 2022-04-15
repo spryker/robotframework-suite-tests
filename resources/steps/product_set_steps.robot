@@ -31,7 +31,6 @@ Yves: change variant of the product on CMS page on:
     Mouse Over    xpath=//*[contains(@class,'product-item__container') and descendant::a[contains(.,'${productName}')]]
     Run Keyword If    '${env}'=='b2b'    Select From List By Label   //*[contains(@class,'custom-element product-set-details')]//div[@class='product-item__variant']/descendant::select    ${variantToSet}
     ...    ELSE    Select From List By Label    //*[contains(@class,'custom-element custom-select custom-select--expand')]//descendant::select    ${variantToSet}
-        
 
 Yves: add all products to the shopping cart from Product Set
     Click    ${add_all_product_to_the_shopping_cart}

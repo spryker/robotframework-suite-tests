@@ -11,7 +11,6 @@ Yves: go to wishlist with name:
     [Arguments]    ${wishlistName}
     Yves: go To 'Wishlist' Page
     Click    xpath=//table[@class='table table--expand']//a[contains(text(),'${wishlistName}')]
-        
     Element Should Be Visible    xpath=//div[contains(@class,'title')]//*[contains(text(),'${wishlistName}')]
 
 Yves: product with sku is marked as discountinued in wishlist:
@@ -20,7 +19,7 @@ Yves: product with sku is marked as discountinued in wishlist:
         ${discontinue_applied}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//li[contains(text(),'${productSku}')]/ancestor::td/following-sibling::td/span[contains(text(),'Discontinued')]
         Run Keyword If    '${discontinue_applied}'=='False'    Run Keywords    Sleep    1s    AND    Reload
         ...    ELSE    Exit For Loop
-    END    
+    END
     Element Should Be Visible    xpath=//li[contains(text(),'${productSku}')]/ancestor::td/following-sibling::td/span[contains(text(),'Discontinued')]
 
 Yves: product with sku is marked as alternative in wishlist:
@@ -29,7 +28,7 @@ Yves: product with sku is marked as alternative in wishlist:
         ${alternative_applied}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//li[contains(text(),'${productSku}')]/ancestor::tr/preceding-sibling::tr//*[contains(text(),'Alternative for')]
         Run Keyword If    '${alternative_applied}'=='False'    Run Keywords    Sleep    1s    AND    Reload
         ...    ELSE    Exit For Loop
-    END     
+    END
     Element Should Be Visible    xpath=//li[contains(text(),'${productSku}')]/ancestor::tr/preceding-sibling::tr//*[contains(text(),'Alternative for')]
 
 Yves: create wishlist with name:
@@ -45,16 +44,9 @@ Yves: wishlist contains product with sku:
 
 Yves: delete all wishlists
     Yves: go To 'Wishlist' Page
-        
     ${wishlists_list_count}=   Get Element Count    ${wishlist_delete_button}
     FOR    ${index}    IN RANGE    0    ${wishlists_list_count}
         Click    ${wishlist_delete_button}\[1\]
         Yves: flash message should be shown:    success    Wishlist deleted successfully
         Yves: remove flash messages
     END
-
-
-
-
-    
-    

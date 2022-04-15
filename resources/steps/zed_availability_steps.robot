@@ -30,12 +30,12 @@ Zed: change product stock:
         ...    ELSE    Uncheck Checkbox    \(//*[@type='checkbox' and contains(@id,'is_never_out_of_stock')]\)\[${index}\]
     END
     Type Text    xpath=//input[contains(@id,'AvailabilityGui_stock_stocks_0_quantity')]    ${quantityWarehouse1}
-    Type Text    xpath=//input[contains(@id,'AvailabilityGui_stock_stocks_1_quantity')]    ${quantityWarehouse2}   
+    Type Text    xpath=//input[contains(@id,'AvailabilityGui_stock_stocks_1_quantity')]    ${quantityWarehouse2}
     Click    ${zed_save_button}
     #Resave to apply changes
     Click    ${zed_save_button}
 
-Zed: check and restore product availability in Zed:    
+Zed: check and restore product availability in Zed:
     [Arguments]    ${skuAbstract}    ${expectedStatus}    ${skuConcrete}
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Catalog    Availability
@@ -45,5 +45,3 @@ Zed: check and restore product availability in Zed:
     ...    Zed: change product stock:    ${skuAbstract}    ${skuConcrete}    true    10    0
     ...    ELSE    Run Keyword If   '${expectedStatus}'=='Not Available' and '${isProductAvailable}'=='True'
     ...    Zed: change product stock:    ${skuAbstract}    ${skuConcrete}    false    0    0
-
-

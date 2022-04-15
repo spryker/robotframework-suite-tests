@@ -47,12 +47,12 @@ Bazaarvoice_E2E
     Yves: add product to the shopping cart
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: billing address same as shipping address:    true
-    Yves: fill in the following new shipping address:
+    Yves: fill in a new shipping address:
     ...    || salutation | firstName | lastName    | street        | houseNumber | postCode | city   | country | company | phone     | additionalAddress ||
     ...    || Mr.        | Robot     | bazaarvoice | Kirncher Str. | 7           | 10247    | Berlin | Germany | Spryker | 123456789 | Additional street ||
     Yves: submit form on the checkout
-    Yves: select the following shipping method on the checkout and go next:    Air Sonic
-    Yves: select the following payment method on the checkout and go next:    Invoice
+    Yves: select shipping method on the checkout page and go next:    Air Sonic
+    Yves: select payment method on the checkout page and go next:    Invoice
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     #TODO: create an assertion for bv pixer request on the checkout

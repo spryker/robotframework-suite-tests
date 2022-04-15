@@ -6,7 +6,7 @@ Resource    ../common/common.robot
 *** Keywords ***
 Zed: create new Zed user with the following data:
     [Arguments]    ${zedUserEmail}    ${zedUserPassword}   ${zedUserFirstName}    ${zedUserLastName}    ${checkboxGroup}   ${checkboxAgent}    ${userInterfaceLanguage}
-    ${currentURL}=    Get Location        
+    ${currentURL}=    Get Location
     Run Keyword Unless    '/user' in '${currentURL}'    Zed: go to second navigation item level:    Users    Users
     Zed: click button in Header:    Add New User
     Wait Until Element Is Visible    ${zed_user_email_field}
@@ -19,13 +19,11 @@ Zed: create new Zed user with the following data:
     Zed: Check checkbox by Label:    ${checkboxAgent}
     Select From List By Label    ${zed_user_interface_language}    ${userInterfaceLanguage}
     Zed: submit the form
-    Zed: table should contain:    ${zedUserEmail}  
+    Zed: table should contain:    ${zedUserEmail}
 
 Yves: perform search by customer:
     [Arguments]    ${searchQuery}
     Type Text    ${agent_customer_search_widget}    ${searchQuery}
-        
-        
 
 Yves: agent widget contains:
     [Arguments]    ${searchQuery}
@@ -33,10 +31,9 @@ Yves: agent widget contains:
     Page Should Contain Element    xpath=//ul[@data-qa='component customer-list']/li[@data-value='${searchQuery}']
 
 Yves: As an Agent login under the customer:
-    [Arguments]    ${searchQuery} 
+    [Arguments]    ${searchQuery}
     Yves: perform search by customer:    ${searchQuery}
     Wait Until Element Is Visible    //ul[@data-qa='component customer-list']/li[@data-value='${searchQuery}']
     Click    xpath=//ul[@data-qa='component customer-list']/li[@data-value='${searchQuery}']
     Click    ${agent_confirm_login_button}
-        
-     
+

@@ -15,15 +15,15 @@ Yves: 'Shopping List' widget contains:
 Yves: go To 'Shopping Lists' Page
     Mouse Over    ${shopping_list_icon_header_menu_item}
     ${button_exists}=    Run Keyword And Return Status    Element Should Be Visible    ${shopping_list_sub_navigation_all_lists_button}
-    Run Keyword If    ${button_exists}=='PASS'    Click Element by xpath with JavaScript    ${shopping_list_sub_navigation_all_lists_button}     
-    ...    ELSE    Click    ${shopping_list_icon_header_menu_item}        
+    Run Keyword If    ${button_exists}=='PASS'    Click Element by xpath with JavaScript    ${shopping_list_sub_navigation_all_lists_button}
+    ...    ELSE    Click    ${shopping_list_icon_header_menu_item}
 
 Yves: create new 'Shopping List' with name:
     [Arguments]    ${shoppingListName}
-    ${currentURL}=    Get Location        
+    ${currentURL}=    Get Location
     Run Keyword Unless    '/shopping-list' in '${currentURL}'    Go To    ${host}shopping-list
     Type Text    ${shopping_list_name_input_field}    ${shoppingListName}
-    Click    ${create_shopping_list_button}      
+    Click    ${create_shopping_list_button}
 
 Yves: the following shopping list is shown:
     [Arguments]    ${shoppingListName}    ${shoppingListOwner}    ${shoppingListAccess}
@@ -31,7 +31,7 @@ Yves: the following shopping list is shown:
 
 Yves: share shopping list with user:
     [Arguments]    ${shoppingListName}    ${customer}    ${accessLevel}
-    Share shopping list with name:    ${shoppingListName} 
+    Share shopping list with name:    ${shoppingListName}
     Select access level to share shopping list with:    ${customer}    ${accessLevel}
     Click    ${share_shopping_list_confirm_button}
     Yves: 'Shopping Lists' page is displayed
@@ -43,11 +43,11 @@ Yves: shopping list contains the following products:
     FOR    ${index}    IN RANGE    0    ${sku_list_count}
         ${sku_to_check}=    Get From List    ${sku_list}    ${index}
         Page Should Contain Element    xpath=//*[@data-qa='component shopping-list-table']//div[contains(@class,'product-card-item__col--description')]//div[contains(.,'SKU: ${sku_to_check}')]/ancestor::article
-    END  
+    END
 
 Yves: delete 'Shopping List' with name:
-    [Arguments]    ${shoppingListName} 
-    ${currentURL}=    Get Location        
+    [Arguments]    ${shoppingListName}
+    ${currentURL}=    Get Location
     Run Keyword Unless    '/shopping-list' in '${currentURL}'    Go To    ${host}shopping-list
     Delete shopping list with name:    ${shoppingListName}
     Wait Until Element Is Visible    ${delete_shopping_list_button}
@@ -55,6 +55,6 @@ Yves: delete 'Shopping List' with name:
 
 Yves: view shopping list with name:
     [Arguments]    ${shoppingListName}
-    ${currentURL}=    Get Location        
+    ${currentURL}=    Get Location
     Run Keyword Unless    '/shopping-list' in '${currentURL}'    Go To    ${host}shopping-list
     View shopping list with name:   ${shoppingListName}
