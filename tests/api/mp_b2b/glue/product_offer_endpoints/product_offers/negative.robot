@@ -1,5 +1,6 @@
 *** Settings ***
 Suite Setup       SuiteSetup
+Test Setup    TestSetup
 Resource    ../../../../../../resources/common/common_api.robot
 Default Tags    glue
 
@@ -27,7 +28,7 @@ Get_product_offer_with_volume_prices_included_for_inactive_product_offer
     And Response should return error message:    Product offer not found.
 
 Get_product_offer_with_volume_prices_included_for_waiting_for_approval_product_offer
-    When I send a GET request:    /product-offers/${wfa_offer_with_vp}?include=product-offer-prices
+    When I send a GET request:    /product-offers/${waiting_for_approval_offer_with_vp}?include=product-offer-prices
     Then Response status code should be:    404
     And Response should return error code:    3701
     And Response reason should be:    Not Found
@@ -40,15 +41,9 @@ Get_product_offer_with_volume_prices_included_for_denied_product_offer
     And Response reason should be:    Not Found
     And Response should return error message:    Product offer not found.    
 
-Get_concrete_product_without_offers
-    When I send a GET request:    /concrete-products/066_23294028/product-offers
-    Then Response status code should be:    200
-    And Response reason should be:    OK
-
 Get_product_offer_with_empty_product_id
     When I send a GET request:    /concrete-products//product-offers
     Then Response status code should be:    400
     And Response should return error code:    312
     And Response reason should be:    Bad Request
     And Response should return error message:    Concrete product sku is not specified.
-    
