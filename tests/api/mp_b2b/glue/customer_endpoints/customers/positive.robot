@@ -1,8 +1,13 @@
 *** Settings ***
 Suite Setup       SuiteSetup
 Resource    ../../../../../../resources/common/common_api.robot
+Default Tags    glue
 
 *** Test Cases ***
+
+ENABLER
+    TestSetup
+
 # can't receive the confirmation from email
 Create_customer
     I send a POST request:    /customers/    {"data":{"type":"customers","attributes":{"firstName":"${yves_third_user_first_name}","lastName":"${yves_third_user_last_name}","gender":"${gender_male}","salutation":"${yves_third_user_salutation}","email":"${email_name}+${random}${email_domain}","password":"${yves_user_password}","confirmPassword":"${yves_user_password}","acceptedTerms":True}}}

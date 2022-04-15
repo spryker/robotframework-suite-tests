@@ -41,10 +41,16 @@
         "yves_shared_shopping_list_user_password": "change123",
         "yves_shared_shopping_list_user_salutation": "Mr",        
 
+        "yves_shared_shopping_cart_user_email": "Solomon@spryker.com",
+        "yves_shared_shopping_cart_user_first_name": "Solomon",
+        "yves_shared_shopping_cart_user_last_name": "Wesner",
+        "yves_shared_shopping_cart_user_password": "change123",
+        "yves_shared_shopping_cart_user_salutation": "Mr",
+
         "gender_female": "Female",
         "gender_male": "Male",
         
-        "email_name": "maxmusterman",
+        "email_name": "sonia",
         "email_domain": "@spryker.com",
 
         "zed_admin_email": "admin@spryker.com",
@@ -116,7 +122,6 @@
         "yves_user_2nd_shopping_list_name": "Weekly office",
         "yves_user_3rd_shopping_list_name": "Monthly office"
     },
-
     "search":{
         "total_number_of_products_in_search": "420",
         "default_ipp": "12",
@@ -327,8 +332,8 @@
 
         "brand_name": "verbatim",
 
-        "cart_permission_group_id":"1",
-        "cart_permission_group_type":"cart-permission-groups"
+        "cart_permission_group_id":"1"
+        
 
     },
     "availability":{
@@ -393,7 +398,8 @@
     "return_reasons":{
       "return_reason_damaged": "Damaged",
       "return_reason_wrong_item": "Wrong Item",
-      "return_reason_no_longer_needed": "No longer needed"
+      "return_reason_no_longer_needed": "No longer needed",
+      "return_reasons_qty": "3"
     }
 
 }
