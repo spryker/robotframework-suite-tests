@@ -21,8 +21,8 @@ Get_concrete_alternative_product
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response reason should be:    OK
     And Response should contain the array of a certain size:    [data]    3
-    And Response body parameter should be:    [data][0][type]    concrete-products
-    And Response body parameter should be:    [data][0][id]    ${concrete_product_with_alternative_sku}
+    And Each array element of array in response should contain nested property with value:    [data]    type    concrete-products
+    And Each array element of array in response should contain property:    [data]    id
     And Response body parameter should contain:    [data][0][attributes]    sku
     And Response body parameter should contain:    [data][0][attributes]    isDiscontinued
     And Response body parameter should contain:    [data][0][attributes]    discontinuedNote
