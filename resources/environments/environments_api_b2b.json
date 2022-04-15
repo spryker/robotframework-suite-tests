@@ -332,8 +332,8 @@
 
         "brand_name": "verbatim",
 
-        "cart_permission_group_id":"1",
-        "cart_permission_group_type":"cart-permission-groups"
+        "cart_permission_group_id":"1"
+        
 
     },
     "availability":{
@@ -398,7 +398,8 @@
     "return_reasons":{
       "return_reason_damaged": "Damaged",
       "return_reason_wrong_item": "Wrong Item",
-      "return_reason_no_longer_needed": "No longer needed"
+      "return_reason_no_longer_needed": "No longer needed",
+      "return_reasons_qty": "3"
     }
 
 }
