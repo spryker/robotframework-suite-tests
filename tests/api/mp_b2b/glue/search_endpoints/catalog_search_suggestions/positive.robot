@@ -221,19 +221,22 @@ Get_search_suggestions_with_abstract_product_sku_and_included_abstract_products
     And Response body parameter should be:    [included][0][attributes][reviewCount]    0
     And Response body parameter should be:    [included][0][attributes][name]    ${abstract_available_product_with_stock_name}
     And Response body parameter should be:    [included][0][attributes][description]    ${abstract_available_product_with_stock_description}
-    And Response body parameter should be:    [included][0][attributes][attributes][material]    ${material_4}
-    And Response body parameter should be:    [included][0][attributes][attributes][anlieferung]    ${delivery_1}
+    And Response body parameter should not be EMPTY:    [included][0][attributes][attributes][norm]
+    And Response body parameter should be:    [included][0][attributes][attributes][stapelbar]    No
     And Response body parameter should be:    [included][0][attributes][attributes][preiseinheit]    ${price_unit_1}
-    And Response body parameter should be:    [included][0][attributes][attributes][utensilienschub]    No
-    And Response body parameter should be:    [included][0][attributes][attributes][einzelauszugssperre]    No
-    And Response body parameter should be:    [included][0][attributes][attributes][ausziehbare_mausplattev2]    No
-    And Response body parameter should be:    [included][0][attributes][attributes][brand]    ${brand_3}
-    And Response body parameter should be:    [included][0][attributes][superAttributesDefinition]    ${abstract_available_product_with_stock_superattribute}
-    And Response should contain the array of a certain size:    [included][0][attributes][superAttributes]    0
-    And Response should contain the array of a certain size:    [included][0][attributes][attributeMap][super_attributes]    0
-    And Response body parameter should be:    [included][0][attributes][attributeMap][product_concrete_ids]    ${concrete_available_product_sku}
+    And Response body parameter should be:    [included][0][attributes][attributes][reihenverbinder]    No
+    And Response body parameter should not be EMPTY:    [included][0][attributes][attributes][sitzschalenform]
+    And Response body parameter should not be EMPTY:    [included][0][attributes][attributes][rollenausfuehrung]
+    And Response body parameter should not be EMPTY:    [included][0][attributes][attributes][brand]
+    And Response should contain the array of a certain size:    [included][0][attributes][superAttributesDefinition]    0
+    And Response body parameter should contain:    [included][0][attributes][superAttributes][bezugsfarbe]    ${color_4}
+    And Response body parameter should contain:    [included][0][attributes][attributeMap][super_attributes][bezugsfarbe]    ${color_4}
+    And Response body parameter should contain:    [included][0][attributes][attributeMap][product_concrete_ids]    ${concrete_available_product_sku}
     And Response should contain the array of a certain size:    [included][0][attributes][attributeMap][attribute_variants]    0
-    And Response should contain the array of a certain size:    [included][0][attributes][attributeMap][attribute_variant_map]    0
+    And Response body parameter should not be EMPTY:    [included][0][attributes][attributeMap][attribute_variant_map]
+    And Response body parameter should contain:    [included][0][attributes]    metaTitle
     And Response body parameter should be:    [included][0][attributes][metaKeywords]    ${concrete_available_product_meta_keywords}
-    And Response body parameter should be:    [included][0][attributes][metaDescription]     ${concrete_available_product_meta_description}
+    And Response body parameter should be:    [included][0][attributes][metaDescription]    ${concrete_available_product_meta_description}
+    And Response body parameter should not be EMPTY:    [included][0][attributes][attributeNames]
+    And Response body parameter should not be EMPTY:    [included][0][attributes][url]
     And Response body has correct self link

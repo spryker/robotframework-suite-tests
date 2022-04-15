@@ -1,5 +1,5 @@
 {
-    "environment": "api_mp_b2b",
+    "environment": "api_mp_b2b", 
 
     "env": {
         "glue_url": "http://glue.de.spryker.local",
@@ -44,7 +44,7 @@
         "gender_female": "Female",
         "gender_male": "Male",
         
-        "email_name": "maxmusterman",
+        "email_name": "sonia",
         "email_domain": "@spryker.com",
 
         "zed_admin_email": "admin@spryker.com",
@@ -195,8 +195,8 @@
         "abstract_available_product_with_stock_description": " Easy-to-care-for fabric cover. Substructure in graphite black RAL 9011.<br/>Standard rolling for soft floors.<br/>The backrest has height-adjustable lumbar support.  ",
         "abstract_available_product_with_stock_superattribute": "bezugsfarbe",
         "concrete_available_product_sku": "102712",
-        "concrete_available_product_meta_keywords": "Prosedia vertebral disc swivel chair with synchronous mechanics and contoured seat - backrest height 660 mm",
-        "concrete_available_product_meta_description": " Easy-to-care-for fabric cover. Substructure in graphite black RAL 9011.<br/>Standard rolling for soft floors.<br/>The backrest has height-adjustable lumbar support.  ",
+        "concrete_available_product_meta_keywords": "Arbeitsdrehstuhl,Bandscheibendrehstuhl,Bandschreibendrehstuhl,Bürodrehstuhl,Bürostuhl,Drehstuhl,Schreibtischstuhl,Universalstuhl",
+        "concrete_available_product_meta_description": " Pflegeleichter Stoffbezug. Gestell in Graphitschwarz RAL 9011.<br/>Standardmäßig Rollen für weiche Böden.<br/>Die Rückenlehne verfügt über eine höhenverstellbare Lendenwirbelstütze.  ",
 
         "abstract_available_with_stock_and_never_out_of_stock": "M87",
         "concrete_available_with_stock_and_never_out_of_stock": "657716",
@@ -283,9 +283,10 @@
         "material_4": "Steel sheets, stove-enameled",
         "delivery_1": "assembled",
         "price_unit_1": "piece",
-        "color_3": "purple",
         "color_1": "yellow",
         "color_2": "blue",
+        "color_3": "purple",
+        "color_4": "orange",
         "product_management_superattribute_id": "farbe",
         "product_management_attribute_free_input_id": "verschlussart",
         "product_management_attribute_no_input_id": "bundled_product"
@@ -298,7 +299,7 @@
         "abstract_list_product1_name": "Clairefontaine Collegeblock 8272C DIN A5, 90 sheets",
         "abstract_list_product2_sku": "M23723",
         "abstract_list_product2_name": "Brennenstuhl extension cable 3 m",
-        "abstract_list_size": "8",
+        "abstract_list_size": "7",
 
         "banner_1_id": "br-1",
         "banner_1_name": "Furniture - Upgrade Your Office",
@@ -367,11 +368,23 @@
 
         "url_resolver_example": "/en/clairefontaine-collegeblock-8272c-din-a5-90blatt-kariert-M21692",
         "url_resolver_entity_type": "abstract-products",
-        "url_resolver_entity_id": "M21692"
+        "url_resolver_entity_id": "M21692",
+
+        "url_resolver_category_nodes": "/en/stationery",
+        "url_resolver_category_nodes_entity": "category-nodes",
+        "url_resolver_category_nodes_id": "2",
+
+        "url_resolver_cms": "/en/privacy",
+        "url_resolver_cms_entity": "cms-pages",
+        "url_resolver_cms_id": "1e9fb640-9073-55f4-a2d2-535090c92025",
+
+        "url_resolver_merchant": "/en/merchant/spryker",
+        "url_resolver_merchant_entity": "merchants",
+        "url_resolver_merchant_id": "MER000008"
     },
     "companies":{
         "company_name": "Spryker Systems GmbH",
-        "busines_unit_address_id": "2175cddd-f8af-5885-b161-227b5c93e72f",
+        "business_unit_address_id": "2175cddd-f8af-5885-b161-227b5c93e72f",
         "business_unit_name": "Spryker Systems HR department",
         "user_with_multiple_companies": "anne.boleyn@spryker.com",
         "company_id": "62de4ab6-b768-5c21-8835-455d9f341625",
@@ -390,10 +403,26 @@
         "label_id_alternative": "1",
         "label_name_alternative": "Alternatives available"
     },
+
+    "merchants":{
+        "merchant_id": "MER000011",
+        "merchant_name": "Computer Experts",
+        "merchant_url": "/en/merchant/computer-experts",
+        "merchant_contact_person_role": "Brand Manager",
+        "merchant_contact_person_title": "Ms",
+        "merchant_contact_person_first_name": "Michele",
+        "merchant_contact_person_last_name": "Nemeth",
+        "merchant_contact_person_phone": "030/123456789",
+        "merchant_public_email": "support@computer-experts.com",
+        "merchant_public_phone": "+49 30 234567691",
+        "merchant_description": "Computer Experts offer products that enhance your work environment with computer accessories that improve how you work, communicate, and interact. Computer Experts founded in 2013 and continuously growing, acquiring deep industry experience."
+    },
+    
     "return_reasons":{
-      "return_reason_damaged": "Damaged",
-      "return_reason_wrong_item": "Wrong Item",
-      "return_reason_no_longer_needed": "No longer needed"
+        "return_reason_damaged": "Damaged",
+        "return_reason_wrong_item": "Wrong Item",
+        "return_reason_no_longer_needed": "No longer needed",
+        "return_reasons_qty": "3"
     }
 
 }

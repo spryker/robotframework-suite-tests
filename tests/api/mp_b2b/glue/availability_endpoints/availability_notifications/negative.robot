@@ -7,7 +7,7 @@ Default Tags    glue
 *** Test Cases ***
 ENABLER
     TestSetup
-
+    
 #GET requests
 Get_availability_notifications_without_customerId
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
@@ -51,18 +51,6 @@ Get_availability_notifications_without_access_token
     ...  AND    Response status code should be:    204
 
 #POST requests
-Subscribe_to_availability_notifications_with_empty_type
-    When I send a POST request:    /availability-notifications    {"data": {"type": "","attributes": {"sku": "${concrete_product_with_alternative_sku}","email": "${yves_user_email}"}}}
-    Then Response status code should be:    400
-    And Response reason should be:    Bad Request
-    And Response should return error message:    Invalid type.
-
-Subscribe_to_availability_notifications_without_type
-    When I send a POST request:    /availability-notifications    {"data": {"attributes": {"sku": "${concrete_product_with_alternative_sku}","email": "${yves_user_email}"}}}
-    Then Response status code should be:    400
-    And Response reason should be:    Bad Request
-    And Response should return error message:    Post data is invalid.
-
 Subscribe_to_availability_notifications_with_invalid_sku
 #This test fails due to the bug https://spryker.atlassian.net/browse/CC-15970
     When I send a POST request:    /availability-notifications    {"data": {"type": "availability-notifications","attributes": {"sku": "fake","email": "${yves_user_email}"}}}
