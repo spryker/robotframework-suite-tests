@@ -319,14 +319,15 @@
         "material_2": "metal",
         "material_3": "chipboard",
         "material_4": "Steel sheets, stove-enameled",
-
+        
         "delivery_1": "assembled",
         "price_unit_1": "piece",
-
-        "color_3": "purple",
+        
         "color_1": "yellow",
         "color_2": "blue",
-
+        "color_3": "purple",
+        "color_4": "orange",
+        
         "product_management_superattribute_id": "farbe",
         "product_management_attribute_free_input_id": "verschlussart",
         "product_management_attribute_no_input_id": "bundled_product"
