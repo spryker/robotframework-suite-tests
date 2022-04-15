@@ -201,7 +201,7 @@
         "concrete_available_product_meta_description": " Easy-to-care-for fabric cover. Substructure in graphite black RAL 9011.<br/>Standard rolling for soft floors.<br/>The backrest has height-adjustable lumbar support.  ",
 
         "abstract_available_product_with_stock_NESTED":{
-            "id": "M61125",
+            "sku": "M61125",
             "merchant_reference": "MER000008",
             "name": "Prosedia vertebral disc swivel chair with synchronous mechanics and contoured seat - backrest height 660 mm",
             "description": " Easy-to-care-for fabric cover. Substructure in graphite black RAL 9011.<br/>Standard rolling for soft floors.<br/>The backrest has height-adjustable lumbar support.  ",
@@ -227,8 +227,7 @@
                     "id": "OP_1_year_waranty",
                     "option_group_name": "Three (3) year limited warranty",
                     "sku": "OP_1_year_waranty",
-                    "option_name": "One (1) year limited warranty",
-                    "price": 0
+                    "option_name": "One (1) year limited warranty"
                 }
             }
         },
@@ -252,6 +251,12 @@
 
         "abstract_product_with_label": "M21691",
         "abstract_product_with_label_name": "Clairefontaine Collegeblock 8272C DIN A5, 90 sheets",
+
+        "abstract_product_with_label_NESTED": {
+            "sku": "M21691",
+            "name": "Clairefontaine Collegeblock 8272C DIN A5, 90 sheets"
+        },
+
 
         "abstract_product_with_concrete_offers": "",
         "abstract_product_with_concrete_offers_name": "",
@@ -312,15 +317,19 @@
         "brand_1": "Soennecken",
         "brand_2": "edding",
         "brand_3": "Mauser",
+
         "material_1": "aluminum",
         "material_2": "metal",
         "material_3": "chipboard",
         "material_4": "Steel sheets, stove-enameled",
+
         "delivery_1": "assembled",
         "price_unit_1": "piece",
+
         "color_3": "purple",
         "color_1": "yellow",
         "color_2": "blue",
+
         "product_management_superattribute_id": "farbe",
         "product_management_attribute_free_input_id": "verschlussart",
         "product_management_attribute_no_input_id": "bundled_product"
@@ -416,14 +425,37 @@
     "labels":{
         "label_id_manual": "3",
         "label_name_manual": "Top",
+
         "label_id_sale": "5",
         "label_name_sale": "SALE %",
+
         "label_id_new": "4",
         "label_name_new": "New",
+
         "label_id_discontinued": "2",
         "label_name_discontinued": "Discontinued",
+
         "label_id_alternative": "1",
         "label_name_alternative": "Alternatives available"
+    },
+
+    "merchants":{
+
+        "merchants":{
+            "spryker":{
+                "merchant_name": "Spryker",
+                "merchant_url": "/en/merchant/spryker",
+                "contact_person_role": "E-Commerce Manager",
+                "contact_person_title": "Mr",
+                "contact_person_first_name": "Harald",
+                "contact_person_last_name": "Schmidt",
+                "contact_person_phone": "+49 30 208498350",
+                "public_email": "info@spryker.com",
+                "public_phone": "+49 30 234567891",
+                "description": "Spryker is the main merchant on the B2B Demo Marketplace."
+            }
+        }
+
     }
 
 }

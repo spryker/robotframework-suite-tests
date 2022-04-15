@@ -8,13 +8,13 @@ Default Tags    glue
 ENABLER
     TestSetup
 
-Abstract_product_with_one_concrete
-    When I send a GET request:    /abstract-products/${abstract_available_product_with_stock_NESTED.id}
+Get_abstract_product_with_one_concrete
+    When I send a GET request:    /abstract-products/${abstract_available_product_with_stock_NESTED.sku}
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response body parameter should be:    [data][type]    abstract-products
-    And Response body parameter should be:    [data][id]    ${abstract_available_product_with_stock_NESTED.id}
-    And Response body parameter should be:    [data][attributes][sku]    ${abstract_available_product_with_stock_NESTED.id}
+    And Response body parameter should be:    [data][id]    ${abstract_available_product_with_stock_NESTED.sku}
+    And Response body parameter should be:    [data][attributes][sku]    ${abstract_available_product_with_stock_NESTED.sku}
     And Response body parameter should be:    [data][attributes][merchantReference]    ${abstract_available_product_with_stock_NESTED.merchant_reference}
     And Response body parameter should have datatype:    [data][attributes][reviewCount]    int
     And Response body parameter should be:    [data][attributes][name]    ${abstract_available_product_with_stock_NESTED.name}
@@ -36,8 +36,8 @@ Abstract_product_with_one_concrete
     And Response body has correct self link internal
 
 
-Abstract_product_with_category_nodes_included
-    When I send a GET request:    /abstract-products/${abstract_available_product_with_stock_NESTED.id}?include=category-nodes
+Get_abstract_product_with_category_nodes_included
+    When I send a GET request:    /abstract-products/${abstract_available_product_with_stock_NESTED.sku}?include=category-nodes
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response body parameter should be:    [data][type]    abstract-products
@@ -69,8 +69,8 @@ Abstract_product_with_category_nodes_included
     And Each array element of array in response should contain nested property:    [included]    attributes    parents
 
 
-Abstract_product_has_one_concrete_product_with_concrete_products_included
-    When I send a GET request:    /abstract-products/${abstract_available_product_with_stock_NESTED.id}?include=concrete-products
+Get_abstract_product_with_concrete_products_included
+    When I send a GET request:    /abstract-products/${abstract_available_product_with_stock_NESTED.sku}?include=concrete-products
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response body parameter should be:    [data][type]    abstract-products
@@ -91,7 +91,7 @@ Abstract_product_has_one_concrete_product_with_concrete_products_included
     And Response body parameter should be:    [included][0][attributes][discontinuedNote]    None
     And Response body parameter should be:    [included][0][attributes][averageRating]    None
     And Response body parameter should have datatype:    [included][0][attributes][reviewCount]    int
-    And Response body parameter should be:    [included][0][attributes][productAbstractSku]    ${abstract_available_product_with_stock_NESTED.id}
+    And Response body parameter should be:    [included][0][attributes][productAbstractSku]    ${abstract_available_product_with_stock_NESTED.sku}
     And Response body parameter should be:    [included][0][attributes][name]    ${abstract_available_product_with_stock_NESTED.concrete_available_product.name}
     And Response body parameter should be:    [included][0][attributes][description]    ${abstract_available_product_with_stock_NESTED.concrete_available_product.description}
     And Response body parameter should be:    [included][0][attributes][metaTitle]    ${abstract_available_product_with_stock_NESTED.concrete_available_product.meta_title}
@@ -104,8 +104,8 @@ Abstract_product_has_one_concrete_product_with_concrete_products_included
 
     
 
-Abstract_product_with_product_options_included
-    When I send a GET request:    /abstract-products/${abstract_available_product_with_stock_NESTED.id}?include=product-options
+Get_abstract_product_with_product_options_included
+    When I send a GET request:    /abstract-products/${abstract_available_product_with_stock_NESTED.sku}?include=product-options
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response body parameter should be:    [data][type]    abstract-products
@@ -118,7 +118,7 @@ Abstract_product_with_product_options_included
     And Each array element of array in response should contain property:    [included]    id
     And Each array element of array in response should contain property:    [included]    attributes
     And Each array element of array in response should contain property:    [included]    links
-    And Each array element of array in response should contain property with value:    [included]    type    product-options
+    And Response include should contain certain entity type:    product-options
     And Each array element of array in response should contain nested property:    [included]    attributes    optionGroupName
     And Each array element of array in response should contain nested property:    [included]    attributes    sku
     And Each array element of array in response should contain nested property:    [included]    attributes    optionName
@@ -126,12 +126,58 @@ Abstract_product_with_product_options_included
     And Each array element of array in response should contain nested property:    [included]    attributes    currencyIsoCode
     And Each array element of array in response should contain nested property:    [included]    [links]    self
     And Response body parameter should be:    [included][0][id]    ${abstract_available_product_with_stock_NESTED.product_options.first.id}
-    And Response body parameter should be:    [included][0][attribtues][optionGroupName]    'Three (3) year limited warranty'
-    And Response body parameter should be:    [included][0][attribtues][sku]    ${abstract_available_product_with_stock_NESTED.product_options.first.sku}
-    And Response body parameter should be:    [included][0][attribtues][optionName]    ${abstract_available_product_with_stock_NESTED.product_options.first.option_name}
-    And Response body parameter should be:    [included][0][attribtues][price]    ${abstract_available_product_with_stock_NESTED.product_options.first.price}
+    And Response body parameter should be:    [included][0][attributes][optionGroupName]    ${abstract_available_product_with_stock_NESTED.product_options.first.option_group_name}
+    And Response body parameter should be:    [included][0][attributes][sku]    ${abstract_available_product_with_stock_NESTED.product_options.first.sku}
+    And Response body parameter should be:    [included][0][attributes][optionName]    ${abstract_available_product_with_stock_NESTED.product_options.first.option_name}
     And Each array element of array in response should contain property with value in:    [included]    [attributes][currencyIsoCode]    ${currency_code_eur}    ${currency_code_dollar}
 
+
+Get_abstract_product_with_product_labels_included
+    When I send a GET request:    /abstract-products/${abstract_product_with_label_NESTED.sku}?include=product-labels
+    Then Response status code should be:    200
+    And Response reason should be:    OK
+    And Response body parameter should be:    [data][type]    abstract-products
+    And Response should contain the array of a certain size:    [included]    1
+    And Response should contain the array of a certain size:    [data][relationships]    1
+    And Response body parameter should not be EMPTY:    [data][relationships]
+    And Response body parameter should not be EMPTY:    [data][relationships][product-labels]
+    And Response include should contain certain entity type:    product-labels
+    And Each array element of array in response should contain property:    [data][relationships][product-labels][data]    type
+    And Each array element of array in response should contain property:    [data][relationships][product-labels][data]    id
+    And Each array element of array in response should contain property:    [included]    id
+    And Each array element of array in response should contain property:    [included]    attributes
+    And Each array element of array in response should contain property:    [included]    links
+    And Response body parameter should be:    [included][0][id]    ${label_id_new}
+    And Response body parameter should be:    [included][0][attributes][name]    ${label_name_new}
+
+
+
+
+Get_abstract_product_with_merchants_included
+    When I send a GET request:    /abstract-products/${abstract_available_product_with_stock_NESTED.sku}?include=merchants
+    Then Response status code should be:    200
+    And Response reason should be:    OK
+    And Response body parameter should be:    [data][type]    abstract-products
+    And Response should contain the array of a certain size:    [included]    1
+    And Response should contain the array of a certain size:    [data][relationships]    1
+    And Response body parameter should not be EMPTY:    [data][relationships]
+    And Response body parameter should not be EMPTY:    [data][relationships][merchants]
+    And Response include should contain certain entity type:    merchants
+    And Each array element of array in response should contain property:    [data][relationships][merchants][data]    type
+    And Each array element of array in response should contain property:    [data][relationships][merchants][data]    id
+    And Each array element of array in response should contain property:    [included]    id
+    And Each array element of array in response should contain property:    [included]    attributes
+    And Each array element of array in response should contain property:    [included]    links
+    And Response body parameter should be:    [included][0][attributes][merchantName]    ${merchants.spryker.merchant_name}
+    And Response body parameter should be:    [included][0][attributes][merchantUrl]    ${merchants.spryker.merchant_url}
+    And Response body parameter should be:    [included][0][attributes][contactPersonRole]    ${merchants.spryker.contact_person_role}
+    And Response body parameter should be:    [included][0][attributes][contactPersonTitle]    ${merchants.spryker.contact_person_title}
+    And Response body parameter should be:    [included][0][attributes][contactPersonFirstName]    ${merchants.spryker.contact_person_first_name}
+    And Response body parameter should be:    [included][0][attributes][contactPersonLastName]    ${merchants.spryker.contact_person_last_name}
+    And Response body parameter should be:    [included][0][attributes][contactPersonPhone]    ${merchants.spryker.contact_person_phone}
+    And Response body parameter should be:    [included][0][attributes][publicEmail]    ${merchants.spryker.public_email}
+    And Response body parameter should be:    [included][0][attributes][publicPhone]    ${merchants.spryker.public_phone}
+    And Response body parameter should be:    [included][0][attributes][description]    ${merchants.spryker.description}
     
 
 
