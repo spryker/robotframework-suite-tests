@@ -30,6 +30,7 @@ Get_reviews_with_missing_abstract_product
     And Response should return error code:    311
     And Response should return error message:    Abstract product sku is not specified.
 
+# bug CC-16486
 Get_review_by_id_with_missing_abstract_product
     When I send a GET request:    /abstract-products//product-reviews/78
     Then Response status code should be:    400
