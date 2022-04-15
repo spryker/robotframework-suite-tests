@@ -46,7 +46,7 @@ Product_has_abstract_alternative_with_includes
     And Response include element has self link:   abstract-product-prices
 
 Product_has_no_abstract_alternative
-    When I send a GET request:    /concrete-products/${bundled_product_1_concrete_sku}/abstract-alternative-products
+    When I send a GET request:    /concrete-products/${concrete_of_product_with_relations_upselling_sku}/abstract-alternative-products
     Then Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response should contain the array of a certain size:    [data]    0
     And Response body has correct self link
