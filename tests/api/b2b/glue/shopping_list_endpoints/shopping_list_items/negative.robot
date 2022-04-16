@@ -5,6 +5,9 @@ Resource    ../../../../../../resources/common/common_api.robot
 Default Tags    glue
 
 *** Test Cases ***
+ENABLER
+    TestSetup
+    
 Add_a_concrete_product_to_the_shopping_list_without_access_token
     I send a POST request:    /shopping-lists/${yves_user_1st_shopping_list_id}/shopping-list-items    {"data":{"type":"shopping-list-items","attributes":{"sku":"${concrete_available_product_sku}","quantity":1}}}
     And Response status code should be:    403
@@ -310,9 +313,7 @@ Update_product_in_the_shopping_list_without_quantity_in_the_request
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}  
     I send a PATCH request:    /shopping-lists/shoppingListId/shopping-list-items/shoppingListItemId    {"data":{"type":"shopping-list-items","attributes":{}}}
-    And Response status code should be:    200
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
-    And Response body parameter should be:    [data][attributes][quantity]    2
     And Response status code should be:    422
     And Response should return error code:    901
     And Response reason should be:    Unprocessable Content
