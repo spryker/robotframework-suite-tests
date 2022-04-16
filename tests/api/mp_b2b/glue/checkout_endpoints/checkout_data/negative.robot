@@ -7,6 +7,7 @@ Default Tags    glue
 *** Test Cases ***
 ENABLER
     TestSetup
+    
 #POST requests
 Provide_checkout_data_with_invalid_access_token
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
