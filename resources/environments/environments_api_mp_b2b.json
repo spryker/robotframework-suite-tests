@@ -39,7 +39,13 @@
         "yves_shared_shopping_list_user_first_name": "Trever",
         "yves_shared_shopping_list_user_last_name": "Meier",
         "yves_shared_shopping_list_user_password": "change123",
-        "yves_shared_shopping_list_user_salutation": "Mr",        
+        "yves_shared_shopping_list_user_salutation": "Mr",       
+        
+        "yves_shared_shopping_cart_user_email": "Solomon@spryker.com",
+        "yves_shared_shopping_cart_user_first_name": "Solomon",
+        "yves_shared_shopping_cart_user_last_name": "Wesner",
+        "yves_shared_shopping_cart_user_password": "change123",
+        "yves_shared_shopping_cart_user_salutation": "Mr",
 
         "gender_female": "Female",
         "gender_male": "Male",
