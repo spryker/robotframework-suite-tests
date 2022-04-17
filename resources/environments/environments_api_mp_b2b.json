@@ -123,7 +123,7 @@
         "ipp_middle": "24",
         "ipp_biggest": "36",
         "default_ipp_pages_qty": "35",
-        "default_categories_qty": "37",
+        "default_categories_qty": "35",
         "default_colors_qty": "10",
         "default_labels_qty": "5",
         "default_materials_qty": "10",
@@ -139,7 +139,7 @@
         "alternatives_label": "Alternatives available",
 
         "category_id_lvl1": "11",
-        "category_items_qty_lvl1": "172",
+        "category_items_qty_lvl1": "175",
         "category_id_lvl2": "12",
         "category_items_qty_lvl2": "56",
         "category_id_lvl3": "13",
