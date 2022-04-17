@@ -1,9 +1,12 @@
 *** Settings ***
 Suite Setup       SuiteSetup
-Test Setup    TestSetup
+Test Setup        TestSetup
 Resource    ../../../../../../resources/common/common_api.robot
+Default Tags    glue
 
 *** Test Cases ***
+ENABLER
+    TestSetup
 
 Get_access_token_for_company_user_by_id
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
