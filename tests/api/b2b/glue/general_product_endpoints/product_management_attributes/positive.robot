@@ -1,8 +1,12 @@
 *** Settings ***
-Suite Setup       SuiteSetup
+Suite Setup    SuiteSetup
+Test Setup    TestSetup
 Resource    ../../../../../../resources/common/common_api.robot
+Default Tags    glue
 
 *** Test Cases ***
+ENABLER
+    TestSetup
 
 Get_all_product_management_attributes
     When I send a GET request:    /product-management-attributes
@@ -21,13 +25,13 @@ Get_all_product_management_attributes
     And Response body parameter should not be EMPTY:    [data][0][attributes][values]
     And Response body parameter should not be EMPTY:    [data][0][attributes][values][0][value]
     And Response body parameter should not be EMPTY:    [data][0][attributes][values][0][localizedValues]
-    And Response body parameter should be:    [data][0][attributes][values][0][localizedValues][0][localeName]    ${locale_DE}
+    And Response body parameter should be:    [data][0][attributes][values][0][localizedValues][0][localeName]    ${locale_name_DE}
     And Response body parameter should not be EMPTY:    [data][0][attributes][values][0][localizedValues][0][translation]
     And Response body parameter should not be EMPTY:    [data][0][links][self]
     And Each array element of array in response should contain nested property:    [data]    [attributes]    key
     And Each array element of array in response should contain property with value in:    [data]    [attributes][allowInput]    True    False
     And Each array element of array in response should contain property with value in:    [data]    [attributes][isSuper]    True    False
-    And Each array element of nested array should contain property with value in:    [data]    [attributes][localizedKeys]   localeName    ${locale_DE}    ${locale_EN}
+    And Each array element of nested array should contain property with value in:    [data]    [attributes][localizedKeys]   localeName    ${locale_name_DE}    ${locale_name_EN}
     And Each array element of array in response should contain nested property:    [data]    [attributes][localizedKeys]    translation
     And Each array element of nested array should contain property with value NOT in:    [data]    [attributes][localizedKeys]    translation    None
     And Each array element of array in response should contain nested property:    [data]    [attributes]    values
@@ -48,7 +52,7 @@ Get_product_management_attribute_by_id_superattribute
     And Response body parameter should be:    [data][attributes][allowInput]    True
     And Response body parameter should be:    [data][attributes][isSuper]    True
     And Response body parameter should not be EMPTY:    [data][attributes][localizedKeys][0][translation]
-    And Response body parameter should be:    [data][attributes][localizedKeys][0][localeName]    ${locale_EN}
+    And Response body parameter should be:    [data][attributes][localizedKeys][0][localeName]    ${locale_name_EN}
     And Response body parameter should not be EMPTY:    [data][attributes][values][0][localizedValues][0][localeName]
     And Response body parameter should not be EMPTY:    [data][attributes][values][0][localizedValues][0][translation]
     And Each array element of array in response should contain property:    [data][attributes][localizedKeys]    translation
@@ -71,7 +75,7 @@ Get_product_management_attribute_by_id_normal_editable_attribute
     And Response body parameter should be:    [data][attributes][allowInput]    True
     And Response body parameter should be:    [data][attributes][isSuper]    False
     And Response body parameter should not be EMPTY:    [data][attributes][localizedKeys][0][translation]
-    And Response body parameter should be:    [data][attributes][localizedKeys][0][localeName]    ${locale_EN}
+    And Response body parameter should be:    [data][attributes][localizedKeys][0][localeName]    ${locale_name_EN}
     And Each array element of array in response should contain property:    [data][attributes][localizedKeys]    translation
     And Each array element of array in response should contain property:    [data][attributes][localizedKeys]    localeName
     And Each array element of array in response should contain property:    [data][attributes][values]    value
@@ -92,7 +96,7 @@ Get_product_management_attribute_by_id_normal_non_editable_attribute
     And Response body parameter should be:    [data][attributes][allowInput]    False
     And Response body parameter should be:    [data][attributes][isSuper]    False
     And Response body parameter should not be EMPTY:    [data][attributes][localizedKeys][0][translation]
-    And Response body parameter should be:    [data][attributes][localizedKeys][0][localeName]    ${locale_EN}
+    And Response body parameter should be:    [data][attributes][localizedKeys][0][localeName]    ${locale_name_EN}
     And Each array element of array in response should contain property:    [data][attributes][localizedKeys]    translation
     And Each array element of array in response should contain property:    [data][attributes][localizedKeys]    localeName
     And Each array element of array in response should contain property:    [data][attributes][values]    value

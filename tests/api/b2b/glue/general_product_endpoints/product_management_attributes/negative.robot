@@ -1,10 +1,13 @@
 *** Settings ***
-Suite Setup       SuiteSetup
+Suite Setup    SuiteSetup
+Test Setup    TestSetup
 Resource    ../../../../../../resources/common/common_api.robot
+Default Tags    glue
 
 *** Test Cases ***
-
-
+ENABLER
+    TestSetup
+    
 Get_an_attribute_with_non_existent_attribute_id
     When I send a GET request:    /product-management-attributes/fake
     Then Response status code should be:    404
