@@ -635,7 +635,7 @@ Response body parameter should be less than:
     ${data}=    Replace String    ${data}    ]   ${EMPTY}
     ${result}=    Evaluate    '${data}' < '${expected_value}'
     ${result}=    Convert To String    ${result}
-    Should Be Equal    ${result}    True    Actula ${data} is not less than expected ${expected_value}
+    Should Be Equal    ${result}    True    Actual ${data} is not less than expected ${expected_value}
 
 Response should contain the array of a certain size:
     [Documentation]    This keyword checks that the body array sent in ``${json_path}`` argument contains the specific number of items ``${expected_size}``. The expected size should be an integer value.
