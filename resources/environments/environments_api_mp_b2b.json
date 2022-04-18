@@ -60,6 +60,7 @@
         "customer_reference_10_de": "DE--10",
         "customer_reference_15_de": "DE--15",
         "customer_reference_34_de": "DE--34",
+        "customer_reference_44_de": "DE--44",
 
         "grant_type_password": "password",
         "grant_type_refresh_token": "refresh_token"
