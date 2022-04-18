@@ -1294,7 +1294,7 @@ Cleanup all items in the guest cart:
         ...
         ...    ``Cleanup items in the guest cart:    ${cart_id}``
         [Arguments]    ${cart_id}
-        ${response}=    GET    ${current_url}/guest-carts/${cart_id}    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}  params=include=guest-cart-items     expected_status=200
+        ${response}=    GET    ${current_url}/guest-carts/${cart_id}    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}  params=include=guest-cart-items,bundle-items    expected_status=200
         ${response_body}=    Set Variable    ${response.json()}
         @{included}=    Get Value From Json    ${response_body}    [included]
         ${list_length}=    Get length    @{included}

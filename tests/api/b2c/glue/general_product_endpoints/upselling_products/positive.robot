@@ -10,7 +10,7 @@ ENABLER
 
 #Logged in customer's cart
 
-Cart_contains_product_with_upselling_relation
+Get_upselling_products
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     ...    AND    Find or create customer cart
@@ -44,11 +44,10 @@ Cart_contains_product_with_upselling_relation
     And Response body parameter should not be EMPTY:    [data][0][attributes][attributeNames]
     And Response body parameter should not be EMPTY:    [data][0][attributes][url]     
     And Response body has correct self link
-    [Teardown]    Run Keywords    Cleanup all items in the cart:    ${cart_id}
-    ...  AND    Response status code should be:    200
+    [Teardown]    Run Keyword    Cleanup all items in the cart:    ${cart_id}
 
 
-Cart_contains_product_with_upselling_relation_plus_includes
+Get_upselling_products_plus_includes
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     ...    AND    Find or create customer cart
@@ -62,6 +61,13 @@ Cart_contains_product_with_upselling_relation_plus_includes
     And Each array element of array in response should contain nested property with value:    [data]    type    abstract-products  
     And Response body has correct self link 
     And Response should contain the array larger than a certain size:    [included]    0
+    And Response should contain the array of a certain size:    [data][0][relationships][abstract-product-prices][data]    1
+    And Response should contain the array of a certain size:    [data][0][relationships][abstract-product-image-sets][data]    1
+    And Response should contain the array of a certain size:    [data][0][relationships][concrete-products][data]    1
+    And Response should contain the array of a certain size:    [data][0][relationships][abstract-product-availabilities][data]    1
+    And Response should contain the array of a certain size:    [data][0][relationships][product-tax-sets][data]    1
+    And Response should contain the array larger than a certain size:    [data][0][relationships][product-options][data]    1
+    And Response should contain the array larger than a certain size:    [data][0][relationships][category-nodes][data]    1 
     And Response include should contain certain entity type:    abstract-product-prices
     And Response include should contain certain entity type:    abstract-product-image-sets
     And Response include should contain certain entity type:    concrete-products
@@ -80,11 +86,10 @@ Cart_contains_product_with_upselling_relation_plus_includes
     And Response include element has self link:    product-options
     And Response include element has self link:    product-reviews
     And Response include element has self link:    category-nodes
-    [Teardown]    Run Keywords    Cleanup all items in the cart:    ${cart_id}
-    ...  AND    Response status code should be:    200
+    [Teardown]    Run Keyword    Cleanup all items in the cart:    ${cart_id}
 
 
-Cart_contains_multiple_products_with_upselling_relation
+Get_upselling_products_for_cart_containing_multiple_products
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     ...    AND    Find or create customer cart
@@ -126,11 +131,10 @@ Cart_contains_multiple_products_with_upselling_relation
     And Each array element of array in response should contain nested property:    [data]    [attributes]   url
     And Each array element of array in response should contain nested property:    [data]    [links]    self
     And Response body has correct self link
-    [Teardown]    Run Keywords    Cleanup all items in the cart:    ${cart_id}
-    ...  AND    Response status code should be:    200
+    [Teardown]    Run Keyword    Cleanup all items in the cart:    ${cart_id}
  
 
-Cart_contains_no_products_with_upselling_relations
+Get_upselling_products_for_cart_without_upselling_relations
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
     ...    AND    I set Headers:    Authorization=${token}
     ...    AND    Find or create customer cart
@@ -142,8 +146,7 @@ Cart_contains_no_products_with_upselling_relations
     And Response reason should be:    OK
     And Response should contain the array of a certain size:    [data]    0
     And Response body has correct self link
-    [Teardown]    Run Keywords    Cleanup all items in the cart:    ${cart_id}
-    ...  AND    Response status code should be:    200
+    [Teardown]    Run Keyword    Cleanup all items in the cart:    ${cart_id}
 
 
 Get_upselling_products_for_empty_cart
@@ -156,18 +159,16 @@ Get_upselling_products_for_empty_cart
     And Response reason should be:    OK
     And Response should contain the array of a certain size:    [data]    0
     And Response body has correct self link
-    [Teardown]    Run Keywords    Cleanup all items in the cart:    ${cart_id}
-    ...  AND    Response status code should be:    200
+    [Teardown]    Run Keyword    Cleanup all items in the cart:    ${cart_id}
 
 
 #Guest user cart
 
-Guest_cart_contains_product_with_upselling_relation
-    [Setup]    Run Keywords    I set Headers:    Content-Type=${default_header_content_type}    X-Anonymous-Customer-Unique-Id=${anonymous_customer_static_id}
-    ...    AND    I send a POST request:    /guest-cart-items    {"data":{"type":"guest-cart-items","attributes":{"sku":"${concrete_of_product_with_relations_upselling_sku}","quantity":1}}}
+Get_upselling_products_for_guest_cart
+    [Setup]    Run Keywords    I set Headers:    Content-Type=${default_header_content_type}    X-Anonymous-Customer-Unique-Id=${random}
+    ...    AND    Create a guest cart:    ${random}    ${concrete_of_product_with_relations_upselling_sku}    1
     ...    AND    Response status code should be:    201
-    ...    AND    Save value to a variable:    [data][id]    cart_id
-    When I send a GET request:    /guest-carts/${cart_id}/up-selling-products
+    When I send a GET request:    /guest-carts/${guest_cart_id}/up-selling-products
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
@@ -194,16 +195,14 @@ Guest_cart_contains_product_with_upselling_relation
     And Response body parameter should not be EMPTY:    [data][0][attributes][attributeNames]
     And Response body parameter should not be EMPTY:    [data][0][attributes][url]     
     And Response body has correct self link
-    [Teardown]    Run Keywords    Cleanup all items in the guest cart:    ${cart_id}
-    ...    AND    Response status code should be:    200
+    [Teardown]    Run Keyword    Cleanup all items in the guest cart:    ${guest_cart_id}
 
 
-Guest_cart_contains_product_with_upselling_relation_plus_includes
-    [Setup]    Run Keywords    I set Headers:    Content-Type=${default_header_content_type}    X-Anonymous-Customer-Unique-Id=${anonymous_customer_static_id}
-    ...    AND    I send a POST request:    /guest-cart-items    {"data":{"type":"guest-cart-items","attributes":{"sku":"${concrete_of_product_with_relations_upselling_sku}","quantity":1}}}
+Get_upselling_products_for_guest_cart_plus_includes
+    [Setup]    Run Keywords    I set Headers:    Content-Type=${default_header_content_type}    X-Anonymous-Customer-Unique-Id=${random}
+    ...    AND    Create a guest cart:    ${random}    ${concrete_of_product_with_relations_upselling_sku}    1
     ...    AND    Response status code should be:    201
-    ...    AND    Save value to a variable:    [data][id]    cart_id
-    When I send a GET request:    /guest-carts/${cart_id}/up-selling-products?include=abstract-product-prices,abstract-product-image-sets,concrete-products,abstract-product-availabilities,product-labels,product-tax-sets,product-options,product-reviews,category-nodes
+    When I send a GET request:    /guest-carts/${guest_cart_id}/up-selling-products?include=abstract-product-prices,abstract-product-image-sets,concrete-products,abstract-product-availabilities,product-labels,product-tax-sets,product-options,product-reviews,category-nodes
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
@@ -211,6 +210,13 @@ Guest_cart_contains_product_with_upselling_relation_plus_includes
     And Each array element of array in response should contain nested property with value:    [data]    type    abstract-products  
     And Response body has correct self link 
     And Response should contain the array larger than a certain size:    [included]    0
+    And Response should contain the array of a certain size:    [data][0][relationships][abstract-product-prices][data]    1
+    And Response should contain the array of a certain size:    [data][0][relationships][abstract-product-image-sets][data]    1
+    And Response should contain the array of a certain size:    [data][0][relationships][concrete-products][data]    1
+    And Response should contain the array of a certain size:    [data][0][relationships][abstract-product-availabilities][data]    1
+    And Response should contain the array of a certain size:    [data][0][relationships][product-tax-sets][data]    1
+    And Response should contain the array larger than a certain size:    [data][0][relationships][product-options][data]    1
+    And Response should contain the array larger than a certain size:    [data][0][relationships][category-nodes][data]    1 
     And Response include should contain certain entity type:    abstract-product-prices
     And Response include should contain certain entity type:    abstract-product-image-sets
     And Response include should contain certain entity type:    concrete-products
@@ -229,19 +235,18 @@ Guest_cart_contains_product_with_upselling_relation_plus_includes
     And Response include element has self link:    product-options
     And Response include element has self link:    product-reviews
     And Response include element has self link:    category-nodes
-    [Teardown]    Run Keywords    Cleanup all items in the guest cart:    ${cart_id}
-    ...    AND    Response status code should be:    200
+    [Teardown]    Run Keyword    Cleanup all items in the guest cart:    ${guest_cart_id}
 
 
-Guest_cart_contains_multiple_products_with_upselling_relation
-    [Setup]    Run Keywords    I set Headers:    Content-Type=${default_header_content_type}    X-Anonymous-Customer-Unique-Id=${anonymous_customer_static_id}
-    ...    AND    I send a POST request:    /guest-cart-items    {"data":{"type":"guest-cart-items","attributes":{"sku":"${concrete_of_product_with_relations_upselling_sku}","quantity":2}}}
+Get_upselling_products_for_guest_cart_containing_multiple_products
+    [Setup]    Run Keywords    I set Headers:    Content-Type=${default_header_content_type}    X-Anonymous-Customer-Unique-Id=${random}
+    ...    AND    Create a guest cart:    ${random}    ${concrete_of_product_with_relations_upselling_sku}    2
     ...    AND    Response status code should be:    201
-    ...    AND    Save value to a variable:    [data][id]    cart_id
-    ...    AND    I send a POST request:    /guest-carts/${cart_id}/guest-cart-items    {"data": {"type": "guest-cart-items","attributes": {"sku": "${concrete_of_alternative_product_with_relations_upselling_sku}","quantity": 1}}}
+    ...    AND    I send a POST request:    /guest-carts/${guest_cart_id}/guest-cart-items    {"data": {"type": "guest-cart-items","attributes": {"sku": "${concrete_of_alternative_product_with_relations_upselling_sku}","quantity": 1}}}
     ...    AND    Response status code should be:    201
-    ...    AND    I send a POST request:    /guest-carts/${cart_id}/guest-cart-items    {"data": {"type": "guest-cart-items","attributes": {"sku": "${concrete_of_product_without_relations}","quantity": 1}}}
-    When I send a GET request:    /guest-carts/${cart_id}/up-selling-products
+    ...    AND    I send a POST request:    /guest-carts/${guest_cart_id}/guest-cart-items    {"data": {"type": "guest-cart-items","attributes": {"sku": "${concrete_of_product_without_relations}","quantity": 1}}}
+    ...    AND    Response status code should be:    201
+    When I send a GET request:    /guest-carts/${guest_cart_id}/up-selling-products
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
@@ -272,20 +277,17 @@ Guest_cart_contains_multiple_products_with_upselling_relation
     And Each array element of array in response should contain nested property:    [data]    [attributes]   url
     And Each array element of array in response should contain nested property:    [data]    [links]    self
     And Response body has correct self link
-    [Teardown]    Run Keywords    Cleanup all items in the guest cart:    ${cart_id}
-    ...    AND    Response status code should be:    200
+    [Teardown]    Run Keyword    Cleanup all items in the guest cart:    ${guest_cart_id}
  
 
-Guest_cart_contains_no_products_with_upselling_relations
-    [Setup]    Run Keywords    I set Headers:    Content-Type=${default_header_content_type}    X-Anonymous-Customer-Unique-Id=${anonymous_customer_static_id}
-    ...    AND    I send a POST request:    /guest-cart-items    {"data": {"type": "guest-cart-items","attributes": {"sku": "${concrete_of_product_without_relations}","quantity": 1}}}
+Get_upselling_products_for_guest_cart_without_upselling_relations
+    [Setup]    Run Keywords    I set Headers:    Content-Type=${default_header_content_type}    X-Anonymous-Customer-Unique-Id=${random}
+    ...    AND    Create a guest cart:    ${random}    ${concrete_of_product_without_relations}    1
     ...    AND    Response status code should be:    201
-    ...    AND    Save value to a variable:    [data][id]    cart_id
-    When I send a GET request:    /guest-carts/${cart_id}/up-selling-products
+    When I send a GET request:    /guest-carts/${guest_cart_id}/up-selling-products
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response should contain the array of a certain size:    [data]    0
     And Response body has correct self link
-    [Teardown]    Run Keywords    Cleanup all items in the guest cart:    ${cart_id}
-    ...    AND    Response status code should be:    200
+    [Teardown]    Run Keyword    Cleanup all items in the guest cart:    ${guest_cart_id}
 

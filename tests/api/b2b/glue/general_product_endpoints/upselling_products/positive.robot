@@ -8,7 +8,7 @@ Default Tags    glue
 ENABLER
     TestSetup
 
-Cart_contains_product_with_upselling_relation
+Get_upselling_products
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     ...    AND    I send a POST request:    /carts    {"data":{"type":"carts","attributes":{"priceMode":"${gross_mode}","currency":"${currency_code_eur}","store":"${store_de}","name":"Cart-${random}"}}}
@@ -45,7 +45,7 @@ Cart_contains_product_with_upselling_relation
     [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cart_id}
     ...  AND    Response status code should be:    204
 
-Cart_contains_product_with_upselling_relation_plus_includes
+Get_upselling_products_plus_includes
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     ...    AND    I send a POST request:    /carts    {"data":{"type":"carts","attributes":{"priceMode":"${gross_mode}","currency":"${currency_code_eur}","store":"${store_de}","name":"Cart-${random}"}}}
@@ -60,6 +60,13 @@ Cart_contains_product_with_upselling_relation_plus_includes
     And Each array element of array in response should contain nested property with value:    [data]    type    abstract-products  
     And Response body has correct self link 
     And Response should contain the array larger than a certain size:    [included]    0
+    And Response should contain the array of a certain size:    [data][0][relationships][abstract-product-prices][data]    1
+    And Response should contain the array of a certain size:    [data][0][relationships][abstract-product-image-sets][data]    1
+    And Response should contain the array of a certain size:    [data][0][relationships][concrete-products][data]    1
+    And Response should contain the array of a certain size:    [data][0][relationships][abstract-product-availabilities][data]    1
+    And Response should contain the array of a certain size:    [data][0][relationships][product-tax-sets][data]    1
+    And Response should contain the array larger than a certain size:    [data][0][relationships][product-options][data]    1
+    And Response should contain the array larger than a certain size:    [data][0][relationships][category-nodes][data]    1    
     And Response include should contain certain entity type:    abstract-product-prices
     And Response include should contain certain entity type:    abstract-product-image-sets
     And Response include should contain certain entity type:    concrete-products
@@ -81,7 +88,7 @@ Cart_contains_product_with_upselling_relation_plus_includes
     [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cart_id}
     ...  AND    Response status code should be:    204
 
-Cart_contains_multiple_products_with_upselling_relation
+Get_upselling_products_for_cart_containing_multiple_products
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     ...    AND    I send a POST request:    /carts    {"data":{"type":"carts","attributes":{"priceMode":"${gross_mode}","currency":"${currency_code_eur}","store":"${store_de}","name":"Cart-${random}"}}}
@@ -126,7 +133,7 @@ Cart_contains_multiple_products_with_upselling_relation
     [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cart_id}
     ...  AND    Response status code should be:    204
 
-Cart_contains_no_products_with_upselling_relations
+Get_upselling_products_for_cart_without_upselling_relations
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     ...    AND    I send a POST request:    /carts    {"data":{"type":"carts","attributes":{"priceMode":"${gross_mode}","currency":"${currency_code_eur}","store":"${store_de}","name":"Cart-${random}"}}}

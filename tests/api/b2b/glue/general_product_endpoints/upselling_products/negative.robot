@@ -8,7 +8,7 @@ Default Tags    glue
 ENABLER
     TestSetup
 
-No_cart_is_passing_to_upselling_products_request
+Get_upselling_products_with_missing_cart_id
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     When I send a GET request:    /carts//up-selling-products
@@ -17,7 +17,7 @@ No_cart_is_passing_to_upselling_products_request
     And Response should return error code:    104
     And Response should return error message:    Cart uuid is missing.
     
-Nonexistent_cart_id_is_passing_to_upselling_products_request
+Get_upselling_products_with_nonexistent_cart_id
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     When I send a GET request:    /carts/not_a_cart/up-selling-products
