@@ -1,6 +1,6 @@
 *** Variables ***
 ${checkout_summary_main_content_locator}    xpath=//div[@data-qa='component summary-overview']
-${checkout_summary_submit_order_button}    xpath=//form[@name='summaryForm']//button[@data-qa='submit-button']
+${checkout_summary_submit_order_button}    xpath=//form[@name='summaryForm']//button[contains(@class,'submit-button')]
 ${checkout_summary_approver_dropdown}    id=quote_approve_request_form_approverCompanyUserId
 ${checkout_summary_send_request_button}    xpath=//form[@name='quote_approve_request_form']//button[contains(@class,'button--success')]
 ${checkout_summary_cancel_request_button}    xpath=//div[@data-qa='component quote-approve-request']//form[contains(@action,'remove')]//button

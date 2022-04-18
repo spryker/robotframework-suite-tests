@@ -2,7 +2,7 @@
 Resource    ../../common/common.robot
 *** Variables ***
 ${shopping_carts_main_content_locator}    xpath=//*[@data-qa='component quote-table']
-${create_shopping_cart_button}    xpath=//a[contains(.,'Create Shopping Cart')]
+${create_shopping_cart_button}    xpath=//main//a[contains(@href,'multi-cart/create')]
 ${shopping_cart_name_input_field}    id=quoteForm_name
 ${create_new_cart_submit_button}    xpath=//form[@name='quoteForm']//button[@data-qa='submit-button']
 ${share_shopping_cart_confirm_button}    xpath=//form[@name='shareCartForm']//button[@type='submit']
