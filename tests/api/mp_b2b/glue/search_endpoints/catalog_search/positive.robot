@@ -220,7 +220,7 @@ Search_by_several_attributes
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response body parameter should be:    [data][0][type]    catalog-search
-    And Response body parameter should be:    [data][0][attributes][pagination][numFound]    21
+    And Response body parameter should be:    [data][0][attributes][pagination][numFound]    20
     And Response body parameter should be:    [data][0][attributes][pagination][currentPage]    1
     And Response body parameter should be greater than:    [data][0][attributes][pagination][maxPage]    1
     And Response should contain the array of a certain size:    [data][0][attributes][abstractProducts]    ${default_ipp}
@@ -649,7 +649,7 @@ Search_sort_by_name_desc
     And Response body parameter should be:    [data][0][type]    catalog-search
     And Response body parameter should be:    [data][0][attributes][sort][currentSortParam]    name_desc
     And Response body parameter should be:    [data][0][attributes][sort][currentSortOrder]    desc
-    And Response body parameter should start with:    [data][0][attributes][abstractProducts][0][abstractName]    r
+    And Response body parameter should start with:    [data][0][attributes][abstractProducts][0][abstractName]    X
     And Response body has correct self link
 
 Search_sort_by_rating
