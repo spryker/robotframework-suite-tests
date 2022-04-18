@@ -60,6 +60,7 @@
         "customer_reference_10_de": "DE--10",
         "customer_reference_15_de": "DE--15",
         "customer_reference_34_de": "DE--34",
+        "customer_reference_44_de": "DE--44",
 
         "grant_type_password": "password",
         "grant_type_refresh_token": "refresh_token"
@@ -406,8 +407,10 @@
         "label_name_alternative": "Alternatives available"
     },
 
-    "merchants": {
-        "merchants": {
+
+     "merchants":{
+
+        "merchants":{
             "spryker": {
                 "merchant_id": "MER000008",
                 "merchant_name": "Spryker",
@@ -433,8 +436,8 @@
                 "public_email": "support@computer-experts.com",
                 "public_phone": "+49 30 234567691",
                 "description": "Computer Experts offer products that enhance your work environment with computer accessories that improve how you work, communicate, and interact. Computer Experts founded in 2013 and continuously growing, acquiring deep industry experience.",
-                "addresses": {
-                    "city_munchen": "München",
+                "addresses":{
+                    "city_munchen":"München",
                     "address1": "Matthias-Pschorr-Straße"
                 }
             }
