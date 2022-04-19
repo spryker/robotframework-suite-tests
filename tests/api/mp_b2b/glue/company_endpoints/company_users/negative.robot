@@ -15,13 +15,13 @@ Retrieve_list_of_company_users_without_access_token
     And Response should return error code:    002
     And Response should return error message:    Missing access token.
 
+# CC-16616
 Retrieve_list_of_company_users_by_user_without_admin_role
-    When I get access token for the customer:    Elizabet@spryker.com
+    When I get access token for the customer:    ${yves_shared_shopping_list_user_email}
     And I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     And I send a GET request:    /company-users
     Then Response status code should be:    403
     And Response reason should be:    Forbidden
-# CC-16616
 
 Retrieve_company_user_by_incorrect_id
     When I get access token for the customer:    ${yves_user_email}
@@ -40,3 +40,12 @@ Retrieve_company_user_with incorrect_token
     And Response reason should be:    Unauthorized
     And Response should return error code:    001
     And Response should return error message:    Invalid access token.
+
+Retrieve_user_who_doesn't_belong_to_company
+    When I get access token for the customer:    ${yves_second_user_email}
+    And I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
+    And I send a GET request:    /company-users/
+    Then Response status code should be:    403
+    And Response reason should be:    Forbidden
+    And Response should return error code:    1403
+    And Response should return error message:    Current company user is not set. You need to select the current company user with \/company-user-access-tokens in order to access the resource collection.
