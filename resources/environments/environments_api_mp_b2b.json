@@ -157,18 +157,21 @@
     },
 
     "products": {
-        "bundle_product_abstract_sku": "B0001",
-        "bundle_product_concrete_sku": "000101",
-        "bundle_product_product_name": "Our Favourite Workspace Bundle",
-        "bundled_product_1_abstract_sku": "M528",
-        "bundled_product_2_abstract_sku": "M1017905",
-        "bundled_product_3_abstract_sku": "M24605",
-        "bundled_product_1_concrete_sku": "104939",
-        "bundled_product_1_concrete_name": "Dauphin vertebral disc swivel chair, synchronous mechanism",
-        "bundled_product_2_concrete_sku": "574995",
-        "bundled_product_2_concrete_name": "UPLINER standing desk, electric - without traverse, WxD 1800 x 800 mm - substructure silver, light gray",
-        "bundled_product_3_concrete_sku": "426581",
-        "bundled_product_3_concrete_name": "Cherry keyboard Strait JK-0300DE metal-look, corded, USB, silver",
+        
+        "bundle_product_abstract_sku": "M90851",
+        "bundle_product_abstract_name": "IDEAL document shredder - Power 1300 watts, 165 l volume",
+        "bundle_product_concrete_sku":"107938",
+        "bundle_product_concrete_name": "IDEAL document shredder - Power 1300 watts, 165 l volume - 23 – 25 sheets, safety level P-4, particle",
+        "bundled_product_1_abstract_sku": "M23457",
+        "bundled_product_2_abstract_sku": "C2235",
+        "bundled_product_3_abstract_sku": "M11542",
+        "bundled_product_1_concrete_sku": "424453",
+        "bundled_product_1_concrete_name": "Schneider ballpoint pen HAPTIFY 135323 M 0.5 mm, dark blue/light blue",
+        "bundled_product_2_concrete_sku": "1001454",
+        "bundled_product_2_concrete_name": "Schomburg standing desk - HxWxD 1094 x 600 x 500 mm, beech",
+        "bundled_product_3_concrete_sku": "104517",
+        "bundled_product_3_concrete_name": "Wood stackable chair - 4-foot substructure, upholstered seat - Cover anthracite, substructure coated",
+
         "qty_of_products_in_bundle": "3",
         "qty_of_each_product_inside_bundle": "1",
 
