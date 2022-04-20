@@ -2,7 +2,7 @@
     "environment": "api_mp_b2b",
 
     "env": {
-        "glue_url": "http://glue.de.spryker.local",
+        "glue_url": "https://glue.de.mp-b2b.internal-testing.demo-spryker.com",
         "bapi_url": "http://backend-api.de.spryker.local/api/rest"
     },
 
@@ -415,21 +415,8 @@
     },
 
 
-        "merchants":{
-           
-                "merchant_id": "MER000008",
-                "merchant_name": "Spryker",
-                "merchant_url": "/en/merchant/spryker",
-                "contact_person_role": "E-Commerce Manager",
-                "contact_person_title": "Mr",
-                "contact_person_first_name": "Harald",
-                "contact_person_last_name": "Schmidt",
-                "contact_person_phone": "+49 30 208498350",
-                "public_email": "info@spryker.com",
-                "public_phone": "+49 30 234567891",
-                "description": "Spryker is the main merchant on the B2B Demo Marketplace."                
-
-            },
+        "merchants":
+        {
                 "merchant_id": "MER000011",
                 "merchant_offer_id": "offer394",
                 "concrete_product_with_offer_sku":"425159",
@@ -446,8 +433,8 @@
                 "addresses":{
                     "city_munchen":"München",
                     "address1": "Matthias-Pschorr-Straße"
-                },
-
+                }
+            },
     "return_reasons": {
         "return_reason_damaged": "Damaged",
         "return_reason_wrong_item": "Wrong Item",
