@@ -36,7 +36,10 @@
         "customer_reference_1_de": "DE--1",
         "customer_reference_10_de": "DE--10",
         "customer_reference_15_de": "DE--15",
-        "customer_reference_34_de": "DE--34"
+        "customer_reference_34_de": "DE--34",
+
+        "grant_type_password": "password",
+        "grant_type_refresh_token": "refresh_token"
 
     },
 
@@ -294,8 +297,8 @@
     },
 
     "misc": {
-
         "default_header_content_type": "application/vnd.api+json",
+        "urlencoded_header_content_type": "application/x-www-form-urlencoded",
         "test_cart_name": "Test-cart",
         "qty_of_categories_in_category_trees": "6",
         "qty_of_subcategories_in_category_trees": "2",
