@@ -351,8 +351,9 @@
         "qty_of_subcategories_in_category_trees": "2",
         "color_name": "black",
 
-        "payment_provider_name": "DummyPayment",
-        "payment_method_name": "Invoice",
+        "payment_provider_name": "dummyMarketplacePayment",
+        "payment_method_name": "invoice",
+        "payment_selection_name": "dummyMarketplacePaymentInvoice",
         "carrier_name": "DHL",
         "shipment_method_name": "Standard",
         "shipment_method_name_2": "Express",
@@ -414,10 +415,8 @@
     },
 
 
-     "merchants":{
-
         "merchants":{
-            "spryker": {
+           
                 "merchant_id": "MER000008",
                 "merchant_name": "Spryker",
                 "merchant_url": "/en/merchant/spryker",
@@ -428,10 +427,12 @@
                 "contact_person_phone": "+49 30 208498350",
                 "public_email": "info@spryker.com",
                 "public_phone": "+49 30 234567891",
-                "description": "Spryker is the main merchant on the B2B Demo Marketplace."
+                "description": "Spryker is the main merchant on the B2B Demo Marketplace."                
+
             },
-            "computer_experts": {
                 "merchant_id": "MER000011",
+                "merchant_offer_id": "offer394",
+                "concrete_product_with_offer_sku":"425159",
                 "merchant_name": "Computer Experts",
                 "merchant_url": "/en/merchant/computer-experts",
                 "contact_person_role": "Brand Manager",
@@ -445,10 +446,7 @@
                 "addresses":{
                     "city_munchen":"München",
                     "address1": "Matthias-Pschorr-Straße"
-                }
-            }
-        }
-    },
+                },
 
     "return_reasons": {
         "return_reason_damaged": "Damaged",
