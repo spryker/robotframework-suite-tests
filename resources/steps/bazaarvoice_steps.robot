@@ -60,7 +60,7 @@ Yves: post bazaarvoice review with data:
     END
     Check Checkbox    ${bv_terms_and_conditions_checkbox}
     Click    ${bv_submit_button}
-Yves: page should contain the following script:
+Yves: page should contain script:
     [Arguments]    ${scriptId}
     Try reloading page until element is/not appear:    xpath=//head//script[@id='${scriptId}']    true
     Page Should Contain Element    xpath=//head//script[@id='${scriptId}']

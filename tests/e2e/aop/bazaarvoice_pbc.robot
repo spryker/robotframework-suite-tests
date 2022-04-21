@@ -31,12 +31,12 @@ Bazaarvoice_E2E
     Zed: submit pbc configuration form
     Zed: PBC details page should contain elements:    ${appConnectedStatus}
     Yves: go to the 'Home' page
-    Yves: page should contain the following script:    bazaar-voice
+    Yves: page should contain script:    bazaar-voice
     Yves: perform search by:    150
-    Yves: page should contain the following script:    bazaar-voice
+    Yves: page should contain script:    bazaar-voice
     Yves: 1st product card in the catalog should contains bv inline rating
     Yves: go to PDP of the product with sku:    150
-    Yves: page should contain the following script:    bazaar-voice
+    Yves: page should contain script:    bazaar-voice
     Yves: PDP contains/doesn't contain:    true    ${bazaarvoiceWriteReview}    ${bazaarvoiceQuestions}    ${bazaarvoiceInlineRating}
     Yves: post bazaarvoice review with data:
     ...    || overallRating | reviewTitle            | review                                               | recommendProduct | nickname        | location | email                       | age      | gender | qualityRating | valueRating ||
