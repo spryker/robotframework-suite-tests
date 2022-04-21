@@ -166,9 +166,9 @@ Add_five_items_to_cart_with_included_cart_rules_and_promotional_items
     And Response body parameter should be:    [data][id]    ${cart_uid}
     And Response body parameter should be:    [data][type]    carts
     And Response body parameter should not be EMPTY:    [data][links][self]
-    And Response should contain the array of a certain size:    [data][relationships][cart-rules][data]    2
+    And Response should contain the array of a certain size:    [data][relationships][cart-rules][data]    1
     And Response should contain the array of a certain size:    [data][relationships][promotional-items][data]    1
-    And Response should contain the array of a certain size:    [included]    4
+    And Response should contain the array of a certain size:    [included]    3
     And Response include should contain certain entity type:    cart-rules
     And Response include should contain certain entity type:    items
     And Response include element has self link:   cart-rules
@@ -205,7 +205,7 @@ Add_random_weight_product_to_cart_with_included_sales_units_and_measurenet_units
     And Response include element has self link:   sales-units
     And Response include element has self link:   product-measurement-units
     And Response body parameter should be:    [included][0][type]    product-measurement-units
-    And Response body parameter should be:    [included][0][id]    ${packaging_unit_m}
+    And Response body parameter should be:    [included][0][id]    ${packaging_unit_i}
     And Response body parameter should be:    [included][1][type]    sales-units
     And Response body parameter should be:    [included][1][id]    ${sales_unit_id}
     And Response body parameter should be:    [included][2][attributes][salesUnit][id]    ${sales_unit_id}
