@@ -323,6 +323,42 @@
 
     },
 
+    "merchants":{
+
+        "merchants":{
+            "spryker": {
+                "merchant_id": "MER000001",
+                "merchant_name": "Spryker",
+                "merchant_url": "/en/merchant/spryker",
+                "contact_person_role": "E-Commerce Manager",
+                "contact_person_title": "Mr",
+                "contact_person_first_name": "Harald",
+                "contact_person_last_name": "Schmidt",
+                "contact_person_phone": "+49 30 208498350",
+                "public_email": "info@spryker.com",
+                "public_phone": "+49 30 234567891",
+                "description": "Spryker is the main merchant on the B2B Demo Marketplace."
+            },
+            "sony_experts": {
+                "merchant_id": "MER000006",
+                "merchant_name": "Sony Experts",
+                "merchant_url": "/en/merchant/sony-experts",
+                "contact_person_role": "Brand Manager",
+                "contact_person_title": "Ms",
+                "contact_person_first_name": "Michele",
+                "contact_person_last_name": "Nemeth",
+                "contact_person_phone": "030/123456789",
+                "public_email": "support@sony-experts.com",
+                "public_phone": "+49 30 234567691",
+                "description": "Capture your moment with the best cameras from Sony. From pocket-size to professional-style, they all pack features to deliver the best quality pictures.Discover the range of Sony cameras, lenses and accessories, and capture your favorite moments with precision and style with the best cameras can offer.",
+                "addresses":{
+                    "city_munchen":"München",
+                    "address1": "Matthias-Pschorr-Straße"
+                }
+            }
+        }
+    },
+
     "return_reason":{
         "return_reasons_qty": "3"
     },
