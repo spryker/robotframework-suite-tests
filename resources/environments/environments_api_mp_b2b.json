@@ -86,27 +86,27 @@
     },
 
     "shop":{
-        "currency_name_eur": "Euro",
-        "currency_code_eur": "EUR",
-        "currency_symbol_eur": "€",
-        "store_de": "DE",
+       "currency_name_eur": "Euro",
+       "currency_code_eur": "EUR",
+       "currency_symbol_eur": "€",
+       "store_de": "DE",
 
-        "currency_name_dollar": "US Dollar",
-        "currency_code_dollar": "USD",
-        "currency_symbol_dollar": "$",
-        "store_us": "US",
+       "currency_name_dollar": "US Dollar",
+       "currency_code_dollar": "USD",
+       "currency_symbol_dollar": "$",
+       "store_us": "US",
 
-        "currency_name_chf": "Swiss Franc",
-        "currency_code_chf": "CHF",
-        "currency_symbol_chf": "CHF",
+       "currency_name_chf": "Swiss Franc",
+       "currency_code_chf": "CHF",
+       "currency_symbol_chf": "CHF",
 
-        "gross_mode": "GROSS_MODE",
-        "net_mode": "NET_MODE",
+       "gross_mode": "GROSS_MODE",
+       "net_mode": "NET_MODE",
 
-        "locale_name_DE": "de_DE",
-        "locale_code_DE": "de",
-        "locale_name_EN": "en_US",
-        "locale_code_EN": "en"
+       "locale_name_DE": "de_DE",
+       "locale_code_DE": "de",
+       "locale_name_EN": "en_US",
+       "locale_code_EN": "en"
     },
 
     "shopping-list":{

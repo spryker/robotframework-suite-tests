@@ -19,6 +19,8 @@ Get_product_offers_without_product_offer_id
 Get_not_existing_concrete_product_offers    
     When I send a GET request:    /concrete-products/123456789/product-offers
     Then Response status code should be:    200
+    And Response reason should be:    OK
+    And Response should contain the array of a certain size:    [data]    0
 
 Get_product_offer_with_volume_prices_included_for_inactive_product_offer
     When I send a GET request:    /product-offers/${inactive_offer_with_vp}?include=product-offer-prices
