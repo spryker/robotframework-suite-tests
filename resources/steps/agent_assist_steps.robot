@@ -4,7 +4,7 @@ Resource    ../common/common_zed.robot
 Resource    ../common/common.robot
 
 *** Keywords ***
-Zed: create new Zed user with the following data:
+Zed: create new Zed user with data:
     [Arguments]    ${zedUserEmail}    ${zedUserPassword}   ${zedUserFirstName}    ${zedUserLastName}    ${checkboxGroup}   ${checkboxAgent}    ${userInterfaceLanguage}
     ${currentURL}=    Get Location        
     Run Keyword Unless    '/user' in '${currentURL}'    Zed: go to second navigation item level:    Users    Users

@@ -307,7 +307,7 @@ Customer_Specific_Prices
 Agent_Assist
     [Documentation]    Checks Agent creation and that it can login under customer
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    Zed: create new Zed user with the following data:    agent+${random}@spryker.com    change123${random}    Agent    Assist    Root group    This user is an agent    en_US
+    Zed: create new Zed user with data:    agent+${random}@spryker.com    change123${random}    Agent    Assist    Root group    This user is an agent    en_US
     Yves: go to the 'Home' page
     Yves: go to URL:    agent/login
     Yves: login on Yves with provided credentials:    agent+${random}@spryker.com    change123${random}
@@ -440,7 +440,7 @@ Approval_Process
 Request_for_Quote
     [Documentation]    Checks user can request and receive quote
     [Setup]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    ...    AND    Zed: create new Zed user with the following data:    agent_quote+${random}@spryker.com    change123${random}    Request    Quote    Root group    This user is an agent    en_US
+    ...    AND    Zed: create new Zed user with data:    agent_quote+${random}@spryker.com    change123${random}    Request    Quote    Root group    This user is an agent    en_US
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     Yves: delete all shopping carts
     Yves: create new 'Shopping Cart' with name:    RfQCart+${random}
@@ -595,7 +595,7 @@ Return_Management
     Yves: check that 'Print Slip' contains the following products:    410083
     Zed: login on Zed with provided credentials:    admin@spryker.com
     Zed: create a return for the following order and product in it:    ${lastPlacedOrder}    421426
-    Zed: create new Zed user with the following data:    return+agent+${random}@spryker.com    change123${random}    Agent    Assist    Root group    This user is an agent    en_US
+    Zed: create new Zed user with data:    return+agent+${random}@spryker.com    change123${random}    Agent    Assist    Root group    This user is an agent    en_US
     Yves: go to the 'Home' page
     Yves: logout on Yves as a customer
     Yves: go to URL:    agent/login

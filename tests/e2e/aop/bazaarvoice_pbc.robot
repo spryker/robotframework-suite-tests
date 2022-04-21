@@ -25,7 +25,7 @@ Bazaarvoice_E2E
     Zed: click button on the PBC details page:    connect
     Zed: PBC details page should contain the following elements:    ${appPendingStatus}
     Zed: click button on the PBC details page:    configure
-    Zed: configure bazaarvoice pbc with the following data:
+    Zed: configure bazaarvoice pbc with data:
     ...    || clientName      | siteId    | environment | services                                                                              | stores ||
     ...    || partner-spryker | main_site | Staging     | Ratings & Reviews,Questions & Answers,Inline Ratings,Bazaarvoice Pixel,Container Page | EN,DE  ||
     Zed: submit pbc configuration form
@@ -38,7 +38,7 @@ Bazaarvoice_E2E
     Yves: go to PDP of the product with sku:    150
     Yves: page should contain the following script:    bazaar-voice
     Yves: PDP contains/doesn't contain:    true    ${bazaarvoiceWriteReview}    ${bazaarvoiceQuestions}    ${bazaarvoiceInlineRating}
-    Yves: post bazaarvoice review with the following data:
+    Yves: post bazaarvoice review with data:
     ...    || overallRating | reviewTitle            | review                                               | recommendProduct | nickname        | location | email                       | age      | gender | qualityRating | valueRating ||
     ...    || 5             | Robot Review ${random} | I bought this a month ago and am so happy that I did | yes              | Robot ${random} | New York | sonia+${random}@spryker.com | 25 to 34 | Female | 5             | 1           ||
     Yves: login on Yves with provided credentials:    ${yves_company_user_manager_and_buyer_email}

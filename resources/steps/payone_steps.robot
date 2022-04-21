@@ -10,7 +10,7 @@ Resource    ../pages/yves/yves_bazaarvoice_review_popup_form.robot
 Resource    ../pages/apps/apps_payone_cc_payment_page.robot
 
 *** Keywords ***
-Zed: configure payone pbc with the following data:
+Zed: configure payone pbc with data:
     [Documentation]    Possible argument names: credentialsKey, merchantId, subAccountId, paymentPortalId, mode, methods
     [Arguments]    @{args}
     ${payoneCondifurationData}=    Set Up Keyword Arguments    @{args}

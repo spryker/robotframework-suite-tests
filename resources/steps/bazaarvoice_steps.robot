@@ -8,7 +8,7 @@ Resource    ../pages/yves/yves_bazaarvoice_review_popup_form.robot
 
 
 *** Keywords ***
-Zed: configure bazaarvoice pbc with the following data:
+Zed: configure bazaarvoice pbc with data:
     [Documentation]    Possible argument names: clientName, siteId, environment, services, stores
     [Arguments]    @{args}
     ${bazaarvoiceCondifurationData}=    Set Up Keyword Arguments    @{args}
@@ -37,7 +37,7 @@ Check bazaarvoice configuration checkbox:
         ...    AND    Click    xpath=//spy-checkbox/label//span[contains(text(),'${checkbox_to_check}')]/ancestor::label
     END
 
-Yves: post bazaarvoice review with the following data:
+Yves: post bazaarvoice review with data:
     [Documentation]    Possible argument names: overallRating, reviewTitle, review, recommendProduct, nickname, location, email, age, gender, qualityRating, valueRating
     [Arguments]    @{args}
     Click    ${pdp_bazaarvoice_write_review_button}

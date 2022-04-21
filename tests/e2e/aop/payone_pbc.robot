@@ -28,7 +28,7 @@ Payone_E2E
     Zed: click button on the PBC details page:    connect
     Zed: PBC details page should contain the following elements:    ${appPendingStatus}
     Zed: click button on the PBC details page:    configure
-    Zed: configure payone pbc with the following data:
+    Zed: configure payone pbc with data:
     ...    || credentialsKey   | merchantId | subAccountId | paymentPortalId | mode | methods            ||
     ...    || s6RUCzClrUaHQcDH | 32481      | 32893        | 2024080         | Test | Credit Card,PayPal ||
     Zed: submit pbc configuration form
