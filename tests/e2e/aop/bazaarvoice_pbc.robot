@@ -51,7 +51,7 @@ Bazaarvoice_E2E
     ...    || salutation | firstName | lastName    | street        | houseNumber | postCode | city   | country | company | phone     | additionalAddress ||
     ...    || Mr.        | Robot     | bazaarvoice | Kirncher Str. | 7           | 10247    | Berlin | Germany | Spryker | 123456789 | Additional street ||
     Yves: submit form on the checkout
-    Yves: select the following shipping method on the checkout and go next:    Air Sonic
+    Yves: select shipping method on checkout and go next:    Air Sonic
     Yves: select the following payment method on the checkout and go next:    Invoice
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page

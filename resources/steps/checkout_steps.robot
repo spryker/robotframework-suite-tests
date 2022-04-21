@@ -105,7 +105,7 @@ Yves: fill in new delivery address for a product:
         Run keyword if    '${key}'=='additionalAddress' and '${value}' != '${EMPTY}'    Type Text    xpath=//article[contains(@data-qa,'component product-card-item')]//*[contains(.,'${item}')]/ancestor::div[contains(@class,'address-item-form')][1]//input[contains(@name,'[address3]')]    ${value}
     END
 
-Yves: select the following shipping method on the checkout and go next:
+Yves: select shipping method on checkout and go next:
     [Arguments]    ${shippingMethod}
     Run Keyword If    '${env}'=='suite-nonsplit'    Click    xpath=//input[contains(@id,'shipmentSelection')]/following-sibling::span[contains(@class,'label')][contains(text(),'${shippingMethod}')]/../span[contains(@class,'radio__box')]
     ...    ELSE    Click    xpath=//div[@data-qa='component shipment-sidebar']//*[contains(.,'Shipping Method')]/../ul//label[contains(.,'${shippingMethod}')]/span[contains(@class,'radio__box')]

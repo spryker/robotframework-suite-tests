@@ -261,7 +261,7 @@ Configurable_Bundle
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: billing address same as shipping address:    true
     Yves: fill in the following new shipping address:    Mr    ${yves_second_user_first_name}    ${yves_second_user_last_name}    Kirncher Str.    7    10247    Berlin    Germany
-    Yves: select the following shipping method on the checkout and go next:    Express
+    Yves: select shipping method on checkout and go next:    Express
     Yves: select the following payment method on the checkout and go next:    Invoice
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
@@ -296,7 +296,7 @@ Discounts
     Yves: proceed with checkout as guest:    Mr    Guest    user    guest@user.com    
     Yves: billing address same as shipping address:    true
     Yves: fill in the following new shipping address:    Mr    Guest    user    Kirncher Str.    7    10247    Berlin    Germany
-    Yves: select the following shipping method on the checkout and go next:    Express
+    Yves: select shipping method on checkout and go next:    Express
     Yves: select the following payment method on the checkout and go next:    Invoice
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
@@ -379,7 +379,7 @@ Return_Management
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: billing address same as shipping address:    true
     Yves: fill in the following new shipping address:    Mr    Guest    User    Kirncher Str.    7    10247    Berlin    Germany
-    Yves: select the following shipping method on the checkout and go next:    Express
+    Yves: select shipping method on checkout and go next:    Express
     Yves: select the following payment method on the checkout and go next:    Invoice
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
@@ -484,7 +484,7 @@ Share_Shopping_Carts
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: billing address same as shipping address:    true
     Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${yves_company_user_shared_permission_receiver_address}
-    Yves: select the following shipping method on the checkout and go next:    Express
+    Yves: select shipping method on checkout and go next:    Express
     Yves: select the following payment method on the checkout and go next:    Invoice
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
@@ -519,7 +519,7 @@ Quick_Order
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: billing address same as shipping address:    true
     Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${yves_company_user_buyer_address}
-    Yves: select the following shipping method on the checkout and go next:    Express
+    Yves: select shipping method on checkout and go next:    Express
     Yves: select the following payment method on the checkout and go next:    Invoice
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
@@ -553,7 +553,7 @@ Packaging_Units
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: billing address same as shipping address:    true
     Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${yves_company_user_manager_and_buyer_address}
-    Yves: select the following shipping method on the checkout and go next:    Express
+    Yves: select shipping method on checkout and go next:    Express
     Yves: select the following payment method on the checkout and go next:    Invoice
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
@@ -630,7 +630,7 @@ Business_Unit_Address_on_Checkout
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: billing address same as shipping address:    true
     Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${yves_company_user_buyer_address}
-    Yves: select the following shipping method on the checkout and go next:    Express
+    Yves: select shipping method on checkout and go next:    Express
     Yves: select the following payment method on the checkout and go next:    Invoice
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
@@ -651,7 +651,7 @@ Approval_Process
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: billing address same as shipping address:    true
     Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${yves_company_user_buyer_with_limit_address}
-    Yves: select the following shipping method on the checkout and go next:    Express
+    Yves: select shipping method on checkout and go next:    Express
     Yves: select the following payment method on the checkout and go next:    Invoice
     Yves: select approver on the 'Summary' page:    Lilu Dallas (€1,000.00)
     Yves: 'send the request' on the summary page
@@ -667,7 +667,7 @@ Approval_Process
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: billing address same as shipping address:    true
     Yves: select the following existing address on the checkout as 'shipping' address and go next:            ${yves_company_user_buyer_with_limit_address}
-    Yves: select the following shipping method on the checkout and go next:    Express
+    Yves: select shipping method on checkout and go next:    Express
     Yves: select the following payment method on the checkout and go next:    Invoice
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
@@ -679,7 +679,7 @@ Approval_Process
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: billing address same as shipping address:    true
     Yves: select the following existing address on the checkout as 'shipping' address and go next:            ${yves_company_user_buyer_with_limit_address}
-    Yves: select the following shipping method on the checkout and go next:    Express
+    Yves: select shipping method on checkout and go next:    Express
     Yves: select the following payment method on the checkout and go next:    Invoice
     Yves: select approver on the 'Summary' page:    Lilu Dallas (€1,000.00)
     Yves: 'send the request' on the summary page
@@ -783,7 +783,7 @@ Request_for_Quote
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: billing address same as shipping address:    true
     Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${yves_company_user_buyer_address}
-    Yves: select the following shipping method on the checkout and go next:    Express
+    Yves: select shipping method on checkout and go next:    Express
     Yves: select the following payment method on the checkout and go next:    Invoice
     Yves: shopping cart contains product with unit price:    009_30692991    Canon IXUS 180    500
     Yves: accept the terms and conditions:    true
