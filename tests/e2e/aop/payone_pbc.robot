@@ -22,7 +22,7 @@ Payone_E2E
     [Setup]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Payone: create Beeceptor relay
     Zed: go to first navigation item level:    Apps
-    Zed: AOP catalog page should contain the following apps:    Payone    BazaarVoice
+    Zed: AOP catalog page should contain apps:    Payone    BazaarVoice
     Zed: go to the PBC details page:    Payone
     Zed: PBC details page should contain elements:    ${appTitle}    ${appShortDescription}    ${appAuthor}   ${appLogo}
     Zed: click button on the PBC details page:    connect

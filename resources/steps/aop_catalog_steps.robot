@@ -12,7 +12,7 @@ ${appPendingStatus}    ${pbc_details_pending_status_locator}
 ${appConnectedStatus}    ${pbc_details_connected_status_locator}
 
 *** Keywords ***
-Zed: AOP catalog page should contain the following apps:
+Zed: AOP catalog page should contain apps:
     [Documentation]    check that pbc is displayed in the aop catalog page. Possible arguments: pbc title (multiple titles are supported, case sensitive)
     [Arguments]    @{pbc_title_list}    ${element1}=${EMPTY}     ${element2}=${EMPTY}     ${element3}=${EMPTY}     ${element4}=${EMPTY}     ${element5}=${EMPTY}     ${element6}=${EMPTY}     ${element7}=${EMPTY}     ${element8}=${EMPTY}     ${element9}=${EMPTY}     ${element10}=${EMPTY}     ${element11}=${EMPTY}     ${element12}=${EMPTY}     ${element13}=${EMPTY}     ${element14}=${EMPTY}     ${element15}=${EMPTY}
     ${pbc_titles_list_count}=   get length  ${pbc_title_list}

@@ -19,7 +19,7 @@ Bazaarvoice_E2E
     [Documentation]    Checks that bazzarvoice pbc can be connected in the backoffice and is reflected to the storefront
     [Setup]    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to first navigation item level:    Apps
-    Zed: AOP catalog page should contain the following apps:    Payone    BazaarVoice
+    Zed: AOP catalog page should contain apps:    Payone    BazaarVoice
     Zed: go to the PBC details page:    BazaarVoice
     Zed: PBC details page should contain elements:    ${appTitle}    ${appShortDescription}    ${appAuthor}   ${appLogo}
     Zed: click button on the PBC details page:    connect
