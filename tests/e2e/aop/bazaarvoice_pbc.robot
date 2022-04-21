@@ -21,15 +21,15 @@ Bazaarvoice_E2E
     Zed: go to first navigation item level:    Apps
     Zed: AOP catalog page should contain the following apps:    Payone    BazaarVoice
     Zed: go to the PBC details page:    BazaarVoice
-    Zed: PBC details page should contain the following elements:    ${appTitle}    ${appShortDescription}    ${appAuthor}   ${appLogo}
+    Zed: PBC details page should contain elements:    ${appTitle}    ${appShortDescription}    ${appAuthor}   ${appLogo}
     Zed: click button on the PBC details page:    connect
-    Zed: PBC details page should contain the following elements:    ${appPendingStatus}
+    Zed: PBC details page should contain elements:    ${appPendingStatus}
     Zed: click button on the PBC details page:    configure
     Zed: configure bazaarvoice pbc with data:
     ...    || clientName      | siteId    | environment | services                                                                              | stores ||
     ...    || partner-spryker | main_site | Staging     | Ratings & Reviews,Questions & Answers,Inline Ratings,Bazaarvoice Pixel,Container Page | EN,DE  ||
     Zed: submit pbc configuration form
-    Zed: PBC details page should contain the following elements:    ${appConnectedStatus}
+    Zed: PBC details page should contain elements:    ${appConnectedStatus}
     Yves: go to the 'Home' page
     Yves: page should contain the following script:    bazaar-voice
     Yves: perform search by:    150

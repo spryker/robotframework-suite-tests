@@ -254,7 +254,7 @@ Product_Relations
     Yves: PDP contains/doesn't contain:    false    ${relatedProducts}
     Yves: add product to the shopping cart
     Yves: go to the shopping cart through the header with name:    productRelationCart+${random}
-    Yves: shopping cart contains/doesn't contain the following elements:    true    ${upSellProducts}
+    Yves: shopping cart contains/doesn't contain elements:    true    ${upSellProducts}
     [Teardown]    Yves: delete 'Shopping Cart' with name:    productRelationCart+${random}
 
 Default_Merchants
@@ -374,7 +374,7 @@ Approval_Process
     Yves: 'Summary' page contains/doesn't contain:    true    ${cancelRequestButton}    ${alertWarning}    ${quoteStatus}
     Yves: go to the 'Home' page
     Yves: go to the shopping cart through the header with name:    approvalCart+${random}
-    Yves: shopping cart contains/doesn't contain the following elements:    true    ${lockedCart}
+    Yves: shopping cart contains/doesn't contain elements:    true    ${lockedCart}
     Yves: create new 'Shopping Cart' with name:    newApprovalCart+${random}
     Yves: go to PDP of the product with sku:    M58314
     Yves: add product to the shopping cart
@@ -430,7 +430,7 @@ Approval_Process
     Yves: go to user menu item in the left bar:    Shopping carts
     Yves: shopping cart with name xxx has the following status:    approvalCart+${random}    Approved
     Yves: go to the shopping cart through the header with name:    approvalCart+${random}
-    Yves: shopping cart contains/doesn't contain the following elements:    true    ${lockedCart}
+    Yves: shopping cart contains/doesn't contain elements:    true    ${lockedCart}
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: 'Summary' page is displayed
     Yves: Accept the Terms and Conditions:    true

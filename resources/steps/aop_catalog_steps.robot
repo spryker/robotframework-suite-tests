@@ -32,7 +32,7 @@ Zed: go to the PBC details page:
     Wait Until Element Is Visible    ${pbc_details_main_content_locator}
     Page Should Contain Element    ${pbc_details_main_content_locator}
 
-Zed: PBC details page should contain the following elements: 
+Zed: PBC details page should contain elements:
     [Arguments]    @{pbc_elements_list}    ${element1}=${EMPTY}     ${element2}=${EMPTY}     ${element3}=${EMPTY}     ${element4}=${EMPTY}     ${element5}=${EMPTY}     ${element6}=${EMPTY}     ${element7}=${EMPTY}     ${element8}=${EMPTY}     ${element9}=${EMPTY}     ${element10}=${EMPTY}     ${element11}=${EMPTY}     ${element12}=${EMPTY}     ${element13}=${EMPTY}     ${element14}=${EMPTY}     ${element15}=${EMPTY}
     ${pbc_elements_list_coumt}=   get length  ${pbc_elements_list}
     FOR    ${index}    IN RANGE    0    ${pbc_elements_list_coumt}

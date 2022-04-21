@@ -24,15 +24,15 @@ Payone_E2E
     Zed: go to first navigation item level:    Apps
     Zed: AOP catalog page should contain the following apps:    Payone    BazaarVoice
     Zed: go to the PBC details page:    Payone
-    Zed: PBC details page should contain the following elements:    ${appTitle}    ${appShortDescription}    ${appAuthor}   ${appLogo}
+    Zed: PBC details page should contain elements:    ${appTitle}    ${appShortDescription}    ${appAuthor}   ${appLogo}
     Zed: click button on the PBC details page:    connect
-    Zed: PBC details page should contain the following elements:    ${appPendingStatus}
+    Zed: PBC details page should contain elements:    ${appPendingStatus}
     Zed: click button on the PBC details page:    configure
     Zed: configure payone pbc with data:
     ...    || credentialsKey   | merchantId | subAccountId | paymentPortalId | mode | methods            ||
     ...    || s6RUCzClrUaHQcDH | 32481      | 32893        | 2024080         | Test | Credit Card,PayPal ||
     Zed: submit pbc configuration form
-    Zed: PBC details page should contain the following elements:    ${appConnectedStatus}
+    Zed: PBC details page should contain elements:    ${appConnectedStatus}
     Zed: activate/deactivate payment method:    Payone    Credit Card
 
     Yves: login on Yves with provided credentials:    ${yves_company_user_manager_and_buyer_email}

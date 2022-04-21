@@ -503,7 +503,7 @@ Product_Relations
     Yves: PDP contains/doesn't contain:    false    ${relatedProducts}
     Yves: add product to the shopping cart
     Yves: go to b2c shopping cart
-    Yves: shopping cart contains/doesn't contain the following elements:    true    ${upSellProducts}
+    Yves: shopping cart contains/doesn't contain elements:    true    ${upSellProducts}
     [Teardown]    Yves: check if cart is not empty and clear it
 
 Guest_Checkout
