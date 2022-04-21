@@ -118,7 +118,7 @@ Yves: select the following shipping method for the shipment:
     [Arguments]    ${shipment}    ${shippingProvider}    ${shippingMethod}
         Click    xpath=//form[@name='shipmentCollectionForm']/descendant::article[contains(@class,'grid')][${shipment}]//div[@data-qa='component shipment-sidebar']//*[contains(@class,'title')]/*[contains(text(),'${shippingProvider}')]/..//following-sibling::ul[1]//label[contains(.,'${shippingMethod}')]/span[contains(@class,'radio__box')]
 
-Yves: select the following payment method on the checkout and go next:
+Yves: select payment method on checkout and go next:
     [Arguments]    ${paymentMethod}    ${paymentProvider}=${EMPTY}
     Run Keyword If    '${env}'=='b2b'    Run keywords
     ...    Click    //form[@id='payment-form']//li[@class='checkout-list__item'][contains(.,'${paymentMethod}')]//span[contains(@class,'toggler-radio__box')]

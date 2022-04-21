@@ -271,7 +271,7 @@ Product_Bundles
     ...    || Mr.        | ${yves_second_user_first_name} | ${yves_second_user_last_name} | Kirncher Str. | 7           | 10247    | Berlin | Germany | Spryker | 123456789 | Additional street ||
     Yves: submit form on the checkout
     Yves: select shipping method on checkout and go next:    Express
-    Yves: select the following payment method on the checkout and go next:    Invoice
+    Yves: select payment method on checkout and go next:    Invoice
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
@@ -304,7 +304,7 @@ Configurable_Bundle
     ...    || Mr.        | ${yves_second_user_first_name} | ${yves_second_user_last_name} | Kirncher Str. | 7           | 10247    | Berlin | Germany | Spryker | 123456789 | Additional street ||
     Yves: submit form on the checkout
     Yves: select shipping method on checkout and go next:    Express
-    Yves: select the following payment method on the checkout and go next:    Invoice
+    Yves: select payment method on checkout and go next:    Invoice
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
@@ -349,7 +349,7 @@ Discounts
     ...    || Mr.        | ${yves_second_user_first_name} | ${yves_second_user_last_name} | Kirncher Str. | 7           | 10247    | Berlin | Germany | Spryker | 123456789 | Additional street ||
     Yves: submit form on the checkout
     Yves: select shipping method on checkout and go next:    Express
-    Yves: select the following payment method on the checkout and go next:    Invoice
+    Yves: select payment method on checkout and go next:    Invoice
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
@@ -391,7 +391,7 @@ Split_Delivery
     Yves: select the following shipping method for the shipment:    2    Hermes    Same Day
     Yves: select the following shipping method for the shipment:    3    DHL    Express
     Yves: submit form on the checkout
-    Yves: select the following payment method on the checkout and go next:    Invoice
+    Yves: select payment method on checkout and go next:    Invoice
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
@@ -434,7 +434,7 @@ Return_Management
     ...    || Mr.        | Guest     | User     | Kirncher Str. | 7           | 10247    | Berlin | Germany | Spryker | 123456789 | Additional street ||
     Yves: submit form on the checkout
     Yves: select shipping method on checkout and go next:    Express
-    Yves: select the following payment method on the checkout and go next:    Invoice
+    Yves: select payment method on checkout and go next:    Invoice
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
@@ -542,7 +542,7 @@ Guest_Checkout
     ...    || Mr.        | Guest     | User     | Kirncher Str. | 7           | 10247    | Berlin | Germany | Spryker | 123456789 | Additional street ||
     Yves: submit form on the checkout
     Yves: select shipping method on checkout and go next:    Express
-    Yves: select the following payment method on the checkout and go next:    Invoice
+    Yves: select payment method on checkout and go next:    Invoice
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
@@ -577,7 +577,7 @@ Refunds
     ...    || Mr.        | ${yves_second_user_first_name} | ${yves_second_user_last_name} | Kirncher Str. | 7           | 10247    | Berlin | Germany | Spryker | 123456789 | Additional street ||
     Yves: submit form on the checkout
     Yves: select shipping method on checkout and go next:    Express
-    Yves: select the following payment method on the checkout and go next:    Invoice
+    Yves: select payment method on checkout and go next:    Invoice
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed

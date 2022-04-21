@@ -48,7 +48,7 @@ Payone_E2E
     ...    || Mr.        | Robot     | payone   | Kirncher Str. | 7           | 10247    | Berlin | Germany | Spryker | 123456789 | Additional street ||
     Yves: submit form on the checkout
     Yves: select shipping method on checkout and go next:    Air Sonic
-    Yves: select the following payment method on the checkout and go next:    Credit Card    Payone
+    Yves: select payment method on checkout and go next:    Credit Card    Payone
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Payone: cancel payment
@@ -69,7 +69,7 @@ Payone_E2E
     ...    || Mr.        | Robot     | payone   | Kirncher Str. | 7           | 10247    | Berlin | Germany | Spryker | 123456789 | Additional street ||
     Yves: submit form on the checkout
     Yves: select shipping method on checkout and go next:    Air Sonic
-    Yves: select the following payment method on the checkout and go next:    Credit Card    Payone
+    Yves: select payment method on checkout and go next:    Credit Card    Payone
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Payone: submit credit card with data:
