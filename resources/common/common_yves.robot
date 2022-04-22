@@ -28,7 +28,7 @@ ${notification_area}    xpath=//section[@data-qa='component notification-area']
 
 
 *** Keywords ***
-Yves: login on Yves with credentials:
+Yves: login with credentials:
     [Arguments]    ${email}    ${password}=${default_password}
     ${currentURL}=    Get Url
     Run Keyword Unless    '/login' in '${currentURL}'

@@ -41,7 +41,7 @@ Bazaarvoice_E2E
     Yves: post bazaarvoice review with data:
     ...    || overallRating | reviewTitle            | review                                               | recommendProduct | nickname        | location | email                       | age      | gender | qualityRating | valueRating ||
     ...    || 5             | Robot Review ${random} | I bought this a month ago and am so happy that I did | yes              | Robot ${random} | New York | sonia+${random}@spryker.com | 25 to 34 | Female | 5             | 1           ||
-    Yves: login on Yves with credentials:    ${yves_company_user_manager_and_buyer_email}
+    Yves: login with credentials:    ${yves_company_user_manager_and_buyer_email}
     Yves: create new 'Shopping Cart' with name:    bazaarvoice+${random}
     Yves: go to PDP with sku:    136
     Yves: add product to the shopping cart

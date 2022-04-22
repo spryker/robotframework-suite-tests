@@ -35,7 +35,7 @@ Payone_E2E
     Zed: PBC details page should contain elements:    ${appConnectedStatus}
     Zed: activate/deactivate payment method:    Payone    Credit Card
 
-    Yves: login on Yves with credentials:    ${yves_company_user_manager_and_buyer_email}
+    Yves: login with credentials:    ${yves_company_user_manager_and_buyer_email}
 
     # Cancel order scenario
     Yves: create new 'Shopping Cart' with name:    payone+${random}
@@ -95,7 +95,7 @@ Payone_E2E
     Zed: wait for order item to be in state:    142    canceled
     Zed: trigger matching state of order item inside xxx shipment:    136    deliver
 
-    Yves: login on Yves with credentials:    ${yves_company_user_manager_and_buyer_email}
+    Yves: login with credentials:    ${yves_company_user_manager_and_buyer_email}
     Yves: go to 'Order History' page
     Yves: 'View Order/Reorder/Return' on the order history page:     Return    ${lastPlacedOrder}
     Yves: 'Create Return' page is displayed
