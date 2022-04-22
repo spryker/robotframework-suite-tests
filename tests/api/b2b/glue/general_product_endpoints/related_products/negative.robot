@@ -5,6 +5,9 @@ Resource    ../../../../../../resources/common/common_api.robot
 Default Tags    glue
 
 *** Test Cases ***
+ENABLER
+    TestSetup
+
 Get_related_products_without_abstract_SKU
     When I send a GET request:    /abstract-products//related-products
     Then Response status code should be:    400
