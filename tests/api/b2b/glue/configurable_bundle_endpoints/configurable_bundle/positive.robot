@@ -93,28 +93,15 @@ Get_configurable_bundle_templates_including_concrete_products_concrete_product_p
     And Each Array Element Of Array In Response Should Contain Property:    [data]    id
     And Each Array Element Of Array In Response Should Contain Property:    [data]    attributes
     And Each Array Element Of Array In Response Should Contain Property:    [data]    links
-    And Each array element of array in response should contain nested property:    [data]    relationships    configurable-bundle-template-slots
-    And Response should contain the array of a certain size:    [included]    9
-    And Each array element of array in response should contain property:    [included]    id
-    And Each array element of array in response should contain nested property:    [included]    attributes    name
-    And Response body parameter should be:    [included][0][type]    concrete-product-image-sets
-    And Each array element of array in response should contain property:    [included][0][attributes][images]    externalUrlLarge
-    And Each array element of array in response should contain property:    [included][0][attributes][images]    externalUrlSmall
-    And Response body parameter should be:    [included][1][type]    concrete-product-prices
-    And Response body parameter should be:    [included][2][type]    concrete-products
-    And Response body parameter should be:    [included][3][type]    concrete-product-image-sets
-    And Each array element of array in response should contain property:    [included][3][attributes][images]    externalUrlLarge
-    And Each array element of array in response should contain property:    [included][3][attributes][images]    externalUrlSmall
-    And Response body parameter should be:    [included][5][type]    concrete-product-prices
-    And Response body parameter should be:    [included][6][type]    concrete-product-prices
-    And Response body parameter should be:    [included][7][type]    concrete-products
-    And Response body parameter should not be EMPTY:    [included][7][attributes][sku]
-    And Response body parameter should not be EMPTY:    [included][7][attributes][description]
-    And Response body parameter should be:    [included][8][type]    configurable-bundle-template-slots
-    And Response body parameter should be:    [included][9][type]    concrete-product-image-sets
-    And Each array element of array in response should contain property:    [included][9][attributes][images]    externalUrlLarge
-    And Each array element of array in response should contain property:    [included][9][attributes][images]    externalUrlSmall
+    And Response should contain the array larger than a certain size:    [data][relationships][configurable-bundle-template-slots][data]    0
    # TODO check included concrete-products,configurable-bundle-template-slots,concrete-product-prices,concrete-product-image-sets after BUG CC-16634 fix
+    And Response should contain the array of a certain size:    [included]    9
+    And Response include should contain certain entity type:    concrete-product-image-sets
+    And Response include element has self link:   concrete-product-image-sets
+    And Response include should contain certain entity type:    concrete-product-prices
+    And Response include element has self link:   concrete-product-prices
+    And Response include should contain certain entity type:    concrete-products
+    And Response include element has self link:   concrete-products
     And Response body has correct self link
 
 Add_configured_bundle_item_to_the_cart_with_included_items
