@@ -98,7 +98,7 @@ Yves: 'Business Unit' dropdown contains:
 Zed: delete company user xxx withing xxx company business unit:
     [Documentation]    Possible argument names: company user name
     [Arguments]    ${companyUserName}    ${companyBusinessUnit}
-    Zed: login on Zed with credentials:    ${zed_admin_email}
+    Zed: login with credentials:    ${zed_admin_email}
     ${currentURL}=    Get Location
     Run Keyword Unless    '/customer' in '${currentURL}'    Zed: go to second navigation item level:    Customers    Company Users
     Zed: perform search by:    ${companyUserName}

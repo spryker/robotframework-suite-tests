@@ -26,7 +26,7 @@ Resource    ../../resources/steps/zed_users_steps.robot
 Agent_Assist_Impersonate_As_Customer
     [Documentation]    This test case checks the overall possibility to create an agent user in Zed, login with his credentials in Yves and impersonate as a customer.
     [Tags]    suite-nonsplit    b2c    b2b    all
-    Zed: login on Zed with credentials:    ${zed_admin_email}    ${zed_admin_password}
+    Zed: login with credentials:    ${zed_admin_email}    ${zed_admin_password}
     Zed: create new Zed user with data:    agent+${random}@spryker.com    change123    Agent    Assist    Root group    This user is an agent    en_US
     Yves: go to the 'Home' page
     Yves: go to URL:    agent/login
@@ -36,13 +36,13 @@ Agent_Assist_Impersonate_As_Customer
     Yves: agent widget contains:    ${yves_user_email}
     Yves: As an Agent login under the customer:    ${yves_user_email}
     Yves: header contains/doesn't contain:    false    ${customerSearchWidget}
-    Zed: login on Zed with credentials:    ${zed_admin_email}
+    Zed: login with credentials:    ${zed_admin_email}
     Zed: delete Zed user with the following email:    agent+${random}@spryker.com
 
 # Agent_Assist_Impersonate_As_Customer_Merchant_Prices
 #     [Documentation]    This test case checks the overall possibility to create an agent user in Zed, login with his credentials in Yves and impersonate as a customer.
 #     [Tags]    b2b
-#     Zed: login on Zed with credentials:    ${zedAdminEmail}    ${zedAdminPassword}
+#     Zed: login with credentials:    ${zedAdminEmail}    ${zedAdminPassword}
 #     Zed: create new Zed user with data:    agent+${random}@spryker.com    change123    Agent    Assist    Root group    This user is an agent    en_US
 #     Yves: go to the 'Home' page
 #     Yves: go to URL:    agent/login
@@ -59,7 +59,7 @@ Agent_Assist_Impersonate_As_Customer
 # Agent_Assist_Overview_B2B
 #     [Documentation]    This test case checks that an agent in a B2B shop has a menu for request for quote
 #     [Tags]    b2b    suite_nonsplit
-#     Zed: login on Zed with credentials:    admin@spryker.com
+#     Zed: login with credentials:    admin@spryker.com
 #     Zed: create new Zed user with data:    agent+${random}@spryker.com    change123    Agent    Assist    Root group    This user is an agent    en_US
 #     Yves: go to the 'Home' page
 #     Yves: go to URL:    agent/login
@@ -73,7 +73,7 @@ Agent_Assist_Impersonate_As_Customer
 # Agent_Assist_Overview_B2C
 #     [Documentation]    This test case checks that an agent in a B2C shop has no menu for request for quote
 #     [Tags]    b2c
-#     Zed: login on Zed with credentials:    admin@spryker.com
+#     Zed: login with credentials:    admin@spryker.com
 #     Zed: create new Zed user with data:    agent+${random}@spryker.com    change123    Agent    Assist    Root group    This user is an agent    en_US
 #     Yves: go to the 'Home' page
 #     Yves: go to URL:    agent/login
@@ -93,7 +93,7 @@ Agent_Assist_Impersonate_As_Customer
 #     Yves: add product to the shopping cart
 #     Yves: go to the shopping cart through the header with name:    QuoteRequest+${random}
 #     Yves: convert a cart to a quote request
-#     Zed: login on Zed with credentials:    admin@spryker.com
+#     Zed: login with credentials:    admin@spryker.com
 #     Zed: create new Zed user with data:    agent+${random}@spryker.com    change123    Agent    Assist    Root group    This user is an agent    en_US
 #     Yves: go to the 'Home' page
 #     Yves: go to URL:    agent/login

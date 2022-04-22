@@ -15,7 +15,7 @@ ${zed_processing_block_locator}     xpath=//div[contains(@id,'processing')][cont
 
 
 *** Keywords ***
-Zed: login on Zed with credentials:
+Zed: login with credentials:
     [Arguments]    ${email}    ${password}=${default_password}
     go to    ${zed_url}
     delete all cookies

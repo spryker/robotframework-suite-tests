@@ -19,7 +19,7 @@ Resource    ../../../resources/steps/orders_management_steps.robot
 *** Test Cases ***
 Payone_E2E
     [Documentation]    Checks that payone pbc can be connected in the backoffice and is reflected to the storefront
-    [Setup]    Run Keywords    Zed: login on Zed with credentials:    ${zed_admin_email}
+    [Setup]    Run Keywords    Zed: login with credentials:    ${zed_admin_email}
     ...    AND    Payone: create Beeceptor relay
     Zed: go to first navigation item level:    Apps
     Zed: AOP catalog page should contain apps:    Payone    BazaarVoice
@@ -78,7 +78,7 @@ Payone_E2E
     Wait Until Page Contains Element    ${success_page_main_container_locator}[${env}]
     Yves: 'Thank you' page is displayed
     Yves: get the last placed order ID by current customer
-    Zed: login on Zed with credentials:    ${zed_admin_email}
+    Zed: login with credentials:    ${zed_admin_email}
     Zed: go to order page:    ${lastPlacedOrder}
     Zed: trigger matching state of order item inside xxx shipment:    136    invoice customer
     Zed: trigger matching state of order item inside xxx shipment:    136    Ship
@@ -102,7 +102,7 @@ Payone_E2E
     Yves: create return for the following products:    136
     Yves: 'Return Details' page is displayed
 
-    Zed: login on Zed with credentials:    ${zed_admin_email}
+    Zed: login with credentials:    ${zed_admin_email}
     Zed: go to order page:    ${lastPlacedOrder}
     Zed: wait for order item to be in state:    136    waiting for return
     Zed: trigger matching state of order item inside xxx shipment:    136    Execute return
@@ -114,7 +114,7 @@ Payone_E2E
     Zed: trigger matching state of order item inside xxx shipment:    150    Close
     Zed: wait for order item to be in state:    150    closed
 
-    [Teardown]    Run Keywords    Zed: login on Zed with credentials:    ${zed_admin_email}
+    [Teardown]    Run Keywords    Zed: login with credentials:    ${zed_admin_email}
     ...    AND    Zed: go to first navigation item level:    Apps
     ...    AND    Zed: go to the PBC details page:    Payone
     ...    AND    Zed: Disconnect pbc

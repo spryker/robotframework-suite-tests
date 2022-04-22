@@ -177,7 +177,7 @@ Discontinued_Alternative_Products
     Yves: add product to wishlist:    My wishlist
     Yves: get sku of the concrete product on PDP
     Yves: get sku of the abstract product on PDP
-    Zed: login on Zed with credentials:    ${zed_admin_email}
+    Zed: login with credentials:    ${zed_admin_email}
     Zed: discontinue the following product:    ${got_abstract_product_sku}    ${got_concrete_product_sku}
     Zed: product is successfully discontinued
     Zed: check if at least one price exists for concrete and add if doesn't:    100
@@ -189,7 +189,7 @@ Discontinued_Alternative_Products
     Yves: product with sku is marked as alternative in wishlist:    011
     [Teardown]    Run Keywords    Yves: login with credentials:    ${yves_user_email}
     ...    AND    Yves: check if cart is not empty and clear it
-    ...    AND    Zed: login on Zed with credentials:    ${zed_admin_email}
+    ...    AND    Zed: login with credentials:    ${zed_admin_email}
     ...    AND    Zed: undo discontinue the following product:    ${got_abstract_product_sku}    ${got_concrete_product_sku}
 
 Back_in_Stock_Notification
@@ -198,7 +198,7 @@ Back_in_Stock_Notification
     ...    AND    Yves: go to the PDP of the first available product
     ...    AND    Yves: get sku of the concrete product on PDP
     ...    AND    Yves: get sku of the abstract product on PDP
-    Zed: login on Zed with credentials:    ${zed_admin_email}
+    Zed: login with credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Catalog    Availability
     Zed: check if product is/not in stock:    ${got_abstract_product_sku}    true
     Zed: change product stock:    ${got_abstract_product_sku}    ${got_concrete_product_sku}    false    0
@@ -210,7 +210,7 @@ Back_in_Stock_Notification
     Yves: check if product is available on PDP:    ${got_abstract_product_sku}    false
     Yves: submit back in stock notification request for email:    ${yves_second_user_email}
     Yves: unsubscribe from availability notifications
-    Zed: login on Zed with credentials:    ${zed_admin_email}
+    Zed: login with credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Catalog    Availability
     Zed: change product stock:    ${got_abstract_product_sku}    ${got_concrete_product_sku}    true    0
     Zed: go to second navigation item level:    Catalog    Availability
@@ -254,7 +254,7 @@ Product_Sets
 
 Product_Bundles
     [Documentation]    Checks checkout with Bundle product
-    [Setup]    Run keywords    Zed: login on Zed with credentials:    ${zed_admin_email}
+    [Setup]    Run keywords    Zed: login with credentials:    ${zed_admin_email}
     ...    AND    Zed: change product stock:    ${bundled_product_1_abstract_sku}    ${bundled_product_1_concrete_sku}    true    10
     ...    AND    Zed: change product stock:    ${bundled_product_2_abstract_sku}    ${bundled_product_2_concrete_sku}    true    10
     ...    AND    Zed: change product stock:    ${bundled_product_3_abstract_sku}    ${bundled_product_3_concrete_sku}    true    10
@@ -318,10 +318,10 @@ Configurable_Bundle
 
 Discounts
     [Documentation]    Discounts, Promo Products, and Coupon Codes (includes guest checkout)
-    [Setup]    Run keywords    Zed: login on Zed with credentials:    ${zed_admin_email}
+    [Setup]    Run keywords    Zed: login with credentials:    ${zed_admin_email}
     ...    AND    Zed: deactivate following discounts from Overview page:    For every purchase above certain value depending on the currency and net/gross price. you get this promotional product for free    10% Discount for all orders above    €5 every tuesday and wednesday for buying 5 items    5% discount on all white products    10% discount on all products with an Intel Core processor    Free standard delivery
     ...    AND    Zed: change product stock:    190    190_25111746    true    10
-    Zed: login on Zed with credentials:    ${zed_admin_email}
+    Zed: login with credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Merchandising    Discount
     Zed: create a discount and activate it:    voucher    Percentage    5    sku = '*'    test${random}    discountName=Voucher Code 5% ${random}
     Zed: create a discount and activate it:    cart rule    Percentage    10    sku = '*'    discountName=Cart Rule 10% ${random}
@@ -354,10 +354,10 @@ Discounts
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
     Yves: get the last placed order ID by current customer
-    Zed: login on Zed with credentials:    ${zed_admin_email}
+    Zed: login with credentials:    ${zed_admin_email}
     Zed: grand total for the order equals:    ${lastPlacedOrder}    €848.54
     [Teardown]    Run keywords    Yves: check if cart is not empty and clear it
-    ...    AND    Zed: login on Zed with credentials:    ${zed_admin_email}
+    ...    AND    Zed: login with credentials:    ${zed_admin_email}
     ...    AND    Zed: deactivate following discounts from Overview page:    Voucher Code 5% ${random}    Cart Rule 10% ${random}    Promotional Product 100% ${random}
     ...    AND    Zed: activate following discounts from Overview page:    For every purchase above certain value depending on the currency and net/gross price. you get this promotional product for free    10% Discount for all orders above    €5 every tuesday and wednesday for buying 5 items    5% discount on all white products    10% discount on all products with an Intel Core processor    Free standard delivery
 
@@ -399,7 +399,7 @@ Split_Delivery
 
 Agent_Assist
     [Documentation]    Checks that agent can be used
-    Zed: login on Zed with credentials:    ${zed_admin_email}
+    Zed: login with credentials:    ${zed_admin_email}
     Zed: create new Zed user with data:    agent+${random}@spryker.com    change${random}    Agent    Assist    Root group    This user is an agent    en_US
     Yves: go to the 'Home' page
     Yves: go to URL:    agent/login
@@ -413,7 +413,7 @@ Agent_Assist
     Yves: go to PDP with sku:    031
     Yves: product price on the PDP should be:    €400.24
     [Teardown]    Run Keywords    Yves: check if cart is not empty and clear it
-    ...    AND    Zed: login on Zed with credentials:    ${zed_admin_email}
+    ...    AND    Zed: login with credentials:    ${zed_admin_email}
     ...    AND    Zed: delete Zed user with the following email:    agent+${random}@spryker.com
 
 Return_Management
@@ -439,7 +439,7 @@ Return_Management
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
     Yves: get the last placed order ID by current customer
-    Zed: login on Zed with credentials:    ${zed_admin_email}
+    Zed: login with credentials:    ${zed_admin_email}
     Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Pay
     Zed: trigger all matching states inside this order:    Skip timeout
     Zed: trigger all matching states inside this order:    Ship
@@ -452,7 +452,7 @@ Return_Management
     Yves: create return for the following products:    010_30692994
     Yves: 'Return Details' page is displayed
     Yves: check that 'Print Slip' contains the following products:    010_30692994
-    Zed: login on Zed with credentials:    ${zed_admin_email}
+    Zed: login with credentials:    ${zed_admin_email}
     Zed: create a return for the following order and product in it:    ${lastPlacedOrder}    007_30691822
     Zed: create new Zed user with data:    returnagent+${random}@spryker.com    change123${random}    Agent    Assist    Root group    This user is an agent    en_US
     Yves: go to the 'Home' page
@@ -469,19 +469,19 @@ Return_Management
     Yves: create return for the following products:    008_30692992
     Yves: 'Return Details' page is displayed
     Yves: check that 'Print Slip' contains the following products:    008_30692992
-    Zed: login on Zed with credentials:    ${zed_admin_email}
+    Zed: login with credentials:    ${zed_admin_email}
     Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Execute return
     Yves: login with credentials:    ${yves_user_email}
     Yves: go to user menu item in header:    Orders History
     Yves: 'Order History' page is displayed
     Yves: 'Order History' page contains the following order with a status:    ${lastPlacedOrder}    Returned
     [Teardown]    Run Keywords    Yves: check if cart is not empty and clear it
-    ...    AND    Zed: login on Zed with credentials:    ${zed_admin_email}
+    ...    AND    Zed: login with credentials:    ${zed_admin_email}
     ...    AND    Zed: delete Zed user with the following email:    returnagent+${random}@spryker.com
 
 Content_Management
     [Documentation]    Checks cms content can be edited in zed and that correct cms elements are present on homepage
-    Zed: login on Zed with credentials:    ${zed_admin_email}
+    Zed: login with credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Content    Pages
     Zed: create a cms page and publish it:    Test Page${random}    test-page${random}    Page Title    Page text
     Yves: go to the 'Home' page
@@ -508,11 +508,11 @@ Product_Relations
 
 Guest_Checkout
     [Documentation]    Guest checkout with bundles, discounts and OMS
-    [Setup]    Run keywords    Zed: login on Zed with credentials:    ${zed_admin_email}
+    [Setup]    Run keywords    Zed: login with credentials:    ${zed_admin_email}
     ...    AND    Zed: change product stock:    ${bundled_product_1_abstract_sku}    ${bundled_product_1_concrete_sku}    true    10
     ...    AND    Zed: change product stock:    ${bundled_product_2_abstract_sku}    ${bundled_product_2_concrete_sku}    true    10
     ...    AND    Zed: change product stock:    ${bundled_product_3_abstract_sku}    ${bundled_product_3_concrete_sku}    true    10
-    ...    AND    Zed: login on Zed with credentials:    ${zed_admin_email}
+    ...    AND    Zed: login with credentials:    ${zed_admin_email}
     ...    AND    Zed: go to second navigation item level:    Merchandising    Discount
     ...    AND    Zed: create a discount and activate it:    voucher    Percentage    5    sku = '*'    guestTest${random}    discountName=Guest Voucher Code 5% ${random}
     ...    AND    Zed: create a discount and activate it:    cart rule    Percentage    10    sku = '*'    discountName=Guest Cart Rule 10% ${random}
@@ -546,7 +546,7 @@ Guest_Checkout
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
-    Zed: login on Zed with credentials:    ${zed_admin_email}
+    Zed: login with credentials:    ${zed_admin_email}
     Zed: get the last placed order ID of the customer by email:    guest+${random}@user.com
     Zed: trigger all matching states inside xxx order:    ${zedLastPlacedOrder}    Pay
     Zed: trigger all matching states inside this order:    Skip timeout
@@ -554,12 +554,12 @@ Guest_Checkout
     Zed: trigger all matching states inside this order:    Stock update
     Zed: trigger all matching states inside this order:    Close
     [Teardown]    Run keywords    Yves: check if cart is not empty and clear it
-    ...    AND    Zed: login on Zed with credentials:    ${zed_admin_email}
+    ...    AND    Zed: login with credentials:    ${zed_admin_email}
     ...    AND    Zed: deactivate following discounts from Overview page:    Guest Voucher Code 5% ${random}    Guest Cart Rule 10% ${random}
 
 Refunds
     [Documentation]    Checks that refund can be created for one item and the whole order
-    [Setup]    Run keywords    Zed: login on Zed with credentials:    ${zed_admin_email}
+    [Setup]    Run keywords    Zed: login with credentials:    ${zed_admin_email}
     ...    AND    Zed: deactivate following discounts from Overview page:    10% Discount for all orders above
     Yves: login with credentials:    ${yves_user_email}
     Yves: check if cart is not empty and clear it
@@ -582,7 +582,7 @@ Refunds
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
     Yves: get the last placed order ID by current customer
-    Zed: login on Zed with credentials:    ${zed_admin_email}
+    Zed: login with credentials:    ${zed_admin_email}
     Zed: grand total for the order equals:    ${lastPlacedOrder}    €990.10
     Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Pay
     Zed: trigger all matching states inside this order:    Skip timeout
@@ -594,6 +594,6 @@ Refunds
     Zed: trigger all matching states inside this order:    Stock update
     Zed: trigger all matching states inside this order:    Refund
     Zed: grand total for the order equals:    ${lastPlacedOrder}    €0.00
-    [Teardown]    Run keywords    Zed: login on Zed with credentials:    ${zed_admin_email}
+    [Teardown]    Run keywords    Zed: login with credentials:    ${zed_admin_email}
     ...    AND    Zed: activate following discounts from Overview page:    10% Discount for all orders above
 

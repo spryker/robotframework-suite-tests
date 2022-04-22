@@ -17,7 +17,7 @@ Resource    ../../../resources/steps/checkout_steps.robot
 *** Test Cases ***
 Bazaarvoice_E2E
     [Documentation]    Checks that bazzarvoice pbc can be connected in the backoffice and is reflected to the storefront
-    [Setup]    Zed: login on Zed with credentials:    ${zed_admin_email}
+    [Setup]    Zed: login with credentials:    ${zed_admin_email}
     Zed: go to first navigation item level:    Apps
     Zed: AOP catalog page should contain apps:    Payone    BazaarVoice
     Zed: go to the PBC details page:    BazaarVoice
@@ -57,7 +57,7 @@ Bazaarvoice_E2E
     Yves: 'submit the order' on the summary page
     #TODO: create an assertion for bv pixer request on the checkout
     Yves: 'Thank you' page is displayed
-    [Teardown]    Run Keywords    Zed: login on Zed with credentials:    ${zed_admin_email}
+    [Teardown]    Run Keywords    Zed: login with credentials:    ${zed_admin_email}
     ...    AND    Zed: go to first navigation item level:    Apps
     ...    AND    Zed: go to the PBC details page:    BazaarVoice
     ...    AND    Zed: Disconnect pbc
