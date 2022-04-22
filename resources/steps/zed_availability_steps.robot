@@ -37,7 +37,7 @@ Zed: change product stock:
 
 Zed: check and restore product availability in Zed:    
     [Arguments]    ${skuAbstract}    ${expectedStatus}    ${skuConcrete}
-    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: login on Zed with credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Catalog    Availability
     Zed: perform search by:    ${skuAbstract}
     ${isProductAvailable}=    Run Keyword And Return Status    Element Text Should Be    ${zed_availability_product_availability_label}     Available
