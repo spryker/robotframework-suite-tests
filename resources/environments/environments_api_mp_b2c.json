@@ -39,8 +39,10 @@
         "customer_reference_34_de": "DE--34",
 
         "grant_type_password": "password",
-        "grant_type_refresh_token": "refresh_token"
+        "grant_type_refresh_token": "refresh_token",
 
+        "email_name": "sonia",
+        "email_domain": "@spryker.com"
     },
 
     "address": {

@@ -12,6 +12,7 @@ ENABLER
 Get_availability_notifications_without_customerId
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
     ...  AND    I set Headers:    Authorization=${token}
+    ...  AND    Cleanup all availability notifications:    ${yves_user_reference}
     ...  AND    I send a POST request:    /availability-notifications    {"data": {"type": "availability-notifications","attributes": {"sku": "${concrete_product_with_abstract_product_alternative_sku}","email": "${yves_user_email}"}}}
     ...  AND    Response status code should be:    201
     ...  AND    Save value to a variable:    [data][id]    availability_notification_id
@@ -24,7 +25,10 @@ Get_availability_notifications_without_customerId
     ...  AND    Response status code should be:    204
 
 Get_availability_notifications_with_invalid_access_token
-    [Setup]    Run Keywords    I send a POST request:    /availability-notifications    {"data": {"type": "availability-notifications","attributes": {"sku": "${concrete_product_with_abstract_product_alternative_sku}","email": "${yves_user_email}"}}}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    ...  AND    I set Headers:    Authorization=${token}
+    ...  AND    Cleanup all availability notifications:    ${yves_user_reference}
+    ...  AND    I send a POST request:    /availability-notifications    {"data": {"type": "availability-notifications","attributes": {"sku": "${concrete_product_with_abstract_product_alternative_sku}","email": "${yves_user_email}"}}}
     ...  AND    Response status code should be:    201
     ...  AND    Save value to a variable:    [data][id]    availability_notification_id
     ...  AND    I set Headers:    Authorization=325tr
@@ -38,7 +42,10 @@ Get_availability_notifications_with_invalid_access_token
     ...  AND    Response status code should be:    204
 
 Get_availability_notifications_without_access_token
-    [Setup]    Run Keywords    I send a POST request:    /availability-notifications    {"data": {"type": "availability-notifications","attributes": {"sku": "${concrete_product_with_abstract_product_alternative_sku}","email": "${yves_user_email}"}}}
+   [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    ...  AND    I set Headers:    Authorization=${token}
+    ...  AND    Cleanup all availability notifications:    ${yves_user_reference}
+    ...  AND    I send a POST request:    /availability-notifications    {"data": {"type": "availability-notifications","attributes": {"sku": "${concrete_product_with_abstract_product_alternative_sku}","email": "${yves_user_email}"}}}
     ...  AND    Response status code should be:    201
     ...  AND    Save value to a variable:    [data][id]    availability_notification_id
     ...  AND    I set Headers:    Authorization=
@@ -94,7 +101,10 @@ Subscribe_to_availability_notifications_without_sku_and_email
     And Array in response should contain property with value:    [errors]    detail    email => This field is missing.
 
 Subscribe_to_availability_notifications_with_existing_subscription
-    [Setup]    Run Keywords    I send a POST request:    /availability-notifications    {"data": {"type": "availability-notifications","attributes": {"sku": "${concrete_product_with_abstract_product_alternative_sku}","email": "${yves_user_email}"}}}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    ...  AND    I set Headers:    Authorization=${token}
+    ...  AND    Cleanup all availability notifications:    ${yves_user_reference}
+    ...  AND    I send a POST request:    /availability-notifications    {"data": {"type": "availability-notifications","attributes": {"sku": "${concrete_product_with_abstract_product_alternative_sku}","email": "${yves_user_email}"}}}
     ...  AND    Response status code should be:    201
     ...  AND    Save value to a variable:    [data][id]    availability_notification_id
     When I send a POST request:    /availability-notifications    {"data": {"type": "availability-notifications","attributes": {"sku": "${concrete_product_with_abstract_product_alternative_sku}","email": "${yves_user_email}"}}}
@@ -109,7 +119,10 @@ Subscribe_to_availability_notifications_with_existing_subscription
 
 #DELETE requests
 Delete_availability_notifications_with_invalid_availability_notification_id
-    [Setup]    Run Keywords    I send a POST request:    /availability-notifications    {"data": {"type": "availability-notifications","attributes": {"sku": "${concrete_product_with_abstract_product_alternative_sku}","email": "${yves_user_email}"}}}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    ...  AND    I set Headers:    Authorization=${token}
+    ...  AND    Cleanup all availability notifications:    ${yves_user_reference}
+    ...  AND    I send a POST request:    /availability-notifications    {"data": {"type": "availability-notifications","attributes": {"sku": "${concrete_product_with_abstract_product_alternative_sku}","email": "${yves_user_email}"}}}
     ...  AND    Response status code should be:    201
     ...  AND    Save value to a variable:    [data][id]    availability_notification_id
     When I send a DELETE request:    /availability-notifications/7fc6ebf
@@ -121,7 +134,10 @@ Delete_availability_notifications_with_invalid_availability_notification_id
     ...  AND    Response status code should be:    204
 
 Delete_availability_notifications_without_availability_notification_id
-    [Setup]    Run Keywords    I send a POST request:    /availability-notifications    {"data": {"type": "availability-notifications","attributes": {"sku": "${concrete_product_with_abstract_product_alternative_sku}","email": "${yves_user_email}"}}}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    ...  AND    I set Headers:    Authorization=${token}
+    ...  AND    Cleanup all availability notifications:    ${yves_user_reference}
+    ...  AND    I send a POST request:    /availability-notifications    {"data": {"type": "availability-notifications","attributes": {"sku": "${concrete_product_with_abstract_product_alternative_sku}","email": "${yves_user_email}"}}}
     ...  AND    Response status code should be:    201
     ...  AND    Save value to a variable:    [data][id]    availability_notification_id
     When I send a DELETE request:    /availability-notifications/

@@ -12,6 +12,7 @@ ENABLER
 Get_availability_notifications_for_customer
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
     ...  AND    I set Headers:    Authorization=${token}
+    ...  AND    Cleanup all availability notifications:    ${yves_user_reference}
     ...  AND    I send a POST request:    /availability-notifications    {"data": {"type": "availability-notifications","attributes": {"sku": "${concrete_product_with_abstract_product_alternative_sku}","email": "${yves_user_email}"}}}
     ...  AND    Response status code should be:    201
     ...  AND    Save value to a variable:    [data][id]    availability_notification_id
@@ -29,16 +30,18 @@ Get_availability_notifications_for_customer
 Get_empty_list_of_availability_notifications_for_customer
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
     ...  AND    I set Headers:    Authorization=${token}
+    ...  AND    Cleanup all availability notifications:    ${yves_user_reference}
     When I send a GET request:    /customers/${yves_user_reference}/availability-notifications
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response should contain the array of a certain size:    [data]    0
     And Response body has correct self link
 
-
-
 #POST requests
 Subscribe_to_availability_notifications_for_customer
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    ...  AND    I set Headers:    Authorization=${token}
+    ...  AND    Cleanup all availability notifications:    ${yves_user_reference}
     When I send a POST request:    /availability-notifications    {"data": {"type": "availability-notifications","attributes": {"sku": "${concrete_product_with_abstract_product_alternative_sku}","email": "${yves_user_email}"}}}
     And Save value to a variable:    [data][id]    availability_notification_id
     Then Response status code should be:    201
@@ -72,6 +75,7 @@ Subscribe_to_availability_notifications_with_non_existing_email
 Delete_availability_notifications_for_customer
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
     ...  AND    I set Headers:    Authorization=${token}
+    ...  AND    Cleanup all availability notifications:    ${yves_user_reference}
     ...  AND    I send a POST request:    /availability-notifications    {"data": {"type": "availability-notifications","attributes": {"sku": "${concrete_product_with_abstract_product_alternative_sku}","email": "${yves_user_email}"}}}
     ...  AND    Response status code should be:    201
     ...  AND    Save value to a variable:    [data][id]    availability_notification_id
