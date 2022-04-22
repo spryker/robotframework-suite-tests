@@ -42,7 +42,7 @@ New_Customer_Registration
 Guest_User_Access_Restrictions
     [Documentation]    Checks that guest users see products info and cart but not profile
     Yves: header contains/doesn't contain:    true    ${currencySwitcher}[${env}]   ${wishlistIcon}    ${accountIcon}    ${shoppingCartIcon}
-    Yves: go to PDP of the product with sku:    002
+    Yves: go to PDP with sku:    002
     Yves: PDP contains/doesn't contain:     true    ${pdpPriceLocator}    ${addToCartButton}
     Yves: add product to the shopping cart
     Yves: go to b2c shopping cart
@@ -56,7 +56,7 @@ Authorized_User_Access
     [Documentation]    Checks that authorized users see products info, cart and profile
     Yves: login on Yves with credentials:    ${yves_second_user_email}
     Yves: header contains/doesn't contain:    true    ${currencySwitcher}[${env}]    ${accountIcon}     ${wishlistIcon}    ${shoppingCartIcon}
-    Yves: go to PDP of the product with sku:    002
+    Yves: go to PDP with sku:    002
     Yves: PDP contains/doesn't contain:     true    ${pdpPriceLocator}     ${addToCartButton}
     Yves: add product to the shopping cart
     Yves: go to b2c shopping cart
@@ -139,18 +139,18 @@ Product_labels
     Yves: PDP contains/doesn't contain:    true    ${pdp_sales_label}[${env}]
     Yves: go to first navigation item level:    New
     Yves: 1st product card in catalog (not)contains:     New label    true
-    Yves: go to PDP of the product with sku:    666
+    Yves: go to PDP with sku:    666
     Yves: PDP contains/doesn't contain:    true    ${pdp_new_label}[${env}]
     [Teardown]    Yves: check if cart is not empty and clear it
 
 Product_PDP
     [Documentation]    Checks that PDP contains required elements
-    Yves: go to PDP of the product with sku:    135
+    Yves: go to PDP with sku:    135
     Yves: change variant of the product on PDP on:    Flash
     Yves: PDP contains/doesn't contain:    true    ${pdpPriceLocator}   ${addToCartButton}    ${pdp_warranty_option}    ${pdp_gift_wrapping_option}    ${relatedProducts}
     Yves: PDP contains/doesn't contain:    false    ${pdp_add_to_wishlist_button}
     Yves: login on Yves with credentials:    ${yves_user_email}
-    Yves: go to PDP of the product with sku:    135
+    Yves: go to PDP with sku:    135
     Yves: PDP contains/doesn't contain:    true    ${pdpPriceLocator}   ${pdp_add_to_cart_disabled_button}[${env}]    ${pdp_warranty_option}    ${pdp_gift_wrapping_option}     ${pdp_add_to_wishlist_button}    ${relatedProducts}
     Yves: change variant of the product on PDP on:    Flash
     Yves: PDP contains/doesn't contain:    true    ${pdpPriceLocator}    ${addToCartButton}    ${pdp_warranty_option}    ${pdp_gift_wrapping_option}     ${pdp_add_to_wishlist_button}    ${relatedProducts}
@@ -158,7 +158,7 @@ Product_PDP
 Volume_Prices
     [Documentation]    Checks volume prices are applied
     Yves: login on Yves with credentials:    ${yves_user_email}
-    Yves: go to PDP of the product with sku:    193
+    Yves: go to PDP with sku:    193
     Yves: change quantity on PDP:    5
     Yves: add product to the shopping cart
     Yves: go to b2c shopping cart
@@ -168,7 +168,7 @@ Volume_Prices
 
 Discontinued_Alternative_Products
     [Documentation]    Checks discontinued and alternative products
-    Yves: go to PDP of the product with sku:    ${product_with_relations_alternative_products_sku}
+    Yves: go to PDP with sku:    ${product_with_relations_alternative_products_sku}
     Yves: change variant of the product on PDP on:    2.3 GHz - Discontinued
     Yves: PDP contains/doesn't contain:    true    ${alternativeProducts}
     Yves: login on Yves with credentials:    ${yves_user_email}
@@ -205,7 +205,7 @@ Back_in_Stock_Notification
     Zed: go to second navigation item level:    Catalog    Availability
     Zed: check if product is/not in stock:    ${got_abstract_product_sku}    false
     Yves: login on Yves with credentials:    ${yves_second_user_email}
-    Yves: go to PDP of the product with sku:  ${got_abstract_product_sku}
+    Yves: go to PDP with sku:  ${got_abstract_product_sku}
     Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    True
     Yves: check if product is available on PDP:    ${got_abstract_product_sku}    false
     Yves: submit back in stock notification request for email:    ${yves_second_user_email}
@@ -216,7 +216,7 @@ Back_in_Stock_Notification
     Zed: go to second navigation item level:    Catalog    Availability
     Zed: check if product is/not in stock:    ${got_abstract_product_sku}    true
     Yves: login on Yves with credentials:    ${yves_second_user_email}
-    Yves: go to PDP of the product with sku:  ${got_abstract_product_sku}
+    Yves: go to PDP with sku:  ${got_abstract_product_sku}
     Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    False
     Yves: check if product is available on PDP:    ${got_abstract_product_sku}    true
     [Teardown]    Zed: check and restore product availability in Zed:    ${got_abstract_product_sku}    Available    ${got_concrete_product_sku}
@@ -225,11 +225,11 @@ Add_to_Wishlist
     [Documentation]    Check creation of wishlist and adding to different wishlists
     Yves: login on Yves with credentials:    ${yves_user_email}
     Yves: delete all wishlists
-    Yves: go to PDP of the product with sku:  003
+    Yves: go to PDP with sku:  003
     Yves: add product to wishlist:    My wishlist
     Yves: go To 'Wishlist' Page
     Yves: create wishlist with name:    Second wishlist
-    Yves: go to PDP of the product with sku:  004
+    Yves: go to PDP with sku:  004
     Yves: add product to wishlist:    Second wishlist    select
     Yves: go To 'Wishlist' Page
     Yves: go to wishlist with name:    My wishlist
@@ -259,7 +259,7 @@ Product_Bundles
     ...    AND    Zed: change product stock:    ${bundled_product_2_abstract_sku}    ${bundled_product_2_concrete_sku}    true    10
     ...    AND    Zed: change product stock:    ${bundled_product_3_abstract_sku}    ${bundled_product_3_concrete_sku}    true    10
     Yves: login on Yves with credentials:    ${yves_user_email}
-    Yves: go to PDP of the product with sku:    ${bundle_product_abstract_sku}
+    Yves: go to PDP with sku:    ${bundle_product_abstract_sku}
     Yves: PDP contains/doesn't contain:    true    ${bundleItemsSmall}    ${bundleItemsLarge}
     Yves: add product to the shopping cart
     Yves: go to b2c shopping cart
@@ -328,13 +328,13 @@ Discounts
     Zed: create a discount and activate it:    cart rule    Percentage    100    discountName=Promotional Product 100% ${random}    promotionalProductDiscount=True    promotionalProductAbstractSku=002    promotionalProductQuantity=2
     Yves: login on Yves with credentials:    ${yves_user_email}
     Yves: check if cart is not empty and clear it
-    Yves: go to PDP of the product with sku:    190
+    Yves: go to PDP with sku:    190
     Yves: add product to the shopping cart
     Yves: go to b2c shopping cart
     Yves: apply discount voucher to cart:    test${random}
     Yves: discount is applied:    voucher    Voucher Code 5% ${random}    - €8.73
     Yves: discount is applied:    cart rule    Cart Rule 10% ${random}    - €17.46
-    Yves: go to PDP of the product with sku:    ${bundle_product_abstract_sku}
+    Yves: go to PDP with sku:    ${bundle_product_abstract_sku}
     Yves: add product to the shopping cart
     Yves: go to b2c shopping cart
     Yves: discount is applied:    cart rule    Cart Rule 10% ${random}    - €87.96
@@ -365,11 +365,11 @@ Split_Delivery
     [Documentation]    Checks split delivery in checkout
     Yves: login on Yves with credentials:    ${yves_user_email}
     Yves: check if cart is not empty and clear it
-    Yves: go to PDP of the product with sku:    007
+    Yves: go to PDP with sku:    007
     Yves: add product to the shopping cart
-    Yves: go to PDP of the product with sku:    011
+    Yves: go to PDP with sku:    011
     Yves: add product to the shopping cart
-    Yves: go to PDP of the product with sku:    012
+    Yves: go to PDP with sku:    012
     Yves: add product to the shopping cart
     Yves: go to b2c shopping cart
     Yves: click on the 'Checkout' button in the shopping cart
@@ -410,7 +410,7 @@ Agent_Assist
     Yves: As an Agent login under the customer:    ${yves_user_email}
     Yves: perform search by:    031
     Yves: product with name in the catalog should have price:    Canon PowerShot G9 X    €400.24
-    Yves: go to PDP of the product with sku:    031
+    Yves: go to PDP with sku:    031
     Yves: product price on the PDP should be:    €400.24
     [Teardown]    Run Keywords    Yves: check if cart is not empty and clear it
     ...    AND    Zed: login on Zed with credentials:    ${zed_admin_email}
@@ -420,11 +420,11 @@ Return_Management
     [Documentation]    Checks that returns work and oms process is checked
     Yves: login on Yves with credentials:    ${yves_user_email}
     Yves: check if cart is not empty and clear it
-    Yves: go to PDP of the product with sku:    007
+    Yves: go to PDP with sku:    007
     Yves: add product to the shopping cart
-    Yves: go to PDP of the product with sku:    008
+    Yves: go to PDP with sku:    008
     Yves: add product to the shopping cart
-    Yves: go to PDP of the product with sku:    010
+    Yves: go to PDP with sku:    010
     Yves: add product to the shopping cart
     Yves: go to b2c shopping cart
     Yves: click on the 'Checkout' button in the shopping cart
@@ -497,9 +497,9 @@ Content_Management
 Product_Relations
     [Documentation]    Checks related product on PDP and upsell products in cart
     Yves: login on Yves with credentials:    ${yves_user_email}
-    Yves: go to PDP of the product with sku:    ${product_with_relations_related_products_sku}
+    Yves: go to PDP with sku:    ${product_with_relations_related_products_sku}
     Yves: PDP contains/doesn't contain:    true    ${relatedProducts}
-    Yves: go to PDP of the product with sku:    ${product_with_relations_upselling_sku}
+    Yves: go to PDP with sku:    ${product_with_relations_upselling_sku}
     Yves: PDP contains/doesn't contain:    false    ${relatedProducts}
     Yves: add product to the shopping cart
     Yves: go to b2c shopping cart
@@ -517,7 +517,7 @@ Guest_Checkout
     ...    AND    Zed: create a discount and activate it:    voucher    Percentage    5    sku = '*'    guestTest${random}    discountName=Guest Voucher Code 5% ${random}
     ...    AND    Zed: create a discount and activate it:    cart rule    Percentage    10    sku = '*'    discountName=Guest Cart Rule 10% ${random}
     Yves: go to the 'Home' page
-    Yves: go to PDP of the product with sku:    ${bundle_product_abstract_sku}
+    Yves: go to PDP with sku:    ${bundle_product_abstract_sku}
     Yves: PDP contains/doesn't contain:    true    ${bundleItemsSmall}    ${bundleItemsLarge}
     Yves: add product to the shopping cart
     Yves: go to URL:    en/configurable-bundle/configurator/template-selection
@@ -527,9 +527,9 @@ Guest_Checkout
     Yves: select product in the bundle slot:    Slot 6    Sony NEX-VG30E
     Yves: go to 'Summary' step in the bundle configurator
     Yves: add products to the shopping cart in the bundle configurator
-    Yves: go to PDP of the product with sku:    007
+    Yves: go to PDP with sku:    007
     Yves: add product to the shopping cart
-    Yves: go to PDP of the product with sku:    008
+    Yves: go to PDP with sku:    008
     Yves: add product to the shopping cart
     Yves: go to b2c shopping cart
     Yves: apply discount voucher to cart:    guestTest${random}
@@ -563,11 +563,11 @@ Refunds
     ...    AND    Zed: deactivate following discounts from Overview page:    10% Discount for all orders above
     Yves: login on Yves with credentials:    ${yves_user_email}
     Yves: check if cart is not empty and clear it
-    Yves: go to PDP of the product with sku:    007
+    Yves: go to PDP with sku:    007
     Yves: add product to the shopping cart
-    Yves: go to PDP of the product with sku:    008
+    Yves: go to PDP with sku:    008
     Yves: add product to the shopping cart
-    Yves: go to PDP of the product with sku:    010
+    Yves: go to PDP with sku:    010
     Yves: add product to the shopping cart
     Yves: go to b2c shopping cart
     Yves: click on the 'Checkout' button in the shopping cart

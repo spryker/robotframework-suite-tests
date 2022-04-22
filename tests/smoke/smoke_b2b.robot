@@ -29,12 +29,12 @@ Resource    ../../resources/steps/zed_cms_page_steps.robot
 Guest_User_Access_Restrictions
     [Documentation]    Checks that guest users are not able to see: Prices, Availability, Quick Order, "My Account" features
     Yves: header contains/doesn't contain:    false    ${priceModeSwitcher}    ${currencySwitcher}[${env}]     ${quickOrderIcon}    ${accountIcon}    ${shoppingListIcon}    ${shoppingCartIcon}
-    Yves: go to PDP of the product with sku:    ${one_variant_product_abstract_sku} 
+    Yves: go to PDP with sku:    ${one_variant_product_abstract_sku}
     Yves: PDP contains/doesn't contain:     false    ${pdpPriceLocator}    ${addToCartButton}
     Yves: login on Yves with credentials:    ${yves_company_user_manager_and_buyer_email}
     Yves: header contains/doesn't contain:    true    ${priceModeSwitcher}    ${currencySwitcher}[${env}]    ${quickOrderIcon}    ${accountIcon}    ${shoppingListIcon}    ${shoppingCartIcon}
     Yves: company menu 'should' be available for logged in user
-    Yves: go to PDP of the product with sku:    ${one_variant_product_abstract_sku}
+    Yves: go to PDP with sku:    ${one_variant_product_abstract_sku}
     Yves: PDP contains/doesn't contain:     true    ${pdpPriceLocator}    ${addToCartButton}
     Yves: go to company menu item:    Users
     Yves: 'Company Users' page is displayed
@@ -66,7 +66,7 @@ Share_Shopping_Carts
     Yves: 'Shopping Carts' page is displayed
     Yves: the following shopping cart is shown:    shoppingCartName+${random}    Owner access
     Yves: share shopping cart with user:    shoppingCartName+${random}    ${yves_company_user_shared_permission_receiver_lastname} ${yves_company_user_shared_permission_receiver_firstname}    Full access
-    Yves: go to PDP of the product with sku:    M10569
+    Yves: go to PDP with sku:    M10569
     Yves: add product to the shopping cart
     Yves: logout on Yves as a customer
     Yves: login on Yves with credentials:    ${yves_company_user_shared_permission_receiver_email}
@@ -139,7 +139,7 @@ Volume_Prices
     [Documentation]    Checks that volume prices are applied in cart
     [Setup]    Run keywords    Yves: login on Yves with credentials:    ${yves_company_user_buyer_email}
     ...    AND    Yves: create new 'Shopping Cart' with name:    VolumePriceCart+${random}
-    Yves: go to PDP of the product with sku:    M21189
+    Yves: go to PDP with sku:    M21189
     Yves: change quantity on PDP:    5
     Yves: add product to the shopping cart
     Yves: go to the shopping cart through the header with name:    VolumePriceCart+${random}
@@ -149,7 +149,7 @@ Volume_Prices
 Discontinued_Alternative_Products
     [Documentation]    Checks that product can be discontinued in Zed
     #Todo: extend methods "Zed: discontinue the following product:" and "Zed: undo discontinue the following product:" to check first that the product can be discontinued or undicontinued
-    Yves: go to PDP of the product with sku:  M21100
+    Yves: go to PDP with sku:  M21100
     Yves: PDP contains/doesn't contain:    true    ${alternativeProducts}
     Yves: login on Yves with credentials:    ${yves_company_user_buyer_email}
     Yves: go to the PDP of the first available product
@@ -166,13 +166,13 @@ Measurement_Units
     [Documentation]    Checks checkout with Measurement Unit product
     [Setup]    Run keywords    Yves: login on Yves with credentials:    ${yves_company_user_manager_and_buyer_email}
     ...    AND    Yves: create new 'Shopping Cart' with name:    measurementUnitsCart+${random}
-    Yves: go to PDP of the product with sku:    M23723
+    Yves: go to PDP with sku:    M23723
     Yves: select the following 'Sales Unit' on PDP:    Meter
     Yves: change quantity using '+' or '-' button № times:    +    1
     Yves: PDP contains/doesn't contain:    true    ${measurementUnitSuggestion}
     Yves: change quantity using '+' or '-' button № times:    -    1
     Yves: add product to the shopping cart
-    Yves: go to PDP of the product with sku:    M1006871
+    Yves: go to PDP with sku:    M1006871
     Yves: add product to the shopping cart
     Yves: go to the shopping cart through the header with name:  measurementUnitsCart+${random}
     Yves: 'Shopping Cart' page is displayed
@@ -190,13 +190,13 @@ Packaging_Units
     [Documentation]    Checks checkout with Packaging Unit product
     [Setup]    Run keywords    Yves: login on Yves with credentials:    ${yves_company_user_manager_and_buyer_email}
     ...    AND    Yves: create new 'Shopping Cart' with name:    packagingUnitsCart+${random}
-    Yves: go to PDP of the product with sku:    M21766
+    Yves: go to PDP with sku:    M21766
     Yves: change variant of the product on PDP on:    Box
     Yves: change amount on PDP:    51
     Yves: PDP contains/doesn't contain:    true    ${packagingUnitSuggestion}
     Yves: change amount on PDP:    10
     Yves: add product to the shopping cart
-    Yves: go to PDP of the product with sku:    M1006871
+    Yves: go to PDP with sku:    M1006871
     Yves: add product to the shopping cart
     Yves: go to the shopping cart through the header with name:    packagingUnitsCart+${random}
     Yves: shopping cart contains the following products:    421519_3
@@ -230,7 +230,7 @@ Product_Bundles
     ...    AND    Zed: change product stock:    ${bundled_product_3_abstract_sku}    ${bundled_product_3_concrete_sku}    true    10
     Yves: login on Yves with credentials:    ${yves_company_user_buyer_email}
     Yves: create new 'Shopping Cart' with name:    productBundleCart+${random}
-    Yves: go to PDP of the product with sku:    ${bundle_product_abstract_sku}
+    Yves: go to PDP with sku:    ${bundle_product_abstract_sku}
     Yves: PDP contains/doesn't contain:    true    ${bundleItemsSmall}    ${bundleItemsLarge}
     Yves: add product to the shopping cart
     Yves: go to the shopping cart through the header with name:    productBundleCart+${random}
@@ -248,9 +248,9 @@ Product_Relations
     [Documentation]    Checks related product on PDP and upsell products in cart
     [Setup]    Run keywords    Yves: login on Yves with credentials:    ${yves_company_user_buyer_email}
     ...    AND    Yves: create new 'Shopping Cart' with name:    productRelationCart+${random}
-    Yves: go to PDP of the product with sku:    ${product_with_relations_related_products_sku}
+    Yves: go to PDP with sku:    ${product_with_relations_related_products_sku}
     Yves: PDP contains/doesn't contain:    true    ${relatedProducts}
-    Yves: go to PDP of the product with sku:    ${product_with_relations_upselling_sku}
+    Yves: go to PDP with sku:    ${product_with_relations_upselling_sku}
     Yves: PDP contains/doesn't contain:    false    ${relatedProducts}
     Yves: add product to the shopping cart
     Yves: go to the shopping cart through the header with name:    productRelationCart+${random}
@@ -290,14 +290,14 @@ Customer_Specific_Prices
     Yves: login on Yves with credentials:    ${yves_company_user_buyer_email}
     Yves: perform search by:    ${one_variant_product_abstract_name}
     Yves: product with name in the catalog should have price:    ${one_variant_product_abstract_name}    ${one_variant_product_default_price}
-    Yves: go to PDP of the product with sku:    ${one_variant_product_abstract_sku}
+    Yves: go to PDP with sku:    ${one_variant_product_abstract_sku}
     Yves: product price on the PDP should be:    ${one_variant_product_default_price}
     Yves: logout on Yves as a customer
     Yves: login on Yves with credentials:    ${yves_company_user_special_prices_customer_email}
     Yves: create new 'Shopping Cart' with name:    customerPrices+${random}
     Yves: perform search by:    ${one_variant_product_abstract_name}
     Yves: product with name in the catalog should have price:    ${one_variant_product_abstract_name}    ${one_variant_product_merchant_price}
-    Yves: go to PDP of the product with sku:    ${one_variant_product_abstract_sku}
+    Yves: go to PDP with sku:    ${one_variant_product_abstract_sku}
     Yves: product price on the PDP should be:    ${one_variant_product_merchant_price}
     Yves: add product to the shopping cart
     Yves: go to the shopping cart through the header with name:    customerPrices+${random}
@@ -317,7 +317,7 @@ Agent_Assist
     Yves: As an Agent login under the customer:    ${yves_company_user_special_prices_customer_email}
     Yves: perform search by:    ${one_variant_product_abstract_name}
     Yves: product with name in the catalog should have price:    ${one_variant_product_abstract_name}    ${one_variant_product_merchant_price}
-    Yves: go to PDP of the product with sku:    ${one_variant_product_abstract_sku}
+    Yves: go to PDP with sku:    ${one_variant_product_abstract_sku}
     Yves: product price on the PDP should be:    ${one_variant_product_merchant_price}
     [Teardown]    Run Keywords    Zed: login on Zed with credentials:    ${zed_admin_email}
     ...    AND    Zed: delete Zed user with the following email:    agent+${random}@spryker.com
@@ -338,7 +338,7 @@ Business_Unit_Address_on_Checkout
     [Documentation]    Checks that business unit address can be used during checkout
     [Setup]    Run keywords    Yves: login on Yves with credentials:    ${yves_company_user_buyer_email}
     ...    AND    Yves: create new 'Shopping Cart' with name:    businessAddressCart+${random}
-    Yves: go to PDP of the product with sku:    M64933
+    Yves: go to PDP with sku:    M64933
     Yves: add product to the shopping cart
     Yves: go to the shopping cart through the header with name:    businessAddressCart+${random}
     Yves: click on the 'Checkout' button in the shopping cart
@@ -360,7 +360,7 @@ Approval_Process
     [Documentation]    Checks role permissions on checkout and Approval process
     [Setup]    Run keywords    Yves: login on Yves with credentials:    ${yves_company_user_buyer_with_limit_email}
     ...    AND    Yves: create new 'Shopping Cart' with name:    approvalCart+${random}
-    Yves: go to PDP of the product with sku:    M49320
+    Yves: go to PDP with sku:    M49320
     Yves: add product to the shopping cart
     Yves: go to the shopping cart through the header with name:    approvalCart+${random}
     Yves: click on the 'Checkout' button in the shopping cart
@@ -376,7 +376,7 @@ Approval_Process
     Yves: go to the shopping cart through the header with name:    approvalCart+${random}
     Yves: shopping cart contains/doesn't contain elements:    true    ${lockedCart}
     Yves: create new 'Shopping Cart' with name:    newApprovalCart+${random}
-    Yves: go to PDP of the product with sku:    M58314
+    Yves: go to PDP with sku:    M58314
     Yves: add product to the shopping cart
     Yves: go to the shopping cart through the header with name:    newApprovalCart+${random}
     Yves: click on the 'Checkout' button in the shopping cart
@@ -388,7 +388,7 @@ Approval_Process
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
     Yves: create new 'Shopping Cart' with name:    anotherApprovalCart+${random}
-    Yves: go to PDP of the product with sku:    M58314
+    Yves: go to PDP with sku:    M58314
     Yves: add product to the shopping cart
     Yves: go to the shopping cart through the header with name:    anotherApprovalCart+${random}
     Yves: click on the 'Checkout' button in the shopping cart
@@ -444,9 +444,9 @@ Request_for_Quote
     Yves: login on Yves with credentials:    ${yves_company_user_buyer_email}
     Yves: delete all shopping carts
     Yves: create new 'Shopping Cart' with name:    RfQCart+${random}
-    Yves: go to PDP of the product with sku:    ${one_variant_product_abstract_sku}
+    Yves: go to PDP with sku:    ${one_variant_product_abstract_sku}
     Yves: add product to the shopping cart
-    Yves: go to PDP of the product with sku:    M1018212
+    Yves: go to PDP with sku:    M1018212
     Yves: add product to the shopping cart
     Yves: go to the shopping cart through the header with name:    RfQCart+${random}
     Yves: submit new request for quote
@@ -513,7 +513,7 @@ Request_for_Quote
 #     [Documentation]    Fails due to Bug:CC-12380
 #     Yves: login on Yves with credentials:    ${yves_company_user_manager_and_buyer_email}
 #     Yves: create new 'Shopping Cart' with name:    externalCart+${random}
-#     Yves: go to PDP of the product with sku:    M90806
+#     Yves: go to PDP with sku:    M90806
 #     Yves: add product to the shopping cart
 #     Yves: go to the shopping cart through the header with name:    externalCart+${random}
 #     Yves: 'Shopping Cart' page is displayed
@@ -564,11 +564,11 @@ Return_Management
     [Documentation]    Checks OMS and that Yves and Zed users can create returns
     [Setup]    Run keywords    Yves: login on Yves with credentials:    ${yves_company_user_buyer_email}
     ...    AND    Yves: create new 'Shopping Cart' with name:    returnCart+${random}
-    Yves: go to PDP of the product with sku:    M90802
+    Yves: go to PDP with sku:    M90802
     Yves: add product to the shopping cart
-    Yves: go to PDP of the product with sku:    M21711
+    Yves: go to PDP with sku:    M21711
     Yves: add product to the shopping cart
-    Yves: go to PDP of the product with sku:    M90737
+    Yves: go to PDP with sku:    M90737
     Yves: add product to the shopping cart
     Yves: go to the shopping cart through the header with name:    returnCart+${random}
     Yves: click on the 'Checkout' button in the shopping cart
@@ -645,12 +645,12 @@ User_Account
 
 Product_PDP
     [Documentation]    Checks that PDP contains required elements
-    Yves: go to PDP of the product with sku:    ${multi_variant_product_abstract_sku}
+    Yves: go to PDP with sku:    ${multi_variant_product_abstract_sku}
     Yves: change variant of the product on PDP on:    500 x 930 x 400
     Yves: PDP contains/doesn't contain:    true    ${pdp_warranty_option}    ${pdp_insurance_option}
     Yves: PDP contains/doesn't contain:    false    ${pdpPriceLocator}   ${addToCartButton} 
     Yves: login on Yves with provided credentials:    ${yves_user_email}
-    Yves: go to PDP of the product with sku:    ${multi_variant_product_abstract_sku}
+    Yves: go to PDP with sku:    ${multi_variant_product_abstract_sku}
     Yves: PDP contains/doesn't contain:    true    ${pdpPriceLocator}    ${pdp_add_to_cart_disabled_button}[${env}]    ${pdp_warranty_option}    ${pdp_insurance_option}
     Yves: change variant of the product on PDP on:    500 x 930 x 400
     Yves: PDP contains/doesn't contain:    true    ${pdpPriceLocator}    ${addToCartButton}    ${pdp_warranty_option}    ${pdp_insurance_option} 
@@ -718,13 +718,13 @@ Discounts
     Zed: create a discount and activate it:    cart rule    Percentage    100    discountName=Promotional Product 100% ${random}    promotionalProductDiscount=True    promotionalProductAbstractSku=M29503    promotionalProductQuantity=2
     Yves: login on Yves with credentials:    ${yves_company_user_buyer_email}
     Yves: create new 'Shopping Cart' with name:    discounts+${random}
-    Yves: go to PDP of the product with sku:    M21777
+    Yves: go to PDP with sku:    M21777
     Yves: add product to the shopping cart
     Yves: go to the shopping cart through the header with name:    discounts+${random}
     Yves: apply discount voucher to cart:    test${random}
     Yves: discount is applied:    voucher    Voucher Code 5% ${random}    - €0.72
     Yves: discount is applied:    cart rule    Cart Rule 10% ${random}    - €1.44
-    Yves: go to PDP of the product with sku:    ${bundle_product_abstract_sku}
+    Yves: go to PDP with sku:    ${bundle_product_abstract_sku}
     Yves: add product to the shopping cart
     Yves: go to the shopping cart through the header with name:    discounts+${random}
     Yves: discount is applied:    cart rule    Cart Rule 10% ${random}    - €125.46
@@ -759,7 +759,7 @@ Back_in_Stock_Notification
     Zed: go to second navigation item level:    Catalog    Availability
     Zed: check if product is/not in stock:    ${got_abstract_product_sku}    false
     Yves: login on Yves with credentials:    ${yves_user_email}
-    Yves: go to PDP of the product with sku:  ${got_abstract_product_sku}
+    Yves: go to PDP with sku:  ${got_abstract_product_sku}
     Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    True
     Yves: check if product is available on PDP:    ${got_abstract_product_sku}    false
     Yves: submit back in stock notification request for email:    ${yves_user_email}
@@ -770,7 +770,7 @@ Back_in_Stock_Notification
     Zed: go to second navigation item level:    Catalog    Availability
     Zed: check if product is/not in stock:    ${got_abstract_product_sku}    true
     Yves: login on Yves with credentials:    ${yves_user_email}
-    Yves: go to PDP of the product with sku:  ${got_abstract_product_sku}
+    Yves: go to PDP with sku:  ${got_abstract_product_sku}
     Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    False
     Yves: check if product is available on PDP:    ${got_abstract_product_sku}    true
     [Teardown]    Zed: check and restore product availability in Zed:    ${got_abstract_product_sku}    Available    ${got_concrete_product_sku}
@@ -780,11 +780,11 @@ Split_Delivery
     [Setup]    Run Keywords    Yves: login on Yves with credentials:    ${yves_company_user_buyer_email}
     ...    AND    Yves: delete all shopping carts
     ...    AND    Yves: create new 'Shopping Cart' with name:    splitDelivery+${random}
-    Yves: go to PDP of the product with sku:    ${one_variant_product_abstract_sku}
+    Yves: go to PDP with sku:    ${one_variant_product_abstract_sku}
     Yves: add product to the shopping cart
-    Yves: go to PDP of the product with sku:    ${multi_color_product_abstract_sku}
+    Yves: go to PDP with sku:    ${multi_color_product_abstract_sku}
     Yves: add product to the shopping cart
-    Yves: go to PDP of the product with sku:    ${product_with_relations_related_products_sku}
+    Yves: go to PDP with sku:    ${product_with_relations_related_products_sku}
     Yves: add product to the shopping cart
     Yves: go to the shopping cart through the header with name:    splitDelivery+${random}
     Yves: click on the 'Checkout' button in the shopping cart
@@ -835,11 +835,11 @@ Refunds
     ...    AND    Zed: deactivate following discounts from Overview page:    10% Discount for all orders above
     ...    AND    Yves: login on Yves with credentials:    ${yves_company_user_buyer_email}
     ...    AND    Yves: create new 'Shopping Cart' with name:    refunds+${random}
-    Yves: go to PDP of the product with sku:    ${one_variant_product_abstract_sku}
+    Yves: go to PDP with sku:    ${one_variant_product_abstract_sku}
     Yves: add product to the shopping cart
-    Yves: go to PDP of the product with sku:    ${multi_color_product_abstract_sku}
+    Yves: go to PDP with sku:    ${multi_color_product_abstract_sku}
     Yves: add product to the shopping cart
-    Yves: go to PDP of the product with sku:    ${product_with_relations_related_products_sku}
+    Yves: go to PDP with sku:    ${product_with_relations_related_products_sku}
     Yves: add product to the shopping cart
     Yves: go to the shopping cart through the header with name:    refunds+${random}
     Yves: click on the 'Checkout' button in the shopping cart

@@ -13,8 +13,8 @@ b2c_test_new_function
     Set Up Keyword Arguments    
     ...    || usrname | sku | price   | name           || 
     ...    || test    | 005 | €70.00  | Canon IXUS 175 ||
-    Yves: go to PDP of the product with sku:    ${sku}
-    Yves: PDP contains/doesn't contain:     true    ${pdpPriceLocator}    ${addToCartButton} 
+    Yves: go to PDP with sku:    ${sku}
+    Yves: PDP contains/doesn't contain:     true    ${pdpPriceLocator}    ${addToCartButton}
     Yves: add product to the shopping cart
     Yves: go to b2c shopping cart
     Yves: shopping cart contains product with unit price:   ${sku}    ${name}    ${price}

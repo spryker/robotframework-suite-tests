@@ -55,7 +55,7 @@ Yves: login on Yves with credentials:
     Run Keyword If    'agent' in '${email}'    Yves: header contains/doesn't contain:    true    ${customerSearchWidget}
     Yves: remove flash messages
 
-Yves: go to PDP of the product with sku:
+Yves: go to PDP with sku:
     [Arguments]    ${sku}
     Yves: perform search by:    ${sku}
     Wait Until Page Contains Element    ${catalog_product_card_locator}

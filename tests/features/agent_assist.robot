@@ -53,7 +53,7 @@ Agent_Assist_Impersonate_As_Customer
 #     Yves: As an Agent login under the customer:    ${yvesUserEmail}
 #     Yves: perform search by:    EUROKRAFT trolley - with open shovel
 #     Yves: product with name in the catalog should have price:    EUROKRAFT trolley - with open shovel    €188.34
-#     Yves: go to PDP of the product with sku:    M70208
+#     Yves: go to PDP with sku:    M70208
 #     Yves: product price on the PDP should be:    €188.34
 
 # Agent_Assist_Overview_B2B
@@ -89,7 +89,7 @@ Agent_Assist_Impersonate_As_Customer
 #     [Tags]    b2b    suite_nonsplit
 #     Yves: login on Yves with credentials:    sonia@spryker.com
 #     Yves: create new 'Shopping Cart' with name:    QuoteRequest+${random}
-#     Yves: go to PDP of the product with sku:    M70208
+#     Yves: go to PDP with sku:    M70208
 #     Yves: add product to the shopping cart
 #     Yves: go to the shopping cart through the header with name:    QuoteRequest+${random}
 #     Yves: convert a cart to a quote request
@@ -104,7 +104,7 @@ Agent_Assist_Impersonate_As_Customer
 #     Yves: As an Agent login under the customer:    karl@spryker.com
 #     Yves: perform search by:    EUROKRAFT trolley - with open shovel
 #     Yves: product with name in the catalog should have price:    EUROKRAFT trolley - with open shovel    €188.34
-#     Yves: go to PDP of the product with sku:    M70208
+#     Yves: go to PDP with sku:    M70208
 #     Yves: product price on the PDP should be:    €188.34
 
 

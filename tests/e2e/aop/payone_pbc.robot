@@ -39,7 +39,7 @@ Payone_E2E
 
     # Cancel order scenario
     Yves: create new 'Shopping Cart' with name:    payone+${random}
-    Yves: go to PDP of the product with sku:    136
+    Yves: go to PDP with sku:    136
     Yves: add product to the shopping cart
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: billing address same as shipping address:    true
@@ -56,11 +56,11 @@ Payone_E2E
 
     # Pay order scenario
     Yves: create new 'Shopping Cart' with name:    payone+${random}
-    Yves: go to PDP of the product with sku:    136
+    Yves: go to PDP with sku:    136
     Yves: add product to the shopping cart
-    Yves: go to PDP of the product with sku:    142
+    Yves: go to PDP with sku:    142
     Yves: add product to the shopping cart
-    Yves: go to PDP of the product with sku:    150
+    Yves: go to PDP with sku:    150
     Yves: add product to the shopping cart
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: billing address same as shipping address:    true

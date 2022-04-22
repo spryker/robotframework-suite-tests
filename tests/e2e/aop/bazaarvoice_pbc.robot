@@ -35,7 +35,7 @@ Bazaarvoice_E2E
     Yves: perform search by:    150
     Yves: page should contain script:    bazaar-voice
     Yves: 1st product card in the catalog should contains bv inline rating
-    Yves: go to PDP of the product with sku:    150
+    Yves: go to PDP with sku:    150
     Yves: page should contain script:    bazaar-voice
     Yves: PDP contains/doesn't contain:    true    ${bazaarvoiceWriteReview}    ${bazaarvoiceQuestions}    ${bazaarvoiceInlineRating}
     Yves: post bazaarvoice review with data:
@@ -43,7 +43,7 @@ Bazaarvoice_E2E
     ...    || 5             | Robot Review ${random} | I bought this a month ago and am so happy that I did | yes              | Robot ${random} | New York | sonia+${random}@spryker.com | 25 to 34 | Female | 5             | 1           ||
     Yves: login on Yves with credentials:    ${yves_company_user_manager_and_buyer_email}
     Yves: create new 'Shopping Cart' with name:    bazaarvoice+${random}
-    Yves: go to PDP of the product with sku:    136
+    Yves: go to PDP with sku:    136
     Yves: add product to the shopping cart
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: billing address same as shipping address:    true
