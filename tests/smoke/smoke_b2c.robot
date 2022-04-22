@@ -54,7 +54,7 @@ Guest_User_Access_Restrictions
 
 Authorized_User_Access
     [Documentation]    Checks that authorized users see products info, cart and profile
-    Yves: login on Yves with provided credentials:    ${yves_second_user_email}
+    Yves: login on Yves with credentials:    ${yves_second_user_email}
     Yves: header contains/doesn't contain:    true    ${currencySwitcher}[${env}]    ${accountIcon}     ${wishlistIcon}    ${shoppingCartIcon}
     Yves: go to PDP of the product with sku:    002
     Yves: PDP contains/doesn't contain:     true    ${pdpPriceLocator}     ${addToCartButton}
@@ -71,7 +71,7 @@ Authorized_User_Access
 
 User_Account
     [Documentation]    Checks user account pages work
-    Yves: login on Yves with provided credentials:    ${yves_second_user_email}
+    Yves: login on Yves with credentials:    ${yves_second_user_email}
     Yves: go to user menu item in header:    Overview
     Yves: 'Overview' page is displayed
     Yves: go to user menu item in header:    Orders History
@@ -149,7 +149,7 @@ Product_PDP
     Yves: change variant of the product on PDP on:    Flash
     Yves: PDP contains/doesn't contain:    true    ${pdpPriceLocator}   ${addToCartButton}    ${pdp_warranty_option}    ${pdp_gift_wrapping_option}    ${relatedProducts}
     Yves: PDP contains/doesn't contain:    false    ${pdp_add_to_wishlist_button}
-    Yves: login on Yves with provided credentials:    ${yves_user_email}
+    Yves: login on Yves with credentials:    ${yves_user_email}
     Yves: go to PDP of the product with sku:    135
     Yves: PDP contains/doesn't contain:    true    ${pdpPriceLocator}   ${pdp_add_to_cart_disabled_button}[${env}]    ${pdp_warranty_option}    ${pdp_gift_wrapping_option}     ${pdp_add_to_wishlist_button}    ${relatedProducts}
     Yves: change variant of the product on PDP on:    Flash
@@ -157,7 +157,7 @@ Product_PDP
 
 Volume_Prices
     [Documentation]    Checks volume prices are applied
-    Yves: login on Yves with provided credentials:    ${yves_user_email}
+    Yves: login on Yves with credentials:    ${yves_user_email}
     Yves: go to PDP of the product with sku:    193
     Yves: change quantity on PDP:    5
     Yves: add product to the shopping cart
@@ -171,7 +171,7 @@ Discontinued_Alternative_Products
     Yves: go to PDP of the product with sku:    ${product_with_relations_alternative_products_sku}
     Yves: change variant of the product on PDP on:    2.3 GHz - Discontinued
     Yves: PDP contains/doesn't contain:    true    ${alternativeProducts}
-    Yves: login on Yves with provided credentials:    ${yves_user_email}
+    Yves: login on Yves with credentials:    ${yves_user_email}
     Yves: delete all wishlists
     Yves: go to the PDP of the first available product
     Yves: add product to wishlist:    My wishlist
@@ -182,12 +182,12 @@ Discontinued_Alternative_Products
     Zed: product is successfully discontinued
     Zed: check if at least one price exists for concrete and add if doesn't:    100
     Zed: add following alternative products to the concrete:    011
-    Yves: login on Yves with provided credentials:    ${yves_user_email}
+    Yves: login on Yves with credentials:    ${yves_user_email}
     Yves: go To 'Wishlist' Page
     Yves: go to wishlist with name:    My wishlist
     Yves: product with sku is marked as discountinued in wishlist:    ${got_concrete_product_sku}
     Yves: product with sku is marked as alternative in wishlist:    011
-    [Teardown]    Run Keywords    Yves: login on Yves with provided credentials:    ${yves_user_email}    
+    [Teardown]    Run Keywords    Yves: login on Yves with credentials:    ${yves_user_email}
     ...    AND    Yves: check if cart is not empty and clear it
     ...    AND    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: undo discontinue the following product:    ${got_abstract_product_sku}    ${got_concrete_product_sku}
@@ -204,7 +204,7 @@ Back_in_Stock_Notification
     Zed: change product stock:    ${got_abstract_product_sku}    ${got_concrete_product_sku}    false    0
     Zed: go to second navigation item level:    Catalog    Availability
     Zed: check if product is/not in stock:    ${got_abstract_product_sku}    false
-    Yves: login on Yves with provided credentials:    ${yves_second_user_email}
+    Yves: login on Yves with credentials:    ${yves_second_user_email}
     Yves: go to PDP of the product with sku:  ${got_abstract_product_sku}
     Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    True
     Yves: check if product is available on PDP:    ${got_abstract_product_sku}    false
@@ -215,7 +215,7 @@ Back_in_Stock_Notification
     Zed: change product stock:    ${got_abstract_product_sku}    ${got_concrete_product_sku}    true    0
     Zed: go to second navigation item level:    Catalog    Availability
     Zed: check if product is/not in stock:    ${got_abstract_product_sku}    true
-    Yves: login on Yves with provided credentials:    ${yves_second_user_email}
+    Yves: login on Yves with credentials:    ${yves_second_user_email}
     Yves: go to PDP of the product with sku:  ${got_abstract_product_sku}
     Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    False
     Yves: check if product is available on PDP:    ${got_abstract_product_sku}    true
@@ -223,7 +223,7 @@ Back_in_Stock_Notification
 
 Add_to_Wishlist
     [Documentation]    Check creation of wishlist and adding to different wishlists
-    Yves: login on Yves with provided credentials:    ${yves_user_email}
+    Yves: login on Yves with credentials:    ${yves_user_email}
     Yves: delete all wishlists
     Yves: go to PDP of the product with sku:  003
     Yves: add product to wishlist:    My wishlist
@@ -240,7 +240,7 @@ Add_to_Wishlist
 
 Product_Sets
     [Documentation]    Check the usage of product sets
-    Yves: login on Yves with provided credentials:    ${yves_user_email}
+    Yves: login on Yves with credentials:    ${yves_user_email}
     Yves: go to URL:    en/product-sets
     Yves: 'Product Sets' page contains the following sets:    HP Product Set    Sony Product Set    Upgrade your running game
     Yves: view the following Product Set:    Upgrade your running game
@@ -258,7 +258,7 @@ Product_Bundles
     ...    AND    Zed: change product stock:    ${bundled_product_1_abstract_sku}    ${bundled_product_1_concrete_sku}    true    10
     ...    AND    Zed: change product stock:    ${bundled_product_2_abstract_sku}    ${bundled_product_2_concrete_sku}    true    10
     ...    AND    Zed: change product stock:    ${bundled_product_3_abstract_sku}    ${bundled_product_3_concrete_sku}    true    10
-    Yves: login on Yves with provided credentials:    ${yves_user_email}
+    Yves: login on Yves with credentials:    ${yves_user_email}
     Yves: go to PDP of the product with sku:    ${bundle_product_abstract_sku}
     Yves: PDP contains/doesn't contain:    true    ${bundleItemsSmall}    ${bundleItemsLarge}
     Yves: add product to the shopping cart
@@ -279,7 +279,7 @@ Product_Bundles
 
 Configurable_Bundle
     [Documentation]    Check the usage of configurable bundles (includes authorized checkout)
-    Yves: login on Yves with provided credentials:    ${yves_user_email}
+    Yves: login on Yves with credentials:    ${yves_user_email}
     Yves: check if cart is not empty and clear it
     Yves: go to URL:    en/configurable-bundle/configurator/template-selection
     Yves: 'Choose Bundle to configure' page is displayed
@@ -326,7 +326,7 @@ Discounts
     Zed: create a discount and activate it:    voucher    Percentage    5    sku = '*'    test${random}    discountName=Voucher Code 5% ${random}
     Zed: create a discount and activate it:    cart rule    Percentage    10    sku = '*'    discountName=Cart Rule 10% ${random}
     Zed: create a discount and activate it:    cart rule    Percentage    100    discountName=Promotional Product 100% ${random}    promotionalProductDiscount=True    promotionalProductAbstractSku=002    promotionalProductQuantity=2
-    Yves: login on Yves with provided credentials:    ${yves_user_email}
+    Yves: login on Yves with credentials:    ${yves_user_email}
     Yves: check if cart is not empty and clear it
     Yves: go to PDP of the product with sku:    190
     Yves: add product to the shopping cart
@@ -363,7 +363,7 @@ Discounts
 
 Split_Delivery
     [Documentation]    Checks split delivery in checkout
-    Yves: login on Yves with provided credentials:    ${yves_user_email}
+    Yves: login on Yves with credentials:    ${yves_user_email}
     Yves: check if cart is not empty and clear it
     Yves: go to PDP of the product with sku:    007
     Yves: add product to the shopping cart
@@ -403,7 +403,7 @@ Agent_Assist
     Zed: create new Zed user with data:    agent+${random}@spryker.com    change${random}    Agent    Assist    Root group    This user is an agent    en_US
     Yves: go to the 'Home' page
     Yves: go to URL:    agent/login
-    Yves: login on Yves with provided credentials:    agent+${random}@spryker.com    change${random}
+    Yves: login on Yves with credentials:    agent+${random}@spryker.com    change${random}
     Yves: header contains/doesn't contain:    true    ${customerSearchWidget}
     Yves: perform search by customer:    ${yves_user_first_name}
     Yves: agent widget contains:    ${yves_user_email}
@@ -418,7 +418,7 @@ Agent_Assist
 
 Return_Management
     [Documentation]    Checks that returns work and oms process is checked
-    Yves: login on Yves with provided credentials:    ${yves_user_email}
+    Yves: login on Yves with credentials:    ${yves_user_email}
     Yves: check if cart is not empty and clear it
     Yves: go to PDP of the product with sku:    007
     Yves: add product to the shopping cart
@@ -443,7 +443,7 @@ Return_Management
     Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Pay
     Zed: trigger all matching states inside this order:    Skip timeout
     Zed: trigger all matching states inside this order:    Ship
-    Yves: login on Yves with provided credentials:    ${yves_user_email}
+    Yves: login on Yves with credentials:    ${yves_user_email}
     Yves: go to user menu item in header:    Orders History
     Yves: 'Order History' page is displayed
     Yves: get the last placed order ID by current customer
@@ -458,7 +458,7 @@ Return_Management
     Yves: go to the 'Home' page
     Yves: logout on Yves as a customer
     Yves: go to URL:    agent/login
-    Yves: login on Yves with provided credentials:    returnagent+${random}@spryker.com    change123${random}
+    Yves: login on Yves with credentials:    returnagent+${random}@spryker.com    change123${random}
     Yves: header contains/doesn't contain:    true    ${customerSearchWidget}
     Yves: perform search by customer:    ${yves_user_email}
     Yves: agent widget contains:    ${yves_user_email}
@@ -471,7 +471,7 @@ Return_Management
     Yves: check that 'Print Slip' contains the following products:    008_30692992
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Execute return
-    Yves: login on Yves with provided credentials:    ${yves_user_email}
+    Yves: login on Yves with credentials:    ${yves_user_email}
     Yves: go to user menu item in header:    Orders History
     Yves: 'Order History' page is displayed
     Yves: 'Order History' page contains the following order with a status:    ${lastPlacedOrder}    Returned
@@ -496,7 +496,7 @@ Content_Management
 
 Product_Relations
     [Documentation]    Checks related product on PDP and upsell products in cart
-    Yves: login on Yves with provided credentials:    ${yves_user_email}
+    Yves: login on Yves with credentials:    ${yves_user_email}
     Yves: go to PDP of the product with sku:    ${product_with_relations_related_products_sku}
     Yves: PDP contains/doesn't contain:    true    ${relatedProducts}
     Yves: go to PDP of the product with sku:    ${product_with_relations_upselling_sku}
@@ -561,7 +561,7 @@ Refunds
     [Documentation]    Checks that refund can be created for one item and the whole order
     [Setup]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: deactivate following discounts from Overview page:    10% Discount for all orders above
-    Yves: login on Yves with provided credentials:    ${yves_user_email}
+    Yves: login on Yves with credentials:    ${yves_user_email}
     Yves: check if cart is not empty and clear it
     Yves: go to PDP of the product with sku:    007
     Yves: add product to the shopping cart

@@ -31,7 +31,7 @@ Guest_User_Access_Restrictions
     Yves: header contains/doesn't contain:    false    ${priceModeSwitcher}    ${currencySwitcher}[${env}]     ${quickOrderIcon}    ${accountIcon}    ${shoppingListIcon}    ${shoppingCartIcon}
     Yves: go to PDP of the product with sku:    ${one_variant_product_abstract_sku} 
     Yves: PDP contains/doesn't contain:     false    ${pdpPriceLocator}    ${addToCartButton}
-    Yves: login on Yves with provided credentials:    ${yves_company_user_manager_and_buyer_email}
+    Yves: login on Yves with credentials:    ${yves_company_user_manager_and_buyer_email}
     Yves: header contains/doesn't contain:    true    ${priceModeSwitcher}    ${currencySwitcher}[${env}]    ${quickOrderIcon}    ${accountIcon}    ${shoppingListIcon}    ${shoppingCartIcon}
     Yves: company menu 'should' be available for logged in user
     Yves: go to PDP of the product with sku:    ${one_variant_product_abstract_sku}
@@ -41,14 +41,14 @@ Guest_User_Access_Restrictions
 
 Share_Shopping_Lists
     [Documentation]    Checks that shopping list can be shared
-    Yves: login on Yves with provided credentials:    ${yves_company_user_shared_permission_owner_email}
+    Yves: login on Yves with credentials:    ${yves_company_user_shared_permission_owner_email}
     Yves: go to 'Shopping Lists' page
     Yves: 'Shopping Lists' page is displayed
     Yves: create new 'Shopping List' with name:    shoppingListName+${random}
     Yves: the following shopping list is shown:    shoppingListName+${random}    ${yves_company_user_shared_permission_owner_firstname} ${yves_company_user_shared_permission_owner_lastname}    Full access
     Yves: share shopping list with user:    shoppingListName+${random}    ${yves_company_user_shared_permission_receiver_firstname} ${yves_company_user_shared_permission_receiver_lastname}    Full access
     Create New Context
-    Yves: login on Yves with provided credentials:    ${yves_company_user_shared_permission_receiver_email}
+    Yves: login on Yves with credentials:    ${yves_company_user_shared_permission_receiver_email}
     Yves: 'Shopping List' widget contains:    shoppingListName+${random}    Full access
     Yves: go to 'Shopping Lists' page
     Yves: 'Shopping Lists' page is displayed
@@ -57,7 +57,7 @@ Share_Shopping_Lists
 
 Share_Shopping_Carts
     [Documentation]    Checks that cart can be shared and used for checkout
-    Yves: login on Yves with provided credentials:    ${yves_company_user_shared_permission_owner_email}
+    Yves: login on Yves with credentials:    ${yves_company_user_shared_permission_owner_email}
     Yves: go to 'Shopping Carts' page through the header
     Yves: 'Shopping Carts' page is displayed
     Yves: create new 'Shopping Cart' with name:    shoppingCartName+${random}
@@ -69,7 +69,7 @@ Share_Shopping_Carts
     Yves: go to PDP of the product with sku:    M10569
     Yves: add product to the shopping cart
     Yves: logout on Yves as a customer
-    Yves: login on Yves with provided credentials:    ${yves_company_user_shared_permission_receiver_email}
+    Yves: login on Yves with credentials:    ${yves_company_user_shared_permission_receiver_email}
     Yves: 'Shopping Carts' widget contains:    shoppingCartName+${random}    Full access
     Yves: go to 'Shopping Carts' page through the header
     Yves: 'Shopping Carts' page is displayed
@@ -94,7 +94,7 @@ Share_Shopping_Carts
 
 Quick_Order
     [Documentation]    Checks Quick Order, checkout and Reorder
-    [Setup]    Run keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
+    [Setup]    Run keywords    Yves: login on Yves with credentials:    ${yves_company_user_buyer_email}
     ...    AND    Yves: delete all shopping carts
     ...    AND    Yves: create new 'Shopping Cart' with name:    quickOrderCart+${random}
     ...    AND    Yves: create new 'Shopping List' with name:    quickOrderList+${random}
@@ -105,7 +105,7 @@ Quick_Order
     Yves: go to the shopping cart through the header with name:    quickOrderCart+${random}
     Yves: 'Shopping Cart' page is displayed
     Yves: shopping cart contains the following products:    401627    520561    101509    419871    419869    425073    425084
-    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
+    Yves: login on Yves with credentials:    ${yves_company_user_buyer_email}
     Yves: go to 'Quick Order' page through the header
     Yves: add the following articles into the form through quick order text area:    401627,1\n520561,3\n101509,21\n419871,1\n419869,11\n425073,1\n425084,2
     Yves: add products to the shopping list from quick order page with name:    quickOrderList+${random}
@@ -137,7 +137,7 @@ Quick_Order
 
 Volume_Prices
     [Documentation]    Checks that volume prices are applied in cart
-    [Setup]    Run keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
+    [Setup]    Run keywords    Yves: login on Yves with credentials:    ${yves_company_user_buyer_email}
     ...    AND    Yves: create new 'Shopping Cart' with name:    VolumePriceCart+${random}
     Yves: go to PDP of the product with sku:    M21189
     Yves: change quantity on PDP:    5
@@ -151,7 +151,7 @@ Discontinued_Alternative_Products
     #Todo: extend methods "Zed: discontinue the following product:" and "Zed: undo discontinue the following product:" to check first that the product can be discontinued or undicontinued
     Yves: go to PDP of the product with sku:  M21100
     Yves: PDP contains/doesn't contain:    true    ${alternativeProducts}
-    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
+    Yves: login on Yves with credentials:    ${yves_company_user_buyer_email}
     Yves: go to the PDP of the first available product
     Yves: get sku of the concrete product on PDP
     Yves: get sku of the abstract product on PDP
@@ -164,7 +164,7 @@ Discontinued_Alternative_Products
 
 Measurement_Units
     [Documentation]    Checks checkout with Measurement Unit product
-    [Setup]    Run keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_manager_and_buyer_email}
+    [Setup]    Run keywords    Yves: login on Yves with credentials:    ${yves_company_user_manager_and_buyer_email}
     ...    AND    Yves: create new 'Shopping Cart' with name:    measurementUnitsCart+${random}
     Yves: go to PDP of the product with sku:    M23723
     Yves: select the following 'Sales Unit' on PDP:    Meter
@@ -188,7 +188,7 @@ Measurement_Units
 
 Packaging_Units
     [Documentation]    Checks checkout with Packaging Unit product
-    [Setup]    Run keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_manager_and_buyer_email}
+    [Setup]    Run keywords    Yves: login on Yves with credentials:    ${yves_company_user_manager_and_buyer_email}
     ...    AND    Yves: create new 'Shopping Cart' with name:    packagingUnitsCart+${random}
     Yves: go to PDP of the product with sku:    M21766
     Yves: change variant of the product on PDP on:    Box
@@ -211,7 +211,7 @@ Packaging_Units
 
 Product_Sets
     [Documentation]    Checks that product set can be added into cart
-    [Setup]    Run keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
+    [Setup]    Run keywords    Yves: login on Yves with credentials:    ${yves_company_user_buyer_email}
     ...    AND    Yves: create new 'Shopping Cart' with name:    productSetsCart+${random}
     Yves: go to URL:    en/product-sets
     Yves: 'Product Sets' page contains the following sets:    The Presenter's Set    Basic office supplies    The ultimate data disposal set
@@ -228,7 +228,7 @@ Product_Bundles
     ...    AND    Zed: change product stock:    ${bundled_product_1_abstract_sku}    ${bundled_product_1_concrete_sku}    true    10
     ...    AND    Zed: change product stock:    ${bundled_product_2_abstract_sku}    ${bundled_product_2_concrete_sku}    true    10
     ...    AND    Zed: change product stock:    ${bundled_product_3_abstract_sku}    ${bundled_product_3_concrete_sku}    true    10
-    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
+    Yves: login on Yves with credentials:    ${yves_company_user_buyer_email}
     Yves: create new 'Shopping Cart' with name:    productBundleCart+${random}
     Yves: go to PDP of the product with sku:    ${bundle_product_abstract_sku}
     Yves: PDP contains/doesn't contain:    true    ${bundleItemsSmall}    ${bundleItemsLarge}
@@ -246,7 +246,7 @@ Product_Bundles
 
 Product_Relations
     [Documentation]    Checks related product on PDP and upsell products in cart
-    [Setup]    Run keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
+    [Setup]    Run keywords    Yves: login on Yves with credentials:    ${yves_company_user_buyer_email}
     ...    AND    Yves: create new 'Shopping Cart' with name:    productRelationCart+${random}
     Yves: go to PDP of the product with sku:    ${product_with_relations_related_products_sku}
     Yves: PDP contains/doesn't contain:    true    ${relatedProducts}
@@ -267,17 +267,17 @@ Default_Merchants
 
 Product_Restrictions
     [Documentation]    Checks White and Black lists
-    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
+    Yves: login on Yves with credentials:    ${yves_company_user_buyer_email}
     Yves: perform search by:    Soennecken
     Yves: 'Catalog' page should show products:    18
     Yves: go to URL:    en/office-furniture/storage/lockers
     Yves: 'Catalog' page should show products:    34
     Yves: logout on Yves as a customer
-    Yves: login on Yves with provided credentials:    ${yves_company_user_restriction_customer_email_1}
+    Yves: login on Yves with credentials:    ${yves_company_user_restriction_customer_email_1}
     Yves: perform search by:    Soennecken
     Yves: 'Catalog' page should show products:    0
     Yves: logout on Yves as a customer
-    Yves: login on Yves with provided credentials:    ${yves_company_user_restriction_customer_email_2}
+    Yves: login on Yves with credentials:    ${yves_company_user_restriction_customer_email_2}
     Yves: go to URL:    en/office-furniture/storage/lockers
     Yves: 'Catalog' page should show products:    0
     Yves: go to URL:    en/transport/lift-carts
@@ -287,13 +287,13 @@ Product_Restrictions
 
 Customer_Specific_Prices
     [Documentation]    Checks that product price can be different for different customers
-    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
+    Yves: login on Yves with credentials:    ${yves_company_user_buyer_email}
     Yves: perform search by:    ${one_variant_product_abstract_name}
     Yves: product with name in the catalog should have price:    ${one_variant_product_abstract_name}    ${one_variant_product_default_price}
     Yves: go to PDP of the product with sku:    ${one_variant_product_abstract_sku}
     Yves: product price on the PDP should be:    ${one_variant_product_default_price}
     Yves: logout on Yves as a customer
-    Yves: login on Yves with provided credentials:    ${yves_company_user_special_prices_customer_email}
+    Yves: login on Yves with credentials:    ${yves_company_user_special_prices_customer_email}
     Yves: create new 'Shopping Cart' with name:    customerPrices+${random}
     Yves: perform search by:    ${one_variant_product_abstract_name}
     Yves: product with name in the catalog should have price:    ${one_variant_product_abstract_name}    ${one_variant_product_merchant_price}
@@ -310,7 +310,7 @@ Agent_Assist
     Zed: create new Zed user with data:    agent+${random}@spryker.com    change123${random}    Agent    Assist    Root group    This user is an agent    en_US
     Yves: go to the 'Home' page
     Yves: go to URL:    agent/login
-    Yves: login on Yves with provided credentials:    agent+${random}@spryker.com    change123${random}
+    Yves: login on Yves with credentials:    agent+${random}@spryker.com    change123${random}
     Yves: header contains/doesn't contain:    true    ${customerSearchWidget}
     Yves: perform search by customer:    ${yves_company_user_special_prices_customer_firstname}
     Yves: agent widget contains:    ${yves_company_user_special_prices_customer_email}
@@ -328,7 +328,7 @@ Business_on_Behalf
     Zed: go to second navigation item level:    Customers    Company Users
     Zed: click Action Button in a table for row that contains:    Donald    Attach to BU
     Zed: attach company user to the following BU with role:    Spryker Systems Zurich (id: 25)    Admin
-    Yves: login on Yves with provided credentials:    ${yves_company_user_bob_email}
+    Yves: login on Yves with credentials:    ${yves_company_user_bob_email}
     Yves: go to URL:    en/company/user/select
     Yves: 'Select Business Unit' page is displayed
     Yves: 'Business Unit' dropdown contains:    Spryker Systems GmbH / Spryker Systems Berlin    Spryker Systems GmbH / Spryker Systems Zurich
@@ -336,7 +336,7 @@ Business_on_Behalf
 
 Business_Unit_Address_on_Checkout
     [Documentation]    Checks that business unit address can be used during checkout
-    [Setup]    Run keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
+    [Setup]    Run keywords    Yves: login on Yves with credentials:    ${yves_company_user_buyer_email}
     ...    AND    Yves: create new 'Shopping Cart' with name:    businessAddressCart+${random}
     Yves: go to PDP of the product with sku:    M64933
     Yves: add product to the shopping cart
@@ -358,7 +358,7 @@ Business_Unit_Address_on_Checkout
 
 Approval_Process
     [Documentation]    Checks role permissions on checkout and Approval process
-    [Setup]    Run keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_with_limit_email}
+    [Setup]    Run keywords    Yves: login on Yves with credentials:    ${yves_company_user_buyer_with_limit_email}
     ...    AND    Yves: create new 'Shopping Cart' with name:    approvalCart+${random}
     Yves: go to PDP of the product with sku:    M49320
     Yves: add product to the shopping cart
@@ -401,7 +401,7 @@ Approval_Process
     Yves: 'Summary' page is displayed
     Yves: 'Summary' page contains/doesn't contain:    true    ${cancelRequestButton}    ${alertWarning}    ${quoteStatus}
     Yves: logout on Yves as a customer
-    Yves: login on Yves with provided credentials:    ${yves_company_user_approver_email}
+    Yves: login on Yves with credentials:    ${yves_company_user_approver_email}
     Yves: go to user menu item in header:    Overview
     Yves: 'Overview' page is displayed
     Yves: go to user menu item in the left bar:    Shopping carts
@@ -426,7 +426,7 @@ Approval_Process
     Yves: shopping cart with name xxx has the following status:    approvalCart+${random}    Approved
     Yves: shopping cart with name xxx has the following status:    anotherApprovalCart+${random}    Waiting
     Yves: logout on Yves as a customer
-    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_with_limit_email}
+    Yves: login on Yves with credentials:    ${yves_company_user_buyer_with_limit_email}
     Yves: go to user menu item in the left bar:    Shopping carts
     Yves: shopping cart with name xxx has the following status:    approvalCart+${random}    Approved
     Yves: go to the shopping cart through the header with name:    approvalCart+${random}
@@ -441,7 +441,7 @@ Request_for_Quote
     [Documentation]    Checks user can request and receive quote
     [Setup]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: create new Zed user with data:    agent_quote+${random}@spryker.com    change123${random}    Request    Quote    Root group    This user is an agent    en_US
-    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
+    Yves: login on Yves with credentials:    ${yves_company_user_buyer_email}
     Yves: delete all shopping carts
     Yves: create new 'Shopping Cart' with name:    RfQCart+${random}
     Yves: go to PDP of the product with sku:    ${one_variant_product_abstract_sku}
@@ -453,7 +453,7 @@ Request_for_Quote
     Yves: click 'Send to Agent' button on the 'Quote Request Details' page
     Yves: logout on Yves as a customer
     Yves: go to URL:    agent/login
-    Yves: login on Yves with provided credentials:    agent_quote+${random}@spryker.com    change123${random}
+    Yves: login on Yves with credentials:    agent_quote+${random}@spryker.com    change123${random}
     Yves: header contains/doesn't contain:    true    ${quoteRequestsWidget}
     Yves: go to 'Quote Requests' page through the header
     Yves: 'Quote Requests' page is displayed
@@ -465,7 +465,7 @@ Request_for_Quote
     Yves: click 'Send to Customer' button on the 'Quote Request Details' page
     Yves: logout on Yves as a customer
     Yves: go to the 'Home' page
-    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
+    Yves: login on Yves with credentials:    ${yves_company_user_buyer_email}
     Yves: go to user menu item in header:    Quote Requests
     Yves: quote request with reference xxx should have status:    ${lastCreatedRfQ}    Ready
     Yves: view quote request with reference:    ${lastCreatedRfQ}
@@ -478,7 +478,7 @@ Request_for_Quote
     Yves: click 'Send to Agent' button on the 'Quote Request Details' page
     Yves: logout on Yves as a customer
     Yves: go to URL:    agent/login
-    Yves: login on Yves with provided credentials:    agent_quote+${random}@spryker.com    change123${random}
+    Yves: login on Yves with credentials:    agent_quote+${random}@spryker.com    change123${random}
     Yves: move mouse over header menu item:     ${quoteRequestsWidget}
     Yves: 'Quote Requests' widget is shown
     Yves: go to the quote request through the header with reference:    ${lastCreatedRfQ}
@@ -489,7 +489,7 @@ Request_for_Quote
     Yves: click 'Send to Customer' button on the 'Quote Request Details' page
     Yves: logout on Yves as a customer
     Yves: go to the 'Home' page
-    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
+    Yves: login on Yves with credentials:    ${yves_company_user_buyer_email}
     Yves: go to user menu item in header:    Quote Requests
     Yves: quote request with reference xxx should have status:    ${lastCreatedRfQ}    Ready
     Yves: view quote request with reference:    ${lastCreatedRfQ}
@@ -511,7 +511,7 @@ Request_for_Quote
 
 # Unique_URL
 #     [Documentation]    Fails due to Bug:CC-12380
-#     Yves: login on Yves with provided credentials:    ${yves_company_user_manager_and_buyer_email}
+#     Yves: login on Yves with credentials:    ${yves_company_user_manager_and_buyer_email}
 #     Yves: create new 'Shopping Cart' with name:    externalCart+${random}
 #     Yves: go to PDP of the product with sku:    M90806
 #     Yves: add product to the shopping cart
@@ -527,7 +527,7 @@ Request_for_Quote
 
 Configurable_Bundle
     [Documentation]    Checks checkout with the configurable bundle
-    [Setup]    Run keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_manager_and_buyer_email}
+    [Setup]    Run keywords    Yves: login on Yves with credentials:    ${yves_company_user_manager_and_buyer_email}
     ...    AND    Yves: delete all shopping carts
     ...    AND    Yves: create new 'Shopping Cart' with name:    confBundle+${random}
     Yves: go to second navigation item level:    More    Configurable Bundle
@@ -562,7 +562,7 @@ Configurable_Bundle
 
 Return_Management
     [Documentation]    Checks OMS and that Yves and Zed users can create returns
-    [Setup]    Run keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
+    [Setup]    Run keywords    Yves: login on Yves with credentials:    ${yves_company_user_buyer_email}
     ...    AND    Yves: create new 'Shopping Cart' with name:    returnCart+${random}
     Yves: go to PDP of the product with sku:    M90802
     Yves: add product to the shopping cart
@@ -584,7 +584,7 @@ Return_Management
     Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Pay
     Zed: trigger all matching states inside this order:    Skip timeout
     Zed: trigger all matching states inside this order:    Ship
-    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
+    Yves: login on Yves with credentials:    ${yves_company_user_buyer_email}
     Yves: go to user menu item in header:    Order History
     Yves: 'Order History' page is displayed
     Yves: get the last placed order ID by current customer
@@ -599,7 +599,7 @@ Return_Management
     Yves: go to the 'Home' page
     Yves: logout on Yves as a customer
     Yves: go to URL:    agent/login
-    Yves: login on Yves with provided credentials:    return+agent+${random}@spryker.com    change123${random}
+    Yves: login on Yves with credentials:    return+agent+${random}@spryker.com    change123${random}
     Yves: header contains/doesn't contain:    true    ${customerSearchWidget}
     Yves: perform search by customer:    ${yves_company_user_buyer_email}
     Yves: agent widget contains:    ${yves_company_user_buyer_email}
@@ -612,7 +612,7 @@ Return_Management
     Yves: check that 'Print Slip' contains the following products:    108278
     Zed: login on Zed with provided credentials:    admin@spryker.com
     Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Execute return
-    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
+    Yves: login on Yves with credentials:    ${yves_company_user_buyer_email}
     Yves: go to user menu item in header:    Order History
     Yves: 'Order History' page is displayed
     Yves: 'Order History' page contains the following order with a status:    ${lastPlacedOrder}    Returned
@@ -621,7 +621,7 @@ Return_Management
 
 User_Account
     [Documentation]    Checks user account pages work
-    Yves: login on Yves with provided credentials:    ${yves_user_email}
+    Yves: login on Yves with credentials:    ${yves_user_email}
     Yves: go to user menu item in header:    Overview
     Yves: 'Overview' page is displayed
     Yves: go to user menu item in header:    Order History
@@ -669,7 +669,7 @@ Product_labels
 
 Catalog
     [Documentation]    Checks that catalog options and search work
-    Yves: login on Yves with provided credentials:    ${yves_user_email}
+    Yves: login on Yves with credentials:    ${yves_user_email}
     Yves: perform search by:    friwa
     Yves: 'Catalog' page should show products:    14
     Yves: catalog page contains filter:    Product Ratings     Product Labels     Brand    Color
@@ -690,7 +690,7 @@ Catalog
 
 Catalog_Actions
     [Documentation]    Checks quick add to cart and product groups
-    [Setup]    Run keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
+    [Setup]    Run keywords    Yves: login on Yves with credentials:    ${yves_company_user_buyer_email}
     ...    AND    Yves: create new 'Shopping Cart' with name:    catalogActions+${random}
     Yves: perform search by:    FRIWA stackable chair - with closed back
     Yves: 1st product card in catalog (not)contains:      Add to Cart    true
@@ -716,7 +716,7 @@ Discounts
     Zed: create a discount and activate it:    voucher    Percentage    5    sku = '*'    test${random}    discountName=Voucher Code 5% ${random}
     Zed: create a discount and activate it:    cart rule    Percentage    10    sku = '*'    discountName=Cart Rule 10% ${random}
     Zed: create a discount and activate it:    cart rule    Percentage    100    discountName=Promotional Product 100% ${random}    promotionalProductDiscount=True    promotionalProductAbstractSku=M29503    promotionalProductQuantity=2
-    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
+    Yves: login on Yves with credentials:    ${yves_company_user_buyer_email}
     Yves: create new 'Shopping Cart' with name:    discounts+${random}
     Yves: go to PDP of the product with sku:    M21777
     Yves: add product to the shopping cart
@@ -758,7 +758,7 @@ Back_in_Stock_Notification
     Zed: change product stock:    ${got_abstract_product_sku}    ${got_concrete_product_sku}    false    0
     Zed: go to second navigation item level:    Catalog    Availability
     Zed: check if product is/not in stock:    ${got_abstract_product_sku}    false
-    Yves: login on Yves with provided credentials:    ${yves_user_email}
+    Yves: login on Yves with credentials:    ${yves_user_email}
     Yves: go to PDP of the product with sku:  ${got_abstract_product_sku}
     Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    True
     Yves: check if product is available on PDP:    ${got_abstract_product_sku}    false
@@ -769,7 +769,7 @@ Back_in_Stock_Notification
     Zed: change product stock:    ${got_abstract_product_sku}    ${got_concrete_product_sku}    true    0  
     Zed: go to second navigation item level:    Catalog    Availability  
     Zed: check if product is/not in stock:    ${got_abstract_product_sku}    true
-    Yves: login on Yves with provided credentials:    ${yves_user_email}
+    Yves: login on Yves with credentials:    ${yves_user_email}
     Yves: go to PDP of the product with sku:  ${got_abstract_product_sku}
     Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    False
     Yves: check if product is available on PDP:    ${got_abstract_product_sku}    true
@@ -777,7 +777,7 @@ Back_in_Stock_Notification
 
 Split_Delivery
     [Documentation]    Checks split delivery in checkout with new addresses
-    [Setup]    Run Keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
+    [Setup]    Run Keywords    Yves: login on Yves with credentials:    ${yves_company_user_buyer_email}
     ...    AND    Yves: delete all shopping carts
     ...    AND    Yves: create new 'Shopping Cart' with name:    splitDelivery+${random}
     Yves: go to PDP of the product with sku:    ${one_variant_product_abstract_sku}
@@ -833,7 +833,7 @@ Refunds
     [Documentation]    Checks that refund can be created for an item and the whole order
     [Setup]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: deactivate following discounts from Overview page:    10% Discount for all orders above
-    ...    AND    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
+    ...    AND    Yves: login on Yves with credentials:    ${yves_company_user_buyer_email}
     ...    AND    Yves: create new 'Shopping Cart' with name:    refunds+${random}
     Yves: go to PDP of the product with sku:    ${one_variant_product_abstract_sku}
     Yves: add product to the shopping cart

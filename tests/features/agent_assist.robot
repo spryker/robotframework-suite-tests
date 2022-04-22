@@ -30,7 +30,7 @@ Agent_Assist_Impersonate_As_Customer
     Zed: create new Zed user with data:    agent+${random}@spryker.com    change123    Agent    Assist    Root group    This user is an agent    en_US
     Yves: go to the 'Home' page
     Yves: go to URL:    agent/login
-    Yves: login on Yves with provided credentials:    agent+${random}@spryker.com
+    Yves: login on Yves with credentials:    agent+${random}@spryker.com
     Yves: header contains/doesn't contain:    true    ${customerSearchWidget}
     Yves: perform search by customer:    ${yves_user_first_name}
     Yves: agent widget contains:    ${yves_user_email}
@@ -46,7 +46,7 @@ Agent_Assist_Impersonate_As_Customer
 #     Zed: create new Zed user with data:    agent+${random}@spryker.com    change123    Agent    Assist    Root group    This user is an agent    en_US
 #     Yves: go to the 'Home' page
 #     Yves: go to URL:    agent/login
-#     Yves: login on Yves with provided credentials:    agent+${random}@spryker.com
+#     Yves: login on Yves with credentials:    agent+${random}@spryker.com
 #     Yves: header contains/doesn't contain:    true    ${customerSearchWidget}
 #     Yves: perform search by customer:    ${yvesUserFirstName}
 #     Yves: agent widget contains:    ${yvesUserEmail}
@@ -63,7 +63,7 @@ Agent_Assist_Impersonate_As_Customer
 #     Zed: create new Zed user with data:    agent+${random}@spryker.com    change123    Agent    Assist    Root group    This user is an agent    en_US
 #     Yves: go to the 'Home' page
 #     Yves: go to URL:    agent/login
-#     Yves: login on Yves with provided credentials:    agent+${random}@spryker.com
+#     Yves: login on Yves with credentials:    agent+${random}@spryker.com
 #     Yves: header contains/doesn't contain:    true    ${quote_request_agent_widget}
 #     Click    ${agent_assist_overview_link}
 #     
@@ -77,17 +77,17 @@ Agent_Assist_Impersonate_As_Customer
 #     Zed: create new Zed user with data:    agent+${random}@spryker.com    change123    Agent    Assist    Root group    This user is an agent    en_US
 #     Yves: go to the 'Home' page
 #     Yves: go to URL:    agent/login
-#     Yves: login on Yves with provided credentials:    agent+${random}@spryker.com
+#     Yves: login on Yves with credentials:    agent+${random}@spryker.com
 #     Yves: header contains/doesn't contain:    false    ${quote_request_agent_widget}
 #     Click    ${agent_assist_overview_link}
-#     
+#
 #     Page Should Contain Element    ${agent_assist_menu_overview}
 #     Page Should Not Contain Element    ${agent_assist_menu_quote_request}
 
 # Agent_Request_For_Quote
 #     [Documentation]    In this test is checked, that an agent can process a request for quote.
-#     [Tags]    b2b    suite_nonsplit 
-#     Yves: login on Yves with provided credentials:    sonia@spryker.com
+#     [Tags]    b2b    suite_nonsplit
+#     Yves: login on Yves with credentials:    sonia@spryker.com
 #     Yves: create new 'Shopping Cart' with name:    QuoteRequest+${random}
 #     Yves: go to PDP of the product with sku:    M70208
 #     Yves: add product to the shopping cart
@@ -97,7 +97,7 @@ Agent_Assist_Impersonate_As_Customer
 #     Zed: create new Zed user with data:    agent+${random}@spryker.com    change123    Agent    Assist    Root group    This user is an agent    en_US
 #     Yves: go to the 'Home' page
 #     Yves: go to URL:    agent/login
-#     Yves: login on Yves with provided credentials:    agent+${random}@spryker.com
+#     Yves: login on Yves with credentials:    agent+${random}@spryker.com
 #     Yves: header contains/doesn't contain:    true    ${customerSearchWidget}
 #     Yves: perform search by customer:    Karl
 #     Yves: agent widget contains:    karl@spryker.com
