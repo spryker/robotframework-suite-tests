@@ -29,10 +29,10 @@ Get_all_concrete_product_offer_info_with_product_offer_prices_and_product_offer_
     And Response should contain the array of a certain size:    [included]    4
     And Response should contain the array of a certain size:    [data][0][relationships]    2
     And Response include should contain certain entity type:    product-offer-prices
-    # And Response include should contain certain entity type:    product-offer-availabilities
+    And Response include should contain certain entity type:    product-offer-availabilities
     And Response include should contain certain entity type:    merchants
     And Response include element has self link:    product-offer-prices
-    # And Response include element has self link:    product-offer-availabilities
+    And Response include element has self link:    product-offer-availabilities
     And Response include element has self link:    merchants
     And Response body has correct self link
 
@@ -51,10 +51,10 @@ Get_all_product_offer_info_with_product_offer_prices_and_product_offer_availabil
     And Response should contain the array of a certain size:    [included]    2
     And Response should contain the array of a certain size:    [data][relationships]    2
     And Response include should contain certain entity type:    product-offer-prices
-    # And Response include should contain certain entity type:    product-offer-availabilities
+    And Response include should contain certain entity type:    product-offer-availabilities
     And Response include should contain certain entity type:    merchants
     And Response include element has self link:    product-offer-prices
-    # And Response include element has self link:    product-offer-availabilities
+    And Response include element has self link:    product-offer-availabilities
     And Response include element has self link:    merchants
 
 Get_product_offer_without_volume_prices
