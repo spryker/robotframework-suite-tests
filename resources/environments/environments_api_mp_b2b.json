@@ -187,6 +187,21 @@
         "product_related_product_with_related_relation_sku": "M29501",
         "product_related_product_with_related_relation_name": "Safescan automatic banknote counter - UV counterfeit recognition",
 
+        "product_related_product_with_upselling_relation_NESTED": {
+            "sku": "M29499",
+            "merchant_reference": "MER000008",
+            "name": "Safescan counterfeit test device - SAFESCAN 45 UV",
+            "description": " Counterfeit test device, SAFESCAN 45 UV, doubled UV lamp. Strong, doubled UV lamp (2 x 6 W). Monitors the UV features of banknotes. Suitable for all currencies. Suitable for all driver’s licenses and documents. Suitable for identity cards and credit cards. CE-certified.  ",
+            "concrete_available_product": {
+                "sku": "419869",
+                "name": "Safescan Counterfeit test device, SAFESCAN 45 UV, doubled UV lamp",
+                "description": "Counterfeit test device, SAFESCAN 45 UV, doubled UV lamp. Strong, doubled UV lamp (2 x 6 W). Monitors the UV features of banknotes. Suitable for all currencies. Suitable for all driver’s licenses and documents. Suitable for identity cards and credit cards. CE-certified.",
+                "meta_title": "",
+                "meta_keywords": "Geldscheinprüfer,Geldprüfer",
+                "meta_description": " Falschgeld-Prüfgerät, SAFESCAN 45 UV, doppelte UV Lampe. Starke, doppelte UV Lampe (2 x 6 W). Kontrolliert die UV-Merkmale von Geldscheinen. Eignet sich für alle Währungen. Eignet sich für alle Führerscheine und Dokumente. Eignet sich für Identitätskarten und Kreditkarten. CE-zertifiziert.  "
+            }
+        },
+
         "concrete_product_with_alternative_sku": "420566",
         "concrete_product_with_alternative_sku_name": "Verbatim USB stick Store n Go V3 49173 32GB USB3.0 gray",
         "concrete_product_with_alternative_sku_name_in_lower_case": "verbatim usb stick store n go v3 49173 32gb usb3.0 gray",
