@@ -255,7 +255,11 @@
         "color_4": "Black",
         "color_3": "purple",
         "color_1": "yellow",
-        "color_2": "Blue"
+        "color_2": "Blue",
+
+        "product_management_superattribute_id": "4g",
+        "product_management_attribute_free_input_id": "4g_standards",
+        "product_management_attribute_no_input_id": "bundled_product"
 
     },
 
