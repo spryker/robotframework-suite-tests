@@ -20,7 +20,7 @@ Get_my_availability_notifications
     And Response body parameter should be:    [data][0][id]    ${availability_notification_id}
     And Response body parameter should be:    [data][0][attributes][localeName]    ${locale_name_EN}
     And Response body parameter should be:    [data][0][attributes][email]    ${yves_user_email}
-    And Response body parameter should be:    [data][0][attributes][sku]    ${concrete_product_with_alternative_sku}
+    And Response body parameter should be:    [data][0][attributes][sku]    ${concrete_product_with_abstract_product_alternative_sku}
     And Each array element of array in response should contain property:    [data]    type
     And Each array element of array in response should contain property:    [data]    id
     And Each array element of array in response should contain nested property:    [data]    [attributes]    localeName
