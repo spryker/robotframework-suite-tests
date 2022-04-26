@@ -28,7 +28,7 @@ Restore_password_with_incorrect_type
     And Response should return error message:    Restore password key is not valid.
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
 
-!!!Restore_password_without_restorePasswordKey
+Restore_password_without_restorePasswordKey
     I send a PATCH request:    /customer-restore-password/${yves_user_reference}   {"data":{"type":"customer-restore-password","attributes":{"restorePasswordKey":"","password":"${yves_user_password}","confirmPassword":"${yves_user_password}"}}}
     And Response status code should be:    422
     And Response should return error code:    901
