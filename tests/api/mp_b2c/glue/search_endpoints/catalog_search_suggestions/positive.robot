@@ -7,7 +7,6 @@ Default Tags    glue
 *** Test Cases ***
 ENABLER
     TestSetup
-#ET requests
 Get_search_suggestions_without_query_parameter
     When I send a GET request:    /catalog-search-suggestions
     Then Response status code should be:    200
