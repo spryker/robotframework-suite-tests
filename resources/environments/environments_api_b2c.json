@@ -194,6 +194,7 @@
         "concrete_available_with_stock_and_never_out_of_stock": "004_30663302",
         "abstract_available_product_with_no_stock_and_never_out_of_stock": "154",
         "abstract_unavailable_product": "111",
+        "concrete_unavailable_product_sku": "111_12295890",
 
         "abstract_available_product_with_3_concretes": "127",
         "abstract_available_product_with_3_concretes_name": "HP Z 620",
