@@ -157,6 +157,9 @@
         "product_related_product_with_upselling_relation_sku": "042",
         "product_related_product_with_upselling_relation_name": "Samsung Galaxy S7",
         "concrete_of_product_without_relations": "019_21081473",
+        "concrete_product_with_alternative_sku": "138_30046855",
+        "concrete_product_with_alternative_sku_name": "Acer TravelMate P258-M",
+        
         
         "concrete_product_with_abstract_product_alternative_sku": "138_30046855",
         "concrete_product_with_abstract_product_alternative_sku_name": "Acer TravelMate P258-M",
