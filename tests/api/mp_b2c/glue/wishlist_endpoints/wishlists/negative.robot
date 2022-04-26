@@ -17,7 +17,7 @@ Getting_wishlist_by_invalid_Access_Token
     And Response should return error message:    Invalid access token.
     
 Getting_wishlist_without_Access_Token
-    #  [Setup]    I set Headers:    Authorization=
+     [Setup]    I set Headers:    Authorization=
     When I send a GET request:    /wishlists
     And Response should return error code:    002
     And Response status code should be:    403
