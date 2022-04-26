@@ -452,7 +452,10 @@
                 "addresses":{
                     "city_munchen":"München",
                     "address1": "Matthias-Pschorr-Straße"
-                }
+                },
+                "second_merchant_id": "MER000009",
+                "third_merchant_id": "MER000010"
+                
             },
     "return_reasons": {
         "return_reason_damaged": "Damaged",
