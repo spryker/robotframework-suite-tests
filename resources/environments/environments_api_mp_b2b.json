@@ -246,8 +246,10 @@
 
         "concrete_product_with_promotions": "212427",
 
+        "concrete_product_with_threshold_limit": "424273",
+
         "concrete_product_random_weight_sku": "421519_3",
-        "concrete_product_random_weight_name": "VGA cable as long as you want",
+        "concrete_product_random_weight_name": "Box Papermate Kugelschreiber InkJoy 700 RT S0957340 M Druckmechanik schwarz",
         "concrete_product_random_weight_measurement_unit": "19",
         "packaging_unit_m": "METR",
         "packaging_unit_i": "ITEM",
@@ -268,9 +270,9 @@
         "discount_concrete_product_1_sku": "108298",
         "discount_concrete_product_sku": "103117",
         "discount_concrete_product_1_name": "Mauser hinged door cabinet - sideboard, 4 compartments, center separating wall - HxWxD 1225 x 1600 x 420 mm - light gray / ultramarine blue",
-        "discount_amount_for_product_1_with_discount_20%_off_storage": "6226",
-        "discount_amount_for_product_1_with_discount_10%_off_minimum_order": "2490",
-        "discount_concrete_product_1_total_sum_of_discounts": "8716",
+        "discount_amount_for_product_1_with_discount_20%_off_storage": "10600",
+        "discount_amount_for_product_1_with_discount_10%_off_minimum_order": "4240",
+        "discount_concrete_product_1_total_sum_of_discounts": "14840",
         "discount_concrete_product_2_sku": "213216",
         "discount_concrete_product_2_name": "office akktiv base cabinet - HxWxD 942 x 913 x 420 mm - light gray, RAL 7035",
         "discount_amount_for_product_2_with_discount_20%_off_storage": "5783",
@@ -374,7 +376,7 @@
         "discount_2_description": "Get a 10% discount on all orders above a certain value depending on currency and gross/net price mode",
         "discount_2_total_sum_for_discounts_for_products_1_2_and_3": "8435",
         "discount_3_name": "Free standard delivery",
-        "discount_3_description": "Free standard delivery for all orders above certain value depending on the currency and net/gross price. This discount is not exclusive and can be combined with other discounts.",
+        "discount_3_description": "Get a 10% discount on all orders above a certain value depending on currency and gross/net price mode",
         "discount_3_total_sum": "490",
 
         "url_resolver_example": "/en/clairefontaine-collegeblock-8272c-din-a5-90blatt-kariert-M21692",
@@ -418,27 +420,28 @@
         "label_name_alternative": "Alternatives available"
     },
 
+    "merchants":{
+        "merchant_id": "MER000011",
+        "merchant_offer_id": "offer394",
+        "concrete_product_with_offer_sku":"425159",
+        "merchant_name": "Computer Experts",
+        "merchant_url": "/en/merchant/computer-experts",
+        "contact_person_role": "Brand Manager",
+        "contact_person_title": "Ms",
+        "contact_person_first_name": "Michele",
+        "contact_person_last_name": "Nemeth",
+        "contact_person_phone": "030/123456789",
+        "public_email": "support@computer-experts.com",
+        "public_phone": "+49 30 234567691",
+        "description": "Computer Experts offer products that enhance your work environment with computer accessories that improve how you work, communicate, and interact. Computer Experts founded in 2013 and continuously growing, acquiring deep industry experience.",
+        "addresses":{
+            "city_munchen":"München",
+            "address1": "Matthias-Pschorr-Straße"
+        },
+        "merchant_spryker_id": "MER000008",
+        "merchant_office_king_id": "MER000009"
+    },
 
-        "merchants":
-        {
-                "merchant_id": "MER000011",
-                "merchant_offer_id": "offer394",
-                "concrete_product_with_offer_sku":"425159",
-                "merchant_name": "Computer Experts",
-                "merchant_url": "/en/merchant/computer-experts",
-                "contact_person_role": "Brand Manager",
-                "contact_person_title": "Ms",
-                "contact_person_first_name": "Michele",
-                "contact_person_last_name": "Nemeth",
-                "contact_person_phone": "030/123456789",
-                "public_email": "support@computer-experts.com",
-                "public_phone": "+49 30 234567691",
-                "description": "Computer Experts offer products that enhance your work environment with computer accessories that improve how you work, communicate, and interact. Computer Experts founded in 2013 and continuously growing, acquiring deep industry experience.",
-                "addresses":{
-                    "city_munchen":"München",
-                    "address1": "Matthias-Pschorr-Straße"
-                }
-            },
     "return_reasons": {
         "return_reason_damaged": "Damaged",
         "return_reason_wrong_item": "Wrong Item",
