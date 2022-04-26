@@ -220,6 +220,7 @@
         "concrete_product_multiple_image_set_name": "Asus ZenPad Z170C",
         "concrete_available_product_with_stock": "001_25904006",
         "concrete_available_product_without_stock": "212_123",
+        "concrete_available_product_with_offer":  "092_24495842",
 
         "abstract_product_with_multiple_variants": "130",
         "concrete_product_sku_multivariant_variant1": "130_29285281",
