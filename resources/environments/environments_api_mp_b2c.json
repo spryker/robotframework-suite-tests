@@ -232,7 +232,9 @@
 
         "review_title": "This is a review",
         "review_text": "This is review text",
-        "default_review_rating": "5"
+        "default_review_rating": "5",
+        "product_offer_reference_id": "offer418"
+
     },
 
     "product_attributes": {
