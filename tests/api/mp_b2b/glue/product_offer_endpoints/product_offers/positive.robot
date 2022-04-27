@@ -14,7 +14,7 @@ Get_concrete_product_without_offers
     And Response reason should be:    OK
     And Response should contain the array of a certain size:    [data]    0
 
-# Due to the MP-6749 there is no product-offer-prices include displayed
+# Due to the MP-6749 there is no product-offer-availabilities include displayed
 Get_all_concrete_product_offer_info_with_product_offer_prices_and_product_offer_availabilities_and_merchants_included
     When I send a GET request:    /concrete-products/${concrete_product_with_volume_prices}/product-offers?include=product-offer-prices,product-offer-availabilities,merchants
     Then Response status code should be:    200
@@ -23,7 +23,7 @@ Get_all_concrete_product_offer_info_with_product_offer_prices_and_product_offer_
     And Response body parameter should be:    [data][0][id]    ${second_offer_with_vp}
     And Response body parameter should be:    [data][0][type]    product-offers
     And Response body parameter should be in:    [data][0][attributes][isDefault]    True    False
-    And Response body parameter should be:    [data][0][attributes][merchantReference]    ${second_merchant_id}
+    And Response body parameter should be:    [data][0][attributes][merchantReference]    ${merchant_office_king_id}
     And Response body parameter should not be EMPTY:    [data][0][links][self]
     And Response body parameter should contain:    [data][0][attributes]    merchantSku
     And Response should contain the array of a certain size:    [included]    4
@@ -36,7 +36,7 @@ Get_all_concrete_product_offer_info_with_product_offer_prices_and_product_offer_
     And Response include element has self link:    merchants
     And Response body has correct self link
 
-# Due to the MP-6749 there is no product-offer-prices include displayed
+# Due to the MP-6749 there is no product-offer-availabilities include displayed
 Get_all_product_offer_info_with_product_offer_prices_and_product_offer_availabilities_and_merchants_included
     When I send a GET request:    /product-offers/${offer}?include=product-offer-prices,product-offer-availabilities,merchants
     Then Response status code should be:    200
@@ -45,7 +45,7 @@ Get_all_product_offer_info_with_product_offer_prices_and_product_offer_availabil
     And Response body parameter should be:    [data][id]    ${offer}
     And Response body parameter should be:    [data][type]    product-offers
     And Response body parameter should be in:    [data][attributes][isDefault]    True    False
-    And Response body parameter should be:    [data][attributes][merchantReference]    ${third_merchant_id}
+    And Response body parameter should be:    [data][attributes][merchantReference]    ${merchant_budget_stationery_id}
     And Response body parameter should not be EMPTY:    [data][links][self]
     And Response body parameter should be greater than:    [data][attributes][merchantSku]    1
     And Response should contain the array of a certain size:    [included]    2
