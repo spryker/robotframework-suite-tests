@@ -186,6 +186,13 @@
         "abstract_available_product_with_3_concretes_name": "HP Z 620",
         "abstract_available_product_with_3_concretes_superattribute": "total_storage_capacity",
 
+        "discount_concrete_product_1_sku": "108298",
+        "discount_concrete_product_2_sku": "213216",
+        "discount_concrete_product_3_sku": "401768",
+        "concrete_product_with_options": "419871",
+        "concrete_product_random_weight_sku": "cable-vga-1-2",
+        "delivery_date": "2030-12-31",
+
         "abstract_product_with_volume_prices": "193",
         "abstract_product_with_volume_prices_name": "TomTom Golf",
         "abstract_product_with_original_prices": "072",
@@ -299,7 +306,9 @@
         "test_cart_name": "Test-cart",
         "qty_of_categories_in_category_trees": "6",
         "qty_of_subcategories_in_category_trees": "2",
-        "color_name": "black"
+        "color_name": "black",
+        "payment_provider_name": "DummyPayment",
+        "payment_method_name": "Invoice"
         
     },
 
