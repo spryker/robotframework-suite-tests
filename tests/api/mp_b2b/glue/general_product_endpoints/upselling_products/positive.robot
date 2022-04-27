@@ -74,7 +74,6 @@ Cart_contains_product_with_upselling_relation_plus_includes
     When I send a GET request:    /carts/${cart_id}/up-selling-products?include=category-nodes
     Then Response status code should be:    200
     And Response reason should be:    OK
-    And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response should contain the array larger than a certain size:    [data]    0
     And Each array element of array in response should contain nested property with value:    [data]    type    abstract-products  
     And Response body has correct self link 
