@@ -157,18 +157,20 @@
     },
 
     "products": {
-        "bundle_product_abstract_sku": "B0001",
-        "bundle_product_concrete_sku": "000101",
-        "bundle_product_product_name": "Our Favourite Workspace Bundle",
-        "bundled_product_1_abstract_sku": "M528",
-        "bundled_product_2_abstract_sku": "M1017905",
-        "bundled_product_3_abstract_sku": "M24605",
-        "bundled_product_1_concrete_sku": "104939",
-        "bundled_product_1_concrete_name": "Dauphin vertebral disc swivel chair, synchronous mechanism",
-        "bundled_product_2_concrete_sku": "574995",
-        "bundled_product_2_concrete_name": "UPLINER standing desk, electric - without traverse, WxD 1800 x 800 mm - substructure silver, light gray",
-        "bundled_product_3_concrete_sku": "426581",
-        "bundled_product_3_concrete_name": "Cherry keyboard Strait JK-0300DE metal-look, corded, USB, silver",
+        
+        "bundle_product_abstract_sku": "M90851",
+        "bundle_product_abstract_name": "IDEAL document shredder - Power 1300 watts, 165 l volume",
+        "bundle_product_concrete_sku":"000201",
+        "bundle_product_concrete_name": "IDEAL document shredder - Power 1300 watts, 165 l volume - 23 – 25 sheets, safety level P-4, particle",
+        "bundled_product_1_abstract_sku": "M23457",
+        "bundled_product_2_abstract_sku": "C2235",
+        "bundled_product_3_abstract_sku": "M11542",
+        "bundled_product_1_concrete_sku": "424453",
+        "bundled_product_1_concrete_name": "Schneider ballpoint pen HAPTIFY 135323 M 0.5 mm, dark blue/light blue",
+        "bundled_product_2_concrete_sku": "1001454",
+        "bundled_product_2_concrete_name": "Schomburg standing desk - HxWxD 1094 x 600 x 500 mm, beech",
+        "bundled_product_3_concrete_sku": "104517",
+        "bundled_product_3_concrete_name": "Wood stackable chair - 4-foot substructure, upholstered seat - Cover anthracite, substructure coated",
         "qty_of_products_in_bundle": "3",
         "qty_of_each_product_inside_bundle": "1",
 
@@ -259,10 +261,11 @@
 
         "concrete_product_with_promotions": "212427",
 
-        "concrete_product_random_weight_sku": "cable-vga-1-2",
+        "concrete_product_random_weight_sku": "421519_3",
         "concrete_product_random_weight_name": "VGA cable as long as you want",
         "concrete_product_random_weight_measurement_unit": "19",
         "packaging_unit_m": "METR",
+        "packaging_unit_i": "ITEM",
         "packaging_unit_cm": "CMET",
         "packaging_unit_m_name": "Meter",
         "concrete_product_random_weight_qty_of_units": "2",
@@ -278,10 +281,11 @@
         "product_option_2": "OP_insurance",
 
         "discount_concrete_product_1_sku": "108298",
+        "discount_concrete_product_sku": "103117",
         "discount_concrete_product_1_name": "Mauser hinged door cabinet - sideboard, 4 compartments, center separating wall - HxWxD 1225 x 1600 x 420 mm - light gray / ultramarine blue",
-        "discount_amount_for_product_1_with_discount_20%_off_storage": "10600",
-        "discount_amount_for_product_1_with_discount_10%_off_minimum_order": "4240",
-        "discount_concrete_product_1_total_sum_of_discounts": "14840",
+        "discount_amount_for_product_1_with_discount_20%_off_storage": "6226",
+        "discount_amount_for_product_1_with_discount_10%_off_minimum_order": "2490",
+        "discount_concrete_product_1_total_sum_of_discounts": "8716",
         "discount_concrete_product_2_sku": "213216",
         "discount_concrete_product_2_name": "office akktiv base cabinet - HxWxD 942 x 913 x 420 mm - light gray, RAL 7035",
         "discount_amount_for_product_2_with_discount_20%_off_storage": "5783",
@@ -366,8 +370,9 @@
         "qty_of_subcategories_in_category_trees": "2",
         "color_name": "black",
 
-        "payment_provider_name": "DummyPayment",
-        "payment_method_name": "Invoice",
+        "payment_provider_name": "dummyMarketplacePayment",
+        "payment_method_name": "invoice",
+        "payment_selection_name": "dummyMarketplacePaymentInvoice",
         "carrier_name": "DHL",
         "shipment_method_name": "Standard",
         "shipment_method_name_2": "Express",
@@ -429,24 +434,11 @@
     },
 
 
-     "merchants":{
-
-        "merchants":{
-            "spryker": {
-                "merchant_id": "MER000008",
-                "merchant_name": "Spryker",
-                "merchant_url": "/en/merchant/spryker",
-                "contact_person_role": "E-Commerce Manager",
-                "contact_person_title": "Mr",
-                "contact_person_first_name": "Harald",
-                "contact_person_last_name": "Schmidt",
-                "contact_person_phone": "+49 30 208498350",
-                "public_email": "info@spryker.com",
-                "public_phone": "+49 30 234567891",
-                "description": "Spryker is the main merchant on the B2B Demo Marketplace."
-            },
-            "computer_experts": {
+        "merchants":
+        {
                 "merchant_id": "MER000011",
+                "merchant_offer_id": "offer394",
+                "concrete_product_with_offer_sku":"425159",
                 "merchant_name": "Computer Experts",
                 "merchant_url": "/en/merchant/computer-experts",
                 "contact_person_role": "Brand Manager",
@@ -461,10 +453,7 @@
                     "city_munchen":"München",
                     "address1": "Matthias-Pschorr-Straße"
                 }
-            }
-        }
-    },
-
+            },
     "return_reasons": {
         "return_reason_damaged": "Damaged",
         "return_reason_wrong_item": "Wrong Item",
