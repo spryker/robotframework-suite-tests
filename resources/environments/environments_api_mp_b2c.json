@@ -3,7 +3,7 @@
 
     "env": {
 
-        "glue_url": "http://glue.de.spryker.local",
+        "glue_url": "https://glue.de.mp-b2c.internal-testing.demo-spryker.com",
         "bapi_url": "http://backend-api.de.spryker.local/api/rest"
     },
 
@@ -146,8 +146,11 @@
         "bundled_product_2_abstract_sku": "127",
         "bundled_product_3_abstract_sku": "121",
         "bundled_product_1_concrete_sku": "150_29554292",
+        "bundled_product_1_concrete_name": "HP Chromebook 11",
         "bundled_product_2_concrete_sku": "127_22828284",
+        "bundled_product_2_concrete_name": "HP Z 620",
         "bundled_product_3_concrete_sku": "121_29406823",
+        "bundled_product_3_concrete_name": "HP 200 280 G1",
         "qty_of_products_in_bundle": "3",
         "qty_of_each_product_inside_bundle": "1",
 
@@ -308,7 +311,17 @@
         "test_cart_name": "Test-cart",
         "qty_of_categories_in_category_trees": "6",
         "qty_of_subcategories_in_category_trees": "2",
-        "color_name": "black"
+        "color_name": "black",
+
+
+
+        "payment_provider_name": "DummyPayment",
+        "payment_method_name": "Credit Card",
+        "payment_selection_name": "dummyMarketplacePaymentInvoice",
+        "carrier_name": "DHL",
+        "shipment_method_name": "Standard",
+        "shipment_method_name_2": "Express",
+        "delivery_date": "2030-12-31"
         
     },
 
