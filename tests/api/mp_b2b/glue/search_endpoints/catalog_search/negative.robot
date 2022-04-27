@@ -8,8 +8,6 @@ Default Tags    glue
 ENABLER
     TestSetup
 
-
-
 # bug https://spryker.atlassian.net/browse/CC-15983
 Search_without_query_parameter
     When I send a GET request:    /catalog-search?

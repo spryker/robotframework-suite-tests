@@ -238,8 +238,8 @@ Filter_by_rating_only_min
     And Response body parameter should be greater than:    [data][0][attributes][pagination][maxPage]    1
     And Response should contain the array of a certain size:    [data][0][attributes][abstractProducts]    ${default_ipp}
     #rating facets
-    And Response body parameter should be:    [data][0][attributes][rangeFacets][1][activeMin]    3
-    And Response body parameter should be:    [data][0][attributes][rangeFacets][1][activeMax]    ${default_max_rating}
+    And Response body parameter should be:    [data][0][attributes][rangeFacets][0][activeMin]    3
+    And Response body parameter should be:    [data][0][attributes][rangeFacets][0][activeMax]    ${default_max_rating}
 
 
 Filter_by_rating_only_max
@@ -342,7 +342,7 @@ Filter_by_label_two_labels
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response body parameter should be:    [data][0][type]    catalog-search
-    And Response body parameter should be:    [data][0][attributes][pagination][numFound]    39
+    And Response body parameter should be:    [data][0][attributes][pagination][numFound]    37
     And Response body parameter should be:    [data][0][attributes][pagination][currentPage]    1
     And Response body parameter should be greater than:    [data][0][attributes][pagination][maxPage]    1
     And Response should contain the array of a certain size:    [data][0][attributes][abstractProducts]    ${default_ipp}
@@ -549,7 +549,6 @@ Search_with_specific_currency
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response body parameter should be:    [data][0][type]    catalog-search
-    And Response body parameter should be less than:    [data][0][attributes][pagination][numFound]    ${total_number_of_products_in_search}
     And Response body parameter should be greater than:    [data][0][attributes][pagination][numFound]    1
     And Response body parameter should be:    [data][0][attributes][pagination][currentPage]    1
     And Response body parameter should be greater than:    [data][0][attributes][pagination][maxPage]    1
@@ -649,7 +648,7 @@ Search_sort_by_name_desc
     And Response body parameter should be:    [data][0][type]    catalog-search
     And Response body parameter should be:    [data][0][attributes][sort][currentSortParam]    name_desc
     And Response body parameter should be:    [data][0][attributes][sort][currentSortOrder]    desc
-    And Response body parameter should start with:    [data][0][attributes][abstractProducts][0][abstractName]    r
+    And Response body parameter should start with:    [data][0][attributes][abstractProducts][0][abstractName]    X
     And Response body has correct self link
 
 Search_sort_by_rating
