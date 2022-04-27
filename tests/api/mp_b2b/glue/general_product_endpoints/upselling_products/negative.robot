@@ -10,7 +10,7 @@ ENABLER
     
 No_cart_is_passing_to_upselling_products_request
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
-    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
+    ...    AND    I set Headers:    Authorization=${token}
     When I send a GET request:    /carts//up-selling-products
     Then Response status code should be:    400
     And Response reason should be:    Bad Request
@@ -19,7 +19,7 @@ No_cart_is_passing_to_upselling_products_request
     
 Nonexistent_cart_id_is_passing_to_upselling_products_request
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
-    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
+    ...    AND    I set Headers:    Authorization=${token}
     When I send a GET request:    /carts/not_a_cart/up-selling-products
     Then Response status code should be:    404
     And Response reason should be:    Not Found
@@ -27,7 +27,7 @@ Nonexistent_cart_id_is_passing_to_upselling_products_request
     And Response should return error message:    Cart with given uuid not found.
 
 Get_upselling_products_with_invalid token
-    [Setup]    I set Headers:   Content-Type=${default_header_content_type}     Authorization=invalid
+    [Setup]    I set Headers:    Authorization=invalid
     When I send a GET request:    /carts//up-selling-products
     Then Response status code should be:    401
     And Response reason should be:    Unauthorized
