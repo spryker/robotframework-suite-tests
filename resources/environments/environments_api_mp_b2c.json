@@ -176,7 +176,7 @@
         "abstract_product_with_alternative_sku": "155",
         "abstract_product_with_alternative_name": "Lenovo IdeaPad Yoga 500",
         "alternative_abstract_product": "134",
-        "alternative_abstract_product_price_chf": "11345",
+        "alternative_abstract_product_price_chf": "39675",
 
         "abstract_available_product_with_stock": "183",
         "abstract_available_product_with_stock_name": "Sony Xperia SGP512E1",
@@ -252,7 +252,7 @@
         "display_technology": "TFT",
         "delivery_1": "assembled",
         "price_unit_1": "piece",
-        "color_4": "Black",
+        "color_4": "black",
         "color_3": "purple",
         "color_1": "yellow",
         "color_2": "Blue",
