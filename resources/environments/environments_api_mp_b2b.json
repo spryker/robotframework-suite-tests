@@ -253,7 +253,7 @@
         "packaging_unit_i": "ITEM",
         "packaging_unit_cm": "CMET",
         "packaging_unit_m_name": "Meter",
-        "concrete_product_random_weight_qty_of_units": "2",
+        "concrete_product_random_weight_qty_of_units": "1",
         "concrete_product_random_weight_amount": "5.0000000000",
         "concrete_product_random_weight_conversion": "1",
         "concrete_product_random_weight_precision": "100",
