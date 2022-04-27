@@ -24,6 +24,12 @@
         "yves_second_user_reference": "DE--4",
         "yves_second_user_salutation": "Mr",
 
+        "yves_shared_shopping_cart_user_email": "Solomon@spryker.com",
+        "yves_shared_shopping_cart_user_first_name": "Solomon",
+        "yves_shared_shopping_cart_user_last_name": "Wesner",
+        "yves_shared_shopping_cart_user_password": "change123",
+        "yves_shared_shopping_cart_user_salutation": "Mr",
+
         "zed_admin_email": "admin@spryker.com",
         "zed_admin_password": "change123",
 
