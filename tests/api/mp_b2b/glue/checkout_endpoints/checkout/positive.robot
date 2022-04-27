@@ -40,14 +40,15 @@ Create_order_include_orders
     And Response body parameter should be:    [data][attributes][redirectUrl]    None
     And Response body parameter should be:    [data][attributes][isExternalRedirect]    None
     And Response body has correct self link internal
-    #totals
     And Response body parameter should be:    [data][relationships][orders][data][0][type]    orders
     And Response body parameter should contain:    [data][relationships][orders][data][0][id]    ${store_de}--
     And Response body parameter should be:    [included][0][type]    orders
     And Response body parameter should contain:    [included][0][id]    ${store_de}--
+    And Response body parameter should be:    [included][0][attributes][merchantReferences]    ${merchant_spryker_id}
     And Response body parameter should not be EMPTY:    [included][0][attributes][createdAt]
     And Response body parameter should be:    [included][0][attributes][currencyIsoCode]    ${currency_code_eur}
     And Response body parameter should be:    [included][0][attributes][priceMode]    ${gross_mode}
+    #totals
     And Response body parameter should be greater than:    [included][0][attributes][totals][expenseTotal]    0
     And Response body parameter should be greater than:    [included][0][attributes][totals][discountTotal]    0
     And Response body parameter should be greater than:    [included][0][attributes][totals][taxTotal]    0
@@ -94,6 +95,7 @@ Create_order_include_orders
     And Response body parameter should be:    [included][0][attributes][shippingAddress][country]    ${default_country}
     And Response body parameter should be:    [included][0][attributes][shippingAddress][iso2Code]    ${default_iso2Code}
     #items
+    And Response body parameter should be:    [included][0][attributes][items][0][merchantReference]    ${merchant_spryker_id}
     And Response body parameter should be:    [included][0][attributes][items][0][name]    ${concrete_available_with_stock_and_never_out_of_stock_name}
     And Response body parameter should be:    [included][0][attributes][items][0][sku]    ${concrete_available_with_stock_and_never_out_of_stock}
     And Response body parameter should be greater than:    [included][0][attributes][items][0][sumPrice]    0
@@ -382,6 +384,7 @@ Create_order_with_2_product_discounts
     And Response body parameter with rounding should be:    [included][0][attributes][totals][grandTotal]    ${grand_total_sum}
     #item 1 - "20% off storage" discount
     And Response should contain the array of a certain size:    [included][0][attributes][items][0][calculatedDiscounts]    2
+    And Response body parameter should be:    [included][0][attributes][items][0][merchantReference]    ${merchant_spryker_id}
     And Response body parameter should be:    [included][0][attributes][items][0][name]    ${discount_concrete_product_1_name}
     And Response body parameter should be:    [included][0][attributes][items][0][sku]    ${discount_concrete_product_1_sku}
     And Response body parameter should be:    [included][0][attributes][items][0][calculatedDiscounts][0][unitAmount]    ${discount_amount_for_product_1_with_discount_20%_off_storage}
@@ -399,6 +402,7 @@ Create_order_with_2_product_discounts
     And Response body parameter should be:    [included][0][attributes][items][0][calculatedDiscounts][1][quantity]    1
     #item 2 - "20% off storage" discount
     And Response should contain the array of a certain size:    [included][0][attributes][items][1][calculatedDiscounts]    2
+    And Response body parameter should be:    [included][0][attributes][items][1][merchantReference]    ${merchant_spryker_id}
     And Response body parameter should be:    [included][0][attributes][items][1][name]    ${discount_concrete_product_2_name}
     And Response body parameter should be:    [included][0][attributes][items][1][sku]    ${discount_concrete_product_2_sku}
     And Response body parameter should be:    [included][0][attributes][items][1][calculatedDiscounts][0][unitAmount]    ${discount_amount_for_product_2_with_discount_20%_off_storage}
@@ -416,6 +420,9 @@ Create_order_with_2_product_discounts
     And Response body parameter should be:    [included][0][attributes][items][1][calculatedDiscounts][1][quantity]    1
     #item 3 - "10% off minimum order" discount
     And Response should contain the array of a certain size:    [included][0][attributes][items][2][calculatedDiscounts]    1
+    And Response body parameter should be:    [included][0][attributes][items][2][merchantReference]    ${merchant_office_king_id}
+    And Response body parameter should be:    [included][0][attributes][items][2][name]    ${discount_concrete_product_3_name}
+    And Response body parameter should be:    [included][0][attributes][items][2][sku]    ${discount_concrete_product_3_sku}
     And Response body parameter should be:    [included][0][attributes][items][2][calculatedDiscounts][0][unitAmount]    ${discount_amount_for_product_3_with_10%_discount}
     And Response body parameter should be:    [included][0][attributes][items][2][calculatedDiscounts][0][sumAmount]    ${discount_amount_for_product_3_with_10%_discount}
     And Response body parameter should be:    [included][0][attributes][items][2][calculatedDiscounts][0][displayName]    ${discount_2_name}
