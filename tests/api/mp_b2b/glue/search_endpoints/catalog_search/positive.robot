@@ -549,7 +549,6 @@ Search_with_specific_currency
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response body parameter should be:    [data][0][type]    catalog-search
-    And Response body parameter should be less than:    [data][0][attributes][pagination][numFound]    ${total_number_of_products_in_search}
     And Response body parameter should be greater than:    [data][0][attributes][pagination][numFound]    1
     And Response body parameter should be:    [data][0][attributes][pagination][currentPage]    1
     And Response body parameter should be greater than:    [data][0][attributes][pagination][maxPage]    1
