@@ -25,7 +25,6 @@ Cart_contains_product_with_upselling_relation
     And Response body parameter should be:    [data][0][attributes][reviewCount]    0
     And Response body parameter should be:    [data][0][attributes][name]    ${product_related_product_with_upselling_relation_NESTED.name}
     And Response body parameter should be:    [data][0][attributes][description]    ${product_related_product_with_upselling_relation_NESTED.description}
-    And Response body parameter should not be EMPTY:    [data][0][attributes][attributes]
     And Response should contain the array of a certain size:    [data][0][attributes][superAttributesDefinition]    0
     And Response should contain the array of a certain size:    [data][0][attributes][superAttributes]    0
     And Response should contain the array larger than a certain size:    [data][0][attributes][attributeMap]    0
@@ -96,7 +95,6 @@ Cart_contains_product_with_upselling_relation_with_include_abstract_product_pric
     And Each array element of array in response should contain property:    [data]    relationships
     And Each array element of array in response should contain nested property:    [data]    [relationships][abstract-product-prices][data]    type
     And Each array element of array in response should contain nested property:    [data]    [relationships][abstract-product-prices][data]    id
-    And Response body parameter should not be EMPTY:    [included]
     And Response body parameter should be:    [included][0][type]    abstract-product-prices
     And Response body parameter should be:    [included][0][id]    ${product_related_product_with_upselling_relation_NESTED.sku}
     And Each array element of array in response should contain property:    [included]    type
@@ -191,6 +189,8 @@ Cart_contains_product_with_upselling_relation_with_include_concrete_products
     And Each array element of array in response should contain nested property:    [included]    [attributes]    metaDescription
     And Each array element of array in response should contain nested property:    [included]    [attributes]    attributeNames
     And Each array element of array in response should contain nested property:    [included]    [links]    self
+    [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cart_id}
+    ...  AND    Response status code should be:    204
 
 
 Cart_contains_product_with_upselling_relation_with_include_abstract_product_availabilities
@@ -210,12 +210,14 @@ Cart_contains_product_with_upselling_relation_with_include_abstract_product_avai
     And Each array element of array in response should contain property:    [included]    id
     And Each array element of array in response should contain property:    [included]    attributes
     And Each array element of array in response should contain property:    [included]    links
-    Each array element of array in response should contain nested property with value:    [included]    [type]    abstract-product-availabilities
-    Each array element of array in response should contain nested property with value:    [included]    [attributes][quantity]    ${stock_is_20}
-    Each array element of array in response should contain nested property with value:    [included]    [attributes][availability]    True
+    And Each array element of array in response should contain nested property with value:    [included]    [type]    abstract-product-availabilities
+    And Each array element of array in response should contain nested property with value:    [included]    [attributes][quantity]    ${stock_is_20}
+    And Each array element of array in response should contain nested property with value:    [included]    [attributes][availability]    True
     And Each array element of array in response should contain nested property:    [included]    [attributes]    availability
     And Each array element of array in response should contain nested property:    [included]    [attributes]    quantity
     And Each array element of array in response should contain nested property:    [included]    [links]    self
+    [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cart_id}
+    ...  AND    Response status code should be:    204
 
 Cart_contains_product_with_upselling_relation_with_include_product_labels
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
@@ -232,7 +234,7 @@ Cart_contains_product_with_upselling_relation_with_include_product_labels
     And Each array element of array in response should contain property:    [included]    attributes
     And Each array element of array in response should contain property:    [included]    links
     And Response include should contain certain entity type:    product-labels
-    Each array element of array in response should contain nested property with value:    [included]    [type]    product-labels
+    And Each array element of array in response should contain nested property with value:    [included]    [type]    product-labels
     And Each array element of array in response should contain nested property:    [included]    [attributes]    name
     And Each array element of array in response should contain nested property:    [included]    [attributes]    isExclusive
     And Each array element of array in response should contain nested property:    [included]    [attributes]    position
@@ -240,6 +242,8 @@ Cart_contains_product_with_upselling_relation_with_include_product_labels
     And Each array element of array in response should contain nested property:    [included]    [links]    self
     And Response body parameter should be:    [included][0][id]    ${label_id_new}
     And Response body parameter should be:    [included][0][attributes][name]    ${label_name_new}
+    [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cart_id}
+    ...  AND    Response status code should be:    204
 
 
 Cart_contains_product_with_upselling_relation_with_include_product_tax_sets
@@ -257,12 +261,14 @@ Cart_contains_product_with_upselling_relation_with_include_product_tax_sets
     And Each array element of array in response should contain property:    [included]    attributes
     And Each array element of array in response should contain property:    [included]    links
     And Response include should contain certain entity type:   product-tax-sets
-    Each array element of array in response should contain nested property with value:    [included]    [type]    product-tax-sets
+    And Each array element of array in response should contain nested property with value:    [included]    [type]    product-tax-sets
     And Each array element of array in response should contain nested property:    [included]    [attributes]    name
     And Each array element of array in response should contain nested property:    [included]    [attributes][restTaxRates]    name
     And Each array element of array in response should contain nested property:    [included]    [attributes][restTaxRates]    rate
     And Each array element of array in response should contain nested property:    [included]    [attributes][restTaxRates]    country
     And Each array element of array in response should contain nested property:    [included]    [links]    self
+    [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cart_id}
+    ...  AND    Response status code should be:    204
 
 Cart_contains_product_with_upselling_relation_with_include_product_options
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
@@ -311,6 +317,8 @@ Cart_contains_product_with_upselling_relation_with_include_product_options
     And Response body parameter should be:    [included][3][attributes][sku]    ${concrete_of_product_with_relations_upselling_NESTED.product_options.OP_insurance.sku}
     And Response body parameter should be:    [included][3][attributes][optionName]    ${concrete_of_product_with_relations_upselling_NESTED.product_options.OP_insurance.option_name}
     And Each array element of array in response should contain property with value in:    [included]    [attributes][currencyIsoCode]    ${currency_code_eur}    ${currency_code_dollar}
+    [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cart_id}
+    ...  AND    Response status code should be:    204
 
 
 Cart_contains_product_with_upselling_relation_with_include_product_reviews
@@ -345,6 +353,8 @@ Cart_contains_product_with_upselling_relation_with_include_product_reviews
     And Response body parameter should be:    [included][4][attributes][nickname]    ${concrete_of_product_with_relations_upselling_NESTED.product_reviews.review_5.nickname}
     And Response body parameter should be:    [included][4][attributes][summary]    ${concrete_of_product_with_relations_upselling_NESTED.product_reviews.review_5.summary}
     And Response body parameter should be:    [included][4][attributes][description]    ${concrete_of_product_with_relations_upselling_NESTED.product_reviews.review_5.description}
+    [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cart_id}
+    ...  AND    Response status code should be:    204
 
 Cart_contains_product_with_upselling_relation_with_include_category_nodes
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
@@ -373,12 +383,12 @@ Cart_contains_product_with_upselling_relation_with_include_category_nodes
     And Each array element of array in response should contain nested property:    [included]    attributes    url
     And Each array element of array in response should contain nested property:    [included]    attributes    children
     And Each array element of array in response should contain nested property:    [included]    attributes    parents
-
     And Response body parameter should be:    [included][0][id]    ${concrete_of_product_with_relations_upselling_NESTED.category_nodes.category_node_25.node_id}
     And Response body parameter should be:    [included][0][attributes][name]    ${concrete_of_product_with_relations_upselling_NESTED.category_nodes.category_node_25.name}
-
     And Response body parameter should be:    [included][1][id]    ${concrete_of_product_with_relations_upselling_NESTED.category_nodes.category_node_23.node_id}
     And Response body parameter should be:    [included][1][attributes][name]    ${concrete_of_product_with_relations_upselling_NESTED.category_nodes.category_node_23.name}
+    [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cart_id}
+    ...  AND    Response status code should be:    204
 
 Cart_contains_multiple_products_with_upselling_relation
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
