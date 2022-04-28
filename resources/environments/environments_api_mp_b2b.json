@@ -2,7 +2,7 @@
     "environment": "api_mp_b2b", 
 
     "env": {
-        "glue_url": "https://glue.de.mp-b2b.internal-testing.demo-spryker.com",
+        "glue_url": "http://glue.de.spryker.local",
         "bapi_url": "http://backend-api.de.spryker.local/api/rest"
     },
 
@@ -240,7 +240,7 @@
 
         "concrete_product_with_promotions": "212427",
 
-        "concrete_product_random_weight_sku": "101509",
+        "concrete_product_random_weight_sku": "cable-vga-1-2",
         "concrete_product_random_weight_name": "VGA cable as long as you want",
         "concrete_product_random_weight_measurement_unit": "19",
         "packaging_unit_m": "METR",
