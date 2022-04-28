@@ -8,22 +8,22 @@ Default Tags    glue
 ENABLER
     TestSetup
     
-Get_a_measurement_unit_with_non_existent_sku
-    When I send a GET request:    /concrete-products/fake/sales-units
+Get_alternative_abstract_with_nonexistant_SKU
+    When I send a GET request:    /concrete-products/fake/abstract-alternative-products 
     Then Response status code should be:    404
     And Response reason should be:    Not Found
     And Response should return error code:    302
     And Response should return error message:    Concrete product is not found.
 
-Get_a_measurement_unit_with_abstract_sku
-    When I send a GET request:    /concrete-products/${abstract_available_product_with_stock}/sales-units
+Get_alternative_abstract_with_abstract_SKU
+    When I send a GET request:    /concrete-products/${abstract_product_with_alternative_sku}/abstract-alternative-products
     Then Response status code should be:    404
     And Response reason should be:    Not Found
     And Response should return error code:    302
     And Response should return error message:    Concrete product is not found.
 
-Get_a_measurement_unit_with_empty_sku
-    When I send a GET request:    /concrete-products//sales-units
+Get_alternative_abstract_without_SKU
+    When I send a GET request:    /concrete-products//abstract-alternative-products
     Then Response status code should be:    400
     And Response reason should be:    Bad Request
     And Response should return error code:    312
