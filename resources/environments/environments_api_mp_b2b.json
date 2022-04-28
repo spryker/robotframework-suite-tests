@@ -423,6 +423,7 @@
     "merchants":{
         "merchant_id": "MER000011",
         "merchant_offer_id": "offer394",
+        "merchant_offer_price": "1234",
         "concrete_product_with_offer_sku":"425159",
         "merchant_name": "Computer Experts",
         "merchant_url": "/en/merchant/computer-experts",
