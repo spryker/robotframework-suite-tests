@@ -21,5 +21,8 @@ Get_product_offer_availabilities
     And Each array element of array in response should contain nested property:    [data]    [attributes]    isNeverOutOfStock
     And Each array element of array in response should contain nested property:    [data]    [attributes]    availability
     And Each array element of array in response should contain nested property:    [data]    [attributes]    quantity
+    And Each array element of array in response should contain nested property with datatype:    [data]    [attributes][isNeverOutOfStock]    bool
+    And Each array element of array in response should contain nested property with datatype:    [data]    [attributes][availability]    bool
+    And Each array element of array in response should contain nested property with datatype:    [data]    [attributes][quantity]    str
     And Each array element of array in response should contain nested property:    [data]    [links]    self
     And Response body has correct self link
