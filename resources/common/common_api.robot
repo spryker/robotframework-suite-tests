@@ -635,7 +635,7 @@ Response body parameter should be less than:
     ${data}=    Replace String    ${data}    ]   ${EMPTY}
     ${result}=    Evaluate    '${data}' < '${expected_value}'
     ${result}=    Convert To String    ${result}
-    Should Be Equal    ${result}    True    Actula ${data} is not less than expected ${expected_value}
+    Should Be Equal    ${result}    True    Actual ${data} is not less than expected ${expected_value}
 
 Response should contain the array of a certain size:
     [Documentation]    This keyword checks that the body array sent in ``${json_path}`` argument contains the specific number of items ``${expected_size}``. The expected size should be an integer value.
@@ -1283,4 +1283,55 @@ Cleanup all items in the cart:
                 ${cart_item_uid}=    Replace String    ${cart_item_uid}    [   ${EMPTY}
                 ${cart_item_uid}=    Replace String    ${cart_item_uid}    ]   ${EMPTY}
                 ${response_delete}=    DELETE    ${current_url}/carts/${cart_id}/items/${cart_item_uid}    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}    expected_status=204
+        END
+
+Cleanup all items in the guest cart:
+    [Documentation]    This keyword deletes any and all items in the given GUEST cart uid.
+        ...
+        ...    Before using this method you should set any value as X-Anonymous-Customer-Unique-Id into the headers with the help of ``I set Headers:``
+        ...
+        ...    *Example:*
+        ...
+        ...    ``Cleanup items in the guest cart:    ${cart_id}``
+        [Arguments]    ${cart_id}
+        ${response}=    GET    ${current_url}/guest-carts/${cart_id}    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}  params=include=guest-cart-items,bundle-items    expected_status=200
+        ${response_body}=    Set Variable    ${response.json()}
+        @{included}=    Get Value From Json    ${response_body}    [included]
+        ${list_length}=    Get length    @{included}
+        Log    list_length: ${list_length}
+        FOR    ${index}    IN RANGE    0    ${list_length}
+                ${list_element}=    Get From List    @{included}    ${index}
+                ${cart_item_uid}=    Get Value From Json    ${list_element}    [id]
+                ${cart_item_uid}=    Convert To String    ${cart_item_uid}
+                ${cart_item_uid}=    Replace String    ${cart_item_uid}    '   ${EMPTY}
+                ${cart_item_uid}=    Replace String    ${cart_item_uid}    [   ${EMPTY}
+                ${cart_item_uid}=    Replace String    ${cart_item_uid}    ]   ${EMPTY}
+                ${response_delete}=    DELETE    ${current_url}/guest-carts/${cart_id}/guest-cart-items/${cart_item_uid}    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}    expected_status=204
+        END
+
+Cleanup all availability notifications:
+    [Documentation]    This keyword deletes any and all availability notifications related to the given customer reference.
+        ...
+        ...    Before using this method you should get customer token and set it into the headers with the help of ``I get access token for the customer:`` and ``I set Headers:``
+        ...
+        ...    *Example:*
+        ...
+        ...    ``Cleanup all availability notifications in the guest cart:    ${yves_user_reference}``
+        [Arguments]    ${yves_user_reference}
+        ${response}=    GET    ${current_url}/customers/${yves_user_reference}/availability-notifications    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}   expected_status=200
+        ${response_body}=    Set Variable    ${response.json()}
+        @{data}=    Get Value From Json    ${response_body}    [data]
+        ${list_length}=    Get Length    @{data}
+        ${list_length}=    Convert To Integer    ${list_length}
+        ${log_list}=    Log List    @{data}
+        Log    list_length: ${list_length}
+        FOR    ${index}    IN RANGE    0    ${list_length}
+                ${list_element}=    Get From List    @{data}    ${index}
+                ${availability_notification_id}=    Get Value From Json    ${list_element}    [id]
+                ${availability_notification_id}=    Convert To String    ${availability_notification_id}
+                ${availability_notification_id}=    Replace String    ${availability_notification_id}    '   ${EMPTY}
+                ${availability_notification_id}=    Replace String    ${availability_notification_id}    [   ${EMPTY}
+                ${availability_notification_id}=    Replace String    ${availability_notification_id}    ]   ${EMPTY}
+                Log    availability_notification_id: ${availability_notification_id}
+                ${response_delete}=    DELETE    ${current_url}/availability-notifications/${availability_notification_id}    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}    expected_status=204
         END
