@@ -2,7 +2,7 @@
     "environment": "api_mp_b2b",
 
     "env": {
-        "glue_url": "http://glue.de.spryker.local",
+        "glue_url": "https://glue.de.mp-b2b.internal-testing.demo-spryker.com",
         "bapi_url": "http://backend-api.de.spryker.local/api/rest"
     },
 
@@ -215,17 +215,45 @@
                 "meta_description": " Pflegeleichter Stoffbezug. Gestell in Graphitschwarz RAL 9011.<br/>Standardmäßig Rollen für weiche Böden.<br/>Die Rückenlehne verfügt über eine höhenverstellbare Lendenwirbelstütze.  "
             },
             "category_nodes":{
-                "first_category_node_name": "Swivel Chairs",
-                "second_category_node_name": "Office furniture",
-                "third_category_node_name": "Chairs"
+                "category_node_14": {
+                    "node_id":"14",
+                    "name":"Swivel Chairs"
+                },
+                "category_node_11": {
+                    "node_id":"11",
+                    "name":"Office furniture"
+                },
+                "category_node_12": {
+                    "node_id":"12",
+                    "name":"Chairs"
+                }
             },
             "product_options":{
-                "first":{
+                "OP_1":{
                     "id": "OP_1_year_waranty",
                     "option_group_name": "Three (3) year limited warranty",
                     "sku": "OP_1_year_waranty",
                     "option_name": "One (1) year limited warranty"
+                },
+                "OP_2":{
+                    "id": "OP_2_year_waranty",
+                    "option_group_name": "Three (3) year limited warranty",
+                    "sku": "OP_2_year_waranty",
+                    "option_name": "Two (2) year limited warranty"
+                },
+                "OP_3":{
+                    "id": "OP_3_year_waranty",
+                    "option_group_name": "Three (3) year limited warranty",
+                    "sku": "OP_3_year_waranty",
+                    "option_name": "Three (3) year limited warranty"
+                },
+                "OP_insurance":{
+                    "id": "OP_insurance",
+                    "option_group_name": "Two (2) year insurance coverage",
+                    "sku": "OP_insurance",
+                    "option_name": "Two (2) year insurance coverage"
                 }
+
             }
         },
 
