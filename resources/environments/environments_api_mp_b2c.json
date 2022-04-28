@@ -183,6 +183,7 @@
         "abstract_available_product_with_stock_name": "Sony Xperia SGP512E1",
         "abstract_available_product_with_stock_description": "Enjoy greater flexibility  ...than ever before with the Galaxy Tab S2. Remarkably slim and ultra-lightweight, use this device to take your e-books, photos, videos and work-related files with you wherever you need to go. The Galaxy Tab S2’s 4:3 ratio display is optimised for magazine reading and web use. Switch to Reading Mode to adjust screen brightness and change wallpaper - create an ideal eBook reading environment designed to reduce the strain on your eyes. Get greater security with convenient and accurate fingerprint functionality. Activate fingerprint lock by pressing the home button. Use fingerprint verification to restrict / allow access to your web browser, screen lock mode and your Samsung account.        ",
         "abstract_available_product_with_stock_superattribute": "color",
+        "abstract_available_product_with_stock_superAttributesDefinition": "color",
         "concrete_available_product_sku": "183_21811723",
         "concrete_available_product_meta_keywords": "Sony,Communication Electronics",
         "concrete_available_product_meta_description": "Enjoy greater flexibility  ...than ever before with the Galaxy Tab S2. Remarkably slim and ultra-lightweight, use this device to take your e-books, photos,",
@@ -191,6 +192,7 @@
         "concrete_available_with_stock_and_never_out_of_stock": "004_30663302",
         "abstract_available_product_with_no_stock_and_never_out_of_stock": "154",
         "abstract_unavailable_product": "111",
+        "concrete_product_with_alternative_sku": "420566",
 
         "abstract_available_product_with_3_concretes": "127",
         "abstract_available_product_with_3_concretes_name": "HP Z 620",
@@ -210,7 +212,7 @@
         "abstract_product_with_concrete_offers_name": "",
 
         "abstract_product_with_reviews": "035",
-        "abstract_product_with_reviews_name": "Rectangular table, rectangular tubing - 1600 x 800 mm",
+        "abstract_product_with_review_name": "Canon PowerShot N",
 
         "abstract_product_with_options": "012",
         "abstract_product_with_options_name": "Canon IXUS 165",
