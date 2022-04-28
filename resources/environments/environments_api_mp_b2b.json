@@ -2,7 +2,7 @@
     "environment": "api_mp_b2b", 
 
     "env": {
-        "glue_url": "http://glue.de.spryker.local",
+        "glue_url": "https://glue.de.mp-b2b.internal-testing.demo-spryker.com",
         "bapi_url": "http://backend-api.de.spryker.local/api/rest"
     },
 
@@ -203,6 +203,7 @@
         "concrete_available_with_stock_and_never_out_of_stock_name": "FRIWA stackable chair - with closed back",
         "abstract_available_product_with_no_stock_and_never_out_of_stock": "M90851",
         "abstract_unavailable_product": "M1014948",
+        "concrete_unavailable_product_sku": "212447",
 
         "abstract_available_product_with_3_concretes": "M29456",
         "abstract_available_product_with_3_concretes_name": "Gmöhling aluminum data removal container - Exterior - LxWxH 435 x 385 x 650 mm",
@@ -239,7 +240,7 @@
 
         "concrete_product_with_promotions": "212427",
 
-        "concrete_product_random_weight_sku": "cable-vga-1-2",
+        "concrete_product_random_weight_sku": "101509",
         "concrete_product_random_weight_name": "VGA cable as long as you want",
         "concrete_product_random_weight_measurement_unit": "19",
         "packaging_unit_m": "METR",
