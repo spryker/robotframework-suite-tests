@@ -43,10 +43,7 @@ Get_abstract_product_with_1_concrete_with_include_abstract_product_image_sets
     And Response body parameter should not be EMPTY:    [data][relationships][abstract-product-image-sets]
     And Response body parameter should be:    [data][relationships][abstract-product-image-sets][data][0][type]    abstract-product-image-sets
     And Response body parameter should be:    [data][relationships][abstract-product-image-sets][data][0][id]    ${abstract_available_with_stock_and_never_out_of_stock}
-    And Response body parameter should not be EMPTY:    [included]
-    And Response body parameter should be:    [included][0][type]    abstract-product-image-sets
     And Response body parameter should be:    [included][0][id]    ${abstract_available_with_stock_and_never_out_of_stock}
-    And Each array element of array in response should contain property:    [included]    type
     And Each array element of array in response should contain property:    [included]    id
     And Each array element of array in response should contain property:    [included]    attributes
     And Each array element of array in response should contain property:    [included]    links
@@ -66,12 +63,8 @@ Get_abstract_product_with_3_concretes_with_include_abstract_product_image_sets
     And Response reason should be:    OK
     And Response should contain the array of a certain size:    [included]    1
     And Response should contain the array of a certain size:    [data][relationships]    1
-    And Response body parameter should not be EMPTY:    [data][relationships]
-    And Response body parameter should not be EMPTY:    [data][relationships][abstract-product-image-sets]
     And Each array element of array in response should contain property:    [data][relationships][abstract-product-image-sets][data]    type
     And Each array element of array in response should contain property:    [data][relationships][abstract-product-image-sets][data]    id
-    And Response body parameter should not be EMPTY:    [included]
-    And Each array element of array in response should contain property:    [included]    type
     And Each array element of array in response should contain property:    [included]    id
     And Each array element of array in response should contain property:    [included]    attributes
     And Each array element of array in response should contain property:    [included]    links
