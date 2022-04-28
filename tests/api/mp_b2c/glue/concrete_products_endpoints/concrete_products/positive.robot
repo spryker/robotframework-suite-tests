@@ -35,8 +35,8 @@ Get_concrete_product_with_included_image_sets
     And Response body parameter should be:    [data][type]   concrete-products
     And Response body parameter should be:    [data][attributes][sku]    ${concrete_product_one_image_set}
     And Response body parameter should be:    [data][attributes][name]    ${concrete_product_one_image_set_name}
-    And Response should contain the array of a certain size:    [data][attributes][attributeNames]    1
-    And Response should contain the array of a certain size:    [data][attributes][attributes]    1
+    And Response should contain the array of a certain size:    [data][attributes][attributeNames]    6
+    And Response should contain the array of a certain size:    [data][attributes][attributes]    6
     And Response should contain the array of a certain size:    [data][relationships]   1
     And Response include should contain certain entity type:    concrete-product-image-sets
     And Response include element has self link:   concrete-product-image-sets
