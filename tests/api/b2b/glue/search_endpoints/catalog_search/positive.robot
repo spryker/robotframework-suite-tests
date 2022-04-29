@@ -8,7 +8,6 @@ Default Tags    glue
 ENABLER
     TestSetup
 
-
 ##### SEARCH PARAMETERS #####
 
 Search_with_empty_search_criteria_all_default_values_check
