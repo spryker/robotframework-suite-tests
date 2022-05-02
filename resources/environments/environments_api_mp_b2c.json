@@ -232,8 +232,7 @@
 
         "review_title": "This is a review",
         "review_text": "This is review text",
-        "default_review_rating": "5",
-        "product_offer_reference_id": "offer418"
+        "default_review_rating": "5"
 
     },
 
@@ -263,6 +262,21 @@
         "product_management_attribute_free_input_id": "4g_standards",
         "product_management_attribute_no_input_id": "bundled_product"
 
+    },
+    "product_offers":{  
+
+        "inactive_offer_with_volume_price": "offer5",
+        "waiting_for_approval_offer_with_volume_price": "offer10",
+        "denied_offer_with_volume_price": "offer404",
+        "offer": "offer2",
+        "offer_without_volume_price": "offer359",
+        "offer_without_original_price": "offer6",
+        "second_offer_with_volume_price": "offer348",
+        "offer_with_volume_price": "offer417",
+        "offer_with_volume_price_gross_net_prices": "offer48",
+        "merchant_sony_experts_id" : "MER000006",
+        "merchant_video_king_id": "MER000002",
+        "offer_price": "10160"
     },
 
     "content": {
