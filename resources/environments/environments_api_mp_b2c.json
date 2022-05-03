@@ -140,14 +140,18 @@
     "products": {
 
         "bundle_product_abstract_sku": "211",
+        "bundle_product_abstract_name": "HP Bundle",
         "bundle_product_concrete_sku": "211_123",
-        "bundle_product_product_name": "HP Bundle",
+        "bundle_product_concrete_name": "HP Bundle",
         "bundled_product_1_abstract_sku": "150",
         "bundled_product_2_abstract_sku": "127",
         "bundled_product_3_abstract_sku": "121",
         "bundled_product_1_concrete_sku": "150_29554292",
+        "bundled_product_1_concrete_name": "HP Chromebook 11",
         "bundled_product_2_concrete_sku": "127_22828284",
+        "bundled_product_2_concrete_name": "HP Z 620",
         "bundled_product_3_concrete_sku": "121_29406823",
+        "bundled_product_3_concrete_name": "HP 200 280 G1",
         "qty_of_products_in_bundle": "3",
         "qty_of_each_product_inside_bundle": "1",
 
@@ -166,6 +170,9 @@
         "product_related_product_with_upselling_relation_sku": "042",
         "product_related_product_with_upselling_relation_name": "Samsung Galaxy S7",
         "concrete_of_product_without_relations": "019_21081473",
+        "concrete_product_with_alternative_sku": "030_30021698",
+        "concrete_product_with_alternative_sku_name": "Canon PowerShot G9 X",
+        
         
         "concrete_product_with_abstract_product_alternative_sku": "138_30046855",
         "concrete_product_with_abstract_product_alternative_sku_name": "Acer TravelMate P258-M",
@@ -176,12 +183,13 @@
         "abstract_product_with_alternative_sku": "155",
         "abstract_product_with_alternative_name": "Lenovo IdeaPad Yoga 500",
         "alternative_abstract_product": "134",
-        "alternative_abstract_product_price_chf": "11345",
+        "alternative_abstract_product_price_chf": "39675",
 
         "abstract_available_product_with_stock": "183",
         "abstract_available_product_with_stock_name": "Sony Xperia SGP512E1",
         "abstract_available_product_with_stock_description": "Enjoy greater flexibility  ...than ever before with the Galaxy Tab S2. Remarkably slim and ultra-lightweight, use this device to take your e-books, photos, videos and work-related files with you wherever you need to go. The Galaxy Tab S2’s 4:3 ratio display is optimised for magazine reading and web use. Switch to Reading Mode to adjust screen brightness and change wallpaper - create an ideal eBook reading environment designed to reduce the strain on your eyes. Get greater security with convenient and accurate fingerprint functionality. Activate fingerprint lock by pressing the home button. Use fingerprint verification to restrict / allow access to your web browser, screen lock mode and your Samsung account.        ",
         "abstract_available_product_with_stock_superattribute": "color",
+        "abstract_available_product_with_stock_superAttributesDefinition": "color",
         "concrete_available_product_sku": "183_21811723",
         "concrete_available_product_meta_keywords": "Sony,Communication Electronics",
         "concrete_available_product_meta_description": "Enjoy greater flexibility  ...than ever before with the Galaxy Tab S2. Remarkably slim and ultra-lightweight, use this device to take your e-books, photos,",
@@ -209,17 +217,18 @@
         "abstract_product_with_concrete_offers_name": "",
 
         "abstract_product_with_reviews": "035",
-        "abstract_product_with_reviews_name": "Rectangular table, rectangular tubing - 1600 x 800 mm",
+        "abstract_product_with_review_name": "Canon PowerShot N",
 
         "abstract_product_with_options": "012",
         "abstract_product_with_options_name": "Canon IXUS 165",
 
-        "concrete_product_one_image_set": "666_133",
-        "concrete_product_one_image_set_name": "Gift Card 5000",
+        "concrete_product_one_image_set": "158_29885222",
+        "concrete_product_one_image_set_name": "Asus ZenPad Z170C",
         "concrete_product_multiple_image_set": "158_29885222",
         "concrete_product_multiple_image_set_name": "Asus ZenPad Z170C",
         "concrete_available_product_with_stock": "001_25904006",
         "concrete_available_product_without_stock": "212_123",
+        "concrete_available_product_with_offer":  "092_24495842",
 
         "abstract_product_with_multiple_variants": "130",
         "concrete_product_sku_multivariant_variant1": "130_29285281",
@@ -252,10 +261,14 @@
         "display_technology": "TFT",
         "delivery_1": "assembled",
         "price_unit_1": "piece",
-        "color_4": "Black",
+        "color_4": "black",
         "color_3": "purple",
         "color_1": "yellow",
-        "color_2": "Blue"
+        "color_2": "Blue",
+
+        "product_management_superattribute_id": "4g",
+        "product_management_attribute_free_input_id": "4g_standards",
+        "product_management_attribute_no_input_id": "bundled_product"
 
     },
 
@@ -308,7 +321,17 @@
         "test_cart_name": "Test-cart",
         "qty_of_categories_in_category_trees": "6",
         "qty_of_subcategories_in_category_trees": "2",
-        "color_name": "black"
+        "color_name": "black",
+
+
+
+        "payment_provider_name": "DummyPayment",
+        "payment_method_name": "Credit Card",
+        "payment_selection_name": "dummyMarketplacePaymentInvoice",
+        "carrier_name": "DHL",
+        "shipment_method_name": "Standard",
+        "shipment_method_name_2": "Express",
+        "delivery_date": "2030-12-31"
         
     },
 
@@ -335,6 +358,7 @@
             "spryker": {
                 "merchant_id": "MER000001",
                 "merchant_name": "Spryker",
+                "concrete_product_with_offer_sku":"112_312526191",
                 "merchant_url": "/en/merchant/spryker",
                 "contact_person_role": "E-Commerce Manager",
                 "contact_person_title": "Mr",
