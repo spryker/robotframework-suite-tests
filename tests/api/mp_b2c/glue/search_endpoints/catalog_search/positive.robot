@@ -154,28 +154,6 @@ Search_by_attribute_that_does_not_return_products
     And Response body parameter should be:    [data][0][attributes][pagination][numFound]    0
     And Response body parameter should be:    [data][0][attributes][pagination][currentPage]    0
     And Response body parameter should be:    [data][0][attributes][pagination][maxPage]    0
-    #Sort
-    And Response should contain the array of a certain size:    [data][0][attributes][sort]    4
-    #pagination
-    And Response should contain the array of a certain size:    [data][0][attributes][pagination]    5
-    #Abstract Products
-    And Response should contain the array of a certain size:    [data][0][attributes][abstractProducts]    0
-    #categories
-    And Response should contain the array of a certain size:    [data][0][attributes][valueFacets][0][values]    0
-    #labels
-    And Response should contain the array of a certain size:    [data][0][attributes][valueFacets][1][values]    0
-    #color
-    And Response should contain the array of a certain size:    [data][0][attributes][valueFacets][2][values]    0
-    #storage-capacity
-    And Response should contain the array of a certain size:    [data][0][attributes][valueFacets][3][values]    0
-    #brand
-    And Response should contain the array of a certain size:    [data][0][attributes][valueFacets][4][values]    0
-    #touchscreen
-    And Response should contain the array of a certain size:    [data][0][attributes][valueFacets][5][values]    0
-    #weight
-    And Response should contain the array of a certain size:    [data][0][attributes][valueFacets][6][values]    0
-    #merchant-name
-    And Response should contain the array of a certain size:    [data][0][attributes][valueFacets][7][values]    0
     And Response body has correct self link
 
 Search_by_abstract_sku
@@ -196,23 +174,7 @@ Search_by_abstract_sku
     And Each array element of array in response should contain value:    [data][0][attributes][abstractProducts]    abstractName
     And Each array element of array in response should contain value:    [data][0][attributes][abstractProducts]    prices
     And Response body parameter should be greater than:    [data][0][attributes][abstractProducts][0][prices][0][grossAmount]    10
-    And Response body parameter should be greater than:    [data][0][attributes][abstractProducts][0][prices][0][DEFAULT]    10
-    #categories
-    And Response should contain the array of a certain size:    [data][0][attributes][valueFacets][0][values]    6
-    #labels
-    And Response should contain the array of a certain size:    [data][0][attributes][valueFacets][1][values]    0
-    #color
-    And Response should contain the array of a certain size:    [data][0][attributes][valueFacets][2][values]    2
-    #storage-capacity
-    And Response should contain the array of a certain size:    [data][0][attributes][valueFacets][3][values]    0
-    #brand
-    And Response should contain the array of a certain size:    [data][0][attributes][valueFacets][4][values]    2
-    #touchscreen
-    And Response should contain the array of a certain size:    [data][0][attributes][valueFacets][5][values]    0
-    #weight
-    And Response should contain the array of a certain size:    [data][0][attributes][valueFacets][6][values]    1
-    #merchant-name
-    And Response should contain the array of a certain size:    [data][0][attributes][valueFacets][7][values]    1
+    And Response body parameter should be greater than:    [data][0][attributes][abstractProducts][0][prices][0][DEFAULT]    1
     And Response body has correct self link
 
 Search_by_full_name
@@ -230,22 +192,6 @@ Search_by_full_name
     And Response body parameter should be:    [data][0][attributes][abstractProducts][0][abstractSku]    ${abstract_product_with_alternative_sku}
     And Response body parameter should be:    [data][0][attributes][abstractProducts][0][abstractName]    ${abstract_product_with_alternative_name}
     And Response body parameter should be greater than:    [data][0][attributes][abstractProducts][0][prices][0][DEFAULT]    10
-    #categories
-    And Response should contain the array larger than a certain size:    [data][0][attributes][valueFacets][0][values]    6
-    #labels
-    And Response should contain the array larger than a certain size:    [data][0][attributes][valueFacets][1][values]    0
-    #color
-    And Response should contain the array of a certain size:    [data][0][attributes][valueFacets][2][values]    2
-    #storage-capacity
-    And Response should contain the array of a certain size:    [data][0][attributes][valueFacets][3][values]    0
-    #brand
-    And Response should contain the array larger than a certain size:    [data][0][attributes][valueFacets][4][values]    2
-    #touchscreen
-    And Response should contain the array of a certain size:    [data][0][attributes][valueFacets][5][values]    0
-    #weight
-    And Response should contain the array of a certain size:    [data][0][attributes][valueFacets][6][values]    0
-    #merchant-name
-    And Response should contain the array of a certain size:    [data][0][attributes][valueFacets][7][values]    1
     And Response body has correct self link
 
 Search_by_concrete_sku
@@ -263,20 +209,6 @@ Search_by_concrete_sku
     And Response body parameter should be:    [data][0][attributes][abstractProducts][0][abstractSku]    ${abstract_product_with_alternative_sku}
     And Response body parameter should be:    [data][0][attributes][abstractProducts][0][abstractName]    ${abstract_product_with_alternative_name}
     And Response body parameter should be greater than:    [data][0][attributes][abstractProducts][0][prices][0][DEFAULT]    10
-    #categories
-    And Response should contain the array larger than a certain size:    [data][0][attributes][valueFacets][0][values]    3
-    #color
-    And Response should contain the array of a certain size:    [data][0][attributes][valueFacets][2][values]    1
-    #storage-capacity
-    And Response should contain the array of a certain size:    [data][0][attributes][valueFacets][3][values]    0
-    #brand
-    And Response should contain the array larger than a certain size:    [data][0][attributes][valueFacets][4][values]    0
-    #touchscreen
-    And Response should contain the array of a certain size:    [data][0][attributes][valueFacets][5][values]    0
-    #weight
-    And Response should contain the array of a certain size:    [data][0][attributes][valueFacets][6][values]    0
-    #merchant-name
-    And Response should contain the array of a certain size:    [data][0][attributes][valueFacets][7][values]    1
     And Response body has correct self link
 
 Search_by_name_substring
@@ -291,22 +223,6 @@ Search_by_name_substring
     And Response should contain the array of a certain size:    [data][0][attributes][abstractProducts]    11
     And Response body parameter should NOT be:    [data][0][attributes][abstractProducts][0][abstractSku]    ${abstract_product_with_alternative_sku}
     And Response body parameter should NOT be:   [data][0][attributes][abstractProducts][0][abstractName]    ${abstract_product_with_alternative_name}
-    #categories
-    And Response should contain the array larger than a certain size:    [data][0][attributes][valueFacets][0][values]    4
-    #labels
-    Response should contain the array of a certain size:    [data][0][attributes][valueFacets][1][values]    1
-    #color
-    And Response should contain the array of a certain size:    [data][0][attributes][valueFacets][2][values]    2
-    #storage-capacity
-    And Response should contain the array of a certain size:    [data][0][attributes][valueFacets][3][values]    0
-    #brand
-    Response should contain the array of a certain size:    [data][0][attributes][valueFacets][4][values]    1
-    #touchscreen
-    And Response should contain the array of a certain size:    [data][0][attributes][valueFacets][5][values]    0
-    #weight
-    And Response should contain the array of a certain size:    [data][0][attributes][valueFacets][6][values]    0
-    #merchant-name
-    And Response should contain the array of a certain size:    [data][0][attributes][valueFacets][7][values]    1
     And Response body has correct self link
 
 Search_by_attribute_(brand)
