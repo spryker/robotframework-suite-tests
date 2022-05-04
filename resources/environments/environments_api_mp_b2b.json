@@ -354,7 +354,21 @@
         "discount_concrete_product_3_name": "EUROKRAFT aluminum hand truck - Load capacity 200 kg, with skids - load capacity 200 kg",
         "discount_amount_for_product_3_with_discount_20%_off_storage": "16383",
         "discount_amount_for_product_3_with_10%_discount": "1882"
+    },    
+
+    "product_offers":{  
+
+        "inactive_offer_with_vp": "offer3",
+        "waiting_for_approval_offer_with_vp": "offer4",
+        "denied_offer_with_vp": "offer404",
+        "offer": "offer2",
+        "offer_without_vp": "offer359",
+        "offer_without_original_price": "offer6",
+        "second_offer_with_vp": "offer9",
+        "offer_with_vp": "offer10",
+        "offer_with_vp_gross_net_prices": "offer48"
     },
+
     "product_attributes":{
         "brand_1": "Soennecken",
         "brand_2": "edding",
@@ -474,6 +488,7 @@
         "user_with_multiple_companies": "anne.boleyn@spryker.com",
         "company_id": "62de4ab6-b768-5c21-8835-455d9f341625",
         "company_user_id": "2816dcbd-855e-567e-b26f-4d57f3310bb8"
+
     },
     "labels":{
         "label_id_manual": "3",
@@ -511,9 +526,10 @@
             "address1": "Matthias-Pschorr-Straße"
         },
         "merchant_spryker_id": "MER000008",
-        "merchant_office_king_id": "MER000009"
+        "merchant_office_king_id": "MER000009",
+        "merchant_budget_stationery_id": "MER000010"
     },
-
+  
     "return_reasons": {
         "return_reason_damaged": "Damaged",
         "return_reason_wrong_item": "Wrong Item",
