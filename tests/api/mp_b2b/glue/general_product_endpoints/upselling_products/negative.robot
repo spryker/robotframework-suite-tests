@@ -41,7 +41,7 @@ Get_upselling_products_without_access_token
     And Response should return error code:    002
     And Response should return error message:    Missing access token.
 
-Get_upselling_products_using_cart_of_other_customer
+Get_upselling_products_using_cart_from_another_customer
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
     ...  AND    I set Headers:    Authorization=${token}
     ...  AND    Save value to a variable:    [data][attributes][accessToken]    first_user_token

@@ -10,7 +10,7 @@ ENABLER
     
 Cart_contains_product_with_upselling_relation
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
-    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
+    ...    AND    I set Headers:    Authorization=${token}
     ...    AND    I send a POST request:    /carts    {"data":{"type":"carts","attributes":{"priceMode":"${gross_mode}","currency":"${currency_code_eur}","store":"${store_de}","name":"Cart-${random}"}}}
     ...    AND    Save value to a variable:    [data][id]    cart_id
     ...    AND    I send a POST request:    /carts/${cart_id}/items    {"data": {"type": "items","attributes": {"sku": "${concrete_of_product_with_relations_upselling_sku}","quantity": 1}}}
@@ -63,28 +63,9 @@ Cart_contains_product_with_upselling_relation
     [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cart_id}
     ...  AND    Response status code should be:    204
 
-Cart_contains_product_with_upselling_relation_plus_includes
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
-    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
-    ...    AND    I send a POST request:    /carts    {"data":{"type":"carts","attributes":{"priceMode":"${gross_mode}","currency":"${currency_code_eur}","store":"${store_de}","name":"Cart-${random}"}}}
-    ...    AND    Save value to a variable:    [data][id]    cart_id
-    ...    AND    I send a POST request:    /carts/${cart_id}/items    {"data": {"type": "items","attributes": {"sku": "${concrete_of_product_with_relations_upselling_sku}","quantity": 1}}}
-    ...    AND    Response status code should be:    201
-    When I send a GET request:    /carts/${cart_id}/up-selling-products?include=category-nodes
-    Then Response status code should be:    200
-    And Response reason should be:    OK
-    And Response should contain the array larger than a certain size:    [data]    0
-    And Each array element of array in response should contain nested property with value:    [data]    type    abstract-products  
-    And Response body has correct self link 
-    And Response should contain the array larger than a certain size:    [included]    0
-    And Response include should contain certain entity type:    category-nodes
-    And Response include element has self link:    category-nodes
-    [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cart_id}
-    ...  AND    Response status code should be:    204
-
 Cart_contains_product_with_upselling_relation_with_include_abstract_product_prices
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
-    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
+    ...    AND    I set Headers:    Authorization=${token}
     ...    AND    I send a POST request:    /carts    {"data":{"type":"carts","attributes":{"priceMode":"${gross_mode}","currency":"${currency_code_eur}","store":"${store_de}","name":"Cart-${random}"}}}
     ...    AND    Save value to a variable:    [data][id]    cart_id
     ...    AND    I send a POST request:    /carts/${cart_id}/items    {"data": {"type": "items","attributes": {"sku": "${concrete_of_product_with_relations_upselling_sku}","quantity": 1}}}
@@ -108,17 +89,16 @@ Cart_contains_product_with_upselling_relation_with_include_abstract_product_pric
     And Each array element of array in response should contain nested property:    [included]    attributes    prices
     And Each array element of array in response should contain nested property:    [included]    [attributes][prices]    priceTypeName
     And Response body parameter should be:    [included][0][attributes][prices][0][priceTypeName]    DEFAULT
-    And Response body parameter should be:    [included][0][attributes][prices][0][grossAmount]    3352
+    And Response body parameter should be greater than:    [included][0][attributes][prices][0][grossAmount]    0
     And Response body parameter should be:    [included][0][attributes][prices][0][currency][code]    ${currency_code_eur}
     And Response body parameter should be:    [included][0][attributes][prices][0][currency][name]    ${currency_name_eur}
     And Response body parameter should be:    [included][0][attributes][prices][0][currency][symbol]    ${currency_symbol_eur}
     [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cart_id}
     ...  AND    Response status code should be:    204
 
-
 Cart_contains_product_with_upselling_relation_with_include_abstract_prodcut_image_sets
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
-    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
+    ...    AND    I set Headers:    Authorization=${token}
     ...    AND    I send a POST request:    /carts    {"data":{"type":"carts","attributes":{"priceMode":"${gross_mode}","currency":"${currency_code_eur}","store":"${store_de}","name":"Cart-${random}"}}}
     ...    AND    Save value to a variable:    [data][id]    cart_id
     ...    AND    I send a POST request:    /carts/${cart_id}/items    {"data": {"type": "items","attributes": {"sku": "${concrete_of_product_with_relations_upselling_sku}","quantity": 1}}}
@@ -147,7 +127,7 @@ Cart_contains_product_with_upselling_relation_with_include_abstract_prodcut_imag
 
 Cart_contains_product_with_upselling_relation_with_include_concrete_products
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
-    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
+    ...    AND    I set Headers:    Authorization=${token}
     ...    AND    I send a POST request:    /carts    {"data":{"type":"carts","attributes":{"priceMode":"${gross_mode}","currency":"${currency_code_eur}","store":"${store_de}","name":"Cart-${random}"}}}
     ...    AND    Save value to a variable:    [data][id]    cart_id
     ...    AND    I send a POST request:    /carts/${cart_id}/items    {"data": {"type": "items","attributes": {"sku": "${concrete_of_product_with_relations_upselling_sku}","quantity": 1}}}
@@ -192,10 +172,9 @@ Cart_contains_product_with_upselling_relation_with_include_concrete_products
     [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cart_id}
     ...  AND    Response status code should be:    204
 
-
 Cart_contains_product_with_upselling_relation_with_include_abstract_product_availabilities
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
-    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
+    ...    AND    I set Headers:    Authorization=${token}
     ...    AND    I send a POST request:    /carts    {"data":{"type":"carts","attributes":{"priceMode":"${gross_mode}","currency":"${currency_code_eur}","store":"${store_de}","name":"Cart-${random}"}}}
     ...    AND    Save value to a variable:    [data][id]    cart_id
     ...    AND    I send a POST request:    /carts/${cart_id}/items    {"data": {"type": "items","attributes": {"sku": "${concrete_of_product_with_relations_upselling_sku}","quantity": 1}}}
@@ -211,7 +190,7 @@ Cart_contains_product_with_upselling_relation_with_include_abstract_product_avai
     And Each array element of array in response should contain property:    [included]    attributes
     And Each array element of array in response should contain property:    [included]    links
     And Each array element of array in response should contain nested property with value:    [included]    [type]    abstract-product-availabilities
-    And Each array element of array in response should contain nested property with value:    [included]    [attributes][quantity]    ${stock_is_20}
+    And Each array element of array in response should contain nested property:    [included]    [attributes]    quantity
     And Each array element of array in response should contain nested property with value:    [included]    [attributes][availability]    True
     And Each array element of array in response should contain nested property:    [included]    [attributes]    availability
     And Each array element of array in response should contain nested property:    [included]    [attributes]    quantity
@@ -221,7 +200,7 @@ Cart_contains_product_with_upselling_relation_with_include_abstract_product_avai
 
 Cart_contains_product_with_upselling_relation_with_include_product_labels
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
-    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
+    ...    AND    I set Headers:    Authorization=${token}
     ...    AND    I send a POST request:    /carts    {"data":{"type":"carts","attributes":{"priceMode":"${gross_mode}","currency":"${currency_code_eur}","store":"${store_de}","name":"Cart-${random}"}}}
     ...    AND    Save value to a variable:    [data][id]    cart_id
     ...    AND    I send a POST request:    /carts/${cart_id}/items    {"data": {"type": "items","attributes": {"sku": "${concrete_of_product_with_relations_upselling_sku}","quantity": 1}}}
@@ -245,10 +224,9 @@ Cart_contains_product_with_upselling_relation_with_include_product_labels
     [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cart_id}
     ...  AND    Response status code should be:    204
 
-
 Cart_contains_product_with_upselling_relation_with_include_product_tax_sets
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
-    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
+    ...    AND    I set Headers:    Authorization=${token}
     ...    AND    I send a POST request:    /carts    {"data":{"type":"carts","attributes":{"priceMode":"${gross_mode}","currency":"${currency_code_eur}","store":"${store_de}","name":"Cart-${random}"}}}
     ...    AND    Save value to a variable:    [data][id]    cart_id
     ...    AND    I send a POST request:    /carts/${cart_id}/items    {"data": {"type": "items","attributes": {"sku": "${concrete_of_product_with_relations_upselling_sku}","quantity": 1}}}
@@ -272,7 +250,7 @@ Cart_contains_product_with_upselling_relation_with_include_product_tax_sets
 
 Cart_contains_product_with_upselling_relation_with_include_product_options
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
-    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
+    ...    AND    I set Headers:    Authorization=${token}
     ...    AND    I send a POST request:    /carts    {"data":{"type":"carts","attributes":{"priceMode":"${gross_mode}","currency":"${currency_code_eur}","store":"${store_de}","name":"Cart-${random}"}}}
     ...    AND    Save value to a variable:    [data][id]    cart_id
     ...    AND    I send a POST request:    /carts/${cart_id}/items    {"data": {"type": "items","attributes": {"sku": "${concrete_of_product_with_relations_upselling_sku}","quantity": 1}}}
@@ -320,10 +298,10 @@ Cart_contains_product_with_upselling_relation_with_include_product_options
     [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cart_id}
     ...  AND    Response status code should be:    204
 
-
 Cart_contains_product_with_upselling_relation_with_include_product_reviews
+# Created the bug-ticket related to the product-reviews ID - https://spryker.atlassian.net/browse/CC-16680
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
-    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
+    ...    AND    I set Headers:    Authorization=${token}
     ...    AND    I send a POST request:    /carts    {"data":{"type":"carts","attributes":{"priceMode":"${gross_mode}","currency":"${currency_code_eur}","store":"${store_de}","name":"Cart-${random}"}}}
     ...    AND    Save value to a variable:    [data][id]    cart_id
     ...    AND    I send a POST request:    /carts/${cart_id}/items    {"data": {"type": "items","attributes": {"sku": "${concrete_of_product_with_relations_upselling_sku}","quantity": 1}}}
@@ -358,7 +336,7 @@ Cart_contains_product_with_upselling_relation_with_include_product_reviews
 
 Cart_contains_product_with_upselling_relation_with_include_category_nodes
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
-    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
+    ...    AND    I set Headers:    Authorization=${token}
     ...    AND    I send a POST request:    /carts    {"data":{"type":"carts","attributes":{"priceMode":"${gross_mode}","currency":"${currency_code_eur}","store":"${store_de}","name":"Cart-${random}"}}}
     ...    AND    Save value to a variable:    [data][id]    cart_id
     ...    AND    I send a POST request:    /carts/${cart_id}/items    {"data": {"type": "items","attributes": {"sku": "${concrete_of_product_with_relations_upselling_sku}","quantity": 1}}}
@@ -436,7 +414,7 @@ Cart_contains_multiple_products_with_upselling_relation
 
 Cart_contains_no_products_with_upselling_relations
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
-    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
+    ...    AND    I set Headers:    Authorization=${token}
     ...    AND    I send a POST request:    /carts    {"data":{"type":"carts","attributes":{"priceMode":"${gross_mode}","currency":"${currency_code_eur}","store":"${store_de}","name":"Cart-${random}"}}}
     ...    AND    Save value to a variable:    [data][id]    cart_id
     ...    AND    I send a POST request:    /carts/${cart_id}/items    {"data": {"type": "items","attributes": {"sku": "${concrete_available_product_sku}","quantity": 1}}}
@@ -451,7 +429,7 @@ Cart_contains_no_products_with_upselling_relations
 
 Get_upselling_products_for_empty_cart
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
-    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
+    ...    AND    I set Headers:    Authorization=${token}
     ...    AND    I send a POST request:    /carts    {"data":{"type":"carts","attributes":{"priceMode":"${gross_mode}","currency":"${currency_code_eur}","store":"${store_de}","name":"Cart-${random}"}}}
     ...    AND    Save value to a variable:    [data][id]    cart_id
     When I send a GET request:    /carts/${cart_id}/up-selling-products
