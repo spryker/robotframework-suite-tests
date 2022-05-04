@@ -5,6 +5,9 @@ Resource    ../../../../../../resources/common/common_api.robot
 Default Tags    glue
 
 *** Test Cases ***
+ENABLER
+    TestSetup
+
 #GET requests
 Get_search_suggestions_without_query_parameter
 # There is a bug https://spryker.atlassian.net/browse/CC-15983

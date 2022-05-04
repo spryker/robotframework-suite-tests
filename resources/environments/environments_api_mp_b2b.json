@@ -6,7 +6,7 @@
         "bapi_url": "http://backend-api.de.spryker.local/api/rest"
     },
 
-    "users": {    
+    "users": {
         "yves_user_email": "sonia@spryker.com",
         "yves_user_first_name": "Sonia",
         "yves_user_last_name": "Wagner",
@@ -27,7 +27,7 @@
         "yves_third_user_last_name": "Musterman",
         "yves_third_user_password": "change123",
         "yves_third_user_salutation": "Mr",
-      
+
         "yves_fourth_user_email": "Lilu@ottom.de",
         "yves_fourth_user_first_name": "Lilu",
         "yves_fourth_user_last_name": "Dallas",
@@ -39,12 +39,18 @@
         "yves_shared_shopping_list_user_first_name": "Trever",
         "yves_shared_shopping_list_user_last_name": "Meier",
         "yves_shared_shopping_list_user_password": "change123",
-        "yves_shared_shopping_list_user_salutation": "Mr",        
+        "yves_shared_shopping_list_user_salutation": "Mr",       
+        
+        "yves_shared_shopping_cart_user_email": "Solomon@spryker.com",
+        "yves_shared_shopping_cart_user_first_name": "Solomon",
+        "yves_shared_shopping_cart_user_last_name": "Wesner",
+        "yves_shared_shopping_cart_user_password": "change123",
+        "yves_shared_shopping_cart_user_salutation": "Mr",
 
         "gender_female": "Female",
         "gender_male": "Male",
-        
-        "email_name": "maxmusterman",
+
+        "email_name": "sonia",
         "email_domain": "@spryker.com",
 
         "zed_admin_email": "admin@spryker.com",
@@ -60,12 +66,13 @@
         "customer_reference_10_de": "DE--10",
         "customer_reference_15_de": "DE--15",
         "customer_reference_34_de": "DE--34",
+        "customer_reference_44_de": "DE--44",
 
         "grant_type_password": "password",
         "grant_type_refresh_token": "refresh_token"
     },
-    
-    "address":{
+
+    "address": {
         "default_address1": "Third, 33, 11",
         "default_address2": "33-B",
         "default_address3": "third. address. line",
@@ -85,31 +92,31 @@
         "changed_phone": "555-555-55"
     },
 
-    "shop":{
-      "currency_name_eur": "Euro",
-      "currency_code_eur": "EUR",
-      "currency_symbol_eur": "€",
-      "store_de": "DE",
+    "shop": {
+        "currency_name_eur": "Euro",
+        "currency_code_eur": "EUR",
+        "currency_symbol_eur": "€",
+        "store_de": "DE",
 
-      "currency_name_dollar": "US Dollar",
-      "currency_code_dollar": "USD",
-      "currency_symbol_dollar": "$",
-      "store_us": "US",
+        "currency_name_dollar": "US Dollar",
+        "currency_code_dollar": "USD",
+        "currency_symbol_dollar": "$",
+        "store_us": "US",
 
-      "currency_name_chf": "Swiss Franc",
-      "currency_code_chf": "CHF",
-      "currency_symbol_chf": "CHF",
+        "currency_name_chf": "Swiss Franc",
+        "currency_code_chf": "CHF",
+        "currency_symbol_chf": "CHF",
 
-      "gross_mode": "GROSS_MODE",
-      "net_mode": "NET_MODE",
+        "gross_mode": "GROSS_MODE",
+        "net_mode": "NET_MODE",
 
-      "locale_name_DE": "de_DE",
-      "locale_code_DE": "de",
-      "locale_name_EN": "en_US",
-      "locale_code_EN": "en"
+        "locale_name_DE": "de_DE",
+        "locale_code_DE": "de",
+        "locale_name_EN": "en_US",
+        "locale_code_EN": "en"
     },
 
-    "shopping-list":{
+    "shopping-list": {
         "shopping_list_name": "My Shopping List",
         "yves_user_1st_shopping_list_id": "cf032865-d1ad-5e27-803a-423bd15ced66",
         "yves_user_1st_shopping_list_name": "Newcomers",
@@ -118,12 +125,12 @@
     },
 
     "search":{
-        "total_number_of_products_in_search": "420",
+        "total_number_of_products_in_search": "414",
         "default_ipp": "12",
         "ipp_middle": "24",
         "ipp_biggest": "36",
         "default_ipp_pages_qty": "35",
-        "default_categories_qty": "37",
+        "default_categories_qty": "33",
         "default_colors_qty": "10",
         "default_labels_qty": "5",
         "default_materials_qty": "10",
@@ -147,23 +154,23 @@
         "category_tree_branches_qty": "6",
 
         "abstract_sku_highest_rating": "M1016129"
-
     },
-        
+
     "products": {
         
-        "bundle_product_abstract_sku": "B0001",
-        "bundle_product_concrete_sku":"000101",
-        "bundle_product_product_name": "Our Favourite Workspace Bundle",
-        "bundled_product_1_abstract_sku": "M528",
-        "bundled_product_2_abstract_sku": "M1017905",
-        "bundled_product_3_abstract_sku": "M24605",
-        "bundled_product_1_concrete_sku": "104939",
-        "bundled_product_1_concrete_name": "Dauphin vertebral disc swivel chair, synchronous mechanism",
-        "bundled_product_2_concrete_sku": "574995",
-        "bundled_product_2_concrete_name": "UPLINER standing desk, electric - without traverse, WxD 1800 x 800 mm - substructure silver, light gray",
-        "bundled_product_3_concrete_sku": "426581",
-        "bundled_product_3_concrete_name": "Cherry keyboard Strait JK-0300DE metal-look, corded, USB, silver",
+        "bundle_product_abstract_sku": "M90851",
+        "bundle_product_abstract_name": "IDEAL document shredder - Power 1300 watts, 165 l volume",
+        "bundle_product_concrete_sku":"000201",
+        "bundle_product_concrete_name": "IDEAL document shredder - Power 1300 watts, 165 l volume - 23 – 25 sheets, safety level P-4, particle",
+        "bundled_product_1_abstract_sku": "M23457",
+        "bundled_product_2_abstract_sku": "C2235",
+        "bundled_product_3_abstract_sku": "M11542",
+        "bundled_product_1_concrete_sku": "424453",
+        "bundled_product_1_concrete_name": "Schneider ballpoint pen HAPTIFY 135323 M 0.5 mm, dark blue/light blue",
+        "bundled_product_2_concrete_sku": "1001454",
+        "bundled_product_2_concrete_name": "Schomburg standing desk - HxWxD 1094 x 600 x 500 mm, beech",
+        "bundled_product_3_concrete_sku": "104517",
+        "bundled_product_3_concrete_name": "Wood stackable chair - 4-foot substructure, upholstered seat - Cover anthracite, substructure coated",
         "qty_of_products_in_bundle": "3",
         "qty_of_each_product_inside_bundle": "1",
 
@@ -195,14 +202,15 @@
         "abstract_available_product_with_stock_description": " Easy-to-care-for fabric cover. Substructure in graphite black RAL 9011.<br/>Standard rolling for soft floors.<br/>The backrest has height-adjustable lumbar support.  ",
         "abstract_available_product_with_stock_superattribute": "bezugsfarbe",
         "concrete_available_product_sku": "102712",
-        "concrete_available_product_meta_keywords": "Prosedia vertebral disc swivel chair with synchronous mechanics and contoured seat - backrest height 660 mm",
-        "concrete_available_product_meta_description": " Easy-to-care-for fabric cover. Substructure in graphite black RAL 9011.<br/>Standard rolling for soft floors.<br/>The backrest has height-adjustable lumbar support.  ",
+        "concrete_available_product_meta_keywords": "Arbeitsdrehstuhl,Bandscheibendrehstuhl,Bandschreibendrehstuhl,Bürodrehstuhl,Bürostuhl,Drehstuhl,Schreibtischstuhl,Universalstuhl",
+        "concrete_available_product_meta_description": " Pflegeleichter Stoffbezug. Gestell in Graphitschwarz RAL 9011.<br/>Standardmäßig Rollen für weiche Böden.<br/>Die Rückenlehne verfügt über eine höhenverstellbare Lendenwirbelstütze.  ",
 
         "abstract_available_with_stock_and_never_out_of_stock": "M87",
         "concrete_available_with_stock_and_never_out_of_stock": "657716",
         "concrete_available_with_stock_and_never_out_of_stock_name": "FRIWA stackable chair - with closed back",
         "abstract_available_product_with_no_stock_and_never_out_of_stock": "M90851",
         "abstract_unavailable_product": "M1014948",
+        "concrete_unavailable_product_sku": "212447",
 
         "abstract_available_product_with_3_concretes": "M29456",
         "abstract_available_product_with_3_concretes_name": "Gmöhling aluminum data removal container - Exterior - LxWxH 435 x 385 x 650 mm",
@@ -213,7 +221,7 @@
         "abstract_product_with_original_prices": "M74972",
         "concrete_product_with_original_prices": "420687",
         "concrete_product_with_original_prices_name": "Post-it Index Strong adhesive stripes, 686-F1EU 4 sheets sorted, 4 pieces/pack",
-        "concrete_product_with_volume_prices": "420685",    
+        "concrete_product_with_volume_prices": "420685",
 
         "abstract_product_with_label": "M21691",
         "abstract_product_with_label_name": "Clairefontaine Collegeblock 8272C DIN A5, 90 sheets",
@@ -239,13 +247,16 @@
 
         "concrete_product_with_promotions": "212427",
 
-        "concrete_product_random_weight_sku": "cable-vga-1-2",
-        "concrete_product_random_weight_name": "VGA cable as long as you want",
+        "concrete_product_with_threshold_limit": "424273",
+
+        "concrete_product_random_weight_sku": "421519_3",
+        "concrete_product_random_weight_name": "Box Papermate Kugelschreiber InkJoy 700 RT S0957340 M Druckmechanik schwarz",
         "concrete_product_random_weight_measurement_unit": "19",
         "packaging_unit_m": "METR",
+        "packaging_unit_i": "ITEM",
         "packaging_unit_cm": "CMET",
         "packaging_unit_m_name": "Meter",
-        "concrete_product_random_weight_qty_of_units": "2",
+        "concrete_product_random_weight_qty_of_units": "1",
         "concrete_product_random_weight_amount": "5.0000000000",
         "concrete_product_random_weight_conversion": "1",
         "concrete_product_random_weight_precision": "100",
@@ -258,6 +269,7 @@
         "product_option_2": "OP_insurance",
 
         "discount_concrete_product_1_sku": "108298",
+        "discount_concrete_product_sku": "103117",
         "discount_concrete_product_1_name": "Mauser hinged door cabinet - sideboard, 4 compartments, center separating wall - HxWxD 1225 x 1600 x 420 mm - light gray / ultramarine blue",
         "discount_amount_for_product_1_with_discount_20%_off_storage": "10600",
         "discount_amount_for_product_1_with_discount_10%_off_minimum_order": "4240",
@@ -271,34 +283,51 @@
         "discount_concrete_product_3_name": "EUROKRAFT aluminum hand truck - Load capacity 200 kg, with skids - load capacity 200 kg",
         "discount_amount_for_product_3_with_discount_20%_off_storage": "16383",
         "discount_amount_for_product_3_with_10%_discount": "1882"
+    },    
 
+    "product_offers":{  
+
+        "inactive_offer_with_vp": "offer3",
+        "waiting_for_approval_offer_with_vp": "offer4",
+        "denied_offer_with_vp": "offer404",
+        "offer": "offer2",
+        "offer_without_vp": "offer359",
+        "offer_without_original_price": "offer6",
+        "second_offer_with_vp": "offer9",
+        "offer_with_vp": "offer10",
+        "offer_with_vp_gross_net_prices": "offer48"
     },
+
     "product_attributes":{
         "brand_1": "Soennecken",
         "brand_2": "edding",
         "brand_3": "Mauser",
+        
         "material_1": "aluminum",
         "material_2": "metal",
         "material_3": "chipboard",
         "material_4": "Steel sheets, stove-enameled",
+        
         "delivery_1": "assembled",
         "price_unit_1": "piece",
-        "color_3": "purple",
+        
         "color_1": "yellow",
         "color_2": "blue",
+        "color_3": "purple",
+        "color_4": "orange",
+        
         "product_management_superattribute_id": "farbe",
         "product_management_attribute_free_input_id": "verschlussart",
         "product_management_attribute_no_input_id": "bundled_product"
 
     },
-    "content":{
-
+    "content": {
         "abstract_product_list_id": "apl-1",
         "abstract_list_product1_sku": "M21692",
         "abstract_list_product1_name": "Clairefontaine Collegeblock 8272C DIN A5, 90 sheets",
         "abstract_list_product2_sku": "M23723",
         "abstract_list_product2_name": "Brennenstuhl extension cable 3 m",
-        "abstract_list_size": "8",
+        "abstract_list_size": "7",
 
         "banner_1_id": "br-1",
         "banner_1_name": "Furniture - Upgrade Your Office",
@@ -316,7 +345,7 @@
         "category_node_is_root_id": "1",
         "category_node_has_only_parent_id": "37",
         "category_node_has_children_id": "11",
-        
+
         "category_nodes_storage_name": "Foods",
         "category_nodes_storage_url": "/en/foods",
         "subcategory_nodes_storage_name": "Fish",
@@ -327,15 +356,14 @@
 
         "brand_name": "verbatim",
 
-        "cart_permission_group_id":"1",
-        "cart_permission_group_type":"cart-permission-groups"
-
+        "cart_permission_group_id": "1",
+        "cart_permission_group_type": "cart-permission-groups"
     },
-    "availability":{
+    "availability": {
         "stock_is_0": "0.0000000000",
         "stock_is_20": "20.0000000000"
     },
-    "misc":{
+    "misc": {
         "default_header_content_type": "application/vnd.api+json",
         "urlencoded_header_content_type": "application/x-www-form-urlencoded",
         "test_cart_name": "Test-cart",
@@ -344,13 +372,14 @@
         "qty_of_subcategories_in_category_trees": "2",
         "color_name": "black",
 
-        "payment_provider_name": "DummyPayment",
-        "payment_method_name": "Invoice",
+        "payment_provider_name": "dummyMarketplacePayment",
+        "payment_method_name": "invoice",
+        "payment_selection_name": "dummyMarketplacePaymentInvoice",
         "carrier_name": "DHL",
         "shipment_method_name": "Standard",
         "shipment_method_name_2": "Express",
         "delivery_date": "2030-12-31",
-        
+
         "review_title": "This is a review",
         "review_text": "This is review text",
         "default_review_rating": "5",
@@ -362,7 +391,7 @@
         "discount_2_description": "Get a 10% discount on all orders above a certain value depending on currency and gross/net price mode",
         "discount_2_total_sum_for_discounts_for_products_1_2_and_3": "8435",
         "discount_3_name": "Free standard delivery",
-        "discount_3_description": "Free standard delivery for all orders above certain value depending on the currency and net/gross price. This discount is not exclusive and can be combined with other discounts.",
+        "discount_3_description": "Get a 10% discount on all orders above a certain value depending on currency and gross/net price mode",
         "discount_3_total_sum": "490",
 
         "url_resolver_example": "/en/clairefontaine-collegeblock-8272c-din-a5-90blatt-kariert-M21692",
@@ -381,9 +410,9 @@
         "url_resolver_merchant_entity": "merchants",
         "url_resolver_merchant_id": "MER000008"
     },
-    "companies":{
+    "companies": {
         "company_name": "Spryker Systems GmbH",
-        "busines_unit_address_id": "2175cddd-f8af-5885-b161-227b5c93e72f",
+        "business_unit_address_id": "2175cddd-f8af-5885-b161-227b5c93e72f",
         "business_unit_name": "Spryker Systems HR department",
         "user_with_multiple_companies": "anne.boleyn@spryker.com",
         "company_id": "62de4ab6-b768-5c21-8835-455d9f341625",
@@ -393,20 +422,47 @@
     "labels":{
         "label_id_manual": "3",
         "label_name_manual": "Top",
+
         "label_id_sale": "5",
         "label_name_sale": "SALE %",
+
         "label_id_new": "4",
         "label_name_new": "New",
+
         "label_id_discontinued": "2",
         "label_name_discontinued": "Discontinued",
+
         "label_id_alternative": "1",
         "label_name_alternative": "Alternatives available"
     },
-    "return_reasons":{
-      "return_reason_damaged": "Damaged",
-      "return_reason_wrong_item": "Wrong Item",
-      "return_reason_no_longer_needed": "No longer needed",
-      "return_reasons_qty": "3"
-    }
 
+    "merchants":{
+        "merchant_id": "MER000011",
+        "merchant_offer_id": "offer394",
+        "concrete_product_with_offer_sku":"425159",
+        "merchant_name": "Computer Experts",
+        "merchant_url": "/en/merchant/computer-experts",
+        "contact_person_role": "Brand Manager",
+        "contact_person_title": "Ms",
+        "contact_person_first_name": "Michele",
+        "contact_person_last_name": "Nemeth",
+        "contact_person_phone": "030/123456789",
+        "public_email": "support@computer-experts.com",
+        "public_phone": "+49 30 234567691",
+        "description": "Computer Experts offer products that enhance your work environment with computer accessories that improve how you work, communicate, and interact. Computer Experts founded in 2013 and continuously growing, acquiring deep industry experience.",
+        "addresses":{
+            "city_munchen":"München",
+            "address1": "Matthias-Pschorr-Straße"
+        },
+        "merchant_spryker_id": "MER000008",
+        "merchant_office_king_id": "MER000009",
+        "merchant_budget_stationery_id": "MER000010"
+    },
+  
+    "return_reasons": {
+        "return_reason_damaged": "Damaged",
+        "return_reason_wrong_item": "Wrong Item",
+        "return_reason_no_longer_needed": "No longer needed",
+        "return_reasons_qty": "3"
+    }
 }

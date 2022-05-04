@@ -21,3 +21,10 @@ Get_alternative_abstract_with_abstract_SKU
     And Response reason should be:    Not Found
     And Response should return error code:    302
     And Response should return error message:    Concrete product is not found.
+
+Get_alternative_abstract_without_SKU
+    When I send a GET request:    /concrete-products//abstract-alternative-products
+    Then Response status code should be:    400
+    And Response reason should be:    Bad Request
+    And Response should return error code:    312
+    And Response should return error message:    Concrete product sku is not specified.    

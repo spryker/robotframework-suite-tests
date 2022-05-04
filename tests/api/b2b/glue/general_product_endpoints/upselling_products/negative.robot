@@ -5,7 +5,10 @@ Resource    ../../../../../../resources/common/common_api.robot
 Default Tags    glue
 
 *** Test Cases ***
-No_cart_is_passing_to_upselling_products_request
+ENABLER
+    TestSetup
+
+Get_upselling_products_with_missing_cart_id
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     When I send a GET request:    /carts//up-selling-products
@@ -14,7 +17,7 @@ No_cart_is_passing_to_upselling_products_request
     And Response should return error code:    104
     And Response should return error message:    Cart uuid is missing.
     
-Nonexistent_cart_id_is_passing_to_upselling_products_request
+Get_upselling_products_with_nonexistent_cart_id
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     When I send a GET request:    /carts/not_a_cart/up-selling-products
@@ -23,7 +26,7 @@ Nonexistent_cart_id_is_passing_to_upselling_products_request
     And Response should return error code:    101
     And Response should return error message:    Cart with given uuid not found.
 
-Get_upselling_products_with_invalid token
+Get_upselling_products_with_invalid_token
     [Setup]    I set Headers:   Content-Type=${default_header_content_type}     Authorization=invalid
     When I send a GET request:    /carts//up-selling-products
     Then Response status code should be:    401

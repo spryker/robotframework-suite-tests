@@ -5,6 +5,8 @@ Resource    ../../../../../../resources/common/common_api.robot
 Default Tags    glue
 
 *** Test Cases ***
+ENABLER
+    TestSetup
 #POST requests
 Provide_checkout_data_with_invalid_access_token
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
@@ -18,9 +20,6 @@ Provide_checkout_data_with_invalid_access_token
     And Response reason should be:    Unauthorized
     And Response should return error message:    Invalid access token.
     And Response should return error code:    001
-    [Teardown]    Run Keywords    I set Headers:    Authorization=${token}
-    ...  AND    I send a DELETE request:    /carts/${cart_id}
-    ...  AND    Response status code should be:    204
 
 Provide_checkout_data_without_access_token
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
@@ -34,9 +33,6 @@ Provide_checkout_data_without_access_token
     And Response reason should be:    Forbidden
     And Response should return error message:    Missing access token.
     And Response should return error code:    002
-    [Teardown]    Run Keywords    I set Headers:    Authorization=${token}
-    ...  AND    I send a DELETE request:    /carts/${cart_id}
-    ...  AND    Response status code should be:    204
 
 Provide_checkout_data_with_invalid_type
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
@@ -48,8 +44,6 @@ Provide_checkout_data_with_invalid_type
     Then Response status code should be:    400
     And Response reason should be:    Bad Request
     And Response should return error message:    Invalid type.
-    [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cart_id}
-    ...  AND    Response status code should be:    204
 
 Provide_checkout_data_with_empty_type
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
@@ -61,8 +55,6 @@ Provide_checkout_data_with_empty_type
     Then Response status code should be:    400
     And Response reason should be:    Bad Request
     And Response should return error message:    Invalid type.
-    [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cart_id}
-    ...  AND    Response status code should be:    204
 
 Provide_checkout_data_without_type
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
@@ -74,8 +66,6 @@ Provide_checkout_data_without_type
     Then Response status code should be:    400
     And Response reason should be:    Bad Request
     And Response should return error message:    Post data is invalid.
-    [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cart_id}
-    ...  AND    Response status code should be:    204
 
 Provide_checkout_data_with_invalid_email
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
@@ -88,8 +78,6 @@ Provide_checkout_data_with_invalid_email
     And Response reason should be:    Unprocessable Content
     And Response should return error code:    901
     And Response should return error message:    customer.email => Email is invalid.
-    [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cart_id}
-    ...  AND    Response status code should be:    204
 
 Provide_checkout_data_with_invalid_cart_id
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
@@ -114,9 +102,6 @@ Provide_checkout_data_with_cart_id_from_another_customer
     And Response reason should be:    Unprocessable Content
     And Response should return error code:    1103
     And Response should return error message:    Cart not found.
-    [Teardown]    Run Keywords    I set Headers:    Authorization=Bearer ${first_user_token}
-    ...  AND    I send a DELETE request:    /carts/${cart_id}
-    ...  AND    Response status code should be:    204
 
 Provide_checkout_data_with_empty_customer_attributes_and_cart_id
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
@@ -162,8 +147,6 @@ Provide_checkout_data_with_empty_billing_address_data
     And Array in response should contain property with value:    [errors]    detail    billingAddress.city => This value should not be blank.
     And Array in response should contain property with value:    [errors]    detail    billingAddress.city => This value is too short. It should have 3 characters or more.
     And Array in response should contain property with value:    [errors]    detail    billingAddress.iso2Code => This value should not be blank.
-    [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cart_id}
-    ...  AND    Response status code should be:    204
 
 Provide_checkout_data_without_billing_address_data
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
@@ -184,8 +167,6 @@ Provide_checkout_data_without_billing_address_data
     And Array in response should contain property with value:    [errors]    detail    billingAddress.zipCode => This field is missing.
     And Array in response should contain property with value:    [errors]    detail    billingAddress.city => This field is missing.
     And Array in response should contain property with value:    [errors]    detail    billingAddress.iso2Code => This field is missing.
-    [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cart_id}
-    ...  AND    Response status code should be:    204
 
 Provide_checkout_data_with_empty_shipping_address_data
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
@@ -207,8 +188,6 @@ Provide_checkout_data_with_empty_shipping_address_data
     And Array in response should contain property with value:    [errors]    detail    shippingAddress.city => This value should not be blank.
     And Array in response should contain property with value:    [errors]    detail    shippingAddress.city => This value is too short. It should have 3 characters or more.
     And Array in response should contain property with value:    [errors]    detail    shippingAddress.iso2Code => This value should not be blank.
-    [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cart_id}
-    ...  AND    Response status code should be:    204
 
 Provide_checkout_data_without_shipping_address_data
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
@@ -229,8 +208,6 @@ Provide_checkout_data_without_shipping_address_data
     And Array in response should contain property with value:    [errors]    detail    shippingAddress.zipCode => This field is missing.
     And Array in response should contain property with value:    [errors]    detail    shippingAddress.city => This field is missing.
     And Array in response should contain property with value:    [errors]    detail    shippingAddress.iso2Code => This field is missing.
-    [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cart_id}
-    ...  AND    Response status code should be:    204
 
 Provide_checkout_data_with_empty_payments
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
@@ -245,9 +222,7 @@ Provide_checkout_data_with_empty_payments
     And Array in response should contain property with value:    [errors]    detail    payments.0.paymentMethodName => This value should not be blank.
     And Array in response should contain property with value:    [errors]    detail    payments.0.paymentProviderName => This value should not be blank.
     And Response should return error message:    payments.0.paymentMethodName => This value should not be blank.
-    [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cart_id}
-    ...  AND    Response status code should be:    204
-
+    
 Provide_checkout_data_without_payments
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
     ...  AND    I set Headers:    Authorization=${token}
@@ -261,8 +236,6 @@ Provide_checkout_data_without_payments
     And Each array element of array in response should contain property with value:    [errors]    status    422
     And Array in response should contain property with value:    [errors]    detail    payments.0.paymentMethodName => This field is missing.
     And Array in response should contain property with value:    [errors]    detail    payments.0.paymentProviderName => This field is missing.
-    [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cart_id}
-    ...  AND    Response status code should be:    204
 
 Provide_checkout_data_without_shipment_method_id
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
@@ -275,5 +248,3 @@ Provide_checkout_data_without_shipment_method_id
     And Response reason should be:    Unprocessable Content
     And Response should return error message:    shipment.idShipmentMethod => This field is missing.
     And Response should return error code:    901
-    [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cart_id}
-    ...  AND    Response status code should be:    204
