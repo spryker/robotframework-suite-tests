@@ -108,10 +108,14 @@
         "default_max_price": "345699",
         "sorting_options_qty": "5",
 
+        "new_label_id": "4",
         "new_label": "New",
+        "sale_label_id": "5",
         "sale_label": "SALE %",
         "manual_label": "Top",
+        "discontinued_label_id": "2",
         "discontinued_label": "Discontinued",
+        "alternatives_label_id": "1",
         "alternatives_label": "Alternatives available",
 
         "category_id_lvl1": "11",
