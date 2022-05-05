@@ -1245,6 +1245,27 @@ Find or create customer cart
         Run Keyword Unless    ${hasCart}    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${gross_mode}","currency": "${currency_code_eur}","store": "${store_de}"}}}
         Run Keyword Unless    ${hasCart}    Save value to a variable:    [data][id]    cart_id
 
+
+Get ETag header value from cart
+    [Documentation]    This keyword first retrieves cart for the current customer token. and then keyword sets ``${Etag} `` variable
+        ...                and it can be re-used by the keywords that follow this keyword in the test
+        ...
+        ...     This keyword does not accept any arguments. This keyword is used for removing unused/unwanted (ex. W/"") characters from ETag header value.
+
+        ${response}=    I send a GET request:    /carts
+        ${Etag}=    Get Value From Json   ${response_headers}    [ETag]
+        ${Etag}=    Convert To String    ${Etag}
+        ${Etag}=    Replace String    ${Etag}    '   ${EMPTY}
+        ${Etag}=    Replace String    ${Etag}    [   ${EMPTY}
+        ${Etag}=    Replace String    ${Etag}    ]   ${EMPTY}
+        ${Etag}=    Replace String    ${Etag}    W   ${EMPTY}
+        ${Etag}=    Replace String    ${Etag}    /   ${EMPTY}
+        ${Etag}=    Replace String    ${Etag}    "   ${EMPTY}
+        Log    ${Etag}
+        Set Test Variable    ${Etag}
+        [Return]    ${Etag}
+    
+
 Create a guest cart:
     [Documentation]    This keyword creates guest cart and sets ``${x_anonymous_customer_unique_id}`` that specify guest reference
         ...             and ``${guest_cart_id}`` that specify guest cart, variables
