@@ -271,8 +271,10 @@
         "discount_concrete_product_3_name": "EUROKRAFT aluminum hand truck - Load capacity 200 kg, with skids - load capacity 200 kg",
         "discount_amount_for_product_3_with_discount_20%_off_storage": "16383",
         "discount_amount_for_product_3_with_10%_discount": "1882",
-        "voucher_concrete_product_1_with_brand_safescan": "391",
-        "concrete_product_with_brand_safescan": "419872"
+        "voucher_concrete_product_1_with_brand_safescan_2_items": "782",
+        "concrete_product_with_brand_safescan": "419872",
+        "voucher_concrete_product_with_brand_safescan_and_white_color_2_items": "3201",
+        "concrete_product_with_brand_safescan_and_white_color": "419901"
 
     },
     "product_attributes":{
@@ -368,10 +370,10 @@
         "discount_3_total_sum": "490",
 	    "discount_id_3_name": "5% off white",
 	    "discount_id_3_description": "Get a 5% discount on all white products with voucher code",
-        "discount_id_3_voucher_code": "sprykerje7p",
+        "discount_id_3_voucher_code": "sprykercu7r",
         "discount_id_4_name": "10% off Safescan",
 	    "discount_id_4_description": "Get a 10% discount on all Safescan brand products with voucher code",
-        "discount_id_4_voucher_code": "safescan000910",
+        "discount_id_4_voucher_code": "safescanda2wa4ju8f",
         "discount_id_4_amount_for_product_M29502": "",
 
         "url_resolver_example": "/en/clairefontaine-collegeblock-8272c-din-a5-90blatt-kariert-M21692",
