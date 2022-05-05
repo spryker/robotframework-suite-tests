@@ -14,9 +14,9 @@ Get_product_offer_availabilities
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
-    And Response body parameter should be:    [data][0][id]    ${second_offer_with_vp}
-    And Response body parameter should be:    [data][0][type]    product-offer-availabilities
-    And Response body parameter should be in:    [data][0][attributes][isNeverOutOfStock]    True    False
-    AND Response should contain the array larger than a certain size:    [data][0][attributes][quantity]    0
-    And Response body parameter should be in:    [data][0][attributes][availability]    True    False
-    And Response body parameter should not be EMPTY:    [data][0][links][self]
+    And Each array element of array in response should contain property with value:    [data]    id    ${second_offer_with_vp}
+    And Each array element of array in response should contain property with value:    [data]    type    product-offer-availabilities
+    And Response should contain the array larger than a certain size:    [data][0][attributes][quantity]    0
+    And Each array element of array in response should contain property with value in:    [data]    [attributes][isNeverOutOfStock]    True    False
+    And Each array element of array in response should contain property with value in:    [data]    [attributes][availability]    True    False
+    And Response body has correct self link
