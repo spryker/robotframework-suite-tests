@@ -118,6 +118,7 @@ Get_product_offer_price_with_gross_chf_volume_prices
     And Response body parameter should be:    [data][0][attributes][prices][0][netAmount]    None
     And Response body parameter should be greater than:    [data][0][attributes][prices][0][grossAmount]    1
     And Response should contain the array of a certain size:    [data][0][attributes][prices][0][currency]    3
+    And Response should contain the array of a certain size:    [data][0][attributes][prices][0][volumePrices]    0
     And Response body parameter should be:    [data][0][attributes][prices][0][currency][code]    ${currency_code_chf}
     And Response body parameter should be:    [data][0][attributes][prices][0][currency][name]    ${currency_name_chf}
     And Response body parameter should be:    [data][0][attributes][prices][0][currency][symbol]    ${currency_symbol_chf}
@@ -132,6 +133,7 @@ Get_product_offer_price_with_net_chf_volume_prices
     And Response body parameter should be:    [data][0][attributes][prices][0][grossAmount]    None
     And Response body parameter should be greater than:    [data][0][attributes][prices][0][netAmount]    1
     And Response should contain the array of a certain size:    [data][0][attributes][prices][0][currency]    3
+    And Response should contain the array of a certain size:    [data][0][attributes][prices][0][volumePrices]    0
     And Response body parameter should be:    [data][0][attributes][prices][0][currency][code]    ${currency_code_chf}
     And Response body parameter should be:    [data][0][attributes][prices][0][currency][name]    ${currency_name_chf}
     And Response body parameter should be:    [data][0][attributes][prices][0][currency][symbol]    ${currency_symbol_chf}
