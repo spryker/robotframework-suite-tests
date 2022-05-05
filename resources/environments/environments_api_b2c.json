@@ -222,6 +222,12 @@
         "product_option_1_name": "Two (2) year limited warranty",
         "product_option_2": "OP_insurance",
 
+        "configurable_bundle_template_id": "8d8510d8-59fe-5289-8a65-19f0c35a0089",
+        "configurable_bundle_template_name": "All in",
+        "configurable_bundle_first_slot_item_sku": "001_25904006",
+        "configurable_bundle_first_slot_uuid": "332b40ac-a789-57ce-bec0-23d8dddd71eb",
+        "configured_bundle_quantity": 2,
+
 
         "review_title": "This is a review",
         "review_text": "This is review text",
