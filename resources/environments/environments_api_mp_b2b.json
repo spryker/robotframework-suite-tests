@@ -358,15 +358,18 @@
 
     "product_offers":{  
 
-        "inactive_offer_with_vp": "offer3",
-        "waiting_for_approval_offer_with_vp": "offer4",
-        "denied_offer_with_vp": "offer404",
-        "offer": "offer2",
-        "offer_without_vp": "offer359",
+        "inactive_offer_with_volume_price": "offer3",
+        "waiting_for_approval_offer_with_volume_price": "offer4",
+        "denied_offer_with_volume_price": "offer404",
+        "active_offer": "offer2",
+        "offer_without_volume_price": "offer359",
         "offer_without_original_price": "offer6",
-        "second_offer_with_vp": "offer9",
-        "offer_with_vp": "offer10",
-        "offer_with_vp_gross_net_prices": "offer48"
+        "second_offer_with_volume_price": "offer9",
+        "offer_with_volume_price": "offer10",
+        "offer_with_volume_price_gross_net_prices": "offer48",
+        "merchant_office_king_id": "MER000009",
+        "merchant_budget_stationery_id": "MER000010",
+        "active_offer_price": "10160"
     },
 
     "product_attributes":{
@@ -510,6 +513,7 @@
     "merchants":{
         "merchant_id": "MER000011",
         "merchant_offer_id": "offer394",
+        "merchant_offer_price": "1234",
         "concrete_product_with_offer_sku":"425159",
         "merchant_name": "Computer Experts",
         "merchant_url": "/en/merchant/computer-experts",

@@ -20,7 +20,7 @@ Get_all_concrete_product_offer_info_with_product_offer_prices_and_product_offer_
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
-    And Response body parameter should be:    [data][0][id]    ${second_offer_with_vp}
+    And Response body parameter should be:    [data][0][id]    ${second_offer_with_volume_price}
     And Response body parameter should be:    [data][0][type]    product-offers
     And Response body parameter should be in:    [data][0][attributes][isDefault]    True    False
     And Response body parameter should be:    [data][0][attributes][merchantReference]    ${merchant_office_king_id}
@@ -38,11 +38,11 @@ Get_all_concrete_product_offer_info_with_product_offer_prices_and_product_offer_
 
 # Due to the MP-6749 there is no product-offer-availabilities include displayed
 Get_all_product_offer_info_with_product_offer_prices_and_product_offer_availabilities_and_merchants_included
-    When I send a GET request:    /product-offers/${offer}?include=product-offer-prices,product-offer-availabilities,merchants
+    When I send a GET request:    /product-offers/${active_offer}?include=product-offer-prices,product-offer-availabilities,merchants
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
-    And Response body parameter should be:    [data][id]    ${offer}
+    And Response body parameter should be:    [data][id]    ${active_offer}
     And Response body parameter should be:    [data][type]    product-offers
     And Response body parameter should be in:    [data][attributes][isDefault]    True    False
     And Response body parameter should be:    [data][attributes][merchantReference]    ${merchant_budget_stationery_id}
@@ -58,11 +58,11 @@ Get_all_product_offer_info_with_product_offer_prices_and_product_offer_availabil
     And Response include element has self link:    merchants
 
 Get_product_offer_without_volume_prices
-    When I send a GET request:    /product-offers/${offer_without_vp}?include=product-offer-prices
+    When I send a GET request:    /product-offers/${offer_without_volume_price}?include=product-offer-prices
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
-    And Response body parameter should be:    [data][id]    ${offer_without_vp}
+    And Response body parameter should be:    [data][id]    ${offer_without_volume_price}
     And Response body parameter should be:    [data][type]    product-offers
     And Response body parameter should be in:    [data][attributes][isDefault]    True    False
     And Response should contain the array of a certain size:    [included]    1
@@ -72,11 +72,11 @@ Get_product_offer_without_volume_prices
     And Response should contain the array of a certain size:    [included][0][attributes][prices][0][volumePrices]    0
 
 Get_product_offer_with_gross_eur_volume_prices
-    When I send a GET request:    /product-offers/${offer_with_vp}?include=product-offer-prices
+    When I send a GET request:    /product-offers/${offer_with_volume_price}?include=product-offer-prices
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
-    And Response body parameter should be:    [data][id]    ${offer_with_vp}
+    And Response body parameter should be:    [data][id]    ${offer_with_volume_price}
     And Response body parameter should be:    [data][type]    product-offers
     And Response body parameter should be in:    [data][attributes][isDefault]    True    False
     And Response should contain the array of a certain size:    [included]    1
@@ -95,11 +95,11 @@ Get_product_offer_with_gross_eur_volume_prices
     And Response body parameter should be:    [included][0][attributes][prices][0][currency][symbol]    ${currency_symbol_eur}
 
 Get_product_offer_with_net_eur_volume_prices
-    When I send a GET request:    /product-offers/${offer_with_vp}?include=product-offer-prices&priceMode=${net_mode}
+    When I send a GET request:    /product-offers/${offer_with_volume_price}?include=product-offer-prices&priceMode=${net_mode}
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
-    And Response body parameter should be:    [data][id]    ${offer_with_vp}
+    And Response body parameter should be:    [data][id]    ${offer_with_volume_price}
     And Response body parameter should be:    [data][type]    product-offers
     And Response body parameter should be in:    [data][attributes][isDefault]    True    False
     And Response should contain the array of a certain size:    [included]    1
@@ -118,11 +118,11 @@ Get_product_offer_with_net_eur_volume_prices
     And Response body parameter should be:    [included][0][attributes][prices][0][currency][symbol]    ${currency_symbol_eur}
 
 Get_product_offer_with_gross_chf_volume_prices
-    When I send a GET request:    /product-offers/${offer_with_vp}?include=product-offer-prices&currency=${currency_code_chf}
+    When I send a GET request:    /product-offers/${offer_with_volume_price}?include=product-offer-prices&currency=${currency_code_chf}
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
-    And Response body parameter should be:    [data][id]    ${offer_with_vp}
+    And Response body parameter should be:    [data][id]    ${offer_with_volume_price}
     And Response body parameter should be:    [data][type]    product-offers
     And Response body parameter should be in:    [data][attributes][isDefault]    True    False
     And Response should contain the array of a certain size:    [included]    1
@@ -137,11 +137,11 @@ Get_product_offer_with_gross_chf_volume_prices
     And Response body parameter should be:    [included][0][attributes][prices][0][currency][symbol]    ${currency_symbol_chf}
 
 Get_product_offer_with_net_chf_volume_prices
-    When I send a GET request:    /product-offers/${offer_with_vp}?include=product-offer-prices&priceMode=${net_mode}&currency=${currency_code_chf}
+    When I send a GET request:    /product-offers/${offer_with_volume_price}?include=product-offer-prices&priceMode=${net_mode}&currency=${currency_code_chf}
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
-    And Response body parameter should be:    [data][id]    ${offer_with_vp}
+    And Response body parameter should be:    [data][id]    ${offer_with_volume_price}
     And Response body parameter should be:    [data][type]    product-offers
     And Response body parameter should be in:    [data][attributes][isDefault]    True    False
     And Response should contain the array of a certain size:    [included]    1
