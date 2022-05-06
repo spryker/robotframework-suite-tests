@@ -56,7 +56,7 @@ Retrieves_a_merchant_by_id
     And Response body parameter should be:    [data][attributes][contactPersonPhone]    ${merchant_contact_person_phone}
     And Response body parameter should be:    [data][attributes][publicEmail]    ${merchant_public_email}
     And Response body parameter should be:    [data][attributes][publicPhone]    ${merchant_public_phone}
-    And Response body parameter should be:    [data][attributes][description]    "${merchant_description}"
+    Response body parameter should not be EMPTY:    [data][attributes][description]
     And Response body parameter should not be EMPTY:    [data][attributes]
     And Response body parameter should not be EMPTY:    [data][attributes][logoUrl]
     And Response body parameter should not be EMPTY:    [data][attributes][bannerUrl]

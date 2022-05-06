@@ -73,8 +73,7 @@
         "merchant_contact_person_phone": "030/123456789",
         "merchant_public_email": "support@budgetcamerasonline.com",
         "merchant_public_phone": "+49 30 234567591",
-        "merchant_logo_url": "https://d2s0ynfc62ej12.cloudfront.net/merchant/budgetcameras-logo.png",
-        "merchant_description": "DSLR and mirrorless cameras are by far the most popular with filmmakers on a tight budget when you cant afford multiple specialist cameras.Budget Cameras is offering a great selection of digital cameras with the lowest prices."
+        "merchant_logo_url": "https://d2s0ynfc62ej12.cloudfront.net/merchant/budgetcameras-logo.png"
     },
 
     "shop": {
