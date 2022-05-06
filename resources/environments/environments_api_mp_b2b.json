@@ -189,6 +189,77 @@
         "product_related_product_with_related_relation_sku": "M29501",
         "product_related_product_with_related_relation_name": "Safescan automatic banknote counter - UV counterfeit recognition",
 
+        "concrete_of_product_with_relations_upselling_NESTED":{
+            "product_options":{
+                "OP_1":{
+                    "id": "OP_1_year_waranty",
+                    "option_group_name": "Three (3) year limited warranty",
+                    "sku": "OP_1_year_waranty",
+                    "option_name": "One (1) year limited warranty"
+                },
+                "OP_2":{
+                    "id": "OP_2_year_waranty",
+                    "option_group_name": "Three (3) year limited warranty",
+                    "sku": "OP_2_year_waranty",
+                    "option_name": "Two (2) year limited warranty"
+                },
+                "OP_3":{
+                    "id": "OP_3_year_waranty",
+                    "option_group_name": "Three (3) year limited warranty",
+                    "sku": "OP_3_year_waranty",
+                    "option_name": "Three (3) year limited warranty"
+                },
+                "OP_insurance":{
+                    "id": "OP_insurance",
+                    "option_group_name": "Two (2) year insurance coverage",
+                    "sku": "OP_insurance",
+                    "option_name": "Two (2) year insurance coverage"
+                }
+
+            },
+            "product_reviews":{
+                "review_1":{
+                    "id":"1",
+                    "rating":"1",
+                    "nickname":"Spencor",
+                    "summary":"To heavy, uncomfortable",
+                    "description":"YOu really feel there is tech on your wrist with this watch, it felt like a weight on my wrist and strap was very uncomfortable. Battery dies really fast."
+                },
+                "review_5":{
+                    "id":"5",
+                    "rating":"5",
+                    "nickname":"Spencor",
+                    "summary":"Five Stars",
+                    "description":"Daughter is very happy with her new phone!"
+                }
+            },
+            "category_nodes":{
+                "category_node_23": {
+                    "node_id":"23",
+                    "name":"Office equipment"
+                },
+                "category_node_25": {
+                    "node_id":"25",
+                    "name":"Money Counters and Validators"
+                }
+            }
+        },
+
+        "product_related_product_with_upselling_relation_NESTED": {
+            "sku": "M29499",
+            "merchant_reference": "MER000008",
+            "name": "Safescan counterfeit test device - SAFESCAN 45 UV",
+            "description": " Counterfeit test device, SAFESCAN 45 UV, doubled UV lamp. Strong, doubled UV lamp (2 x 6 W). Monitors the UV features of banknotes. Suitable for all currencies. Suitable for all driver’s licenses and documents. Suitable for identity cards and credit cards. CE-certified.  ",
+            "concrete_available_product": {
+                "sku": "419869",
+                "name": "Safescan Counterfeit test device, SAFESCAN 45 UV, doubled UV lamp",
+                "description": "Counterfeit test device, SAFESCAN 45 UV, doubled UV lamp. Strong, doubled UV lamp (2 x 6 W). Monitors the UV features of banknotes. Suitable for all currencies. Suitable for all driver’s licenses and documents. Suitable for identity cards and credit cards. CE-certified.",
+                "meta_title": "",
+                "meta_keywords": "Geldscheinprüfer,Geldprüfer",
+                "meta_description": " Falschgeld-Prüfgerät, SAFESCAN 45 UV, doppelte UV Lampe. Starke, doppelte UV Lampe (2 x 6 W). Kontrolliert die UV-Merkmale von Geldscheinen. Eignet sich für alle Währungen. Eignet sich für alle Führerscheine und Dokumente. Eignet sich für Identitätskarten und Kreditkarten. CE-zertifiziert.  "
+            }
+        },
+
         "concrete_product_with_alternative_sku": "420566",
         "concrete_product_with_alternative_sku_name": "Verbatim USB stick Store n Go V3 49173 32GB USB3.0 gray",
         "concrete_product_with_alternative_sku_name_in_lower_case": "verbatim usb stick store n go v3 49173 32gb usb3.0 gray",
@@ -270,6 +341,7 @@
         "concrete_available_with_stock_and_never_out_of_stock_name": "FRIWA stackable chair - with closed back",
         "abstract_available_product_with_no_stock_and_never_out_of_stock": "M90851",
         "abstract_unavailable_product": "M1014948",
+        "concrete_unavailable_product_sku": "212447",
 
         "abstract_available_product_with_3_concretes": "M29456",
         "abstract_available_product_with_3_concretes_name": "Gmöhling aluminum data removal container - Exterior - LxWxH 435 x 385 x 650 mm",
@@ -347,7 +419,24 @@
         "discount_concrete_product_3_name": "EUROKRAFT aluminum hand truck - Load capacity 200 kg, with skids - load capacity 200 kg",
         "discount_amount_for_product_3_with_discount_20%_off_storage": "16383",
         "discount_amount_for_product_3_with_10%_discount": "1882"
+    },    
+
+    "product_offers":{  
+
+        "inactive_offer_with_volume_price": "offer3",
+        "waiting_for_approval_offer_with_volume_price": "offer4",
+        "denied_offer_with_volume_price": "offer404",
+        "active_offer": "offer2",
+        "offer_without_volume_price": "offer359",
+        "offer_without_original_price": "offer6",
+        "second_offer_with_volume_price": "offer9",
+        "offer_with_volume_price": "offer10",
+        "offer_with_volume_price_gross_net_prices": "offer48",
+        "merchant_office_king_id": "MER000009",
+        "merchant_budget_stationery_id": "MER000010",
+        "active_offer_price": "10160"
     },
+
     "product_attributes":{
         "brand_1": "Soennecken",
         "brand_2": "edding",
@@ -467,6 +556,7 @@
         "user_with_multiple_companies": "anne.boleyn@spryker.com",
         "company_id": "62de4ab6-b768-5c21-8835-455d9f341625",
         "company_user_id": "2816dcbd-855e-567e-b26f-4d57f3310bb8"
+
     },
     "labels":{
         "label_id_manual": "3",
@@ -506,6 +596,7 @@
         },
         "merchant_spryker_id": "MER000008",
         "merchant_office_king_id": "MER000009",
+
         "merchant_budget_stationery_id": "MER000010",
         "merchant_spryker_name": "Spryker",
         "merchant_spryker_url": "/en/merchant/spryker",
@@ -519,8 +610,6 @@
         "description_spryker": "Spryker is the main merchant on the B2B Demo Marketplace."
         
     },
-
-
     "return_reasons": {
         "return_reason_damaged": "Damaged",
         "return_reason_wrong_item": "Wrong Item",
