@@ -44,7 +44,6 @@ Get_abstract_product_with_category_nodes_included
     And Response should contain the array of a certain size:    [included]    3
     And Response should contain the array of a certain size:    [data][relationships]    1
     And Each array element of array in response should contain property with value:    [data][relationships][category-nodes][data]    type    category-nodes
-    And Each array element of array in response should contain property:    [data][relationships][category-nodes][data]    type
     And Each array element of array in response should contain property:    [data][relationships][category-nodes][data]    id
     And Response body parameter should be:    [data][relationships][category-nodes][data][0][id]    ${abstract_available_product_with_stock_NESTED.category_nodes.category_node_14.node_id}
     And Response body parameter should be:    [data][relationships][category-nodes][data][1][id]    ${abstract_available_product_with_stock_NESTED.category_nodes.category_node_11.node_id}
@@ -73,12 +72,17 @@ Get_abstract_product_with_concrete_products_included
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response body parameter should be:    [data][type]    abstract-products
+    And Response body parameter should be:    [data][id]    ${abstract_available_product_with_stock}
     And Response should contain the array of a certain size:    [included]    2
     And Response should contain the array of a certain size:    [data][relationships]    1
+    And Response should contain the array of a certain size:    [data][attributes][attributeMap]    4
+    And Response should contain the array of a certain size:    [included][1][attributes]    15
+    And Response should contain the array of a certain size:    [included][1][attributes][attributes]    7
     And Response body parameter should not be EMPTY:    [data][relationships]
     And Response body parameter should not be EMPTY:    [data][relationships][concrete-products][data][0][type]
     And Response body parameter should not be EMPTY:    [data][relationships][concrete-products][data][0][id]
     And Response body parameter should not be EMPTY:    [data][relationships][concrete-products]
+    And Response body parameter should be:    [data][attributes][merchantReference]    ${abstract_available_product_with_stock_NESTED.merchant_reference}
     And Each Array Element Of Array In Response Should Contain Property:    [data][relationships][concrete-products][data]    type
     And Each Array Element Of Array In Response Should Contain Property:    [data][relationships][concrete-products][data]    id
     And Each Array Element Of Array In Response Should Contain Property:    [included]    type
@@ -103,6 +107,19 @@ Get_abstract_product_with_concrete_products_included
     And Response body parameter should not be EMPTY:    [included][0][attributes][attributes]
     And Response body parameter should not be EMPTY:    [included][0][attributes][superAttributesDefinition]
     And Response body parameter should not be EMPTY:    [included][0][attributes][attributeNames]
+    And Response body parameter should not be EMPTY:    [included][1][attributes][attributes]
+    And Response should contain the Array of a certain size:     [included][1][attributes][superAttributesDefinition]    0
+    And Response body parameter should not be EMPTY:    [included][1][attributes][attributeNames]    
+    And Response body parameter should be:   [included][1][type]    abstract-products
+    And Response body parameter should be:   [included][1][id]    ${abstract_available_product_with_stock}
+    And Each array element of array in response should contain nested property:    [included]    [links]    self
+    And Response body parameter should be:    [included][1][attributes][sku]    ${abstract_available_product_with_stock_NESTED.sku}
+    And Response body parameter should be:    [included][1][attributes][name]    ${abstract_available_product_with_stock_NESTED.name}
+    And Response body parameter should be:    [included][1][attributes][description]    ${abstract_available_product_with_stock_NESTED.description}
+    And Response body parameter should be:    [included][1][attributes][metaTitle]    ${abstract_available_product_with_stock_NESTED.meta_title}
+    And Response body parameter should be:    [included][1][attributes][metaKeywords]    ${abstract_available_product_with_stock_NESTED.meta_keywords}
+    And Response body parameter should be:    [included][1][attributes][metaDescription]    ${abstract_available_product_with_stock_NESTED.meta_description}
+    And Response body parameter should contain:    [data][attributes][superAttributes]    ${abstract_available_product_with_stock_NESTED.superattribute}
 
 Get_abstract_product_with_product_options_included
     When I send a GET request:    /abstract-products/${abstract_available_product_with_stock_NESTED.sku}?include=product-options
@@ -187,76 +204,19 @@ Get_abstract_product_with_merchants_included
     And Each array element of array in response should contain property:    [data][relationships][merchants][data]    type
     And Each array element of array in response should contain property:    [data][relationships][merchants][data]    id
     And Response body parameter should be:    [data][relationships][merchants][data][0][type]    merchants
-    And Response body parameter should be:    [data][relationships][merchants][data][0][id]    ${merchants.spryker.merchant_id}
+    And Response body parameter should be:    [data][relationships][merchants][data][0][id]    ${merchant_spryker_id}
     And Each array element of array in response should contain property:    [included]    id
     And Each array element of array in response should contain property:    [included]    attributes
     And Each array element of array in response should contain property:    [included]    links
-    And Response body parameter should be:    [included][0][id]    ${merchants.spryker.merchant_id}
+    And Response body parameter should be:    [included][0][id]    ${merchant_spryker_id}
     And Response body parameter should be:    [included][0][type]    merchants
-    And Response body parameter should be:    [included][0][attributes][merchantName]    ${merchants.spryker.merchant_name}
-    And Response body parameter should be:    [included][0][attributes][merchantUrl]    ${merchants.spryker.merchant_url}
-    And Response body parameter should be:    [included][0][attributes][contactPersonRole]    ${merchants.spryker.contact_person_role}
-    And Response body parameter should be:    [included][0][attributes][contactPersonTitle]    ${merchants.spryker.contact_person_title}
-    And Response body parameter should be:    [included][0][attributes][contactPersonFirstName]    ${merchants.spryker.contact_person_first_name}
-    And Response body parameter should be:    [included][0][attributes][contactPersonLastName]    ${merchants.spryker.contact_person_last_name}
-    And Response body parameter should be:    [included][0][attributes][contactPersonPhone]    ${merchants.spryker.contact_person_phone}
-    And Response body parameter should be:    [included][0][attributes][publicEmail]    ${merchants.spryker.public_email}
-    And Response body parameter should be:    [included][0][attributes][publicPhone]    ${merchants.spryker.public_phone}
-    And Response body parameter should be:    [included][0][attributes][description]    ${merchants.spryker.description}
-
-Get_abstract_product_with_concrete_products_image_set_included
-    When I send a GET request:    /abstract-products/${abstract_available_product_with_stock_NESTED.sku}?include=concrete-product-image-sets
-    Then Response status code should be:    200
-    And Response reason should be:    OK
-    And Response body parameter should be:    [data][type]    abstract-products
-    And Response body parameter should be:    [data][id]    ${abstract_available_product_with_stock}
-    And Response body parameter should be:    [data][attributes][merchantReference]    ${merchants.spryker.merchant_id}
-    And Response body parameter should be:    [data][attributes][averageRating]    None
-    And Response body parameter should be:    [data][attributes][reviewCount]    0
-    And Response body parameter should be:    [data][attributes][name]    ${abstract_available_product_with_stock_name}
-    And Response body parameter should not be EMPTY:    [data][attributes][description]
-    And Response body parameter should not be EMPTY:    [data][attributes][attributes][norm]
-    And Each Array Element Of Array In Response Should Contain Property:  [data][attributes][superAttributesDefinition]    ${product_management_superattribute_id}
-    And Each Array Element Of Array In Response Should Contain Property:  [data][attributes][superAttributesDefinition]    papierformat
-    And Each Array Element Of Array In Response Should Contain Property:  [data][attributes][superAttributesDefinition]    attributeMap
-    And Each Array Element Of Array In Response Should Contain Property:  [data][attributes][superAttributesDefinition]    attributeNames
-    And Response should contain the array of a certain size:    [data][attributes][superAttributesDefinition]    0
-    And Response should contain the array of a certain size:    [data][attributes][attributeNames]    8
-    And Response body parameter should not be EMPTY:    [data][attributes][attributeNames]
-    And Response body parameter should not be EMPTY:  [data][attributes][attributeMap][super_attributes]
-    And Response body parameter should not be EMPTY:    [data][attributes]
-    And Response body parameter should not be EMPTY:    [data][attributes][attributes]
-    And Response should contain the array of a certain size:    [data][attributes][attributeMap]    4
-    And Response should contain the array of a certain size:    [data][attributes][superAttributesDefinition]    0
-    And Response should contain the array of a certain size:    [data][attributes][superAttributes]    1
-    And Response body has correct self link internal
-
-Get_abstract_product_with_concrete_product_availabilities_included
-    When I send a GET request:    /abstract-products/${abstract_available_product_with_stock_NESTED.sku}?include=concrete-product-availabilities
-    And Response reason should be:    OK
-    And Response body parameter should be:    [data][type]    abstract-products
-    And Response body parameter should be:    [data][id]    ${abstract_available_product_with_stock_NESTED.sku}
-    And Response body parameter should be:    [data][attributes][sku]    ${abstract_available_product_with_stock_NESTED.sku}
-    And Response body parameter should be:    [data][attributes][merchantReference]    ${abstract_available_product_with_stock_NESTED.merchant_reference}
-    And Response body parameter should have datatype:    [data][attributes][reviewCount]    int
-    And Response body parameter should be:    [data][attributes][name]    ${abstract_available_product_with_stock_NESTED.name}
-    And Response body parameter should be:    [data][attributes][description]    ${abstract_available_product_with_stock_NESTED.description}
-    And Response body parameter should be:    [data][attributes][metaTitle]    ${abstract_available_product_with_stock_NESTED.meta_title}
-    And Response body parameter should be:    [data][attributes][metaKeywords]    ${abstract_available_product_with_stock_NESTED.meta_keywords}
-    And Response body parameter should be:    [data][attributes][metaDescription]    ${abstract_available_product_with_stock_NESTED.meta_description}
-    And Response body parameter should be:    [data][attributes][attributeMap][product_concrete_ids][0]    ${abstract_available_product_with_stock_NESTED.concrete_available_product.sku}
-    And Response body parameter should be:    [data][attributes][averageRating]    None
-    And Response should contain the array of a certain size:    [data][attributes][superAttributesDefinition]    0
-    And Response should contain the array of a certain size:    [data][attributes][attributeMap]    4
-    And Response should contain the array of a certain size:    [data][attributes][attributeMap][product_concrete_ids]    1
-    And Response body parameter should have datatype:    [data][attributes][attributeMap][attribute_variants]    list
-    And Response body parameter should have datatype:    [data][attributes][attributeMap][attribute_variant_map]    dict
-    And Response body parameter should contain:    [data][attributes][superAttributes]    ${abstract_available_product_with_stock_NESTED.superattribute}
-    And Response body parameter should not be EMPTY:    [data][attributes][attributeNames]
-    And Response body parameter should not be EMPTY:    [data][attributes][url]
-    And Response body parameter should not be EMPTY:    [data][attributes][attributes][norm]
-    And Response body parameter should not be EMPTY:    [data][attributes][attributeMap][product_concrete_ids][0]
-    And Response should contain the array of a certain size:    [data][attributes][attributeMap]    4
-    And Response should contain the array of a certain size:    [data][attributes][superAttributesDefinition]    0
-    And Response should contain the array of a certain size:    [data][attributes][superAttributes]    1
-    And Response body has correct self link internal
+    And Response body parameter should be:    [included][0][attributes][merchantName]    ${merchant_spryker_name}
+    And Response body parameter should be:    [included][0][attributes][merchantUrl]    ${merchant_spryker_url}
+    And Response body parameter should be:    [included][0][attributes][contactPersonRole]    ${contact_spryker_person_role}
+    And Response body parameter should be:    [included][0][attributes][contactPersonTitle]    ${contact_spryker_person_title}
+    And Response body parameter should be:    [included][0][attributes][contactPersonFirstName]    ${contact_spryker_person_first_name}
+    And Response body parameter should be:    [included][0][attributes][contactPersonLastName]    ${contact_spryker_person_last_name}
+    And Response body parameter should be:    [included][0][attributes][contactPersonPhone]    ${contact_spryker_person_phone}
+    And Response body parameter should be:    [included][0][attributes][publicEmail]    ${spryker_public_email}
+    And Response body parameter should be:    [included][0][attributes][publicPhone]    ${spryker_public_phone}
+    And Response body parameter should be:    [included][0][attributes][description]    ${description_spryker}

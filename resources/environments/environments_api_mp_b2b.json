@@ -485,40 +485,41 @@
         "label_name_alternative": "Alternatives available"
     },
 
-    "merchants": {
-        "merchants": {
-            "spryker": {
-                "merchant_id": "MER000008",
-                "merchant_name": "Spryker",
-                "merchant_url": "/en/merchant/spryker",
-                "contact_person_role": "E-Commerce Manager",
-                "contact_person_title": "Mr",
-                "contact_person_first_name": "Harald",
-                "contact_person_last_name": "Schmidt",
-                "contact_person_phone": "+49 30 208498350",
-                "public_email": "info@spryker.com",
-                "public_phone": "+49 30 234567891",
-                "description": "Spryker is the main merchant on the B2B Demo Marketplace."
-            },
-            "computer_experts": {
-                "merchant_id": "MER000011",
-                "merchant_name": "Computer Experts",
-                "merchant_url": "/en/merchant/computer-experts",
-                "contact_person_role": "Brand Manager",
-                "contact_person_title": "Ms",
-                "contact_person_first_name": "Michele",
-                "contact_person_last_name": "Nemeth",
-                "contact_person_phone": "030/123456789",
-                "public_email": "support@computer-experts.com",
-                "public_phone": "+49 30 234567691",
-                "description": "Computer Experts offer products that enhance your work environment with computer accessories that improve how you work, communicate, and interact. Computer Experts founded in 2013 and continuously growing, acquiring deep industry experience.",
-                "addresses": {
-                    "city_munchen": "München",
-                    "address1": "Matthias-Pschorr-Straße"
-                }
-            }
-        }
+    "merchants":{
+        "merchant_id": "MER000011",
+        "merchant_offer_id": "offer394",
+        "merchant_offer_price": "1234",
+        "concrete_product_with_offer_sku":"425159",
+        "merchant_name": "Computer Experts",
+        "merchant_url": "/en/merchant/computer-experts",
+        "contact_person_role": "Brand Manager",
+        "contact_person_title": "Ms",
+        "contact_person_first_name": "Michele",
+        "contact_person_last_name": "Nemeth",
+        "contact_person_phone": "030/123456789",
+        "public_email": "support@computer-experts.com",
+        "public_phone": "+49 30 234567691",
+        "description": "Computer Experts offer products that enhance your work environment with computer accessories that improve how you work, communicate, and interact. Computer Experts founded in 2013 and continuously growing, acquiring deep industry experience.",
+        "addresses":{
+            "city_munchen":"München",
+            "address1": "Matthias-Pschorr-Straße"
+        },
+        "merchant_spryker_id": "MER000008",
+        "merchant_office_king_id": "MER000009",
+        "merchant_budget_stationery_id": "MER000010",
+        "merchant_spryker_name": "Spryker",
+        "merchant_spryker_url": "/en/merchant/spryker",
+        "contact_spryker_person_role":"E-Commerce Manager",
+        "contact_spryker_person_title": "Mr",
+        "contact_spryker_person_first_name": "Harald",
+        "contact_spryker_person_last_name": "Schmidt",
+        "contact_spryker_person_phone": "+49 30 208498350",
+        "spryker_public_email": "info@spryker.com",
+        "spryker_public_phone": "+49 30 234567891",
+        "description_spryker": "Spryker is the main merchant on the B2B Demo Marketplace."
+        
     },
+
 
     "return_reasons": {
         "return_reason_damaged": "Damaged",
