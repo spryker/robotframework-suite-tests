@@ -92,7 +92,8 @@
 
     "search": {
 
-        "total_number_of_products_in_search": "215",
+        "total_number_of_products_in_search": "212",
+        "total_number_of_products_in_search_1": "211",
         "default_ipp": "12",
         "ipp_middle": "24",
         "ipp_biggest": "36",
@@ -105,9 +106,10 @@
         "default_storage_capacity_qty": "5",
         "default_touchscreen_qty": "2",
         "default_brands_qty": "10",
+        "default_merchant_qty": "4",
         "default_min_rating": "4",
         "default_max_rating": "5",
-        "default_min_price": "0",
+        "default_min_price": "1879",
         "default_max_price": "345699",
         "sorting_options_qty": "5",
 
@@ -184,6 +186,17 @@
         "abstract_product_with_alternative_name": "Lenovo IdeaPad Yoga 500",
         "alternative_abstract_product": "134",
         "alternative_abstract_product_price_chf": "39675",
+        "discount_1_name": "10% off minimum order",
+        "discount_amount_for_product_1_with_discount_20%_off_storage": "4000",
+        "discount_amount_for_product_1_with_discount_10%_off_minimum_order": "1600",
+        "discount_concrete_product_1_total_sum_of_discounts": "5600",
+        "discount_concrete_product_2_sku": "213216",
+        "discount_concrete_product_2_name": "office akktiv base cabinet - HxWxD 942 x 913 x 420 mm - light gray, RAL 7035",
+        "discount_amount_for_product_2_with_discount_20%_off_storage": "5783",
+        "discount_amount_for_product_2_with_discount_10%_off_minimum_order": "2313",
+        "discount_concrete_product_2_total_sum_of_discounts": "8096",
+        "discount_concrete_product_3_sku": "401768",
+        "discount_2_name": "20% off cameras",
 
         "abstract_available_product_with_stock": "183",
         "abstract_available_product_with_stock_name": "Sony Xperia SGP512E1",
@@ -194,7 +207,7 @@
         "concrete_available_product_meta_keywords": "Sony,Communication Electronics",
         "concrete_available_product_meta_description": "Enjoy greater flexibility  ...than ever before with the Galaxy Tab S2. Remarkably slim and ultra-lightweight, use this device to take your e-books, photos,",
         "concrete_available_product_with_label": "204_29851280",
-        "abstract_available_with_stock_and_never_out_of_stock": "207",
+        "abstract_available_with_stock_and_never_out_of_stock": "004",
         "concrete_available_with_stock_and_never_out_of_stock": "004_30663302",
         "abstract_available_product_with_no_stock_and_never_out_of_stock": "154",
         "abstract_unavailable_product": "111",
