@@ -23,14 +23,14 @@ Get_not_existing_concrete_product_offers
     And Response should contain the array of a certain size:    [data]    0
 
 Get_product_offer_with_volume_prices_included_for_inactive_product_offer
-    When I send a GET request:    /product-offers/${inactive_offer_with_vp}?include=product-offer-prices
+    When I send a GET request:    /product-offers/${inactive_offer_with_volume_price}?include=product-offer-prices
     Then Response status code should be:    404
     And Response should return error code:    3701
     And Response reason should be:    Not Found
     And Response should return error message:    Product offer not found.
 
 Get_product_offer_with_volume_prices_included_for_waiting_for_approval_product_offer
-    When I send a GET request:    /product-offers/${waiting_for_approval_offer_with_vp}?include=product-offer-prices
+    When I send a GET request:    /product-offers/${waiting_for_approval_offer_with_volume_price}?include=product-offer-prices
     Then Response status code should be:    404
     And Response should return error code:    3701
     And Response reason should be:    Not Found
