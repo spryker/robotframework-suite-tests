@@ -1,4 +1,6 @@
 *** Settings ***
+Library    String
+Library    Browser
 Library    ../../resources/libraries/common.py
 Resource    common.robot
 Resource    ../pages/yves/yves_catalog_page.robot
@@ -17,6 +19,8 @@ Resource    ../pages/yves/yves_quote_request_page.robot
 Resource    ../pages/yves/yves_choose_bundle_to_configure_page.robot
 Resource    ../pages/yves/yves_create_return_page.robot
 Resource    ../pages/yves/yves_return_details_page.robot
+Resource    ../pages/yves/yves_checkout_summary_page.robot
+Resource    ../pages/yves/yves_checkout_cancel_payment_page.robot
 Resource    ../steps/header_steps.robot
 
 *** Variable ***
@@ -75,8 +79,10 @@ Yves: '${pageName}' page is displayed
     ...    ELSE IF    '${pageName}' == 'Choose Bundle to configure'    Page Should Contain Element    ${choose_bundle_main_content_locator}    ${pageName} page is not displayed
     ...    ELSE IF    '${pageName}' == 'Create Return'    Page Should Contain Element    ${create_return_main_content_locator}    ${pageName} page is not displayed
     ...    ELSE IF    '${pageName}' == 'Return Details'    Page Should Contain Element    ${return_details_main_content_locator}    ${pageName} page is not displayed
+    ...    ELSE IF    '${pageName}' == 'Payment cancellation'    Page Should Contain Element    ${cancel_payment_page_main_container_locator}    ${pageName} page is not displayed
 
-Yves: remove flash messages    ${flash_massage_state}=    Run Keyword And Ignore Error    Page Should Contain Element    ${notification_area}    1s
+Yves: remove flash messages
+    ${flash_massage_state}=    Run Keyword And Ignore Error    Page Should Contain Element    ${notification_area}    1s
     Log    ${flash_massage_state}
     Run Keyword If    'PASS' in ${flash_massage_state}     Remove element from HTML with JavaScript    //section[@data-qa='component notification-area']
 
@@ -99,6 +105,7 @@ Yves: go to the 'Home' page
 
 Yves: get the last placed order ID by current customer
     [Documentation]    Returns orderID of the last order from customer account
+    Run Keyword If    '${env}'=='suite-nonsplit'    Yves: go to URL:    /customer/order
     ${currentURL}=    Get Location
     Run Keyword If    '${env}'=='b2b'    Set Test Variable    ${menuItem}    Order History
     ...    ELSE    Set Test Variable    ${menuItem}    Orders History
@@ -169,7 +176,7 @@ Yves: get index of the first available product
     ${productsCount}=    Get Element Count    xpath=//product-item[@data-qa='component product-item']
     Log    ${productsCount}
     FOR    ${index}    IN RANGE    1    ${productsCount}+1
-        ${status}=    Run Keyword And Ignore Error    
+        ${status}=    Run Keyword And Ignore Error
         ...    Run keyword if    '${env}'=='b2b'    Page should contain element    xpath=//product-item[@data-qa='component product-item'][${index}]//*[@class='product-item__actions']//ajax-add-to-cart//button[@disabled='']
         ...    ELSE    Run keyword if    '${env}'=='b2c'    Page should contain element    xpath=//product-item[@data-qa='component product-item'][${index}]//ajax-add-to-cart//button
         Log    ${index}
@@ -188,7 +195,7 @@ Yves: get index of the first available product
     END
         ${productIndex}=    Set Variable    ${index}
         Return From Keyword    ${productIndex}
-    
+
 Yves: go to the PDP of the first available product
     ${index}=    Yves: get index of the first available product
     Click    xpath=//product-item[@data-qa='component product-item'][${index}]//a[contains(@class,'link-detail-page') and (contains(@class,'info')) or (contains(@class,'name'))]
@@ -220,3 +227,7 @@ Yves: try reloading page if element is/not appear:
         ...    ELSE    Run Keyword If    '${isDisplayed}'=='False' and '${elementAppears}'=='True'    Run Keywords    Sleep    1s    AND    Reload
         ...    ELSE    Exit For Loop
     END
+
+Yves: get current lang
+    ${lang}=    get attribute    xpath=//html    lang
+    return from keyword   ${lang}

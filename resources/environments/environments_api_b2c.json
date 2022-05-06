@@ -36,8 +36,10 @@
         "customer_reference_1_de": "DE--1",
         "customer_reference_10_de": "DE--10",
         "customer_reference_15_de": "DE--15",
-        "customer_reference_34_de": "DE--34"
-
+        "customer_reference_34_de": "DE--34",
+        
+        "grant_type_password": "password",
+        "grant_type_refresh_token": "refresh_token"
     },
 
     "address": {
@@ -106,10 +108,14 @@
         "default_max_price": "345699",
         "sorting_options_qty": "5",
 
+        "new_label_id": "4",
         "new_label": "New",
+        "sale_label_id": "5",
         "sale_label": "SALE %",
         "manual_label": "Top",
+        "discontinued_label_id": "2",
         "discontinued_label": "Discontinued",
+        "alternatives_label_id": "1",
         "alternatives_label": "Alternatives available",
 
         "category_id_lvl1": "11",
@@ -141,6 +147,12 @@
         "bundled_product_3_concrete_sku": "121_29406823",
         "qty_of_products_in_bundle": "3",
         "qty_of_each_product_inside_bundle": "1",
+
+        "configurable_bundle_slot_1_product_1": "003_26138343",
+        "configurable_bundle_slot_1_product_no_stock": "011_30775359",
+        "configurable_bundle_slot_5_product_1": "005_30663301",
+        "configurable_bundle_slot_5_product_2": "008_30692992",
+        "configurable_bundle_slot_6_product_1": "201_11217755",
 
         "multi_variant_product_abstract_sku": "M58035",
 
@@ -294,8 +306,8 @@
     },
 
     "misc": {
-
         "default_header_content_type": "application/vnd.api+json",
+        "urlencoded_header_content_type": "application/x-www-form-urlencoded",
         "test_cart_name": "Test-cart",
         "qty_of_categories_in_category_trees": "6",
         "qty_of_subcategories_in_category_trees": "2",
@@ -328,6 +340,14 @@
 
         "wishlist_name":"HS"
         
-       }
+       },
+
+       "configurable_bundles":{
+        "configurable_bundle_template_1_uuid": "8d8510d8-59fe-5289-8a65-19f0c35a0089",
+        "configurable_bundle_template_2_uuid": "c8291fd3-c6ca-5b8f-8ff5-eccd6cb787de",
+        "configurable_bundle_slot_1_uuid": "332b40ac-a789-57ce-bec0-23d8dddd71eb",
+        "configurable_bundle_slot_5_uuid": "9626de80-6caa-57a9-a683-2846ec5b6914",
+        "configurable_bundle_slot_6_uuid": "2a5e55b1-993a-5510-864c-a4a18558aa75"
+    }
 
  }
