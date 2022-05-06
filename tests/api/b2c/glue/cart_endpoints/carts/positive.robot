@@ -5,6 +5,9 @@ Resource    ../../../../../../resources/common/common_api.robot
 Default Tags    glue
 
 *** Test Cases ***
+ENABLER
+    TestSetup
+
 #GET requests
 Get_cart_by_cart_id
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
@@ -131,7 +134,7 @@ Get_cart_with_included_cart_rules
     And Response body parameter should not be EMPTY:    [data][0][attributes][totals][grandTotal]
     And Response body parameter should not be EMPTY:    [data][0][attributes][totals][priceToPay]
     And Response body should contain:    discounts
-    And Response body parameter should be:    [data][0][attributes][discounts][0][displayName]    10% Discount for all orders above
+    And Response body parameter should be:    [data][0][attributes][discounts][0][displayName]    10% off minimum order
     And Response body parameter should be:    [data][0][attributes][discounts][0][amount]    3202
     And Each array element of array in response should contain property with value:    [data][0][relationships][cart-rules][data]    type    cart-rules
     And Each array element of array in response should contain property:    [data][0][relationships][cart-rules][data]    id
@@ -171,7 +174,7 @@ Get_cart_with_included_promotional_items
     And Response body parameter should not be EMPTY:    [data][0][attributes][totals][grandTotal]
     And Response body parameter should not be EMPTY:    [data][0][attributes][totals][priceToPay]
     And Response body should contain:    discounts
-    And Response body parameter should be:    [data][0][attributes][discounts][0][displayName]    10% Discount for all orders above
+    And Response body parameter should be:    [data][0][attributes][discounts][0][displayName]    10% off minimum order
     And Response body parameter should be:    [data][0][attributes][discounts][0][amount]    6404
     And Each array element of array in response should contain property with value:    [data][0][relationships][promotional-items][data]    type    promotional-items
     And Each array element of array in response should contain property:    [data][0][relationships][promotional-items][data]    id
@@ -179,7 +182,7 @@ Get_cart_with_included_promotional_items
     And Each array element of array in response should contain property:    [included]    id
     And Each array element of array in response should contain property:    [included]    attributes
     And Response body parameter should be:    [included][0][attributes][sku]    112
-    And Response body parameter should be:    [included][0][attributes][quantity]    2
+    And Response body parameter should be:    [included][0][attributes][quantity]    1
 
 #PATCH requests
 Update_cart_by_cart_id_with_all_attributes
@@ -187,14 +190,14 @@ Update_cart_by_cart_id_with_all_attributes
           ...  AND    I set Headers:    Authorization=${token}
           ...  AND    Find or create customer cart
           ...  AND    Cleanup all items in the cart:    ${cart_id}
-          ...  AND    Save Header value to a variable:    ETag    header_tag
-          ...  AND    I set Headers:    Authorization=${token}    If-Match=${header_tag}
-    When I send a PATCH request:    /carts/${cart_id}    {"data": {"type": "carts","attributes": {"priceMode": "${gross_mode}","currency": "${currency_code_eur}","store": "${store_de}"}}}
+          ...  AND    Get ETag header value from cart
+          ...  AND    I set Headers:    Authorization=${token}    If-Match=${ETag}
+    When I send a PATCH request:    /carts/${cart_id}    {"data": {"type": "carts","attributes": {"priceMode": "${net_mode}","currency": "${currency_code_eur}","store": "${store_de}"}}}
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response body parameter should be:    [data][type]    carts
     And Response body parameter should be:    [data][id]    ${cart_id}
-    And Response body parameter should be:    [data][attributes][priceMode]    ${gross_mode}
+    And Response body parameter should be:    [data][attributes][priceMode]    ${net_mode}
     And Response body parameter should be:    [data][attributes][currency]    ${currency_code_eur}
     And Response body parameter should be:    [data][attributes][store]    ${store_de}
     And Response body parameter should be:    [data][attributes][totals][expenseTotal]    0
@@ -204,8 +207,8 @@ Update_cart_by_cart_id_with_all_attributes
     And Response body parameter should be:    [data][attributes][totals][grandTotal]    0
     And Response body parameter should be:    [data][attributes][totals][priceToPay]    0
     And Response body has correct self link internal
-    [Teardown]    Run Keywords    Save Header value to a variable:    ETag    header_tag
-        ...  AND    I set Headers:    Authorization=${token}    If-Match=${header_tag}
+    [Teardown]    Run Keywords    Get ETag header value from cart
+        ...  AND    I set Headers:    Authorization=${token}    If-Match=${ETag}
         ...  AND    I send a PATCH request:    /carts/${cart_id}    {"data": {"type": "carts","attributes": {"priceMode": "${gross_mode}"}}}
         ...  AND    Response status code should be:    200
 
@@ -215,8 +218,8 @@ Update_cart_with_empty_priceMod_currency_store
         ...  AND    I set Headers:    Authorization=${token}
         ...  AND    Find or create customer cart
         ...  AND    Cleanup all items in the cart:    ${cart_id}
-        ...  AND    Save Header value to a variable:    ETag    header_tag
-        ...  AND    I set Headers:    Authorization=${token}    If-Match=${header_tag}
+        ...  AND    Get ETag header value from cart
+        ...  AND    I set Headers:    Authorization=${token}    If-Match=${ETag}
     When I send a PATCH request:    /carts/${cart_id}    {"data": {"type": "carts","attributes": {"priceMode": "","currency": "","store": ""}}}
     Then Response status code should be:    200
     And Response reason should be:    OK
