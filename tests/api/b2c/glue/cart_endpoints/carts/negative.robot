@@ -5,6 +5,9 @@ Resource    ../../../../../../resources/common/common_api.robot
 Default Tags    glue
 
 *** Test Cases ***
+ENABLER
+    TestSetup
+
 Get_cart_by_cart_id_with_invalid_access_token
    [Setup]    I set Headers:    Authorization=3485h7
     When I send a GET request:    /carts/not-existing-cart
@@ -156,9 +159,9 @@ Update_cart_from_another_customer_cart_id
      [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
         ...  AND    I set Headers:    Authorization=${token}
         ...  AND    Find or create customer cart
-        ...  AND    Save Header value to a variable:    ETag    header_tag
+        ...  AND    Get ETag header value from cart
         ...  AND    I get access token for the customer:    ${yves_second_user_email}
-        ...  AND    I set Headers:    Authorization=${token}    If-Match=${header_tag}
+        ...  AND    I set Headers:    Authorization=${token}    If-Match=${Etag}
     When I send a PATCH request:    /carts/${cart_id}    {"data": {"type": "carts","attributes": {"priceMode": "${net_mode}","currency": "${currency_code_eur}","store": "${store_de}"}}}
     Then Response status code should be:    404
     And Response reason should be:    Not Found
@@ -212,8 +215,8 @@ Update_cart_with_invalid_priceMod_currency_store
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
         ...  AND    I set Headers:    Authorization=${token}
         ...  AND    Find or create customer cart
-        ...  AND    Save Header value to a variable:    ETag    header_tag
-        ...  AND    I set Headers:    Authorization=${token}    If-Match=${header_tag}
+        ...  AND    Get ETag header value from cart
+        ...  AND    I set Headers:    Authorization=${token}    If-Match=${ETag}
     When I send a PATCH request:    /carts/${cart_id}    {"data": {"type": "carts","attributes": {"priceMode": "GROSS","currency": "EU","store": "DEK"}}}
     Then Response status code should be:    422
     And Response reason should be:    Unprocessable Content
