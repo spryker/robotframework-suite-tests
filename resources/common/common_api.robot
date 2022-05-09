@@ -1247,10 +1247,12 @@ Find or create customer cart
 
 
 Get ETag header value from cart
-    [Documentation]    This keyword first retrieves cart for the current customer token. and then keyword sets ``${Etag} `` variable
-        ...                and it can be re-used by the keywords that follow this keyword in the test
+    [Documentation]    This keyword first retrieves cart for the current customer token.
+        ...   and then It gets the Etag header value and saves it into the test variable ``${Etag}``, which can then be used within the scope of the test where this keyword was called.
         ...
-        ...     This keyword does not accept any arguments. This keyword is used for removing unused/unwanted (ex. W/"") characters from ETag header value.
+        ...    and it can be re-used by the keywords that follow this keyword in the test
+        ...    This keyword does not accept any arguments. This keyword is used for removing unused/unwanted (ex. W/"") characters from ETag header value.
+        
 
         ${response}=    I send a GET request:    /carts
         ${Etag}=    Get Value From Json   ${response_headers}    [ETag]

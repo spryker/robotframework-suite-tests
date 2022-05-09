@@ -109,7 +109,7 @@ Create_cart_with_invalid_access_token
     And Response should return error message:    Missing access token.
     And Response should return error code:    002
 
-Create_cart_when_cart_already_exist
+Create_cart_when_cart_already_exists
       [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
              ...  AND    I set Headers:    Authorization=${token}
              ...  AND    Find or create customer cart
@@ -154,6 +154,22 @@ Update_cart_without_cart_id
     And Response reason should be:    Bad Request
     And Response should return error message:    Resource id is not specified.
 
+
+Update_cart_from_another_customer_cart_id
+
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+        ...  AND    I set Headers:    Authorization=${token}
+        ...  AND    Find or create customer cart
+        ...  AND    Cleanup all items in the cart:    ${cart_id}
+        ...  AND    Get ETag header value from cart
+        ...  AND    I get access token for the customer:    ${yves_second_user_email}
+        ...  AND    I set Headers:    Authorization=${token}    If-Match=${Etag}
+
+    When I send a PATCH request:    /carts/${cart_id}    {"data": {"type": "carts","attributes": {"priceMode": "${net_mode}","currency": "${currency_code_eur}","store": "${store_de}"}}}
+    Then Response status code should be:    404
+    And Response reason should be:    Not Found
+    And Response should return error message:    Cart with given uuid not found.
+    And Response should return error code:    101
 
 Update_cart_with_invalid_header_tag
      [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
@@ -216,7 +232,7 @@ Update_cart_with_invalid_priceMod_currency_store
     When I send a GET request:    /carts/${cart_id}
     Then Response status code should be:    200
     And Response reason should be:    OK
-    And Response body parameter should be:    [data][attributes][priceMode]    ${net_mode}
+    And Response body parameter should be:    [data][attributes][priceMode]    ${gross_mode}
     And Response body parameter should be:    [data][attributes][currency]    ${currency_code_eur}
     And Response body parameter should be:    [data][attributes][store]    ${store_de}
 

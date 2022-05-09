@@ -13,7 +13,6 @@ Get_cart_by_cart_id
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
     ...  AND    I set Headers:    Authorization=${token}
     ...  AND    Find or create customer cart
-    ...  AND    Cleanup all items in the cart:    ${cart_id}
     When I send a GET request:    /carts/${cart_id}
     Then Response reason should be:    OK
     And Response body parameter should be:    [data][type]    carts
@@ -21,12 +20,12 @@ Get_cart_by_cart_id
     And Response body parameter should be:    [data][attributes][priceMode]    ${gross_mode}
     And Response body parameter should be:    [data][attributes][currency]    ${currency_code_eur}
     And Response body parameter should be:    [data][attributes][store]    ${store_de}
-    And Response body parameter should contain:    [data][attributes][totals]    expenseTotal
-    And Response body parameter should contain:    [data][attributes][totals]    discountTotal
-    And Response body parameter should contain:    [data][attributes][totals]    taxTotal
-    And Response body parameter should contain:    [data][attributes][totals]    subtotal
-    And Response body parameter should contain:    [data][attributes][totals]    grandTotal
-    And Response body parameter should contain:    [data][attributes][totals]    priceToPay
+    And Response body parameter should be:    [data][attributes][totals][expenseTotal]    0
+    And Response body parameter should be:    [data][attributes][totals][discountTotal]    0
+    And Response body parameter should be:    [data][attributes][totals][taxTotal]    0
+    And Response body parameter should be:    [data][attributes][totals][subtotal]    0
+    And Response body parameter should be:    [data][attributes][totals][grandTotal]    0
+    And Response body parameter should be:    [data][attributes][totals][priceToPay]    0
     And Response body has correct self link internal
 
 Get_cart_without_cart_id
@@ -209,7 +208,10 @@ Update_cart_by_cart_id_with_all_attributes
     And Response body parameter should contain:    [data][attributes][totals]    grandTotal
     And Response body parameter should contain:    [data][attributes][totals]    priceToPay
     And Response body has correct self link internal
-
+    [Teardown]    Run Keywords    Get ETag header value from cart
+        ...  AND    I set Headers:    Authorization=${token}    If-Match=${ETag}
+        ...  AND    I send a PATCH request:    /carts/${cart_id}    {"data": {"type": "carts","attributes": {"priceMode": "${gross_mode}"}}}
+        ...  AND    Response status code should be:    200
 Update_cart_with_empty_priceMod_currency_store
 # Spryker is designed so that we can send empty attributes: priceMod, currency, store and it will not be changed to the empty values.
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}

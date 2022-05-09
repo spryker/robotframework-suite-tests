@@ -107,7 +107,7 @@ Create_cart_with_invalid_access_token
     And Response should return error message:    Missing access token.
     And Response should return error code:    002
 
-Create_cart_when_cart_already_exist
+Create_cart_when_cart_already_exists
       [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
              ...  AND    I set Headers:    Authorization=${token}
              ...  AND    Find or create customer cart

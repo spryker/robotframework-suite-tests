@@ -3,7 +3,7 @@
 
     "env": {
 
-        "glue_url": "http://glue.de.spryker.local",
+        "glue_url": "https://glue.de.mp-b2c.internal-testing.demo-spryker.com",
         "bapi_url": "http://backend-api.de.spryker.local/api/rest"
     },
 
