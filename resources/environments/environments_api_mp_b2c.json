@@ -3,7 +3,7 @@
 
     "env": {
 
-        "glue_url": "http://glue.de.spryker.local",
+        "glue_url": "https://glue.de.mp-b2c.internal-testing.demo-spryker.com",
         "bapi_url": "http://backend-api.de.spryker.local/api/rest"
     },
 
@@ -186,17 +186,26 @@
         "abstract_product_with_alternative_name": "Lenovo IdeaPad Yoga 500",
         "alternative_abstract_product": "134",
         "alternative_abstract_product_price_chf": "39675",
-        "discount_1_name": "10% off minimum order",
-        "discount_amount_for_product_1_with_discount_20%_off_storage": "4000",
-        "discount_amount_for_product_1_with_discount_10%_off_minimum_order": "1600",
-        "discount_concrete_product_1_total_sum_of_discounts": "5600",
-        "discount_concrete_product_2_sku": "213216",
-        "discount_concrete_product_2_name": "office akktiv base cabinet - HxWxD 942 x 913 x 420 mm - light gray, RAL 7035",
-        "discount_amount_for_product_2_with_discount_20%_off_storage": "5783",
-        "discount_amount_for_product_2_with_discount_10%_off_minimum_order": "2313",
-        "discount_concrete_product_2_total_sum_of_discounts": "8096",
+        "discount_1_name": "20% off cameras",
+        "discount_1_description": "20% off all digital cameras in the store",
+        "discount_amount_for_product_1_with_discount_20%_off_storage": "1400",
+        "discount_amount_for_product_1_with_discount_10%_off_minimum_order": "560",
+        "discount_concrete_product_1_total_sum_of_discounts": "8300",
+        "discount_concrete_product_2_sku": "007_30691822",
+        "discount_concrete_product_2_name": "Canon IXUS 285",
+        "discount_amount_for_product_2_with_discount_20%_off_storage": "6900",
+        "discount_amount_for_product_2_with_discount_10%_off_minimum_order": "2760",
+        "discount_concrete_product_2_total_sum_of_discounts": "3320",
         "discount_concrete_product_3_sku": "401768",
-        "discount_2_name": "20% off cameras",
+        "discount_amount_for_product_3_with_10%_discount": "490",
+        "discount_2_name": "10% off minimum order",
+        "discount_2_description":"Get a 10% discount on all orders above 100 EUR or 115 CHF",
+        "discount_3_name": "Free standard delivery",
+        "discount_3_total_sum":"490",
+        "discount_3_description":"Free standard delivery for all orders above certain value depending on the currency",
+        "discount_1_total_sum_for_discounts_for_products_1_and_2":"8300",
+        "discount_2_total_sum_for_discounts_for_products_1_2":"3320",
+        "discount_3_total_sum_for_discounts_for_products_1_2":"490",
 
         "abstract_available_product_with_stock": "183",
         "abstract_available_product_with_stock_name": "Sony Xperia SGP512E1",
@@ -209,6 +218,7 @@
         "concrete_available_product_with_label": "204_29851280",
         "abstract_available_with_stock_and_never_out_of_stock": "004",
         "concrete_available_with_stock_and_never_out_of_stock": "004_30663302",
+        "concrete_available_with_stock_and_never_out_of_stock_name": "Canon IXUS 175",
         "abstract_available_product_with_no_stock_and_never_out_of_stock": "154",
         "abstract_unavailable_product": "111",
 
@@ -245,6 +255,7 @@
 
         "abstract_product_with_multiple_variants": "130",
         "concrete_product_sku_multivariant_variant1": "130_29285281",
+        "concrete_product_sku_multivariant_variant1_name": "Lenovo ThinkStation P300",
         "concrete_product_sku_multivariant_variant2": "130_24326086",
 
         "product_option_1": "OP_2_year_waranty",
