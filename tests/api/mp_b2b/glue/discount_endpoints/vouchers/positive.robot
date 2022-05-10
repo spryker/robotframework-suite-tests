@@ -113,11 +113,11 @@ Deleting_voucher_from_cart_of_logged_in_customer
     ...    AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${GROSS_MODE}","currency": "${currency_code_eur}","store": "${store_de}","name": "${test_cart_name}-${random}"}}}
     ...    AND    Save value to a variable:    [data][id]    cart_id
     ...    AND    Response status code should be:    201
-    ...    AND    I send a POST request:    /carts/${cart_id}/items    {"data": {"type": "items","attributes": {"sku": "${concrete_product_with_brand_safescan}","quantity": 2}}}
+    ...    AND    I send a POST request:    /carts/${cart_id}/items    {"data": {"type": "items","attributes": {"sku": "${concrete_product_with_brand_safescan_and_white_color}","quantity": 5}}}
     ...    AND    Response status code should be:    201
-    ...    AND    I send a POST request:    /carts/${cart_id}/vouchers    {"data": {"type": "vouchers","attributes": {"code": "${discount_id_3_voucher_code}"}}}
+    ...    AND    I send a POST request:    /carts/${cart_id}/vouchers    {"data": {"type": "vouchers","attributes": {"code": "${discount_id_4_voucher_code}"}}}
     ...    AND    Response status code should be:    201
-    When I send a DELETE request:    /carts/${cartId}/vouchers/${discount_id_3_voucher_code}
+    When I send a DELETE request:    /carts/${cartId}/vouchers/${discount_id_4_voucher_code}
     Then Response status code should be:    204
     And Response reason should be:    No Content
     [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cart_id}

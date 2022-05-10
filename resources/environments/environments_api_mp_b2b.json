@@ -189,6 +189,17 @@
         "product_related_product_with_related_relation_sku": "M29501",
         "product_related_product_with_related_relation_name": "Safescan automatic banknote counter - UV counterfeit recognition",
 
+        "discount_id_3_name": "5% off white",
+	    "discount_id_3_description": "Get a 5% discount on all white products with voucher code",
+        "discount_id_3_voucher_code": "sprykerqa5s",
+        "discount_id_4_name": "10% off Safescan",
+	    "discount_id_4_description": "Get a 10% discount on all Safescan brand products with voucher code",
+        "discount_id_4_voucher_code": "safescanme3be9se6g",
+        "voucher_concrete_product_1_with_brand_safescan_2_items": "782",
+        "concrete_product_with_brand_safescan": "419872",
+        "voucher_concrete_product_with_brand_safescan_and_white_color_2_items": "3201",
+        "concrete_product_with_brand_safescan_and_white_color": "419901",
+
         "concrete_of_product_with_relations_upselling_NESTED":{
             "product_options":{
                 "OP_1":{
