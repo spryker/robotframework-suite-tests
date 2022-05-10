@@ -250,6 +250,7 @@
         "product_option_1": "OP_2_year_waranty",
         "product_option_1_name": "Two (2) year limited warranty",
         "product_option_2": "OP_insurance",
+    
 
 
         "review_title": "This is a review",
@@ -281,7 +282,8 @@
 
         "product_management_superattribute_id": "4g",
         "product_management_attribute_free_input_id": "4g_standards",
-        "product_management_attribute_no_input_id": "bundled_product"
+        "product_management_attribute_no_input_id": "bundled_product",
+        "return_reason": "Damaged"
 
     },
 
