@@ -62,14 +62,8 @@ Adding_voucher_without_access_token
 
 Adding_voucher_with_invalid_access_token
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
-    ...    AND    I set Headers:    Authorization=${token}
-    ...    AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${GROSS_MODE}","currency": "${currency_code_eur}","store": "${store_de}","name": "${test_cart_name}-${random}"}}}
-    ...    AND    Save value to a variable:    [data][id]    cart_id
-    ...    AND    Response status code should be:    201
-    ...    AND    I send a POST request:    /carts/${cart_id}/items    {"data": {"type": "items","attributes": {"sku": "419901","quantity": 1}}}
-    ...    AND    Response status code should be:    201
     ...    AND    I set Headers:    Authorization="fake"
-    When I send a POST request:    /carts/${cart_id}/vouchers    {"data": {"type": "vouchers","attributes": {"code": "${discount_id_3_voucher_code}"}}}
+    When I send a POST request:    /carts/invalidCartId/vouchers    {"data": {"type": "vouchers","attributes": {"code": "${discount_id_3_voucher_code}"}}}
     Then Response status code should be:    401
     And Response reason should be:    Unauthorized
     And Response should return error code:    001
