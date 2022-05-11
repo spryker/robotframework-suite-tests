@@ -10,7 +10,6 @@ ENABLER
 
 
 ####### POST #######
-
 Adding_not_existing_voucher_code_to_cart_of_logged_in_customer
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
     ...    AND    I set Headers:    Authorization=${token}
@@ -73,6 +72,7 @@ Adding_voucher_with_invalid_access_token
     ...    AND    Response status code should be:    204
 
 ####### DELETE #######
+# Fails because of CC-16719
 Deleting_voucher_without_access_token
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
     ...    AND    I set Headers:    Authorization=${token}
@@ -93,7 +93,7 @@ Deleting_voucher_without_access_token
     ...    AND    I send a DELETE request:    /carts/${cart_id}
     ...    AND    Response status code should be:    204  
 
-
+# Fails because of CC-16719
 Deleting_voucher_with_invalid_access_token
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
     ...    AND    I set Headers:    Authorization=${token}

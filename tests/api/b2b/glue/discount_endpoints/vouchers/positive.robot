@@ -9,6 +9,7 @@ ENABLER
     TestSetup
 
 #####POST#####
+# Fails because of CC-16719
 Adding_voucher_code_to_cart_of_logged_in_customer
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
     ...    AND    I set Headers:    Authorization=${token}
@@ -37,7 +38,7 @@ Adding_voucher_code_to_cart_of_logged_in_customer
     [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cart_id}
     ...  AND    Response status code should be:    204
 
-
+# Fails because of CC-16719
 Checking_voucher_is_applied_after_order_is_placed
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
     ...    AND    I set Headers:    Authorization=${token}
@@ -70,6 +71,7 @@ Checking_voucher_is_applied_after_order_is_placed
     ...  AND    Response status code should be:    204
 
 
+# Fails because of CC-16719
 Adding_two_vouchers_with_different_priority_to_the_same_cart
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
     ...    AND    I set Headers:    Authorization=${token}
@@ -106,7 +108,39 @@ Adding_two_vouchers_with_different_priority_to_the_same_cart
     ...  AND    Response status code should be:    204
 
 
+# Fails because of CC-16719
+Adding_voucher_with_cart_rule_with_to_the_same_cart
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    ...    AND    I set Headers:    Authorization=${token}
+    ...    AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${GROSS_MODE}","currency": "${currency_code_eur}","store": "${store_de}","name": "${test_cart_name}-${random}"}}}
+    ...    AND    Save value to a variable:    [data][id]    cart_id
+    ...    AND    Response status code should be:    201
+    ...    AND    I send a POST request:    /carts/${cart_id}/items    {"data": {"type": "items","attributes": {"sku": "${concrete_product_with_brand_safescan}","quantity": 10}}}
+    ...    AND    Response status code should be:    201
+    When I send a POST request:    /carts/${cart_id}/vouchers    {"data": {"type": "vouchers","attributes": {"code": "${discount_id_4_voucher_code}"}}}
+    Then Response status code should be:    201
+    And Response reason should be:    Created
+    And Save value to a variable:    [data][attributes][totals][discountTotal]    discount_total_sum
+    And Save value to a variable:    [data][attributes][totals][subtotal]    sub_total_sum
+    And Save value to a variable:    [data][attributes][totals][expenseTotal]    expense_total_sum
+    #discountTotal
+    And Save value to a variable:    discount_total_sum    ${voucher_concrete_product_1_with_brand_safescan_2_items}
+    And Response body parameter with rounding should be:    [data][attributes][totals][discountTotal]    ${discount_total_sum}
+    #grandTotal
+    And Perform arithmetical calculation with two arguments:    grand_total_sum    ${sub_total_sum}    -    ${discount_total_sum}
+    And Perform arithmetical calculation with two arguments:    grand_total_sum    ${grand_total_sum}    +    ${expense_total_sum}
+    And Response body parameter with rounding should be:    [data][attributes][totals][grandTotal]    ${grand_total_sum}
+    #checking cart rule and vouchers in cart
+    And Response body parameter should contain:    [data][attributes][discounts][0][displayName]    ${discount_id_4_name}
+    And Response body parameter should contain:    [data][attributes][discounts][0][code]    ${discount_id_4_voucher_code}
+    And Response body parameter should contain:    [data][attributes][discounts][1][displayName]    ${cart_rule_name_10_off_minimum_order}
+    And Response body parameter should contain:    [data][attributes][discounts][1][code]    None
+
+    [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cart_id}
+    ...  AND    Response status code should be:    204
+
 ####### DELETE #######
+# Fails because of CC-16719
 Deleting_voucher_from_cart_of_logged_in_customer
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
     ...    AND    I set Headers:    Authorization=${token}
