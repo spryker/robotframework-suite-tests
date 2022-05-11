@@ -15,6 +15,17 @@ Add_an_item_to_the_guest_cart_without_x_anonymous_customer_unique_id
     And Response reason should be:    Bad Request
     And Response should return error message:    Anonymous customer unique id is empty.
 
+Add_an_item_to_the_guest_cart_of_another_anonymous_customer
+    [Setup]    I set Headers:    Content-Type=${default_header_content_type}    X-Anonymous-Customer-Unique-Id=${random}
+    Run Keywords    Create a guest cart:    ${random}    ${concrete_available_product_with_offer}    1
+    ...    AND    Save value to a variable:    [data][id]    guestCartId
+    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    X-Anonymous-Customer-Unique-Id=${random}1
+    When I send a POST request:    /guest-carts/${guest_cart_id}/guest-cart-items    {"data":{"type":"guest-cart-items","attributes":{"sku":"${concrete_available_product_with_offer}","quantity":"1"}}}
+    Then Response status code should be:    404
+    And Response should return error code:    101
+    And Response reason should be:    Not Found
+    And Response should return error message:    Cart with given uuid not found.
+
 Add_an_item_to_the_non_existing_guest_cart
     [Setup]    I set Headers:    Content-Type=${default_header_content_type}    X-Anonymous-Customer-Unique-Id=${random}
     When I send a POST request:    /guest-carts/guestCartId/guest-cart-items    {"data":{"type":"guest-cart-items","attributes":{"sku":"${concrete_available_product_with_offer}","quantity":"1"}}}
@@ -25,13 +36,9 @@ Add_an_item_to_the_non_existing_guest_cart
 
 Add_an_non_existing_item_to_the_guest_cart
     [Setup]    I set Headers:    Content-Type=${default_header_content_type}    X-Anonymous-Customer-Unique-Id=${random}
-    Run Keywords    I send a POST request:    /guest-cart-items    {"data":{"type":"guest-cart-items","attributes":{"sku":"${concrete_available_product_with_offer}","quantity":"1"}}}
-    ...    AND    Response status code should be:    201
-    ...    AND    Response reason should be:    Created
+    Run Keywords    Create a guest cart:    ${random}    ${concrete_available_product_with_offer}    1
     ...    AND    Save value to a variable:    [data][id]    guestCartId
-    ...    AND    I send a DELETE request:    /guest-carts/${guestCartId}/guest-cart-items/${concrete_available_product_with_offer}
-    ...    AND    Response status code should be:    204
-    ...    AND    Response reason should be:    No Content
+    ...    AND    Cleanup All Items In The Guest Cart:    ${guest_cart_id}
     When I send a POST request:    /guest-carts/${guestCartId}/guest-cart-items    {"data":{"type":"guest-cart-items","attributes":{"sku":"non_existing_item","quantity":"1"}}}
     Then Array in response should contain property with value:    [errors]    code    102
     And Array in response should contain property with value:    [errors]    code    113
@@ -42,13 +49,9 @@ Add_an_non_existing_item_to_the_guest_cart
 
 Add_an_item_to_the_guest_cart_without_sku_attribute_and_quantity_attribute
     [Setup]    I set Headers:    Content-Type=${default_header_content_type}    X-Anonymous-Customer-Unique-Id=${random}
-    Run Keywords    I send a POST request:    /guest-cart-items    {"data":{"type":"guest-cart-items","attributes":{"sku":"${concrete_available_product_with_offer}","quantity":"1"}}}
-    ...    AND    Response status code should be:    201
-    ...    AND    Response reason should be:    Created
+    Run Keywords    Create a guest cart:    ${random}    ${concrete_available_product_with_offer}    1
     ...    AND    Save value to a variable:    [data][id]    guestCartId
-    ...    AND    I send a DELETE request:    /guest-carts/${guestCartId}/guest-cart-items/${concrete_available_product_with_offer}
-    ...    AND    Response status code should be:    204
-    ...    AND    Response reason should be:    No Content
+    ...    AND    Cleanup All Items In The Guest Cart:    ${guest_cart_id}
     When I send a POST request:    /guest-carts/${guestCartId}/guest-cart-items    {"data":{"type":"guest-cart-items","attributes":{}}}
     Then Each array element of array in response should contain property with value:    [errors]    code    901
     And Each array element of array in response should contain property with value:    [errors]    status    422
@@ -58,13 +61,9 @@ Add_an_item_to_the_guest_cart_without_sku_attribute_and_quantity_attribute
 
 Add_an_item_to_the_guest_cart_without_sku_and_quantity_values
     [Setup]    I set Headers:    Content-Type=${default_header_content_type}    X-Anonymous-Customer-Unique-Id=${random}
-    Run Keywords    I send a POST request:    /guest-cart-items    {"data":{"type":"guest-cart-items","attributes":{"sku":"${concrete_available_product_with_offer}","quantity":"1"}}}
-    ...    AND    Response status code should be:    201
-    ...    AND    Response reason should be:    Created
+    Run Keywords    Create a guest cart:    ${random}    ${concrete_available_product_with_offer}    1
     ...    AND    Save value to a variable:    [data][id]    guestCartId
-    ...    AND    I send a DELETE request:    /guest-carts/${guestCartId}/guest-cart-items/${concrete_available_product_with_offer}
-    ...    AND    Response status code should be:    204
-    ...    AND    Response reason should be:    No Content
+    ...    AND    Cleanup All Items In The Guest Cart:    ${guest_cart_id}
     When I send a POST request:    /guest-carts/${guestCartId}/guest-cart-items    {"data":{"type":"guest-cart-items","attributes":{"sku":"","quantity":""}}}
     Then Each array element of array in response should contain property with value:    [errors]    code    901
     And Each array element of array in response should contain property with value:    [errors]    status    422
@@ -79,6 +78,17 @@ Update_an_item_quantity_at_the_guest_cart_without_x_anonymous_customer_unique_id
     And Response reason should be:    Bad Request
     And Response should return error message:    Anonymous customer unique id is empty.
 
+Update_an_item_quantity_at_the_guest_cart_of_another_anonymous_customer
+    [Setup]    I set Headers:    Content-Type=${default_header_content_type}    X-Anonymous-Customer-Unique-Id=${random}
+    Run Keywords    Create a guest cart:    ${random}    ${concrete_available_product_with_offer}    1
+    ...    AND    Save value to a variable:    [data][id]    guestCartId
+    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    X-Anonymous-Customer-Unique-Id=${random}1
+    When I send a PATCH request:    /guest-carts/guestCartId/guest-cart-items/${concrete_available_product_with_offer}?include=items    {"data":{"type":"guest-cart-items","attributes":{"quantity":"2"}}}
+    Then Response status code should be:    404
+    And Response should return error code:    101
+    And Response reason should be:    Not Found
+    And Response should return error message:    Cart with given uuid not found.
+
 Update_an_item_quantity_at_the_non_existing_guest_cart
     [Setup]    I set Headers:    Content-Type=${default_header_content_type}    X-Anonymous-Customer-Unique-Id=${random}
     When I send a PATCH request:    /guest-carts/guestCartId/guest-cart-items/${concrete_available_product_with_offer}?include=items    {"data":{"type":"guest-cart-items","attributes":{"quantity":"2"}}}
@@ -89,9 +99,7 @@ Update_an_item_quantity_at_the_non_existing_guest_cart
 
 Update_quantity_of_a_non_existing_item_at_the_guest_cart
     [Setup]    I set Headers:    Content-Type=${default_header_content_type}    X-Anonymous-Customer-Unique-Id=${random}
-    Run Keywords    I send a POST request:    /guest-cart-items    {"data":{"type":"guest-cart-items","attributes":{"sku":"${concrete_available_product_with_offer}","quantity":"1"}}}
-    ...    AND    Response status code should be:    201
-    ...    AND    Response reason should be:    Created
+    Run Keywords    Create a guest cart:    ${random}    ${concrete_available_product_with_offer}    1
     ...    AND    Save value to a variable:    [data][id]    guestCartId
     When I send a PATCH request:    /guest-carts/${guestCartId}/guest-cart-items/non_existing_item   {"data":{"type":"guest-cart-items","attributes":{"quantity":"2"}}}
     Then Response status code should be:    404
@@ -101,9 +109,7 @@ Update_quantity_of_a_non_existing_item_at_the_guest_cart
 
 Update_an_item_quantity_at_the_guest_cart_without_quantity_attribute
     [Setup]    I set Headers:    Content-Type=${default_header_content_type}    X-Anonymous-Customer-Unique-Id=${random}
-    Run Keywords    I send a POST request:    /guest-cart-items    {"data":{"type":"guest-cart-items","attributes":{"sku":"${concrete_available_product_with_offer}","quantity":"1"}}}
-    ...    AND    Response status code should be:    201
-    ...    AND    Response reason should be:    Created
+    Run Keywords    Create a guest cart:    ${random}    ${concrete_available_product_with_offer}    1
     ...    AND    Save value to a variable:    [data][id]    guestCartId
     When I send a PATCH request:    /guest-carts/${guestCartId}/guest-cart-items/${concrete_available_product_with_offer}    {"data":{"type":"guest-cart-items","attributes":{}}}
     Then Response status code should be:    422
@@ -113,9 +119,7 @@ Update_an_item_quantity_at_the_guest_cart_without_quantity_attribute
 
 Update_an_item_quantity_at_the_guest_cart_with_empty_quantity_value
     [Setup]    I set Headers:    Content-Type=${default_header_content_type}    X-Anonymous-Customer-Unique-Id=${random}
-    Run Keywords    I send a POST request:    /guest-cart-items    {"data":{"type":"guest-cart-items","attributes":{"sku":"${concrete_available_product_with_offer}","quantity":"1"}}}
-    ...    AND    Response status code should be:    201
-    ...    AND    Response reason should be:    Created
+    Run Keywords    Create a guest cart:    ${random}    ${concrete_available_product_with_offer}    1
     ...    AND    Save value to a variable:    [data][id]    guestCartId
     When I send a PATCH request:    /guest-carts/${guestCartId}/guest-cart-items/${concrete_available_product_with_offer}    {"data":{"type":"guest-cart-items","attributes":{"quantity":""}}}
     Then Response status code should be:    422
@@ -125,9 +129,7 @@ Update_an_item_quantity_at_the_guest_cart_with_empty_quantity_value
 
 Update_an_item_quantity_at_the_guest_cart_with_non_numeric_quantity_value
     [Setup]    I set Headers:    Content-Type=${default_header_content_type}    X-Anonymous-Customer-Unique-Id=${random}
-    Run Keywords    I send a POST request:    /guest-cart-items    {"data":{"type":"guest-cart-items","attributes":{"sku":"${concrete_available_product_with_offer}","quantity":"1"}}}
-    ...    AND    Response status code should be:    201
-    ...    AND    Response reason should be:    Created
+    Run Keywords    Create a guest cart:    ${random}    ${concrete_available_product_with_offer}    1
     ...    AND    Save value to a variable:    [data][id]    guestCartId
     When I send a PATCH request:    /guest-carts/${guestCartId}/guest-cart-items/${concrete_available_product_with_offer}    {"data":{"type":"guest-cart-items","attributes":{"quantity":"test"}}}
     Then Response status code should be:    422
@@ -144,9 +146,7 @@ Remove_an_item_from_the_guest_cart_without_x_anonymous_customer_unique_id
 
 Remove_a_non_existing_item_from_the_guest_cart
     [Setup]    I set Headers:    Content-Type=${default_header_content_type}    X-Anonymous-Customer-Unique-Id=${random}
-    Run Keywords    I send a POST request:    /guest-cart-items    {"data":{"type":"guest-cart-items","attributes":{"sku":"${concrete_available_product_with_offer}","quantity":"1"}}}
-    ...    AND    Response status code should be:    201
-    ...    AND    Response reason should be:    Created
+    Run Keywords    Create a guest cart:    ${random}    ${concrete_available_product_with_offer}    1
     ...    AND    Save value to a variable:    [data][id]    guestCartId
     When I send a DELETE request:    /guest-carts/${guestCartId}/guest-cart-items/non_existing_item
     Then Response status code should be:    404
@@ -156,11 +156,18 @@ Remove_a_non_existing_item_from_the_guest_cart
 
 Remove_an_item_from_the_non_existing_guest_cart
     [Setup]    I set Headers:    Content-Type=${default_header_content_type}    X-Anonymous-Customer-Unique-Id=${random}
-    Run Keywords    I send a POST request:    /guest-cart-items    {"data":{"type":"guest-cart-items","attributes":{"sku":"${concrete_available_product_with_offer}","quantity":"1"}}}
-    ...    AND    Response status code should be:    201
-    ...    AND    Response reason should be:    Created
-    ...    AND    Save value to a variable:    [data][id]    guestCartId
     When I send a DELETE request:    /guest-carts/guestCartId/guest-cart-items/${concrete_available_product_with_offer}
+    Then Response status code should be:    404
+    And Response should return error code:    101
+    And Response reason should be:    Not Found
+    And Response should return error message:    Cart with given uuid not found.
+
+Remove_an_item_from_the_guest_cart_of_another_anonymous_customer
+    [Setup]    I set Headers:    Content-Type=${default_header_content_type}    X-Anonymous-Customer-Unique-Id=${random}
+    Run Keywords    Create a guest cart:    ${random}    ${concrete_available_product_with_offer}    1
+    ...    AND    Save value to a variable:    [data][id]    guestCartId
+    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    X-Anonymous-Customer-Unique-Id=${random}1
+    When I send a DELETE request:    /guest-carts/${guestCartId}/guest-cart-items/${concrete_available_product_with_offer}
     Then Response status code should be:    404
     And Response should return error code:    101
     And Response reason should be:    Not Found
