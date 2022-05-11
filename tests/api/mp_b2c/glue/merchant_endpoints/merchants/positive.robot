@@ -40,23 +40,24 @@ Retrieves_list_of_merchants
 
 
 Retrieves_a_merchant_by_id
-    When I send a GET request:  /merchants/${merchant_id}
+
+    When I send a GET request:  /merchants/${merchants.sony_experts.merchant_id}
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response body parameter should not be EMPTY:    [data][type]
     And Response body parameter should not be EMPTY:    [data][id]    
-    And Response body parameter should be:    [data][id]    ${merchant_id}
+    And Response body parameter should be:    [data][id]    ${merchants.sony_experts.merchant_id}
     And Response body parameter should be:    [data][type]    merchants
-    And Response body parameter should be:    [data][attributes][merchantName]    ${merchant_name}
-    And Response body parameter should be:    [data][attributes][merchantUrl]    ${merchant_url}
-    And Response body parameter should be:    [data][attributes][contactPersonRole]    ${merchant_contact_person_role}
-    And Response body parameter should be:    [data][attributes][contactPersonTitle]    ${merchant_contact_person_title}
-    And Response body parameter should be:    [data][attributes][contactPersonFirstName]    ${merchant_contact_person_first_name}
-    And Response body parameter should be:    [data][attributes][contactPersonLastName]    ${merchant_contact_person_last_name}
-    And Response body parameter should be:    [data][attributes][contactPersonPhone]    ${merchant_contact_person_phone}
-    And Response body parameter should be:    [data][attributes][publicEmail]    ${merchant_public_email}
-    And Response body parameter should be:    [data][attributes][publicPhone]    ${merchant_public_phone}
-    Response body parameter should not be EMPTY:    [data][attributes][description]
+    And Response body parameter should be:    [data][attributes][merchantName]    ${merchants.sony_experts.merchant_name}
+    And Response body parameter should be:    [data][attributes][merchantUrl]    ${merchants.sony_experts.merchant_url}
+    And Response body parameter should be:    [data][attributes][contactPersonRole]    ${merchants.sony_experts.contact_person_role}
+    And Response body parameter should be:    [data][attributes][contactPersonTitle]    ${merchants.sony_experts.contact_person_title}
+    And Response body parameter should be:    [data][attributes][contactPersonFirstName]    ${merchants.sony_experts.contact_person_first_name}
+    And Response body parameter should be:    [data][attributes][contactPersonLastName]    ${merchants.sony_experts.contact_person_last_name}
+    And Response body parameter should be:    [data][attributes][contactPersonPhone]    ${merchants.sony_experts.contact_person_phone}
+    And Response body parameter should be:    [data][attributes][publicEmail]    ${merchants.sony_experts.public_email}
+    And Response body parameter should be:    [data][attributes][publicPhone]    ${merchants.sony_experts.public_phone}
+    And Response body parameter should be:    [data][attributes][description]    ${merchants.sony_experts.description}
     And Response body parameter should not be EMPTY:    [data][attributes]
     And Response body parameter should not be EMPTY:    [data][attributes][logoUrl]
     And Response body parameter should not be EMPTY:    [data][attributes][bannerUrl]
