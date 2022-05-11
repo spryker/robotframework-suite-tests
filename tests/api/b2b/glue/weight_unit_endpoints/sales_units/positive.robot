@@ -1,9 +1,13 @@
 *** Settings ***
 Suite Setup       SuiteSetup
+Test Setup        TestSetup
 Resource    ../../../../../../resources/common/common_api.robot
+Default Tags    glue
 
 *** Test Cases ***
-
+ENABLER
+    TestSetup
+    
 Get_sales_units_for_product_without_sales_units
     When I send a GET request:    /concrete-products/${concrete_available_product_sku}/sales-units
     Then Response status code should be:    200
