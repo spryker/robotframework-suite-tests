@@ -68,7 +68,7 @@ Get_product_offer_without_volume_prices
     And Response include should contain certain entity type:    product-offer-prices
     And Response include element has self link:    product-offer-prices
 
-Get_product_offer_with_gross_eur_volume_prices
+Get_product_offer_with_gross_eur
     When I send a GET request:    /product-offers/${active_offer}?include=product-offer-prices
     Then Response status code should be:    200
     And Response reason should be:    OK
@@ -87,7 +87,7 @@ Get_product_offer_with_gross_eur_volume_prices
     And Response body parameter should be:    [included][0][attributes][prices][0][currency][name]    ${currency_name_eur}
     And Response body parameter should be:    [included][0][attributes][prices][0][currency][symbol]    ${currency_symbol_eur}
 
-Get_product_offer_with_net_eur_volume_prices
+Get_product_offer_with_net_eur
     When I send a GET request:    /product-offers/${active_offer}?include=product-offer-prices&priceMode=${net_mode}
     Then Response status code should be:    200
     And Response reason should be:    OK
