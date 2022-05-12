@@ -193,12 +193,12 @@ Update_cart_by_cart_id_with_all_attributes
         ...  AND    Cleanup all items in the cart:    ${cart_id}
         ...  AND    Get ETag header value from cart
         ...  AND    I set Headers:    Authorization=${token}    If-Match=${Etag}
-    When I send a PATCH request:    /carts/${cart_id}    {"data": {"type": "carts","attributes": {"priceMode": "${gross_mode}","currency": "${currency_code_eur}","store": "${store_de}"}}}
+    When I send a PATCH request:    /carts/${cart_id}    {"data": {"type": "carts","attributes": {"priceMode": "${net_mode}","currency": "${currency_code_eur}","store": "${store_de}"}}}
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response body parameter should be:    [data][type]    carts
     And Response body parameter should be:    [data][id]    ${cart_id}
-    And Response body parameter should be:    [data][attributes][priceMode]    ${gross_mode}
+    And Response body parameter should be:    [data][attributes][priceMode]    ${net_mode}
     And Response body parameter should be:    [data][attributes][currency]    ${currency_code_eur}
     And Response body parameter should be:    [data][attributes][store]    ${store_de}
     And Response body parameter should contain:    [data][attributes][totals]    expenseTotal
@@ -212,6 +212,8 @@ Update_cart_by_cart_id_with_all_attributes
         ...  AND    I set Headers:    Authorization=${token}    If-Match=${ETag}
         ...  AND    I send a PATCH request:    /carts/${cart_id}    {"data": {"type": "carts","attributes": {"priceMode": "${gross_mode}"}}}
         ...  AND    Response status code should be:    200
+
+
 Update_cart_with_empty_priceMod_currency_store
 # Spryker is designed so that we can send empty attributes: priceMod, currency, store and it will not be changed to the empty values.
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
