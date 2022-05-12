@@ -21,10 +21,10 @@ Create_guest_cart
     And Response body parameter should be:    [data][attributes][store]    ${store_de}
     And Response body parameter should not be EMPTY:    [data][attributes][totals][expenseTotal]
     And Response body parameter should not be EMPTY:    [data][attributes][totals][discountTotal]
-    Response body parameter should be greater than:    [data][attributes][totals][taxTotal]    0
-    Response body parameter should be greater than:    [data][attributes][totals][subtotal]    0
-    Response body parameter should be greater than:    [data][attributes][totals][grandTotal]    0
-    Response body parameter should be greater than:    [data][attributes][totals][priceToPay]    0
+    And Response body parameter should be greater than:    [data][attributes][totals][taxTotal]    0
+    And Response body parameter should be greater than:    [data][attributes][totals][subtotal]    0
+    And Response body parameter should be greater than:    [data][attributes][totals][grandTotal]    0
+    And Response body parameter should be greater than:    [data][attributes][totals][priceToPay]    0
 
 Retrieve_guest_cart
     [Setup]    Create a guest cart:    ${random}    ${concrete_product_with_concrete_product_alternative_sku}    7
@@ -38,10 +38,10 @@ Retrieve_guest_cart
     And Response body parameter should be:    [data][0][attributes][store]    ${store_de}
     And Response body parameter should not be EMPTY:    [data][0][attributes][totals][expenseTotal]
     And Response body parameter should not be EMPTY:    [data][0][attributes][totals][discountTotal]
-    Response body parameter should be greater than:    [data][0][attributes][totals][taxTotal]    0
-    Response body parameter should be greater than:    [data][0][attributes][totals][subtotal]    0
-    Response body parameter should be greater than:    [data][0][attributes][totals][grandTotal]    0
-    Response body parameter should be greater than:    [data][0][attributes][totals][priceToPay]    0
+    And Response body parameter should be greater than:    [data][0][attributes][totals][taxTotal]    0
+    And Response body parameter should be greater than:    [data][0][attributes][totals][subtotal]    0
+    And Response body parameter should be greater than:    [data][0][attributes][totals][grandTotal]    0
+    And Response body parameter should be greater than:    [data][0][attributes][totals][priceToPay]    0
 
 Retrieve_guest_cart_by_id
     [Setup]    Create a guest cart:    ${random}    ${concrete_product_with_concrete_product_alternative_sku}    7
@@ -55,10 +55,10 @@ Retrieve_guest_cart_by_id
     And Response body parameter should be:    [data][attributes][store]    ${store_de}
     And Response body parameter should not be EMPTY:    [data][attributes][totals][expenseTotal]
     And Response body parameter should not be EMPTY:    [data][attributes][totals][discountTotal]
-    Response body parameter should be greater than:    [data][attributes][totals][taxTotal]    0
-    Response body parameter should be greater than:    [data][attributes][totals][subtotal]    0
-    Response body parameter should be greater than:    [data][attributes][totals][grandTotal]    0
-    Response body parameter should be greater than:    [data][attributes][totals][priceToPay]    0
+    And Response body parameter should be greater than:    [data][attributes][totals][taxTotal]    0
+    And Response body parameter should be greater than:    [data][attributes][totals][subtotal]    0
+    And Response body parameter should be greater than:    [data][attributes][totals][grandTotal]    0
+    And Response body parameter should be greater than:    [data][attributes][totals][priceToPay]    0
 
 Retrieve_guest_cart_including_cart_items
     [Setup]    Create a guest cart:    ${random}    ${concrete_product_with_concrete_product_alternative_sku}    7
@@ -74,7 +74,7 @@ Retrieve_guest_cart_including_cart_items
     And Response body parameter should be:    [data][relationships][guest-cart-items][data][0][id]    ${concrete_product_with_concrete_product_alternative_sku}
     And Response body parameter should be:    [included][0][type]    guest-cart-items
     And Response body parameter should not be EMPTY:    [included][0][id]
-    Response should contain the array of a certain size:    [included]    1
+    And Response should contain the array of a certain size:    [included]    1
     And Each array element of array in response should contain property:    [included]    id
     And Each array element of array in response should contain property:    [included]    attributes
     And Each array element of array in response should contain property:    [included]    links
@@ -187,10 +187,10 @@ Convert_guest_cart_to_customer_cart
     And Response body parameter should be:    [data][0][attributes][store]    ${store_de}
     And Response body parameter should not be EMPTY:    [data][0][attributes][totals][expenseTotal]
     And Response body parameter should not be EMPTY:    [data][0][attributes][totals][discountTotal]
-    Response body parameter should be greater than:    [data][0][attributes][totals][taxTotal]    0
-    Response body parameter should be greater than:    [data][0][attributes][totals][subtotal]    0
-    Response body parameter should be greater than:    [data][0][attributes][totals][grandTotal]    0
-    Response body parameter should be greater than:    [data][0][attributes][totals][grandTotal]    0
+    And Response body parameter should be greater than:    [data][0][attributes][totals][taxTotal]    0
+    And Response body parameter should be greater than:    [data][0][attributes][totals][subtotal]    0
+    And Response body parameter should be greater than:    [data][0][attributes][totals][grandTotal]    0
+    And Response body parameter should be greater than:    [data][0][attributes][totals][grandTotal]    0
     And Response body parameter should be:    [included][0][type]    items
     And Response body parameter should be:    [included][0][attributes][sku]    ${concrete_product_with_concrete_product_alternative_sku}
     And Response body parameter should be:    [included][0][attributes][quantity]    1
