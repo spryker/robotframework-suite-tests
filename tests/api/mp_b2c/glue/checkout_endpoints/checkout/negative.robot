@@ -395,7 +395,7 @@ Create_order_with_split_shipments_&_without_shipping_address
     And Response should return error code:    901
     And Response should return error message:    shipments.1.shippingAddress => This value should not be blank.
     
-bug CC-16705
+# bug CC-16705
 Create_order_with_invalid_checkout_data
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
     ...    AND    I set Headers:    Authorization=${token}
