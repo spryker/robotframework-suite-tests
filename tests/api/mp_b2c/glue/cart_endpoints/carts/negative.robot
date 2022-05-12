@@ -1,13 +1,12 @@
 *** Settings ***
-Suite Setup    SuiteSetup
-Test Setup    TestSetup
+Suite Setup       SuiteSetup
+Test Setup        TestSetup
 Resource    ../../../../../../resources/common/common_api.robot
 Default Tags    glue
 
 *** Test Cases ***
 ENABLER
     TestSetup
-
 Get_cart_by_cart_id_with_invalid_access_token
    [Setup]    I set Headers:    Authorization=3485h7
     When I send a GET request:    /carts/not-existing-cart
@@ -155,13 +154,17 @@ Update_cart_without_cart_id
     And Response reason should be:    Bad Request
     And Response should return error message:    Resource id is not specified.
 
+
 Update_cart_from_another_customer_cart_id
-     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
         ...  AND    I set Headers:    Authorization=${token}
         ...  AND    Find or create customer cart
+        ...  AND    Cleanup all items in the cart:    ${cart_id}
         ...  AND    Get ETag header value from cart
         ...  AND    I get access token for the customer:    ${yves_second_user_email}
         ...  AND    I set Headers:    Authorization=${token}    If-Match=${Etag}
+
     When I send a PATCH request:    /carts/${cart_id}    {"data": {"type": "carts","attributes": {"priceMode": "${net_mode}","currency": "${currency_code_eur}","store": "${store_de}"}}}
     Then Response status code should be:    404
     And Response reason should be:    Not Found
@@ -215,8 +218,9 @@ Update_cart_with_invalid_priceMod_currency_store
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
         ...  AND    I set Headers:    Authorization=${token}
         ...  AND    Find or create customer cart
+        ...  AND    Cleanup all items in the cart:    ${cart_id}
         ...  AND    Get ETag header value from cart
-        ...  AND    I set Headers:    Authorization=${token}    If-Match=${ETag}
+        ...  AND    I set Headers:    Authorization=${token}    If-Match=${Etag}
     When I send a PATCH request:    /carts/${cart_id}    {"data": {"type": "carts","attributes": {"priceMode": "GROSS","currency": "EU","store": "DEK"}}}
     Then Response status code should be:    422
     And Response reason should be:    Unprocessable Content
@@ -231,6 +235,7 @@ Update_cart_with_invalid_priceMod_currency_store
     And Response body parameter should be:    [data][attributes][priceMode]    ${gross_mode}
     And Response body parameter should be:    [data][attributes][currency]    ${currency_code_eur}
     And Response body parameter should be:    [data][attributes][store]    ${store_de}
+
 
 Delete_cart_by_cart_id
      [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
