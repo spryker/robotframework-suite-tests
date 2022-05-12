@@ -1,19 +1,18 @@
 *** Settings ***
-Suite Setup    SuiteSetup
-Test Setup    TestSetup
+Suite Setup       SuiteSetup
+Test Setup        TestSetup
 Resource    ../../../../../../resources/common/common_api.robot
 Default Tags    glue
 
 *** Test Cases ***
 ENABLER
     TestSetup
-
+    
 #GET requests
 Get_cart_by_cart_id
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
     ...  AND    I set Headers:    Authorization=${token}
     ...  AND    Find or create customer cart
-    ...  AND    Cleanup all items in the cart:    ${cart_id}
     When I send a GET request:    /carts/${cart_id}
     Then Response reason should be:    OK
     And Response body parameter should be:    [data][type]    carts
@@ -184,14 +183,16 @@ Get_cart_with_included_promotional_items
     And Response body parameter should be:    [included][0][attributes][sku]    112
     And Response body parameter should be:    [included][0][attributes][quantity]    1
 
+
+
 #PATCH requests
 Update_cart_by_cart_id_with_all_attributes
-       [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
-          ...  AND    I set Headers:    Authorization=${token}
-          ...  AND    Find or create customer cart
-          ...  AND    Cleanup all items in the cart:    ${cart_id}
-          ...  AND    Get ETag header value from cart
-          ...  AND    I set Headers:    Authorization=${token}    If-Match=${ETag}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+        ...  AND    I set Headers:    Authorization=${token}
+        ...  AND    Find or create customer cart
+        ...  AND    Cleanup all items in the cart:    ${cart_id}
+        ...  AND    Get ETag header value from cart
+        ...  AND    I set Headers:    Authorization=${token}    If-Match=${Etag}
     When I send a PATCH request:    /carts/${cart_id}    {"data": {"type": "carts","attributes": {"priceMode": "${net_mode}","currency": "${currency_code_eur}","store": "${store_de}"}}}
     Then Response status code should be:    200
     And Response reason should be:    OK
@@ -200,17 +201,18 @@ Update_cart_by_cart_id_with_all_attributes
     And Response body parameter should be:    [data][attributes][priceMode]    ${net_mode}
     And Response body parameter should be:    [data][attributes][currency]    ${currency_code_eur}
     And Response body parameter should be:    [data][attributes][store]    ${store_de}
-    And Response body parameter should be:    [data][attributes][totals][expenseTotal]    0
-    And Response body parameter should be:    [data][attributes][totals][discountTotal]    0
-    And Response body parameter should be:    [data][attributes][totals][taxTotal]    0
-    And Response body parameter should be:    [data][attributes][totals][subtotal]    0
-    And Response body parameter should be:    [data][attributes][totals][grandTotal]    0
-    And Response body parameter should be:    [data][attributes][totals][priceToPay]    0
+    And Response body parameter should contain:    [data][attributes][totals]    expenseTotal
+    And Response body parameter should contain:    [data][attributes][totals]    discountTotal
+    And Response body parameter should contain:    [data][attributes][totals]    taxTotal
+    And Response body parameter should contain:    [data][attributes][totals]    subtotal
+    And Response body parameter should contain:    [data][attributes][totals]    grandTotal
+    And Response body parameter should contain:    [data][attributes][totals]    priceToPay
     And Response body has correct self link internal
     [Teardown]    Run Keywords    Get ETag header value from cart
         ...  AND    I set Headers:    Authorization=${token}    If-Match=${ETag}
         ...  AND    I send a PATCH request:    /carts/${cart_id}    {"data": {"type": "carts","attributes": {"priceMode": "${gross_mode}"}}}
         ...  AND    Response status code should be:    200
+
 
 Update_cart_with_empty_priceMod_currency_store
 # Spryker is designed so that we can send empty attributes: priceMod, currency, store and it will not be changed to the empty values.
@@ -219,7 +221,7 @@ Update_cart_with_empty_priceMod_currency_store
         ...  AND    Find or create customer cart
         ...  AND    Cleanup all items in the cart:    ${cart_id}
         ...  AND    Get ETag header value from cart
-        ...  AND    I set Headers:    Authorization=${token}    If-Match=${ETag}
+        ...  AND    I set Headers:    Authorization=${token}    If-Match=${Etag}
     When I send a PATCH request:    /carts/${cart_id}    {"data": {"type": "carts","attributes": {"priceMode": "","currency": "","store": ""}}}
     Then Response status code should be:    200
     And Response reason should be:    OK
@@ -228,10 +230,10 @@ Update_cart_with_empty_priceMod_currency_store
     And Response body parameter should be:    [data][attributes][priceMode]    ${gross_mode}
     And Response body parameter should be:    [data][attributes][currency]    ${currency_code_eur}
     And Response body parameter should be:    [data][attributes][store]    ${store_de}
-    And Response body parameter should be:    [data][attributes][totals][expenseTotal]    0
-    And Response body parameter should be:    [data][attributes][totals][discountTotal]    0
-    And Response body parameter should be:    [data][attributes][totals][taxTotal]    0
-    And Response body parameter should be:    [data][attributes][totals][subtotal]    0
-    And Response body parameter should be:    [data][attributes][totals][grandTotal]    0
-    And Response body parameter should be:    [data][attributes][totals][priceToPay]    0
+    And Response body parameter should contain:    [data][attributes][totals]    expenseTotal
+    And Response body parameter should contain:    [data][attributes][totals]    discountTotal
+    And Response body parameter should contain:    [data][attributes][totals]    taxTotal
+    And Response body parameter should contain:    [data][attributes][totals]    subtotal
+    And Response body parameter should contain:    [data][attributes][totals]    grandTotal
+    And Response body parameter should contain:    [data][attributes][totals]    priceToPay
     And Response body has correct self link internal
