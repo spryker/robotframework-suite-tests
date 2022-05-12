@@ -8,16 +8,7 @@ Default Tags    glue
 ENABLER
     TestSetup
 
-# All suite fails fue to the BUG https://spryker.atlassian.net/browse/CC-16691
-####### GET #######
-Get_configurable_bundle_templates_by_invalid_configurable_bundle_template_id
-    When I send a GET request:    /configurable-bundle-templates/fake
-    Then Response status code should be:    404
-    And Response reason should be:    Not Found
-    And Response should return error code:    3901
-    And Response should return error message:    Configurable bundle template not found.
-
-####### POST ######
+######## POST ######
 Add_configured_bundle_item_to_cart_non_existing_sku
    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
       ...  AND    I set Headers:    Authorization=${token}
@@ -82,7 +73,7 @@ Add_configured_bundle_item_to_cart_with_missing_properties
     And Response reason should be:    Unprocessable Content
     And Response should return error code:    4003
     And Response should return error message:    The quantity of the configured bundle should be more than zero.
-
+    
 Add_configured_bundle_item_to_cart_with_invalid_properties
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
@@ -92,6 +83,18 @@ Add_configured_bundle_item_to_cart_with_invalid_properties
     Then Response status code should be:    422
     And Response reason should be:    Unprocessable Content
     And Response should return error code:    4003
+    And Response should return error message:    The quantity of the configured bundle should be more than zero.
+
+Add_configured_bundle_item_to_cart_with_invalid_qty
+
+   [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
+    ...  AND    Find or create customer cart
+    ...  AND    Cleanup all items in the cart:    ${cart_id}
+    When I send a POST request:    /carts/${cart_id}/configured-bundles    {"data": {"type": "configured-bundles","attributes": {"quantity": "abc"}}}
+    Then Response status code should be:    422
+    And Response should return error code:     4003
+    And Response reason should be:    Unprocessable Content
     And Response should return error message:    The quantity of the configured bundle should be more than zero.
 
 ####### PATCH #######

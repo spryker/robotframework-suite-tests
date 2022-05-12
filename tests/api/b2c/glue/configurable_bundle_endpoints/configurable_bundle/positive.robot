@@ -8,7 +8,6 @@ Default Tags    glue
 ENABLER
     TestSetup
 
-# All suite fails fue to the BUG https://spryker.atlassian.net/browse/CC-16691
 Get_configurable_bundle_templates
     When I send a GET request:    /configurable-bundle-templates
     Then Response status code should be:    200
@@ -67,20 +66,20 @@ Get_configurable_bundle_templates_by_configurable_bundle_template_id
     And Response body parameter should be:    [data][type]    configurable-bundle-templates
     And Response body parameter should be:    [data][id]    ${configurable_bundle_template_id}
     And Response body parameter should be:    [data][attributes][name]    ${configurable_bundle_template_name}
-    Response should contain the array of a certain size:    [data][relationships][configurable-bundle-template-slots][data]    4
+    And Response should contain the array of a certain size:    [data][relationships][configurable-bundle-template-slots][data]    4
     And Each array element of array in response should contain property with value:    [data][relationships][configurable-bundle-template-slots][data]    type    configurable-bundle-template-slots
     And Each array element of array in response should contain property:    [data][relationships][configurable-bundle-template-slots][data]    id
-    Response should contain the array of a certain size:    [data][relationships][configurable-bundle-template-image-sets][data]    1
+    And Response should contain the array of a certain size:    [data][relationships][configurable-bundle-template-image-sets][data]    1
     And Each array element of array in response should contain property with value:    [data][relationships][configurable-bundle-template-image-sets][data]    type    configurable-bundle-template-image-sets
     And Each array element of array in response should contain property:    [data][relationships][configurable-bundle-template-slots][data]    id
     And Response body has correct self link internal
     And Each array element of array in response should contain property:    [included]    id
     And Each array element of array in response should contain nested property:    [included]    attributes    name
-    And And Response body parameter should be:    [included][0][type]    configurable-bundle-template-slots
-    And And Response body parameter should be:    [included][1][type]    configurable-bundle-template-slots
-    And And Response body parameter should be:    [included][2][type]    configurable-bundle-template-slots
-    And And Response body parameter should be:    [included][3][type]    configurable-bundle-template-slots
-    And And Response body parameter should be:    [included][4][type]    configurable-bundle-template-image-sets
+    And Response body parameter should be:    [included][0][type]    configurable-bundle-template-slots
+    And Response body parameter should be:    [included][1][type]    configurable-bundle-template-slots
+    And Response body parameter should be:    [included][2][type]    configurable-bundle-template-slots
+    And Response body parameter should be:    [included][3][type]    configurable-bundle-template-slots
+    And Response body parameter should be:    [included][4][type]    configurable-bundle-template-image-sets
     And Each array element of array in response should contain property:    [included][4][attributes][images]    externalUrlLarge
     And Each array element of array in response should contain property:    [included][4][attributes][images]    externalUrlSmall
 
@@ -90,20 +89,51 @@ Get_configurable_bundle_templates_including_concrete_products_concrete_product_p
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
-    And Each array element of array in response should contain property with value:    [data]    type    configurable-bundle-templates
-    And Each Array Element Of Array In Response Should Contain Property:    [data]    id
-    And Each Array Element Of Array In Response Should Contain Property:    [data]    attributes
-    And Each Array Element Of Array In Response Should Contain Property:    [data]    links
-    And Response should contain the array larger than a certain size:    [data][relationships][configurable-bundle-template-slots][data]    0
-   # TODO check included concrete-products,configurable-bundle-template-slots,concrete-product-prices,concrete-product-image-sets after BUG CC-16634 fix
-    And Response should contain the array of a certain size:    [included]    9
-    And Response include should contain certain entity type:    concrete-product-image-sets
-    And Response include element has self link:   concrete-product-image-sets
-    And Response include should contain certain entity type:    concrete-product-prices
-    And Response include element has self link:   concrete-product-prices
-    And Response include should contain certain entity type:    concrete-products
-    And Response include element has self link:   concrete-products
-    And Response body has correct self link
+    And Response body parameter should be:    [data][type]    configurable-bundle-templates
+    And Response body parameter should be:    [data][id]    ${configurable_bundle_template_id}
+    And Response body parameter should contain:    [data][attributes]    name
+    And Response body parameter should contain:    [data][attributes][name]    All in
+    And Response body parameter should contain:    [data][links]    self
+    And Response body parameter should contain:    [data][relationships]    configurable-bundle-template-slots
+    And Response should contain the array of a certain size:    [included]    706
+    And Response body parameter should be:    [included][0][type]    concrete-product-image-sets
+   And Response body parameter should not be EMPTY:    [included][0][id]
+   And Response body parameter should be:    [included][0][attributes][imageSets][0][name]    default
+   And Each array element of array in response should contain property:    [included][0][attributes][imageSets][0][images]    externalUrlLarge
+   And Each array element of array in response should contain property:    [included][0][attributes][imageSets][0][images]   externalUrlSmall
+   And Response include element has self link:   concrete-product-image-sets
+   And Response body parameter should be:    [included][1][type]    concrete-product-prices
+   And Response body parameter should not be EMPTY:    [included][1][id]
+   And Response body parameter should not be EMPTY:     [included][1][attributes]
+   And Response body parameter should not be EMPTY:     [included][1][attributes][price]
+   And Response body parameter should not be EMPTY:     [included][1][attributes][prices][0][priceTypeName]
+   And Response body parameter should be:     [included][1][attributes][prices][0][netAmount]    None
+   And Response body parameter should not be EMPTY:     [included][1][attributes][prices][0][grossAmount]
+   And Response body parameter should be:    [included][1][attributes][prices][0][currency][code]    ${currency_code_eur}
+   And Response body parameter should be:    [included][1][attributes][prices][0][currency][name]    ${currency_name_eur}
+   And Response body parameter should be:    [included][1][attributes][prices][0][currency][symbol]    ${currency_symbol_eur}
+   And Response body parameter should not be EMPTY:     [included][1][attributes][prices][1][priceTypeName]
+   And Response body parameter should be:     [included][1][attributes][prices][1][netAmount]    None
+   And Response body parameter should not be EMPTY:     [included][1][attributes][prices][1][grossAmount]
+   And Response body parameter should be:    [included][1][attributes][prices][1][currency][code]    ${currency_code_eur}
+   And Response body parameter should be:    [included][1][attributes][prices][1][currency][name]    ${currency_name_eur}
+   And Response body parameter should be:    [included][1][attributes][prices][1][currency][symbol]    ${currency_symbol_eur}
+   And Response include element has self link:   concrete-product-prices
+   And Response body parameter should be:    [included][2][type]    concrete-products
+   And Response body parameter should not be EMPTY:    [included][2][id]
+   And Response body parameter should not be EMPTY:     [included][2][attributes]
+   And Response body parameter should not be EMPTY:     [included][2][attributes][sku]
+   And Response body parameter should be:     [included][2][attributes][isDiscontinued]    False
+   And Response body parameter should be:     [included][2][attributes][discontinuedNote]    None
+   And Response body parameter should be:     [included][2][attributes][averageRating]    None
+   And Response body parameter should not be EMPTY:     [included][2][attributes][reviewCount]
+   And Response body parameter should not be EMPTY:     [included][2][attributes][productAbstractSku]
+   And Response body parameter should not be EMPTY:     [included][2][attributes][name]
+   And Response body parameter should not be EMPTY:     [included][2][attributes][description]
+   And Response body parameter should not be EMPTY:     [included][2][attributes][attributes]
+   And Response body parameter should not be EMPTY:     [included][2][attributes][superAttributesDefinition]
+   And Response body parameter should not be EMPTY:     [included][2][attributes][attributeNames]
+   And Response body parameter should not be EMPTY:     [included][2][relationships]
 
 Add_configured_bundle_item_to_the_cart_with_included_items
   [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
@@ -146,7 +176,6 @@ Add_configured_bundle_item_to_the_cart_with_included_items
     And Response body parameter should not be EMPTY:    [included][0][attributes][calculations][sumDiscountAmountFullAggregation]
     And Response body parameter should not be EMPTY:    [included][0][attributes][calculations][unitPriceToPayAggregation]
     And Response body parameter should not be EMPTY:    [included][0][attributes][calculations][sumPriceToPayAggregation]
-
 
 Update_configured_bundle_quantity_in_the cart_to_the_cart
   [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
