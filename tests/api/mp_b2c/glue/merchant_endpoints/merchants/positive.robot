@@ -1,7 +1,7 @@
 *** Settings ***
-Suite Setup       SuiteSetup
+Suite Setup    SuiteSetup
+Test Setup    TestSetup
 Resource    ../../../../../../resources/common/common_api.robot
-Test Setup        TestSetup
 Default Tags    glue
 
 *** Test Cases ***
@@ -40,6 +40,7 @@ Retrieves_list_of_merchants
 
 
 Retrieves_a_merchant_by_id
+
     When I send a GET request:  /merchants/${merchants.sony_experts.merchant_id}
     Then Response status code should be:    200
     And Response reason should be:    OK

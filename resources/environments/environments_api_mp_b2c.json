@@ -67,6 +67,20 @@
         
     },
 
+    "merchants": {
+        "merchant_id": "MER000005",
+        "merchant_name": "Budget Cameras",
+        "merchant_url": "/en/merchant/budget-cameras",
+        "merchant_contact_person_role": "Merchandise Manager",
+        "merchant_contact_person_title": "Mr",
+        "merchant_contact_person_first_name": "Jason",
+        "merchant_contact_person_last_name": "Weidmann",
+        "merchant_contact_person_phone": "030/123456789",
+        "merchant_public_email": "support@budgetcamerasonline.com",
+        "merchant_public_phone": "+49 30 234567591",
+        "merchant_logo_url": "https://d2s0ynfc62ej12.cloudfront.net/merchant/budgetcameras-logo.png"
+    },
+
     "shop": {
 
         "currency_name_eur": "Euro",
@@ -250,6 +264,7 @@
         "product_option_1": "OP_2_year_waranty",
         "product_option_1_name": "Two (2) year limited warranty",
         "product_option_2": "OP_insurance",
+    
 
 
         "review_title": "This is a review",
@@ -281,7 +296,8 @@
 
         "product_management_superattribute_id": "4g",
         "product_management_attribute_free_input_id": "4g_standards",
-        "product_management_attribute_no_input_id": "bundled_product"
+        "product_management_attribute_no_input_id": "bundled_product",
+        "return_reason": "Damaged"
 
     },
 
