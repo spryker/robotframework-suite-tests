@@ -10,6 +10,7 @@ ENABLER
 
 #POST requests
 Provide_checkout_data
+# Created the bug-ticket https://spryker.atlassian.net/browse/CC-16683
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
     ...  AND    I set Headers:    Authorization=${token}
     ...  AND    Find or create customer cart
@@ -52,6 +53,7 @@ Provide_checkout_with_only_cart_id
     And Response body has correct self link internal
 
 Provide_checkout_data_with_invalid_billing_address_data
+# Created the bug-ticket https://spryker.atlassian.net/browse/CC-16683
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
     ...  AND    I set Headers:    Authorization=${token}
     ...  AND    Find or create customer cart
@@ -76,6 +78,7 @@ Provide_checkout_data_with_invalid_billing_address_data
     And Response body has correct self link internal
 
 Provide_checkout_data_with_invalid_shipping_address_data
+# Created the bug-ticket https://spryker.atlassian.net/browse/CC-16683
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
     ...  AND    I set Headers:    Authorization=${token}
     ...  AND    Find or create customer cart
@@ -100,6 +103,7 @@ Provide_checkout_data_with_invalid_shipping_address_data
     And Response body has correct self link internal
 
 Provide_checkout_data_with_invalid_payments
+# Created the bug-ticket https://spryker.atlassian.net/browse/CC-16683
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
     ...  AND    I set Headers:    Authorization=${token}
     ...  AND    Find or create customer cart
@@ -159,6 +163,7 @@ Provide_checkout_data_with_empty_cart
     And Response body has correct self link internal
 
 Provide_checkout_data_with_bundle_product
+# Created the bug-ticket https://spryker.atlassian.net/browse/CC-16683
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
     ...  AND    I set Headers:    Authorization=${token}
     ...  AND    Find or create customer cart
