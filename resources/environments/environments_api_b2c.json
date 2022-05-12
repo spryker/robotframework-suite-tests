@@ -143,8 +143,11 @@
         "bundled_product_2_abstract_sku": "127",
         "bundled_product_3_abstract_sku": "121",
         "bundled_product_1_concrete_sku": "150_29554292",
+        "bundled_product_1_concrete_name": "HP Chromebook 11",
         "bundled_product_2_concrete_sku": "127_22828284",
+        "bundled_product_2_concrete_name": "HP Z 620",
         "bundled_product_3_concrete_sku": "121_29406823",
+        "bundled_product_3_concrete_name": "HP 200 280 G1",
         "qty_of_products_in_bundle": "3",
         "qty_of_each_product_inside_bundle": "1",
 
@@ -191,6 +194,7 @@
         "concrete_available_product_with_label": "204_29851280",
         "abstract_available_with_stock_and_never_out_of_stock": "209",
         "concrete_available_with_stock_and_never_out_of_stock": "004_30663302",
+        "concrete_available_with_stock_and_never_out_of_stock_name": "Canon IXUS 175",
         "abstract_available_product_with_no_stock_and_never_out_of_stock": "154",
         "abstract_unavailable_product": "111",
 
@@ -216,6 +220,10 @@
 
         "abstract_product_with_options": "012",
         "abstract_product_with_options_name": "Canon IXUS 165",
+        "concrete_product_with_options": "012_25904598",
+        "concrete_product_with_options_name": "Canon IXUS 165",
+
+        "concrete_product_with_threshold_limit": "006_30692993",
 
         "concrete_product_one_image_set": "666_133",
         "concrete_product_one_image_set_name": "Gift Card 5000",
@@ -231,6 +239,7 @@
         "product_option_1": "OP_2_year_waranty",
         "product_option_1_name": "Two (2) year limited warranty",
         "product_option_2": "OP_insurance",
+        "product_option_group_name": "Three (3) year limited warranty",
 
 
         "review_title": "This is a review",
@@ -315,8 +324,18 @@
         "test_cart_name": "Test-cart",
         "qty_of_categories_in_category_trees": "6",
         "qty_of_subcategories_in_category_trees": "2",
-        "color_name": "black"
-        
+        "color_name": "black",
+
+        "payment_provider_name": "DummyPayment",
+        "payment_method_name": "Invoice",
+        "carrier_name": "DHL",
+        "shipment_method_name": "Standard",
+        "shipment_method_name_5": "Next Day",
+        "delivery_date": "2030-12-31",
+
+        "discount_1_name": "Free standard delivery",
+        "discount_1_description": "Free standard delivery for all orders above certain value depending on the currency",
+        "discount_1_total_sum": "490"
     },
 
 
