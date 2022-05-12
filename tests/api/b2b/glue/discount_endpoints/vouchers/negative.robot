@@ -67,9 +67,7 @@ Adding_voucher_with_invalid_access_token
     And Response reason should be:    Unauthorized
     And Response should return error code:    001
     And Response should return error message:    Invalid access token.
-    [Teardown]    Run Keywords    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
-    ...    AND    I send a DELETE request:     /carts/${cart_id}
-    ...    AND    Response status code should be:    204
+
 
 ####### DELETE #######
 # Fails because of CC-16719

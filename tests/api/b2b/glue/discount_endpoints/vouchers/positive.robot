@@ -31,16 +31,15 @@ Adding_voucher_code_to_cart_of_logged_in_customer
     And Perform arithmetical calculation with two arguments:    grand_total_sum    ${sub_total_sum}    -    ${discount_total_sum}
     And Perform arithmetical calculation with two arguments:    grand_total_sum    ${grand_total_sum}    +    ${expense_total_sum}
     And Response body parameter with rounding should be:    [data][attributes][totals][grandTotal]    ${grand_total_sum}
-    #calculatedDiscounts - "10% off Safescan" discount
+    #checking cart rule and vouchers in cart
     And Response body parameter should contain:    [data][attributes][discounts][0][displayName]    ${discount_id_4_name}
-    And Response body parameter should contain:    [data][attributes][discounts][0][amount]    ${discount_total_sum}
     And Response body parameter should contain:    [data][attributes][discounts][0][code]    ${discount_id_4_voucher_code}
     [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cart_id}
     ...  AND    Response status code should be:    204
 
 # Fails because of CC-16719
 Checking_voucher_is_applied_after_order_is_placed
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_second_user_email}
     ...    AND    I set Headers:    Authorization=${token}
     ...    AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${GROSS_MODE}","currency": "${currency_code_eur}","store": "${store_de}","name": "${test_cart_name}-${random}"}}}
     ...    AND    Save value to a variable:    [data][id]    cart_id
@@ -67,8 +66,6 @@ Checking_voucher_is_applied_after_order_is_placed
     And Response body parameter should contain:    [included][0][attributes][calculatedDiscounts]["${discount_id_4_name}"][displayName]    ${discount_id_4_name}
     And Response body parameter should contain:    [included][0][attributes][calculatedDiscounts]["${discount_id_4_name}"][sumAmount]    ${discount_total_sum}
     And Response body parameter should contain:    [included][0][attributes][calculatedDiscounts]["${discount_id_4_name}"][voucherCode]    ${discount_id_4_voucher_code}
-    [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cart_id}
-    ...  AND    Response status code should be:    204
 
 
 # Fails because of CC-16719
@@ -135,7 +132,6 @@ Adding_voucher_with_cart_rule_with_to_the_same_cart
     And Response body parameter should contain:    [data][attributes][discounts][0][code]    ${discount_id_4_voucher_code}
     And Response body parameter should contain:    [data][attributes][discounts][1][displayName]    ${cart_rule_name_10_off_minimum_order}
     And Response body parameter should contain:    [data][attributes][discounts][1][code]    None
-
     [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cart_id}
     ...  AND    Response status code should be:    204
 
@@ -163,10 +159,5 @@ Deleting_voucher_from_cart_of_logged_in_customer
     And Response body parameter with rounding should be:    [data][attributes][totals][discountTotal]    ${discount_total}
     Response body parameter should NOT be:    [data][attributes][discounts][0][displayName]    ${discount_id_4_name}
     Response body parameter should NOT be:    [data][attributes][discounts][0][code]    ${discount_id_4_voucher_code}
-
     [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cart_id}
     ...  AND    Response status code should be:    204
-
-
-
-

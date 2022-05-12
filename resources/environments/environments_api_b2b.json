@@ -2,7 +2,7 @@
     "environment": "api_b2b", 
 
     "env": {
-        "glue_url": "http://glue.de.spryker.local",
+        "glue_url": "https://glue.de.b2b.internal-testing.demo-spryker.com/",
         "bapi_url": "http://backend-api.de.spryker.local/api/rest"
     },
 
@@ -370,10 +370,10 @@
         "discount_3_total_sum": "490",
 	    "discount_id_3_name": "5% off white",
 	    "discount_id_3_description": "Get a 5% discount on all white products with voucher code",
-        "discount_id_3_voucher_code": "sprykercu7r",
+        "discount_id_3_voucher_code": "sprykerca9j",
         "discount_id_4_name": "10% off Safescan",
 	    "discount_id_4_description": "Get a 10% discount on all Safescan brand products with voucher code",
-        "discount_id_4_voucher_code": "safescanve5za7pa5v",
+        "discount_id_4_voucher_code": "safescanqu1pu4ga1z",
 
         "cart_rule_name_10_off_minimum_order": "10% off minimum order",
         
