@@ -140,8 +140,8 @@
     "products": {
 
         "bundle_product_abstract_sku": "211",
-        "bundle_product_concrete_sku": "211_123",
         "bundle_product_abstract_name": "HP Bundle",
+        "bundle_product_concrete_sku": "211_123",
         "bundle_product_product_name": "HP Bundle",
         "bundled_product_1_abstract_sku": "150",
         "bundled_product_2_abstract_sku": "127",
