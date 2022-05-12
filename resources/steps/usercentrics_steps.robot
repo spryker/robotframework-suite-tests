@@ -30,10 +30,14 @@ Yves: page should/shouldn't contain usercentrics privacy settings form:
     ...    AND    Wait Until Page Contains Element    ${usercentrics_form}
     ...    ELSE    Wait Until Page Does Not Contain Element    ${usercentrics_form}
 
-Yves: usercentrics accept/deny cookies:
+Yves: usercentrics accept/deny all:
     [Arguments]    ${accept}
     Try reloading page until element is/not appear:    ${usercentrics_form}    true
     Wait Until Page Contains Element    ${usercentrics_form}
     Run Keyword If    '${accept}'=='true'    Click    ${usercentrics_form_accept_button}
     ...    ELSE    Click    ${usercentrics_form_deny_button}
-    Wait Until Page Does Not Contain Element    ${usercentrics_form}
+
+Yves: usercentrics successfully saved config
+    [Arguments]    ${timeout}=30s
+    ${response}=    Wait for response    matcher=usercentrics.*?graphql     timeout=${timeout}
+    Should be true    ${response}[ok]

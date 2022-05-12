@@ -29,7 +29,16 @@ Usercentrics_E2E
     Yves: go to the 'Home' page
     Yves: page should contain script with attribute:    data-settings-id    qp-9Y6Hw9
     Yves: page should/shouldn't contain usercentrics privacy settings form:    true
-    Yves: usercentrics accept/deny cookies:    true
+    Yves: usercentrics accept/deny all:    true
+    Yves: usercentrics successfully saved config
+    Reload
+    Yves: page should/shouldn't contain usercentrics privacy settings form:    false
+    LocalStorage clear
+    Delete all cookies
+    Yves: go to the 'Home' page
+    Yves: page should/shouldn't contain usercentrics privacy settings form:    true
+    Yves: usercentrics accept/deny all:    false
+    Yves: usercentrics successfully saved config
     Reload
     Yves: page should/shouldn't contain usercentrics privacy settings form:    false
     [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
