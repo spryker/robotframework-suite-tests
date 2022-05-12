@@ -420,9 +420,8 @@
         "discount_amount_for_product_3_with_discount_20%_off_storage": "16383",
         "discount_amount_for_product_3_with_10%_discount": "1882"
     },    
-
+  
     "product_offers":{  
-
         "inactive_offer_with_volume_price": "offer3",
         "waiting_for_approval_offer_with_volume_price": "offer4",
         "denied_offer_with_volume_price": "offer404",
@@ -432,8 +431,6 @@
         "second_offer_with_volume_price": "offer9",
         "offer_with_volume_price": "offer10",
         "offer_with_volume_price_gross_net_prices": "offer48",
-        "merchant_office_king_id": "MER000009",
-        "merchant_budget_stationery_id": "MER000010",
         "active_offer_price": "10160"
     },
 

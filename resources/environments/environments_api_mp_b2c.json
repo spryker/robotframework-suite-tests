@@ -67,6 +67,20 @@
         
     },
 
+    "merchants": {
+        "merchant_id": "MER000005",
+        "merchant_name": "Budget Cameras",
+        "merchant_url": "/en/merchant/budget-cameras",
+        "merchant_contact_person_role": "Merchandise Manager",
+        "merchant_contact_person_title": "Mr",
+        "merchant_contact_person_first_name": "Jason",
+        "merchant_contact_person_last_name": "Weidmann",
+        "merchant_contact_person_phone": "030/123456789",
+        "merchant_public_email": "support@budgetcamerasonline.com",
+        "merchant_public_phone": "+49 30 234567591",
+        "merchant_logo_url": "https://d2s0ynfc62ej12.cloudfront.net/merchant/budgetcameras-logo.png"
+    },
+
     "shop": {
 
         "currency_name_eur": "Euro",
