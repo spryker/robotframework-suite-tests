@@ -55,19 +55,6 @@ Get_all_product_offer_info_with_product_offer_prices_and_product_offer_availabil
     And Response include element has self link:    product-offer-availabilities
     And Response include element has self link:    merchants
 
-Get_product_offer_without_volume_prices
-    When I send a GET request:    /product-offers/${offer_without_volume_price}?include=product-offer-prices
-    Then Response status code should be:    200
-    And Response reason should be:    OK
-    And Response header parameter should be:    Content-Type    ${default_header_content_type}
-    And Response body parameter should be:    [data][id]    ${offer_without_volume_price}
-    And Response body parameter should be:    [data][type]    product-offers
-    And Response body parameter should be in:    [data][attributes][isDefault]    True    False
-    And Response should contain the array of a certain size:    [included]    1
-    And Response should contain the array of a certain size:    [data][relationships]    1
-    And Response include should contain certain entity type:    product-offer-prices
-    And Response include element has self link:    product-offer-prices
-
 Get_product_offer_with_gross_eur
     When I send a GET request:    /product-offers/${active_offer}?include=product-offer-prices
     Then Response status code should be:    200

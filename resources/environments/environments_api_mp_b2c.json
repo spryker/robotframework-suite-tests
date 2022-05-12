@@ -317,16 +317,7 @@
         "cms_page_collection_name": "GTC",
         "cms_page_collection_url": "/en/gtc",
 
-        "brand_name": "canon",
-
-        "payment_provider_name": "DummyPayment",
-        "payment_method_name": "Credit Card",
-        "payment_selection_name": "dummyMarketplacePaymentInvoice",
-        "carrier_name": "DHL",
-        "shipment_method_name": "Standard",
-        "shipment_method_name_2": "Express",
-        "delivery_date": "2030-12-31"
-
+        "brand_name": "canon"
     },
 
     "cart":{
@@ -344,8 +335,18 @@
         "test_cart_name": "Test-cart",
         "qty_of_categories_in_category_trees": "6",
         "qty_of_subcategories_in_category_trees": "2",
-        "color_name": "black"
+        "color_name": "black",
+
         
+
+        "payment_provider_name": "DummyPayment",
+        "payment_method_name": "Credit Card",
+        "payment_selection_name": "dummyMarketplacePaymentInvoice",
+        "carrier_name": "DHL",
+        "shipment_method_name": "Standard",
+        "shipment_method_name_2": "Express",
+        "delivery_date": "2030-12-31"
+
     },
 
 
