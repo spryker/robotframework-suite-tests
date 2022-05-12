@@ -40,11 +40,11 @@ Add_an_item_to_the_guest_cart_with_items_include
     Run Keywords    Create a guest cart:    ${random}    ${concrete_available_product_with_offer}    1
     ...    AND    Save value to a variable:    [data][id]    guestCartId
     ...    AND    Cleanup All Items In The Guest Cart:    ${guest_cart_id}
-    When I send a POST request:    /guest-carts/${guestCartId}/guest-cart-items?include=items    {"data":{"type":"guest-cart-items","attributes":{"sku":"${concrete_available_product_with_offer}","quantity":"1"}}}
+    When I send a POST request:    /guest-carts/${guestCartId}/guest-cart-items?include=items    {"data":{"type":"guest-cart-items","attributes":{"sku":"${concrete_product_with_concrete_product_alternative_sku}","quantity":"1"}}}
     Then Response status code should be:    201
     And Response reason should be:    Created
     And Response body parameter should be:    [included][0][type]    guest-cart-items
-    And Response body parameter should be:    [included][0][id]    ${concrete_available_product_with_offer}
+    And Response body parameter should be:    [included][0][id]    ${concrete_product_with_concrete_product_alternative_sku}
     And Response should contain the array of a certain size:    [included]    1
     And Response body parameter should not be EMPTY:    [data][links][self]
 
@@ -53,11 +53,11 @@ Add_an_item_to_the_guest_cart_with_concrete_products_and_abstract_products_inclu
     Run Keywords    Create a guest cart:    ${random}    ${concrete_product_with_concrete_product_alternative_sku}    1
     ...    AND    Save value to a variable:    [data][id]    guestCartId
     ...    AND    Cleanup All Items In The Guest Cart:    ${guest_cart_id}
-    When I send a POST request:    /guest-carts/${guestCartId}/guest-cart-items?include=concrete-products,abstract-products    {"data":{"type":"guest-cart-items","attributes":{"sku":"${concrete_available_product_with_offer}","quantity":"1"}}}
+    When I send a POST request:    /guest-carts/${guestCartId}/guest-cart-items?include=concrete-products,abstract-products    {"data":{"type":"guest-cart-items","attributes":{"sku":"${concrete_product_with_concrete_product_alternative_sku}","quantity":"1"}}}
     Then Response status code should be:    201
     And Response reason should be:    Created
     And Response body parameter should not be EMPTY:    [data][links][self]
-    And Response should contain the array of a certain size:    [included]    3
+    And Response should contain the array of a certain size:    [included]    4
     And Response include should contain certain entity type:    concrete-products
     And Response include should contain certain entity type:    abstract-products
     And Response include should contain certain entity type:    guest-cart-items
@@ -65,18 +65,25 @@ Add_an_item_to_the_guest_cart_with_concrete_products_and_abstract_products_inclu
     And Response include element has self link:   abstract-products
     And Response include element has self link:   concrete-products
 
-Add_an_item_to_the_guest_cart_with_promotional_items_include
+Add_an_item_to_the_guest_cart_with_cart_rules_and_promotional_items_includes
     [Setup]    I set Headers:    Content-Type=${default_header_content_type}    X-Anonymous-Customer-Unique-Id=${random}
     Run Keywords    Create a guest cart:    ${random}    ${concrete_product_with_concrete_product_alternative_sku}    1
     ...    AND    Save value to a variable:    [data][id]    guestCartId
     ...    AND    Cleanup All Items In The Guest Cart:    ${guest_cart_id}
-    When I send a POST request:    /guest-carts/${guestCartId}/guest-cart-items?include=promotional-items    {"data":{"type":"guest-cart-items","attributes":{"sku":"${concrete_product_with_concrete_product_alternative_sku}","quantity":"1"}}}
+    When I send a POST request:    /guest-carts/${guestCartId}/guest-cart-items?include=cart-rules,promotional-items   {"data":{"type":"guest-cart-items","attributes":{"sku":"${concrete_product_with_concrete_product_alternative_sku}","quantity": 10}}}
     Then Response status code should be:    201
     And Response reason should be:    Created
+    And Response header parameter should be:    Content-Type    ${default_header_content_type}
+    And Response body parameter should be:    [data][id]    ${guestCartId}
+    And Response body parameter should be:    [data][type]    guest-carts
     And Response body parameter should not be EMPTY:    [data][links][self]
-    And Response should contain the array of a certain size:    [included]    2
-    And Response include should contain certain entity type:    promotional-items
+    And Response should contain the array of a certain size:    [data][relationships][cart-rules][data]    1
+    And Response should contain the array of a certain size:    [data][relationships][promotional-items][data]    2
+    And Response should contain the array of a certain size:    [included]    4
+    And Response include should contain certain entity type:    cart-rules
     And Response include should contain certain entity type:    guest-cart-items
+    And Response include should contain certain entity type:    promotional-items
+    And Response include element has self link:   cart-rules
     And Response include element has self link:   guest-cart-items
     And Response include element has self link:   promotional-items
 
@@ -101,7 +108,7 @@ Add_an_item_to_the_guest_cart_with_bundle_items_include
     And Response include should contain certain entity type:    bundle-items
     And Response include element has self link:   bundled-items
     And Response include element has self link:   bundle-items
-    
+
 Update_an_item_quantity_at_the_guest_cart_with_items_include
     [Setup]    I set Headers:    Content-Type=${default_header_content_type}    X-Anonymous-Customer-Unique-Id=${random}
     Run Keywords    Create a guest cart:    ${random}    ${concrete_available_product_with_offer}    1
