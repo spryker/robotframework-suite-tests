@@ -5,6 +5,9 @@ Resource    ../../../../../../resources/common/common_api.robot
 Default Tags    glue
 
 *** Test Cases ***
+ENABLER
+    TestSetup
+    
 #POST requests
 Provide_checkout_data
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
@@ -29,6 +32,8 @@ Provide_checkout_data
     And Response body parameter should be:    [data][attributes][selectedShipmentMethods][0][currencyIsoCode]    ${currency_code_eur}
     And Response should contain the array of a certain size:    [data][attributes][selectedPaymentMethods]    0
     And Response body has correct self link internal
+    [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cart_id}
+    ...  AND    Response status code should be:    204
 
 Provide_checkout_with_only_cart_id
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
@@ -47,6 +52,8 @@ Provide_checkout_with_only_cart_id
     And Response should contain the array of a certain size:    [data][attributes][selectedShipmentMethods]    0
     And Response should contain the array of a certain size:    [data][attributes][selectedPaymentMethods]    0
     And Response body has correct self link internal
+    [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cart_id}
+    ...  AND    Response status code should be:    204
 
 Provide_checkout_data_with_invalid_billing_address_data
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
@@ -71,6 +78,8 @@ Provide_checkout_data_with_invalid_billing_address_data
     And Response body parameter should be:    [data][attributes][selectedShipmentMethods][0][currencyIsoCode]    ${currency_code_eur}
     And Response should contain the array of a certain size:    [data][attributes][selectedPaymentMethods]    0
     And Response body has correct self link internal
+    [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cart_id}
+    ...  AND    Response status code should be:    204
 
 Provide_checkout_data_with_invalid_shipping_address_data
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
@@ -95,6 +104,8 @@ Provide_checkout_data_with_invalid_shipping_address_data
     And Response body parameter should be:    [data][attributes][selectedShipmentMethods][0][currencyIsoCode]    ${currency_code_eur}
     And Response should contain the array of a certain size:    [data][attributes][selectedPaymentMethods]    0
     And Response body has correct self link internal
+    [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cart_id}
+    ...  AND    Response status code should be:    204
 
 Provide_checkout_data_with_invalid_payments
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
@@ -119,6 +130,8 @@ Provide_checkout_data_with_invalid_payments
     And Response body parameter should be:    [data][attributes][selectedShipmentMethods][0][currencyIsoCode]    ${currency_code_eur}
     And Response should contain the array of a certain size:    [data][attributes][selectedPaymentMethods]    0
     And Response body has correct self link internal
+    [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cart_id}
+    ...  AND    Response status code should be:    204
 
 Provide_checkout_data_with_invalid_shipment_method_id
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
@@ -137,6 +150,8 @@ Provide_checkout_data_with_invalid_shipment_method_id
     And Response should contain the array of a certain size:    [data][attributes][selectedShipmentMethods]    0
     And Response should contain the array of a certain size:    [data][attributes][selectedPaymentMethods]    0
     And Response body has correct self link internal
+    [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cart_id}
+    ...  AND    Response status code should be:    204
 
 Provide_checkout_data_with_empty_cart
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
@@ -154,6 +169,8 @@ Provide_checkout_data_with_empty_cart
     And Response should contain the array of a certain size:    [data][attributes][selectedShipmentMethods]    0
     And Response should contain the array of a certain size:    [data][attributes][selectedPaymentMethods]    0
     And Response body has correct self link internal
+    [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cart_id}
+    ...  AND    Response status code should be:    204
 
 Provide_checkout_data_with_bundle_product
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
@@ -178,3 +195,5 @@ Provide_checkout_data_with_bundle_product
     And Response body parameter should be:    [data][attributes][selectedShipmentMethods][0][currencyIsoCode]    ${currency_code_eur}
     And Response should contain the array of a certain size:    [data][attributes][selectedPaymentMethods]    0
     And Response body has correct self link internal
+    [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cart_id}
+    ...  AND    Response status code should be:    204
