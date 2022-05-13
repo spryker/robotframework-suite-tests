@@ -5,14 +5,11 @@
 2. Install [Browser library](https://robotframework-browser.org/#installation)
 3. Install RequestsLibrary: `pip install robotframework-requests`
 
-### For API testing installation requires Robot Framework, [RequestsLibrary](https://github.com/MarketSquare/robotframework-requests) and [JSONLibrary](https://github.com/robotframework-thailand/robotframework-jsonlibrary)
+### For API testing installation requires Robot Framework, [RequestsLibrary](https://github.com/MarketSquare/robotframework-requests), [JSONLibrary](https://github.com/robotframework-thailand/robotframework-jsonlibrary) and [DatabaseLibrary](https://github.com/franz-see/Robotframework-Database-Library)
 1. Install [Robot Framework](https://github.com/robotframework/robotframework/blob/master/INSTALL.rst)
 2. Install RequestsLibrary: `pip install robotframework-requests`
 3. Install JSONLibrary: `pip install -U robotframework-jsonlibrary`
-
-### For DB testing installation requires Robot Framework, [DatabaseLibrary](https://github.com/franz-see/Robotframework-Database-Library)
-1. Install [Robot Framework](https://github.com/robotframework/robotframework/blob/master/INSTALL.rst)
-2. Install DatabaseLibrary: `pip install -U robotframework-databaselibrary`
+4. Install DatabaseLibrary: `pip install -U robotframework-databaselibrary`
 
 # How to run tests
 
