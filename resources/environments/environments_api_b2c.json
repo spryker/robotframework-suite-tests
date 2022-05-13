@@ -24,6 +24,12 @@
         "yves_second_user_reference": "DE--4",
         "yves_second_user_salutation": "Mr",
 
+        "yves_third_user_first_name": "Jackie",
+        "yves_third_user_last_name": "Chan",
+        "yves_third_user_password": "change123",
+        "yves_third_user_gender_male": "Male",
+        "yves_third_user_salutation": "Mr",
+
         "zed_admin_email": "admin@spryker.com",
         "zed_admin_password": "change123",
 
