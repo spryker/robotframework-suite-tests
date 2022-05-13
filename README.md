@@ -10,6 +10,10 @@
 2. Install RequestsLibrary: `pip install robotframework-requests`
 3. Install JSONLibrary: `pip install -U robotframework-jsonlibrary`
 
+### For DB testing installation requires Robot Framework, [DatabaseLibrary](https://github.com/franz-see/Robotframework-Database-Library)
+1. Install [Robot Framework](https://github.com/robotframework/robotframework/blob/master/INSTALL.rst)
+2. Install DatabaseLibrary: `pip install -U robotframework-databaselibrary`
+
 # How to run tests
 
 `robot -v env:{ENVIRONMENT} {PATH}`
