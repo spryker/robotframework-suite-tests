@@ -31,13 +31,13 @@ Retrieve_guest_cart
     When I send a GET request:    /guest-carts
     Then Response status code should be:    200
     And Response reason should be:    OK
-    And Response body parameter should be:    [data][0][type]    guest-carts
-    And Response body parameter should not be EMPTY:    [data][0][id]
-    And Response body parameter should be:    [data][0][attributes][priceMode]    ${gross_mode}
-    And Response body parameter should be:    [data][0][attributes][currency]    ${currency_code_eur}
-    And Response body parameter should be:    [data][0][attributes][store]    ${store_de}
-    And Response body parameter should not be EMPTY:    [data][0][attributes][totals][expenseTotal]
-    And Response body parameter should not be EMPTY:    [data][0][attributes][totals][discountTotal]
+    And Each array element of array in response should contain value:    [data]    guest-carts
+    And Each array element of array in response should contain nested property with datatype:    [data]    id    str
+    And Each array element of array in response should contain nested property with value:    [data]    [attributes][priceMode]    ${gross_mode}
+    And Each array element of array in response should contain nested property with value:    [data]    [attributes][currency]    ${currency_code_eur}
+    And Each array element of array in response should contain nested property with value:    [data]    [attributes][store]    ${store_de}
+    And Each array element of array in response should contain nested property with datatype:    [data]    [attributes][totals][expenseTotal]    int
+    And Each array element of array in response should contain nested property with datatype:    [data]    [attributes][totals][discountTotal]    int
     And Response body parameter should be greater than:    [data][0][attributes][totals][taxTotal]    0
     And Response body parameter should be greater than:    [data][0][attributes][totals][subtotal]    0
     And Response body parameter should be greater than:    [data][0][attributes][totals][grandTotal]    0
