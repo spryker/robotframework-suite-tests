@@ -17,11 +17,11 @@ ${default_password}            change123
 ${default_allow_redirects}     true
 ${default_auth}                ${NONE}
 # *** DB VARIABLES ***
-${db_host}         127.0.0.1
-${db_name}         eu-docker
-${db_password}     secret
-${db_port}         3306
-${db_user}         spryker  
+${default_db_host}         127.0.0.1
+${default_db_name}         eu-docker
+${default_db_password}     secret
+${default_db_port}         3306
+${default_db_user}         spryker  
 
 *** Keywords ***
 SuiteSetup
@@ -1129,7 +1129,7 @@ Save value to a variable:
     Set Test Variable    ${${name}}    ${var_value}  
     [Return]    ${name}
 
-Save value from DB to a variable:
+Save the result of a SELECT DB query to a variable:
     [Documentation]    This keyword saves any value which you receive from DB using SQL query ``${sql_query}`` to a test variable called ``${variable_name}``. 
     ...
     ...    It can be used to save a value returned by any query into a custom test variable.
@@ -1139,15 +1139,11 @@ Save value from DB to a variable:
     ...
     ...    *Examples:*
     ...
-    ...    ``[Setup]    Connect To Database    pymysql    ${db_name}    ${db_user}    ${db_password}    ${db_host}    ${db_port}``
-    ...
-    ...    ``Save value from DB to a variable:    select registration_key from spy_customer where customer_reference = '${user_reference_id}'    confirmation_key``
-    ...
-    ...    ``[Teardown]    Disconnect From Database``
-    ...
-    ...    ``Save value from DB to a variable:`` should be called after you connect to the DB. You can set connection in [Setup] of your current test case and also don't forget to disconnect from the DB in the [Teardown] section.
+    ...    ``Save the result of a SELECT DB query to a variable:    select registration_key from spy_customer where customer_reference = '${user_reference_id}'    confirmation_key``
     [Arguments]    ${sql_query}    ${variable_name}
+    Connect To Database    pymysql    ${default_db_name}    ${default_db_user}    ${default_db_password}    ${default_db_host}    ${default_db_port}
     ${var_value} =    Query    ${sql_query}
+    Disconnect From Database
     ${var_value}=    Convert To String    ${var_value}
     ${var_value}=    Replace String    ${var_value}    '   ${EMPTY}
     ${var_value}=    Replace String    ${var_value}    ,   ${EMPTY}
