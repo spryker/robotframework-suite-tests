@@ -2,7 +2,7 @@
     "environment": "api_mp_b2b",
 
     "env": {
-        "glue_url": "http://glue.de.spryker.local",
+        "glue_url": "https://glue.de.mp-b2b.internal-testing.demo-spryker.com/",
         "bapi_url": "http://backend-api.de.spryker.local/api/rest"
     },
 
@@ -191,14 +191,16 @@
 
         "discount_id_3_name": "5% off white",
 	    "discount_id_3_description": "Get a 5% discount on all white products with voucher code",
-        "discount_id_3_voucher_code": "sprykerqa5s",
+        "discount_id_3_voucher_code": "sprykerhe1x",
         "discount_id_4_name": "10% off Safescan",
 	    "discount_id_4_description": "Get a 10% discount on all Safescan brand products with voucher code",
-        "discount_id_4_voucher_code": "safescanme3be9se6g",
+        "discount_id_4_voucher_code": "safescanca1ya5zu7m",
         "voucher_concrete_product_1_with_brand_safescan_2_items": "782",
         "concrete_product_with_brand_safescan": "419872",
         "voucher_concrete_product_with_brand_safescan_and_white_color_2_items": "3201",
         "concrete_product_with_brand_safescan_and_white_color": "419901",
+
+        "cart_rule_name_10_off_minimum_order": "10% off minimum order",
 
         "concrete_of_product_with_relations_upselling_NESTED":{
             "product_options":{
