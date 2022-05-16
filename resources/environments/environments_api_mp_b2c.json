@@ -158,7 +158,7 @@
         "bundle_product_abstract_sku": "211",
         "bundle_product_abstract_name": "HP Bundle",
         "bundle_product_concrete_sku": "211_123",
-        "bundle_product_concrete_name": "HP Bundle",
+        "bundle_product_product_name": "HP Bundle",
         "bundled_product_1_abstract_sku": "150",
         "bundled_product_2_abstract_sku": "127",
         "bundled_product_3_abstract_sku": "121",
@@ -189,7 +189,6 @@
         "concrete_product_with_alternative_sku": "030_30021698",
         "concrete_product_with_alternative_sku_name": "Canon PowerShot G9 X",
         
-        
         "concrete_product_with_abstract_product_alternative_sku": "138_30046855",
         "concrete_product_with_abstract_product_alternative_sku_name": "Acer TravelMate P258-M",
         "concrete_product_with_abstract_product_alternative_sku_name_in_lower_case": "acer travelmate p258-m",
@@ -199,6 +198,8 @@
         "abstract_product_with_alternative_sku": "155",
         "abstract_product_with_alternative_name": "Lenovo IdeaPad Yoga 500",
         "alternative_abstract_product": "134",
+
+
         "alternative_abstract_product_price_chf": "39675",
         "discount_1_name": "10% off minimum order",
         "discount_amount_for_product_1_with_discount_20%_off_storage": "4000",
@@ -211,6 +212,7 @@
         "discount_concrete_product_2_total_sum_of_discounts": "8096",
         "discount_concrete_product_3_sku": "401768",
         "discount_2_name": "20% off cameras",
+
 
         "abstract_available_product_with_stock": "183",
         "abstract_available_product_with_stock_name": "Sony Xperia SGP512E1",
@@ -244,7 +246,7 @@
         "abstract_product_with_concrete_offers_name": "",
 
         "abstract_product_with_reviews": "035",
-        "abstract_product_with_review_name": "Canon PowerShot N",
+        "abstract_product_with_reviews_name": "Rectangular table, rectangular tubing - 1600 x 800 mm",
 
         "abstract_product_with_options": "012",
         "abstract_product_with_options_name": "Canon IXUS 165",
@@ -255,11 +257,11 @@
         "concrete_product_multiple_image_set_name": "Asus ZenPad Z170C",
         "concrete_available_product_with_stock": "001_25904006",
         "concrete_available_product_without_stock": "212_123",
-        "concrete_available_product_with_offer":  "092_24495842",
-
+        "concrete_available_product_with_offer":  "092_24495842",   
         "abstract_product_with_multiple_variants": "130",
         "concrete_product_sku_multivariant_variant1": "130_29285281",
         "concrete_product_sku_multivariant_variant2": "130_24326086",
+        
 
         "product_option_1": "OP_2_year_waranty",
         "product_option_1_name": "Two (2) year limited warranty",
@@ -270,6 +272,7 @@
         "review_title": "This is a review",
         "review_text": "This is review text",
         "default_review_rating": "5"
+
     },
 
     "product_attributes": {
@@ -289,7 +292,7 @@
         "display_technology": "TFT",
         "delivery_1": "assembled",
         "price_unit_1": "piece",
-        "color_4": "black",
+        "color_4": "Black",
         "color_3": "purple",
         "color_1": "yellow",
         "color_2": "Blue",
@@ -299,6 +302,21 @@
         "product_management_attribute_no_input_id": "bundled_product",
         "return_reason": "Damaged"
 
+    },
+    "product_offers":{  
+
+        "inactive_offer_with_volume_price": "offer5",
+        "waiting_for_approval_offer_with_volume_price": "offer10",
+        "denied_offer_with_volume_price": "offer404",
+        "active_offer": "offer2",
+        "offer_without_volume_price": "offer359",
+        "offer_without_original_price": "offer6",
+        "second_offer_with_volume_price": "offer348",
+        "offer_with_volume_price": "offer417",
+        "offer_with_volume_price_gross_net_prices": "offer48",
+        "merchant_sony_experts_id" : "MER000006",
+        "merchant_video_king_id": "MER000002",
+        "active_offer_price": "10160"
     },
 
     "content": {
@@ -332,7 +350,6 @@
         "cms_page_collection_url": "/en/gtc",
 
         "brand_name": "canon"
-
     },
 
     "cart":{
@@ -352,7 +369,7 @@
         "qty_of_subcategories_in_category_trees": "2",
         "color_name": "black",
 
-
+        
 
         "payment_provider_name": "DummyPayment",
         "payment_method_name": "Credit Card",
@@ -361,7 +378,7 @@
         "shipment_method_name": "Standard",
         "shipment_method_name_2": "Express",
         "delivery_date": "2030-12-31"
-        
+
     },
 
 
