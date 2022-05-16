@@ -46,7 +46,7 @@ Get_concrete_bundle_product_with_bundled_products_include
     And Response body parameter should be:    [data][id]    ${bundle_product_concrete_sku}
     And Response body parameter should be:    [data][attributes][sku]    ${bundle_product_concrete_sku}
     And Response body parameter should be:    [data][attributes][productAbstractSku]    ${bundle_product_abstract_sku}
-    And Response body parameter should be:    [data][attributes][name]    ${bundle_product_concrete_name}
+    And Response body parameter should be:    [data][attributes][name]    ${bundle_product_product_name}
     And Response body has correct self link internal
     And Response should contain the array of a certain size:    [data][relationships][bundled-products][data]    ${qty_of_products_in_bundle}
     And Each array element of array in response should contain property with value:    [data][relationships][bundled-products][data]    type    bundled-products
