@@ -157,7 +157,7 @@ Deleting_voucher_from_cart_of_logged_in_customer
     And Response reason should be:    OK
     And Response body parameter with rounding should be:    [data][attributes][totals][grandTotal]    ${grand_total}
     And Response body parameter with rounding should be:    [data][attributes][totals][discountTotal]    ${discount_total}
-    Response body parameter should NOT be:    [data][attributes][discounts][0][displayName]    ${discount_id_4_name}
-    Response body parameter should NOT be:    [data][attributes][discounts][0][code]    ${discount_id_4_voucher_code}
+    And Response body parameter should NOT be:    [data][attributes][discounts][0][displayName]    ${discount_id_4_name}
+    And Response body parameter should NOT be:    [data][attributes][discounts][0][code]    ${discount_id_4_voucher_code}
     [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cart_id}
     ...  AND    Response status code should be:    204
