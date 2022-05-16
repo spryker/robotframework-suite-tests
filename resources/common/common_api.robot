@@ -7,6 +7,7 @@ Library    Collections
 Library    BuiltIn
 Library    DateTime
 Library    JSONLibrary
+Library    DatabaseLibrary
 Library    ../../resources/libraries/common.py
 
 *** Variables ***
@@ -15,6 +16,12 @@ ${api_timeout}                 60
 ${default_password}            change123
 ${default_allow_redirects}     true
 ${default_auth}                ${NONE}
+# *** DB VARIABLES ***
+${default_db_host}         127.0.0.1
+${default_db_name}         eu-docker
+${default_db_password}     secret
+${default_db_port}         3306
+${default_db_user}         spryker  
 
 *** Keywords ***
 SuiteSetup
@@ -635,7 +642,7 @@ Response body parameter should be less than:
     ${data}=    Replace String    ${data}    ]   ${EMPTY}
     ${result}=    Evaluate    '${data}' < '${expected_value}'
     ${result}=    Convert To String    ${result}
-    Should Be Equal    ${result}    True    Actula ${data} is not less than expected ${expected_value}
+    Should Be Equal    ${result}    True    Actual ${data} is not less than expected ${expected_value}
 
 Response should contain the array of a certain size:
     [Documentation]    This keyword checks that the body array sent in ``${json_path}`` argument contains the specific number of items ``${expected_size}``. The expected size should be an integer value.
@@ -1122,6 +1129,29 @@ Save value to a variable:
     Set Test Variable    ${${name}}    ${var_value}  
     [Return]    ${name}
 
+Save the result of a SELECT DB query to a variable:
+    [Documentation]    This keyword saves any value which you receive from DB using SQL query ``${sql_query}`` to a test variable called ``${variable_name}``. 
+    ...
+    ...    It can be used to save a value returned by any query into a custom test variable.
+    ...    This variable, once created, can be used during the specific test where this keyword is used and can be re-used by the keywords that follow this keyword in the test. 
+    ...    It will not be visible to other tests.
+    ...    NOTE: Make sure that you expect only 1 value from DB, you can also check your query via external SQL tool.
+    ...
+    ...    *Examples:*
+    ...
+    ...    ``Save the result of a SELECT DB query to a variable:    select registration_key from spy_customer where customer_reference = '${user_reference_id}'    confirmation_key``
+    [Arguments]    ${sql_query}    ${variable_name}
+    Connect To Database    pymysql    ${default_db_name}    ${default_db_user}    ${default_db_password}    ${default_db_host}    ${default_db_port}
+    ${var_value} =    Query    ${sql_query}
+    Disconnect From Database
+    ${var_value}=    Convert To String    ${var_value}
+    ${var_value}=    Replace String    ${var_value}    '   ${EMPTY}
+    ${var_value}=    Replace String    ${var_value}    ,   ${EMPTY}
+    ${var_value}=    Replace String    ${var_value}    (   ${EMPTY}
+    ${var_value}=    Replace String    ${var_value}    )   ${EMPTY}
+    Set Test Variable    ${${variable_name}}    ${var_value}  
+    [Return]    ${variable_name}
+
 Save Header value to a variable:
     [Documentation]    This keyword saves any value located in a response Header parameter ``${header_parameter}`` to a test variable called ``${name}``. 
     ...
@@ -1245,6 +1275,29 @@ Find or create customer cart
         Run Keyword Unless    ${hasCart}    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${gross_mode}","currency": "${currency_code_eur}","store": "${store_de}"}}}
         Run Keyword Unless    ${hasCart}    Save value to a variable:    [data][id]    cart_id
 
+
+Get ETag header value from cart
+    [Documentation]    This keyword first retrieves cart for the current customer token.
+        ...   and then It gets the Etag header value and saves it into the test variable ``${Etag}``, which can then be used within the scope of the test where this keyword was called.
+        ...
+        ...    and it can be re-used by the keywords that follow this keyword in the test
+        ...    This keyword does not accept any arguments. This keyword is used for removing unused/unwanted (ex. W/"") characters from ETag header value.
+        
+
+        ${response}=    I send a GET request:    /carts
+        ${Etag}=    Get Value From Json   ${response_headers}    [ETag]
+        ${Etag}=    Convert To String    ${Etag}
+        ${Etag}=    Replace String    ${Etag}    '   ${EMPTY}
+        ${Etag}=    Replace String    ${Etag}    [   ${EMPTY}
+        ${Etag}=    Replace String    ${Etag}    ]   ${EMPTY}
+        ${Etag}=    Replace String    ${Etag}    W   ${EMPTY}
+        ${Etag}=    Replace String    ${Etag}    /   ${EMPTY}
+        ${Etag}=    Replace String    ${Etag}    "   ${EMPTY}
+        Log    ${Etag}
+        Set Test Variable    ${Etag}
+        [Return]    ${Etag}
+    
+
 Create a guest cart:
     [Documentation]    This keyword creates guest cart and sets ``${x_anonymous_customer_unique_id}`` that specify guest reference
         ...             and ``${guest_cart_id}`` that specify guest cart, variables
@@ -1283,4 +1336,55 @@ Cleanup all items in the cart:
                 ${cart_item_uid}=    Replace String    ${cart_item_uid}    [   ${EMPTY}
                 ${cart_item_uid}=    Replace String    ${cart_item_uid}    ]   ${EMPTY}
                 ${response_delete}=    DELETE    ${current_url}/carts/${cart_id}/items/${cart_item_uid}    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}    expected_status=204
+        END
+
+Cleanup all items in the guest cart:
+    [Documentation]    This keyword deletes any and all items in the given GUEST cart uid.
+        ...
+        ...    Before using this method you should set any value as X-Anonymous-Customer-Unique-Id into the headers with the help of ``I set Headers:``
+        ...
+        ...    *Example:*
+        ...
+        ...    ``Cleanup all items in the guest cart:    ${cart_id}``
+        [Arguments]    ${cart_id}
+        ${response}=    GET    ${current_url}/guest-carts/${cart_id}    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}  params=include=guest-cart-items,bundle-items    expected_status=200
+        ${response_body}=    Set Variable    ${response.json()}
+        @{included}=    Get Value From Json    ${response_body}    [included]
+        ${list_length}=    Get length    @{included}
+        Log    list_length: ${list_length}
+        FOR    ${index}    IN RANGE    0    ${list_length}
+                ${list_element}=    Get From List    @{included}    ${index}
+                ${cart_item_uid}=    Get Value From Json    ${list_element}    [id]
+                ${cart_item_uid}=    Convert To String    ${cart_item_uid}
+                ${cart_item_uid}=    Replace String    ${cart_item_uid}    '   ${EMPTY}
+                ${cart_item_uid}=    Replace String    ${cart_item_uid}    [   ${EMPTY}
+                ${cart_item_uid}=    Replace String    ${cart_item_uid}    ]   ${EMPTY}
+                ${response_delete}=    DELETE    ${current_url}/guest-carts/${cart_id}/guest-cart-items/${cart_item_uid}    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}    expected_status=204
+        END
+
+Cleanup all availability notifications:
+    [Documentation]    This keyword deletes any and all availability notifications related to the given customer reference.
+        ...
+        ...    Before using this method you should get customer token and set it into the headers with the help of ``I get access token for the customer:`` and ``I set Headers:``
+        ...
+        ...    *Example:*
+        ...
+        ...    ``Cleanup all availability notifications in the guest cart:    ${yves_user_reference}``
+        [Arguments]    ${yves_user_reference}
+        ${response}=    GET    ${current_url}/customers/${yves_user_reference}/availability-notifications    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}   expected_status=200
+        ${response_body}=    Set Variable    ${response.json()}
+        @{data}=    Get Value From Json    ${response_body}    [data]
+        ${list_length}=    Get Length    @{data}
+        ${list_length}=    Convert To Integer    ${list_length}
+        ${log_list}=    Log List    @{data}
+        Log    list_length: ${list_length}
+        FOR    ${index}    IN RANGE    0    ${list_length}
+                ${list_element}=    Get From List    @{data}    ${index}
+                ${availability_notification_id}=    Get Value From Json    ${list_element}    [id]
+                ${availability_notification_id}=    Convert To String    ${availability_notification_id}
+                ${availability_notification_id}=    Replace String    ${availability_notification_id}    '   ${EMPTY}
+                ${availability_notification_id}=    Replace String    ${availability_notification_id}    [   ${EMPTY}
+                ${availability_notification_id}=    Replace String    ${availability_notification_id}    ]   ${EMPTY}
+                Log    availability_notification_id: ${availability_notification_id}
+                ${response_delete}=    DELETE    ${current_url}/availability-notifications/${availability_notification_id}    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}    expected_status=204
         END

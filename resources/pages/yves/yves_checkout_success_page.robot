@@ -1,2 +1,2 @@
 *** Variables ***
-&{success_page_main_container_locator}    b2b=xpath=//main[contains(@class,'page-layout-main--success')]//div[contains(@class,'container--checkout-success')]    b2c=xpath=//div[contains(@class,'page-layout-checkout success-page')]    suite-nonsplit=xpath=//main//*[contains(text(),'placed successfully')]
+&{success_page_main_container_locator}    b2b=xpath=//main[contains(@class,'page-layout-main--success')]//div[contains(@class,'container--checkout-success')]    b2c=xpath=//div[contains(@class,'page-layout-checkout success-page')]    suite-nonsplit=xpath=//main//*[contains(text(),'Thank you')]

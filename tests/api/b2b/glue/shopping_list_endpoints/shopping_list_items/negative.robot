@@ -5,6 +5,9 @@ Resource    ../../../../../../resources/common/common_api.robot
 Default Tags    glue
 
 *** Test Cases ***
+ENABLER
+    TestSetup
+    
 Add_a_concrete_product_to_the_shopping_list_without_access_token
     I send a POST request:    /shopping-lists/${yves_user_1st_shopping_list_id}/shopping-list-items    {"data":{"type":"shopping-list-items","attributes":{"sku":"${concrete_available_product_sku}","quantity":1}}}
     And Response status code should be:    403
@@ -60,7 +63,7 @@ Add_a_product_with_zero_quantity_to_the_shopping_list
     ...    AND    Response status code should be:    204
     ...    AND    Response reason should be:    No Content
 
-Add_a_product_with_negaive_quantity_of_to_the_shopping_list  
+Add_a_product_with_negaive_quantity_to_the_shopping_list  
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}  
     ...    AND    I send a POST request:    /shopping-lists    {"data":{"type":"shopping-lists","attributes":{"name":"${shopping_list_name}${random}"}}}
@@ -232,7 +235,7 @@ Add_a_concrete_product_without_type_in_request_to_the_shopping_list
     [Teardown]    Run Keywords    I send a DELETE request:    /shopping-lists/${shoppingListId}
     ...    AND    Response status code should be:    204
     ...    AND    Response reason should be:    No Content
-
+#https://spryker.atlassian.net/browse/CC-16674
 Add_a_concrete_product_to_the_shared_shopping_list_without_write_access_permission
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}  
@@ -310,9 +313,7 @@ Update_product_in_the_shopping_list_without_quantity_in_the_request
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}  
     I send a PATCH request:    /shopping-lists/shoppingListId/shopping-list-items/shoppingListItemId    {"data":{"type":"shopping-list-items","attributes":{}}}
-    And Response status code should be:    200
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
-    And Response body parameter should be:    [data][attributes][quantity]    2
     And Response status code should be:    422
     And Response should return error code:    901
     And Response reason should be:    Unprocessable Content
@@ -344,17 +345,17 @@ Update_product_at_the_shopping_list_without_type_in_request
     And Response reason should be:    Bad Request
     And Response should return error message:    Post data is invalid.
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
-
+#https://spryker.atlassian.net/browse/CC-16674
 Change_quantity_of_a_concrete_product_at_the_shared_shopping_list_without_write_access_permission 
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
-    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}  
+    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     ...    AND    I send a GET request:    /shopping-lists/
     ...    AND    Save value to a variable:    [data][1][id]    sharedShoppingListId
     ...    AND    I send a POST request:    /shopping-lists/${sharedShoppingListId}/shopping-list-items    {"data":{"type":"shopping-list-items","attributes":{"sku":"${concrete_available_product_sku}","quantity":1}}}
     ...    AND    Response status code should be:    201
     ...    AND    Save value to a variable:    [data][id]    shoppingListItemId
     ...    AND    I get access token for the customer:    ${yves_shared_shopping_list_user_email}
-    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token} 
+    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     I send a PATCH request:    /shopping-lists/${sharedShoppingListId}/shopping-list-items/${shoppingListItemId}    {"data":{"type":"shopping-list-items","attributes":{"quantity":2}}}
     And Response status code should be:    403
     And Response should return error code:    1505
@@ -362,7 +363,7 @@ Change_quantity_of_a_concrete_product_at_the_shared_shopping_list_without_write_
     And Response should return error message:    Requested operation requires write access permission.
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     [Teardown]    Run Keywords    I get access token for the customer:    ${yves_user_email}
-    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}  
+    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     ...    AND    I send a DELETE request:    /shopping-lists/${sharedShoppingListId}/shopping-list-items/${shoppingListItemId}
     ...    AND    Response status code should be:    204
     ...    AND    Response reason should be:    No Content
@@ -426,9 +427,10 @@ Remove_a_product_from_the_shopping_list_without_shopping_list_item_id_in_url
     And Response should return error message:    Resource id is not specified.
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
 
+#https://spryker.atlassian.net/browse/CC-16674
 Remove_a_concrete_product_from_the_shared_shopping_list_without_write_access_permission 
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
-    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}  
+    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     ...    AND    I send a GET request:    /shopping-lists/
     ...    AND    Response status code should be:    200
     ...    AND    Save value to a variable:    [data][1][id]    sharedShoppingListId
@@ -436,7 +438,7 @@ Remove_a_concrete_product_from_the_shared_shopping_list_without_write_access_per
     ...    AND    Response status code should be:    201
     ...    AND    Save value to a variable:    [data][id]    shoppingListItemId
     ...    AND    I get access token for the customer:    ${yves_shared_shopping_list_user_email}
-    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token} 
+    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     I send a DELETE request:    /shopping-lists/${sharedShoppingListId}/shopping-list-items/${shoppingListItemId}
     And Response status code should be:    403
     And Response should return error code:    1505
@@ -444,7 +446,7 @@ Remove_a_concrete_product_from_the_shared_shopping_list_without_write_access_per
     And Response should return error message:    Requested operation requires write access permission.
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     [Teardown]    Run Keywords    I get access token for the customer:    ${yves_user_email}
-    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}  
+    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     ...    AND    I send a DELETE request:    /shopping-lists/${sharedShoppingListId}/shopping-list-items/${shoppingListItemId}
     ...    AND    Response status code should be:    204
     ...    AND    Response reason should be:    No Content
