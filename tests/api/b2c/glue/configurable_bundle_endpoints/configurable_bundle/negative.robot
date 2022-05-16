@@ -109,6 +109,17 @@ Update_configured_bundle_item_in_cart_with_non_existing_bundle_group_key
     And Response should return error code:    4004
     And Response should return error message:    Configured bundle with provided group key not found in cart.
 
+Update_configured_bundle_item_in_cart_with_invalid_qty
+  [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+      ...  AND    I set Headers:    Authorization=${token}
+      ...  AND    Find or create customer cart
+      ...  AND    Cleanup all items in the cart:    ${cart_id}
+    ...    AND     I send a POST request:    /carts/${cart_id}/configured-bundles?include=items    {"data": {"type": "configured-bundles","attributes": {"quantity": "${configured_bundle_quantity}","templateUuid": "${configurable_bundle_template_id}","items": [{"sku": "${configurable_bundle_first_slot_item_sku}","quantity": 2,"slotUuid": "${configurable_bundle_first_slot_uuid}"}]}}}
+    When I send a PATCH request:    /carts/${cart_id}/configured-bundles     {"data": {"type": "configured-bundles","attributes": {"quantity": "abcd"}}}
+    Then Response status code should be:    400
+    And Response reason should be:    Bad Request
+    And Response should return error message:    Resource id is not specified.
+
 Update_configured_bundle_item_in_cart_with_no_item_id
   [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
       ...  AND    I set Headers:    Authorization=${token}
