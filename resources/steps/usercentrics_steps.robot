@@ -18,11 +18,6 @@ Zed: configure usercentrics pbc:
         Run keyword if    '${key}'=='isActive' and '${value}' == 'false'    Click    ${pbc_usercentrics_is_active_input} >> xpath=//ancestor::spy-checkbox//label[contains(@class, 'ant-checkbox-wrapper-checked')]
     END
 
-Yves: page should contain script with attribute:
-    [Arguments]    ${attribute}    ${value}
-    Try reloading page until element is/not appear:    xpath=//head//script[@${attribute}='${value}']    true
-    Page Should Contain Element    xpath=//head//script[@${attribute}='${value}']
-
 Yves: page should/shouldn't contain usercentrics privacy settings form:
     [Arguments]    ${shouldContain}
     Run Keyword If    '${shouldContain}'=='true'    Run Keywords

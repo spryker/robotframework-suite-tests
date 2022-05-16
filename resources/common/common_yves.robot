@@ -231,3 +231,12 @@ Yves: try reloading page if element is/not appear:
 Yves: get current lang
     ${lang}=    get attribute    xpath=//html    lang
     return from keyword   ${lang}
+
+Yves: page should contain script with attribute:
+    [Arguments]    ${attribute}    ${value}
+    Try reloading page until element is/not appear:    xpath=//head//script[@${attribute}='${value}']    true
+    Page Should Contain Element    xpath=//head//script[@${attribute}='${value}']
+
+Yves: page should contain script with id:
+    [Arguments]    ${scriptId}
+    Yves: page should contain script with attribute:    id    ${scriptId}
