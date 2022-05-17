@@ -60,11 +60,6 @@ Yves: post bazaarvoice review:
     Check Checkbox    ${bv_terms_and_conditions_checkbox}
     Click    ${bv_submit_button}
 
-Yves: page should contain script with id:
-    [Arguments]    ${scriptId}
-    Try reloading page until element is/not appear:    xpath=//head//script[@id='${scriptId}']    true
-    Page Should Contain Element    xpath=//head//script[@id='${scriptId}']
-
 Yves: first product card in the catalog should contain bazaarvoice inline rating
     Page Should Contain Element    xpath=//div[contains(@class,'grid grid')]/div[1]/product-item//*[@data-bv-show='inline_rating']
 
