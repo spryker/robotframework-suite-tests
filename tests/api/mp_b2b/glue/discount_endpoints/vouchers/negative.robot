@@ -22,7 +22,8 @@ Adding_not_existing_voucher_code_to_cart_of_logged_in_customer
     When I send a POST request:    /carts/${cart_id}/vouchers    {"data": {"type": "vouchers","attributes": {"code": "1111111"}}}
     Then Response status code should be:    422
     And Response reason should be:    Unprocessable Content
-    And Response body parameter should not be EMPTY:    [errors]
+    And Response should return error code:    3302
+    And Response should return error message:    "Cart code cant be added."
     [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cart_id}
     ...    AND    Response status code should be:    204
 
