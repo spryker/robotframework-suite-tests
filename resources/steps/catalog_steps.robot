@@ -37,7 +37,7 @@ Yves: change sorting order on catalog page:
     Click    xpath=//span[contains(@id,'select2-sort')]
     Wait Until Element Is Visible    xpath=//ul[contains(@role,'listbox')]//li[contains(@id,'select2-sort') and contains(text(),'${sortingOption}')]
     Click    xpath=//ul[contains(@role,'listbox')]//li[contains(@id,'select2-sort') and contains(text(),'${sortingOption}')]
-        
+
 
 Yves: 1st product card in catalog (not)contains:
     [Documentation]    ${elementName} can be: Price, Name, Add to Cart, Color selector, Sale label, New label
@@ -81,7 +81,7 @@ Yves: quick add to cart for first item in catalog
 
 Yves: get current cart item counter value
     [Documentation]    returns the cart item count number as an integer
-    ${currentCartCounterText}=    Execute Javascript    document.evaluate("//*[@data-qa='component navigation-top']//span[contains(@class,'cart-counter__quantity js-cart-counter__quantity')]", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.textContent
+    ${currentCartCounterText}=    Evaluate Javascript    ${None}    document.evaluate("//*[@data-qa='component navigation-top']//span[contains(@class,'cart-counter__quantity js-cart-counter__quantity')]", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.textContent
     ${currentCartCounter}=    Convert To Integer    ${currentCartCounterText}
     [return]    ${currentCartCounter}
 

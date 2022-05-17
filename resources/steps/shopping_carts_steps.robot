@@ -11,8 +11,8 @@ ${lockedCart}    ${shopping_cart_locked_cart_form}
 *** Keywords ***
 Yves: 'Shopping Carts' widget contains:
     [Arguments]    ${shoppingCartName}    ${accessLevel}
-    Wait Until Element Is Visible    ${shopping_car_icon_header_menu_item}[${env}] 
-    Mouse Over    ${shopping_car_icon_header_menu_item}[${env}] 
+    Wait Until Element Is Visible    ${shopping_car_icon_header_menu_item}[${env}]
+    Mouse Over    ${shopping_car_icon_header_menu_item}[${env}]
     Wait Until Element Is Visible    ${shopping_cart_sub_navigation_widget}
     Page Should Contain Element    xpath=//*[contains(@class,'icon--cart')]/ancestor::li//div[contains(@class,'js-user-navigation__sub-nav-cart')]//span[text()[contains(.,'${accessLevel}')]]/ancestor::div[@class='mini-cart-detail']//*[contains(@class,'mini-cart-detail__title')]/*[text()='${shoppingCartName}']
 
@@ -20,12 +20,12 @@ Yves: Go to 'Shopping Carts' page
     Mouse Over    ${shopping_car_icon_header_menu_item}[${env}]
     Wait Until Page Contains Element    ${shopping_cart_sub_navigation_widget}
     Click Element by xpath with JavaScript    ${shopping_cart_sub_navigation_all_carts_button}
-        
+
 
 Yves: create new 'Shopping Cart' with name:
     [Arguments]    ${shoppingCartName}
-    ${currentURL}=    Get Location        
-    Run Keyword Unless    '/multi-cart' in '${currentURL}'    Go To    ${host}multi-cart
+    ${currentURL}=    Get Location
+    Run Keyword If    '/multi-cart' not in '${currentURL}'    Go To    ${host}multi-cart
     Click    ${create_shopping_cart_button}
     Type Text    ${shopping_cart_name_input_field}    ${shoppingCartName}
     Click    ${create_new_cart_submit_button}
@@ -34,7 +34,7 @@ Yves: the following shopping cart is shown:
     [Arguments]    ${shoppingCartName}    ${shoppingCartAccess}
     Page Should Contain Element    xpath=//*[@data-qa='component quote-table']//table//td[@data-content='Access'][contains(.,'${shoppingCartAccess}')]/../td[@data-content='Name'][contains(.,'${shoppingCartName}')]
 
-Yves: share shopping cart with user:    
+Yves: share shopping cart with user:
     [Arguments]    ${shoppingCartName}    ${customerToShare}    ${accessLevel}
     Share shopping cart with name:    ${shoppingCartName}
     Select access level to share shopping cart with:    ${customerToShare}    ${accessLevel}
@@ -44,17 +44,17 @@ Yves: share shopping cart with user:
 
 Yves: go to the shopping cart through the header with name:
     [Arguments]    ${shoppingCartName}
-    Wait Until Element Is Visible    ${shopping_car_icon_header_menu_item}[${env}] 
-    Mouse Over    ${shopping_car_icon_header_menu_item}[${env}] 
+    Wait Until Element Is Visible    ${shopping_car_icon_header_menu_item}[${env}]
+    Mouse Over    ${shopping_car_icon_header_menu_item}[${env}]
     Wait Until Element Is Visible    ${shopping_cart_sub_navigation_widget}
     Click    //*[contains(@class,'icon--cart')]/ancestor::li//div[contains(@class,'js-user-navigation__sub-nav-cart')]//div[@class='mini-cart-detail']//*[contains(@class,'mini-cart-detail__title')]/*[text()='${shoppingCartName}']
-    
+
 Yves: go to b2c shopping cart
-    Wait Until Element Is Visible    ${shopping_car_icon_header_menu_item}[${env}] 
+    Wait Until Element Is Visible    ${shopping_car_icon_header_menu_item}[${env}]
     Click     ${shopping_car_icon_header_menu_item}[${env}]
     Wait Until Element Is Visible    ${shopping_cart_main_content_locator}[${env}]
-             
-    
+
+
 Yves: shopping cart contains the following products:
     [Documentation]    For item listing you can use sku or name of the product
     [Arguments]    @{items_list}
@@ -62,8 +62,8 @@ Yves: shopping cart contains the following products:
     FOR    ${index}    IN RANGE    0    ${items_list_count}
         ${item_to_check}=    Get From List    ${items_list}    ${index}
         Page Should Contain Element    xpath=//main[contains(@class,'cart')]//article[contains(@data-qa,'component product-card-item')]//*[contains(.,'${item_to_check}')]/ancestor::article
-    END    
-    
+    END
+
 Yves: click on the '${buttonName}' button in the shopping cart
     Yves: remove flash messages
     Run Keyword If    '${buttonName}' == 'Checkout'    Click    ${shopping_cart_checkout_button}
@@ -80,11 +80,11 @@ Yves: shopping cart contains/doesn't contain the following elements:
     ${shopping_cart_elements_list_count}=   get length  ${shopping_cart_elements_list}
     FOR    ${index}    IN RANGE    0    ${shopping_cart_elements_list_count}
         ${shopping_cart_element_to_check}=    Get From List    ${shopping_cart_elements_list}    ${index}
-        Run Keyword If    '${condition}' == 'true'    
+        Run Keyword If    '${condition}' == 'true'
         ...    Run Keywords
         ...    Log    ${shopping_cart_element_to_check}    #Left as an example of multiple actions in Condition
         ...    AND    Page Should Contain Element    ${shopping_cart_element_to_check}    message=${shopping_cart_element_to_check} is not displayed
-        Run Keyword If    '${condition}' == 'false'    
+        Run Keyword If    '${condition}' == 'false'
         ...    Run Keywords
         ...    Log    ${shopping_cart_element_to_check}    #Left as an example of multiple actions in Condition
         ...    AND    Page Should Not Contain Element    ${shopping_cart_element_to_check}    message=${shopping_cart_element_to_check} should not be displayed
@@ -97,7 +97,7 @@ Yves: shopping cart with name xxx has the following status:
 Yves: delete product from the shopping cart with sku:
     [Arguments]    ${sku}
     Click    xpath=//form[@name='removeFromCartForm_${sku}']//button
-        
+
     Yves: remove flash messages
 
 Yves: shopping cart doesn't contain the following products:
@@ -106,7 +106,7 @@ Yves: shopping cart doesn't contain the following products:
     FOR    ${index}    IN RANGE    0    ${sku_list_count}
         ${sku_to_check}=    Get From List    ${sku_list}    ${index}
         Page Should Not Contain Element    xpath=//form[@name='removeFromCartForm_${sku_to_check}']
-    END  
+    END
 
 Yves: get link for external cart sharing
     Yves: Expand shopping cart accordion:    Share Cart via link
@@ -115,7 +115,7 @@ Yves: get link for external cart sharing
     ${externalURL}=    Get Element Attribute    xpath=//input[@id='PREVIEW']    value
     Set Suite Variable    ${externalURL}
 
-Yves: Expand shopping cart accordion: 
+Yves: Expand shopping cart accordion:
      [Arguments]    ${accordionTitle}
      ${accordionState}=    Get Element Attribute    xpath=//div[@data-qa='component cart-sidebar']//*[contains(@class,'cart-sidebar-item__title')][contains(.,'${accordionTitle}')]    class
      ${accordionState}=    Replace String    ${accordionState}    ${SPACE}    ${EMPTY}
@@ -124,7 +124,7 @@ Yves: Expand shopping cart accordion:
      ${accordionState}=    Replace String    ${accordionState}    \r    ${EMPTY}
      ${accordionState}=    Replace String    ${accordionState}    \n    ${EMPTY}
      Log    ${accordionState}
-     Run Keyword Unless    'active' in '${accordionState}'    Run Keywords
+     Run Keyword If    'active' not in '${accordionState}'    Run Keywords
      ...    Click    xpath=//div[@data-qa='component cart-sidebar']//*[contains(@class,'cart-sidebar-item__title')][contains(.,'${accordionTitle}')]
      ...    AND    Wait Until Element Is Visible    xpath=//div[@data-qa='component cart-sidebar']//*[contains(@class,'cart-sidebar-item__title')][contains(.,'${accordionTitle}')]/../div[contains(@class,'cart-sidebar-item__content')]
 
@@ -145,8 +145,8 @@ Yves: change quantity of the configurable bundle in the shopping cart on:
 Yves: delete all shopping carts
     Yves: create new 'Shopping Cart' with name:    Z
     #create new empty cart that will be the last one in the list
-    ${currentURL}=    Get Location        
-    Run Keyword Unless    '/shopping-list' in '${currentURL}'    Go To    ${host}multi-cart
+    ${currentURL}=    Get Location
+    Run Keyword If    '/shopping-list' not in '${currentURL}'    Go To    ${host}multi-cart
     ${shoppingCartsCount}=    Get Element Count    xpath=//*[@data-qa='component quote-table']//table/tbody/tr//ul//a[contains(.,'Delete')]
     Log    ${shoppingCartsCount}
     FOR    ${index}    IN RANGE    0    ${shoppingCartsCount}-1
@@ -155,16 +155,16 @@ Yves: delete all shopping carts
         Wait Until Element Is Visible    ${delete_shopping_cart_button}
         Click    ${delete_shopping_cart_button}
     END
-    
+
 
 Yves: delete 'Shopping Cart' with name:
     [Arguments]    ${shoppingCartName}
-    ${currentURL}=    Get Location        
-    Run Keyword Unless    '/shopping-list' in '${currentURL}'    Go To    ${host}multi-cart
+    ${currentURL}=    Get Location
+    Run Keyword If    '/shopping-list' not in '${currentURL}'    Go To    ${host}multi-cart
     Delete shopping cart with name:    ${shoppingCartName}
     Wait Until Element Is Visible    ${delete_shopping_cart_button}
     Click    ${delete_shopping_cart_button}
-      
+
 
 Yves: delete from b2c cart products with name:
     [Arguments]    @{productNameList}
@@ -185,7 +185,7 @@ Yves: apply discount voucher to cart:
     Click    ${shopping_cart_voucher_code_redeem_button}
     Yves: flash message should be shown:    success    Your voucher code has been applied
     Yves: remove flash messages
-    
+
 
 Yves: discount is applied:
 #TODO: make from this method somth real, because Sum is not used
@@ -196,7 +196,7 @@ Yves: discount is applied:
     ...    ELSE    Run Keyword If    '${env}'=='b2b' and '${discountType}'=='cart rule'    Element should be visible    xpath=//span[contains(text(),'${expectedDiscountSum}')]/preceding-sibling::span[contains(text(),'${discountName}')]/ancestor::*[contains(@data-qa,'cart-code-summary')]/*[contains(.,'Discounts')]
 
 Yves: promotional product offer is/not shown in cart:
-    [Arguments]    ${isShown}    
+    [Arguments]    ${isShown}
     Run Keyword If    '${isShown}'=='true'    Element Should Be Visible    ${shopping_cart_promotional_product_section}    message=Promotional products are not displayed but should be
     ...    ELSE    Run Keyword If    '${isShown}'=='false'    Element Should Not Be Visible    ${shopping_cart_promotional_product_section}    message=Promotional products are displayed but should not
 
@@ -205,8 +205,8 @@ Yves: change quantity of promotional product and add to cart:
     [Arguments]    ${action}    ${clicksCount}
     FOR    ${index}    IN RANGE    0    ${clicksCount}
         Run Keyword If    '${action}' == '+'    Click    ${shopping_cart_promotional_product_increase_quantity_button}[${env}]
-        ...    ELSE IF    '${action}' == '-'    Click    ${shopping_cart_promotional_product_decrease_quantity_button}[${env}] 
+        ...    ELSE IF    '${action}' == '-'    Click    ${shopping_cart_promotional_product_decrease_quantity_button}[${env}]
     END
     Click    ${shopping_cart_promotional_product_add_to_cart_button}
     Yves: flash message should be shown:    success    Items added successfully
-    Yves: remove flash messages 
+    Yves: remove flash messages

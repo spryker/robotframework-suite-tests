@@ -85,7 +85,7 @@ Zed: attach company user to the following BU with role:
     Select From List By Label    ${zed_business_unit_selector}    ${business_unit}
     Zed: Check checkbox by Label:    ${role_checkbox}
     Zed: submit the form
-    
+
 
 Yves: 'Business Unit' dropdown contains:
     [Arguments]    @{business_units_list}    ${element1}=${EMPTY}     ${element2}=${EMPTY}     ${element3}=${EMPTY}     ${element4}=${EMPTY}     ${element5}=${EMPTY}     ${element6}=${EMPTY}     ${element7}=${EMPTY}     ${element8}=${EMPTY}     ${element9}=${EMPTY}     ${element10}=${EMPTY}     ${element11}=${EMPTY}     ${element12}=${EMPTY}     ${element13}=${EMPTY}     ${element14}=${EMPTY}     ${element15}=${EMPTY}
@@ -98,9 +98,9 @@ Yves: 'Business Unit' dropdown contains:
 Zed: delete company user xxx withing xxx company business unit:
     [Documentation]    Possible argument names: company user name
     [Arguments]    ${companyUserName}    ${companyBusinessUnit}
-    Zed: login on Zed with provided credentials:    ${zed_admin_email}    
-    ${currentURL}=    Get Location        
-    Run Keyword Unless    '/customer' in '${currentURL}'    Zed: go to second navigation item level:    Customers    Company Users
+    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    ${currentURL}=    Get Location
+    Run Keyword If    '/customer' not in '${currentURL}'    Zed: go to second navigation item level:    Customers    Company Users
     Zed: perform search by:    ${companyUserName}
     ${customerExists}=    Run Keyword And Return Status    Table should contain    ${zed_table_locator}    ${companyBusinessUnit}
     Run Keyword If    '${customerExists}'=='True'    Run keywords

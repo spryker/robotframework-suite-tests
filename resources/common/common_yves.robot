@@ -31,7 +31,7 @@ ${notification_area}    xpath=//section[@data-qa='component notification-area']
 Yves: login on Yves with provided credentials:
     [Arguments]    ${email}    ${password}=${default_password}
     ${currentURL}=    Get Url
-    Run Keyword Unless    '/login' in '${currentURL}'
+    Run Keyword If    '/login' not in '${currentURL}'
     ...    Run keyword if    '${env}' in ['b2b','suite-nonsplit']
     ...    Run Keywords
     ...    Go To    ${host}
@@ -51,7 +51,7 @@ Yves: login on Yves with provided credentials:
     Type Text    ${email_field}    ${email}
     Type Text    ${password_field}    ${password}
     Click    ${form_login_button}
-    Run Keyword Unless    'fake' in '${email}' or 'agent' in '${email}'  Wait Until Element Is Visible    ${user_navigation_icon_header_menu_item}[${env}]     Login Failed!
+    Run Keyword If    'fake' not in '${email}' or 'agent' not in '${email}'  Wait Until Element Is Visible    ${user_navigation_icon_header_menu_item}[${env}]     Login Failed!
     Run Keyword If    'agent' in '${email}'    Yves: header contains/doesn't contain:    true    ${customerSearchWidget}
     Yves: remove flash messages
 
@@ -109,7 +109,7 @@ Yves: get the last placed order ID by current customer
     ${currentURL}=    Get Location
     Run Keyword If    '${env}'=='b2b'    Set Test Variable    ${menuItem}    Order History
     ...    ELSE    Set Test Variable    ${menuItem}    Orders History
-    Run Keyword Unless    '/customer/order' in '${currentURL}'
+    Run Keyword If    '/customer/order' not in '${currentURL}'
     ...    Run Keywords
     ...    Yves: go to the 'Home' page
     ...    AND    Yves: go to user menu item in header:    ${menuItem}

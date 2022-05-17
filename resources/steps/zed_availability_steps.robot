@@ -14,7 +14,7 @@ Zed: check if product is/not in stock:
 Zed: change product stock:
     [Arguments]    ${skuAbstract}    ${skuConcrete}    ${isNeverOutOfStock}    ${quantityWarehouse1}    ${quantityWarehouse2}=0
     ${currentURL}=    Get Location
-    Run Keyword Unless    '/availability-gui' in '${currentURL}'    Zed: go to second navigation item level:    Catalog    Availability
+    Run Keyword If    '/availability-gui' not in '${currentURL}'    Zed: go to second navigation item level:    Catalog    Availability
     Run Keyword If    '/availability-gui/index/edit' in '${currentURL}'    Zed: go to second navigation item level:    Catalog    Availability
     Zed: perform search by:    ${skuAbstract}
     Click    xpath=//a[contains(text(),'${skuAbstract}')]/ancestor::tr//following-sibling::td//*[contains(.,'View')]
@@ -30,12 +30,12 @@ Zed: change product stock:
         ...    ELSE    Uncheck Checkbox    \(//*[@type='checkbox' and contains(@id,'is_never_out_of_stock')]\)\[${index}\]
     END
     Type Text    xpath=//input[contains(@id,'AvailabilityGui_stock_stocks_0_quantity')]    ${quantityWarehouse1}
-    Type Text    xpath=//input[contains(@id,'AvailabilityGui_stock_stocks_1_quantity')]    ${quantityWarehouse2}   
+    Type Text    xpath=//input[contains(@id,'AvailabilityGui_stock_stocks_1_quantity')]    ${quantityWarehouse2}
     Click    ${zed_save_button}
     #Resave to apply changes
     Click    ${zed_save_button}
 
-Zed: check and restore product availability in Zed:    
+Zed: check and restore product availability in Zed:
     [Arguments]    ${skuAbstract}    ${expectedStatus}    ${skuConcrete}
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Catalog    Availability

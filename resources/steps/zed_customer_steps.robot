@@ -7,10 +7,10 @@ Resource    ../common/common.robot
 Zed: delete customer:
     [Documentation]    Possible argument names: email
         [Arguments]    @{args}
-        Zed: login on Zed with provided credentials:    ${zed_admin_email}    
+        Zed: login on Zed with provided credentials:    ${zed_admin_email}
         ${registrationData}=    Set Up Keyword Arguments    @{args}
-        ${currentURL}=    Get Location        
-        Run Keyword Unless    '/customer' in '${currentURL}'    Zed: go to second navigation item level:    Customers    Customers
+        ${currentURL}=    Get Location
+        Run Keyword If    '/customer' not in '${currentURL}'    Zed: go to second navigation item level:    Customers    Customers
         FOR    ${key}    ${value}    IN    &{registrationData}
             Log    Key is '${key}' and value is '${value}'.
             Zed: perform search by:    ${value}

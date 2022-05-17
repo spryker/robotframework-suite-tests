@@ -100,25 +100,25 @@ Select Random Option From List
 
 Click Element by xpath with JavaScript
     [Arguments]    ${xpath}
-    Execute Javascript    document.evaluate("${xpath}", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.click()
+    Evaluate Javascript    ${None}  document.evaluate("${xpath}", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.click()
 
 Click Element by id with JavaScript
     [Arguments]    ${id}
-    Execute Javascript    document.getElementById("${id}").click()
+    Evaluate Javascript    ${None}  document.getElementById("${id}").click()
 
 Remove element from HTML with JavaScript
     [Arguments]    ${xpath}
-    Execute Javascript    var element=document.evaluate("${xpath}", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;element.parentNode.removeChild(element);
+    Evaluate Javascript    ${None}  var element=document.evaluate("${xpath}", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;element.parentNode.removeChild(element);
 
 Add/Edit element attribute with JavaScript:
     [Arguments]    ${xpath}    ${attribute}    ${attributeValue}
     Log    ${attribute}
     Log    ${attributeValue}
-    Execute Javascript    (document.evaluate("${xpath}", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue).setAttribute("${attribute}", "${attributeValue}");
+    Evaluate Javascript    ${None}   (document.evaluate("${xpath}", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue).setAttribute("${attribute}", "${attributeValue}");
 
 Remove element attribute with JavaScript:
     [Arguments]    ${xpath}    ${attribute}
-    Execute Javascript    var element=document.evaluate("${xpath}", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;element.removeAttribute("${attribute}"");
+    Evaluate Javascript    ${None}  var element=document.evaluate("${xpath}", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;element.removeAttribute("${attribute}"");
 
 # Helper keywords for migration from Selenium Library to Browser Library
 Wait Until Element Is Visible
@@ -155,7 +155,7 @@ Wait Until Element Is Not Visible
 
 Page Should Contain Link
     [Arguments]    ${url}    ${message}=${EMPTY}
-    ${hrefs}=    Execute JavaScript    Array.from(document.querySelectorAll('a')).map(e => e.getAttribute('href'))
+    ${hrefs}=    Evaluate JavaScript    ${None} Array.from(document.querySelectorAll('a')).map(e => e.getAttribute('href'))
     Should Contain    ${hrefs}    ${url}
 
 Scroll Element Into View
