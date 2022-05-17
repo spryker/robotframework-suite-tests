@@ -184,6 +184,36 @@ Get_cart_with_included_promotional_items
     And Response body parameter should be:    [included][0][attributes][sku]    112
     And Response body parameter should be:    [included][0][attributes][quantity]    1
 
+Get_cart_by_cart_id_with_included_vouchers
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    ...    AND    I set Headers:    Authorization=${token}
+    ...    AND    Find or create customer cart
+    ...    AND    Cleanup all items in the cart:    ${cart_id}
+    ...    AND    I send a POST request:    /carts/${cart_id}/items    {"data": {"type": "items","attributes": {"sku": "${discount_concrete_product_sku_with_voucher_code}","quantity": 1}}}
+    ...    AND    Save the result of a SELECT DB query to a variable:    select code from spy_discount_voucher where fk_discount_voucher_pool = 1 and id_discount_voucher = 1    discount_voucher_code
+    ...    AND    I send a POST request:    /carts/${cart_id}/vouchers    {"data": {"type": "vouchers","attributes": {"code": "${discount_voucher_code}"}}}
+    When I send a GET request:    /carts/${cart_id}?include=vouchers
+    Then Response body parameter should be:    [data][type]    carts
+    And Response body parameter should be:    [data][id]    ${cart_id}
+    And Response body parameter should be:    [data][attributes][priceMode]    ${gross_mode}
+    And Response body parameter should be:    [data][attributes][currency]    ${currency_code_eur}
+    And Response body parameter should be:    [data][attributes][store]    ${store_de}
+    #relationships
+    And Response body parameter should be:    [data][relationships][vouchers][data][0][type]    vouchers
+    And Response body parameter should be:    [data][relationships][vouchers][data][0][id]    ${discount_voucher_code}
+    #included
+    And Response body parameter should be:    [included][0][type]    vouchers
+    And Response body parameter should be:    [included][0][id]    ${discount_voucher_code}
+    And Response body parameter should be greater than:    [included][0][attributes][amount]    0
+    And Response body parameter should be:    [included][0][attributes][code]    ${discount_voucher_code}
+    And Response body parameter should be:    [included][0][attributes][discountType]    voucher
+    And Response body parameter should be:    [included][0][attributes][displayName]    ${discount_2_name}
+    And Response body parameter should be:    [included][0][attributes][isExclusive]    False
+    And Response body parameter should not be EMPTY:    [included][0][attributes][expirationDateTime]
+    And Response body parameter should be:    [included][0][attributes][discountPromotionAbstractSku]    None
+    And Response body parameter should be:    [included][0][attributes][discountPromotionQuantity]    None
+    And Response body parameter should not be EMPTY:    [included][0][links][self]
+
 #PATCH requests
 Update_cart_by_cart_id_with_all_attributes
        [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
