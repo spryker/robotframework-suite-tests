@@ -7,6 +7,7 @@ Library    Collections
 Library    BuiltIn
 Library    DateTime
 Library    JSONLibrary
+Library    DatabaseLibrary
 Library    ../../resources/libraries/common.py
 
 *** Variables ***
@@ -15,6 +16,12 @@ ${api_timeout}                 60
 ${default_password}            change123
 ${default_allow_redirects}     true
 ${default_auth}                ${NONE}
+# *** DB VARIABLES ***
+${default_db_host}         127.0.0.1
+${default_db_name}         eu-docker
+${default_db_password}     secret
+${default_db_port}         3306
+${default_db_user}         spryker  
 
 *** Keywords ***
 SuiteSetup
@@ -1122,6 +1129,29 @@ Save value to a variable:
     Set Test Variable    ${${name}}    ${var_value}  
     [Return]    ${name}
 
+Save the result of a SELECT DB query to a variable:
+    [Documentation]    This keyword saves any value which you receive from DB using SQL query ``${sql_query}`` to a test variable called ``${variable_name}``. 
+    ...
+    ...    It can be used to save a value returned by any query into a custom test variable.
+    ...    This variable, once created, can be used during the specific test where this keyword is used and can be re-used by the keywords that follow this keyword in the test. 
+    ...    It will not be visible to other tests.
+    ...    NOTE: Make sure that you expect only 1 value from DB, you can also check your query via external SQL tool.
+    ...
+    ...    *Examples:*
+    ...
+    ...    ``Save the result of a SELECT DB query to a variable:    select registration_key from spy_customer where customer_reference = '${user_reference_id}'    confirmation_key``
+    [Arguments]    ${sql_query}    ${variable_name}
+    Connect To Database    pymysql    ${default_db_name}    ${default_db_user}    ${default_db_password}    ${default_db_host}    ${default_db_port}
+    ${var_value} =    Query    ${sql_query}
+    Disconnect From Database
+    ${var_value}=    Convert To String    ${var_value}
+    ${var_value}=    Replace String    ${var_value}    '   ${EMPTY}
+    ${var_value}=    Replace String    ${var_value}    ,   ${EMPTY}
+    ${var_value}=    Replace String    ${var_value}    (   ${EMPTY}
+    ${var_value}=    Replace String    ${var_value}    )   ${EMPTY}
+    Set Test Variable    ${${variable_name}}    ${var_value}  
+    [Return]    ${variable_name}
+
 Save Header value to a variable:
     [Documentation]    This keyword saves any value located in a response Header parameter ``${header_parameter}`` to a test variable called ``${name}``. 
     ...
@@ -1245,6 +1275,29 @@ Find or create customer cart
         Run Keyword Unless    ${hasCart}    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${gross_mode}","currency": "${currency_code_eur}","store": "${store_de}"}}}
         Run Keyword Unless    ${hasCart}    Save value to a variable:    [data][id]    cart_id
 
+
+Get ETag header value from cart
+    [Documentation]    This keyword first retrieves cart for the current customer token.
+        ...   and then It gets the Etag header value and saves it into the test variable ``${Etag}``, which can then be used within the scope of the test where this keyword was called.
+        ...
+        ...    and it can be re-used by the keywords that follow this keyword in the test
+        ...    This keyword does not accept any arguments. This keyword is used for removing unused/unwanted (ex. W/"") characters from ETag header value.
+        
+
+        ${response}=    I send a GET request:    /carts
+        ${Etag}=    Get Value From Json   ${response_headers}    [ETag]
+        ${Etag}=    Convert To String    ${Etag}
+        ${Etag}=    Replace String    ${Etag}    '   ${EMPTY}
+        ${Etag}=    Replace String    ${Etag}    [   ${EMPTY}
+        ${Etag}=    Replace String    ${Etag}    ]   ${EMPTY}
+        ${Etag}=    Replace String    ${Etag}    W   ${EMPTY}
+        ${Etag}=    Replace String    ${Etag}    /   ${EMPTY}
+        ${Etag}=    Replace String    ${Etag}    "   ${EMPTY}
+        Log    ${Etag}
+        Set Test Variable    ${Etag}
+        [Return]    ${Etag}
+    
+
 Create a guest cart:
     [Documentation]    This keyword creates guest cart and sets ``${x_anonymous_customer_unique_id}`` that specify guest reference
         ...             and ``${guest_cart_id}`` that specify guest cart, variables
@@ -1292,7 +1345,7 @@ Cleanup all items in the guest cart:
         ...
         ...    *Example:*
         ...
-        ...    ``Cleanup items in the guest cart:    ${cart_id}``
+        ...    ``Cleanup all items in the guest cart:    ${cart_id}``
         [Arguments]    ${cart_id}
         ${response}=    GET    ${current_url}/guest-carts/${cart_id}    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}  params=include=guest-cart-items,bundle-items    expected_status=200
         ${response_body}=    Set Variable    ${response.json()}

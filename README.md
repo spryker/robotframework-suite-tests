@@ -5,10 +5,13 @@
 2. Install [Browser library](https://robotframework-browser.org/#installation)
 3. Install RequestsLibrary: `pip install robotframework-requests`
 
-### For API testing installation requires Robot Framework, [RequestsLibrary](https://github.com/MarketSquare/robotframework-requests) and [JSONLibrary](https://github.com/robotframework-thailand/robotframework-jsonlibrary)
+### For API testing installation requires Robot Framework, [RequestsLibrary](https://github.com/MarketSquare/robotframework-requests), [JSONLibrary](https://github.com/robotframework-thailand/robotframework-jsonlibrary), [DatabaseLibrary](https://github.com/franz-see/Robotframework-Database-Library) and [PyMySQL](https://github.com/PyMySQL/PyMySQL).
 1. Install [Robot Framework](https://github.com/robotframework/robotframework/blob/master/INSTALL.rst)
 2. Install RequestsLibrary: `pip install robotframework-requests`
 3. Install JSONLibrary: `pip install -U robotframework-jsonlibrary`
+4. Install DatabaseLibrary: `pip install -U robotframework-databaselibrary`
+5. Install PyMySQL: `python3 -m pip install PyMySQL`
+6. Import PyMySQL: `import pymysql` - if PyMySQL still doesn't work, you can use direct import command
 
 # How to run tests
 

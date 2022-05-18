@@ -39,8 +39,8 @@
         "yves_shared_shopping_list_user_first_name": "Trever",
         "yves_shared_shopping_list_user_last_name": "Meier",
         "yves_shared_shopping_list_user_password": "change123",
-        "yves_shared_shopping_list_user_salutation": "Mr",       
-        
+        "yves_shared_shopping_list_user_salutation": "Mr",
+
         "yves_shared_shopping_cart_user_email": "Solomon@spryker.com",
         "yves_shared_shopping_cart_user_first_name": "Solomon",
         "yves_shared_shopping_cart_user_last_name": "Wesner",
@@ -157,11 +157,11 @@
     },
 
     "products": {
-        
+
         "bundle_product_abstract_sku": "M90851",
         "bundle_product_abstract_name": "IDEAL document shredder - Power 1300 watts, 165 l volume",
         "bundle_product_concrete_sku":"000201",
-        "bundle_product_concrete_name": "IDEAL document shredder - Power 1300 watts, 165 l volume - 23 – 25 sheets, safety level P-4, particle",
+        "bundle_product_product_name": "IDEAL document shredder - Power 1300 watts, 165 l volume - 23 – 25 sheets, safety level P-4, particle",
         "bundled_product_1_abstract_sku": "M23457",
         "bundled_product_2_abstract_sku": "C2235",
         "bundled_product_3_abstract_sku": "M11542",
@@ -286,8 +286,68 @@
         "abstract_available_product_with_stock_description": " Easy-to-care-for fabric cover. Substructure in graphite black RAL 9011.<br/>Standard rolling for soft floors.<br/>The backrest has height-adjustable lumbar support.  ",
         "abstract_available_product_with_stock_superattribute": "bezugsfarbe",
         "concrete_available_product_sku": "102712",
-        "concrete_available_product_meta_keywords": "Arbeitsdrehstuhl,Bandscheibendrehstuhl,Bandschreibendrehstuhl,Bürodrehstuhl,Bürostuhl,Drehstuhl,Schreibtischstuhl,Universalstuhl",
-        "concrete_available_product_meta_description": " Pflegeleichter Stoffbezug. Gestell in Graphitschwarz RAL 9011.<br/>Standardmäßig Rollen für weiche Böden.<br/>Die Rückenlehne verfügt über eine höhenverstellbare Lendenwirbelstütze.  ",
+        "concrete_available_product_meta_keywords": "Prosedia vertebral disc swivel chair with synchronous mechanics and contoured seat - backrest height 660 mm",
+        "concrete_available_product_meta_description": " Easy-to-care-for fabric cover. Substructure in graphite black RAL 9011.<br/>Standard rolling for soft floors.<br/>The backrest has height-adjustable lumbar support.  ",
+
+        "abstract_available_product_with_stock_NESTED":{
+            "sku": "M61125",
+            "merchant_reference": "MER000008",
+            "name": "Prosedia vertebral disc swivel chair with synchronous mechanics and contoured seat - backrest height 660 mm",
+            "description": " Easy-to-care-for fabric cover. Substructure in graphite black RAL 9011.<br/>Standard rolling for soft floors.<br/>The backrest has height-adjustable lumbar support.  ",
+            "superattribute": "bezugsfarbe",
+            "meta_title": "Prosedia vertebral disc swivel chair with synchronous mechanics and contoured seat - backrest height 660 mm",
+            "meta_keywords": "Arbeitsdrehstuhl,Bandscheibendrehstuhl,Bandschreibendrehstuhl,Bürodrehstuhl,Bürostuhl,Drehstuhl,Schreibtischstuhl,Universalstuhl",
+            "meta_description": " Pflegeleichter Stoffbezug. Gestell in Graphitschwarz RAL 9011.<br/>Standardmäßig Rollen für weiche Böden.<br/>Die Rückenlehne verfügt über eine höhenverstellbare Lendenwirbelstütze.  ",
+            "concrete_available_product": {
+                "sku": "102712",
+                "name": "Prosedia vertebral disc swivel chair with synchronous mechanics and contoured seat - backrest height 660 mm - cover color orange",
+                "description": "Easy-to-care-for fabric cover. Substructure in graphite black RAL 9011.<br/>Standard rolling for soft floors.<br/>The backrest has height-adjustable lumbar support.",
+                "meta_title": "Prosedia vertebral disc swivel chair with synchronous mechanics and contoured seat - backrest height 660 mm",
+                "meta_keywords": "Arbeitsdrehstuhl,Bandscheibendrehstuhl,Bandschreibendrehstuhl,Bürodrehstuhl,Bürostuhl,Drehstuhl,Schreibtischstuhl,Universalstuhl",
+                "meta_description": " Pflegeleichter Stoffbezug. Gestell in Graphitschwarz RAL 9011.<br/>Standardmäßig Rollen für weiche Böden.<br/>Die Rückenlehne verfügt über eine höhenverstellbare Lendenwirbelstütze.  "
+            },
+            "category_nodes":{
+                "category_node_14": {
+                    "node_id":"14",
+                    "name":"Swivel Chairs"
+                },
+                "category_node_11": {
+                    "node_id":"11",
+                    "name":"Office furniture"
+                },
+                "category_node_12": {
+                    "node_id":"12",
+                    "name":"Chairs"
+                }
+            },
+            "product_options":{
+                "OP_1":{
+                    "id": "OP_1_year_waranty",
+                    "option_group_name": "Three (3) year limited warranty",
+                    "sku": "OP_1_year_waranty",
+                    "option_name": "One (1) year limited warranty"
+                },
+                "OP_2":{
+                    "id": "OP_2_year_waranty",
+                    "option_group_name": "Three (3) year limited warranty",
+                    "sku": "OP_2_year_waranty",
+                    "option_name": "Two (2) year limited warranty"
+                },
+                "OP_3":{
+                    "id": "OP_3_year_waranty",
+                    "option_group_name": "Three (3) year limited warranty",
+                    "sku": "OP_3_year_waranty",
+                    "option_name": "Three (3) year limited warranty"
+                },
+                "OP_insurance":{
+                    "id": "OP_insurance",
+                    "option_group_name": "Two (2) year insurance coverage",
+                    "sku": "OP_insurance",
+                    "option_name": "Two (2) year insurance coverage"
+                }
+
+            }
+        },
 
         "abstract_available_with_stock_and_never_out_of_stock": "M87",
         "concrete_available_with_stock_and_never_out_of_stock": "657716",
@@ -309,6 +369,11 @@
 
         "abstract_product_with_label": "M21691",
         "abstract_product_with_label_name": "Clairefontaine Collegeblock 8272C DIN A5, 90 sheets",
+
+        "abstract_product_with_label_NESTED": {
+            "sku": "M21691",
+            "name": "Clairefontaine Collegeblock 8272C DIN A5, 90 sheets"
+        },
 
         "abstract_product_with_concrete_offers": "",
         "abstract_product_with_concrete_offers_name": "",
@@ -368,9 +433,8 @@
         "discount_amount_for_product_3_with_discount_20%_off_storage": "16383",
         "discount_amount_for_product_3_with_10%_discount": "1882"
     },    
-
+  
     "product_offers":{  
-
         "inactive_offer_with_volume_price": "offer3",
         "waiting_for_approval_offer_with_volume_price": "offer4",
         "denied_offer_with_volume_price": "offer404",
@@ -380,8 +444,6 @@
         "second_offer_with_volume_price": "offer9",
         "offer_with_volume_price": "offer10",
         "offer_with_volume_price_gross_net_prices": "offer48",
-        "merchant_office_king_id": "MER000009",
-        "merchant_budget_stationery_id": "MER000010",
         "active_offer_price": "10160"
     },
 
@@ -389,20 +451,20 @@
         "brand_1": "Soennecken",
         "brand_2": "edding",
         "brand_3": "Mauser",
-        
+
         "material_1": "aluminum",
         "material_2": "metal",
         "material_3": "chipboard",
         "material_4": "Steel sheets, stove-enameled",
-        
+
         "delivery_1": "assembled",
         "price_unit_1": "piece",
-        
+
         "color_1": "yellow",
         "color_2": "blue",
         "color_3": "purple",
         "color_4": "orange",
-        
+
         "product_management_superattribute_id": "farbe",
         "product_management_attribute_free_input_id": "verschlussart",
         "product_management_attribute_no_input_id": "bundled_product"
@@ -544,9 +606,20 @@
         },
         "merchant_spryker_id": "MER000008",
         "merchant_office_king_id": "MER000009",
-        "merchant_budget_stationery_id": "MER000010"
+
+        "merchant_budget_stationery_id": "MER000010",
+        "merchant_spryker_name": "Spryker",
+        "merchant_spryker_url": "/en/merchant/spryker",
+        "contact_spryker_person_role":"E-Commerce Manager",
+        "contact_spryker_person_title": "Mr",
+        "contact_spryker_person_first_name": "Harald",
+        "contact_spryker_person_last_name": "Schmidt",
+        "contact_spryker_person_phone": "+49 30 208498350",
+        "spryker_public_email": "info@spryker.com",
+        "spryker_public_phone": "+49 30 234567891",
+        "description_spryker": "Spryker is the main merchant on the B2B Demo Marketplace."
+        
     },
-  
     "return_reasons": {
         "return_reason_damaged": "Damaged",
         "return_reason_wrong_item": "Wrong Item",
