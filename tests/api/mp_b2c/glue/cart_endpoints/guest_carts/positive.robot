@@ -38,10 +38,10 @@ Retrieve_guest_cart
     And Each array element of array in response should contain nested property with value:    [data]    [attributes][store]    ${store_de}
     And Each array element of array in response should contain nested property with datatype:    [data]    [attributes][totals][expenseTotal]    int
     And Each array element of array in response should contain nested property with datatype:    [data]    [attributes][totals][discountTotal]    int
-    And Each array element of array in response should contain nested property in range:    [data]    [attributes][totals][taxTotal]    0    None    
-    And Each array element of array in response should contain nested property in range:    [data]    [attributes][totals][subtotal]    0    None    
-    And Each array element of array in response should contain nested property in range:    [data]    [attributes][totals][grandTotal]    0    None    
-    And Each array element of array in response should contain nested property in range:    [data]    [attributes][totals][priceToPay]    0    None    
+    And Each array element of array in response should be greater than:    [data]    [attributes][totals][taxTotal]    0    
+    And Each array element of array in response should be greater than:    [data]    [attributes][totals][subtotal]    0    
+    And Each array element of array in response should be greater than:    [data]    [attributes][totals][grandTotal]    0    
+    And Each array element of array in response should be greater than:    [data]    [attributes][totals][priceToPay]    0      
 
 Retrieve_guest_cart_by_id
     [Setup]    Create a guest cart:    ${random}    ${concrete_product_with_concrete_product_alternative_sku}    7
@@ -187,10 +187,10 @@ Convert_guest_cart_to_customer_cart
     And Each array element of array in response should contain nested property with value:    [data]    [attributes][store]    ${store_de}
     And Each array element of array in response should contain nested property with datatype:    [data]    [attributes][totals][expenseTotal]    int
     And Each array element of array in response should contain nested property with datatype:    [data]    [attributes][totals][discountTotal]    int
-    And Each array element of array in response should contain nested property in range:    [data]    [attributes][totals][taxTotal]    0    None    
-    And Each array element of array in response should contain nested property in range:    [data]    [attributes][totals][subtotal]    0    None    
-    And Each array element of array in response should contain nested property in range:    [data]    [attributes][totals][grandTotal]    0    None    
-    And Each array element of array in response should contain nested property in range:    [data]    [attributes][totals][priceToPay]    0    None 
+    And Each array element of array in response should be greater than:    [data]    [attributes][totals][taxTotal]    0    
+    And Each array element of array in response should be greater than:    [data]    [attributes][totals][subtotal]    0   
+    And Each array element of array in response should be greater than:    [data]    [attributes][totals][grandTotal]    0    
+    And Each array element of array in response should be greater than:    [data]    [attributes][totals][priceToPay]    0
     And Each array element of array in response should contain nested property with value:    [included]    type    items
     And Each array element of array in response should contain nested property with value:    [included]    [attributes][sku]    ${concrete_product_with_concrete_product_alternative_sku}
     And Each array element of array in response should contain nested property with value:    [included]    [attributes][quantity]    1  

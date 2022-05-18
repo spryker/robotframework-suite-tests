@@ -940,13 +940,10 @@ Each array element of array in response should contain nested property in range:
     ...
     ...    ``Each array element of array in response should contain nested property in range:    [data]    attributes.sku    20    100``
     ...
-    ...    ``Each array element of array in response should contain nested property in range:    [data]    [attributes][sku]    None    100``
-    ...
-    ...    ``Each array element of array in response should contain nested property in range:    [data]    [attributes][sku]    0    None``
-    ...
-    ...    ``Each array element of array in response should contain nested property in range:    [data]    [relationships][concrete-products][data][0][type]    10     500``
+    ...    ``Each array element of array in response should contain nested property in range:    [data]    [relationships][concrete-products][data][0][price]    10     500``
     [Arguments]    ${json_path}    ${expected_nested_property}    ${lower_value}    ${higher_value}
     Run Keyword If    ${lower_value} == ${higher_value}    Fail    Your higher and lower values cannot be the same.
+    Run Keyword If    ${lower_value} > ${higher_value}    Fail    Your lower value cannot be greater than the lower value.
     @{data}=    Get Value From Json    ${response_body}    ${json_path}
     ${list_length}=    Get Length    @{data}
     ${log_list}=    Log List    @{data}
@@ -957,12 +954,93 @@ Each array element of array in response should contain nested property in range:
         ${list_element}=    Replace String    ${list_element}    [   ${EMPTY}
         ${list_element}=    Replace String    ${list_element}    '   ${EMPTY}
         ${list_element}=    Replace String    ${list_element}    ]   ${EMPTY}
-        ${list_element}=    Convert To Integer    ${list_element}
-        Run Keyword If   ${lower_value} != None     Should Be True    ${list_element} > ${lower_value}
-        Run Keyword If   ${higher_value} != None     Should Be True    ${list_element} < ${higher_value}
+        Run Keyword If    ${list_element} <= ${lower_value}    Fail    Value ${list_element} is less than lower value ${lower_value}.
+        Run Keyword If    ${list_element} >= ${higher_value}    Fail    Value ${list_element} is greater than higher value ${higher_value}.
     END
+Each array element of array in response should be greater than:
+    [Documentation]    This keyword checks that each element in the array specified as ``${json_path}`` contains the specified property ``${expected_nested_property}`` that's greater than ``${expected_value}``
+    ...
+    ...    If at least one array element has this property not greater than ``${expected_value}``, the keyword will fail.
+    ...
+    ...    *NOTES*: 
+    ...
+    ...    1. ``${expected_nested_property}`` is a second level property. In an array like this 
+    ...
+    ...    ``{"data":[{"type": "some-type", "attributes": {"name": "some name", "sku": "1234"}},...]}`` 
+    ...
+    ...    it will be ``attributes.sku``. 
+    ...
+    ...    2. The first level property in the above array is just ``attributes``, but it cannot be checked by this keyword.
+    ...
+    ...    3. Syntax for the second level property is ``[firstlevel][secondlevel]`` or ``firstlevel.secondlevel``.
+    ...
+    ...
+    ...    *Example:*
+    ...
+    ...    ``Each array element of array in response should be greater than:    [data]    [attributes][price]    1000``
+    ...
+    ...    ``Each array element of array in response should be greater than:    [data]    attributes.price    2000``
+    ...
+    ...    ``Each array element of array in response should be greater than:    [data]    [relationships][concrete-products][data][0][price]     5000``
+    [Arguments]    ${json_path}    ${expected_nested_property}    ${expected_value}   
+    @{data}=    Get Value From Json    ${response_body}    ${json_path}
+    ${list_length}=    Get Length    @{data}
+    ${log_list}=    Log List    @{data}
+    FOR    ${index}    IN RANGE    0    ${list_length}
+        ${list_element}=    Get From List    @{data}    ${index}
+        ${list_element}=    Get Value From Json    ${list_element}    $.${expected_nested_property}
+        ${list_element}=    Convert To String    ${list_element}
+        ${list_element}=    Replace String    ${list_element}    [   ${EMPTY}
+        ${list_element}=    Replace String    ${list_element}    '   ${EMPTY}
+        ${list_element}=    Replace String    ${list_element}    ]   ${EMPTY}
+        ${result}=    Evaluate    '${list_element}' > '${expected_value}'
+        ${result}=    Convert To String    ${result}
+        Should Be Equal    ${result}    True    Actual ${list_element} is not greater than expected ${expected_value}
+    END    
+
+Each array element of array in response should be less than:
+    [Documentation]    This keyword checks that each element in the array specified as ``${json_path}`` contains the specified property ``${expected_nested_property}`` that's less than ``${expected_value}``
+    ...
+    ...    If at least one array element has this property not less than ``${expected_value}``, the keyword will fail.
+    ...
+    ...    *NOTES*: 
+    ...
+    ...    1. ``${expected_nested_property}`` is a second level property. In an array like this 
+    ...
+    ...    ``{"data":[{"type": "some-type", "attributes": {"name": "some name", "sku": "1234"}},...]}`` 
+    ...
+    ...    it will be ``attributes.sku``. 
+    ...
+    ...    2. The first level property in the above array is just ``attributes``, but it cannot be checked by this keyword.
+    ...
+    ...    3. Syntax for the second level property is ``[firstlevel][secondlevel]`` or ``firstlevel.secondlevel``.
+    ...
+    ...
+    ...    *Example:*
+    ...
+    ...    ``Each array element of array in response should be less than:    [data]    [attributes][price]    1000``
+    ...
+    ...    ``Each array element of array in response should be less than:    [data]    attributes.price    2000``
+    ...
+    ...    ``Each array element of array in response should be less than:    [data]    [relationships][concrete-products][data][0][price]     5000``
+    [Arguments]    ${json_path}    ${expected_nested_property}    ${expected_value}   
+    @{data}=    Get Value From Json    ${response_body}    ${json_path}
+    ${list_length}=    Get Length    @{data}
+    ${log_list}=    Log List    @{data}
+    FOR    ${index}    IN RANGE    0    ${list_length}
+        ${list_element}=    Get From List    @{data}    ${index}
+        ${list_element}=    Get Value From Json    ${list_element}    $.${expected_nested_property}
+        ${list_element}=    Convert To String    ${list_element}
+        ${list_element}=    Replace String    ${list_element}    [   ${EMPTY}
+        ${list_element}=    Replace String    ${list_element}    '   ${EMPTY}
+        ${list_element}=    Replace String    ${list_element}    ]   ${EMPTY}
+        ${result}=    Evaluate    '${list_element}' < '${expected_value}'
+        ${result}=    Convert To String    ${result}
+        Should Be Equal    ${result}    True    Actual ${list_element} is not less than expected ${expected_value}
+    END     
 
 Each array element of array in response should contain nested property with datatype:
+
     [Documentation]    This keyword checks that each element in the array specified as ``${json_path}`` contains the specified property ``${expected_nested_property}`` with the value of the specified data type ``${expected_type}``.
     ...
     ...    If at least one array element has this property with another value, the keyword will fail.
