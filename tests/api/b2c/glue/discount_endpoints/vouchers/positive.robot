@@ -15,7 +15,7 @@ Add_voucher_code_to_cart
     ...    AND    Find or create customer cart
     ...    AND    Cleanup all items in the cart:    ${cart_id}
     ...    AND    I send a POST request:    /carts/${cart_id}/items    {"data": {"type": "items","attributes": {"sku": "${discount_concrete_product_sku_with_voucher_code}","quantity": 1}}}
-    ...    AND    Save the result of a SELECT DB query to a variable:    select code from spy_discount_voucher where fk_discount_voucher_pool = 1 limit 1    discount_voucher_code
+    ...    AND    Save the result of a SELECT DB query to a variable:    select code from spy_discount_voucher where fk_discount_voucher_pool = 1 and is_active = 1 limit 1    discount_voucher_code
     When I send a POST request:    /carts/${cart_id}/vouchers    {"data": {"type": "vouchers","attributes": {"code": "${discount_voucher_code}"}}}
     Then Response status code should be:    201
     And Response reason should be:    Created
@@ -43,7 +43,7 @@ Add_voucher_code_to_cart
 
 Add_voucher_code_to_guest_user_cart
     [Setup]    Run Keywords    Create a guest cart:    ${x_anonymous_prefix}${random}    ${discount_concrete_product_sku_with_voucher_code}    1
-    ...   AND    Save the result of a SELECT DB query to a variable:    select code from spy_discount_voucher where fk_discount_voucher_pool = 1 limit 1    discount_voucher_code
+    ...   AND    Save the result of a SELECT DB query to a variable:    select code from spy_discount_voucher where fk_discount_voucher_pool = 1 and is_active = 1 limit 1    discount_voucher_code
     When I send a POST request:    /guest-carts/${guest_cart_id}/vouchers    {"data": {"type": "vouchers","attributes": {"code": "${discount_voucher_code}"}}}
     Then Response status code should be:    201
     And Response reason should be:    Created
@@ -76,7 +76,7 @@ Add_voucher_code_to_cart_including_vouchers
     ...    AND    Find or create customer cart
     ...    AND    Cleanup all items in the cart:    ${cart_id}
     ...    AND    I send a POST request:    /carts/${cart_id}/items    {"data": {"type": "items","attributes": {"sku": "${discount_concrete_product_sku_with_voucher_code}","quantity": 1}}}
-    ...    AND    Save the result of a SELECT DB query to a variable:    select code from spy_discount_voucher where fk_discount_voucher_pool = 1 limit 1    discount_voucher_code
+    ...    AND    Save the result of a SELECT DB query to a variable:    select code from spy_discount_voucher where fk_discount_voucher_pool = 1 and is_active = 1 limit 1    discount_voucher_code
     When I send a POST request:    /carts/${cart_id}/vouchers?include=vouchers    {"data": {"type": "vouchers","attributes": {"code": "${discount_voucher_code}"}}}
     Then Response status code should be:    201
     And Response reason should be:    Created
@@ -103,7 +103,7 @@ Add_voucher_code_to_cart_including_vouchers
 
 Add_voucher_code_to_guest_user_cart_including_vouchers
     [Setup]    Run Keywords    Create a guest cart:    ${x_anonymous_prefix}${random}    ${discount_concrete_product_sku_with_voucher_code}    1
-    ...   AND    Save the result of a SELECT DB query to a variable:    select code from spy_discount_voucher where fk_discount_voucher_pool = 1 limit 1    discount_voucher_code
+    ...   AND    Save the result of a SELECT DB query to a variable:    select code from spy_discount_voucher where fk_discount_voucher_pool = 1 and is_active = 1 limit 1    discount_voucher_code
     When I send a POST request:    /guest-carts/${guest_cart_id}/vouchers?include=vouchers    {"data": {"type": "vouchers","attributes": {"code": "${discount_voucher_code}"}}}
     Then Response status code should be:    201
     And Response reason should be:    Created
@@ -138,7 +138,7 @@ Delete_voucher_code_from_cart
     ...    AND    Find or create customer cart
     ...    AND    Cleanup all items in the cart:    ${cart_id}
     ...    AND    I send a POST request:    /carts/${cart_id}/items    {"data": {"type": "items","attributes": {"sku": "${discount_concrete_product_sku_with_voucher_code}","quantity": 1}}}
-    ...    AND    Save the result of a SELECT DB query to a variable:    select code from spy_discount_voucher where fk_discount_voucher_pool = 1 limit 1    discount_voucher_code
+    ...    AND    Save the result of a SELECT DB query to a variable:    select code from spy_discount_voucher where fk_discount_voucher_pool = 1 and is_active = 1 limit 1    discount_voucher_code
     ...    AND    I send a POST request:    /carts/${cart_id}/vouchers    {"data": {"type": "vouchers","attributes": {"code": "${discount_voucher_code}"}}}
     When I send a DELETE request:    /carts/${cart_id}/vouchers/${discount_voucher_code}
     Then Response status code should be:    204
@@ -146,7 +146,7 @@ Delete_voucher_code_from_cart
 
 Delete_voucher_code_from_guest_user_cart
     [Setup]    Run Keywords    Create a guest cart:    ${x_anonymous_prefix}${random}    ${discount_concrete_product_sku_with_voucher_code}    1
-    ...   AND    Save the result of a SELECT DB query to a variable:    select code from spy_discount_voucher where fk_discount_voucher_pool = 1 limit 1    discount_voucher_code
+    ...   AND    Save the result of a SELECT DB query to a variable:    select code from spy_discount_voucher where fk_discount_voucher_pool = 1 and is_active = 1 limit 1    discount_voucher_code
     ...   AND    I send a POST request:    /guest-carts/${guest_cart_id}/vouchers    {"data": {"type": "vouchers","attributes": {"code": "${discount_voucher_code}"}}}
     When I send a DELETE request:    /guest-carts/${guest_cart_id}/vouchers/${discount_voucher_code}
     Then Response status code should be:    204

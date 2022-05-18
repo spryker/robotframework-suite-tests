@@ -13,9 +13,8 @@ Add_voucher_code_to_cart_with_invalid_access_token
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
     ...    AND    I set Headers:    Authorization=${token}
     ...    AND    Find or create customer cart
-    ...    AND    Save the result of a SELECT DB query to a variable:    select code from spy_discount_voucher where fk_discount_voucher_pool = 1 limit 1    discount_voucher_code
     ...    AND    I set Headers:    Authorization=fake_token
-    When I send a POST request:    /carts/${cart_id}/vouchers    {"data": {"type": "vouchers","attributes": {"code": "${discount_voucher_code}"}}}
+    When I send a POST request:    /carts/${cart_id}/vouchers    {"data": {"type": "vouchers","attributes": {"code": "discount_voucher_code"}}}
     Then Response status code should be:    401
     And Response reason should be:    Unauthorized
     And Response should return error code:    001
@@ -25,9 +24,8 @@ Add_voucher_code_to_cart_without_access_token
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
     ...    AND    I set Headers:    Authorization=${token}
     ...    AND    Find or create customer cart
-    ...    AND    Save the result of a SELECT DB query to a variable:    select code from spy_discount_voucher where fk_discount_voucher_pool = 1 limit 1    discount_voucher_code
     ...    AND    I set Headers:    Authorization=
-    When I send a POST request:    /carts/${cart_id}/vouchers    {"data": {"type": "vouchers","attributes": {"code": "${discount_voucher_code}"}}}
+    When I send a POST request:    /carts/${cart_id}/vouchers    {"data": {"type": "vouchers","attributes": {"code": "discount_voucher_code"}}}
     Then Response status code should be:    403
     And Response reason should be:    Forbidden
     And Response should return error code:    002
@@ -35,9 +33,8 @@ Add_voucher_code_to_cart_without_access_token
 
 Add_voucher_code_to_guest_cart_with_invalid_anonymous_customer_id
     [Setup]    Run Keywords    Create a guest cart:    ${x_anonymous_prefix}${random}    ${discount_concrete_product_sku_with_voucher_code}    1
-    ...   AND    Save the result of a SELECT DB query to a variable:    select code from spy_discount_voucher where fk_discount_voucher_pool = 1 limit 1    discount_voucher_code
     ...   AND    I set Headers:    X-Anonymous-Customer-Unique-Id=fake_anonymous_customer_id
-    When I send a POST request:    /guest-carts/${guest_cart_id}/vouchers    {"data": {"type": "vouchers","attributes": {"code": "${discount_voucher_code}"}}}
+    When I send a POST request:    /guest-carts/${guest_cart_id}/vouchers    {"data": {"type": "vouchers","attributes": {"code": "discount_voucher_code"}}}
     Then Response status code should be:    404
     And Response reason should be:    Not Found
     And Response should return error code:    101
@@ -47,9 +44,8 @@ Add_voucher_code_to_guest_cart_with_invalid_anonymous_customer_id
 
 Add_voucher_code_to_guest_cart_without_anonymous_customer_id
     [Setup]    Run Keywords    Create a guest cart:    ${x_anonymous_prefix}${random}    ${discount_concrete_product_sku_with_voucher_code}    1
-    ...   AND    Save the result of a SELECT DB query to a variable:    select code from spy_discount_voucher where fk_discount_voucher_pool = 1 limit 1    discount_voucher_code
     ...   AND    I set Headers:    X-Anonymous-Customer-Unique-Id=
-    When I send a POST request:    /guest-carts/${guest_cart_id}/vouchers    {"data": {"type": "vouchers","attributes": {"code": "${discount_voucher_code}"}}}
+    When I send a POST request:    /guest-carts/${guest_cart_id}/vouchers    {"data": {"type": "vouchers","attributes": {"code": "discount_voucher_code"}}}
     Then Response status code should be:    400
     And Response reason should be:    Bad Request
     And Response should return error code:    109
@@ -135,17 +131,15 @@ Add_voucher_code_from_another_discount_to_cart
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
     ...    AND    I set Headers:    Authorization=${token}
     ...    AND    Find or create customer cart
-    ...    AND    Save the result of a SELECT DB query to a variable:    select code from spy_discount_voucher where fk_discount_voucher_pool = 2 limit 1    discount_voucher_code
-    When I send a POST request:    /carts/${cart_id}/vouchers    {"data": {"type": "vouchers","attributes": {"code": "${discount_voucher_code}"}}}
+    When I send a POST request:    /carts/${cart_id}/vouchers    {"data": {"type": "vouchers","attributes": {"code": "discount_voucher_code"}}}
     Then Response status code should be:    422
     And Response reason should be:    Unprocessable Content
     And Response should return error code:    3302
     And Response should return error message:    "Cart code cant be added."
 
 Add_voucher_code_from_another_discount_to_guest_user_cart
-    [Setup]    Run Keywords    Create a guest cart:    ${x_anonymous_prefix}${random}    ${discount_concrete_product_sku_with_voucher_code}    1
-    ...   AND    Save the result of a SELECT DB query to a variable:    select code from spy_discount_voucher where fk_discount_voucher_pool = 2 limit 1    discount_voucher_code
-    When I send a POST request:    /guest-carts/${guest_cart_id}/vouchers    {"data": {"type": "vouchers","attributes": {"code": "${discount_voucher_code}"}}}
+    [Setup]    Create a guest cart:    ${x_anonymous_prefix}${random}    ${discount_concrete_product_sku_with_voucher_code}    1
+    When I send a POST request:    /guest-carts/${guest_cart_id}/vouchers    {"data": {"type": "vouchers","attributes": {"code": "discount_voucher_code"}}}
     Then Response status code should be:    422
     And Response reason should be:    Unprocessable Content
     And Response should return error code:    3302
@@ -158,17 +152,15 @@ Add_voucher_code_to_cart_without_voucher_discount
     ...    AND    Find or create customer cart
     ...    AND    Cleanup all items in the cart:    ${cart_id}
     ...    AND    I send a POST request:    /carts/${cart_id}/items    {"data": {"type": "items","attributes": {"sku": "${concrete_available_with_stock_and_never_out_of_stock}","quantity": 1}}}
-    ...    AND    Save the result of a SELECT DB query to a variable:    select code from spy_discount_voucher where fk_discount_voucher_pool = 1 limit 1    discount_voucher_code
-    When I send a POST request:    /carts/${cart_id}/vouchers    {"data": {"type": "vouchers","attributes": {"code": "${discount_voucher_code}"}}}
+    When I send a POST request:    /carts/${cart_id}/vouchers    {"data": {"type": "vouchers","attributes": {"code": "discount_voucher_code"}}}
     Then Response status code should be:    422
     And Response reason should be:    Unprocessable Content
     And Response should return error code:    3302
     And Response should return error message:    "Cart code cant be added."
 
 Add_voucher_code_to_guest_user_cart_without_voucher_discount
-    [Setup]    Run Keywords    Create a guest cart:    ${x_anonymous_prefix}${random}    ${concrete_available_with_stock_and_never_out_of_stock}    1
-    ...   AND    Save the result of a SELECT DB query to a variable:    select code from spy_discount_voucher where fk_discount_voucher_pool = 1 limit 1    discount_voucher_code
-    When I send a POST request:    /guest-carts/${guest_cart_id}/vouchers    {"data": {"type": "vouchers","attributes": {"code": "${discount_voucher_code}"}}}
+    [Setup]    Create a guest cart:    ${x_anonymous_prefix}${random}    ${concrete_available_with_stock_and_never_out_of_stock}    1
+    When I send a POST request:    /guest-carts/${guest_cart_id}/vouchers    {"data": {"type": "vouchers","attributes": {"code": "discount_voucher_code"}}}
     Then Response status code should be:    422
     And Response reason should be:    Unprocessable Content
     And Response should return error code:    3302
@@ -179,10 +171,9 @@ Add_voucher_code_from_another_customer_to_cart
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
     ...    AND    I set Headers:    Authorization=${token}
     ...    AND    Find or create customer cart
-    ...    AND    Save the result of a SELECT DB query to a variable:    select code from spy_discount_voucher where fk_discount_voucher_pool = 1 limit 1    discount_voucher_code
     ...    AND    I get access token for the customer:    ${yves_second_user_email}
     ...    AND    I set Headers:    Authorization=${token}
-    When I send a POST request:    /carts/${cart_id}/vouchers    {"data": {"type": "vouchers","attributes": {"code": "${discount_voucher_code}"}}}
+    When I send a POST request:    /carts/${cart_id}/vouchers    {"data": {"type": "vouchers","attributes": {"code": "discount_voucher_code"}}}
     Then Response status code should be:    404
     And Response reason should be:    Not Found
     And Response should return error code:    101
@@ -190,9 +181,8 @@ Add_voucher_code_from_another_customer_to_cart
 
 Add_voucher_code_from_another_customer_to_guest_user_cart
     [Setup]    Run Keywords    Create a guest cart:    ${x_anonymous_prefix}${random}    ${discount_concrete_product_sku_with_voucher_code}    1
-    ...   AND    Save the result of a SELECT DB query to a variable:    select code from spy_discount_voucher where fk_discount_voucher_pool = 1 limit 1    discount_voucher_code
     ...   AND    I set Headers:    X-Anonymous-Customer-Unique-Id=fake_anonymous_customer_id
-    When I send a POST request:    /guest-carts/${guest_cart_id}/vouchers    {"data": {"type": "vouchers","attributes": {"code": "${discount_voucher_code}"}}}
+    When I send a POST request:    /guest-carts/${guest_cart_id}/vouchers    {"data": {"type": "vouchers","attributes": {"code": "discount_voucher_code"}}}
     Then Response status code should be:    404
     And Response reason should be:    Not Found
     And Response should return error code:    101
@@ -205,18 +195,16 @@ Add_voucher_code_to_empty_cart
     ...    AND    I set Headers:    Authorization=${token}
     ...    AND    Find or create customer cart
     ...    AND    Cleanup all items in the cart:    ${cart_id}
-    ...    AND    Save the result of a SELECT DB query to a variable:    select code from spy_discount_voucher where fk_discount_voucher_pool = 1 limit 1    discount_voucher_code
-    When I send a POST request:    /carts/${cart_id}/vouchers    {"data": {"type": "vouchers","attributes": {"code": "${discount_voucher_code}"}}}
+    When I send a POST request:    /carts/${cart_id}/vouchers    {"data": {"type": "vouchers","attributes": {"code": "discount_voucher_code"}}}
     Then Response status code should be:    422
     And Response reason should be:    Unprocessable Content
     And Response should return error code:    3302
     And Response should return error message:    "Cart code cant be added."
     
-Add_voucher_code_to_guest_user_cart
+Add_voucher_code_to_empty_guest_user_cart
     [Setup]    Run Keywords    Create a guest cart:    ${x_anonymous_prefix}${random}    ${discount_concrete_product_sku_with_voucher_code}    1
-    ...   AND    Save the result of a SELECT DB query to a variable:    select code from spy_discount_voucher where fk_discount_voucher_pool = 1 limit 1    discount_voucher_code
     ...    AND    Cleanup all items in the guest cart:    ${guest_cart_id}
-    When I send a POST request:    /guest-carts/${guest_cart_id}/vouchers    {"data": {"type": "vouchers","attributes": {"code": "${discount_voucher_code}"}}}
+    When I send a POST request:    /guest-carts/${guest_cart_id}/vouchers    {"data": {"type": "vouchers","attributes": {"code": "discount_voucher_code"}}}
     Then Response status code should be:    422
     And Response reason should be:    Unprocessable Content
     And Response should return error code:    3302
@@ -346,11 +334,9 @@ Delete_voucher_code_from_another_customer_cart
     ...    AND    Find or create customer cart
     ...    AND    Cleanup all items in the cart:    ${cart_id}
     ...    AND    I send a POST request:    /carts/${cart_id}/items    {"data": {"type": "items","attributes": {"sku": "${discount_concrete_product_sku_with_voucher_code}","quantity": 1}}}
-    ...    AND    Save the result of a SELECT DB query to a variable:    select code from spy_discount_voucher where fk_discount_voucher_pool = 1 limit 1    discount_voucher_code
-    ...    AND    I send a POST request:    /carts/${cart_id}/vouchers    {"data": {"type": "vouchers","attributes": {"code": "${discount_voucher_code}"}}}
     ...    AND    I get access token for the customer:    ${yves_second_user_email}
     ...    AND    I set Headers:    Authorization=${token}
-    When I send a DELETE request:    /carts/${cart_id}/vouchers/${discount_voucher_code}
+    When I send a DELETE request:    /carts/${cart_id}/vouchers/discount_voucher_code
     Then Response status code should be:    404
     And Response reason should be:    Not Found
     And Response should return error code:    101
@@ -358,10 +344,8 @@ Delete_voucher_code_from_another_customer_cart
 
 Delete_voucher_code_from_another_customer_guest_cart
     [Setup]    Run Keywords    Create a guest cart:    ${x_anonymous_prefix}${random}    ${discount_concrete_product_sku_with_voucher_code}    1
-    ...   AND    Save the result of a SELECT DB query to a variable:    select code from spy_discount_voucher where fk_discount_voucher_pool = 1 limit 1    discount_voucher_code
-    ...   AND    I send a POST request:    /guest-carts/${guest_cart_id}/vouchers    {"data": {"type": "vouchers","attributes": {"code": "${discount_voucher_code}"}}}
     ...   AND    I set Headers:    X-Anonymous-Customer-Unique-Id=fake_anonymous_customer_id
-    When I send a DELETE request:    /guest-carts/${guest_cart_id}/vouchers/${discount_voucher_code}
+    When I send a DELETE request:    /guest-carts/${guest_cart_id}/vouchers/discount_voucher_code
     Then Response status code should be:    404
     And Response reason should be:    Not Found
     And Response should return error code:    101
