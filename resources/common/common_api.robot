@@ -66,8 +66,8 @@ TestSetup
     ...    ``Default Tags    bapi``
     FOR  ${tag}  IN  @{Test Tags}
     Log   ${tag}
-    Run Keyword if    '${tag}'=='bapi'    Set Suite Variable    ${current_url}    ${bapi_url}
-    Run Keyword if    '${tag}'=='glue'    Set Suite Variable    ${current_url}    ${glue_url}
+    IF    '${tag}'=='bapi'    Set Suite Variable    ${current_url}    ${bapi_url}
+    IF    '${tag}'=='glue'    Set Suite Variable    ${current_url}    ${glue_url}
     END
     Log    ${current_url}
 
@@ -118,7 +118,7 @@ I get access token for the customer:
     [Arguments]    ${email}    ${password}=${default_password}
     ${hasValue}    Run Keyword and return status     Should not be empty    ${headers}
     ${data}=    Evaluate    {"data":{"type":"access-tokens","attributes":{"username":"${email}","password":"${password}"}}}
-    ${response}=    Run Keyword if    ${hasValue}    POST    ${current_url}/access-tokens    json=${data}    headers=${headers}
+    ${response}=    IF    ${hasValue}       run keyword    POST    ${current_url}/access-tokens    json=${data}    headers=${headers}
     ...    ELSE    POST    ${current_url}/access-tokens    json=${data}
     ${token}=    Set Variable    Bearer ${response.json()['data']['attributes']['accessToken']}
     ${response_body}=    Set Variable    ${response.json()}
@@ -145,9 +145,9 @@ I send a POST request:
     [Arguments]   ${path}    ${json}    ${timeout}=${api_timeout}    ${allow_redirects}=${default_allow_redirects}    ${auth}=${default_auth}    ${expected_status}=ANY
     ${data}=    Evaluate    ${json}
     ${hasValue}    Run Keyword and return status     Should not be empty    ${headers}
-    ${response}=    Run Keyword if    ${hasValue}    POST    ${current_url}${path}    json=${data}    headers=${headers}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}
+    ${response}=    IF    ${hasValue}   run keyword    POST    ${current_url}${path}    json=${data}    headers=${headers}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}
     ...    ELSE    POST    ${current_url}${path}    json=${data}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=ANY
-    ${response_body}=    Run Keyword if    ${response.status_code} != 204    Set Variable    ${response.json()}
+    ${response_body}=    IF    ${response.status_code} != 204    Set Variable    ${response.json()}
     ${response_headers}=    Set Variable    ${response.headers}
     Set Test Variable    ${response_headers}    ${response_headers}
     Set Test Variable    ${response_body}    ${response_body}
@@ -169,9 +169,9 @@ I send a POST request with data:
     [Arguments]   ${path}    ${data}    ${timeout}=${api_timeout}    ${allow_redirects}=${default_allow_redirects}    ${auth}=${default_auth}    ${expected_status}=ANY
     ${data}=    Evaluate    ${data}
     ${hasValue}    Run Keyword and return status     Should not be empty    ${headers}
-    ${response}=    Run Keyword if    ${hasValue}    POST    ${current_url}${path}    data=${data}    headers=${headers}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}
+    ${response}=    IF    ${hasValue}   run keyword    POST    ${current_url}${path}    data=${data}    headers=${headers}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}
     ...    ELSE    POST    ${current_url}${path}    data=${data}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}
-    ${response_body}=    Run Keyword if    ${response.status_code} != 204    Set Variable    ${response.json()}
+    ${response_body}=    IF    ${response.status_code} != 204    Set Variable    ${response.json()}
     ${response_headers}=    Set Variable    ${response.headers}
     Set Test Variable    ${response_headers}    ${response_headers}
     Set Test Variable    ${response_body}    ${response_body}
@@ -193,9 +193,9 @@ I send a PUT request:
     [Arguments]   ${path}    ${json}    ${timeout}=${api_timeout}    ${allow_redirects}=${default_allow_redirects}    ${auth}=${default_auth}    ${expected_status}=ANY
     ${data}=    Evaluate    ${json}
     ${hasValue}    Run Keyword and return status     Should not be empty    ${headers}
-    ${response}=    Run Keyword if    ${hasValue}    PUT    ${current_url}${path}    json=${data}    headers=${headers}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}
+    ${response}=    IF    ${hasValue}   run keyword    PUT    ${current_url}${path}    json=${data}    headers=${headers}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}
     ...    ELSE    PUT    ${current_url}${path}    json=${data}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}
-    ${response_body}=    Run Keyword if    ${response.status_code} != 204    Set Variable    ${response.json()}
+    ${response_body}=    IF    ${response.status_code} != 204    Set Variable    ${response.json()}
     ${response_headers}=    Set Variable    ${response.headers}
     Set Test Variable    ${response_headers}    ${response_headers}
     Set Test Variable    ${response_body}    ${response_body}
@@ -217,9 +217,9 @@ I send a PUT request with data:
     [Arguments]   ${path}    ${data}    ${timeout}=${api_timeout}    ${allow_redirects}=${default_allow_redirects}    ${auth}=${default_auth}    ${expected_status}=ANY
     ${data}=    Evaluate    ${data}
     ${hasValue}    Run Keyword and return status     Should not be empty    ${headers}
-    ${response}=    Run Keyword if    ${hasValue}    PUT    ${current_url}${path}    data=${data}    headers=${headers}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}
+    ${response}=    IF    ${hasValue}   run keyword    PUT    ${current_url}${path}    data=${data}    headers=${headers}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}
     ...    ELSE    PUT    ${current_url}${path}    data=${data}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}
-    ${response_body}=    Run Keyword if    ${response.status_code} != 204    Set Variable    ${response.json()}
+    ${response_body}=    IF    ${response.status_code} != 204    Set Variable    ${response.json()}
     ${response_headers}=    Set Variable    ${response.headers}
     Set Test Variable    ${response_headers}    ${response_headers}
     Set Test Variable    ${response_body}    ${response_body}
@@ -246,9 +246,9 @@ I send a PATCH request:
     [Arguments]   ${path}    ${json}    ${timeout}=${api_timeout}    ${allow_redirects}=${default_allow_redirects}    ${auth}=${default_auth}    ${expected_status}=ANY
     ${data}=    Evaluate    ${json}
     ${hasValue}    Run Keyword and return status     Should not be empty    ${headers}
-    ${response}=    Run Keyword if    ${hasValue}    PATCH   ${current_url}${path}    json=${data}    headers=${headers}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}
+    ${response}=    IF    ${hasValue}   run keyword    PATCH   ${current_url}${path}    json=${data}    headers=${headers}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}
     ...    ELSE    PATCH    ${current_url}${path}    json=${data}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}
-    ${response_body}=    Run Keyword if    ${response.status_code} != 204    Set Variable    ${response.json()}
+    ${response_body}=    IF    ${response.status_code} != 204    Set Variable    ${response.json()}
     ${response_headers}=    Set Variable    ${response.headers}
     Set Test Variable    ${response_headers}    ${response_headers}
     Set Test Variable    ${response_body}    ${response_body}
@@ -276,9 +276,9 @@ I send a PATCH request with data
     [Arguments]   ${path}    ${data}    ${timeout}=${api_timeout}    ${allow_redirects}=${default_allow_redirects}    ${auth}=${default_auth}    ${expected_status}=ANY
     ${data}=    Evaluate    ${data}
     ${hasValue}    Run Keyword and return status     Should not be empty    ${headers}
-    ${response}=    Run Keyword if    ${hasValue}    PATCH    ${current_url}${path}    data=${data}    headers=${headers}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}
+    ${response}=    IF    ${hasValue}   run keyword    PATCH    ${current_url}${path}    data=${data}    headers=${headers}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}
     ...    ELSE    PATCH    ${current_url}${path}    data=${data}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}
-    ${response_body}=    Run Keyword if    ${response.status_code} != 204    Set Variable    ${response.json()}
+    ${response_body}=    IF    ${response.status_code} != 204    Set Variable    ${response.json()}
     ${response_headers}=    Set Variable    ${response.headers}
     Set Test Variable    ${response_headers}    ${response_headers}
     Set Test Variable    ${response_body}    ${response_body}
@@ -303,9 +303,9 @@ I send a GET request:
     ...    ``I send a GET request:    /abstract-products/${abstract_sku}``
     [Arguments]   ${path}    ${timeout}=${api_timeout}    ${allow_redirects}=${default_allow_redirects}    ${auth}=${default_auth}    ${expected_status}=ANY
     ${hasValue}    Run Keyword and return status     Should not be empty    ${headers}
-    ${response}=    Run Keyword if    ${hasValue}    GET    ${current_url}${path}    headers=${headers}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}
+    ${response}=    IF    ${hasValue}   run keyword    GET    ${current_url}${path}    headers=${headers}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}
     ...    ELSE    GET    ${current_url}${path}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}
-    ${response_body}=    Run Keyword if    ${response.status_code} != 204    Set Variable    ${response.json()}
+    ${response_body}=    IF    ${response.status_code} != 204    Set Variable    ${response.json()}
     ${response_headers}=    Set Variable    ${response.headers}
     Set Test Variable    ${response_headers}    ${response_headers}
     Set Test Variable    ${response_body}    ${response_body}
@@ -333,11 +333,11 @@ I send a DELETE request:
     ...    ``I send a DELETE request:    /customers/${customer_reference}/addresses/addressUID``
     [Arguments]   ${path}    ${timeout}=${api_timeout}    ${allow_redirects}=${default_allow_redirects}    ${auth}=${default_auth}    ${expected_status}=ANY
     ${hasValue}    Run Keyword and return status     Should not be empty    ${headers}
-    ${response}=    Run Keyword if    ${hasValue}    DELETE    ${current_url}${path}    headers=${headers}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}
+    ${response}=    IF    ${hasValue}   run keyword    DELETE    ${current_url}${path}    headers=${headers}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}
     ...    ELSE    DELETE    ${current_url}${path}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}
     ${response_headers}=    Set Variable    ${response.headers}
     Set Test Variable    ${response}    ${response}
-    ${response_body}=    Run Keyword if    ${response.status_code} != 204    Set Variable    ${response.json()}
+    ${response_body}=    IF    ${response.status_code} != 204    Set Variable    ${response.json()}
     Set Test Variable    ${response_headers}    ${response_headers}
     Set Test Variable    ${response_body}    ${response_body}
     Set Test Variable    ${expected_self_link}    ${current_url}${path}
@@ -1078,7 +1078,7 @@ Response include should contain certain entity type:
         ${type}=    Replace String    ${type}    [   ${EMPTY}
         ${type}=    Replace String    ${type}    ]   ${EMPTY}
         ${result}=    Evaluate    '${type}' == '${expected_value}'
-        Run Keyword if    ${result}    Exit For Loop
+        IF    ${result}    Exit For Loop
     END
     Should Be Equal As Strings    ${result}    True    Include section ${expected_value} was not found
 
@@ -1102,9 +1102,9 @@ Response include element has self link:
         ${type}=    Replace String    ${type}    [   ${EMPTY}
         ${type}=    Replace String    ${type}    ]   ${EMPTY}
         ${result}=    Evaluate    '${type}' == '${expected_value}'
-        ${link_found}=    Run Keyword if    ${result}    Get Value From Json    ${include_element}    [links][self]
-        Run Keyword if    ${link_found}    Should Not Be Equal    ${link_found}    None    ${link_found} is  empty for ${expected_value} include section
-        Run Keyword if    ${result}    Exit For Loop
+        ${link_found}=    IF    ${result}    Get Value From Json    ${include_element}    [links][self]
+        IF    ${link_found}    Should Not Be Equal    ${link_found}    None    ${link_found} is  empty for ${expected_value} include section
+        IF    ${result}    Exit For Loop
     END
     Should Be Equal As Strings    ${result}    True    Include section ${expected_value} was not found
 
@@ -1227,7 +1227,7 @@ Array in response should contain property with value:
         ${value}=    Replace String    ${value}    [   ${EMPTY}
         ${value}=    Replace String    ${value}    ]   ${EMPTY}
         ${result}=    Evaluate    '${value}' == '${expected_value}'
-        Run Keyword if    ${result}    Exit For Loop
+        IF    ${result}    Exit For Loop
     END
     Should Be Equal As Strings    ${result}    True    Value ${expected_value} was not found in the array
 
@@ -1272,8 +1272,8 @@ Find or create customer cart
         Save value to a variable:    [data][0][id]    cart_id
         ${hasCart}    Run Keyword and return status     Should not be empty    ${cart_id}
         Log    cart_id:${cart_id}
-        Run Keyword If    !${hasCart}    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${gross_mode}","currency": "${currency_code_eur}","store": "${store_de}"}}}
-        Run Keyword If    !${hasCart}    Save value to a variable:    [data][id]    cart_id
+        IF    !${hasCart}    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${gross_mode}","currency": "${currency_code_eur}","store": "${store_de}"}}}
+        IF    !${hasCart}    Save value to a variable:    [data][id]    cart_id
 
 
 Get ETag header value from cart

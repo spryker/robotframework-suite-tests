@@ -15,13 +15,16 @@ Yves: 'Shopping List' widget contains:
 Yves: go To 'Shopping Lists' Page
     Mouse Over    ${shopping_list_icon_header_menu_item}
     ${button_exists}=    Run Keyword And Return Status    Element Should Be Visible    ${shopping_list_sub_navigation_all_lists_button}
-    Run Keyword If    ${button_exists}=='PASS'    Click Element by xpath with JavaScript    ${shopping_list_sub_navigation_all_lists_button}
-    ...    ELSE    Click    ${shopping_list_icon_header_menu_item}
+    IF    ${button_exists}=='PASS'
+        Click Element by xpath with JavaScript    ${shopping_list_sub_navigation_all_lists_button}
+    ELSE
+        Click    ${shopping_list_icon_header_menu_item}
+    END
 
 Yves: create new 'Shopping List' with name:
     [Arguments]    ${shoppingListName}
     ${currentURL}=    Get Location
-    Run Keyword If    '/shopping-list' not in '${currentURL}'    Go To    ${host}shopping-list
+    IF    '/shopping-list' not in '${currentURL}'    Go To    ${host}shopping-list
     Type Text    ${shopping_list_name_input_field}    ${shoppingListName}
     Click    ${create_shopping_list_button}
 
@@ -48,7 +51,7 @@ Yves: shopping list contains the following products:
 Yves: delete 'Shopping List' with name:
     [Arguments]    ${shoppingListName}
     ${currentURL}=    Get Location
-    Run Keyword If    '/shopping-list' not in '${currentURL}'    Go To    ${host}shopping-list
+    IF    '/shopping-list' not in '${currentURL}'    Go To    ${host}shopping-list
     Delete shopping list with name:    ${shoppingListName}
     Wait Until Element Is Visible    ${delete_shopping_list_button}
     Click    ${delete_shopping_list_button}
@@ -56,5 +59,5 @@ Yves: delete 'Shopping List' with name:
 Yves: view shopping list with name:
     [Arguments]    ${shoppingListName}
     ${currentURL}=    Get Location
-    Run Keyword If    '/shopping-list' not in '${currentURL}'    Go To    ${host}shopping-list
+    IF    '/shopping-list' not in '${currentURL}'    Go To    ${host}shopping-list
     View shopping list with name:   ${shoppingListName}

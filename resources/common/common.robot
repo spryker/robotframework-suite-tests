@@ -50,8 +50,8 @@ SuiteSetup
     Load Variables    ${env}
     New Browser    ${browser}    headless=${headless}    args=['--ignore-certificate-errors']
     Set Browser Timeout    ${browser_timeout}
-    Run Keyword if    '${headless}=true'    Create default Main Context
-    Run Keyword if    '${headless}=false'    Create default Main Context
+    IF    '${headless}=true'    Create default Main Context
+    IF    '${headless}=false'    Create default Main Context
     New Page    ${host}
     ${random}=    Generate Random String    5    [NUMBERS]
     Set Global Variable    ${random}
@@ -255,9 +255,13 @@ Try reloading page until element is/not appear:
     [Arguments]    ${element}    ${shouldBeDisplayed}    ${tries}=20    ${timeout}=1s
     FOR    ${index}    IN RANGE    0    ${tries}
         ${elementAppears}=    Run Keyword And Return Status    Page Should Contain Element    ${element}
-        Run Keyword If    '${shouldBeDisplayed}'=='true' and '${elementAppears}'=='False'    Run Keywords    Sleep    ${timeout}    AND    Reload
-        ...    ELSE    Run Keyword If    '${shouldBeDisplayed}'=='false' and '${elementAppears}'=='True'    Run Keywords    Sleep    ${timeout}    AND    Reload
-        ...    ELSE    Exit For Loop
+        IF    '${shouldBeDisplayed}'=='true' and '${elementAppears}'=='False'
+            Run Keywords    Sleep    ${timeout}    AND    Reload
+            ELSE IF    '${shouldBeDisplayed}'=='false' and '${elementAppears}'=='True'
+                Run Keywords    Sleep    ${timeout}    AND    Reload
+        ELSE
+            Exit For Loop
+        END
     END
     IF    ('${shouldBeDisplayed}'=='true' and '${elementAppears}'=='False') or ('${shouldBeDisplayed}'=='false' and '${elementAppears}'=='True')
         Fail    'Timeout exceeded'

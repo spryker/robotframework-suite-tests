@@ -44,7 +44,7 @@ Zed: create new Company Role with provided permissions:
     Zed: click button in Header:    Add company user role
     ${new_list_of_permissions}=    get length    ${permissions_list}
     log    ${new_list_of_permissions}
-    run keyword if  '${is_default}'=='true'     Zed: Check checkbox by Label:  Is Default
+    IF  '${is_default}'=='true'     Zed: Check checkbox by Label:  Is Default
     FOR    ${index}    IN RANGE    0    ${new_list_of_permissions}
         ${permission_to_set}=    Get From List    ${permissions_list}    ${index}
         Log    ${permission_to_set}
@@ -100,9 +100,11 @@ Zed: delete company user xxx withing xxx company business unit:
     [Arguments]    ${companyUserName}    ${companyBusinessUnit}
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ${currentURL}=    Get Location
-    Run Keyword If    '/customer' not in '${currentURL}'    Zed: go to second navigation item level:    Customers    Company Users
+    IF    '/customer' not in '${currentURL}'    Zed: go to second navigation item level:    Customers    Company Users
     Zed: perform search by:    ${companyUserName}
     ${customerExists}=    Run Keyword And Return Status    Table should contain    ${zed_table_locator}    ${companyBusinessUnit}
-    Run Keyword If    '${customerExists}'=='True'    Run keywords
-        ...    Zed: click Action Button(without search) in a table for row that contains:    ${companyBusinessUnit}    Delete    AND
-        ...    Click    ${zed_confirm_delete_company_user_button}
+    IF    '${customerExists}'=='True'
+        Run keywords
+            Zed: click Action Button(without search) in a table for row that contains:    ${companyBusinessUnit}    Delete
+            Click    ${zed_confirm_delete_company_user_button}
+    END

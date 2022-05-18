@@ -7,7 +7,7 @@ Resource    ../common/common.robot
 Zed: delete Zed user with the following email:
     [Arguments]    ${zed_email}
     ${currentURL}=    Get Location
-    Run Keyword If    '/user' not in '${currentURL}'    Zed: go to second navigation item level:    Users    Users
+    IF    '/user' not in '${currentURL}'    Zed: go to second navigation item level:    Users    Users
     Zed: click Action Button in a table for row that contains:    ${zed_email}    Delete
 
     Wait Until Page Contains Element    ${zed_confirm_delete_user_button}

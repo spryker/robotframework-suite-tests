@@ -8,14 +8,17 @@ Resource    ../common/common.robot
 Zed: check if product is/not in stock:
     [Arguments]    ${sku}    ${isInStock}
     Zed: perform search by:    ${sku}
-    Run Keyword If    '${isInStock}'=='true'    Element Text Should Be    ${zed_availability_product_availability_label}     Available    Message='Expected product availability is not found'
-    ...    ELSE    Element Text Should Be    ${zed_availability_product_availability_label}     Not available    Message='Expected product availability is not found'
+    IF    '${isInStock}'=='true'
+        Element Text Should Be    ${zed_availability_product_availability_label}     Available    Message='Expected product availability is not found'
+    ELSE
+        Element Text Should Be    ${zed_availability_product_availability_label}     Not available    Message='Expected product availability is not found'
+    END
 
 Zed: change product stock:
     [Arguments]    ${skuAbstract}    ${skuConcrete}    ${isNeverOutOfStock}    ${quantityWarehouse1}    ${quantityWarehouse2}=0
     ${currentURL}=    Get Location
-    Run Keyword If    '/availability-gui' not in '${currentURL}'    Zed: go to second navigation item level:    Catalog    Availability
-    Run Keyword If    '/availability-gui/index/edit' in '${currentURL}'    Zed: go to second navigation item level:    Catalog    Availability
+    IF    '/availability-gui' not in '${currentURL}'    Zed: go to second navigation item level:    Catalog    Availability
+    IF    '/availability-gui/index/edit' in '${currentURL}'    Zed: go to second navigation item level:    Catalog    Availability
     Zed: perform search by:    ${skuAbstract}
     Click    xpath=//a[contains(text(),'${skuAbstract}')]/ancestor::tr//following-sibling::td//*[contains(.,'View')]
     Element Should Be Visible    xpath=//div[@class='ibox float-e-margins']/*[contains(.,'Variant availability')]
@@ -26,8 +29,11 @@ Zed: change product stock:
         Log    ${zed_availability_never_out_of_stock_checkbox}
         Log    ${index}
         Log    ${zed_availability_never_out_of_stock_checkbox}\[${index}\]
-        Run Keyword If    '${isNeverOutOfStock}'=='true'    Check checkbox    \(//*[@type='checkbox' and contains(@id,'is_never_out_of_stock')]\)\[${index}\]
-        ...    ELSE    Uncheck Checkbox    \(//*[@type='checkbox' and contains(@id,'is_never_out_of_stock')]\)\[${index}\]
+        IF    '${isNeverOutOfStock}'=='true'
+            Check checkbox    \(//*[@type='checkbox' and contains(@id,'is_never_out_of_stock')]\)\[${index}\]
+        ELSE
+            Uncheck Checkbox    \(//*[@type='checkbox' and contains(@id,'is_never_out_of_stock')]\)\[${index}\]
+        END
     END
     Type Text    xpath=//input[contains(@id,'AvailabilityGui_stock_stocks_0_quantity')]    ${quantityWarehouse1}
     Type Text    xpath=//input[contains(@id,'AvailabilityGui_stock_stocks_1_quantity')]    ${quantityWarehouse2}
@@ -41,9 +47,12 @@ Zed: check and restore product availability in Zed:
     Zed: go to second navigation item level:    Catalog    Availability
     Zed: perform search by:    ${skuAbstract}
     ${isProductAvailable}=    Run Keyword And Return Status    Element Text Should Be    ${zed_availability_product_availability_label}     Available
-    Run Keyword If    '${expectedStatus}'=='Available' and '${isProductAvailable}'=='False'
-    ...    Zed: change product stock:    ${skuAbstract}    ${skuConcrete}    true    10    0
-    ...    ELSE    Run Keyword If   '${expectedStatus}'=='Not Available' and '${isProductAvailable}'=='True'
-    ...    Zed: change product stock:    ${skuAbstract}    ${skuConcrete}    false    0    0
+    IF    '${expectedStatus}'=='Available' and '${isProductAvailable}'=='False'
+        Zed: change product stock:    ${skuAbstract}    ${skuConcrete}    true    10    0
+    ELSE
+        IF   '${expectedStatus}'=='Not Available' and '${isProductAvailable}'=='True'
+        Zed: change product stock:    ${skuAbstract}    ${skuConcrete}    false    0    0
+        END
+    END
 
 

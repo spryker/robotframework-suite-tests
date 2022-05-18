@@ -12,18 +12,20 @@ Yves: choose bundle template to configure:
 Yves: select product in the bundle slot:
     [Arguments]    ${slot}    ${sku}
     Click    xpath=//form[@name='configurator_state_form']//button[contains(.,'${slot}')]
-        
-    Run keyword if    '${env}'=='b2b'    Click    xpath=//product-item-list[@data-qa='component configurator-product']//span[@class='configurator-product__sku'][text()='Sku: ${sku}']/ancestor::product-item-list//button
-    ...    ELSE    Run keyword if    '${env}'=='b2c'    Click    xpath=(//product-item-list[@data-qa='component configurator-product']//span[contains(text(),'${sku}')]/ancestor::product-item-list//button)[1]
-        
+    IF    '${env}'=='b2b'
+        Click    xpath=//product-item-list[@data-qa='component configurator-product']//span[@class='configurator-product__sku'][text()='Sku: ${sku}']/ancestor::product-item-list//button
+    ELSE
+        IF    '${env}'=='b2c'    Click    xpath=(//product-item-list[@data-qa='component configurator-product']//span[contains(text(),'${sku}')]/ancestor::product-item-list//button)[1]
+    END
+
 
 Yves: go to 'Summary' step in the bundle configurator
     Click    ${bundle_configurator_summary_step}
-     
-    
+
+
 
 Yves: add products to the shopping cart in the bundle configurator
     Wait Until Element Is Visible    ${bundle_configurator_add_to_cart_button}
     Click    ${bundle_configurator_add_to_cart_button}
-        
+
     Yves: remove flash messages

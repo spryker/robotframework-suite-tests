@@ -7,7 +7,7 @@ Resource    ../common/common.robot
 Zed: create new Zed user with the following data:
     [Arguments]    ${zedUserEmail}    ${zedUserPassword}   ${zedUserFirstName}    ${zedUserLastName}    ${checkboxGroup}   ${checkboxAgent}    ${userInterfaceLanguage}
     ${currentURL}=    Get Location
-    Run Keyword If    '/user' not in '${currentURL}'    Zed: go to second navigation item level:    Users    Users
+    IF    '/user' not in '${currentURL}'    Zed: go to second navigation item level:    Users    Users
     Zed: click button in Header:    Add New User
     Wait Until Element Is Visible    ${zed_user_email_field}
     Type Text    ${zed_user_email_field}    ${zedUserEmail}

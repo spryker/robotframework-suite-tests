@@ -10,8 +10,11 @@ Zed: create a discount and activate it:
 # General information
     Click    ${zed_discount_add_new_discount_button}
     Wait Until Element Is Visible    ${zed_discount_create_discount_page}
-    Run keyword if    '${discountType}'=='voucher'    Select From List By Label    ${zed_discount_type_dropdown}    Voucher codes
-    ...    ELSE    Run keyword if    '${discountType}'=='cart rule'    Select From List By Label    ${zed_discount_type_dropdown}    Cart rule
+    IF    '${discountType}'=='voucher'
+        Select From List By Label    ${zed_discount_type_dropdown}    Voucher codes
+    ELSE IF    '${discountType}'=='cart rule'
+        Select From List By Label    ${zed_discount_type_dropdown}    Cart rule
+    END
     Type Text    ${zed_discount_name_field}     ${discountName}
     Type Text    ${zed_discount_description_field}     ${discountDescription}
     Evaluate Javascript    ${None}  document.getElementById("discount_discountGeneral_valid_from").setAttribute("value", "2021-01-01")
@@ -19,19 +22,22 @@ Zed: create a discount and activate it:
 # Discount calculation
     Zed: go to tab:    Discount calculation
     Wait For Elements State    ${zed_discount_query_builder_first_calculation_group}    visible    15s
-    Run keyword if    '${valueType}'=='Percentage'    Run Keywords    Select From List By Label    ${zed_discount_calculator_type_drop_down}    Percentage
+    IF    '${valueType}'=='Percentage'    Run Keywords    Select From List By Label    ${zed_discount_calculator_type_drop_down}    Percentage
     ...    AND    Type Text    ${zed_discount_percentage_value_field}     ${discountValue}
-    ...    ELSE    Run keyword if    Run keywords    '${valueType}'=='Fixed amount'    Select From List By Label    ${zed_discount_calculator_type_drop_down}    Fixed amount
+    ...    ELSE   Run keywords    '${valueType}'=='Fixed amount'    Select From List By Label    ${zed_discount_calculator_type_drop_down}    Fixed amount
     ...    AND    Type Text    ${zed_discount_euro_gross_field}    ${discountValue}
-    Run Keyword If    '${promotionalProductDiscount}'=='False'    Run keywords
+    IF    '${promotionalProductDiscount}'=='False'
+        Run keywords
     ...    Click    ${zed_discount_plain_query_apply_to__button}
     ...    AND    Wait Until Element Is Visible    ${zed_discount_plain_query_apply_to_field}
     ...    AND    Type Text    ${zed_discount_plain_query_apply_to_field}     ${applyToQuery}
-    ...    ELSE    Run Keyword If    '${promotionalProductDiscount}'=='True'    Run keywords
+    ELSE IF    '${promotionalProductDiscount}'=='True'
+        Run keywords
     ...    Click    ${zed_discount_promotional_product_radio}
     ...    AND    Wait Until Element Is Visible    ${zed_discount_promotional_product_abstract_sku_field}
     ...    AND    Type Text    ${zed_discount_promotional_product_abstract_sku_field}     ${promotionalProductAbstractSku}
     ...    AND    Type Text    ${zed_discount_promotional_product_abstract_quantity_field}     ${promotionalProductQuantity}
+    END
     # Discount condition
     Zed: go to tab:    Conditions
     Wait For Elements State    ${zed_discount_query_builder_first_condition_group}    visible    15s
@@ -41,7 +47,7 @@ Zed: create a discount and activate it:
     Click    ${zed_discount_save_button}
     Click    ${zed_discount_activate_button}
     # Voucher codes
-    Run keyword if    '${discountType}'=='voucher'    Zed: generate vouchers:    1    ${voucherCode}
+    IF    '${discountType}'=='voucher'    Zed: generate vouchers:    1    ${voucherCode}
     # Check discount in Zed
     Zed: go to second navigation item level:    Merchandising    Discount
     Zed: perform search by:    ${discountName}
@@ -50,8 +56,7 @@ Zed: create a discount and activate it:
 Zed: generate vouchers:
     [Arguments]    ${quantity}    ${customCode}    ${addRandomLength}=    ${maxNumberOfUsages}=0
     ${currentURL}=    Get Location
-    Run Keyword If    'tab-content-general' not in '${currentURL}'
-    ...    Zed: go to tab:    Voucher codes
+    IF    'tab-content-general' not in '${currentURL}'  Zed: go to tab:    Voucher codes
     Type Text    ${zed_discount_voucher_quantity_field}     ${quantity}
     Type Text    ${zed_discount_voucher_custom_code_field}     ${customCode}
     Type Text    ${zed_discount_voucher_max_usages_field}     ${maxNumberOfUsages}
@@ -65,7 +70,7 @@ Zed: deactivate following discounts from Overview page:
         Zed: perform search by:    ${name}
         ${isDiscountActive}=    Set Variable    ${EMPTY}
         ${isDiscountActive}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//td[contains(text(),'${name}')]/following-sibling::td[contains(@class,'Action')]//button[contains(.,'Deactivate')]
-        Run Keyword If    '${isDiscountActive}'=='True'    Click    xpath=//td[contains(text(),'${name}')]/following-sibling::td[contains(@class,'Action')]//button[contains(.,'Deactivate')]
+        IF    '${isDiscountActive}'=='True'    Click    xpath=//td[contains(text(),'${name}')]/following-sibling::td[contains(@class,'Action')]//button[contains(.,'Deactivate')]
     END
 
 Zed: activate following discounts from Overview page:
@@ -76,5 +81,5 @@ Zed: activate following discounts from Overview page:
         Zed: perform search by:    ${name}
         ${isDiscountInactive}=    Set Variable    ${EMPTY}
         ${isDiscountInactive}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//td[contains(text(),'${name}')]/following-sibling::td[contains(@class,'Action')]//button[contains(.,'Activate')]
-        Run Keyword If    '${isDiscountInactive}'=='True'    Click    xpath=//td[contains(text(),'${name}')]/following-sibling::td[contains(@class,'Action')]//button[contains(.,'Activate')]
+        IF    '${isDiscountInactive}'=='True'    Click    xpath=//td[contains(text(),'${name}')]/following-sibling::td[contains(@class,'Action')]//button[contains(.,'Activate')]
     END

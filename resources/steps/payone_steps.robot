@@ -16,15 +16,17 @@ Zed: configure payone pbc with the following data:
     ${payoneCondifurationData}=    Set Up Keyword Arguments    @{args}
     FOR    ${key}    ${value}    IN    &{payoneCondifurationData}
         Log    Key is '${key}' and value is '${value}'.
-        Run keyword if    '${key}'=='credentialsKey' and '${value}' != '${EMPTY}'    Type Text    ${pbc_payone_credentials_key_input}    ${value}
-        Run keyword if    '${key}'=='merchantId' and '${value}' != '${EMPTY}'    Type Text    ${pbc_payone_merchant_id_input}    ${value}
-        Run keyword if    '${key}'=='subAccountId' and '${value}' != '${EMPTY}'    Type Text    ${pbc_payone_sub_account_id_input}    ${value}
-        Run keyword if    '${key}'=='paymentPortalId' and '${value}' != '${EMPTY}'    Type Text    ${pbc_payone_payment_portal_id_input}    ${value}
-        Run keyword if    '${key}'=='mode' and '${value}' != '${EMPTY}'    Click    //spy-radio-group[@id='isLiveMode']//label//span[contains(text(),'${value}')]/ancestor::label
-        Run keyword if    '${key}'=='methods' and '${value}' != '${EMPTY}'    Run Keywords
-        ...    Conver string to List by separator:    ${value}
-        ...    AND    Log    ${covertedList}
-        ...    AND    Check payone configuration checkbox:    ${covertedList}
+        IF    '${key}'=='credentialsKey' and '${value}' != '${EMPTY}'    Type Text    ${pbc_payone_credentials_key_input}    ${value}
+        IF    '${key}'=='merchantId' and '${value}' != '${EMPTY}'    Type Text    ${pbc_payone_merchant_id_input}    ${value}
+        IF    '${key}'=='subAccountId' and '${value}' != '${EMPTY}'    Type Text    ${pbc_payone_sub_account_id_input}    ${value}
+        IF    '${key}'=='paymentPortalId' and '${value}' != '${EMPTY}'    Type Text    ${pbc_payone_payment_portal_id_input}    ${value}
+        IF    '${key}'=='mode' and '${value}' != '${EMPTY}'    Click    //spy-radio-group[@id='isLiveMode']//label//span[contains(text(),'${value}')]/ancestor::label
+        IF    '${key}'=='methods' and '${value}' != '${EMPTY}'
+            Run Keywords
+                Conver string to List by separator:    ${value}
+                Log    ${covertedList}
+                Check payone configuration checkbox:    ${covertedList}
+        END
     END
 
 Check payone configuration checkbox:
@@ -47,12 +49,12 @@ Payone: submit credit card with data:
     ${cardData}=    Set Up Keyword Arguments    @{args}
     FOR    ${key}    ${value}    IN    &{cardData}
         Log    Key is '${key}' and value is '${value}'.
-        Run keyword if    '${key}'=='cardType' and '${value}' != '${EMPTY}'    Select From List By Value When Element Is Visible    ${apps_payone_payment_cc_card_type}    ${value}
-        Run keyword if    '${key}'=='cardNumber' and '${value}' != '${EMPTY}'    Type Text When Element Is Visible    ${apps_payone_payment_cc_card_number}    ${value}
-        Run keyword if    '${key}'=='nameOnCard' and '${value}' != '${EMPTY}'    Type Text When Element Is Visible    ${apps_payone_payment_cc_name_on_card}    ${value}
-        Run keyword if    '${key}'=='expireMonth' and '${value}' != '${EMPTY}'    Select From List By Value When Element Is Visible    ${apps_payone_payment_cc_expire_month}    ${value}
-        Run keyword if    '${key}'=='expireYear' and '${value}' != '${EMPTY}'    Select From List By Value When Element Is Visible    ${apps_payone_payment_cc_expire_year}    ${value}
-        Run keyword if    '${key}'=='cvc' and '${value}' != '${EMPTY}'    Type Text When Element Is Visible    ${apps_payone_payment_cc_cvc}    ${value}
+        IF    '${key}'=='cardType' and '${value}' != '${EMPTY}'    Select From List By Value When Element Is Visible    ${apps_payone_payment_cc_card_type}    ${value}
+        IF    '${key}'=='cardNumber' and '${value}' != '${EMPTY}'    Type Text When Element Is Visible    ${apps_payone_payment_cc_card_number}    ${value}
+        IF    '${key}'=='nameOnCard' and '${value}' != '${EMPTY}'    Type Text When Element Is Visible    ${apps_payone_payment_cc_name_on_card}    ${value}
+        IF    '${key}'=='expireMonth' and '${value}' != '${EMPTY}'    Select From List By Value When Element Is Visible    ${apps_payone_payment_cc_expire_month}    ${value}
+        IF    '${key}'=='expireYear' and '${value}' != '${EMPTY}'    Select From List By Value When Element Is Visible    ${apps_payone_payment_cc_expire_year}    ${value}
+        IF    '${key}'=='cvc' and '${value}' != '${EMPTY}'    Type Text When Element Is Visible    ${apps_payone_payment_cc_cvc}    ${value}
     END
     Click    ${apps_payone_payment_pay_btn}
 

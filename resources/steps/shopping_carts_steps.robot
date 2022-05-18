@@ -25,7 +25,7 @@ Yves: Go to 'Shopping Carts' page
 Yves: create new 'Shopping Cart' with name:
     [Arguments]    ${shoppingCartName}
     ${currentURL}=    Get Location
-    Run Keyword If    '/multi-cart' not in '${currentURL}'    Go To    ${host}multi-cart
+    IF    '/multi-cart' not in '${currentURL}'    Go To    ${host}multi-cart
     Click    ${create_shopping_cart_button}
     Type Text    ${shopping_cart_name_input_field}    ${shoppingCartName}
     Click    ${create_new_cart_submit_button}
@@ -66,28 +66,36 @@ Yves: shopping cart contains the following products:
 
 Yves: click on the '${buttonName}' button in the shopping cart
     Yves: remove flash messages
-    Run Keyword If    '${buttonName}' == 'Checkout'    Click    ${shopping_cart_checkout_button}
-    ...    ELSE IF    '${buttonName}' == 'Request a Quote'    Click    ${shopping_cart_request_quote_button}
+    IF    '${buttonName}' == 'Checkout'
+        Click    ${shopping_cart_checkout_button}
+    ELSE IF    '${buttonName}' == 'Request a Quote'
+        Click    ${shopping_cart_request_quote_button}
+    END
 
 Yves: shopping cart contains product with unit price:
     [Documentation]    Already contains '€' sign inside
     [Arguments]    ${sku}    ${productName}    ${productPrice}
-    Run Keyword If    '${env}'=='b2b'    Page Should Contain Element    xpath=//div[contains(@class,'product-card-item__col--description')]//div[contains(.,'SKU: ${sku}')]/ancestor::article//*[contains(@class,'product-card-item__col--description')]/div[1]//*[contains(@class,'money-price__amount')][contains(.,'€${productPrice}')]
-    ...    ELSE    Page Should Contain Element    xpath=//main[@class='page-layout-cart']//article[contains(@data-qa,'component product-card-item')]//a[contains(text(),'${productName}')]/following-sibling::span/span[contains(@class,'money-price__amount') and contains(.,'${productPrice}')]
+    IF    '${env}'=='b2b'
+        Page Should Contain Element    xpath=//div[contains(@class,'product-card-item__col--description')]//div[contains(.,'SKU: ${sku}')]/ancestor::article//*[contains(@class,'product-card-item__col--description')]/div[1]//*[contains(@class,'money-price__amount')][contains(.,'€${productPrice}')]
+    ELSE
+        Page Should Contain Element    xpath=//main[@class='page-layout-cart']//article[contains(@data-qa,'component product-card-item')]//a[contains(text(),'${productName}')]/following-sibling::span/span[contains(@class,'money-price__amount') and contains(.,'${productPrice}')]
+    END
 
 Yves: shopping cart contains/doesn't contain the following elements:
     [Arguments]    ${condition}    @{shopping_cart_elements_list}    ${element1}=${EMPTY}     ${element2}=${EMPTY}     ${element3}=${EMPTY}     ${element4}=${EMPTY}     ${element5}=${EMPTY}     ${element6}=${EMPTY}     ${element7}=${EMPTY}     ${element8}=${EMPTY}     ${element9}=${EMPTY}     ${element10}=${EMPTY}     ${element11}=${EMPTY}     ${element12}=${EMPTY}     ${element13}=${EMPTY}     ${element14}=${EMPTY}     ${element15}=${EMPTY}
     ${shopping_cart_elements_list_count}=   get length  ${shopping_cart_elements_list}
     FOR    ${index}    IN RANGE    0    ${shopping_cart_elements_list_count}
         ${shopping_cart_element_to_check}=    Get From List    ${shopping_cart_elements_list}    ${index}
-        Run Keyword If    '${condition}' == 'true'
-        ...    Run Keywords
-        ...    Log    ${shopping_cart_element_to_check}    #Left as an example of multiple actions in Condition
-        ...    AND    Page Should Contain Element    ${shopping_cart_element_to_check}    message=${shopping_cart_element_to_check} is not displayed
-        Run Keyword If    '${condition}' == 'false'
-        ...    Run Keywords
-        ...    Log    ${shopping_cart_element_to_check}    #Left as an example of multiple actions in Condition
-        ...    AND    Page Should Not Contain Element    ${shopping_cart_element_to_check}    message=${shopping_cart_element_to_check} should not be displayed
+        IF    '${condition}' == 'true'
+            Run Keywords
+                Log    ${shopping_cart_element_to_check}    #Left as an example of multiple actions in Condition
+                Page Should Contain Element    ${shopping_cart_element_to_check}    message=${shopping_cart_element_to_check} is not displayed
+        END
+        IF    '${condition}' == 'false'
+            Run Keywords
+            Log    ${shopping_cart_element_to_check}    #Left as an example of multiple actions in Condition
+            Page Should Not Contain Element    ${shopping_cart_element_to_check}    message=${shopping_cart_element_to_check} should not be displayed
+        END
     END
 
 Yves: shopping cart with name xxx has the following status:
@@ -124,10 +132,11 @@ Yves: Expand shopping cart accordion:
      ${accordionState}=    Replace String    ${accordionState}    \r    ${EMPTY}
      ${accordionState}=    Replace String    ${accordionState}    \n    ${EMPTY}
      Log    ${accordionState}
-     Run Keyword If    'active' not in '${accordionState}'    Run Keywords
-     ...    Click    xpath=//div[@data-qa='component cart-sidebar']//*[contains(@class,'cart-sidebar-item__title')][contains(.,'${accordionTitle}')]
-     ...    AND    Wait Until Element Is Visible    xpath=//div[@data-qa='component cart-sidebar']//*[contains(@class,'cart-sidebar-item__title')][contains(.,'${accordionTitle}')]/../div[contains(@class,'cart-sidebar-item__content')]
-
+     IF    'active' not in '${accordionState}'
+         Run Keywords
+            Click    xpath=//div[@data-qa='component cart-sidebar']//*[contains(@class,'cart-sidebar-item__title')][contains(.,'${accordionTitle}')]
+            Wait Until Element Is Visible    xpath=//div[@data-qa='component cart-sidebar']//*[contains(@class,'cart-sidebar-item__title')][contains(.,'${accordionTitle}')]/../div[contains(@class,'cart-sidebar-item__content')]
+     END
 
 Yves: Shopping Cart title should be equal:
     [Arguments]    ${expectedCartTitle}
@@ -146,7 +155,7 @@ Yves: delete all shopping carts
     Yves: create new 'Shopping Cart' with name:    Z
     #create new empty cart that will be the last one in the list
     ${currentURL}=    Get Location
-    Run Keyword If    '/shopping-list' not in '${currentURL}'    Go To    ${host}multi-cart
+    IF    '/shopping-list' not in '${currentURL}'    Go To    ${host}multi-cart
     ${shoppingCartsCount}=    Get Element Count    xpath=//*[@data-qa='component quote-table']//table/tbody/tr//ul//a[contains(.,'Delete')]
     Log    ${shoppingCartsCount}
     FOR    ${index}    IN RANGE    0    ${shoppingCartsCount}-1
@@ -160,7 +169,7 @@ Yves: delete all shopping carts
 Yves: delete 'Shopping Cart' with name:
     [Arguments]    ${shoppingCartName}
     ${currentURL}=    Get Location
-    Run Keyword If    '/shopping-list' not in '${currentURL}'    Go To    ${host}multi-cart
+    IF      '/shopping-list' not in '${currentURL}'    Go To    ${host}multi-cart
     Delete shopping cart with name:    ${shoppingCartName}
     Wait Until Element Is Visible    ${delete_shopping_cart_button}
     Click    ${delete_shopping_cart_button}
@@ -172,15 +181,18 @@ Yves: delete from b2c cart products with name:
         Click    xpath=//div[@class='page-layout-cart__items-wrap']//a[contains(text(),'${product}')]/ancestor::div/following-sibling::div//form[contains(@name,'removeFromCart')]//button[text()='Remove']
         Yves: flash message should be shown:    success    Products were removed successfully
         Yves: remove flash messages
-        Run Keyword If    '${env}'=='b2b'    Page Should Not Contain Element    xpath=//div[contains(@class,'product-card-item__col--description')]//div[contains(.,'${namproducte}')]
-        ...    ELSE    Page Should Not Contain Element    xpath=//main[@class='page-layout-cart']//article[contains(@data-qa,'component product-card-item')]//a[contains(text(),'${product}')]
+        IF    '${env}'=='b2b'
+            Page Should Not Contain Element    xpath=//div[contains(@class,'product-card-item__col--description')]//div[contains(.,'${namproducte}')]
+        ELSE
+            Page Should Not Contain Element    xpath=//main[@class='page-layout-cart']//article[contains(@data-qa,'component product-card-item')]//a[contains(text(),'${product}')]
+        END
     END
 
 Yves: apply discount voucher to cart:
     [Arguments]    ${voucherCode}
     ${expanded}=    Set Variable    ${EMPTY}
-    ${expanded}=    Run Keyword If    '${env}'=='b2c'    Run Keyword And Return Status    Get Element State    ${shopping_cart_voucher_code_field}    ==    hidden
-    Run Keyword If    '${env}'=='b2c' and '${expanded}'=='False'    Click    ${shopping_cart_voucher_code_section_toggler}
+    ${expanded}=    IF    '${env}'=='b2c'    Run Keyword And Return Status    Get Element State    ${shopping_cart_voucher_code_field}    ==    hidden
+    IF    '${env}'=='b2c' and '${expanded}'=='False'    Click    ${shopping_cart_voucher_code_section_toggler}
     Type Text    ${shopping_cart_voucher_code_field}    ${voucherCode}
     Click    ${shopping_cart_voucher_code_redeem_button}
     Yves: flash message should be shown:    success    Your voucher code has been applied
@@ -190,22 +202,33 @@ Yves: apply discount voucher to cart:
 Yves: discount is applied:
 #TODO: make from this method somth real, because Sum is not used
     [Arguments]    ${discountType}    ${discountName}    ${expectedDiscountSum}
-    Run Keyword If    '${env}'=='b2c' and '${discountType}'=='voucher'    Element should be visible    xpath=//span[contains(text(),'${expectedDiscountSum}')]/preceding-sibling::span[contains(text(),'${discountName}')]/ancestor::*[contains(@data-qa,'cart-discount-summary')]/*[contains(.,'Vouchers')]
-    ...    ELSE    Run Keyword If    '${env}'=='b2c' and '${discountType}'=='cart rule'    Element should be visible    xpath=//span[contains(text(),'${expectedDiscountSum}')]/preceding-sibling::span[contains(text(),'${discountName}')]/ancestor::*[contains(@data-qa,'cart-discount-summary')]/*[contains(.,'Discounts')]
-    Run Keyword If    '${env}'=='b2b' and '${discountType}'=='voucher'    Element should be visible    xpath=//span[contains(text(),'${expectedDiscountSum}')]/preceding-sibling::span[contains(text(),'${discountName}')]/ancestor::*[contains(@data-qa,'cart-code-summary')]/*[contains(.,'Vouchers')]
-    ...    ELSE    Run Keyword If    '${env}'=='b2b' and '${discountType}'=='cart rule'    Element should be visible    xpath=//span[contains(text(),'${expectedDiscountSum}')]/preceding-sibling::span[contains(text(),'${discountName}')]/ancestor::*[contains(@data-qa,'cart-code-summary')]/*[contains(.,'Discounts')]
+    IF    '${env}'=='b2c' and '${discountType}'=='voucher'
+        Element should be visible    xpath=//span[contains(text(),'${expectedDiscountSum}')]/preceding-sibling::span[contains(text(),'${discountName}')]/ancestor::*[contains(@data-qa,'cart-discount-summary')]/*[contains(.,'Vouchers')]
+    ELSE IF    '${env}'=='b2c' and '${discountType}'=='cart rule'
+        Element should be visible    xpath=//span[contains(text(),'${expectedDiscountSum}')]/preceding-sibling::span[contains(text(),'${discountName}')]/ancestor::*[contains(@data-qa,'cart-discount-summary')]/*[contains(.,'Discounts')]
+    ELSE IF     '${env}'=='b2b' and '${discountType}'=='voucher'
+        Element should be visible    xpath=//span[contains(text(),'${expectedDiscountSum}')]/preceding-sibling::span[contains(text(),'${discountName}')]/ancestor::*[contains(@data-qa,'cart-code-summary')]/*[contains(.,'Vouchers')]
+    ELSE IF    '${env}'=='b2b' and '${discountType}'=='cart rule'
+        Element should be visible    xpath=//span[contains(text(),'${expectedDiscountSum}')]/preceding-sibling::span[contains(text(),'${discountName}')]/ancestor::*[contains(@data-qa,'cart-code-summary')]/*[contains(.,'Discounts')]
+    END
 
 Yves: promotional product offer is/not shown in cart:
     [Arguments]    ${isShown}
-    Run Keyword If    '${isShown}'=='true'    Element Should Be Visible    ${shopping_cart_promotional_product_section}    message=Promotional products are not displayed but should be
-    ...    ELSE    Run Keyword If    '${isShown}'=='false'    Element Should Not Be Visible    ${shopping_cart_promotional_product_section}    message=Promotional products are displayed but should not
+    IF    '${isShown}'=='true'
+        Element Should Be Visible    ${shopping_cart_promotional_product_section}    message=Promotional products are not displayed but should be
+    ELSE IF    '${isShown}'=='false'
+        Element Should Not Be Visible    ${shopping_cart_promotional_product_section}    message=Promotional products are displayed but should not
+    END
 
 Yves: change quantity of promotional product and add to cart:
     [Documentation]    set ${action} to + or - to change quantity. ${clickCount} indicates how many times to click
     [Arguments]    ${action}    ${clicksCount}
     FOR    ${index}    IN RANGE    0    ${clicksCount}
-        Run Keyword If    '${action}' == '+'    Click    ${shopping_cart_promotional_product_increase_quantity_button}[${env}]
-        ...    ELSE IF    '${action}' == '-'    Click    ${shopping_cart_promotional_product_decrease_quantity_button}[${env}]
+        IF    '${action}' == '+'
+            Click    ${shopping_cart_promotional_product_increase_quantity_button}[${env}]
+        ELSE IF    '${action}' == '-'
+            Click    ${shopping_cart_promotional_product_decrease_quantity_button}[${env}]
+        END
     END
     Click    ${shopping_cart_promotional_product_add_to_cart_button}
     Yves: flash message should be shown:    success    Items added successfully
