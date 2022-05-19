@@ -24,6 +24,12 @@
         "yves_second_user_reference": "DE--4",
         "yves_second_user_salutation": "Mr",
 
+        "yves_third_user_first_name": "Jackie",
+        "yves_third_user_last_name": "Chan",
+        "yves_third_user_password": "change123",
+        "yves_third_user_gender_male": "Male",
+        "yves_third_user_salutation": "Mr",
+
         "zed_admin_email": "admin@spryker.com",
         "zed_admin_password": "change123",
 
@@ -179,6 +185,7 @@
         "concrete_product_with_concrete_product_alternative_sku": "155_30149933",
         "concrete_product_with_concrete_product_alternative_sku_name": "Lenovo IdeaPad Yoga 500",
         "concrete_product_with_concrete_product_alternative_sku_name_in_lower_case": "lenovo ideapad yoga 500",
+        "concrete_product_with_concrete_product_alternative_promotional_items_sku": "112",
         "abstract_product_with_alternative_sku": "155",
         "abstract_product_with_alternative_name": "Lenovo IdeaPad Yoga 500",
         "alternative_abstract_product": "134",
@@ -240,6 +247,12 @@
         "product_option_1_name": "Two (2) year limited warranty",
         "product_option_2": "OP_insurance",
         "product_option_group_name": "Three (3) year limited warranty",
+
+        "configurable_bundle_template_id": "8d8510d8-59fe-5289-8a65-19f0c35a0089",
+        "configurable_bundle_template_name": "All in",
+        "configurable_bundle_first_slot_item_sku": "001_25904006",
+        "configurable_bundle_first_slot_uuid": "332b40ac-a789-57ce-bec0-23d8dddd71eb",
+        "configured_bundle_quantity": 2,
 
 
         "review_title": "This is a review",
@@ -337,7 +350,7 @@
         "discount_1_name": "Free standard delivery",
         "discount_1_description": "Free standard delivery for all orders above certain value depending on the currency",
         "discount_1_total_sum": "490",
-
+        "discount_2_name": "5% off white",
 
         "discount_concrete_product_1_sku": "108298",
         "discount_concrete_product_1_name": "Mauser hinged door cabinet - sideboard, 4 compartments, center separating wall - HxWxD 1225 x 1600 x 420 mm - light gray / ultramarine blue",
@@ -353,6 +366,9 @@
         "discount_concrete_product_3_name": "EUROKRAFT aluminum hand truck - Load capacity 200 kg, with skids - load capacity 200 kg",
         "discount_amount_for_product_3_with_discount_20%_off_storage": "16383",
         "discount_amount_for_product_3_with_10%_discount": "1882",
+        
+        "discount_concrete_product_sku_with_voucher_code": "058_24245592",
+        
         "configurable_bundle_template_id": "8d8510d8-59fe-5289-8a65-19f0c35a0089",
         "configurable_bundle_template_name": "Office bundle",
         "configurable_bundle_first_slot_item_sku": "575056",
