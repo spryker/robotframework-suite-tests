@@ -130,6 +130,36 @@ Retrieve_guest_cart_including_cart_rules
     And Each array element of array in response should contain value:    [included]    discountPromotionAbstractSku
     And Each array element of array in response should contain value:    [included]    discountPromotionQuantity
 
+Retrieve_guest_cart_including_vouchers
+    [Setup]    Run Keywords    Create a guest cart:    ${x_anonymous_prefix}${random}    ${discount_concrete_product_sku_with_voucher_code}    1
+    ...   AND    I send a POST request:    /guest-cart-items?include=items    {"data": {"type": "guest-cart-items","attributes": {"sku": "${discount_concrete_product_sku_with_voucher_code}","quantity": 1}}}
+    ...   AND    Save the result of a SELECT DB query to a variable:    select code from spy_discount_voucher where fk_discount_voucher_pool = 1 and id_discount_voucher = 1    discount_voucher_code
+    ...   AND    I send a POST request:    /guest-carts/${guest_cart_id}/vouchers    {"data": {"type": "vouchers","attributes": {"code": "${discount_voucher_code}"}}}
+    When I send a GET request:    /guest-carts/${guest_cart_id}?include=vouchers
+    Then Response status code should be:    200
+    And Response reason should be:    OK
+    And Response body parameter should be:    [data][type]    guest-carts
+    And Response body parameter should be:    [data][id]    ${guest_cart_id}
+    And Response body parameter should be:    [data][attributes][priceMode]    ${gross_mode}
+    And Response body parameter should be:    [data][attributes][currency]    ${currency_code_eur}
+    And Response body parameter should be:    [data][attributes][store]    ${store_de}
+    #relationships
+    And Response body parameter should be:    [data][relationships][vouchers][data][0][type]    vouchers
+    And Response body parameter should be:    [data][relationships][vouchers][data][0][id]    ${discount_voucher_code}
+    #included
+    And Response body parameter should be:    [included][0][type]    vouchers
+    And Response body parameter should be:    [included][0][id]    ${discount_voucher_code}
+    And Response body parameter should be greater than:    [included][0][attributes][amount]    0
+    And Response body parameter should be:    [included][0][attributes][code]    ${discount_voucher_code}
+    And Response body parameter should be:    [included][0][attributes][discountType]    voucher
+    And Response body parameter should be:    [included][0][attributes][displayName]    ${discount_2_name}
+    And Response body parameter should be:    [included][0][attributes][isExclusive]    False
+    And Response body parameter should not be EMPTY:    [included][0][attributes][expirationDateTime]
+    And Response body parameter should be:    [included][0][attributes][discountPromotionAbstractSku]    None
+    And Response body parameter should be:    [included][0][attributes][discountPromotionQuantity]    None
+    And Response body parameter should not be EMPTY:    [included][0][links][self]
+    [Teardown]    Cleanup all items in the guest cart:    ${guest_cart_id}
+
 Update_guest_cart_with_all_attributes
       [Setup]    Run Keywords    Create a guest cart:    ${random}    ${concrete_product_with_concrete_product_alternative_sku}    1
             ...   AND    I set Headers:     X-Anonymous-Customer-Unique-Id=${x_anonymous_customer_unique_id}
