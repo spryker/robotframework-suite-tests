@@ -931,9 +931,6 @@ Each array element of array in response should contain nested property in range:
     ...
     ...    3. Syntax for the second level property is ``[firstlevel][secondlevel]`` or ``firstlevel.secondlevel``.
     ...
-    ...    4. You can just check if your property is bigger or smaller than value to write ``None`` on the place of absent argument.
-    ...
-    ...
     ...    *Example:*
     ...
     ...    ``Each array element of array in response should contain nested property in range:    [data]    [attributes][sku]    0    10``
@@ -954,8 +951,8 @@ Each array element of array in response should contain nested property in range:
         ${list_element}=    Replace String    ${list_element}    [   ${EMPTY}
         ${list_element}=    Replace String    ${list_element}    '   ${EMPTY}
         ${list_element}=    Replace String    ${list_element}    ]   ${EMPTY}
-        Run Keyword If    ${list_element} <= ${lower_value}    Fail    Value ${list_element} is less than lower value ${lower_value}.
-        Run Keyword If    ${list_element} >= ${higher_value}    Fail    Value ${list_element} is greater than higher value ${higher_value}.
+        Run Keyword If    ${list_element} < ${lower_value}    Fail    Value ${list_element} is less than lower value ${lower_value}.
+        Run Keyword If    ${list_element} > ${higher_value}    Fail    Value ${list_element} is greater than higher value ${higher_value}.
     END
 Each array element of array in response should be greater than:
     [Documentation]    This keyword checks that each element in the array specified as ``${json_path}`` contains the specified property ``${expected_nested_property}`` that's greater than ``${expected_value}``
