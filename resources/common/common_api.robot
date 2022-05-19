@@ -1037,7 +1037,6 @@ Each array element of array in response should be less than:
     END     
 
 Each array element of array in response should contain nested property with datatype:
-
     [Documentation]    This keyword checks that each element in the array specified as ``${json_path}`` contains the specified property ``${expected_nested_property}`` with the value of the specified data type ``${expected_type}``.
     ...
     ...    If at least one array element has this property with another value, the keyword will fail.
