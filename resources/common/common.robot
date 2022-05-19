@@ -244,7 +244,7 @@ Verify the src attribute of the image is accessible:
         Should Be Equal    '${response.status_code}'    '200'
     END
 
-Conver string to List by separator:
+Convert string to List by separator:
     [Arguments]    ${string}    ${separator}=,
     ${covertedList}=    Split String    ${string}    ${separator}
     ${covertedList}=    Set Test Variable    ${covertedList}

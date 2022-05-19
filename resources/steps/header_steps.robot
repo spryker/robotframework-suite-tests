@@ -49,13 +49,13 @@ Yves: header contains/doesn't contain:
         ${header_element_to_check}=    Get From List    ${header_elements_list}    ${index}
         IF    '${condition}' == 'true'
             Run Keywords
-            Log    ${header_element_to_check}    #Left as an example of multiple actions in Condition
-            Page Should Contain Element    ${header_element_to_check}    message=${header_element_to_check} is not displayed
+                Log    ${header_element_to_check}    #Left as an example of multiple actions in Condition
+                Page Should Contain Element    ${header_element_to_check}    message=${header_element_to_check} is not displayed
         END
         IF    '${condition}' == 'false'
             Run Keywords
-            Log    ${header_element_to_check}    #Left as an example of multiple actions in Condition
-            Page Should Not Contain Element    ${header_element_to_check}    message=${header_element_to_check} should not be displayed
+                Log    ${header_element_to_check}    #Left as an example of multiple actions in Condition
+                Page Should Not Contain Element    ${header_element_to_check}    message=${header_element_to_check} should not be displayed
         END
     END
 

@@ -195,24 +195,26 @@ Yves: get index of the first available product
     ${productsCount}=    Get Element Count    xpath=//product-item[@data-qa='component product-item']
     Log    ${productsCount}
     FOR    ${index}    IN RANGE    1    ${productsCount}+1
-        ${status}=    IF    '${env}'=='b2b'     Run Keyword     Page should contain element    xpath=//product-item[@data-qa='component product-item'][${index}]//*[@class='product-item__actions']//ajax-add-to-cart//button[@disabled='']
-            ...     ELSE IF     '${env}'=='b2c'     Run Keyword     Page should contain element    xpath=//product-item[@data-qa='component product-item'][${index}]//ajax-add-to-cart//button
-            ...     Log    ${index}
+        ${status}=  IF    '${env}'=='b2b'   Run Keyword And Ignore Error     Page should contain element    xpath=//product-item[@data-qa='component product-item'][${index}]//*[@class='product-item__actions']//ajax-add-to-cart//button[@disabled='']
+        ...     ELSE IF     '${env}'=='b2c'     Run Keyword     Page should contain element    xpath=//product-item[@data-qa='component product-item'][${index}]//ajax-add-to-cart//button
+        Log    ${index}
         ${pdp_url}=    IF    '${env}'=='b2b'    Get Element Attribute    xpath=//product-item[@data-qa='component product-item'][${index}]//a[@itemprop='url']    href
         IF    'PASS' in ${status} and '${env}'=='b2b'    Continue For Loop
         IF    'bundle' in '${pdp_url}' and '${env}'=='b2c'    Continue For Loop
         IF    'FAIL' in ${status} and '${env}'=='b2b'
             Run Keywords
-            ...    Return From Keyword    ${index}
-            ...    Exit For Loop
-
+                Return From Keyword  ${index}
+                Log ${index}
+                Exit For Loop
+        END
         ${pdp_url}=    IF    '${env}'=='b2c'    Get Element Attribute    xpath=//product-item[@data-qa='component product-item'][${index}]//div[contains(@class,'product-item__image')]//a[contains(@class,'link-detail-page')]    href
         IF    'FAIL' in ${status} and '${env}'=='b2c'    Continue For Loop
         IF    'bundle' in '${pdp_url}' and '${env}'=='b2c'    Continue For Loop
         IF    'PASS' in ${status} and '${env}'=='b2c'
             Run Keywords
-            ...    Return From Keyword    ${index}
-            ...    Exit For Loop
+                Return From Keyword    ${index}
+                Log ${index}
+                Exit For Loop
         END
     END
         ${productIndex}=    Set Variable    ${index}

@@ -173,8 +173,8 @@ Yves: 'Summary' page contains/doesn't contain:
         END
         IF    '${condition}' == 'false'
                 Run Keywords
-                Log    ${checkout_summary_element_to_check}    #Left as an example of multiple actions in Condition
-                Page Should Not Contain Element    ${checkout_summary_element_to_check}    message=${checkout_summary_element_to_check} should not be displayed
+                    Log    ${checkout_summary_element_to_check}    #Left as an example of multiple actions in Condition
+                    Page Should Not Contain Element    ${checkout_summary_element_to_check}    message=${checkout_summary_element_to_check} should not be displayed
         END
     END
 

@@ -23,7 +23,7 @@ Zed: configure payone pbc with the following data:
         IF    '${key}'=='mode' and '${value}' != '${EMPTY}'    Click    //spy-radio-group[@id='isLiveMode']//label//span[contains(text(),'${value}')]/ancestor::label
         IF    '${key}'=='methods' and '${value}' != '${EMPTY}'
             Run Keywords
-                Conver string to List by separator:    ${value}
+                Convert string to List by separator:    ${value}
                 Log    ${covertedList}
                 Check payone configuration checkbox:    ${covertedList}
         END

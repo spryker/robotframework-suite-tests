@@ -29,8 +29,8 @@ Yves: PDP contains/doesn't contain:
         END
         IF    '${condition}' == 'false'
             Run Keywords
-            Log    ${pdp_element_to_check}    #Left as an example of multiple actions in Condition
-            Page Should Not Contain Element    ${pdp_element_to_check}    message=${pdp_element_to_check} should not be displayed
+                Log    ${pdp_element_to_check}    #Left as an example of multiple actions in Condition
+                Page Should Not Contain Element    ${pdp_element_to_check}    message=${pdp_element_to_check} should not be displayed
         END
     END
 

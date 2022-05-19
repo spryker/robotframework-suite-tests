@@ -93,8 +93,8 @@ Yves: shopping cart contains/doesn't contain the following elements:
         END
         IF    '${condition}' == 'false'
             Run Keywords
-            Log    ${shopping_cart_element_to_check}    #Left as an example of multiple actions in Condition
-            Page Should Not Contain Element    ${shopping_cart_element_to_check}    message=${shopping_cart_element_to_check} should not be displayed
+                Log    ${shopping_cart_element_to_check}    #Left as an example of multiple actions in Condition
+                Page Should Not Contain Element    ${shopping_cart_element_to_check}    message=${shopping_cart_element_to_check} should not be displayed
         END
     END
 
