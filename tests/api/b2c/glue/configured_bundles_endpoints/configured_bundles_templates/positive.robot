@@ -85,11 +85,8 @@ Get_configurable_bundle_templates_by_configurable_bundle_template_id
     And Response body has correct self link internal
     And Each array element of array in response should contain property:    [included]    id
     And Each array element of array in response should contain nested property:    [included]    attributes    name
-    And Response body parameter should be:    [included][0][type]    configurable-bundle-template-slots
-    And Response body parameter should be:    [included][1][type]    configurable-bundle-template-slots
-    And Response body parameter should be:    [included][2][type]    configurable-bundle-template-slots
-    And Response body parameter should be:    [included][3][type]    configurable-bundle-template-slots
-    And Response body parameter should be:    [included][4][type]    configurable-bundle-template-image-sets
+    And Response include should contain certain entity type:    configurable-bundle-template-slots
+    And Response include should contain certain entity type:    configurable-bundle-template-image-sets        
     And Each array element of array in response should contain property:    [included][4][attributes][images]    externalUrlLarge
     And Each array element of array in response should contain property:    [included][4][attributes][images]    externalUrlSmall
 
@@ -105,11 +102,10 @@ Get_configurable_bundle_templates_including_concrete_products_concrete_product_p
     And Response should contain the array larger than a certain size:    [data][relationships][configurable-bundle-template-slots][data]    3
     And Each array element of array in response should contain property with value:    [data][relationships][configurable-bundle-template-slots][data]    type    configurable-bundle-template-slots
     And Each array element of array in response should contain property:    [data][relationships][configurable-bundle-template-slots][data]    id
-    And Response should contain the array of a certain size:    [included]    706
-    And Each array element of array in response should contain property with value in:    [included]    type    configurable-bundle-template-slots    concrete-product-image-sets    concrete-product-prices    concrete-products
-    And Each array element of array in response should contain property with value NOT in:    [included]    id    None
-    And Each array element of array in response should contain property with value NOT in:    [included]    name    None
-    And Each array element of array in response should contain nested property:    [included]    [attributes]    name
+    And Response include should contain certain entity type:    configurable-bundle-template-slots
+    And Response include should contain certain entity type:    concrete-product-image-sets
+    And Response include should contain certain entity type:    concrete-product-prices
+    And Response include should contain certain entity type:    concrete-products
     And Response include element has self link:   concrete-product-image-sets
     And Response include element has self link:   concrete-product-prices
     And Response include element has self link:   concrete-products
