@@ -3,7 +3,7 @@
 
     "env": {
 
-        "glue_url": "https://glue.de.mp-b2c.internal-testing.demo-spryker.com",
+        "glue_url": "http://glue.de.spryker.local",
         "bapi_url": "http://backend-api.de.spryker.local/api/rest"
     },
 
@@ -201,7 +201,7 @@
         "discount_1_description_1": "20% off all digital cameras in the store",
         "discount_amount_for_product_1_with_discount_20%_off_storage_1": "1400",
         "discount_amount_for_product_1_with_discount_10%_off_minimum_order_1": "560",
-        "discount_concrete_product_1_total_sum_of_discounts_1": "8300",
+        "discount_concrete_product_1_total_sum_of_discounts_1": "1400",
         "discount_concrete_product_2_sku_1": "007_30691822",
         "discount_concrete_product_2_name_1": "Canon IXUS 285",
         "discount_amount_for_product_2_with_discount_20%_off_storage_1": "6900",
