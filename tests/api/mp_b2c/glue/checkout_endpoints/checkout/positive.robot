@@ -330,7 +330,7 @@ Create_order_with_2_product_discounts
     And Save value to a variable:    [included][0][attributes][totals][discountTotal]    discount_total_sum
     And Save value to a variable:    [included][0][attributes][totals][subtotal]    sub_total_sum
     #discountTotal
-    And Perform arithmetical calculation with two arguments:    discount_total_sum    ${discount_concrete_product_1_total_sum_of_discounts}    +    ${discount_concrete_product_2_total_sum_of_discounts}
+    And Perform arithmetical calculation with two arguments:    discount_total_sum    ${discount_concrete_product_1_total_sum_of_discounts_1}    +    ${discount_concrete_product_2_total_sum_of_discounts_1}
      And Perform arithmetical calculation with two arguments:    discount_total_sum    ${discount_total_sum}    +    ${expense_total_sum}
     And Response body parameter with rounding should be:    [included][0][attributes][totals][discountTotal]    ${discount_total_sum}
     #grandTotal
