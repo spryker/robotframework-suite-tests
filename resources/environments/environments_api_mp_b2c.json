@@ -212,6 +212,11 @@
         "discount_concrete_product_2_total_sum_of_discounts": "8096",
         "discount_concrete_product_3_sku": "401768",
         "discount_2_name": "20% off cameras",
+        
+        "discount_concrete_product_sku_with_voucher_code": "155_30149933",
+        "discount_voucher_code": "se3y",
+        "discount_3_name": "FLAT 10% OFF",
+
 
 
         "abstract_available_product_with_stock": "183",
