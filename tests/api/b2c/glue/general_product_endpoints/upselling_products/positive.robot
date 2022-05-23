@@ -23,26 +23,26 @@ Get_upselling_products
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response should contain the array larger than a certain size:    [data]    0
     And Each array element of array in response should contain nested property with value:    [data]    type    abstract-products
-    And Response body parameter should be:    [data][0][id]    ${product_related_product_with_upselling_relation_sku}
-    And Response body parameter should not be EMPTY:    [data][0][attributes]
-    And Response body parameter should be:    [data][0][attributes][sku]    ${product_related_product_with_upselling_relation_sku}
-    And Response body parameter should be:    [data][0][attributes][averageRating]    None
-    And Response body parameter should be:    [data][0][attributes][reviewCount]    0
-    And Response body parameter should be:    [data][0][attributes][name]    ${product_related_product_with_upselling_relation_name}
-    And Response body parameter should not be EMPTY:    [data][0][attributes][description]
-    And Response body parameter should not be EMPTY:    [data][0][attributes][attributes]
-    And Response should contain the array larger than a certain size:    [data][0][attributes][superAttributesDefinition]    0
-    And Response should contain the array larger than a certain size:    [data][0][attributes][superAttributes]    0
-    And Response should contain the array larger than a certain size:    [data][0][attributes][attributeMap]    0
-    And Response should contain the array larger than a certain size:    [data][0][attributes][attributeMap][super_attributes]   0
-    And Response should contain the array larger than a certain size:    [data][0][attributes][attributeMap][product_concrete_ids]   0
-    And Response should contain the array of a certain size:    [data][0][attributes][attributeMap][attribute_variants]   0
-    And Response should contain the array larger than a certain size:    [data][0][attributes][attributeMap][attribute_variant_map]   0 
-    And Response should contain the array larger than a certain size:    [data][0][attributes][metaTitle]    0  
-    And Response body parameter should not be EMPTY:    [data][0][attributes][metaKeywords]
-    And Response body parameter should not be EMPTY:    [data][0][attributes][metaDescription]
-    And Response body parameter should not be EMPTY:    [data][0][attributes][attributeNames]
-    And Response body parameter should not be EMPTY:    [data][0][attributes][url]     
+    And Response body parameter should be:    [data][7][id]    ${product_related_product_with_upselling_relation_sku}
+    And Response body parameter should not be EMPTY:    [data][7][attributes]
+    And Response body parameter should be:    [data][7][attributes][sku]    ${product_related_product_with_upselling_relation_sku}
+    And Response body parameter should be:    [data][7][attributes][averageRating]    None
+    And Response body parameter should be:    [data][7][attributes][reviewCount]    0
+    And Response body parameter should be:    [data][7][attributes][name]    ${product_related_product_with_upselling_relation_name}
+    And Response body parameter should not be EMPTY:    [data][7][attributes][description]
+    And Response body parameter should not be EMPTY:    [data][7][attributes][attributes]
+    And Response should contain the array larger than a certain size:    [data][7][attributes][superAttributesDefinition]    0
+    And Response should contain the array larger than a certain size:    [data][7][attributes][superAttributes]    0
+    And Response should contain the array larger than a certain size:    [data][7][attributes][attributeMap]    0
+    And Response should contain the array larger than a certain size:    [data][7][attributes][attributeMap][super_attributes]   0
+    And Response should contain the array larger than a certain size:    [data][7][attributes][attributeMap][product_concrete_ids]   0
+    And Response should contain the array of a certain size:    [data][7][attributes][attributeMap][attribute_variants]   0
+    And Response should contain the array larger than a certain size:    [data][7][attributes][attributeMap][attribute_variant_map]   0 
+    And Response should contain the array larger than a certain size:    [data][7][attributes][metaTitle]    0  
+    And Response body parameter should not be EMPTY:    [data][7][attributes][metaKeywords]
+    And Response body parameter should not be EMPTY:    [data][7][attributes][metaDescription]
+    And Response body parameter should not be EMPTY:    [data][7][attributes][attributeNames]
+    And Response body parameter should not be EMPTY:    [data][7][attributes][url]     
     And Response body has correct self link
     [Teardown]    Run Keyword    Cleanup all items in the cart:    ${cart_id}
 
@@ -174,26 +174,26 @@ Get_upselling_products_for_guest_cart
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response should contain the array larger than a certain size:    [data]    0
     And Each array element of array in response should contain nested property with value:    [data]    type    abstract-products
-    And Response body parameter should be:    [data][0][id]    ${product_related_product_with_upselling_relation_sku}
-    And Response body parameter should not be EMPTY:    [data][0][attributes]
-    And Response body parameter should be:    [data][0][attributes][sku]    ${product_related_product_with_upselling_relation_sku}
-    And Response body parameter should be:    [data][0][attributes][averageRating]    None
-    And Response body parameter should be:    [data][0][attributes][reviewCount]    0
-    And Response body parameter should be:    [data][0][attributes][name]    ${product_related_product_with_upselling_relation_name}
-    And Response body parameter should not be EMPTY:    [data][0][attributes][description]
-    And Response body parameter should not be EMPTY:    [data][0][attributes][attributes]
-    And Response should contain the array larger than a certain size:    [data][0][attributes][superAttributesDefinition]    0
-    And Response should contain the array larger than a certain size:    [data][0][attributes][superAttributes]    0
-    And Response should contain the array larger than a certain size:    [data][0][attributes][attributeMap]    0
-    And Response should contain the array larger than a certain size:    [data][0][attributes][attributeMap][super_attributes]   0
-    And Response should contain the array larger than a certain size:    [data][0][attributes][attributeMap][product_concrete_ids]   0
-    And Response should contain the array of a certain size:    [data][0][attributes][attributeMap][attribute_variants]   0
-    And Response should contain the array larger than a certain size:    [data][0][attributes][attributeMap][attribute_variant_map]   0 
-    And Response should contain the array larger than a certain size:    [data][0][attributes][metaTitle]    0  
-    And Response body parameter should not be EMPTY:    [data][0][attributes][metaKeywords]
-    And Response body parameter should not be EMPTY:    [data][0][attributes][metaDescription]
-    And Response body parameter should not be EMPTY:    [data][0][attributes][attributeNames]
-    And Response body parameter should not be EMPTY:    [data][0][attributes][url]     
+    And Response body parameter should be:    [data][7][id]    ${product_related_product_with_upselling_relation_sku}
+    And Response body parameter should not be EMPTY:    [data][7][attributes]
+    And Response body parameter should be:    [data][7][attributes][sku]    ${product_related_product_with_upselling_relation_sku}
+    And Response body parameter should be:    [data][7][attributes][averageRating]    None
+    And Response body parameter should be:    [data][7][attributes][reviewCount]    0
+    And Response body parameter should be:    [data][7][attributes][name]    ${product_related_product_with_upselling_relation_name}
+    And Response body parameter should not be EMPTY:    [data][7][attributes][description]
+    And Response body parameter should not be EMPTY:    [data][7][attributes][attributes]
+    And Response should contain the array larger than a certain size:    [data][7][attributes][superAttributesDefinition]    0
+    And Response should contain the array larger than a certain size:    [data][7][attributes][superAttributes]    0
+    And Response should contain the array larger than a certain size:    [data][7][attributes][attributeMap]    0
+    And Response should contain the array larger than a certain size:    [data][7][attributes][attributeMap][super_attributes]   0
+    And Response should contain the array larger than a certain size:    [data][7][attributes][attributeMap][product_concrete_ids]   0
+    And Response should contain the array of a certain size:    [data][7][attributes][attributeMap][attribute_variants]   0
+    And Response should contain the array larger than a certain size:    [data][7][attributes][attributeMap][attribute_variant_map]   0 
+    And Response should contain the array larger than a certain size:    [data][7][attributes][metaTitle]    0  
+    And Response body parameter should not be EMPTY:    [data][7][attributes][metaKeywords]
+    And Response body parameter should not be EMPTY:    [data][7][attributes][metaDescription]
+    And Response body parameter should not be EMPTY:    [data][7][attributes][attributeNames]
+    And Response body parameter should not be EMPTY:    [data][7][attributes][url]     
     And Response body has correct self link
     [Teardown]    Run Keyword    Cleanup all items in the guest cart:    ${guest_cart_id}
 

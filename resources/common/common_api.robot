@@ -1510,3 +1510,13 @@ Cleanup all availability notifications:
                 Log    availability_notification_id: ${availability_notification_id}
                 ${response_delete}=    DELETE    ${current_url}/availability-notifications/${availability_notification_id}    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}    expected_status=204
         END
+
+Update order status in Database
+    [Documentation]    This keyword updates order status in database to 'Shipped' which is required to make order items available for return. 
+    ...    There is no separate endpoint to update order status and this keyword allows to do this via database value update.
+    
+
+    Connect To Database    pymysql    ${default_db_name}    ${default_db_user}    ${default_db_password}    ${default_db_host}    ${default_db_port}
+    Execute Sql String    update spy_sales_order_item set fk_oms_order_item_state = '7' where uuid = '${Uuid}'
+    Disconnect From Database
+    

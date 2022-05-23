@@ -7,7 +7,6 @@ Default Tags    glue
 *** Test Cases ***
 ENABLER
     TestSetup
-
 Get_cart_by_cart_id_with_invalid_access_token
    [Setup]    I set Headers:    Authorization=3485h7
     When I send a GET request:    /carts/not-existing-cart
@@ -153,13 +152,15 @@ Update_cart_without_cart_id
     When I send a PATCH request:    /carts/    {"data": {"type": "carts","attributes": {"priceMode": "${net_mode}","currency": "${currency_code_eur}","store": "${store_de}"}}}
     Then Response status code should be:    400
     And Response reason should be:    Bad Request
-    And Response should return error message:    Resource id is not specified.
+     And Response should return error message:    Resource id is not specified.
 
+# Issue with ETag format CC-16733
 Update_cart_from_another_customer_cart_id
-     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+      [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
         ...  AND    I set Headers:    Authorization=${token}
-        ...  AND    Find or create customer cart
-        ...  AND    Get ETag header value from cart
+        ...  AND    I send a GET request:    /carts
+        ...  AND    Save value to a variable:    [data][0][id]    cart_id 
+        ...  AND    Save Header value to a variable:    ETag    header_tag
         ...  AND    I get access token for the customer:    ${yves_second_user_email}
         ...  AND    I set Headers:    Authorization=${token}    If-Match=${Etag}
     When I send a PATCH request:    /carts/${cart_id}    {"data": {"type": "carts","attributes": {"priceMode": "${net_mode}","currency": "${currency_code_eur}","store": "${store_de}"}}}
@@ -167,7 +168,7 @@ Update_cart_from_another_customer_cart_id
     And Response reason should be:    Not Found
     And Response should return error message:    Cart with given uuid not found.
     And Response should return error code:    101
-
+    
 Update_cart_with_invalid_header_tag
      [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
         ...  AND    I set Headers:    Authorization=${token}
@@ -211,6 +212,7 @@ Update_cart_without_type
     And Response reason should be:    Bad Request
     And Response should return error message:    Post data is invalid.
 
+# Issue with ETag format CC-16733
 Update_cart_with_invalid_priceMod_currency_store
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
         ...  AND    I set Headers:    Authorization=${token}

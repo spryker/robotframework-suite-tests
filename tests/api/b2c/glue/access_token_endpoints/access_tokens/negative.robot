@@ -2,8 +2,11 @@
 Suite Setup       SuiteSetup
 Resource    ../../../../../../resources/common/common_api.robot
 Test Setup    TestSetup
+Default Tags    glue
 
 *** Test Cases ***
+ENABLER
+    TestSetup
 Get_acess_token_with_invalid_password
     When I send a POST request:    /access-tokens    {"data":{"type":"access-tokens","attributes":{"username":"${yves_second_user_email}","password":"fake"}}}
     Then Response status code should be:    401

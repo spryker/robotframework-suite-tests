@@ -1,8 +1,11 @@
 *** Settings ***
 Suite Setup       SuiteSetup
 Resource    ../../../../../../resources/common/common_api.robot
+Default Tags    glue
 
 *** Test Cases ***
+ENABLER
+    TestSetup
 Request_concrete_availability_by_abstract_SKU
     When I send a GET request:    /concrete-products/${abstract_product_with_alternative_sku}/concrete-product-availabilities
     Then Response status code should be:    404

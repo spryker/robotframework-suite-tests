@@ -1,8 +1,11 @@
 *** Settings ***
 Suite Setup       SuiteSetup
 Resource    ../../../../../../resources/common/common_api.robot
+Default Tags    glue
 
 *** Test Cases ***
+ENABLER
+    TestSetup
 Request_product_prices_with_abstract_sku
     When I send a GET request:    /concrete-products/${bundled_product_1_abstract_sku}/concrete-product-prices
     Then Response status code should be:    404

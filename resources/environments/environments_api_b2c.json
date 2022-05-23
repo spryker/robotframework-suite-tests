@@ -18,8 +18,8 @@
         "yves_user_salutation": "Ms",
 
         "yves_second_user_email": "bill.martin@spryker.com",
-        "yves_second_user_first_name": "Martin",
-        "yves_second_user_last_name": "Bill",
+        "yves_second_user_first_name": "Bill",
+        "yves_second_user_last_name": "Martin",
         "yves_second_user_password": "change123",
         "yves_second_user_reference": "DE--4",
         "yves_second_user_salutation": "Mr",
@@ -169,14 +169,14 @@
         "packaging_unit_product_abstract_sku": "M21766",
 
         "product_with_relations_related_products_sku": "204",
-        "product_related_product_with_related_relation_sku": "016",
-        "product_related_product_with_related_relation_name": "Sony Cyber-shot DSC-W800",
+        "product_related_product_with_related_relation_sku": "058",
+        "product_related_product_with_related_relation_name": "Acer Liquid Jade",
         "product_with_relations_alternative_products_sku": "M21100",
         "product_with_relations_upselling_sku": "063",
         "concrete_of_product_with_relations_upselling_sku": "063_29231675",      
         "concrete_of_alternative_product_with_relations_upselling_sku": "007_30691822",
-        "product_related_product_with_upselling_relation_sku": "042",
-        "product_related_product_with_upselling_relation_name": "Samsung Galaxy S7",
+        "product_related_product_with_upselling_relation_sku": "051",
+        "product_related_product_with_upselling_relation_name": "Samsung Galaxy S6 edge",
         "concrete_of_product_without_relations": "019_21081473",
         
         "concrete_product_with_abstract_product_alternative_sku": "138_30046855",
@@ -203,7 +203,15 @@
         "concrete_available_with_stock_and_never_out_of_stock": "004_30663302",
         "concrete_available_with_stock_and_never_out_of_stock_name": "Canon IXUS 175",
         "abstract_available_product_with_no_stock_and_never_out_of_stock": "154",
-        "abstract_unavailable_product": "111",
+        "abstract_unavailable_product": "011",
+
+        "abstract_available_product_with_stock_one_concrete_with_superattribute": "156",
+        "abstract_available_product_with_stock_one_concrete_with_superattribute_name": "Acer Iconia B1-850",
+        "abstract_available_product_with_stock_one_concrete_with_superattribute_name_description": "Portable charm With a bevy of trendy, eye catching colours to suit any lifestyle and show your personality, this slim and lightweight tablet designed to be travel friendly. Plus its beautifully textured anti-slip finish helps you keep a firm grip wherever you go. Looks sharp and stays sharp. The HD LCD with IPS1 technology brings out every detail of the display from any angle. Put that together with Zero Air Gap technology and you get brighter and crisper images with higher contrast and considerably better visibility in sunlight. A highly effective anti-fingerprint coating reduces messy fingerprints and smudges, and makes the screen much easier to clean. Add to that Acer’s innovative Touch WakeApp which adds new one-touch gestures to both wake the tablet up and pop it right into whatever app you want instant access to.",
+        "abstract_available_product_with_stock_one_concrete_with_superattribute_name_superattribute": "form_factor",
+        "concrete_available_product_with_superattribute_sku": "156_32018944",
+        "concrete_available_product_with_superattribute_meta_keywords": "Acer,Communication Electronics",
+        "concrete_available_product_with_superattribute_meta_description": "Portable charm With a bevy of trendy, eye catching colours to suit any lifestyle and show your personality, this slim and lightweight tablet designed to be",
 
         "abstract_available_product_with_3_concretes": "127",
         "abstract_available_product_with_3_concretes_name": "HP Z 620",
@@ -215,6 +223,8 @@
         "concrete_product_with_original_prices": "072_21927455",
         "concrete_product_with_original_prices_name": "Samsung Galaxy Note 3",
         "concrete_product_with_volume_prices": "193_32124735",
+        "concrete_product_with_review": "086_30521602",
+        "concrete_product_with_review_name": "Samsung Gear S2",
 
         "abstract_product_with_label": "145",
         "abstract_product_with_label_name": "DELL Chromebook 13",
@@ -223,7 +233,7 @@
         "abstract_product_with_concrete_offers_name": "",
 
         "abstract_product_with_reviews": "035",
-        "abstract_product_with_reviews_name": "Rectangular table, rectangular tubing - 1600 x 800 mm",
+        "abstract_product_with_reviews_name": "Canon PowerShot N",
 
         "abstract_product_with_options": "012",
         "abstract_product_with_options_name": "Canon IXUS 165",
@@ -237,7 +247,7 @@
         "concrete_product_multiple_image_set": "158_29885222",
         "concrete_product_multiple_image_set_name": "Asus ZenPad Z170C",
         "concrete_available_product_with_stock": "001_25904006",
-        "concrete_available_product_without_stock": "212_123",
+        "concrete_available_product_without_stock": "031_30021637",
 
         "abstract_product_with_multiple_variants": "130",
         "concrete_product_sku_multivariant_variant1": "130_29285281",
@@ -267,6 +277,7 @@
         "brand_3": "Mauser",
         "brand_4": "Sony",
         "brand_5": "Lenovo",
+        "brand_6": "Acer",
         "material_1": "aluminum",
         "material_2": "metal",
         "material_3": "chipboard",
@@ -277,10 +288,14 @@
         "display_technology": "TFT",
         "delivery_1": "assembled",
         "price_unit_1": "piece",
-        "color_4": "Black",
+        "color_5": "white",
+        "color_4": "black",
         "color_3": "purple",
         "color_1": "yellow",
-        "color_2": "Blue",
+        "color_2": "blue",
+        "processor_frequency": "1.3 GHz",
+        "internal_storage_capacity": "16 GB",
+        "processor_cores": "4",
 
         "product_management_superattribute_id": "4g",
         "product_management_attribute_free_input_id": "4g_standards",
@@ -394,12 +409,14 @@
     },
 
     "return_reason":{
-        "return_reasons_qty": "3"
+        "return_reasons_qty": "3",
+        "return_reason_damaged":  "Damaged"
     },
 
     "wishlists":{
 
-        "wishlist_name":"HS"
+        "wishlist_name":"HS",
+        "wishlist_name_2":"Wishlist Name"
         
        },
 

@@ -1,8 +1,11 @@
 *** Settings ***
 Suite Setup       SuiteSetup
 Resource    ../../../../../../resources/common/common_api.robot
+Default Tags    glue
 
 *** Test Cases ***
+ENABLER
+    TestSetup
 Get_abstract_image_stes_by_concrete_SKU
     When I send a GET request:    /abstract-products/${concrete_product_with_abstract_product_alternative_sku}/abstract-product-image-sets
     Then Response status code should be:    404

@@ -1,8 +1,11 @@
 *** Settings ***
 Suite Setup       SuiteSetup
 Resource    ../../../../../../resources/common/common_api.robot
+Default Tags    glue
 
 *** Test Cases ***
+ENABLER
+    TestSetup
 Get_concrete_bundled_products_inside_concrete_bundle
     When I send a GET request:    /concrete-products/${bundle_product_concrete_sku}/bundled-products
     Then Response status code should be:    200
@@ -42,7 +45,7 @@ Get_concrete_bundle_product_with_bundled_products_include
     And Response body parameter should be:    [data][attributes][sku]    ${bundle_product_concrete_sku}
     And Response body parameter should be:    [data][attributes][productAbstractSku]    ${bundle_product_abstract_sku}
     And Response body parameter should be:    [data][attributes][name]    ${bundle_product_product_name}
-    And Response body parameter should be:    [data][attributes][attributes][bundled_product]    Yes
+    And Response body parameter should be:    [data][attributes][attributes][bundled_product]    yes
     And Response body parameter should be:    [data][attributes][attributeNames][bundled_product]    Bundled Product
     And Response body has correct self link internal
     And Response should contain the array of a certain size:    [data][relationships][bundled-products][data]    ${qty_of_products_in_bundle}
@@ -62,7 +65,7 @@ Get_abstract_bundle_product_with_bundled_products_include
     And Response body parameter should be:    [data][id]    ${bundle_product_abstract_sku}
     And Response body parameter should be:    [data][attributes][sku]    ${bundle_product_abstract_sku}
     And Response body parameter should be:    [data][attributes][name]    ${bundle_product_product_name}
-    And Response body parameter should be:    [data][attributes][attributes][bundled_product]    Yes
+    And Response body parameter should be:    [data][attributes][attributes][bundled_product]    yes
     And Response body parameter should be:    [data][attributes][attributeNames][bundled_product]    Bundled Product
     And Response body parameter should be:    [data][attributes][attributeMap][product_concrete_ids]    ${bundle_product_concrete_sku}
     And Response body has correct self link internal

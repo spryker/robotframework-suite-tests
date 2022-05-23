@@ -5,6 +5,8 @@ Resource    ../../../../../resources/common/common_api.robot
 Default Tags    glue
 
 *** Test Cases ***
+ENABLER
+    TestSetup
 #GET requests
 Get_availability_notifications_for_customer
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}

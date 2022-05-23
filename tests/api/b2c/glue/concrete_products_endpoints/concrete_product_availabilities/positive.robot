@@ -1,8 +1,11 @@
 *** Settings ***
 Suite Setup       SuiteSetup
 Resource    ../../../../../../resources/common/common_api.robot
+Default Tags    glue
 
 *** Test Cases ***
+ENABLER
+    TestSetup
 Request_concrete_availability_by_concrete_SKU_with_stock
     When I send a GET request:    /concrete-products/${concrete_available_product_with_stock}/concrete-product-availabilities
     Then Response status code should be:    200
@@ -28,6 +31,7 @@ Request_concrete_availability_by_concrete_SKU_with_stock_and_never_out_of_stock
     And Response body has correct self link
     
 #Bug CC-15984 - not demo data
+# Bug is resolved
 Request_concrete_availability_by_concrete_SKU_without_stock
     When I send a GET request:    /concrete-products/${concrete_available_product_without_stock}/concrete-product-availabilities
     Then Response status code should be:    200

@@ -1,8 +1,11 @@
 *** Settings ***
 Suite Setup       SuiteSetup
 Resource    ../../../../../../resources/common/common_api.robot
+Default Tags    glue
 
 *** Test Cases ***
+ENABLER
+    TestSetup
 Abstract_product_with_one_concrete
     When I send a GET request:    /abstract-products/${abstract_available_product_with_stock}
     Then Response status code should be:    200
@@ -18,7 +21,7 @@ Abstract_product_with_one_concrete
     And Response should contain the array larger than a certain size:    [data][attributes][superAttributesDefinition]    0
     And Response should contain the array of a certain size:    [data][attributes][attributeMap]    4
     And Response should contain the array of a certain size:    [data][attributes][attributeMap][product_concrete_ids]    1
-    And Response body parameter should contain:    [data][attributes][superAttributes]    ${abstract_available_product_with_stock_superattribute}
+    And Response body parameter should contain:    [data][attributes][superAttributesDefinition]    ${abstract_available_product_with_stock_superattribute}
     And Response body parameter should not be EMPTY:    [data][attributes][metaTitle]
     And Response body parameter should not be EMPTY:    [data][attributes][metaKeywords]
     And Response body parameter should not be EMPTY:    [data][attributes][metaDescription]
@@ -92,6 +95,8 @@ Abstract_product_with_abstract_includes_for_labels
     
 
 # Bug CC-14879
+# Bug is resolved
+# ${abstract_product_with_reviews_name} is updated as different product name is in demoshop for this SKU
 Abstract_product_with_abstract_includes_for_reviews
     When I send a GET request:    /abstract-products/${abstract_product_with_reviews}?include=product-reviews
     Then Response status code should be:    200

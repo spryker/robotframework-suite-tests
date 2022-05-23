@@ -1,8 +1,11 @@
 *** Settings ***
 Suite Setup       SuiteSetup
 Resource    ../../../../../../resources/common/common_api.robot
+Default Tags    glue
 
 *** Test Cases ***
+ENABLER
+    TestSetup
 ####### POST #######
 Add_item_to_cart_non_existing_sku
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}

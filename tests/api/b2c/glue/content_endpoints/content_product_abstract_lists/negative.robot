@@ -1,9 +1,11 @@
 *** Settings ***
 Suite Setup       SuiteSetup
 Resource    ../../../../../../resources/common/common_api.robot
+Default Tags    glue
 
 *** Test Cases ***
-
+ENABLER
+    TestSetup
 Get_abstract_product_list_by_fake_id
     When I send a GET request:    /content-product-abstract-lists/fake
     Then Response status code should be:    404
