@@ -89,8 +89,10 @@ Add_voucher_code_to_cart_including_vouchers
     #relationships
     And Response body parameter should be:    [data][relationships][vouchers][data][0][type]    vouchers
     And Response body parameter should be:    [data][relationships][vouchers][data][0][id]    ${discount_voucher_code}
+    And Response should contain the array of a certain size:    [data][relationships][vouchers][data]    1
+
     #included
-    And Response body parameter should be:    [included][0][type]    vouchers
+    And Response include should contain certain entity type:    vouchers
     And Response body parameter should be:    [included][0][id]    ${discount_voucher_code}
     And Response body parameter should be greater than:    [included][0][attributes][amount]    0
     And Response body parameter should be:    [included][0][attributes][code]    ${discount_voucher_code}
@@ -100,7 +102,8 @@ Add_voucher_code_to_cart_including_vouchers
     And Response body parameter should not be EMPTY:    [included][0][attributes][expirationDateTime]
     And Response body parameter should be:    [included][0][attributes][discountPromotionAbstractSku]    None
     And Response body parameter should be:    [included][0][attributes][discountPromotionQuantity]    None
-    And Response body parameter should not be EMPTY:    [included][0][links][self]
+    And Response include element has self link:    vouchers
+
 
 Add_voucher_code_to_guest_user_cart_including_vouchers
 
@@ -116,8 +119,9 @@ Add_voucher_code_to_guest_user_cart_including_vouchers
     #relationships
     And Response body parameter should be:    [data][relationships][vouchers][data][0][type]    vouchers
     And Response body parameter should be:    [data][relationships][vouchers][data][0][id]    ${discount_voucher_code}
+    And Response should contain the array of a certain size:    [data][relationships][vouchers][data]    1
     #included
-    And Response body parameter should be:    [included][0][type]    vouchers
+    And Response include should contain certain entity type:    vouchers
     And Response body parameter should be:    [included][0][id]    ${discount_voucher_code}
     And Response body parameter should be greater than:    [included][0][attributes][amount]    0
     And Response body parameter should be:    [included][0][attributes][code]    ${discount_voucher_code}
@@ -127,7 +131,8 @@ Add_voucher_code_to_guest_user_cart_including_vouchers
     And Response body parameter should not be EMPTY:    [included][0][attributes][expirationDateTime]
     And Response body parameter should be:    [included][0][attributes][discountPromotionAbstractSku]    None
     And Response body parameter should be:    [included][0][attributes][discountPromotionQuantity]    None
-    And Response body parameter should not be EMPTY:    [included][0][links][self]
+    And Response include element has self link:    vouchers
+
     [Teardown]    Cleanup all items in the guest cart:    ${guest_cart_id}
 
 #DELETE requests
@@ -141,6 +146,8 @@ Delete_voucher_code_from_cart
     When I send a DELETE request:    /carts/${cart_id}/vouchers/${discount_voucher_code}
     Then Response status code should be:    204
     And Response reason should be:    No Content
+    [Teardown]    Run Keywords    I send a GET request:    /carts/${cart_id}
+    ...    AND    Response body parameter should be:    [data][attributes][totals][discountTotal]    0
 
 Delete_voucher_code_from_guest_user_cart
     [Setup]    Run Keywords    Create a guest cart:    ${x_anonymous_prefix}${random}    ${discount_concrete_product_sku_with_voucher_code}    1
@@ -148,4 +155,6 @@ Delete_voucher_code_from_guest_user_cart
     When I send a DELETE request:    /guest-carts/${guest_cart_id}/vouchers/${discount_voucher_code}
     Then Response status code should be:    204
     And Response reason should be:    No Content
-    [Teardown]    Cleanup all items in the guest cart:    ${guest_cart_id} 
+    [Teardown]    Run Keywords     I set Headers:    X-Anonymous-Customer-Unique-Id=${x_anonymous_prefix}${random}
+    ...    AND    I send a GET request:    /guest-carts
+    ...    AND    Response body parameter should be:    [data][0][attributes][totals][discountTotal]    0
