@@ -125,8 +125,8 @@ Yves: add product to wishlist:
     IF    '${selectWishlist}'=='select'
         Run keywords
             Wait Until Element Is Visible    xpath=//select[contains(@name,'wishlist-name')]
-                Wait Until Element Is Enabled    xpath=//select[contains(@name,'wishlist-name')]
-                Select From List By Value    xpath=//select[contains(@name,'wishlist-name')]    ${wishlistName}
+            Wait Until Element Is Enabled    xpath=//select[contains(@name,'wishlist-name')]
+            Select From List By Value    xpath=//select[contains(@name,'wishlist-name')]    ${wishlistName}
     END
     Click    ${pdp_add_to_wishlist_button}
     Yves: flash message should be shown:    success    Items added successfully

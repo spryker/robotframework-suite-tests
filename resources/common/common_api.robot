@@ -1272,8 +1272,8 @@ Find or create customer cart
         Save value to a variable:    [data][0][id]    cart_id
         ${hasCart}    Run Keyword and return status     Should not be empty    ${cart_id}
         Log    cart_id:${cart_id}
-        IF    !${hasCart}    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${gross_mode}","currency": "${currency_code_eur}","store": "${store_de}"}}}
-        IF    !${hasCart}    Save value to a variable:    [data][id]    cart_id
+        IF    not ${hasCart}    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${gross_mode}","currency": "${currency_code_eur}","store": "${store_de}"}}}
+        IF    not ${hasCart}    Save value to a variable:    [data][id]    cart_id
 
 
 Get ETag header value from cart
