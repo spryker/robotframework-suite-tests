@@ -127,24 +127,6 @@ Add_voucher_code_to_guest_cart_with_invalid_cart_id
     And Response should return error code:    101
     And Response should return error message:    Cart with given uuid not found.
 
-Add_voucher_code_from_another_discount_to_cart
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
-    ...    AND    I set Headers:    Authorization=${token}
-    ...    AND    Find or create customer cart
-    When I send a POST request:    /carts/${cart_id}/vouchers    {"data": {"type": "vouchers","attributes": {"code": "discount_voucher_code"}}}
-    Then Response status code should be:    422
-    And Response reason should be:    Unprocessable Content
-    And Response should return error code:    3302
-    And Response should return error message:    "Cart code cant be added."
-
-Add_voucher_code_from_another_discount_to_guest_user_cart
-    [Setup]    Create a guest cart:    ${x_anonymous_prefix}${random}    ${discount_concrete_product_sku_with_voucher_code}    1
-    When I send a POST request:    /guest-carts/${guest_cart_id}/vouchers    {"data": {"type": "vouchers","attributes": {"code": "discount_voucher_code"}}}
-    Then Response status code should be:    422
-    And Response reason should be:    Unprocessable Content
-    And Response should return error code:    3302
-    And Response should return error message:    "Cart code cant be added."
-    [Teardown]    Cleanup all items in the guest cart:    ${guest_cart_id}
 
 Add_voucher_code_to_cart_without_voucher_discount
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
