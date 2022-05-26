@@ -201,6 +201,7 @@
 
 
         "alternative_abstract_product_price_chf": "39675",
+        
         "discount_1_name": "10% off minimum order",
         "discount_amount_for_product_1_with_discount_20%_off_storage": "4000",
         "discount_amount_for_product_1_with_discount_10%_off_minimum_order": "1600",
@@ -210,8 +211,27 @@
         "discount_amount_for_product_2_with_discount_20%_off_storage": "5783",
         "discount_amount_for_product_2_with_discount_10%_off_minimum_order": "2313",
         "discount_concrete_product_2_total_sum_of_discounts": "8096",
+
+        "discount_1_name_1": "20% off cameras",
+        "discount_1_description_1": "20% off all digital cameras in the store",
+        "discount_amount_for_product_1_with_discount_20%_off_storage_1": "1400",
+        "discount_amount_for_product_1_with_discount_10%_off_minimum_order_1": "560",
+        "discount_concrete_product_1_total_sum_of_discounts_1": "1400",
+        "discount_concrete_product_2_sku_1": "007_30691822",
+        "discount_concrete_product_2_name_1": "Canon IXUS 285",
+        "discount_amount_for_product_2_with_discount_20%_off_storage_1": "6900",
+        "discount_amount_for_product_2_with_discount_10%_off_minimum_order_1": "2760",
+        "discount_concrete_product_2_total_sum_of_discounts_1": "3320",
         "discount_concrete_product_3_sku": "401768",
+        "discount_amount_for_product_3_with_10%_discount": "490",
         "discount_2_name": "20% off cameras",
+        "discount_2_description":"Get a 10% discount on all orders above 100 EUR or 115 CHF",
+        "discount_3_name": "Free standard delivery",
+        "discount_3_total_sum":"490",
+        "discount_3_description":"Free standard delivery for all orders above certain value depending on the currency",
+        "discount_1_total_sum_for_discounts_for_products_1_and_2":"8300",
+        "discount_2_total_sum_for_discounts_for_products_1_2":"3320",
+        "discount_3_total_sum_for_discounts_for_products_1_2":"490",
 
 
         "abstract_available_product_with_stock": "183",
@@ -225,6 +245,7 @@
         "concrete_available_product_with_label": "204_29851280",
         "abstract_available_with_stock_and_never_out_of_stock": "004",
         "concrete_available_with_stock_and_never_out_of_stock": "004_30663302",
+        "concrete_available_with_stock_and_never_out_of_stock_name": "Canon IXUS 175",
         "abstract_available_product_with_no_stock_and_never_out_of_stock": "154",
         "abstract_unavailable_product": "111",
 
@@ -260,6 +281,7 @@
         "concrete_available_product_with_offer":  "092_24495842",   
         "abstract_product_with_multiple_variants": "130",
         "concrete_product_sku_multivariant_variant1": "130_29285281",
+        "concrete_product_sku_multivariant_variant1_name": "Lenovo ThinkStation P300",
         "concrete_product_sku_multivariant_variant2": "130_24326086",
         
 
@@ -267,8 +289,6 @@
         "product_option_1_name": "Two (2) year limited warranty",
         "product_option_2": "OP_insurance",
     
-
-
         "review_title": "This is a review",
         "review_text": "This is review text",
         "default_review_rating": "5"
