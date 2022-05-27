@@ -21,6 +21,7 @@ ${browser_timeout}     60 seconds
 ${email_domain}        @spryker.com
 ${default_password}    change123
 ${admin_email}         admin@spryker.com
+${device}
 # ${fake_email}          test.spryker+${random}@gmail.com
 
 *** Keywords ***
@@ -50,8 +51,7 @@ SuiteSetup
     Load Variables    ${env}
     New Browser    ${browser}    headless=${headless}    args=['--ignore-certificate-errors']
     Set Browser Timeout    ${browser_timeout}
-    Run Keyword if    '${headless}=true'    Create default Main Context
-    Run Keyword if    '${headless}=false'    Create default Main Context
+    Create default Main Context
     New Page    ${host}
     ${random}=    Generate Random String    5    [NUMBERS]
     Set Global Variable    ${random}
@@ -75,7 +75,13 @@ TestTeardown
     Delete All Cookies
 
 Create default Main Context
-    ${main_context}=    New Context    viewport={'width': 1440, 'height': 1080}
+    Log    ${device}
+    IF  '${device}' == '${EMPTY}'
+        ${main_context}=    New Context    viewport={'width': 1440, 'height': 1080}
+    ELSE
+        ${device}=    Get Device    ${device}
+        ${main_context}=    New Context    &{device}
+    END
     Set Suite Variable    ${main_context}
 
 Variable datatype should be:
