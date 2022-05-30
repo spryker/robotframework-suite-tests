@@ -37,11 +37,16 @@ Zed: go to second navigation item level:
     [Arguments]     ${navigation_item_level1}   ${navigation_item_level2}
     ${node_state}=    Get Element Attribute  xpath=(//span[contains(@class,'nav-label')][text()='${navigation_item_level1}']/ancestor::li)[1]    class
     log    ${node_state}
-    Run Keyword If    'active' in '${node_state}'   run keywords  wait until element is visible  xpath=//ul[contains(@class,'nav-second-level')]//a/span[text()='${navigation_item_level2}']
-    ...    AND      Click  xpath=//span[contains(@class,'nav-label')][text()='${navigation_item_level1}']/ancestor::li//ul[contains(@class,'nav-second-level')]//a/span[text()='${navigation_item_level2}']
-    ...    ELSE     run keywords    Click    //ul[@id='side-menu']/li/a/span[@class='nav-label'][contains(text(),'${navigation_item_level1}')]/../../a
-    ...    AND      wait until element is visible  xpath=//span[contains(@class,'nav-label')][text()='${navigation_item_level1}']/ancestor::li//ul[contains(@class,'nav-second-level')]//a/span[text()='${navigation_item_level2}']
-    ...    AND      Click  xpath=//span[contains(@class,'nav-label')][text()='${navigation_item_level1}']/ancestor::li//ul[contains(@class,'nav-second-level')]//a/span[text()='${navigation_item_level2}']
+    IF    'active' in '${node_state}'
+       run keywords
+            wait until element is visible  xpath=//ul[contains(@class,'nav-second-level')]//a/span[text()='${navigation_item_level2}']
+            Click  xpath=//span[contains(@class,'nav-label')][text()='${navigation_item_level1}']/ancestor::li//ul[contains(@class,'nav-second-level')]//a/span[text()='${navigation_item_level2}']
+    ELSE
+        run keywords
+            Click    //ul[@id='side-menu']/li/a/span[@class='nav-label'][contains(text(),'${navigation_item_level1}')]/../../a
+            wait until element is visible  xpath=//span[contains(@class,'nav-label')][text()='${navigation_item_level1}']/ancestor::li//ul[contains(@class,'nav-second-level')]//a/span[text()='${navigation_item_level2}']
+            Click  xpath=//span[contains(@class,'nav-label')][text()='${navigation_item_level1}']/ancestor::li//ul[contains(@class,'nav-second-level')]//a/span[text()='${navigation_item_level2}']
+    END
 
 Zed: click button in Header:
     [Arguments]    ${button_name}

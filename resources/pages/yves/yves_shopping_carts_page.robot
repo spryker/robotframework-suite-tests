@@ -10,34 +10,34 @@ ${delete_first_shopping_cart_button}    xpath=//*[@data-qa='component quote-tabl
 
 
 *** Keywords ***
-Edit shopping cart with name:    
+Edit shopping cart with name:
     [Arguments]    ${shoppingCartName}
     Click    xpath=//*[@data-qa='component quote-table']//table//td[@data-content='Name'][contains(.,'${shoppingCartName}')]/..//ul//a[contains(.,'Edit')]
 
-Duplicate shopping cart with name:    
+Duplicate shopping cart with name:
     [Arguments]    ${shoppingCartName}
     Click    xpath=//*[@data-qa='component quote-table']//table//td[@data-content='Name'][contains(.,'${shoppingCartName}')]/..//ul//a[contains(.,'Duplicate')]
 
-Add to list shopping cart with name:    
+Add to list shopping cart with name:
     [Arguments]    ${shoppingCartName}
     Click    xpath=//*[@data-qa='component quote-table']//table//td[@data-content='Name'][contains(.,'${shoppingCartName}')]/..//ul//a[contains(.,'Add to list')]
 
-Dismiss shopping cart with name:    
+Dismiss shopping cart with name:
     [Arguments]    ${shoppingCartName}
     Click    xpath=//*[@data-qa='component quote-table']//table//td[@data-content='Name'][contains(.,'${shoppingCartName}')]/..//ul//a[contains(.,'Dismiss')]
 
-Delete shopping cart with name:    
+Delete shopping cart with name:
     [Arguments]    ${shoppingCartName}
     Click    xpath=//*[@data-qa='component quote-table']//table//td[@data-content='Name'][contains(.,'${shoppingCartName}')]/..//ul//a[contains(.,'Delete')]
 
-Share shopping cart with name:    
+Share shopping cart with name:
     [Arguments]    ${shoppingCartName}
     Click    xpath=//*[@data-qa='component quote-table']//table//td[@data-content='Name'][contains(.,'${shoppingCartName}')]/..//ul//a[contains(.,'Share')]
 
 Select access level to share shopping cart with:
     [Arguments]    ${customerToShareWith}    ${accessLevel}
-    Select From List By Label    xpath=//div[@data-qa="share-cart-table"]//*[text()='Users']/../../div[@data-qa='component user-share-list']//li[contains(.,'${customerToShareWith}')]//select    ${accessLevel}  
+    Select From List By Label    xpath=//div[@data-qa="share-cart-table"]//*[text()='Users']/../../div[@data-qa='component user-share-list']//li[contains(.,'${customerToShareWith}')]//select    ${accessLevel}
 
 Delete first available shopping cart
         ${can_be_deleted}=    Run Keyword And Return Status    Page Should Contain Element    ${delete_first_shopping_cart_button}
-        Run Keyword If    '${can_be_deleted}'=='True'    Click    ${delete_first_shopping_cart_button}
+        IF    '${can_be_deleted}'=='True'    Click    ${delete_first_shopping_cart_button}

@@ -1,12 +1,12 @@
 {
-    "environment": "api_b2b", 
+    "environment": "api_b2b",
 
     "env": {
         "glue_url": "http://glue.de.spryker.local",
         "bapi_url": "http://backend-api.de.spryker.local/api/rest"
     },
 
-    "users": {    
+    "users": {
         "yves_user_email": "sonia@spryker.com",
         "yves_user_first_name": "Sonia",
         "yves_user_last_name": "Wagner",
@@ -27,7 +27,7 @@
         "yves_third_user_last_name": "Musterman",
         "yves_third_user_password": "change123",
         "yves_third_user_salutation": "Mr",
-      
+
         "yves_fourth_user_email": "Lilu@ottom.de",
         "yves_fourth_user_first_name": "Lilu",
         "yves_fourth_user_last_name": "Dallas",
@@ -39,7 +39,7 @@
         "yves_shared_shopping_list_user_first_name": "Trever",
         "yves_shared_shopping_list_user_last_name": "Meier",
         "yves_shared_shopping_list_user_password": "change123",
-        "yves_shared_shopping_list_user_salutation": "Mr",        
+        "yves_shared_shopping_list_user_salutation": "Mr",
 
         "yves_shared_shopping_cart_user_email": "Solomon@spryker.com",
         "yves_shared_shopping_cart_user_first_name": "Solomon",
@@ -49,7 +49,7 @@
 
         "gender_female": "Female",
         "gender_male": "Male",
-        
+
         "email_name": "sonia",
         "email_domain": "@spryker.com",
 
@@ -70,7 +70,7 @@
         "grant_type_password": "password",
         "grant_type_refresh_token": "refresh_token"
     },
-    
+
     "address":{
         "default_address1": "Third, 33, 11",
         "default_address2": "33-B",
@@ -154,9 +154,9 @@
         "abstract_sku_highest_rating": "M1016129"
 
     },
-        
+
     "products": {
-        
+
         "bundle_product_abstract_sku": "B0001",
         "bundle_product_concrete_sku":"000101",
         "bundle_product_product_name": "Our Favourite Workspace Bundle",
@@ -219,7 +219,7 @@
         "abstract_product_with_original_prices": "M74972",
         "concrete_product_with_original_prices": "420687",
         "concrete_product_with_original_prices_name": "Post-it Index Strong adhesive stripes, 686-F1EU 4 sheets sorted, 4 pieces/pack",
-        "concrete_product_with_volume_prices": "420685",    
+        "concrete_product_with_volume_prices": "420685",
 
         "abstract_product_with_label": "M21691",
         "abstract_product_with_label_name": "Clairefontaine Collegeblock 8272C DIN A5, 90 sheets",
@@ -277,7 +277,7 @@
         "discount_concrete_product_3_name": "EUROKRAFT aluminum hand truck - Load capacity 200 kg, with skids - load capacity 200 kg",
         "discount_amount_for_product_3_with_discount_20%_off_storage": "16383",
         "discount_amount_for_product_3_with_10%_discount": "1882",
-        
+
         "voucher_concrete_product_1_with_brand_safescan_2_items": "782",
         "concrete_product_with_brand_safescan": "419872",
         "voucher_concrete_product_with_brand_safescan_and_white_color_2_items": "3201",
@@ -289,7 +289,7 @@
         "configurable_bundle_first_slot_uuid": "332b40ac-a789-57ce-bec0-23d8dddd71eb",
         "configured_bundle_quantity": 2
     },
-    
+
     "product_attributes":{
         "brand_1": "Soennecken",
         "brand_2": "edding",
@@ -333,7 +333,7 @@
         "category_node_is_root_id": "1",
         "category_node_has_only_parent_id": "37",
         "category_node_has_children_id": "11",
-        
+
         "category_nodes_storage_name": "Foods",
         "category_nodes_storage_url": "/en/foods",
         "subcategory_nodes_storage_name": "Fish",
@@ -345,7 +345,7 @@
         "brand_name": "verbatim",
 
         "cart_permission_group_id":"1"
-        
+
 
     },
     "availability":{
@@ -367,7 +367,7 @@
         "shipment_method_name": "Standard",
         "shipment_method_name_2": "Express",
         "delivery_date": "2030-12-31",
-        
+
         "review_title": "This is a review",
         "review_text": "This is review text",
         "default_review_rating": "5",
@@ -389,7 +389,7 @@
         "discount_id_4_voucher_code": "safescanqu1pu4ga1z",
 
         "cart_rule_name_10_off_minimum_order": "10% off minimum order",
-        
+
         "url_resolver_example": "/en/clairefontaine-collegeblock-8272c-din-a5-90blatt-kariert-M21692",
         "url_resolver_entity_type": "abstract-products",
         "url_resolver_entity_id": "M21692"

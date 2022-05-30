@@ -13,9 +13,13 @@ Yves: go to 'Order History' page
 
 Yves: 'View Order/Reorder/Return' on the order history page:
     [Arguments]    ${orderAction}    ${lastPlacedOrder}
-    Run Keyword If    '${orderAction}' == 'View Order'    Click   xpath=//div[contains(@data-qa,'component order-table')]//td[text()='${lastPlacedOrder}']/..//a[contains(.,'${orderAction}')]
-    ...    ELSE IF    '${orderAction}' == 'Reorder'    Click    xpath=//div[contains(@data-qa,'component order-table')]//td[text()='${lastPlacedOrder}']/..//a[contains(.,'${orderAction}')]
-    ...    ELSE IF    '${orderAction}' == 'Return'    Click    xpath=//div[contains(@data-qa,'component order-table')]//td[text()='${lastPlacedOrder}']/..//a[contains(.,'${orderAction}')]
+    IF    '${orderAction}' == 'View Order'
+        Click   xpath=//div[contains(@data-qa,'component order-table')]//td[text()='${lastPlacedOrder}']/..//a[contains(.,'${orderAction}')]
+    ELSE IF    '${orderAction}' == 'Reorder'
+        Click    xpath=//div[contains(@data-qa,'component order-table')]//td[text()='${lastPlacedOrder}']/..//a[contains(.,'${orderAction}')]
+    ELSE IF    '${orderAction}' == 'Return'
+        Click    xpath=//div[contains(@data-qa,'component order-table')]//td[text()='${lastPlacedOrder}']/..//a[contains(.,'${orderAction}')]
+    END
 
 Yves: reorder all items from 'View Order' page
     Click    ${order_details_reorder_all_button}

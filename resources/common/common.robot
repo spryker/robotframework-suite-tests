@@ -106,25 +106,25 @@ Select Random Option From List
 
 Click Element by xpath with JavaScript
     [Arguments]    ${xpath}
-    Execute Javascript    document.evaluate("${xpath}", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.click()
+    Evaluate Javascript     ${None}     document.evaluate("${xpath}", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.click()
 
 Click Element by id with JavaScript
     [Arguments]    ${id}
-    Execute Javascript    document.getElementById("${id}").click()
+    Evaluate Javascript     ${None}    document.getElementById("${id}").click()
 
 Remove element from HTML with JavaScript
     [Arguments]    ${xpath}
-    Execute Javascript    var element=document.evaluate("${xpath}", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;element.parentNode.removeChild(element);
+    Evaluate Javascript     ${None}    var element=document.evaluate("${xpath}", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;element.parentNode.removeChild(element);
 
 Add/Edit element attribute with JavaScript:
     [Arguments]    ${xpath}    ${attribute}    ${attributeValue}
     Log    ${attribute}
     Log    ${attributeValue}
-    Execute Javascript    (document.evaluate("${xpath}", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue).setAttribute("${attribute}", "${attributeValue}");
+    Evaluate Javascript     ${None}    (document.evaluate("${xpath}", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue).setAttribute("${attribute}", "${attributeValue}");
 
 Remove element attribute with JavaScript:
     [Arguments]    ${xpath}    ${attribute}
-    Execute Javascript    var element=document.evaluate("${xpath}", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;element.removeAttribute("${attribute}"");
+    Evaluate Javascript     ${None}    var element=document.evaluate("${xpath}", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;element.removeAttribute("${attribute}"");
 
 # Helper keywords for migration from Selenium Library to Browser Library
 Wait Until Element Is Visible
@@ -261,9 +261,13 @@ Try reloading page until element is/not appear:
     [Arguments]    ${element}    ${shouldBeDisplayed}    ${tries}=20    ${timeout}=1s
     FOR    ${index}    IN RANGE    0    ${tries}
         ${elementAppears}=    Run Keyword And Return Status    Page Should Contain Element    ${element}
-        Run Keyword If    '${shouldBeDisplayed}'=='true' and '${elementAppears}'=='False'    Run Keywords    Sleep    ${timeout}    AND    Reload
-        ...    ELSE    Run Keyword If    '${shouldBeDisplayed}'=='false' and '${elementAppears}'=='True'    Run Keywords    Sleep    ${timeout}    AND    Reload
-        ...    ELSE    Exit For Loop
+        IF    '${shouldBeDisplayed}'=='true' and '${elementAppears}'=='False'
+            Run Keywords    Sleep    ${timeout}    AND    Reload
+        ELSE IF     '${shouldBeDisplayed}'=='false' and '${elementAppears}'=='True'
+            Run Keywords    Sleep    ${timeout}    AND    Reload
+        ELSE
+            Exit For Loop
+        END
     END
     IF    ('${shouldBeDisplayed}'=='true' and '${elementAppears}'=='False') or ('${shouldBeDisplayed}'=='false' and '${elementAppears}'=='True')
         Fail    'Timeout exceeded'
