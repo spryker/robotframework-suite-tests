@@ -34,7 +34,7 @@ Add_voucher_code_to_cart
     And Response body parameter with rounding should be:    [data][attributes][totals][grandTotal]    ${grand_total}
     And Response body parameter with rounding should be:    [data][attributes][totals][priceToPay]    ${grand_total}
     #discounts
-    And Response body parameter should be:    [data][attributes][discounts][0][displayName]    ${discount_3_name}
+    And Response body parameter should be:    [data][attributes][discounts][0][displayName]    ${discount_4_name}
     And Response body parameter should be greater than:    [data][attributes][discounts][0][amount]    0
     And Response body parameter should be:    [data][attributes][discounts][0][code]    ${discount_voucher_code}
     And Response should contain the array of a certain size:    [data][attributes][thresholds]    0
@@ -65,7 +65,7 @@ Add_voucher_code_to_guest_user_cart
     And Response body parameter with rounding should be:    [data][attributes][totals][grandTotal]    ${grand_total}
     And Response body parameter with rounding should be:    [data][attributes][totals][priceToPay]    ${grand_total}
     #discounts
-    And Response body parameter should be:    [data][attributes][discounts][0][displayName]    ${discount_3_name}
+    And Response body parameter should be:    [data][attributes][discounts][0][displayName]    ${discount_4_name}
     And Response body parameter should be greater than:    [data][attributes][discounts][0][amount]    0
     And Response body parameter should be:    [data][attributes][discounts][0][code]    ${discount_voucher_code}
     And Response should contain the array of a certain size:    [data][attributes][thresholds]    0
@@ -97,7 +97,7 @@ Add_voucher_code_to_cart_including_vouchers
     And Response body parameter should be greater than:    [included][0][attributes][amount]    0
     And Response body parameter should be:    [included][0][attributes][code]    ${discount_voucher_code}
     And Response body parameter should be:    [included][0][attributes][discountType]    voucher
-    And Response body parameter should be:    [included][0][attributes][displayName]    ${discount_3_name}
+    And Response body parameter should be:    [included][0][attributes][displayName]    ${discount_4_name}
     And Response body parameter should be:    [included][0][attributes][isExclusive]    False
     And Response body parameter should not be EMPTY:    [included][0][attributes][expirationDateTime]
     And Response body parameter should be:    [included][0][attributes][discountPromotionAbstractSku]    None
@@ -126,7 +126,7 @@ Add_voucher_code_to_guest_user_cart_including_vouchers
     And Response body parameter should be greater than:    [included][0][attributes][amount]    0
     And Response body parameter should be:    [included][0][attributes][code]    ${discount_voucher_code}
     And Response body parameter should be:    [included][0][attributes][discountType]    voucher
-    And Response body parameter should be:    [included][0][attributes][displayName]    ${discount_3_name}
+    And Response body parameter should be:    [included][0][attributes][displayName]    ${discount_4_name}
     And Response body parameter should be:    [included][0][attributes][isExclusive]    False
     And Response body parameter should not be EMPTY:    [included][0][attributes][expirationDateTime]
     And Response body parameter should be:    [included][0][attributes][discountPromotionAbstractSku]    None
