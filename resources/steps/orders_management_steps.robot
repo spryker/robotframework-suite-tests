@@ -23,14 +23,19 @@ Zed: trigger all matching states inside this order:
     Reload
     FOR    ${index}    IN RANGE    0    21
         ${order_state_reached}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//div[@id='order-overview']//form[@name='oms_trigger_form']//button[@id='oms_trigger_form_submit'][text()='${status}']
-        Run Keyword If    '${order_state_reached}'=='False'    Run Keywords    Sleep    3s    AND    Reload
-        ...    ELSE    Exit For Loop
+        IF    '${order_state_reached}'=='False'
+            Run Keywords    Sleep    3s    AND    Reload
+        ELSE
+            Exit For Loop
+        END
     END
     Click    xpath=//div[@id='order-overview']//form[@name='oms_trigger_form']//button[@id='oms_trigger_form_submit'][text()='${status}']
     ${order_changed_status}=    Run Keyword And Ignore Error    Element Should Not Be Visible    xpath=//div[@id='order-overview']//form[@name='oms_trigger_form']//button[@id='oms_trigger_form_submit'][text()='${status}']
-    Run Keyword If    'FAIL' in ${order_changed_status}    Run Keywords
-    ...    Reload
-    ...    AND    Click    xpath=//div[@id='order-overview']//form[@name='oms_trigger_form']//button[@id='oms_trigger_form_submit'][text()='${status}']
+    IF    'FAIL' in ${order_changed_status}
+        Run Keywords
+           Reload
+           Click    xpath=//div[@id='order-overview']//form[@name='oms_trigger_form']//button[@id='oms_trigger_form_submit'][text()='${status}']
+    END
 
 Zed: trigger matching state of order item inside xxx shipment:
     [Arguments]    ${sku}    ${event}    ${shipment}=1
@@ -38,9 +43,11 @@ Zed: trigger matching state of order item inside xxx shipment:
     Try reloading page until element is/not appear:    ${elementSelector}    true    20    10s
     Click    ${elementSelector}
     ${order_changed_status}=    Run Keyword And Ignore Error    Element Should Not Be Visible    ${elementSelector}
-    Run Keyword If    'FAIL' in ${order_changed_status}    Run Keywords
-    ...    Reload
-    ...    AND    Click    ${elementSelector}
+    IF    'FAIL' in ${order_changed_status}
+        Run Keywords
+            Reload
+            Click    ${elementSelector}
+    END
 
 Zed: wait for order item to be in state:
     [Arguments]    ${sku}    ${state}    ${shipment}=1
