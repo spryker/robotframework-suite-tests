@@ -7,200 +7,263 @@
     },
 
     "users": {
-        "yves_user_email": "sonia@spryker.com",
-        "yves_user_first_name": "Sonia",
-        "yves_user_last_name": "Wagner",
-        "yves_user_password": "change123",
-        "yves_user_password_new": "qweRTY_123",
-        "yves_user_reference": "DE--21",
-        "yves_user_salutation": "Ms",
-
-        "yves_second_user_email": "bill.martin@spryker.com",
-        "yves_second_user_first_name": "Martin",
-        "yves_second_user_last_name": "Bill",
-        "yves_second_user_password": "change123",
-        "yves_second_user_reference": "DE--4",
-        "yves_second_user_salutation": "Mr",
-
-        "yves_third_user_email": "maxmusterman@spryker.com",
-        "yves_third_user_first_name": "Max",
-        "yves_third_user_last_name": "Musterman",
-        "yves_third_user_password": "change123",
-        "yves_third_user_salutation": "Mr",
-
-        "yves_fourth_user_email": "Lilu@ottom.de",
-        "yves_fourth_user_first_name": "Lilu",
-        "yves_fourth_user_last_name": "Dallas",
-        "yves_fourth_user_password": "change123",
-        "yves_fourth_user_reference": "DE-30",
-        "yves_fourth_user_salutation": "Ms",
-
-        "yves_shared_shopping_list_user_email": "Trever.m@spryker.com",
-        "yves_shared_shopping_list_user_first_name": "Trever",
-        "yves_shared_shopping_list_user_last_name": "Meier",
-        "yves_shared_shopping_list_user_password": "change123",
-        "yves_shared_shopping_list_user_salutation": "Mr",
-
-        "yves_shared_shopping_cart_user_email": "Solomon@spryker.com",
-        "yves_shared_shopping_cart_user_first_name": "Solomon",
-        "yves_shared_shopping_cart_user_last_name": "Wesner",
-        "yves_shared_shopping_cart_user_password": "change123",
-        "yves_shared_shopping_cart_user_salutation": "Mr",
-
-        "gender_female": "Female",
-        "gender_male": "Male",
-
-        "email_name": "sonia",
-        "email_domain": "@spryker.com",
-
-        "zed_admin_email": "admin@spryker.com",
-        "zed_admin_password": "change123",
-
-        "agent_email": "admin@spryker.com",
-        "agent_password": "change123",
-
-        "non_agent_email": "admin_de@spryker.com",
-        "non_agent_password": "change123",
-
-        "customer_reference_1_de": "DE--1",
-        "customer_reference_10_de": "DE--10",
-        "customer_reference_15_de": "DE--15",
-        "customer_reference_34_de": "DE--34",
-        "customer_reference_44_de": "DE--44",
-
-        "grant_type_password": "password",
-        "grant_type_refresh_token": "refresh_token"
+        "yves_user": {
+            "email": "sonia@spryker.com",
+            "first_name": "Sonia",
+            "last_name": "Wagner",
+            "password": "change123",
+            "password_new": "qweRTY_123",
+            "reference": "DE--21",
+            "salutation": "Ms"
+        },
+        "yves_second_user": {
+            "email": "bill.martin@spryker.com",
+            "first_name": "Martin",
+            "last_name": "Bill",
+            "password": "change123",
+            "reference": "DE--4",
+            "salutation": "Mr"
+        },
+        "yves_third_user": {
+            "email": "maxmusterman@spryker.com",
+            "first_name": "Max",
+            "last_name": "Musterman",
+            "password": "change123",
+            "salutation": "Mr"
+        },
+        "yves_fourth_user": {
+            "email": "Lilu@ottom.de",
+            "first_name": "Lilu",
+            "last_name": "Dallas",
+            "password": "change123",
+            "reference": "DE-30",
+            "salutation": "Ms"
+        },
+        "yves_shared_shopping_list_user": {
+            "email": "Trever.m@spryker.com",
+            "first_name": "Trever",
+            "last_name": "Meier",
+            "password": "change123",
+            "salutation": "Mr"
+        },
+        "yves_shared_shopping_cart_user": {
+            "email": "Solomon@spryker.com",
+            "first_name": "Solomon",
+            "last_name": "Wesner",
+            "password": "change123",
+            "salutation": "Mr"
+        },
+        "gender": {
+            "female": "Female",
+            "male": "Male"
+        },
+        "email": {
+            "name": "sonia",
+            "domain": "@spryker.com"
+        },
+        "zed_admin": {
+            "email": "admin@spryker.com",
+            "password": "change123"
+        },
+        "agent": {
+            "email": "admin@spryker.com",
+            "password": "change123"
+        },
+        "non_agent":{
+            "email": "admin_de@spryker.com",
+            "password": "change123"
+        },
+        "customer_reference": {
+            "de_1":  "DE--1",
+            "de_10": "DE--10",
+            "de_15": "DE--15",
+            "de_34": "DE--34",
+            "de_44": "DE--44"
+        },
+        "grant_type":{
+            "password": "password",
+            "refresh_token": "refresh_token"
+        }
     },
 
     "address": {
-        "default_address1": "Third, 33, 11",
-        "default_address2": "33-B",
-        "default_address3": "third. address. line",
-        "default_zipCode": "12312",
-        "default_city": "Berlin",
-        "default_country": "Germany",
-        "default_iso2Code": "DE",
-        "default_company": "Spryker",
-        "default_phone": "22111-3-4-5",
-
-        "default_shipping_status": "False",
-        "default_billing_status": "False",
-
-        "changed_address1": "New Street 123",
-        "changed_address2": "75d",
-        "changed_address3": "third. address. line - changed",
-        "changed_phone": "555-555-55"
+        "default": {
+            "address1": "Third, 33, 11",
+            "address2": "33-B",
+            "address3": "third. address. line",
+            "zipCode": "12312",
+            "city": "Berlin",
+            "country": "Germany",
+            "iso2Code": "DE",
+            "company": "Spryker",
+            "phone": "22111-3-4-5",
+            "shipping_status": "False",
+            "billing_status": "False"
+        },
+        "changed": {
+            "address1": "New Street 123",
+            "address2": "75d",
+            "address3": "third. address. line - changed",
+            "phone": "555-555-55"
+        }
     },
 
-    "shop": {
-        "currency_name_eur": "Euro",
-        "currency_code_eur": "EUR",
-        "currency_symbol_eur": "€",
-        "store_de": "DE",
 
-        "currency_name_dollar": "US Dollar",
-        "currency_code_dollar": "USD",
-        "currency_symbol_dollar": "$",
-        "store_us": "US",
-
-        "currency_name_chf": "Swiss Franc",
-        "currency_code_chf": "CHF",
-        "currency_symbol_chf": "CHF",
-
-        "gross_mode": "GROSS_MODE",
-        "net_mode": "NET_MODE",
-
-        "locale_name_DE": "de_DE",
-        "locale_code_DE": "de",
-        "locale_name_EN": "en_US",
-        "locale_code_EN": "en"
+"shop": {
+        "currency": {
+            "eur": {
+                "name": "Euro",
+                "code": "EUR",
+                "symbol": "€"
+            },
+            "dollar": {
+                "name": "US Dollar",
+                "code": "USD",
+                "symbol": "$"
+            },
+            "chf": {
+                "name": "Swiss Franc",
+                "code": "CHF",
+                "symbol": "CHF"
+            }
+        },
+        "store": {
+            "de": "DE",
+            "us": "US"
+        },
+        "mode": {
+            "gross": "GROSS_MODE",
+            "net": "NET_MODE"
+        },
+        "locale": {
+            "DE": {
+                "name": "de_DE",
+                "code": "de"
+            },
+            "EN": {
+                "name": "en_US",
+                "code": "en"
+            }
+        }
     },
 
-    "shopping-list": {
+"shopping-list": {
         "shopping_list_name": "My Shopping List",
-        "yves_user_1st_shopping_list_id": "cf032865-d1ad-5e27-803a-423bd15ced66",
-        "yves_user_1st_shopping_list_name": "Newcomers",
+        "yves_user_1st_shopping_list": {
+            "id": "cf032865-d1ad-5e27-803a-423bd15ced66",
+            "name": "Newcomers"
+        },
         "yves_user_2nd_shopping_list_name": "Weekly office",
         "yves_user_3rd_shopping_list_name": "Monthly office"
+        
     },
 
-    "search":{
+"search":{
         "total_number_of_products_in_search": "414",
         "default_ipp": "12",
         "ipp_middle": "24",
         "ipp_biggest": "36",
-        "default_ipp_pages_qty": "35",
-        "default_categories_qty": "33",
-        "default_colors_qty": "10",
-        "default_labels_qty": "5",
-        "default_materials_qty": "10",
-        "default_brands_qty": "10",
-        "default_min_rating": "4",
-        "default_max_rating": "5",
-        "sorting_options_qty": "5",
-
-        "new_label": "New",
-        "sale_label": "SALE %",
-        "manual_label": "Top",
-        "discontinued_label": "Discontinued",
-        "alternatives_label": "Alternatives available",
-
-        "category_id_lvl1": "11",
-        "category_items_qty_lvl1": "172",
-        "category_id_lvl2": "12",
-        "category_items_qty_lvl2": "56",
-        "category_id_lvl3": "13",
-        "category_items_qty_lvl3": "28",
+        "default_qty": {
+            "ipp_pages": "35",
+            "categories": "33",
+            "colors": "10",
+            "labels": "5",
+            "materials": "10",
+            "brands": "10",
+            "sorting_options": "5"
+        },
+        "default_rating": {
+            "min": "4",
+            "max": "5"
+        },
+        "label": {
+            "new": "New",
+            "sale": "SALE %",
+            "manual": "Top",
+            "discontinued": "Discontinued",
+            "alternatives": "Alternatives available"
+        },
+        "category_id": {
+            "lvl1": "11",
+            "lvl2": "12",
+            "lvl3": "13"
+        },
+        "category_items_qty": {
+            "lvl1": "172",
+            "lvl2": "56",
+            "lvl3": "28"
+        },
         "category_tree_branches_qty": "6",
 
         "abstract_sku_highest_rating": "M1016129"
     },
 
-    "products": {
+"products": {
 
-        "bundle_product_abstract_sku": "M90851",
-        "bundle_product_abstract_name": "IDEAL document shredder - Power 1300 watts, 165 l volume",
-        "bundle_product_concrete_sku":"000201",
-        "bundle_product_product_name": "IDEAL document shredder - Power 1300 watts, 165 l volume - 23 – 25 sheets, safety level P-4, particle",
-        "bundled_product_1_abstract_sku": "M23457",
-        "bundled_product_2_abstract_sku": "C2235",
-        "bundled_product_3_abstract_sku": "M11542",
-        "bundled_product_1_concrete_sku": "424453",
-        "bundled_product_1_concrete_name": "Schneider ballpoint pen HAPTIFY 135323 M 0.5 mm, dark blue/light blue",
-        "bundled_product_2_concrete_sku": "1001454",
-        "bundled_product_2_concrete_name": "Schomburg standing desk - HxWxD 1094 x 600 x 500 mm, beech",
-        "bundled_product_3_concrete_sku": "104517",
-        "bundled_product_3_concrete_name": "Wood stackable chair - 4-foot substructure, upholstered seat - Cover anthracite, substructure coated",
-        "qty_of_products_in_bundle": "3",
-        "qty_of_each_product_inside_bundle": "1",
-
-        "multi_variant_product_abstract_sku": "M58035",
-
-        "measurement_unit_product_abstract_sku": "M23723",
-        "packaging_unit_product_abstract_sku": "M21766",
-
-        "product_with_relations_related_products_sku": "M29529",
-        "product_with_relations_alternative_products_sku": "M21100",
-        "product_with_relations_upselling_sku": "M29502",
+        "bundle_product": {
+            "abstract": {
+                "sku": "M90851",
+                "name": "IDEAL document shredder - Power 1300 watts, 165 l volume",
+                "product_1_sku": "M23457",
+                "product_2_sku": "C2235",
+                "product_3_sku": "M11542"
+                },
+            "concrete": {
+                "sku":"000201",
+                "name": "IDEAL document shredder - Power 1300 watts, 165 l volume - 23 – 25 sheets, safety level P-4, particle",
+                "product_1_sku": "424453",
+                "product_1_name": "Schneider ballpoint pen HAPTIFY 135323 M 0.5 mm, dark blue/light blue",
+                "product_2_sku": "1001454",
+                "product_2_name": "Schomburg standing desk - HxWxD 1094 x 600 x 500 mm, beech",
+                "product_3_sku": "104517",
+                "product_3_name": "Wood stackable chair - 4-foot substructure, upholstered seat - Cover anthracite, substructure coated"                        
+                },
+            "qty_of_product": {
+                "in_bundle": "3",
+                "inside_bundle": "1"
+                }
+        },
+        "product_abstract_sku": {
+            "multi_variant": "M58035",
+            "measurement_unit": "M23723",
+            "packaging_unit": "M21766"
+        },
+        "product_with_relations": {
+            "related_products_sku": "M29529",
+            "alternative_products_sku": "M21100",
+            "upselling_sku": "M29502"
+        },
         "concrete_of_product_with_relations_upselling_sku": "419872",
         "concrete_of_alternative_product_with_relations_upselling_sku": "419880",
-        "product_related_product_with_upselling_relation_sku": "M29499",
-        "product_related_product_with_upselling_relation_name": "Safescan counterfeit test device - SAFESCAN 45 UV",
-        "product_related_product_with_related_relation_sku": "M29501",
-        "product_related_product_with_related_relation_name": "Safescan automatic banknote counter - UV counterfeit recognition",
+        "product_related_product_with": {
+            "upselling_relation": {
+                "sku": "M29499",
+                "name": "Safescan counterfeit test device - SAFESCAN 45 UV"
+                },
+            "related_relation": {
+                "sku": "M29501",
+                "name": "Safescan automatic banknote counter - UV counterfeit recognition"  
+                }
+        },
+ 
+        "discount": {
+            "id_3": {
+                "name": "5% off white",
+                "description": "Get a 5% discount on all white products with voucher code",
+                "voucher_code": "sprykerhe1x"
+            },
+            "id_4": {
+                "name": "10% off Safescan",
+                "description": "Get a 10% discount on all Safescan brand products with voucher code",
+                "voucher_code": "safescanca1ya5zu7m"
+            },
+            "voucher_concrete_product_1_with_brand_safescan_2_items": "782",
+            "concrete_product_with_brand_safescan": "419872",
+            "voucher_concrete_product_with_brand_safescan_and_white_color_2_items": "3201",
+            "concrete_product_with_brand_safescan_and_white_color": "419901",
+            "cart_rule_name_10_off_minimum_order": "10% off minimum order"
+        },
 
-        "discount_id_3_name": "5% off white",
-	    "discount_id_3_description": "Get a 5% discount on all white products with voucher code",
-        "discount_id_3_voucher_code": "sprykerhe1x",
-        "discount_id_4_name": "10% off Safescan",
-	    "discount_id_4_description": "Get a 10% discount on all Safescan brand products with voucher code",
-        "discount_id_4_voucher_code": "safescanca1ya5zu7m",
-        "voucher_concrete_product_1_with_brand_safescan_2_items": "782",
-        "concrete_product_with_brand_safescan": "419872",
-        "voucher_concrete_product_with_brand_safescan_and_white_color_2_items": "3201",
-        "concrete_product_with_brand_safescan_and_white_color": "419901",
-
-        "cart_rule_name_10_off_minimum_order": "10% off minimum order",
 
         "concrete_of_product_with_relations_upselling_NESTED":{
             "product_options":{
@@ -248,11 +311,11 @@
             },
             "category_nodes":{
                 "category_node_23": {
-                    "node_id":"23",
+                    "id":"23",
                     "name":"Office equipment"
                 },
                 "category_node_25": {
-                    "node_id":"25",
+                    "id":"25",
                     "name":"Money Counters and Validators"
                 }
             }
@@ -273,22 +336,23 @@
             }
         },
 
-        "concrete_product_with_alternative_sku": "420566",
-        "concrete_product_with_alternative_sku_name": "Verbatim USB stick Store n Go V3 49173 32GB USB3.0 gray",
-        "concrete_product_with_alternative_sku_name_in_lower_case": "verbatim usb stick store n go v3 49173 32gb usb3.0 gray",
-        "abstract_product_with_alternative_sku": "M21100",
-        "abstract_product_with_alternative_name": "Verbatim USB stick Store n Go V3 49173 32GB USB3.0 gray",
-        "alternative_abstract_product": "M21099",
-        "alternative_abstract_product_price_chf": "1130",
+        "concrete_product_with_alternative": {
+            "sku": "420566",
+            "sku_name": "Verbatim USB stick Store n Go V3 49173 32GB USB3.0 gray",
+            "sku_name_in_lower_case": "verbatim usb stick store n go v3 49173 32gb usb3.0 gray"
+          
+        },
+        "abstract_product_with_alternative": {
+            "sku": "M21100",
+            "name": "Verbatim USB stick Store n Go V3 49173 32GB USB3.0 gray"
+        },
+        "alternative_abstract_product": {
+            "sku": "M21099",
+            "price_chf": "1130"
+        },
 
-        "abstract_available_product_with_stock": "M61125",
-        "abstract_available_product_with_stock_name": "Prosedia vertebral disc swivel chair with synchronous mechanics and contoured seat - backrest height 660 mm",
-        "abstract_available_product_with_stock_description": " Easy-to-care-for fabric cover. Substructure in graphite black RAL 9011.<br/>Standard rolling for soft floors.<br/>The backrest has height-adjustable lumbar support.  ",
-        "abstract_available_product_with_stock_superattribute": "bezugsfarbe",
-        "concrete_available_product_sku": "102712",
-        "concrete_available_product_meta_keywords": "Prosedia vertebral disc swivel chair with synchronous mechanics and contoured seat - backrest height 660 mm",
-        "concrete_available_product_meta_description": " Easy-to-care-for fabric cover. Substructure in graphite black RAL 9011.<br/>Standard rolling for soft floors.<br/>The backrest has height-adjustable lumbar support.  ",
 
+       
         "abstract_available_product_with_stock_NESTED":{
             "sku": "M61125",
             "merchant_reference": "MER000008",
@@ -349,89 +413,115 @@
             }
         },
 
-        "abstract_available_with_stock_and_never_out_of_stock": "M87",
         "concrete_available_with_stock_and_never_out_of_stock": "657716",
         "concrete_available_with_stock_and_never_out_of_stock_name": "FRIWA stackable chair - with closed back",
-        "abstract_available_product_with_no_stock_and_never_out_of_stock": "M90851",
+
+
+
+"abstract_product": {
         "abstract_unavailable_product": "M1014948",
+        "abstract_product_with": {
+            "volume_prices": "M21189",
+            "volume_prices_name": "Post-it stick note Super Sticky Meeting Notes 6445-4SS 4 pieces/pack",
+            "original_prices": "M74972",
+            "label": "M21691",
+            "label_name": "Clairefontaine Collegeblock 8272C DIN A5, 90 sheets",
+            "concrete_offers": "",
+            "concrete_offers_name": "",
+            "reviews": "M719",
+            "reviews_name": "Rectangular table, rectangular tubing - 1600 x 800 mm",
+            "reviews_qty": "4",
+            "options": "M29501",
+            "options_name": "Safescan automatic banknote counter - UV counterfeit recognition",
+        "abstract_available_product_with": {
+            "stock_and_never_out_of_stock": "M87",
+            "no_stock_and_never_out_of_stock": "M90851",
+            "3_concretes": "M29456",
+            "3_concretes_name": "Gmöhling aluminum data removal container - Exterior - LxWxH 435 x 385 x 650 mm",
+            "3_concretes_superattribute": "material"
+        }
+    }
+},
+    "concrete_product": {
         "concrete_unavailable_product_sku": "212447",
-
-        "abstract_available_product_with_3_concretes": "M29456",
-        "abstract_available_product_with_3_concretes_name": "Gmöhling aluminum data removal container - Exterior - LxWxH 435 x 385 x 650 mm",
-        "abstract_available_product_with_3_concretes_superattribute": "material",
-
-        "abstract_product_with_volume_prices": "M21189",
-        "abstract_product_with_volume_prices_name": "Post-it stick note Super Sticky Meeting Notes 6445-4SS 4 pieces/pack",
-        "abstract_product_with_original_prices": "M74972",
-        "concrete_product_with_original_prices": "420687",
-        "concrete_product_with_original_prices_name": "Post-it Index Strong adhesive stripes, 686-F1EU 4 sheets sorted, 4 pieces/pack",
-        "concrete_product_with_volume_prices": "420685",
-
-        "abstract_product_with_label": "M21691",
-        "abstract_product_with_label_name": "Clairefontaine Collegeblock 8272C DIN A5, 90 sheets",
-
-        "abstract_product_with_label_NESTED": {
-            "sku": "M21691",
-            "name": "Clairefontaine Collegeblock 8272C DIN A5, 90 sheets"
-        },
-
-        "abstract_product_with_concrete_offers": "",
-        "abstract_product_with_concrete_offers_name": "",
-
-        "abstract_product_with_reviews": "M719",
-        "abstract_product_with_reviews_name": "Rectangular table, rectangular tubing - 1600 x 800 mm",
-        "abstract_product_with_reviews_qty": "4",
-
-        "abstract_product_with_options": "M29501",
-        "abstract_product_with_options_name": "Safescan automatic banknote counter - UV counterfeit recognition",
-        "concrete_product_with_options": "419871",
-        "concrete_product_with_options_name": "Safescan automatic banknote counter, UV Counterfeit recognition, SAFESCAN 2210",
-
-        "concrete_product_one_image_set": "401768",
-        "concrete_product_one_image_set_name": "EUROKRAFT aluminum hand truck - Load capacity 200 kg, with skids - load capacity 200 kg",
-        "concrete_product_multiple_image_set": "212427",
-        "concrete_product_multiple_image_set_name": "Wood stackable chair, upholstered - VE 4 pieces, substructure chromed - upholstery black",
         "concrete_available_product_with_stock": "420566",
         "concrete_available_product_without_stock": "",
+        "concrete_product_with": {
+            "original_prices": "420687",
+            "original_prices_name": "Post-it Index Strong adhesive stripes, 686-F1EU 4 sheets sorted, 4 pieces/pack",
+            "volume_prices": "420685",
+            "promotions": "212427",
+            "threshold_limit": "424273",
+            "options": "419871",
+            "options_name": "Safescan automatic banknote counter, UV Counterfeit recognition, SAFESCAN 2210"
+            },
+        "image_set": {
+            "one": {
+                "sku": "401768",
+                "sku_name": "EUROKRAFT aluminum hand truck - Load capacity 200 kg, with skids - load capacity 200 kg"    
+            },
+            "multiple" : {
+                "sku": "212427",
+                "sku_name": "Wood stackable chair, upholstered - VE 4 pieces, substructure chromed - upholstery black"    
+            }
+         }
+    },  
 
-        "concrete_product_with_promotions": "212427",
+        "packaging_unit": {
+            "m": "METR",
+            "i": "ITEM",
+            "cm": "CMET",
+            "m_name": "Meter"
+        },
+        "concrete_product_random_weight": {
+            "qty_of_units": "1",
+            "amount": "5.0000000000",
+            "conversion": "1",
+            "precision": "100",
+            "packaging_unit": "19",
+            "sku": "421519_3",
+            "name": "Box Papermate Kugelschreiber InkJoy 700 RT S0957340 M Druckmechanik schwarz",
+            "measurement_unit": "19"
+        },
 
-        "concrete_product_with_threshold_limit": "424273",
-
-        "concrete_product_random_weight_sku": "421519_3",
-        "concrete_product_random_weight_name": "Box Papermate Kugelschreiber InkJoy 700 RT S0957340 M Druckmechanik schwarz",
-        "concrete_product_random_weight_measurement_unit": "19",
-        "packaging_unit_m": "METR",
-        "packaging_unit_i": "ITEM",
-        "packaging_unit_cm": "CMET",
-        "packaging_unit_m_name": "Meter",
-        "concrete_product_random_weight_qty_of_units": "1",
-        "concrete_product_random_weight_amount": "5.0000000000",
-        "concrete_product_random_weight_conversion": "1",
-        "concrete_product_random_weight_precision": "100",
-
-        "concrete_product_random_weight_packaging_unit": "19",
         "measurement_unit_m": "METR",
 
         "product_option_1": "OP_2_year_waranty",
         "product_option_1_name": "Two (2) year limited warranty",
         "product_option_2": "OP_insurance",
 
-        "discount_concrete_product_1_sku": "108298",
-        "discount_concrete_product_sku": "103117",
-        "discount_concrete_product_1_name": "Mauser hinged door cabinet - sideboard, 4 compartments, center separating wall - HxWxD 1225 x 1600 x 420 mm - light gray / ultramarine blue",
-        "discount_amount_for_product_1_with_discount_20%_off_storage": "10600",
-        "discount_amount_for_product_1_with_discount_10%_off_minimum_order": "4240",
-        "discount_concrete_product_1_total_sum_of_discounts": "14840",
-        "discount_concrete_product_2_sku": "213216",
-        "discount_concrete_product_2_name": "office akktiv base cabinet - HxWxD 942 x 913 x 420 mm - light gray, RAL 7035",
-        "discount_amount_for_product_2_with_discount_20%_off_storage": "5783",
-        "discount_amount_for_product_2_with_discount_10%_off_minimum_order": "2313",
-        "discount_concrete_product_2_total_sum_of_discounts": "8096",
-        "discount_concrete_product_3_sku": "401768",
-        "discount_concrete_product_3_name": "EUROKRAFT aluminum hand truck - Load capacity 200 kg, with skids - load capacity 200 kg",
-        "discount_amount_for_product_3_with_discount_20%_off_storage": "16383",
-        "discount_amount_for_product_3_with_10%_discount": "1882"
+
+        "discount_concrete_product": {
+            "discount_concrete_product_sku": "103117",
+            "product_1": {
+                "sku": "108298",
+                "name": "Mauser hinged door cabinet - sideboard, 4 compartments, center separating wall - HxWxD 1225 x 1600 x 420 mm - light gray / ultramarine blue",
+                "discount_amount": {
+                    "with_20%_off_storage": "10600",
+                    "with_10%_off_minimum_order": "4240",
+                    "total_sum_of_discounts": "14840"
+                }
+            },
+            "product_2": {
+                "sku": "213216",
+                "name": "office akktiv base cabinet - HxWxD 942 x 913 x 420 mm - light gray, RAL 7035",
+                "discount_amount": {
+                    "with_20%_off_storage": "5783",
+                    "with_10%_off_minimum_order": "2313",
+                    "total_sum_of_discounts": "8096"
+                }
+            },
+            "product_3": {
+                "sku": "401768",
+                "name": "EUROKRAFT aluminum hand truck - Load capacity 200 kg, with skids - load capacity 200 kg",
+                "discount_amount": {
+                    "with_20%_off_storage": "16383",
+                    "with_10%_off_minimum_order": "1882"
+                }
+            }
+
+        }
+       
     },    
   
     "product_offers":{  
@@ -470,23 +560,35 @@
         "product_management_attribute_no_input_id": "bundled_product"
 
     },
-    "content": {
-        "abstract_product_list_id": "apl-1",
-        "abstract_list_product1_sku": "M21692",
-        "abstract_list_product1_name": "Clairefontaine Collegeblock 8272C DIN A5, 90 sheets",
-        "abstract_list_product2_sku": "M23723",
-        "abstract_list_product2_name": "Brennenstuhl extension cable 3 m",
-        "abstract_list_size": "7",
 
-        "banner_1_id": "br-1",
-        "banner_1_name": "Furniture - Upgrade Your Office",
+"content": {
 
-        "cms_pages_qty": "5",
-        "first_cms_page_name": "Imprint",
-        "first_cms_page_name_in_lower_case": "imprint",
-        "first_cms_page_url_en": "/en/imprint",
-        "cms_page_with_product_lists_id": "10014bd9-4bba-5a54-b84f-31b4b7efd064",
-        "cms_page_with_product_lists_name": "Demo Landing Page",
+        "abstract_list": {
+            "product_id": "apl-1",
+            "product1_sku": "M21692",
+            "product1_name": "Clairefontaine Collegeblock 8272C DIN A5, 90 sheets",
+            "product2_sku": "M23723",
+            "product2_name": "Brennenstuhl extension cable 3 m",
+            "size": "7"
+        }, 
+        "banner_1": {
+            "id": "br-1",
+            "name": "Furniture - Upgrade Your Office"
+        },
+
+        "cms_pages": {
+            "qty": "5",
+            "first_cms_page": {
+                "name": "Imprint",
+                "name_in_lower_case": "imprint",
+                "url_en": "/en/imprint"
+            },
+            "cms_page_with_product_lists": {
+                "id": "10014bd9-4bba-5a54-b84f-31b4b7efd064",
+                "name": "Demo Landing Page"
+            }
+        },
+ 
 
         "category_collection_name": "Sticky Notes",
         "category_collection_url": "/en/stationery/paper/sticky-notes",
@@ -508,11 +610,13 @@
         "cart_permission_group_id": "1",
         "cart_permission_group_type": "cart-permission-groups"
     },
-    "availability": {
+
+"availability": {
         "stock_is_0": "0.0000000000",
         "stock_is_20": "20.0000000000"
     },
-    "misc": {
+
+"misc": {
         "default_header_content_type": "application/vnd.api+json",
         "urlencoded_header_content_type": "application/x-www-form-urlencoded",
         "test_cart_name": "Test-cart",
@@ -521,71 +625,98 @@
         "qty_of_subcategories_in_category_trees": "2",
         "color_name": "black",
 
-        "payment_provider_name": "dummyMarketplacePayment",
-        "payment_method_name": "invoice",
-        "payment_selection_name": "dummyMarketplacePaymentInvoice",
+        "payment": {
+            "provider_name": "dummyMarketplacePayment",
+            "method_name": "invoice",
+            "selection_name": "dummyMarketplacePaymentInvoice"
+        },
         "carrier_name": "DHL",
         "shipment_method_name": "Standard",
         "shipment_method_name_2": "Express",
         "delivery_date": "2030-12-31",
 
-        "review_title": "This is a review",
-        "review_text": "This is review text",
-        "default_review_rating": "5",
+        "review": {
+            "title": "This is a review",
+            "text": "This is review text",
+            "default_rating": "5"
+        },
 
-        "discount_1_name": "20% off storage",
-        "discount_1_description": "Storage sale: 20% off all office storage products",
-        "discount_1_total_sum_for_discounts_for_products_1_and_2": "16383",
-        "discount_2_name": "10% off minimum order",
-        "discount_2_description": "Get a 10% discount on all orders above a certain value depending on currency and gross/net price mode",
-        "discount_2_total_sum_for_discounts_for_products_1_2_and_3": "8435",
-        "discount_3_name": "Free standard delivery",
-        "discount_3_description": "Get a 10% discount on all orders above a certain value depending on currency and gross/net price mode",
-        "discount_3_total_sum": "490",
+        "discount": {
+            "discount_1": {
+                "name": "20% off storage",
+                "description": "Storage sale: 20% off all office storage products",
+                "total_sum_for_discounts_for_products_1_and_2": "16383"
+            },
+            "discount_2": {
+                "name": "10% off minimum order",
+                "description": "Get a 10% discount on all orders above a certain value depending on currency and gross/net price mode",
+                "total_sum_for_discounts_for_products_1_2_and_3": "8435"
+            },
+            "discount_3": {
+                "name": "Free standard delivery",
+                "description": "Get a 10% discount on all orders above a certain value depending on currency and gross/net price mode",
+                "total_sum": "490"
+            }
+        }
+        },
 
-        "url_resolver_example": "/en/clairefontaine-collegeblock-8272c-din-a5-90blatt-kariert-M21692",
-        "url_resolver_entity_type": "abstract-products",
-        "url_resolver_entity_id": "M21692",
 
-        "url_resolver_category_nodes": "/en/stationery",
-        "url_resolver_category_nodes_entity": "category-nodes",
-        "url_resolver_category_nodes_id": "2",
+"url_resolver": 
+        {
+            "example": "/en/clairefontaine-collegeblock-8272c-din-a5-90blatt-kariert-M21692",
+            "entity_type": "abstract-products",
+            "entity_id": "M21692",
 
-        "url_resolver_cms": "/en/privacy",
-        "url_resolver_cms_entity": "cms-pages",
-        "url_resolver_cms_id": "1e9fb640-9073-55f4-a2d2-535090c92025",
+            "category_nodes": "/en/stationery",
+            "category_nodes_entity": "category-nodes",
+            "category_nodes_id": "2",
 
-        "url_resolver_merchant": "/en/merchant/spryker",
-        "url_resolver_merchant_entity": "merchants",
-        "url_resolver_merchant_id": "MER000008"
-    },
-    "companies": {
+            "cms": "/en/privacy",
+            "cms_entity": "cms-pages",
+            "cms_id": "1e9fb640-9073-55f4-a2d2-535090c92025",
+
+            "merchant": "/en/merchant/spryker",
+            "merchant_entity": "merchants",
+            "merchant_id": "MER000008"  
+        },
+
+"companies": {
         "company_name": "Spryker Systems GmbH",
-        "business_unit_address_id": "2175cddd-f8af-5885-b161-227b5c93e72f",
-        "business_unit_name": "Spryker Systems HR department",
         "user_with_multiple_companies": "anne.boleyn@spryker.com",
         "company_id": "62de4ab6-b768-5c21-8835-455d9f341625",
-        "company_user_id": "2816dcbd-855e-567e-b26f-4d57f3310bb8"
+        "company_user_id": "2816dcbd-855e-567e-b26f-4d57f3310bb8",
+        "business_unit": {
+            "address_id": "2175cddd-f8af-5885-b161-227b5c93e72f",
+            "name": "Spryker Systems HR department"
+        }
 
     },
-    "labels":{
-        "label_id_manual": "3",
-        "label_name_manual": "Top",
 
-        "label_id_sale": "5",
-        "label_name_sale": "SALE %",
-
-        "label_id_new": "4",
-        "label_name_new": "New",
-
-        "label_id_discontinued": "2",
-        "label_name_discontinued": "Discontinued",
-
-        "label_id_alternative": "1",
-        "label_name_alternative": "Alternatives available"
+"labels":
+    {
+        "label_manual": {
+            "id": "3",
+            "name": "Top"
+        },
+        "label_sale": {
+            "id": "5",
+            "name": "SALE %"
+        },
+        "label_new": {
+            "id": "4",
+            "name": "New"
+        },
+        "label_discontinued": {
+            "id": "2",
+            "name": "Discontinued"
+        },
+        "label_alternative": {
+            "id": "1",
+            "name": "Alternatives available"
+        }
     },
 
-    "merchants":{
+"merchants":{
         "merchant_id": "MER000011",
         "merchant_offer_id": "offer394",
         "merchant_offer_price": "1234",
@@ -620,7 +751,7 @@
         "description_spryker": "Spryker is the main merchant on the B2B Demo Marketplace."
         
     },
-    "return_reasons": {
+"return_reasons": {
         "return_reason_damaged": "Damaged",
         "return_reason_wrong_item": "Wrong Item",
         "return_reason_no_longer_needed": "No longer needed",
