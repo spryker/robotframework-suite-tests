@@ -17,8 +17,8 @@ Zed: create a discount and activate it:
     END
     Type Text    ${zed_discount_name_field}     ${discountName}
     Type Text    ${zed_discount_description_field}     ${discountDescription}
-    Evaluate Javascript    ${None}  document.getElementById("discount_discountGeneral_valid_from").setAttribute("value", "2021-01-01")
-    Evaluate JavaScript    ${None}   document.getElementById("discount_discountGeneral_valid_to").setAttribute("value", "2050-01-01")
+    Evaluate Javascript    ${None}  document.getElementById("discount_discountGeneral_valid_from").setAttribute("value", "31.05.2021 00:00")
+    Evaluate JavaScript    ${None}   document.getElementById("discount_discountGeneral_valid_to").setAttribute("value", "01.01.2050 00:00")
 # Discount calculation
     Zed: go to tab:    Discount calculation
     Wait For Elements State    ${zed_discount_query_builder_first_calculation_group}    visible    15s

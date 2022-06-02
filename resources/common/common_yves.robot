@@ -54,8 +54,11 @@ Yves: login on Yves with provided credentials:
     Type Text    ${email_field}    ${email}
     Type Text    ${password_field}    ${password}
     Click    ${form_login_button}
-    IF    'fake' not in '${email}' or 'agent' not in '${email}'  Wait Until Element Is Visible    ${user_navigation_icon_header_menu_item}[${env}]     Login Failed!
-    IF    'agent' in '${email}'    Yves: header contains/doesn't contain:    true    ${customerSearchWidget}
+    IF    'agent' in '${email}'    
+    Yves: header contains/doesn't contain:    true    ${customerSearchWidget}
+        ELSE    
+        Wait Until Element Is Visible    ${user_navigation_icon_header_menu_item}[${env}]     Login Failed!
+    END
     Yves: remove flash messages
 
 Yves: go to PDP of the product with sku:
@@ -200,7 +203,7 @@ Yves: get index of the first available product
         Log    ${index}
         ${pdp_url}=    IF    '${env}'=='b2b'    Get Element Attribute    xpath=//product-item[@data-qa='component product-item'][${index}]//a[@itemprop='url']    href
         IF    'PASS' in ${status} and '${env}'=='b2b'    Continue For Loop
-        IF    'bundle' in '${pdp_url}' and '${env}'=='b2c'    Continue For Loop
+        IF    'bundle' in '${pdp_url}' and '${env}'=='b2b'    Continue For Loop
         IF    'FAIL' in ${status} and '${env}'=='b2b'
             Run Keywords
                 Return From Keyword  ${index}
