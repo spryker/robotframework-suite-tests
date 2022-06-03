@@ -68,8 +68,10 @@ Yves: click on the '${buttonName}' button in the shopping cart
     Yves: remove flash messages
     IF    '${buttonName}' == 'Checkout'
         Click    ${shopping_cart_checkout_button}
+        Wait Until Page Does Not Contain Element    ${shopping_cart_checkout_button}
     ELSE IF    '${buttonName}' == 'Request a Quote'
         Click    ${shopping_cart_request_quote_button}
+        Wait Until Page Does Not Contain Element    ${shopping_cart_request_quote_button}
     END
 
 Yves: shopping cart contains product with unit price:
