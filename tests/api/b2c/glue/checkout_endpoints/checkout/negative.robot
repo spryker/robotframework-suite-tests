@@ -81,7 +81,7 @@ Create_order_without_type
     And Response reason should be:    Bad Request
     And Response should return error message:    Post data is invalid.
 
-Create_order_with_invalid_email_
+Create_order_with_invalid_email
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
     ...  AND    I set Headers:    Authorization=${token}
     ...  AND    Find or create customer cart

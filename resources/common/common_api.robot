@@ -1511,12 +1511,17 @@ Cleanup all availability notifications:
                 ${response_delete}=    DELETE    ${current_url}/availability-notifications/${availability_notification_id}    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}    expected_status=204
         END
 
-Update order status in Database
-    [Documentation]    This keyword updates order status in database to 'Shipped' which is required to make order items available for return. 
+Update order status in Database:
+    [Documentation]    This keyword updates order status in database to any required status. This allows to skip going through the order workflow manually 
+    ...    but just switch to the status you need to create a test. 
     ...    There is no separate endpoint to update order status and this keyword allows to do this via database value update.
+    ...    *Example:*
+    ...    
+    ...    ``Update order status in Database:    7    shipped``
     
-
+    [Arguments]    ${order_item_status}    ${order_item_status_name}
     Connect To Database    pymysql    ${default_db_name}    ${default_db_user}    ${default_db_password}    ${default_db_host}    ${default_db_port}
-    Execute Sql String    update spy_sales_order_item set fk_oms_order_item_state = '7' where uuid = '${Uuid}'
+    Execute Sql String    insert ignore into spy_oms_order_item_state (id_oms_order_item_state, name) values ('${order_item_status}', '${order_item_status_name}')
+    Execute Sql String    update spy_sales_order_item set fk_oms_order_item_state = '${order_item_status}' where uuid = '${Uuid}'
     Disconnect From Database
     

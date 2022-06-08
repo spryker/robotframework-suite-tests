@@ -146,9 +146,7 @@ Add_ten_items_to_cart_with_included_cart_rules_and_promotional_items
     And Response body parameter should be:    [data][id]    ${cart_id}
     And Response body parameter should be:    [data][type]    carts
     And Response body parameter should not be EMPTY:    [data][links][self]
-    And Response body parameter should NOT be:    [data][relationships][cart-rules][data]    None
-    And Response body parameter should NOT be:   [data][relationships][promotional-items][data]    None
-    And Response body parameter should NOT be:    [included]    None
+    And Response should contain the array of a certain size:    [included]    4
     And Response include should contain certain entity type:    cart-rules
     And Response include should contain certain entity type:    items
     And Response include element has self link:   cart-rules

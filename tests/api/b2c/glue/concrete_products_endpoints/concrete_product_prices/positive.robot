@@ -49,7 +49,7 @@ Request_concrete_product_with_volume_product_prices
     And Each array element of array in response should contain property:    [data][0][attributes][prices][0][volumePrices]    grossAmount
     And Each array element of array in response should contain property:    [data][0][attributes][prices][0][volumePrices]    netAmount
     And Each array element of array in response should contain property:    [data][0][attributes][prices][0][volumePrices]    quantity
-    And Response body parameter should be:    [data][0][attributes][prices][0][volumePrices][0][grossAmount]   16500
-    And Response body parameter should be:    [data][0][attributes][prices][0][volumePrices][0][netAmount]   15000
+    And Response body parameter should be:    [data][0][attributes][prices][0][volumePrices][0][grossAmount]   ${concrete_product_with_volume_prices_gross_amount}
+    And Response body parameter should be:    [data][0][attributes][prices][0][volumePrices][0][netAmount]   ${concrete_product_with_volume_prices_net_amount}
     And Response body parameter should be:    [data][0][attributes][prices][0][volumePrices][0][quantity]   5
 

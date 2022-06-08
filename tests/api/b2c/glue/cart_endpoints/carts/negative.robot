@@ -154,13 +154,12 @@ Update_cart_without_cart_id
     And Response reason should be:    Bad Request
      And Response should return error message:    Resource id is not specified.
 
-# Issue with ETag format CC-16733
 Update_cart_from_another_customer_cart_id
       [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
         ...  AND    I set Headers:    Authorization=${token}
         ...  AND    I send a GET request:    /carts
         ...  AND    Save value to a variable:    [data][0][id]    cart_id 
-        ...  AND    Save Header value to a variable:    ETag    header_tag
+        ...  AND    Get ETag header value from cart
         ...  AND    I get access token for the customer:    ${yves_second_user_email}
         ...  AND    I set Headers:    Authorization=${token}    If-Match=${Etag}
     When I send a PATCH request:    /carts/${cart_id}    {"data": {"type": "carts","attributes": {"priceMode": "${net_mode}","currency": "${currency_code_eur}","store": "${store_de}"}}}
@@ -194,8 +193,8 @@ Update_cart_with_invalid_type
        [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
         ...  AND    I set Headers:    Authorization=${token}
         ...  AND    Find or create customer cart
-        ...  AND    Save Header value to a variable:    ETag    header_tag
-        ...  AND    I set Headers:    Authorization=${token}    If-Match=${header_tag}
+        ...  AND    Get ETag header value from cart
+        ...  AND    I set Headers:    Authorization=${token}    If-Match=${Etag}
     When I send a PATCH request:    /carts/${cart_id}    {"data": {"type": "car","attributes": {"priceMode": "${net_mode}","currency": "${currency_code_eur}","store": "${store_de}"}}}
     Then Response status code should be:    400
     And Response reason should be:    Bad Request
@@ -205,18 +204,18 @@ Update_cart_without_type
        [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
         ...  AND    I set Headers:    Authorization=${token}
         ...  AND    Find or create customer cart
-        ...  AND    Save Header value to a variable:    ETag    header_tag
-        ...  AND    I set Headers:    Authorization=${token}    If-Match=${header_tag}
+        ...  AND    Get ETag header value from cart
+        ...  AND    I set Headers:    Authorization=${token}    If-Match=${Etag}
     When I send a PATCH request:    /carts/${cart_id}    {"data": {"attributes": {"priceMode": "${net_mode}","currency": "${currency_code_eur}","store": "${store_de}"}}}
     Then Response status code should be:    400
     And Response reason should be:    Bad Request
     And Response should return error message:    Post data is invalid.
 
-# Issue with ETag format CC-16733
 Update_cart_with_invalid_priceMod_currency_store
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
         ...  AND    I set Headers:    Authorization=${token}
-        ...  AND    Find or create customer cart
+        ...  AND    Find or create customer cart 
+        ...  AND    Cleanup all items in the cart:    ${cart_id}
         ...  AND    Get ETag header value from cart
         ...  AND    I set Headers:    Authorization=${token}    If-Match=${ETag}
     When I send a PATCH request:    /carts/${cart_id}    {"data": {"type": "carts","attributes": {"priceMode": "GROSS","currency": "EU","store": "DEK"}}}

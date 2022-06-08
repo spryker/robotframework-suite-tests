@@ -448,7 +448,6 @@ Filter_by_label_empty_label
     And Response should contain the array of a certain size:    [data][0][attributes][abstractProducts]    ${default_ipp}
     And Response body parameter should be:    [data][0][attributes][valueFacets][1][activeValue][0]    ${EMPTY}
 
-# Test fails because of color name specified in test data - should be in lowercase 'black'
 Filter_by_color_one_color
     When I send a GET request:    /catalog-search?q=&color=${color_4}
     Then Response status code should be:    200

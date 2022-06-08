@@ -200,7 +200,7 @@
         "concrete_available_product_meta_description": "Enjoy greater flexibility  ...than ever before with the Galaxy Tab S2. Remarkably slim and ultra-lightweight, use this device to take your e-books, photos,",
         "concrete_available_product_with_label": "204_29851280",
         "abstract_available_with_stock_and_never_out_of_stock": "209",
-        "concrete_available_with_stock_and_never_out_of_stock": "004_30663302",
+        "concrete_available_with_stock_and_never_out_of_stock": "005_30663301",
         "concrete_available_with_stock_and_never_out_of_stock_name": "Canon IXUS 175",
         "abstract_available_product_with_no_stock_and_never_out_of_stock": "154",
         "abstract_unavailable_product": "011",
@@ -223,6 +223,8 @@
         "concrete_product_with_original_prices": "072_21927455",
         "concrete_product_with_original_prices_name": "Samsung Galaxy Note 3",
         "concrete_product_with_volume_prices": "193_32124735",
+        "concrete_product_with_volume_prices_net_amount": "15000",
+        "concrete_product_with_volume_prices_gross_amount": "16500",
         "concrete_product_with_review": "086_30521602",
         "concrete_product_with_review_name": "Samsung Gear S2",
 
@@ -415,8 +417,7 @@
 
     "wishlists":{
 
-        "wishlist_name":"HS",
-        "wishlist_name_2":"Wishlist Name"
+        "wishlist_name":"HS"
         
        },
 

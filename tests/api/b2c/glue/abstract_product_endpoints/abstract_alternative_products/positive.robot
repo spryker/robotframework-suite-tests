@@ -6,8 +6,6 @@ Default Tags    glue
 *** Test Cases ***
 ENABLER
     TestSetup
-# BUG CC-16484 - bug was removed
-# Test passed with variable ${abstract_product_with_alternative_sku} instead of ${alternative_abstract_product}
 Product_has_abstract_alternative
     When I send a GET request:    /concrete-products/${concrete_product_with_abstract_product_alternative_sku}/abstract-alternative-products
     Then Response status code should be:    200
@@ -19,8 +17,7 @@ Product_has_abstract_alternative
     And Response body parameter should be:    [data][0][attributes][sku]    ${abstract_product_with_alternative_sku}
     And Response body has correct self link
 
-# BUG CC-16484 - bug was removed
-# Test passed
+
 Product_has_abstract_alternative_with_includes
     When I send a GET request:    /concrete-products/${concrete_product_with_abstract_product_alternative_sku}/abstract-alternative-products?include=abstract-product-image-sets,abstract-product-availabilities,abstract-product-prices,category-nodes
     Then Response status code should be:    200

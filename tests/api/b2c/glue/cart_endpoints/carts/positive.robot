@@ -214,7 +214,6 @@ Get_cart_by_cart_id_with_included_vouchers
     And Response body parameter should not be EMPTY:    [included][0][links][self]
 
 #PATCH requests
-# Issue with ETag format CC-16733 - applicable to all PATCH requests
 Update_cart_by_cart_id_with_all_attributes
        [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
           ...  AND    I set Headers:    Authorization=${token}

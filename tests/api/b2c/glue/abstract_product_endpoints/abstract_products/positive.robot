@@ -94,9 +94,6 @@ Abstract_product_with_abstract_includes_for_labels
     And Response include element has self link:   product-labels
     
 
-# Bug CC-14879
-# Bug is resolved
-# ${abstract_product_with_reviews_name} is updated as different product name is in demoshop for this SKU
 Abstract_product_with_abstract_includes_for_reviews
     When I send a GET request:    /abstract-products/${abstract_product_with_reviews}?include=product-reviews
     Then Response status code should be:    200
