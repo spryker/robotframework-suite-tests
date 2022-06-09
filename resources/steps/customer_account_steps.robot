@@ -65,6 +65,7 @@ Yves: check that user has address exists/doesn't exist:
         Yves: go to user menu item in header:    Profile
     END
     Yves: go to user menu item in the left bar:    Addresses
+    Wait Until Element Is Visible    ${customer_account_add_new_address_button}[${env}]
     IF    '${exists}'=='true'
         Run keywords
             Element Should Be Visible    xpath=//ul[contains(@class,'display-address')]//*[contains(text(),'${firstName} ${lastName}')]    AND

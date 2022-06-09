@@ -11,7 +11,7 @@ Resource    ../common/common.robot
 ${cancelRequestButton}    ${checkout_summary_cancel_request_button}
 ${alertWarning}    ${checkout_summary_alert_warning}
 ${quoteStatus}    ${checkout_summary_quote_status}
-&{submit_checkout_form_button}    b2b=xpath=//div[contains(@class,'form--checkout-form')]//button[@data-qa='submit-button']    b2c=b2b=xpath=//div[contains(@class,'form--checkout-form')]//button[@data-qa='submit-button']    suite-nonsplit=xpath=//button[@data-qa='submit-button']
+&{submit_checkout_form_button}    b2b=xpath=//div[contains(@class,'form--checkout-form')]//button[@data-qa='submit-button']    b2c=xpath=//div[contains(@class,'form--checkout-form')]//button[@data-qa='submit-button']    suite-nonsplit=xpath=//button[@data-qa='submit-button']
 
 *** Keywords ***
 Yves: billing address same as shipping address:

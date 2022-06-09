@@ -195,8 +195,8 @@ Yves: get index of the first available product
     ${productsCount}=    Get Element Count    xpath=//product-item[@data-qa='component product-item']
     Log    ${productsCount}
     FOR    ${index}    IN RANGE    1    ${productsCount}+1
-        ${status}=  IF    '${env}'=='b2b'   Run Keyword And Ignore Error     Page should contain element    xpath=//product-item[@data-qa='component product-item'][${index}]//*[@class='product-item__actions']//ajax-add-to-cart//button[@disabled='']
-        ...     ELSE IF     '${env}'=='b2c'     Run Keyword     Page should contain element    xpath=//product-item[@data-qa='component product-item'][${index}]//ajax-add-to-cart//button
+        ${status}=    IF    '${env}'=='b2b'   Run Keyword And Ignore Error     Page should contain element    xpath=//product-item[@data-qa='component product-item'][${index}]//*[@class='product-item__actions']//ajax-add-to-cart//button[@disabled='']
+        ...    ELSE IF    '${env}'=='b2c'    Run Keyword And Ignore Error    Page should contain element    xpath=//product-item[@data-qa='component product-item'][${index}]//ajax-add-to-cart//button    Add to cart button is missing    0:00:30
         Log    ${index}
         ${pdp_url}=    IF    '${env}'=='b2b'    Get Element Attribute    xpath=//product-item[@data-qa='component product-item'][${index}]//a[@itemprop='url']    href
         IF    'PASS' in ${status} and '${env}'=='b2b'    Continue For Loop
