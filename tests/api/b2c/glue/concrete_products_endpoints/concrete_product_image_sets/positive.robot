@@ -1,8 +1,11 @@
 *** Settings ***
 Suite Setup       SuiteSetup
 Resource    ../../../../../../resources/common/common_api.robot
+Default Tags    glue
 
 *** Test Cases ***
+ENABLER
+    TestSetup
 Request_concrete_product_with_one_image_set
     When I send a GET request:    /concrete-products/${concrete_product_one_image_set}/concrete-product-image-sets
     Then Response status code should be:    200

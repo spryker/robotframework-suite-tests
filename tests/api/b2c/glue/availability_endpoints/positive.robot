@@ -5,6 +5,8 @@ Resource    ../../../../../resources/common/common_api.robot
 Default Tags    glue
 
 *** Test Cases ***
+ENABLER
+    TestSetup
 #GET requests
 Get_availability_notifications_for_customer
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
@@ -49,6 +51,7 @@ Subscribe_to_availability_notifications_for_customer
     [Teardown]    Run Keywords    I send a DELETE request:    /availability-notifications/${availability_notification_id}
     ...  AND    Response status code should be:    204
 
+# bug CC-16977
 Subscribe_to_availability_notifications_with_non_existing_email
     When I send a POST request:    /availability-notifications    {"data": {"type": "availability-notifications","attributes": {"sku": "${concrete_product_with_abstract_product_alternative_sku}","email": "test1234546@gmail.com"}}}
     And Save value to a variable:    [data][id]    availability_notification_id

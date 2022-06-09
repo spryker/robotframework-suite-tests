@@ -1,8 +1,11 @@
 *** Settings ***
 Suite Setup       SuiteSetup
 Resource    ../../../../../../resources/common/common_api.robot
+Default Tags    glue
 
 *** Test Cases ***
+ENABLER
+    TestSetup
 #######POST#######
 Refresh_token_with_access_token
     [Setup]    I get access token for the customer:    ${yves_user_email}
@@ -51,7 +54,7 @@ Refresh_token_with_deleted_refresh_token
 #######DELETE#######
 # Spryker is designed so removing non-existent refresh token will return 204 for security reasons   
 Delete_refresh_token_with_invalid_refresh_token
-    [Setup]    Run Keywords    When I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
     ...    AND    I set Headers:    Authorization=${token}
     When I send a DELETE request:    /refresh-tokens/faketoken
     Then Response status code should be:    204

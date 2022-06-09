@@ -1,8 +1,11 @@
 *** Settings ***
 Suite Setup       SuiteSetup
 Resource    ../../../../../../resources/common/common_api.robot
+Default Tags    glue
 
 *** Test Cases ***
+ENABLER
+    TestSetup
 Abstract_product_list
     When I send a GET request:    /content-product-abstract-lists/${abstract_product_list_id}
     Then Response status code should be:    200

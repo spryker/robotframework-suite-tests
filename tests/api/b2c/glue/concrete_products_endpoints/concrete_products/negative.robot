@@ -1,9 +1,11 @@
 *** Settings ***
 Suite Setup       SuiteSetup
 Resource    ../../../../../../resources/common/common_api.robot
+Default Tags    glue
 
 *** Test Cases ***
-
+ENABLER
+    TestSetup
 Request_product_concrete_with_product_doesn't_exist
     When I send a GET request:    /concrete-products/354656u7i8
     Then Response status code should be:    404

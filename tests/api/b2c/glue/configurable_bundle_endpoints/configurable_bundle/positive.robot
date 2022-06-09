@@ -25,7 +25,7 @@ Add_configured_bundle_item_to_the_cart_with_included_items
     And Each array element of array in response should contain property with value:    [data][relationships][items][data]    type    items
     And Each Array Element Of Array In Response Should Contain Property:    [data][relationships][items][data]    id
     And Each Array Element Of Array In Response Should Contain Property:    [data][relationships][items][data]    id
-    And Response should contain the array of a certain size:    [included]    2
+    And Response should contain the array of a certain size:    [included]    1
     And Response body parameter should be:    [included][0][type]    items
     And Response body parameter should be:    [included][0][attributes][sku]    ${configurable_bundle_first_slot_item_sku}
     And Response body parameter should be:    [included][0][attributes][quantity]   2
