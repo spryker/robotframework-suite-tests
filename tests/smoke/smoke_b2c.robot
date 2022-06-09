@@ -168,29 +168,29 @@ Volume_Prices
 
 Discontinued_Alternative_Products
     [Documentation]    Checks discontinued and alternative products
-    # Yves: go to PDP of the product with sku:    ${product_with_relations_alternative_products_sku}
-    # Yves: change variant of the product on PDP on:    2.3 GHz - Discontinued
-    # Yves: PDP contains/doesn't contain:    true    ${alternativeProducts}
-    # Yves: login on Yves with provided credentials:    ${yves_user_email}
-    # Yves: delete all wishlists
+    Yves: go to PDP of the product with sku:    ${product_with_relations_alternative_products_sku}
+    Yves: change variant of the product on PDP on:    2.3 GHz - Discontinued
+    Yves: PDP contains/doesn't contain:    true    ${alternativeProducts}
+    Yves: login on Yves with provided credentials:    ${yves_user_email}
+    Yves: delete all wishlists
     Yves: go to the PDP of the first available product
-    # Yves: add product to wishlist:    My wishlist
-    # Yves: get sku of the concrete product on PDP
-    # Yves: get sku of the abstract product on PDP
-    # Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    # Zed: discontinue the following product:    ${got_abstract_product_sku}    ${got_concrete_product_sku}
-    # Zed: product is successfully discontinued
-    # Zed: check if at least one price exists for concrete and add if doesn't:    100
-    # Zed: add following alternative products to the concrete:    012
-    # Yves: login on Yves with provided credentials:    ${yves_user_email}
-    # Yves: go To 'Wishlist' Page
-    # Yves: go to wishlist with name:    My wishlist
-    # Yves: product with sku is marked as discountinued in wishlist:    ${got_concrete_product_sku}
-    # Yves: product with sku is marked as alternative in wishlist:    012
-    # [Teardown]    Run Keywords    Yves: login on Yves with provided credentials:    ${yves_user_email}    
-    # ...    AND    Yves: check if cart is not empty and clear it
-    # ...    AND    Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    # ...    AND    Zed: undo discontinue the following product:    ${got_abstract_product_sku}    ${got_concrete_product_sku}
+    Yves: add product to wishlist:    My wishlist
+    Yves: get sku of the concrete product on PDP
+    Yves: get sku of the abstract product on PDP
+    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: discontinue the following product:    ${got_abstract_product_sku}    ${got_concrete_product_sku}
+    Zed: product is successfully discontinued
+    Zed: check if at least one price exists for concrete and add if doesn't:    100
+    Zed: add following alternative products to the concrete:    012
+    Yves: login on Yves with provided credentials:    ${yves_user_email}
+    Yves: go To 'Wishlist' Page
+    Yves: go to wishlist with name:    My wishlist
+    Yves: product with sku is marked as discountinued in wishlist:    ${got_concrete_product_sku}
+    Yves: product with sku is marked as alternative in wishlist:    012
+    [Teardown]    Run Keywords    Yves: login on Yves with provided credentials:    ${yves_user_email}    
+    ...    AND    Yves: check if cart is not empty and clear it
+    ...    AND    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    ...    AND    Zed: undo discontinue the following product:    ${got_abstract_product_sku}    ${got_concrete_product_sku}
 
 Back_in_Stock_Notification
     [Documentation]    Back in stock notification is sent and availability check
