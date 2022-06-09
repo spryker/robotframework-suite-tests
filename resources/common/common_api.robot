@@ -1519,9 +1519,11 @@ Update order status in Database:
     ...    
     ...    ``Update order status in Database:    7    shipped``
     
-    [Arguments]    ${order_item_status}    ${order_item_status_name}
+    [Arguments]    ${order_item_status_name}
     Connect To Database    pymysql    ${default_db_name}    ${default_db_user}    ${default_db_password}    ${default_db_host}    ${default_db_port}
-    Execute Sql String    insert ignore into spy_oms_order_item_state (id_oms_order_item_state, name) values ('${order_item_status}', '${order_item_status_name}')
-    Execute Sql String    update spy_sales_order_item set fk_oms_order_item_state = '${order_item_status}' where uuid = '${Uuid}'
+    Execute Sql String    insert ignore into spy_oms_order_item_state (name) values ('${order_item_status_name}')
     Disconnect From Database
-    
+    Save the result of a SELECT DB query to a variable:    select id_oms_order_item_state from spy_oms_order_item_state where name like '${order_item_status_name}'    state_id
+    Connect To Database    pymysql    ${default_db_name}    ${default_db_user}    ${default_db_password}    ${default_db_host}    ${default_db_port}
+    Execute Sql String    update spy_sales_order_item set fk_oms_order_item_state = '${state_id}' where uuid = '${Uuid}'
+    Disconnect From Database
