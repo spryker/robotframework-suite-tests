@@ -186,7 +186,7 @@
             } 
     },
 
-    "search":
+"search":
     {
         "total_number_of_products_in_search": "414",
         "ipp": 
@@ -237,7 +237,8 @@
         "abstract_sku_highest_rating": "M1016129"
     },
 
-    "products": {
+"products": 
+    {
         "bundle_product": 
             {
             "abstract": {
@@ -280,23 +281,29 @@
             "has_upselling_products": {
                 "abstract_sku": "M29502",
                 "concrete_sku": "419880"
+                } 
+            },
+            "product_with_related_relations": {
+                "has_upselling_products": {
+                    "sku": "M29499",
+                    "name": "Safescan counterfeit test device - SAFESCAN 45 UV"
                 },
-            "product_related_product_with_upselling_relation_sku": "M29499",
-            "product_related_product_with_upselling_relation_name": "Safescan counterfeit test device - SAFESCAN 45 UV",
-            "product_related_product_with_related_relation_sku": "M29501",
-            "product_related_product_with_related_relation_name": "Safescan automatic banknote counter - UV counterfeit recognition"
+                "has_related_products": {
+                    "sku": "M29501",
+                    "name": "Safescan automatic banknote counter - UV counterfeit recognition"
+                }
             },
         "discount": 
             {
             "id_3": {
                 "name": "5% off white",
                 "description": "Get a 5% discount on all white products with voucher code",
-                "voucher_code": "sprykerhe1x"
+                "voucher_code": "sprykerxa2s"
                 },
             "id_4": {
                 "name": "10% off Safescan",
                 "description": "Get a 10% discount on all Safescan brand products with voucher code",
-                "voucher_code": "safescanca1ya5zu7m"
+                "voucher_code": "safescanfa9ja4va8m"
                 },
             "concrete_products_with_discounts": {
                 "concrete_product_with_brand_safescan": "419872",
@@ -352,7 +359,7 @@
                     "description":"Daughter is very happy with her new phone!"
                     }
                 },
-        "category_nodes":{
+            "category_nodes":{
                 "category_node_23": {
                     "id":"23",
                     "name":"Office equipment"
@@ -414,15 +421,15 @@
                     },
             "category_nodes":{
                 "category_node_14": {
-                    "node_id":"14",
+                    "id":"14",
                     "name":"Swivel Chairs"
                     },
                 "category_node_11": {
-                    "node_id":"11",
+                    "id":"11",
                     "name":"Office furniture"
                     },
                 "category_node_12": {
-                    "node_id":"12",
+                    "id":"12",
                     "name":"Chairs"
                     }
                 },
@@ -470,7 +477,7 @@
                 "sku": "M21691",
                 "name": "Clairefontaine Collegeblock 8272C DIN A5, 90 sheets"
                 },
-            "abstract_product_with_reviews": {
+            "product_with_reviews": {
                 "sku": "M719",
                 "name": "Rectangular table, rectangular tubing - 1600 x 800 mm",
                 "qty": "4"               
@@ -490,28 +497,27 @@
                 "concrete_unavailable_product": "212447"
                 },
             "abstract_product_with_variants": {
-                "3_concretes": "M29456",
-                "3_concretes_name": "Gmöhling aluminum data removal container - Exterior - LxWxH 435 x 385 x 650 mm",
-                "3_concretes_superattribute": "material"
+                "concretes_3": "M29456",
+                "concretes_name_3": "Gmöhling aluminum data removal container - Exterior - LxWxH 435 x 385 x 650 mm",
+                "concretes_superattribute_3": "material"
                 }
             },
-        "concrete_product": 
-            {
             "concrete_available_product_with_stock": "420566",
             "concrete_available_product_without_stock": "",
             "concrete_product_with_promotions": "212427",
             "concrete_product_with_threshold_limit": "424273",
-            "image_set": {
-            "one": {
-                "sku": "401768",
-                "name": "EUROKRAFT aluminum hand truck - Load capacity 200 kg, with skids - load capacity 200 kg"    
-                    },
-            "multiple" : {
-                "sku": "212427",
-                "name": "Wood stackable chair, upholstered - VE 4 pieces, substructure chromed - upholstery black"    
-                    }
-                }
-            }, 
+            "concrete_product": {
+                "image_set": {
+                    "one": {
+                        "sku": "401768",
+                        "name": "EUROKRAFT aluminum hand truck - Load capacity 200 kg, with skids - load capacity 200 kg"    
+                            },
+                    "multiple" : {
+                        "sku": "212427",
+                        "name": "Wood stackable chair, upholstered - VE 4 pieces, substructure chromed - upholstery black"    
+                            }
+                        }
+                },
         "packaging_unit": 
             {
             "m": "METR",
@@ -536,40 +542,33 @@
                 "option_1_name": "Two (2) year limited warranty",
                 "option_2": "OP_insurance"
             },
-
         "discount_concrete_product": 
             {
             "discount_concrete_product_sku": "103117",
             "product_1": {
                 "sku": "108298",
                 "name": "Mauser hinged door cabinet - sideboard, 4 compartments, center separating wall - HxWxD 1225 x 1600 x 420 mm - light gray / ultramarine blue",
-                "discount_amount": {
-                    "with_20%_off_storage": "10600",
-                    "with_10%_off_minimum_order": "4240",
-                    "total_sum_of_discounts": "14840"
-                    }
+                "discount_amount_with_20_percentage_off_storage": "10600",
+                "discount_amount_with_10_percentage_off_minimum_order": "4240",
+                "discount_amount_total_sum_of_discounts": "14840"
                 },
             "product_2": {
                 "sku": "213216",
                 "name": "office akktiv base cabinet - HxWxD 942 x 913 x 420 mm - light gray, RAL 7035",
-                "discount_amount": {
-                    "with_20%_off_storage": "5783",
-                    "with_10%_off_minimum_order": "2313",
-                    "total_sum_of_discounts": "8096"
-                    }
+                "discount_amount_with_20_percentage_off_storage": "5783",
+                "discount_amount_with_10_percentage_off_minimum_order": "2313",
+                "discount_amount_total_sum_of_discounts": "8096"
                 },  
             "product_3": {
                 "sku": "401768",
                 "name": "EUROKRAFT aluminum hand truck - Load capacity 200 kg, with skids - load capacity 200 kg",
-                "discount_amount": {
-                    "with_20%_off_storage": "16383",
-                    "with_10%_off_minimum_order": "1882"
-                    }
+                "discount_amount_with_20_percentage_off_storage": "16383",
+                "discount_amount_with_10_percentage_off_minimum_order": "1882"
                 }
             }
     },    
   
-    "product_offers":
+"product_offers":
     {  
         "inactive_offer_with_volume_price": "offer3",
         "waiting_for_approval_offer_with_volume_price": "offer4",
@@ -583,7 +582,7 @@
         "active_offer_price": "10160"
     },
 
-    "product_attributes":
+"product_attributes":
     {
         "brand_1": "Soennecken",
         "brand_2": "edding",
@@ -608,7 +607,8 @@
 
     },
 
-"content": {
+"content": 
+    {
         "abstract_list": 
             {
             "product_id": "apl-1",
@@ -645,8 +645,8 @@
 
         "category_nodes_storage_name": "Foods",
         "category_nodes_storage_url": "/en/foods",
-        "subcategory_nodes_storage_name": "Fish",
-        "subcategory_nodes_storage_url": "/en/foods/fish",
+        "subcategory_nodes_storage_name": "Vegetables",
+        "subcategory_nodes_storage_url": "/en/foods/vegetables",
 
         "cms_page_collection_name": "GTC",
         "cms_page_collection_url": "/en/gtc",
@@ -682,8 +682,8 @@
         "shipment": 
             {
             "carrier_name": "DHL",
-            "shipment_method_name": "Standard",
-            "shipment_method_name_2": "Express",
+            "method_name_1": "Standard",
+            "method_name_2": "Express",
             "delivery_date": "2030-12-31"
             },
 
@@ -694,23 +694,23 @@
             "default_rating": "5"
             },
 
-        "discount": 
+        "discount_1": 
             {
-            "discount_1": {
-                "name": "20% off storage",
-                "description": "Storage sale: 20% off all office storage products",
-                "total_sum_for_discounts_for_products_1_and_2": "16383"
-                },
-            "discount_2": {
-                "name": "10% off minimum order",
-                "description": "Get a 10% discount on all orders above a certain value depending on currency and gross/net price mode",
-                "total_sum_for_discounts_for_products_1_2_and_3": "8435"
-                },
-            "discount_3": {
-                "name": "Free standard delivery",
-                "description": "Get a 10% discount on all orders above a certain value depending on currency and gross/net price mode",
-                "total_sum": "490"
-                }
+            "name": "20% off storage",
+            "description": "Storage sale: 20% off all office storage products",
+            "total_sum_for_discounts_for_products_1_and_2": "16383"
+            },
+        "discount_2": 
+            {
+            "name": "10% off minimum order",
+            "description": "Get a 10% discount on all orders above a certain value depending on currency and gross/net price mode",
+            "total_sum_for_discounts_for_products_1_2_and_3": "8435"
+            },
+        "discount_3": 
+            {
+            "name": "Free standard delivery",
+            "description": "Get a 10% discount on all orders above a certain value depending on currency and gross/net price mode",
+            "total_sum": "490"
             },
         "url_resolver": 
             {
@@ -731,84 +731,95 @@
             "merchant_id": "MER000008"  
             }
     },
-    "companies": 
+"companies": 
     {
         "company_name": "Spryker Systems GmbH",
         "user_with_multiple_companies": "anne.boleyn@spryker.com",
         "company_id": "62de4ab6-b768-5c21-8835-455d9f341625",
         "company_user_id": "2816dcbd-855e-567e-b26f-4d57f3310bb8",
-        "business_unit": {
+        "business_unit": 
+            {
             "address_id": "2175cddd-f8af-5885-b161-227b5c93e72f",
             "name": "Spryker Systems HR department"
-        }
+            }
     },
 
-    "labels":
+"labels":
     {
-        "label_manual": {
+        "label_manual": 
+            {
             "id": "3",
             "name": "Top"
-        },
-        "label_sale": {
+            },
+        "label_sale": 
+            {
             "id": "5",
             "name": "SALE %"
-        },
-        "label_new": {
+            },
+        "label_new": 
+            {
             "id": "4",
             "name": "New"
-        },
-        "label_discontinued": {
+            },
+        "label_discontinued": 
+            {
             "id": "2",
             "name": "Discontinued"
-        },
-        "label_alternative": {
+            },
+        "label_alternative": 
+            {
             "id": "1",
             "name": "Alternatives available"
-        }
+            }
     },
 
-    "merchants":
+"merchants": 
     {
-        "merchant_id": "MER000011",
-        "merchant_offer_id": "offer394",
-        "merchant_offer_price": "1234",
-        "concrete_product_with_offer_sku":"425159",
-        "merchant_name": "Computer Experts",
-        "merchant_url": "/en/merchant/computer-experts",
-        "contact_person_role": "Brand Manager",
-        "contact_person_title": "Ms",
-        "contact_person_first_name": "Michele",
-        "contact_person_last_name": "Nemeth",
-        "contact_person_phone": "030/123456789",
-        "public_email": "support@computer-experts.com",
-        "public_phone": "+49 30 234567691",
-        "description": "Computer Experts offer products that enhance your work environment with computer accessories that improve how you work, communicate, and interact. Computer Experts founded in 2013 and continuously growing, acquiring deep industry experience.",
-        "addresses":{
-            "city_munchen":"München",
-            "address1": "Matthias-Pschorr-Straße"
-        },
-        "merchant_spryker_id": "MER000008",
-        "merchant_office_king_id": "MER000009",
-
-        "merchant_budget_stationery_id": "MER000010",
-        "merchant_spryker_name": "Spryker",
-        "merchant_spryker_url": "/en/merchant/spryker",
-        "contact_spryker_person_role":"E-Commerce Manager",
-        "contact_spryker_person_title": "Mr",
-        "contact_spryker_person_first_name": "Harald",
-        "contact_spryker_person_last_name": "Schmidt",
-        "contact_spryker_person_phone": "+49 30 208498350",
-        "spryker_public_email": "info@spryker.com",
-        "spryker_public_phone": "+49 30 234567891",
-        "description_spryker": "Spryker is the main merchant on the B2B Demo Marketplace."
-        
+    "merchants": 
+        {
+        "computer_experts": 
+                {
+                    "merchant_id": "MER000011",
+                    "merchant_offer_id": "offer394",
+                    "merchant_offer_price": "1234",
+                    "concrete_product_with_offer_sku":"425159",
+                    "merchant_name": "Computer Experts",
+                    "merchant_url": "/en/merchant/computer-experts",
+                    "contact_person_role": "Brand Manager",
+                    "contact_person_title": "Ms",
+                    "contact_person_first_name": "Michele",
+                    "contact_person_last_name": "Nemeth",
+                    "contact_person_phone": "030/123456789",
+                    "public_email": "support@computer-experts.com",
+                    "public_phone": "+49 30 234567691",
+                    "description": "Computer Experts offer products that enhance your work environment with computer accessories that improve how you work, communicate, and interact. Computer Experts founded in 2013 and continuously growing, acquiring deep industry experience.",
+                    "addresses":{
+                    "city_munchen":"München",
+                    "address1": "Matthias-Pschorr-Straße"
+                        }
+                },
+            "merchant_spryker_id": "MER000008",
+            "merchant_office_king_id": "MER000009",
+            "merchant_budget_stationery_id": "MER000010",
+            "merchant_spryker_name": "Spryker",
+            "merchant_spryker_url": "/en/merchant/spryker",
+            "contact_spryker_person_role":"E-Commerce Manager",
+            "contact_spryker_person_title": "Mr",
+            "contact_spryker_person_first_name": "Harald",
+            "contact_spryker_person_last_name": "Schmidt",
+            "contact_spryker_person_phone": "+49 30 208498350",
+            "spryker_public_email": "info@spryker.com",
+            "spryker_public_phone": "+49 30 234567891",
+            "description_spryker": "Spryker is the main merchant on the B2B Demo Marketplace."
+            }
     },
+
     "return_reasons": 
-    {
+        {
         "return_reason_damaged": "Damaged",
         "return_reason_wrong_item": "Wrong Item",
         "return_reason_no_longer_needed": "No longer needed",
         "return_reasons_qty": "3"
-    }
+        }
 
 }

@@ -8,16 +8,16 @@ Resource    ../../../../../../resources/common/common_api.robot
 ENABLER
     TestSetup
 Get_product_prices_with_abstract_sku
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}  
-    When I send a GET request:    /concrete-products/${bundled_product_1_abstract_sku}/concrete-product-prices
+    When I send a GET request:    /concrete-products/${bundle_product.abstract.product_1_sku}/concrete-product-prices
     Then Response status code should be:    404
     And Response reason should be:    Not Found
     And Response should return error code:    308
     And Response should return error message:    Can`t find concrete product prices.
 
 Get_product_prices_with_empty_SKU
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token} 
     When I send a GET request:    /concrete-products//concrete-product-prices
     Then Response status code should be:    400
@@ -26,7 +26,7 @@ Get_product_prices_with_empty_SKU
     And Response should return error message:    Concrete product sku is not specified.
 
 Get_product_prices_with_special_characters
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}  
     When I send a GET request:    /concrete-products/~!@#$%^&*()_+/concrete-product-prices
     Then Response status code should be:    404
@@ -35,7 +35,7 @@ Get_product_prices_with_special_characters
     And Response should return error message:     Concrete product is not found.
 
 Get_product_prices_by_concrete_sku_product_doesn't_exist
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}  
     When I send a GET request:    /concrete-products/4567890/concrete-product-prices
     Then Response status code should be:    404
@@ -44,7 +44,7 @@ Get_product_prices_by_concrete_sku_product_doesn't_exist
     And Response should return error message:     Can`t find concrete product prices.
 
 Get_product_prices_without_access_token
-    When I send a GET request:    /concrete-products/${concrete_product_one_image_set}/concrete-product-prices
+    When I send a GET request:    /concrete-products/${concrete_product.image_set.one.sku}/concrete-product-prices
     Then Response status code should be:    403
     And Response reason should be:    Forbidden
     And Response should return error code:    002
@@ -52,7 +52,7 @@ Get_product_prices_without_access_token
 
 Get_product_prices_without_wrong_access_token
     [Setup]   I set Headers:    Authorization=8ur30jfpwoe 
-    When I send a GET request:    /concrete-products/${concrete_product_one_image_set}/concrete-product-prices
+    When I send a GET request:    /concrete-products/${concrete_product.image_set.one.sku}/concrete-product-prices
     Then Response status code should be:    401
     And Response reason should be:    Unauthorized
     And Response should return error code:    001

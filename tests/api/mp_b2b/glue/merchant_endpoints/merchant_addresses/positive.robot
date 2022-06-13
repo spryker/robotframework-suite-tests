@@ -14,7 +14,7 @@ Retrieves_merchant_addresses
     And Response reason should be:    OK
     And Response body parameter should be:    [data][0][id]    ${merchants.computer_experts.merchant_id}
     And Response body parameter should be:    [data][0][type]    merchant-addresses
-    And Response body parameter should be:    [data][0][attributes][addresses][0][countryName]    ${default_country}
+    And Response body parameter should be:    [data][0][attributes][addresses][0][countryName]    ${default.country}
     And Response body parameter should be:    [data][0][attributes][addresses][0][city]    ${merchants.computer_experts.addresses.city_munchen}
     And Each array element of array in response should contain property:    [data]    type
     And Each array element of array in response should contain property:    [data]    id
@@ -59,6 +59,6 @@ Retrieves_merchant_with_include_merchant_addresses
     And Each array element of array in response should contain nested property:    [included]    [attributes][addresses]    zipCode
     And Each array element of array in response should contain nested property:    [included]    [attributes][addresses]    latitude
     And Each array element of array in response should contain nested property:    [included]    [attributes][addresses]    longitude
-    And Response body parameter should be:    [included][0][attributes][addresses][0][countryName]    ${default_country}
+    And Response body parameter should be:    [included][0][attributes][addresses][0][countryName]    ${default.country}
     And Response body parameter should be:    [included][0][attributes][addresses][0][city]    ${merchants.computer_experts.addresses.city_munchen}
     And Response body parameter should be:    [included][0][attributes][addresses][0][address1]    ${merchants.computer_experts.addresses.address1}

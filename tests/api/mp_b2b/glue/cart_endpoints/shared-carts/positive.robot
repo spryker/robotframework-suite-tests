@@ -119,7 +119,7 @@ Add_an_item_to_the_shared_shopping_cart_by_user_with_access
     ...    AND    Save value to a variable:    [data][0][id]    companyUserId
     ...    AND    I send a POST request:    /carts/${cartId}/shared-carts    {"data":{"type":"shared-carts","attributes":{"idCompanyUser":"${companyUserId}","idCartPermissionGroup":2}}}
     ...    AND    Response status code should be:    201
-    ...    AND    Then I get access token for the customer:    ${yves_shared_shopping_cart_user_email}
+    ...    AND    I get access token for the customer:    ${yves_shared_shopping_cart_user_email}
     ...    AND    I set Headers:    Authorization=${token}
     When I send a POST request:    /carts/${cartId}/items?include=items    {"data":{"type":"items","attributes":{"sku":"${concrete_available_product_sku}","quantity":1}}}
     Then Response status code should be:    201
@@ -144,7 +144,7 @@ Update_an_item_quantity_at_the_shared_shopping_cart_with_full_access_permissions
     ...    AND    Save value to a variable:    [data][0][id]    companyUserId
     ...    AND    I send a POST request:    /carts/${cartId}/shared-carts    {"data":{"type":"shared-carts","attributes":{"idCompanyUser":"${companyUserId}","idCartPermissionGroup":2}}}
     ...    AND    Response status code should be:    201
-    ...    AND    Then I get access token for the customer:    ${yves_shared_shopping_cart_user_email}
+    ...    AND    I get access token for the customer:    ${yves_shared_shopping_cart_user_email}
     ...    AND    I set Headers:    Authorization=${token}
     When I send a PATCH request:    /carts/${cartId}/items/${itemId}?include=items    {"data":{"type":"items","attributes":{"quantity":2}}}
     Then Response status code should be:    200
@@ -170,7 +170,7 @@ Delete_an_item_from_the_shared_shopping_cart_with_full_access_permissions_by_use
     ...    AND    Save value to a variable:    [data][0][id]    companyUserId
     ...    AND    I send a POST request:    /carts/${cartId}/shared-carts    {"data":{"type":"shared-carts","attributes":{"idCompanyUser":"${companyUserId}","idCartPermissionGroup":2}}}
     ...    AND    Response status code should be:    201
-    ...    AND    Then I get access token for the customer:    ${yves_shared_shopping_cart_user_email}
+    ...    AND    I get access token for the customer:    ${yves_shared_shopping_cart_user_email}
     ...    AND    I set Headers:    Authorization=${token}
     ...    AND    I send a GET request:    /carts/${cartId}?include=items
     ...    AND    Save value to a variable:    [data][relationships][items][data][0][id]    itemId

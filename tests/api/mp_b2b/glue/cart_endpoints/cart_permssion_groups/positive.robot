@@ -9,9 +9,9 @@ ENABLER
     TestSetup
 
 Get_cart_permission_groups_by_cart_id
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
-    ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${gross_mode}","currency": "${currency_code_eur}","store": "${store_de}","name": "${test_cart_name}-${random}"}}}
+    ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
     ...  AND    Save value to a variable:    [data][id]    cart_id
     ...  AND    Response status code should be:    201
     ...  AND    I send a GET request:    /company-users
@@ -51,7 +51,7 @@ Get_cart_permission_groups_by_cart_id
     ...  AND    Response status code should be:    204
 
 Get_all_cart_permission_groups
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
     When I send a GET request:    /cart-permission-groups
     Then Response status code should be:    200
@@ -67,7 +67,7 @@ Get_all_cart_permission_groups
 
 
 Get_cart_permission_groups_by_id
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
     When I send a GET request:    /cart-permission-groups/${cart_permission_group_id}
     Then Response status code should be:    200

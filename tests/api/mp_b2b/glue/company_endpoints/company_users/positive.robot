@@ -9,7 +9,7 @@ ENABLER
     TestSetup
 
 Retrieve_list_of_company_users
-    When I get access token for the customer:    ${yves_user_email}
+    When I get access token for the customer:    ${yves_user.email}
     And I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     And I send a GET request:    /company-users
     Then Response status code should be:    200
@@ -27,7 +27,7 @@ Retrieve_list_of_company_users
     And Response body has correct self link
 
 Retrieve_company_user_by_id 
-    When I get access token for the customer:    ${yves_user_email}
+    When I get access token for the customer:    ${yves_user.email}
     And I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     And I send a GET request:    /company-users/${company_user_id}
     Then Response status code should be:    200
@@ -42,7 +42,7 @@ Retrieve_company_user_by_id
     And Response body has correct self link internal
 
 Retrieve_company_user_including_customers
-    When I get access token for the customer:    ${yves_user_email}
+    When I get access token for the customer:    ${yves_user.email}
     And I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     And I send a GET request:    /company-users?include=customers
     Then Response status code should be:    200
@@ -58,7 +58,7 @@ Retrieve_company_user_including_customers
     And Response include element has self link:  customers
 
 Retrieve_company_user_including_company_business_units
-    When I get access token for the customer:    ${yves_user_email}
+    When I get access token for the customer:    ${yves_user.email}
     And I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     And I send a GET request:    /company-users?include=company-business-units
     Then Response status code should be:    200
@@ -76,7 +76,7 @@ Retrieve_company_user_including_company_business_units
     And Response include element has self link:    company-business-units
 
 Retrieve_company_user_including_company_roles
-    When I get access token for the customer:    ${yves_user_email}
+    When I get access token for the customer:    ${yves_user.email}
     And I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     And I send a GET request:    /company-users?include=company-roles
     Then Response status code should be:    200
@@ -93,7 +93,7 @@ Retrieve_company_user_including_company_roles
     And Response include element has self link:    company-roles
 
 Retrieve_company_user_including_companies
-    When I get access token for the customer:    ${yves_user_email}
+    When I get access token for the customer:    ${yves_user.email}
     And I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     And I send a GET request:    /company-users?include=companies
     Then Response status code should be:    200
@@ -110,7 +110,7 @@ Retrieve_company_user_including_companies
     And Response include element has self link:    companies
 
 Retrieve_company_users_by_mine
-    When I get access token for the customer:    ${yves_user_email}
+    When I get access token for the customer:    ${yves_user.email}
     And I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     And I send a GET request:    /company-users/mine
     Then Response status code should be:    200
@@ -124,7 +124,7 @@ Retrieve_company_users_by_mine
     And Response body has correct self link
 
 Retrieve_list_of_company_users_with_include_customers_and_filtered_by_company_role
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}  
     ...    AND    I send a GET request:    /company-roles/mine
     ...    AND    Save value to a variable:    [data][0][id]    company-role-uuid   
