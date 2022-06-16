@@ -750,6 +750,7 @@ Discounts
 
 Back_in_Stock_Notification
     [Documentation]    Back in stock notification is sent and availability check
+    Yves: login on Yves with provided credentials:    ${yves_user_email}
     Yves: go to the PDP of the first available product
     Yves: get sku of the concrete product on PDP
     Yves: get sku of the abstract product on PDP

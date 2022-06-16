@@ -193,6 +193,7 @@ Yves: go to third navigation item level:
     Click Element by xpath with JavaScript    //div[@class='header__navigation']//navigation-multilevel[@data-qa='component navigation-multilevel']/ul[@class='menu menu--lvl-0']//li[contains(@class,'menu__item--lvl-0')]/span/*[contains(@class,'lvl-0')][1][text()='${navigation_item_level1}']/ancestor::li//ul[contains(@class,'menu--lvl-2')]//li[contains(@class,'menu__item--lvl-2')]/span/*[contains(@class,'lvl-2')][1][text()='${navigation_item_level3}']
 
 Yves: get index of the first available product
+    [Documentation]    For B2B this keyword should be used only for logged in customers, otherwise add to cart buttons are absent and it returns wrong index
     Yves: perform search by:    ${EMPTY}
     Wait Until Page Contains Element    ${catalog_main_page_locator}[${env}]
     ${productsCount}=    Get Element Count    xpath=//product-item[@data-qa='component product-item']
