@@ -1,9 +1,12 @@
 *** Settings ***
 Suite Setup       SuiteSetup
 Resource    ../../../../../../resources/common/common_api.robot
+Test Setup    TestSetup
+Default Tags    glue
 
 *** Test Cases ***
-
+ENABLER
+    TestSetup
 Get_banner_without_id
     When I send a GET request:    /content-banners
     Then Response status code should be:    400
@@ -12,7 +15,7 @@ Get_banner_without_id
     And Response should return error message:    Content key is missing.
 
 Get_banner_with_wrong_content_id_type
-    When I send a GET request:    /content-banners/${abstract_product_list_id}
+    When I send a GET request:    /content-banners/${abstract_list.id}
     Then Response status code should be:    422
     And Response reason should be:    Unprocessable Content
     And Response should return error code:    2203

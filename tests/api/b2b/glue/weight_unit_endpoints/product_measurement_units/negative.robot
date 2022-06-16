@@ -1,8 +1,12 @@
 *** Settings ***
 Suite Setup       SuiteSetup
 Resource    ../../../../../../resources/common/common_api.robot
+Test Setup    TestSetup
+Default Tags    glue
 
 *** Test Cases ***
+ENABLER
+    TestSetup
 Get_a_measurement_unit_with_non_existent_unit_id
     When I send a GET request:    /product-measurement-units/fake
     Then Response status code should be:    404

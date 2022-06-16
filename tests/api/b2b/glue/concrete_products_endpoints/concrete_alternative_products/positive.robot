@@ -1,10 +1,14 @@
 *** Settings ***
 Suite Setup       SuiteSetup
 Resource    ../../../../../../resources/common/common_api.robot
+Test Setup    TestSetup
+Default Tags    glue
 
 *** Test Cases ***
+ENABLER
+    TestSetup
 Get_concrete_alternative_product_for_a_product_that_has_none
-    When I send a GET request:    /concrete-products/${bundled_product_1_concrete_sku}/concrete-alternative-products
+    When I send a GET request:    /concrete-products/${bundle_product.product_2.concrete_sku}/concrete-alternative-products
     Then Response status code should be:    200
     And Response should contain the array of a certain size:    [data]    0
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
@@ -12,7 +16,7 @@ Get_concrete_alternative_product_for_a_product_that_has_none
     And Response reason should be:    OK
 
 Get_concrete_alternative_product
-    When I send a GET request:    /concrete-products/${concrete_product_with_alternative_sku}/concrete-alternative-products
+    When I send a GET request:    /concrete-products/${concrete.alternative_products.product_1.sku}/concrete-alternative-products
     Then Response status code should be:    200
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response reason should be:    OK
@@ -38,9 +42,9 @@ Get_concrete_alternative_product
     And Response body has correct self link
 
 Get_concrete_alternative_product_with_include
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}  
-    When I send a GET request:    /concrete-products/${concrete_product_with_alternative_sku}/concrete-alternative-products?include=concrete-product-image-sets,concrete-product-availabilities,concrete-product-prices
+    When I send a GET request:    /concrete-products/${concrete.alternative_products.product_1.sku}/concrete-alternative-products?include=concrete-product-image-sets,concrete-product-availabilities,concrete-product-prices
     Then Response status code should be:    200
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response reason should be:    OK

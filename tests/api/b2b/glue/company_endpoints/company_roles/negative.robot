@@ -1,10 +1,14 @@
 *** Settings ***
 Suite Setup       SuiteSetup
 Resource    ../../../../../../resources/common/common_api.robot
+Test Setup    TestSetup
+Default Tags    glue
 
 *** Test Cases ***
+ENABLER
+    TestSetup
 Request_company_role_by_wrong_ID
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}  
     When I send a GET request:    /company-roles/6334few7
     Then Response status code should be:    404
@@ -28,11 +32,11 @@ Request_company_role_with_wrong_access_token
     And Response body parameter should be:    [errors][0][detail]    Invalid access token.
 
 Request_company_role_if_role_belong_to_other_users 
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}  
     ...    AND    I send a GET request:    /company-roles/mine
     ...    AND    Save value to a variable:    [data][0][id]    company_role_id
-    ...    AND    I get access token for the customer:    ${yves_second_user_email}
+    ...    AND    I get access token for the customer:    ${yves_second_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token} 
     When I send a GET request:    /company-roles/${company_role_id}
     Then Response status code should be:    404

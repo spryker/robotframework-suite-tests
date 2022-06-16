@@ -16,7 +16,7 @@ Agent_searches_for_customers_with_no_token
     And Response should return error message:    Action is available to agent user only.
 
 Agent_searches_for_customers_with_customer_token
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I Set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     When I send a GET request:    /agent-customer-search
     Then Response status code should be:    401

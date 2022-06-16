@@ -9,7 +9,7 @@ ENABLER
     TestSetup
 
 Get_access_token_for_company_user_by_id
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}  
     ...    AND    Save value to a variable:    [data][attributes][idCompanyUser]    company_user
     When I send a POST request:    /company-user-access-tokens    {"data":{"type":"company-user-access-tokens","attributes":{"idCompanyUser":"${company_user}"}}}

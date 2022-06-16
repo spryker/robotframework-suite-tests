@@ -1,9 +1,12 @@
 *** Settings ***
 Suite Setup       SuiteSetup
 Resource    ../../../../../../resources/common/common_api.robot
+Test Setup    TestSetup
+Default Tags    glue
 
 *** Test Cases ***
-
+ENABLER
+    TestSetup
 ######POST#####
 Get_a_label_without_label_id
     When I send a GET request:    /product-labels
