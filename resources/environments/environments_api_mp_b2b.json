@@ -391,6 +391,10 @@
             "name": "Verbatim USB stick Store n Go V3 49173 32GB USB3.0 gray",
             "name_lower_case": "verbatim usb stick store n go v3 49173 32gb usb3.0 gray"
             },
+        "concrete_product_with_discontinued": 
+            {
+            "sku": "421540"
+            },
         "abstract_product_with_alternative": 
             {
             "sku": "M21100",

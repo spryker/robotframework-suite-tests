@@ -29,7 +29,8 @@ Abstract_product_list_abstract_products
     And Response body parameter should be:    [data][1][attributes][sku]    ${abstract_list.product2_sku}
     And Response body parameter should be:    [data][1][attributes][name]    ${abstract_list.product2_name}
 
-# there is a bug in b2b and mp_b2b - include does not work
+# there is a bug in b2b and mp_b2b - include does not work 
+# fails in mp_b2b CC-16994
 Abstract_product_list_with_include
     When I send a GET request:    /content-product-abstract-lists/${abstract_list.product_id}?include=abstract-products
     Then Response status code should be:    200

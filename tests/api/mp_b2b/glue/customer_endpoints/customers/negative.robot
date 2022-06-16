@@ -150,7 +150,7 @@ Get_a_customer_with_access_token_from_another_user
 Update_a_customer_with_wrong_id
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
-    I send a PATCH request:    /customers/DE--35   {"data":{"type":"customers","attributes":{"firstName":"${yves_third_user.first_name}","lastName":"${yves_third_user.last_name}","gender":"${gender.male}","salutation":"${yves_third_user.salutation}","email":"${yves_third_user.first_name}@spryker.com","password":"${yves_user.password}","confirmPassword":"${yves_user.password}","acceptedTerms":True}}}
+    I send a PATCH request:    /customers/DE--30   {"data":{"type":"customers","attributes":{"firstName":"${yves_third_user.first_name}","lastName":"${yves_third_user.last_name}","gender":"${gender.male}","salutation":"${yves_third_user.salutation}","email":"${yves_third_user.first_name}@spryker.com","password":"${yves_user.password}","confirmPassword":"${yves_user.password}","acceptedTerms":True}}}
     Response status code should be:    403
     And Response reason should be:    Forbidden
     And Response should return error code:    411
@@ -251,7 +251,7 @@ Delete_a_customer_with_wrong_id
 Delete_a_customer_with_access_token_from_another
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}  
-    I send a DELETE request:    /customers/DE--35
+    I send a DELETE request:    /customers/DE--30
     Response status code should be:    403
     And Response reason should be:    Forbidden
     And Response should return error code:    411

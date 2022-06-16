@@ -81,45 +81,44 @@ Adding_voucher_with_invalid_access_token
 
 ####### DELETE #######
 Deleting_voucher_without_access_token
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
-    ...    AND    I set Headers:    Authorization=${token}
-    ...    AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
-    ...    AND    Save value to a variable:    [data][id]    cart_id
-    ...    AND    Response status code should be:    201
-    ...    AND    I send a POST request:    /carts/${cart_id}/items    {"data": {"type": "items","attributes": {"sku": "419901","quantity": 1}}}
-    ...    AND    Response status code should be:    201
-    ...    AND    I send a POST request:    /carts/${cart_id}/vouchers    {"data": {"type": "vouchers","attributes": {"code": "${discount.id_3.voucher_code}"}}}
-    ...    AND    Response status code should be:    201
-    ...    AND    I set Headers:    Authorization=
-    When I send a DELETE request:    /carts/${cart_id}/vouchers/${discount.id_3.voucher_code}    
+    [Setup]    Run Keyword    I set Headers:    Authorization=
+    # ...    AND    I set Headers:    Authorization=${token}
+    # ...    AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
+    # ...    AND    Save value to a variable:    [data][id]    cart_id
+    # ...    AND    Response status code should be:    201
+    # ...    AND    I send a POST request:    /carts/${cart_id}/items    {"data": {"type": "items","attributes": {"sku": "419901","quantity": 1}}}
+    # ...    AND    Response status code should be:    201
+    # ...    AND    I send a POST request:    /carts/${cart_id}/vouchers    {"data": {"type": "vouchers","attributes": {"code": "${discount.id_3.voucher_code}"}}}
+    # ...    AND    Response status code should be:    201  
+    When I send a DELETE request:    /carts/fakeid/vouchers/${discount.id_3.voucher_code}    
     Then Response status code should be:    403
     And Response reason should be:    Forbidden
     And Response should return error code:    002
     And Response should return error message:    Missing access token.
-    [Teardown]    Run Keywords    I set Headers:    Authorization=${token}
-    ...    AND    I send a DELETE request:    /carts/${cart_id}
-    ...    AND    Response status code should be:    204  
+    # [Teardown]    Run Keywords    I set Headers:    Authorization=${token}
+    # ...    AND    I send a DELETE request:    /carts/${cart_id}
+    # ...    AND    Response status code should be:    204  
 
 
 Deleting_voucher_with_invalid_access_token
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
-    ...    AND    I set Headers:    Authorization=${token}
-    ...    AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
-    ...    AND    Save value to a variable:    [data][id]    cart_id
-    ...    AND    Response status code should be:    201
-    ...    AND    I send a POST request:    /carts/${cart_id}/items    {"data": {"type": "items","attributes": {"sku": "419901","quantity": 1}}}
-    ...    AND    Response status code should be:    201
-    ...    AND    I send a POST request:    /carts/${cart_id}/vouchers    {"data": {"type": "vouchers","attributes": {"code": "${discount.id_3.voucher_code}"}}}
-    ...    AND    Response status code should be:    201
-    ...    AND    I set Headers:    Authorization="fake"
-    When I send a DELETE request:    /carts/${cart_id}/vouchers/${discount.id_3.voucher_code}
+    [Setup]    Run Keyword    I set Headers:    Authorization="fake"
+    # ...    AND    I set Headers:    Authorization=${token}
+    # ...    AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
+    # ...    AND    Save value to a variable:    [data][id]    cart_id
+    # ...    AND    Response status code should be:    201
+    # ...    AND    I send a POST request:    /carts/${cart_id}/items    {"data": {"type": "items","attributes": {"sku": "419901","quantity": 1}}}
+    # ...    AND    Response status code should be:    201
+    # ...    AND    I send a POST request:    /carts/${cart_id}/vouchers    {"data": {"type": "vouchers","attributes": {"code": "${discount.id_3.voucher_code}"}}}
+    # ...    AND    Response status code should be:    201
+
+    When I send a DELETE request:    /carts/fakeid/vouchers/${discount.id_3.voucher_code}
     Then Response status code should be:    401
     And Response reason should be:    Unauthorized
     And Response should return error code:    001
     And Response should return error message:    Invalid access token.
-    [Teardown]    Run Keywords    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
-    ...    AND    I send a DELETE request:     /carts/${cart_id}
-    ...    AND    Response status code should be:    204
+    # [Teardown]    Run Keywords    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
+    # ...    AND    I send a DELETE request:     /carts/${cart_id}
+    # ...    AND    Response status code should be:    204
 
 Deleting_voucher_code_with_invalid_cart_id
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}

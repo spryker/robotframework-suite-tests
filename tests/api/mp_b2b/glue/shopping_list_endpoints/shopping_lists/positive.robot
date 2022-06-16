@@ -156,7 +156,7 @@ Get_shopping_lists_info_with_non_zero_quantity_of_number_of_items
     I send a GET request:    /shopping-lists
     And Response status code should be:    200
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
-    And Response body parameter should NOT be:    [data][0][attributes][numberOfItems]    None
+    And Response body parameter should NOT be:    [data][0][attributes][numberOfItems]    "None"
 
 Get_shopping_lists_info_for_user_with_zero_quantity_of_number_of_shopping_lists
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_fourth_user.email}

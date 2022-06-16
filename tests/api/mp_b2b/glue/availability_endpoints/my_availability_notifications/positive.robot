@@ -11,7 +11,7 @@ ENABLER
 Get_my_availability_notifications
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
-    ...  AND    I send a POST request:    /availability-notifications    {"data": {"type": "availability-notifications","attributes": {"sku": "${concrete_product_with_alternative.sku}","email": "${yves_user.email}"}}}
+    ...  AND    I send a POST request:    /availability-notifications    {"data": {"type": "availability-notifications","attributes": {"sku": "${concrete_product_with_discontinued.sku}","email": "${yves_user.email}"}}}
     ...  AND    Save value to a variable:    [data][id]    availability_notification_id
     ...  AND    Response status code should be:    201
     When I send a GET request:    /my-availability-notifications
@@ -21,7 +21,7 @@ Get_my_availability_notifications
     And Response body parameter should be:    [data][0][id]    ${availability_notification_id}
     And Response body parameter should be:    [data][0][attributes][localeName]    ${locale.EN.name}
     And Response body parameter should be:    [data][0][attributes][email]    ${yves_user.email}
-    And Response body parameter should be:    [data][0][attributes][sku]    ${concrete_product_with_alternative.sku}
+    And Response body parameter should be:    [data][0][attributes][sku]    ${concrete_product_with_discontinued.sku}
     And Each array element of array in response should contain property:    [data]    type
     And Each array element of array in response should contain property:    [data]    id
     And Each array element of array in response should contain nested property:    [data]    [attributes]    localeName
