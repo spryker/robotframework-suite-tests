@@ -10,7 +10,7 @@ ENABLER
 
 #POST requests
 Add_voucher_code_to_cart_with_invalid_access_token
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}
     ...    AND    Find or create customer cart
     ...    AND    I set Headers:    Authorization=fake_token
@@ -21,7 +21,7 @@ Add_voucher_code_to_cart_with_invalid_access_token
     And Response should return error message:    Invalid access token.
 
 Add_voucher_code_to_cart_without_access_token
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}
     ...    AND    Find or create customer cart
     ...    AND    I set Headers:    Authorization=
@@ -32,7 +32,7 @@ Add_voucher_code_to_cart_without_access_token
     And Response should return error message:    Missing access token.
 
 Add_voucher_code_to_guest_cart_with_invalid_anonymous_customer_id
-    [Setup]    Run Keywords    Create a guest cart:    ${x_anonymous_prefix}${random}    ${discount_concrete_product_sku_with_voucher_code}    1
+    [Setup]    Run Keywords    Create a guest cart:    ${x_anonymous_prefix}${random}    ${discount.concrete.product_with_voucher_code.sku}    1
     ...   AND    I set Headers:    X-Anonymous-Customer-Unique-Id=fake_anonymous_customer_id
     When I send a POST request:    /guest-carts/${guest_cart_id}/vouchers    {"data": {"type": "vouchers","attributes": {"code": "discount_voucher_code"}}}
     Then Response status code should be:    404
@@ -43,7 +43,7 @@ Add_voucher_code_to_guest_cart_with_invalid_anonymous_customer_id
     ...    AND    Cleanup all items in the guest cart:    ${guest_cart_id}
 
 Add_voucher_code_to_guest_cart_without_anonymous_customer_id
-    [Setup]    Run Keywords    Create a guest cart:    ${x_anonymous_prefix}${random}    ${discount_concrete_product_sku_with_voucher_code}    1
+    [Setup]    Run Keywords    Create a guest cart:    ${x_anonymous_prefix}${random}    ${discount.concrete.product_with_voucher_code.sku}    1
     ...   AND    I set Headers:    X-Anonymous-Customer-Unique-Id=
     When I send a POST request:    /guest-carts/${guest_cart_id}/vouchers    {"data": {"type": "vouchers","attributes": {"code": "discount_voucher_code"}}}
     Then Response status code should be:    400
@@ -54,7 +54,7 @@ Add_voucher_code_to_guest_cart_without_anonymous_customer_id
     ...    AND    Cleanup all items in the guest cart:    ${guest_cart_id}
 
 Add_invalid_voucher_code_to_cart
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}
     ...    AND    Find or create customer cart
     When I send a POST request:    /carts/${cart_id}/vouchers    {"data": {"type": "vouchers","attributes": {"code": "fake_discount_voucher_code"}}}
@@ -64,7 +64,7 @@ Add_invalid_voucher_code_to_cart
     And Response should return error message:    "Cart code cant be added."
 
 Add_empty_voucher_code_to_cart
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}
     ...    AND    Find or create customer cart
     When I send a POST request:    /carts/${cart_id}/vouchers    {"data": {"type": "vouchers","attributes": {"code": ""}}}
@@ -74,7 +74,7 @@ Add_empty_voucher_code_to_cart
     And Response should return error message:    code => This value should not be blank.
 
 Add_voucher_to_cart_without_voucher_code
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}
     ...    AND    Find or create customer cart
     When I send a POST request:    /carts/${cart_id}/vouchers    {"data": {"type": "vouchers","attributes": {}}}
@@ -84,7 +84,7 @@ Add_voucher_to_cart_without_voucher_code
     And Response should return error message:    code => This field is missing.
 
 Add_invalid_voucher_code_to_guest_cart
-    [Setup]    Create a guest cart:    ${x_anonymous_prefix}${random}    ${discount_concrete_product_sku_with_voucher_code}    1
+    [Setup]    Create a guest cart:    ${x_anonymous_prefix}${random}    ${discount.concrete.product_with_voucher_code.sku}    1
     When I send a POST request:    /guest-carts/${guest_cart_id}/vouchers    {"data": {"type": "vouchers","attributes": {"code": "fake_discount_voucher_code"}}}
     Then Response status code should be:    422
     And Response reason should be:    Unprocessable Content
@@ -93,7 +93,7 @@ Add_invalid_voucher_code_to_guest_cart
     [Teardown]    Cleanup all items in the guest cart:    ${guest_cart_id}
 
 Add_empty_voucher_code_to_guest_cart
-    [Setup]    Create a guest cart:    ${x_anonymous_prefix}${random}    ${discount_concrete_product_sku_with_voucher_code}    1
+    [Setup]    Create a guest cart:    ${x_anonymous_prefix}${random}    ${discount.concrete.product_with_voucher_code.sku}    1
     When I send a POST request:    /guest-carts/${guest_cart_id}/vouchers    {"data": {"type": "vouchers","attributes": {"code": ""}}}
     Then Response status code should be:    422
     And Response reason should be:    Unprocessable Content
@@ -102,7 +102,7 @@ Add_empty_voucher_code_to_guest_cart
     [Teardown]    Cleanup all items in the guest cart:    ${guest_cart_id}
 
 Add_voucher_to_guest_cart_without_voucher_code    
-    [Setup]    Create a guest cart:    ${x_anonymous_prefix}${random}    ${discount_concrete_product_sku_with_voucher_code}    1
+    [Setup]    Create a guest cart:    ${x_anonymous_prefix}${random}    ${discount.concrete.product_with_voucher_code.sku}    1
     When I send a POST request:    /guest-carts/${guest_cart_id}/vouchers    {"data": {"type": "vouchers","attributes": {}}}
     Then Response status code should be:    422
     And Response reason should be:    Unprocessable Content
@@ -111,7 +111,7 @@ Add_voucher_to_guest_cart_without_voucher_code
     [Teardown]    Cleanup all items in the guest cart:    ${guest_cart_id}
 
 Add_voucher_code_to_cart_with_invalid_cart_id
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}
     When I send a POST request:    /carts/fake_cart_id/vouchers    {"data": {"type": "vouchers","attributes": {"code": "fake_discount_voucher_code"}}}
     Then Response status code should be:    404
@@ -128,7 +128,7 @@ Add_voucher_code_to_guest_cart_with_invalid_cart_id
     And Response should return error message:    Cart with given uuid not found.
 
 Add_voucher_code_from_another_discount_to_cart
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}
     ...    AND    Find or create customer cart
     When I send a POST request:    /carts/${cart_id}/vouchers    {"data": {"type": "vouchers","attributes": {"code": "discount_voucher_code"}}}
@@ -138,7 +138,7 @@ Add_voucher_code_from_another_discount_to_cart
     And Response should return error message:    "Cart code cant be added."
 
 Add_voucher_code_from_another_discount_to_guest_user_cart
-    [Setup]    Create a guest cart:    ${x_anonymous_prefix}${random}    ${discount_concrete_product_sku_with_voucher_code}    1
+    [Setup]    Create a guest cart:    ${x_anonymous_prefix}${random}    ${discount.concrete.product_with_voucher_code.sku}    1
     When I send a POST request:    /guest-carts/${guest_cart_id}/vouchers    {"data": {"type": "vouchers","attributes": {"code": "discount_voucher_code"}}}
     Then Response status code should be:    422
     And Response reason should be:    Unprocessable Content
@@ -147,11 +147,11 @@ Add_voucher_code_from_another_discount_to_guest_user_cart
     [Teardown]    Cleanup all items in the guest cart:    ${guest_cart_id}
 
 Add_voucher_code_to_cart_without_voucher_discount
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}
     ...    AND    Find or create customer cart
     ...    AND    Cleanup all items in the cart:    ${cart_id}
-    ...    AND    I send a POST request:    /carts/${cart_id}/items    {"data": {"type": "items","attributes": {"sku": "${concrete_available_with_stock_and_never_out_of_stock}","quantity": 1}}}
+    ...    AND    I send a POST request:    /carts/${cart_id}/items    {"data": {"type": "items","attributes": {"sku": "${product_availability.concrete_available_with_stock_and_never_out_of_stock_sku}","quantity": 1}}}
     When I send a POST request:    /carts/${cart_id}/vouchers    {"data": {"type": "vouchers","attributes": {"code": "discount_voucher_code"}}}
     Then Response status code should be:    422
     And Response reason should be:    Unprocessable Content
@@ -159,7 +159,7 @@ Add_voucher_code_to_cart_without_voucher_discount
     And Response should return error message:    "Cart code cant be added."
 
 Add_voucher_code_to_guest_user_cart_without_voucher_discount
-    [Setup]    Create a guest cart:    ${x_anonymous_prefix}${random}    ${concrete_available_with_stock_and_never_out_of_stock}    1
+    [Setup]    Create a guest cart:    ${x_anonymous_prefix}${random}    ${product_availability.concrete_available_with_stock_and_never_out_of_stock_sku}    1
     When I send a POST request:    /guest-carts/${guest_cart_id}/vouchers    {"data": {"type": "vouchers","attributes": {"code": "discount_voucher_code"}}}
     Then Response status code should be:    422
     And Response reason should be:    Unprocessable Content
@@ -168,10 +168,10 @@ Add_voucher_code_to_guest_user_cart_without_voucher_discount
     [Teardown]    Cleanup all items in the guest cart:    ${guest_cart_id}
 
 Add_voucher_code_from_another_customer_to_cart
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}
     ...    AND    Find or create customer cart
-    ...    AND    I get access token for the customer:    ${yves_second_user_email}
+    ...    AND    I get access token for the customer:    ${yves_second_user.email}
     ...    AND    I set Headers:    Authorization=${token}
     When I send a POST request:    /carts/${cart_id}/vouchers    {"data": {"type": "vouchers","attributes": {"code": "discount_voucher_code"}}}
     Then Response status code should be:    404
@@ -180,7 +180,7 @@ Add_voucher_code_from_another_customer_to_cart
     And Response should return error message:    Cart with given uuid not found.
 
 Add_voucher_code_from_another_customer_to_guest_user_cart
-    [Setup]    Run Keywords    Create a guest cart:    ${x_anonymous_prefix}${random}    ${discount_concrete_product_sku_with_voucher_code}    1
+    [Setup]    Run Keywords    Create a guest cart:    ${x_anonymous_prefix}${random}    ${discount.concrete.product_with_voucher_code.sku}    1
     ...   AND    I set Headers:    X-Anonymous-Customer-Unique-Id=fake_anonymous_customer_id
     When I send a POST request:    /guest-carts/${guest_cart_id}/vouchers    {"data": {"type": "vouchers","attributes": {"code": "discount_voucher_code"}}}
     Then Response status code should be:    404
@@ -191,7 +191,7 @@ Add_voucher_code_from_another_customer_to_guest_user_cart
     ...    AND    Cleanup all items in the guest cart:    ${guest_cart_id}
 
 Add_voucher_code_to_empty_cart
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}
     ...    AND    Find or create customer cart
     ...    AND    Cleanup all items in the cart:    ${cart_id}
@@ -202,7 +202,7 @@ Add_voucher_code_to_empty_cart
     And Response should return error message:    "Cart code cant be added."
     
 Add_voucher_code_to_empty_guest_user_cart
-    [Setup]    Run Keywords    Create a guest cart:    ${x_anonymous_prefix}${random}    ${discount_concrete_product_sku_with_voucher_code}    1
+    [Setup]    Run Keywords    Create a guest cart:    ${x_anonymous_prefix}${random}    ${discount.concrete.product_with_voucher_code.sku}    1
     ...    AND    Cleanup all items in the guest cart:    ${guest_cart_id}
     When I send a POST request:    /guest-carts/${guest_cart_id}/vouchers    {"data": {"type": "vouchers","attributes": {"code": "discount_voucher_code"}}}
     Then Response status code should be:    422
@@ -214,7 +214,7 @@ Add_voucher_code_to_empty_guest_user_cart
 
 #DELETE requests
 Delete_voucher_code_from_cart_with_invalid_access_token
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}
     ...    AND    Find or create customer cart
     ...    AND    I set Headers:    Authorization=fake_token
@@ -225,7 +225,7 @@ Delete_voucher_code_from_cart_with_invalid_access_token
     And Response should return error message:    Invalid access token.
 
 Delete_voucher_code_from_cart_without_access_token
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}
     ...    AND    Find or create customer cart
     ...    AND    I set Headers:    Authorization=
@@ -236,7 +236,7 @@ Delete_voucher_code_from_cart_without_access_token
     And Response should return error message:    Missing access token.
 
 Delete_voucher_code_from_guest_user_cart_with_invalid_anonymous_customer_id
-    [Setup]    Run Keywords    Create a guest cart:    ${x_anonymous_prefix}${random}    ${discount_concrete_product_sku_with_voucher_code}    1
+    [Setup]    Run Keywords    Create a guest cart:    ${x_anonymous_prefix}${random}    ${discount.concrete.product_with_voucher_code.sku}    1
     ...   AND    I set Headers:    X-Anonymous-Customer-Unique-Id=fake_anonymous_customer_id
     When I send a DELETE request:    /guest-carts/${guest_cart_id}/vouchers/fake_discount_voucher_code
     Then Response status code should be:    404
@@ -247,7 +247,7 @@ Delete_voucher_code_from_guest_user_cart_with_invalid_anonymous_customer_id
     ...    AND    Cleanup all items in the guest cart:    ${guest_cart_id}
 
 Delete_voucher_code_from_guest_cart_without_anonymous_customer_id
-    [Setup]    Run Keywords    Create a guest cart:    ${x_anonymous_prefix}${random}    ${discount_concrete_product_sku_with_voucher_code}    1
+    [Setup]    Run Keywords    Create a guest cart:    ${x_anonymous_prefix}${random}    ${discount.concrete.product_with_voucher_code.sku}    1
     ...   AND    I set Headers:    X-Anonymous-Customer-Unique-Id=
     When I send a DELETE request:    /guest-carts/${guest_cart_id}/vouchers/fake_discount_voucher_code
     Then Response status code should be:    400
@@ -258,7 +258,7 @@ Delete_voucher_code_from_guest_cart_without_anonymous_customer_id
     ...    AND    Cleanup all items in the guest cart:    ${guest_cart_id}
 
 Delete_invalid_voucher_code_from_cart
-     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}
     ...    AND    Find or create customer cart
     When I send a DELETE request:    /carts/${cart_id}/vouchers/fake_discount_voucher_code
@@ -268,7 +268,7 @@ Delete_invalid_voucher_code_from_cart
     And Response should return error message:    Cart code not found in cart.
 
 Delete_empty_voucher_code_from_cart
-     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}
     ...    AND    Find or create customer cart
     When I send a DELETE request:    /carts/${cart_id}/vouchers/
@@ -277,7 +277,7 @@ Delete_empty_voucher_code_from_cart
     And Response should return error message:    Resource id is not specified.
 
 Delete_voucher_from_cart_without_voucher_code
-     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}
     ...    AND    Find or create customer cart
     When I send a DELETE request:    /carts/${cart_id}/vouchers
@@ -286,7 +286,7 @@ Delete_voucher_from_cart_without_voucher_code
     And Response should return error message:    Resource id is not specified.
 
 Delete_invalid_voucher_code_from_guest_user_cart
-    [Setup]    Create a guest cart:    ${x_anonymous_prefix}${random}    ${discount_concrete_product_sku_with_voucher_code}    1
+    [Setup]    Create a guest cart:    ${x_anonymous_prefix}${random}    ${discount.concrete.product_with_voucher_code.sku}    1
     When I send a DELETE request:    /guest-carts/${guest_cart_id}/vouchers/fake_discount_voucher_code
     Then Response status code should be:    422
     And Response reason should be:    Unprocessable Content
@@ -295,7 +295,7 @@ Delete_invalid_voucher_code_from_guest_user_cart
     [Teardown]    Cleanup all items in the guest cart:    ${guest_cart_id}
 
 Delete_empty_voucher_code_from_guest_user_cart
-    [Setup]    Create a guest cart:    ${x_anonymous_prefix}${random}    ${discount_concrete_product_sku_with_voucher_code}    1
+    [Setup]    Create a guest cart:    ${x_anonymous_prefix}${random}    ${discount.concrete.product_with_voucher_code.sku}    1
     When I send a DELETE request:    /guest-carts/${guest_cart_id}/vouchers/
     Then Response status code should be:    400
     And Response reason should be:    Bad Request
@@ -303,7 +303,7 @@ Delete_empty_voucher_code_from_guest_user_cart
     [Teardown]    Cleanup all items in the guest cart:    ${guest_cart_id}
 
 Delete_voucher_from_guest_user_cart_without_voucher_code
-    [Setup]    Create a guest cart:    ${x_anonymous_prefix}${random}    ${discount_concrete_product_sku_with_voucher_code}    1
+    [Setup]    Create a guest cart:    ${x_anonymous_prefix}${random}    ${discount.concrete.product_with_voucher_code.sku}    1
     When I send a DELETE request:    /guest-carts/${guest_cart_id}/vouchers
     Then Response status code should be:    400
     And Response reason should be:    Bad Request
@@ -311,7 +311,7 @@ Delete_voucher_from_guest_user_cart_without_voucher_code
     [Teardown]    Cleanup all items in the guest cart:    ${guest_cart_id}
 
 Delete_voucher_code_from_cart_with_invalid_cart_id
-     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}
     When I send a DELETE request:    /carts/fake_cart_id/vouchers/fake_discount_voucher_code
     Then Response status code should be:    404
@@ -320,7 +320,7 @@ Delete_voucher_code_from_cart_with_invalid_cart_id
     And Response should return error message:    Cart with given uuid not found.
 
 Delete_voucher_code_from_guest_user_cart_with_invalid_cart_id
-    [Setup]    Create a guest cart:    ${x_anonymous_prefix}${random}    ${discount_concrete_product_sku_with_voucher_code}    1
+    [Setup]    Create a guest cart:    ${x_anonymous_prefix}${random}    ${discount.concrete.product_with_voucher_code.sku}    1
     When I send a DELETE request:    /guest-carts/fake_guest_cart_id/vouchers/fake_discount_voucher_code
     Then Response status code should be:    404
     And Response reason should be:    Not Found
@@ -329,12 +329,12 @@ Delete_voucher_code_from_guest_user_cart_with_invalid_cart_id
     [Teardown]    Cleanup all items in the guest cart:    ${guest_cart_id}
 
 Delete_voucher_code_from_another_customer_cart
-     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}
     ...    AND    Find or create customer cart
     ...    AND    Cleanup all items in the cart:    ${cart_id}
-    ...    AND    I send a POST request:    /carts/${cart_id}/items    {"data": {"type": "items","attributes": {"sku": "${discount_concrete_product_sku_with_voucher_code}","quantity": 1}}}
-    ...    AND    I get access token for the customer:    ${yves_second_user_email}
+    ...    AND    I send a POST request:    /carts/${cart_id}/items    {"data": {"type": "items","attributes": {"sku": "${discount.concrete.product_with_voucher_code.sku}","quantity": 1}}}
+    ...    AND    I get access token for the customer:    ${yves_second_user.email}
     ...    AND    I set Headers:    Authorization=${token}
     When I send a DELETE request:    /carts/${cart_id}/vouchers/discount_voucher_code
     Then Response status code should be:    404
@@ -343,7 +343,7 @@ Delete_voucher_code_from_another_customer_cart
     And Response should return error message:    Cart with given uuid not found.
 
 Delete_voucher_code_from_another_customer_guest_cart
-    [Setup]    Run Keywords    Create a guest cart:    ${x_anonymous_prefix}${random}    ${discount_concrete_product_sku_with_voucher_code}    1
+    [Setup]    Run Keywords    Create a guest cart:    ${x_anonymous_prefix}${random}    ${discount.concrete.product_with_voucher_code.sku}    1
     ...   AND    I set Headers:    X-Anonymous-Customer-Unique-Id=fake_anonymous_customer_id
     When I send a DELETE request:    /guest-carts/${guest_cart_id}/vouchers/discount_voucher_code
     Then Response status code should be:    404

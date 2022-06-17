@@ -9,267 +9,462 @@
 
     "users": {
 
-        "yves_user_email": "sonia@spryker.com",
-        "yves_user_first_name": "Sonia",
-        "yves_user_last_name": "Wagner",
-        "yves_user_password": "change123",
-        "yves_user_password_new":"Change@123",
-        "yves_user_reference": "DE--21",
-        "yves_user_salutation": "Ms",
+        "yves_user":{
+            "email": "sonia@spryker.com",
+            "first_name": "Sonia",
+            "last_name": "Wagner",
+            "password": "change123",
+            "password_new":"Change@123",
+            "reference": "DE--21",
+            "salutation": "Ms"
+        },
 
-        "yves_second_user_email": "bill.martin@spryker.com",
-        "yves_second_user_first_name": "Bill",
-        "yves_second_user_last_name": "Martin",
-        "yves_second_user_password": "change123",
-        "yves_second_user_reference": "DE--4",
-        "yves_second_user_salutation": "Mr",
+        "yves_second_user":{
+            "email": "bill.martin@spryker.com",
+            "first_name": "Bill",
+            "last_name": "Martin",
+            "password": "change123",
+            "reference": "DE--4",
+            "salutation": "Mr"
+        },
 
-        "yves_third_user_first_name": "Jackie",
-        "yves_third_user_last_name": "Chan",
-        "yves_third_user_password": "change123",
-        "yves_third_user_gender_male": "Male",
-        "yves_third_user_salutation": "Mr",
+        "yves_third_user":{
+            "first_name": "Jackie",
+            "last_name": "Chan",
+            "password": "change123",
+            "gender_male": "Male",
+            "salutation": "Mr"
+        },
 
-        "zed_admin_email": "admin@spryker.com",
-        "zed_admin_password": "change123",
-
-        "agent_email": "admin@spryker.com",
-        "agent_password": "change123",
-
-        "non_agent_email": "admin_de@spryker.com",
-        "non_agent_password": "change123",
-
-        "customer_reference_1_de": "DE--1",
-        "customer_reference_10_de": "DE--10",
-        "customer_reference_15_de": "DE--15",
-        "customer_reference_34_de": "DE--34",
+        "gender": {
+            "female": "Female",
+            "male": "Male"
+        },
         
-        "grant_type_password": "password",
-        "grant_type_refresh_token": "refresh_token"
+        "email": {
+            "name": "sonia",
+            "domain": "@spryker.com"
+        },
+
+        "zed_admin":{
+            "email": "admin@spryker.com",
+            "password": "change123"
+        },
+
+        "agent":{
+            "email": "admin@spryker.com",
+            "password": "change123"
+        },
+
+        "non_agent":{
+            "email": "admin_de@spryker.com",
+            "password": "change123"
+        },
+
+        "customer_reference":{
+            "de_1":  "DE--1",
+            "de_10": "DE--10",
+            "de_15": "DE--15",
+            "de_34": "DE--34"
+        },
+        
+        "grant_type":{
+            "password": "password",
+            "refresh_token": "refresh_token"
+        }
     },
 
     "address": {
 
-        "default_address1": "Third, 33, 11",
-        "default_address2": "33-B",
-        "default_address3": "third. address. line",
-        "default_zipCode": "12312",
-        "default_city": "Berlin",
-        "default_country": "Germany",
-        "default_iso2Code": "DE",
-        "default_company": "Spryker",
-        "default_phone": "22111-3-4-5",
+        "default":{
+            "address1": "Third, 33, 11",
+            "address2": "33-B",
+            "address3": "third. address. line",
+            "zipCode": "12312",
+            "city": "Berlin",
+            "country": "Germany",
+            "iso2Code": "DE",
+            "company": "Spryker",
+            "phone": "22111-3-4-5",
+            "shipping_status": "False",
+            "billing_status": "False"
+        },
 
-        "default_shipping_status": "False",
-        "default_billing_status": "False",
-
-        "changed_address1": "New Street 123",
-        "changed_address2": "75d",
-        "changed_address3": "third. address. line - changed",
-        "changed_phone": "555-555-55"
-        
+        "changed":{
+            "address1": "New Street 123",
+            "address2": "75d",
+            "address3": "third. address. line - changed",
+            "phone": "555-555-55"
+        }
     },
 
-    "shop": {
+        "shop": {
 
-        "currency_name_eur": "Euro",
-        "currency_code_eur": "EUR",
-        "currency_symbol_eur": "€",
-        "store_de": "DE",
-        "gross_mode": "GROSS_MODE",
-        "net_mode": "NET_MODE",
-        "currency_name_chf": "Swiss Franc",
-        "currency_code_chf": "CHF",
-        "currency_symbol_chf": "CHF",
+        "currency":{
 
-        "currency_name_dollar": "US Dollar",
-        "currency_code_dollar": "USD",
-        "currency_symbol_dollar": "$",
-        "store_us": "US",
+            "eur":{
+                "name": "Euro",
+                "code": "EUR",
+                "symbol": "€"
+            },
+
+            "chf":{
+                "name": "Swiss Franc",
+                "code": "CHF",
+                "symbol": "CHF"
+            },
+        
+            "dollar":{
+                "name": "US Dollar",
+                "code": "USD",
+                "symbol": "$"
+            },
+        
+            "mode":{
+                "gross": "GROSS_MODE",
+                "net": "NET_MODE"
+            }
+        },
+
+        "store":{
+                "us": "US",
+                "de": "DE"
+        },
   
-        "locale_name_DE": "de_DE",
-        "locale_code_DE": "de",
-        "locale_name_EN": "en_US",
-        "locale_code_EN": "en"
+        "locale":{
+
+            "DE":{
+                "name": "de_DE",
+                "code": "de"
+            },
+
+            "EN":{
+                "name": "en_US",
+                "code": "en"
+            }
+        }
     },
 
     "search": {
 
         "total_number_of_products_in_search": "215",
-        "default_ipp": "12",
-        "ipp_middle": "24",
-        "ipp_biggest": "36",
-        "default_ipp_pages_qty": "18",
-        "default_categories_qty": "15",
-        "default_colors_qty": "10",
-        "default_weight_qty": "10",
-        "default_labels_qty": "4",
-        "default_materials_qty": "10",
-        "default_storage_capacity_qty": "5",
-        "default_touchscreen_qty": "2",
-        "default_brands_qty": "10",
-        "default_min_rating": "4",
-        "default_max_rating": "5",
-        "default_min_price": "0",
-        "default_max_price": "345699",
-        "sorting_options_qty": "5",
+        
+        "ipp":{
+            "default": "12",
+            "middle": "24",
+            "biggest": "36"
+        },
 
-        "new_label_id": "4",
-        "new_label": "New",
-        "sale_label_id": "5",
-        "sale_label": "SALE %",
-        "manual_label": "Top",
-        "discontinued_label_id": "2",
-        "discontinued_label": "Discontinued",
-        "alternatives_label_id": "1",
-        "alternatives_label": "Alternatives available",
+        "default_qty":{
+            "ipp_pages": "18",
+            "categories": "15",
+            "colors": "10",
+            "weight": "10",
+            "labels": "4",
+            "materials": "10",
+            "storage_capacity": "5",
+            "touchscreen": "2",
+            "brands": "10"
+        },
 
-        "category_id_lvl1": "11",
-        "category_items_qty_lvl1": "39",
-        "category_id_lvl2": "12",
-        "category_items_qty_lvl2": "38",
-        "category_id_lvl3": "13",
-        "category_items_qty_lvl3": "28",
+        "default_rating":{
+            "min": "4",
+            "max": "5"
+        },
+
+        "default_price":{
+            "min": "0",
+            "max": "345699"
+        },
+
+        "sorting_options":{
+            "qty": "5"
+        },
+
+
+        "label":{
+        "new_id": "4",
+        "new": "New",
+        "sale_id": "5",
+        "sale": "SALE %",
+        "manual": "Top",
+        "discontinued_id": "2",
+        "discontinued": "Discontinued",
+        "alternatives_id": "1",
+        "alternatives": "Alternatives available"
+        },
+
+        "category_lvl1": 
+            {
+            "id": "11",
+            "qty": "39"
+        },
+
+        "category_lvl2": 
+            {
+            "id": "12",
+            "qty": "38"
+        },
+
+        "category_lvl3": 
+            {
+            "id": "13",
+            "qty": "28"
+        },
+
+        "category_node":{
+            "root_id": "1",
+            "parent_id": "6",
+            "children_id": "5"
+        },
+
         "category_tree_branches_qty": "6",
-
-        "category_node_is_root_id": "1",
-        "category_node_has_only_parent_id": "6",
-        "category_node_has_children_id": "5",
-
         "abstract_sku_highest_rating": "035"
 
     },
 
     "products": {
 
-        "bundle_product_abstract_sku": "211",
-        "bundle_product_concrete_sku": "211_123",
-        "bundle_product_product_name": "HP Bundle",
-        "bundled_product_1_abstract_sku": "150",
-        "bundled_product_2_abstract_sku": "127",
-        "bundled_product_3_abstract_sku": "121",
-        "bundled_product_1_concrete_sku": "150_29554292",
-        "bundled_product_1_concrete_name": "HP Chromebook 11",
-        "bundled_product_2_concrete_sku": "127_22828284",
-        "bundled_product_2_concrete_name": "HP Z 620",
-        "bundled_product_3_concrete_sku": "121_29406823",
-        "bundled_product_3_concrete_name": "HP 200 280 G1",
-        "qty_of_products_in_bundle": "3",
-        "qty_of_each_product_inside_bundle": "1",
+        "bundle_product":{
+            "abstract_sku": "211",
+            "concrete_sku": "211_123",
+            "product_name": "HP Bundle"
+        },
 
-        "configurable_bundle_slot_1_product_1": "003_26138343",
-        "configurable_bundle_slot_1_product_no_stock": "011_30775359",
-        "configurable_bundle_slot_5_product_1": "005_30663301",
-        "configurable_bundle_slot_5_product_2": "008_30692992",
-        "configurable_bundle_slot_6_product_1": "201_11217755",
+        "bundled":{
+            "product_1":{
+                "abstract_sku": "150",
+                "concrete_sku": "150_29554292",
+                "concrete_name": "HP Chromebook 11"
+            },
 
-        "multi_variant_product_abstract_sku": "M58035",
+            "product_2":{
+                "abstract_sku": "127",
+                "concrete_sku": "127_22828284",
+                "concrete_name": "HP Z 620"
+            },
 
-        "measurement_unit_product_abstract_sku": "M23723",
-        "packaging_unit_product_abstract_sku": "M21766",
+            "product_3":{
+                "abstract_sku": "121",
+                "concrete_sku": "121_29406823",
+                "concrete_name": "HP 200 280 G1"
+            }
+        },
 
-        "product_with_relations_related_products_sku": "204",
-        "product_related_product_with_related_relation_sku": "058",
-        "product_related_product_with_related_relation_name": "Acer Liquid Jade",
-        "product_with_relations_alternative_products_sku": "M21100",
-        "product_with_relations_upselling_sku": "063",
-        "concrete_of_product_with_relations_upselling_sku": "063_29231675",      
-        "concrete_of_alternative_product_with_relations_upselling_sku": "007_30691822",
-        "product_related_product_with_upselling_relation_sku": "051",
-        "product_related_product_with_upselling_relation_name": "Samsung Galaxy S6 edge",
-        "concrete_of_product_without_relations": "019_21081473",
+        "products_in_bundle":{
+            "total_qty_of_products": "3",
+            "qty_of_each_product": "1"
+        },
+
+        "configurable_bundle":{
+
+            "slot_1":{
+                "product_1": "003_26138343",
+                "product_no_stock": "011_30775359"
+            },
+
+            "slot_5":{
+                "product_1": "005_30663301",
+                "product_2": "008_30692992"
+            },
         
-        "concrete_product_with_abstract_product_alternative_sku": "138_30046855",
-        "concrete_product_with_abstract_product_alternative_sku_name": "Acer TravelMate P258-M",
-        "concrete_product_with_abstract_product_alternative_sku_name_in_lower_case": "acer travelmate p258-m",
-        "concrete_product_with_concrete_product_alternative_sku": "155_30149933",
-        "concrete_product_with_concrete_product_alternative_sku_name": "Lenovo IdeaPad Yoga 500",
-        "concrete_product_with_concrete_product_alternative_sku_name_in_lower_case": "lenovo ideapad yoga 500",
-        "concrete_product_with_concrete_product_alternative_promotional_items_sku": "112",
-        "abstract_product_with_alternative_sku": "155",
-        "abstract_product_with_alternative_name": "Lenovo IdeaPad Yoga 500",
-        "alternative_abstract_product": "134",
-        "alternative_abstract_product_price_chf": "11345",
+            "slot_6":{
+                "product_1": "201_11217755"
+            }
+        },
 
-        "abstract_available_product_with_stock": "183",
-        "abstract_available_product_with_stock_name": "Sony Xperia SGP512E1",
-        "abstract_available_product_with_stock_description": "Enjoy greater flexibility  ...than ever before with the Galaxy Tab S2. Remarkably slim and ultra-lightweight, use this device to take your e-books, photos, videos and work-related files with you wherever you need to go. The Galaxy Tab S2’s 4:3 ratio display is optimised for magazine reading and web use. Switch to Reading Mode to adjust screen brightness and change wallpaper - create an ideal eBook reading environment designed to reduce the strain on your eyes. Get greater security with convenient and accurate fingerprint functionality. Activate fingerprint lock by pressing the home button. Use fingerprint verification to restrict / allow access to your web browser, screen lock mode and your Samsung account.        ",
-        "abstract_available_product_with_stock_superattribute": "color",
-        "concrete_available_product_sku": "183_21811723",
-        "concrete_available_product_meta_keywords": "Sony,Communication Electronics",
-        "concrete_available_product_meta_description": "Enjoy greater flexibility  ...than ever before with the Galaxy Tab S2. Remarkably slim and ultra-lightweight, use this device to take your e-books, photos,",
-        "concrete_available_product_with_label": "204_29851280",
-        "abstract_available_with_stock_and_never_out_of_stock": "209",
-        "concrete_available_with_stock_and_never_out_of_stock": "005_30663301",
-        "concrete_available_with_stock_and_never_out_of_stock_name": "Canon IXUS 175",
-        "abstract_available_product_with_no_stock_and_never_out_of_stock": "154",
-        "abstract_unavailable_product": "011",
+        "special_product_abstract_sku":{
+            "with_multivariant": "M58035",
+            "with_measurement_unit": "M23723",
+            "with_packaging_unit": "M21766"
+        },
 
-        "abstract_available_product_with_stock_one_concrete_with_superattribute": "156",
-        "abstract_available_product_with_stock_one_concrete_with_superattribute_name": "Acer Iconia B1-850",
-        "abstract_available_product_with_stock_one_concrete_with_superattribute_name_description": "Portable charm With a bevy of trendy, eye catching colours to suit any lifestyle and show your personality, this slim and lightweight tablet designed to be travel friendly. Plus its beautifully textured anti-slip finish helps you keep a firm grip wherever you go. Looks sharp and stays sharp. The HD LCD with IPS1 technology brings out every detail of the display from any angle. Put that together with Zero Air Gap technology and you get brighter and crisper images with higher contrast and considerably better visibility in sunlight. A highly effective anti-fingerprint coating reduces messy fingerprints and smudges, and makes the screen much easier to clean. Add to that Acer’s innovative Touch WakeApp which adds new one-touch gestures to both wake the tablet up and pop it right into whatever app you want instant access to.",
-        "abstract_available_product_with_stock_one_concrete_with_superattribute_name_superattribute": "form_factor",
-        "concrete_available_product_with_superattribute_sku": "156_32018944",
-        "concrete_available_product_with_superattribute_meta_keywords": "Acer,Communication Electronics",
-        "concrete_available_product_with_superattribute_meta_description": "Portable charm With a bevy of trendy, eye catching colours to suit any lifestyle and show your personality, this slim and lightweight tablet designed to be",
+        "product_related_product_with_related_relation":{
+            "sku": "058",
+            "name": "Acer Liquid Jade"
+        },
 
-        "abstract_available_product_with_3_concretes": "127",
-        "abstract_available_product_with_3_concretes_name": "HP Z 620",
-        "abstract_available_product_with_3_concretes_superattribute": "total_storage_capacity",
+        "product_with_relations": {
+            "has_related_products": {
+                "sku": "204"
+            },
 
-        "abstract_product_with_volume_prices": "193",
-        "abstract_product_with_volume_prices_name": "TomTom Golf",
-        "abstract_product_with_original_prices": "072",
-        "concrete_product_with_original_prices": "072_21927455",
-        "concrete_product_with_original_prices_name": "Samsung Galaxy Note 3",
-        "concrete_product_with_volume_prices": "193_32124735",
-        "concrete_product_with_volume_prices_net_amount": "15000",
-        "concrete_product_with_volume_prices_gross_amount": "16500",
-        "concrete_product_with_review": "086_30521602",
-        "concrete_product_with_review_name": "Samsung Gear S2",
+            "has_alternative_products":{
+                "sku": "M21100"
+            },
 
-        "abstract_product_with_label": "145",
-        "abstract_product_with_label_name": "DELL Chromebook 13",
+            "has_upselling_products": {
+                "sku": "063",
+                "concrete_sku": "063_29231675" 
+            }
+        },
+      
+        "concrete_of_alternative_product_with_relations_upselling":{
+            "sku": "007_30691822"
+        },
 
-        "abstract_product_with_concrete_offers": "",
-        "abstract_product_with_concrete_offers_name": "",
+        "product_related_product_with_upselling_relation":{
+            "sku": "051",
+            "name": "Samsung Galaxy S6 edge"
+        },
 
-        "abstract_product_with_reviews": "035",
-        "abstract_product_with_reviews_name": "Canon PowerShot N",
+        "concrete_of_product_without_relations":{
+            "sku": "019_21081473"
+        },
+        
+        
+        "concrete_product_with_abstract_product_alternative":{
+            "sku": "138_30046855",
+            "name": "Acer TravelMate P258-M",
+            "name_in_lower_case": "acer travelmate p258-m"
+        },
 
-        "abstract_product_with_options": "012",
-        "abstract_product_with_options_name": "Canon IXUS 165",
-        "concrete_product_with_options": "012_25904598",
-        "concrete_product_with_options_name": "Canon IXUS 165",
+        "concrete_product_with_concrete_product_alternative":{
+            "sku": "155_30149933",
+            "name": "Lenovo IdeaPad Yoga 500",
+            "name_in_lower_case": "lenovo ideapad yoga 500",
+            "promotional_items_sku": "112"
+        },
 
-        "concrete_product_with_threshold_limit": "006_30692993",
+        "abstract_product_with_alternative":{
+            "sku": "155",
+            "name": "Lenovo IdeaPad Yoga 500"
+        },
 
-        "concrete_product_one_image_set": "666_133",
-        "concrete_product_one_image_set_name": "Gift Card 5000",
-        "concrete_product_multiple_image_set": "158_29885222",
-        "concrete_product_multiple_image_set_name": "Asus ZenPad Z170C",
-        "concrete_available_product_with_stock": "001_25904006",
-        "concrete_available_product_without_stock": "031_30021637",
+        "alternative_abstract_product":{
+            "sku": "134",
+            "price_chf": "11345"
+        },
 
-        "abstract_product_with_multiple_variants": "130",
-        "concrete_product_sku_multivariant_variant1": "130_29285281",
-        "concrete_product_sku_multivariant_variant2": "130_24326086",
+        "abstract_available_product_with_stock":{
+            "sku": "183",
+            "name": "Sony Xperia SGP512E1",
+            "description": "Enjoy greater flexibility  ...than ever before with the Galaxy Tab S2. Remarkably slim and ultra-lightweight, use this device to take your e-books, photos, videos and work-related files with you wherever you need to go. The Galaxy Tab S2’s 4:3 ratio display is optimised for magazine reading and web use. Switch to Reading Mode to adjust screen brightness and change wallpaper - create an ideal eBook reading environment designed to reduce the strain on your eyes. Get greater security with convenient and accurate fingerprint functionality. Activate fingerprint lock by pressing the home button. Use fingerprint verification to restrict / allow access to your web browser, screen lock mode and your Samsung account.        ",
+            "superattribute": "color"
+        },
 
-        "product_option_1": "OP_2_year_waranty",
-        "product_option_1_name": "Two (2) year limited warranty",
-        "product_option_2": "OP_insurance",
-        "product_option_group_name": "Three (3) year limited warranty",
+        "concrete_available_product":{
+            "sku": "183_21811723",
+            "meta_keywords": "Sony,Communication Electronics",
+            "meta_description": "Enjoy greater flexibility  ...than ever before with the Galaxy Tab S2. Remarkably slim and ultra-lightweight, use this device to take your e-books, photos,",
+            "label": "204_29851280",
+            "with_stock_one_concrete_with_superattribute": "156",
+            "with_stock_one_concrete_with_superattribute_name": "Acer Iconia B1-850",
+            "with_stock_one_concrete_with_superattribute_name_description": "Portable charm With a bevy of trendy, eye catching colours to suit any lifestyle and show your personality, this slim and lightweight tablet designed to be travel friendly. Plus its beautifully textured anti-slip finish helps you keep a firm grip wherever you go. Looks sharp and stays sharp. The HD LCD with IPS1 technology brings out every detail of the display from any angle. Put that together with Zero Air Gap technology and you get brighter and crisper images with higher contrast and considerably better visibility in sunlight. A highly effective anti-fingerprint coating reduces messy fingerprints and smudges, and makes the screen much easier to clean. Add to that Acer’s innovative Touch WakeApp which adds new one-touch gestures to both wake the tablet up and pop it right into whatever app you want instant access to.",
+            "with_stock_one_concrete_with_superattribute_name_superattribute": "form_factor",
+            "with_superattribute_sku": "156_32018944",
+            "with_superattribute_meta_keywords": "Acer,Communication Electronics",
+            "with_superattribute_meta_description": "Portable charm With a bevy of trendy, eye catching colours to suit any lifestyle and show your personality, this slim and lightweight tablet designed to be"
+        },        
 
-        "configurable_bundle_template_id": "8d8510d8-59fe-5289-8a65-19f0c35a0089",
-        "configurable_bundle_template_name": "All in",
-        "configurable_bundle_first_slot_item_sku": "001_25904006",
-        "configurable_bundle_first_slot_uuid": "332b40ac-a789-57ce-bec0-23d8dddd71eb",
-        "configured_bundle_quantity": 2,
+        "abstract_product_with_variants":{
+            "concretes_3": "127",
+            "concretes_name_3": "HP Z 620",
+            "concretes_superattribute_3": "total_storage_capacity"
+        },
+
+        "product_availability":{
+            "concrete_available_with_stock_and_never_out_of_stock_sku": "005_30663301",
+            "concrete_available_with_stock_and_never_out_of_stock_name": "Canon IXUS 175",
+            "abstract_available_product_with_no_stock_and_never_out_of_stock": "154",
+            "abstract_available_with_stock_and_never_out_of_stock": "209",
+            "abstract_unavailable_product": "011",
+            "concrete_available_product_with_stock": "001_25904006",
+            "concrete_available_product_without_stock": "031_30021637"
+        },
 
 
-        "review_title": "This is a review",
-        "review_text": "This is review text",
-        "default_review_rating": "5"
+        "abstract_product":{
+
+            "volume_prices":{ 
+                "sku": "193",
+                "name": "TomTom Golf"
+            },
+
+            "original_prices":{
+                "sku": "072"
+            },
+            "label":{
+                "sku": "145",
+                "name": "DELL Chromebook 13"
+            },
+
+            "with_reviews":{ 
+                "sku": "035",
+                "name": "Canon PowerShot N"
+            },
+
+            "with_options":{
+                "sku": "012",
+                "name": "Canon IXUS 165"
+            },
+
+            "multiple_variants":{
+                "sku":"130"
+            }
+        },
+
+        "concrete_product":{
+
+            "original_prices":{
+                "sku": "072_21927455",
+                "name": "Samsung Galaxy Note 3"
+            },
+
+            "volume_prices":{
+                "sku": "193_32124735"
+            },
+
+            "volume_prices_net":{
+                "amount": "15000"
+            },
+
+            "volume_prices_gross":{
+                "amount": "16500"
+            },
+
+            "with_review":{
+                "sku": "086_30521602",
+                "name": "Samsung Gear S2"
+            },
+
+            "with_options":{ 
+                "sku": "012_25904598",
+                "name": "Canon IXUS 165"
+            },
+
+            "threshold_limit":{
+                "sku": "006_30692993"
+            },
+
+            "one_image_set":{ 
+                "sku": "666_133",
+                "name": "Gift Card 5000"
+            },
+
+            "multiple_image_set":{
+                "sku": "158_29885222",
+                "set_name": "Asus ZenPad Z170C"
+            },
+            
+            "multivariant":{
+            "sku_variant1": "130_29285281",
+            "sku_variant2": "130_24326086"
+            }
+        },
+
+        "product":{
+            "option_1": "OP_2_year_waranty",
+            "option_1_name": "Two (2) year limited warranty",
+            "option_2": "OP_insurance",
+            "option_group_name": "Three (3) year limited warranty"
+        },
+
+        "review":{
+            "title": "This is a review",
+            "text": "This is review text",
+            "default_rating": "5"
+        }
     },
 
     "product_attributes": {
@@ -280,61 +475,80 @@
         "brand_4": "Sony",
         "brand_5": "Lenovo",
         "brand_6": "Acer",
+
         "material_1": "aluminum",
         "material_2": "metal",
         "material_3": "chipboard",
         "material_4": "Steel sheets, stove-enameled",
+
         "internal_memory": "3 GB",
         "aspect_ratio": "16:10",
         "storage_media": "flash",
         "display_technology": "TFT",
         "delivery_1": "assembled",
         "price_unit_1": "piece",
+
         "color_5": "white",
         "color_4": "black",
         "color_3": "purple",
         "color_1": "yellow",
         "color_2": "blue",
+        
         "processor_frequency": "1.3 GHz",
         "internal_storage_capacity": "16 GB",
         "processor_cores": "4",
 
-        "product_management_superattribute_id": "4g",
-        "product_management_attribute_free_input_id": "4g_standards",
-        "product_management_attribute_no_input_id": "bundled_product"
+        "product_management":{
+            "superattribute_id": "4g",
+            "attribute_free_input_id": "4g_standards",
+            "attribute_no_input_id": "bundled_product"
+        }
 
     },
 
     "content": {
 
-        "abstract_product_list_id": "apl-watches",
-        "abstract_list_product1_sku": "083",
-        "abstract_list_product1_name": "Samsung Gear 2 Classic",
-        "abstract_list_product2_sku": "087",
-        "abstract_list_product2_name": "Samsung Gear S2",
-        "abstract_list_size": "4",
+        "abstract_list": {
+            "product_id": "apl-watches",
+            "product1_sku": "083",
+            "product1_name": "Samsung Gear 2 Classic",
+            "product2_sku": "087",
+            "product2_name": "Samsung Gear S2",
+            "size": "4"
+        },
+    
+        "banner_1": {
+            "id": "br-smartwatches",
+            "name": "The freedom of cellular"
+        },
 
-        "banner_1_id": "br-smartwatches",
-        "banner_1_name": "The freedom of cellular",
+        "cms_pages":{
 
-        "cms_pages_qty": "5",
-        "first_cms_page_name": "Imprint",
-        "first_cms_page_name_in_lower_case": "imprint",
-        "first_cms_page_url_en": "/en/imprint",
-        "cms_page_with_product_lists_id": "10014bd9-4bba-5a54-b84f-31b4b7efd064",
-        "cms_page_with_product_lists_name": "Demo Landing Page",
+            "qty": "5",
+
+            "first_cms_page": {
+                "name": "Imprint",
+                "name_in_lower_case": "imprint",
+                "url_en": "/en/imprint"
+            },
+
+            "cms_page_with_product_lists": {
+                "id": "10014bd9-4bba-5a54-b84f-31b4b7efd064",
+                "name": "Demo Landing Page"
+            }
+        },
 
         "category_collection_name": "Digital Cameras",
         "category_collection_url": "/en/cameras-&-camcorders/digital-cameras",
-
+    
         "category_nodes_storage_name": "Cameras & Camcorders",
         "category_nodes_storage_url": "/en/cameras-&-camcorders",
         "subcategory_nodes_storage_name": "Digital Cameras",
         "subcategory_nodes_storage_url": "/en/cameras-&-camcorders/digital-cameras",
-
+    
         "cms_page_collection_name": "GTC",
         "cms_page_collection_url": "/en/gtc",
-
+    
         "brand_name": "canon"
 
     },
@@ -342,6 +556,7 @@
     "cart":{
         "x_anonymous_prefix": "anonymous"
     },
+    
     "availability":{
         "stock_is_0": "0.0000000000",
         "stock_is_20": "20.0000000000"
@@ -355,45 +570,77 @@
         "qty_of_categories_in_category_trees": "6",
         "qty_of_subcategories_in_category_trees": "2",
         "color_name": "black",
-
-        "payment_provider_name": "DummyPayment",
-        "payment_method_name": "Invoice",
-        "carrier_name": "DHL",
-        "shipment_method_name": "Standard",
-        "shipment_method_name_2": "Express",
-        "shipment_method_name_5": "Next Day",
-        "delivery_date": "2030-12-31",
-
-        "discount_1_name": "Free standard delivery",
-        "discount_1_description": "Free standard delivery for all orders above certain value depending on the currency",
-        "discount_1_total_sum": "490",
-        "discount_2_name": "5% off white",
-
-        "discount_concrete_product_1_sku": "108298",
-        "discount_concrete_product_1_name": "Mauser hinged door cabinet - sideboard, 4 compartments, center separating wall - HxWxD 1225 x 1600 x 420 mm - light gray / ultramarine blue",
-        "discount_amount_for_product_1_with_discount_20%_off_storage": "10600",
-        "discount_amount_for_product_1_with_discount_10%_off_minimum_order": "4240",
-        "discount_concrete_product_1_total_sum_of_discounts": "14840",
-        "discount_concrete_product_2_sku": "213216",
-        "discount_concrete_product_2_name": "office akktiv base cabinet - HxWxD 942 x 913 x 420 mm - light gray, RAL 7035",
-        "discount_amount_for_product_2_with_discount_20%_off_storage": "5783",
-        "discount_amount_for_product_2_with_discount_10%_off_minimum_order": "2313",
-        "discount_concrete_product_2_total_sum_of_discounts": "8096",
-        "discount_concrete_product_3_sku": "401768",
-        "discount_concrete_product_3_name": "EUROKRAFT aluminum hand truck - Load capacity 200 kg, with skids - load capacity 200 kg",
-        "discount_amount_for_product_3_with_discount_20%_off_storage": "16383",
-        "discount_amount_for_product_3_with_10%_discount": "1882",
         
-        "discount_concrete_product_sku_with_voucher_code": "058_24245592",
+        "payment":{
+            "provider_name": "DummyPayment",
+            "method_name": "Invoice"
+        },
+
+        "shipment":{
+            "carrier_name": "DHL",
+            "method_name": "Standard",
+            "method_name_2": "Express",
+            "method_name_5": "Next Day",
+            "delivery_date": "2030-12-31"
+        },
+
+    "discount":{
+            
+            "discount_1":{
+                "name": "Free standard delivery",
+                "description": "Free standard delivery for all orders above certain value depending on the currency",
+                "total_sum": "490"
+            },
+
+            "discount_2":{
+                "name": "5% off white"
+            },
+
+        "concrete":{
+
+            "product_1":{
+                "sku": "108298",
+                "name": "Mauser hinged door cabinet - sideboard, 4 compartments, center separating wall - HxWxD 1225 x 1600 x 420 mm - light gray / ultramarine blue",
+                "total_sum_of_discounts": "14840"
+            },
+
+            "product_2":{
+                "sku": "213216",
+                "name": "office akktiv base cabinet - HxWxD 942 x 913 x 420 mm - light gray, RAL 7035",
+                "total_sum_of_discounts": "8096"
+            },
+
+            "product_3":{
+                "sku": "401768",
+                "name": "EUROKRAFT aluminum hand truck - Load capacity 200 kg, with skids - load capacity 200 kg"
+            },
+
+            "product_with_voucher_code":{
+                "sku": "058_24245592"
+            }
+        },
         
-        "configurable_bundle_template_id": "8d8510d8-59fe-5289-8a65-19f0c35a0089",
-        "configurable_bundle_template_name": "Office bundle",
-        "configurable_bundle_first_slot_item_sku": "575056",
-        "configurable_bundle_first_slot_uuid": "332b40ac-a789-57ce-bec0-23d8dddd71eb",
-        "configured_bundle_quantity": 2
+        
+        "amount":{
+
+            "product_2":{
+                "20%_off_storage": "5783",
+                "10%_off_minimum_order": "2313"
+            },
+
+            "product_3":{
+                "20%_off_storage": "16383",
+                "10%_discount": "1882"
+            },
+
+            "product_1":{
+                "20%_off_storage": "10600",
+                "10%_off_minimum_order": "4240"
+            }
+        }
+    }
     },
-
-
+        
     "url_resolver":{
 
         "url_resolver_abstract_product": "/en/canon-ixus-160-1",
@@ -422,9 +669,9 @@
        },
 
        "configurable_bundles":{
-        "configurable_bundle_template_id": "8d8510d8-59fe-5289-8a65-19f0c35a0089",
-        "configurable_bundle_first_slot_item_sku": "575056",
-        "configurable_bundle_first_slot_uuid": "332b40ac-a789-57ce-bec0-23d8dddd71eb",
+        "configurable_bundle_template_1_uuid": "8d8510d8-59fe-5289-8a65-19f0c35a0089",
+        "configurable_bundle_first_slot_item_sku": "001_25904006",
+        "configurable_bundle_slot_1_uuid": "332b40ac-a789-57ce-bec0-23d8dddd71eb",
         "configurable_bundle_template_2_uuid": "c8291fd3-c6ca-5b8f-8ff5-eccd6cb787de",
         "configurable_bundle_slot_5_uuid": "9626de80-6caa-57a9-a683-2846ec5b6914",
         "configurable_bundle_slot_6_uuid": "2a5e55b1-993a-5510-864c-a4a18558aa75",

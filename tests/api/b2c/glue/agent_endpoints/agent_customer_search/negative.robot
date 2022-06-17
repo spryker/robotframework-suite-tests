@@ -8,7 +8,7 @@ Resource    ../../../../../../resources/common/common_api.robot
 ENABLER
    TestSetup
 Not_agent_can't_get_search_for_customers
-    When I send a POST request:    /agent-access-tokens    {"data": {"type": "agent-access-tokens","attributes": {"username": "${non_agent_email}","password": "${non_agent_password}"}}}
+    When I send a POST request:    /agent-access-tokens    {"data": {"type": "agent-access-tokens","attributes": {"username": "${non_agent.email}","password": "${non_agent.password}"}}}
     Then Response status code should be:    401
     And Response reason should be:    Unauthorized
     And Response should return error code:    4101

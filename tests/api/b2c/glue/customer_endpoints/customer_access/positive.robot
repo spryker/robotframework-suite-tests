@@ -19,12 +19,12 @@ Resources_list_which_customer_can_access
     And Response body has correct self link
 
 Access_restricted_resource_as_authorized_customer   
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     ...    AND    I send a POST request:    /wishlists    {"data": {"type": "wishlists","attributes": {"name": "${wishlist_name}"}}}
     ...    AND    Save value to a variable:    [data][id]    wishlist_id
     ...    AND    Response status code should be:    201
-    ...    AND    I send a POST request:    /wishlists/${wishlist_id}/wishlist-items    {"data": {"type": "wishlist-items","attributes": {"sku": "${concrete_available_product_with_label}"}}}
+    ...    AND    I send a POST request:    /wishlists/${wishlist_id}/wishlist-items    {"data": {"type": "wishlist-items","attributes": {"sku": "${concrete_available_product.label}"}}}
     ...    AND    Response status code should be:    201
     I send a GET request:    /wishlists
     Response status code should be:    200

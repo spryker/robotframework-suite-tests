@@ -1,5 +1,6 @@
 *** Settings ***
-Suite Setup       SuiteSetup
+Suite Setup    SuiteSetup
+Test Setup     TestSetup
 Resource    ../../../../../../resources/common/common_api.robot
 Default Tags    glue
 
@@ -7,21 +8,21 @@ Default Tags    glue
 ENABLER
     TestSetup
 Abstract_product_with_one_concrete
-    When I send a GET request:    /abstract-products/${abstract_available_product_with_stock}
+    When I send a GET request:    /abstract-products/${abstract_available_product_with_stock.sku}
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
-    And Response body parameter should be:    [data][id]    ${abstract_available_product_with_stock}
-    And Response body parameter should be:    [data][attributes][sku]    ${abstract_available_product_with_stock}
+    And Response body parameter should be:    [data][id]    ${abstract_available_product_with_stock.sku}
+    And Response body parameter should be:    [data][attributes][sku]    ${abstract_available_product_with_stock.sku}
     And Response body parameter should be:    [data][attributes][averageRating]    None
     And Response body parameter should be:    [data][attributes][reviewCount]    0
-    And Response body parameter should be:    [data][attributes][name]    ${abstract_available_product_with_stock_name}
+    And Response body parameter should be:    [data][attributes][name]    ${abstract_available_product_with_stock.name}
     And Response body parameter should not be EMPTY:    [data][attributes][description]
     And Response body parameter should not be EMPTY:    [data][attributes][attributes]
     And Response should contain the array larger than a certain size:    [data][attributes][superAttributesDefinition]    0
     And Response should contain the array of a certain size:    [data][attributes][attributeMap]    4
     And Response should contain the array of a certain size:    [data][attributes][attributeMap][product_concrete_ids]    1
-    And Response body parameter should contain:    [data][attributes][superAttributesDefinition]    ${abstract_available_product_with_stock_superattribute}
+    And Response body parameter should contain:    [data][attributes][superAttributesDefinition]    ${abstract_available_product_with_stock.superattribute}
     And Response body parameter should not be EMPTY:    [data][attributes][metaTitle]
     And Response body parameter should not be EMPTY:    [data][attributes][metaKeywords]
     And Response body parameter should not be EMPTY:    [data][attributes][metaDescription]
@@ -30,21 +31,21 @@ Abstract_product_with_one_concrete
     And Response body has correct self link internal
 
 Abstract_product_with_3_concrete3
-    When I send a GET request:    /abstract-products/${abstract_available_product_with_3_concretes}
+    When I send a GET request:    /abstract-products/${abstract_product_with_variants.concretes_3}
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
-    And Response body parameter should be:    [data][id]    ${abstract_available_product_with_3_concretes}
-    And Response body parameter should be:    [data][attributes][sku]    ${abstract_available_product_with_3_concretes}
+    And Response body parameter should be:    [data][id]    ${abstract_product_with_variants.concretes_3}
+    And Response body parameter should be:    [data][attributes][sku]    ${abstract_product_with_variants.concretes_3}
     And Response body parameter should be:    [data][attributes][averageRating]    None
     And Response body parameter should be:    [data][attributes][reviewCount]    0
-    And Response body parameter should be:    [data][attributes][name]    ${abstract_available_product_with_3_concretes_name}
+    And Response body parameter should be:    [data][attributes][name]    ${abstract_product_with_variants.concretes_name_3}
     And Response body parameter should not be EMPTY:    [data][attributes][description]
     And Response body parameter should not be EMPTY:    [data][attributes][attributes]
     And Response should contain the array larger than a certain size:    [data][attributes][superAttributesDefinition]    0
     And Response should contain the array of a certain size:    [data][attributes][attributeMap]    4
     And Response should contain the array of a certain size:    [data][attributes][attributeMap][product_concrete_ids]    4
-    And Response body parameter should contain:    [data][attributes][superAttributes]    ${abstract_available_product_with_3_concretes_superattribute}
+    And Response body parameter should contain:    [data][attributes][superAttributes]    ${abstract_product_with_variants.concretes_superattribute_3}
     And Response body parameter should not be EMPTY:    [data][attributes][metaTitle]
     And Response body parameter should not be EMPTY:    [data][attributes][metaKeywords]
     And Response body parameter should not be EMPTY:    [data][attributes][metaDescription]
@@ -53,13 +54,13 @@ Abstract_product_with_3_concrete3
     And Response body has correct self link internal
 
 Abstract_product_with_abstract_includes_for_availability_images_taxes_categories_and_prices
-    When I send a GET request:    /abstract-products/${abstract_available_product_with_stock}?include=abstract-product-availabilities,abstract-product-image-sets,product-tax-sets,category-nodes,abstract-product-prices
+    When I send a GET request:    /abstract-products/${abstract_available_product_with_stock.sku}?include=abstract-product-availabilities,abstract-product-image-sets,product-tax-sets,category-nodes,abstract-product-prices
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
-    And Response body parameter should be:    [data][id]    ${abstract_available_product_with_stock}
-    And Response body parameter should be:    [data][attributes][sku]    ${abstract_available_product_with_stock}
-    And Response body parameter should be:    [data][attributes][name]    ${abstract_available_product_with_stock_name}
+    And Response body parameter should be:    [data][id]    ${abstract_available_product_with_stock.sku}
+    And Response body parameter should be:    [data][attributes][sku]    ${abstract_available_product_with_stock.sku}
+    And Response body parameter should be:    [data][attributes][name]    ${abstract_available_product_with_stock.name}
     And Response body has correct self link internal
     And Response should contain the array of a certain size:    [data][relationships][abstract-product-image-sets][data]    1
     And Response should contain the array of a certain size:    [data][relationships][abstract-product-availabilities][data]    1
@@ -80,13 +81,13 @@ Abstract_product_with_abstract_includes_for_availability_images_taxes_categories
     
 
 Abstract_product_with_abstract_includes_for_labels
-    When I send a GET request:    /abstract-products/${abstract_product_with_label}?include=product-labels
+    When I send a GET request:    /abstract-products/${abstract_product.label.sku}?include=product-labels
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
-    And Response body parameter should be:    [data][id]    ${abstract_product_with_label}
-    And Response body parameter should be:    [data][attributes][sku]    ${abstract_product_with_label}
-    And Response body parameter should be:    [data][attributes][name]    ${abstract_product_with_label_name}
+    And Response body parameter should be:    [data][id]    ${abstract_product.label.sku}
+    And Response body parameter should be:    [data][attributes][sku]    ${abstract_product.label.sku}
+    And Response body parameter should be:    [data][attributes][name]    ${abstract_product.label.name}
     And Response body has correct self link internal
     And Response should contain the array larger than a certain size:    [data][relationships][product-labels][data]    0
     And Response should contain the array larger than a certain size:    [included]    0
@@ -95,13 +96,13 @@ Abstract_product_with_abstract_includes_for_labels
     
 
 Abstract_product_with_abstract_includes_for_reviews
-    When I send a GET request:    /abstract-products/${abstract_product_with_reviews}?include=product-reviews
+    When I send a GET request:    /abstract-products/${abstract_product.with_reviews.sku}?include=product-reviews
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
-    And Response body parameter should be:    [data][id]    ${abstract_product_with_reviews}
-    And Response body parameter should be:    [data][attributes][sku]    ${abstract_product_with_reviews}
-    And Response body parameter should be:    [data][attributes][name]    ${abstract_product_with_reviews_name}
+    And Response body parameter should be:    [data][id]    ${abstract_product.with_reviews.sku}
+    And Response body parameter should be:    [data][attributes][sku]    ${abstract_product.with_reviews.sku}
+    And Response body parameter should be:    [data][attributes][name]    ${abstract_product.with_reviews.name}
     And Response body has correct self link internal
     And Response should contain the array larger than a certain size:    [data][relationships][product-reviews][data]    0
     And Response should contain the array larger than a certain size:    [included]    0
@@ -109,13 +110,13 @@ Abstract_product_with_abstract_includes_for_reviews
     And Response include element has self link:   product-reviews
 
 Abstract_product_with_abstract_includes_for_options
-    When I send a GET request:    /abstract-products/${abstract_product_with_options}?include=product-options
+    When I send a GET request:    /abstract-products/${abstract_product.with_options.sku}?include=product-options
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
-    And Response body parameter should be:    [data][id]    ${abstract_product_with_options}
-    And Response body parameter should be:    [data][attributes][sku]    ${abstract_product_with_options}
-    And Response body parameter should be:    [data][attributes][name]    ${abstract_product_with_options_name}
+    And Response body parameter should be:    [data][id]    ${abstract_product.with_options.sku}
+    And Response body parameter should be:    [data][attributes][sku]    ${abstract_product.with_options.sku}
+    And Response body parameter should be:    [data][attributes][name]    ${abstract_product.with_options.name}
     And Response body has correct self link internal
     And Response should contain the array larger than a certain size:    [data][relationships][product-options][data]    0
     And Response should contain the array larger than a certain size:    [included]    1
@@ -123,13 +124,13 @@ Abstract_product_with_abstract_includes_for_options
     And Response include element has self link:   product-options 
 
 Abstract_product_with_3_concrete_and_concrete_nested_includes
-    When I send a GET request:    /abstract-products/${abstract_available_product_with_3_concretes}?include=concrete-products,concrete-product-prices,concrete-product-image-sets,concrete-product-availabilities
+    When I send a GET request:    /abstract-products/${abstract_product_with_variants.concretes_3}?include=concrete-products,concrete-product-prices,concrete-product-image-sets,concrete-product-availabilities
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
-    And Response body parameter should be:    [data][id]    ${abstract_available_product_with_3_concretes}
-    And Response body parameter should be:    [data][attributes][sku]    ${abstract_available_product_with_3_concretes}
-    And Response body parameter should be:    [data][attributes][name]    ${abstract_available_product_with_3_concretes_name}
+    And Response body parameter should be:    [data][id]    ${abstract_product_with_variants.concretes_3}
+    And Response body parameter should be:    [data][attributes][sku]    ${abstract_product_with_variants.concretes_3}
+    And Response body parameter should be:    [data][attributes][name]    ${abstract_product_with_variants.concretes_name_3}
     And Response body has correct self link internal
     And Response should contain the array of a certain size:    [data][relationships][concrete-products][data]    4
     And Response should contain the array larger than a certain size:    [included]    4
