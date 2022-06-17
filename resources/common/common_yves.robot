@@ -54,8 +54,11 @@ Yves: login on Yves with provided credentials:
     Type Text    ${email_field}    ${email}
     Type Text    ${password_field}    ${password}
     Click    ${form_login_button}
-    IF    'fake' not in '${email}' or 'agent' not in '${email}'  Wait Until Element Is Visible    ${user_navigation_icon_header_menu_item}[${env}]     Login Failed!
-    IF    'agent' in '${email}'    Yves: header contains/doesn't contain:    true    ${customerSearchWidget}
+    IF    'agent' in '${email}'    
+    Yves: header contains/doesn't contain:    true    ${customerSearchWidget}
+        ELSE    
+        Wait Until Element Is Visible    ${user_navigation_icon_header_menu_item}[${env}]     Login Failed!
+    END
     Yves: remove flash messages
 
 Yves: go to PDP of the product with sku:
@@ -190,6 +193,7 @@ Yves: go to third navigation item level:
     Click Element by xpath with JavaScript    //div[@class='header__navigation']//navigation-multilevel[@data-qa='component navigation-multilevel']/ul[@class='menu menu--lvl-0']//li[contains(@class,'menu__item--lvl-0')]/span/*[contains(@class,'lvl-0')][1][text()='${navigation_item_level1}']/ancestor::li//ul[contains(@class,'menu--lvl-2')]//li[contains(@class,'menu__item--lvl-2')]/span/*[contains(@class,'lvl-2')][1][text()='${navigation_item_level3}']
 
 Yves: get index of the first available product
+    [Documentation]    For B2B this keyword should be used only for logged in customers, otherwise add to cart buttons are absent and it returns wrong index
     Yves: perform search by:    ${EMPTY}
     Wait Until Page Contains Element    ${catalog_main_page_locator}[${env}]
     ${productsCount}=    Get Element Count    xpath=//product-item[@data-qa='component product-item']
@@ -200,7 +204,7 @@ Yves: get index of the first available product
         Log    ${index}
         ${pdp_url}=    IF    '${env}'=='b2b'    Get Element Attribute    xpath=//product-item[@data-qa='component product-item'][${index}]//a[@itemprop='url']    href
         IF    'PASS' in ${status} and '${env}'=='b2b'    Continue For Loop
-        IF    'bundle' in '${pdp_url}' and '${env}'=='b2c'    Continue For Loop
+        IF    'bundle' in '${pdp_url}' and '${env}'=='b2b'    Continue For Loop
         IF    'FAIL' in ${status} and '${env}'=='b2b'
             Run Keywords
                 Return From Keyword  ${index}
