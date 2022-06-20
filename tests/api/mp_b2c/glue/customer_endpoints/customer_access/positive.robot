@@ -20,7 +20,7 @@ Resources_list_which_customer_can_access
     And Response body has correct self link
 
 Access_restricted_resource_as_authorized_customer   
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     I send a GET request:    /wishlists
     Response status code should be:    200

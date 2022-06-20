@@ -10,7 +10,7 @@ ENABLER
 
 Get_token_for_customer_with_invalid_grant_type
     When I set Headers:    Content-Type=${urlencoded_header_content_type}
-    Then I send a POST request with data:    /token    {"grant_type": "invalid_grant_type","username": "${yves_user_email}","password": "${yves_user_password}"}
+    Then I send a POST request with data:    /token    {"grant_type": "invalid_grant_type","username": "${yves_user.email}","password": "${yves_user.password}"}
     And Response status code should be:    400
     And Response reason should be:    Bad Request
     And Response body parameter should be:    [error]    invalid_grant
@@ -19,7 +19,7 @@ Get_token_for_customer_with_invalid_grant_type
 
 Get_token_for_customer_with_missing_grant_type
     When I set Headers:    Content-Type=${urlencoded_header_content_type}
-    Then I send a POST request with data:    /token    {"username": "${yves_user_email}","password": "${yves_user_password}"}
+    Then I send a POST request with data:    /token    {"username": "${yves_user.email}","password": "${yves_user.password}"}
     And Response status code should be:    400
     And Response reason should be:    Bad Request
     And Response body parameter should be:    [error]    invalid_grant
@@ -28,7 +28,7 @@ Get_token_for_customer_with_missing_grant_type
 
 Get_token_for_customer_with_invalid_password
     When I set Headers:    Content-Type=${urlencoded_header_content_type}
-    Then I send a POST request with data:    /token    {"grant_type": "${grant_type_password}","username": "${yves_user_email}","password": "wrong_password"}
+    Then I send a POST request with data:    /token    {"grant_type": "${grant_type.password}","username": "${yves_user.email}","password": "wrong_password"}
     And Response status code should be:    400
     And Response reason should be:    Bad Request
     And Response body parameter should be:    [error]    invalid_grant
@@ -37,7 +37,7 @@ Get_token_for_customer_with_invalid_password
 
 Get_token_for_customer_with_missing_password
     When I set Headers:    Content-Type=${urlencoded_header_content_type}
-    Then I send a POST request with data:    /token    {"grant_type": "${grant_type_password}","username": "${yves_user_email}"}
+    Then I send a POST request with data:    /token    {"grant_type": "${grant_type.password}","username": "${yves_user.email}"}
     Then Response status code should be:    400
     And Response reason should be:    Bad Request
     And Response body parameter should be:    [error]    invalid_request
@@ -46,7 +46,7 @@ Get_token_for_customer_with_missing_password
 
 Get_token_for_customer_with_invalid_email
     When I set Headers:    Content-Type=${urlencoded_header_content_type}
-    Then I send a POST request with data:    /token    {"grant_type": "${grant_type_password}","username": "fake@spryker.com","password": "${yves_user_password}"}
+    Then I send a POST request with data:    /token    {"grant_type": "${grant_type.password}","username": "fake@spryker.com","password": "${yves_user.password}"}
     And Response status code should be:    400
     And Response reason should be:    Bad Request
     And Response body parameter should be:    [error]    invalid_grant
@@ -55,7 +55,7 @@ Get_token_for_customer_with_invalid_email
 
 Get_token_for_customer_with_missing_email
     When I set Headers:    Content-Type=${urlencoded_header_content_type}
-    Then I send a POST request with data:    /token    {"grant_type": "${grant_type_password}","password": "${yves_user_password}"}
+    Then I send a POST request with data:    /token    {"grant_type": "${grant_type.password}","password": "${yves_user.password}"}
     Then Response status code should be:    400
     And Response reason should be:    Bad Request
     And Response body parameter should be:    [error]    invalid_request
@@ -65,7 +65,7 @@ Get_token_for_customer_with_missing_email
 
 Get_token_using_refresh_token_for_customer_with_missing_grant_type
     [Setup]    Run Keywords    I set Headers:    Content-Type=${urlencoded_header_content_type}
-    ...  AND    I send a POST request with data:    /token    {"grant_type": "${grant_type_password}","username": "${yves_user_email}","password": "${yves_user_password}"}
+    ...  AND    I send a POST request with data:    /token    {"grant_type": "${grant_type.password}","username": "${yves_user.email}","password": "${yves_user.password}"}
     ...  AND    Response status code should be:    200
     ...  AND    Save value to a variable:    [refresh_token]    refresh_token
     When I set Headers:    Content-Type=${urlencoded_header_content_type}
@@ -78,7 +78,7 @@ Get_token_using_refresh_token_for_customer_with_missing_grant_type
 
 Get_token_using_refresh_token_for_customer_with_invalid_grant_type
     [Setup]    Run Keywords    I set Headers:    Content-Type=${urlencoded_header_content_type}
-    ...  AND    I send a POST request with data:    /token    {"grant_type": "${grant_type_password}","username": "${yves_user_email}","password": "${yves_user_password}"}
+    ...  AND    I send a POST request with data:    /token    {"grant_type": "${grant_type.password}","username": "${yves_user.email}","password": "${yves_user.password}"}
     ...  AND    Response status code should be:    200
     ...  AND    Save value to a variable:    [refresh_token]    refresh_token
     When I set Headers:    Content-Type=${urlencoded_header_content_type}
@@ -91,7 +91,7 @@ Get_token_using_refresh_token_for_customer_with_invalid_grant_type
 
 Get_token_using_refresh_token_for_customer_with_missing_refresh_token
     When I set Headers:    Content-Type=${urlencoded_header_content_type}
-    And I send a POST request with data:    /token    {"grant_type": "${grant_type_refresh_token}"}
+    And I send a POST request with data:    /token    {"grant_type": "${grant_type.refresh_token}"}
     Then Response status code should be:    400
     And Response reason should be:    Bad Request
     And Response body parameter should be:    [error]    invalid_request
@@ -100,7 +100,7 @@ Get_token_using_refresh_token_for_customer_with_missing_refresh_token
 
 Get_token_using_refresh_token_for_customer_with_invalid_refresh_token
     When I set Headers:    Content-Type=${urlencoded_header_content_type}
-    And I send a POST request with data:    /token    {"grant_type": "${grant_type_refresh_token}","refresh_token": "invalid_refresh_token"}
+    And I send a POST request with data:    /token    {"grant_type": "${grant_type.refresh_token}","refresh_token": "invalid_refresh_token"}
     Then Response status code should be:    400
     And Response reason should be:    Bad Request
     And Response body parameter should be:    [error]    invalid_request

@@ -9,10 +9,10 @@ ENABLER
     TestSetup
 
 Retrieves_merchant_opening_hours
-    When I send a GET request:  /merchants/${merchants.sony_experts.merchant_id}/merchant-opening-hours
+    When I send a GET request:  /merchants/${merchant.sony_experts.merchant_id}/merchant-opening-hours
     Then Response status code should be:    200
     And Response reason should be:    OK
-    And Response body parameter should be:    [data][0][id]    ${merchants.sony_experts.merchant_id}
+    And Response body parameter should be:    [data][0][id]    ${merchant.sony_experts.merchant_id}
     And Response body parameter should be:    [data][0][type]    merchant-opening-hours
     And Each array element of array in response should contain property:    [data]    attributes
     And Each array element of array in response should contain property with value:    [data]    type    merchant-opening-hours
@@ -31,11 +31,11 @@ Retrieves_merchant_opening_hours
 
 
 Retrieves_merchant_with_include_merchant_opening_hours
-    When I send a GET request:  /merchants/${merchants.sony_experts.merchant_id}?include=merchant-opening-hours
+    When I send a GET request:  /merchants/${merchant.sony_experts.merchant_id}?include=merchant-opening-hours
     Then Response status code should be:    200
     And Response reason should be:    OK    
     And Response body parameter should be:    [data][type]    merchants
-    And Response body parameter should be:    [data][id]    ${merchants.sony_experts.merchant_id}
+    And Response body parameter should be:    [data][id]    ${merchant.sony_experts.merchant_id}
     And Response should contain the array of a certain size:    [included][0][attributes][weekdaySchedule]    8
     And Response should contain the array of a certain size:    [included][0][attributes][dateSchedule]    15
     And Response should contain the array of a certain size:    [included]    1

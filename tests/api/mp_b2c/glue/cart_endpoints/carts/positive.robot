@@ -10,27 +10,27 @@ ENABLER
     
 #GET requests
 Get_cart_by_cart_id
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
     ...  AND    Find or create customer cart
     When I send a GET request:    /carts/${cart_id}
     Then Response reason should be:    OK
     And Response body parameter should be:    [data][type]    carts
     And Response body parameter should be:    [data][id]    ${cart_id}
-    And Response body parameter should be:    [data][attributes][priceMode]    ${gross_mode}
-    And Response body parameter should be:    [data][attributes][currency]    ${currency_code_eur}
-    And Response body parameter should be:    [data][attributes][store]    ${store_de}
-    And Response body parameter should be:    [data][attributes][totals][expenseTotal]    0
-    And Response body parameter should be:    [data][attributes][totals][discountTotal]    0
-    And Response body parameter should be:    [data][attributes][totals][taxTotal]    0
-    And Response body parameter should be:    [data][attributes][totals][subtotal]    0
-    And Response body parameter should be:    [data][attributes][totals][grandTotal]    0
-    And Response body parameter should be:    [data][attributes][totals][priceToPay]    0
+    And Response body parameter should be:    [data][attributes][priceMode]    ${mode.gross}
+    And Response body parameter should be:    [data][attributes][currency]    ${currency.eur.code}
+    And Response body parameter should be:    [data][attributes][store]    ${store.de}
+    And Response body parameter should be:    [data][attributes][totals][expenseTotal]    None
+    And Response body parameter should be:    [data][attributes][totals][discountTotal]   None
+    And Response body parameter should be:    [data][attributes][totals][taxTotal]    None
+    And Response body parameter should be:    [data][attributes][totals][subtotal]    None
+    And Response body parameter should be:    [data][attributes][totals][grandTotal]    None
+    And Response body parameter should be:    [data][attributes][totals][priceToPay]    None
     And Response body has correct self link internal
 
 Get_cart_without_cart_id
 # Spryker is designed so that we can get all carts same as for /customers/{customerId}/carts request
-   [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+   [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
        ...  AND    I set Headers:    Authorization=${token}
        ...  AND    Find or create customer cart
     When I send a GET request:    /carts
@@ -43,20 +43,20 @@ Get_cart_without_cart_id
     And Response body parameter should not be EMPTY:    [data][0][attributes]
 
 Get_cart_by_cart_id_with_included_items
-   [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+   [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
        ...  AND    I set Headers:    Authorization=${token}
        ...  AND    Find or create customer cart
        ...  AND    Cleanup all items in the cart:    ${cart_id}
-       ...  AND    I send a POST request:    /carts/${cart_id}/items    {"data": {"type": "items","attributes": {"sku": "${concrete_product_with_concrete_product_alternative_sku}", "quantity": "1"}}}
+       ...  AND    I send a POST request:    /carts/${cart_id}/items    {"data": {"type": "items","attributes": {"sku": "${concrete_product_with_concrete_product_alternative.sku}", "quantity": "1"}}}
        ...  AND    Response status code should be:    201
     When I send a GET request:    /carts/${cart_id}?include=items
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response body parameter should be:    [data][type]    carts
     And Response body parameter should be:    [data][id]   ${cart_id}
-    And Response body parameter should be:    [data][attributes][priceMode]    ${gross_mode}
-    And Response body parameter should be:    [data][attributes][currency]    ${currency_code_eur}
-    And Response body parameter should be:    [data][attributes][store]    ${store_de}
+    And Response body parameter should be:    [data][attributes][priceMode]    ${mode.gross}
+    And Response body parameter should be:    [data][attributes][currency]    ${currency.eur.code}
+    And Response body parameter should be:    [data][attributes][store]    ${store.de}
     And Response body parameter should not be EMPTY:    [data][attributes][totals][expenseTotal]
     And Response body parameter should not be EMPTY:    [data][attributes][totals][discountTotal]
     And Response body parameter should not be EMPTY:    [data][attributes][totals][taxTotal]
@@ -99,10 +99,10 @@ Get_cart_by_cart_id_with_included_items
     And Each array element of array in response should contain value:    [included]    selectedProductOptions
 
 Get_cart_by_customer_id
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
        ...  AND    I set Headers:    Authorization=${token}
        ...  AND    Find or create customer cart
-    When I send a GET request:    /customers/${yves_user_reference}/carts
+    When I send a GET request:    /customers/${yves_user.reference}/carts
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response body parameter should contain:    [data]    ${cart_id}
@@ -112,20 +112,20 @@ Get_cart_by_customer_id
     And Response body parameter should not be EMPTY:    [data][0][attributes]
 
 Get_cart_with_included_cart_rules
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
        ...  AND    I set Headers:    Authorization=${token}
        ...  AND    Find or create customer cart
        ...  AND    Cleanup all items in the cart:    ${cart_id}
-       ...  AND    I send a POST request:    /carts/${cart_id}/items    {"data": {"type": "items","attributes": {"sku": "${concrete_product_with_concrete_product_alternative_sku}", "quantity": "4"}}}
+       ...  AND    I send a POST request:    /carts/${cart_id}/items    {"data": {"type": "items","attributes": {"sku": "${concrete_product_with_concrete_product_alternative.sku}", "quantity": "4"}}}
        ...  AND    Response status code should be:    201
     When I send a GET request:    /carts?include=cart-rules
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response body parameter should be:    [data][0][type]    carts
     And Response body parameter should be:    [data][0][id]   ${cart_id}
-    And Response body parameter should be:    [data][0][attributes][priceMode]    ${gross_mode}
-    And Response body parameter should be:    [data][0][attributes][currency]    ${currency_code_eur}
-    And Response body parameter should be:    [data][0][attributes][store]    ${store_de}
+    And Response body parameter should be:    [data][0][attributes][priceMode]    ${mode.gross}
+    And Response body parameter should be:    [data][0][attributes][currency]    ${currency.eur.code}
+    And Response body parameter should be:    [data][0][attributes][store]    ${store.de}
     And Response body parameter should not be EMPTY:    [data][0][attributes][totals][expenseTotal]
     And Response body parameter should not be EMPTY:    [data][0][attributes][totals][discountTotal]
     And Response body parameter should not be EMPTY:    [data][0][attributes][totals][taxTotal]
@@ -152,20 +152,20 @@ Get_cart_with_included_cart_rules
     And Each array element of array in response should contain value:    [included]    discountPromotionQuantity
 
 Get_cart_with_included_promotional_items
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
        ...  AND    I set Headers:    Authorization=${token}
        ...  AND    Find or create customer cart
        ...  AND    Cleanup all items in the cart:    ${cart_id}
-       ...  AND    I send a POST request:    /carts/${cart_id}/items    {"data": {"type": "items","attributes": {"sku": "${concrete_product_with_concrete_product_alternative_sku}", "quantity": "8"}}}
+       ...  AND    I send a POST request:    /carts/${cart_id}/items    {"data": {"type": "items","attributes": {"sku": "${concrete_product_with_concrete_product_alternative.sku}", "quantity": "8"}}}
        ...  AND    Response status code should be:    201
     When I send a GET request:    /carts?include=promotional-items
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response body parameter should be:    [data][0][type]    carts
     And Response body parameter should be:    [data][0][id]   ${cart_id}
-    And Response body parameter should be:    [data][0][attributes][priceMode]    ${gross_mode}
-    And Response body parameter should be:    [data][0][attributes][currency]    ${currency_code_eur}
-    And Response body parameter should be:    [data][0][attributes][store]    ${store_de}
+    And Response body parameter should be:    [data][0][attributes][priceMode]    ${mode.gross}
+    And Response body parameter should be:    [data][0][attributes][currency]    ${currency.eur.code}
+    And Response body parameter should be:    [data][0][attributes][store]    ${store.de}
     And Response body parameter should not be EMPTY:    [data][0][attributes][totals][expenseTotal]
     And Response body parameter should not be EMPTY:    [data][0][attributes][totals][discountTotal]
     And Response body parameter should not be EMPTY:    [data][0][attributes][totals][taxTotal]
@@ -183,24 +183,22 @@ Get_cart_with_included_promotional_items
     And Response body parameter should be:    [included][0][attributes][sku]    112
     And Response body parameter should be:    [included][0][attributes][quantity]    1
 
-
-
 #PATCH requests
 Update_cart_by_cart_id_with_all_attributes
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
         ...  AND    I set Headers:    Authorization=${token}
         ...  AND    Find or create customer cart
         ...  AND    Cleanup all items in the cart:    ${cart_id}
         ...  AND    Get ETag header value from cart
         ...  AND    I set Headers:    Authorization=${token}    If-Match=${Etag}
-    When I send a PATCH request:    /carts/${cart_id}    {"data": {"type": "carts","attributes": {"priceMode": "${net_mode}","currency": "${currency_code_eur}","store": "${store_de}"}}}
+    When I send a PATCH request:    /carts/${cart_id}    {"data": {"type": "carts","attributes": {"priceMode": "${mode.net}","currency": "${currency.eur.code}","store": "${store.de}"}}}
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response body parameter should be:    [data][type]    carts
     And Response body parameter should be:    [data][id]    ${cart_id}
-    And Response body parameter should be:    [data][attributes][priceMode]    ${net_mode}
-    And Response body parameter should be:    [data][attributes][currency]    ${currency_code_eur}
-    And Response body parameter should be:    [data][attributes][store]    ${store_de}
+    And Response body parameter should be:    [data][attributes][priceMode]    ${mode.net}
+    And Response body parameter should be:    [data][attributes][currency]    ${currency.eur.code}
+    And Response body parameter should be:    [data][attributes][store]    ${store.de}
     And Response body parameter should contain:    [data][attributes][totals]    expenseTotal
     And Response body parameter should contain:    [data][attributes][totals]    discountTotal
     And Response body parameter should contain:    [data][attributes][totals]    taxTotal
@@ -210,13 +208,11 @@ Update_cart_by_cart_id_with_all_attributes
     And Response body has correct self link internal
     [Teardown]    Run Keywords    Get ETag header value from cart
         ...  AND    I set Headers:    Authorization=${token}    If-Match=${ETag}
-        ...  AND    I send a PATCH request:    /carts/${cart_id}    {"data": {"type": "carts","attributes": {"priceMode": "${gross_mode}"}}}
+        ...  AND    I send a PATCH request:    /carts/${cart_id}    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}"}}}
         ...  AND    Response status code should be:    200
-
-
 Update_cart_with_empty_priceMod_currency_store
 # Spryker is designed so that we can send empty attributes: priceMod, currency, store and it will not be changed to the empty values.
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
         ...  AND    I set Headers:    Authorization=${token}
         ...  AND    Find or create customer cart
         ...  AND    Cleanup all items in the cart:    ${cart_id}
@@ -227,9 +223,9 @@ Update_cart_with_empty_priceMod_currency_store
     And Response reason should be:    OK
     And Response body parameter should be:    [data][type]    carts
     And Response body parameter should be:    [data][id]    ${cart_id}
-    And Response body parameter should be:    [data][attributes][priceMode]    ${gross_mode}
-    And Response body parameter should be:    [data][attributes][currency]    ${currency_code_eur}
-    And Response body parameter should be:    [data][attributes][store]    ${store_de}
+    And Response body parameter should be:    [data][attributes][priceMode]    ${mode.gross}
+    And Response body parameter should be:    [data][attributes][currency]    ${currency.eur.code}
+    And Response body parameter should be:    [data][attributes][store]    ${store.de}
     And Response body parameter should contain:    [data][attributes][totals]    expenseTotal
     And Response body parameter should contain:    [data][attributes][totals]    discountTotal
     And Response body parameter should contain:    [data][attributes][totals]    taxTotal

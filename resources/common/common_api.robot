@@ -114,7 +114,7 @@ I get access token for the customer:
     ...
     ...    *Example:*
     ...
-    ...    ``I get access token for the customer:    ${yves_user_email}``
+    ...    ``I get access token for the customer:    ${yves_user.email}``
     [Arguments]    ${email}    ${password}=${default_password}
     ${hasValue}    Run Keyword and return status     Should not be empty    ${headers}
     ${data}=    Evaluate    {"data":{"type":"access-tokens","attributes":{"username":"${email}","password":"${password}"}}}
@@ -141,7 +141,7 @@ I send a POST request:
     ...
     ...    *Example:*
     ...
-    ...    ``I send a POST request:    /agent-access-tokens    {"data": {"type": "agent-access-tokens","attributes": {"username": "${agent_email}","password": "${agent_password}"}}}``
+    ...    ``I send a POST request:    /agent-access-tokens    {"data": {"type": "agent-access-tokens","attributes": {"username": "${agent.email}","password": "${agent.password}"}}}``
     [Arguments]   ${path}    ${json}    ${timeout}=${api_timeout}    ${allow_redirects}=${default_allow_redirects}    ${auth}=${default_auth}    ${expected_status}=ANY
     ${data}=    Evaluate    ${json}
     ${hasValue}    Run Keyword and return status     Should not be empty    ${headers}
@@ -165,7 +165,7 @@ I send a POST request with data:
     ...
     ...    *Example:*
     ...
-    ...    ``I send a POST request:    /agent-access-tokens    {"data": {"type": "agent-access-tokens","attributes": {"username": "${agent_email}","password": "${agent_password}"}}}``
+    ...    ``I send a POST request:    /agent-access-tokens    {"data": {"type": "agent-access-tokens","attributes": {"username": "${agent.email}","password": "${agent.password}"}}}``
     [Arguments]   ${path}    ${data}    ${timeout}=${api_timeout}    ${allow_redirects}=${default_allow_redirects}    ${auth}=${default_auth}    ${expected_status}=ANY
     ${data}=    Evaluate    ${data}
     ${hasValue}    Run Keyword and return status     Should not be empty    ${headers}
@@ -395,7 +395,7 @@ Perform arithmetical calculation with two arguments:
     ...
     ...    *Example:*
     ...
-    ...    ``Perform arithmetical calculation with two arguments:    discount_total_sum    ${discount_total_sum}    +    ${discount_amount_for_product_3_with_10%_discount}``
+    ...    ``Perform arithmetical calculation with two arguments:    discount_total_sum    ${discount_total_sum}    +    ${discount.product_3.with_10%_discount}``
     [Arguments]    ${variable_name}    ${expected_value1}    ${math_symbol}    ${expected_value2}
     IF    '${math_symbol}' == '+'
         ${result}    Evaluate    ${expected_value1} + ${expected_value2}
@@ -440,7 +440,7 @@ Response body parameter with rounding should be:
     ...
     ...    *Example:*
     ...
-    ...    ``Response body parameter with rounding should be:    [data][attributes][discounts][0][amount]    ${discount_amount_for_product_3_with_10%_discount}``
+    ...    ``Response body parameter with rounding should be:    [data][attributes][discounts][0][amount]    ${discount.product_3.with_10%_discount}``
     [Arguments]    ${json_path}    ${expected_value}
     ${data}=    Get Value From Json    ${response_body}    ${json_path}
     ${data}=    Convert To String    ${data}
@@ -722,7 +722,7 @@ Each array element of array in response should contain value:
     ...
     ...    *Example:*
     ...
-    ...   ``Each array element of array in response should contain value:    [data][0][attributes][prices]    ${currency_code_eur}``
+    ...   ``Each array element of array in response should contain value:    [data][0][attributes][prices]    ${currency.eur.code}``
     ...
     ...    The example above checks if ALL prices returened in volumePrices array have currency code, regardless of which property has this value.
     [Arguments]    ${json_path}    ${expected_value}
@@ -1360,7 +1360,7 @@ Cleanup existing customer addresses:
     ...
     ...    *Example:*
     ...
-    ...    ``Cleanup existing customer addresses:    ${yves_user_reference}``
+    ...    ``Cleanup existing customer addresses:    ${yves_user.reference}``
     [Arguments]    ${customer_reference}
     ${response}=    GET    ${current_url}/customers/${customer_reference}/addresses    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}    expected_status=200
     ${response_body}=    Set Variable    ${response.json()}
@@ -1394,7 +1394,7 @@ Find or create customer cart
         Save value to a variable:    [data][0][id]    cart_id
         ${hasCart}    Run Keyword and return status     Should not be empty    ${cart_id}
         Log    cart_id:${cart_id}
-        IF    not ${hasCart}    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${gross_mode}","currency": "${currency_code_eur}","store": "${store_de}"}}}
+        IF    not ${hasCart}    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}"}}}
         IF    not ${hasCart}    Save value to a variable:    [data][id]    cart_id
 
 
@@ -1491,9 +1491,9 @@ Cleanup all availability notifications:
         ...
         ...    *Example:*
         ...
-        ...    ``Cleanup all availability notifications in the guest cart:    ${yves_user_reference}``
-        [Arguments]    ${yves_user_reference}
-        ${response}=    GET    ${current_url}/customers/${yves_user_reference}/availability-notifications    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}   expected_status=200
+        ...    ``Cleanup all availability notifications in the guest cart:    ${yves_user.reference}``
+        [Arguments]    ${yves_user.reference}
+        ${response}=    GET    ${current_url}/customers/${yves_user.reference}/availability-notifications    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}   expected_status=200
         ${response_body}=    Set Variable    ${response.json()}
         @{data}=    Get Value From Json    ${response_body}    [data]
         ${list_length}=    Get Length    @{data}
@@ -1510,20 +1510,3 @@ Cleanup all availability notifications:
                 Log    availability_notification_id: ${availability_notification_id}
                 ${response_delete}=    DELETE    ${current_url}/availability-notifications/${availability_notification_id}    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}    expected_status=204
         END
-
-Update order status in Database:
-    [Documentation]    This keyword updates order status in database to any required status. This allows to skip going through the order workflow manually 
-    ...    but just switch to the status you need to create a test. 
-    ...    There is no separate endpoint to update order status and this keyword allows to do this via database value update.
-    ...    *Example:*
-    ...    
-    ...    ``Update order status in Database:    7    shipped``
-    
-    [Arguments]    ${order_item_status_name}
-    Connect To Database    pymysql    ${default_db_name}    ${default_db_user}    ${default_db_password}    ${default_db_host}    ${default_db_port}
-    Execute Sql String    insert ignore into spy_oms_order_item_state (name) values ('${order_item_status_name}')
-    Disconnect From Database
-    Save the result of a SELECT DB query to a variable:    select id_oms_order_item_state from spy_oms_order_item_state where name like '${order_item_status_name}'    state_id
-    Connect To Database    pymysql    ${default_db_name}    ${default_db_user}    ${default_db_password}    ${default_db_host}    ${default_db_port}
-    Execute Sql String    update spy_sales_order_item set fk_oms_order_item_state = '${state_id}' where uuid = '${Uuid}'
-    Disconnect From Database
