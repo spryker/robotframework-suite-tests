@@ -7,122 +7,196 @@
     },
 
     "users": {    
-        "yves_user_email": "sonia@spryker.com",
-        "yves_user_first_name": "Sonia",
-        "yves_user_last_name": "Wagner",
-        "yves_user_password": "change123",
-        "yves_user_reference": "DE--21",
-        "yves_user_salutation": "Ms",
-
-        "yves_second_user_email": "bill.martin@spryker.com",
-        "yves_second_user_first_name": "Martin",
-        "yves_second_user_last_name": "Bill",
-        "yves_second_user_password": "change123",
-        "yves_second_user_reference": "DE--4",
-        "yves_second_user_salutation": "Mr",
-
-        "zed_admin_email": "admin@spryker.com",
-        "zed_admin_password": "change123",
-
-        "agent_email": "agent123@spryker.com",
-        "agent_password": "change123"
+        "yves_user": 
+            {
+            "email": "sonia@spryker.com",
+            "first_name": "Sonia",
+            "last_name": "Wagner",
+            "password": "change123",
+            "reference": "DE--21",
+            "salutation": "Ms"
+            },
+        "yves_second_user": 
+            {
+            "email": "bill.martin@spryker.com",
+            "first_name": "Martin",
+            "last_name": "Bill",
+            "password": "change123",
+            "reference": "DE--4",
+            "salutation": "Mr"
+            },
+        "zed_admin": 
+            {
+            "email": "admin@spryker.com",
+            "password": "change123"
+            },
+        "agent": 
+            {
+            "email": "agent123@spryker.com",
+            "password": "change123"
+            }
     },
     
     "address":{
-        "default_address1": "Third, 33, 11",
-        "default_address2": "33-B",
-        "default_address3": "third. address. line",
-        "default_zipCode": "12312",
-        "default_city": "Berlin",
-        "default_country": "Germany",
-        "default_iso2Code": "DE",
-        "default_company": "Spryker",
-        "default_phone": "22111-3-4-5",
-
-        "default_shipping_status": "False",
-        "default_billing_status": "False",
-
-        "changed_address1": "New Street 123",
-        "changed_address2": "75d",
-        "changed_address3": "third. address. line - changed",
-        "changed_phone": "555-555-55"
-
+        "default": 
+            {
+            "address1": "Third, 33, 11",
+            "address2": "33-B",
+            "address3": "third. address. line",
+            "zipCode": "12312",
+            "city": "Berlin",
+            "country": "Germany",
+            "iso2Code": "DE",
+            "company": "Spryker",
+            "phone": "22111-3-4-5",
+            "shipping_status": "False",
+            "billing_status": "False"
+            },
+        "changed": 
+            {
+            "address1": "New Street 123",
+            "address2": "75d",
+            "address3": "third. address. line - changed",
+            "phone": "555-555-55"
+            }
     },
 
     "shop":{
-        "currency_name_eur": "Euro",
-        "currency_code_eur": "EUR",
-        "currency_symbol_eur": "€"
+        "currency": 
+            {
+            "eur": 
+                {
+                "name": "Euro",
+                "code": "EUR",
+                "symbol": "€"
+                }
+            }
     },
         
     "products": {
-        
-        "bundle_product_abstract_sku": "211",
-        "bundle_product_product_name": "HP Bundle",
-        "bundled_product_1_abstract_sku": "121",
-        "bundled_product_2_abstract_sku": "127",
-        "bundled_product_3_abstract_sku": "150",
-        "bundled_product_1_concrete_sku": "121_29406823",
-        "bundled_product_2_concrete_sku": "127_22828284",
-        "bundled_product_3_concrete_sku": "150_29554292",
+        "bundle_product": 
+            {
+            "bundle_product_product_name": "HP Bundle",
 
-        "multi_variant_product_abstract_sku": "051",
+            "abstract": 
+                {
+                "sku": "211",
+                "product_1_sku": "121",
+                "product_2_sku": "127",
+                "product_3_sku": "150"
+                },
+            "concrete": 
+                {
+                "product_1_sku": "121_29406823",
+                "product_2_sku": "127_22828284",
+                "product_3_sku": "150_29554292"
+                }
 
-        "measurement_unit_product_abstract_sku": "215",
-        "packaging_unit_product_abstract_sku": "218",
+            },
 
-        "product_with_relations_related_products_sku": "200",
-        "product_with_relations_alternative_products_sku": "145",
-        "product_with_relations_upselling_sku": "018",
+        "special_product_abstract_sku": 
+            {
+            "with_multivariant": "051",
+            "with_measurement_unit": "215",
+            "with_packaging_unit": "218"
+            },
 
-        "concrete_product_with_alternative_sku": "138_30046855",
-        "abstract_product_with_alternative_sku": "138",
+        "product_with_relations": 
+            {
+            "has_related_products": 
+                {
+                "sku": "200"
+                },
+            "has_alternative_products": 
+                {
+                "sku": "145"
+                },
+            "has_upselling_products": 
+                {
+                "sku": "018"
+                }
+            },
+        "product_with_alternative": 
+            {
+            "concrete_sku": "138_30046855",
+            "abstract_sku": "138"
+            },
+
         "alternative_abstract_product": "155",
 
-        "abstract_available_product_with_stock": "183",
-        "abstract_available_product_with_stock_name": "Sony Xperia SGP512E1",
-        "abstract_available_product_with_stock_superattribute": "color",
+        "abstract_available_product_with_stock": 
+            {
+            "sku": "183",
+            "name": "Sony Xperia SGP512E1",
+            "superattribute": "color"
+            },
 
-        "abstract_available_with_stock_and_never_out_of_stock": "130",
-        "abstract_available_product_with_no_stock_and_never_out_of_stock": "666",
-        "abstract_unavailable_product": "189",
+        "product_availability": 
+            {
+            "abstract_available_with_stock_and_never_out_of_stock": "130",
+            "abstract_available_product_with_no_stock_and_never_out_of_stock": "666",
+            "abstract_unavailable_product": "189"
+            },
 
-        "abstract_available_product_with_3_concretes": "177",
-        "abstract_available_product_with_3_concretes_name": "Samsung Galaxy Tab Active 8.0 8 GB",
-        "abstract_available_product_with_3_concretes_superattribute": "internal_storage_capacity",
+        "abstract_product_with_variants": 
+            {
+            "concretes_3": "177",
+            "concretes_name_3": "Samsung Galaxy Tab Active 8.0 8 GB",
+            "concretes_superattribute_3": "internal_storage_capacity"
+            },
 
-
-        "abstract_product_with_volume_prices": "093",
-        "abstract_product_with_volume_prices_name": "Sony SmartWatch 3",
-        "abstract_product_with_original_prices": "203",
-
-        "abstract_product_with_label": "001",
-        "abstract_product_with_label_name": "Canon IXUS 160",
-
-        "abstract_product_with_concrete_offers": "093",
-        "abstract_product_with_concrete_offers_name": "Sony SmartWatch 3",
-
-        "abstract_product_with_reviews": "093",
-        "abstract_product_with_reviews_name": "Sony SmartWatch 3",
-
-        "abstract_product_with_options": "093",
-        "abstract_product_with_options_name": "Sony SmartWatch 3"
-            
+        "abstract_product": 
+            {
+            "product_with_volume_prices": 
+                {
+                "sku": "093",
+                "name": "Sony SmartWatch 3"
+                },
+            "product_with_original_prices": 
+                {
+                "sku": "203"
+                },
+            "product_with_label": 
+                {
+                "sku": "001",
+                "name": "Canon IXUS 160"
+                },
+            "product_with_reviews": 
+                {
+                "sku": "093",
+                "name": "Sony SmartWatch 3"
+                },
+            "product_with_options": 
+                {
+                "sku": "093",
+                "name": "Sony SmartWatch 3"
+                },
+            "product_with_concrete_offers": 
+                {
+                "sku": "112",
+                "name": "Acer Extensa M2610"
+                }
+            }   
     },
+
     "content":{
-
-        "abstract_product_list_id": "apl-1",
-        "abstract_list_product1_sku": "204",
-        "abstract_list_product1_name": "Sony PXW-FS5K",
-        "abstract_list_product2_sku": "205",
-        "abstract_list_product2_name": "Toshiba CAMILEO S30",
-        "abstract_list_size": "2"
+        "abstract_product_list": 
+            {
+            "id": "apl-1",
+            "product1_sku": "204",
+            "product1_name": "Sony PXW-FS5K",
+            "product2_sku": "205",
+            "product2_name": "Toshiba CAMILEO S30",
+            "size": "2"
+            }
 
     },
+
     "availability":{
         "stock_is_0": "0.0000000000",
         "stock_is_20": "20.0000000000"
     },
+
     "misc":{
         "default_header_content_type": "application/vnd.api+json"
     }
