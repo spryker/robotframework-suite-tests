@@ -7,7 +7,8 @@ Default Tags    glue
 *** Test Cases ***
 ENABLER
     TestSetup
-    
+
+# no demo data - https://spryker.atlassian.net/browse/MP-6888
 Get_concrete_bundled_products_inside_concrete_bundle
     When I send a GET request:    /concrete-products/${bundle_product.concrete.sku}/bundled-products
     Then Response status code should be:    200
@@ -24,6 +25,7 @@ Get_concrete_bundled_products_inside_concrete_bundle
     And Each array element of array in response should contain nested property with value:    [data]    [attributes][quantity]    ${bundle_product.products_in_bundle.qty_of_each_product}
     And Response body has correct self link
 
+# no demo data - https://spryker.atlassian.net/browse/MP-6888 
 Get_concrete_bundled_products_inside_concrete_bundle_with_included_concretes
     When I send a GET request:    /concrete-products/${bundle_product.concrete.sku}/bundled-products?include=concrete-products 
     Then Response status code should be:    200
@@ -37,6 +39,7 @@ Get_concrete_bundled_products_inside_concrete_bundle_with_included_concretes
     And Response include should contain certain entity type:    concrete-products
     And Response include element has self link:   concrete-products
 
+# no demo data - https://spryker.atlassian.net/browse/MP-6888
 Get_concrete_bundle_product_with_bundled_products_include
     When I send a GET request:    /concrete-products/${bundle_product.concrete.sku}?include=bundled-products
     Then Response status code should be:    200
@@ -56,6 +59,7 @@ Get_concrete_bundle_product_with_bundled_products_include
     And Response include element has self link:   concrete-products
     And Response include element has self link:   bundled-products
 
+# no demo data - https://spryker.atlassian.net/browse/MP-6888
 Get_abstract_bundle_product_with_bundled_products_include
     When I send a GET request:    /abstract-products/${bundle_product.abstract.sku}?include=bundled-products,concrete-products
     Then Response status code should be:    200
