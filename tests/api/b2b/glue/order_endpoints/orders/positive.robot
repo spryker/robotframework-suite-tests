@@ -118,7 +118,7 @@ Get_order_by_order_id
     And Response body parameter should be:    [data][attributes][items][0][amount]    None
     #expenses
     And Response body parameter should be:    [data][attributes][expenses][0][type]    SHIPMENT_EXPENSE_TYPE
-    And Response body parameter should be:    [data][attributes][expenses][0][name]    ${shipment_method.name}
+    And Response body parameter should be:    [data][attributes][expenses][0][name]    ${shipment.shipment_method1.name}
     And Response body parameter should be greater than:    [data][attributes][expenses][0][sumPrice]    0
     And Response body parameter should be greater than:    [data][attributes][expenses][0][unitGrossPrice]    0
     And Response body parameter should be greater than:    [data][attributes][expenses][0][sumGrossPrice]    0
@@ -140,8 +140,8 @@ Get_order_by_order_id
     And Response body parameter should be:    [data][attributes][payments][0][paymentProvider]    ${payment_provider_name}
     And Response body parameter should be:    [data][attributes][payments][0][paymentMethod]    ${payment_method_name}
     #shipments
-    And Response body parameter should be:    [data][attributes][shipments][0][shipmentMethodName]    ${shipment_method.name}
-    And Response body parameter should be:    [data][attributes][shipments][0][carrierName]    ${shipment_method.carrier_name}
+    And Response body parameter should be:    [data][attributes][shipments][0][shipmentMethodName]    ${shipment.shipment_method1.name}
+    And Response body parameter should be:    [data][attributes][shipments][0][carrierName]    ${shipment.carrier_name}
     And Response body parameter should be:    [data][attributes][shipments][0][deliveryTime]    None
     And Response body parameter should be greater than:    [data][attributes][shipments][0][defaultGrossPrice]    0
     And Response body parameter should be:    [data][attributes][shipments][0][defaultNetPrice]    0
@@ -324,8 +324,8 @@ Get_order_by_order_id_with_mode.net_&_chf_currency_&_express_shipment_method
     And Response body parameter should be:    [data][attributes][items][0][sku]    ${concrete.available_product.with_stock_and_never_out_of_stock.sku}
     And Response body parameter should be:    [data][attributes][items][0][quantity]    20
     #shipments
-    And Response body parameter should be:    [data][attributes][shipments][0][shipmentMethodName]    ${shipment_method.name_2}
-    And Response body parameter should be:    [data][attributes][shipments][0][carrierName]    ${shipment_method.carrier_name}
+    And Response body parameter should be:    [data][attributes][shipments][0][shipmentMethodName]    ${shipment.shipment_method2.name}
+    And Response body parameter should be:    [data][attributes][shipments][0][carrierName]    ${shipment.carrier_name}
     And Response body parameter should be:    [data][attributes][shipments][0][deliveryTime]    None
     And Response body parameter should be greater than:    [data][attributes][shipments][0][defaultGrossPrice]    0
     And Response body parameter should be:    [data][attributes][shipments][0][defaultNetPrice]    0
@@ -338,7 +338,7 @@ Get_order_by_order_id_with_split_shipment
     ...  AND    Save value to a variable:    [data][id]    cart_id
     ...  AND    I send a POST request:    /carts/${cartId}/items    {"data": {"type": "items","attributes": {"sku": "${concrete.available_product.with_stock_and_never_out_of_stock.sku}","quantity": 1}}}
     ...  AND    I send a POST request:    /carts/${cartId}/items    {"data": {"type": "items","attributes": {"sku": "${concrete.with_options.sku}","quantity": 1}}}
-    ...  AND    I send a POST request:    /checkout    {"data": {"type": "checkout","attributes": {"customer": {"salutation": "${yves_user.salutation}","email": "${yves_user.email}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}"},"idCart": "${cart_id}","billingAddress": {"salutation": "${yves_user.salutation}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}","address1": "${default.address1}","address2": "${default.address2}","address3": "${default.address3}","zipCode": "${default.zipCode}","city": "${default.city}","iso2Code": "${default.iso2Code}","company": "${default.company}","phone": "${default.phone}","isDefaultBilling": False,"isDefaultShipping": False},"payments": [{"paymentMethodName": "${payment_method_name}","paymentProviderName": "${payment_provider_name}"}],"shipments": [{"items": ["${concrete.available_product.with_stock_and_never_out_of_stock.sku}"],"shippingAddress": {"salutation": "${yves_user.salutation}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}","address1": "${default.address1}","address2": "${default.address2}","address3": "${default.address3}","zipCode": "${default.zipCode}","city": "${default.city}","iso2Code": "${default.iso2Code}","company": "${default.company}","phone": "${default.phone}"},"idShipmentMethod": 2,"requestedDeliveryDate": "${shipment_method.delivery_date}"},{"items": ["${concrete.with_options.sku}"],"shippingAddress": {"salutation": "${yves_user.salutation}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}","address1": "${changed.address1}","address2": "${changed.address2}","address3": "${changed.address3}","zipCode": "${default.zipCode}","city": "${default.city}","iso2Code": "${default.iso2Code}","company": "${default.company}","phone": "${changed.phone}","isDefaultBilling": False,"isDefaultShipping": False},"idShipmentMethod": 4,"requestedDeliveryDate": None}]}}}
+    ...  AND    I send a POST request:    /checkout    {"data": {"type": "checkout","attributes": {"customer": {"salutation": "${yves_user.salutation}","email": "${yves_user.email}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}"},"idCart": "${cart_id}","billingAddress": {"salutation": "${yves_user.salutation}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}","address1": "${default.address1}","address2": "${default.address2}","address3": "${default.address3}","zipCode": "${default.zipCode}","city": "${default.city}","iso2Code": "${default.iso2Code}","company": "${default.company}","phone": "${default.phone}","isDefaultBilling": False,"isDefaultShipping": False},"payments": [{"paymentMethodName": "${payment_method_name}","paymentProviderName": "${payment_provider_name}"}],"shipments": [{"items": ["${concrete.available_product.with_stock_and_never_out_of_stock.sku}"],"shippingAddress": {"salutation": "${yves_user.salutation}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}","address1": "${default.address1}","address2": "${default.address2}","address3": "${default.address3}","zipCode": "${default.zipCode}","city": "${default.city}","iso2Code": "${default.iso2Code}","company": "${default.company}","phone": "${default.phone}"},"idShipmentMethod": 2,"requestedDeliveryDate": "${shipment.delivery_date}"},{"items": ["${concrete.with_options.sku}"],"shippingAddress": {"salutation": "${yves_user.salutation}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}","address1": "${changed.address1}","address2": "${changed.address2}","address3": "${changed.address3}","zipCode": "${default.zipCode}","city": "${default.city}","iso2Code": "${default.iso2Code}","company": "${default.company}","phone": "${changed.phone}","isDefaultBilling": False,"isDefaultShipping": False},"idShipmentMethod": 4,"requestedDeliveryDate": None}]}}}
     ...  AND    Save value to a variable:    [data][attributes][orderReference]    order_id
     When I send a GET request:    /orders/${order_id}
     Then Response status code should be:    200
@@ -368,7 +368,7 @@ Get_order_by_order_id_with_split_shipment_&_include
     ...  AND    Save value to a variable:    [data][id]    cart_id
     ...  AND    I send a POST request:    /carts/${cartId}/items    {"data": {"type": "items","attributes": {"sku": "${concrete.available_product.with_stock_and_never_out_of_stock.sku}","quantity": 1}}}
     ...  AND    I send a POST request:    /carts/${cartId}/items    {"data": {"type": "items","attributes": {"sku": "${concrete.with_options.sku}","quantity": 1}}}
-    ...  AND    I send a POST request:    /checkout    {"data": {"type": "checkout","attributes": {"customer": {"salutation": "${yves_user.salutation}","email": "${yves_user.email}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}"},"idCart": "${cart_id}","billingAddress": {"salutation": "${yves_user.salutation}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}","address1": "${default.address1}","address2": "${default.address2}","address3": "${default.address3}","zipCode": "${default.zipCode}","city": "${default.city}","iso2Code": "${default.iso2Code}","company": "${default.company}","phone": "${default.phone}","isDefaultBilling": False,"isDefaultShipping": False},"payments": [{"paymentMethodName": "${payment_method_name}","paymentProviderName": "${payment_provider_name}"}],"shipments": [{"items": ["${concrete.available_product.with_stock_and_never_out_of_stock.sku}"],"shippingAddress": {"salutation": "${yves_user.salutation}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}","address1": "${default.address1}","address2": "${default.address2}","address3": "${default.address3}","zipCode": "${default.zipCode}","city": "${default.city}","iso2Code": "${default.iso2Code}","company": "${default.company}","phone": "${default.phone}"},"idShipmentMethod": 1,"requestedDeliveryDate": "${shipment_method.delivery_date}"},{"items": ["${concrete.with_options.sku}"],"shippingAddress": {"salutation": "${yves_user.salutation}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}","address1": "${changed.address1}","address2": "${changed.address2}","address3": "${changed.address3}","zipCode": "${default.zipCode}","city": "${default.city}","iso2Code": "${default.iso2Code}","company": "${default.company}","phone": "${changed.phone}","isDefaultBilling": False,"isDefaultShipping": False},"idShipmentMethod": 1,"requestedDeliveryDate": None}]}}}
+    ...  AND    I send a POST request:    /checkout    {"data": {"type": "checkout","attributes": {"customer": {"salutation": "${yves_user.salutation}","email": "${yves_user.email}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}"},"idCart": "${cart_id}","billingAddress": {"salutation": "${yves_user.salutation}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}","address1": "${default.address1}","address2": "${default.address2}","address3": "${default.address3}","zipCode": "${default.zipCode}","city": "${default.city}","iso2Code": "${default.iso2Code}","company": "${default.company}","phone": "${default.phone}","isDefaultBilling": False,"isDefaultShipping": False},"payments": [{"paymentMethodName": "${payment_method_name}","paymentProviderName": "${payment_provider_name}"}],"shipments": [{"items": ["${concrete.available_product.with_stock_and_never_out_of_stock.sku}"],"shippingAddress": {"salutation": "${yves_user.salutation}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}","address1": "${default.address1}","address2": "${default.address2}","address3": "${default.address3}","zipCode": "${default.zipCode}","city": "${default.city}","iso2Code": "${default.iso2Code}","company": "${default.company}","phone": "${default.phone}"},"idShipmentMethod": 1,"requestedDeliveryDate": "${shipment.delivery_date}"},{"items": ["${concrete.with_options.sku}"],"shippingAddress": {"salutation": "${yves_user.salutation}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}","address1": "${changed.address1}","address2": "${changed.address2}","address3": "${changed.address3}","zipCode": "${default.zipCode}","city": "${default.city}","iso2Code": "${default.iso2Code}","company": "${default.company}","phone": "${changed.phone}","isDefaultBilling": False,"isDefaultShipping": False},"idShipmentMethod": 1,"requestedDeliveryDate": None}]}}}
     ...  AND    Save value to a variable:    [data][attributes][orderReference]    order_id
     When I send a GET request:    /orders/${order_id}?include=order-shipments
     Then Response status code should be:    200
@@ -397,9 +397,9 @@ Get_order_by_order_id_with_split_shipment_&_include
     And Response body parameter should be:    [included][0][type]    order-shipments
     And Response body parameter should be greater than:    [included][0][id]    0
     And Response body parameter should not be EMPTY:    [included][0][attributes][itemUuids][0]
-    And Response body parameter should be:    [included][0][attributes][methodName]    ${shipment_method.name}
-    And Response body parameter should be:    [included][0][attributes][carrierName]    ${shipment_method.carrier_name}
-    And Response body parameter should be:    [included][0][attributes][requestedDeliveryDate]    ${shipment_method.delivery_date}
+    And Response body parameter should be:    [included][0][attributes][methodName]    ${shipment.shipment_method1.name}
+    And Response body parameter should be:    [included][0][attributes][carrierName]    ${shipment.carrier_name}
+    And Response body parameter should be:    [included][0][attributes][requestedDeliveryDate]    ${shipment.delivery_date}
     And Response body parameter should be:    [included][0][attributes][shippingAddress][salutation]    ${yves_user.salutation}
     And Response body parameter should be:    [included][0][attributes][shippingAddress][firstName]    ${yves_user.first_name}
     And Response body parameter should be:    [included][0][attributes][shippingAddress][middleName]    None
@@ -423,8 +423,8 @@ Get_order_by_order_id_with_split_shipment_&_include
     And Response body parameter should be:    [included][1][type]    order-shipments
     And Response body parameter should be greater than:    [included][1][id]    0
     And Response body parameter should not be EMPTY:    [included][1][attributes][itemUuids][0]
-    And Response body parameter should be:    [included][1][attributes][methodName]    ${shipment_method.name}
-    And Response body parameter should be:    [included][1][attributes][carrierName]    ${shipment_method.carrier_name}
+    And Response body parameter should be:    [included][1][attributes][methodName]    ${shipment.shipment_method1.name}
+    And Response body parameter should be:    [included][1][attributes][carrierName]    ${shipment.carrier_name}
     And Response body parameter should be:    [included][1][attributes][requestedDeliveryDate]    None
     And Response body parameter should be:    [included][1][attributes][shippingAddress][salutation]    ${yves_user.salutation}
     And Response body parameter should be:    [included][1][attributes][shippingAddress][firstName]    ${yves_user.first_name}
@@ -472,8 +472,8 @@ Get_order_by_order_id_with_free_shipping_discount
     And Response body parameter should be:    [data][attributes][totals][remunerationTotal]    0
     And Response should contain the array of a certain size:    [data][attributes][items]    3
     #shipments
-    And Response body parameter should be:    [data][attributes][shipments][0][shipmentMethodName]    ${shipment_method.name}
-    And Response body parameter should be:    [data][attributes][shipments][0][carrierName]    ${shipment_method.carrier_name}
+    And Response body parameter should be:    [data][attributes][shipments][0][shipmentMethodName]    ${shipment.shipment_method1.name}
+    And Response body parameter should be:    [data][attributes][shipments][0][carrierName]    ${shipment.carrier_name}
     And Response body parameter should be:    [data][attributes][shipments][0][deliveryTime]    None
     And Response body parameter should be:    [data][attributes][shipments][0][defaultGrossPrice]    ${discounts.discount_3.total_sum}
     And Response body parameter should be:    [data][attributes][shipments][0][defaultNetPrice]    0

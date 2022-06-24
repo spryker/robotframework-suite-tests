@@ -24,8 +24,8 @@ Provide_checkout_data
     And Response should contain the array of a certain size:    [data][attributes][paymentProviders]    0
     And Response should contain the array of a certain size:    [data][attributes][shipmentMethods]    0
     And Response body parameter should be:    [data][attributes][selectedShipmentMethods][0][id]    1
-    And Response body parameter should be:    [data][attributes][selectedShipmentMethods][0][name]    ${shipment_method.name}
-    And Response body parameter should be:    [data][attributes][selectedShipmentMethods][0][carrierName]    ${shipment_method.carrier_name}
+    And Response body parameter should be:    [data][attributes][selectedShipmentMethods][0][name]    ${shipment.shipment_method1.name}
+    And Response body parameter should be:    [data][attributes][selectedShipmentMethods][0][carrierName]    ${shipment.carrier_name}
     And Response body parameter should be greater than:    [data][attributes][selectedShipmentMethods][0][price]    0
     And Response body parameter should be:    [data][attributes][selectedShipmentMethods][0][taxRate]    None
     And Response body parameter should be:    [data][attributes][selectedShipmentMethods][0][deliveryTime]    None
@@ -70,8 +70,8 @@ Provide_checkout_data_with_invalid_billing_address_data
     And Response should contain the array of a certain size:    [data][attributes][paymentProviders]    0
     And Response should contain the array of a certain size:    [data][attributes][shipmentMethods]    0
     And Response body parameter should be:    [data][attributes][selectedShipmentMethods][0][id]    1
-    And Response body parameter should be:    [data][attributes][selectedShipmentMethods][0][name]    ${shipment_method.name}
-    And Response body parameter should be:    [data][attributes][selectedShipmentMethods][0][carrierName]    ${shipment_method.carrier_name}
+    And Response body parameter should be:    [data][attributes][selectedShipmentMethods][0][name]    ${shipment.shipment_method1.name}
+    And Response body parameter should be:    [data][attributes][selectedShipmentMethods][0][carrierName]    ${shipment.carrier_name}
     And Response body parameter should be greater than:    [data][attributes][selectedShipmentMethods][0][price]    0
     And Response body parameter should be:    [data][attributes][selectedShipmentMethods][0][taxRate]    None
     And Response body parameter should be:    [data][attributes][selectedShipmentMethods][0][deliveryTime]    None
@@ -96,8 +96,8 @@ Provide_checkout_data_with_invalid_shipping_address_data
     And Response should contain the array of a certain size:    [data][attributes][paymentProviders]    0
     And Response should contain the array of a certain size:    [data][attributes][shipmentMethods]    0
     And Response body parameter should be:    [data][attributes][selectedShipmentMethods][0][id]    1
-    And Response body parameter should be:    [data][attributes][selectedShipmentMethods][0][name]    ${shipment_method.name}
-    And Response body parameter should be:    [data][attributes][selectedShipmentMethods][0][carrierName]    ${shipment_method.carrier_name}
+    And Response body parameter should be:    [data][attributes][selectedShipmentMethods][0][name]    ${shipment.shipment_method1.name}
+    And Response body parameter should be:    [data][attributes][selectedShipmentMethods][0][carrierName]    ${shipment.carrier_name}
     And Response body parameter should be greater than:    [data][attributes][selectedShipmentMethods][0][price]    0
     And Response body parameter should be:    [data][attributes][selectedShipmentMethods][0][taxRate]    None
     And Response body parameter should be:    [data][attributes][selectedShipmentMethods][0][deliveryTime]    None
@@ -122,8 +122,8 @@ Provide_checkout_data_with_invalid_payments
     And Response should contain the array of a certain size:    [data][attributes][paymentProviders]    0
     And Response should contain the array of a certain size:    [data][attributes][shipmentMethods]    0
     And Response body parameter should be:    [data][attributes][selectedShipmentMethods][0][id]    1
-    And Response body parameter should be:    [data][attributes][selectedShipmentMethods][0][name]    ${shipment_method.name}
-    And Response body parameter should be:    [data][attributes][selectedShipmentMethods][0][carrierName]    ${shipment_method.carrier_name}
+    And Response body parameter should be:    [data][attributes][selectedShipmentMethods][0][name]    ${shipment.shipment_method1.name}
+    And Response body parameter should be:    [data][attributes][selectedShipmentMethods][0][carrierName]    ${shipment.carrier_name}
     And Response body parameter should be greater than:    [data][attributes][selectedShipmentMethods][0][price]    0
     And Response body parameter should be:    [data][attributes][selectedShipmentMethods][0][taxRate]    None
     And Response body parameter should be:    [data][attributes][selectedShipmentMethods][0][deliveryTime]    None
@@ -187,8 +187,8 @@ Provide_checkout_data_with_bundle_product
     And Response should contain the array of a certain size:    [data][attributes][paymentProviders]    0
     And Response should contain the array of a certain size:    [data][attributes][shipmentMethods]    0
     And Response body parameter should be:    [data][attributes][selectedShipmentMethods][0][id]    1
-    And Response body parameter should be:    [data][attributes][selectedShipmentMethods][0][name]    ${shipment_method.name}
-    And Response body parameter should be:    [data][attributes][selectedShipmentMethods][0][carrierName]    ${shipment_method.carrier_name}
+    And Response body parameter should be:    [data][attributes][selectedShipmentMethods][0][name]    ${shipment.shipment_method1.name}
+    And Response body parameter should be:    [data][attributes][selectedShipmentMethods][0][carrierName]    ${shipment.carrier_name}
     And Response body parameter should be greater than:    [data][attributes][selectedShipmentMethods][0][price]    0
     And Response body parameter should be:    [data][attributes][selectedShipmentMethods][0][taxRate]    None
     And Response body parameter should be:    [data][attributes][selectedShipmentMethods][0][deliveryTime]    None

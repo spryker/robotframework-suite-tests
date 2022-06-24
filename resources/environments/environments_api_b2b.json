@@ -154,8 +154,12 @@
             "id": "cf032865-d1ad-5e27-803a-423bd15ced66",
             "name": "Newcomers"
         },
-        "shopping_list_name_2": "Weekly office",
-        "shopping_list_name_3": "Monthly office"
+        "shopping_list_2":{
+            "name":"Weekly office"
+        },
+        "shopping_list_3":{
+            "name":"Monthly office"
+        } 
     },
     "search":{
         "default_qty":{
@@ -495,6 +499,17 @@
             "name": "Standard",
             "delivery_date": "2030-12-31",
             "name_2": "Express"
+        },
+        "shipment":{
+            "carrier_name": "DHL",
+            "delivery_date": "2030-12-31",
+            "shipment_method1":{
+                "name": "Standard"       
+            },
+            "shipment_method2":{
+                "name": "Express"
+            }
+
         },
         "review":{        
             "title": "This is a review",

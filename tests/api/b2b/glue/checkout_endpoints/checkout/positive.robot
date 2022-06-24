@@ -141,7 +141,7 @@ Create_order_include_orders
     And Response body parameter should be:    [included][0][attributes][items][0][amount]    None
     #expenses
     And Response body parameter should be:    [included][0][attributes][expenses][0][type]    SHIPMENT_EXPENSE_TYPE
-    And Response body parameter should be:    [included][0][attributes][expenses][0][name]    ${shipment_method.name}
+    And Response body parameter should be:    [included][0][attributes][expenses][0][name]    ${shipment.shipment_method1.name}
     And Response body parameter should be greater than:    [included][0][attributes][expenses][0][sumPrice]    0
     And Response body parameter should be greater than:    [included][0][attributes][expenses][0][unitGrossPrice]    0
     And Response body parameter should be greater than:    [included][0][attributes][expenses][0][sumGrossPrice]    0
@@ -163,8 +163,8 @@ Create_order_include_orders
     And Response body parameter should be:    [included][0][attributes][payments][0][paymentProvider]    ${payment_provider_name}
     And Response body parameter should be:    [included][0][attributes][payments][0][paymentMethod]    ${payment_method_name}
     #shipments
-    And Response body parameter should be:    [included][0][attributes][shipments][0][shipmentMethodName]    ${shipment_method.name}
-    And Response body parameter should be:    [included][0][attributes][shipments][0][carrierName]    ${shipment_method.carrier_name}
+    And Response body parameter should be:    [included][0][attributes][shipments][0][shipmentMethodName]    ${shipment.shipment_method1.name}
+    And Response body parameter should be:    [included][0][attributes][shipments][0][carrierName]    ${shipment.carrier_name}
     And Response body parameter should be:    [included][0][attributes][shipments][0][deliveryTime]    None
     And Response body parameter should be greater than:    [included][0][attributes][shipments][0][defaultGrossPrice]    0
     And Response body parameter should be:    [included][0][attributes][shipments][0][defaultNetPrice]    0
@@ -256,7 +256,7 @@ Create_order_with_split_shipments
     ...  AND    Save value to a variable:    [data][id]    cart_id
     ...  AND    I send a POST request:    /carts/${cartId}/items    {"data": {"type": "items","attributes": {"sku": "${concrete.available_product.with_stock_and_never_out_of_stock.sku}","quantity": 1}}}
     ...  AND    I send a POST request:    /carts/${cartId}/items    {"data": {"type": "items","attributes": {"sku": "${concrete.with_options.sku}","quantity": 1}}}
-    When I send a POST request:    /checkout?include=orders    {"data": {"type": "checkout","attributes": {"customer": {"salutation": "${yves_user.salutation}","email": "${yves_user.email}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}"},"idCart": "${cart_id}","billingAddress": {"salutation": "${yves_user.salutation}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}","address1": "${default.address1}","address2": "${default.address2}","address3": "${default.address3}","zipCode": "${default.zipCode}","city": "${default.city}","iso2Code": "${default.iso2Code}","company": "${default.company}","phone": "${default.phone}","isDefaultBilling": False,"isDefaultShipping": False},"payments": [{"paymentMethodName": "${payment_method_name}","paymentProviderName": "${payment_provider_name}"}],"shipments": [{"items": ["${concrete.available_product.with_stock_and_never_out_of_stock.sku}"],"shippingAddress": {"salutation": "${yves_user.salutation}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}","address1": "${default.address1}","address2": "${default.address2}","address3": "${default.address3}","zipCode": "${default.zipCode}","city": "${default.city}","iso2Code": "${default.iso2Code}","company": "${default.company}","phone": "${default.phone}"},"idShipmentMethod": 2,"requestedDeliveryDate": "${shipment_method.delivery_date}"},{"items": ["${concrete.with_options.sku}"],"shippingAddress": {"salutation": "${yves_user.salutation}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}","address1": "${changed.address1}","address2": "${changed.address2}","address3": "${changed.address3}","zipCode": "${default.zipCode}","city": "${default.city}","iso2Code": "${default.iso2Code}","company": "${default.company}","phone": "${changed.phone}","isDefaultBilling": False,"isDefaultShipping": False},"idShipmentMethod": 4,"requestedDeliveryDate": None}]}}}
+    When I send a POST request:    /checkout?include=orders    {"data": {"type": "checkout","attributes": {"customer": {"salutation": "${yves_user.salutation}","email": "${yves_user.email}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}"},"idCart": "${cart_id}","billingAddress": {"salutation": "${yves_user.salutation}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}","address1": "${default.address1}","address2": "${default.address2}","address3": "${default.address3}","zipCode": "${default.zipCode}","city": "${default.city}","iso2Code": "${default.iso2Code}","company": "${default.company}","phone": "${default.phone}","isDefaultBilling": False,"isDefaultShipping": False},"payments": [{"paymentMethodName": "${payment_method_name}","paymentProviderName": "${payment_provider_name}"}],"shipments": [{"items": ["${concrete.available_product.with_stock_and_never_out_of_stock.sku}"],"shippingAddress": {"salutation": "${yves_user.salutation}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}","address1": "${default.address1}","address2": "${default.address2}","address3": "${default.address3}","zipCode": "${default.zipCode}","city": "${default.city}","iso2Code": "${default.iso2Code}","company": "${default.company}","phone": "${default.phone}"},"idShipmentMethod": 2,"requestedDeliveryDate": "${shipment.delivery_datedelivery_date}"},{"items": ["${concrete.with_options.sku}"],"shippingAddress": {"salutation": "${yves_user.salutation}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}","address1": "${changed.address1}","address2": "${changed.address2}","address3": "${changed.address3}","zipCode": "${default.zipCode}","city": "${default.city}","iso2Code": "${default.iso2Code}","company": "${default.company}","phone": "${changed.phone}","isDefaultBilling": False,"isDefaultShipping": False},"idShipmentMethod": 4,"requestedDeliveryDate": None}]}}}
     Then Response status code should be:    201
     And Response reason should be:    Created
     And Response body parameter should be:    [data][type]    checkout
@@ -300,8 +300,8 @@ Create_order_with_split_shipments_&_same_shipping_address
     And Response body parameter should be:    [included][0][attributes][items][1][sku]    ${concrete.with_options.sku}
     And Response body parameter should be:    [included][0][attributes][items][1][quantity]    1
     And Response should contain certain number of values:    [included][0][attributes]    shipments    1
-    And Response body parameter should be:    [included][0][attributes][shipments][0][shipmentMethodName]    ${shipment_method.name}
-    And Response body parameter should be:    [included][0][attributes][shipments][0][carrierName]    ${shipment_method.carrier_name}
+    And Response body parameter should be:    [included][0][attributes][shipments][0][shipmentMethodName]    ${shipment.shipment_method1.name}
+    And Response body parameter should be:    [included][0][attributes][shipments][0][carrierName]    ${shipment.carrier_name}
     And Response body parameter should be:    [included][0][attributes][shipments][0][deliveryTime]    None
     And Response body parameter should be greater than:    [included][0][attributes][shipments][0][defaultGrossPrice]    0
     And Response body parameter should be:    [included][0][attributes][shipments][0][defaultNetPrice]    0
@@ -328,8 +328,8 @@ Create_order_with_same_items_in_different_shipments
     And Response body parameter should be:    [included][0][attributes][items][0][quantity]    1
     And Response body parameter should be greater than:    [included][0][attributes][items][0][idShipment]    0
     And Response should contain certain number of values:    [included][0][attributes]    shipments    1
-    And Response body parameter should be:    [included][0][attributes][shipments][0][shipmentMethodName]    ${shipment_method.name}
-    And Response body parameter should be:    [included][0][attributes][shipments][0][carrierName]    ${shipment_method.carrier_name}
+    And Response body parameter should be:    [included][0][attributes][shipments][0][shipmentMethodName]    ${shipment.shipment_method1.name}
+    And Response body parameter should be:    [included][0][attributes][shipments][0][carrierName]    ${shipment.carrier_name}
     And Response body parameter should be:    [included][0][attributes][shipments][0][deliveryTime]    None
     And Response body parameter should be greater than:    [included][0][attributes][shipments][0][defaultGrossPrice]    0
     And Response body parameter should be:    [included][0][attributes][shipments][0][defaultNetPrice]    0
@@ -360,8 +360,8 @@ Create_order_with_free_shipping_discount
     And Response body parameter should be:    [included][0][attributes][totals][remunerationTotal]    0
     And Response should contain the array of a certain size:    [included][0][attributes][items]    3
     #shipments
-    And Response body parameter should be:    [included][0][attributes][shipments][0][shipmentMethodName]    ${shipment_method.name}
-    And Response body parameter should be:    [included][0][attributes][shipments][0][carrierName]    ${shipment_method.carrier_name}
+    And Response body parameter should be:    [included][0][attributes][shipments][0][shipmentMethodName]    ${shipment.shipment_method1.name}
+    And Response body parameter should be:    [included][0][attributes][shipments][0][carrierName]    ${shipment.carrier_name}
     And Response body parameter should be:    [included][0][attributes][shipments][0][deliveryTime]    None
     And Response body parameter should be:    [included][0][attributes][shipments][0][defaultGrossPrice]    ${discounts.discount_3.total_sum}
     And Response body parameter should be:    [included][0][attributes][shipments][0][defaultNetPrice]    0
