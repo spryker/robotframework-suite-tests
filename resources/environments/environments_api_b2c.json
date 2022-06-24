@@ -348,20 +348,20 @@
             "meta_keywords": "Sony,Communication Electronics",
             "meta_description": "Enjoy greater flexibility  ...than ever before with the Galaxy Tab S2. Remarkably slim and ultra-lightweight, use this device to take your e-books, photos,",
             "label": "204_29851280",
-            "with_stock_one_concrete_with_superattribute": "156",
-            "with_stock_one_concrete_with_superattribute_name": "Acer Iconia B1-850",
-            "with_stock_one_concrete_with_superattribute_name_description": "Portable charm With a bevy of trendy, eye catching colours to suit any lifestyle and show your personality, this slim and lightweight tablet designed to be travel friendly. Plus its beautifully textured anti-slip finish helps you keep a firm grip wherever you go. Looks sharp and stays sharp. The HD LCD with IPS1 technology brings out every detail of the display from any angle. Put that together with Zero Air Gap technology and you get brighter and crisper images with higher contrast and considerably better visibility in sunlight. A highly effective anti-fingerprint coating reduces messy fingerprints and smudges, and makes the screen much easier to clean. Add to that Acer’s innovative Touch WakeApp which adds new one-touch gestures to both wake the tablet up and pop it right into whatever app you want instant access to.",
-            "with_stock_one_concrete_with_superattribute_name_superattribute": "form_factor",
-            "with_superattribute_sku": "156_32018944",
-            "with_superattribute_meta_keywords": "Acer,Communication Electronics",
-            "with_superattribute_meta_description": "Portable charm With a bevy of trendy, eye catching colours to suit any lifestyle and show your personality, this slim and lightweight tablet designed to be"
-        },        
 
-        "abstract_product_with_variants":{
-            "concretes_3": "127",
-            "concretes_name_3": "HP Z 620",
-            "concretes_superattribute_3": "total_storage_capacity"
-        },
+            "with_stock_one_concrete_with_superattribute":{
+                "sku":"156",
+                "name": "Acer Iconia B1-850",
+                "description": "Portable charm With a bevy of trendy, eye catching colours to suit any lifestyle and show your personality, this slim and lightweight tablet designed to be travel friendly. Plus its beautifully textured anti-slip finish helps you keep a firm grip wherever you go. Looks sharp and stays sharp. The HD LCD with IPS1 technology brings out every detail of the display from any angle. Put that together with Zero Air Gap technology and you get brighter and crisper images with higher contrast and considerably better visibility in sunlight. A highly effective anti-fingerprint coating reduces messy fingerprints and smudges, and makes the screen much easier to clean. Add to that Acer’s innovative Touch WakeApp which adds new one-touch gestures to both wake the tablet up and pop it right into whatever app you want instant access to.",
+                "superattribute_name": "form_factor"
+            },
+
+            "with_superattribute":{
+                "sku": "156_32018944",
+                "meta_keywords": "Acer,Communication Electronics",
+                "meta_description": "Portable charm With a bevy of trendy, eye catching colours to suit any lifestyle and show your personality, this slim and lightweight tablet designed to be"
+            }
+        },        
 
         "product_availability":{
             "concrete_available_with_stock_and_never_out_of_stock_sku": "005_30663301",
@@ -397,10 +397,6 @@
             "with_options":{
                 "sku": "012",
                 "name": "Canon IXUS 165"
-            },
-
-            "multiple_variants":{
-                "sku":"130"
             }
         },
 
@@ -445,11 +441,22 @@
             "multiple_image_set":{
                 "sku": "158_29885222",
                 "set_name": "Asus ZenPad Z170C"
-            },
+            }
             
-            "multivariant":{
-            "sku_variant1": "130_29285281",
-            "sku_variant2": "130_24326086"
+        },
+        
+        "multivariant":{
+
+            "abstract_product":{
+                "concretes_3": "127",
+                "concretes_name_3": "HP Z 620",
+                "concretes_superattribute_3": "total_storage_capacity",
+                "sku":"130"
+            },
+
+            "concrete_product":{
+                "sku_variant1": "130_29285281",
+                "sku_variant2": "130_24326086"
             }
         },
 

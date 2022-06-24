@@ -9,7 +9,7 @@ ENABLER
     TestSetup
 
 Product_has_related_products
-    When I send a GET request:    /abstract-products/${concrete_available_product.with_stock_one_concrete_with_superattribute}/related-products
+    When I send a GET request:    /abstract-products/${concrete_available_product.with_stock_one_concrete_with_superattribute.sku}/related-products
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}

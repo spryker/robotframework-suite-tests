@@ -31,21 +31,21 @@ Abstract_product_with_one_concrete
     And Response body has correct self link internal
 
 Abstract_product_with_3_concrete3
-    When I send a GET request:    /abstract-products/${abstract_product_with_variants.concretes_3}
+    When I send a GET request:    /abstract-products/${multivariant.abstract_product.concretes_3}
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
-    And Response body parameter should be:    [data][id]    ${abstract_product_with_variants.concretes_3}
-    And Response body parameter should be:    [data][attributes][sku]    ${abstract_product_with_variants.concretes_3}
+    And Response body parameter should be:    [data][id]    ${multivariant.abstract_product.concretes_3}
+    And Response body parameter should be:    [data][attributes][sku]    ${multivariant.abstract_product.concretes_3}
     And Response body parameter should be:    [data][attributes][averageRating]    None
     And Response body parameter should be:    [data][attributes][reviewCount]    0
-    And Response body parameter should be:    [data][attributes][name]    ${abstract_product_with_variants.concretes_name_3}
+    And Response body parameter should be:    [data][attributes][name]    ${multivariant.abstract_product.concretes_name_3}
     And Response body parameter should not be EMPTY:    [data][attributes][description]
     And Response body parameter should not be EMPTY:    [data][attributes][attributes]
     And Response should contain the array larger than a certain size:    [data][attributes][superAttributesDefinition]    0
     And Response should contain the array of a certain size:    [data][attributes][attributeMap]    4
     And Response should contain the array of a certain size:    [data][attributes][attributeMap][product_concrete_ids]    4
-    And Response body parameter should contain:    [data][attributes][superAttributes]    ${abstract_product_with_variants.concretes_superattribute_3}
+    And Response body parameter should contain:    [data][attributes][superAttributes]    ${multivariant.abstract_product.concretes_superattribute_3}
     And Response body parameter should not be EMPTY:    [data][attributes][metaTitle]
     And Response body parameter should not be EMPTY:    [data][attributes][metaKeywords]
     And Response body parameter should not be EMPTY:    [data][attributes][metaDescription]
@@ -124,13 +124,13 @@ Abstract_product_with_abstract_includes_for_options
     And Response include element has self link:   product-options 
 
 Abstract_product_with_3_concrete_and_concrete_nested_includes
-    When I send a GET request:    /abstract-products/${abstract_product_with_variants.concretes_3}?include=concrete-products,concrete-product-prices,concrete-product-image-sets,concrete-product-availabilities
+    When I send a GET request:    /abstract-products/${multivariant.abstract_product.concretes_3}?include=concrete-products,concrete-product-prices,concrete-product-image-sets,concrete-product-availabilities
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
-    And Response body parameter should be:    [data][id]    ${abstract_product_with_variants.concretes_3}
-    And Response body parameter should be:    [data][attributes][sku]    ${abstract_product_with_variants.concretes_3}
-    And Response body parameter should be:    [data][attributes][name]    ${abstract_product_with_variants.concretes_name_3}
+    And Response body parameter should be:    [data][id]    ${multivariant.abstract_product.concretes_3}
+    And Response body parameter should be:    [data][attributes][sku]    ${multivariant.abstract_product.concretes_3}
+    And Response body parameter should be:    [data][attributes][name]    ${multivariant.abstract_product.concretes_name_3}
     And Response body has correct self link internal
     And Response should contain the array of a certain size:    [data][relationships][concrete-products][data]    4
     And Response should contain the array larger than a certain size:    [included]    4

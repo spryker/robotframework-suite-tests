@@ -8,11 +8,11 @@ Default Tags    glue
 ENABLER
     TestSetup
 Abstract_prices_detault_only
-    When I send a GET request:    /abstract-products/${abstract_product_with_variants.concretes_3}/abstract-product-prices
+    When I send a GET request:    /abstract-products/${multivariant.abstract_product.concretes_3}/abstract-product-prices
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
-    And Response body parameter should be:    [data][0][id]    ${abstract_product_with_variants.concretes_3}
+    And Response body parameter should be:    [data][0][id]    ${multivariant.abstract_product.concretes_3}
     And Response body parameter should be greater than:    [data][0][attributes][price]   100
     And Save value to a variable:    [data][0][attributes][price]    default.price
     And Response should contain the array of a certain size:    [data][0][attributes][prices]    1

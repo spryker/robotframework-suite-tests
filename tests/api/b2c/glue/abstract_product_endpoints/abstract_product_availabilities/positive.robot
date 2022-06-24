@@ -55,12 +55,12 @@ Product_is_unavailable
 
 Product_is_available_with_3_concrete_stocks_combined
     #checks that stock of all 3 concretes as aggregated in response
-    When I send a GET request:    /abstract-products/${abstract_product_with_variants.concretes_3}/abstract-product-availabilities
+    When I send a GET request:    /abstract-products/${multivariant.abstract_product.concretes_3}/abstract-product-availabilities
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response body parameter should be:    [data][0][type]    abstract-product-availabilities
-    And Response body parameter should be:    [data][0][id]    ${abstract_product_with_variants.concretes_3}
+    And Response body parameter should be:    [data][0][id]    ${multivariant.abstract_product.concretes_3}
     And Response body parameter should be:    [data][0][attributes][availability]    True
     And Response body parameter should be greater than:    [data][0][attributes][quantity]    ${stock_is_20}
     And Response body has correct self link  
