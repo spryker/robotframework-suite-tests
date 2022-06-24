@@ -245,7 +245,6 @@
             "option_2": "OP_insurance"
         },
         "special_product_abstract_sku": {
-            "with_multiple_variants": "130",
             "with_measurement_unit": "M23723",
             "with_packaging_unit": "M21766"
         },
@@ -287,11 +286,6 @@
                 "concrete_sku": "193_32124735",
                 "abstract_sku": "193",
                 "abstract_name": "TomTom Golf"
-            },
-            "multivariant": {
-                "variant1_name": "Lenovo ThinkStation P300",
-                "variant1_sku": "130_29285281",
-                "variant2_sku": "130_24326086"
             },
             "product_without_relations": "019_21081473"
         },
@@ -350,7 +344,10 @@
         },
         "abstract_product": {
             "product_with_multiple_variants": {
-                "sku": "130"
+                "sku": "130",
+                "variant1_name": "Lenovo ThinkStation P300",
+                "variant1_sku": "130_29285281",
+                "variant2_sku": "130_24326086"
             },
             "product_with_label": {
                 "sku": "145",
@@ -369,7 +366,6 @@
             "total_qty_of_products": "3",
             "qty_of_each_product": "1"
         },
-        "multi_variant_product_abstract_sku": "M58035",
         "review": {
             "title": "This is a review",
             "text": "This is review text",

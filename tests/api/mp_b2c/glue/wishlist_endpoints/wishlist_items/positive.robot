@@ -67,10 +67,10 @@ Adding_multiple_variant_of_abstract_product_in_wishlist
     ...    AND    Response status code should be:    201 
     ...    AND    Response reason should be:    Created
     ...    AND    Save value to a variable:    [data][id]        wishlist_id
-    When I send a POST request:    /wishlists/${wishlist_id}/wishlist-items    {"data": {"type": "wishlist-items","attributes": {"sku": "${concrete_product.multivariant.variant1_sku}"}}}
+    When I send a POST request:    /wishlists/${wishlist_id}/wishlist-items    {"data": {"type": "wishlist-items","attributes": {"sku": "${abstract_product.product_with_multiple_variants.variant1_sku}"}}}
     Then Response status code should be:    201 
     And Response reason should be:    Created
-    When I send a POST request:    /wishlists/${wishlist_id}/wishlist-items    {"data": {"type": "wishlist-items","attributes": {"sku": "${concrete_product.multivariant.variant2_sku}"}}}
+    When I send a POST request:    /wishlists/${wishlist_id}/wishlist-items    {"data": {"type": "wishlist-items","attributes": {"sku": "${abstract_product.product_with_multiple_variants.variant2_sku}"}}}
     Then Response status code should be:    201 
     And Response reason should be:    Created
     And Save value to a variable:    [data][id]    wishlist_items_id
