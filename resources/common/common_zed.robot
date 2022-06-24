@@ -77,7 +77,7 @@ Zed: Uncheck Checkbox by Label:
 
 Zed: submit the form
     wait until element is visible    ${zed_save_button}
-    Click   ${zed_save_button}
+    Wait Until Keyword Succeeds    3 x    3 s    Click    ${zed_save_button}    
     Wait Until Element Is Visible    ${zed_log_out_button}
 
 Zed: perform search by:

@@ -217,9 +217,9 @@ Yves: discount is applied:
 Yves: promotional product offer is/not shown in cart:
     [Arguments]    ${isShown}
     IF    '${isShown}'=='true'
-        Element Should Be Visible    ${shopping_cart_promotional_product_section}    message=Promotional products are not displayed but should be
+        Element Should Be Visible    ${shopping_cart_promotional_product_section}    message=Promotional products are not displayed but should be    timeout=0:00:30
     ELSE IF    '${isShown}'=='false'
-        Element Should Not Be Visible    ${shopping_cart_promotional_product_section}    message=Promotional products are displayed but should not
+        Element Should Not Be Visible    ${shopping_cart_promotional_product_section}    message=Promotional products are displayed but should not    timeout=0:00:30
     END
 
 Yves: change quantity of promotional product and add to cart:

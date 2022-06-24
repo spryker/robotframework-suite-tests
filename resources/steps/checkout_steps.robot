@@ -12,6 +12,8 @@ ${cancelRequestButton}    ${checkout_summary_cancel_request_button}
 ${alertWarning}    ${checkout_summary_alert_warning}
 ${quoteStatus}    ${checkout_summary_quote_status}
 &{submit_checkout_form_button}    b2b=xpath=//div[contains(@class,'form--checkout-form')]//button[@data-qa='submit-button']    b2c=xpath=//div[contains(@class,'form--checkout-form')]//button[@data-qa='submit-button']    suite-nonsplit=xpath=//button[@data-qa='submit-button']
+&{billing_address_section}    b2b=xpath=//form[@name='addressesForm']//div[contains(@class,'billing-same-as-shipping')]    b2c=xpath=//form[@name='addressesForm']//div[contains(@class,'billing-address')]    suite-nonsplit=xpath=//form[@name='addressesForm']//div[contains(@class,'billing-same-as-shipping')]
+${selected address}
 
 *** Keywords ***
 Yves: billing address same as shipping address:
@@ -21,6 +23,7 @@ Yves: billing address same as shipping address:
     ${checkboxState}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//input[@id='addressesForm_billingSameAsShipping'][@checked]
     IF    '${checkboxState}'=='False' and '${state}' == 'true'    Click Element by xpath with JavaScript    //input[@id='addressesForm_billingSameAsShipping']
     IF    '${checkboxState}'=='True' and '${state}' == 'false'    Click Element by xpath with JavaScript    //input[@id='addressesForm_billingSameAsShipping']
+    Wait Until Element Is Not Visible    ${billing_address_section}[${env}]
 
 Yves: accept the terms and conditions:
     [Documentation]    ${state} can be true or false
@@ -37,8 +40,12 @@ Yves: accept the terms and conditions:
 
 Yves: select the following existing address on the checkout as 'shipping' address and go next:
     [Arguments]    ${addressToUse}
-    Wait Until Element Is Visible    ${checkout_address_delivery_selector}[${env}]
-    Select From List By Label    ${checkout_address_delivery_selector}[${env}]    ${addressToUse}
+    Wait Until Element Is Visible    ${checkout_address_delivery_selector}[${env}] 
+    WHILE  '${selected address}' != '${addressToUse}'
+        Run Keywords         
+            Select From List By Label    ${checkout_address_delivery_selector}[${env}]    ${addressToUse}
+            ${selected address}=    Get Text    xpath=//div[contains(@class,'shippingAddress')]//select[@name='checkout-full-addresses'][contains(@class,'address__form')]/..//span[contains(@id,'checkout-full-address')]
+    END
     Click    ${submit_checkout_form_button}[${env}]
 
 Yves: fill in the following new shipping address:
