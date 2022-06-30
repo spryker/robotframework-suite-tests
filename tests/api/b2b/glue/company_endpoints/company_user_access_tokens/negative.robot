@@ -9,7 +9,7 @@ ENABLER
     TestSetup
     
 Request_access_token_by_invalid_company_id
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token} 
     When I send a POST request:    /company-user-access-tokens    {"data":{"type":"company-user-access-tokens","attributes":{"idCompanyUser":"35235"}}}
     Then Response status code should be:    422
@@ -18,7 +18,7 @@ Request_access_token_by_invalid_company_id
     And Response should return error message:    idCompanyUser => This is not a valid UUID.
 
 Request_access_token_by_empty_company_id
-   [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+   [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token} 
     When I send a POST request:    /company-user-access-tokens    {"data":{"type":"company-user-access-tokens","attributes":{"idCompanyUser":""}}}
     Then Response status code should be:    422
@@ -27,7 +27,7 @@ Request_access_token_by_empty_company_id
     And Response should return error message:    idCompanyUser => This value should not be blank.
 
 Request_access_token_with_invalid_type
-   [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+   [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token} 
     When I send a POST request:    /company-user-access-tokens    {"data":{"type":"company-access-tokens","attributes":{"idCompanyUser":""}}}
    Then Response status code should be:    400
@@ -35,7 +35,7 @@ Request_access_token_with_invalid_type
     And Response should return error message:    Invalid type.
 
 Request_access_token_with_empty_type
-   [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+   [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token} 
     When I send a POST request:    /company-user-access-tokens    {"data":{"type":"","attributes":{"idCompanyUser":""}}}
     Then Response status code should be:    400
@@ -43,7 +43,7 @@ Request_access_token_with_empty_type
     And Response should return error message:    Invalid type.
 
 Request_access_token_using_invalid_token
-   [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+   [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=546789
     When I send a POST request:    /company-user-access-tokens    {"data":{"type":"company-user-access-tokens","attributes":{"idCompanyUser":"35235"}}}
     Then Response status code should be:    401
@@ -59,10 +59,10 @@ Request_access_token_with_missing_token
     And Response should return error message:    Missing access token.
 
 Request_access_token_if_user_belong_to_other_company
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}  
     ...    AND    Save value to a variable:    [data][attributes][idCompanyUser]    company_user
-    ...    AND    I get access token for the customer:    ${yves_second_user_email}
+    ...    AND    I get access token for the customer:    ${yves_second_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}  
     When I send a POST request:    /company-user-access-tokens    {"data":{"type":"company-user-access-tokens","attributes":{"idCompanyUser":"${company_user}"}}}
     Then Response status code should be:    401

@@ -1,10 +1,14 @@
 *** Settings ***
 Suite Setup       SuiteSetup
 Resource    ../../../../../../resources/common/common_api.robot
+Test Setup    TestSetup
+Default Tags    glue
 
 *** Test Cases ***
+ENABLER
+    TestSetup
 Request_company_user_by_wrong_ID
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}  
     When I send a GET request:    /company-users/645647
     Then Response status code should be:    404
@@ -29,7 +33,7 @@ Request_company_user_with_wrong_access_token
 
 # CC-16616
 Retrieve_list_of_company_users_by_user_without_admin_role
-    When I get access token for the customer:    ${yves_shared_shopping_list_user_email}
+    When I get access token for the customer:    ${yves_shared_shopping_list_user.email}
     And I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     And I send a GET request:    /company-users
     Then Response status code should be:    403

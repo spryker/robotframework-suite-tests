@@ -10,9 +10,9 @@ ENABLER
     
 ####### POST #######
 Add_item_to_cart_non_existing_sku
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
-    ...    AND    I send a POST request:    /carts    {"data":{"type":"carts","attributes":{"priceMode":"${gross_mode}","currency":"${currency_code_eur}","store":"${store_de}","name":"Cart-${random}"}}}
+    ...    AND    I send a POST request:    /carts    {"data":{"type":"carts","attributes":{"priceMode":"${mode.gross}","currency":"${currency.eur.code}","store":"${store.de}","name":"Cart-${random}"}}}
     ...    AND    Save value to a variable:    [data][id]    cart_uid
     When I send a POST request:    /carts/${cart_uid}/items    {"data": {"type": "items","attributes": {"sku": "fake","quantity": 1}}}
     Then Response status code should be:    422
@@ -23,52 +23,44 @@ Add_item_to_cart_non_existing_sku
     ...    AND    Response status code should be:    204
 
 Add_item_to_non_existing_cart
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
-    When I send a POST request:    /carts/fake/items    {"data": {"type": "items","attributes": {"sku": "${concrete_available_with_stock_and_never_out_of_stock}","quantity": 1}}}
+    When I send a POST request:    /carts/fake/items    {"data": {"type": "items","attributes": {"sku": "${concrete.available_product.with_stock_and_never_out_of_stock.sku}","quantity": 1}}}
     Then Response status code should be:    404
     And Response reason should be:    Not Found
     And Response should return error code:    101
     And Response should return error message:    Cart with given uuid not found.
 
 Add_item_to_missing_cart
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
-    When I send a POST request:    /carts//items    {"data": {"type": "items","attributes": {"sku": "${concrete_available_with_stock_and_never_out_of_stock}","quantity": 1}}}
+    When I send a POST request:    /carts//items    {"data": {"type": "items","attributes": {"sku": "${concrete.available_product.with_stock_and_never_out_of_stock.sku}","quantity": 1}}}
     Then Response status code should be:    400
     And Response reason should be:    Bad Request
     And Response should return error code:    104
     And Response should return error message:    Cart uuid is missing.
 
 Add_item_to_cart_with_invalid_token
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
-    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
-    ...    AND    I send a POST request:    /carts    {"data":{"type":"carts","attributes":{"priceMode":"${gross_mode}","currency":"${currency_code_eur}","store":"${store_de}","name":"Cart-${random}"}}}
-    ...    AND    Save value to a variable:    [data][id]    cart_uid
-    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization="fake"
-    When I send a POST request:    /carts/${cart_uid}/items    {"data": {"type": "items","attributes": {"sku": "${concrete_available_with_stock_and_never_out_of_stock}","quantity": 1}}}
+    [Setup]    Run Keyword    I set Headers:    Content-Type=${default_header_content_type}    Authorization="fake"
+    When I send a POST request:    /carts/as/items    {"data": {"type": "items","attributes": {"sku": "${concrete.available_product.with_stock_and_never_out_of_stock.sku}","quantity": 1}}}
     Then Response status code should be:    401
     And Response reason should be:    Unauthorized
     And Response should return error code:    001
     And Response should return error message:    Invalid access token.
-    [Teardown]    Run Keywords    I get access token for the customer:    ${yves_user_email}
-    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
-    ...    AND    I send a DELETE request:     /carts/${cart_uid}
-    ...    AND    Response status code should be:    204
-
+  
 Add_item_to_cart_with_missing_token
-    When I send a POST request:    /carts/fake/items    {"data": {"type": "items","attributes": {"sku": "${concrete_available_with_stock_and_never_out_of_stock}","quantity": 1}}}
+    When I send a POST request:    /carts/fake/items    {"data": {"type": "items","attributes": {"sku": "${concrete.available_product.with_stock_and_never_out_of_stock.sku}","quantity": 1}}}
     Then Response status code should be:    403
     And Response reason should be:    Forbidden
     And Response should return error code:    002
     And Response should return error message:    Missing access token.
 
 Add_item_to_cart_with_wrong_type
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
-    ...    AND    I send a POST request:    /carts    {"data":{"type":"carts","attributes":{"priceMode":"${gross_mode}","currency":"${currency_code_eur}","store":"${store_de}","name":"Cart-${random}"}}}
+    ...    AND    I send a POST request:    /carts    {"data":{"type":"carts","attributes":{"priceMode":"${mode.gross}","currency":"${currency.eur.code}","store":"${store.de}","name":"Cart-${random}"}}}
     ...    AND    Save value to a variable:    [data][id]    cart_uid
-    When I send a POST request:    /carts/${cart_uid}/items    {"data": {"type": "carts","attributes": {"sku": "${concrete_available_with_stock_and_never_out_of_stock}","quantity": 1}}}
+    When I send a POST request:    /carts/${cart_uid}/items    {"data": {"type": "carts","attributes": {"sku": "${concrete.available_product.with_stock_and_never_out_of_stock.sku}","quantity": 1}}}
     Then Response status code should be:    400
     And Response reason should be:    Bad Request
     And Response should return error message:    Invalid type.
@@ -76,9 +68,9 @@ Add_item_to_cart_with_wrong_type
     ...    AND    Response status code should be:    204
 
 Add_item_to_cart_with_missing_properties
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
-    ...    AND    I send a POST request:    /carts    {"data":{"type":"carts","attributes":{"priceMode":"${gross_mode}","currency":"${currency_code_eur}","store":"${store_de}","name":"Cart-${random}"}}}
+    ...    AND    I send a POST request:    /carts    {"data":{"type":"carts","attributes":{"priceMode":"${mode.gross}","currency":"${currency.eur.code}","store":"${store.de}","name":"Cart-${random}"}}}
     ...    AND    Save value to a variable:    [data][id]    cart_uid
     When I send a POST request:    /carts/${cart_uid}/items    {"data": {"type": "items","attributes": {}}}
     Then Response status code should be:    422
@@ -90,9 +82,9 @@ Add_item_to_cart_with_missing_properties
     ...    AND    Response status code should be:    204
 
 Add_item_to_cart_with_invalid_properties
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
-    ...    AND    I send a POST request:    /carts    {"data":{"type":"carts","attributes":{"priceMode":"${gross_mode}","currency":"${currency_code_eur}","store":"${store_de}","name":"Cart-${random}"}}}
+    ...    AND    I send a POST request:    /carts    {"data":{"type":"carts","attributes":{"priceMode":"${mode.gross}","currency":"${currency.eur.code}","store":"${store.de}","name":"Cart-${random}"}}}
     ...    AND    Save value to a variable:    [data][id]    cart_uid
     When I send a POST request:    /carts/${cart_uid}/items    {"data": {"type": "items","attributes": {"sku": "","quantity": "" }}}
     Then Response status code should be:    422
@@ -107,9 +99,9 @@ Add_item_to_cart_with_invalid_properties
 
 ####### PATCH #######
 Update_item_in_cart_with_non_existing_item_id
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
-    ...    AND    I send a POST request:    /carts    {"data":{"type":"carts","attributes":{"priceMode":"${gross_mode}","currency":"${currency_code_eur}","store":"${store_de}","name":"Cart-${random}"}}}
+    ...    AND    I send a POST request:    /carts    {"data":{"type":"carts","attributes":{"priceMode":"${mode.gross}","currency":"${currency.eur.code}","store":"${store.de}","name":"Cart-${random}"}}}
     ...    AND    Save value to a variable:    [data][id]    cart_uid
     When I send a PATCH request:    /carts/${cart_uid}/items/fake    {"data": {"type": "items","attributes": {"quantity": 1}}}
     Then Response status code should be:    404
@@ -120,9 +112,9 @@ Update_item_in_cart_with_non_existing_item_id
     ...    AND    Response status code should be:    204
 
 Update_item_in_cart_with_no_item_id
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
-    ...    AND    I send a POST request:    /carts    {"data":{"type":"carts","attributes":{"priceMode":"${gross_mode}","currency":"${currency_code_eur}","store":"${store_de}","name":"Cart-${random}"}}}
+    ...    AND    I send a POST request:    /carts    {"data":{"type":"carts","attributes":{"priceMode":"${mode.gross}","currency":"${currency.eur.code}","store":"${store.de}","name":"Cart-${random}"}}}
     ...    AND    Save value to a variable:    [data][id]    cart_uid
     When I send a PATCH request:    /carts/${cart_uid}/items    {"data": {"type": "items","attributes": {"quantity": 1}}}
     Then Response status code should be:    400
@@ -132,7 +124,7 @@ Update_item_in_cart_with_no_item_id
     ...    AND    Response status code should be:    204
 
 Update_item_in_cart_with_non_existing_cart_id
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     When I send a PATCH request:    /carts/fake/items/fake    {"data": {"type": "items","attributes": {"quantity": 1}}}
     Then Response status code should be:    404
@@ -141,11 +133,11 @@ Update_item_in_cart_with_non_existing_cart_id
     And Response should return error message:    Cart with given uuid not found.
 
 Update_item_in_cart_with_no_cart_id
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
-    ...    AND    I send a POST request:    /carts    {"data":{"type":"carts","attributes":{"priceMode":"${gross_mode}","currency":"${currency_code_eur}","store":"${store_de}","name":"Cart-${random}"}}}
+    ...    AND    I send a POST request:    /carts    {"data":{"type":"carts","attributes":{"priceMode":"${mode.gross}","currency":"${currency.eur.code}","store":"${store.de}","name":"Cart-${random}"}}}
     ...    AND    Save value to a variable:    [data][id]    cart_uid
-    ...    AND    I send a POST request:    /carts/${cart_uid}/items?include=items    {"data": {"type": "items","attributes": {"sku": "${concrete_available_with_stock_and_never_out_of_stock}","quantity": 1}}}
+    ...    AND    I send a POST request:    /carts/${cart_uid}/items?include=items    {"data": {"type": "items","attributes": {"sku": "${concrete.available_product.with_stock_and_never_out_of_stock.sku}","quantity": 1}}}
     ...    AND    Save value to a variable:    [included][0][id]    item_uid
     When I send a PATCH request:    /carts//items/${item_uid}    {"data": {"type": "items","attributes": {"quantity": 1}}}
     Then Response status code should be:    400
@@ -155,30 +147,30 @@ Update_item_in_cart_with_no_cart_id
     ...    AND    Response status code should be:    204
 
 Update_item_in_cart_with_another_user_token
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
-    ...    AND    I send a POST request:    /carts    {"data":{"type":"carts","attributes":{"priceMode":"${gross_mode}","currency":"${currency_code_eur}","store":"${store_de}","name":"Cart-${random}"}}}
+    ...    AND    I send a POST request:    /carts    {"data":{"type":"carts","attributes":{"priceMode":"${mode.gross}","currency":"${currency.eur.code}","store":"${store.de}","name":"Cart-${random}"}}}
     ...    AND    Save value to a variable:    [data][id]    cart_uid
-    ...    AND    I send a POST request:    /carts/${cart_uid}/items?include=items    {"data": {"type": "items","attributes": {"sku": "${concrete_available_with_stock_and_never_out_of_stock}","quantity": 1}}}
+    ...    AND    I send a POST request:    /carts/${cart_uid}/items?include=items    {"data": {"type": "items","attributes": {"sku": "${concrete.available_product.with_stock_and_never_out_of_stock.sku}","quantity": 1}}}
     ...    AND    Save value to a variable:    [included][0][id]    item_uid
-    ...    AND    I get access token for the customer:    ${yves_second_user_email}
+    ...    AND    I get access token for the customer:    ${yves_second_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     When I send a PATCH request:    /carts/${cart_uid}/items/${item_uid}    {"data": {"type": "items","attributes": {"quantity": 1}}}
     Then Response status code should be:    404
     And Response reason should be:    Not Found
     And Response should return error code:    101
     And Response should return error message:    Cart with given uuid not found.
-    [Teardown]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Teardown]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     ...    AND    I send a DELETE request:     /carts/${cart_uid}
     ...    AND    Response status code should be:    204
 
 Update_item_without_changing_qty
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
-    ...    AND    I send a POST request:    /carts    {"data":{"type":"carts","attributes":{"priceMode":"${gross_mode}","currency":"${currency_code_eur}","store":"${store_de}","name":"Cart-${random}"}}}
+    ...    AND    I send a POST request:    /carts    {"data":{"type":"carts","attributes":{"priceMode":"${mode.gross}","currency":"${currency.eur.code}","store":"${store.de}","name":"Cart-${random}"}}}
     ...    AND    Save value to a variable:    [data][id]    cart_uid
-    ...    AND    I send a POST request:    /carts/${cart_uid}/items?include=items    {"data": {"type": "items","attributes": {"sku": "${concrete_available_with_stock_and_never_out_of_stock}","quantity": 1}}}
+    ...    AND    I send a POST request:    /carts/${cart_uid}/items?include=items    {"data": {"type": "items","attributes": {"sku": "${concrete.available_product.with_stock_and_never_out_of_stock.sku}","quantity": 1}}}
     ...    AND    Save value to a variable:    [included][0][id]    item_uid
     When I send a PATCH request:    /carts/${cart_uid}/items/${item_uid}    {"data": {"type": "items","attributes": {"quantity": 1}}}
     Then Response status code should be:    422
@@ -189,11 +181,11 @@ Update_item_without_changing_qty
     ...    AND    Response status code should be:    204
 
 Update_item_with_invalid_parameters
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
-    ...    AND    I send a POST request:    /carts    {"data":{"type":"carts","attributes":{"priceMode":"${gross_mode}","currency":"${currency_code_eur}","store":"${store_de}","name":"Cart-${random}"}}}
+    ...    AND    I send a POST request:    /carts    {"data":{"type":"carts","attributes":{"priceMode":"${mode.gross}","currency":"${currency.eur.code}","store":"${store.de}","name":"Cart-${random}"}}}
     ...    AND    Save value to a variable:    [data][id]    cart_uid
-    ...    AND    I send a POST request:    /carts/${cart_uid}/items?include=items    {"data": {"type": "items","attributes": {"sku": "${concrete_available_with_stock_and_never_out_of_stock}","quantity": 1}}}
+    ...    AND    I send a POST request:    /carts/${cart_uid}/items?include=items    {"data": {"type": "items","attributes": {"sku": "${concrete.available_product.with_stock_and_never_out_of_stock.sku}","quantity": 1}}}
     ...    AND    Save value to a variable:    [included][0][id]    item_uid
     When I send a PATCH request:    /carts/${cart_uid}/items/${item_uid}    {"data": {"type": "items","attributes": {"quantity": ""}}}
     Then Response status code should be:    422
@@ -206,9 +198,9 @@ Update_item_with_invalid_parameters
 
 ####### DELETE #######
 Delete_cart_item_with_non_existing_item_id
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
-    ...    AND    I send a POST request:    /carts    {"data":{"type":"carts","attributes":{"priceMode":"${gross_mode}","currency":"${currency_code_eur}","store":"${store_de}","name":"Cart-${random}"}}}
+    ...    AND    I send a POST request:    /carts    {"data":{"type":"carts","attributes":{"priceMode":"${mode.gross}","currency":"${currency.eur.code}","store":"${store.de}","name":"Cart-${random}"}}}
     ...    AND    Save value to a variable:    [data][id]    cart_uid
     When I send a DELETE request:    /carts/${cart_uid}/items/fake
     Then Response status code should be:    404
@@ -219,9 +211,9 @@ Delete_cart_item_with_non_existing_item_id
     ...    AND    Response status code should be:    204
 
 Delete_cart_item_with_empty_item_id
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
-    ...    AND    I send a POST request:    /carts    {"data":{"type":"carts","attributes":{"priceMode":"${gross_mode}","currency":"${currency_code_eur}","store":"${store_de}","name":"Cart-${random}"}}}
+    ...    AND    I send a POST request:    /carts    {"data":{"type":"carts","attributes":{"priceMode":"${mode.gross}","currency":"${currency.eur.code}","store":"${store.de}","name":"Cart-${random}"}}}
     ...    AND    Save value to a variable:    [data][id]    cart_uid
     When I send a DELETE request:    /carts/${cart_uid}/items
     Then Response status code should be:    400
@@ -231,7 +223,7 @@ Delete_cart_item_with_empty_item_id
     ...    AND    Response status code should be:    204
 
 Delete_cart_item_with_non_existing_cart
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     When I send a DELETE request:    /carts/fake/items/fake
     Then Response status code should be:    404
@@ -240,7 +232,7 @@ Delete_cart_item_with_non_existing_cart
     And Response should return error message:    Cart with given uuid not found.
 
 Delete_cart_item_with_missing_cart
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     When I send a DELETE request:    /carts//items/fake
     Then Response status code should be:    400

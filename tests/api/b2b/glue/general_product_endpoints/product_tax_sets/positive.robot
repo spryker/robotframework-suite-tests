@@ -1,11 +1,14 @@
 *** Settings ***
 Suite Setup       SuiteSetup
 Resource    ../../../../../../resources/common/common_api.robot
+Test Setup    TestSetup
+Default Tags    glue
 
 *** Test Cases ***
-
+ENABLER
+    TestSetup
 Get_product_tax sets
-    When I send a GET request:    /abstract-products/${abstract_product_with_reviews}/product-tax-sets
+    When I send a GET request:    /abstract-products/${abstract.with_review.sku}/product-tax-sets
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}

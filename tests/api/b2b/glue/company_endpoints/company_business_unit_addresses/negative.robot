@@ -1,10 +1,14 @@
 *** Settings ***
 Suite Setup       SuiteSetup
 Resource    ../../../../../../resources/common/common_api.robot
+Test Setup    TestSetup
+Default Tags    glue
 
 *** Test Cases ***
+ENABLER
+    TestSetup
 Request_business_unit_address_by_wrong_ID
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}  
     When I send a GET request:    /company-business-unit-addresses/3456r7t8y8u
     Then Response status code should be:    404
@@ -28,7 +32,7 @@ Request_business_unit_address_with_wrong_access_token
     And Response body parameter should be:    [errors][0][detail]    Invalid access token.
 
 Request_business_unit_address_with_mine
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}  
     When I send a GET request:    /company-business-unit-addresses/mine
     Then Response status code should be:    404
