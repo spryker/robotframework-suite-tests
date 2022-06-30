@@ -11,15 +11,15 @@ ENABLER
 ### POST ###
 Add_configured_bundle_with_1_slot_1_product_new_cart   
     [Setup]    Run Keyword    I set Headers:    Content-Type=${default_header_content_type}    X-Anonymous-Customer-Unique-Id=${random}
-    When I send a POST request:    /guest-carts//guest-configured-bundles    {"data": {"type": "guest-configured-bundles","attributes": {"quantity": 1,"templateUuid": "${configurable_bundle_template_1_uuid}","items": [{"sku": "${configurable_bundle_slot_1_product_1}","quantity": 1,"slotUuid": "${configurable_bundle_slot_1_uuid}"}]}}}
+    When I send a POST request:    /guest-carts//guest-configured-bundles    {"data": {"type": "guest-configured-bundles","attributes": {"quantity": 1,"templateUuid": "${configurable_bundle_template_1_uuid}","items": [{"sku": "${configurable_bundle.slot_1.product_1}","quantity": 1,"slotUuid": "${configurable_bundle_slot_1_uuid}"}]}}}
     Then Response status code should be:    201
     And Response reason should be:    Created
     And Save value to a variable:    [data][id]    guest_cart_id
     And Response should contain the array larger than a certain size:    [data]    0
     And Response body parameter should be:    [data][type]    guest-carts
-    And Response body parameter should be:    [data][attributes][priceMode]    ${gross_mode}
-    And Response body parameter should be:    [data][attributes][currency]    ${currency_code_eur}
-    And Response body parameter should be:    [data][attributes][store]    ${store_de}
+    And Response body parameter should be:    [data][attributes][priceMode]    ${currency.mode.gross}
+    And Response body parameter should be:    [data][attributes][currency]    ${currency.eur.code}
+    And Response body parameter should be:    [data][attributes][store]    ${store.de}
     And Response body parameter should not be EMPTY:    [data][attributes][totals][expenseTotal]
     And Response body parameter should not be EMPTY:    [data][attributes][totals][discountTotal]
     And Response body parameter should be greater than:    [data][attributes][totals][taxTotal]    0
@@ -36,17 +36,17 @@ Add_configured_bundle_with_1_slot_1_product_new_cart
 
 Add_configured_bundle_with_multiple_slots_and_products_to_existing_cart
     [Setup]    Run Keywords    I set Headers:    Content-Type=${default_header_content_type}    X-Anonymous-Customer-Unique-Id=${random}
-    ...    AND    Create a guest cart:    ${random}    ${concrete_available_product_sku}    1
-    When I send a POST request:    /guest-carts/${guest_cart_id}/guest-configured-bundles?include=guest-cart-items    {"data": {"type": "guest-configured-bundles","attributes": {"quantity": 1,"templateUuid": "${configurable_bundle_template_2_uuid}","items": [{"sku": "${configurable_bundle_slot_5_product_1}","quantity": 1,"slotUuid": "${configurable_bundle_slot_5_uuid}"}]}}}
+    ...    AND    Create a guest cart:    ${random}    ${concrete_available_product.sku}    1
+    When I send a POST request:    /guest-carts/${guest_cart_id}/guest-configured-bundles?include=guest-cart-items    {"data": {"type": "guest-configured-bundles","attributes": {"quantity": 1,"templateUuid": "${configurable_bundle_template_2_uuid}","items": [{"sku": "${configurable_bundle.slot_5.product_1}","quantity": 1,"slotUuid": "${configurable_bundle_slot_5_uuid}"}]}}}
     And Save value to a variable:    [included][0][attributes][configuredBundle][groupKey]    bundle_id
-    And I send a POST request:    /guest-carts/${guest_cart_id}/guest-configured-bundles/${bundle_id}    {"data": {"type": "guest-configured-bundles","attributes": {"quantity": 1,"templateUuid": "${configurable_bundle_template_2_uuid}","items": [{"sku": "${configurable_bundle_slot_6_product_1}","quantity": 1,"slotUuid": "${configurable_bundle_slot_6_uuid}"}]}}}
+    And I send a POST request:    /guest-carts/${guest_cart_id}/guest-configured-bundles/${bundle_id}    {"data": {"type": "guest-configured-bundles","attributes": {"quantity": 1,"templateUuid": "${configurable_bundle_template_2_uuid}","items": [{"sku": "${configurable_bundle.slot_6.product_1}","quantity": 1,"slotUuid": "${configurable_bundle_slot_6_uuid}"}]}}}
     Then Response status code should be:    201
     And Response reason should be:    Created
     And Response should contain the array larger than a certain size:    [data]    0
     And Response body parameter should be:    [data][type]    guest-carts
-    And Response body parameter should be:    [data][attributes][priceMode]    ${gross_mode}
-    And Response body parameter should be:    [data][attributes][currency]    ${currency_code_eur}
-    And Response body parameter should be:    [data][attributes][store]    ${store_de}
+    And Response body parameter should be:    [data][attributes][priceMode]    ${currency.mode.gross}
+    And Response body parameter should be:    [data][attributes][currency]    ${currency.eur.code}
+    And Response body parameter should be:    [data][attributes][store]    ${store.de}
     And Response body parameter should not be EMPTY:    [data][attributes][totals][expenseTotal]
     And Response body parameter should not be EMPTY:    [data][attributes][totals][discountTotal]
     And Response body parameter should be greater than:    [data][attributes][totals][taxTotal]    0
@@ -63,7 +63,7 @@ Add_configured_bundle_with_multiple_slots_and_products_to_existing_cart
 
 Add_configured_bundle_include_cart_rules
     [Setup]    Run Keyword    I set Headers:    Content-Type=${default_header_content_type}    X-Anonymous-Customer-Unique-Id=${random}
-    When I send a POST request:    /guest-carts//guest-configured-bundles?include=cart-rules    {"data": {"type": "guest-configured-bundles","attributes": {"quantity": 1,"templateUuid": "${configurable_bundle_template_2_uuid}","items": [{"sku": "${configurable_bundle_slot_5_product_1}","quantity": 1,"slotUuid": "${configurable_bundle_slot_5_uuid}"}]}}}
+    When I send a POST request:    /guest-carts//guest-configured-bundles?include=cart-rules    {"data": {"type": "guest-configured-bundles","attributes": {"quantity": 1,"templateUuid": "${configurable_bundle_template_2_uuid}","items": [{"sku": "${configurable_bundle.slot_5.product_1}","quantity": 1,"slotUuid": "${configurable_bundle_slot_5_uuid}"}]}}}
     Then Response status code should be:    201
     And Response reason should be:    Created
     And Save value to a variable:    [data][id]    guest_cart_id
@@ -90,7 +90,7 @@ Add_configured_bundle_include_cart_rules
 
 Add_configured_bundle_include_guest_cart_items
     [Setup]    Run Keyword    I set Headers:    Content-Type=${default_header_content_type}    X-Anonymous-Customer-Unique-Id=${random}
-    When I send a POST request:    /guest-carts//guest-configured-bundles?include=guest-cart-items    {"data": {"type": "guest-configured-bundles","attributes": {"quantity": 1,"templateUuid": "${configurable_bundle_template_2_uuid}","items": [{"sku": "${configurable_bundle_slot_5_product_1}","quantity": 1,"slotUuid": "${configurable_bundle_slot_5_uuid}"}]}}}
+    When I send a POST request:    /guest-carts//guest-configured-bundles?include=guest-cart-items    {"data": {"type": "guest-configured-bundles","attributes": {"quantity": 1,"templateUuid": "${configurable_bundle_template_2_uuid}","items": [{"sku": "${configurable_bundle.slot_5.product_1}","quantity": 1,"slotUuid": "${configurable_bundle_slot_5_uuid}"}]}}}
     Then Response status code should be:    201
     And Response reason should be:    Created
     And Save value to a variable:    [data][id]    guest_cart_id
@@ -144,7 +144,7 @@ Add_configured_bundle_include_guest_cart_items
 
 Add_configured_bundle_include_concrete_products
     [Setup]    Run Keyword    I set Headers:    Content-Type=${default_header_content_type}    X-Anonymous-Customer-Unique-Id=${random}
-    When I send a POST request:    /guest-carts//guest-configured-bundles?include=concrete-products,guest-cart-items    {"data": {"type": "guest-configured-bundles","attributes": {"quantity": 1,"templateUuid": "${configurable_bundle_template_2_uuid}","items": [{"sku": "${configurable_bundle_slot_5_product_1}","quantity": 1,"slotUuid": "${configurable_bundle_slot_5_uuid}"}]}}}
+    When I send a POST request:    /guest-carts//guest-configured-bundles?include=concrete-products,guest-cart-items    {"data": {"type": "guest-configured-bundles","attributes": {"quantity": 1,"templateUuid": "${configurable_bundle_template_2_uuid}","items": [{"sku": "${configurable_bundle.slot_5.product_1}","quantity": 1,"slotUuid": "${configurable_bundle_slot_5_uuid}"}]}}}
     Then Response status code should be:    201
     And Response reason should be:    Created
     And Save value to a variable:    [data][id]    guest_cart_id
@@ -154,7 +154,7 @@ Add_configured_bundle_include_concrete_products
     And Response include should contain certain entity type:     concrete-products
     And Response should contain the array larger than a certain size:    [included]    0
     And Response body parameter should be:    [included][0][type]    concrete-products
-    And Response body parameter should be:    [included][0][id]    ${configurable_bundle_slot_5_product_1}
+    And Response body parameter should be:    [included][0][id]    ${configurable_bundle.slot_5.product_1}
     And Each array element of array in response should contain property:    [included]    links
     And Each array element of array in response should contain property:    [included]    attributes
     And Response body parameter should not be EMPTY:    [included][0][attributes][sku]
@@ -175,8 +175,8 @@ Add_configured_bundle_include_concrete_products
 
 Add_configured_bundle_include_bundle_items
     [Setup]    Run Keywords    I set Headers:    Content-Type=${default_header_content_type}    X-Anonymous-Customer-Unique-Id=${random}
-    ...    AND    Create a guest cart:    ${random}    ${bundle_product_concrete_sku}    1   
-    When I send a POST request:    /guest-carts/${guest_cart_id}/guest-configured-bundles?include=bundle-items    {"data": {"type": "guest-configured-bundles","attributes": {"quantity": 1,"templateUuid": "${configurable_bundle_template_2_uuid}","items": [{"sku": "${configurable_bundle_slot_5_product_1}","quantity": 1,"slotUuid": "${configurable_bundle_slot_5_uuid}"}]}}}
+    ...    AND    Create a guest cart:    ${random}    ${bundle_product.concrete_sku}    1   
+    When I send a POST request:    /guest-carts/${guest_cart_id}/guest-configured-bundles?include=bundle-items    {"data": {"type": "guest-configured-bundles","attributes": {"quantity": 1,"templateUuid": "${configurable_bundle_template_2_uuid}","items": [{"sku": "${configurable_bundle.slot_5.product_1}","quantity": 1,"slotUuid": "${configurable_bundle_slot_5_uuid}"}]}}}
     Then Response status code should be:    201
     And Response reason should be:    Created
     And Response should contain the array larger than a certain size:    [data]    0
@@ -204,9 +204,9 @@ Add_configured_bundle_include_bundle_items
 
 Add_same_configured_bundle_again_to_check_quantity_not_merged
     [Setup]    Run Keyword    I set Headers:    Content-Type=${default_header_content_type}    X-Anonymous-Customer-Unique-Id=${random}
-    When I send a POST request:    /guest-carts//guest-configured-bundles    {"data": {"type": "guest-configured-bundles","attributes": {"quantity": 1,"templateUuid": "${configurable_bundle_template_2_uuid}","items": [{"sku": "${configurable_bundle_slot_5_product_1}","quantity": 1,"slotUuid": "${configurable_bundle_slot_5_uuid}"}]}}}
+    When I send a POST request:    /guest-carts//guest-configured-bundles    {"data": {"type": "guest-configured-bundles","attributes": {"quantity": 1,"templateUuid": "${configurable_bundle_template_2_uuid}","items": [{"sku": "${configurable_bundle.slot_5.product_1}","quantity": 1,"slotUuid": "${configurable_bundle_slot_5_uuid}"}]}}}
     And Save value to a variable:    [data][id]    guest_cart_id
-    And I send a POST request:    /guest-carts/${guest_cart_id}/guest-configured-bundles?include=guest-cart-items    {"data": {"type": "guest-configured-bundles","attributes": {"quantity": 1,"templateUuid": "${configurable_bundle_template_2_uuid}","items": [{"sku": "${configurable_bundle_slot_5_product_1}","quantity": 1,"slotUuid": "${configurable_bundle_slot_5_uuid}"}]}}}
+    And I send a POST request:    /guest-carts/${guest_cart_id}/guest-configured-bundles?include=guest-cart-items    {"data": {"type": "guest-configured-bundles","attributes": {"quantity": 1,"templateUuid": "${configurable_bundle_template_2_uuid}","items": [{"sku": "${configurable_bundle.slot_5.product_1}","quantity": 1,"slotUuid": "${configurable_bundle_slot_5_uuid}"}]}}}
     Then Response status code should be:    201   
     And Response should contain the array larger than a certain size:    [data]    0
     And Response body parameter should be:    [data][type]    guest-carts   
@@ -214,14 +214,14 @@ Add_same_configured_bundle_again_to_check_quantity_not_merged
     And Response include should contain certain entity type:     guest-cart-items
     And Response should contain the array of a certain size:    [data][relationships][guest-cart-items][data]    2   
     And Response should contain the array of a certain size:    [included]    2
-    And Each array element of array in response should contain nested property with value:    [included]    [attributes][sku]    ${configurable_bundle_slot_5_product_1}
+    And Each array element of array in response should contain nested property with value:    [included]    [attributes][sku]    ${configurable_bundle.slot_5.product_1}
     And Each array element of array in response should contain nested property with value:    [included]    [attributes][quantity]    1
     [Teardown]    Run Keyword    Cleanup all items in the guest cart:    ${guest_cart_id}
 
 Add_configured_bundle_to_cart_that_contains_same_product
     [Setup]    Run Keywords    I set Headers:    Content-Type=${default_header_content_type}    X-Anonymous-Customer-Unique-Id=${random}
-    ...    AND    Create a guest cart:    ${random}    ${configurable_bundle_slot_5_product_1}    1
-    When I send a POST request:    /guest-carts/${guest_cart_id}/guest-configured-bundles?include=guest-cart-items    {"data": {"type": "guest-configured-bundles","attributes": {"quantity": 1,"templateUuid": "${configurable_bundle_template_2_uuid}","items": [{"sku": "${configurable_bundle_slot_5_product_1}","quantity": 1,"slotUuid": "${configurable_bundle_slot_5_uuid}"}]}}}
+    ...    AND    Create a guest cart:    ${random}    ${configurable_bundle.slot_5.product_1}    1
+    When I send a POST request:    /guest-carts/${guest_cart_id}/guest-configured-bundles?include=guest-cart-items    {"data": {"type": "guest-configured-bundles","attributes": {"quantity": 1,"templateUuid": "${configurable_bundle_template_2_uuid}","items": [{"sku": "${configurable_bundle.slot_5.product_1}","quantity": 1,"slotUuid": "${configurable_bundle_slot_5_uuid}"}]}}}
     Then Response status code should be:    201
     And Response should contain the array larger than a certain size:    [data]    0
     And Response body parameter should be:    [data][type]    guest-carts   
@@ -229,15 +229,15 @@ Add_configured_bundle_to_cart_that_contains_same_product
     And Response include should contain certain entity type:     guest-cart-items
     And Response should contain the array of a certain size:    [data][relationships][guest-cart-items][data]    2   
     And Response should contain the array of a certain size:    [included]    2
-    And Each array element of array in response should contain nested property with value:    [included]    [attributes][sku]    ${configurable_bundle_slot_5_product_1}
+    And Each array element of array in response should contain nested property with value:    [included]    [attributes][sku]    ${configurable_bundle.slot_5.product_1}
     And Each array element of array in response should contain nested property with value:    [included]    [attributes][quantity]    1
     [Teardown]    Run Keyword    Cleanup all items in the guest cart:    ${guest_cart_id}
 
 Add_other_configured_bundle_product_with_same_template
     [Setup]    Run Keyword    I set Headers:    Content-Type=${default_header_content_type}    X-Anonymous-Customer-Unique-Id=${random}
-    When I send a POST request:    /guest-carts//guest-configured-bundles    {"data": {"type": "guest-configured-bundles","attributes": {"quantity": 1,"templateUuid": "${configurable_bundle_template_2_uuid}","items": [{"sku": "${configurable_bundle_slot_5_product_1}","quantity": 1,"slotUuid": "${configurable_bundle_slot_5_uuid}"}]}}}
+    When I send a POST request:    /guest-carts//guest-configured-bundles    {"data": {"type": "guest-configured-bundles","attributes": {"quantity": 1,"templateUuid": "${configurable_bundle_template_2_uuid}","items": [{"sku": "${configurable_bundle.slot_5.product_1}","quantity": 1,"slotUuid": "${configurable_bundle_slot_5_uuid}"}]}}}
     And Save value to a variable:    [data][id]    guest_cart_id
-    And I send a POST request:    /guest-carts/${guest_cart_id}/guest-configured-bundles?include=guest-cart-items    {"data": {"type": "guest-configured-bundles","attributes": {"quantity": 1,"templateUuid": "${configurable_bundle_template_2_uuid}","items": [{"sku": "${configurable_bundle_slot_5_product_2}","quantity": 1,"slotUuid": "${configurable_bundle_slot_5_uuid}"}]}}}
+    And I send a POST request:    /guest-carts/${guest_cart_id}/guest-configured-bundles?include=guest-cart-items    {"data": {"type": "guest-configured-bundles","attributes": {"quantity": 1,"templateUuid": "${configurable_bundle_template_2_uuid}","items": [{"sku": "${configurable_bundle.slot_5.product_2}","quantity": 1,"slotUuid": "${configurable_bundle_slot_5_uuid}"}]}}}
     Then Response status code should be:    201   
     And Response should contain the array larger than a certain size:    [data]    0
     And Response body parameter should be:    [data][type]    guest-carts   
@@ -246,8 +246,8 @@ Add_other_configured_bundle_product_with_same_template
     And Response should contain the array of a certain size:    [data][relationships][guest-cart-items][data]    2   
     And Response should contain the array of a certain size:    [included]    2
     And Each array element of array in response should contain nested property with value:    [included]    [attributes][quantity]    1
-    And Response body parameter should be:    [included][0][attributes][sku]    ${configurable_bundle_slot_5_product_1}
-    And Response body parameter should be:    [included][1][attributes][sku]    ${configurable_bundle_slot_5_product_2}
+    And Response body parameter should be:    [included][0][attributes][sku]    ${configurable_bundle.slot_5.product_1}
+    And Response body parameter should be:    [included][1][attributes][sku]    ${configurable_bundle.slot_5.product_2}
     [Teardown]    Run Keyword    Cleanup all items in the guest cart:    ${guest_cart_id}
 
 
@@ -255,7 +255,7 @@ Add_other_configured_bundle_product_with_same_template
 ### PATCH ###
 Update_configured_bundle_product_quantity  
     [Setup]    Run Keywords    I set Headers:    Content-Type=${default_header_content_type}    X-Anonymous-Customer-Unique-Id=${random}
-    ...    AND    I send a POST request:    /guest-carts//guest-configured-bundles?include=guest-cart-items    {"data": {"type": "guest-configured-bundles","attributes": {"quantity": 1,"templateUuid": "${configurable_bundle_template_2_uuid}","items": [{"sku": "${configurable_bundle_slot_5_product_1}","quantity": 1,"slotUuid": "${configurable_bundle_slot_5_uuid}"}]}}}
+    ...    AND    I send a POST request:    /guest-carts//guest-configured-bundles?include=guest-cart-items    {"data": {"type": "guest-configured-bundles","attributes": {"quantity": 1,"templateUuid": "${configurable_bundle_template_2_uuid}","items": [{"sku": "${configurable_bundle.slot_5.product_1}","quantity": 1,"slotUuid": "${configurable_bundle_slot_5_uuid}"}]}}}
     ...    AND    Save value to a variable:    [data][id]    guest_cart_id
     ...    AND    Save value to a variable:    [included][0][attributes][configuredBundle][groupKey]    bundle_id
     When I send a PATCH request:    /guest-carts/${guest_cart_id}/guest-configured-bundles/${bundle_id}?include=guest-cart-items    {"data":{"type": "guest-configured-bundles","attributes":{"quantity": 2}}}
@@ -263,9 +263,9 @@ Update_configured_bundle_product_quantity
     And Response reason should be:    OK
     And Response should contain the array larger than a certain size:    [data]    0
     And Response body parameter should be:    [data][type]    guest-carts
-    And Response body parameter should be:    [data][attributes][priceMode]    ${gross_mode}
-    And Response body parameter should be:    [data][attributes][currency]    ${currency_code_eur}
-    And Response body parameter should be:    [data][attributes][store]    ${store_de}
+    And Response body parameter should be:    [data][attributes][priceMode]    ${currency.mode.gross}
+    And Response body parameter should be:    [data][attributes][currency]    ${currency.eur.code}
+    And Response body parameter should be:    [data][attributes][store]    ${store.de}
     And Response body parameter should not be EMPTY:    [data][attributes][totals][expenseTotal]
     And Response body parameter should not be EMPTY:    [data][attributes][totals][discountTotal]
     And Response body parameter should be greater than:    [data][attributes][totals][taxTotal]    0
@@ -278,7 +278,7 @@ Update_configured_bundle_product_quantity
     And Response body parameter should be:    [data][attributes][discounts][0][code]    None
     And Response should contain the array smaller than a certain size:    [data][attributes][thresholds]    1
     And Response body parameter should be:    [data][links][self]    ${glue_url}/guest-carts/${guest_cart_id}
-    And Response body parameter should be:    [included][0][attributes][sku]    ${configurable_bundle_slot_5_product_1} 
+    And Response body parameter should be:    [included][0][attributes][sku]    ${configurable_bundle.slot_5.product_1} 
     And Response body parameter should be:    [included][0][attributes][quantity]    2
     [Teardown]    Run Keyword    Cleanup all items in the guest cart:    ${guest_cart_id}
 
@@ -286,7 +286,7 @@ Update_configured_bundle_product_quantity
 ### DELETE ###
 Delete_configured_bundle_from_cart 
     [Setup]    Run Keywords    I set Headers:    Content-Type=${default_header_content_type}    X-Anonymous-Customer-Unique-Id=${random}
-    ...    AND    I send a POST request:    /guest-carts//guest-configured-bundles?include=guest-cart-items    {"data": {"type": "guest-configured-bundles","attributes": {"quantity": 1,"templateUuid": "${configurable_bundle_template_2_uuid}","items": [{"sku": "${configurable_bundle_slot_5_product_1}","quantity": 1,"slotUuid": "${configurable_bundle_slot_5_uuid}"}]}}}
+    ...    AND    I send a POST request:    /guest-carts//guest-configured-bundles?include=guest-cart-items    {"data": {"type": "guest-configured-bundles","attributes": {"quantity": 1,"templateUuid": "${configurable_bundle_template_2_uuid}","items": [{"sku": "${configurable_bundle.slot_5.product_1}","quantity": 1,"slotUuid": "${configurable_bundle_slot_5_uuid}"}]}}}
     ...    AND    Save value to a variable:    [data][id]    guest_cart_id
     ...    AND    Save value to a variable:    [included][0][attributes][configuredBundle][groupKey]    bundle_id
     When I send a DELETE request:    /guest-carts/${guest_cart_id}/guest-configured-bundles/${bundle_id}

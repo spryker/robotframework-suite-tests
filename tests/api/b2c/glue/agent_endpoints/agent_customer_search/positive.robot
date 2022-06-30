@@ -9,7 +9,7 @@ ENABLER
    TestSetup
 #bug CC-16754
 Agent_can_get_search_for_customers_without_search_parameters
-    [Setup]    Run Keywords    I send a POST request:    /agent-access-tokens    {"data": {"type": "agent-access-tokens","attributes": {"username": "${agent_email}","password": "${agent_password}"}}}
+    [Setup]    Run Keywords    I send a POST request:    /agent-access-tokens    {"data": {"type": "agent-access-tokens","attributes": {"username": "${agent.email}","password": "${agent.password}"}}}
     ...    AND    Response status code should be:    201
     ...    AND    Response reason should be:    Created
     ...    AND    Save value to a variable:    [data][attributes][accessToken]    agent_token
@@ -34,13 +34,13 @@ Agent_can_get_search_for_customers_without_search_parameters
 
 #bug CC-16754
 Agent_can_get_search_for_customers_by_email
-    [Setup]    Run Keywords    I send a POST request:    /agent-access-tokens    {"data": {"type": "agent-access-tokens","attributes": {"username": "${agent_email}","password": "${agent_password}"}}}
+    [Setup]    Run Keywords    I send a POST request:    /agent-access-tokens    {"data": {"type": "agent-access-tokens","attributes": {"username": "${agent.email}","password": "${agent.password}"}}}
     ...    AND    Response status code should be:    201
     ...    AND    Response reason should be:    Created
     ...    AND    Save value to a variable:    [data][attributes][accessToken]    agent_token
     ...    AND    I Set Headers:    Content-Type=${default_header_content_type}    Authorization=Bearer ${agent_token}
     ...    AND    Log    ${agent_token}
-    When I send a GET request:    /agent-customer-search?q=${yves_user_email}
+    When I send a GET request:    /agent-customer-search?q=${yves_user.email}
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
@@ -55,13 +55,13 @@ Agent_can_get_search_for_customers_by_email
 
 #bug CC-16754
 Agent_can_get_search_for_customers_by_first_name
-    [Setup]    Run Keywords    I send a POST request:    /agent-access-tokens    {"data": {"type": "agent-access-tokens","attributes": {"username": "${agent_email}","password": "${agent_password}"}}}
+    [Setup]    Run Keywords    I send a POST request:    /agent-access-tokens    {"data": {"type": "agent-access-tokens","attributes": {"username": "${agent.email}","password": "${agent.password}"}}}
     ...    AND    Response status code should be:    201
     ...    AND    Response reason should be:    Created
     ...    AND    Save value to a variable:    [data][attributes][accessToken]    agent_token
     ...    AND    I Set Headers:    Content-Type=${default_header_content_type}    Authorization=Bearer ${agent_token}
     ...    AND    Log    ${agent_token}
-    When I send a GET request:    /agent-customer-search?q=${yves_second_user_first_name}
+    When I send a GET request:    /agent-customer-search?q=${yves_second_user.first_name}
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
@@ -76,13 +76,13 @@ Agent_can_get_search_for_customers_by_first_name
 
 #bug CC-16754
 Agent_can_get_search_for_customers_by_last_name
-    [Setup]    Run Keywords    I send a POST request:    /agent-access-tokens    {"data": {"type": "agent-access-tokens","attributes": {"username": "${agent_email}","password": "${agent_password}"}}}
+    [Setup]    Run Keywords    I send a POST request:    /agent-access-tokens    {"data": {"type": "agent-access-tokens","attributes": {"username": "${agent.email}","password": "${agent.password}"}}}
     ...    AND    Response status code should be:    201
     ...    AND    Response reason should be:    Created
     ...    AND    Save value to a variable:    [data][attributes][accessToken]    agent_token
     ...    AND    I Set Headers:    Content-Type=${default_header_content_type}    Authorization=Bearer ${agent_token}
     ...    AND    Log    ${agent_token}
-    When I send a GET request:    /agent-customer-search?q=${yves_second_user_last_name}
+    When I send a GET request:    /agent-customer-search?q=${yves_second_user.last_name}
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
@@ -97,7 +97,7 @@ Agent_can_get_search_for_customers_by_last_name
 
 #bug CC-16754
 Agent_can_get_search_for_customers_with_changed_page_limit
-    [Setup]    Run Keywords    I send a POST request:    /agent-access-tokens    {"data": {"type": "agent-access-tokens","attributes": {"username": "${agent_email}","password": "${agent_password}"}}}
+    [Setup]    Run Keywords    I send a POST request:    /agent-access-tokens    {"data": {"type": "agent-access-tokens","attributes": {"username": "${agent.email}","password": "${agent.password}"}}}
     ...    AND    Response status code should be:    201
     ...    AND    Response reason should be:    Created
     ...    AND    Save value to a variable:    [data][attributes][accessToken]    agent_token
@@ -121,7 +121,7 @@ Agent_can_get_search_for_customers_with_changed_page_limit
 
 #bug CC-16754
 Agent_can_get_search_for_customers_by_substring
-    [Setup]    Run Keywords    I send a POST request:    /agent-access-tokens    {"data": {"type": "agent-access-tokens","attributes": {"username": "${agent_email}","password": "${agent_password}"}}}
+    [Setup]    Run Keywords    I send a POST request:    /agent-access-tokens    {"data": {"type": "agent-access-tokens","attributes": {"username": "${agent.email}","password": "${agent.password}"}}}
     ...    AND    Response status code should be:    201
     ...    AND    Response reason should be:    Created
     ...    AND    Save value to a variable:    [data][attributes][accessToken]    agent_token
@@ -150,7 +150,7 @@ Agent_can_get_search_for_customers_by_substring
 
 #bug CC-16754
 Agent_can_get_search_for_customers_by_incorrect_keyword
-    [Setup]    Run Keywords    I send a POST request:    /agent-access-tokens    {"data": {"type": "agent-access-tokens","attributes": {"username": "${agent_email}","password": "${agent_password}"}}}
+    [Setup]    Run Keywords    I send a POST request:    /agent-access-tokens    {"data": {"type": "agent-access-tokens","attributes": {"username": "${agent.email}","password": "${agent.password}"}}}
     ...    AND    Response status code should be:    201
     ...    AND    Response reason should be:    Created
     ...    AND    Save value to a variable:    [data][attributes][accessToken]    agent_token

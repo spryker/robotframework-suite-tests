@@ -1,5 +1,6 @@
 *** Settings ***
-Suite Setup       SuiteSetup
+Suite Setup    SuiteSetup
+Test Setup     TestSetup
 Resource    ../../../../../../resources/common/common_api.robot
 Default Tags    glue
 
@@ -40,4 +41,3 @@ Get_abstract_product_list_products_with_no_id
     And Response reason should be:    Not Found
     And Response should return error code:    2201
     And Response should return error message:    Content item not found.
-

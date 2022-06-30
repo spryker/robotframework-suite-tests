@@ -9,7 +9,7 @@ ENABLER
     TestSetup
 #GET Request
 Retrieves_all_customer_wishlists
-    [Setup]    Run Keywords    I GET access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I GET access token for the customer:    ${yves_user.email}
     ...    AND     I set headers:    authorization=${token}
     When I send a GET request:    /wishlists
      Then Response status code should be:    200
@@ -22,7 +22,7 @@ Retrieves_all_customer_wishlists
          
 #GET Request
 Retrieves_wishlist_data_by_id
-    [Setup]    Run Keywords    I GET access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I GET access token for the customer:    ${yves_user.email}
     ...    AND    I set headers:    authorization=${token}
     ...    AND    I send a Post request:    /wishlists    {"data": {"type": "wishlists","attributes": {"name": "${wishlist_name}"}}}
     ...    AND    Save value to a variable:    [data][id]    wishlist_id
@@ -43,12 +43,12 @@ Retrieves_wishlist_data_by_id
 
 #Get_Request
 Retrieves_wishlist_with_items
-    [Setup]    Run Keywords    I GET access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I GET access token for the customer:    ${yves_user.email}
     ...    AND    I set headers:    authorization=${token}
     ...    AND    I send a Post request:    /wishlists    {"data": {"type": "wishlists","attributes": {"name": "${wishlist_name}"}}}
     ...    AND    Save value to a variable:    [data][id]    wishlist_id
     ...    AND    Response status code should be:    201
-    ...    AND    I send a Post request:    /wishlists/${wishlist_id}/wishlist-items    {"data": {"type": "wishlist-items","attributes": {"sku": "${concrete_available_product_with_label}"}}}
+    ...    AND    I send a Post request:    /wishlists/${wishlist_id}/wishlist-items    {"data": {"type": "wishlist-items","attributes": {"sku": "${concrete_available_product.label}"}}}
     ...    AND    Response status code should be:    201
     when I send a GET request:    /wishlists/${wishlist_id}?include=wishlist-items
      then Response status code should be:    200
@@ -68,12 +68,12 @@ Retrieves_wishlist_with_items
 
 #Get Request
 Retrieves_wishlist_with_items_in_concreate
-    [Setup]    Run Keywords    I GET access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I GET access token for the customer:    ${yves_user.email}
     ...    AND    I set headers:    authorization=${token}
     ...    AND    I send a Post request:    /wishlists    {"data": {"type": "wishlists","attributes": {"name": "${wishlist_name}"}}}
     ...    AND    Save value to a variable:    [data][id]    wishlist_id
     ...    AND    Response status code should be:    201
-    ...    AND    I send a Post request:    /wishlists/${wishlist_id}/wishlist-items    {"data": {"type": "wishlist-items","attributes": {"sku": "${concrete_available_product_with_label}"}}}
+    ...    AND    I send a Post request:    /wishlists/${wishlist_id}/wishlist-items    {"data": {"type": "wishlist-items","attributes": {"sku": "${concrete_available_product.label}"}}}
     ...    AND    Response status code should be:    201
      when I send a GET request:    /wishlists/${wishlist_id}?include=wishlist-items,concrete-products
      then Response status code should be:    200
@@ -94,12 +94,12 @@ Retrieves_wishlist_with_items_in_concreate
     
 #Get Request
 Wishlist_Product_Labels
-     [Setup]    Run Keywords    I GET access token for the customer:    ${yves_user_email}
+     [Setup]    Run Keywords    I GET access token for the customer:    ${yves_user.email}
     ...    AND    I set headers:    authorization=${token}
     ...    AND    I send a Post request:    /wishlists    {"data": {"type": "wishlists","attributes": {"name": "${wishlist_name}"}}}
     ...    AND    Save value to a variable:    [data][id]    wishlist_id
     ...    AND    Response status code should be:    201
-    ...    AND    I send a Post request:    /wishlists/${wishlist_id}/wishlist-items    {"data": {"type": "wishlist-items","attributes": {"sku": "${concrete_available_product_with_label}"}}}
+    ...    AND    I send a Post request:    /wishlists/${wishlist_id}/wishlist-items    {"data": {"type": "wishlist-items","attributes": {"sku": "${concrete_available_product.label}"}}}
     ...    AND    Response status code should be:    201
      when I send a GET request:    /wishlists/${wishlist_id}?include=wishlist-items,concrete-products,product-labels
      then Response status code should be:    200
@@ -121,7 +121,7 @@ Wishlist_Product_Labels
 
 #Post Request
 Creates_wishlist
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...        AND    I set Headers:    Authorization=${token}
     When I send a POST request:    /wishlists    {"data": {"type": "wishlists","attributes": {"name": "${wishlist_name}"}}}
     And Save value to a variable:    [data][id]    wishlist_del_id
@@ -136,7 +136,7 @@ Creates_wishlist
 
 #Patch Request
 Updates_customer_wishlist
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...        AND    I set Headers:    Authorization=${token}
     ...    AND    I send a Post request:    /wishlists    {"data": {"type": "wishlists","attributes": {"name": "${wishlist_name}"}}}  
     ...    AND    Response status code should be:    201
@@ -152,7 +152,7 @@ Updates_customer_wishlist
 
 # Delete Request
 Removes_customer_wishlist
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
     ...  AND    I send a POST request:    /wishlists    {"data": {"type": "wishlists","attributes": {"name": "${wishlist_name}"}}}
     ...  AND    Response status code should be:    201

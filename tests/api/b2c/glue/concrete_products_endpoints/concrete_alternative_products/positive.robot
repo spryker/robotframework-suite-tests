@@ -1,5 +1,6 @@
 *** Settings ***
-Suite Setup       SuiteSetup
+Suite Setup    SuiteSetup
+Test Setup     TestSetup
 Resource    ../../../../../../resources/common/common_api.robot
 Default Tags    glue
 
@@ -7,7 +8,7 @@ Default Tags    glue
 ENABLER
     TestSetup
 Get_concrete_alternative_product_for_a_product_that_has_none
-    When I send a GET request:    /concrete-products/${bundled_product_1_concrete_sku}/concrete-alternative-products
+    When I send a GET request:    /concrete-products/${bundled.product_1.concrete_sku}/concrete-alternative-products
     Then Response status code should be:    200
     And Response should contain the array of a certain size:    [data]    0
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
@@ -15,7 +16,7 @@ Get_concrete_alternative_product_for_a_product_that_has_none
     And Response reason should be:    OK
 
 Get_concrete_alternative_product
-    When I send a GET request:    /concrete-products/${concrete_product_with_concrete_product_alternative_sku}/concrete-alternative-products
+    When I send a GET request:    /concrete-products/${concrete_product_with_concrete_product_alternative.sku}/concrete-alternative-products
     Then Response status code should be:    200
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response reason should be:    OK
@@ -41,7 +42,7 @@ Get_concrete_alternative_product
     And Response body has correct self link
 
 Get_concrete_alternative_product_with_include
-    When I send a GET request:    /concrete-products/${concrete_product_with_concrete_product_alternative_sku}/concrete-alternative-products?include=concrete-product-image-sets,concrete-product-availabilities,concrete-product-prices
+    When I send a GET request:    /concrete-products/${concrete_product_with_concrete_product_alternative.sku}/concrete-alternative-products?include=concrete-product-image-sets,concrete-product-availabilities,concrete-product-prices
     Then Response status code should be:    200
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response reason should be:    OK
@@ -54,4 +55,3 @@ Get_concrete_alternative_product_with_include
     And Response include element has self link:   concrete-product-image-sets
     And Response include element has self link:   concrete-product-availabilities
     And Response include element has self link:   concrete-product-prices
-

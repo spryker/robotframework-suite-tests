@@ -1,5 +1,6 @@
 *** Settings ***
-Suite Setup       SuiteSetup
+Suite Setup    SuiteSetup
+Test Setup     TestSetup
 Resource    ../../../../../../resources/common/common_api.robot
 Default Tags    glue
 
@@ -14,9 +15,8 @@ Get_cms_page_list_by_fake_id
     And Response should return error message:    Cms page not found.
 
 Get_cms_page_list_by_wrond_id
-    When I send a GET request:    /cms-pages/${abstract_product_list_id}
+    When I send a GET request:    /cms-pages/${abstract_list.product_id}
     Then Response status code should be:    404
     And Response reason should be:    Not Found
     And Response should return error code:    3801
     And Response should return error message:    Cms page not found.
-

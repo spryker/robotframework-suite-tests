@@ -19,5 +19,3 @@ Get_url_collection_when_requested_url_does_not_exist
     Then Response status code should be:    404
     And Response should return error code:    2802
     And Response should return error message:    Url not found.
-
-
