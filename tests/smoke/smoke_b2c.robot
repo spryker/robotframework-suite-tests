@@ -46,7 +46,7 @@ Guest_User_Access_Restrictions
     Yves: PDP contains/doesn't contain:     true    ${pdpPriceLocator}    ${addToCartButton}
     Yves: add product to the shopping cart
     Yves: go to b2c shopping cart
-    Yves: shopping cart contains product with unit price:   002    Canon IXUS 160    94.99
+    Yves: shopping cart contains product with unit price:   002    Canon IXUS 160    99.99
     Yves: go to user menu item in header:    Overview
     Yves: 'Login' page is displayed
     Yves: go To 'Wishlist' Page
@@ -60,7 +60,7 @@ Authorized_User_Access
     Yves: PDP contains/doesn't contain:     true    ${pdpPriceLocator}     ${addToCartButton}
     Yves: add product to the shopping cart
     Yves: go to b2c shopping cart
-    Yves: shopping cart contains product with unit price:    002    Canon IXUS 160    94.99
+    Yves: shopping cart contains product with unit price:    002    Canon IXUS 160    99.99
     Yves: go to user menu item in header:    Overview
     Yves: 'Overview' page is displayed
     Yves: go to user menu item in header:    Orders History
@@ -99,7 +99,7 @@ Catalog
     [Documentation]    Checks that catalog options and search work
     Yves: perform search by:    canon
     Yves: 'Catalog' page should show products:    30
-    Yves: select filter value:    Color    Blue
+    Yves: select filter value:    Color    blue
     Yves: 'Catalog' page should show products:    2
     Yves: go to first navigation item level:    Computers
     Yves: 'Catalog' page should show products:    72
@@ -111,8 +111,8 @@ Catalog
     Yves: 1st product card in catalog (not)contains:      Price    €3,456.99
     Yves: go to catalog page:    2
     Yves: catalog page contains filter:    Price    Ratings     Label     Brand    Color
-    Yves: select filter value:    Color    Blue
-    Yves: 'Catalog' page should show products:    1
+    Yves: select filter value:    Color    blue
+    Yves: 'Catalog' page should show products:    2
     [Teardown]    Yves: check if cart is not empty and clear it
 
 Catalog_Actions
@@ -125,7 +125,7 @@ Catalog_Actions
     Yves: perform search by:    002
     Yves: 1st product card in catalog (not)contains:      Add to Cart    true
     Yves: 1st product card in catalog (not)contains:      Color selector   true
-    Yves: select product color:    Black
+    Yves: select product color:    black
     Yves: quick add to cart for first item in catalog
     Yves: go to b2c shopping cart
     Yves: shopping cart contains the following products:    NEX-VG20EH    Canon IXUS 160
@@ -162,7 +162,7 @@ Volume_Prices
     Yves: change quantity on PDP:    5
     Yves: add product to the shopping cart
     Yves: go to b2c shopping cart
-    Yves: shopping cart contains product with unit price:    193    Sony FDR-AX40    8.25
+    Yves: shopping cart contains product with unit price:    193    Sony FDR-AX40    825.00
     Yves: delete from b2c cart products with name:    Sony FDR-AX40
     [Teardown]    Yves: check if cart is not empty and clear it
 
@@ -181,12 +181,12 @@ Discontinued_Alternative_Products
     Zed: discontinue the following product:    ${got_abstract_product_sku}    ${got_concrete_product_sku}
     Zed: product is successfully discontinued
     Zed: check if at least one price exists for concrete and add if doesn't:    100
-    Zed: add following alternative products to the concrete:    011
+    Zed: add following alternative products to the concrete:    012
     Yves: login on Yves with provided credentials:    ${yves_user_email}
     Yves: go To 'Wishlist' Page
     Yves: go to wishlist with name:    My wishlist
     Yves: product with sku is marked as discountinued in wishlist:    ${got_concrete_product_sku}
-    Yves: product with sku is marked as alternative in wishlist:    011
+    Yves: product with sku is marked as alternative in wishlist:    012
     [Teardown]    Run Keywords    Yves: login on Yves with provided credentials:    ${yves_user_email}    
     ...    AND    Yves: check if cart is not empty and clear it
     ...    AND    Zed: login on Zed with provided credentials:    ${zed_admin_email}
@@ -260,6 +260,7 @@ Product_Bundles
     ...    AND    Zed: change product stock:    ${bundled_product_3_abstract_sku}    ${bundled_product_3_concrete_sku}    true    10
     Yves: login on Yves with provided credentials:    ${yves_user_email}
     Yves: go to PDP of the product with sku:    ${bundle_product_abstract_sku}
+    #Fails due to bug CC-16679
     Yves: PDP contains/doesn't contain:    true    ${bundleItemsSmall}    ${bundleItemsLarge}
     Yves: add product to the shopping cart
     Yves: go to b2c shopping cart
@@ -319,7 +320,7 @@ Configurable_Bundle
 Discounts
     [Documentation]    Discounts, Promo Products, and Coupon Codes (includes guest checkout)
     [Setup]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    ...    AND    Zed: deactivate following discounts from Overview page:    For every purchase above certain value depending on the currency and net/gross price. you get this promotional product for free    10% Discount for all orders above    €5 every tuesday and wednesday for buying 5 items    5% discount on all white products    10% discount on all products with an Intel Core processor    Free standard delivery
+    ...    AND    Zed: deactivate following discounts from Overview page:    Free Acer Notebook    Tu & Wed $5 off 5 or more    10% off $100+    Free smartphone    20% off cameras    Free Acer M2610    Free standard delivery    10% off Intel Core    5% off white    Tu & Wed €5 off 5 or more    10% off minimum order
     ...    AND    Zed: change product stock:    190    190_25111746    true    10
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Merchandising    Discount
@@ -341,7 +342,7 @@ Discounts
     Yves: promotional product offer is/not shown in cart:    true
     Yves: change quantity of promotional product and add to cart:    +    1
     Yves: shopping cart contains the following products:    Kodak EasyShare M532    Canon IXUS 160
-    Yves: discount is applied:    cart rule    Promotional Product 100% ${random}    - €189.98
+    Yves: discount is applied:    cart rule    Promotional Product 100% ${random}    - €199.98
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: billing address same as shipping address:    true
     Yves: fill in the following new shipping address:
@@ -355,11 +356,11 @@ Discounts
     Yves: 'Thank you' page is displayed
     Yves: get the last placed order ID by current customer
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    Zed: grand total for the order equals:    ${lastPlacedOrder}    €848.54
+    Zed: grand total for the order equals:    ${lastPlacedOrder}    €753.55
     [Teardown]    Run keywords    Yves: check if cart is not empty and clear it
     ...    AND    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: deactivate following discounts from Overview page:    Voucher Code 5% ${random}    Cart Rule 10% ${random}    Promotional Product 100% ${random}
-    ...    AND    Zed: activate following discounts from Overview page:    For every purchase above certain value depending on the currency and net/gross price. you get this promotional product for free    10% Discount for all orders above    €5 every tuesday and wednesday for buying 5 items    5% discount on all white products    10% discount on all products with an Intel Core processor    Free standard delivery
+    ...    AND    Zed: activate following discounts from Overview page:    Free Acer Notebook    Tu & Wed $5 off 5 or more    10% off $100+    Free smartphone    20% off cameras    Free Acer M2610    Free standard delivery    10% off Intel Core    5% off white    Tu & Wed €5 off 5 or more    10% off minimum order
 
 Split_Delivery
     [Documentation]    Checks split delivery in checkout
@@ -367,7 +368,7 @@ Split_Delivery
     Yves: check if cart is not empty and clear it
     Yves: go to PDP of the product with sku:    007
     Yves: add product to the shopping cart
-    Yves: go to PDP of the product with sku:    011
+    Yves: go to PDP of the product with sku:    005
     Yves: add product to the shopping cart
     Yves: go to PDP of the product with sku:    012
     Yves: add product to the shopping cart
@@ -379,7 +380,7 @@ Split_Delivery
     ...    || Canon IXUS 285 | Dr.        | First     | Last     | First Street | 1           | 10247    | Berlin | Germany | Spryker | 123456789 | Additional street ||
    Yves: fill in new delivery address for a product:
     ...    || product        | salutation | firstName | lastName | street        | houseNumber | postCode | city   | country | company | phone     | additionalAddress ||
-    ...    || Canon IXUS 180 | Dr.        | First     | Last     | Second Street | 2           | 10247    | Berlin | Germany | Spryker | 123456789 | Additional street ||
+    ...    || Canon IXUS 175 | Dr.        | First     | Last     | Second Street | 2           | 10247    | Berlin | Germany | Spryker | 123456789 | Additional street ||
    Yves: fill in new delivery address for a product:
     ...    || product        | salutation | firstName | lastName | street       | houseNumber | postCode | city   | country | company | phone     | additionalAddress ||
     ...    || Canon IXUS 165 | Dr.        | First     | Last     | Third Street | 3           | 10247    | Berlin | Germany | Spryker | 123456789 | Additional street ||
@@ -518,6 +519,7 @@ Guest_Checkout
     ...    AND    Zed: create a discount and activate it:    cart rule    Percentage    10    sku = '*'    discountName=Guest Cart Rule 10% ${random}
     Yves: go to the 'Home' page
     Yves: go to PDP of the product with sku:    ${bundle_product_abstract_sku}
+    #Fails due to bug CC-16679
     Yves: PDP contains/doesn't contain:    true    ${bundleItemsSmall}    ${bundleItemsLarge}
     Yves: add product to the shopping cart
     Yves: go to URL:    en/configurable-bundle/configurator/template-selection
@@ -560,7 +562,7 @@ Guest_Checkout
 Refunds
     [Documentation]    Checks that refund can be created for one item and the whole order
     [Setup]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    ...    AND    Zed: deactivate following discounts from Overview page:    10% Discount for all orders above
+    ...    AND    Zed: deactivate following discounts from Overview page:    Tu & Wed $5 off 5 or more    10% off $100+    20% off cameras    Tu & Wed €5 off 5 or more    10% off minimum order
     Yves: login on Yves with provided credentials:    ${yves_user_email}
     Yves: check if cart is not empty and clear it
     Yves: go to PDP of the product with sku:    007
@@ -583,17 +585,17 @@ Refunds
     Yves: 'Thank you' page is displayed
     Yves: get the last placed order ID by current customer
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    Zed: grand total for the order equals:    ${lastPlacedOrder}    €990.10
+    Zed: grand total for the order equals:    ${lastPlacedOrder}    €1,041.90
     Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Pay
     Zed: trigger all matching states inside this order:    Skip timeout
     Zed: trigger matching state of order item inside xxx shipment:    008_30692992    Ship
     Zed: trigger matching state of order item inside xxx shipment:    008_30692992    Stock update
     Zed: trigger matching state of order item inside xxx shipment:    008_30692992    Refund
-    Zed: grand total for the order equals:    ${lastPlacedOrder}    €662.35
+    Zed: grand total for the order equals:    ${lastPlacedOrder}    €696.90
     Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Ship
     Zed: trigger all matching states inside this order:    Stock update
     Zed: trigger all matching states inside this order:    Refund
     Zed: grand total for the order equals:    ${lastPlacedOrder}    €0.00
     [Teardown]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    ...    AND    Zed: activate following discounts from Overview page:    10% Discount for all orders above
+    ...    AND    Zed: activate following discounts from Overview page:    Tu & Wed $5 off 5 or more    10% off $100+    20% off cameras    Tu & Wed €5 off 5 or more    10% off minimum order
  

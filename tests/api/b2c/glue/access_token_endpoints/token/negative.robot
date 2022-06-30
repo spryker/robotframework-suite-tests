@@ -5,7 +5,8 @@ Resource    ../../../../../../resources/common/common_api.robot
 Default Tags    glue
 
 *** Test Cases ***
-
+ENABLER
+    TestSetup
 Get_token_for_customer_with_invalid_grant_type
     When I set Headers:    Content-Type=${urlencoded_header_content_type}
     Then I send a POST request with data:    /token    {"grant_type": "invalid_grant_type","username": "${yves_user_email}","password": "${yves_user_password}"}

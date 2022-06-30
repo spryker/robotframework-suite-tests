@@ -1,8 +1,11 @@
 *** Settings ***
 Suite Setup       SuiteSetup
 Resource    ../../../../../../resources/common/common_api.robot
+Default Tags    glue
 
 *** Test Cases ***
+ENABLER
+    TestSetup
 Product_is_available_with_stock_and_never_out_of_stock
     When I send a GET request:    /abstract-products/${abstract_available_with_stock_and_never_out_of_stock}/abstract-product-availabilities
     Then Response status code should be:    200
@@ -13,7 +16,7 @@ Product_is_available_with_stock_and_never_out_of_stock
     And Response body parameter should be greater than:    [data][0][attributes][quantity]   1
     And Response body parameter should be:    [data][0][attributes][availability]   True
     And Response body has correct self link
-
+ 
 Product_is_available_with_stock
     When I send a GET request:    /abstract-products/${abstract_available_product_with_stock}/abstract-product-availabilities
     Then Response status code should be:    200
@@ -24,7 +27,6 @@ Product_is_available_with_stock
     And Response body parameter should be greater than:    [data][0][attributes][quantity]   1
     And Response body parameter should be:    [data][0][attributes][availability]   True
     And Response body has correct self link    
-
 
 Product_is_available_never_out_of_stock
     When I send a GET request:    /abstract-products/${abstract_available_product_with_no_stock_and_never_out_of_stock}/abstract-product-availabilities
@@ -38,6 +40,7 @@ Product_is_available_never_out_of_stock
     And Response body has correct self link   
 
 # No demo data for B2C BUG CC-16485
+# Bug is resolved and unavailble product SKU is updated in test data
 Product_is_unavailable
     When I send a GET request:    /abstract-products/${abstract_unavailable_product}/abstract-product-availabilities
     Then Response status code should be:    200

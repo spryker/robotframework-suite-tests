@@ -1,8 +1,11 @@
 *** Settings ***
 Suite Setup       SuiteSetup
 Resource    ../../../../../../resources/common/common_api.robot
+Default Tags    glue
 
 *** Test Cases ***
+ENABLER
+    TestSetup
 Request_product_concrete_by_id
     When I send a GET request:    /concrete-products/${concrete_product_with_concrete_product_alternative_sku}
     Then Response status code should be:    200
@@ -64,13 +67,13 @@ Request_product_concrete_with_included_product_labels_and_product_options
 
 # BUG CC-16490
 Request_product_concrete_with_included_product_reviews
-    When I send a GET request:    /concrete-products/${concrete_product_with_original_prices}?include=product-reviews
+    When I send a GET request:    /concrete-products/${concrete_product_with_review}?include=product-reviews
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response body parameter should be:    [data][type]   concrete-products
-    And Response body parameter should be:    [data][attributes][sku]    ${concrete_product_with_original_prices}
-    And Response body parameter should be:    [data][attributes][name]    ${concrete_product_with_original_prices_name}
+    And Response body parameter should be:    [data][attributes][sku]    ${concrete_product_with_review}
+    And Response body parameter should be:    [data][attributes][name]    ${concrete_product_with_review_name}
     And Response should contain the array of a certain size:    [data][relationships]   1
     And Response include should contain certain entity type:    product-reviews
 

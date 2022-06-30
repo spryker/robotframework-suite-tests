@@ -32,6 +32,7 @@ Agent_cannot_impersonate_customer_with_invalid_token
     And Response should return error code:    4103
     And Response should return error message:    Action is available to agent user only.
 
+#bug CC-16754
 Agent_cannot_impersonate_customer_with_wrong_type
     [Setup]    Run Keywords    I send a POST request:    /agent-access-tokens    {"data": {"type": "agent-access-tokens","attributes": {"username": "${agent_email}","password": "${agent_password}"}}}
     ...    AND    Response status code should be:    201
@@ -42,6 +43,7 @@ Agent_cannot_impersonate_customer_with_wrong_type
     And Response reason should be:    Bad Request
     And Response should return error message:    Invalid type.
 
+#bug CC-16754
 Agent_cannot_impersonate_customer_with_invalid_customer_reference
     [Setup]    Run Keywords    I send a POST request:    /agent-access-tokens    {"data": {"type": "agent-access-tokens","attributes": {"username": "${agent_email}","password": "${agent_password}"}}}
     ...    AND    Response status code should be:    201
@@ -53,6 +55,7 @@ Agent_cannot_impersonate_customer_with_invalid_customer_reference
     And Response should return error code:    4104
     And Response should return error message:    Failed to impersonate a customer.
 
+#bug CC-16754
 Agent_cannot_impersonate_customer_with_empty_customer_reference
     [Setup]    Run Keywords    I send a POST request:    /agent-access-tokens    {"data": {"type": "agent-access-tokens","attributes": {"username": "${agent_email}","password": "${agent_password}"}}}
     ...    AND    Response status code should be:    201
@@ -64,6 +67,7 @@ Agent_cannot_impersonate_customer_with_empty_customer_reference
     And Response should return error code:    4104
     And Response should return error message:    Failed to impersonate a customer.
 
+#bug CC-16754
 Agent_cannot_impersonate_customer_with_missing_customer_reference
     [Setup]    Run Keywords    I send a POST request:    /agent-access-tokens    {"data": {"type": "agent-access-tokens","attributes": {"username": "${agent_email}","password": "${agent_password}"}}}
     ...    AND    Response status code should be:    201

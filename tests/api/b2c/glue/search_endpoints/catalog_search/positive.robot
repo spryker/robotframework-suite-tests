@@ -1,11 +1,13 @@
 *** Settings ***
 Suite Setup       SuiteSetup
 Resource    ../../../../../../resources/common/common_api.robot
+Default Tags    glue
 
 *** Test Cases ***
 
 ##### SEARCH PARAMETERS #####
-
+ENABLER
+    TestSetup
 Search_with_empty_search_criteria_all_default_values_check
     When I send a GET request:    /catalog-search?q=
     Then Response status code should be:    200
@@ -452,7 +454,7 @@ Filter_by_color_one_color
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response body parameter should be:    [data][0][type]    catalog-search
-    And Response body parameter should be:    [data][0][attributes][pagination][numFound]    79
+    And Response body parameter should be:    [data][0][attributes][pagination][numFound]    75
     And Response body parameter should be:    [data][0][attributes][pagination][currentPage]    1
     And Response body parameter should be:    [data][0][attributes][pagination][maxPage]    7
     And Response should contain the array of a certain size:    [data][0][attributes][abstractProducts]    12
@@ -468,7 +470,7 @@ Filter_by_color_two_colors
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response body parameter should be:    [data][0][type]    catalog-search
-    And Response body parameter should be:    [data][0][attributes][pagination][numFound]    89
+    And Response body parameter should be:    [data][0][attributes][pagination][numFound]    86
     And Response body parameter should be:    [data][0][attributes][pagination][currentPage]    1
     And Response body parameter should be:    [data][0][attributes][pagination][maxPage]    8
     And Response should contain the array of a certain size:    [data][0][attributes][abstractProducts]    12
@@ -513,7 +515,7 @@ Filter_by_valid_main_category
     # check that category tree is correctly updated
     And Response should contain the array of a certain size:    [data][0][attributes][categoryTreeFilter]    ${category_tree_branches_qty}
     And Response body parameter should be:    [data][0][attributes][categoryTreeFilter][0][docCount]    0
-    And Response body parameter should be:    [data][0][attributes][categoryTreeFilter][2][docCount]    ${category_items_qty_lvl1}
+    And Response body parameter should be:    [data][0][attributes][categoryTreeFilter][3][docCount]    ${category_items_qty_lvl1}
     And Response body has correct self link
 
 Filter_by_valid_subcategory
@@ -530,8 +532,8 @@ Filter_by_valid_subcategory
     # check that category tree is correctly updated
     And Response should contain the array of a certain size:    [data][0][attributes][categoryTreeFilter]    ${category_tree_branches_qty}
     And Response body parameter should be:    [data][0][attributes][categoryTreeFilter][0][docCount]    0
-    And Response body parameter should be:    [data][0][attributes][categoryTreeFilter][2][docCount]    ${category_items_qty_lvl2}
-    And Response body parameter should be:    [data][0][attributes][categoryTreeFilter][2][children][0][docCount]    ${category_items_qty_lvl2}
+    And Response body parameter should be:    [data][0][attributes][categoryTreeFilter][3][docCount]    ${category_items_qty_lvl2}
+    And Response body parameter should be:    [data][0][attributes][categoryTreeFilter][3][children][0][docCount]    ${category_items_qty_lvl2}
     And Response body has correct self link
 
 Search_with_specific_currency

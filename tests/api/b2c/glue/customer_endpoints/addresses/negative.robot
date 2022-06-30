@@ -1,9 +1,11 @@
 *** Settings ***
 Suite Setup       SuiteSetup
 Resource    ../../../../../../resources/common/common_api.robot
+Default Tags    glue
 
 *** Test Cases ***
-
+ENABLER
+    TestSetup
 ######POST#####
 Create_customer_address_with_missing_required_fields
     When I get access token for the customer:    ${yves_user_email}
@@ -40,6 +42,7 @@ Create_customer_address_with_empty_fields
     And Array in response should contain property with value:    [errors]    detail    zipCode => This value should not be blank.
     And Array in response should contain property with value:    [errors]    detail    city => This value should not be blank.
 
+# Bug is created CC-16726
 Create_customer_address_with_invalid_salutation
     When I get access token for the customer:    ${yves_user_email}
     And I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
@@ -257,7 +260,7 @@ Patch_customer_address_with_empty_required_fields
     [Teardown]    Run Keywords    I send a DELETE request:     /customers/${yves_user_reference}/addresses/${address_uid}
     ...    AND    Response status code should be:    204
 
-
+# Bug is created CC-16726
 Patch_customer_address_with_invalid_salutation
     [Setup]    Run keywords    I get access token for the customer:    ${yves_user_email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}

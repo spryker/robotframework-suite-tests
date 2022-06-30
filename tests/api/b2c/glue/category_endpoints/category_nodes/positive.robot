@@ -6,7 +6,8 @@ Test Setup     TestSetup
 Default Tags    glue
 
 *** Test Cases ***
-
+ENABLER
+    TestSetup
 Get_category_node_is_root_by_id
     When I send a GET request:    /category-nodes/${category_node_is_root_id}
     Then Response status code should be:    200

@@ -68,8 +68,10 @@ Yves: click on the '${buttonName}' button in the shopping cart
     Yves: remove flash messages
     IF    '${buttonName}' == 'Checkout'
         Click    ${shopping_cart_checkout_button}
+        Wait Until Page Does Not Contain Element    ${shopping_cart_checkout_button}
     ELSE IF    '${buttonName}' == 'Request a Quote'
         Click    ${shopping_cart_request_quote_button}
+        Wait Until Page Does Not Contain Element    ${shopping_cart_request_quote_button}
     END
 
 Yves: shopping cart contains product with unit price:
@@ -191,7 +193,7 @@ Yves: delete from b2c cart products with name:
 Yves: apply discount voucher to cart:
     [Arguments]    ${voucherCode}
     ${expanded}=    Set Variable    ${EMPTY}
-    ${expanded}=    IF    '${env}'=='b2c'    Run Keyword And Return Status    Get Element State    ${shopping_cart_voucher_code_field}    ==    hidden
+    ${expanded}=    IF    '${env}'=='b2c'    Run Keyword And Return Status    Get Element States    ${shopping_cart_voucher_code_field}    ==    hidden    return_names=False
     IF    '${env}'=='b2c' and '${expanded}'=='False'    Click    ${shopping_cart_voucher_code_section_toggler}
     Type Text    ${shopping_cart_voucher_code_field}    ${voucherCode}
     Click    ${shopping_cart_voucher_code_redeem_button}

@@ -8,6 +8,7 @@ Default Tags    glue
 ENABLER
     TestSetup
     
+#bug CC-16754
 Agent_can_get_customer_impersonation_token
     [Setup]    Run Keywords    I send a POST request:    /agent-access-tokens    {"data": {"type": "agent-access-tokens","attributes": {"username": "${agent_email}","password": "${agent_password}"}}}
     ...    AND    Response status code should be:    201
