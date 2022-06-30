@@ -15,6 +15,7 @@ Get_navigations_by_non_exist_id
     And Response should return error message:    Navigation not found.
 
 
+
 Get_absent_navigations
     When I send a GET request:    /navigations
     Then Response status code should be:    400

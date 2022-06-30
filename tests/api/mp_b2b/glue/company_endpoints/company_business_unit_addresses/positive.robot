@@ -8,14 +8,14 @@ Default Tags    glue
 ENABLER
     TestSetup
 Get_business_units_address_by_id
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token} 
-    When I send a GET request:    /company-business-unit-addresses/${business_unit_address_id}
+    When I send a GET request:    /company-business-unit-addresses/${business_unit.address_id}
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response body parameter should be:    [data][type]    company-business-unit-addresses
-    And Response body parameter should be:    [data][id]    ${business_unit_address_id}
+    And Response body parameter should be:    [data][id]    ${business_unit.address_id}
     And Response should contain the array of a certain size:    [data][attributes]  8  
     And Response body parameter should not be EMPTY:    [data][attributes][address1]
     And Response body parameter should not be EMPTY:    [data][attributes][address2]

@@ -15,7 +15,7 @@ Get_cart_permission_group_with_unauthenicated_user
     And Response should return error message:    Missing access token.
 
 Get_cart_permission_group_by_non_exist_id
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
     When I send a GET request:    /cart-permission-groups/111111
     Then Response status code should be:    404

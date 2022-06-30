@@ -10,19 +10,19 @@ ENABLER
     
 ####POST#####
 Add_one_item_to_cart
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
-    ...    AND    I send a POST request:    /carts    {"data":{"type":"carts","attributes":{"priceMode":"${gross_mode}","currency":"${currency_code_eur}","store":"${store_de}","name":"Cart-${random}"}}}
+    ...    AND    I send a POST request:    /carts    {"data":{"type":"carts","attributes":{"priceMode":"${mode.gross}","currency":"${currency.eur.code}","store":"${store.de}","name":"Cart-${random}"}}}
     ...    AND    Save value to a variable:    [data][id]    cart_uid
-    When I send a POST request:    /carts/${cart_uid}/items    {"data": {"type": "items","attributes": {"sku": "${concrete_available_with_stock_and_never_out_of_stock}","quantity": 1}}}
+    When I send a POST request:    /carts/${cart_uid}/items    {"data": {"type": "items","attributes": {"sku": "${abstract_product.product_availability.concrete_available_with_stock_and_never_out_of_stock}","quantity": 1}}}
     Then Response status code should be:    201
     And Response reason should be:    Created
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response body parameter should be:    [data][id]    ${cart_uid}
     And Response body parameter should be:    [data][type]    carts
-    And Response body parameter should be:    [data][attributes][priceMode]    ${gross_mode}
-    And Response body parameter should be:    [data][attributes][currency]    ${currency_code_eur}
-    And Response body parameter should be:    [data][attributes][store]    ${store_de}
+    And Response body parameter should be:    [data][attributes][priceMode]    ${mode.gross}
+    And Response body parameter should be:    [data][attributes][currency]    ${currency.eur.code}
+    And Response body parameter should be:    [data][attributes][store]    ${store.de}
     And Response body parameter should be:    [data][attributes][name]    Cart-${random}
     And Response body parameter should be:    [data][attributes][isDefault]    True
     And Response body parameter should not be EMPTY:    [data][attributes][totals][expenseTotal]
@@ -37,19 +37,19 @@ Add_one_item_to_cart
     ...    AND    Response status code should be:    204
 
 Add_two_items_to_cart_with_included_items_concrete_products_and_abstract_products
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
-    ...    AND    I send a POST request:    /carts    {"data":{"type":"carts","attributes":{"priceMode":"${gross_mode}","currency":"${currency_code_eur}","store":"${store_de}","name":"Cart-${random}"}}}
+    ...    AND    I send a POST request:    /carts    {"data":{"type":"carts","attributes":{"priceMode":"${mode.gross}","currency":"${currency.eur.code}","store":"${store.de}","name":"Cart-${random}"}}}
     ...    AND    Save value to a variable:    [data][id]    cart_uid
-    When I send a POST request:    /carts/${cart_uid}/items?include=items,concrete-products,abstract-products   {"data": {"type": "items","attributes": {"sku": "${concrete_available_with_stock_and_never_out_of_stock}","quantity": 2}}}
+    When I send a POST request:    /carts/${cart_uid}/items?include=items,concrete-products,abstract-products   {"data": {"type": "items","attributes": {"sku": "${abstract_product.product_availability.concrete_available_with_stock_and_never_out_of_stock}","quantity": 2}}}
     Then Response status code should be:    201
     And Response reason should be:    Created
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response body parameter should be:    [data][id]    ${cart_uid}
     And Response body parameter should be:    [data][type]    carts
-    And Response body parameter should be:    [data][attributes][priceMode]    ${gross_mode}
-    And Response body parameter should be:    [data][attributes][currency]    ${currency_code_eur}
-    And Response body parameter should be:    [data][attributes][store]    ${store_de}
+    And Response body parameter should be:    [data][attributes][priceMode]    ${mode.gross}
+    And Response body parameter should be:    [data][attributes][currency]    ${currency.eur.code}
+    And Response body parameter should be:    [data][attributes][store]    ${store.de}
     And Response body parameter should be:    [data][attributes][name]    Cart-${random}
     And Response body parameter should be:    [data][attributes][isDefault]    True
     And Response body parameter should not be EMPTY:    [data][attributes][totals][grandTotal]
@@ -64,11 +64,11 @@ Add_two_items_to_cart_with_included_items_concrete_products_and_abstract_product
     And Response include element has self link:   concrete-products
     And Response include element has self link:   abstract-products
     And Response body parameter should be:    [included][2][type]    items
-    And Response body parameter should be:    [included][2][id]    ${concrete_available_with_stock_and_never_out_of_stock}
-    And Response body parameter should be:    [included][2][attributes][sku]    ${concrete_available_with_stock_and_never_out_of_stock}
+    And Response body parameter should be:    [included][2][id]    ${abstract_product.product_availability.concrete_available_with_stock_and_never_out_of_stock}
+    And Response body parameter should be:    [included][2][attributes][sku]    ${abstract_product.product_availability.concrete_available_with_stock_and_never_out_of_stock}
     And Response body parameter should be:    [included][2][attributes][quantity]    2
-    And Response body parameter should be:    [included][2][attributes][groupKey]    ${concrete_available_with_stock_and_never_out_of_stock}
-    And Response body parameter should be:    [included][2][attributes][abstractSku]    ${abstract_available_with_stock_and_never_out_of_stock}
+    And Response body parameter should be:    [included][2][attributes][groupKey]    ${abstract_product.product_availability.concrete_available_with_stock_and_never_out_of_stock}
+    And Response body parameter should be:    [included][2][attributes][abstractSku]    ${abstract_product.product_availability.abstract_available_with_stock_and_never_out_of_stock}
     And Response body parameter should be:    [included][2][attributes][amount]    None
     And Response body parameter should not be EMPTY:    [included][2][attributes][calculations][unitPrice] 
     And Response body parameter should not be EMPTY:    [included][2][attributes][calculations][sumPrice]
@@ -95,11 +95,11 @@ Add_two_items_to_cart_with_included_items_concrete_products_and_abstract_product
     ...    AND    Response status code should be:    204
 
 Get_a_cart_with_included_items_and_concrete_products
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
-    ...    AND    I send a POST request:    /carts    {"data":{"type":"carts","attributes":{"priceMode":"${gross_mode}","currency":"${currency_code_eur}","store":"${store_de}","name":"Cart-${random}"}}}
+    ...    AND    I send a POST request:    /carts    {"data":{"type":"carts","attributes":{"priceMode":"${mode.gross}","currency":"${currency.eur.code}","store":"${store.de}","name":"Cart-${random}"}}}
     ...    AND    Save value to a variable:    [data][id]    cart_uid
-    ...    AND    I send a POST request:    /carts/${cart_uid}/items?include=items   {"data": {"type": "items","attributes": {"sku": "${concrete_available_with_stock_and_never_out_of_stock}","quantity": 2}}}
+    ...    AND    I send a POST request:    /carts/${cart_uid}/items?include=items   {"data": {"type": "items","attributes": {"sku": "${abstract_product.product_availability.concrete_available_with_stock_and_never_out_of_stock}","quantity": 2}}}
     ...    AND    Response status code should be:    201
     When I send a GET request:    /carts/${cart_uid}?include=items,concrete-products 
     Then Response status code should be:    200
@@ -107,9 +107,9 @@ Get_a_cart_with_included_items_and_concrete_products
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response body parameter should be:    [data][id]    ${cart_uid}
     And Response body parameter should be:    [data][type]    carts
-    And Response body parameter should be:    [data][attributes][priceMode]    ${gross_mode}
-    And Response body parameter should be:    [data][attributes][currency]    ${currency_code_eur}
-    And Response body parameter should be:    [data][attributes][store]    ${store_de}
+    And Response body parameter should be:    [data][attributes][priceMode]    ${mode.gross}
+    And Response body parameter should be:    [data][attributes][currency]    ${currency.eur.code}
+    And Response body parameter should be:    [data][attributes][store]    ${store.de}
     And Response body parameter should be:    [data][attributes][name]    Cart-${random}
     And Response body parameter should be:    [data][attributes][isDefault]    True
     And Response body parameter should not be EMPTY:    [data][attributes][totals][grandTotal]
@@ -122,11 +122,11 @@ Get_a_cart_with_included_items_and_concrete_products
     And Response include element has self link:   items
     And Response include element has self link:   concrete-products
     And Response body parameter should be:    [included][1][type]    items
-    And Response body parameter should be:    [included][1][id]    ${concrete_available_with_stock_and_never_out_of_stock}
-    And Response body parameter should be:    [included][1][attributes][sku]    ${concrete_available_with_stock_and_never_out_of_stock}
+    And Response body parameter should be:    [included][1][id]    ${abstract_product.product_availability.concrete_available_with_stock_and_never_out_of_stock}
+    And Response body parameter should be:    [included][1][attributes][sku]    ${abstract_product.product_availability.concrete_available_with_stock_and_never_out_of_stock}
     And Response body parameter should be:    [included][1][attributes][quantity]    2
-    And Response body parameter should be:    [included][1][attributes][groupKey]    ${concrete_available_with_stock_and_never_out_of_stock}
-    And Response body parameter should be:    [included][1][attributes][abstractSku]    ${abstract_available_with_stock_and_never_out_of_stock}
+    And Response body parameter should be:    [included][1][attributes][groupKey]    ${abstract_product.product_availability.concrete_available_with_stock_and_never_out_of_stock}
+    And Response body parameter should be:    [included][1][attributes][abstractSku]    ${abstract_product.product_availability.abstract_available_with_stock_and_never_out_of_stock}
     And Response body parameter should be:    [included][1][attributes][amount]    None
     And Response body parameter should not be EMPTY:    [included][1][attributes][calculations][unitPrice] 
     And Response body parameter should not be EMPTY:    [included][1][attributes][calculations][sumPrice]
@@ -155,9 +155,9 @@ Get_a_cart_with_included_items_and_concrete_products
 
 
 Add_five_items_to_cart_with_included_cart_rules_and_promotional_items
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
-    ...    AND    I send a POST request:    /carts    {"data":{"type":"carts","attributes":{"priceMode":"${gross_mode}","currency":"${currency_code_eur}","store":"${store_de}","name":"Cart-${random}"}}}
+    ...    AND    I send a POST request:    /carts    {"data":{"type":"carts","attributes":{"priceMode":"${mode.gross}","currency":"${currency.eur.code}","store":"${store.de}","name":"Cart-${random}"}}}
     ...    AND    Save value to a variable:    [data][id]    cart_uid
     When I send a POST request:    /carts/${cart_uid}/items?include=cart-rules,promotional-items   {"data": {"type": "items","attributes": {"sku": "${concrete_product_with_promotions}","quantity": 5}}}
     Then Response status code should be:    201
@@ -177,13 +177,13 @@ Add_five_items_to_cart_with_included_cart_rules_and_promotional_items
     ...    AND    Response status code should be:    204
 
 Add_random_weight_product_to_cart_with_included_sales_units_and_measurenet_units
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
-    ...    AND    I send a POST request:    /carts    {"data":{"type":"carts","attributes":{"priceMode":"${gross_mode}","currency":"${currency_code_eur}","store":"${store_de}","name":"Cart-${random}"}}}
+    ...    AND    I send a POST request:    /carts    {"data":{"type":"carts","attributes":{"priceMode":"${mode.gross}","currency":"${currency.eur.code}","store":"${store.de}","name":"Cart-${random}"}}}
     ...    AND    Save value to a variable:    [data][id]    cart_uid
-    ...    AND    I send a GET request:    /concrete-products/${concrete_product_random_weight_sku}?include=sales-units
+    ...    AND    I send a GET request:    /concrete-products/${concrete_product_random_weight.sku}?include=sales-units
     ...    AND    Save value to a variable:    [included][0][id]    sales_unit_id
-    When I send a POST request:    /carts/${cart_uid}/items?include=items,sales-units,product-measurement-units   {"data": {"type": "items","attributes": {"sku": "${concrete_product_random_weight_sku}","quantity": 1,"salesUnit": {"id": "${sales_unit_id}","amount": 10}}}}
+    When I send a POST request:    /carts/${cart_uid}/items?include=items,sales-units,product-measurement-units   {"data": {"type": "items","attributes": {"sku": "${concrete_product_random_weight.sku}","quantity": 1,"salesUnit": {"id": "${sales_unit_id}","amount": 10}}}}
     Then Response status code should be:    201
     And Response reason should be:    Created
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
@@ -205,7 +205,7 @@ Add_random_weight_product_to_cart_with_included_sales_units_and_measurenet_units
     And Response include element has self link:   sales-units
     And Response include element has self link:   product-measurement-units
     And Response body parameter should be:    [included][0][type]    product-measurement-units
-    And Response body parameter should be:    [included][0][id]    ${packaging_unit_i}
+    And Response body parameter should be:    [included][0][id]    ${packaging_unit.i}
     And Response body parameter should be:    [included][1][type]    sales-units
     And Response body parameter should be:    [included][1][id]    ${sales_unit_id}
     And Response body parameter should be:    [included][2][attributes][salesUnit][id]    ${sales_unit_id}
@@ -215,11 +215,11 @@ Add_random_weight_product_to_cart_with_included_sales_units_and_measurenet_units
 
 
 Add_product_with_options_to_cart
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
-    ...    AND    I send a POST request:    /carts    {"data":{"type":"carts","attributes":{"priceMode":"${gross_mode}","currency":"${currency_code_eur}","store":"${store_de}","name":"Cart-${random}"}}}
+    ...    AND    I send a POST request:    /carts    {"data":{"type":"carts","attributes":{"priceMode":"${mode.gross}","currency":"${currency.eur.code}","store":"${store.de}","name":"Cart-${random}"}}}
     ...    AND    Save value to a variable:    [data][id]    cart_uid
-    When I send a POST request:    /carts/${cart_uid}/items?include=items    {"data":{"type": "items","attributes":{"sku": "${concrete_available_with_stock_and_never_out_of_stock}","quantity": 1,"productOptions": [{ "sku": "${product_option_1}"},{ "sku": "${product_option_2}"}] }}}
+    When I send a POST request:    /carts/${cart_uid}/items?include=items    {"data":{"type": "items","attributes":{"sku": "${abstract_product.product_availability.concrete_available_with_stock_and_never_out_of_stock}","quantity": 1,"productOptions": [{ "sku": "${product_options.option_1}"},{ "sku": "${product_options.option_2}"}] }}}
     Then Response status code should be:    201
     And Response reason should be:    Created
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
@@ -229,9 +229,9 @@ Add_product_with_options_to_cart
     And Response should contain the array of a certain size:    [included]    1
     And Response include should contain certain entity type:    items
     And Response include element has self link:   items
-    And Response body parameter should contain:    [included][0][id]    ${concrete_available_with_stock_and_never_out_of_stock}
-    And Response body parameter should be:    [included][0][attributes][sku]    ${concrete_available_with_stock_and_never_out_of_stock}
-    And Response body parameter should contain:    [included][0][attributes][groupKey]    ${concrete_available_with_stock_and_never_out_of_stock}
+    And Response body parameter should contain:    [included][0][id]    ${abstract_product.product_availability.concrete_available_with_stock_and_never_out_of_stock}
+    And Response body parameter should be:    [included][0][attributes][sku]    ${abstract_product.product_availability.concrete_available_with_stock_and_never_out_of_stock}
+    And Response body parameter should contain:    [included][0][attributes][groupKey]    ${abstract_product.product_availability.concrete_available_with_stock_and_never_out_of_stock}
     And Response body parameter should be greater than:    [included][0][attributes][calculations][unitProductOptionPriceAggregation]    1
     And Response body parameter should be greater than:    [included][0][attributes][calculations][sumProductOptionPriceAggregation]    1
     And Response should contain the array of a certain size:    [included][0][attributes][selectedProductOptions]    2
@@ -243,52 +243,52 @@ Add_product_with_options_to_cart
     ...    AND    Response status code should be:    204
 
 Add_item_with_storage_category_and_2_discounts
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
-    ...    AND    I send a POST request:    /carts    {"data":{"type":"carts","attributes":{"priceMode":"${gross_mode}","currency":"${currency_code_eur}","store":"${store_de}","name":"Cart-${random}"}}}
+    ...    AND    I send a POST request:    /carts    {"data":{"type":"carts","attributes":{"priceMode":"${mode.gross}","currency":"${currency.eur.code}","store":"${store.de}","name":"Cart-${random}"}}}
     ...    AND    Save value to a variable:    [data][id]    cart_uid
-    When I send a POST request:    /carts/${cart_uid}/items    {"data": {"type": "items","attributes": {"sku": "${discount_concrete_product_sku}","quantity": 1}}}
+    When I send a POST request:    /carts/${cart_uid}/items    {"data": {"type": "items","attributes": {"sku": "${discount_concrete_product.product_1.sku}","quantity": 1}}}
     Then Response status code should be:    201
     And Response reason should be:    Created
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response body parameter should be:    [data][id]    ${cart_uid}
     And Response body parameter should be:    [data][type]    carts
     And Response body parameter should be:    [data][attributes][totals][expenseTotal]    0
-    And Response body parameter should be:    [data][attributes][totals][discountTotal]    ${discount_concrete_product_1_total_sum_of_discounts}
+    And Response body parameter should be:    [data][attributes][totals][discountTotal]    ${discount_concrete_product.product_1.discount_amount_total_sum_of_discounts}
     And Response body parameter should be greater than:    [data][attributes][totals][taxTotal]    0
     And Response body parameter should be greater than:    [data][attributes][totals][subtotal]    0
     And Response body parameter should be greater than:    [data][attributes][totals][grandTotal]    0
     And Response body parameter should be greater than:    [data][attributes][totals][priceToPay]    0
-    And Response body parameter should be:    [data][attributes][discounts][0][displayName]    ${discount_1_name}
-    And Response body parameter should be:    [data][attributes][discounts][0][amount]    ${discount_amount_for_product_1_with_discount_20%_off_storage}
+    And Response body parameter should be:    [data][attributes][discounts][0][displayName]    ${discount_1.name}
+    And Response body parameter should be:    [data][attributes][discounts][0][amount]    ${discount_concrete_product.product_1.discount_amount_with_20_percentage_off_storage}
     And Response body parameter should be:    [data][attributes][discounts][0][code]    None
-    And Response body parameter should be:    [data][attributes][discounts][1][displayName]    ${discount_2_name}
-    And Response body parameter should be:    [data][attributes][discounts][1][amount]    ${discount_amount_for_product_1_with_discount_10%_off_minimum_order}
+    And Response body parameter should be:    [data][attributes][discounts][1][displayName]    ${discount_2.name}
+    And Response body parameter should be:    [data][attributes][discounts][1][amount]    ${discount_concrete_product.product_1.discount_amount_with_10_percentage_off_minimum_order}
     And Response body parameter should be:    [data][attributes][discounts][1][code]    None
     And Response body parameter should not be EMPTY:    [data][links][self]
     [Teardown]    Run Keywords    I send a DELETE request:     /carts/${cart_uid}
     ...    AND    Response status code should be:    204
 
 Add_item_without_storage_category_and_2_discounts
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
-    ...    AND    I send a POST request:    /carts    {"data":{"type":"carts","attributes":{"priceMode":"${gross_mode}","currency":"${currency_code_eur}","store":"${store_de}","name":"Cart-${random}"}}}
+    ...    AND    I send a POST request:    /carts    {"data":{"type":"carts","attributes":{"priceMode":"${mode.gross}","currency":"${currency.eur.code}","store":"${store.de}","name":"Cart-${random}"}}}
     ...    AND    Save value to a variable:    [data][id]    cart_uid
-    When I send a POST request:    /carts/${cart_uid}/items    {"data": {"type": "items","attributes": {"sku": "${discount_concrete_product_3_sku}","quantity": 1}}}
+    When I send a POST request:    /carts/${cart_uid}/items    {"data": {"type": "items","attributes": {"sku": "${discount_concrete_product.product_3.sku}","quantity": 1}}}
     Then Response status code should be:    201
     And Response reason should be:    Created
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response body parameter should be:    [data][id]    ${cart_uid}
     And Response body parameter should be:    [data][type]    carts
     And Response body parameter should be:    [data][attributes][totals][expenseTotal]    0
-    And Response body parameter with rounding should be:    [data][attributes][totals][discountTotal]    ${discount_amount_for_product_3_with_10%_discount}
+    And Response body parameter with rounding should be:    [data][attributes][totals][discountTotal]    ${discount_concrete_product.product_3.discount_amount_with_10_percentage_off_minimum_order}
     And Response body parameter should be greater than:    [data][attributes][totals][taxTotal]    0
     And Response body parameter should be greater than:    [data][attributes][totals][subtotal]    0
     And Response body parameter should be greater than:    [data][attributes][totals][grandTotal]    0
     And Response body parameter should be greater than:    [data][attributes][totals][priceToPay]    0
     And Response should contain the array of a certain size:    [data][attributes][discounts]    1
-    And Response body parameter should be:    [data][attributes][discounts][0][displayName]    ${discount_2_name}
-    And Response body parameter with rounding should be:    [data][attributes][discounts][0][amount]    ${discount_amount_for_product_3_with_10%_discount}
+    And Response body parameter should be:    [data][attributes][discounts][0][displayName]    ${discount_2.name}
+    And Response body parameter with rounding should be:    [data][attributes][discounts][0][amount]    ${discount_concrete_product.product_3.discount_amount_with_10_percentage_off_minimum_order}
     And Response body parameter should be:    [data][attributes][discounts][0][code]    None
     And Response body parameter should not be EMPTY:    [data][links][self]
     [Teardown]    Run Keywords    I send a DELETE request:     /carts/${cart_uid}
@@ -296,11 +296,11 @@ Add_item_without_storage_category_and_2_discounts
 
 ###### PATCH #######
 Change_item_qty_in_cart
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
-    ...    AND    I send a POST request:    /carts    {"data":{"type":"carts","attributes":{"priceMode":"${gross_mode}","currency":"${currency_code_eur}","store":"${store_de}","name":"Cart-${random}"}}}
+    ...    AND    I send a POST request:    /carts    {"data":{"type":"carts","attributes":{"priceMode":"${mode.gross}","currency":"${currency.eur.code}","store":"${store.de}","name":"Cart-${random}"}}}
     ...    AND    Save value to a variable:    [data][id]    cart_uid
-    ...    AND    I send a POST request:    /carts/${cart_uid}/items?include=items    {"data": {"type": "items","attributes": {"sku": "${concrete_available_with_stock_and_never_out_of_stock}","quantity": 1}}}
+    ...    AND    I send a POST request:    /carts/${cart_uid}/items?include=items    {"data": {"type": "items","attributes": {"sku": "${abstract_product.product_availability.concrete_available_with_stock_and_never_out_of_stock}","quantity": 1}}}
     ...    AND    Save value to a variable:    [included][0][id]    item_uid
     ...    AND    Save value to a variable:    [included][0][attributes][calculations][sumPriceToPayAggregation]    item_total_price
     When I send a PATCH request:    /carts/${cart_uid}/items/${item_uid}?include=items  {"data":{"type": "items","attributes":{"quantity": 5}}}
@@ -316,13 +316,13 @@ Change_item_qty_in_cart
     ...    AND    Response status code should be:    204
 
 Change_item_amount_in_cart
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
-    ...    AND    I send a POST request:    /carts    {"data":{"type":"carts","attributes":{"priceMode":"${gross_mode}","currency":"${currency_code_eur}","store":"${store_de}","name":"Cart-${random}"}}}
+    ...    AND    I send a POST request:    /carts    {"data":{"type":"carts","attributes":{"priceMode":"${mode.gross}","currency":"${currency.eur.code}","store":"${store.de}","name":"Cart-${random}"}}}
     ...    AND    Save value to a variable:    [data][id]    cart_uid
-    ...    AND    I send a GET request:    /concrete-products/${concrete_product_random_weight_sku}?include=sales-units
+    ...    AND    I send a GET request:    /concrete-products/${concrete_product_random_weight.sku}?include=sales-units
     ...    AND    Save value to a variable:    [included][0][id]    sales_unit_id
-    ...    AND    I send a POST request:    /carts/${cart_uid}/items?include=items    {"data": {"type": "items","attributes": {"sku": "${concrete_product_random_weight_sku}","quantity": 1,"salesUnit": {"id": "${sales_unit_id}","amount": 10}}}}
+    ...    AND    I send a POST request:    /carts/${cart_uid}/items?include=items    {"data": {"type": "items","attributes": {"sku": "${concrete_product_random_weight.sku}","quantity": 1,"salesUnit": {"id": "${sales_unit_id}","amount": 10}}}}
     ...    AND    Save value to a variable:    [included][0][id]    item_uid
     ...    AND    Save value to a variable:    [included][0][attributes][calculations][sumPriceToPayAggregation]    item_total_price
     When I send a PATCH request:    /carts/${cart_uid}/items/${item_uid}?include=items    {"data":{"type": "items","attributes":{"quantity": 2,"salesUnit": {"id": "${sales_unit_id}","amount": 5}}}}
@@ -340,11 +340,11 @@ Change_item_amount_in_cart
 
 ##### DELETE #######
 Delete_item_form_cart
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
-    ...    AND    I send a POST request:    /carts    {"data":{"type":"carts","attributes":{"priceMode":"${gross_mode}","currency":"${currency_code_eur}","store":"${store_de}","name":"Cart-${random}"}}}
+    ...    AND    I send a POST request:    /carts    {"data":{"type":"carts","attributes":{"priceMode":"${mode.gross}","currency":"${currency.eur.code}","store":"${store.de}","name":"Cart-${random}"}}}
     ...    AND    Save value to a variable:    [data][id]    cart_uid
-    ...    AND    I send a POST request:    /carts/${cart_uid}/items?include=items    {"data": {"type": "items","attributes": {"sku": "${concrete_available_with_stock_and_never_out_of_stock}","quantity": 1}}}
+    ...    AND    I send a POST request:    /carts/${cart_uid}/items?include=items    {"data": {"type": "items","attributes": {"sku": "${abstract_product.product_availability.concrete_available_with_stock_and_never_out_of_stock}","quantity": 1}}}
     ...    AND    Save value to a variable:    [included][0][id]    item_uid
     When I send a DELETE request:    /carts/${cart_uid}/items/${item_uid}
     Then Response status code should be:    204

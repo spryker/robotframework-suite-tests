@@ -8,7 +8,7 @@ Resource    ../../../../../../resources/common/common_api.robot
 ENABLER
     TestSetup
 Get_concrete_alternative_product_for_a_product_that_has_none
-    When I send a GET request:    /concrete-products/${bundled_product_1_concrete_sku}/concrete-alternative-products
+    When I send a GET request:    /concrete-products/${bundle_product.concrete.product_1_sku}/concrete-alternative-products
     Then Response status code should be:    200
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response reason should be:    OK
@@ -16,7 +16,7 @@ Get_concrete_alternative_product_for_a_product_that_has_none
     And Response body has correct self link
 
 Get_concrete_alternative_product
-    When I send a GET request:    /concrete-products/${concrete_product_with_alternative_sku}/concrete-alternative-products
+    When I send a GET request:    /concrete-products/${concrete_product_with_alternative.sku}/concrete-alternative-products
     Then Response status code should be:    200
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response reason should be:    OK
@@ -42,9 +42,9 @@ Get_concrete_alternative_product
     And Response body has correct self link
 
 Get_concrete_alternative_product_with_include
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}  
-    When I send a GET request:    /concrete-products/${concrete_product_with_alternative_sku}/concrete-alternative-products?include=concrete-product-image-sets,concrete-product-availabilities,concrete-product-prices
+    When I send a GET request:    /concrete-products/${concrete_product_with_alternative.sku}/concrete-alternative-products?include=concrete-product-image-sets,concrete-product-availabilities,concrete-product-prices
     Then Response status code should be:    200
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response reason should be:    OK
