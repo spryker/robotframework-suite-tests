@@ -3,6 +3,7 @@ Resource    ../pages/yves/yves_shopping_carts_page.robot
 Resource    ../pages/yves/yves_shopping_cart_page.robot
 Resource    ../pages/yves/yves_delete_shopping_cart_page.robot
 Resource    ../common/common_yves.robot
+Resource    ../common/common.robot
 
 *** Variables ***
 ${upSellProducts}    ${shopping_cart_upp-sell_products_section}
@@ -217,9 +218,9 @@ Yves: discount is applied:
 Yves: promotional product offer is/not shown in cart:
     [Arguments]    ${isShown}
     IF    '${isShown}'=='true'
-        Element Should Be Visible    ${shopping_cart_promotional_product_section}    message=Promotional products are not displayed but should be    timeout=0:00:30
+        Element Should Be Visible    ${shopping_cart_promotional_product_section}    message=Promotional products are not displayed but should be    timeout=${browser_timeout}
     ELSE IF    '${isShown}'=='false'
-        Element Should Not Be Visible    ${shopping_cart_promotional_product_section}    message=Promotional products are displayed but should not    timeout=0:00:30
+        Element Should Not Be Visible    ${shopping_cart_promotional_product_section}    message=Promotional products are displayed but should not    timeout=${browser_timeout}
     END
 
 Yves: change quantity of promotional product and add to cart:

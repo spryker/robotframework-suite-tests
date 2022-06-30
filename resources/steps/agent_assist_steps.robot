@@ -19,7 +19,7 @@ Zed: create new Zed user with the following data:
     Zed: Check checkbox by Label:    ${checkboxAgent}
     Select From List By Label    ${zed_user_interface_language}    ${userInterfaceLanguage}
     Zed: submit the form
-    Wait Until Element Is Visible    xpath=//div[@class='title-action']/a[contains(.,'Add New User')]    User wasn't saved     0:00:80
+    Zed: wait for button in Header to be visible:    Add New User    ${browser_timeout}
     Zed: table should contain:    ${zedUserEmail}
 
 Yves: perform search by customer:

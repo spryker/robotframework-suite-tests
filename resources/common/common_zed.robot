@@ -53,6 +53,10 @@ Zed: click button in Header:
     wait until element is visible    xpath=//div[@class='title-action']/a[contains(.,'${button_name}')]
     Click    xpath=//div[@class='title-action']/a[contains(.,'${button_name}')]
 
+Zed: wait for button in Header to be visible:
+    [Arguments]    ${button_name}    ${timeout}
+    Wait until element is visible    xpath=//div[@class='title-action']/a[contains(.,'${button_name}')]
+
 Zed: click Action Button in a table for row that contains:
     [Arguments]    ${row_content}    ${zed_table_action_button_locator}
     Zed: perform search by:    ${row_content}
