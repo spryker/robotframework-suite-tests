@@ -9,14 +9,14 @@ ENABLER
     TestSetup
 
 Share_not_owned_shopping_cart
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    Save value to a variable:    [data][attributes][accessToken]    userToken
     ...    AND    I set Headers:    Authorization=${token}  
-    ...    AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${gross_mode}","currency": "${currency_code_eur}","store": "${store_de}","name": "${test_cart_name}-${random}"}}}
+    ...    AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
     ...    AND    Save value to a variable:    [data][id]    cartId
     ...    AND    I send a GET request:    /company-users
     ...    AND    Save value to a variable:    [data][0][id]    companyUserId
-    ...    AND    Then I get access token for the customer:    ${yves_shared_shopping_cart_user_email}
+    ...    AND    I get access token for the customer:    ${yves_shared_shopping_cart_user.email}
     ...    AND    I set Headers:    Authorization=${token}
     When I send a POST request:    /carts/${cartId}/shared-carts    {"data":{"type":"shared-carts","attributes":{"idCompanyUser":"${companyUserId}","idCartPermissionGroup":1}}}
     Then Response status code should be:    403
@@ -29,9 +29,9 @@ Share_not_owned_shopping_cart
     ...    AND    Response reason should be:    No Content
 
 Share_shopping_cart_with_non_existing_permission_group
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}  
-    ...    AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${gross_mode}","currency": "${currency_code_eur}","store": "${store_de}","name": "${test_cart_name}-${random}"}}}
+    ...    AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
     ...    AND    Save value to a variable:    [data][id]    cartId
     ...    AND    I send a GET request:    /company-users
     ...    AND    Save value to a variable:    [data][0][id]    companyUserId
@@ -45,9 +45,9 @@ Share_shopping_cart_with_non_existing_permission_group
     ...    AND    Response reason should be:    No Content
 
 Share_shopping_cart_with_empty_permission_group_value_and_company_user_value
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}  
-    ...    AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${gross_mode}","currency": "${currency_code_eur}","store": "${store_de}","name": "${test_cart_name}-${random}"}}}
+    ...    AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
     ...    AND    Save value to a variable:    [data][id]    cartId
     ...    AND    I send a GET request:    /company-users
     ...    AND    Save value to a variable:    [data][0][id]    companyUserId
@@ -61,9 +61,9 @@ Share_shopping_cart_with_empty_permission_group_value_and_company_user_value
     ...    AND    Response status code should be:    204
 
 Share_shopping_cart_without_company_user_attribute_and_cart_permission_group_attribute
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}  
-    ...    AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${gross_mode}","currency": "${currency_code_eur}","store": "${store_de}","name": "${test_cart_name}-${random}"}}}
+    ...    AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
     ...    AND    Save value to a variable:    [data][id]    cartId
     When I send a POST request:    /carts/${cartId}/shared-carts    {"data":{"type":"shared-carts","attributes":{}}}
     Then Each array element of array in response should contain property with value:    [errors]    code    901
@@ -76,13 +76,13 @@ Share_shopping_cart_without_company_user_attribute_and_cart_permission_group_att
     ...    AND    Response reason should be:    No Content
 
 Share_shopping_cart_to_the_other_company_user
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_fourth_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_fourth_user.email}
     ...    AND    I set Headers:    Authorization=${token}
     ...    AND    I send a GET request:    /company-users
     ...    AND    Save value to a variable:    [data][0][id]    companyUserId
-    ...    AND    Then I get access token for the customer:    ${yves_user_email}
+    ...    AND    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}  
-    ...    AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${gross_mode}","currency": "${currency_code_eur}","store": "${store_de}","name": "${test_cart_name}-${random}"}}}
+    ...    AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
     ...    AND    Save value to a variable:    [data][id]    cartId
     When I send a POST request:    /carts/${cartId}/shared-carts    {"data":{"type":"shared-carts","attributes":{"idCompanyUser":"${companyUserId}","idCartPermissionGroup":1}}}
     Then Response status code should be:    403
@@ -101,7 +101,7 @@ Share_shopping_cart_without_access_token
     And Response should return error message:    Missing access token.
 
 Share_shopping_cart_with_wrong_access_token
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}1
     When I send a POST request:    /carts/shoppingCartId/shared-carts    {"data":{"type":"shared-carts","attributes":{"idCompanyUser":"${companyUserId}","idCartPermissionGroup":1}}}
     Then Response status code should be:    401
@@ -110,7 +110,7 @@ Share_shopping_cart_with_wrong_access_token
     And Response should return error message:    Invalid access token.
 
 Share_shopping_cart_with_empty_cart_id
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}
     When I send a POST request:    /carts//shared-carts    {"data":{"type":"shared-carts","attributes":{"idCompanyUser":"${companyUserId}","idCartPermissionGroup":1}}}
     Then Response status code should be:    400
@@ -119,9 +119,9 @@ Share_shopping_cart_with_empty_cart_id
     And Response should return error message:    Cart uuid is missing.
 
 Share_shopping_cart_with_incorrect_cart_permission_id
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}
-    ...    AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${gross_mode}","currency": "${currency_code_eur}","store": "${store_de}","name": "${test_cart_name}-${random}"}}}
+    ...    AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
     ...    AND    Save value to a variable:    [data][id]    cartId
     ...    AND    I send a GET request:    /company-users
     ...    AND    Save value to a variable:    [data][0][id]    companyUserId
@@ -135,9 +135,9 @@ Share_shopping_cart_with_incorrect_cart_permission_id
     ...    AND    Response reason should be:    No Content
 
 Share_shopping_cart_to_non_existing_company_user
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}
-    ...    AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${gross_mode}","currency": "${currency_code_eur}","store": "${store_de}","name": "${test_cart_name}-${random}"}}}
+    ...    AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
     ...    AND    Save value to a variable:    [data][id]    cartId
     ...    AND    I send a GET request:    /company-users
     ...    AND    Save value to a variable:    [data][0][id]    companyUserId
@@ -158,7 +158,7 @@ Update_permissions_of_shared_shopping_cart_without_access_token
     And Response should return error message:    Missing access token.
 
 Update_permissions_of_shared_shopping_cart_with_wrong_access_token
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}1
     When I send a PATCH request:    /shared-carts/sharedCardId    {"data":{"type":"shared-carts","attributes":{"idCartPermissionGroup":1}}}
     Then Response status code should be:    401
@@ -167,7 +167,7 @@ Update_permissions_of_shared_shopping_cart_with_wrong_access_token
     And Response should return error message:    Invalid access token.
 
 Update_permissions_of_shared_shopping_cart_without_shared_cart_id
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}  
     When I send a PATCH request:    /shared-carts    {"data":{"type":"shared-carts","attributes":{"idCartPermissionGroup":1}}}
     Then Response status code should be:    400
@@ -175,9 +175,9 @@ Update_permissions_of_shared_shopping_cart_without_shared_cart_id
     And Response should return error message:    Resource id is not specified.
 
 Update_permissions_of_shared_shopping_cart_with_incorrect_permission_group
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}  
-    ...    AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${gross_mode}","currency": "${currency_code_eur}","store": "${store_de}","name": "${test_cart_name}-${random}"}}}
+    ...    AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
     ...    AND    Save value to a variable:    [data][id]    cartId
     ...    AND    I send a GET request:    /company-users
     ...    AND    Save value to a variable:    [data][0][id]    companyUserId
@@ -193,9 +193,9 @@ Update_permissions_of_shared_shopping_cart_with_incorrect_permission_group
     ...    AND    Response reason should be:    No Content
 
 Update_permissions_of_shared_shopping_cart_with_extra_attribute
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}  
-    ...    AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${gross_mode}","currency": "${currency_code_eur}","store": "${store_de}","name": "${test_cart_name}-${random}"}}}
+    ...    AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
     ...    AND    Save value to a variable:    [data][id]    cartId
     ...    AND    I send a GET request:    /company-users
     ...    AND    Save value to a variable:    [data][0][id]    companyUserId
@@ -210,11 +210,11 @@ Update_permissions_of_shared_shopping_cart_with_extra_attribute
     ...    AND    Response reason should be:    No Content
 
 Update_permissions_of_shared_shopping_cart_with_empty_permission_group_value
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}  
-    ...    AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${gross_mode}","currency": "${currency_code_eur}","store": "${store_de}","name": "${test_cart_name}-${random}"}}}
+    ...    AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
     ...    AND    Save value to a variable:    [data][id]    cartId
-    ...    AND    I send a POST request:    /carts/${cartId}/items    {"data":{"type":"items","attributes":{"sku":"${concrete_available_product_sku}","quantity":1}}}
+    ...    AND    I send a POST request:    /carts/${cartId}/items    {"data":{"type":"items","attributes":{"sku":"${abstract_available_product_with_stock.concrete_available_product.sku}","quantity":1}}}
     ...    AND    Response status code should be:    201
     ...    AND    I send a GET request:    /company-users
     ...    AND    Save value to a variable:    [data][0][id]    companyUserId
@@ -230,11 +230,11 @@ Update_permissions_of_shared_shopping_cart_with_empty_permission_group_value
     ...    AND    Response reason should be:    No Content
 
 Update_permissions_of_shared_shopping_cart_without_permission_group_attribute
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}  
-    ...    AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${gross_mode}","currency": "${currency_code_eur}","store": "${store_de}","name": "${test_cart_name}-${random}"}}}
+    ...    AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
     ...    AND    Save value to a variable:    [data][id]    cartId
-    ...    AND    I send a POST request:    /carts/${cartId}/items    {"data":{"type":"items","attributes":{"sku":"${concrete_available_product_sku}","quantity":1}}}
+    ...    AND    I send a POST request:    /carts/${cartId}/items    {"data":{"type":"items","attributes":{"sku":"${abstract_available_product_with_stock.concrete_available_product.sku}","quantity":1}}}
     ...    AND    Response status code should be:    201
     ...    AND    I send a GET request:    /company-users
     ...    AND    Save value to a variable:    [data][0][id]    companyUserId
@@ -250,17 +250,17 @@ Update_permissions_of_shared_shopping_cart_without_permission_group_attribute
     ...    AND    Response reason should be:    No Content
 
 Add_an_item_to_the_shared_shopping_cart_by_user_without_access
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    Save value to a variable:    [data][attributes][accessToken]    userToken
     ...    AND    I set Headers:    Authorization=${token}  
-    ...    AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${gross_mode}","currency": "${currency_code_eur}","store": "${store_de}","name": "${test_cart_name}-${random}"}}}
+    ...    AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
     ...    AND    Save value to a variable:    [data][id]    cartId
     ...    AND    I send a GET request:    /company-users
     ...    AND    Save value to a variable:    [data][0][id]    companyUserId
     ...    AND    I send a POST request:    /carts/${cartId}/shared-carts    {"data":{"type":"shared-carts","attributes":{"idCompanyUser":"${companyUserId}","idCartPermissionGroup":1}}}
-    ...    AND    Then I get access token for the customer:    ${yves_shared_shopping_cart_user_email}
+    ...    AND    I get access token for the customer:    ${yves_shared_shopping_cart_user.email}
     ...    AND    I set Headers:    Authorization=${token}
-    When I send a POST request:    /carts/${cartId}/items    {"data":{"type":"items","attributes":{"sku":"${concrete_available_product_sku}","quantity":1}}}
+    When I send a POST request:    /carts/${cartId}/items    {"data":{"type":"items","attributes":{"sku":"${abstract_available_product_with_stock.concrete_available_product.sku}","quantity":1}}}
     Then Response status code should be:    403
     And Response should return error code:    115
     And Response reason should be:    Forbidden
@@ -272,20 +272,20 @@ Add_an_item_to_the_shared_shopping_cart_by_user_without_access
     ...    AND    Response reason should be:    No Content
 
 Update_an_item_quantity_at_the_shared_shopping_cart_by_user_without_access
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    Save value to a variable:    [data][attributes][accessToken]    userToken
     ...    AND    I set Headers:    Authorization=${token}  
-    ...    AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${gross_mode}","currency": "${currency_code_eur}","store": "${store_de}","name": "${test_cart_name}-${random}"}}}
+    ...    AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
     ...    AND    Save value to a variable:    [data][id]    cartId
-    ...    AND    I send a POST request:    /carts/${cartId}/items    {"data":{"type":"items","attributes":{"sku":"${concrete_available_product_sku}","quantity":1}}}
+    ...    AND    I send a POST request:    /carts/${cartId}/items    {"data":{"type":"items","attributes":{"sku":"${abstract_available_product_with_stock.concrete_available_product.sku}","quantity":1}}}
     ...    AND    Response status code should be:    201
     ...    AND    I send a GET request:    /company-users
     ...    AND    Save value to a variable:    [data][0][id]    companyUserId
     ...    AND    I send a POST request:    /carts/${cartId}/shared-carts    {"data":{"type":"shared-carts","attributes":{"idCompanyUser":"${companyUserId}","idCartPermissionGroup":1}}}
     ...    AND    Response status code should be:    201
-    ...    AND    Then I get access token for the customer:    ${yves_shared_shopping_cart_user_email}
+    ...    AND    I get access token for the customer:    ${yves_shared_shopping_cart_user.email}
     ...    AND    I set Headers:    Authorization=${token}
-    When I send a PATCH request:    /carts/${cartId}/items/${concrete_available_product_sku}    {"data":{"type":"items","attributes":{"quantity":2}}}
+    When I send a PATCH request:    /carts/${cartId}/items/${abstract_available_product_with_stock.concrete_available_product.sku}    {"data":{"type":"items","attributes":{"quantity":2}}}
     Then Response status code should be:    403
     And Response should return error code:    115
     And Response reason should be:    Forbidden
@@ -296,20 +296,20 @@ Update_an_item_quantity_at_the_shared_shopping_cart_by_user_without_access
     ...    AND    Response reason should be:    No Content
 
 Remove_an_item_from_the_shared_shopping_cart_by_user_without_access
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    Save value to a variable:    [data][attributes][accessToken]    userToken
     ...    AND    I set Headers:    Authorization=${token}  
-    ...    AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${gross_mode}","currency": "${currency_code_eur}","store": "${store_de}","name": "${test_cart_name}-${random}"}}}
+    ...    AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
     ...    AND    Save value to a variable:    [data][id]    cartId
-    ...    AND    I send a POST request:    /carts/${cartId}/items    {"data":{"type":"items","attributes":{"sku":"${concrete_available_product_sku}","quantity":1}}}
+    ...    AND    I send a POST request:    /carts/${cartId}/items    {"data":{"type":"items","attributes":{"sku":"${abstract_available_product_with_stock.concrete_available_product.sku}","quantity":1}}}
     ...    AND    Response status code should be:    201
     ...    AND    I send a GET request:    /company-users
     ...    AND    Save value to a variable:    [data][0][id]    companyUserId
     ...    AND    I send a POST request:    /carts/${cartId}/shared-carts    {"data":{"type":"shared-carts","attributes":{"idCompanyUser":"${companyUserId}","idCartPermissionGroup":1}}}
     ...    AND    Response status code should be:    201
-    ...    AND    Then I get access token for the customer:    ${yves_shared_shopping_cart_user_email}
+    ...    AND    I get access token for the customer:    ${yves_shared_shopping_cart_user.email}
     ...    AND    I set Headers:    Authorization=${token}
-    When I send a DELETE request:    /carts/${cartId}/items/${concrete_available_product_sku}
+    When I send a DELETE request:    /carts/${cartId}/items/${abstract_available_product_with_stock.concrete_available_product.sku}
     Then Response status code should be:    403
     And Response should return error code:    115
     And Response reason should be:    Forbidden
@@ -321,18 +321,18 @@ Remove_an_item_from_the_shared_shopping_cart_by_user_without_access
     ...    AND    Response reason should be:    No Content
 
 Remove_the_shared_shopping_cart_by_user_without_access
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    Save value to a variable:    [data][attributes][accessToken]    userToken
     ...    AND    I set Headers:    Authorization=${token}  
-    ...    AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${gross_mode}","currency": "${currency_code_eur}","store": "${store_de}","name": "${test_cart_name}-${random}"}}}
+    ...    AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
     ...    AND    Save value to a variable:    [data][id]    cartId
-    ...    AND    I send a POST request:    /carts/${cartId}/items    {"data":{"type":"items","attributes":{"sku":"${concrete_available_product_sku}","quantity":1}}}
+    ...    AND    I send a POST request:    /carts/${cartId}/items    {"data":{"type":"items","attributes":{"sku":"${abstract_available_product_with_stock.concrete_available_product.sku}","quantity":1}}}
     ...    AND    Response status code should be:    201
     ...    AND    I send a GET request:    /company-users
     ...    AND    Save value to a variable:    [data][0][id]    companyUserId
     ...    AND    I send a POST request:    /carts/${cartId}/shared-carts    {"data":{"type":"shared-carts","attributes":{"idCompanyUser":"${companyUserId}","idCartPermissionGroup":1}}}
     ...    AND    Save value to a variable:    [data][id]    sharedCardId
-    ...    AND    Then I get access token for the customer:    ${yves_shared_shopping_cart_user_email}
+    ...    AND    I get access token for the customer:    ${yves_shared_shopping_cart_user.email}
     ...    AND    I set Headers:    Authorization=${token}
     When I send a DELETE request:    /shared-carts/${sharedCardId}
     Then Response status code should be:    403
@@ -345,11 +345,11 @@ Remove_the_shared_shopping_cart_by_user_without_access
     ...    AND    Response reason should be:    No Content
 
 Remove_the_already_deleted_shared_shopping_cart_by_user_with_access
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}  
-    ...    AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${gross_mode}","currency": "${currency_code_eur}","store": "${store_de}","name": "${test_cart_name}-${random}"}}}
+    ...    AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
     ...    AND    Save value to a variable:    [data][id]    cartId
-    ...    AND    I send a POST request:    /carts/${cartId}/items    {"data":{"type":"items","attributes":{"sku":"${concrete_available_product_sku}","quantity":1}}}
+    ...    AND    I send a POST request:    /carts/${cartId}/items    {"data":{"type":"items","attributes":{"sku":"${abstract_available_product_with_stock.concrete_available_product.sku}","quantity":1}}}
     ...    AND    Response status code should be:    201
     ...    AND    I send a GET request:    /company-users
     ...    AND    Save value to a variable:    [data][0][id]    companyUserId
@@ -358,7 +358,7 @@ Remove_the_already_deleted_shared_shopping_cart_by_user_with_access
     ...    AND    I send a DELETE request:    /carts/${cartId}
     ...    AND    Response status code should be:    204
     ...    AND    Response reason should be:    No Content
-    ...    AND    Then I get access token for the customer:    ${yves_shared_shopping_cart_user_email}
+    ...    AND    I get access token for the customer:    ${yves_shared_shopping_cart_user.email}
     ...    AND    I set Headers:    Authorization=${token}
     When I send a DELETE request:    /shared-carts/${sharedCardId}
     Then Response status code should be:    404

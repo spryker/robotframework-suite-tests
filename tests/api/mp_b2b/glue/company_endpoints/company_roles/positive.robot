@@ -8,7 +8,7 @@ Default Tags    glue
 ENABLER
     TestSetup
 Request_company_role_by_id
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}  
     ...    AND    I send a GET request:    /company-roles/mine
     ...    AND    Save value to a variable:    [data][0][id]    company_role_id  
@@ -23,7 +23,7 @@ Request_company_role_by_id
     And Response body has correct self link internal
 
 Request_company_role_by_mine
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}  
     When I send a GET request:    /company-roles/mine
     Then Response status code should be:    200
@@ -40,7 +40,7 @@ Request_company_role_by_mine
     And Response body has correct self link
 
 Request_company_role_by_mine_with_include_companies
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}  
     When I send a GET request:    /company-roles/mine?include=companies
     Then Response status code should be:    200
@@ -66,7 +66,7 @@ Request_company_role_by_mine_with_include_companies
     And Response body has correct self link
 
 Request_company_role_by_id_with_include_companies
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}  
     ...    AND    I send a GET request:    /company-roles/mine
     ...    AND    Save value to a variable:    [data][0][id]    company_role_id  

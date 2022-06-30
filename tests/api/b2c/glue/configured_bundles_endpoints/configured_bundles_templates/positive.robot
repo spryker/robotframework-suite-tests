@@ -23,7 +23,7 @@ Get_configurable_bundle_templates
     And Response body has correct self link
 
 Get_configurable_bundle_templates_with_uuid
-    When I send a GET request:    /configurable-bundle-templates/${configurable_bundle_template_id}
+    When I send a GET request:    /configurable-bundle-templates/${configurable_bundle_template_1_uuid}
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response body parameter should be:    [data][type]   configurable-bundle-templates
@@ -68,13 +68,13 @@ Get_configurable_bundle_templates_including_configurable_bundle_template_image_s
     And Each Array Element Of Array In Response Should Contain Property:    [included]    links
     And Response body has correct self link
 
-Get_configurable_bundle_templates_by_configurable_bundle_template_id
-    When I send a GET request:    /configurable-bundle-templates/${configurable_bundle_template_id}?include=configurable-bundle-template-slots,configurable-bundle-template-image-sets
+Get_configurable_bundle_templates_by_configurable_bundle_template_1_uuid
+    When I send a GET request:    /configurable-bundle-templates/${configurable_bundle_template_1_uuid}?include=configurable-bundle-template-slots,configurable-bundle-template-image-sets
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response body parameter should be:    [data][type]    configurable-bundle-templates
-    And Response body parameter should be:    [data][id]    ${configurable_bundle_template_id}
+    And Response body parameter should be:    [data][id]    ${configurable_bundle_template_1_uuid}
     And Response body parameter should be:    [data][attributes][name]    ${configurable_bundle_template_name_1}
     And Response should contain the array of a certain size:    [data][relationships][configurable-bundle-template-slots][data]    4
     And Each array element of array in response should contain property with value:    [data][relationships][configurable-bundle-template-slots][data]    type    configurable-bundle-template-slots
@@ -91,12 +91,12 @@ Get_configurable_bundle_templates_by_configurable_bundle_template_id
     And Each array element of array in response should contain property:    [included][4][attributes][images]    externalUrlSmall
 
 Get_configurable_bundle_templates_including_concrete_products_concrete_product_prices_concrete_product_image_sets
-    When I send a GET request:    /configurable-bundle-templates/${configurable_bundle_template_id}?include=configurable-bundle-template-slots,concrete-products,concrete-product-prices,concrete-product-image-sets
+    When I send a GET request:    /configurable-bundle-templates/${configurable_bundle_template_1_uuid}?include=configurable-bundle-template-slots,concrete-products,concrete-product-prices,concrete-product-image-sets
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response body parameter should be:    [data][type]    configurable-bundle-templates
-    And Response body parameter should be:    [data][id]    ${configurable_bundle_template_id}
+    And Response body parameter should be:    [data][id]    ${configurable_bundle_template_1_uuid}
     And Response body parameter should be:    [data][attributes][name]   ${configurable_bundle_template_name_1}
     And Response body parameter should not be EMPTY:    [data][links][self]
     And Response should contain the array larger than a certain size:    [data][relationships][configurable-bundle-template-slots][data]    3

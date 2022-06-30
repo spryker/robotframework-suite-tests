@@ -10,9 +10,9 @@ ENABLER
 
 # GET requests
 Get_cart_by_cart_id
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
-    ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${gross_mode}","currency": "${currency_code_eur}","store": "${store_de}","name": "${test_cart_name}-${random}"}}}
+    ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
     ...  AND    Save value to a variable:    [data][id]    cart_id
     ...  AND    Response status code should be:    201
     When I send a GET request:    /carts/${cart_id}
@@ -20,9 +20,9 @@ Get_cart_by_cart_id
     And Response reason should be:    OK
     And Response body parameter should be:    [data][type]    carts
     And Response body parameter should be:    [data][id]    ${cart_id}
-    And Response body parameter should be:    [data][attributes][priceMode]    ${gross_mode}
-    And Response body parameter should be:    [data][attributes][currency]    ${currency_code_eur}
-    And Response body parameter should be:    [data][attributes][store]    ${store_de}
+    And Response body parameter should be:    [data][attributes][priceMode]    ${mode.gross}
+    And Response body parameter should be:    [data][attributes][currency]    ${currency.eur.code}
+    And Response body parameter should be:    [data][attributes][store]    ${store.de}
     And Response body parameter should be:    [data][attributes][name]    ${test_cart_name}-${random}
     And Response body parameter should be:    [data][attributes][isDefault]    True
     And Response body parameter should be:    [data][attributes][totals][expenseTotal]    0
@@ -37,9 +37,9 @@ Get_cart_by_cart_id
 
 Get_cart_without_cart_id
 # Spryker is designed so that we can get all carts same as for /customers/{customerId}/carts request
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
-    ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${gross_mode}","currency": "${currency_code_eur}","store": "${store_de}","name": "${test_cart_name}-${random}"}}}
+    ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
     ...  AND    Save value to a variable:    [data][id]    cart_id
     ...  AND    Response status code should be:    201
     When I send a GET request:    /carts
@@ -66,21 +66,21 @@ Get_cart_without_cart_id
     ...  AND    Response status code should be:    204
 
 Get_cart_by_cart_id_with_included_items
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
-    ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${gross_mode}","currency": "${currency_code_eur}","store": "${store_de}","name": "${test_cart_name}-${random}"}}}
+    ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
     ...  AND    Save value to a variable:    [data][id]    cart_id
-    ...  AND    I send a POST request:    /carts/${cartId}/items    {"data": {"type": "items","attributes": {"sku": "${concrete_available_product_sku}","quantity": 1}}}
-    ...  AND    I send a POST request:    /carts/${cartId}/items    {"data": {"type": "items","attributes": {"sku": "${concrete_product_with_options}","quantity": 1}}}
-    ...  AND    I send a POST request:    /carts/${cartId}/items    {"data": {"type": "items","attributes": {"sku": "${concrete_product_with_original_prices}","quantity": 1}}}
+    ...  AND    I send a POST request:    /carts/${cartId}/items    {"data": {"type": "items","attributes": {"sku": "${concrete.available_product.with_stock.product_1.sku}","quantity": 1}}}
+    ...  AND    I send a POST request:    /carts/${cartId}/items    {"data": {"type": "items","attributes": {"sku": "${concrete.with_options.sku}","quantity": 1}}}
+    ...  AND    I send a POST request:    /carts/${cartId}/items    {"data": {"type": "items","attributes": {"sku": "${concrete.with_original_prices.sku}","quantity": 1}}}
     When I send a GET request:    /carts/${cart_id}?include=items
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response body parameter should be:    [data][type]    carts
     And Response body parameter should be:    [data][id]    ${cart_id}
-    And Response body parameter should be:    [data][attributes][priceMode]    ${gross_mode}
-    And Response body parameter should be:    [data][attributes][currency]    ${currency_code_eur}
-    And Response body parameter should be:    [data][attributes][store]    ${store_de}
+    And Response body parameter should be:    [data][attributes][priceMode]    ${mode.gross}
+    And Response body parameter should be:    [data][attributes][currency]    ${currency.eur.code}
+    And Response body parameter should be:    [data][attributes][store]    ${store.de}
     And Response body parameter should be:    [data][attributes][name]    ${test_cart_name}-${random}
     And Response body parameter should be:    [data][attributes][isDefault]    True
     And Response body parameter should not be EMPTY:    [data][attributes][totals][expenseTotal]
@@ -93,21 +93,21 @@ Get_cart_by_cart_id_with_included_items
     And Response body has correct self link internal
     And Response should contain the array of a certain size:    [data][relationships][items][data]    3
     And Each array element of array in response should contain property with value:    [data][relationships][items][data]    type    items
-    And Response body parameter should be:    [data][relationships][items][data][0][id]    ${concrete_available_product_sku}
-    And Response body parameter should be:    [data][relationships][items][data][1][id]    ${concrete_product_with_options}
-    And Response body parameter should be:    [data][relationships][items][data][2][id]    ${concrete_product_with_original_prices}
+    And Response body parameter should be:    [data][relationships][items][data][0][id]    ${concrete.available_product.with_stock.product_1.sku}
+    And Response body parameter should be:    [data][relationships][items][data][1][id]    ${concrete.with_options.sku}
+    And Response body parameter should be:    [data][relationships][items][data][2][id]    ${concrete.with_original_prices.sku}
     And Response should contain the array of a certain size:    [included]    3
     And Each array element of array in response should contain property with value:    [included]    type    items
-    And Response body parameter should be:    [included][0][id]    ${concrete_available_product_sku}
-    And Response body parameter should be:    [included][1][id]    ${concrete_product_with_options}
-    And Response body parameter should be:    [included][2][id]    ${concrete_product_with_original_prices}
+    And Response body parameter should be:    [included][0][id]    ${concrete.available_product.with_stock.product_1.sku}
+    And Response body parameter should be:    [included][1][id]    ${concrete.with_options.sku}
+    And Response body parameter should be:    [included][2][id]    ${concrete.with_original_prices.sku}
     And Each array element of array in response should contain property:    [included]    attributes
     And Each array element of array in response should contain property:    [included]    links
-    And Response body parameter should be:    [included][0][attributes][sku]    ${concrete_available_product_sku}
+    And Response body parameter should be:    [included][0][attributes][sku]    ${concrete.available_product.with_stock.product_1.sku}
     And Response body parameter should be:    [included][0][attributes][quantity]    1
-    And Response body parameter should be:    [included][1][attributes][sku]    ${concrete_product_with_options}
+    And Response body parameter should be:    [included][1][attributes][sku]    ${concrete.with_options.sku}
     And Response body parameter should be:    [included][1][attributes][quantity]    1
-    And Response body parameter should be:    [included][2][attributes][sku]    ${concrete_product_with_original_prices}
+    And Response body parameter should be:    [included][2][attributes][sku]    ${concrete.with_original_prices.sku}
     And Response body parameter should be:    [included][2][attributes][quantity]    1
     And Each array element of array in response should contain value:    [included]    groupKey
     And Each array element of array in response should contain value:    [included]    abstractSku
@@ -138,13 +138,13 @@ Get_cart_by_cart_id_with_included_items
     ...  AND    Response status code should be:    204
 
 Get_cart_by_cart_id_with_2_product_discounts
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
-    ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${gross_mode}","currency": "${currency_code_eur}","store": "${store_de}","name": "${test_cart_name}-${random}"}}}
+    ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
     ...  AND    Save value to a variable:    [data][id]    cart_id
-    ...  AND    I send a POST request:    /carts/${cartId}/items    {"data": {"type": "items","attributes": {"sku": "${discount_concrete_product_1_sku}","quantity": 1}}}
-    ...  AND    I send a POST request:    /carts/${cartId}/items    {"data": {"type": "items","attributes": {"sku": "${discount_concrete_product_2_sku}","quantity": 1}}}
-    ...  AND    I send a POST request:    /carts/${cartId}/items    {"data": {"type": "items","attributes": {"sku": "${discount_concrete_product_3_sku}","quantity": 1}}}
+    ...  AND    I send a POST request:    /carts/${cartId}/items    {"data": {"type": "items","attributes": {"sku": "${discount.product_1.sku}","quantity": 1}}}
+    ...  AND    I send a POST request:    /carts/${cartId}/items    {"data": {"type": "items","attributes": {"sku": "${discount.product_2.sku}","quantity": 1}}}
+    ...  AND    I send a POST request:    /carts/${cartId}/items    {"data": {"type": "items","attributes": {"sku": "${discount.product_3.sku}","quantity": 1}}}
     When I send a GET request:    /carts/${cart_id}?include=items
     Then Response status code should be:    200
     And Response reason should be:    OK
@@ -154,7 +154,7 @@ Get_cart_by_cart_id_with_2_product_discounts
     And Save value to a variable:    [data][attributes][totals][subtotal]    sub_total_sum
     And Save value to a variable:    [data][attributes][totals][discountTotal]    discount_total_sum
     And Response body parameter should be:    [data][attributes][totals][expenseTotal]    0    
-    And Perform arithmetical calculation with two arguments:    discount_total_sum    ${discount_1_total_sum_for_discounts_for_products_1_and_2}    +    ${discount_2_total_sum_for_discounts_for_products_1_2_and_3}
+    And Perform arithmetical calculation with two arguments:    discount_total_sum    ${discounts.discount_1.total_sum_for_products_1_and_2}    +    ${discounts.discount_2.total_sum_for_discounts_for_products_1_2_and_3}
     And Response body parameter with rounding should be:    [data][attributes][totals][discountTotal]    ${discount_total_sum}
     And Response body parameter should be greater than:    [data][attributes][totals][taxTotal]    0
     And Response body parameter should be greater than:    [data][attributes][totals][subtotal]    0
@@ -163,56 +163,56 @@ Get_cart_by_cart_id_with_2_product_discounts
     And Response body parameter should be greater than:    [data][attributes][totals][priceToPay]    0
     #discounts
     And Response should contain the array of a certain size:    [data][attributes][discounts]    2
-    And Response body parameter should be:    [data][attributes][discounts][0][displayName]    ${discount_1_name}
-    And Response body parameter should be:    [data][attributes][discounts][0][amount]    ${discount_1_total_sum_for_discounts_for_products_1_and_2}
+    And Response body parameter should be:    [data][attributes][discounts][0][displayName]    ${discounts.discount_1.name}
+    And Response body parameter should be:    [data][attributes][discounts][0][amount]    ${discounts.discount_1.total_sum_for_products_1_and_2}
     And Response body parameter should be:    [data][attributes][discounts][0][code]    None
-    And Response body parameter should be:    [data][attributes][discounts][1][displayName]    ${discount_2_name}
-    And Response body parameter should be:    [data][attributes][discounts][1][amount]    ${discount_2_total_sum_for_discounts_for_products_1_2_and_3}
+    And Response body parameter should be:    [data][attributes][discounts][1][displayName]    ${discounts.discount_2.name}
+    And Response body parameter should be:    [data][attributes][discounts][1][amount]    ${discounts.discount_2.total_sum_for_discounts_for_products_1_2_and_3}
     And Response body parameter should be:    [data][attributes][discounts][1][code]    None
     And Response body has correct self link internal
     #items
     And Response should contain the array of a certain size:    [data][relationships][items][data]    3
     And Each array element of array in response should contain property with value:    [data][relationships][items][data]    type    items
-    And Response body parameter should be:    [data][relationships][items][data][0][id]    ${discount_concrete_product_1_sku}
-    And Response body parameter should be:    [data][relationships][items][data][1][id]    ${discount_concrete_product_2_sku}
-    And Response body parameter should be:    [data][relationships][items][data][2][id]    ${discount_concrete_product_3_sku}
+    And Response body parameter should be:    [data][relationships][items][data][0][id]    ${discount.product_1.sku}
+    And Response body parameter should be:    [data][relationships][items][data][1][id]    ${discount.product_2.sku}
+    And Response body parameter should be:    [data][relationships][items][data][2][id]    ${discount.product_3.sku}
     #included
     And Response should contain the array of a certain size:    [included]    3
     And Each array element of array in response should contain property with value:    [included]    type    items
     #item 1
-    And Response body parameter should be:    [included][0][id]    ${discount_concrete_product_1_sku}
-    And Response body parameter should be:    [included][0][attributes][sku]    ${discount_concrete_product_1_sku}
+    And Response body parameter should be:    [included][0][id]    ${discount.product_1.sku}
+    And Response body parameter should be:    [included][0][attributes][sku]    ${discount.product_1.sku}
     And Response body parameter should be:    [included][0][attributes][quantity]    1
-    And Response body parameter should be:    [included][0][attributes][calculations][unitDiscountAmountAggregation]    ${discount_concrete_product_1_total_sum_of_discounts}
-    And Response body parameter should be:    [included][0][attributes][calculations][sumDiscountAmountAggregation]    ${discount_concrete_product_1_total_sum_of_discounts}
-    And Response body parameter should be:    [included][0][attributes][calculations][unitDiscountAmountFullAggregation]    ${discount_concrete_product_1_total_sum_of_discounts}
-    And Response body parameter should be:    [included][0][attributes][calculations][sumDiscountAmountFullAggregation]    ${discount_concrete_product_1_total_sum_of_discounts}
+    And Response body parameter should be:    [included][0][attributes][calculations][unitDiscountAmountAggregation]    ${discount.product_1.total_sum_of_discounts}
+    And Response body parameter should be:    [included][0][attributes][calculations][sumDiscountAmountAggregation]    ${discount.product_1.total_sum_of_discounts}
+    And Response body parameter should be:    [included][0][attributes][calculations][unitDiscountAmountFullAggregation]    ${discount.product_1.total_sum_of_discounts}
+    And Response body parameter should be:    [included][0][attributes][calculations][sumDiscountAmountFullAggregation]    ${discount.product_1.total_sum_of_discounts}
     #item 2
-    And Response body parameter should be:    [included][1][id]    ${discount_concrete_product_2_sku}
-    And Response body parameter should be:    [included][1][attributes][sku]    ${discount_concrete_product_2_sku}
+    And Response body parameter should be:    [included][1][id]    ${discount.product_2.sku}
+    And Response body parameter should be:    [included][1][attributes][sku]    ${discount.product_2.sku}
     And Response body parameter should be:    [included][1][attributes][quantity]    1
-    And Response body parameter should be:    [included][1][attributes][calculations][unitDiscountAmountAggregation]    ${discount_concrete_product_2_total_sum_of_discounts}
-    And Response body parameter should be:    [included][1][attributes][calculations][sumDiscountAmountAggregation]    ${discount_concrete_product_2_total_sum_of_discounts}
-    And Response body parameter should be:    [included][1][attributes][calculations][unitDiscountAmountFullAggregation]    ${discount_concrete_product_2_total_sum_of_discounts}
-    And Response body parameter should be:    [included][1][attributes][calculations][sumDiscountAmountFullAggregation]    ${discount_concrete_product_2_total_sum_of_discounts}
+    And Response body parameter should be:    [included][1][attributes][calculations][unitDiscountAmountAggregation]    ${discount.product_2.total_sum_of_discounts}
+    And Response body parameter should be:    [included][1][attributes][calculations][sumDiscountAmountAggregation]    ${discount.product_2.total_sum_of_discounts}
+    And Response body parameter should be:    [included][1][attributes][calculations][unitDiscountAmountFullAggregation]    ${discount.product_2.total_sum_of_discounts}
+    And Response body parameter should be:    [included][1][attributes][calculations][sumDiscountAmountFullAggregation]    ${discount.product_2.total_sum_of_discounts}
     #item 3
-    And Response body parameter should be:    [included][2][id]    ${discount_concrete_product_3_sku}
-    And Response body parameter should be:    [included][2][attributes][sku]    ${discount_concrete_product_3_sku}
+    And Response body parameter should be:    [included][2][id]    ${discount.product_3.sku}
+    And Response body parameter should be:    [included][2][attributes][sku]    ${discount.product_3.sku}
     And Response body parameter should be:    [included][2][attributes][quantity]    1
-    And Response body parameter should be:    [included][2][attributes][calculations][unitDiscountAmountAggregation]    ${discount_amount_for_product_3_with_10%_discount}
-    And Response body parameter should be:    [included][2][attributes][calculations][sumDiscountAmountAggregation]    ${discount_amount_for_product_3_with_10%_discount}
-    And Response body parameter should be:    [included][2][attributes][calculations][unitDiscountAmountFullAggregation]    ${discount_amount_for_product_3_with_10%_discount}
-    And Response body parameter should be:    [included][2][attributes][calculations][sumDiscountAmountFullAggregation]    ${discount_amount_for_product_3_with_10%_discount}
+    And Response body parameter should be:    [included][2][attributes][calculations][unitDiscountAmountAggregation]    ${discount.product_3.with_10_percent_discount_amount}
+    And Response body parameter should be:    [included][2][attributes][calculations][sumDiscountAmountAggregation]    ${discount.product_3.with_10_percent_discount_amount}
+    And Response body parameter should be:    [included][2][attributes][calculations][unitDiscountAmountFullAggregation]    ${discount.product_3.with_10_percent_discount_amount}
+    And Response body parameter should be:    [included][2][attributes][calculations][sumDiscountAmountFullAggregation]    ${discount.product_3.with_10_percent_discount_amount}
     [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cart_id}
     ...  AND    Response status code should be:    204
 
 Get_cart_by_customer_id
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
-    ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${gross_mode}","currency": "${currency_code_eur}","store": "${store_de}","name": "${test_cart_name}-${random}"}}}
+    ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
     ...  AND    Save value to a variable:    [data][id]    cart_id
     ...  AND    Response status code should be:    201
-    When I send a GET request:    /customers/${yves_user_reference}/carts
+    When I send a GET request:    /customers/${yves_user.reference}/carts
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response body parameter should contain:    [data]    ${cart_id}
@@ -239,17 +239,17 @@ Get_cart_by_customer_id
 
 #POST requests
 Create_cart
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
-    When I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${gross_mode}","currency": "${currency_code_eur}","store": "${store_de}","name": "${test_cart_name}-${random}"}}}
+    When I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
     And Save value to a variable:    [data][id]    cart_id
     Then Response status code should be:    201
     And Response reason should be:    Created
     And Response body parameter should be:    [data][type]    carts
     And Response body parameter should be:    [data][id]    ${cart_id}
-    And Response body parameter should be:    [data][attributes][priceMode]    ${gross_mode}
-    And Response body parameter should be:    [data][attributes][currency]    ${currency_code_eur}
-    And Response body parameter should be:    [data][attributes][store]    ${store_de}
+    And Response body parameter should be:    [data][attributes][priceMode]    ${mode.gross}
+    And Response body parameter should be:    [data][attributes][currency]    ${currency.eur.code}
+    And Response body parameter should be:    [data][attributes][store]    ${store.de}
     And Response body parameter should be:    [data][attributes][name]    ${test_cart_name}-${random}
     And Response body parameter should be:    [data][attributes][isDefault]    True
     And Response body parameter should be:    [data][attributes][totals][expenseTotal]    None
@@ -264,19 +264,19 @@ Create_cart
 
 Create_cart_with_existing_name
 # Spryker is designed so that we can send existing name and it will be changed automatically to the unique value on the BE side.
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
-    ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${gross_mode}","currency": "${currency_code_eur}","store": "${store_de}","name": "${test_cart_name}-${random}"}}}
+    ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
     ...  AND    Save value to a variable:    [data][id]    cart_id
-    When I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${gross_mode}","currency": "${currency_code_eur}","store": "${store_de}","name": "${test_cart_name}-${random}"}}}
+    When I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
     And Save value to a variable:    [data][id]    cart_id_2
     Then Response status code should be:    201
     And Response reason should be:    Created
     And Response body parameter should be:    [data][type]    carts
     And Response body parameter should be:    [data][id]    ${cart_id_2}
-    And Response body parameter should be:    [data][attributes][priceMode]    ${gross_mode}
-    And Response body parameter should be:    [data][attributes][currency]    ${currency_code_eur}
-    And Response body parameter should be:    [data][attributes][store]    ${store_de}
+    And Response body parameter should be:    [data][attributes][priceMode]    ${mode.gross}
+    And Response body parameter should be:    [data][attributes][currency]    ${currency.eur.code}
+    And Response body parameter should be:    [data][attributes][store]    ${store.de}
     And Response body parameter should NOT be:    [data][attributes][name]    ${test_cart_name}-${random}
     And Response body parameter should be:    [data][attributes][isDefault]    True
     And Response body parameter should be:    [data][attributes][totals][expenseTotal]    None
@@ -295,21 +295,21 @@ Create_cart_with_existing_name
 
 #PATCH requests
 Update_cart_by_cart_id_with_all_attributes
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
-    ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${gross_mode}","currency": "${currency_code_eur}","store": "${store_de}","name": "${test_cart_name}"}}}
+    ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}"}}}
     ...  AND    Save value to a variable:    [data][id]    cart_id
     ...  AND    Save Header value to a variable:    ETag    header_tag
     ...  AND    Response status code should be:    201
     ...  AND    I set Headers:    Authorization=${token}    If-Match=${header_tag}
-    When I send a PATCH request:    /carts/${cart_id}    {"data": {"type": "carts","attributes": {"priceMode": "${net_mode}","currency": "${currency_code_eur}","store": "${store_de}","name": "${test_cart_name}-${random}"}}}
+    When I send a PATCH request:    /carts/${cart_id}    {"data": {"type": "carts","attributes": {"priceMode": "${mode.net}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response body parameter should be:    [data][type]    carts
     And Response body parameter should be:    [data][id]    ${cart_id}
-    And Response body parameter should be:    [data][attributes][priceMode]    ${net_mode}
-    And Response body parameter should be:    [data][attributes][currency]    ${currency_code_eur}
-    And Response body parameter should be:    [data][attributes][store]    ${store_de}
+    And Response body parameter should be:    [data][attributes][priceMode]    ${mode.net}
+    And Response body parameter should be:    [data][attributes][currency]    ${currency.eur.code}
+    And Response body parameter should be:    [data][attributes][store]    ${store.de}
     And Response body parameter should be:    [data][attributes][name]    ${test_cart_name}-${random}
     And Response body parameter should be:    [data][attributes][isDefault]    True
     And Response body parameter should be:    [data][attributes][totals][expenseTotal]    0
@@ -324,9 +324,9 @@ Update_cart_by_cart_id_with_all_attributes
 
 Update_cart_with_empty_priceMod_currency_store
 # Spryker is designed so that we can send empty attributes: priceMod, currency, store and it will not be changed to the empty values.
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
-    ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${gross_mode}","currency": "${currency_code_eur}","store": "${store_de}","name": "${test_cart_name}-${random}"}}}
+    ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
     ...  AND    Save value to a variable:    [data][id]    cart_id
     ...  AND    Save Header value to a variable:    ETag    header_tag
     ...  AND    Response status code should be:    201
@@ -336,9 +336,9 @@ Update_cart_with_empty_priceMod_currency_store
     And Response reason should be:    OK
     And Response body parameter should be:    [data][type]    carts
     And Response body parameter should be:    [data][id]    ${cart_id}
-    And Response body parameter should be:    [data][attributes][priceMode]    ${gross_mode}
-    And Response body parameter should be:    [data][attributes][currency]    ${currency_code_eur}
-    And Response body parameter should be:    [data][attributes][store]    ${store_de}
+    And Response body parameter should be:    [data][attributes][priceMode]    ${mode.gross}
+    And Response body parameter should be:    [data][attributes][currency]    ${currency.eur.code}
+    And Response body parameter should be:    [data][attributes][store]    ${store.de}
     And Response body parameter should be:    [data][attributes][name]    ${test_cart_name}-${random}
     And Response body parameter should be:    [data][attributes][isDefault]    True
     And Response body parameter should be:    [data][attributes][totals][expenseTotal]    0
@@ -352,9 +352,9 @@ Update_cart_with_empty_priceMod_currency_store
     ...  AND    Response status code should be:    204
 
 Update_cart_with_name_attribute
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
-    ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${gross_mode}","currency": "${currency_code_eur}","store": "${store_de}","name": "${test_cart_name}"}}}
+    ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}"}}}
     ...  AND    Save value to a variable:    [data][id]    cart_id
     ...  AND    Save Header value to a variable:    ETag    header_tag
     ...  AND    Response status code should be:    201
@@ -364,9 +364,9 @@ Update_cart_with_name_attribute
     And Response reason should be:    OK
     And Response body parameter should be:    [data][type]    carts
     And Response body parameter should be:    [data][id]    ${cart_id}
-    And Response body parameter should be:    [data][attributes][priceMode]    ${gross_mode}
-    And Response body parameter should be:    [data][attributes][currency]    ${currency_code_eur}
-    And Response body parameter should be:    [data][attributes][store]    ${store_de}
+    And Response body parameter should be:    [data][attributes][priceMode]    ${mode.gross}
+    And Response body parameter should be:    [data][attributes][currency]    ${currency.eur.code}
+    And Response body parameter should be:    [data][attributes][store]    ${store.de}
     And Response body parameter should be:    [data][attributes][name]    ${test_cart_name}-${random}
     And Response body parameter should be:    [data][attributes][isDefault]    True
     And Response body parameter should be:    [data][attributes][totals][expenseTotal]    0
@@ -381,9 +381,9 @@ Update_cart_with_name_attribute
 
 Update_cart_with_existing_name
 # Spryker is designed so that we can send existing name and it will be changed automatically to the unique value on the BE side.
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
-    ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${gross_mode}","currency": "${currency_code_eur}","store": "${store_de}","name": "${test_cart_name}-${random}"}}}
+    ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
     ...  AND    Save value to a variable:    [data][id]    cart_id
     ...  AND    Save Header value to a variable:    ETag    header_tag
     ...  AND    Response status code should be:    201
@@ -393,9 +393,9 @@ Update_cart_with_existing_name
     And Response reason should be:    OK
     And Response body parameter should be:    [data][type]    carts
     And Response body parameter should be:    [data][id]    ${cart_id}
-    And Response body parameter should be:    [data][attributes][priceMode]    ${gross_mode}
-    And Response body parameter should be:    [data][attributes][currency]    ${currency_code_eur}
-    And Response body parameter should be:    [data][attributes][store]    ${store_de}
+    And Response body parameter should be:    [data][attributes][priceMode]    ${mode.gross}
+    And Response body parameter should be:    [data][attributes][currency]    ${currency.eur.code}
+    And Response body parameter should be:    [data][attributes][store]    ${store.de}
     And Response body parameter should NOT be:    [data][attributes][name]    "My Cart"
     And Response body parameter should be:    [data][attributes][isDefault]    True
     And Response body parameter should be:    [data][attributes][totals][expenseTotal]    0
@@ -412,9 +412,9 @@ Update_cart_with_existing_name
 
 #DELETE requests
 Delete_cart_by_cart_id
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
-    ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${gross_mode}","currency": "${currency_code_eur}","store": "${store_de}","name": "${test_cart_name}-${random}"}}}
+    ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
     ...  AND    Save value to a variable:    [data][id]    cart_id
     ...  AND    Response status code should be:    201
     When I send a DELETE request:    /carts/${cart_id}

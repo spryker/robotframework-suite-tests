@@ -8,7 +8,7 @@ Default Tags    glue
 
 Get_token_for_customer
     I set Headers:    Content-Type=${urlencoded_header_content_type}
-    I send a POST request with data:    /token    {"grant_type": "${grant_type_password}","username": "${yves_user_email}","password": "${yves_user_password}"}
+    I send a POST request with data:    /token    {"grant_type": "${grant_type.password}","username": "${yves_user.email}","password": "${yves_user.password}"}
     Response status code should be:    200
     Response reason should be:    OK
     And Response body parameter should be:    [token_type]    Bearer
@@ -20,11 +20,11 @@ Get_token_for_customer
 
 Get_token_using_refresh_token_for_customer
     [Setup]    Run Keywords    I set Headers:    Content-Type=${urlencoded_header_content_type}
-    ...  AND    I send a POST request with data:    /token    {"grant_type": "${grant_type_password}","username": "${yves_user_email}","password": "${yves_user_password}"}
+    ...  AND    I send a POST request with data:    /token    {"grant_type": "${grant_type.password}","username": "${yves_user.email}","password": "${yves_user.password}"}
     ...  AND    Response status code should be:    200
     ...  AND    Save value to a variable:    [refresh_token]    refresh_token
     When I set Headers:    Content-Type=${urlencoded_header_content_type}
-    And I send a POST request with data:    /token    {"grant_type": "${grant_type_refresh_token}","refresh_token": "${refresh_token}"}
+    And I send a POST request with data:    /token    {"grant_type": "${grant_type.refresh_token}","refresh_token": "${refresh_token}"}
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response body parameter should be:    [token_type]    Bearer

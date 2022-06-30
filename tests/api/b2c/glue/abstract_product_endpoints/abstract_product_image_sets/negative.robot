@@ -1,5 +1,6 @@
 *** Settings ***
-Suite Setup       SuiteSetup
+Suite Setup    SuiteSetup
+Test Setup     TestSetup
 Resource    ../../../../../../resources/common/common_api.robot
 Default Tags    glue
 
@@ -7,7 +8,7 @@ Default Tags    glue
 ENABLER
     TestSetup
 Get_abstract_image_stes_by_concrete_SKU
-    When I send a GET request:    /abstract-products/${concrete_product_with_abstract_product_alternative_sku}/abstract-product-image-sets
+    When I send a GET request:    /abstract-products/${concrete_product_with_abstract_product_alternative.sku}/abstract-product-image-sets
     Then Response status code should be:    404
     And Response reason should be:    Not Found
     And Response should return error code:    303

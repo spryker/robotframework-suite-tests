@@ -23,7 +23,7 @@ Get_related_products_for_nonexistent_SKU
     And Response should return error message:    Abstract product is not found.
 
 Get_related_products_for_concrete_SKU
-    When I send a GET request:    /abstract-products/${concrete_available_product_sku}/related-products
+    When I send a GET request:    /abstract-products/${abstract_available_product_with_stock.concrete_available_product.sku}/related-products
     Then Response status code should be:    404
     And Response reason should be:    Not Found
     And Response should return error code:    301

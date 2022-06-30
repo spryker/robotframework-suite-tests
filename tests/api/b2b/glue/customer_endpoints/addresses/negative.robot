@@ -1,14 +1,17 @@
 *** Settings ***
 Suite Setup       SuiteSetup
 Resource    ../../../../../../resources/common/common_api.robot
+Test Setup    TestSetup
+Default Tags    glue
 
 *** Test Cases ***
-
+ENABLER
+    TestSetup
 ######POST#####
 Create_customer_address_with_missing_required_fields
-    When I get access token for the customer:    ${yves_user_email}
+    When I get access token for the customer:    ${yves_user.email}
     And I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
-    And I send a POST request:    /customers/${yves_user_reference}/addresses    {"data": {"type": "addresses","attributes": {"address3": "${default_address3}"}}}
+    And I send a POST request:    /customers/${yves_user.reference}/addresses    {"data": {"type": "addresses","attributes": {"address3": "${default.address3}"}}}
     Then Response status code should be:    422
     And Response reason should be:    Unprocessable Content
     And Each array element of array in response should contain property with value:    [errors]    code    901
@@ -25,9 +28,9 @@ Create_customer_address_with_missing_required_fields
     And Array in response should contain property with value:    [errors]    detail    isDefaultBilling => This field is missing.
 
 Create_customer_address_with_empty_fields
-    When I get access token for the customer:    ${yves_user_email}
+    When I get access token for the customer:    ${yves_user.email}
     And I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
-    And I send a POST request:    /customers/${yves_user_reference}/addresses    {"data": {"type": "addresses","attributes": {"salutation": "","firstName": "","lastName": "","address1": "","address2": "","address3": "","zipCode": "","city": "","country": "","iso2Code": "","company":"","phone": "","isDefaultShipping": "","isDefaultBilling": ""}}}
+    And I send a POST request:    /customers/${yves_user.reference}/addresses    {"data": {"type": "addresses","attributes": {"salutation": "","firstName": "","lastName": "","address1": "","address2": "","address3": "","zipCode": "","city": "","country": "","iso2Code": "","company":"","phone": "","isDefaultShipping": "","isDefaultBilling": ""}}}
     Then Response status code should be:    422
     And Response reason should be:    Unprocessable Content
     And Each array element of array in response should contain property with value:    [errors]    code    901
@@ -41,76 +44,76 @@ Create_customer_address_with_empty_fields
     And Array in response should contain property with value:    [errors]    detail    city => This value should not be blank.
 
 Create_customer_address_with_invalid_salutation
-    When I get access token for the customer:    ${yves_user_email}
+    When I get access token for the customer:    ${yves_user.email}
     And I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
-    And I send a POST request:    /customers/${yves_user_reference}/addresses    {"data": {"type": "addresses","attributes": {"salutation": "Fake","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}","address1": "${default_address1}","address2": "${default_address2}","zipCode": "${default_zipCode}","city": "${default_city}","iso2Code": "${default_iso2Code}","isDefaultShipping": ${default_shipping_status},"isDefaultBilling": ${default_billing_status}}}}
+    And I send a POST request:    /customers/${yves_user.reference}/addresses    {"data": {"type": "addresses","attributes": {"salutation": "Fake","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}","address1": "${default.address1}","address2": "${default.address2}","zipCode": "${default.zipCode}","city": "${default.city}","iso2Code": "${default.iso2Code}","isDefaultShipping": ${default.shipping_status},"isDefaultBilling": ${default.billing_status}}}}
     Then Response status code should be:    422
     And Response reason should be:    Unprocessable Content
     And Response should return error message:    salutation =\u003E The value you selected is not a valid choice.
 
 Create_customer_address_with_customer_reference_not_matching_token
-    When I get access token for the customer:    ${yves_user_email}
+    When I get access token for the customer:    ${yves_user.email}
     And I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
-    And I send a POST request:    /customers/${yves_second_user_reference}/addresses    {"data": {"type": "addresses","attributes": {"salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}","address1": "${default_address1}","address2": "${default_address2}","zipCode": "${default_zipCode}","city": "${default_city}","iso2Code": "${default_iso2Code}","isDefaultShipping": ${default_shipping_status},"isDefaultBilling": ${default_billing_status}}}}
+    And I send a POST request:    /customers/${yves_second_user.reference}/addresses    {"data": {"type": "addresses","attributes": {"salutation": "${yves_user.salutation}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}","address1": "${default.address1}","address2": "${default.address2}","zipCode": "${default.zipCode}","city": "${default.city}","iso2Code": "${default.iso2Code}","isDefaultShipping": ${default.shipping_status},"isDefaultBilling": ${default.billing_status}}}}
     Then Response status code should be:    403
     And Response reason should be:    Forbidden
     And Response should return error code:    411
     And Response should return error message:    Unauthorized request.
 
 Create_customer_address_with_non_existing_customer_reference
-    When I get access token for the customer:    ${yves_user_email}
+    When I get access token for the customer:    ${yves_user.email}
     And I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
-    And I send a POST request:    /customers/DE--10000/addresses    {"data": {"type": "addresses","attributes": {"salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}","address1": "${default_address1}","address2": "${default_address2}","zipCode": "${default_zipCode}","city": "${default_city}","iso2Code": "${default_iso2Code}","isDefaultShipping": ${default_shipping_status},"isDefaultBilling": ${default_billing_status}}}}
+    And I send a POST request:    /customers/DE--10000/addresses    {"data": {"type": "addresses","attributes": {"salutation": "${yves_user.salutation}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}","address1": "${default.address1}","address2": "${default.address2}","zipCode": "${default.zipCode}","city": "${default.city}","iso2Code": "${default.iso2Code}","isDefaultShipping": ${default.shipping_status},"isDefaultBilling": ${default.billing_status}}}}
     Then Response status code should be:    403
     And Response reason should be:    Forbidden
     And Response should return error code:    411
     And Response should return error message:    Unauthorized request.
 
 Create_customer_address_with_empty_customer_reference
-    When I get access token for the customer:    ${yves_user_email}
+    When I get access token for the customer:    ${yves_user.email}
     And I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
-    And I send a POST request:    /customers//addresses    {"data": {"type": "addresses","attributes": {"salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}","address1": "${default_address1}","address2": "${default_address2}","zipCode": "${default_zipCode}","city": "${default_city}","iso2Code": "${default_iso2Code}","isDefaultShipping": ${default_shipping_status},"isDefaultBilling": ${default_billing_status}}}}
+    And I send a POST request:    /customers//addresses    {"data": {"type": "addresses","attributes": {"salutation": "${yves_user.salutation}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}","address1": "${default.address1}","address2": "${default.address2}","zipCode": "${default.zipCode}","city": "${default.city}","iso2Code": "${default.iso2Code}","isDefaultShipping": ${default.shipping_status},"isDefaultBilling": ${default.billing_status}}}}
     Then Response status code should be:    403
     And Response reason should be:    Forbidden
     And Response should return error code:    411
     And Response should return error message:    Unauthorized request.
 
 Create_customer_address_with_empty_type
-    When I get access token for the customer:    ${yves_user_email}
+    When I get access token for the customer:    ${yves_user.email}
     And I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
-    And I send a POST request:    /customers/${yves_user_reference}/addresses    {"data": {"type": "","attributes": {"salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}","address1": "${default_address1}","address2": "${default_address2}","zipCode": "${default_zipCode}","city": "${default_city}","iso2Code": "${default_iso2Code}","isDefaultShipping": ${default_shipping_status},"isDefaultBilling": ${default_billing_status}}}}
+    And I send a POST request:    /customers/${yves_user.reference}/addresses    {"data": {"type": "","attributes": {"salutation": "${yves_user.salutation}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}","address1": "${default.address1}","address2": "${default.address2}","zipCode": "${default.zipCode}","city": "${default.city}","iso2Code": "${default.iso2Code}","isDefaultShipping": ${default.shipping_status},"isDefaultBilling": ${default.billing_status}}}}
     Then Response status code should be:    400
     And Response reason should be:    Bad Request
     And Response should return error message:    Invalid type.
 
 ######GET#####
 Get_non-existent_customer_address
-    When I get access token for the customer:    ${yves_user_email}
+    When I get access token for the customer:    ${yves_user.email}
     And I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
-    And I send a GET request:    /customers/${yves_user_reference}/addresses/fake
+    And I send a GET request:    /customers/${yves_user.reference}/addresses/fake
     Then Response status code should be:    404
     And Response reason should be:    Not Found
     And Response should return error message:    Address was not found.
 
 Get_other_customer_address_list
-    [Setup]    Run keywords    I get access token for the customer:    ${yves_second_user_email}
+    [Setup]    Run keywords    I get access token for the customer:    ${yves_second_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
-    ...    AND    I send a POST request:    /customers/${yves_second_user_reference}/addresses    {"data": {"type": "addresses","attributes": {"salutation": "${yves_second_user_salutation}","firstName": "${yves_second_user_first_name}","lastName": "${yves_second_user_last_name}","address1": "${default_address1}","address2": "${default_address2}","address3": "${default_address3}","zipCode": "${default_zipCode}","city": "${default_city}","country": "${default_country}","iso2Code": "${default_iso2Code}","company":"${default_company}","phone": "${default_phone}","isDefaultShipping": ${default_shipping_status},"isDefaultBilling": ${default_billing_status}}}}
+    ...    AND    I send a POST request:    /customers/${yves_second_user.reference}/addresses    {"data": {"type": "addresses","attributes": {"salutation": "${yves_second_user.salutation}","firstName": "${yves_second_user.first_name}","lastName": "${yves_second_user.last_name}","address1": "${default.address1}","address2": "${default.address2}","address3": "${default.address3}","zipCode": "${default.zipCode}","city": "${default.city}","country": "${default.country}","iso2Code": "${default.iso2Code}","company":"${default.company}","phone": "${default.phone}","isDefaultShipping": ${default.shipping_status},"isDefaultBilling": ${default.billing_status}}}}
     ...    AND    Response status code should be:    201
     ...    AND    Save value to a variable:    [data][id]    address_uid
-    When I get access token for the customer:    ${yves_user_email}
+    When I get access token for the customer:    ${yves_user.email}
     And I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
-    When I send a GET request:    /customers/${yves_second_user_reference}/addresses
+    When I send a GET request:    /customers/${yves_second_user.reference}/addresses
     Then Response status code should be:    403
     And Response reason should be:    Forbidden
     And Response should return error message:    Unauthorized request.
-    [Teardown]    Run Keywords    I get access token for the customer:    ${yves_second_user_email}
+    [Teardown]    Run Keywords    I get access token for the customer:    ${yves_second_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
-    ...    AND    I send a DELETE request:     /customers/${yves_second_user_reference}/addresses/${address_uid}
+    ...    AND    I send a DELETE request:     /customers/${yves_second_user.reference}/addresses/${address_uid}
     ...    AND    Response status code should be:    204
 
 Get_address_list_for_non-existent_customer
-    When I get access token for the customer:    ${yves_user_email}
+    When I get access token for the customer:    ${yves_user.email}
     And I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     When I send a GET request:    /customers/fake/addresses
     Then Response status code should be:    404
@@ -118,130 +121,130 @@ Get_address_list_for_non-existent_customer
     And Response should return error message:    Customer not found.
 
 Get_address_list_with_no_token
-    When I send a GET request:    /customers/${yves_user_reference}/addresses
+    When I send a GET request:    /customers/${yves_user.reference}/addresses
     Then Response status code should be:    403
     And Response reason should be:    Forbidden
     And Response should return error message:    Missing access token.
 
 Get_other_customer_address_by_id
-    [Setup]    Run keywords    I get access token for the customer:    ${yves_second_user_email}
+    [Setup]    Run keywords    I get access token for the customer:    ${yves_second_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
-    ...    AND    I send a POST request:    /customers/${yves_second_user_reference}/addresses    {"data": {"type": "addresses","attributes": {"salutation": "${yves_second_user_salutation}","firstName": "${yves_second_user_first_name}","lastName": "${yves_second_user_last_name}","address1": "${default_address1}","address2": "${default_address2}","address3": "${default_address3}","zipCode": "${default_zipCode}","city": "${default_city}","country": "${default_country}","iso2Code": "${default_iso2Code}","company":"${default_company}","phone": "${default_phone}","isDefaultShipping": ${default_shipping_status},"isDefaultBilling": ${default_billing_status}}}}
+    ...    AND    I send a POST request:    /customers/${yves_second_user.reference}/addresses    {"data": {"type": "addresses","attributes": {"salutation": "${yves_second_user.salutation}","firstName": "${yves_second_user.first_name}","lastName": "${yves_second_user.last_name}","address1": "${default.address1}","address2": "${default.address2}","address3": "${default.address3}","zipCode": "${default.zipCode}","city": "${default.city}","country": "${default.country}","iso2Code": "${default.iso2Code}","company":"${default.company}","phone": "${default.phone}","isDefaultShipping": ${default.shipping_status},"isDefaultBilling": ${default.billing_status}}}}
     ...    AND    Response status code should be:    201
     ...    AND    Save value to a variable:    [data][id]    address_uid
-    When I get access token for the customer:    ${yves_user_email}
+    When I get access token for the customer:    ${yves_user.email}
     And I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
-    When I send a GET request:    /customers/${yves_user_reference}/addresses/${address_uid}
+    When I send a GET request:    /customers/${yves_user.reference}/addresses/${address_uid}
     Then Response status code should be:    404
     And Response reason should be:    Not Found
     And Response should return error message:    Address was not found.
-    [Teardown]    Run Keywords    I get access token for the customer:    ${yves_second_user_email}
+    [Teardown]    Run Keywords    I get access token for the customer:    ${yves_second_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
-    ...    AND    I send a DELETE request:     /customers/${yves_second_user_reference}/addresses/${address_uid}
+    ...    AND    I send a DELETE request:     /customers/${yves_second_user.reference}/addresses/${address_uid}
     ...    AND    Response status code should be:    204
 
 Get_other_customer_address_by_id_and_reference
-    [Setup]    Run keywords    I get access token for the customer:    ${yves_second_user_email}
+    [Setup]    Run keywords    I get access token for the customer:    ${yves_second_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
-    ...    AND    I send a POST request:    /customers/${yves_second_user_reference}/addresses    {"data": {"type": "addresses","attributes": {"salutation": "${yves_second_user_salutation}","firstName": "${yves_second_user_first_name}","lastName": "${yves_second_user_last_name}","address1": "${default_address1}","address2": "${default_address2}","address3": "${default_address3}","zipCode": "${default_zipCode}","city": "${default_city}","country": "${default_country}","iso2Code": "${default_iso2Code}","company":"${default_company}","phone": "${default_phone}","isDefaultShipping": ${default_shipping_status},"isDefaultBilling": ${default_billing_status}}}}
+    ...    AND    I send a POST request:    /customers/${yves_second_user.reference}/addresses    {"data": {"type": "addresses","attributes": {"salutation": "${yves_second_user.salutation}","firstName": "${yves_second_user.first_name}","lastName": "${yves_second_user.last_name}","address1": "${default.address1}","address2": "${default.address2}","address3": "${default.address3}","zipCode": "${default.zipCode}","city": "${default.city}","country": "${default.country}","iso2Code": "${default.iso2Code}","company":"${default.company}","phone": "${default.phone}","isDefaultShipping": ${default.shipping_status},"isDefaultBilling": ${default.billing_status}}}}
     ...    AND    Response status code should be:    201
     ...    AND    Save value to a variable:    [data][id]    address_uid
-    When I get access token for the customer:    ${yves_user_email}
+    When I get access token for the customer:    ${yves_user.email}
     And I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
-    When I send a GET request:    /customers/${yves_second_user_reference}/addresses/${address_uid}
+    When I send a GET request:    /customers/${yves_second_user.reference}/addresses/${address_uid}
     Then Response status code should be:    403
     And Response reason should be:    Forbidden
     And Response should return error message:    Unauthorized request.
-    [Teardown]    Run Keywords    I get access token for the customer:    ${yves_second_user_email}
+    [Teardown]    Run Keywords    I get access token for the customer:    ${yves_second_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
-    ...    AND    I send a DELETE request:     /customers/${yves_second_user_reference}/addresses/${address_uid}
+    ...    AND    I send a DELETE request:     /customers/${yves_second_user.reference}/addresses/${address_uid}
     ...    AND    Response status code should be:    204
 
 
 ######PATCH#####
 Patch_customer_address_without_id
-    When I get access token for the customer:    ${yves_user_email}
+    When I get access token for the customer:    ${yves_user.email}
     And I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
-    And I send a PATCH request:    /customers/${yves_user_reference}/addresses    {"data": {"type": "addresses","attributes": {"address1": "${changed_address1}","address2": "${changed_address2}","address3": "${changed_address3}","phone": "${changed_phone}"}}}
+    And I send a PATCH request:    /customers/${yves_user.reference}/addresses    {"data": {"type": "addresses","attributes": {"address1": "${changed.address1}","address2": "${changed.address2}","address3": "${changed.address3}","phone": "${changed.phone}"}}}
     Then Response status code should be:    400
     And Response reason should be:    Bad Request
     And Response should return error message:    Resource id is not specified.
 
 Patch_customer_address_with_fake_id
-    When I get access token for the customer:    ${yves_user_email}
+    When I get access token for the customer:    ${yves_user.email}
     And I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
-    And I send a PATCH request:    /customers/${yves_user_reference}/addresses/fake    {"data": {"type": "addresses","attributes": {"address1": "${changed_address1}","address2": "${changed_address2}","address3": "${changed_address3}","phone": "${changed_phone}"}}}
+    And I send a PATCH request:    /customers/${yves_user.reference}/addresses/fake    {"data": {"type": "addresses","attributes": {"address1": "${changed.address1}","address2": "${changed.address2}","address3": "${changed.address3}","phone": "${changed.phone}"}}}
     Then Response status code should be:    404
     And Response reason should be:    Not Found
     And Response should return error message:    Address was not found.
 
 Patch_another_customer_address
-    [Setup]    Run keywords    I get access token for the customer:    ${yves_second_user_email}
+    [Setup]    Run keywords    I get access token for the customer:    ${yves_second_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
-    ...    AND    I send a POST request:    /customers/${yves_second_user_reference}/addresses    {"data": {"type": "addresses","attributes": {"salutation": "${yves_second_user_salutation}","firstName": "${yves_second_user_first_name}","lastName": "${yves_second_user_last_name}","address1": "${default_address1}","address2": "${default_address2}","address3": "${default_address3}","zipCode": "${default_zipCode}","city": "${default_city}","country": "${default_country}","iso2Code": "${default_iso2Code}","company":"${default_company}","phone": "${default_phone}","isDefaultShipping": ${default_shipping_status},"isDefaultBilling": ${default_billing_status}}}}
+    ...    AND    I send a POST request:    /customers/${yves_second_user.reference}/addresses    {"data": {"type": "addresses","attributes": {"salutation": "${yves_second_user.salutation}","firstName": "${yves_second_user.first_name}","lastName": "${yves_second_user.last_name}","address1": "${default.address1}","address2": "${default.address2}","address3": "${default.address3}","zipCode": "${default.zipCode}","city": "${default.city}","country": "${default.country}","iso2Code": "${default.iso2Code}","company":"${default.company}","phone": "${default.phone}","isDefaultShipping": ${default.shipping_status},"isDefaultBilling": ${default.billing_status}}}}
     ...    AND    Response status code should be:    201
     ...    AND    Save value to a variable:    [data][id]    address_uid
-    When I get access token for the customer:    ${yves_user_email}
+    When I get access token for the customer:    ${yves_user.email}
     And I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
-    When I send a PATCH request:    /customers/${yves_user_reference}/addresses/${address_uid}    {"data": {"type": "addresses","attributes": {"address1": "${changed_address1}","address2": "${changed_address2}","address3": "${changed_address3}","phone": "${changed_phone}"}}}
+    When I send a PATCH request:    /customers/${yves_user.reference}/addresses/${address_uid}    {"data": {"type": "addresses","attributes": {"address1": "${changed.address1}","address2": "${changed.address2}","address3": "${changed.address3}","phone": "${changed.phone}"}}}
     Then Response status code should be:    404
     And Response reason should be:    Not Found
     And Response should return error message:    Address was not found.
-    [Teardown]    Run Keywords    I get access token for the customer:    ${yves_second_user_email}
+    [Teardown]    Run Keywords    I get access token for the customer:    ${yves_second_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
-    ...    AND    I send a DELETE request:     /customers/${yves_second_user_reference}/addresses/${address_uid}
+    ...    AND    I send a DELETE request:     /customers/${yves_second_user.reference}/addresses/${address_uid}
     ...    AND    Response status code should be:    204
 
 Patch_another_customer_address_by_id_using_reference
-    [Setup]    Run keywords    I get access token for the customer:    ${yves_second_user_email}
+    [Setup]    Run keywords    I get access token for the customer:    ${yves_second_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
-    ...    AND    I send a POST request:    /customers/${yves_second_user_reference}/addresses    {"data": {"type": "addresses","attributes": {"salutation": "${yves_second_user_salutation}","firstName": "${yves_second_user_first_name}","lastName": "${yves_second_user_last_name}","address1": "${default_address1}","address2": "${default_address2}","address3": "${default_address3}","zipCode": "${default_zipCode}","city": "${default_city}","country": "${default_country}","iso2Code": "${default_iso2Code}","company":"${default_company}","phone": "${default_phone}","isDefaultShipping": ${default_shipping_status},"isDefaultBilling": ${default_billing_status}}}}
+    ...    AND    I send a POST request:    /customers/${yves_second_user.reference}/addresses    {"data": {"type": "addresses","attributes": {"salutation": "${yves_second_user.salutation}","firstName": "${yves_second_user.first_name}","lastName": "${yves_second_user.last_name}","address1": "${default.address1}","address2": "${default.address2}","address3": "${default.address3}","zipCode": "${default.zipCode}","city": "${default.city}","country": "${default.country}","iso2Code": "${default.iso2Code}","company":"${default.company}","phone": "${default.phone}","isDefaultShipping": ${default.shipping_status},"isDefaultBilling": ${default.billing_status}}}}
     ...    AND    Response status code should be:    201
     ...    AND    Save value to a variable:    [data][id]    address_uid
-    When I get access token for the customer:    ${yves_user_email}
+    When I get access token for the customer:    ${yves_user.email}
     And I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
-    When I send a PATCH request:    /customers/${yves_second_user_reference}/addresses/${address_uid}    {"data": {"type": "addresses","attributes": {"address1": "${changed_address1}","address2": "${changed_address2}","address3": "${changed_address3}","phone": "${changed_phone}"}}}
+    When I send a PATCH request:    /customers/${yves_second_user.reference}/addresses/${address_uid}    {"data": {"type": "addresses","attributes": {"address1": "${changed.address1}","address2": "${changed.address2}","address3": "${changed.address3}","phone": "${changed.phone}"}}}
     Then Response status code should be:    403
     And Response reason should be:    Forbidden
     And Response should return error message:    Unauthorized request.
-    [Teardown]    Run Keywords    I get access token for the customer:    ${yves_second_user_email}
+    [Teardown]    Run Keywords    I get access token for the customer:    ${yves_second_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
-    ...    AND    I send a DELETE request:     /customers/${yves_second_user_reference}/addresses/${address_uid}
+    ...    AND    I send a DELETE request:     /customers/${yves_second_user.reference}/addresses/${address_uid}
     ...    AND    Response status code should be:    204
 
 Patch_customer_address_with_no_reference
-    [Setup]    Run keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
-    ...    AND    I send a POST request:    /customers/${yves_user_reference}/addresses    {"data": {"type": "addresses","attributes": {"salutation": "${yves_second_user_salutation}","firstName": "${yves_second_user_first_name}","lastName": "${yves_second_user_last_name}","address1": "${default_address1}","address2": "${default_address2}","address3": "${default_address3}","zipCode": "${default_zipCode}","city": "${default_city}","country": "${default_country}","iso2Code": "${default_iso2Code}","company":"${default_company}","phone": "${default_phone}","isDefaultShipping": ${default_shipping_status},"isDefaultBilling": ${default_billing_status}}}}
+    ...    AND    I send a POST request:    /customers/${yves_user.reference}/addresses    {"data": {"type": "addresses","attributes": {"salutation": "${yves_second_user.salutation}","firstName": "${yves_second_user.first_name}","lastName": "${yves_second_user.last_name}","address1": "${default.address1}","address2": "${default.address2}","address3": "${default.address3}","zipCode": "${default.zipCode}","city": "${default.city}","country": "${default.country}","iso2Code": "${default.iso2Code}","company":"${default.company}","phone": "${default.phone}","isDefaultShipping": ${default.shipping_status},"isDefaultBilling": ${default.billing_status}}}}
     ...    AND    Response status code should be:    201
     ...    AND    Save value to a variable:    [data][id]    address_uid
-    When I send a PATCH request:    /customers//addresses/${address_uid}    {"data": {"type": "addresses","attributes": {"address1": "${changed_address1}","address2": "${changed_address2}","address3": "${changed_address3}","phone": "${changed_phone}"}}}
+    When I send a PATCH request:    /customers//addresses/${address_uid}    {"data": {"type": "addresses","attributes": {"address1": "${changed.address1}","address2": "${changed.address2}","address3": "${changed.address3}","phone": "${changed.phone}"}}}
     Then Response status code should be:    400
     And Response reason should be:    Bad Request
     And Response should return error message:    Resource id is not specified.
-    [Teardown]    Run Keywords    I send a DELETE request:     /customers/${yves_user_reference}/addresses/${address_uid}
+    [Teardown]    Run Keywords    I send a DELETE request:     /customers/${yves_user.reference}/addresses/${address_uid}
     ...    AND    Response status code should be:    204
 
 Patch_customer_address_with_wrong_reference
-    [Setup]    Run keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
-    ...    AND    I send a POST request:    /customers/${yves_user_reference}/addresses    {"data": {"type": "addresses","attributes": {"salutation": "${yves_second_user_salutation}","firstName": "${yves_second_user_first_name}","lastName": "${yves_second_user_last_name}","address1": "${default_address1}","address2": "${default_address2}","address3": "${default_address3}","zipCode": "${default_zipCode}","city": "${default_city}","country": "${default_country}","iso2Code": "${default_iso2Code}","company":"${default_company}","phone": "${default_phone}","isDefaultShipping": ${default_shipping_status},"isDefaultBilling": ${default_billing_status}}}}
+    ...    AND    I send a POST request:    /customers/${yves_user.reference}/addresses    {"data": {"type": "addresses","attributes": {"salutation": "${yves_second_user.salutation}","firstName": "${yves_second_user.first_name}","lastName": "${yves_second_user.last_name}","address1": "${default.address1}","address2": "${default.address2}","address3": "${default.address3}","zipCode": "${default.zipCode}","city": "${default.city}","country": "${default.country}","iso2Code": "${default.iso2Code}","company":"${default.company}","phone": "${default.phone}","isDefaultShipping": ${default.shipping_status},"isDefaultBilling": ${default.billing_status}}}}
     ...    AND    Response status code should be:    201
     ...    AND    Save value to a variable:    [data][id]    address_uid
-    When I send a PATCH request:    /customers/DE--1/addresses/${address_uid}    {"data": {"type": "addresses","attributes": {"address1": "${changed_address1}","address2": "${changed_address2}","address3": "${changed_address3}","phone": "${changed_phone}"}}}
+    When I send a PATCH request:    /customers/DE--1/addresses/${address_uid}    {"data": {"type": "addresses","attributes": {"address1": "${changed.address1}","address2": "${changed.address2}","address3": "${changed.address3}","phone": "${changed.phone}"}}}
     Then Response status code should be:    403
     And Response reason should be:    Forbidden
     And Response should return error message:    Unauthorized request.
-    [Teardown]    Run Keywords    I send a DELETE request:     /customers/${yves_user_reference}/addresses/${address_uid}
+    [Teardown]    Run Keywords    I send a DELETE request:     /customers/${yves_user.reference}/addresses/${address_uid}
     ...    AND    Response status code should be:    204
 
 Patch_customer_address_with_empty_required_fields
-    [Setup]    Run keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
-    ...    AND    I send a POST request:    /customers/${yves_user_reference}/addresses    {"data": {"type": "addresses","attributes": {"salutation": "${yves_second_user_salutation}","firstName": "${yves_second_user_first_name}","lastName": "${yves_second_user_last_name}","address1": "${default_address1}","address2": "${default_address2}","address3": "${default_address3}","zipCode": "${default_zipCode}","city": "${default_city}","country": "${default_country}","iso2Code": "${default_iso2Code}","company":"${default_company}","phone": "${default_phone}","isDefaultShipping": ${default_shipping_status},"isDefaultBilling": ${default_billing_status}}}}
+    ...    AND    I send a POST request:    /customers/${yves_user.reference}/addresses    {"data": {"type": "addresses","attributes": {"salutation": "${yves_second_user.salutation}","firstName": "${yves_second_user.first_name}","lastName": "${yves_second_user.last_name}","address1": "${default.address1}","address2": "${default.address2}","address3": "${default.address3}","zipCode": "${default.zipCode}","city": "${default.city}","country": "${default.country}","iso2Code": "${default.iso2Code}","company":"${default.company}","phone": "${default.phone}","isDefaultShipping": ${default.shipping_status},"isDefaultBilling": ${default.billing_status}}}}
     ...    AND    Response status code should be:    201
     ...    AND    Save value to a variable:    [data][id]    address_uid
-    When I send a PATCH request:    /customers/${yves_user_reference}/addresses/${address_uid}    {"data": {"type": "addresses","attributes": {"salutation": None,"firstName": None,"lastName": None, "address1": None,"address2": None,"zipCode": None,"city": None,"iso2Code": None}}}
+    When I send a PATCH request:    /customers/${yves_user.reference}/addresses/${address_uid}    {"data": {"type": "addresses","attributes": {"salutation": None,"firstName": None,"lastName": None, "address1": None,"address2": None,"zipCode": None,"city": None,"iso2Code": None}}}
     Then Response status code should be:    422
     And Response reason should be:    Unprocessable Content
     And Each array element of array in response should contain property with value:    [errors]    code    901
@@ -254,54 +257,54 @@ Patch_customer_address_with_empty_required_fields
     And Array in response should contain property with value:    [errors]    detail    zipCode => This value should not be blank.
     And Array in response should contain property with value:    [errors]    detail    city => This value should not be blank.
     And Array in response should contain property with value:    [errors]    detail    iso2Code => This value should not be blank.
-    [Teardown]    Run Keywords    I send a DELETE request:     /customers/${yves_user_reference}/addresses/${address_uid}
+    [Teardown]    Run Keywords    I send a DELETE request:     /customers/${yves_user.reference}/addresses/${address_uid}
     ...    AND    Response status code should be:    204
 
 
 Patch_customer_address_with_invalid_salutation
-    [Setup]    Run keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
-    ...    AND    I send a POST request:    /customers/${yves_user_reference}/addresses    {"data": {"type": "addresses","attributes": {"salutation": "${yves_second_user_salutation}","firstName": "${yves_second_user_first_name}","lastName": "${yves_second_user_last_name}","address1": "${default_address1}","address2": "${default_address2}","address3": "${default_address3}","zipCode": "${default_zipCode}","city": "${default_city}","country": "${default_country}","iso2Code": "${default_iso2Code}","company":"${default_company}","phone": "${default_phone}","isDefaultShipping": ${default_shipping_status},"isDefaultBilling": ${default_billing_status}}}}
+    ...    AND    I send a POST request:    /customers/${yves_user.reference}/addresses    {"data": {"type": "addresses","attributes": {"salutation": "${yves_second_user.salutation}","firstName": "${yves_second_user.first_name}","lastName": "${yves_second_user.last_name}","address1": "${default.address1}","address2": "${default.address2}","address3": "${default.address3}","zipCode": "${default.zipCode}","city": "${default.city}","country": "${default.country}","iso2Code": "${default.iso2Code}","company":"${default.company}","phone": "${default.phone}","isDefaultShipping": ${default.shipping_status},"isDefaultBilling": ${default.billing_status}}}}
     ...    AND    Response status code should be:    201
     ...    AND    Save value to a variable:    [data][id]    address_uid
-    When I send a PATCH request:    /customers/${yves_user_reference}/addresses/${address_uid}    {"data": {"type": "addresses","attributes": {"salutation": "Fake"}}}
+    When I send a PATCH request:    /customers/${yves_user.reference}/addresses/${address_uid}    {"data": {"type": "addresses","attributes": {"salutation": "Fake"}}}
     Then Response status code should be:    422
     And Response reason should be:    Unprocessable Content
     And Response should return error message:    salutation =\u003E The value you selected is not a valid choice.
-    [Teardown]    Run Keywords    I send a DELETE request:     /customers/${yves_user_reference}/addresses/${address_uid}
+    [Teardown]    Run Keywords    I send a DELETE request:     /customers/${yves_user.reference}/addresses/${address_uid}
     ...    AND    Response status code should be:    204
 
 
 ######DELETE#####
 Delete_customer_address_with_wrong_id
-    When I get access token for the customer:    ${yves_user_email}
+    When I get access token for the customer:    ${yves_user.email}
     And I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
-    And I send a DELETE request:    /customers/${yves_user_reference}/addresses/fake
+    And I send a DELETE request:    /customers/${yves_user.reference}/addresses/fake
     Then Response status code should be:    404
     And Response reason should be:    Not Found
     And Response should return error message:    Address was not found.
 
 Delete_customer_address_with_no_id
-    When I get access token for the customer:    ${yves_user_email}
+    When I get access token for the customer:    ${yves_user.email}
     And I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
-    And I send a DELETE request:    /customers/${yves_user_reference}/addresses
+    And I send a DELETE request:    /customers/${yves_user.reference}/addresses
     Then Response status code should be:    400
     And Response reason should be:    Bad Request
     And Response should return error message:    Resource id is not specified.
 
 Delete_other_customer_address_by_id
-    [Setup]    Run keywords    I get access token for the customer:    ${yves_second_user_email}
+    [Setup]    Run keywords    I get access token for the customer:    ${yves_second_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
-    ...    AND    I send a POST request:    /customers/${yves_second_user_reference}/addresses    {"data": {"type": "addresses","attributes": {"salutation": "${yves_second_user_salutation}","firstName": "${yves_second_user_first_name}","lastName": "${yves_second_user_last_name}","address1": "${default_address1}","address2": "${default_address2}","address3": "${default_address3}","zipCode": "${default_zipCode}","city": "${default_city}","country": "${default_country}","iso2Code": "${default_iso2Code}","company":"${default_company}","phone": "${default_phone}","isDefaultShipping": ${default_shipping_status},"isDefaultBilling": ${default_billing_status}}}}
+    ...    AND    I send a POST request:    /customers/${yves_second_user.reference}/addresses    {"data": {"type": "addresses","attributes": {"salutation": "${yves_second_user.salutation}","firstName": "${yves_second_user.first_name}","lastName": "${yves_second_user.last_name}","address1": "${default.address1}","address2": "${default.address2}","address3": "${default.address3}","zipCode": "${default.zipCode}","city": "${default.city}","country": "${default.country}","iso2Code": "${default.iso2Code}","company":"${default.company}","phone": "${default.phone}","isDefaultShipping": ${default.shipping_status},"isDefaultBilling": ${default.billing_status}}}}
     ...    AND    Response status code should be:    201
     ...    AND    Save value to a variable:    [data][id]    address_uid
-    When I get access token for the customer:    ${yves_user_email}
+    When I get access token for the customer:    ${yves_user.email}
     And I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
-    When I send a DELETE request:    /customers/${yves_user_reference}/addresses/${address_uid}
+    When I send a DELETE request:    /customers/${yves_user.reference}/addresses/${address_uid}
     Then Response status code should be:    404
     And Response reason should be:    Not Found
     And Response should return error message:    Address was not found.
-    [Teardown]    Run Keywords    I get access token for the customer:    ${yves_second_user_email}
+    [Teardown]    Run Keywords    I get access token for the customer:    ${yves_second_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
-    ...    AND    I send a DELETE request:     /customers/${yves_second_user_reference}/addresses/${address_uid}
+    ...    AND    I send a DELETE request:     /customers/${yves_second_user.reference}/addresses/${address_uid}
     ...    AND    Response status code should be:    204

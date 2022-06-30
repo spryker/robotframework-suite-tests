@@ -8,7 +8,7 @@ Default Tags    glue
 ENABLER
     TestSetup
 Get_a_tax_set_with_concrete_sku
-    When I send a GET request:    /abstract-products/${concrete_available_product_sku}/product-tax-sets
+    When I send a GET request:    /abstract-products/${abstract_available_product_with_stock.concrete_available_product.sku}/product-tax-sets
     Then Response status code should be:    404
     And Response reason should be:    Not Found
     And Response should return error code:    310

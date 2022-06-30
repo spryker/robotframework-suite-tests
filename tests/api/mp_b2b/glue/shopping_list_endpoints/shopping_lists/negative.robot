@@ -16,7 +16,7 @@ Create_a_shopping_list_with_empty_type
     And Response header parameter should be:    Content-Type    ${default_header_content_type} 
 
 Create_a_shopping_list_with_empty_values_for_required_fields
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}  
     I send a POST request:    /shopping-lists    {"data":{"type":"shopping-lists","attributes":{"name":""}}}
     Response status code should be:    422
@@ -40,7 +40,7 @@ Create_a_shopping_list_with_absent_type
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
 
 Create_a_shopping_list_with_already_existing_name
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}  
     ...    AND    I send a POST request:    /shopping-lists    {"data":{"type":"shopping-lists","attributes":{"name":"${shopping_list_name}${random}"}}}
     ...    AND    Save value to a variable:    [data][id]    shoppingListId
@@ -55,7 +55,7 @@ Create_a_shopping_list_with_already_existing_name
     ...    AND    Response reason should be:    No Content
 
 Create_a_shopping_list_with_too_long_name
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}  
     I send a POST request:    /shopping-lists    {"data":{"type":"shopping-lists","attributes":{"name":"12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890"}}}
     And Response status code should be:    422
@@ -64,7 +64,7 @@ Create_a_shopping_list_with_too_long_name
     And Array in response should contain property with value:    [errors]    detail    name => This value is too long. It should have 255 characters or less.
 
 Delete_not_existing_shopping_list
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     I send a DELETE request:    /shopping-lists/test12345
     And Response status code should be:    404
@@ -73,11 +73,11 @@ Delete_not_existing_shopping_list
     And Array in response should contain property with value:    [errors]    detail    Shopping list not found.
 
 Delete_existing_shopping_list_of_another_customer
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     ...    AND    I send a GET request:    /shopping-lists
     ...    AND    Save value to a variable:    [data][0][id]    shoppingListId
-    ...    AND    I get access token for the customer:    ${yves_fourth_user_email}
+    ...    AND    I get access token for the customer:    ${yves_fourth_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token} 
     I send a DELETE request:    /shopping-lists/${shoppingListId}
     And Response status code should be:    404
@@ -93,7 +93,7 @@ Delete_shopping_list_without_access_token
     And Array in response should contain property with value:    [errors]    detail    Missing access token.
 
 Delete_shopping_list_with_wrong_access_token
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}1
     I send a DELETE request:    /shopping-lists/shoppingListId
     And Response status code should be:    401
@@ -108,7 +108,7 @@ Delete_a_shopping_list_withouth_shopping_list_id
     And Array in response should contain property with value:    [errors]    detail    Resource id is not specified.
 
 Update_shopping_list_for_the_customer_with_empty_attribute_section
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}  
     I send a PATCH request:    /shopping-lists/shoppingListId    {"data":{"type":"shopping-lists","attributes":{}}}
     And Response status code should be:    422
@@ -117,7 +117,7 @@ Update_shopping_list_for_the_customer_with_empty_attribute_section
     And Array in response should contain property with value:    [errors]    detail    name => This field is missing.
 
 Update_shopping_list_with_existing_name_of_another_available_shopping_list
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}  
     ...    AND    I send a GET request:    /shopping-lists
     ...    AND    Save value to a variable:    [data][0][id]    shoppingListId
@@ -129,7 +129,7 @@ Update_shopping_list_with_existing_name_of_another_available_shopping_list
     And Array in response should contain property with value:    [errors]    detail    Shopping list with given name already exists.
 
 Update_shopping_list_with_empty_name
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}  
     I send a PATCH request:    /shopping-lists/shoppingListId    {"data":{"type":"shopping-lists","attributes":{"name":""}}}
     And Response status code should be:    422
@@ -138,7 +138,7 @@ Update_shopping_list_with_empty_name
     And Array in response should contain property with value:    [errors]    detail    name => This value should not be blank.
 
 Update_shopping_list_name_with_too_long_value
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}  
     I send a PATCH request:    /shopping-lists/shoppingListId    {"data":{"type":"shopping-lists","attributes":{"name":"12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890"}}}
     And Response status code should be:    422
@@ -147,7 +147,7 @@ Update_shopping_list_name_with_too_long_value
     And Array in response should contain property with value:    [errors]    detail    name => This value is too long. It should have 255 characters or less.
 
 Update_shopping_list_withouth_shopping_list_id
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}  
     I send a PATCH request:    /shopping-lists/    {"data":{"type":"shopping-lists","attributes":{"name":"${shopping_list_name}${random}"}}}
     And Response status code should be:    400
@@ -155,7 +155,7 @@ Update_shopping_list_withouth_shopping_list_id
     And Array in response should contain property with value:    [errors]    detail    Resource id is not specified.
 
 Update_shopping_list_with_wrong_shopping_list_id
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}  
     I send a PATCH request:    /shopping-lists/shoppingListId     {"data":{"type":"shopping-lists","attributes":{"name":"${shopping_list_name}${random}"}}}
     And Response status code should be:    404
@@ -171,11 +171,11 @@ Update_shopping_list_with_non_autorized_user
     And Array in response should contain property with value:    [errors]    detail    Missing access token.
 
 Update_existing_shopping_list_of_another_customer
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     ...    AND    I send a GET request:    /shopping-lists
     ...    AND    Save value to a variable:    [data][0][id]    shoppingListId
-    ...    AND    I get access token for the customer:    ${yves_fourth_user_email}
+    ...    AND    I get access token for the customer:    ${yves_fourth_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token} 
     I send a PATCH request:    /shopping-lists/${shoppingListId}    {"data":{"type":"shopping-lists","attributes":{"name":"${shopping_list_name}"}}}
     And Response status code should be:    404
@@ -205,7 +205,7 @@ Get_shopping_list_with_non_autorized_user
     And Array in response should contain property with value:    [errors]    detail    Missing access token.
 
 Get_not_existing_shopping_list
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     I send a GET request:    /shopping-lists/test12345
     And Response status code should be:    404
@@ -214,11 +214,11 @@ Get_not_existing_shopping_list
     And Array in response should contain property with value:    [errors]    detail    Shopping list not found.
 
 Get_existing_shopping_list_of_another_customer
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     ...    AND    I send a GET request:    /shopping-lists
     ...    AND    Save value to a variable:    [data][0][id]    shoppingListId
-    ...    AND    I get access token for the customer:    ${yves_fourth_user_email}
+    ...    AND    I get access token for the customer:    ${yves_fourth_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     I send a GET request:    /shopping-lists/${shoppingListId}
     And Response status code should be:    404
@@ -227,7 +227,7 @@ Get_existing_shopping_list_of_another_customer
     And Array in response should contain property with value:    [errors]    detail    Shopping list not found.
 
 Get_existing_shopping_list_with_wrong_access_token
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}1
     I send a GET request:    /shopping-lists/shoppingListId
     And Response status code should be:    401

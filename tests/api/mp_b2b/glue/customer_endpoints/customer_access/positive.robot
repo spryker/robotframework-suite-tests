@@ -23,12 +23,12 @@ Get_resources_customer_can_access
     And Response body parameter should be:    [data][0][attributes][resourceTypes][4]    guest-cart-items
 
 Access_restricted_resource_as_authorized_customer
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
-    When I send a GET request:    /abstract-products/${abstract_product_with_volume_prices}/abstract-product-prices
+    When I send a GET request:    /abstract-products/${abstract_product.product_with_volume_prices.abstract_sku}/abstract-product-prices
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
-    And Response body parameter should be:    [data][0][id]    ${abstract_product_with_volume_prices}
+    And Response body parameter should be:    [data][0][id]    ${abstract_product.product_with_volume_prices.abstract_sku}
     And Response body parameter should be greater than:    [data][0][attributes][price]   100
     And Response body has correct self link

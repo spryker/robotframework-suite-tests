@@ -25,7 +25,7 @@ Getting_wishlist_without_Access_Token
     And Response should return error message:    Missing access token.
 
 Getting_wishlist_with_invalid_id
-     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}
     When I send a GET request:    /wishlists/2345hasd
     Then Response status code should be:    404 
@@ -42,7 +42,7 @@ Creating_wishlist_by_invalid_Access_Token
 
 #Post Request CC-16553
 Creating_wishlist_with_space_in_name
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...        AND    I set Headers:    Authorization=${token}
     When I send a POST request:    /wishlists    {"data": {"type": "wishlists","attributes": {"name":" "}}}
     Then Response status code should be:    400
@@ -58,7 +58,7 @@ Creating_wishlist_without_Access_Token
     And Response should return error message:    Missing access token.
 
 Creating_wishlist_with_missing_name
-    [Setup]    Run Keywords    I GET access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I GET access token for the customer:    ${yves_user.email}
     ...    AND     I set headers:    authorization=${token}
     When I send a POST request:    /wishlists    {"data": {"type": "wishlists","attributes": {"name": ""}}}
     And Each array element of array in response should contain property with value:    [errors]    code    901
@@ -66,7 +66,7 @@ Creating_wishlist_with_missing_name
     And Array in response should contain property with value:    [errors]    detail    name => This value should not be blank.
 
 Creating_wishlist_with_invalid_name
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}
     When I send a POST request:    /wishlists    {"data": {"type": "wishlists","attributes": {"name": "."}}}
     Then Response status code should be:    400
@@ -74,7 +74,7 @@ Creating_wishlist_with_invalid_name
     And Response should return error code:    210
 
 Creating_Wishlist_with_a_name_that_already_exists
-    [Setup]    Run Keywords    I GET access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I GET access token for the customer:    ${yves_user.email}
     ...    AND    I set headers:    authorization=${token}
     ...    AND    I send a Post request:    /wishlists    {"data": {"type": "wishlists","attributes": {"name": "${wishlist_name}"}}}
     ...    AND    Save value to a variable:    [data][id]    wishlist_id
@@ -88,7 +88,7 @@ Creating_Wishlist_with_a_name_that_already_exists
     
 #Delete
 Delete_already_deleted_wishlist
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}
     ...    AND    I send a POST request:    /wishlists    {"data": { "type": "wishlists","attributes": { "name": "${wishlist_name}"} }}
     ...    AND    Response status code should be:    201 
@@ -120,7 +120,7 @@ Deleting_wishlist_without_Access_Token
     
 #Delete_request
 Wishlist_id_not_specified
-    [Setup]    Run Keywords    I GET access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I GET access token for the customer:    ${yves_user.email}
     ...    AND    I set headers:    authorization=${token}
     When I send a DELETE request:    /wishlists/
     Then Response reason should be:    Bad Request
@@ -128,7 +128,7 @@ Wishlist_id_not_specified
 
 #Patch_request
 Updating_wishlist_with_missing_name
-    [Setup]    Run Keywords    I GET access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I GET access token for the customer:    ${yves_user.email}
     ...    AND     I set headers:    authorization=${token}
     ...    AND     I send a Post request:    /wishlists    {"data": {"type": "wishlists","attributes": {"name": "${wishlist_name}"}}}
     ...    AND    Save value to a variable:    [data][id]    wishlist_id
@@ -140,7 +140,7 @@ Updating_wishlist_with_missing_name
     ...  AND    Response status code should be:    204
 
 Updating_wishlist_with_invalid_name
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}
     ...    AND    I send a Post request:    /wishlists    {"data": {"type": "wishlists","attributes": {"name": "${wishlist_name}"}}}
     ...    AND    Save value to a variable:    [data][id]    wishlist_id

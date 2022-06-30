@@ -10,7 +10,7 @@ ENABLER
 
 #Logged in customer's cart
 Get_upselling_products_with_missing_cart_id
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     When I send a GET request:    /carts//up-selling-products
     Then Response status code should be:    400
@@ -19,7 +19,7 @@ Get_upselling_products_with_missing_cart_id
     And Response should return error message:    Cart uuid is missing.
     
 Get_upselling_products_with_nonexistent_cart_id
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     When I send a GET request:    /carts/not_a_cart/up-selling-products
     Then Response status code should be:    404
@@ -43,11 +43,11 @@ Get_upselling_products_without_access_token
     And Response should return error message:    Missing access token.
 
 Get_upselling_products_using_cart_of_other_customer
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
     ...  AND    Save value to a variable:    [data][attributes][accessToken]    first_user_token
     ...  AND    Find or create customer cart
-    ...  AND    I get access token for the customer:    ${yves_second_user_email}
+    ...  AND    I get access token for the customer:    ${yves_second_user.email}
     ...  AND    I set Headers:    Authorization=${token}
     When I send a GET request:    /carts/${cart_id}/up-selling-products
     Then Response status code should be:    404
@@ -81,7 +81,7 @@ Get_upselling_products_with_empty_anonymous_id
 
 Get_upselling_products_with_other_anonymous_id
     [Setup]    Run Keywords    I set Headers:   Content-Type=${default_header_content_type}     X-Anonymous-Customer-Unique-Id=${random}
-    ...    AND    Create a guest cart:    ${random}    ${concrete_of_product_with_relations_upselling_sku}    1
+    ...    AND    Create a guest cart:    ${random}    ${product_with_relations.has_upselling_products.concrete_sku}    1
     ...    AND    Response status code should be:    201
     ...    AND    I set Headers:    X-Anonymous-Customer-Unique-Id=222
     When I send a GET request:    /guest-carts/${guest_cart_id}/up-selling-products

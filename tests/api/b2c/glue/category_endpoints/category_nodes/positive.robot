@@ -9,12 +9,12 @@ Default Tags    glue
 ENABLER
     TestSetup
 Get_category_node_is_root_by_id
-    When I send a GET request:    /category-nodes/${category_node_is_root_id}
+    When I send a GET request:    /category-nodes/${category_node.root_id}
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response body parameter should be:    [data][type]    category-nodes
-    And Response body parameter should be:    [data][id]    ${category_node_is_root_id}
+    And Response body parameter should be:    [data][id]    ${category_node.root_id}
     And Response Body parameter should have datatype:    [data][attributes][name]    str
     And Response Body parameter should have datatype:    [data][attributes][nodeId]    int
     And Response Body parameter should have datatype:    [data][attributes][order]    NoneType
@@ -24,13 +24,13 @@ Get_category_node_is_root_by_id
     And Response body has correct self link internal
 
 Get_category_node_has_children_by_id
-    When I send a GET request:    /category-nodes/${category_node_has_children_id}
+    When I send a GET request:    /category-nodes/${category_node.children_id}
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response body parameter should be:    [data][type]    category-nodes
-    And Response body parameter should be:    [data][id]    ${category_node_has_children_id}
-    And Response body parameter should be:    [data][attributes][nodeId]    ${category_node_has_children_id}
+    And Response body parameter should be:    [data][id]    ${category_node.children_id}
+    And Response body parameter should be:    [data][attributes][nodeId]    ${category_node.children_id}
     And Response Body parameter should have datatype:    [data][attributes][name]    str
     And Response Body parameter should have datatype:    [data][attributes][nodeId]    int
     And Response Body parameter should have datatype:    [data][attributes][order]    int
@@ -46,12 +46,12 @@ Get_category_node_has_children_by_id
 
 
 Get_category_node_that_has_only_parents_by_id
-    When I send a GET request:    /category-nodes/${category_node_has_only_parent_id}
+    When I send a GET request:    /category-nodes/${category_node.parent_id}
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response body parameter should be:    [data][type]    category-nodes
-    And Response body parameter should be:    [data][id]    ${category_node_has_only_parent_id}
+    And Response body parameter should be:    [data][id]    ${category_node.parent_id}
     And Response Body parameter should have datatype:    [data][attributes][name]    str
     And Response Body parameter should have datatype:    [data][attributes][nodeId]    int
     And Response Body parameter should have datatype:    [data][attributes][order]    int

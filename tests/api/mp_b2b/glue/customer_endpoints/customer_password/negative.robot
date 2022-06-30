@@ -9,9 +9,9 @@ ENABLER
     TestSetup
 
 Update_customer_password_with_not_equal_new_password
-    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}    
-    AND I send a PATCH request:    /customer-password/${yves_user_reference}   {"data":{"type":"customer-password","attributes":{"password":"${yves_user_password}","newPassword":"${yves_user_password}","confirmPassword":"${yves_user_password_new}"}}}
+    AND I send a PATCH request:    /customer-password/${yves_user.reference}   {"data":{"type":"customer-password","attributes":{"password":"${yves_user.password}","newPassword":"${yves_user.password}","confirmPassword":"${yves_user.password_new}"}}}
     Response status code should be:    422
     And Response reason should be:    Unprocessable Content
     And Response should return error code:    406
@@ -19,18 +19,18 @@ Update_customer_password_with_not_equal_new_password
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
 
 Update_customer_password_with_empty_data_type
-    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}    
-    AND I send a PATCH request:    /customer-password/${yves_user_reference}   {"data":{"type":"","attributes":{"password":"${yves_user_password}","newPassword":"${yves_user_password}","confirmPassword":"${yves_user_password_new}"}}}
+    AND I send a PATCH request:    /customer-password/${yves_user.reference}   {"data":{"type":"","attributes":{"password":"${yves_user.password}","newPassword":"${yves_user.password}","confirmPassword":"${yves_user.password_new}"}}}
     Response status code should be:    400
     And Response reason should be:    Bad Request
     And Response should return error message:    Invalid type.
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
 
 Update_customer_password_with_empty_current_password
-    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}    
-    AND I send a PATCH request:    /customer-password/${yves_user_reference}   {"data":{"type":"customer-password","attributes":{"password":"","newPassword":"${yves_user_password}","confirmPassword":"${yves_user_password_new}"}}}
+    AND I send a PATCH request:    /customer-password/${yves_user.reference}   {"data":{"type":"customer-password","attributes":{"password":"","newPassword":"${yves_user.password}","confirmPassword":"${yves_user.password_new}"}}}
     Response status code should be:    422
     And Response reason should be:    Unprocessable Content
     And Response should return error code:    901
@@ -38,9 +38,9 @@ Update_customer_password_with_empty_current_password
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
 
 Update_customer_password_with_empty_new_password
-    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}    
-    AND I send a PATCH request:    /customer-password/${yves_user_reference}   {"data":{"type":"customer-password","attributes":{"password":"${yves_user_password}","newPassword":"","confirmPassword":"${yves_user_password_new}"}}}
+    AND I send a PATCH request:    /customer-password/${yves_user.reference}   {"data":{"type":"customer-password","attributes":{"password":"${yves_user.password}","newPassword":"","confirmPassword":"${yves_user.password_new}"}}}
     Response status code should be:    422
     And Response reason should be:    Unprocessable Content
     And Response should return error code:    901
@@ -48,9 +48,9 @@ Update_customer_password_with_empty_new_password
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
 
 Update_customer_password_with_empty_new_password_confirmation
-    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}    
-    AND I send a PATCH request:    /customer-password/${yves_user_reference}   {"data":{"type":"customer-password","attributes":{"password":"${yves_user_password}","newPassword":"${yves_user_password_new}","confirmPassword":""}}}
+    AND I send a PATCH request:    /customer-password/${yves_user.reference}   {"data":{"type":"customer-password","attributes":{"password":"${yves_user.password}","newPassword":"${yves_user.password_new}","confirmPassword":""}}}
     Response status code should be:    422
     And Response reason should be:    Unprocessable Content
     And Response should return error code:    901
@@ -59,7 +59,7 @@ Update_customer_password_with_empty_new_password_confirmation
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
 
 Update_customer_password_with_non_autorizated_user
-    AND I send a PATCH request:    /customer-password/${yves_user_reference}   {"data":{"type":"customer-password","attributes":{"password":"${yves_user_password}","newPassword":"${yves_user_password_new}","confirmPassword":"${yves_user_password_new}"}}}
+    AND I send a PATCH request:    /customer-password/${yves_user.reference}   {"data":{"type":"customer-password","attributes":{"password":"${yves_user.password}","newPassword":"${yves_user.password_new}","confirmPassword":"${yves_user.password_new}"}}}
     Response status code should be:    403
     And Response reason should be:    Forbidden
     And Response should return error code:    002
@@ -67,9 +67,9 @@ Update_customer_password_with_non_autorizated_user
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
 
 Update_customer_password_with_not_valid_user_password
-    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}    
-    AND I send a PATCH request:    /customer-password/${yves_user_reference}   {"data":{"type":"customer-password","attributes":{"password":"${yves_user_password_new}","newPassword":"${yves_user_password}","confirmPassword":"${yves_user_password}"}}}
+    AND I send a PATCH request:    /customer-password/${yves_user.reference}   {"data":{"type":"customer-password","attributes":{"password":"${yves_user.password_new}","newPassword":"${yves_user.password}","confirmPassword":"${yves_user.password}"}}}
     Response status code should be:    400
     And Response reason should be:    Bad Request
     And Response should return error code:    408
@@ -77,9 +77,9 @@ Update_customer_password_with_not_valid_user_password
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
 
 Update_customer_password_with_too_short_password
-    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}    
-    AND I send a PATCH request:    /customer-password/${yves_user_reference}   {"data":{"type":"customer-password","attributes":{"password":"${yves_user_password_new}","newPassword":"test","confirmPassword":"test"}}}
+    AND I send a PATCH request:    /customer-password/${yves_user.reference}   {"data":{"type":"customer-password","attributes":{"password":"${yves_user.password_new}","newPassword":"test","confirmPassword":"test"}}}
     Response status code should be:    422
     And Response reason should be:    Unprocessable Content
     And Response should return error code:    901
@@ -88,9 +88,9 @@ Update_customer_password_with_too_short_password
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
 
 Update_customer_password_with_too_long_password
-    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}    
-    AND I send a PATCH request:    /customer-password/${yves_user_reference}   {"data":{"type":"customer-password","attributes":{"password":"${yves_user_password_new}","newPassword":"tests1234567890tests1234567890tests1234567890tests1234567890tests1234567890","confirmPassword":"tests1234567890tests1234567890tests1234567890tests1234567890tests1234567890"}}}
+    AND I send a PATCH request:    /customer-password/${yves_user.reference}   {"data":{"type":"customer-password","attributes":{"password":"${yves_user.password_new}","newPassword":"tests1234567890tests1234567890tests1234567890tests1234567890tests1234567890","confirmPassword":"tests1234567890tests1234567890tests1234567890tests1234567890tests1234567890"}}}
     Response status code should be:    422
     And Response reason should be:    Unprocessable Content
     And Response should return error code:    901
@@ -99,9 +99,9 @@ Update_customer_password_with_too_long_password
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
 
 Update_customer_password_with_too_weak_password
-    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}    
-    AND I send a PATCH request:    /customer-password/${yves_user_reference}   {"data":{"type":"customer-password","attributes":{"password":"${yves_user_password_new}","newPassword":"12345678","confirmPassword":"12345678"}}}
+    AND I send a PATCH request:    /customer-password/${yves_user.reference}   {"data":{"type":"customer-password","attributes":{"password":"${yves_user.password_new}","newPassword":"12345678","confirmPassword":"12345678"}}}
     Response status code should be:    400
     And Response reason should be:    Bad Request
     And Response should return error code:    408
@@ -109,9 +109,9 @@ Update_customer_password_with_too_weak_password
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
 
 Update_customer_password_with_wrong_customer_reference
-    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}    
-    AND I send a PATCH request:    /customer-password/test123   {"data":{"type":"customer-password","attributes":{"password":"${yves_user_password_new}","newPassword":"12345678","confirmPassword":"12345678"}}}
+    AND I send a PATCH request:    /customer-password/test123   {"data":{"type":"customer-password","attributes":{"password":"${yves_user.password_new}","newPassword":"12345678","confirmPassword":"12345678"}}}
     Response status code should be:    403
     And Response reason should be:    Forbidden
     And Response should return error code:    411
@@ -119,18 +119,18 @@ Update_customer_password_with_wrong_customer_reference
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
 
 Update_customer_password_with_missing_customer_reference
-    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}    
-    AND I send a PATCH request:    /customer-password/   {"data":{"type":"customer-password","attributes":{"password":"${yves_user_password_new}","newPassword":"12345678","confirmPassword":"12345678"}}}
+    AND I send a PATCH request:    /customer-password/   {"data":{"type":"customer-password","attributes":{"password":"${yves_user.password_new}","newPassword":"12345678","confirmPassword":"12345678"}}}
     Response status code should be:    400
     And Response reason should be:    Bad Request
     And Response should return error message:    Resource id is not specified.
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
 
 Update_customer_password_with_missing_mandatory_fields
-    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}    
-    AND I send a PATCH request:    /customer-password/test123   {"data":{"type":"customer-password","attributes":{"newPassword":"${yves_user_password}"}}}
+    AND I send a PATCH request:    /customer-password/test123   {"data":{"type":"customer-password","attributes":{"newPassword":"${yves_user.password}"}}}
     Response status code should be:    422
     And Response reason should be:    Unprocessable Content
     And Response should return error code:    901
@@ -139,9 +139,9 @@ Update_customer_password_with_missing_mandatory_fields
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
 
 Update_customer_password_with_invalid_access_token
-    Run Keywords    I get access token for the customer:    ${yves_second_user_email}
+    Run Keywords    I get access token for the customer:    ${yves_second_user.email}
     ...  AND    I set Headers:    Authorization=${token}    
-    AND I send a PATCH request:    /customer-password/${yves_user_reference}   {"data":{"type":"customer-password","attributes":{"password":"${yves_user_password}","newPassword":"${yves_user_password}","confirmPassword":"${yves_user_password_new}"}}}
+    AND I send a PATCH request:    /customer-password/${yves_user.reference}   {"data":{"type":"customer-password","attributes":{"password":"${yves_user.password}","newPassword":"${yves_user.password}","confirmPassword":"${yves_user.password_new}"}}}
     Response status code should be:    403
     And Response reason should be:    Forbidden
     And Response should return error code:    411

@@ -9,16 +9,16 @@ ENABLER
     TestSetup
 
 Add_items_to_guest_cart_with_items_include
-     [Setup]    Run Keywords     Create a guest cart:    ${random}    ${concrete_product_with_concrete_product_alternative_sku}    1
+     [Setup]    Run Keywords     Create a guest cart:    ${random}    ${concrete_product_with_concrete_product_alternative.sku}    1
             ...   AND    I set Headers:     X-Anonymous-Customer-Unique-Id=${x_anonymous_customer_unique_id}
-    When I send a POST request:    /guest-cart-items?include=items    {"data": {"type": "guest-cart-items","attributes": {"sku": "${concrete_product_with_concrete_product_alternative_sku}","quantity": 3}}}
+    When I send a POST request:    /guest-cart-items?include=items    {"data": {"type": "guest-cart-items","attributes": {"sku": "${concrete_product_with_concrete_product_alternative.sku}","quantity": 3}}}
     Then Response status code should be:    201
     And Response reason should be:    Created
     And Response body parameter should be:    [data][type]    guest-carts
     And Response body parameter should not be EMPTY:    [data][id]
-    And Response body parameter should be:    [data][attributes][priceMode]    ${gross_mode}
-    And Response body parameter should be:    [data][attributes][currency]    ${currency_code_eur}
-    And Response body parameter should be:    [data][attributes][store]    ${store_de}
+    And Response body parameter should be:    [data][attributes][priceMode]    ${currency.mode.gross}
+    And Response body parameter should be:    [data][attributes][currency]    ${currency.eur.code}
+    And Response body parameter should be:    [data][attributes][store]    ${store.de}
     And Response body parameter should not be EMPTY:    [data][attributes][totals][expenseTotal]
     And Response body parameter should not be EMPTY:    [data][attributes][totals][discountTotal]
     And Response body parameter should not be EMPTY:    [data][attributes][totals][discountTotal]
@@ -26,11 +26,11 @@ Add_items_to_guest_cart_with_items_include
     And Response body parameter should not be EMPTY:    [data][attributes][totals][grandTotal]
     And Response body parameter should not be EMPTY:    [data][attributes][totals][priceToPay]
     And Response body parameter should be:    [included][0][type]    guest-cart-items
-    And Response body parameter should be:    [included][0][id]    ${concrete_product_with_concrete_product_alternative_sku}
-    And Response body parameter should be:    [included][0][attributes][sku]    ${concrete_product_with_concrete_product_alternative_sku}
+    And Response body parameter should be:    [included][0][id]    ${concrete_product_with_concrete_product_alternative.sku}
+    And Response body parameter should be:    [included][0][attributes][sku]    ${concrete_product_with_concrete_product_alternative.sku}
     And Response body parameter should be:    [included][0][attributes][quantity]    4
-    And Response body parameter should be:    [included][0][attributes][groupKey]    ${concrete_product_with_concrete_product_alternative_sku}
-    And Response body parameter should be:    [included][0][attributes][abstractSku]    ${abstract_product_with_alternative_sku}
+    And Response body parameter should be:    [included][0][attributes][groupKey]    ${concrete_product_with_concrete_product_alternative.sku}
+    And Response body parameter should be:    [included][0][attributes][abstractSku]    ${abstract_product_with_alternative.sku}
     And Response body parameter should be:    [included][0][attributes][amount]    None
     And Response body parameter should be:    [included][0][attributes][configuredBundle]    None
     And Response body parameter should be:    [included][0][attributes][configuredBundleItem]    None
@@ -56,16 +56,16 @@ Add_items_to_guest_cart_with_items_include
     And Response body parameter should be greater than:    [included][0][attributes][calculations][sumPriceToPayAggregation]    0
 
 Change_item_qty_in_guest_cart
-     [Setup]    Run Keywords     Create a guest cart:    ${random}    ${concrete_product_with_concrete_product_alternative_sku}    1
+     [Setup]    Run Keywords     Create a guest cart:    ${random}    ${concrete_product_with_concrete_product_alternative.sku}    1
             ...   AND    I set Headers:     X-Anonymous-Customer-Unique-Id=${x_anonymous_customer_unique_id}
-    When I send a PATCH request:    /guest-carts/${guest_cart_id}/guest-cart-items/${concrete_product_with_concrete_product_alternative_sku}?include=items    {"data": {"type": "guest-cart-items","attributes": {"quantity": "10"}}}
+    When I send a PATCH request:    /guest-carts/${guest_cart_id}/guest-cart-items/${concrete_product_with_concrete_product_alternative.sku}?include=items    {"data": {"type": "guest-cart-items","attributes": {"quantity": "10"}}}
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response body parameter should be:    [data][type]    guest-carts
     And Response body parameter should not be EMPTY:    [data][id]
-    And Response body parameter should be:    [data][attributes][priceMode]    ${gross_mode}
-    And Response body parameter should be:    [data][attributes][currency]    ${currency_code_eur}
-    And Response body parameter should be:    [data][attributes][store]    ${store_de}
+    And Response body parameter should be:    [data][attributes][priceMode]    ${currency.mode.gross}
+    And Response body parameter should be:    [data][attributes][currency]    ${currency.eur.code}
+    And Response body parameter should be:    [data][attributes][store]    ${store.de}
     And Response body parameter should not be EMPTY:    [data][attributes][totals][expenseTotal]
     And Response body parameter should not be EMPTY:    [data][attributes][totals][discountTotal]
     And Response body parameter should not be EMPTY:    [data][attributes][totals][discountTotal]
@@ -73,13 +73,13 @@ Change_item_qty_in_guest_cart
     And Response body parameter should not be EMPTY:    [data][attributes][totals][grandTotal]
     And Response body parameter should not be EMPTY:    [data][attributes][totals][priceToPay]
     And Response body parameter should be:    [included][0][type]    guest-cart-items
-    And Response body parameter should be:    [included][0][attributes][sku]    ${concrete_product_with_concrete_product_alternative_sku}
+    And Response body parameter should be:    [included][0][attributes][sku]    ${concrete_product_with_concrete_product_alternative.sku}
     And Response body parameter should be:    [included][0][attributes][quantity]    10
 
 Remove_item_from_guest_cart
-     [Setup]    Run Keywords     Create a guest cart:    ${random}    ${concrete_product_with_concrete_product_alternative_sku}    1
+     [Setup]    Run Keywords     Create a guest cart:    ${random}    ${concrete_product_with_concrete_product_alternative.sku}    1
             ...   AND    I set Headers:     X-Anonymous-Customer-Unique-Id=${x_anonymous_customer_unique_id}
-    When I send a DELETE request:    /guest-carts/${guest_cart_id}/guest-cart-items/${concrete_product_with_concrete_product_alternative_sku}
+    When I send a DELETE request:    /guest-carts/${guest_cart_id}/guest-cart-items/${concrete_product_with_concrete_product_alternative.sku}
     Then Response status code should be:    204
     And Response reason should be:    No Content
     And I set Headers:     X-Anonymous-Customer-Unique-Id=${x_anonymous_customer_unique_id}
@@ -93,14 +93,14 @@ Remove_item_from_guest_cart
 
 Add_items_to_guest_cart_with_included_items_concrete_products_and_abstract_products
      [Setup]    I set Headers:    X-Anonymous-Customer-Unique-Id=${random}
-    When I send a POST request:    /guest-cart-items?include=items,concrete-products,abstract-products    {"data": {"type": "guest-cart-items","attributes": {"sku": "${concrete_product_with_concrete_product_alternative_sku}","quantity": 1}}}
+    When I send a POST request:    /guest-cart-items?include=items,concrete-products,abstract-products    {"data": {"type": "guest-cart-items","attributes": {"sku": "${concrete_product_with_concrete_product_alternative.sku}","quantity": 1}}}
     Then Response status code should be:    201
     And Response reason should be:    Created
     And Response body parameter should be:    [data][type]    guest-carts
     And Response body parameter should not be EMPTY:    [data][id]
-    And Response body parameter should be:    [data][attributes][priceMode]    ${gross_mode}
-    And Response body parameter should be:    [data][attributes][currency]    ${currency_code_eur}
-    And Response body parameter should be:    [data][attributes][store]    ${store_de}
+    And Response body parameter should be:    [data][attributes][priceMode]    ${currency.mode.gross}
+    And Response body parameter should be:    [data][attributes][currency]    ${currency.eur.code}
+    And Response body parameter should be:    [data][attributes][store]    ${store.de}
     #totals
     And Response body parameter should not be EMPTY:    [data][attributes][totals][expenseTotal]
     And Response body parameter should not be EMPTY:    [data][attributes][totals][discountTotal]
@@ -124,14 +124,14 @@ Add_items_to_guest_cart_with_included_items_concrete_products_and_abstract_produ
 
 Add_items_to_guest_cart_with_included_cart_rules
      [Setup]    I set Headers:    X-Anonymous-Customer-Unique-Id=${random}
-    When I send a POST request:    /guest-cart-items?include=cart-rules    {"data": {"type": "guest-cart-items","attributes": {"sku": "${concrete_product_with_concrete_product_alternative_sku}","quantity": 10}}}
+    When I send a POST request:    /guest-cart-items?include=cart-rules    {"data": {"type": "guest-cart-items","attributes": {"sku": "${concrete_product_with_concrete_product_alternative.sku}","quantity": 10}}}
     Then Response status code should be:    201
     And Response reason should be:    Created
     And Response body parameter should be:    [data][type]    guest-carts
     And Response body parameter should not be EMPTY:    [data][id]
-    And Response body parameter should be:    [data][attributes][priceMode]    ${gross_mode}
-    And Response body parameter should be:    [data][attributes][currency]    ${currency_code_eur}
-    And Response body parameter should be:    [data][attributes][store]    ${store_de}
+    And Response body parameter should be:    [data][attributes][priceMode]    ${currency.mode.gross}
+    And Response body parameter should be:    [data][attributes][currency]    ${currency.eur.code}
+    And Response body parameter should be:    [data][attributes][store]    ${store.de}
     And Response body parameter should not be EMPTY:    [data][attributes][totals][expenseTotal]
     And Response body parameter should not be EMPTY:    [data][attributes][totals][discountTotal]
     And Response body parameter should not be EMPTY:    [data][attributes][totals][discountTotal]
@@ -151,14 +151,14 @@ Add_items_to_guest_cart_with_included_cart_rules
 
 Add_items_to_guest_cart_with_included_promotional_products
      [Setup]    I set Headers:    X-Anonymous-Customer-Unique-Id=${random}
-    When I send a POST request:    /guest-cart-items?include=promotional-items    {"data": {"type": "guest-cart-items","attributes": {"sku": "${concrete_product_with_concrete_product_alternative_sku}","quantity": 100}}}
+    When I send a POST request:    /guest-cart-items?include=promotional-items    {"data": {"type": "guest-cart-items","attributes": {"sku": "${concrete_product_with_concrete_product_alternative.sku}","quantity": 100}}}
     Then Response status code should be:    201
     And Response reason should be:    Created
     And Response body parameter should be:    [data][type]    guest-carts
     And Response body parameter should not be EMPTY:    [data][id]
-    And Response body parameter should be:    [data][attributes][priceMode]    ${gross_mode}
-    And Response body parameter should be:    [data][attributes][currency]    ${currency_code_eur}
-    And Response body parameter should be:    [data][attributes][store]    ${store_de}
+    And Response body parameter should be:    [data][attributes][priceMode]    ${currency.mode.gross}
+    And Response body parameter should be:    [data][attributes][currency]    ${currency.eur.code}
+    And Response body parameter should be:    [data][attributes][store]    ${store.de}
     And Response body parameter should not be EMPTY:    [data][attributes][totals][expenseTotal]
     And Response body parameter should not be EMPTY:    [data][attributes][totals][discountTotal]
     And Response body parameter should not be EMPTY:    [data][attributes][totals][discountTotal]
@@ -167,20 +167,20 @@ Add_items_to_guest_cart_with_included_promotional_products
     And Response body parameter should not be EMPTY:    [data][attributes][totals][priceToPay]
     And Response body parameter should be:    [included][0][type]    promotional-items
     And Response body parameter should not be EMPTY:    [included][0][id]
-    And Response body parameter should be:    [included][0][attributes][sku]    ${concrete_product_with_concrete_product_alternative_promotional_items_sku}
+    And Response body parameter should be:    [included][0][attributes][sku]    ${concrete_product_with_concrete_product_alternative.promotional_items_sku}
     And Response body parameter should be:    [included][0][attributes][quantity]    1
-    And Response body parameter should be:    [included][0][attributes][skus]    ${concrete_product_with_concrete_product_alternative_promotional_items_sku}
+    And Response body parameter should be:    [included][0][attributes][skus]    ${concrete_product_with_concrete_product_alternative.promotional_items_sku}
 
 Add_items_to_guest_cart_with_included_bundle_items
      [Setup]    I set Headers:    X-Anonymous-Customer-Unique-Id=${random}
-    When I send a POST request:    /guest-cart-items?include=bundle-items,bundled-items    {"data": {"type": "guest-cart-items","attributes": {"sku": "${bundle_product_concrete_sku}","quantity": 1}}}
+    When I send a POST request:    /guest-cart-items?include=bundle-items,bundled-items    {"data": {"type": "guest-cart-items","attributes": {"sku": "${bundle_product.concrete_sku}","quantity": 1}}}
     Then Response status code should be:    201
     And Response reason should be:    Created
     And Response body parameter should be:    [data][type]    guest-carts
     And Response body parameter should not be EMPTY:    [data][id]
-    And Response body parameter should be:    [data][attributes][priceMode]    ${gross_mode}
-    And Response body parameter should be:    [data][attributes][currency]    ${currency_code_eur}
-    And Response body parameter should be:    [data][attributes][store]    ${store_de}
+    And Response body parameter should be:    [data][attributes][priceMode]    ${currency.mode.gross}
+    And Response body parameter should be:    [data][attributes][currency]    ${currency.eur.code}
+    And Response body parameter should be:    [data][attributes][store]    ${store.de}
     And Response body parameter should not be EMPTY:    [data][attributes][totals][expenseTotal]
     And Response body parameter should not be EMPTY:    [data][attributes][totals][discountTotal]
     And Response body parameter should not be EMPTY:    [data][attributes][totals][discountTotal]
@@ -194,13 +194,13 @@ Add_items_to_guest_cart_with_included_bundle_items
     And Response include element has self link:   bundle-items
     And Response include element has self link:   bundled-items
     And Response body parameter should be:    [included][0][type]    bundled-items
-    And Response body parameter should be:    [included][0][attributes][sku]    ${bundled_product_1_concrete_sku}
+    And Response body parameter should be:    [included][0][attributes][sku]    ${bundled.product_1.concrete_sku}
     And Response body parameter should be:    [included][1][type]    bundled-items
-    And Response body parameter should be:    [included][1][attributes][sku]    ${bundled_product_2_concrete_sku}
+    And Response body parameter should be:    [included][1][attributes][sku]    ${bundled.product_2.concrete_sku}
     And Response body parameter should be:    [included][2][type]    bundled-items
-    And Response body parameter should be:    [included][2][attributes][sku]    ${bundled_product_3_concrete_sku}
+    And Response body parameter should be:    [included][2][attributes][sku]    ${bundled.product_3.concrete_sku}
     And Response body parameter should be:    [included][3][type]    bundle-items
-    And Response body parameter should be:    [included][3][attributes][sku]    ${bundle_product_concrete_sku}
+    And Response body parameter should be:    [included][3][attributes][sku]    ${bundle_product.concrete_sku}
     And Response body parameter should be:    [included][3][attributes][quantity]    1
-    And Response body parameter should be:    [included][3][attributes][groupKey]    ${bundle_product_concrete_sku}
-    And Response body parameter should be:    [included][3][attributes][abstractSku]    ${bundle_product_abstract_sku}
+    And Response body parameter should be:    [included][3][attributes][groupKey]    ${bundle_product.concrete_sku}
+    And Response body parameter should be:    [included][3][attributes][abstractSku]    ${bundle_product.abstract_sku}

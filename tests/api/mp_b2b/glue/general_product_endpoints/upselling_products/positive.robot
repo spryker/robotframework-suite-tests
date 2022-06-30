@@ -9,22 +9,22 @@ ENABLER
     TestSetup
     
 Cart_contains_product_with_upselling_relation
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}
-    ...    AND    I send a POST request:    /carts    {"data":{"type":"carts","attributes":{"priceMode":"${gross_mode}","currency":"${currency_code_eur}","store":"${store_de}","name":"Cart-${random}"}}}
+    ...    AND    I send a POST request:    /carts    {"data":{"type":"carts","attributes":{"priceMode":"${mode.gross}","currency":"${currency.eur.code}","store":"${store.de}","name":"Cart-${random}"}}}
     ...    AND    Save value to a variable:    [data][id]    cart_id
-    ...    AND    I send a POST request:    /carts/${cart_id}/items    {"data": {"type": "items","attributes": {"sku": "${concrete_of_product_with_relations_upselling_sku}","quantity": 1}}}
+    ...    AND    I send a POST request:    /carts/${cart_id}/items    {"data": {"type": "items","attributes": {"sku": "${product_with_relations.has_related_products.concrete_sku}","quantity": 1}}}
     ...    AND    Response status code should be:    201
     When I send a GET request:    /carts/${cart_id}/up-selling-products
     Then Response status code should be:    200
     And Response reason should be:    OK
-    And Response body parameter should be:    [data][0][id]    ${product_related_product_with_upselling_relation_NESTED.sku}
-    And Response body parameter should be:    [data][0][attributes][sku]    ${product_related_product_with_upselling_relation_NESTED.sku}
-    And Response body parameter should be:    [data][0][attributes][merchantReference]    ${product_related_product_with_upselling_relation_NESTED.merchant_reference}
+    And Response body parameter should be:    [data][0][id]    ${product_related_product_with_upselling_relation.sku}
+    And Response body parameter should be:    [data][0][attributes][sku]    ${product_related_product_with_upselling_relation.sku}
+    And Response body parameter should be:    [data][0][attributes][merchantReference]    ${product_related_product_with_upselling_relation.merchant_reference}
     And Response body parameter should be:    [data][0][attributes][averageRating]    None
     And Response body parameter should be:    [data][0][attributes][reviewCount]    0
-    And Response body parameter should be:    [data][0][attributes][name]    ${product_related_product_with_upselling_relation_NESTED.name}
-    And Response body parameter should be:    [data][0][attributes][description]    ${product_related_product_with_upselling_relation_NESTED.description}
+    And Response body parameter should be:    [data][0][attributes][name]    ${product_related_product_with_upselling_relation.name}
+    And Response body parameter should be:    [data][0][attributes][description]    ${product_related_product_with_upselling_relation.description}
     And Response should contain the array of a certain size:    [data][0][attributes][superAttributesDefinition]    0
     And Response should contain the array of a certain size:    [data][0][attributes][superAttributes]    0
     And Response should contain the array larger than a certain size:    [data][0][attributes][attributeMap]    0
@@ -64,11 +64,11 @@ Cart_contains_product_with_upselling_relation
     ...  AND    Response status code should be:    204
 
 Cart_contains_product_with_upselling_relation_with_include_abstract_product_prices
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}
-    ...    AND    I send a POST request:    /carts    {"data":{"type":"carts","attributes":{"priceMode":"${gross_mode}","currency":"${currency_code_eur}","store":"${store_de}","name":"Cart-${random}"}}}
+    ...    AND    I send a POST request:    /carts    {"data":{"type":"carts","attributes":{"priceMode":"${mode.gross}","currency":"${currency.eur.code}","store":"${store.de}","name":"Cart-${random}"}}}
     ...    AND    Save value to a variable:    [data][id]    cart_id
-    ...    AND    I send a POST request:    /carts/${cart_id}/items    {"data": {"type": "items","attributes": {"sku": "${concrete_of_product_with_relations_upselling_sku}","quantity": 1}}}
+    ...    AND    I send a POST request:    /carts/${cart_id}/items    {"data": {"type": "items","attributes": {"sku": "${product_with_relations.has_related_products.concrete_sku}","quantity": 1}}}
     ...    AND    Response status code should be:    201
     When I send a GET request:    /carts/${cart_id}/up-selling-products?include=abstract-product-prices
     Then Response status code should be:    200
@@ -77,7 +77,7 @@ Cart_contains_product_with_upselling_relation_with_include_abstract_product_pric
     And Each array element of array in response should contain nested property:    [data]    [relationships][abstract-product-prices][data]    type
     And Each array element of array in response should contain nested property:    [data]    [relationships][abstract-product-prices][data]    id
     And Response body parameter should be:    [included][0][type]    abstract-product-prices
-    And Response body parameter should be:    [included][0][id]    ${product_related_product_with_upselling_relation_NESTED.sku}
+    And Response body parameter should be:    [included][0][id]    ${product_related_product_with_upselling_relation.sku}
     And Each array element of array in response should contain property:    [included]    type
     And Each array element of array in response should contain property:    [included]    id
     And Each array element of array in response should contain property:    [included]    attributes
@@ -90,18 +90,18 @@ Cart_contains_product_with_upselling_relation_with_include_abstract_product_pric
     And Each array element of array in response should contain nested property:    [included]    [attributes][prices]    priceTypeName
     And Response body parameter should be:    [included][0][attributes][prices][0][priceTypeName]    DEFAULT
     And Response body parameter should be greater than:    [included][0][attributes][prices][0][grossAmount]    0
-    And Response body parameter should be:    [included][0][attributes][prices][0][currency][code]    ${currency_code_eur}
-    And Response body parameter should be:    [included][0][attributes][prices][0][currency][name]    ${currency_name_eur}
-    And Response body parameter should be:    [included][0][attributes][prices][0][currency][symbol]    ${currency_symbol_eur}
+    And Response body parameter should be:    [included][0][attributes][prices][0][currency][code]    ${currency.eur.code}
+    And Response body parameter should be:    [included][0][attributes][prices][0][currency][name]    ${currency.eur.name}
+    And Response body parameter should be:    [included][0][attributes][prices][0][currency][symbol]    ${currency.eur.symbol}
     [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cart_id}
     ...  AND    Response status code should be:    204
 
 Cart_contains_product_with_upselling_relation_with_include_abstract_prodcut_image_sets
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}
-    ...    AND    I send a POST request:    /carts    {"data":{"type":"carts","attributes":{"priceMode":"${gross_mode}","currency":"${currency_code_eur}","store":"${store_de}","name":"Cart-${random}"}}}
+    ...    AND    I send a POST request:    /carts    {"data":{"type":"carts","attributes":{"priceMode":"${mode.gross}","currency":"${currency.eur.code}","store":"${store.de}","name":"Cart-${random}"}}}
     ...    AND    Save value to a variable:    [data][id]    cart_id
-    ...    AND    I send a POST request:    /carts/${cart_id}/items    {"data": {"type": "items","attributes": {"sku": "${concrete_of_product_with_relations_upselling_sku}","quantity": 1}}}
+    ...    AND    I send a POST request:    /carts/${cart_id}/items    {"data": {"type": "items","attributes": {"sku": "${product_with_relations.has_related_products.concrete_sku}","quantity": 1}}}
     ...    AND    Response status code should be:    201
     When I send a GET request:    /carts/${cart_id}/up-selling-products?include=abstract-product-image-sets
     Then Response status code should be:    200
@@ -110,7 +110,7 @@ Cart_contains_product_with_upselling_relation_with_include_abstract_prodcut_imag
     And Each array element of array in response should contain nested property:    [data]    [relationships][abstract-product-image-sets][data]    type
     And Each array element of array in response should contain nested property:    [data]    [relationships][abstract-product-image-sets][data]    id
     And Response body parameter should be:    [included][0][type]    abstract-product-image-sets
-    And Response body parameter should be:    [included][0][id]    ${product_related_product_with_upselling_relation_NESTED.sku}
+    And Response body parameter should be:    [included][0][id]    ${product_related_product_with_upselling_relation.sku}
     And Each array element of array in response should contain property:    [included]    type
     And Each array element of array in response should contain property:    [included]    id
     And Each array element of array in response should contain property:    [included]    attributes
@@ -126,11 +126,11 @@ Cart_contains_product_with_upselling_relation_with_include_abstract_prodcut_imag
     ...  AND    Response status code should be:    204
 
 Cart_contains_product_with_upselling_relation_with_include_concrete_products
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}
-    ...    AND    I send a POST request:    /carts    {"data":{"type":"carts","attributes":{"priceMode":"${gross_mode}","currency":"${currency_code_eur}","store":"${store_de}","name":"Cart-${random}"}}}
+    ...    AND    I send a POST request:    /carts    {"data":{"type":"carts","attributes":{"priceMode":"${mode.gross}","currency":"${currency.eur.code}","store":"${store.de}","name":"Cart-${random}"}}}
     ...    AND    Save value to a variable:    [data][id]    cart_id
-    ...    AND    I send a POST request:    /carts/${cart_id}/items    {"data": {"type": "items","attributes": {"sku": "${concrete_of_product_with_relations_upselling_sku}","quantity": 1}}}
+    ...    AND    I send a POST request:    /carts/${cart_id}/items    {"data": {"type": "items","attributes": {"sku": "${product_with_relations.has_related_products.concrete_sku}","quantity": 1}}}
     ...    AND    Response status code should be:    201
     When I send a GET request:    /carts/${cart_id}/up-selling-products?include=concrete-products
     Then Response status code should be:    200
@@ -139,17 +139,17 @@ Cart_contains_product_with_upselling_relation_with_include_concrete_products
     And Each array element of array in response should contain nested property:    [data]    [relationships][concrete-products][data]    type
     And Each array element of array in response should contain nested property:    [data]    [relationships][concrete-products][data]    id
     And Response body parameter should be:    [included][0][type]    concrete-products
-    And Response body parameter should be:    [included][0][attributes][sku]    ${product_related_product_with_upselling_relation_NESTED.concrete_available_product.sku}
+    And Response body parameter should be:    [included][0][attributes][sku]    ${product_related_product_with_upselling_relation.concrete_available_product.sku}
     And Response body parameter should not be EMPTY:    [included][0][attributes][isDiscontinued]
     And Response body parameter should be:    [included][0][attributes][discontinuedNote]    None
     And Response body parameter should be:    [included][0][attributes][averageRating]    None
     And Response body parameter should have datatype:    [included][0][attributes][reviewCount]    int
-    And Response body parameter should be:    [included][0][attributes][productAbstractSku]    ${product_related_product_with_upselling_relation_NESTED.sku}
-    And Response body parameter should be:    [included][0][attributes][name]    ${product_related_product_with_upselling_relation_NESTED.concrete_available_product.name}
-    And Response body parameter should be:    [included][0][attributes][description]    ${product_related_product_with_upselling_relation_NESTED.concrete_available_product.description}
-    And Response body parameter should be:    [included][0][attributes][metaTitle]    ${product_related_product_with_upselling_relation_NESTED.concrete_available_product.meta_title}
-    And Response body parameter should be:    [included][0][attributes][metaKeywords]    ${product_related_product_with_upselling_relation_NESTED.concrete_available_product.meta_keywords}
-    And Response body parameter should be:    [included][0][attributes][metaDescription]    ${product_related_product_with_upselling_relation_NESTED.concrete_available_product.meta_description}
+    And Response body parameter should be:    [included][0][attributes][productAbstractSku]    ${product_related_product_with_upselling_relation.sku}
+    And Response body parameter should be:    [included][0][attributes][name]    ${product_related_product_with_upselling_relation.concrete_available_product.name}
+    And Response body parameter should be:    [included][0][attributes][description]    ${product_related_product_with_upselling_relation.concrete_available_product.description}
+    And Response body parameter should be:    [included][0][attributes][metaTitle]    ${product_related_product_with_upselling_relation.concrete_available_product.meta_title}
+    And Response body parameter should be:    [included][0][attributes][metaKeywords]    ${product_related_product_with_upselling_relation.concrete_available_product.meta_keywords}
+    And Response body parameter should be:    [included][0][attributes][metaDescription]    ${product_related_product_with_upselling_relation.concrete_available_product.meta_description}
     And Each array element of array in response should contain property:    [included]    type
     And Each array element of array in response should contain property:    [included]    id
     And Each array element of array in response should contain property:    [included]    attributes
@@ -173,11 +173,11 @@ Cart_contains_product_with_upselling_relation_with_include_concrete_products
     ...  AND    Response status code should be:    204
 
 Cart_contains_product_with_upselling_relation_with_include_abstract_product_availabilities
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}
-    ...    AND    I send a POST request:    /carts    {"data":{"type":"carts","attributes":{"priceMode":"${gross_mode}","currency":"${currency_code_eur}","store":"${store_de}","name":"Cart-${random}"}}}
+    ...    AND    I send a POST request:    /carts    {"data":{"type":"carts","attributes":{"priceMode":"${mode.gross}","currency":"${currency.eur.code}","store":"${store.de}","name":"Cart-${random}"}}}
     ...    AND    Save value to a variable:    [data][id]    cart_id
-    ...    AND    I send a POST request:    /carts/${cart_id}/items    {"data": {"type": "items","attributes": {"sku": "${concrete_of_product_with_relations_upselling_sku}","quantity": 1}}}
+    ...    AND    I send a POST request:    /carts/${cart_id}/items    {"data": {"type": "items","attributes": {"sku": "${product_with_relations.has_related_products.concrete_sku}","quantity": 1}}}
     ...    AND    Response status code should be:    201
     When I send a GET request:    /carts/${cart_id}/up-selling-products?include=abstract-product-availabilities
     Then Response status code should be:    200
@@ -199,11 +199,11 @@ Cart_contains_product_with_upselling_relation_with_include_abstract_product_avai
     ...  AND    Response status code should be:    204
 
 Cart_contains_product_with_upselling_relation_with_include_product_labels
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}
-    ...    AND    I send a POST request:    /carts    {"data":{"type":"carts","attributes":{"priceMode":"${gross_mode}","currency":"${currency_code_eur}","store":"${store_de}","name":"Cart-${random}"}}}
+    ...    AND    I send a POST request:    /carts    {"data":{"type":"carts","attributes":{"priceMode":"${mode.gross}","currency":"${currency.eur.code}","store":"${store.de}","name":"Cart-${random}"}}}
     ...    AND    Save value to a variable:    [data][id]    cart_id
-    ...    AND    I send a POST request:    /carts/${cart_id}/items    {"data": {"type": "items","attributes": {"sku": "${concrete_of_product_with_relations_upselling_sku}","quantity": 1}}}
+    ...    AND    I send a POST request:    /carts/${cart_id}/items    {"data": {"type": "items","attributes": {"sku": "${product_with_relations.has_related_products.concrete_sku}","quantity": 1}}}
     ...    AND    Response status code should be:    201
     When I send a GET request:    /carts/${cart_id}/up-selling-products?include=product-labels
     Then Response status code should be:    200
@@ -219,17 +219,17 @@ Cart_contains_product_with_upselling_relation_with_include_product_labels
     And Each array element of array in response should contain nested property:    [included]    [attributes]    position
     And Each array element of array in response should contain nested property:    [included]    [attributes]    frontEndReference
     And Each array element of array in response should contain nested property:    [included]    [links]    self
-    And Response body parameter should be:    [included][0][id]    ${label_id_new}
-    And Response body parameter should be:    [included][0][attributes][name]    ${label_name_new}
+    And Response body parameter should be:    [included][0][id]    ${label_new.id}
+    And Response body parameter should be:    [included][0][attributes][name]    ${label_new.name}
     [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cart_id}
     ...  AND    Response status code should be:    204
 
 Cart_contains_product_with_upselling_relation_with_include_product_tax_sets
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}
-    ...    AND    I send a POST request:    /carts    {"data":{"type":"carts","attributes":{"priceMode":"${gross_mode}","currency":"${currency_code_eur}","store":"${store_de}","name":"Cart-${random}"}}}
+    ...    AND    I send a POST request:    /carts    {"data":{"type":"carts","attributes":{"priceMode":"${mode.gross}","currency":"${currency.eur.code}","store":"${store.de}","name":"Cart-${random}"}}}
     ...    AND    Save value to a variable:    [data][id]    cart_id
-    ...    AND    I send a POST request:    /carts/${cart_id}/items    {"data": {"type": "items","attributes": {"sku": "${concrete_of_product_with_relations_upselling_sku}","quantity": 1}}}
+    ...    AND    I send a POST request:    /carts/${cart_id}/items    {"data": {"type": "items","attributes": {"sku": "${product_with_relations.has_related_products.concrete_sku}","quantity": 1}}}
     ...    AND    Response status code should be:    201
     When I send a GET request:    /carts/${cart_id}/up-selling-products?include=product-tax-sets
     Then Response status code should be:    200
@@ -249,11 +249,11 @@ Cart_contains_product_with_upselling_relation_with_include_product_tax_sets
     ...  AND    Response status code should be:    204
 
 Cart_contains_product_with_upselling_relation_with_include_product_options
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}
-    ...    AND    I send a POST request:    /carts    {"data":{"type":"carts","attributes":{"priceMode":"${gross_mode}","currency":"${currency_code_eur}","store":"${store_de}","name":"Cart-${random}"}}}
+    ...    AND    I send a POST request:    /carts    {"data":{"type":"carts","attributes":{"priceMode":"${mode.gross}","currency":"${currency.eur.code}","store":"${store.de}","name":"Cart-${random}"}}}
     ...    AND    Save value to a variable:    [data][id]    cart_id
-    ...    AND    I send a POST request:    /carts/${cart_id}/items    {"data": {"type": "items","attributes": {"sku": "${concrete_of_product_with_relations_upselling_sku}","quantity": 1}}}
+    ...    AND    I send a POST request:    /carts/${cart_id}/items    {"data": {"type": "items","attributes": {"sku": "${product_with_relations.has_related_products.concrete_sku}","quantity": 1}}}
     ...    AND    Response status code should be:    201
     When I send a GET request:    /carts/${cart_id}/up-selling-products?include=product-options
     Then Response status code should be:    200
@@ -261,10 +261,10 @@ Cart_contains_product_with_upselling_relation_with_include_product_options
     And Response should contain the array of a certain size:    [included]    4
     And Each array element of array in response should contain nested property:    [data]    [relationships][product-options][data]    type
     And Each array element of array in response should contain nested property:    [data]    [relationships][product-options][data]    id
-    And Response body parameter should be:    [data][0][relationships][product-options][data][0][id]    ${concrete_of_product_with_relations_upselling_NESTED.product_options.OP_1.id}
-    And Response body parameter should be:    [data][0][relationships][product-options][data][1][id]    ${concrete_of_product_with_relations_upselling_NESTED.product_options.OP_2.id}
-    And Response body parameter should be:    [data][0][relationships][product-options][data][2][id]    ${concrete_of_product_with_relations_upselling_NESTED.product_options.OP_3.id}
-    And Response body parameter should be:    [data][0][relationships][product-options][data][3][id]    ${concrete_of_product_with_relations_upselling_NESTED.product_options.OP_insurance.id}
+    And Response body parameter should be:    [data][0][relationships][product-options][data][0][id]    ${concrete_of_product_with_relations_upselling.product_options.OP_1.id}
+    And Response body parameter should be:    [data][0][relationships][product-options][data][1][id]    ${concrete_of_product_with_relations_upselling.product_options.OP_2.id}
+    And Response body parameter should be:    [data][0][relationships][product-options][data][2][id]    ${concrete_of_product_with_relations_upselling.product_options.OP_3.id}
+    And Response body parameter should be:    [data][0][relationships][product-options][data][3][id]    ${concrete_of_product_with_relations_upselling.product_options.OP_insurance.id}
     And Each array element of array in response should contain property:    [included]    id
     And Each array element of array in response should contain property:    [included]    attributes
     And Each array element of array in response should contain property:    [included]    links
@@ -275,43 +275,43 @@ Cart_contains_product_with_upselling_relation_with_include_product_options
     And Each array element of array in response should contain nested property:    [included]    attributes    price
     And Each array element of array in response should contain nested property:    [included]    attributes    currencyIsoCode
     And Each array element of array in response should contain nested property:    [included]    [links]    self
-    And Response body parameter should be:    [included][0][id]    ${concrete_of_product_with_relations_upselling_NESTED.product_options.OP_1.id}
-    And Response body parameter should be:    [included][0][attributes][optionGroupName]    ${concrete_of_product_with_relations_upselling_NESTED.product_options.OP_1.option_group_name}
-    And Response body parameter should be:    [included][0][attributes][sku]    ${concrete_of_product_with_relations_upselling_NESTED.product_options.OP_1.sku}
-    And Response body parameter should be:    [included][0][attributes][optionName]    ${concrete_of_product_with_relations_upselling_NESTED.product_options.OP_1.option_name}
-    And Each array element of array in response should contain property with value in:    [included]    [attributes][currencyIsoCode]    ${currency_code_eur}    ${currency_code_dollar}
-    And Response body parameter should be:    [included][1][id]    ${concrete_of_product_with_relations_upselling_NESTED.product_options.OP_2.id}
-    And Response body parameter should be:    [included][1][attributes][optionGroupName]    ${concrete_of_product_with_relations_upselling_NESTED.product_options.OP_2.option_group_name}
-    And Response body parameter should be:    [included][1][attributes][sku]    ${concrete_of_product_with_relations_upselling_NESTED.product_options.OP_2.sku}
-    And Response body parameter should be:    [included][1][attributes][optionName]    ${concrete_of_product_with_relations_upselling_NESTED.product_options.OP_2.option_name}
-    And Each array element of array in response should contain property with value in:    [included]    [attributes][currencyIsoCode]    ${currency_code_eur}    ${currency_code_dollar}
-    And Response body parameter should be:    [included][2][id]    ${concrete_of_product_with_relations_upselling_NESTED.product_options.OP_3.id}
-    And Response body parameter should be:    [included][2][attributes][optionGroupName]    ${concrete_of_product_with_relations_upselling_NESTED.product_options.OP_3.option_group_name}
-    And Response body parameter should be:    [included][2][attributes][sku]    ${concrete_of_product_with_relations_upselling_NESTED.product_options.OP_3.sku}
-    And Response body parameter should be:    [included][2][attributes][optionName]    ${concrete_of_product_with_relations_upselling_NESTED.product_options.OP_3.option_name}
-    And Each array element of array in response should contain property with value in:    [included]    [attributes][currencyIsoCode]    ${currency_code_eur}    ${currency_code_dollar}
-    And Response body parameter should be:    [included][3][id]    ${concrete_of_product_with_relations_upselling_NESTED.product_options.OP_insurance.id}
-    And Response body parameter should be:    [included][3][attributes][optionGroupName]    ${concrete_of_product_with_relations_upselling_NESTED.product_options.OP_insurance.option_group_name}
-    And Response body parameter should be:    [included][3][attributes][sku]    ${concrete_of_product_with_relations_upselling_NESTED.product_options.OP_insurance.sku}
-    And Response body parameter should be:    [included][3][attributes][optionName]    ${concrete_of_product_with_relations_upselling_NESTED.product_options.OP_insurance.option_name}
-    And Each array element of array in response should contain property with value in:    [included]    [attributes][currencyIsoCode]    ${currency_code_eur}    ${currency_code_dollar}
+    And Response body parameter should be:    [included][0][id]    ${concrete_of_product_with_relations_upselling.product_options.OP_1.id}
+    And Response body parameter should be:    [included][0][attributes][optionGroupName]    ${concrete_of_product_with_relations_upselling.product_options.OP_1.option_group_name}
+    And Response body parameter should be:    [included][0][attributes][sku]    ${concrete_of_product_with_relations_upselling.product_options.OP_1.sku}
+    And Response body parameter should be:    [included][0][attributes][optionName]    ${concrete_of_product_with_relations_upselling.product_options.OP_1.option_name}
+    And Each array element of array in response should contain property with value in:    [included]    [attributes][currencyIsoCode]    ${currency.eur.code}    ${currency.dollar.code}
+    And Response body parameter should be:    [included][1][id]    ${concrete_of_product_with_relations_upselling.product_options.OP_2.id}
+    And Response body parameter should be:    [included][1][attributes][optionGroupName]    ${concrete_of_product_with_relations_upselling.product_options.OP_2.option_group_name}
+    And Response body parameter should be:    [included][1][attributes][sku]    ${concrete_of_product_with_relations_upselling.product_options.OP_2.sku}
+    And Response body parameter should be:    [included][1][attributes][optionName]    ${concrete_of_product_with_relations_upselling.product_options.OP_2.option_name}
+    And Each array element of array in response should contain property with value in:    [included]    [attributes][currencyIsoCode]    ${currency.eur.code}    ${currency.dollar.code}
+    And Response body parameter should be:    [included][2][id]    ${concrete_of_product_with_relations_upselling.product_options.OP_3.id}
+    And Response body parameter should be:    [included][2][attributes][optionGroupName]    ${concrete_of_product_with_relations_upselling.product_options.OP_3.option_group_name}
+    And Response body parameter should be:    [included][2][attributes][sku]    ${concrete_of_product_with_relations_upselling.product_options.OP_3.sku}
+    And Response body parameter should be:    [included][2][attributes][optionName]    ${concrete_of_product_with_relations_upselling.product_options.OP_3.option_name}
+    And Each array element of array in response should contain property with value in:    [included]    [attributes][currencyIsoCode]    ${currency.eur.code}    ${currency.dollar.code}
+    And Response body parameter should be:    [included][3][id]    ${concrete_of_product_with_relations_upselling.product_options.OP_insurance.id}
+    And Response body parameter should be:    [included][3][attributes][optionGroupName]    ${concrete_of_product_with_relations_upselling.product_options.OP_insurance.option_group_name}
+    And Response body parameter should be:    [included][3][attributes][sku]    ${concrete_of_product_with_relations_upselling.product_options.OP_insurance.sku}
+    And Response body parameter should be:    [included][3][attributes][optionName]    ${concrete_of_product_with_relations_upselling.product_options.OP_insurance.option_name}
+    And Each array element of array in response should contain property with value in:    [included]    [attributes][currencyIsoCode]    ${currency.eur.code}    ${currency.dollar.code}
     [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cart_id}
     ...  AND    Response status code should be:    204
 
 Cart_contains_product_with_upselling_relation_with_include_product_reviews
 # Created the bug-ticket related to the product-reviews ID - https://spryker.atlassian.net/browse/CC-16680
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}
-    ...    AND    I send a POST request:    /carts    {"data":{"type":"carts","attributes":{"priceMode":"${gross_mode}","currency":"${currency_code_eur}","store":"${store_de}","name":"Cart-${random}"}}}
+    ...    AND    I send a POST request:    /carts    {"data":{"type":"carts","attributes":{"priceMode":"${mode.gross}","currency":"${currency.eur.code}","store":"${store.de}","name":"Cart-${random}"}}}
     ...    AND    Save value to a variable:    [data][id]    cart_id
-    ...    AND    I send a POST request:    /carts/${cart_id}/items    {"data": {"type": "items","attributes": {"sku": "${concrete_of_product_with_relations_upselling_sku}","quantity": 1}}}
+    ...    AND    I send a POST request:    /carts/${cart_id}/items    {"data": {"type": "items","attributes": {"sku": "${product_with_relations.has_related_products.concrete_sku}","quantity": 1}}}
     ...    AND    Response status code should be:    201
     When I send a GET request:    /carts/${cart_id}/up-selling-products?include=product-reviews
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response should contain the array of a certain size:    [included]    9
-    And Response body parameter should be:    [data][3][relationships][product-reviews][data][0][id]    ${concrete_of_product_with_relations_upselling_NESTED.product_reviews.review_1.id}
-    And Response body parameter should be:    [data][4][relationships][product-reviews][data][0][id]    ${concrete_of_product_with_relations_upselling_NESTED.product_reviews.review_5.id}
+    And Response body parameter should be:    [data][3][relationships][product-reviews][data][0][id]    ${concrete_of_product_with_relations_upselling.product_reviews.review_1.id}
+    And Response body parameter should be:    [data][4][relationships][product-reviews][data][0][id]    ${concrete_of_product_with_relations_upselling.product_reviews.review_5.id}
     And Each array element of array in response should contain property:    [included]    id
     And Each array element of array in response should contain property:    [included]    attributes
     And Each array element of array in response should contain property:    [included]    links
@@ -321,32 +321,32 @@ Cart_contains_product_with_upselling_relation_with_include_product_reviews
     And Each array element of array in response should contain nested property:    [included]    attributes    summary
     And Each array element of array in response should contain nested property:    [included]    attributes    description
     And Each array element of array in response should contain nested property:    [included]    [links]    self
-    And Response body parameter should be:    [included][0][id]    ${concrete_of_product_with_relations_upselling_NESTED.product_reviews.review_1.id}
-    And Response body parameter should be:    [included][0][attributes][rating]    ${concrete_of_product_with_relations_upselling_NESTED.product_reviews.review_1.rating}
-    And Response body parameter should be:    [included][0][attributes][nickname]    ${concrete_of_product_with_relations_upselling_NESTED.product_reviews.review_1.nickname}
-    And Response body parameter should be:    [included][0][attributes][summary]    ${concrete_of_product_with_relations_upselling_NESTED.product_reviews.review_1.summary}
-    And Response body parameter should be:    [included][0][attributes][description]    ${concrete_of_product_with_relations_upselling_NESTED.product_reviews.review_1.description}
-    And Response body parameter should be:    [included][4][id]    ${concrete_of_product_with_relations_upselling_NESTED.product_reviews.review_5.id}
-    And Response body parameter should be:    [included][4][attributes][rating]    ${concrete_of_product_with_relations_upselling_NESTED.product_reviews.review_5.rating}
-    And Response body parameter should be:    [included][4][attributes][nickname]    ${concrete_of_product_with_relations_upselling_NESTED.product_reviews.review_5.nickname}
-    And Response body parameter should be:    [included][4][attributes][summary]    ${concrete_of_product_with_relations_upselling_NESTED.product_reviews.review_5.summary}
-    And Response body parameter should be:    [included][4][attributes][description]    ${concrete_of_product_with_relations_upselling_NESTED.product_reviews.review_5.description}
+    And Response body parameter should be:    [included][0][id]    ${concrete_of_product_with_relations_upselling.product_reviews.review_1.id}
+    And Response body parameter should be:    [included][0][attributes][rating]    ${concrete_of_product_with_relations_upselling.product_reviews.review_1.rating}
+    And Response body parameter should be:    [included][0][attributes][nickname]    ${concrete_of_product_with_relations_upselling.product_reviews.review_1.nickname}
+    And Response body parameter should be:    [included][0][attributes][summary]    ${concrete_of_product_with_relations_upselling.product_reviews.review_1.summary}
+    And Response body parameter should be:    [included][0][attributes][description]    ${concrete_of_product_with_relations_upselling.product_reviews.review_1.description}
+    And Response body parameter should be:    [included][4][id]    ${concrete_of_product_with_relations_upselling.product_reviews.review_5.id}
+    And Response body parameter should be:    [included][4][attributes][rating]    ${concrete_of_product_with_relations_upselling.product_reviews.review_5.rating}
+    And Response body parameter should be:    [included][4][attributes][nickname]    ${concrete_of_product_with_relations_upselling.product_reviews.review_5.nickname}
+    And Response body parameter should be:    [included][4][attributes][summary]    ${concrete_of_product_with_relations_upselling.product_reviews.review_5.summary}
+    And Response body parameter should be:    [included][4][attributes][description]    ${concrete_of_product_with_relations_upselling.product_reviews.review_5.description}
     [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cart_id}
     ...  AND    Response status code should be:    204
 
 Cart_contains_product_with_upselling_relation_with_include_category_nodes
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}
-    ...    AND    I send a POST request:    /carts    {"data":{"type":"carts","attributes":{"priceMode":"${gross_mode}","currency":"${currency_code_eur}","store":"${store_de}","name":"Cart-${random}"}}}
+    ...    AND    I send a POST request:    /carts    {"data":{"type":"carts","attributes":{"priceMode":"${mode.gross}","currency":"${currency.eur.code}","store":"${store.de}","name":"Cart-${random}"}}}
     ...    AND    Save value to a variable:    [data][id]    cart_id
-    ...    AND    I send a POST request:    /carts/${cart_id}/items    {"data": {"type": "items","attributes": {"sku": "${concrete_of_product_with_relations_upselling_sku}","quantity": 1}}}
+    ...    AND    I send a POST request:    /carts/${cart_id}/items    {"data": {"type": "items","attributes": {"sku": "${product_with_relations.has_related_products.concrete_sku}","quantity": 1}}}
     ...    AND    Response status code should be:    201
     When I send a GET request:    /carts/${cart_id}/up-selling-products?include=category-nodes
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response should contain the array of a certain size:    [included]    2
-    And Response body parameter should be:    [data][0][relationships][category-nodes][data][0][id]    ${concrete_of_product_with_relations_upselling_NESTED.category_nodes.category_node_25.node_id}
-    And Response body parameter should be:    [data][0][relationships][category-nodes][data][1][id]    ${concrete_of_product_with_relations_upselling_NESTED.category_nodes.category_node_23.node_id}
+    And Response body parameter should be:    [data][0][relationships][category-nodes][data][0][id]    ${concrete_of_product_with_relations_upselling.category_nodes.category_node_25.id}
+    And Response body parameter should be:    [data][0][relationships][category-nodes][data][1][id]    ${concrete_of_product_with_relations_upselling.category_nodes.category_node_23.id}
     And Each array element of array in response should contain property:    [included]    id
     And Each array element of array in response should contain property:    [included]    attributes
     And Each array element of array in response should contain property:    [included]    links
@@ -361,23 +361,23 @@ Cart_contains_product_with_upselling_relation_with_include_category_nodes
     And Each array element of array in response should contain nested property:    [included]    attributes    url
     And Each array element of array in response should contain nested property:    [included]    attributes    children
     And Each array element of array in response should contain nested property:    [included]    attributes    parents
-    And Response body parameter should be:    [included][0][id]    ${concrete_of_product_with_relations_upselling_NESTED.category_nodes.category_node_25.node_id}
-    And Response body parameter should be:    [included][0][attributes][name]    ${concrete_of_product_with_relations_upselling_NESTED.category_nodes.category_node_25.name}
-    And Response body parameter should be:    [included][1][id]    ${concrete_of_product_with_relations_upselling_NESTED.category_nodes.category_node_23.node_id}
-    And Response body parameter should be:    [included][1][attributes][name]    ${concrete_of_product_with_relations_upselling_NESTED.category_nodes.category_node_23.name}
+    And Response body parameter should be:    [included][0][id]    ${concrete_of_product_with_relations_upselling.category_nodes.category_node_25.id}
+    And Response body parameter should be:    [included][0][attributes][name]    ${concrete_of_product_with_relations_upselling.category_nodes.category_node_25.name}
+    And Response body parameter should be:    [included][1][id]    ${concrete_of_product_with_relations_upselling.category_nodes.category_node_23.id}
+    And Response body parameter should be:    [included][1][attributes][name]    ${concrete_of_product_with_relations_upselling.category_nodes.category_node_23.name}
     [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cart_id}
     ...  AND    Response status code should be:    204
 
 Cart_contains_multiple_products_with_upselling_relation
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}
-    ...    AND    I send a POST request:    /carts    {"data":{"type":"carts","attributes":{"priceMode":"${gross_mode}","currency":"${currency_code_eur}","store":"${store_de}","name":"Cart-${random}"}}}
+    ...    AND    I send a POST request:    /carts    {"data":{"type":"carts","attributes":{"priceMode":"${mode.gross}","currency":"${currency.eur.code}","store":"${store.de}","name":"Cart-${random}"}}}
     ...    AND    Save value to a variable:    [data][id]    cart_id
-    ...    AND    I send a POST request:    /carts/${cart_id}/items    {"data": {"type": "items","attributes": {"sku": "${concrete_of_product_with_relations_upselling_sku}","quantity": 2}}}
+    ...    AND    I send a POST request:    /carts/${cart_id}/items    {"data": {"type": "items","attributes": {"sku": "${product_with_relations.has_related_products.concrete_sku}","quantity": 2}}}
     ...    AND    Response status code should be:    201
-    ...    AND    I send a POST request:    /carts/${cart_id}/items    {"data": {"type": "items","attributes": {"sku": "${concrete_of_alternative_product_with_relations_upselling_sku}","quantity": 1}}}
+    ...    AND    I send a POST request:    /carts/${cart_id}/items    {"data": {"type": "items","attributes": {"sku": "${product_with_relations.has_upselling_products.concrete_sku}","quantity": 1}}}
     ...    AND    Response status code should be:    201
-    ...    AND    I send a POST request:    /carts/${cart_id}/items    {"data": {"type": "items","attributes": {"sku": "${concrete_available_product_sku}","quantity": 1}}}
+    ...    AND    I send a POST request:    /carts/${cart_id}/items    {"data": {"type": "items","attributes": {"sku": "${abstract_available_product_with_stock.concrete_available_product.sku}","quantity": 1}}}
     ...    AND    Response status code should be:    201
     When I send a GET request:    /carts/${cart_id}/up-selling-products
     Then Response status code should be:    200
@@ -413,11 +413,11 @@ Cart_contains_multiple_products_with_upselling_relation
     ...  AND    Response status code should be:    204
 
 Cart_contains_no_products_with_upselling_relations
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}
-    ...    AND    I send a POST request:    /carts    {"data":{"type":"carts","attributes":{"priceMode":"${gross_mode}","currency":"${currency_code_eur}","store":"${store_de}","name":"Cart-${random}"}}}
+    ...    AND    I send a POST request:    /carts    {"data":{"type":"carts","attributes":{"priceMode":"${mode.gross}","currency":"${currency.eur.code}","store":"${store.de}","name":"Cart-${random}"}}}
     ...    AND    Save value to a variable:    [data][id]    cart_id
-    ...    AND    I send a POST request:    /carts/${cart_id}/items    {"data": {"type": "items","attributes": {"sku": "${concrete_available_product_sku}","quantity": 1}}}
+    ...    AND    I send a POST request:    /carts/${cart_id}/items    {"data": {"type": "items","attributes": {"sku": "${abstract_available_product_with_stock.concrete_available_product.sku}","quantity": 1}}}
     ...    AND    Response status code should be:    201
     When I send a GET request:    /carts/${cart_id}/up-selling-products
     Then Response status code should be:    200
@@ -428,9 +428,9 @@ Cart_contains_no_products_with_upselling_relations
     ...  AND    Response status code should be:    204
 
 Get_upselling_products_for_empty_cart
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}
-    ...    AND    I send a POST request:    /carts    {"data":{"type":"carts","attributes":{"priceMode":"${gross_mode}","currency":"${currency_code_eur}","store":"${store_de}","name":"Cart-${random}"}}}
+    ...    AND    I send a POST request:    /carts    {"data":{"type":"carts","attributes":{"priceMode":"${mode.gross}","currency":"${currency.eur.code}","store":"${store.de}","name":"Cart-${random}"}}}
     ...    AND    Save value to a variable:    [data][id]    cart_id
     When I send a GET request:    /carts/${cart_id}/up-selling-products
     Then Response status code should be:    200

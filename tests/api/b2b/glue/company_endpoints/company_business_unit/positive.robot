@@ -1,10 +1,14 @@
 *** Settings ***
 Suite Setup       SuiteSetup
 Resource    ../../../../../../resources/common/common_api.robot
+Test Setup    TestSetup
+Default Tags    glue
 
 *** Test Cases ***
+ENABLER
+    TestSetup
 Request_business_unit_by_id
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     ...    AND    I send a GET request:    /company-business-units/mine
     ...    AND    Save value to a variable:    [data][0][id]    business_unit_id   
@@ -25,7 +29,7 @@ Request_business_unit_by_id
 
 
 Request_business_unit_by_mine
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}  
     When I send a GET request:    /company-business-units/mine
     Then Response status code should be:    200
@@ -37,7 +41,7 @@ Request_business_unit_by_mine
     And Response should contain the array of a certain size:    [data][0][attributes]  7  
 
 Request_business_unit_by_id_with_include_address_and_company
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}  
     ...    AND    I send a GET request:    /company-business-units/mine
     ...    AND    Save value to a variable:    [data][0][id]    business_unit_id  
@@ -51,7 +55,7 @@ Request_business_unit_by_id_with_include_address_and_company
     And Response body parameter should contain:    [data][relationships]    company-business-unit-addresses
 
 Request_business_unit_by_mine_include_address_and_company
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}   
     When I send a GET request:    /company-business-units/mine?include=company-business-unit-addresses,companies
     Then Response status code should be:    200

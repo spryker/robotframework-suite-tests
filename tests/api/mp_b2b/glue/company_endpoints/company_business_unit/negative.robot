@@ -25,7 +25,7 @@ Request_business_unit_with_Invalid_access_token
     And Response should return error message:    Invalid access token.
 
 Request_business_unit_by_wrong_ID
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}  
     When I send a GET request:    /company-business-units/wrongId
     Then Response status code should be:    404
@@ -34,11 +34,11 @@ Request_business_unit_by_wrong_ID
     And Response should return error message:    Company business unit not found.
 
 Request_business_unit_if_company_belong_to_other_users 
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}  
     ...    AND    I send a GET request:    /company-business-units/mine
     ...    AND    Save value to a variable:    [data][0][id]    business_unit_id
-    ...    AND    I get access token for the customer:    ${yves_second_user_email}
+    ...    AND    I get access token for the customer:    ${yves_second_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token} 
     When I send a GET request:    /company-business-units/${business_unit_id}
     Then Response status code should be:    404
@@ -47,7 +47,7 @@ Request_business_unit_if_company_belong_to_other_users
     And Response should return error message:    Company business unit not found.
 
 Request_business_unit_with_customer_has_no_company_assignement
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_second_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_second_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}  
     When I send a GET request:    /company-business-units/mine
     Then Response status code should be:    403
