@@ -11,22 +11,22 @@ ENABLER
 #Post
 #CC-16555 API: JSON response is missing product availability and price
 Adding_item_in_wishlist 
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}
     ...    AND    I send a POST request:    /wishlists    {"data": { "type": "wishlists","attributes": { "name": "${wishlist_name}" } }}
     ...    AND    Response status code should be:    201 
     ...    AND    Response reason should be:    Created
-    ...    AND    Save value to a variable:    [data][id]        wishlist_id
-    When I send a POST request:    /wishlists/${wishlist_id}/wishlist-items    {"data": {"type": "wishlist-items","attributes": {"sku": "${concrete_available_product_with_stock}"}}}
+    ...    AND    Save value to a variable:    [data][id]        wishlist_id  
+    When I send a POST request:    /wishlists/${wishlist_id}/wishlist-items    {"data": {"type": "wishlist-items","attributes": {"sku": "${concrete_available_product.with_stock}"}}}
     Then Response status code should be:    201 
     And Response reason should be:    Created
-    And Save value to a variable:    [data][id]    wishlist_items_id
+    And Save value to a variable:    [data][id]    wishlist_items_id  
     And Response body parameter should not be EMPTY:    [data][attributes][sku]
     And Response body parameter should not be EMPTY:    [data][attributes][merchantReference]
     And Response body parameter should be:    [data][attributes][productOfferReference]    None
     And Response body parameter should be:    [data][type]    wishlist-items
     And Response body parameter should be:    [data][id]    ${wishlist_items_id}
-    And Response body parameter should be:    [data][attributes][sku]    ${concrete_available_product_with_stock}
+    And Response body parameter should be:    [data][attributes][sku]    ${concrete_available_product.with_stock}
     And Response body parameter should be:    [data][attributes][id]    ${wishlist_items_id}
     And Response body parameter should not be EMPTY:    [data][attributes][availability]
     And Response body parameter should not be EMPTY:    [data][attributes][prices]
@@ -36,13 +36,13 @@ Adding_item_in_wishlist
 
 #Post
 Adding_item_in_wishlist_with_offer 
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}
     ...    AND    I send a POST request:    /wishlists    {"data": { "type": "wishlists","attributes": { "name": "${wishlist_name}" } }}
     ...    AND    Response status code should be:    201 
     ...    AND    Response reason should be:    Created
     ...    AND    Save value to a variable:    [data][id]        wishlist_id
-    When I send a POST request:    /wishlists/${wishlist_id}/wishlist-items    {"data": {"type": "wishlist-items","attributes": {"sku": "${concrete_available_product_with_offer}", "productOfferReference": "offer5"}}}
+    When I send a POST request:    /wishlists/${wishlist_id}/wishlist-items    {"data": {"type": "wishlist-items","attributes": {"sku": "${concrete_available_product.with_offer}", "productOfferReference": "offer5"}}}
     Then Response status code should be:    201 
     And Response reason should be:    Created
     And Save value to a variable:    [data][id]    wishlist_items_id
@@ -51,7 +51,7 @@ Adding_item_in_wishlist_with_offer
     And Response body parameter should not be EMPTY:    [data][attributes][productOfferReference]
     And Response body parameter should be:    [data][type]    wishlist-items
     And Response body parameter should be:    [data][id]    ${wishlist_items_id}
-    And Response body parameter should be:    [data][attributes][sku]    ${concrete_available_product_with_offer}
+    And Response body parameter should be:    [data][attributes][sku]    ${concrete_available_product.with_offer}
     And Response body parameter should be:    [data][attributes][id]    ${wishlist_items_id}
     And Response body parameter should not be EMPTY:    [data][attributes][availability]
     And Response body parameter should not be EMPTY:    [data][attributes][prices]
@@ -61,16 +61,16 @@ Adding_item_in_wishlist_with_offer
 
 
 Adding_multiple_variant_of_abstract_product_in_wishlist
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}
     ...    AND    I send a POST request:    /wishlists    {"data": { "type": "wishlists","attributes": { "name": "${wishlist_name}" } }}
     ...    AND    Response status code should be:    201 
     ...    AND    Response reason should be:    Created
     ...    AND    Save value to a variable:    [data][id]        wishlist_id
-    When I send a POST request:    /wishlists/${wishlist_id}/wishlist-items    {"data": {"type": "wishlist-items","attributes": {"sku": "${concrete_product_sku_multivariant_variant1}"}}}
+    When I send a POST request:    /wishlists/${wishlist_id}/wishlist-items    {"data": {"type": "wishlist-items","attributes": {"sku": "${abstract_product.product_with_multiple_variants.variant1_sku}"}}}
     Then Response status code should be:    201 
     And Response reason should be:    Created
-    When I send a POST request:    /wishlists/${wishlist_id}/wishlist-items    {"data": {"type": "wishlist-items","attributes": {"sku": "${concrete_product_sku_multivariant_variant2}"}}}
+    When I send a POST request:    /wishlists/${wishlist_id}/wishlist-items    {"data": {"type": "wishlist-items","attributes": {"sku": "${abstract_product.product_with_multiple_variants.variant2_sku}"}}}
     Then Response status code should be:    201 
     And Response reason should be:    Created
     And Save value to a variable:    [data][id]    wishlist_items_id
@@ -91,16 +91,16 @@ Adding_multiple_variant_of_abstract_product_in_wishlist
 
 #Delete
 Deleting_item_from_wishlist
-     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}
     ...    AND    I send a POST request:    /wishlists    {"data": { "type": "wishlists","attributes": { "name": "${wishlist_name}" } }}
     ...    AND    Response status code should be:    201 
     ...    AND    Response reason should be:    Created
     ...    AND    Save value to a variable:    [data][id]    wishlist_id
-    ...    AND    I send a POST request:    /wishlists/${wishlist_id}/wishlist-items    {"data": {"type": "wishlist-items","attributes": {"sku": "${concrete_available_product_with_stock}"}}}
+    ...    AND    I send a POST request:    /wishlists/${wishlist_id}/wishlist-items    {"data": {"type": "wishlist-items","attributes": {"sku": "${concrete_available_product.with_offer}"}}}
     ...    AND    Response status code should be:    201 
     ...    AND    Response reason should be:    Created
-    When I send a DELETE request:    /wishlists/${wishlist_id}/wishlist-items/${concrete_available_product_with_stock}
+    When I send a DELETE request:    /wishlists/${wishlist_id}/wishlist-items/${concrete_available_product.with_offer}
     Then Response status code should be:    204
     And Response reason should be:    No Content
     [Teardown]    Run Keywords    I send a DELETE request:    /wishlists/${wishlist_id}

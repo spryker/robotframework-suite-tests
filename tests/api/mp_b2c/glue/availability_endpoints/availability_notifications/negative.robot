@@ -1,7 +1,7 @@
 *** Settings ***
-Suite Setup    SuiteSetup
-Test Setup    TestSetup
-Resource    ../../../../../resources/common/common_api.robot
+Suite Setup       SuiteSetup
+Resource    ../../../../../../resources/common/common_api.robot
+Test Setup        TestSetup
 Default Tags    glue
 
 *** Test Cases ***
@@ -10,10 +10,10 @@ ENABLER
 
 #GET requests
 Get_availability_notifications_without_customerId
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
-    ...  AND    Cleanup all availability notifications:    ${yves_user_reference}
-    ...  AND    I send a POST request:    /availability-notifications    {"data": {"type": "availability-notifications","attributes": {"sku": "${concrete_product_with_abstract_product_alternative_sku}","email": "${yves_user_email}"}}}
+    ...  AND    Cleanup all availability notifications:    ${yves_user.reference}
+    ...  AND    I send a POST request:    /availability-notifications    {"data": {"type": "availability-notifications","attributes": {"sku": "${concrete_product_with_abstract_product_alternative.sku}","email": "${yves_user.email}"}}}
     ...  AND    Response status code should be:    201
     ...  AND    Save value to a variable:    [data][id]    availability_notification_id
     When I send a GET request:    /customers//availability-notifications
@@ -25,14 +25,14 @@ Get_availability_notifications_without_customerId
     ...  AND    Response status code should be:    204
 
 Get_availability_notifications_with_invalid_access_token
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
-    ...  AND    Cleanup all availability notifications:    ${yves_user_reference}
-    ...  AND    I send a POST request:    /availability-notifications    {"data": {"type": "availability-notifications","attributes": {"sku": "${concrete_product_with_abstract_product_alternative_sku}","email": "${yves_user_email}"}}}
+    ...  AND    Cleanup all availability notifications:    ${yves_user.reference}
+    ...  AND    I send a POST request:    /availability-notifications    {"data": {"type": "availability-notifications","attributes": {"sku": "${concrete_product_with_abstract_product_alternative.sku}","email": "${yves_user.email}"}}}
     ...  AND    Response status code should be:    201
     ...  AND    Save value to a variable:    [data][id]    availability_notification_id
     ...  AND    I set Headers:    Authorization=325tr
-    When I send a GET request:    /customers/${yves_user_reference}/availability-notifications
+    When I send a GET request:    /customers/${yves_user.reference}/availability-notifications
     Then Response status code should be:    401
     And Response reason should be:    Unauthorized
     And Response should return error code:    001
@@ -42,14 +42,14 @@ Get_availability_notifications_with_invalid_access_token
     ...  AND    Response status code should be:    204
 
 Get_availability_notifications_without_access_token
-   [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+   [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
-    ...  AND    Cleanup all availability notifications:    ${yves_user_reference}
-    ...  AND    I send a POST request:    /availability-notifications    {"data": {"type": "availability-notifications","attributes": {"sku": "${concrete_product_with_abstract_product_alternative_sku}","email": "${yves_user_email}"}}}
+    ...  AND    Cleanup all availability notifications:    ${yves_user.reference}
+    ...  AND    I send a POST request:    /availability-notifications    {"data": {"type": "availability-notifications","attributes": {"sku": "${concrete_product_with_abstract_product_alternative.sku}","email": "${yves_user.email}"}}}
     ...  AND    Response status code should be:    201
     ...  AND    Save value to a variable:    [data][id]    availability_notification_id
     ...  AND    I set Headers:    Authorization=
-    When I send a GET request:    /customers/${yves_user_reference}/availability-notifications
+    When I send a GET request:    /customers/${yves_user.reference}/availability-notifications
     Then Response status code should be:    403
     And Response reason should be:    Forbidden
     And Response should return error code:    002
@@ -57,24 +57,23 @@ Get_availability_notifications_without_access_token
     [Teardown]    Run Keywords    I send a DELETE request:    /availability-notifications/${availability_notification_id}
     ...  AND    Response status code should be:    204
 
-
-
 #POST requests
 Subscribe_to_availability_notifications_with_empty_type
-    When I send a POST request:    /availability-notifications    {"data": {"type": "","attributes": {"sku": "${concrete_product_with_abstract_product_alternative_sku}","email": "${yves_user_email}"}}}
+    When I send a POST request:    /availability-notifications    {"data": {"type": "","attributes": {"sku": "${concrete_product_with_abstract_product_alternative.sku}","email": "${yves_user.email}"}}}
     Then Response status code should be:    400
     And Response reason should be:    Bad Request
     And Response should return error message:    Invalid type.
 
 Subscribe_to_availability_notifications_without_type
-    When I send a POST request:    /availability-notifications    {"data": {"attributes": {"sku": "${concrete_product_with_abstract_product_alternative_sku}","email": "${yves_user_email}"}}}
+    When I send a POST request:    /availability-notifications    {"data": {"attributes": {"sku": "${concrete_product_with_abstract_product_alternative.sku}","email": "${yves_user.email}"}}}
     Then Response status code should be:    400
     And Response reason should be:    Bad Request
     And Response should return error message:    Post data is invalid.
 
 Subscribe_to_availability_notifications_with_invalid_sku_and_email
 #This test fails due to the bug https://spryker.atlassian.net/browse/CC-15970
-    When I send a POST request:    /availability-notifications    {"data": {"type": "availability-notifications","attributes": {"sku": "${concrete_product_with_abstract_product_alternative_sku}","email": "gmail"}}}
+#Invalid SKU is not generating correct error messaging https://spryker.atlassian.net/browse/CC-17006
+    When I send a POST request:    /availability-notifications    {"data": {"type": "availability-notifications","attributes": {"sku": "12345","email": "gmail"}}}
     Then Response status code should be:    422
     And Response reason should be:    Unprocessable Content
     And Each array element of array in response should contain property with value:    [errors]    code    901
@@ -101,13 +100,13 @@ Subscribe_to_availability_notifications_without_sku_and_email
     And Array in response should contain property with value:    [errors]    detail    email => This field is missing.
 
 Subscribe_to_availability_notifications_with_existing_subscription
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
-    ...  AND    Cleanup all availability notifications:    ${yves_user_reference}
-    ...  AND    I send a POST request:    /availability-notifications    {"data": {"type": "availability-notifications","attributes": {"sku": "${concrete_product_with_abstract_product_alternative_sku}","email": "${yves_user_email}"}}}
+    ...  AND    Cleanup all availability notifications:    ${yves_user.reference}
+    ...  AND    I send a POST request:    /availability-notifications    {"data": {"type": "availability-notifications","attributes": {"sku": "${concrete_product_with_abstract_product_alternative.sku}","email": "${yves_user.email}"}}}
     ...  AND    Response status code should be:    201
     ...  AND    Save value to a variable:    [data][id]    availability_notification_id
-    When I send a POST request:    /availability-notifications    {"data": {"type": "availability-notifications","attributes": {"sku": "${concrete_product_with_abstract_product_alternative_sku}","email": "${yves_user_email}"}}}
+    When I send a POST request:    /availability-notifications    {"data": {"type": "availability-notifications","attributes": {"sku": "${concrete_product_with_abstract_product_alternative.sku}","email": "${yves_user.email}"}}}
     Then Response status code should be:    422
     And Response reason should be:    Unprocessable Content
     And Response should return error code:    4602
@@ -115,14 +114,12 @@ Subscribe_to_availability_notifications_with_existing_subscription
     [Teardown]    Run Keywords    I send a DELETE request:    /availability-notifications/${availability_notification_id}
     ...  AND    Response status code should be:    204
 
-
-
 #DELETE requests
 Delete_availability_notifications_with_invalid_availability_notification_id
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
-    ...  AND    Cleanup all availability notifications:    ${yves_user_reference}
-    ...  AND    I send a POST request:    /availability-notifications    {"data": {"type": "availability-notifications","attributes": {"sku": "${concrete_product_with_abstract_product_alternative_sku}","email": "${yves_user_email}"}}}
+    ...  AND    Cleanup all availability notifications:    ${yves_user.reference}
+    ...  AND    I send a POST request:    /availability-notifications    {"data": {"type": "availability-notifications","attributes": {"sku": "${concrete_product_with_abstract_product_alternative.sku}","email": "${yves_user.email}"}}}
     ...  AND    Response status code should be:    201
     ...  AND    Save value to a variable:    [data][id]    availability_notification_id
     When I send a DELETE request:    /availability-notifications/7fc6ebf
@@ -134,10 +131,10 @@ Delete_availability_notifications_with_invalid_availability_notification_id
     ...  AND    Response status code should be:    204
 
 Delete_availability_notifications_without_availability_notification_id
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
-    ...  AND    Cleanup all availability notifications:    ${yves_user_reference}
-    ...  AND    I send a POST request:    /availability-notifications    {"data": {"type": "availability-notifications","attributes": {"sku": "${concrete_product_with_abstract_product_alternative_sku}","email": "${yves_user_email}"}}}
+    ...  AND    Cleanup all availability notifications:    ${yves_user.reference}
+    ...  AND    I send a POST request:    /availability-notifications    {"data": {"type": "availability-notifications","attributes": {"sku": "${concrete_product_with_abstract_product_alternative.sku}","email": "${yves_user.email}"}}}
     ...  AND    Response status code should be:    201
     ...  AND    Save value to a variable:    [data][id]    availability_notification_id
     When I send a DELETE request:    /availability-notifications/

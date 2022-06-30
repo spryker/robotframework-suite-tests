@@ -9,13 +9,13 @@ ENABLER
     TestSetup
 
 Get_concrete_product_without_offers
-    When I send a GET request:    /concrete-products/${bundle_product_concrete_sku}/product-offers
+    When I send a GET request:    /concrete-products/${bundle_product.concrete.product_1_sku}/product-offers
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response should contain the array of a certain size:    [data]    0
 
 Get_all_concrete_product_offer_info_with_product_offer_prices_and_product_offer_availabilities_and_merchants_included
-    When I send a GET request:    /concrete-products/${concrete_product_with_volume_prices}/product-offers?include=product-offer-prices,product-offer-availabilities,merchants
+    When I send a GET request:    /concrete-products/${concrete_product.product_with_volume_prices.concrete_sku}/product-offers?include=product-offer-prices,product-offer-availabilities,merchants
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
@@ -70,12 +70,12 @@ Get_product_offer_with_gross_eur
     And Response body parameter should be:    [included][0][attributes][prices][0][netAmount]    None
     And Response body parameter should be greater than:    [included][0][attributes][prices][0][grossAmount]    0
     And Response should contain the array of a certain size:    [included][0][attributes][prices][0][currency]    3
-    And Response body parameter should be:    [included][0][attributes][prices][0][currency][code]    ${currency_code_eur}
-    And Response body parameter should be:    [included][0][attributes][prices][0][currency][name]    ${currency_name_eur}
-    And Response body parameter should be:    [included][0][attributes][prices][0][currency][symbol]    ${currency_symbol_eur}
+    And Response body parameter should be:    [included][0][attributes][prices][0][currency][code]    ${currency.eur.code}
+    And Response body parameter should be:    [included][0][attributes][prices][0][currency][name]    ${currency.eur.name}
+    And Response body parameter should be:    [included][0][attributes][prices][0][currency][symbol]    ${currency.eur.symbol}
 
 Get_product_offer_with_net_eur
-    When I send a GET request:    /product-offers/${active_offer}?include=product-offer-prices&priceMode=${net_mode}
+    When I send a GET request:    /product-offers/${active_offer}?include=product-offer-prices&priceMode=${mode.net}
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
@@ -89,12 +89,12 @@ Get_product_offer_with_net_eur
     And Response body parameter should be:    [included][0][attributes][prices][0][grossAmount]    None
     And Response body parameter should be greater than:    [included][0][attributes][prices][0][netAmount]    1
     And Response should contain the array of a certain size:    [included][0][attributes][prices][0][currency]    3
-    And Response body parameter should be:    [included][0][attributes][prices][0][currency][code]    ${currency_code_eur}
-    And Response body parameter should be:    [included][0][attributes][prices][0][currency][name]    ${currency_name_eur}
-    And Response body parameter should be:    [included][0][attributes][prices][0][currency][symbol]    ${currency_symbol_eur}
+    And Response body parameter should be:    [included][0][attributes][prices][0][currency][code]    ${currency.eur.code}
+    And Response body parameter should be:    [included][0][attributes][prices][0][currency][name]    ${currency.eur.name}
+    And Response body parameter should be:    [included][0][attributes][prices][0][currency][symbol]    ${currency.eur.symbol}
 
 Get_product_offer_with_gross_chf
-    When I send a GET request:    /product-offers/${active_offer}?include=product-offer-prices&currency=${currency_code_chf}
+    When I send a GET request:    /product-offers/${active_offer}?include=product-offer-prices&currency=${currency.chf.code}
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
@@ -108,12 +108,12 @@ Get_product_offer_with_gross_chf
     And Response body parameter should be:    [included][0][attributes][prices][0][netAmount]    None
     And Response body parameter should be greater than:    [included][0][attributes][prices][0][grossAmount]    1
     And Response should contain the array of a certain size:    [included][0][attributes][prices][0][currency]    3
-    And Response body parameter should be:    [included][0][attributes][prices][0][currency][code]    ${currency_code_chf}
-    And Response body parameter should be:    [included][0][attributes][prices][0][currency][name]    ${currency_name_chf}
-    And Response body parameter should be:    [included][0][attributes][prices][0][currency][symbol]    ${currency_symbol_chf}
+    And Response body parameter should be:    [included][0][attributes][prices][0][currency][code]    ${currency.chf.code}
+    And Response body parameter should be:    [included][0][attributes][prices][0][currency][name]    ${currency.chf.name}
+    And Response body parameter should be:    [included][0][attributes][prices][0][currency][symbol]    ${currency.chf.symbol}
 
 Get_product_offer_with_net_chf
-    When I send a GET request:    /product-offers/${active_offer}?include=product-offer-prices&priceMode=${net_mode}&currency=${currency_code_chf}
+    When I send a GET request:    /product-offers/${active_offer}?include=product-offer-prices&priceMode=${mode.net}&currency=${currency.chf.code}
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
@@ -127,9 +127,9 @@ Get_product_offer_with_net_chf
     And Response body parameter should be:    [included][0][attributes][prices][0][grossAmount]    None
     And Response body parameter should be greater than:    [included][0][attributes][prices][0][netAmount]    1
     And Response should contain the array of a certain size:    [included][0][attributes][prices][0][currency]    3
-    And Response body parameter should be:    [included][0][attributes][prices][0][currency][code]    ${currency_code_chf}
-    And Response body parameter should be:    [included][0][attributes][prices][0][currency][name]    ${currency_name_chf}
-    And Response body parameter should be:    [included][0][attributes][prices][0][currency][symbol]    ${currency_symbol_chf}
+    And Response body parameter should be:    [included][0][attributes][prices][0][currency][code]    ${currency.chf.code}
+    And Response body parameter should be:    [included][0][attributes][prices][0][currency][name]    ${currency.chf.name}
+    And Response body parameter should be:    [included][0][attributes][prices][0][currency][symbol]    ${currency.chf.symbol}
 
 Retrieving_product_offer
     When I send a GET request:    /product-offers/${active_offer}

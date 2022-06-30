@@ -9,7 +9,7 @@ ENABLER
     TestSetup
 
 Request_concrete_availability_by_abstract_SKU
-    When I send a GET request:    /concrete-products/${abstract_product_with_alternative_sku}/concrete-product-availabilities
+    When I send a GET request:    /concrete-products/${abstract_product_with_alternative.sku}/concrete-product-availabilities
     Then Response status code should be:    404
     And Response reason should be:    Not Found
     And Response should return error code:    306

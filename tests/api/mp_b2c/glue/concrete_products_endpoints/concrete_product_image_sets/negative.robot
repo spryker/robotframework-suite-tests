@@ -8,7 +8,7 @@ Default Tags    glue
 ENABLER
     TestSetup
 Request_product_image_with_abstract_SKU
-    When I send a GET request:    /concrete-products/${bundled_product_1_abstract_sku}/concrete-product-image-sets
+    When I send a GET request:    /concrete-products/${bundle_product.abstract.product_2_sku}/concrete-product-image-sets
     Then Response status code should be:    404
     And Response reason should be:    Not Found
     And Response should return error code:    304

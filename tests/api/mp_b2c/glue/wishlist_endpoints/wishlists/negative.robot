@@ -25,7 +25,7 @@ Getting_wishlist_without_Access_Token
     And Response should return error message:    Missing access token.
 
 Getting_wishlist_with_invalid_id
-     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}
     When I send a GET request:    /wishlists/2345hasd
     Then Response status code should be:    404 
@@ -34,16 +34,16 @@ Getting_wishlist_with_invalid_id
     And Response should return error message:    "Cant find wishlist."
 
 Creating_wishlist_with_missing_name
-    [Setup]    Run Keywords    I GET access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I GET access token for the customer:    ${yves_user.email}
     ...    AND     I set headers:    authorization=${token}
     When I send a POST request:    /wishlists    {"data": {"type": "wishlists","attributes": {"name": ""}}}
     And Response status code should be:    422
     And Response should return error code:    901
     And Response reason should be:    Unprocessable Content
 
-   #CC-16553
+#CC-16553
 Creating_wishlist_with_space_in_name
-       Run Keywords    I GET access token for the customer:    ${yves_second_user_email}
+       Run Keywords    I GET access token for the customer:    ${yves_second_user.email}
     ...    AND     I set headers:    authorization=${token}
     When I send a POST request:    /wishlists    {"data": {"type": "wishlists","attributes": {"name": " "}}}
     And Response status code should be:    400
@@ -51,7 +51,7 @@ Creating_wishlist_with_space_in_name
     And Response should return error message:    Please enter name using only letters, numbers, underscores, spaces or dashes.
 
 Creating_Wishlist_with_a_name_that_already_exists
-    [Setup]    Run Keywords    I GET access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I GET access token for the customer:    ${yves_user.email}
     ...    AND    I set headers:    authorization=${token}
     ...    AND    I send a Post request:    /wishlists    {"data": {"type": "wishlists","attributes": {"name": "${wishlist_name}"}}}
     ...    AND    Save value to a variable:    [data][id]    wishlist_id
