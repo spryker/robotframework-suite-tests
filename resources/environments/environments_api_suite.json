@@ -69,8 +69,38 @@
                 "name": "Euro",
                 "code": "EUR",
                 "symbol": "€"
-                }
+                },
+
+            "chf":{
+                "name": "Swiss Franc",
+                "code": "CHF",
+                "symbol": "CHF"
+            },
+                    
+            "dollar":{
+                "name": "US Dollar",
+                "code": "USD",
+                "symbol": "$"
             }
+            },
+        "store":{
+            "us": "US",
+            "de": "DE"
+        },
+
+        "locale":{
+
+            "DE":{
+                "name": "de_DE",
+                "code": "de"
+            },
+    
+            "EN":{
+                "name": "en_US",
+                "code": "en"
+            }
+        }
+    
     },
         
     "products": {
