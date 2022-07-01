@@ -199,6 +199,26 @@
 
     "misc":{
         "default_header_content_type": "application/vnd.api+json"
+    },
+
+    "url_resolver":{
+
+        "url_resolver_abstract_product": "/en/acer-aspire-s7-134",
+        "url_resolver_product_entity": "abstract-products",
+        "url_resolver_product_id": "134",
+
+        "url_resolver_category_nodes": "/en/computer/notebooks",
+        "url_resolver_category_nodes_entity": "category-nodes",
+        "url_resolver_category_nodes_id": "6",
+
+        "url_resolver_cms": "/en/privacy",
+        "url_resolver_cms_entity": "cms-pages",
+        "url_resolver_cms_id": "1e9fb640-9073-55f4-a2d2-535090c92025",
+
+        "url_resolver_merchant": "/en/merchant/spryker",
+        "url_resolver_merchant_entity": "merchants",
+        "url_resolver_merchant_id": "MER000001"
+
     }
 
 }
