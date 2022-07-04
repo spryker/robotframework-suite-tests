@@ -23,8 +23,12 @@ ${wishlistIcon}    ${wishlist_icon_header_navigation_widget}
 *** Keywords ***
 Yves: perform search by:
     [Arguments]    ${searchTerm}
-    IF    '${env}'=='b2c'    Click    xpath=//div[@class='header__search-open js-suggest-search__show']
-    wait until element is visible    ${search_form_header_menu_item}
+    IF    '${env}'=='b2c'    
+        Run Keywords
+            Wait Until Element Is Visible    ${search_form_open_menu_item}
+            Click    ${search_form_open_menu_item}
+    END
+    Wait until element is visible    ${search_form_header_menu_item}
     Type Text    ${search_form_header_menu_item}    ${searchTerm}
     Keyboard Key    press    Enter
     Wait Until Page Contains Element    ${catalog_main_page_locator}[${env}]
