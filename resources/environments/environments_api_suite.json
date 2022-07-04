@@ -25,6 +25,10 @@
             "reference": "DE--4",
             "salutation": "Mr"
             },
+        "yves_shared_shopping_list_user": 
+            {
+            "email": "Trever.m@spryker.com"
+            },
         "zed_admin": 
             {
             "email": "admin@spryker.com",
@@ -199,6 +203,13 @@
 
     "misc":{
         "default_header_content_type": "application/vnd.api+json"
+    },
+    "companies": 
+    {
+        "user_with_multiple_companies": "anne.boleyn@spryker.com",
+        "company_user_id": "2816dcbd-855e-567e-b26f-4d57f3310bb8"
+
     }
+
 
 }
