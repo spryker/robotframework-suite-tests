@@ -188,8 +188,11 @@
             "product2_sku": "205",
             "product2_name": "Toshiba CAMILEO S30",
             "size": "2"
-            }
-
+            },
+        "category_nodes_storage_name": "Cameras & Camcorders",
+        "category_nodes_storage_url": "/en/cameras-&-camcorders",
+        "subcategory_nodes_storage_name": "Digital Cameras",
+        "subcategory_nodes_storage_url": "/en/cameras-&-camcorders/digital-cameras"
     },
 
     "availability":{
@@ -198,7 +201,10 @@
     },
 
     "misc":{
-        "default_header_content_type": "application/vnd.api+json"
+        "default_header_content_type": "application/vnd.api+json",
+        "qty_of_categories_in_category_trees": "6",
+        "qty_of_subcategories_in_category_trees": "2"
+
     }
 
 }
