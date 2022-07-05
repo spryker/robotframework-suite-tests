@@ -188,7 +188,12 @@
             "product2_sku": "205",
             "product2_name": "Toshiba CAMILEO S30",
             "size": "2"
-            }
+            },
+
+        "banner_1": {
+            "id": "br-1",
+            "title": "banner title 1"
+        }
 
     },
 
