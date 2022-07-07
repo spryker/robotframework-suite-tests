@@ -69,6 +69,11 @@
                 "name": "Euro",
                 "code": "EUR",
                 "symbol": "€"
+                },
+                "chf": {
+                    "name": "Swiss Franc",
+                    "code": "CHF",
+                    "symbol": "CHF"
                 }
             }
     },
@@ -121,13 +126,25 @@
             "concrete_sku": "138_30046855",
             "abstract_sku": "138"
             },
-
-        "alternative_abstract_product": "155",
+        "concrete_product_with_concrete_product_alternative": {
+                "sku": "145_29885471",
+                "name": "DELL Chromebook 13",
+                "name_lower_case": "dell chromebook 13"
+            },
+            "abstract_product_with_alternative": {
+                "sku": "145",
+                "name": "DELL Chromebook 13"
+            },
+        "alternative_abstract_product": {
+            "sku":"155",
+            "price_chf": "39790"
+        },
 
         "abstract_available_product_with_stock": 
             {
             "sku": "183",
             "name": "Sony Xperia SGP512E1",
+            "description":"Enjoy greater flexibility  ...than ever before with the Galaxy Tab S2. Remarkably slim and ultra-lightweight, use this device to take your e-books, photos, videos and work-related files with you wherever you need to go. The Galaxy Tab S2’s 4:3 ratio display is optimised for magazine reading and web use. Switch to Reading Mode to adjust screen brightness and change wallpaper - create an ideal eBook reading environment designed to reduce the strain on your eyes. Get greater security with convenient and accurate fingerprint functionality. Activate fingerprint lock by pressing the home button. Use fingerprint verification to restrict / allow access to your web browser, screen lock mode and your Samsung account.     ",
             "superattribute": "color"
             },
 
@@ -144,7 +161,11 @@
             "concretes_name_3": "Samsung Galaxy Tab Active 8.0 8 GB",
             "concretes_superattribute_3": "internal_storage_capacity"
             },
-
+            "concrete_available_product": {
+                "sku": "183_21811723",
+                "meta_keywords": "Sony,Communication Electronics",
+                "meta_description": "Enjoy greater flexibility  ...than ever before with the Galaxy Tab S2. Remarkably slim and ultra-lightweight, use this device to take your e-books, photos,"
+            },
         "abstract_product": 
             {
             "product_with_volume_prices": 
@@ -178,7 +199,14 @@
                 }
             }   
     },
-
+    "product_attributes":{
+        "brand_4": "Sony",
+        "internal_memory": "3 GB",
+        "aspect_ratio": "16:10",
+        "storage_media": "flash",
+        "display_technology": "TFT",
+        "color_4": "black"
+    },
     "content":{
         "abstract_product_list": 
             {
@@ -188,7 +216,24 @@
             "product2_sku": "205",
             "product2_name": "Toshiba CAMILEO S30",
             "size": "2"
-            }
+            },
+            "cms_pages": {
+                "qty": "5",
+                "first_cms_page": {
+                    "name": "Imprint",
+                    "name_lower_case": "imprint",
+                    "url_en": "/en/imprint"
+                },
+                "cms_page_with_product_lists": {
+                    "id": "10014bd9-4bba-5a54-b84f-31b4b7efd064",
+                    "name": "Demo Landing Page"
+                }
+            },
+            "category_collection_name": "Digital Cameras",
+            "category_collection_url": "/en/cameras-&-camcorders/digital-cameras",
+            "cms_page_collection_name": "GTC",
+            "brand_name": "canon",
+            "cms_page_collection_url": "/en/gtc"
 
     },
 
@@ -198,7 +243,8 @@
     },
 
     "misc":{
-        "default_header_content_type": "application/vnd.api+json"
+        "default_header_content_type": "application/vnd.api+json",
+        "color_name": "Black"
     }
 
 }
