@@ -188,7 +188,23 @@
             "product2_sku": "205",
             "product2_name": "Toshiba CAMILEO S30",
             "size": "2"
+            },
+
+        "cms_pages":{
+
+            "qty": "6",
+    
+            "first_cms_page": {
+                "name": "Imprint",
+                "name_in_lower_case": "imprint",
+                 "url_en": "/en/imprint"
+            },
+    
+            "cms_page_with_product_lists": {
+                "id": "10014bd9-4bba-5a54-b84f-31b4b7efd064",
+                "name": "Demo Landing Page"
             }
+        }
 
     },
 
