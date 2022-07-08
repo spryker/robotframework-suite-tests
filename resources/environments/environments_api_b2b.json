@@ -40,6 +40,14 @@
             "reference": "DE-30",
             "salutation": "Ms"
         },
+        "yves_fifth_user": {
+            "email": "Sarah@spryker.com",
+            "first_name": "Sarah",
+            "last_name": "Muller",
+            "password": "change123",
+            "reference": "DE-17",
+            "salutation": "Ms"
+        },
         "yves_shared_shopping_list_user": {
             "email": "Trever.m@spryker.com",
             "first_name": "Trever",
@@ -327,8 +335,12 @@
                     "name": "Verbatim USB stick Store n Go V3 49173 32GB USB3.0 gray"
                 },
                 "product_2":{
-                    "sku":"M21099",
+                    "sku":"M90810",
                     "price_chf": "1130"
+                },
+                "product_3":{
+                    "sku": "M21099",
+                    "name": "Verbatim USB stick Store n Go V3 49172 16GB USB3.0, gray"
                 }          
             },
             "available_products":{
@@ -418,7 +430,8 @@
     "product_attributes":{
         "brand_1": "Soennecken",
         "brand_2": "edding",
-        "brand_3": "Prosedia",
+        "brand_3": "Mauser",
+        "brand_4": "Prosedia",
         "material_1": "aluminum",
         "material_2": "metal",
         "material_3": "chipboard",
@@ -432,7 +445,10 @@
             "superattribute_id": "farbe",
             "attribute_free_input_id": "verschlussart",
             "attribute_no_input_id": "bundled_product"
-        }
+        },
+        "norm_1": "DIN EN 1335 Part 1 – 3, DIN EN 12527 + DIN EN 12529",
+        "rollenausfuehrung_1": "rollers for soft floors",
+        "sitzschalenform_1": "Contoured seat"
     },
     "content":{
 
@@ -534,13 +550,13 @@
             },
             "id_3":{
                 "name": "5% off white",
-                "description": "Get a 5% ount on all white products with voucher code",
-                "voucher_code": "sprykerka6b"
+                "description": "Get a 5% discount on all white products with voucher code",
+                "voucher_code": "sprykerca9j"
             },
             "id_4":{
                 "name": "10% off Safescan",
                 "description": "Get a 10% discount on all Safescan brand products with voucher code",
-                "voucher_code": "safescanye4ru9nu9b"
+                "voucher_code": "safescanqu1pu4ga1z"
             }
 
         },

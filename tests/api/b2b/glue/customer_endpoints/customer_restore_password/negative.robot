@@ -22,10 +22,11 @@ Restore_password_with_empty_type
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
 
 Restore_password_with_incorrect_type
-    I send a PATCH request:    /customer-restore-password/${yves_user.reference}   {"data":{"type":"customer-restore","attributes":{"restorePasswordKey":"5ec608df9c0dd57c3dd08b540d4a68da","password":"${yves_user.password}","confirmPassword":"${yves_user.password}"}}}
-    And Response status code should be:    400
-    And Response reason should be:    Bad Request
-    And Response should return error message:    Invalid type.
+    I send a PATCH request:    /customer-restore-password/${yves_user.reference}   {"data":{"type":"customer-restore-password","attributes":{"restorePasswordKey":"5ec608df9c0dd57c3dd08b540d4a68da","password":"${yves_user.password}","confirmPassword":"${yves_user.password}"}}}
+    And Response status code should be:    422
+    And Response should return error code:    415
+    And Response reason should be:    Unprocessable Content
+    And Response should return error message:    Restore password key is not valid.
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
 
 Restore_password_without_restorePasswordKey
