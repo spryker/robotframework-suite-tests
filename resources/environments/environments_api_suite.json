@@ -70,6 +70,16 @@
                 "code": "EUR",
                 "symbol": "€"
                 }
+            },
+        "mode": 
+            {
+            "gross": "GROSS_MODE",
+            "net": "NET_MODE"
+            },
+        "store": 
+            {
+            "us": "US",
+            "de": "DE"
             }
     },
         
@@ -77,7 +87,6 @@
         "bundle_product": 
             {
             "bundle_product_product_name": "HP Bundle",
-
             "abstract": 
                 {
                 "sku": "211",
@@ -91,8 +100,15 @@
                 "product_2_sku": "127_22828284",
                 "product_3_sku": "150_29554292"
                 }
-
             },
+            "bundled_product":{
+                "concrete": {
+                    "product_1_sku": "211_123",
+                    "product_2_sku": "150_29554292",
+                    "product_3_sku": "127_22828284",
+                    "product_4_sku": "121_29406823"
+                    }
+                },
 
         "special_product_abstract_sku": 
             {
@@ -130,12 +146,19 @@
             "name": "Sony Xperia SGP512E1",
             "superattribute": "color"
             },
+        "concrete_available_product": {
+            "with_offer": "092_24495842",
+            "sku": "001_25904006"
 
+        },
         "product_availability": 
             {
             "abstract_available_with_stock_and_never_out_of_stock": "130",
             "abstract_available_product_with_no_stock_and_never_out_of_stock": "666",
             "abstract_unavailable_product": "189"
+            },
+        "concrete_product_with_concrete_product_alternative": {
+                "sku": "155_30149933"
             },
 
         "abstract_product_with_variants": 
