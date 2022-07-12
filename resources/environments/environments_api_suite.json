@@ -101,6 +101,25 @@
             "with_packaging_unit": "218"
             },
 
+        "concrete":{
+            "available_product":{
+                "with_stock_and_never_out_of_stock":{
+                    "sku": "208_14678762",
+                    "name": "Toshiba CAMILEO P20"
+                },
+
+                "with_stock":{
+                    "sku": "001_25904006",
+                    "name": "Canon IXUS 160"
+                },
+                "without_stock":{
+                    "sku": "031_30021637",
+                    "name": "Canon PowerShot G9 X"
+                }
+
+            }
+        },
+
         "product_with_relations": 
             {
             "has_related_products": 
