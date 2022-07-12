@@ -176,7 +176,16 @@
                 "sku": "112",
                 "name": "Acer Extensa M2610"
                 }
-            }   
+            } , 
+            
+        "concrete_product": 
+            {
+            "product_with_concrete_offers": 
+                {
+                "sku": "112_312526191",
+                "name": "Acer Extensa M2610"
+                }
+            }
     },
 
     "content":{
