@@ -25,6 +25,15 @@
             "reference": "DE--4",
             "salutation": "Mr"
             },
+        "yves_fourth_user": 
+            {
+            "email": "Lilu@ottom.de",
+            "first_name": "Lilu",
+            "last_name": "Dallas",
+            "password": "change123",
+            "reference": "DE-30",
+            "salutation": "Ms"
+            },
         "zed_admin": 
             {
             "email": "admin@spryker.com",
@@ -130,7 +139,9 @@
             "name": "Sony Xperia SGP512E1",
             "superattribute": "color"
             },
-
+        "concrete_available_product": {
+            "sku": "010_30692994"
+        },
         "product_availability": 
             {
             "abstract_available_with_stock_and_never_out_of_stock": "130",
@@ -177,6 +188,11 @@
                 "name": "Acer Extensa M2610"
                 }
             }   
+    },
+
+    "shopping-list": 
+    {
+        "shopping_list_name": "My Shopping List"
     },
 
     "content":{
