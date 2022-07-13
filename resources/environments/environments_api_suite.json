@@ -176,7 +176,19 @@
                 "sku": "112",
                 "name": "Acer Extensa M2610"
                 }
-            }   
+            },
+            "concrete_product":{
+                "product_with_original_prices": {
+                    "concrete_sku": "072_21927455",
+                    "concrete_name": "Samsung Galaxy Note 3",
+                    "abstract_sku": "072"
+                },    
+                "product_with_volume_prices": {
+                    "concrete_sku": "193_32124735",
+                    "abstract_sku": "193",
+                    "abstract_name": "TomTom Golf"
+                }
+            } 
     },
 
     "content":{
