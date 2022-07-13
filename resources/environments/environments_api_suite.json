@@ -94,6 +94,9 @@
 
             },
 
+            "concrete_product":{
+                "product_without_relations": "019_21081473"
+            },
         "special_product_abstract_sku": 
             {
             "with_multivariant": "051",
@@ -113,9 +116,17 @@
                 },
             "has_upselling_products": 
                 {
-                "sku": "018"
+                "sku": "018",
+                "concrete_sku": "018_21081477"
                 }
             },
+        "product_related_product_with_upselling_relation": {
+            "sku": "022",
+            "name": "Sony Cyber-shot DSC-WX220"
+        },
+        "concrete_of_alternative_product_with_relations_upselling": {
+            "sku": "007_30691822"
+        },
         "product_with_alternative": 
             {
             "concrete_sku": "138_30046855",
