@@ -13,6 +13,7 @@
             "first_name": "Sonia",
             "last_name": "Wagner",
             "password": "change123",
+            "password_new": "qweRTY_123",
             "reference": "DE--21",
             "salutation": "Ms"
             },
@@ -25,10 +26,27 @@
             "reference": "DE--4",
             "salutation": "Mr"
             },
+        "yves_third_user": 
+            {   
+            "email": "maxmusterman@spryker.com",
+            "first_name": "Max",
+            "last_name": "Musterman",
+            "password": "change123",
+            "salutation": "Mr"
+            },
         "zed_admin": 
             {
             "email": "admin@spryker.com",
             "password": "change123"
+            },
+        "gender": 
+            {
+            "female": "Female",
+            "male": "Male"
+            },
+        "email": {
+            "name": "sonia",
+            "domain": "@spryker.com"
             },
         "agent": 
             {
