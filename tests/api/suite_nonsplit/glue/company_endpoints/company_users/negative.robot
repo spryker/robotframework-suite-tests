@@ -32,7 +32,7 @@ Retrieve_company_user_by_incorrect_id
     And Response should return error code:    1404
     And Response should return error message:    Company user not found
 
-Retrieve_company_user_with incorrect_token
+Retrieve_company_user_with_incorrect_token
     When I get access token for the customer:    ${yves_user.email}
     And I set Headers:    Content-Type=${default_header_content_type}    Authorization=qwerty
     And I send a GET request:    /company-users/qwerty
