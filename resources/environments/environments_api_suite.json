@@ -25,6 +25,10 @@
             "reference": "DE--4",
             "salutation": "Mr"
             },
+        "yves_shared_shopping_list_user": 
+            {
+            "email": "Trever.m@spryker.com"
+            },
         "zed_admin": 
             {
             "email": "admin@spryker.com",
@@ -130,12 +134,17 @@
             "name": "Sony Xperia SGP512E1",
             "superattribute": "color"
             },
+        "concrete_available_product": 
+            {
+            "sku": "010_30692994"
+            },
 
         "product_availability": 
             {
             "abstract_available_with_stock_and_never_out_of_stock": "130",
             "abstract_available_product_with_no_stock_and_never_out_of_stock": "666",
-            "abstract_unavailable_product": "189"
+            "abstract_unavailable_product": "189",
+            "concrete_unavailable_product": "192_17738941"
             },
 
         "abstract_product_with_variants": 
@@ -179,6 +188,15 @@
             }   
     },
 
+    "shopping-list": 
+    {
+        "shopping_list_name": "My Shopping List",
+        "1st_shopping_list": 
+        {
+        "id": "cf032865-d1ad-5e27-803a-423bd15ced66",
+        "name": "Newcomers"
+        }
+    },
     "content":{
         "abstract_product_list": 
             {
