@@ -39,6 +39,15 @@
             "email": "admin@spryker.com",
             "password": "change123"
             },
+        "gender": 
+            {
+            "female": "Female",
+            "male": "Male"
+            },
+        "email": {
+            "name": "sonia",
+            "domain": "@spryker.com"
+            },
         "agent": 
             {
             "email": "agent123@spryker.com",
