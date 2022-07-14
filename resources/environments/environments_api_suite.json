@@ -121,7 +121,13 @@
             "concrete_sku": "138_30046855",
             "abstract_sku": "138"
             },
-
+        "product_related_product_with_related_relation": {
+                "sku": "016",
+                "name": "Sony Cyber-shot DSC-W800"
+            },
+        "concrete_available_product": {
+                "sku": "183_21811723"
+            },
         "alternative_abstract_product": "155",
 
         "abstract_available_product_with_stock": 
