@@ -28,7 +28,15 @@
         "agent": {
             "email": "admin@spryker.com",
             "password": "change123"
-        }
+
+           },
+            "yves_shared_shopping_list_user": {
+                "email": "Trever.m@spryker.com",
+                "first_name": "Trever",
+                "last_name": "Meier",
+                "password": "change123",
+                "salutation": "Mr"
+            }
     },
     "address": {
         "default": {
@@ -58,6 +66,7 @@
                 "code": "EUR",
                 "symbol": "€"
             }
+          }
         },
         "products": {
             "bundle_product": {
@@ -134,34 +143,40 @@
                     "sku": "093",
                     "name": "Sony SmartWatch 3"
                 }
-            }
-        },
-        "content": {
-            "abstract_product_list": {
-                "id": "apl-1",
-                "product1_sku": "204",
-                "product1_name": "Sony PXW-FS5K",
-                "product2_sku": "205",
-                "product2_name": "Toshiba CAMILEO S30",
-                "size": "2"
-            }
-        },
-        "availability": {
-            "stock_is_0": "0.0000000000",
-            "stock_is_20": "20.0000000000"
-        },
-        "companies": {
-            "company_name": "Spryker Systems GmbH",
-            "business_unit_address_id": "2175cddd-f8af-5885-b161-227b5c93e72f",
-            "business_unit_name": "Spryker Systems HR department",
-            "user_with_multiple_companies": "anne.boleyn@spryker.com",
-            "company_id": "62de4ab6-b768-5c21-8835-455d9f341625",
-            "company_user_id": "2816dcbd-855e-567e-b26f-4d57f3310bb8",
-            "busines_unit_address_id": "2175cddd-f8af-5885-b161-227b5c93e72f"
-        },
-        "misc": {
-            "default_header_content_type": "application/vnd.api+json",
-            "urlencoded_header_content_type": "application/x-www-form-urlencoded"
-        }
+            }   
+    },
+
+    "content":{
+        "abstract_product_list": 
+            {
+            "id": "apl-1",
+            "product1_sku": "204",
+            "product1_name": "Sony PXW-FS5K",
+            "product2_sku": "205",
+            "product2_name": "Toshiba CAMILEO S30",
+            "size": "2"
+            },
+        "category_node_is_root_id": "1",
+        "category_node_has_only_parent_id": "12",
+        "category_node_has_children_id": "11"
+    },
+    "companies": {
+        "company_name": "Spryker Systems GmbH",
+        "business_unit_address_id": "2175cddd-f8af-5885-b161-227b5c93e72f",
+        "business_unit_name": "Spryker Systems HR department",
+        "user_with_multiple_companies": "anne.boleyn@spryker.com",
+        "company_id": "62de4ab6-b768-5c21-8835-455d9f341625",
+        "company_user_id": "2816dcbd-855e-567e-b26f-4d57f3310bb8",
+        "busines_unit_address_id": "2175cddd-f8af-5885-b161-227b5c93e72f"
+
+    },
+
+    "availability":{
+        "stock_is_0": "0.0000000000",
+        "stock_is_20": "20.0000000000"
+    },
+
+    "misc":{
+        "default_header_content_type": "application/vnd.api+json"
     }
 }
