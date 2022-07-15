@@ -25,6 +25,26 @@
             "reference": "DE--4",
             "salutation": "Mr"
             },
+        
+            "yves_third_user": 
+            {   
+            "email": "maxmusterman@spryker.com",
+            "first_name": "Max",
+            "last_name": "Musterman",
+            "password": "change123",
+            "salutation": "Mr"
+            },
+
+        "gender": 
+        {
+        "female": "Female",
+        "male": "Male"
+        },
+        "email": 
+            {
+            "name": "sonia",
+            "domain": "@spryker.com"
+            },
         "zed_admin": 
             {
             "email": "admin@spryker.com",
