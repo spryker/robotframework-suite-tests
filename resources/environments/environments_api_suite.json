@@ -176,7 +176,11 @@
                 "sku": "112",
                 "name": "Acer Extensa M2610"
                 }
-            }   
+            },
+            
+        "measurement_unit":{ 
+            "m":"METR"
+        }   
     },
 
     "content":{
