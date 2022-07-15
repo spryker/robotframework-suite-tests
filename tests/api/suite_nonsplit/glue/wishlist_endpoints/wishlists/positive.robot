@@ -12,12 +12,12 @@ ENABLER
 Create_a_wishlist
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}
-    I send a POST request:    /wishlists        {"data":{"type":"wishlists","attributes":{"name":"${wishlist_name}"}}}
+    I send a POST request:    /wishlists        {"data":{"type":"wishlists","attributes":{"name":"${random}"}}}
     And Response status code should be:    201
     And Response body parameter should be:    [data][type]    wishlists
     And Save value to a variable:    [data][id]    wishlistId
     And Response body parameter should be:    [data][id]    ${wishlistId}
-     And Response body parameter should be:    [data][attributes][name]    ${wishlist_name}
+     And Response body parameter should be:    [data][attributes][name]    ${random}
     And Response body parameter should be:    [data][attributes][numberOfItems]    0
     And Save value to a variable:    [data][attributes][createdAt]    createdAt
     And Save value to a variable:    [data][attributes][updatedAt]    updatedAt
@@ -28,6 +28,7 @@ Create_a_wishlist
     ...    AND    Response status code should be:    204
     ...    AND    Response reason should be:    No Content
 
+#Get_Request
 Retrieves_wishlists
     [Setup]     Run Keywords    I GET access token for the customer:    ${yves_user.email}
     ...    AND     I set headers:    authorization=${token}
@@ -75,8 +76,6 @@ Retrieves_wishlist_data_by_id
      AND Response body parameter should not be EMPTY:    [data][links][self]
      [Teardown]    Run Keywords    I send a DELETE request:    /wishlists/${wishlist_id}
     ...  AND    Response status code should be:    204
-
-# #Get_Request
 
 Retrieves_wishlist_with_items
       [Setup]    Run Keywords    I GET access token for the customer:    ${yves_user.email}
@@ -157,7 +156,7 @@ Wishlist_Product_Labels
      [Teardown]    Run Keywords    I send a DELETE request:    /wishlists/${wishlist_id}
     ...  AND    Response status code should be:    204
 
-Retrieves_wishlist_with_items_in_concreate
+Retrieves_wishlist_with_items_including_concrete_products
      [Setup]    Run Keywords    I GET access token for the customer:    ${yves_user.email}
     ...    AND    I set headers:    authorization=${token}
     ...    AND    I send a Post request:    /wishlists    {"data": {"type": "wishlists","attributes": {"name": "${random}"}}}
@@ -179,5 +178,8 @@ Retrieves_wishlist_with_items_in_concreate
      AND Response body parameter should not be EMPTY:    [data][attributes][updatedAt]
      And Response include element has self link:    wishlist-items
      And Response include element has self link:    concrete-products
+     And Response should contain the array larger than a certain size:    [included]    1
+     And Response include should contain certain entity type:    concrete-products
+     And Response include should contain certain entity type:    wishlist-items
      [Teardown]    Run Keywords    I send a DELETE request:    /wishlists/${wishlist_id}
     ...  AND    Response status code should be:    204
