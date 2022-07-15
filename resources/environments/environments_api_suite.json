@@ -69,8 +69,18 @@
                 "name": "Euro",
                 "code": "EUR",
                 "symbol": "€"
+                },
+
+            "mode":{
+                "gross": "GROSS_MODE",
+                "net": "NET_MODE"
                 }
-            }
+            },
+            
+        "store":{
+            "us": "US",
+            "de": "DE"
+        }
     },
         
     "products": {
