@@ -43,6 +43,27 @@ Get_specific_cms_page
     And Response body should contain:    validTo
     And Response body has correct self link internal
 
+Get_cms_pages_with_Pagination
+    When I send a GET request:    /cms-pages?page[limit]=10&page[offset]=0
+    Then Response status code should be:    200
+    And Response reason should be:    OK
+    And Response header parameter should be:    Content-Type    ${default_header_content_type}
+    And Response should contain the array of a certain size:    [data]    ${cms_pages.qty}
+    And Response body parameter should not be EMPTY:    [data][0][id]
+    And Response body parameter should be:    [data][0][attributes][name]    ${cms_pages.first_cms_page.name}
+    And Response body parameter should be:    [data][0][attributes][url]    ${cms_pages.first_cms_page.url_en}
+    And Each array element of array in response should contain property with value:    [data]    type    cms-pages  
+    And Each array element of array in response should contain nested property with value:    [data]    [attributes][isSearchable]    True
+    And Each array element of array in response should contain property:    [data]    id
+    And Each array element of array in response should contain property:    [data]    links
+    And Each array element of array in response should contain value:    [data]    pageKey
+    And Each array element of array in response should contain value:    [data]    name
+    And Each array element of array in response should contain value:    [data]    validTo
+    And Each array element of array in response should contain value:    [data]    url
+    And Response body parameter should not be EMPTY:    [links][self]
+    And Response body parameter should not be EMPTY:    [links][last]
+    And Response body parameter should not be EMPTY:    [links][first]
+
 #CC-18869: API: Include data is missing in cms-page.
 Get_specific_cms_with_includes
     When I send a GET request:    /cms-pages/${cms_pages.cms_page_with_product_lists.id}?include=content-product-abstract-lists
