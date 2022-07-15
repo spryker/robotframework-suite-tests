@@ -51,7 +51,7 @@ Get_availability_notifications_without_access_token
     ...  AND    Response status code should be:    204
 
 #POST requests
-Subscribe_to_availability_notifications_with_invalid_sku
+Subscribe_to_availability_notifications_with_non_existent_sku
     When I send a POST request:    /availability-notifications    {"data": {"type": "availability-notifications","attributes": {"sku": "fake","email": "${yves_user.email}"}}}
     Then Response status code should be:    404
     And Response reason should be:    Not Found
