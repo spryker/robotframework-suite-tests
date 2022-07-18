@@ -34,6 +34,15 @@
             "password": "change123",
             "salutation": "Mr"
             },
+        "yves_fourth_user": 
+            {
+            "email": "Lilu@ottom.de",
+            "first_name": "Lilu",
+            "last_name": "Dallas",
+            "password": "change123",
+            "reference": "DE-30",
+            "salutation": "Ms"
+            },
         "zed_admin": 
             {
             "email": "admin@spryker.com",
@@ -54,12 +63,20 @@
             "password": "change123"
             }
             ,
-            "yves_shared_shopping_list_user": {
+        "yves_shared_shopping_list_user": {
                 "email": "Trever.m@spryker.com",
                 "first_name": "Trever",
                 "last_name": "Meier",
                 "password": "change123",
                 "salutation": "Mr"
+            },
+        "yves_shared_shopping_cart_user": 
+            {
+            "email": "Solomon@spryker.com",
+            "first_name": "Solomon",
+            "last_name": "Wesner",
+            "password": "change123",
+            "salutation": "Mr"
             }
     },
     
@@ -96,6 +113,16 @@
                 "code": "EUR",
                 "symbol": "€"
                 }
+            },
+        "store": 
+            {
+            "de": "DE",
+            "us": "US"
+            },
+        "mode": 
+            {
+            "gross": "GROSS_MODE",
+            "net": "NET_MODE"
             }
     },
         
@@ -156,7 +183,9 @@
             "name": "Sony Xperia SGP512E1",
             "superattribute": "color"
             },
-
+            "concrete_available_product": {
+                "sku": "010_30692994"
+            },
         "product_availability": 
             {
             "abstract_available_with_stock_and_never_out_of_stock": "130",
@@ -236,7 +265,9 @@
     },
 
     "misc":{
-        "default_header_content_type": "application/vnd.api+json"
+        "default_header_content_type": "application/vnd.api+json",
+        "test_cart_name": "Test-cart"
+
     },
     "merchants": 
     {
