@@ -96,6 +96,16 @@
                 "code": "EUR",
                 "symbol": "€"
                 }
+            },
+        "store": 
+            {
+            "de": "DE",
+            "us": "US"
+            },
+        "mode": 
+            {
+            "gross": "GROSS_MODE",
+            "net": "NET_MODE"
             }
     },
         
@@ -161,7 +171,9 @@
             {
             "abstract_available_with_stock_and_never_out_of_stock": "130",
             "abstract_available_product_with_no_stock_and_never_out_of_stock": "666",
-            "abstract_unavailable_product": "189"
+            "abstract_unavailable_product": "189",
+            "concrete_available_with_stock_and_never_out_of_stock_sku": "005_30663301"
+
             },
 
         "abstract_product_with_variants": 
@@ -206,7 +218,18 @@
 
         "concrete_available_product": {
             "with_label": "006_30692993"
-        }   
+        },
+        "discount": 
+                {
+                "discount_2":
+                    {
+                    "name": "5% discount on all white products"
+                    },
+                "product_with_voucher_code":
+                    {
+                    "concrete_sku": "058_24245592"
+                    }   
+                }
     },
 
     "content":{
@@ -242,6 +265,10 @@
     "misc":{
         "default_header_content_type": "application/vnd.api+json"
     },
+    "cart":{
+        "x_anonymous_prefix": "anonymous"
+    },
+    
     "merchants": 
     {
         "merchants": 
