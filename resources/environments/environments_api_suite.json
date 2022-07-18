@@ -13,6 +13,7 @@
             "first_name": "Sonia",
             "last_name": "Wagner",
             "password": "change123",
+            "password_new": "qweRTY_123",
             "reference": "DE--21",
             "salutation": "Ms"
             },
@@ -25,15 +26,40 @@
             "reference": "DE--4",
             "salutation": "Mr"
             },
+        "yves_third_user": 
+            {   
+            "email": "maxmusterman@spryker.com",
+            "first_name": "Max",
+            "last_name": "Musterman",
+            "password": "change123",
+            "salutation": "Mr"
+            },
         "zed_admin": 
             {
             "email": "admin@spryker.com",
             "password": "change123"
             },
+        "gender": 
+            {
+            "female": "Female",
+            "male": "Male"
+            },
+        "email": {
+            "name": "sonia",
+            "domain": "@spryker.com"
+            },
         "agent": 
             {
             "email": "agent123@spryker.com",
             "password": "change123"
+            }
+            ,
+            "yves_shared_shopping_list_user": {
+                "email": "Trever.m@spryker.com",
+                "first_name": "Trever",
+                "last_name": "Meier",
+                "password": "change123",
+                "salutation": "Mr"
             }
     },
     
@@ -208,7 +234,19 @@
             "product2_sku": "205",
             "product2_name": "Toshiba CAMILEO S30",
             "size": "2"
-            }
+            },
+        "category_node_is_root_id": "1",
+        "category_node_has_only_parent_id": "12",
+        "category_node_has_children_id": "11"
+    },
+    "companies": {
+        "company_name": "Spryker Systems GmbH",
+        "business_unit_address_id": "2175cddd-f8af-5885-b161-227b5c93e72f",
+        "business_unit_name": "Spryker Systems HR department",
+        "user_with_multiple_companies": "anne.boleyn@spryker.com",
+        "company_id": "62de4ab6-b768-5c21-8835-455d9f341625",
+        "company_user_id": "2816dcbd-855e-567e-b26f-4d57f3310bb8",
+        "busines_unit_address_id": "2175cddd-f8af-5885-b161-227b5c93e72f"
 
     },
 
@@ -220,7 +258,6 @@
     "misc":{
         "default_header_content_type": "application/vnd.api+json",
         "test_cart_name": "Test-cart"
-
     },
     "merchants": 
     {
