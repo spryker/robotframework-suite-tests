@@ -176,7 +176,20 @@
                 "sku": "112",
                 "name": "Acer Extensa M2610"
                 }
-            }   
+            },
+        
+        "packaging_unit":{
+            "m": "METR",
+            "cm": "CMET",
+            "m_name": "Meter"
+        },
+
+        "concrete_product":{
+            "random_weight":{
+                "sku": "cable-vga-1-2",
+                "qty_of_units": "2"
+            }
+        }  
     },
 
     "content":{
@@ -199,6 +212,12 @@
 
     "misc":{
         "default_header_content_type": "application/vnd.api+json"
+    },
+
+    "configurable_bundles":{
+        "configurable_bundle_template_1_uuid": "8d8510d8-59fe-5289-8a65-19f0c35a0089",
+        "configurable_bundle_template_name_1": "Configurable Bundle \"All in\""
+
     }
 
 }
