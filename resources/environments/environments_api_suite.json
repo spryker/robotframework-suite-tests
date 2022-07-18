@@ -95,6 +95,11 @@
                 "name": "Euro",
                 "code": "EUR",
                 "symbol": "€"
+                },
+            "chf": {
+                    "name": "Swiss Franc",
+                    "code": "CHF",
+                    "symbol": "CHF"
                 }
             }
     },
@@ -147,7 +152,13 @@
             "concrete_sku": "138_30046855",
             "abstract_sku": "138"
             },
-
+            "concrete_product_with_alternative": 
+            {
+                "sku": "134_29759322",
+                "abstract_sku": "134",
+                "name": "Acer Aspire S7",
+                "name_lower_case": "acer aspire s7"
+            },
         "alternative_abstract_product": "155",
 
         "abstract_available_product_with_stock": 
@@ -231,6 +242,88 @@
         "company_id": "62de4ab6-b768-5c21-8835-455d9f341625",
         "company_user_id": "2816dcbd-855e-567e-b26f-4d57f3310bb8",
         "busines_unit_address_id": "2175cddd-f8af-5885-b161-227b5c93e72f"
+
+    },
+    "search":
+    {
+        "ipp": 
+            {
+            "default": "12",
+            "middle": "24",
+            "biggest": "36",
+            "default_2": "2",
+            "default_3": "6"
+            },
+        "default_qty": 
+            {
+                "ipp_pages": "19",
+                "categories": "18",
+                "colors": "10",
+                "labels": "4",
+                "materials": "7",
+                "material": "5",
+                "brands": "10",
+                "sorting_options": "6"
+            },
+        "default_price_range": 
+            {
+                "min": "175",
+                "max": "345699"
+            },
+            "default_active":{
+                "min":"3454",
+                "max":"39353"
+            },
+        "label": 
+            {
+            "new": "New",
+            "sale": "SALE %",
+            "manual": "Top",
+            "discontinued": "Discontinued",
+            "alternatives": "Alternatives available"
+            },
+        "category_lvl1": 
+            {
+            "id": "11",
+            "qty": "39"
+            },
+        "category_lvl2": 
+            {
+            "id": "12",
+            "qty": "38"
+            },
+        "category_lvl3": 
+            {
+            "id": "13",
+            "qty": "5"
+            },
+        "category_tree_branches_qty": "6",
+        "total_number_of_products_in_search": "218",
+        "abstract_sku_highest_rating": "035"
+    },  
+    "product_attributes":
+    {
+        "brand_1": "Acer",
+        "brand_2": "edding",
+        "brand_3": "Mauser",
+        "brand_4": "Sony",
+
+        "material_1": "aluminum",
+        "material_2": "metal",
+        "material_3": "chipboard",
+        "material_4": "Steel sheets, stove-enameled",
+
+        "delivery_1": "assembled",
+        "price_unit_1": "piece",
+
+        "color_1": "yellow",
+        "color_2": "Blue",
+        "color_3": "purple",
+        "color_4": "orange",
+
+        "product_management_superattribute_id": "farbe",
+        "product_management_attribute_free_input_id": "verschlussart",
+        "product_management_attribute_no_input_id": "bundled_product"
 
     },
 
