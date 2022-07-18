@@ -70,7 +70,19 @@
                 "code": "EUR",
                 "symbol": "€"
                 }
-            }
+            },
+        "locale":{
+
+            "DE":{
+                "name": "de_DE",
+                "code": "de"
+            },
+    
+            "EN":{
+                "name": "en_US",
+                "code": "en"
+             }
+        }
     },
         
     "products": {
@@ -177,6 +189,16 @@
                 "name": "Acer Extensa M2610"
                 }
             }   
+    },
+
+    "product_attributes": {
+
+        "product_management":{
+            "superattribute_id": "4g",
+            "attribute_free_input_id": "4g_standards",
+            "attribute_no_input_id": "bundled_product"
+        }
+
     },
 
     "content":{
