@@ -69,8 +69,16 @@
                 "name": "Euro",
                 "code": "EUR",
                 "symbol": "€"
-                }
+                },
+
+            "mode":{
+                "gross": "GROSS_MODE"
             }
+        },
+
+        "store":{
+            "de": "DE"
+        }
     },
         
     "products": {
@@ -199,6 +207,14 @@
 
     "misc":{
         "default_header_content_type": "application/vnd.api+json"
+    },
+
+    "configurable_bundles":{
+        "configurable_bundle_template_1_uuid": "8d8510d8-59fe-5289-8a65-19f0c35a0089",
+        "configurable_bundle_first_slot_item_sku": "001_25904006",
+        "configurable_bundle_slot_1_uuid": "332b40ac-a789-57ce-bec0-23d8dddd71eb",
+        "configured_bundle_quantity": 2
+
     }
 
 }
