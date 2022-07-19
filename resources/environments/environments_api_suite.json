@@ -132,6 +132,19 @@
                 }
 
             },
+            "bundled_product":{
+                "concrete": {
+                    "product_1_sku": "211_123",
+                    "product_1_name": "HP Bundle",
+                    "product_2_sku": "150_29554292",
+                    "product_2_name": "HP Chromebook 11",
+                    "product_3_sku": "127_22828284",
+                    "product_3_name": "HP Z 620",
+                    "product_4_sku": "121_29406823",
+                    "product_4_name": "HP 200 280 G1"
+                    }
+                },
+
 
         "special_product_abstract_sku": 
             {
@@ -160,7 +173,7 @@
             "concrete_sku": "138_30046855",
             "abstract_sku": "138"
             },
-            "concrete_product_with_alternative": 
+        "concrete_product_with_alternative": 
             {
                 "sku": "134_29759322",
                 "abstract_sku": "134",
@@ -180,7 +193,11 @@
             {
             "abstract_available_with_stock_and_never_out_of_stock": "130",
             "abstract_available_product_with_no_stock_and_never_out_of_stock": "666",
-            "abstract_unavailable_product": "189"
+            "abstract_unavailable_product": "189",
+            "concrete_available_with_stock_and_never_out_of_stock": "110_19682159",
+            "concrete_available_with_stock_and_never_out_of_stock_name": "Samsung Galaxy Gear"
+
+
             },
         "concrete_product_with_concrete_product_alternative": {
                 "sku": "155_30149933"
@@ -227,6 +244,18 @@
 
         "concrete_available_product": {
             "with_label": "006_30692993"
+        },
+        "concrete": {
+            "random_weight":{
+                "sku": "cable-vga-1-2",
+                "name": "VGA cable as long as you want",
+                "measurement_unit": "19",
+                "qty_of_units": "2",
+                "amount": "5.0000000000",
+                "conversion": "1",
+                "precision": "100",        
+                "packaging_unit": "19"
+            }
         }   
     },
 
@@ -373,7 +402,27 @@
 
 
     "misc":{
-        "default_header_content_type": "application/vnd.api+json"
+        "default_header_content_type": "application/vnd.api+json",
+        "test_cart_name": "Test-cart",
+        "payment": 
+            {
+            "provider_name_1": "DummyPayment",
+            "method_name_1": "Invoice",
+            "selection_name": "dummyMarketplacePaymentInvoice"
+            },
+        "shipment": 
+            {
+            "carrier_name_1": "Spryker Dummy Shipment",
+            "method_name_1": "Standard",
+            "method_name_2": "Express",
+            "delivery_date": "2030-12-31"
+            },
+            "packaging_unit":{
+                "m": "METR",
+                "cm": "CMET",
+                "m_name": "Meter"
+            }
+
     },
     "merchants": 
     {
@@ -396,8 +445,12 @@
                 "city_munchen":"München",
                 "address1": "Matthias-Pschorr-Straße"
                             }
-                }
+                },
+            "spryker": {
+                "merchant_id": "MER000001"
             }
+            }
+
     }
 
 }
