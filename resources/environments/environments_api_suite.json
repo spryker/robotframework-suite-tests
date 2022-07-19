@@ -332,6 +332,36 @@
         "stock_is_20": "20.0000000000"
     },
 
+    "labels":
+    {
+        "label_standard": 
+            {
+            "id": "3",
+            "name": "Standard Label"
+            },
+        "label_sale": 
+            {
+            "id": "5",
+            "name": "SALE %"
+            },
+        "label_new": 
+            {
+            "id": "4",
+            "name": "New"
+            },
+        "label_discontinued": 
+            {
+            "id": "2",
+            "name": "Discontinued"
+            },
+        "label_alternative": 
+            {
+            "id": "1",
+            "name": "Alternatives available"
+            }
+    },
+
+
     "misc":{
         "default_header_content_type": "application/vnd.api+json"
     },
