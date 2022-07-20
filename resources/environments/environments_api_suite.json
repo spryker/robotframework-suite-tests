@@ -89,7 +89,8 @@
                 {
                 "product_1_sku": "121_29406823",
                 "product_2_sku": "127_22828284",
-                "product_3_sku": "150_29554292"
+                "product_3_sku": "150_29554292",
+                "product_4_sku": "211_123"
                 }
 
             },
@@ -119,6 +120,7 @@
         "product_with_alternative": 
             {
             "concrete_sku": "138_30046855",
+            "concrete_name": "Acer TravelMate P258-M",
             "abstract_sku": "138"
             },
 
@@ -176,7 +178,36 @@
                 "sku": "112",
                 "name": "Acer Extensa M2610"
                 }
-            }   
+            },
+
+            "concrete_product":{
+                "one_image_set":{ 
+                    "sku": "208_14678762",
+                    "name": "Toshiba CAMILEO P20"
+                },
+
+                "original_prices":{
+                    "sku": "072_21927455",
+                    "name": "Samsung Galaxy Note 3"
+                },
+
+                "with_review":{
+                    "sku": "086_30521602",
+                    "name": "Samsung Gear S2"
+                },
+
+                "product_with_concrete_offers":{
+                    "sku": "112_312526191",
+                    "name": "Acer Extensa M2610"
+                },
+
+                "product_with_sales_and_measurement_units":{
+                    "sku": "cable-vga-1-1",
+                    "name": "VGA cable (1.5m)"
+                }
+
+            } 
+         
     },
 
     "content":{
