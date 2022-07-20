@@ -17,14 +17,19 @@ Add_a_concrete_product_to_the_shopping_list_without_access_token
 
 Add_a_concrete_product_to_the_shopping_list_with_wrong_access_token  
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
-    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}1
+    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     ...    AND    I send a POST request:    /shopping-lists    {"data":{"type":"shopping-lists","attributes":{"name":"${shopping_list_name}${random}"}}}
+    ...    AND    Save value to a variable:    [data][id]    shoppingListId
+    ...    AND    I set Headers:    Authorization=3485h7
     I send a POST request:    /shopping-lists/${1st_shopping_list.id}/shopping-list-items    {"data":{"type":"shopping-list-items","attributes":{"sku":"${concrete_available_product.sku}","quantity":1}}}
     And Response status code should be:    401
     And Response should return error code:    001
     And Response reason should be:    Unauthorized
     And Response should return error message:    Invalid access token.
-
+    [Teardown]    Run Keywords    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}    
+    ...    AND    I send a DELETE request:    /shopping-lists/${shoppingListId}
+    ...    AND    Response status code should be:    204
+    ...    AND    Response reason should be:    No Content
 Add_a_product_to_the_non_existing_shopping_list
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}  
@@ -44,6 +49,7 @@ Add_a_product_with_non_existing_sku_to_the_shopping_list
     And Response status code should be:    422
     And Response reason should be:    Unprocessable Content
     And Response should return error message:    1508
+    And Response should return error code:    Concrete product not found.
     [Teardown]    Run Keywords    I send a DELETE request:    /shopping-lists/${shoppingListId}
     ...    AND    Response status code should be:    204
     ...    AND    Response reason should be:    No Content
@@ -103,7 +109,8 @@ Add_too_big_amount_of_concrete_product_to_the_shopping_list
     And Response status code should be:    422
     And Response should return error code:    901
     And Response reason should be:    Unprocessable Content
-    And Response should return error message:    quantity => This value should be of type integer.
+    And Array in response should contain property with value:    [errors]    detail    quantity => This value should be of type integer.
+    And Array in response should contain property with value:    [errors]    detail    quantity => This value should be less than 2147483647.
     [Teardown]    Run Keywords    I send a DELETE request:    /shopping-lists/${shoppingListId}
     ...    AND    Response status code should be:    204
     ...    AND    Response reason should be:    No Content
@@ -118,6 +125,7 @@ Add_an_abstract_product_to_the_shopping_list
     And Response status code should be:    422
     And Response reason should be:    Unprocessable Content
     And Response should return error message:    1508
+    And Response should return error code:    Concrete product not found.
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     [Teardown]    Run Keywords    I send a DELETE request:    /shopping-lists/${shoppingListId}
     ...    AND    Response status code should be:    204
@@ -178,7 +186,8 @@ Add_a_concrete_product_invalid_data_for_quantity_to_the_shopping_list
     And Response status code should be:    422
     And Response should return error code:    901
     And Response reason should be:    Unprocessable Content
-    And Response should return error message:    quantity => This value should be of type integer.
+    And Array in response should contain property with value:    [errors]    detail    quantity => This value should be of type integer.
+    And Array in response should contain property with value:    [errors]    detail    quantity => This value should be greater than 0.
     [Teardown]    Run Keywords    I send a DELETE request:    /shopping-lists/${shoppingListId}
     ...    AND    Response status code should be:    204
     ...    AND    Response reason should be:    No Content
