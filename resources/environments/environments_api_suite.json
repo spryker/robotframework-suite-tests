@@ -52,6 +52,10 @@
             {
             "email": "agent123@spryker.com",
             "password": "change123"
+            },
+        "non_agent":{
+            "email": "admin_de@spryker.com",
+            "password": "change123"
             }
             ,
             "yves_shared_shopping_list_user": {
