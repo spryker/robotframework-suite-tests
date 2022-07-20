@@ -43,9 +43,53 @@ Add_an_item_to_the_guest_cart_with_items_include
     When I send a POST request:    /guest-carts/${guestCartId}/guest-cart-items?include=items    {"data":{"type":"guest-cart-items","attributes":{"sku":"${concrete_product_with_concrete_product_alternative.sku}","quantity":"1"}}}
     Then Response status code should be:    201
     And Response reason should be:    Created
+    And Response body parameter should be:    [data][type]    guest-carts
+    And Response body parameter should be:    [data][id]    ${guestCartId}
+    And Response body parameter should be:    [data][attributes][priceMode]    ${mode.gross}
+    And Response body parameter should be:    [data][attributes][currency]    ${currency.eur.code}
+    And Response body parameter should be:    [data][attributes][store]    ${store.de}
+    And Response body parameter should be:    [data][attributes][isDefault]    True
+    And Response body parameter should be:    [data][attributes][totals][expenseTotal]    0
+    And Response body parameter should be:    [data][attributes][totals][discountTotal]    0
+    And Response body parameter should be greater than:    [data][attributes][totals][taxTotal]    0
+    And Response body parameter should be greater than:    [data][attributes][totals][subtotal]    0
+    And Response body parameter should be greater than:    [data][attributes][totals][grandTotal]    0
+    And Response body parameter should be greater than:    [data][attributes][totals][priceToPay]    0
+    And Response should contain the array of a certain size:    [data][attributes][discounts]    0
+    And Response should contain the array of a certain size:    [data][attributes][thresholds]    1
+    And Response should contain the array of a certain size:    [included]    1
     And Response body parameter should be:    [included][0][type]    guest-cart-items
     And Response body parameter should be:    [included][0][id]    ${concrete_product_with_concrete_product_alternative.sku}
-    And Response should contain the array of a certain size:    [included]    1
+    And Response body parameter should be:    [included][0][attributes][sku]    ${concrete_product_with_concrete_product_alternative.sku}
+    And Response body parameter should be:    [included][0][attributes][quantity]    1
+    And Response body parameter should be:    [included][0][attributes][groupKey]    ${concrete_product_with_concrete_product_alternative.sku}
+    And Response body parameter should be:    [included][0][attributes][amount]    None
+    And Response body parameter should be:    [included][0][attributes][productOfferReference]    None
+    And Response body parameter should be:    [included][0][attributes][merchantReference]    None
+    And Response body parameter should not be EMPTY:    [included][0][attributes][calculations][unitPrice] 
+    And Response body parameter should not be EMPTY:    [included][0][attributes][calculations][sumPrice]
+    And Response body parameter should not be EMPTY:    [included][0][attributes][calculations][taxRate]
+    And Response body parameter should not be EMPTY:    [included][0][attributes][calculations][unitNetPrice]
+    And Response body parameter should not be EMPTY:    [included][0][attributes][calculations][sumNetPrice]
+    And Response body parameter should not be EMPTY:    [included][0][attributes][calculations][unitGrossPrice]
+    And Response body parameter should not be EMPTY:    [included][0][attributes][calculations][sumGrossPrice]
+    And Response body parameter should not be EMPTY:    [included][0][attributes][calculations][unitTaxAmountFullAggregation]
+    And Response body parameter should not be EMPTY:    [included][0][attributes][calculations][sumTaxAmountFullAggregation]
+    And Response body parameter should not be EMPTY:    [included][0][attributes][calculations][sumSubtotalAggregation]
+    And Response body parameter should not be EMPTY:    [included][0][attributes][calculations][unitSubtotalAggregation]
+    And Response body parameter should not be EMPTY:    [included][0][attributes][calculations][unitProductOptionPriceAggregation]
+    And Response body parameter should not be EMPTY:    [included][0][attributes][calculations][sumProductOptionPriceAggregation]   
+    And Response body parameter should not be EMPTY:    [included][0][attributes][calculations][unitDiscountAmountAggregation]  
+    And Response body parameter should not be EMPTY:    [included][0][attributes][calculations][sumDiscountAmountAggregation]  
+    And Response body parameter should not be EMPTY:    [included][0][attributes][calculations][unitDiscountAmountFullAggregation]  
+    And Response body parameter should not be EMPTY:    [included][0][attributes][calculations][sumDiscountAmountFullAggregation]  
+    And Response body parameter should not be EMPTY:    [included][0][attributes][calculations][unitPriceToPayAggregation] 
+    And Response body parameter should not be EMPTY:    [included][0][attributes][calculations][sumPriceToPayAggregation] 
+    And Response body parameter should be:    [included][0][attributes][configuredBundle]    None 
+    And Response body parameter should be:    [included][0][attributes][configuredBundleItem]    None 
+    And Response body parameter should be:    [included][0][attributes][productConfigurationInstance]    None 
+    And Response body parameter should be:    [included][0][attributes][salesUnit]    None 
+    And Response should contain the array of a certain size:    [included][0][attributes][selectedProductOptions]    0 
     And Response body parameter should not be EMPTY:    [data][links][self]
 
 Add_an_item_to_the_guest_cart_with_concrete_products_and_abstract_products_includes

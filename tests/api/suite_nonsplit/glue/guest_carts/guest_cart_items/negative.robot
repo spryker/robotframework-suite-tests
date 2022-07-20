@@ -15,6 +15,14 @@ Add_an_item_to_the_guest_cart_without_x_anonymous_customer_unique_id
     And Response reason should be:    Bad Request
     And Response should return error message:    Anonymous customer unique id is empty.
 
+Add_item_to_guest_cart_with_wrong_type
+    [Setup]    Run Keywords     Create a guest cart:    ${random}    ${concrete_available_product.with_offer}    1
+               ...   AND    I set Headers:     X-Anonymous-Customer-Unique-Id=${x_anonymous_customer_unique_id}
+    When I send a POST request:    /guest-cart-items    {"data": {"type": "fake","attributes": {"sku": "${concrete_available_product.with_offer}","quantity": 1}}}
+    Then Response status code should be:    400
+    And Response reason should be:    Bad Request
+    And Response should return error message:    Invalid type.
+
 Add_an_item_to_the_guest_cart_of_another_anonymous_customer
     [Setup]    I set Headers:    Content-Type=${default_header_content_type}    X-Anonymous-Customer-Unique-Id=${random}
     Run Keywords    Create a guest cart:    ${random}    ${concrete_available_product.with_offer}    1
