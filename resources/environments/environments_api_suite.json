@@ -128,10 +128,23 @@
                 {
                 "product_1_sku": "121_29406823",
                 "product_2_sku": "127_22828284",
-                "product_3_sku": "150_29554292"
-                }
+                "product_3_sku": "150_29554292",
+                "product_4_sku": "211_123"
+                },
+            
+            "qty_of_products_in_bundle": "3",
+            "qty_of_each_product_inside_bundle": "1"
 
             },
+
+        "concrete":{
+            "available_product":{
+                "with_stock_and_never_out_of_stock":{
+                    "sku": "208_14678762",
+                    "name": "Toshiba CAMILEO P20"
+                }
+            }
+        },
 
         "special_product_abstract_sku": 
             {
