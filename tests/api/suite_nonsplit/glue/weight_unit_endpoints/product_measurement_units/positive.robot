@@ -8,7 +8,7 @@ Default Tags    glue
 ENABLER
     TestSetup
 Get_product_measurement_unit_by_id
-    When I send a GET request:    /product-measurement-units/METR
+    When I send a GET request:    /product-measurement-units/${measurement_unit.m}
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
