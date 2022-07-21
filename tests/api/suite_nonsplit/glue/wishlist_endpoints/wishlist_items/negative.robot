@@ -11,14 +11,14 @@ ENABLER
 
 Adding_item_in_wishlist_by_invalid_Access_Token
     [Setup]    I set Headers:    Authorization=3485h7
-    When I send a POST request:    /wishlists    {"data": { "type": "wishlists","attributes": { "name": "${wishlist_name}"} }}
+    When I send a POST request:    /wishlists    {"data": { "type": "wishlists","attributes": { "name": "${random}"} }}
     Then Response status code should be:    401
     And Response reason should be:    Unauthorized
     And Response should return error code:    001
     And Response should return error message:    Invalid access token.
     
 Adding_item_in_wishlist_by_without_Access_Token 
-    When I send a POST request:    /wishlists    {"data": { "type": "wishlists","attributes": { "name": "${wishlist_name}"} }}
+    When I send a POST request:    /wishlists    {"data": { "type": "wishlists","attributes": { "name": "${random}"} }}
     Then Response status code should be:    403
     And Response reason should be:    Forbidden
     And Response should return error code:    002
@@ -27,7 +27,7 @@ Adding_item_in_wishlist_by_without_Access_Token
 Adding_item_with_abstract_sku
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}
-    ...    AND    I send a POST request:    /wishlists    {"data": { "type": "wishlists","attributes": { "name": "${wishlist_name}"} }}
+    ...    AND    I send a POST request:    /wishlists    {"data": { "type": "wishlists","attributes": { "name": "${random}"} }}
     ...    AND    Response status code should be:    201 
     ...    AND    Response reason should be:    Created
     ...    AND    Save value to a variable:    [data][id]    wishlist_reference_id
@@ -42,7 +42,7 @@ Adding_item_with_abstract_sku
 Adding_item_with_invalid_sku
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}
-    ...    AND    I send a POST request:    /wishlists    {"data": { "type": "wishlists","attributes": { "name": "${wishlist_name}"} }}
+    ...    AND    I send a POST request:    /wishlists    {"data": { "type": "wishlists","attributes": { "name": "${random}"} }}
     ...    AND    Response status code should be:    201 
     ...    AND    Response reason should be:    Created
     ...    AND    Save value to a variable:    [data][id]    wishlist_reference_id
@@ -57,7 +57,7 @@ Adding_item_with_invalid_sku
 Adding_item_with_empty_sku
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}
-    ...    AND    I send a POST request:    /wishlists    {"data": { "type": "wishlists","attributes": { "name": "${wishlist_name}"} }}
+    ...    AND    I send a POST request:    /wishlists    {"data": { "type": "wishlists","attributes": { "name": "${random}"} }}
     ...    AND    Response status code should be:    201 
     ...    AND    Response reason should be:    Created
     ...    AND    Save value to a variable:    [data][id]    wishlist_reference_id
@@ -72,7 +72,7 @@ Adding_item_with_empty_sku
 Adding_item_after_enter_space_in_sku
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}
-    ...    AND    I send a POST request:    /wishlists    {"data": { "type": "wishlists","attributes": { "name": "${wishlist_name}"} }}
+    ...    AND    I send a POST request:    /wishlists    {"data": { "type": "wishlists","attributes": { "name": "${random}"} }}
     ...    AND    Response status code should be:    201 
     ...    AND    Response reason should be:    Created
     ...    AND    Save value to a variable:    [data][id]    wishlist_reference_id
@@ -105,7 +105,7 @@ Adding_item_without_wishilist_id
 Adding_items_in_wishlist_by_another_customer_wishlist
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_second_user.email}
     ...    AND    I set Headers:    Authorization=${token}
-    ...    AND    I send a POST request:    /wishlists    {"data": { "type": "wishlists","attributes": { "name": "${wishlist_name}" } }}
+    ...    AND    I send a POST request:    /wishlists    {"data": { "type": "wishlists","attributes": { "name": "${random}" } }}
     ...    AND    Save value to a variable:    [data][id]    wishlist_id
     ...    AND    I get access token for the customer:   ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}
@@ -122,7 +122,7 @@ Adding_items_in_wishlist_by_another_customer_wishlist
 Adding_item_with_deactivated_item_sku
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}
-    ...    AND    I send a POST request:    /wishlists    {"data": { "type": "wishlists","attributes": { "name": "${wishlist_name}"} }}
+    ...    AND    I send a POST request:    /wishlists    {"data": { "type": "wishlists","attributes": { "name": "${random}"} }}
     ...    AND    Response status code should be:    201 
     ...    AND    Response reason should be:    Created
     ...    AND    Save value to a variable:    [data][id]    wishlist_reference_id
@@ -153,7 +153,7 @@ Deleting_item_in_wishlist_by_without_Access_Token
 Deleting_item_in_wishlist_with_empty_sku
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}
-    ...    AND    I send a POST request:    /wishlists    {"data": { "type": "wishlists","attributes": { "name": "${wishlist_name}"} }}
+    ...    AND    I send a POST request:    /wishlists    {"data": { "type": "wishlists","attributes": { "name": "${random}"} }}
     ...    AND    Response status code should be:    201 
     ...    AND    Response reason should be:    Created
     ...    AND    Save value to a variable:    [data][id]    wishlist_reference_id
@@ -168,7 +168,7 @@ Deleting_item_in_wishlist_with_empty_sku
 Delete_wishlist_item_from_already_deleted_wishlist
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}
-    ...    AND    I send a POST request:    /wishlists    {"data": { "type": "wishlists","attributes": { "name": "${wishlist_name}"} }}
+    ...    AND    I send a POST request:    /wishlists    {"data": { "type": "wishlists","attributes": { "name": "${random}"} }}
     ...    AND    Response status code should be:    201 
     ...    AND    Response reason should be:    Created
     ...    AND    Save value to a variable:    [data][id]    wishlist_reference_id
@@ -204,7 +204,7 @@ Deleting_item_without_wishilist_id
 Deleting_items_in_wishlist_by_another_customer_wishlist
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_second_user.email}
     ...    AND    I set Headers:    Authorization=${token}
-    ...    AND    I send a POST request:    /wishlists    {"data": { "type": "wishlists","attributes": { "name": "${wishlist_name}" } }}
+    ...    AND    I send a POST request:    /wishlists    {"data": { "type": "wishlists","attributes": { "name": "${random}" } }}
     ...    AND    Save value to a variable:    [data][id]    wishlist_id
     ...    AND    I send a POST request:    /wishlists/${wishlist_id}/wishlist-items    {"data": {"type": "wishlist-items","attributes": {"sku": "${abstract_available_product_with_stock.concrete_sku}"}}}
     ...    AND    Save value to a variable:    [data][id]    wishlist_item_id
@@ -220,11 +220,11 @@ Deleting_items_in_wishlist_by_another_customer_wishlist
     ...    AND    I send a DELETE request:    /wishlists/${wishlist_id}
     ...    AND    Response status code should be:    204
     
-#CC-16642
+
 Deleting_concrete_product_by_abstract_product_sku
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}
-    ...    AND    I send a POST request:    /wishlists    {"data": { "type": "wishlists","attributes": { "name": "${wishlist_name}" } }}
+    ...    AND    I send a POST request:    /wishlists    {"data": { "type": "wishlists","attributes": { "name": "${random}" } }}
     ...    AND    Response status code should be:    201 
     ...    AND    Response reason should be:    Created
     ...    AND    Save value to a variable:    [data][id]    wishlist_id

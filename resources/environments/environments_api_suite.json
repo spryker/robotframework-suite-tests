@@ -205,9 +205,6 @@
 
     "misc":{
         "default_header_content_type": "application/vnd.api+json"
-    },
-    "wishlists": {
-        "wishlist_name": "HS"
     }
 
 }
