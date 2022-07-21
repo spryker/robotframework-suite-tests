@@ -9,6 +9,24 @@ ENABLER
     TestSetup
     
 #POST requests
+
+# https://spryker.atlassian.net/browse/CC-19340
+Provide_checkout_data_with_invalid_access_token
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
+    ...  AND    I set Headers:    Authorization=${token}
+    ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
+    ...  AND    Save value to a variable:    [data][id]    cart_id
+    ...  AND    I send a POST request:    /carts/${cart_id}/items    {"data": {"type": "items","attributes": {"sku": "${product_availability.concrete_available_with_stock_and_never_out_of_stock}","quantity": 1}}}
+    ...  AND    I set Headers:    Authorization=fake_token
+    When I send a POST request:    /checkout-data    {"data": {"type": "checkout-data","attributes": {"customer": {"email": "${yves_user.email}","salutation": "${yves_user.salutation}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}"},"idCart": "${cart_id}","billingAddress": {"salutation": "${yves_user.salutation}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}","address1": "${default.address1}","address2": "${default.address2}","address3": "${default.address3}","zipCode": "${default.zipCode}","city": "${default.city}","iso2Code": "${default.iso2Code}","company": "${default.company}","phone": "${default.phone}","isDefaultBilling": True,"isDefaultShipping": True},"shippingAddress": {"salutation": "${yves_user.salutation}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}","address1": "${default.address1}","address2": "${default.address2}","address3": "${default.address3}","zipCode": "${default.zipCode}","city": "${default.city}","iso2Code": "${default.iso2Code}","company": "${default.company}","phone": "${default.phone}","isDefaultBilling": True,"isDefaultShipping": True},"payments": [{"paymentProviderName": "${payment.provider_name}","paymentMethodName": "${payment.method_name}"}],"shipment": {"idShipmentMethod": 1},"items": ["${product_availability.concrete_available_with_stock_and_never_out_of_stock}"]}}}
+    Then Response status code should be:    400
+    And Response reason should be:    Bad Request
+    And Response should return error message:    One of Authorization or X-Anonymous-Customer-Unique-Id headers is required.
+    And Response should return error code:    1105
+    [Teardown]    Run Keywords    I set Headers:    Authorization=${token}
+    ...  AND    I send a DELETE request:    /carts/${cart_id}
+    ...  AND    Response status code should be:    204
+
 Provide_checkout_data_without_access_token
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
