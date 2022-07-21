@@ -96,6 +96,7 @@ Yves: catalog page contains filter:
 
 Yves: select filter value:
     [Arguments]    ${filter}    ${filterValue}
+    Wait Until Element Is Visible    xpath=//section[contains(@data-qa,'component filter-section')]//*[contains(text(),'${filter}')]
     Click    xpath=//section[contains(@data-qa,'component filter-section')]//*[contains(text(),'${filter}')]
     Wait Until Element Is Visible    xpath=//section[contains(@data-qa,'component filter-section')]//*[contains(text(),'${filter}')]/following-sibling::*//span[contains(@value,'${filterValue}')]
     Click    xpath=//section[contains(@data-qa,'component filter-section')]//*[contains(text(),'${filter}')]/following-sibling::*//span[contains(@value,'${filterValue}')]
