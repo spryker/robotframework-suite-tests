@@ -63,6 +63,7 @@ Create_a_customer_with_empty_type
     And Response should return error message:    Invalid type.
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
 
+#bug:https://spryker.atlassian.net/browse/CC-19137
 Create_a_customer_with_empty_values_for_required_fields
     I send a POST request:    /customers/    {"data":{"type":"customers","attributes":{"firstName":"","lastName":"","gender":"","salutation":"","email":"","password":"","confirmPassword":"","acceptedTerms":""}}}
     Response status code should be:    422
@@ -70,8 +71,8 @@ Create_a_customer_with_empty_values_for_required_fields
     And Response should return error code:    901
     And Array in response should contain property with value:    [errors]    detail    firstName => This value should not be blank.
     And Array in response should contain property with value:    [errors]    detail    lastName => This value should not be blank.
-    # And Array in response should contain property with value:    [errors]    detail    gender => This value should not be blank.
-    # And Array in response should contain property with value:    [errors]    detail    gender => The value you selected is not a valid choice.
+    And Array in response should contain property with value:    [errors]    detail    gender => This value should not be blank.
+    And Array in response should contain property with value:    [errors]    detail    gender => The value you selected is not a valid choice.
     And Array in response should contain property with value:    [errors]    detail    salutation => This value should not be blank.
     And Array in response should contain property with value:    [errors]    detail    salutation => The value you selected is not a valid choice.
     And Array in response should contain property with value:    [errors]    detail    email => This value should not be blank.
@@ -95,6 +96,7 @@ Create_a_customer_with_wrong_email_format
     And Response should return error message:    email => This value is not a valid email address.
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
 
+#bug:https://spryker.atlassian.net/browse/CC-19137
 Create_a_customer_with_missing_required_fields
     I send a POST request:    /customers/    {"data":{"type":"customers","attributes":{}}}
     Response status code should be:    422
@@ -110,6 +112,7 @@ Create_a_customer_with_missing_required_fields
     And Array in response should contain property with value:    [errors]    detail    gender => This field is missing.
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
 
+#bug:https://spryker.atlassian.net/browse/CC-19138
 Create_a_customer_with_wrong_gender
     I send a POST request:    /customers/    {"data":{"type":"customers","attributes":{"firstName":"${yves_third_user.first_name}","lastName":"${yves_third_user.last_name}","gender":"test","salutation":"test","email":"${yves_third_user.first_name}@spryker.com","password":"${yves_user.password}","confirmPassword":"${yves_user.password}","acceptedTerms":True}}}
     Response status code should be:    422
@@ -166,6 +169,7 @@ Update_a_customer_with_empty_type
     And Response should return error message:    Invalid type.
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
 
+#bug:https://spryker.atlassian.net/browse/CC-19137
 Update_a_customer_with_empty_values_for_required_fields
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
@@ -193,6 +197,7 @@ Update_a_customer_with_absent_type
     And Response should return error message:    Post data is invalid.
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
 
+#bug:https://spryker.atlassian.net/browse/CC-19138
 Update_a_customer_with_invalid_data
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
@@ -241,6 +246,16 @@ Delete_a_customer_with_access_token_from_another
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}  
     I send a DELETE request:    /customers/DE--30
+    Response status code should be:    403
+    And Response reason should be:    Forbidden
+    And Response should return error code:    411
+    And Response should return error message:    Unauthorized request.
+    And Response header parameter should be:    Content-Type    ${default_header_content_type}
+
+Delete_a_customer_with_invalid_id
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
+    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}  
+    I send a DELETE request:    /customers/fake-id
     Response status code should be:    403
     And Response reason should be:    Forbidden
     And Response should return error code:    411
