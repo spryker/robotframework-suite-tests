@@ -141,15 +141,6 @@
 
             },
 
-        "concrete":{
-            "available_product":{
-                "with_stock_and_never_out_of_stock":{
-                    "sku": "208_14678762",
-                    "name": "Toshiba CAMILEO P20"
-                }
-            }
-        },
-
         "special_product_abstract_sku": 
             {
             "with_multivariant": "051",
@@ -271,7 +262,7 @@
                 "sku": "cable-vga-1-2",
                 "qty_of_units": "2"
             }
-        }  
+        },  
 
         "concrete_available_product": {
             "with_label": "006_30692993"
