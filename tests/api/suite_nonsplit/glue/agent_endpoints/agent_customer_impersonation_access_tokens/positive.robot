@@ -34,7 +34,7 @@ Customer_impersonation_token_can_be_used
     ...    AND    Response status code should be:    201
     ...    AND    Save value to a variable:    [data][attributes][accessToken]    impersonation_token
     ...    AND    I Set Headers:    Content-Type=${default_header_content_type}    Authorization=Bearer ${impersonation_token}
-    When I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"name": "cart${random}","priceMode": "${currency.mode.gross}","currency": "${currency.eur.code}","store": "${store.de}"}}}
+    When I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"name": "cart${random}","priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}"}}}
     Then Response status code should be:    201
     And Save value to a variable:    [data][id]    cart_uid
     And I send a POST request:    /carts/${cart_uid}/items    {"data": {"type": "items","attributes": {"sku": "${bundle_product.concrete.product_1_sku}","quantity": 1}}}
