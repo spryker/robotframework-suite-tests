@@ -56,12 +56,11 @@
         "grant_type":{
             "password": "password",
             "refresh_token": "refresh_token"
-        }
+        },
         "non_agent":{
             "email": "admin_de@spryker.com",
             "password": "change123"
-            }
-            ,
+            },
             "yves_shared_shopping_list_user": {
                 "email": "Trever.m@spryker.com",
                 "first_name": "Trever",
@@ -144,15 +143,6 @@
             "qty_of_each_product_inside_bundle": "1"
 
             },
-
-        "concrete":{
-            "available_product":{
-                "with_stock_and_never_out_of_stock":{
-                    "sku": "208_14678762",
-                    "name": "Toshiba CAMILEO P20"
-                }
-            }
-        },
 
         "special_product_abstract_sku": 
             {
