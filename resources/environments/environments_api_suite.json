@@ -52,6 +52,10 @@
             {
             "email": "agent123@spryker.com",
             "password": "change123"
+            },
+        "non_agent":{
+            "email": "admin_de@spryker.com",
+            "password": "change123"
             }
             ,
             "yves_shared_shopping_list_user": {
@@ -95,17 +99,20 @@
                 "name": "Euro",
                 "code": "EUR",
                 "symbol": "€"
+                },
+            "chf": {
+                    "name": "Swiss Franc",
+                    "code": "CHF",
+                    "symbol": "CHF"
                 }
             },
-        "store": 
-            {
-            "de": "DE",
-            "us": "US"
+        "mode": {
+                "gross": "GROSS_MODE",
+                "net": "NET_MODE"
             },
-        "mode": 
-            {
-            "gross": "GROSS_MODE",
-            "net": "NET_MODE"
+        "store": {
+                "us": "US",
+                "de": "DE"
             }
     },
         
@@ -125,10 +132,23 @@
                 {
                 "product_1_sku": "121_29406823",
                 "product_2_sku": "127_22828284",
-                "product_3_sku": "150_29554292"
-                }
+                "product_3_sku": "150_29554292",
+                "product_4_sku": "211_123"
+                },
+            
+            "qty_of_products_in_bundle": "3",
+            "qty_of_each_product_inside_bundle": "1"
 
             },
+
+        "concrete":{
+            "available_product":{
+                "with_stock_and_never_out_of_stock":{
+                    "sku": "208_14678762",
+                    "name": "Toshiba CAMILEO P20"
+                }
+            }
+        },
 
         "special_product_abstract_sku": 
             {
@@ -136,6 +156,25 @@
             "with_measurement_unit": "215",
             "with_packaging_unit": "218"
             },
+
+        "concrete":{
+            "available_product":{
+                "with_stock_and_never_out_of_stock":{
+                    "sku": "208_14678762",
+                    "name": "Toshiba CAMILEO P20"
+                },
+
+                "with_stock":{
+                    "sku": "001_25904006",
+                    "name": "Canon IXUS 160"
+                },
+                "without_stock":{
+                    "sku": "031_30021637",
+                    "name": "Canon PowerShot G9 X"
+                }
+
+            }
+        },
 
         "product_with_relations": 
             {
@@ -157,7 +196,13 @@
             "concrete_sku": "138_30046855",
             "abstract_sku": "138"
             },
-
+            "concrete_product_with_alternative": 
+            {
+                "sku": "134_29759322",
+                "abstract_sku": "134",
+                "name": "Acer Aspire S7",
+                "name_lower_case": "acer aspire s7"
+            },
         "alternative_abstract_product": "155",
 
         "abstract_available_product_with_stock": 
@@ -175,7 +220,9 @@
             "concrete_available_with_stock_and_never_out_of_stock_sku": "005_30663301"
 
             },
-
+        "concrete_product_with_concrete_product_alternative": {
+                "sku": "155_30149933"
+            },
         "abstract_product_with_variants": 
             {
             "concretes_3": "177",
@@ -256,11 +303,123 @@
         "busines_unit_address_id": "2175cddd-f8af-5885-b161-227b5c93e72f"
 
     },
+    "search":
+    {
+        "ipp": 
+            {
+            "default": "12",
+            "middle": "24",
+            "biggest": "36",
+            "default_2": "2",
+            "default_3": "6"
+            },
+        "default_qty": 
+            {
+                "ipp_pages": "19",
+                "categories": "18",
+                "colors": "10",
+                "labels": "4",
+                "materials": "7",
+                "material": "5",
+                "brands": "10",
+                "sorting_options": "6"
+            },
+        "default_price_range": 
+            {
+                "min": "175",
+                "max": "345699"
+            },
+            "default_active":{
+                "min":"3454",
+                "max":"39353"
+            },
+        "label": 
+            {
+            "new": "New",
+            "sale": "SALE %",
+            "manual": "Top",
+            "discontinued": "Discontinued",
+            "alternatives": "Alternatives available"
+            },
+        "category_lvl1": 
+            {
+            "id": "11",
+            "qty": "39"
+            },
+        "category_lvl2": 
+            {
+            "id": "12",
+            "qty": "38"
+            },
+        "category_lvl3": 
+            {
+            "id": "13",
+            "qty": "5"
+            },
+        "category_tree_branches_qty": "6",
+        "total_number_of_products_in_search": "218",
+        "abstract_sku_highest_rating": "035"
+    },  
+    "product_attributes":
+    {
+        "brand_1": "Acer",
+        "brand_2": "edding",
+        "brand_3": "Mauser",
+        "brand_4": "Sony",
+
+        "material_1": "aluminum",
+        "material_2": "metal",
+        "material_3": "chipboard",
+        "material_4": "Steel sheets, stove-enameled",
+
+        "delivery_1": "assembled",
+        "price_unit_1": "piece",
+
+        "color_1": "yellow",
+        "color_2": "Blue",
+        "color_3": "purple",
+        "color_4": "orange",
+
+        "product_management_superattribute_id": "farbe",
+        "product_management_attribute_free_input_id": "verschlussart",
+        "product_management_attribute_no_input_id": "bundled_product"
+
+    },
 
     "availability":{
         "stock_is_0": "0.0000000000",
         "stock_is_20": "20.0000000000"
     },
+
+    "labels":
+    {
+        "label_standard": 
+            {
+            "id": "3",
+            "name": "Standard Label"
+            },
+        "label_sale": 
+            {
+            "id": "5",
+            "name": "SALE %"
+            },
+        "label_new": 
+            {
+            "id": "4",
+            "name": "New"
+            },
+        "label_discontinued": 
+            {
+            "id": "2",
+            "name": "Discontinued"
+            },
+        "label_alternative": 
+            {
+            "id": "1",
+            "name": "Alternatives available"
+            }
+    },
+
 
     "misc":{
         "default_header_content_type": "application/vnd.api+json"
