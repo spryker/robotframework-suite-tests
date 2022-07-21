@@ -429,6 +429,8 @@
         "url_resolver_merchant": "/en/merchant/spryker",
         "url_resolver_merchant_entity": "merchants",
         "url_resolver_merchant_id": "MER000001"
+       },
+        
 
     "merchants": 
     {
