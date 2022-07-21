@@ -128,19 +128,19 @@ Remove element attribute with JavaScript:
 
 # Helper keywords for migration from Selenium Library to Browser Library
 Wait Until Element Is Visible
-    [Arguments]    ${locator}    ${message}=${EMPTY}    ${timeout}=0:00:30
+    [Arguments]    ${locator}    ${message}=${EMPTY}    ${timeout}=${browser_timeout}
     Wait For Elements State    ${locator}    visible    ${timeout}    ${message}
 
 Wait Until Page Contains Element
-    [Arguments]    ${locator}    ${message}=${EMPTY}    ${timeout}=0:00:30
+    [Arguments]    ${locator}    ${message}=${EMPTY}    ${timeout}=${browser_timeout}
     Wait For Elements State    ${locator}    attached    ${timeout}    ${message}
 
 Wait Until Page Does Not Contain Element
-    [Arguments]    ${locator}    ${message}=${EMPTY}    ${timeout}=0:00:30
+    [Arguments]    ${locator}    ${message}=${EMPTY}    ${timeout}=${browser_timeout}
     Wait For Elements State    ${locator}    detached    ${timeout}    ${message}
 
 Wait Until Element Is Enabled
-    [Arguments]    ${locator}    ${message}=${EMPTY}    ${timeout}=0:00:30
+    [Arguments]    ${locator}    ${message}=${EMPTY}    ${timeout}=${browser_timeout}
     Wait For Elements State    ${locator}    enabled    ${timeout}    ${message}
 
 Element Should Be Visible
@@ -156,7 +156,7 @@ Get Location
     [Return]    ${current_location}
 
 Wait Until Element Is Not Visible
-    [Arguments]    ${locator}    ${message}=${EMPTY}    ${timeout}=0:00:30
+    [Arguments]    ${locator}    ${message}=${EMPTY}    ${timeout}=${browser_timeout}
     Wait For Elements State    ${locator}    hidden    ${timeout}    ${message}
 
 Page Should Contain Link
@@ -185,7 +185,7 @@ Element Text Should Be
     Get Text    ${locator}    equal    ${expected}    ${message}
 
 Wait Until Element Contains
-    [Arguments]    ${locator}    ${text}    ${timeout}=0:00:30    ${message}=${EMPTY}
+    [Arguments]    ${locator}    ${text}    ${timeout}=${browser_timeout}    ${message}=${EMPTY}
     Get Text    ${locator}    contains    ${text}    ${message}
 
 Page Should Not Contain Element

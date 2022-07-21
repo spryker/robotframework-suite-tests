@@ -31,7 +31,7 @@ Request_concrete_availability_by_concrete_SKU_with_stock_and_never_out_of_stock
     And Response body parameter should contain:    [data][0][attributes]    quantity
     And Response body has correct self link
     
-#Bug CC-15984 - not demo data
+#Bug CC-18820 - not demo data
 Request_concrete_availability_by_concrete_SKU_without_stock
     When I send a GET request:    /concrete-products/${concrete_available_product.without_stock}/concrete-product-availabilities
     Then Response status code should be:    200
