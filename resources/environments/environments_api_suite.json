@@ -1,14 +1,11 @@
 {
-    "environment": "api_suite", 
-
+    "environment": "api_suite",
     "env": {
         "glue_url": "http://glue.de.spryker.local",
         "bapi_url": "http://backend-api.de.spryker.local/api/rest"
     },
-
-    "users": {    
-        "yves_user": 
-            {
+    "users": {
+        "yves_user": {
             "email": "sonia@spryker.com",
             "first_name": "Sonia",
             "last_name": "Wagner",
@@ -16,56 +13,48 @@
             "password_new": "qweRTY_123",
             "reference": "DE--21",
             "salutation": "Ms"
-            },
-        "yves_second_user": 
-            {
+        },
+        "yves_second_user": {
             "email": "bill.martin@spryker.com",
             "first_name": "Martin",
             "last_name": "Bill",
             "password": "change123",
             "reference": "DE--4",
             "salutation": "Mr"
-            },
-        "yves_third_user": 
-            {   
+        },
+        "yves_third_user": {
             "email": "maxmusterman@spryker.com",
             "first_name": "Max",
             "last_name": "Musterman",
             "password": "change123",
             "salutation": "Mr"
-            },
-        "zed_admin": 
-            {
+        },
+        "zed_admin": {
             "email": "admin@spryker.com",
             "password": "change123"
-            },
-        "gender": 
-            {
+        },
+        "gender": {
             "female": "Female",
             "male": "Male"
-            },
+        },
         "email": {
             "name": "sonia",
             "domain": "@spryker.com"
-            },
-        "agent": 
-            {
+        },
+        "agent": {
             "email": "agent123@spryker.com",
             "password": "change123"
-            }
-            ,
-            "yves_shared_shopping_list_user": {
-                "email": "Trever.m@spryker.com",
-                "first_name": "Trever",
-                "last_name": "Meier",
-                "password": "change123",
-                "salutation": "Mr"
-            }
+        },
+        "yves_shared_shopping_list_user": {
+            "email": "Trever.m@spryker.com",
+            "first_name": "Trever",
+            "last_name": "Meier",
+            "password": "change123",
+            "salutation": "Mr"
+        }
     },
-    
-    "address":{
-        "default": 
-            {
+    "address": {
+        "default": {
             "address1": "Third, 33, 11",
             "address2": "33-B",
             "address3": "third. address. line",
@@ -77,144 +66,163 @@
             "phone": "22111-3-4-5",
             "shipping_status": "False",
             "billing_status": "False"
-            },
-        "changed": 
-            {
+        },
+        "changed": {
             "address1": "New Street 123",
             "address2": "75d",
             "address3": "third. address. line - changed",
             "phone": "555-555-55"
-            }
+        }
     },
-
-    "shop":{
-        "currency": 
-            {
-            "eur": 
-                {
+    "shop": {
+        "currency": {
+            "eur": {
                 "name": "Euro",
                 "code": "EUR",
                 "symbol": "€"
-                }
             }
+        },
+        "mode": {
+            "gross": "GROSS_MODE",
+            "net": "NET_MODE"
+        },
+        "store": {
+            "us": "US",
+            "de": "DE"
+        }
     },
-        
     "products": {
-        "bundle_product": 
-            {
+        "bundle_product": {
             "bundle_product_product_name": "HP Bundle",
-
-            "abstract": 
-                {
+            "abstract": {
                 "sku": "211",
                 "product_1_sku": "121",
                 "product_2_sku": "127",
                 "product_3_sku": "150"
-                },
-            "concrete": 
-                {
+            },
+            "concrete": {
                 "product_1_sku": "121_29406823",
                 "product_2_sku": "127_22828284",
                 "product_3_sku": "150_29554292"
-                }
-
-            },
-
-        "special_product_abstract_sku": 
-            {
+            }
+        },
+        "special_product_abstract_sku": {
             "with_multivariant": "051",
             "with_measurement_unit": "215",
             "with_packaging_unit": "218"
-            },
-
-        "product_with_relations": 
-            {
-            "has_related_products": 
-                {
+        },
+        "product_with_relations": {
+            "has_related_products": {
                 "sku": "200"
-                },
-            "has_alternative_products": 
-                {
-                "sku": "145"
-                },
-            "has_upselling_products": 
-                {
-                "sku": "018"
-                }
             },
-        "product_with_alternative": 
-            {
+            "has_alternative_products": {
+                "sku": "145"
+            },
+            "has_upselling_products": {
+                "sku": "018"
+            }
+        },
+        "product_with_alternative": {
             "concrete_sku": "138_30046855",
             "abstract_sku": "138"
-            },
-
+        },
         "alternative_abstract_product": "155",
-
-        "abstract_available_product_with_stock": 
-            {
+        "abstract_available_product_with_stock": {
             "sku": "183",
             "name": "Sony Xperia SGP512E1",
             "superattribute": "color"
+        },
+        "product_availability": {
+            "concrete_available_with_stock_and_never_out_of_stock_sku": "004_30663302",
+            "concrete_available_with_stock_and_never_out_of_stock_name": "Canon IXUS 175"
             },
-
-        "product_availability": 
-            {
-            "abstract_available_with_stock_and_never_out_of_stock": "130",
-            "abstract_available_product_with_no_stock_and_never_out_of_stock": "666",
-            "abstract_unavailable_product": "189"
-            },
-
-        "abstract_product_with_variants": 
-            {
+        "abstract_product_with_variants": {
             "concretes_3": "177",
             "concretes_name_3": "Samsung Galaxy Tab Active 8.0 8 GB",
             "concretes_superattribute_3": "internal_storage_capacity"
+        },
+        "abstract_product": {
+            "product_with_multiple_variants": {
+                "sku": "130",
+                "variant1_name": "Lenovo ThinkStation P300",
+                "variant1_sku": "130_29285281",
+                "variant2_sku": "130_24326086"
             },
-
-        "abstract_product": 
-            {
-            "product_with_volume_prices": 
-                {
+        "abstract_product": {
+            "product_with_volume_prices": {
                 "sku": "093",
                 "name": "Sony SmartWatch 3"
-                },
-            "product_with_original_prices": 
-                {
+            },
+            "product_with_original_prices": {
                 "sku": "203"
-                },
-            "product_with_label": 
-                {
+            },
+            "product_with_label": {
                 "sku": "001",
                 "name": "Canon IXUS 160"
-                },
-            "product_with_reviews": 
-                {
+            },
+            "product_with_reviews": {
                 "sku": "093",
                 "name": "Sony SmartWatch 3"
-                },
-            "product_with_options": 
-                {
+            },
+            "product_with_options": {
                 "sku": "093",
                 "name": "Sony SmartWatch 3"
-                },
-            "product_with_concrete_offers": 
-                {
+            },
+            "product_with_concrete_offers": {
                 "sku": "112",
                 "name": "Acer Extensa M2610"
-                }
-            }   
+            }
+        }
     },
-
-    "content":{
-        "abstract_product_list": 
-            {
+    "discount_concrete_product": {
+        "product_1": {
+            "total_sum_of_discounts": "5600",
+            "total_sum_of_discounts_1": "1400",
+            "with_discount_20_percentage_off_storage": "4000",
+            "with_discount_10_percentage_off_minimum_order": "1600",
+            "with_discount_20_percentage_off_storage_1": "1400",
+            "with_discount_10_percentage_off_minimum_order_1": "560"
+        },
+        "product_2": {
+            "sku": "213216",
+            "name": "office akktiv base cabinet - HxWxD 942 x 913 x 420 mm - light gray, RAL 7035",
+            "total_sum_of_discounts": "8096",
+            "sku_1": "007_30691822",
+            "name_1": "Canon IXUS 285",
+            "total_sum_of_discounts_1": "3320",
+            "with_discount_20_percentage_off_storage": "5783",
+            "with_discount_10_percentage_off_minimum_order": "2313",
+            "with_discount_20_percentage_off_storage_1": "6900",
+            "with_discount_10_percentage_off_minimum_order_1": "2760"
+        }
+    },
+    "discount_1": {
+        "name": "10% off minimum order",
+        "name_1": "20% off cameras",
+        "description_1": "20% off all digital cameras in the store",
+        "total_sum_for_discounts_for_products_1_and_2": "8300"
+    },
+    "discount_2": {
+        "name": "20% off cameras",
+        "total_sum_for_discounts_for_products_1_2": "3320",
+        "description": "Get a 10% discount on all orders above 100 EUR or 115 CHF"
+    },
+    "discount_3": {
+        "name": "Free standard delivery",
+        "total_sum": "490",
+        "description": "Free standard delivery for all orders above certain value depending on the currency",
+        "total_sum_for_discounts_for_products_1_2": "490"
+    }
+    }    ,
+    "content": {
+        "abstract_product_list": {
             "id": "apl-1",
             "product1_sku": "204",
             "product1_name": "Sony PXW-FS5K",
             "product2_sku": "205",
             "product2_name": "Toshiba CAMILEO S30",
             "size": "2"
-            },
+        },
         "category_node_is_root_id": "1",
         "category_node_has_only_parent_id": "12",
         "category_node_has_children_id": "11"
@@ -227,23 +235,30 @@
         "company_id": "62de4ab6-b768-5c21-8835-455d9f341625",
         "company_user_id": "2816dcbd-855e-567e-b26f-4d57f3310bb8",
         "busines_unit_address_id": "2175cddd-f8af-5885-b161-227b5c93e72f"
-
     },
-
-    "availability":{
+    "availability": {
         "stock_is_0": "0.0000000000",
         "stock_is_20": "20.0000000000"
     },
-
-    "misc":{
-        "default_header_content_type": "application/vnd.api+json"
+    "misc": {
+        "default_header_content_type": "application/vnd.api+json",
+        "test_cart_name": "Test-cart",
+    "payment": {
+            "provider_name": "DummyPayment",
+            "method_name": "Credit Card",
+            "selection_name": "dummyMarketplacePaymentInvoice"
+        }
+        ,
+    "shipment": {
+            "carrier_name": "Spryker Dummy Shipment",
+            "method_name": "Standard",
+            "method_name_2": "Express",
+            "delivery_date": "2030-12-31"
+        }
     },
-    "merchants": 
-    {
-        "merchants": 
-            {
-            "sony_experts": 
-                {
+    "merchants": {
+        "merchants": {
+            "sony_experts": {
                 "merchant_id": "MER000006",
                 "merchant_name": "Sony Experts",
                 "merchant_url": "/en/merchant/sony-experts",
@@ -255,12 +270,11 @@
                 "public_email": "support@sony-experts.com",
                 "public_phone": "+49 30 234567691",
                 "description": "Capture your moment with the best cameras from Sony. From pocket-size to professional-style, they all pack features to deliver the best quality pictures.Discover the range of Sony cameras, lenses and accessories, and capture your favorite moments with precision and style with the best cameras can offer.",
-                "addresses":{
-                "city_munchen":"München",
-                "address1": "Matthias-Pschorr-Straße"
-                            }
+                "addresses": {
+                    "city_munchen": "München",
+                    "address1": "Matthias-Pschorr-Straße"
                 }
             }
+        }
     }
-
 }
