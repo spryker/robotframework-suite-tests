@@ -111,11 +111,12 @@
                 "name": "US Dollar",
                 "code": "USD",
                 "symbol": "$"
+            }
             },
-        "mode": {
+
+            "mode": {
                 "gross": "GROSS_MODE",
                 "net": "NET_MODE"
-            }
             },
             
         "store":{
@@ -162,15 +163,6 @@
             "qty_of_each_product_inside_bundle": "1"
 
             },
-
-        "concrete":{
-            "available_product":{
-                "with_stock_and_never_out_of_stock":{
-                    "sku": "208_14678762",
-                    "name": "Toshiba CAMILEO P20"
-                }
-            }
-        },
 
         "special_product_abstract_sku": 
             {
