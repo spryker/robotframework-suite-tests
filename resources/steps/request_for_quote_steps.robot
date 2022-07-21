@@ -52,9 +52,11 @@ Yves: click '${buttonName}' button on the 'Quote Request Details' page
 
 Yves: change price for the product in the quote request with sku xxx on:
     [Arguments]    ${sku}    ${priceToSet}
+    Wait Until Element Is Visible    ${quote_request_save_button}
     ${use_default_price_state}=    Set Variable    ${EMPTY}
     ${use_default_price_state}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//article[@data-qa='component quote-request-cart-item']//div[contains(@class,'quote-request-cart-item__column--content')][contains(.,'${sku}')]/ancestor::article//*[contains(@class,'quote-request-cart-item__column--total')]//input[@type='checkbox'][@checked]
     IF    '${use_default_price_state}'=='True'    Click Element by xpath with JavaScript    xpath=//article[@data-qa='component quote-request-cart-item']//div[contains(@class,'quote-request-cart-item__column--content')][contains(.,'${sku}')]/ancestor::article//*[contains(@class,'quote-request-cart-item__column--total')]//input[@name='use_default_price']
+    Wait Until Element Is Visible    xpath=//article[@data-qa='component quote-request-cart-item']//div[contains(@class,'quote-request-cart-item__column--content')][contains(.,'${sku}')]/ancestor::article//*[contains(@class,'quote-request-cart-item__column--total')]//input[@type='text']//ancestor::div[contains(@id,'quote_request_agent_form')]   
     Type Text    xpath=//article[@data-qa='component quote-request-cart-item']//div[contains(@class,'quote-request-cart-item__column--content')][contains(.,'${sku}')]/ancestor::article//*[contains(@class,'quote-request-cart-item__column--total')]//input[@type='text']    ${priceToSet}
 
 Yves: add the following note to the quote request:
