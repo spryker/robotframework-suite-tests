@@ -12,7 +12,7 @@ Get_product_measurement_unit_by_id
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
-    And Response body parameter should be:    [data][id]    METR
+    And Response body parameter should be:    [data][id]    ${measurement_unit.m}
     And Response body parameter should be:    [data][type]    product-measurement-units
     And Response body parameter should not be EMPTY:    [data][attributes][name]
     And Response body parameter should not be EMPTY:    [data][attributes][defaultPrecision]
