@@ -17,7 +17,7 @@ Get_cart_permission_groups_by_cart_id
     ...  AND    I send a GET request:    /company-users
     ...  AND    Response status code should be:    200
     ...  AND    Save value to a variable:    [data][0][id]    company_user_id
-    ...  AND    I send a POST request:    /carts/${cart_id}/shared-carts    {"data": {"type": "shared-carts","attributes": {"idCompanyUser": "${company_user_id}","idCartPermissionGroup": "2"}}}
+    ...  AND    I send a POST request:    /carts/${cart_id}/shared-carts    {"data": {"type": "shared-carts","attributes": {"idCompanyUser": "${company_user_id}","idCartPermissionGroup": "${cart_permission_group_id_2}"}}}
     When I send a GET request:    /carts/${cart_id}?include=shared-carts,cart-permission-groups
     Then Response status code should be:    200
     And Response reason should be:    OK
@@ -43,7 +43,7 @@ Get_cart_permission_groups_by_cart_id
     And Response body parameter should be in:    [included][0][attributes][isDefault]    true   false
     And Response body parameter should be:    [included][1][type]    shared-carts
     And Response body parameter should be:    [included][1][attributes][idCompanyUser]    ${company_user_id}
-    And Response body parameter should be:    [included][1][attributes][idCartPermissionGroup]    2
+    And Response body parameter should be:    [included][1][attributes][idCartPermissionGroup]    ${cart_permission_group_id_2}
     And Response body parameter should not be EMPTY:    [included][1][relationships][cart-permission-groups]
     And Each array element of array in response should contain property:    [included][1][relationships][cart-permission-groups][data]    type
     And Each array element of array in response should contain property:    [included][1][relationships][cart-permission-groups][data]    id
