@@ -43,5 +43,6 @@ Yves: change variant of the product on CMS page on:
 
 
 Yves: add all products to the shopping cart from Product Set
+    Wait Until Element Is Enabled    ${add_all_product_to_the_shopping_cart}
     Click    ${add_all_product_to_the_shopping_cart}
     Yves: remove flash messages

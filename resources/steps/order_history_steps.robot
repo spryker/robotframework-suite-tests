@@ -22,6 +22,7 @@ Yves: 'View Order/Reorder/Return' on the order history page:
     END
 
 Yves: reorder all items from 'View Order' page
+    Wait Until Element Is Visible    ${order_details_reorder_all_button}
     Click    ${order_details_reorder_all_button}
     Yves: remove flash messages
 
@@ -33,6 +34,7 @@ Yves: shipping address on the order details page is:
 
 Yves: 'Order Details' page contains the following product title N times:
     [Arguments]    ${productTitle}    ${expectedQuantity}
+    Wait Until Page Contains Element    xpath=//customer-reorder-form[@data-qa='component customer-reorder-form']//div[@data-qa='component order-detail-table']
     ${productTitleCount}=    Get Element Count    xpath=//div[@data-qa='component order-detail-table']//article//*[contains(@class,'title')][text()='${productTitle}']
     ${productTitleCount}=    Convert To String    ${productTitleCount}
     Log    ${productTitleCount}
