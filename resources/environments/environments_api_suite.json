@@ -69,7 +69,16 @@
                 "name": "Euro",
                 "code": "EUR",
                 "symbol": "€"
+                },
+                "chf": {
+                    "name": "Swiss Franc",
+                    "code": "CHF",
+                    "symbol": "CHF"
                 }
+            },
+            "mode": {
+                "gross": "GROSS_MODE",
+                "net": "NET_MODE"
             }
     },
         

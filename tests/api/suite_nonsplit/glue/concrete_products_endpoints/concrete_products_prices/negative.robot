@@ -8,8 +8,6 @@ Resource    ../../../../../../resources/common/common_api.robot
 ENABLER
     TestSetup
 Get_product_prices_with_abstract_sku
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
-    ...    AND    I set Headers:    Authorization=${token}  
     When I send a GET request:    /concrete-products/${bundle_product.abstract.product_2_sku}/concrete-product-prices
     Then Response status code should be:    404
     And Response reason should be:    Not Found
@@ -17,8 +15,7 @@ Get_product_prices_with_abstract_sku
     And Response should return error message:    Can`t find concrete product prices.
 
 Get_product_prices_with_empty_SKU
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
-    ...    AND    I set Headers:    Authorization=${token} 
+
     When I send a GET request:    /concrete-products//concrete-product-prices
     Then Response status code should be:    400
     And Response reason should be:    Bad Request
@@ -26,8 +23,6 @@ Get_product_prices_with_empty_SKU
     And Response should return error message:    Concrete product sku is not specified.
 
 Get_product_prices_with_special_characters
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
-    ...    AND    I set Headers:    Authorization=${token}  
     When I send a GET request:    /concrete-products/~!@#$%^&*()_+/concrete-product-prices
     Then Response status code should be:    404
     And Response reason should be:    Not Found
@@ -35,8 +30,6 @@ Get_product_prices_with_special_characters
     And Response should return error message:     Concrete product is not found.
 
 Get_product_prices_by_concrete_sku_product_doesn't_exist
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
-    ...    AND    I set Headers:    Authorization=${token}  
     When I send a GET request:    /concrete-products/4567890/concrete-product-prices
     Then Response status code should be:    404
     And Response reason should be:    Not Found
