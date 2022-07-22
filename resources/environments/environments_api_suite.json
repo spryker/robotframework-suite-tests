@@ -53,7 +53,8 @@
             "female": "Female",
             "male": "Male"
             },
-        "email": {
+        "email": 
+            {
             "name": "sonia",
             "domain": "@spryker.com"
             },
@@ -62,17 +63,18 @@
             "email": "agent123@spryker.com",
             "password": "change123"
             },
-        "non_agent":{
+        "non_agent":
+            {
             "email": "admin_de@spryker.com",
             "password": "change123"
-            }
-            ,
-            "yves_shared_shopping_list_user": {
-                "email": "Trever.m@spryker.com",
-                "first_name": "Trever",
-                "last_name": "Meier",
-                "password": "change123",
-                "salutation": "Mr"
+            },
+        "yves_shared_shopping_list_user": 
+            {
+            "email": "Trever.m@spryker.com",
+            "first_name": "Trever",
+            "last_name": "Meier",
+            "password": "change123",
+            "salutation": "Mr"
             }
     },
     
@@ -100,7 +102,8 @@
             }
     },
 
-    "shop":{
+    "shop":
+        {
         "currency": 
             {
             "eur": 
@@ -109,17 +112,20 @@
                 "code": "EUR",
                 "symbol": "€"
                 },
-            "chf": {
-                    "name": "Swiss Franc",
-                    "code": "CHF",
-                    "symbol": "CHF"
+            "chf": 
+                {
+                "name": "Swiss Franc",
+                "code": "CHF",
+                "symbol": "CHF"
                 }
             },
-        "mode": {
+        "mode": 
+            {
                 "gross": "GROSS_MODE",
                 "net": "NET_MODE"
             },
-        "store": {
+        "store": 
+            {
                 "us": "US",
                 "de": "DE"
             }
@@ -129,7 +135,6 @@
         "bundle_product": 
             {
             "bundle_product_product_name": "HP Bundle",
-
             "abstract": 
                 {
                 "sku": "211",
@@ -147,65 +152,66 @@
             
             "qty_of_products_in_bundle": "3",
             "qty_of_each_product_inside_bundle": "1"
-
             },
-
-        "concrete":{
-            "available_product":{
-                "with_stock_and_never_out_of_stock":{
-                    "sku": "208_14678762",
-                    "name": "Toshiba CAMILEO P20"
-                }
-            }
-        },
+        "bundled_product":
+                {
+                "concrete": {
+                    "product_1_sku": "211_123",
+                    "product_2_sku": "150_29554292",
+                    "product_3_sku": "127_22828284",
+                    "product_4_sku": "121_29406823"
+                    }
+                },
 
         "special_product_abstract_sku": 
             {
-            "with_multivariant": "051",
-            "with_measurement_unit": "215",
-            "with_packaging_unit": "218"
+                "with_multivariant": "051",
+                "with_measurement_unit": "215",
+                "with_packaging_unit": "218"
             },
 
         "concrete":{
-            "available_product":{
-                "with_stock_and_never_out_of_stock":{
+            "available_product":
+                {
+                "with_stock_and_never_out_of_stock":
+                    {
                     "sku": "208_14678762",
                     "name": "Toshiba CAMILEO P20"
-                },
-
-                "with_stock":{
+                    },
+                "with_stock":
+                    {
                     "sku": "001_25904006",
                     "name": "Canon IXUS 160"
-                },
-                "without_stock":{
+                    },
+                "without_stock":
+                    {
                     "sku": "031_30021637",
                     "name": "Canon PowerShot G9 X"
+                    }
                 }
-
-            }
         },
 
         "product_with_relations": 
-            {
-            "has_related_products": 
                 {
-                "sku": "200"
+                "has_related_products": 
+                    {
+                    "sku": "200"
+                    },
+                "has_alternative_products": 
+                    {
+                    "sku": "145"
+                    },
+                "has_upselling_products": 
+                    {
+                    "sku": "018"
+                    }
                 },
-            "has_alternative_products": 
-                {
-                "sku": "145"
-                },
-            "has_upselling_products": 
-                {
-                "sku": "018"
-                }
-            },
         "product_with_alternative": 
-            {
-            "concrete_sku": "138_30046855",
-            "abstract_sku": "138"
-            },
-            "concrete_product_with_alternative": 
+                {
+                    "concrete_sku": "138_30046855",
+                    "abstract_sku": "138"
+                },
+        "concrete_product_with_alternative": 
             {
                 "sku": "134_29759322",
                 "abstract_sku": "134",
@@ -221,6 +227,9 @@
             "superattribute": "color"
             },
         "concrete_available_product": {
+            "with_offer": "092_24495842",
+            "with_label": "006_30692993",
+
             "sku": "010_30692994"
         },
         "product_availability": 
@@ -232,6 +241,7 @@
         "concrete_product_with_concrete_product_alternative": {
                 "sku": "155_30149933"
             },
+
         "abstract_product_with_variants": 
             {
             "concretes_3": "177",
@@ -270,11 +280,7 @@
                 "sku": "112",
                 "name": "Acer Extensa M2610"
                 }
-            },
-
-        "concrete_available_product": {
-            "with_label": "006_30692993"
-        }   
+            } 
     },
 
     "shopping-list": 
