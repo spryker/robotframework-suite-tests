@@ -12,7 +12,6 @@ Product_has_related_products
     When I send a GET request:    /abstract-products/${product_with_relations.has_related_products.sku}/related-products
     Then Response status code should be:    200
     And Response reason should be:    OK
-    log    ${response_body}
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response should contain the array larger than a certain size:    [data]    0
     And Each array element of array in response should contain nested property with value:    [data]    type    abstract-products
