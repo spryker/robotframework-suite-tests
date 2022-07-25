@@ -13,6 +13,7 @@
             "first_name": "Sonia",
             "last_name": "Wagner",
             "password": "change123",
+            "password_new": "qweRTY_123",
             "reference": "DE--21",
             "salutation": "Ms"
             },
@@ -25,19 +26,55 @@
             "reference": "DE--4",
             "salutation": "Mr"
             },
-        "yves_shared_shopping_list_user": 
+        "yves_third_user": 
+            {   
+            "email": "maxmusterman@spryker.com",
+            "first_name": "Max",
+            "last_name": "Musterman",
+            "password": "change123",
+            "salutation": "Mr"
+            },
+        "yves_fourth_user": 
             {
-            "email": "Trever.m@spryker.com"
+            "email": "Lilu@ottom.de",
+            "first_name": "Lilu",
+            "last_name": "Dallas",
+            "password": "change123",
+            "reference": "DE-30",
+            "salutation": "Ms"
             },
         "zed_admin": 
             {
             "email": "admin@spryker.com",
             "password": "change123"
             },
+        "gender": 
+            {
+            "female": "Female",
+            "male": "Male"
+            },
+        "email": 
+            {
+            "name": "sonia",
+            "domain": "@spryker.com"
+            },
         "agent": 
             {
             "email": "agent123@spryker.com",
             "password": "change123"
+            },
+        "non_agent":
+            {
+            "email": "admin_de@spryker.com",
+            "password": "change123"
+            },
+        "yves_shared_shopping_list_user": 
+            {
+            "email": "Trever.m@spryker.com",
+            "first_name": "Trever",
+            "last_name": "Meier",
+            "password": "change123",
+            "salutation": "Mr"
             }
     },
     
@@ -65,7 +102,8 @@
             }
     },
 
-    "shop":{
+    "shop":
+        {
         "currency": 
             {
             "eur": 
@@ -73,7 +111,23 @@
                 "name": "Euro",
                 "code": "EUR",
                 "symbol": "€"
+                },
+            "chf": 
+                {
+                "name": "Swiss Franc",
+                "code": "CHF",
+                "symbol": "CHF"
                 }
+            },
+        "mode": 
+            {
+                "gross": "GROSS_MODE",
+                "net": "NET_MODE"
+            },
+        "store": 
+            {
+                "us": "US",
+                "de": "DE"
             }
     },
         
@@ -81,7 +135,6 @@
         "bundle_product": 
             {
             "bundle_product_product_name": "HP Bundle",
-
             "abstract": 
                 {
                 "sku": "211",
@@ -93,41 +146,79 @@
                 {
                 "product_1_sku": "121_29406823",
                 "product_2_sku": "127_22828284",
-                "product_3_sku": "150_29554292"
-                }
-
+                "product_3_sku": "150_29554292",
+                "product_4_sku": "211_123"
+                },
+            
+            "qty_of_products_in_bundle": "3",
+            "qty_of_each_product_inside_bundle": "1"
             },
+        "bundled_product":
+                {
+                "concrete": {
+                    "product_1_sku": "211_123",
+                    "product_2_sku": "150_29554292",
+                    "product_3_sku": "127_22828284",
+                    "product_4_sku": "121_29406823"
+                    }
+                },
 
         "special_product_abstract_sku": 
-            {
-            "with_multivariant": "051",
-            "with_measurement_unit": "215",
-            "with_packaging_unit": "218"
+                {
+                "with_multivariant": "051",
+                "with_measurement_unit": "215",
+                "with_packaging_unit": "218"
+                },
+
+        "concrete":{
+            "available_product":
+                {
+                "with_stock_and_never_out_of_stock":
+                    {
+                    "sku": "208_14678762",
+                    "name": "Toshiba CAMILEO P20"
+                    },
+                "with_stock":
+                    {
+                    "sku": "001_25904006",
+                    "name": "Canon IXUS 160"
+                    },
+                "without_stock":
+                    {
+                    "sku": "031_30021637",
+                    "name": "Canon PowerShot G9 X"
+                    }
+                }
             },
 
         "product_with_relations": 
-            {
-            "has_related_products": 
                 {
-                "sku": "200"
+                "has_related_products": 
+                    {
+                    "sku": "200"
+                    },
+                "has_alternative_products": 
+                    {
+                    "sku": "145"
+                    },
+                "has_upselling_products": 
+                    {
+                    "sku": "018"
+                    }
                 },
-            "has_alternative_products": 
-                {
-                "sku": "145"
-                },
-            "has_upselling_products": 
-                {
-                "sku": "018"
-                }
-            },
         "product_with_alternative": 
-            {
-            "concrete_sku": "138_30046855",
-            "abstract_sku": "138"
-            },
-
+                {
+                "concrete_sku": "138_30046855",
+                "abstract_sku": "138"
+                },
+        "concrete_product_with_alternative": 
+                {
+                "sku": "134_29759322",
+                "abstract_sku": "134",
+                "name": "Acer Aspire S7",
+                "name_lower_case": "acer aspire s7"
+                },
         "alternative_abstract_product": "155",
-
         "abstract_available_product_with_stock": 
             {
             "sku": "183",
@@ -136,15 +227,21 @@
             },
         "concrete_available_product": 
             {
+            "with_offer": "092_24495842",
+            "with_label": "006_30692993",
             "sku": "010_30692994"
             },
-
         "product_availability": 
             {
             "abstract_available_with_stock_and_never_out_of_stock": "130",
             "abstract_available_product_with_no_stock_and_never_out_of_stock": "666",
             "abstract_unavailable_product": "189",
-            "concrete_unavailable_product": "192_17738941"
+            "concrete_unavailable_product": "192_17738941",
+            "concrete_available_with_stock_and_never_out_of_stock": "130_29285281"
+            },
+        "concrete_product_with_concrete_product_alternative": 
+            {
+                "sku": "155_30149933"
             },
 
         "abstract_product_with_variants": 
@@ -185,7 +282,7 @@
                 "sku": "112",
                 "name": "Acer Extensa M2610"
                 }
-            }   
+            } 
     },
 
     "shopping-list": 
@@ -197,6 +294,7 @@
         "name": "Newcomers"
         }
     },
+
     "content":{
         "abstract_product_list": 
             {
@@ -206,7 +304,103 @@
             "product2_sku": "205",
             "product2_name": "Toshiba CAMILEO S30",
             "size": "2"
-            }
+            },
+        "category_node_is_root_id": "1",
+        "category_node_has_only_parent_id": "12",
+        "category_node_has_children_id": "11"
+    },
+
+    "companies": {
+        "company_name": "Spryker Systems GmbH",
+        "business_unit_address_id": "2175cddd-f8af-5885-b161-227b5c93e72f",
+        "business_unit_name": "Spryker Systems HR department",
+        "user_with_multiple_companies": "anne.boleyn@spryker.com",
+        "company_id": "62de4ab6-b768-5c21-8835-455d9f341625",
+        "company_user_id": "2816dcbd-855e-567e-b26f-4d57f3310bb8",
+        "busines_unit_address_id": "2175cddd-f8af-5885-b161-227b5c93e72f"
+    },
+
+    "search":
+    {
+        "ipp": 
+            {
+            "default": "12",
+            "middle": "24",
+            "biggest": "36",
+            "default_2": "2",
+            "default_3": "6"
+            },
+        "default_qty": 
+            {
+                "ipp_pages": "19",
+                "categories": "18",
+                "colors": "10",
+                "labels": "4",
+                "materials": "7",
+                "material": "5",
+                "brands": "10",
+                "sorting_options": "6"
+            },
+        "default_price_range": 
+            {
+                "min": "175",
+                "max": "345699"
+            },
+            "default_active":{
+                "min":"3454",
+                "max":"39353"
+            },
+        "label": 
+            {
+            "new": "New",
+            "sale": "SALE %",
+            "manual": "Top",
+            "discontinued": "Discontinued",
+            "alternatives": "Alternatives available"
+            },
+        "category_lvl1": 
+            {
+            "id": "11",
+            "qty": "39"
+            },
+        "category_lvl2": 
+            {
+            "id": "12",
+            "qty": "38"
+            },
+        "category_lvl3": 
+            {
+            "id": "13",
+            "qty": "5"
+            },
+        "category_tree_branches_qty": "6",
+        "total_number_of_products_in_search": "218",
+        "abstract_sku_highest_rating": "035"
+    },  
+
+    "product_attributes":
+    {
+        "brand_1": "Acer",
+        "brand_2": "edding",
+        "brand_3": "Mauser",
+        "brand_4": "Sony",
+
+        "material_1": "aluminum",
+        "material_2": "metal",
+        "material_3": "chipboard",
+        "material_4": "Steel sheets, stove-enameled",
+
+        "delivery_1": "assembled",
+        "price_unit_1": "piece",
+
+        "color_1": "yellow",
+        "color_2": "Blue",
+        "color_3": "purple",
+        "color_4": "orange",
+
+        "product_management_superattribute_id": "farbe",
+        "product_management_attribute_free_input_id": "verschlussart",
+        "product_management_attribute_no_input_id": "bundled_product"
 
     },
 
@@ -215,8 +409,77 @@
         "stock_is_20": "20.0000000000"
     },
 
+    "labels":
+    {
+        "label_standard": 
+            {
+            "id": "3",
+            "name": "Standard Label"
+            },
+        "label_sale": 
+            {
+            "id": "5",
+            "name": "SALE %"
+            },
+        "label_new": 
+            {
+            "id": "4",
+            "name": "New"
+            },
+        "label_discontinued": 
+            {
+            "id": "2",
+            "name": "Discontinued"
+            },
+        "label_alternative": 
+            {
+            "id": "1",
+            "name": "Alternatives available"
+            }
+    },
+
+
     "misc":{
-        "default_header_content_type": "application/vnd.api+json"
+        "default_header_content_type": "application/vnd.api+json",
+        "test_cart_name": "Test-cart",
+        "payment": 
+            {
+            "provider_name": "dummyMarketplacePayment",
+            "method_name": "invoice",
+            "selection_name": "dummyMarketplacePaymentInvoice"
+            },
+        "shipment": 
+            {
+            "carrier_name": "Spryker Dummy Shipment",
+            "method_name_1": "Standard",
+            "method_name_2": "Express",
+            "delivery_date": "2030-12-31"
+            }
+    },
+
+    "merchants": 
+    {
+        "merchants": 
+            {
+            "sony_experts": 
+                {
+                "merchant_id": "MER000006",
+                "merchant_name": "Sony Experts",
+                "merchant_url": "/en/merchant/sony-experts",
+                "contact_person_role": "Brand Manager",
+                "contact_person_title": "Ms",
+                "contact_person_first_name": "Michele",
+                "contact_person_last_name": "Nemeth",
+                "contact_person_phone": "030/123456789",
+                "public_email": "support@sony-experts.com",
+                "public_phone": "+49 30 234567691",
+                "description": "Capture your moment with the best cameras from Sony. From pocket-size to professional-style, they all pack features to deliver the best quality pictures.Discover the range of Sony cameras, lenses and accessories, and capture your favorite moments with precision and style with the best cameras can offer.",
+                "addresses":{
+                "city_munchen":"München",
+                "address1": "Matthias-Pschorr-Straße"
+                            }
+                }
+            }
     }
 
 }

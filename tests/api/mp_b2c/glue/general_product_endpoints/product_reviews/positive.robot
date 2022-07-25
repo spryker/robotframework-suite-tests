@@ -51,6 +51,7 @@ Get_product_reviews_for_product_with_no_reviews
     And Response should contain the array of a certain size:    [data]    0
     And Response body has correct self link
 
+# will be covered by a separate feature https://spryker.aha.io/features/REVIEW-2
 # bug CC-16486
 Get_product_review_by_id
     [Setup]    Run Keywords    I send a GET request:    /abstract-products/${abstract_product.product_with_reviews.sku}/product-reviews
@@ -68,6 +69,7 @@ Get_product_review_by_id
     And Response body parameter should not be EMPTY:    [data][attributes][description]
     And Response body parameter should not be EMPTY:    [data][links][self]
 
+# will be covered by a separate feature https://spryker.aha.io/features/REVIEW-2
 # bug CC-16486 - additional issue with self link
 Create_a_product_review
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
