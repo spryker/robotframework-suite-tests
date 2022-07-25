@@ -32,8 +32,6 @@ Create_customer
     [Teardown]    Run Keywords    I send a POST request:    /access-tokens    {"data":{"type":"access-tokens","attributes":{"username":"${userEmail}","password":"${yves_user.password}"}}}
     ...    AND    Response status code should be:    201
     ...    AND    Save value to a variable:    [data][attributes][accessToken]    token
-    ...    AND    I set Headers:    Authorization=token
-    ...    AND    I set Headers:    Authorization=Bearer ${token}
     ...    AND    Response reason should be:    Created
     ...    AND    Response body has correct self link internal
     ...    AND    I send a DELETE request:    /customers/${user_id}
@@ -46,18 +44,18 @@ New_customer_can_login_after_confirmation
     ...    AND    Response status code should be:    201
     ...    AND    Save value to a variable:    [data][id]    userId
     ...    AND    Save value to a variable:    [data][attributes][email]    userEmail
-    ...    AND    Save the result of a SELECT DB query to a variable:  select registration_key from spy_customer where customer_reference = '${user_id}'    confirmation_key
+    ...    AND    Save the result of a SELECT DB query to a variable:  select registration_key from spy_customer where customer_reference = '${userId}'    confirmation_key
     I send a POST request:    /customer-confirmation   {"data":{"type":"customer-confirmation","attributes":{"registrationKey":"${confirmation_key}"}}}
     And Response status code should be:    204
     And Response reason should be:    No Content
     I send a POST request:    /access-tokens    {"data":{"type":"access-tokens","attributes":{"username":"${userEmail}","password":"${yves_user.password}"}}}
     And Response status code should be:    201
     And Save value to a variable:    [data][attributes][accessToken]    token
-    And I set Headers:    Authorization=token
-    And I set Headers:    Authorization=Bearer ${token}
     And Response reason should be:    Created
     And Response body has correct self link internal
-    [Teardown]    Run Keywords    I send a DELETE request:    /customers/${userId}
+    [Teardown]    Run Keywords    I get access token for the customer:    ${userEmail}
+    ...    AND    I set Headers:    Authorization=${token}
+    ...    AND    I send a DELETE request:    /customers/${userId}
     ...    AND    Response status code should be:    204
     ...    AND    Response reason should be:    No Content    
 
