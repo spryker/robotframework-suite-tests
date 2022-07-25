@@ -11,7 +11,7 @@ ENABLER
  ####POST####
 Create_a_return_with_Invalid_access_token
      [Setup]    I set Headers:    Authorization=3485h7
-    When I send a POST request:     /returns     {"data":{"type":"returns","attributes":{"store":"DE","returnItems":[{"salesOrderItemUuid":"${random}","reason":"${return_reason_damaged}"}]}}}
+    When I send a POST request:     /returns     {"data":{"type":"returns","attributes":{"store":"${store.de}","returnItems":[{"salesOrderItemUuid":"${random}","reason":"${return_reason_damaged}"}]}}}
     Then Response status code should be:     401
     And Response reason should be:     Unauthorized
     And Response should return error message:    Invalid access token.
@@ -19,7 +19,7 @@ Create_a_return_with_Invalid_access_token
 
 Create_a_return_with_without_access_token
      [Setup]    I set Headers:    Authorization=
-    When I send a POST request:     /returns     {"data":{"type":"returns","attributes":{"store":"DE","returnItems":[{"salesOrderItemUuid":"${random}","reason":"${return_reason_damaged}"}]}}}
+    When I send a POST request:     /returns     {"data":{"type":"returns","attributes":{"store":"${store.de}","returnItems":[{"salesOrderItemUuid":"${random}","reason":"${return_reason_damaged}"}]}}}
     Then Response status code should be:     403
     And Response reason should be:     Forbidden
     And Response should return error message:    Missing access token.
@@ -34,7 +34,7 @@ Create_return_for_order_item_that_cannot_be_returned
     ...    AND    I send a POST request:    /carts/${CartId}/items    {"data":{"type":"items","attributes":{"sku":"${concrete.available_product.with_stock_and_never_out_of_stock.sku}","quantity":"1"}}}
     ...    AND    I send a POST request:    /checkout?include=orders    {"data": {"type": "checkout","attributes": {"customer": {"email": "${yves_user.email}","salutation": "${yves_user.salutation}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}"},"idCart": "${CartId}","billingAddress": {"salutation": "${yves_user.salutation}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}","address1": "${default.address1}","address2": "${default.address2}","address3": "${default.address3}","zipCode": "${default.zipCode}","city": "${default.city}","iso2Code": "${default.iso2Code}","company": "${default.company}","phone": "${default.phone}","isDefaultBilling": False,"isDefaultShipping": False},"shippingAddress": {"salutation": "${yves_user.salutation}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}","address1": "${default.address1}","address2": "${default.address2}","address3": "${default.address3}","zipCode": "${default.zipCode}","city": "${default.city}","iso2Code": "${default.iso2Code}","company": "${default.company}","phone": "${default.phone}","isDefaultBilling": False,"isDefaultShipping": False},"payments": [{"paymentProviderName": "DummyPayment","paymentMethodName": "Credit Card"}],"shipment": {"idShipmentMethod": 1},"items": ["${product_with_alternative.concrete_sku}"]}}}
     ...    AND    Save value to a variable:    [included][0][attributes][items][0][uuid]    Uuid
-    When I send a POST request:     /returns     {"data":{"type":"returns","attributes":{"store":"DE","returnItems":[{"salesOrderItemUuid":"${Uuid}","reason":"${return_reason_damaged}"}]}}}
+    When I send a POST request:     /returns     {"data":{"type":"returns","attributes":{"store":"${store.de}","returnItems":[{"salesOrderItemUuid":"${Uuid}","reason":"${return_reason_damaged}"}]}}}
     Then Response status code should be:     422
     And Response reason should be:     Unprocessable Content
     And Response should return error message:    "Return cant be created."    
@@ -57,7 +57,7 @@ Create_a_return_with_order_is_not_returnable_for_merchant
 Create_return_with_invalid_returnItems_uuid
      [Setup]    Run Keywords    I get access token for the customer:    ${yves_second_user.email}
     ...    AND    I set Headers:    Authorization=${token}
-    When I send a POST request:     /returns     {"data":{"type":"returns","attributes":{"store":"DE","returnItems":[{"salesOrderItemUuid":"${random}","reason":"${return_reason_damaged}"}]}}}
+    When I send a POST request:     /returns     {"data":{"type":"returns","attributes":{"store":"${store.de}","returnItems":[{"salesOrderItemUuid":"${random}","reason":"${return_reason_damaged}"}]}}}
     Then Response status code should be:     422
     And Response reason should be:     Unprocessable Content
     And Response should return error message:    "Return cant be created."    
@@ -66,7 +66,7 @@ Create_return_with_invalid_returnItems_uuid
 Create_return_without_returnItems_uuid
      [Setup]    Run Keywords    I get access token for the customer:    ${yves_second_user.email}
     ...    AND    I set Headers:    Authorization=${token}
-    When I send a POST request:     /returns     {"data":{"type":"returns","attributes":{"store":"DE","returnItems":[{"salesOrderItemUuid":"","reason":"${return_reason_damaged}"}]}}}
+    When I send a POST request:     /returns     {"data":{"type":"returns","attributes":{"store":"${store.de}","returnItems":[{"salesOrderItemUuid":"","reason":"${return_reason_damaged}"}]}}}
     Then Response status code should be:     422
     And Response reason should be:     Unprocessable Content
     And Response should return error message:    "Return cant be created."    
@@ -75,7 +75,7 @@ Create_return_without_returnItems_uuid
 Create_return_without_returnItems_reason
      [Setup]    Run Keywords    I get access token for the customer:    ${yves_second_user.email}
     ...    AND    I set Headers:    Authorization=${token}
-    When I send a POST request:     /returns     {"data":{"type":"returns","attributes":{"store":"DE","returnItems":[{"salesOrderItemUuid":"920fc22f-3fb6-53ec-bc5e-c4d321115462","reason":""}]}}}
+    When I send a POST request:     /returns     {"data":{"type":"returns","attributes":{"store":"${store.de}","returnItems":[{"salesOrderItemUuid":"920fc22f-3fb6-53ec-bc5e-c4d321115462","reason":""}]}}}
     Then Response status code should be:     422
     And Response reason should be:     Unprocessable Content
     And Response should return error message:    "Return cant be created."    
