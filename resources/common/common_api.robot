@@ -1526,3 +1526,15 @@ Update order status in Database:
     Connect To Database    pymysql    ${default_db_name}    ${default_db_user}    ${default_db_password}    ${default_db_host}    ${default_db_port}
     Execute Sql String    update spy_sales_order_item set fk_oms_order_item_state = '${state_id}' where uuid = '${Uuid}'
     Disconnect From Database
+
+Get voucher code by discountId from Database:
+    [Documentation]    This keyword allows to get voucher code according to the discount ID. Discount_id can be found in Backoffice > Merchandising > Discount page
+    ...        and set this id as an argument of a keyword.
+    ...
+    ...    *Example:*
+    ...    ``Get voucher code by discountId from Database:    3``
+
+    [Arguments]    ${discount_id}
+    Save the result of a SELECT DB query to a variable:    select fk_discount_voucher_pool from spy_discount where id_discount = ${discount_id}    discount_voucher_pool_id
+    Save the result of a SELECT DB query to a variable:    select code from spy_discount_voucher where fk_discount_voucher_pool = ${discount_voucher_pool_id} and is_active = 1 limit 1    discount_voucher_code
+    Log    ${discount_voucher_code}

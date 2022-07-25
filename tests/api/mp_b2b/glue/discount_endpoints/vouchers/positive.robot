@@ -18,7 +18,7 @@ Adding_voucher_code_to_cart_of_logged_in_customer
     ...    AND    Response status code should be:    201
     ...    AND    I send a POST request:    /carts/${cart_id}/items    {"data": {"type": "items","attributes": {"sku": "${discount.concrete_products_with_discounts.concrete_product_with_brand_safescan}","quantity": 2}}}
     ...    AND    Response status code should be:    201
-    ...    AND    Save the result of a SELECT DB query to a variable:    select code from spy_discount_voucher where fk_discount_voucher_pool = 2 and is_active = 1 limit 1    discount_voucher_code
+    ...    AND    Get voucher code by discountId from Database:    4
     When I send a POST request:    /carts/${cart_id}/vouchers    {"data": {"type": "vouchers","attributes": {"code": "${discount_voucher_code}"}}}
     Then Response status code should be:    201
     And Response reason should be:    Created
@@ -47,7 +47,7 @@ Checking_voucher_is_applied_after_order_is_placed
     ...    AND    Response status code should be:    201
     ...    AND    I send a POST request:    /carts/${cart_id}/items    {"data": {"type": "items","attributes": {"sku": "${discount.concrete_products_with_discounts.concrete_product_with_brand_safescan}","quantity": 2}}}
     ...    AND    Response status code should be:    201
-    ...    AND    Save the result of a SELECT DB query to a variable:    select code from spy_discount_voucher where fk_discount_voucher_pool = 2 and is_active = 1 limit 1    discount_voucher_code
+    ...    AND    Get voucher code by discountId from Database:    4
     ...    AND    I send a POST request:    /carts/${cart_id}/vouchers    {"data": {"type": "vouchers","attributes": {"code": "${discount_voucher_code}"}}}
     ...    AND    Response status code should be:    201
     When I send a POST request:    /checkout?include=orders    {"data": {"type": "checkout","attributes": {"customer": {"salutation": "${yves_user.salutation}","email": "${yves_user.email}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}"},"idCart": "${cart_id}","billingAddress": {"salutation": "${yves_user.salutation}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}","address1": "${default.address1}","address2": "${default.address2}","address3": "${default.address3}","zipCode": "${default.zipCode}","city": "${default.city}","iso2Code": "${default.iso2Code}","company": "${default.company}","phone": "${default.phone}","isDefaultBilling": False,"isDefaultShipping": False},"payments": [{"paymentMethodName": "${payment.method_name}","paymentProviderName": "${payment.provider_name}"}],"shipments": [{"items": ["${product_with_relations.has_related_products.concrete_sku}"],"shippingAddress": {"salutation": "${yves_user.salutation}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}","address1": "${default.address1}","address2": "${default.address2}","address3": "${default.address3}","zipCode": "${default.zipCode}","city": "${default.city}","iso2Code": "${default.iso2Code}","company": "${default.company}","phone": "${default.phone}"},"idShipmentMethod": 2,"requestedDeliveryDate": "${shipment.delivery_date}"},{"items": ["${abstract_product.product_with_options.concrete_sku}"],"shippingAddress": {"salutation": "${yves_user.salutation}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}","address1": "${changed.address1}","address2": "${changed.address2}","address3": "${changed.address3}","zipCode": "${default.zipCode}","city": "${default.city}","iso2Code": "${default.iso2Code}","company": "${default.company}","phone": "${changed.phone}","isDefaultBilling": False,"isDefaultShipping": False},"idShipmentMethod": 4,"requestedDeliveryDate": None}]}}}
@@ -79,12 +79,12 @@ Adding_two_vouchers_with_different_priority_to_the_same_cart
     ...    AND    Response status code should be:    201
     ...    AND    I send a POST request:    /carts/${cart_id}/items    {"data": {"type": "items","attributes": {"sku": "${discount.concrete_products_with_discounts.concrete_product_with_brand_safescan_and_white_color}","quantity": 2}}}
     ...    AND    Response status code should be:    201
-    ...    AND    Save the result of a SELECT DB query to a variable:    select code from spy_discount_voucher where fk_discount_voucher_pool = 1 and is_active = 1 limit 1    discount_voucher_code_1
-    ...    AND    Save the result of a SELECT DB query to a variable:    select code from spy_discount_voucher where fk_discount_voucher_pool = 2 and is_active = 1 limit 1    discount_voucher_code_2
-    When I send a POST request:    /carts/${cart_id}/vouchers    {"data": {"type": "vouchers","attributes": {"code": "${discount_voucher_code_2}"}}}
+    ...    AND    Get voucher code by discountId from Database:    3
+    When I send a POST request:    /carts/${cart_id}/vouchers    {"data": {"type": "vouchers","attributes": {"code": "${discount_voucher_code}"}}}
     Then Response status code should be:    201
     And Response reason should be:    Created
-    And I send a POST request:    /carts/${cart_id}/vouchers    {"data": {"type": "vouchers","attributes": {"code": "${discount_voucher_code_1}"}}}
+    And Get voucher code by discountId from Database:    4
+    And I send a POST request:    /carts/${cart_id}/vouchers    {"data": {"type": "vouchers","attributes": {"code": "${discount_voucher_code}"}}}
     Then Response status code should be:    201
     And Response reason should be:    Created
     And Response body parameter should not be EMPTY:    [data][attributes][discounts][2]
@@ -118,7 +118,7 @@ Adding_voucher_with_cart_rule_with_to_the_same_cart
     ...    AND    Response status code should be:    201
     ...    AND    I send a POST request:    /carts/${cart_id}/items    {"data": {"type": "items","attributes": {"sku": "${discount.concrete_products_with_discounts.concrete_product_with_brand_safescan}","quantity": 10}}}
     ...    AND    Response status code should be:    201
-    ...    AND    Save the result of a SELECT DB query to a variable:    select code from spy_discount_voucher where fk_discount_voucher_pool = 2 and is_active = 1 limit 1    discount_voucher_code
+    ...    AND    Get voucher code by discountId from Database:    4
     When I send a POST request:    /carts/${cart_id}/vouchers    {"data": {"type": "vouchers","attributes": {"code": "${discount_voucher_code}"}}}
     Then Response status code should be:    201
     And Response reason should be:    Created
@@ -152,7 +152,7 @@ Deleting_voucher_from_cart_of_logged_in_customer
     ...    AND    Response status code should be:    201
     ...    AND    Save value to a variable:    [data][attributes][totals][grandTotal]    grand_total
     ...    AND    Save value to a variable:    [data][attributes][totals][discountTotal]    discount_total
-    ...    AND    Save the result of a SELECT DB query to a variable:    select code from spy_discount_voucher where fk_discount_voucher_pool = 2 and is_active = 1 limit 1    discount_voucher_code
+    ...    AND    Get voucher code by discountId from Database:    4
     ...    AND    I send a POST request:    /carts/${cart_id}/vouchers    {"data": {"type": "vouchers","attributes": {"code": "${discount_voucher_code}"}}}
     ...    AND    Response status code should be:    201
     When I send a DELETE request:    /carts/${cartId}/vouchers/${discount_voucher_code}

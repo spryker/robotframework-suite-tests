@@ -36,7 +36,7 @@ Adding_voucher_code_that_could_not_be_applied_to_cart_of_logged_in_customer
     ...    AND    Response status code should be:    201
     ...    AND    I send a POST request:    /carts/${cart_id}/items    {"data": {"type": "items","attributes": {"sku": "464012","quantity": 1}}}
     ...    AND    Response status code should be:    201
-    ...    AND    Save the result of a SELECT DB query to a variable:    select code from spy_discount_voucher where fk_discount_voucher_pool = 1 and is_active = 1 limit 1    discount_voucher_code
+    ...    AND    Get voucher code by discountId from Database:    3
     When I send a POST request:    /carts/${cart_id}/vouchers    {"data": {"type": "vouchers","attributes": {"code": "${discount_voucher_code}"}}}
     Then Response status code should be:    422
     And Response reason should be:    Unprocessable Content
@@ -48,7 +48,7 @@ Adding_voucher_code_that_could_not_be_applied_to_cart_of_logged_in_customer
 Adding_voucher_code_with_invalid_cart_id
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}
-    ...    AND    Save the result of a SELECT DB query to a variable:    select code from spy_discount_voucher where fk_discount_voucher_pool = 1 and is_active = 1 limit 1    discount_voucher_code
+    ...    AND    Get voucher code by discountId from Database:    3
     When I send a POST request:    /carts/invalidCartId/vouchers    {"data": {"type": "vouchers","attributes": {"code": "${discount_voucher_code}"}}}
     Then Response status code should be:    404
     And Response reason should be:    Not Found
@@ -56,7 +56,7 @@ Adding_voucher_code_with_invalid_cart_id
     And Response should return error message:    Cart with given uuid not found.  
 
 Adding_voucher_without_access_token
-    Save the result of a SELECT DB query to a variable:    select code from spy_discount_voucher where fk_discount_voucher_pool = 1 and is_active = 1 limit 1    discount_voucher_code
+    [Setup]    Get voucher code by discountId from Database:    3
     When I send a POST request:    /carts/fake/vouchers    {"data": {"type": "vouchers","attributes": {"code": "${discount_voucher_code}"}}}
     Then Response status code should be:    403
     And Response reason should be:    Forbidden
@@ -73,7 +73,7 @@ Adding_voucher_with_invalid_access_token
     ...    AND    I send a POST request:    /carts/${cart_id}/items    {"data": {"type": "items","attributes": {"sku": "419901","quantity": 1}}}
     ...    AND    Response status code should be:    201
     ...    AND    I set Headers:    Authorization="fake"
-    ...    AND    Save the result of a SELECT DB query to a variable:    select code from spy_discount_voucher where fk_discount_voucher_pool = 1 and is_active = 1 limit 1    discount_voucher_code
+    ...    AND    Get voucher code by discountId from Database:    3
     When I send a POST request:    /carts/${cart_id}/vouchers    {"data": {"type": "vouchers","attributes": {"code": "${discount_voucher_code}"}}}
     Then Response status code should be:    401
     And Response reason should be:    Unauthorized
@@ -93,7 +93,7 @@ Deleting_voucher_without_access_token
     ...    AND    Response status code should be:    201
     ...    AND    I send a POST request:    /carts/${cart_id}/items    {"data": {"type": "items","attributes": {"sku": "419901","quantity": 1}}}
     ...    AND    Response status code should be:    201
-    ...    AND    Save the result of a SELECT DB query to a variable:    select code from spy_discount_voucher where fk_discount_voucher_pool = 1 and is_active = 1 limit 1    discount_voucher_code
+    ...    AND    Get voucher code by discountId from Database:    3
     ...    AND    I send a POST request:    /carts/${cart_id}/vouchers    {"data": {"type": "vouchers","attributes": {"code": "${discount_voucher_code}"}}}
     ...    AND    Response status code should be:    201
     ...    AND    I set Headers:    Authorization=
@@ -116,7 +116,7 @@ Deleting_voucher_with_invalid_access_token
     ...    AND    Response status code should be:    201
     ...    AND    I send a POST request:    /carts/${cart_id}/items    {"data": {"type": "items","attributes": {"sku": "419901","quantity": 1}}}
     ...    AND    Response status code should be:    201
-    ...    AND    Save the result of a SELECT DB query to a variable:    select code from spy_discount_voucher where fk_discount_voucher_pool = 1 and is_active = 1 limit 1    discount_voucher_code
+    ...    AND    Get voucher code by discountId from Database:    3
     ...    AND    I send a POST request:    /carts/${cart_id}/vouchers    {"data": {"type": "vouchers","attributes": {"code": "${discount_voucher_code}"}}}
     ...    AND    Response status code should be:    201
     ...    AND    I set Headers:    Authorization="fake"
@@ -132,7 +132,7 @@ Deleting_voucher_with_invalid_access_token
 Deleting_voucher_code_with_invalid_cart_id
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}
-    ...    AND    Save the result of a SELECT DB query to a variable:    select code from spy_discount_voucher where fk_discount_voucher_pool = 1 and is_active = 1 limit 1    discount_voucher_code
+    ...    AND    Get voucher code by discountId from Database:    3
     When I send a DELETE request:    /carts/invalidCartId/vouchers/${discount_voucher_code}
     Then Response status code should be:    404
     And Response reason should be:    Not Found
