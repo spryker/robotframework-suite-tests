@@ -30,3 +30,4 @@ ${checkout_billing_address_city_field}    id=addressesForm_billingAddress_city
 ${checkout_billing_address_country_select}    id=addressesForm_billingAddress_iso2_code
 ${checkout_billing_address_phone_field}    id=addressesForm_billingAddress_phone
 ${manage_your_addresses_link}    xpath=//a[contains(@href,'customer/address')]
+&{billing_address_section}    b2b=xpath=//form[@name='addressesForm']//div[contains(@class,'billing-same-as-shipping')]    b2c=xpath=//form[@name='addressesForm']//div[contains(@class,'billing-address')]    suite-nonsplit=xpath=//form[@name='addressesForm']//div[contains(@class,'billing-same-as-shipping')]
