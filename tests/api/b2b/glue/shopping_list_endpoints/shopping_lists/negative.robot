@@ -76,7 +76,7 @@ Delete_existing_shopping_list_of_another_customer
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     ...    AND    I send a GET request:    /shopping-lists
     ...    AND    Save value to a variable:    [data][0][id]    shoppingListId
-    ...    AND    I get access token for the customer:    ${yves_fourth_user.email}
+    ...    AND    I get access token for the customer:    ${yves_fifth_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token} 
     I send a DELETE request:    /shopping-lists/${shoppingListId}
     And Response status code should be:    404
@@ -174,7 +174,7 @@ Update_existing_shopping_list_of_another_customer
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     ...    AND    I send a GET request:    /shopping-lists
     ...    AND    Save value to a variable:    [data][0][id]    shoppingListId
-    ...    AND    I get access token for the customer:    ${yves_fourth_user.email}
+    ...    AND    I get access token for the customer:    ${yves_fifth_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token} 
     I send a PATCH request:    /shopping-lists/${shoppingListId}    {"data":{"type":"shopping-lists","attributes":{"name":"${shopping_list_name}"}}}
     And Response status code should be:    404
@@ -217,7 +217,7 @@ Get_existing_shopping_list_of_another_customer
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     ...    AND    I send a GET request:    /shopping-lists
     ...    AND    Save value to a variable:    [data][0][id]    shoppingListId
-    ...    AND    I get access token for the customer:    ${yves_fourth_user.email}
+    ...    AND    I get access token for the customer:    ${yves_fifth_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     I send a GET request:    /shopping-lists/${shoppingListId}
     And Response status code should be:    404
