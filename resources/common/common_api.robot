@@ -1394,7 +1394,7 @@ Find or create customer cart
         Save value to a variable:    [data][0][id]    cart_id
         ${hasCart}    Run Keyword and return status     Should not be empty    ${cart_id}
         Log    cart_id:${cart_id}
-        IF    not ${hasCart}    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${currency.mode.gross}","currency": "${currency.eur.code}","store": "${store.de}"}}}
+        IF    not ${hasCart}    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}"}}}
         IF    not ${hasCart}    Save value to a variable:    [data][id]    cart_id
 
 
