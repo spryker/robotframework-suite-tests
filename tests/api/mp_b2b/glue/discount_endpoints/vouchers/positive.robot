@@ -81,10 +81,12 @@ Adding_two_vouchers_with_different_priority_to_the_same_cart
     ...    AND    Response status code should be:    201
     ...    AND    Get voucher code by discountId from Database:    3
     When I send a POST request:    /carts/${cart_id}/vouchers    {"data": {"type": "vouchers","attributes": {"code": "${discount_voucher_code}"}}}
+    And Save value to a variable:    [data][attributes][discounts][0][code]    voucher_1
     Then Response status code should be:    201
     And Response reason should be:    Created
     And Get voucher code by discountId from Database:    4
     And I send a POST request:    /carts/${cart_id}/vouchers    {"data": {"type": "vouchers","attributes": {"code": "${discount_voucher_code}"}}}
+    And Save value to a variable:    [data][attributes][discounts][0][code]    voucher_2
     Then Response status code should be:    201
     And Response reason should be:    Created
     And Response body parameter should not be EMPTY:    [data][attributes][discounts][2]
@@ -101,10 +103,10 @@ Adding_two_vouchers_with_different_priority_to_the_same_cart
     And Response body parameter with rounding should be:    [data][attributes][totals][grandTotal]    ${grand_total_sum}
     #calculatedDiscounts - "10% off Safescan" discount
     And Response body parameter should contain:    [data][attributes][discounts][0][displayName]    ${discount.id_4.name}
-    And Response body parameter should contain:    [data][attributes][discounts][0][code]    ${discount_voucher_code_2}
+    And Response body parameter should contain:    [data][attributes][discounts][0][code]    ${voucher_2}
     #calculatedDiscounts - "5% off White" discount
     And Response body parameter should contain:    [data][attributes][discounts][1][displayName]    ${discount.id_3.name}
-    And Response body parameter should contain:    [data][attributes][discounts][1][code]    ${discount_voucher_code_1}
+    And Response body parameter should contain:    [data][attributes][discounts][1][code]    ${voucher_1}
     [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cart_id}
     ...  AND    Response status code should be:    204
 
