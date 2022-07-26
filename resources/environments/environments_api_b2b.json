@@ -550,13 +550,11 @@
             },
             "id_3":{
                 "name": "5% off white",
-                "description": "Get a 5% discount on all white products with voucher code",
-                "voucher_code": "sprykerca9j"
+                "description": "Get a 5% discount on all white products with voucher code"
             },
             "id_4":{
                 "name": "10% off Safescan",
-                "description": "Get a 10% discount on all Safescan brand products with voucher code",
-                "voucher_code": "safescanqu1pu4ga1z"
+                "description": "Get a 10% discount on all Safescan brand products with voucher code"
             }
 
         },
