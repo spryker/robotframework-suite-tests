@@ -42,7 +42,7 @@ Product_is_available_never_out_of_stock
     And Response body parameter should be:    [data][0][attributes][quantity]    ${stock_is_0}
     And Response body has correct self link   
 
-# No demo data for B2C BUG CC-16485
+# No demo data for B2C BUG CC-18820
 Product_is_unavailable
     When I send a GET request:    /abstract-products/${product_availability.abstract_unavailable_product}/abstract-product-availabilities
     Then Response status code should be:    200

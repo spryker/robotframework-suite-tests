@@ -47,6 +47,10 @@
         "email": {
             "name": "sonia",
             "domain": "@spryker.com"
+        },
+        "gender": {
+            "male": "Male",
+            "female": "Female"
         }
     },
     "address": {
@@ -299,7 +303,7 @@
             "with_label": "204_29851280",
             "with_stock": "001_25904006",
             "with_offer": "092_24495842",
-            "without_stock": "212_123"
+            "without_stock": ""
         },
         "abstract_available_product_with_stock": {
             "sku": "183",
@@ -316,7 +320,7 @@
             "abstract_unavailable_product": "111"
         },
         "concrete_product_with_abstract_product_alternative": {
-            "sku": "138_30046855",
+            "sku": "138_30657838",
             "name": "Acer TravelMate P258-M",
             "name_lower_case": "acer travelmate p258-m"
         },
@@ -388,10 +392,11 @@
         "display_technology": "TFT",
         "delivery_1": "assembled",
         "price_unit_1": "piece",
-        "color_1": "yellow",
-        "color_2": "Blue",
+        "color_4": "black",
         "color_3": "purple",
-        "color_4": "Black",
+        "color_1": "yellow",
+        "color_2": "blue",
+
         "product_management_superattribute_id": "4g",
         "product_management_attribute_free_input_id": "4g_standards",
         "product_management_attribute_no_input_id": "bundled_product",
