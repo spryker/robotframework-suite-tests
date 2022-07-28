@@ -7,7 +7,6 @@ Default Tags    glue
 *** Test Cases ***
 ENABLER
     TestSetup
-
 #####POST#####
 Create_customer_address_with_all_fields
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
