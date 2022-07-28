@@ -24,12 +24,8 @@ Get_health_check_with_disabled_services
     And Response body parameter should be:    [data][0][id]    None
     And Response body parameter should be:    [data][0][attributes][status]    None
     And Response body parameter should be:    [data][0][attributes][statusCode]    403
-    And Response body parameter should be:
-    ...    [data][0][attributes][message]
-    ...    HealthCheck endpoints are disabled for all applications.
-    And Response should contain the array of a certain size:
-    ...    [data][0][attributes][healthCheckServiceResponses]
-    ...    0
+    And Response body parameter should be:    [data][0][attributes][message]    HealthCheck endpoints are disabled for all applications.
+    And Response should contain the array of a certain size:    [data][0][attributes][healthCheckServiceResponses]    0
     And Response body has correct self link
 
 Get_health_check_with_invalid_service_name
@@ -41,9 +37,7 @@ Get_health_check_with_invalid_service_name
     And Response body parameter should be:    [data][0][attributes][status]    None
     And Response body parameter should be:    [data][0][attributes][statusCode]    400
     And Response body parameter should be:    [data][0][attributes][message]    Requested services not found.
-    And Response should contain the array of a certain size:
-    ...    [data][0][attributes][healthCheckServiceResponses]
-    ...    0
+    And Response should contain the array of a certain size:    [data][0][attributes][healthCheckServiceResponses]    0
     And Response body has correct self link
 
 Get_health_check_with_empty_service_name
@@ -55,9 +49,7 @@ Get_health_check_with_empty_service_name
     And Response body parameter should be:    [data][0][attributes][status]    None
     And Response body parameter should be:    [data][0][attributes][statusCode]    400
     And Response body parameter should be:    [data][0][attributes][message]    Requested services not found.
-    And Response should contain the array of a certain size:
-    ...    [data][0][attributes][healthCheckServiceResponses]
-    ...    0
+    And Response should contain the array of a certain size:    [data][0][attributes][healthCheckServiceResponses]    0
     And Response body has correct self link
 
 #Get_health_check_with_non_existing_id
