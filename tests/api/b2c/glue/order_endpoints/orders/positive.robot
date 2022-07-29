@@ -23,7 +23,7 @@ Get_order_by_order_id
     And Response body parameter should be:    [data][id]    ${order_id}
     And Response body parameter should not be EMPTY:    [data][attributes][createdAt]
     And Response body parameter should be:    [data][attributes][currencyIsoCode]    ${currency.eur.code}
-    And Response body parameter should be:    [data][attributes][priceMode]    ${currency.mode.gross}
+    And Response body parameter should be:    [data][attributes][priceMode]    ${mode.gross}
     #totals
     And Response body parameter should be greater than:    [data][attributes][totals][expenseTotal]    0
     And Response body parameter should be greater than:    [data][attributes][totals][discountTotal]    0
@@ -169,7 +169,7 @@ Get_order_by_order_id_with_bundle_product
     And Response body parameter should be:    [data][id]    ${order_id}
     And Response body parameter should not be EMPTY:    [data][attributes][createdAt]
     And Response body parameter should be:    [data][attributes][currencyIsoCode]    ${currency.eur.code}
-    And Response body parameter should be:    [data][attributes][priceMode]    ${currency.mode.gross}
+    And Response body parameter should be:    [data][attributes][priceMode]    ${mode.gross}
     #items
     And Response should contain the array of a certain size:    [data][attributes][items]    3
     And Each array element of array in response should contain property with value:    [data][attributes][items]    bundleItemIdentifier    None
@@ -299,7 +299,7 @@ Get_order_by_order_id_with_different_items_and_quantity
     And Response body parameter should be:    [data][id]    ${order_id}
     And Response body parameter should not be EMPTY:    [data][attributes][createdAt]
     And Response body parameter should be:    [data][attributes][currencyIsoCode]    ${currency.eur.code}
-    And Response body parameter should be:    [data][attributes][priceMode]    ${currency.mode.gross}
+    And Response body parameter should be:    [data][attributes][priceMode]    ${mode.gross}
     #items
     And Response should contain the array of a certain size:    [data][attributes][items]    3
     And Response body parameter should be:    [data][attributes][items][0][name]    ${product_availability.concrete_available_with_stock_and_never_out_of_stock_name}
@@ -329,7 +329,7 @@ Get_order_by_order_id_with_nonsplit_item
     And Response body parameter should be:    [data][id]    ${order_id}
     And Response body parameter should not be EMPTY:    [data][attributes][createdAt]
     And Response body parameter should be:    [data][attributes][currencyIsoCode]    ${currency.eur.code}
-    And Response body parameter should be:    [data][attributes][priceMode]    ${currency.mode.gross}
+    And Response body parameter should be:    [data][attributes][priceMode]    ${mode.gross}
     #items
     And Response should contain the array of a certain size:    [data][attributes][items]    1
     And Response body parameter should be:    [data][attributes][items][0][name]    ${product_availability.concrete_available_with_stock_and_never_out_of_stock_name}
@@ -352,7 +352,7 @@ Get_order_by_order_id_with_net_mode_&_chf_currency_&_express_shipment_method
     And Response body parameter should be:    [data][id]    ${order_id}
     And Response body parameter should not be EMPTY:    [data][attributes][createdAt]
     And Response body parameter should be:    [data][attributes][currencyIsoCode]    ${currency.eur.code}
-    And Response body parameter should be:    [data][attributes][priceMode]    ${currency.mode.gross}
+    And Response body parameter should be:    [data][attributes][priceMode]    ${mode.gross}
     And Response body parameter should be:    [data][attributes][items][0][name]    ${product_availability.concrete_available_with_stock_and_never_out_of_stock_name}
     And Response body parameter should be:    [data][attributes][items][0][sku]    ${product_availability.concrete_available_with_stock_and_never_out_of_stock_sku}
     And Response body parameter should be:    [data][attributes][items][0][quantity]    20
@@ -382,7 +382,7 @@ Get_order_by_order_id_with_split_shipment
     And Response body parameter should be:    [data][id]    ${order_id}
     And Response body parameter should not be EMPTY:    [data][attributes][createdAt]
     And Response body parameter should be:    [data][attributes][currencyIsoCode]    ${currency.eur.code}
-    And Response body parameter should be:    [data][attributes][priceMode]    ${currency.mode.gross}
+    And Response body parameter should be:    [data][attributes][priceMode]    ${mode.gross}
     And Response body parameter should be:    [data][attributes][shippingAddress]    None
     And Response body parameter should be:    [data][attributes][items][0][name]    ${product_availability.concrete_available_with_stock_and_never_out_of_stock_name}
     And Response body parameter should be:    [data][attributes][items][0][sku]    ${product_availability.concrete_available_with_stock_and_never_out_of_stock_sku}
@@ -413,7 +413,7 @@ Get_order_by_order_id_with_split_shipment_&_include
     And Response body parameter should be:    [data][id]    ${order_id}
     And Response body parameter should not be EMPTY:    [data][attributes][createdAt]
     And Response body parameter should be:    [data][attributes][currencyIsoCode]    ${currency.eur.code}
-    And Response body parameter should be:    [data][attributes][priceMode]    ${currency.mode.gross}
+    And Response body parameter should be:    [data][attributes][priceMode]    ${mode.gross}
     And Response body parameter should be:    [data][attributes][shippingAddress]    None
     And Response body parameter should be:    [data][attributes][items][0][name]    ${product_availability.concrete_available_with_stock_and_never_out_of_stock_name}
     And Response body parameter should be:    [data][attributes][items][0][sku]    ${product_availability.concrete_available_with_stock_and_never_out_of_stock_sku}
