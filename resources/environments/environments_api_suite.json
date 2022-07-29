@@ -43,6 +43,16 @@
             "reference": "DE-30",
             "salutation": "Ms"
             },
+        "yves_fifth_user": 
+            {
+            "email": "Trever.m@spryker.com",
+            "password": "change123"
+            },
+        "yves_sixth_user": 
+            {
+            "email": "kevin@spryker.com",
+            "password": "change123"
+            },
         "zed_admin": 
             {
             "email": "admin@spryker.com",
@@ -176,7 +186,9 @@
                 "with_stock_and_never_out_of_stock":
                     {
                     "sku": "208_14678762",
-                    "name": "Toshiba CAMILEO P20"
+                    "name": "Toshiba CAMILEO P20",
+                    "sku_1": "005_30663301",
+                    "sku_2": "006_30692993"
                     },
                 "with_stock":
                     {
@@ -457,6 +469,15 @@
             }
     },
 
+    "quote_requests":{
+        
+        "quote_request": 
+            {
+            "purchase_order_number": "7711",
+            "delivery_date": "2023-12-31",
+            "note": "Test note"
+            }
+    },
     "merchants": 
     {
         "merchants": 
