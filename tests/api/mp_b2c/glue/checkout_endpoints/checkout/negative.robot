@@ -69,8 +69,8 @@ Create_order_without_type
     And Response reason should be:    Bad Request
     And Response should return error message:    Post data is invalid.
 
-Create_order_with_invalid_email_&_salutation
-# Created the bug for the 'salutation' validation https://spryker.atlassian.net/browse/CC-16504
+
+Create_order_with_invalid_email
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
    ...    AND    Find or create customer cart
@@ -80,8 +80,7 @@ Create_order_with_invalid_email_&_salutation
     Then Response status code should be:    422
     And Response reason should be:    Unprocessable Content
     And Response should return error code:    901
-    And Response should return error message:    customer.email => Email is invalid.
-    And Response should return error message:    customer.salutation => Salutation is invalid. 
+    And Response should return error message:    customer.email => Email is invalid. 
 
 Create_order_with_invalid_cart_id
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}

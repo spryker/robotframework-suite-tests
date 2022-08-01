@@ -8,7 +8,6 @@ Default Tags    glue
 ENABLER
     TestSetup
 
-#https://spryker.atlassian.net/browse/CC-16501
 Retrieves_my_availability_notifications_with_missing_auth_token
     When I send a GET request:    /my-availability-notifications
     Then Response status code should be:     403
@@ -17,7 +16,6 @@ Retrieves_my_availability_notifications_with_missing_auth_token
     And Response should return error code:    002
 
 
-#https://spryker.atlassian.net/browse/CC-16501
 Retrieves_my_availability_notifications_with_invalid_auth_token
     [Setup]    I set Headers:    Authorization=fake_token
     When I send a GET request:    /my-availability-notifications

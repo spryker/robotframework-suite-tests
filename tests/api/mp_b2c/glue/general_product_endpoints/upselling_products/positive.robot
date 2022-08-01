@@ -32,12 +32,9 @@ Get_upselling_products
     And Response body parameter should not be EMPTY:    [data][0][attributes][description]
     And Response body parameter should not be EMPTY:    [data][0][attributes][attributes]
     And Response should contain the array larger than a certain size:    [data][0][attributes][superAttributesDefinition]    0
-    And Response should contain the array larger than a certain size:    [data][0][attributes][superAttributes]    0
     And Response should contain the array larger than a certain size:    [data][0][attributes][attributeMap]    0
-    And Response should contain the array larger than a certain size:    [data][0][attributes][attributeMap][super_attributes]   0
     And Response should contain the array larger than a certain size:    [data][0][attributes][attributeMap][product_concrete_ids]   0
     And Response should contain the array of a certain size:    [data][0][attributes][attributeMap][attribute_variants]   0
-    And Response should contain the array larger than a certain size:    [data][0][attributes][attributeMap][attribute_variant_map]   0 
     And Response should contain the array larger than a certain size:    [data][0][attributes][metaTitle]    0  
     And Response body parameter should not be EMPTY:    [data][0][attributes][metaKeywords]
     And Response body parameter should not be EMPTY:    [data][0][attributes][metaDescription]
@@ -182,12 +179,9 @@ Get_upselling_products_for_guest_cart
     And Response body parameter should not be EMPTY:    [data][0][attributes][description]
     And Response body parameter should not be EMPTY:    [data][0][attributes][attributes]
     And Response should contain the array larger than a certain size:    [data][0][attributes][superAttributesDefinition]    0
-    And Response should contain the array larger than a certain size:    [data][0][attributes][superAttributes]    0
     And Response should contain the array larger than a certain size:    [data][0][attributes][attributeMap]    0
-    And Response should contain the array larger than a certain size:    [data][0][attributes][attributeMap][super_attributes]   0
     And Response should contain the array larger than a certain size:    [data][0][attributes][attributeMap][product_concrete_ids]   0
     And Response should contain the array of a certain size:    [data][0][attributes][attributeMap][attribute_variants]   0
-    And Response should contain the array larger than a certain size:    [data][0][attributes][attributeMap][attribute_variant_map]   0 
     And Response should contain the array larger than a certain size:    [data][0][attributes][metaTitle]    0  
     And Response body parameter should not be EMPTY:    [data][0][attributes][metaKeywords]
     And Response body parameter should not be EMPTY:    [data][0][attributes][metaDescription]
