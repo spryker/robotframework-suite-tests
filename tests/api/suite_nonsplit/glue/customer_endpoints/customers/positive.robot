@@ -29,15 +29,9 @@ Create_customer
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response body parameter should not be EMPTY:    [data][attributes][createdAt]
     And Response body parameter should not be EMPTY:    [data][attributes][updatedAt]
-    [Teardown]    Run Keywords    I send a POST request:    /access-tokens    {"data":{"type":"access-tokens","attributes":{"username":"${userEmail}","password":"${yves_user.password}"}}}
-    ...    AND    Response status code should be:    201
-    ...    AND    Save value to a variable:    [data][attributes][accessToken]    token
-    ...    AND    Response reason should be:    Created
-    ...    AND    Response body has correct self link internal
-    ...    AND    I send a DELETE request:    /customers/${user_id}
+    [Teardown]    Run Keywords    I send a DELETE request:    /customers/${user_id}
     ...    AND    Response status code should be:    204
     ...    AND    Response reason should be:    No Content
-
 
 New_customer_can_login_after_confirmation
     [Setup]    Run Keywords    I send a POST request:    /customers/    {"data":{"type":"customers","attributes":{"firstName":"${yves_third_user.first_name}","lastName":"${yves_third_user.last_name}","gender":"${gender.male}","salutation":"${yves_third_user.salutation}","email":"${email.name}${random}${email.domain}","password":"${yves_user.password}","confirmPassword":"${yves_user.password}","acceptedTerms":True}}}
