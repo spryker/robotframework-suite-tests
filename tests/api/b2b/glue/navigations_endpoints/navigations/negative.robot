@@ -5,6 +5,8 @@ Resource    ../../../../../../resources/common/common_api.robot
 Default Tags    glue
 
 *** Test Cases ***
+ENABLER
+    TestSetup
 Get_navigations_by_non_exist_id
     When I send a GET request:    /navigations/testNonExistNavigations
     Then Response status code should be:    404
