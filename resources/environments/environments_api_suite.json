@@ -158,15 +158,6 @@
 
             },
 
-        "concrete":{
-            "available_product":{
-                "with_stock_and_never_out_of_stock":{
-                    "sku": "208_14678762",
-                    "name": "Toshiba CAMILEO P20"
-                }
-            }
-        },
-
         "special_product_abstract_sku": 
             {
             "with_multivariant": "051",
@@ -229,7 +220,8 @@
             "superattribute": "color"
             },
             "concrete_available_product": {
-                "sku": "010_30692994"
+                "sku": "010_30692994",
+                "with_label": "006_30692993"
             },
         "product_availability": 
             {
@@ -278,11 +270,7 @@
                 "sku": "112",
                 "name": "Acer Extensa M2610"
                 }
-            },
-
-        "concrete_available_product": {
-            "with_label": "006_30692993"
-        }   
+            }
     },
 
     "content":{
