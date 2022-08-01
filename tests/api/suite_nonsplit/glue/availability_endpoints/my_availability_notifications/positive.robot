@@ -19,7 +19,7 @@ Get_my_availability_notifications
     And Response reason should be:    OK
     And Response body parameter should be:    [data][0][type]    availability-notifications
     And Response body parameter should be:    [data][0][id]    ${availability_notification_id}
-    And Response body parameter should be:    [data][0][attributes][localeName]    ${currency.locale.EN.name}
+    And Response body parameter should be:    [data][0][attributes][localeName]    ${locale.EN.name}
     And Response body parameter should be:    [data][0][attributes][email]    ${yves_user.email}
     And Response body parameter should be:    [data][0][attributes][sku]    ${product_with_alternative.concrete_sku}
     And Each array element of array in response should contain property:    [data]    type
