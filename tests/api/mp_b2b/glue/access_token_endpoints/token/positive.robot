@@ -5,7 +5,8 @@ Resource    ../../../../../../resources/common/common_api.robot
 Default Tags    glue
 
 *** Test Cases ***
-
+ENABLER
+    TestSetup
 Get_token_for_customer
     I set Headers:    Content-Type=${urlencoded_header_content_type}
     I send a POST request with data:    /token    {"grant_type": "${grant_type.password}","username": "${yves_user.email}","password": "${yves_user.password}"}
