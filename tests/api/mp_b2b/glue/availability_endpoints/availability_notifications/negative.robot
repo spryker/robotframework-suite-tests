@@ -51,14 +51,13 @@ Get_availability_notifications_without_access_token
     ...  AND    Response status code should be:    204
 
 #POST requests
-Subscribe_to_availability_notifications_with_invalid_sku
-#This test fails due to the bug https://spryker.atlassian.net/browse/CC-15970
+Subscribe_to_availability_notifications_with_non_existent_sku
     When I send a POST request:    /availability-notifications    {"data": {"type": "availability-notifications","attributes": {"sku": "fake","email": "${yves_user.email}"}}}
-    Then Response status code should be:    422
-    And Response reason should be:    Unprocessable Content
-    And Each array element of array in response should contain property with value:    [errors]    code    901
-    And Each array element of array in response should contain property with value:    [errors]    status    422
-    And Array in response should contain property with value:    [errors]    detail    sku => This value is not a valid sku.
+    Then Response status code should be:    404
+    And Response reason should be:    Not Found
+    And Each array element of array in response should contain property with value:    [errors]    code    4601
+    And Each array element of array in response should contain property with value:    [errors]    status    404
+    And Array in response should contain property with value:    [errors]    detail    Product not found.
 
 Subscribe_to_availability_notifications_with_invalid_email
     When I send a POST request:    /availability-notifications    {"data": {"type": "availability-notifications","attributes": {"sku": "${concrete_product_with_discontinued.sku}","email": "gmail"}}}
