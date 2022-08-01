@@ -43,7 +43,8 @@ Add_a_product_with_non_existing_sku_to_the_shopping_list
     I send a POST request:    /shopping-lists/${shoppingListId}/shopping-list-items    {"data":{"type":"shopping-list-items","attributes":{"sku":"sku${random}","quantity":1}}}
     And Response status code should be:    422
     And Response reason should be:    Unprocessable Content
-    And Response should return error message:    1508
+    And Response should return error code:    1508
+    And Response should return error message:    Concrete product not found.
     [Teardown]    Run Keywords    I send a DELETE request:    /shopping-lists/${shoppingListId}
     ...    AND    Response status code should be:    204
     ...    AND    Response reason should be:    No Content
@@ -117,7 +118,8 @@ Add_an_abstract_product_to_the_shopping_list
     I send a POST request:    /shopping-lists/${shoppingListId}/shopping-list-items    {"data":{"type":"shopping-list-items","attributes":{"sku":"${bundle_product.abstract.sku}","quantity":1}}}
     And Response status code should be:    422
     And Response reason should be:    Unprocessable Content
-    And Response should return error message:    1508
+    And Response should return error code:    1508
+    And Response should return error message:    Concrete product not found.
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     [Teardown]    Run Keywords    I send a DELETE request:    /shopping-lists/${shoppingListId}
     ...    AND    Response status code should be:    204

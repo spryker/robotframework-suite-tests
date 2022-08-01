@@ -10,7 +10,6 @@ ENABLER
 
 #GET requests
 Get_search_suggestions_without_query_parameter
-# There is a bug https://spryker.atlassian.net/browse/CC-15983
     When I send a GET request:    /catalog-search-suggestions
     Then Response status code should be:    200
     And Response reason should be:    OK
