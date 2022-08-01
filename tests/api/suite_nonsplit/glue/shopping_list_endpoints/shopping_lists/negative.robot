@@ -1,12 +1,13 @@
 *** Settings ***
-Suite Setup       SuiteSetup
-Test Setup    TestSetup
 Resource    ../../../../../../resources/common/common_api.robot
+Suite Setup    SuiteSetup
+Test Setup    TestSetup
 Default Tags    glue
 
 *** Test Cases ***
 ENABLER
     TestSetup
+
 Create_a_shopping_list_with_empty_type
     I send a POST request:    /shopping-lists    {"data":{"type":"","attributes":{"name":"${shopping_list_name}${random}"}}}
     Response status code should be:    400

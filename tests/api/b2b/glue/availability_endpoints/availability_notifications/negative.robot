@@ -64,7 +64,6 @@ Subscribe_to_availability_notifications_without_type
     And Response should return error message:    Post data is invalid.
 
 Subscribe_to_availability_notifications_with_invalid_sku
-#This test fails due to the bug https://spryker.atlassian.net/browse/CC-15970
     When I send a POST request:    /availability-notifications    {"data": {"type": "availability-notifications","attributes": {"sku": "fake","email": "${yves_user.email}"}}}
     Then Response status code should be:    404
     And Response reason should be:    Not Found

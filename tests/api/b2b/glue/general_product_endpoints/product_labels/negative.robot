@@ -8,6 +8,8 @@ Default Tags    glue
 ENABLER
     TestSetup
 ######POST#####
+ENABLER
+    TestSetup
 Get_a_label_without_label_id
     When I send a GET request:    /product-labels
     Then Response status code should be:    400
