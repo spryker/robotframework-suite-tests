@@ -73,7 +73,7 @@ Get_product_offer_price_without_volume_prices
     And Response body parameter should not be EMPTY:    [data][0][attributes][prices]
 
 Get_product_offer_price_with_gross_eur_volume_prices
-    When I send a GET request:    /product-offers/${product_offers.offer_with_volume_price_gross_net_prices}/product-offer-prices?priceMode=${currency.mode.gross}
+    When I send a GET request:    /product-offers/${product_offers.offer_with_volume_price_gross_net_prices}/product-offer-prices?priceMode=${mode.gross}
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
@@ -91,7 +91,7 @@ Get_product_offer_price_with_gross_eur_volume_prices
     And Response body parameter should be:    [data][0][attributes][prices][0][currency][symbol]    ${currency.eur.symbol}
 
 Get_product_offer_price_with_net_eur_volume_prices
-    When I send a GET request:    /product-offers/${product_offers.offer_with_volume_price_gross_net_prices}/product-offer-prices?priceMode=${currency.mode.net}
+    When I send a GET request:    /product-offers/${product_offers.offer_with_volume_price_gross_net_prices}/product-offer-prices?priceMode=${mode.net}
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
@@ -123,7 +123,7 @@ Get_product_offer_price_with_gross_chf
     And Response body parameter should be:    [data][0][attributes][prices][0][currency][symbol]    ${currency.chf.symbol}
 
 Get_product_offer_price_with_net_chf
-    When I send a GET request:    /product-offers/${product_offers.offer_with_volume_price}/product-offer-prices?currency=${currency.chf.code}&priceMode=${currency.mode.net}
+    When I send a GET request:    /product-offers/${product_offers.offer_with_volume_price}/product-offer-prices?currency=${currency.chf.code}&priceMode=${mode.net}
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
