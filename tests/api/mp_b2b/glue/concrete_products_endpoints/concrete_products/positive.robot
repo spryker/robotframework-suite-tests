@@ -51,8 +51,8 @@ Get_concrete_product_with_included_availabilities_and_product_prices
     And Response body parameter should be:    [data][type]   concrete-products
     And Response body parameter should be:    [data][attributes][sku]    ${abstract_product.product_with_original_prices.concrete_sku}
     And Response body parameter should be:    [data][attributes][name]    ${abstract_product.product_with_original_prices.concrete_name}
-    And Response should contain the array of a certain size:    [data][attributes][attributeNames]    7
-    And Response should contain the array of a certain size:    [data][attributes][attributes]    7
+    And Response should contain the array of a certain size:    [data][attributes][attributeNames]    5
+    And Response should contain the array of a certain size:    [data][attributes][attributes]    5
     And Response should contain the array of a certain size:    [data][relationships]   2
     And Response include should contain certain entity type:    concrete-product-availabilities
     And Response include should contain certain entity type:    concrete-product-prices
