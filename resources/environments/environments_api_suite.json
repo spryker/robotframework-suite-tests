@@ -1,14 +1,11 @@
 {
-    "environment": "api_suite", 
-
+    "environment": "api_suite",
     "env": {
         "glue_url": "http://glue.de.spryker.local",
         "bapi_url": "http://backend-api.de.spryker.local/api/rest"
     },
-
-    "users": {    
-        "yves_user": 
-            {
+    "users": {
+        "yves_user": {
             "email": "sonia@spryker.com",
             "first_name": "Sonia",
             "last_name": "Wagner",
@@ -16,9 +13,8 @@
             "password_new": "qweRTY_123",
             "reference": "DE--21",
             "salutation": "Ms"
-            },
-        "yves_second_user": 
-            {
+        },
+        "yves_second_user": {
             "email": "bill.martin@spryker.com",
             "first_name": "Martin",
             "last_name": "Bill",
@@ -77,10 +73,8 @@
             "salutation": "Mr"
             }
     },
-    
-    "address":{
-        "default": 
-            {
+    "address": {
+        "default": {
             "address1": "Third, 33, 11",
             "address2": "33-B",
             "address3": "third. address. line",
@@ -92,14 +86,13 @@
             "phone": "22111-3-4-5",
             "shipping_status": "False",
             "billing_status": "False"
-            },
-        "changed": 
-            {
+        },
+        "changed": {
             "address1": "New Street 123",
             "address2": "75d",
             "address3": "third. address. line - changed",
             "phone": "555-555-55"
-            }
+        }
     },
 
     "shop":
@@ -129,11 +122,9 @@
                 "us": "US",
                 "de": "DE"
             }
-    },
-        
+        },
     "products": {
-        "bundle_product": 
-            {
+        "bundle_product": {
             "bundle_product_product_name": "HP Bundle",
             "abstract": 
                 {
@@ -141,9 +132,8 @@
                 "product_1_sku": "121",
                 "product_2_sku": "127",
                 "product_3_sku": "150"
-                },
-            "concrete": 
-                {
+            },
+            "concrete": {
                 "product_1_sku": "121_29406823",
                 "product_2_sku": "127_22828284",
                 "product_3_sku": "150_29554292",
@@ -267,18 +257,15 @@
                 {
                 "sku": "093",
                 "name": "Sony SmartWatch 3"
-                },
-            "product_with_original_prices": 
-                {
+            },
+            "product_with_original_prices": {
                 "sku": "203"
-                },
-            "product_with_label": 
-                {
+            },
+            "product_with_label": {
                 "sku": "001",
                 "name": "Canon IXUS 160"
-                },
-            "product_with_reviews": 
-                {
+            },
+            "product_with_reviews": {
                 "sku": "093",
                 "name": "Sony SmartWatch 3",
                 "qty": "4"
@@ -287,10 +274,9 @@
                 {
                 "sku": "093",
                 "name": "Sony SmartWatch 3"
-                },
-            "product_with_concrete_offers": 
-                {
-                "sku": "112",
+            },
+            "product_with_concrete_offers": {
+                "sku": "006_30692993",
                 "name": "Acer Extensa M2610"
                 }
             }
@@ -517,5 +503,4 @@
                 }
             }
     }
-
 }
