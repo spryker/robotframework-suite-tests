@@ -218,7 +218,7 @@ Get_search_suggestions_with_color
     And Response reason should be:    OK
     And Response body parameter should be:    [data][0][type]    catalog-search-suggestions
     And Response body parameter should be:    [data][0][id]    None
-    And Each array element of array in response should contain value:    [data][0][attributes][completion]    ${color_4}
+    And Each array element of array in response should contain value:    [data][0][attributes][completion]    ${color_5}
     And Response should contain the array of a certain size:    [data][0][attributes][completion]    2
     And Response should contain the array of a certain size:    [data][0][attributes][abstractProducts]    10
     And Response body has correct self link
