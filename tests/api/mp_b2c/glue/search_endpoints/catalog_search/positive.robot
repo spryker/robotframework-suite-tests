@@ -368,7 +368,7 @@ Filter_by_brand_empty_brand
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response body parameter should be:    [data][0][type]    catalog-search
-    And Response body parameter should be:    [data][0][attributes][pagination][numFound]    ${_total_number_of_products_in_search_1}
+    And Response body parameter should be:    [data][0][attributes][pagination][numFound]    ${total_number_of_products_in_search_1}
     And Response body parameter should be:    [data][0][attributes][pagination][currentPage]    1
     And Response body parameter should be greater than:    [data][0][attributes][pagination][maxPage]    1
     And Response should contain the array of a certain size:    [data][0][attributes][abstractProducts]    ${ipp.default}
@@ -387,9 +387,8 @@ Filter_by_brand_non_existing_brand
     And Response body parameter should be:    [data][0][attributes][valueFacets][4][activeValue]    test123
     And Response body has correct self link
     
-#bug: https://spryker.atlassian.net/browse/CC-17009
 Filter_by_label_one_label
-    When I send a GET request:    /catalog-search?q=&label=${label.new}
+    When I send a GET request:    /catalog-search?q=&label=${label.new.name}
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
@@ -398,7 +397,7 @@ Filter_by_label_one_label
     And Response body parameter should be:    [data][0][attributes][pagination][currentPage]    1
     And Response body parameter should be:    [data][0][attributes][pagination][maxPage]    1
     And Response should contain the array of a certain size:    [data][0][attributes][abstractProducts]    5
-    And Response body parameter should be:    [data][0][attributes][valueFacets][1][activeValue]    ${label.new}
+    And Response body parameter should be:    [data][0][attributes][valueFacets][1][activeValue]    ${label.new.name}
     And Response body has correct self link
 
 Filter_by_label_two_labels
@@ -460,9 +459,9 @@ Filter_by_color_two_colors
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response body parameter should be:    [data][0][type]    catalog-search
-    And Response body parameter should be:    [data][0][attributes][pagination][numFound]    74
+    And Response body parameter should be:    [data][0][attributes][pagination][numFound]    85
     And Response body parameter should be:    [data][0][attributes][pagination][currentPage]    1
-    And Response body parameter should be:    [data][0][attributes][pagination][maxPage]    7
+    And Response body parameter should be:    [data][0][attributes][pagination][maxPage]    8
     And Response should contain the array of a certain size:    [data][0][attributes][abstractProducts]    12
     And Response body parameter should be:    [data][0][attributes][valueFacets][2][activeValue][0]    ${color_2}
     And Response body parameter should be:    [data][0][attributes][valueFacets][2][activeValue][1]    ${color_name}
@@ -524,7 +523,7 @@ Filter_by_valid_subcategory
     And Response should contain the array of a certain size:    [data][0][attributes][categoryTreeFilter]    ${tree_branches_qty}
     And Response body parameter should be:    [data][0][attributes][categoryTreeFilter][0][docCount]    0
     And Response body parameter should be:    [data][0][attributes][categoryTreeFilter][1][docCount]    0
-    And Response body parameter should be:    [data][0][attributes][categoryTreeFilter][2][children][0][docCount]    ${category_lvl2.qty}
+    And Response body parameter should be:    [data][0][attributes][categoryTreeFilter][4][children][0][docCount]    ${category_lvl2.qty}
     And Response body has correct self link
 
 Search_with_specific_currency

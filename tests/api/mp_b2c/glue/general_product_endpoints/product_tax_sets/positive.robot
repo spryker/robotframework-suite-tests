@@ -19,7 +19,7 @@ Get_product_tax sets
     And Response body parameter should not be EMPTY:    [data][0][attributes][name]
     And Response should contain the array larger than a certain size:    [data][0][attributes][restTaxRates]    1
     And Response body parameter should not be EMPTY:    [data][0][links][self]
-    Each array element of array in response should contain property:    [data][0][attributes][restTaxRates]    name
-    Each array element of array in response should contain property:    [data][0][attributes][restTaxRates]    rate
-    Each array element of array in response should contain property:    [data][0][attributes][restTaxRates]    country
+    And Each array element of array in response should contain property:    [data][0][attributes][restTaxRates]    name
+    And Each array element of array in response should contain property:    [data][0][attributes][restTaxRates]    rate
+    And Each array element of array in response should contain property:    [data][0][attributes][restTaxRates]    country
     And Response body has correct self link
