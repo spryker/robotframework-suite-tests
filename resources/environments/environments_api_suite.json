@@ -130,7 +130,6 @@
                 "de": "DE"
             }
         },
-
     "products": {
         "bundle_product": {
             "bundle_product_product_name": "HP Bundle",
@@ -271,10 +270,20 @@
                 "name": "Sony SmartWatch 3"
             },
             "product_with_concrete_offers": {
-                "sku": "112",
+                "sku": "006_30692993",
                 "name": "Acer Extensa M2610"
                 }
-            } 
+            } , 
+            
+        "concrete_product": 
+            {
+            "product_with_concrete_offers": 
+                {
+                "sku": "112_312526191",
+                "name": "Acer Extensa M2610"
+                }
+            }
+        
     },
 
     "shopping-list": 
@@ -285,6 +294,48 @@
         "id": "cf032865-d1ad-5e27-803a-423bd15ced66",
         "name": "Newcomers"
         }
+    },
+    "product_attributes":{
+
+        "product_offers": {
+            "inactive_offer_with_volume_price": "offer3",
+            "waiting_for_approval_offer_with_volume_price": "offer10",
+            "denied_offer_with_volume_price": "offer404",
+            "active_offer": "offer54",
+            "offer_without_volume_price": "offer359",
+            "offer_without_original_price": "offer6",
+            "second_offer_with_volume_price": "offer348",
+            "offer_with_volume_price": "offer417",
+            "offer_with_volume_price_gross_net_prices": "offer48",
+            "active_offer_price": "31050",
+            "merchant_sony_experts_id": "MER000005",
+            "merchant_video_king_id": "MER000002"
+
+        },
+
+        "brand_1": "Acer",
+        "brand_2": "edding",
+        "brand_3": "Mauser",
+        "brand_4": "Sony",
+
+        "material_1": "aluminum",
+        "material_2": "metal",
+        "material_3": "chipboard",
+        "material_4": "Steel sheets, stove-enameled",
+
+        "delivery_1": "assembled",
+        "price_unit_1": "piece",
+
+        "color_1": "yellow",
+        "color_2": "Blue",
+        "color_3": "purple",
+        "color_4": "orange",
+
+        "product_management_superattribute_id": "farbe",
+        "product_management_attribute_free_input_id": "verschlussart",
+        "product_management_attribute_no_input_id": "bundled_product"
+
+
     },
     "content": {
         "abstract_product_list": {
@@ -367,32 +418,6 @@
         "total_number_of_products_in_search": "218",
         "abstract_sku_highest_rating": "035"
     },  
-
-    "product_attributes":
-    {
-        "brand_1": "Acer",
-        "brand_2": "edding",
-        "brand_3": "Mauser",
-        "brand_4": "Sony",
-
-        "material_1": "aluminum",
-        "material_2": "metal",
-        "material_3": "chipboard",
-        "material_4": "Steel sheets, stove-enameled",
-
-        "delivery_1": "assembled",
-        "price_unit_1": "piece",
-
-        "color_1": "yellow",
-        "color_2": "Blue",
-        "color_3": "purple",
-        "color_4": "orange",
-
-        "product_management_superattribute_id": "farbe",
-        "product_management_attribute_free_input_id": "verschlussart",
-        "product_management_attribute_no_input_id": "bundled_product"
-
-    },
     "availability": {
         "stock_is_0": "0.0000000000",
         "stock_is_20": "20.0000000000"
