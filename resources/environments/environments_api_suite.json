@@ -110,6 +110,13 @@
                 "name": "Swiss Franc",
                 "code": "CHF",
                 "symbol": "CHF"
+                
+                }
+            },
+            "locale": {
+                "EN": {
+                    "name": "en_US",
+                    "code": "en"
                 }
             },
         "mode": 
@@ -338,7 +345,7 @@
             "product2_sku": "205",
             "product2_name": "Toshiba CAMILEO S30",
             "size": "2"
-            },
+},
         "category_node_is_root_id": "1",
         "category_node_has_only_parent_id": "12",
         "category_node_has_children_id": "11"
