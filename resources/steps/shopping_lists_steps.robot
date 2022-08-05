@@ -61,3 +61,7 @@ Yves: view shopping list with name:
     ${currentURL}=    Get Location
     IF    '/shopping-list' not in '${currentURL}'    Go To    ${host}shopping-list
     View shopping list with name:   ${shoppingListName}
+
+Yves: add all available products from list to cart
+    Wait Until Element Is Visible    ${shopping_list_main_content_locator}
+    Click    ${add_all_available_products_to_cart_locator} 

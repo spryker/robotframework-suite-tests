@@ -167,11 +167,10 @@ Yves: select xxx merchant's offer:
     Click    xpath=//section[@data-qa='component product-configurator']//div[contains(text(),'${merchantName}')]/ancestor::div[contains(@class,'offer-item')]//span[contains(@class,'radio__box')]
     Wait Until Element Contains    ${referrer_url}    offer
 
-Yves: merchant's offer price should be:
+Yves: merchant's offer/product price should be:
     [Arguments]    ${merchantName}    ${expectedProductPrice}
     Wait Until Element Is Visible    ${pdpPriceLocator}  
-    ${actualProductPrice}=    Get Text    xpath=//section[@data-qa='component product-configurator']//div[contains(text(),'${merchantName}')]/ancestor::div[contains(@class,'offer-item')]//span[@itemprop='price']
-    Should Be Equal    ${expectedProductPrice}    ${actualProductPrice}
+    Try reloading page until element does/not contain text:    xpath=//section[@data-qa='component product-configurator']//div[contains(text(),'${merchantName}')]/ancestor::div[contains(@class,'item')]//span[@itemprop='price']    ${expectedProductPrice}    true    20    5s
 
 Yves: merchant is (not) displaying in Sold By section of PDP:
     [Arguments]    ${merchantName}    ${condition}
