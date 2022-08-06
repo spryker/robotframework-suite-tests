@@ -36,7 +36,7 @@ Get_product_offer_without_volume_price
 Get_product_offer_with_volume_price
     # There is a bug : https://spryker.atlassian.net/browse/MP-6800
 
-    I send a GET request:    /concrete-products/${merchants.spryker.concrete_product_with_offer_sku}/product-offers
+    I send a GET request:    /concrete-products/${concrete_available_product.with_stock}/product-offers
     AND Save value to a variable:    [data][0][id]    offerId
     When I send a GET request:    /product-offers/${offerId}/product-offer-prices
     Then Response status code should be:    200
