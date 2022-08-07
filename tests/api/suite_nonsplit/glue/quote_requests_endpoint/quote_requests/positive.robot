@@ -43,10 +43,13 @@ Create_quote_request
     And Response body parameter should be greater than:    [data][attributes][shownVersion][cart][totals][grandTotal]    1
     And Response body parameter should be greater than:    [data][attributes][shownVersion][cart][totals][priceToPay]    1
     And Response body parameter should contain:    [data][attributes][shownVersion][cart]    billingAddress
-    And Each array element of array in response should contain property:    [data][attributes][shownVersion][cart][items]    groupKey
+    And Response body parameter should be:    [data][attributes][shownVersion][cart][items][0][groupKey]    ${concrete.available_product.with_stock_and_never_out_of_stock.sku_1}
+    And Response body parameter should be:    [data][attributes][shownVersion][cart][items][1][groupKey]    ${concrete.available_product.with_stock_and_never_out_of_stock.sku_2}
     And Each array element of array in response should contain property:    [data][attributes][shownVersion][cart][items]    productOfferReference
     And Each array element of array in response should contain property:    [data][attributes][shownVersion][cart][items]    merchantReference
-    And Each array element of array in response should contain property:    [data][attributes][shownVersion][cart][items]    sku
+    And Response body parameter should be:    [data][attributes][shownVersion][cart][items][0][sku]    ${concrete.available_product.with_stock_and_never_out_of_stock.sku_1}
+    And Response body parameter should be:    [data][attributes][shownVersion][cart][items][0][sku]    ${concrete.available_product.with_stock_and_never_out_of_stock.sku_1}
+    And Each array element of array in response should contain nested property with value:    [data][attributes][shownVersion][cart][items]    quantity    1
     And Each array element of array in response should contain property:    [data][attributes][shownVersion][cart][items]    quantity
     And Each array element of array in response should contain property:    [data][attributes][shownVersion][cart][items]    abstractSku
     And Each array element of array in response should contain property:    [data][attributes][shownVersion][cart][items]    amount
@@ -60,6 +63,7 @@ Create_quote_request
     And Response body has correct self link for created entity:   ${quote_request_id}
     [Teardown]    Run Keywords    I send a DELETE request:     /carts/${cart_id}
     ...    AND    Response status code should be:    204
+
 
 Create_quote_request_with_included_customers_&_comapny_users_&_company_business_units_and_concrete_products
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
@@ -177,31 +181,6 @@ Create_quote_request_with_empty_meta_data
     [Teardown]    Run Keywords    I send a DELETE request:     /carts/${cart_id}
     ...    AND    Response status code should be:    204
 
-Create_quote_request_for_cart_with_read_only_access
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
-    ...    AND    Save value to a variable:    [data][attributes][accessToken]    userToken
-    ...    AND    I set Headers:    Authorization=${token}  
-    ...    AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
-    ...    AND    Save value to a variable:    [data][id]    cartId
-    ...    AND    I send a POST request:    /carts/${cartId}/items    {"data":{"type":"items","attributes":{"sku":"${concrete.available_product.with_stock_and_never_out_of_stock.sku_1}","quantity":1}}}
-    ...    AND    Response status code should be:    201
-    ...    AND    I send a GET request:    /company-users
-    ...    AND    Save value to a variable:    [data][6][id]    companyUserId
-    ...    AND    I send a POST request:    /carts/${cartId}/shared-carts    {"data":{"type":"shared-carts","attributes":{"idCompanyUser":"${companyUserId}","idCartPermissionGroup":2}}}
-    ...    AND    Save value to a variable:    [data][id]    shared_cart_id
-    ...    AND    I send a PATCH request:    /shared-carts/${shared_cart_id}    {"data":{"type":"shared-carts","attributes":{"idCompanyUser":"${companyUserId}","idCartPermissionGroup":1}}}
-    ...    AND    I get access token for the customer:    ${yves_fifth_user.email}
-    ...    AND    I set Headers:    Authorization=${token}
-    ...    AND    I send a GET request:    /carts/${shared_cart_id}?include=cart-permission-groups
-    When I send a POST request:    /quote-requests    {"data":{"type":"quote-requests","attributes":{"cartUuid":"${cart_id}","meta":{"purchase_order_number":"${quote_request.purchase_order_number}","delivery_date":"${quote_request.delivery_date}","note":"${quote_request.note}"}}}}
-    Then Response status code should be:    422
-    And Response reason should be:    Unprocessable Content
-    And Response should return error message:    Request for quote denied. User does not have permissions to request quote.
-    And Response should return error code:    4506
-    [Teardown]    Run Keywords    I set Headers:    Authorization=Bearer ${userToken}
-    ...    AND    I send a DELETE request:    /carts/${cartId}
-    ...    AND    Response status code should be:    204
-    ...    AND    Response reason should be:    No Content
 
 Create_quote_request_for_cart_with_full_access_permissions
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
@@ -386,7 +365,7 @@ Retrieves_quote_request_by_requestId
     [Teardown]    Run Keywords    I send a DELETE request:     /carts/${cart_id}
     ...    AND    Response status code should be:    204
 
-Retrieve_quote_request version
+Retrieve_quote_request_version
      [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}
     ...    AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
