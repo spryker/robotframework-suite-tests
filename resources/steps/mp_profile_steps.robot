@@ -14,10 +14,14 @@ MP: change store status
     Wait Until Element Is Visible    ${store_status_checkbox}
     Click    ${store_status_checkbox}
 
-MP: update profile fields:
-    [Arguments]    ${merchantProfileEmail}    ${merchantProfilePhone}    ${merchantProfileDeliveryTime}    ${merchantProfileDataPrivacy}
+MP: update profile fields with following data:
+    [Arguments]    @{args}
+    ${profileData}=    Set Up Keyword Arguments    @{args}
     Wait Until Element Is Visible    ${store_status_checkbox}
-    Type Text    ${merchant_profile_email_field}    ${merchantProfileEmail}
-    Type Text    ${merchant_profile_phone_field}    ${merchantProfilePhone}
-    Type Text    ${merchant_profile_delivery_time_en_field}    ${merchantProfileDeliveryTime}
-    Type Text    ${merchant_profile_data_privacy_en_field}     ${merchantProfileDataPrivacy}
+    FOR    ${key}    ${value}    IN    &{profileData}
+        Log    Key is '${key}' and value is '${value}'.
+        IF    '${key}'=='email'    Type Text    ${merchant_profile_email_field}    ${value}
+        IF    '${key}'=='phone'    Type Text    ${merchant_profile_phone_field}    ${value}
+        IF    '${key}'=='delivery time'    Type Text    ${merchant_profile_delivery_time_en_field}    ${value}
+        IF    '${key}'=='data privacy'     Type Text    ${merchant_profile_data_privacy_en_field}    ${value}
+    END  

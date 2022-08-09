@@ -869,7 +869,7 @@ Multiple_Merchants_Order
     [Documentation]    Checks that order with products and offers of multiple merchants could be placed and it will be splitted per merchant
     [Setup]    Run Keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     ...    AND    Yves: delete all shopping carts
-    ...    AND    Yves: create new 'Shopping Cart' with name:    MultipleMerchants+${random}
+    ...    AND    Yves: create new 'Shopping Cart' with name:    MultipleMerchants${random}
     Yves: go to PDP of the product with sku:    ${one_variant_product_of_main_merchant_abstract_sku}
     Yves: add product to the shopping cart
     Yves: go to PDP of the product with sku:    ${one_variant_product_abstract_sku}
@@ -880,7 +880,7 @@ Multiple_Merchants_Order
     Yves: select xxx merchant's offer:    Computer Experts
     Yves: product price on the PDP should be:    ${product_with_multiple_offers_computer_experts_price}
     Yves: add product to the shopping cart
-    Yves: go to the shopping cart through the header with name:    MultipleMerchants+${random}
+    Yves: go to the shopping cart through the header with name:    MultipleMerchants${random}
     Yves: assert merchant of product in cart or list:    ${one_variant_product_of_main_merchant_concrete_sku}    Spryker
     Yves: assert merchant of product in cart or list:    ${one_variant_product_concrete_sku}    Office King
     Yves: assert merchant of product in cart or list:    ${product_with_multiple_offers_concrete_sku}    Computer Experts
@@ -906,14 +906,18 @@ Merchant_Profile_Update
     MP: login on MP with provided credentials:    ${merchant_office_king_email}
     MP: open navigation menu tab:    Profile  
     MP: open profile tab:    Online Profile
-    MP: update profile fields:    updated@office-king.nl    +11 222 333 444    2-4 weeks    Data privacy updated text
+    MP: update profile fields with following data:
+    ...    || email                  | phone           | delivery time | data privacy              ||
+    ...    || updated@office-king.nl | +11 222 333 444 | 2-4 weeks     | Data privacy updated text ||
     MP: click submit button
     Yves: go to URL:    en/merchant/office-king
     Yves: assert merchant profile fields:    updated@office-king.nl    +11 222 333 444    2-4 weeks    Data privacy updated text
     MP: login on MP with provided credentials:    ${merchant_office_king_email}
     MP: open navigation menu tab:    Profile
     MP: open profile tab:    Online Profile  
-    MP: update profile fields:    hi@office-king.nl    +31 123 345 777    2-4 days    Office King values the privacy of your personal data.
+    MP: update profile fields with following data:
+    ...    || email             | phone           | delivery time | data privacy                                          ||
+    ...    || hi@office-king.nl | +31 123 345 777 | 2-4 days      | Office King values the privacy of your personal data. ||
     MP: click submit button
 
 Merchant_Profile_Set_to_Offline_from_MP
@@ -966,34 +970,36 @@ Merchant_Profile_Set_to_Inactive_from_Backoffice
 Manage_Merchants_from_Backoffice
     [Documentation]    Checks that backoffice admin is able to create, approve, edit merchants
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    Zed: create new Merchant with the following data:    NewMerchant+${random}    NewMerchantReference+${random}    merchant+${random}@test.com    DE    NewMerchantURL+${random}    NewMerchant+${random}
-    Zed: perform search by:    NewMerchant+${random}
+    Zed: create new Merchant with the following data:
+    ...    || merchant name        | merchant reference            | e-mail                      | store | store | en url                  | de url                  ||
+    ...    || NewMerchant${random} | NewMerchantReference${random} | merchant+${random}@test.com | DE    | DE    | NewMerchantURL${random} | NewMerchantURL${random} ||
+    Zed: perform search by:    NewMerchant${random}
     Zed: table should contain non-searchable value:    Inactive
     Zed: table should contain non-searchable value:    Waiting for Approval
     Zed: table should contain non-searchable value:    DE
-    Zed: click Action Button in a table for row that contains:    NewMerchant+${random}    Activate
-    Zed: click Action Button in a table for row that contains:    NewMerchant+${random}    Approve Access
-    Zed: perform search by:    NewMerchant+${random}
+    Zed: click Action Button in a table for row that contains:    NewMerchant${random}    Activate
+    Zed: click Action Button in a table for row that contains:    NewMerchant${random}    Approve Access
+    Zed: perform search by:    NewMerchant${random}
     Zed: table should contain non-searchable value:    Active
     Zed: table should contain non-searchable value:    Approved
-    Zed: click Action Button in a table for row that contains:    NewMerchant+${random}    Edit
-    Zed: update Merchant User name on edit page:    NewMerchantUpdated+${random}
-    Yves: go to URL:    en/merchant/NewMerchantURL+${random}
-    Yves: assert name of merchant on profile page:    NewMerchantUpdated+${random}
+    Zed: click Action Button in a table for row that contains:    NewMerchant${random}    Edit
+    Zed: update Merchant name on edit page:    NewMerchantUpdated${random}
+    Yves: go to URL:    en/merchant/NewMerchantURL${random}
+    Yves: assert name of merchant on profile page:    NewMerchantUpdated${random}
 
 Manage_Merchant_Users
     [Documentation]    Checks that backoffice admin is able to create, activate, edit and delete merchant users
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Marketplace    Merchants
     Zed: click Action Button in a table for row that contains:     Office King     Edit
-    Zed: create new Merchant User with the following data:    m_user+${random}@test.com    FName+${random}    LName+${random}
+    Zed: create new Merchant User with the following data:    m_user+${random}@test.com    FName${random}    LName${random}
     Zed: perform merchant user search by:     m_user+${random}@test.com
     Zed: table should contain non-searchable value:    Deactivated
     Zed: click Action Button in Merchant Users table for row that contains:    m_user+${random}@test.com    Activate
     Zed: table should contain non-searchable value:    Active
     Zed: click Action Button in Merchant Users table for row that contains:    m_user+${random}@test.com    Edit
-    Zed: update Merchant User name on edit page:    UpdatedName+${random}
-    Zed: perform merchant user search by:    UpdatedName+${random}
+    Zed: update Merchant name on edit page:    UpdatedName${random}
+    Zed: perform merchant user search by:    UpdatedName${random}
     Zed: click Action Button in Merchant Users table for row that contains:    m_user+${random}@test.com    Deactivate
     Zed: table should contain non-searchable value:    Deactivated
     [Teardown]    Run Keywords    Zed: click Action Button in Merchant Users table for row that contains:    m_user+${random}@test.com    Delete
@@ -1004,10 +1010,14 @@ Create_and_Approve_New_Merchant_Product
     MP: login on MP with provided credentials:    ${merchant_office_king_email}
     MP: open navigation menu tab:    Products    
     MP: click on create new entity button:    Create Product
-    MP: create multi sku product:    SKU${random}    NewProduct${random}    packaging_unit    Item    Box    material    Aluminium          
+    MP: create multi sku product with following data:
+    ...    || product sku  | product name        | first attribute name | first attribute first value | first attribute second value | second attribute name | second attribute value ||
+    ...    || SKU${random} | NewProduct${random} | packaging_unit       | Item                        | Box                          | material              | Aluminium              ||
     MP: perform search by:    NewProduct${random}
     MP: click on a table row that contains:     NewProduct${random}
-    MP: fill abstract product fields:    NewProduct${random}    DE    DE    EUR    100    Standard Taxes   
+    MP: fill abstract product required fields:    NewProduct${random}    DE    Standard Taxes   
+    MP: fill product price values:    1    Default    DE    EUR    100
+    MP: save abstract product 
     MP: click on a table row that contains:    NewProduct${random}
     MP: open concrete drawer by SKU:    SKU${random}-2
     MP: fill concrete product fields        
@@ -1028,23 +1038,25 @@ Create_New_Offer
     MP: click on create new entity button:    Add Offer
     MP: perform search by:    673327
     MP: click on a table row that contains:    673327  
-    MP: fill offer fields:    merchantSKU+${random}    DE    DE    CHF    100
-    MP: perform search by:    merchantSKU+${random}
-    MP: click on a table row that contains:    merchantSKU+${random} 
-    MP: fill offer price values:    1    DE    EUR    200
-    MP: click submit button
+    MP: fill offer fields:    merchantSKU${random}    DE
+    MP: add offer price:    1    DE    CHF    100
+    MP: save offer
+    MP: perform search by:    merchantSKU${random}
+    MP: click on a table row that contains:    merchantSKU${random} 
+    MP: add offer price:    1    DE    EUR    200
+    MP: save offer
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
-    Yves: create new 'Shopping Cart' with name:    newOfferCart+${random}
+    Yves: create new 'Shopping Cart' with name:    newOfferCart${random}
     Yves: go to PDP of the product with sku:     673327
     Yves: merchant is (not) displaying in Sold By section of PDP:    Office King    true
     Yves: merchant's offer/product price should be:    Office King    €200.00
     Yves: select xxx merchant's offer:    Office King
     Yves: add product to the shopping cart
-    Yves: go to the shopping cart through the header with name:    newOfferCart+${random}
+    Yves: go to the shopping cart through the header with name:    newOfferCart${random}
     Yves: 'Shopping Cart' page is displayed
     Yves: assert merchant of product in cart or list:    673327    Office King
     Yves: shopping cart contains product with unit price:    673327    Estucado upholstered chair with armrests, leader, white - white    200
-    [Teardown]    Yves: delete 'Shopping Cart' with name:    newOfferCart+${random}
+    [Teardown]    Yves: delete 'Shopping Cart' with name:    newOfferCart${random}
 
 Approve_Offer
     [Documentation]    Checks that marketplace operator is able to approve or deny merchant's offer and it will be available or not in store due to this status
@@ -1070,14 +1082,14 @@ Fulfill_Order_from_Merchant_Portal
     [Documentation]    Checks that merchant is able to process his order through OMS from merchant portal
     [Setup]    Run Keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     ...    AND    Yves: delete all shopping carts
-    ...    AND    Yves: create new 'Shopping Cart' with name:    MerchantOrder+${random}
+    ...    AND    Yves: create new 'Shopping Cart' with name:    MerchantOrder${random}
     Yves: go to PDP of the product with sku:     ${product_with_multiple_offers_abstract_sku}
     Yves: add product to the shopping cart
     Yves: select xxx merchant's offer:    Computer Experts
     Yves: add product to the shopping cart
     Yves: select xxx merchant's offer:    Office King
     Yves: add product to the shopping cart
-    Yves: go to the shopping cart through the header with name:    MerchantOrder+${random}
+    Yves: go to the shopping cart through the header with name:    MerchantOrder${random}
     Yves: assert merchant of product in cart or list:    ${product_with_multiple_offers_concrete_sku}     Office King
     Yves: assert merchant of product in cart or list:    ${product_with_multiple_offers_concrete_sku}     Computer Experts
     Yves: click on the 'Checkout' button in the shopping cart
@@ -1108,19 +1120,19 @@ Shopping_List_Contains_Offers
     [Documentation]    Checks that customer is able to add merchant products and offers to list and merchant relation won't be lost in list and afterwards in cart
     [Setup]    Run Keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     ...    AND    Yves: delete all shopping carts
-    Yves: create new 'Shopping List' with name:    shoppingListName+${random}
+    Yves: create new 'Shopping List' with name:    shoppingListName${random}
     Yves: go to PDP of the product with sku:    ${product_with_multiple_offers_abstract_sku}
-    Yves: add product to the shopping list:    shoppingListName+${random}
+    Yves: add product to the shopping list:    shoppingListName${random}
     Yves: select xxx merchant's offer:    Computer Experts
-    Yves: add product to the shopping list:    shoppingListName+${random}
-    Yves: view shopping list with name:    shoppingListName+${random}
+    Yves: add product to the shopping list:    shoppingListName${random}
+    Yves: view shopping list with name:    shoppingListName${random}
     Yves: assert merchant of product in cart or list:    ${product_with_multiple_offers_concrete_sku}    Spryker
     Yves: assert merchant of product in cart or list:    ${product_with_multiple_offers_concrete_sku}    Computer Experts
     Yves: add all available products from list to cart  
     Yves: 'Shopping Cart' page is displayed
     Yves: assert merchant of product in cart or list:    ${product_with_multiple_offers_concrete_sku}    Spryker
     Yves: assert merchant of product in cart or list:    ${product_with_multiple_offers_concrete_sku}    Computer Experts
-    [Teardown]    Yves: delete 'Shopping List' with name:    shoppingListName+${random}
+    [Teardown]    Yves: delete 'Shopping List' with name:    shoppingListName${random}
 
 
 Merchant_Portal_Customer_Specific_Prices

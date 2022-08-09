@@ -10,16 +10,20 @@ Zed: select merchant in filter:
     Select From List By Label    ${zed_merchants_filter}    ${merchantName}
 
 Zed: create new Merchant with the following data:
-    [Arguments]    ${MerchantName}    ${MerchantReference}    ${MerchantEmail}    ${checkboxStore}    ${MerchantEnUrl}    ${MerchantDeUrl}
+    [Arguments]    @{args}
+    ${merchantData}=    Set Up Keyword Arguments    @{args}
     Zed: go to second navigation item level:    Marketplace    Merchants  
     Zed: click button in Header:    Add Merchant
     Wait Until Element Is Visible    ${zed_create_merchant_name_field}
-    Type Text    ${zed_create_merchant_name_field}    ${MerchantName}
-    Type Text    ${zed_create_merchant_reference_field}    ${MerchantReference}
-    Type Text    ${zed_create_merchant_email_field}    ${MerchantEmail}
-    Zed: Check checkbox by Label:    ${checkboxStore}
-    Type Text    ${zed_create_merchant_url_en_locale_field}    ${MerchantEnUrl}
-    Type Text    ${zed_create_merchant_url_de_locale_field}    ${MerchantDeUrl}   
+    FOR    ${key}    ${value}    IN    &{merchantData}
+        Log    Key is '${key}' and value is '${value}'.
+        IF    '${key}'=='merchant name'    Type Text    ${zed_create_merchant_name_field}    ${value}
+        IF    '${key}'=='merchant reference'    Type Text    ${zed_create_merchant_reference_field}    ${value}
+        IF    '${key}'=='e-mail'    Type Text    ${zed_create_merchant_email_field}    ${value}
+        IF    '${key}'=='store'    Zed: Check checkbox by Label:    ${value}
+        IF    '${key}'=='en url'    Type Text    ${zed_create_merchant_url_en_locale_field}    ${value}
+        IF    '${key}'=='de url'    Type Text    ${zed_create_merchant_url_de_locale_field}    ${value}
+    END  
     Zed: submit the form
     Zed: wait for button in Header to be visible:    Add Merchant    ${browser_timeout}
     Zed: table should contain:    ${MerchantName}

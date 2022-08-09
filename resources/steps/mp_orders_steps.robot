@@ -6,7 +6,7 @@ Resource    ../pages/mp/mp_order_drawer.robot
 *** Keywords ***
 MP: wait for order to appear:
     [Arguments]    ${orderReference}
-    Sleep    120s
+    Sleep    150s
     MP: perform search by:    ${orderReference}
     Table Should Contain    ${mp_items_table}     ${orderReference}
  

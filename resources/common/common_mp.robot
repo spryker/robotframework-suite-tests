@@ -37,6 +37,8 @@ MP: click submit button
 MP: perform search by:
     [Arguments]    ${searchKey}
     Type Text    ${mp_search_box}    ${searchKey}
+    Wait Until Element Is Visible    ${spinner_loader}
+    Wait Until Element Is Not Visible    ${spinner_loader}
     Wait Until Element Is Enabled    ${mp_items_table}
 
 MP: click on a table row that contains:

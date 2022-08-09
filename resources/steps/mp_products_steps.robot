@@ -20,43 +20,62 @@ MP: fill product price values:
     Click    xpath=//web-spy-card[@spy-title='Price']//tbody/tr[${rowNumber}]/td[3]//spy-select
     MP: select option in expanded dropdown:    ${priceCurrency}
     Type Text    xpath=//web-spy-card[@spy-title='Price']//tbody/tr[${rowNumber}]/td[5]//input    ${grossDefault}
-
-MP: create multi sku product:
-    [Documentation]    Creates new abstract product with 2 variants
-    [Arguments]    ${newProductSku}    ${newProductName}    ${firstAttributeName}    ${firstAttributeFirstValue}    ${firstAttributeSecondValue}    ${secondAttributeName}    ${secondAttributeValue}  
+    
+MP: create multi sku product with following data:
+    [Documentation]    Creates new abstract product with 2 variants    
+    [Arguments]    @{args}
+    ${productData}=    Set Up Keyword Arguments    @{args}
     Wait Until Element Is Visible    ${mp_submit_button}
-    Type Text    ${new_product_sku_field}    ${newProductSku}
-    Type Text    ${new_product_name_field}    ${newProductName}
-    Click    ${new_product_multiple_concretes_option}
-    MP: click submit button
-    Wait Until Element Is Visible    ${spinner_loader}
-    Wait Until Element Is Not Visible    ${spinner_loader}
-    Click    ${new_product_super_attribute_first_row_name_selector}
-    MP: select option in expanded dropdown:    ${firstAttributeName}     
-    Click    ${new_product_super_attribute_first_row_values_selector}
-    MP: select option in expanded dropdown:    ${firstAttributeFirstValue}
-    MP: select option in expanded dropdown:    ${firstAttributeSecondValue}
-    Click    ${new_product_add_super_attribute_button}  
-    Click    ${new_product_super_attribute_second_row_name_selector}
-    MP: select option in expanded dropdown:    ${secondAttributeName}
-    Click    ${new_product_super_attribute_second_row_values_selector}
-    MP: select option in expanded dropdown:    ${secondAttributeValue}
+    FOR    ${key}    ${value}    IN    &{productData}
+        Log    Key is '${key}' and value is '${value}'.
+        IF    '${key}'=='product sku'    Type Text    ${new_product_sku_field}    ${value}
+        IF    '${key}'=='product name'    
+        Run keywords    
+            Type Text    ${new_product_name_field}    ${value}
+            Click    ${new_product_multiple_concretes_option}
+            MP: click submit button
+            Wait Until Element Is Visible    ${spinner_loader}
+            Wait Until Element Is Not Visible    ${spinner_loader}
+            Click    ${new_product_super_attribute_first_row_name_selector}
+        END
+        IF    '${key}'=='first attribute name'    
+        Run keywords    
+            MP: select option in expanded dropdown:    ${value}
+            Click    ${new_product_super_attribute_first_row_values_selector}
+        END
+        IF    '${key}'=='first attribute first value'    MP: select option in expanded dropdown:    ${value}
+        IF    '${key}'=='first attribute second value'    
+        Run Keywords
+            MP: select option in expanded dropdown:    ${value}
+            Click    ${new_product_add_super_attribute_button}  
+            Click    ${new_product_super_attribute_second_row_name_selector}
+        END
+        IF    '${key}'=='second attribute name'    
+        Run Keywords
+            MP: select option in expanded dropdown:    ${value}
+            Click    ${new_product_super_attribute_second_row_values_selector}
+        END
+        IF    '${key}'=='second attribute value'    MP: select option in expanded dropdown:    ${value}
+    END  
     Element Should Contain    ${new_product_concretes_preview_count}    2
     Click    ${new_product_submit_create_button}
     Wait Until Element Is Visible    ${new_product_created_popup}
     Wait Until Element Is Not Visible    ${new_product_created_popup}
 
-MP: fill abstract product fields:
-    [Arguments]    ${productNameDE}    ${productStore}    ${priceStore}    ${priceCurrency}    ${priceGrossValue}    ${taxSet}    
+MP: fill abstract product required fields:
+    [Arguments]    ${productNameDE}    ${productStore}    ${taxSet}    
     Wait Until Element Is Visible    ${product_name_de_field}
     Type Text    ${product_name_de_field}    ${productNameDE}
     Click    ${product_store_selector}
     MP: select option in expanded dropdown:    ${productStore}
-    MP: fill product price values:    1    Default    ${priceStore}    ${priceCurrency}    ${priceGrossValue}
     Wait Until Element Is Visible    ${product_tax_selector}
     Click    ${product_tax_selector}
     MP: select option in expanded dropdown:    ${taxSet}
+
+MP: save abstract product    
     MP: click submit button
+    Wait Until Element Is Visible    ${product_updated_popup}
+    Wait Until Element Is Not Visible    ${product_updated_popup}
 
 MP: fill concrete product fields
     Click    ${product_concrete_active_checkbox}
