@@ -115,12 +115,10 @@ Create_a_customer_with_missing_required_fields
 #bug:https://spryker.atlassian.net/browse/CC-19138
 Create_a_customer_with_wrong_gender
     I send a POST request:    /customers/    {"data":{"type":"customers","attributes":{"firstName":"${yves_third_user.first_name}","lastName":"${yves_third_user.last_name}","gender":"test","salutation":"test","email":"${yves_third_user.first_name}@spryker.com","password":"${yves_user.password}","confirmPassword":"${yves_user.password}","acceptedTerms":True}}}
-    Response status code should be:    422
-    And Response reason should be:   Unprocessable Content
-    And Response should return error code:    901
-    And Array in response should contain property with value:    [errors]    detail    gender => The value you selected is not a valid choice.
-    And Array in response should contain property with value:    [errors]    detail    salutation => The value you selected is not a valid choice.
-    And Response header parameter should be:    Content-Type    ${default_header_content_type}
+    Response status code should be:    400
+    And Response reason should be:   Bad Request
+    And Response should return error code:    414
+    And Array in response should contain property with value:    [errors]    detail    Gender is not valid. Possible options are: Male, Female
 
 Get_a_customer_with_wrong_id
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
@@ -202,12 +200,10 @@ Update_a_customer_with_invalid_data
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     I send a PATCH request:    /customers/${yves_user.reference}    {"data":{"type":"customers","attributes":{"firstName":"${yves_third_user.first_name}","lastName":"${yves_third_user.last_name}","gender":"test","salutation":"test","email":"${yves_third_user.first_name}@spryker.com","password":"${yves_user.password}","confirmPassword":"${yves_user.password}","acceptedTerms":True}}}
-    Response status code should be:    422
-    And Response reason should be:   Unprocessable Content
-    And Response should return error code:    901
-    And Array in response should contain property with value:    [errors]    detail    gender => The value you selected is not a valid choice.
-    And Array in response should contain property with value:    [errors]    detail    salutation => The value you selected is not a valid choice.
-    And Response header parameter should be:    Content-Type    ${default_header_content_type}
+       Response status code should be:    400
+    And Response reason should be:   Bad Request
+    And Response should return error code:    414
+    And Array in response should contain property with value:    [errors]    detail    Gender is not valid. Possible options are: Male, Female
 
 Update_a_customer_without_access_token
     I send a PATCH request:    /customers/DE--35    {"data":{"type":"customers","attributes":{"firstName":"${yves_third_user.first_name}","lastName":"${yves_third_user.last_name}","gender":"${gender.male}","salutation":"${yves_third_user.salutation}","email":"${yves_third_user.first_name}@spryker.com","password":"${yves_user.password}","confirmPassword":"${yves_user.password}","acceptedTerms":True}}}
