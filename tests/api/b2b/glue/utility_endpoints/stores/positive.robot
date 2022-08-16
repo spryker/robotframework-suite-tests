@@ -5,7 +5,6 @@ Resource    ../../../../../../resources/common/common_api.robot
 Default Tags    glue
 
 *** Test Cases ***
-
 ENABLER
     TestSetup
 Get_all_availiable_stores

@@ -602,10 +602,9 @@
         "test_cart_name": "Test-cart",
         "payment": {
             "provider_name": "dummyMarketplacePayment",
-            "method_name": "invoice",
+            "method_name": "Invoice",
             "selection_name": "dummyMarketplacePaymentInvoice",
-            "provider_name_1": "DummyPayment",
-            "method_name_1": "Invoice"
+            "provider_name_1": "DummyPayment"
         },
         "shipment": {
             "carrier_name": "Spryker Dummy Shipment",
