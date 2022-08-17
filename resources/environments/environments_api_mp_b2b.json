@@ -531,7 +531,7 @@
             {
             "qty_of_units": "1",
             "amount": "5.0000000000",
-            "conversion": "15",
+            "conversion": "1",
             "precision": "100",
             "packaging_unit": "19",
             "sku": "421519_3",
