@@ -144,13 +144,12 @@ Quick_Order
 
 Volume_Prices
     [Documentation]    Checks that volume prices are applied in cart
-    [Setup]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    ...    AND    Zed: go to second navigation item level:    Catalog    Availability
-    ...    AND    Zed: change product stock:    ${volume_prices_product_abstract_sku}    ${volume_prices_product_concrete_sku}    true    10  
+    [Setup]    Run keywords    Zed: check and restore product availability in Zed:    ${volume_prices_product_abstract_sku}    Available    ${volume_prices_product_concrete_sku}
     ...    AND    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     ...    AND    Yves: delete all shopping carts
     ...    AND    Yves: create new 'Shopping Cart' with name:    VolumePriceCart+${random}
     Yves: go to PDP of the product with sku:    ${volume_prices_product_abstract_sku}
+    Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    False
     Yves: change quantity on PDP:    5
     Yves: add product to the shopping cart
     Yves: go to the shopping cart through the header with name:    VolumePriceCart+${random}
@@ -675,7 +674,6 @@ Product_PDP
 Product_labels
     [Documentation]    Checks that products have labels on PLP and PDP
     Yves: go to first navigation item level:    Sale %
-    #TODO: Method below do nothing with 'SaleLabel' and 'NewLabel'
     Yves: 1st product card in catalog (not)contains:     Sale label    true
     Yves: go to the PDP of the first available product on open catalog page
     Yves: PDP contains/doesn't contain:    true    ${pdp_sales_label}[${env}]
@@ -828,6 +826,7 @@ Content_Management
 
 Refunds
     [Documentation]    Checks that refund can be created for an item and the whole order of merchant
+    ### Fails due to CC-17201 ###
     [Setup]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: deactivate following discounts from Overview page:    20% off storage    10% off minimum order
     ...    AND    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
@@ -867,7 +866,16 @@ Refunds
 
 Multiple_Merchants_Order
     [Documentation]    Checks that order with products and offers of multiple merchants could be placed and it will be splitted per merchant
-    [Setup]    Run Keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
+    [Setup]    Run Keywords    
+    ...    MP: login on MP with provided credentials:    ${merchant_computer_experts_email}
+    ...    AND    MP: change offer stock:
+    ...    || offer    | stock quantity | is never out of stock ||
+    ...    || offer395 | 10             | true                  ||
+    ...    AND    MP: login on MP with provided credentials:    ${merchant_office_king_email}
+    ...    AND    MP: change offer stock:
+    ...    || offer    | stock quantity | is never out of stock ||
+    ...    || offer193 | 10             | true                  ||
+    ...    AND    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     ...    AND    Yves: delete all shopping carts
     ...    AND    Yves: create new 'Shopping Cart' with name:    MultipleMerchants${random}
     Yves: go to PDP of the product with sku:    ${one_variant_product_of_main_merchant_abstract_sku}
@@ -902,7 +910,9 @@ Multiple_Merchants_Order
 Merchant_Profile_Update
     [Documentation]    Checks that merchant profile could be updated from merchant portal and that changes will be displayed on Yves
     Yves: go to URL:    en/merchant/office-king
-    Yves: assert merchant profile fields:    hi@office-king.nl    +31 123 345 777    2-4 days    Office King values the privacy of your personal data.
+    Yves: assert merchant profile fields:
+    ...    || name | email             | phone           | delivery time | data privacy                                          ||
+    ...    ||      | hi@office-king.nl | +31 123 345 777 | 2-4 days      | Office King values the privacy of your personal data. ||
     MP: login on MP with provided credentials:    ${merchant_office_king_email}
     MP: open navigation menu tab:    Profile  
     MP: open profile tab:    Online Profile
@@ -911,7 +921,9 @@ Merchant_Profile_Update
     ...    || updated@office-king.nl | +11 222 333 444 | 2-4 weeks     | Data privacy updated text ||
     MP: click submit button
     Yves: go to URL:    en/merchant/office-king
-    Yves: assert merchant profile fields:    updated@office-king.nl    +11 222 333 444    2-4 weeks    Data privacy updated text
+    Yves: assert merchant profile fields:
+    ...    || name | email                  | phone           | delivery time | data privacy              ||
+    ...    ||      | updated@office-king.nl | +11 222 333 444 | 2-4 weeks     | Data privacy updated text ||
     MP: login on MP with provided credentials:    ${merchant_office_king_email}
     MP: open navigation menu tab:    Profile
     MP: open profile tab:    Online Profile  
@@ -922,6 +934,15 @@ Merchant_Profile_Update
 
 Merchant_Profile_Set_to_Offline_from_MP
     [Documentation]    Checks that merchant is able to set store offline and then his profile, products and offers won't be displayed on Yves
+    [Setup]    Run Keywords    
+    ...    MP: login on MP with provided credentials:    ${merchant_computer_experts_email}
+    ...    AND    MP: change offer stock:
+    ...    || offer    | stock quantity | is never out of stock ||
+    ...    || offer395 | 10             | true                  ||
+    ...    AND    MP: login on MP with provided credentials:    ${merchant_office_king_email}
+    ...    AND    MP: change offer stock:
+    ...    || offer    | stock quantity | is never out of stock ||
+    ...    || offer193 | 10             | true                  ||
     MP: login on MP with provided credentials:    ${merchant_office_king_email}
     MP: open navigation menu tab:    Profile
     MP: open profile tab:    Online Profile
@@ -947,9 +968,17 @@ Merchant_Profile_Set_to_Offline_from_MP
     Yves: go to URL:    en/merchant/office-king
     Yves: try reloading page if element is/not appear:    ${merchant_profile_main_content_locator}    true
 
-
 Merchant_Profile_Set_to_Inactive_from_Backoffice
     [Documentation]    Checks that backoffice admin is able to deactivate merchant and then it's profile, products and offers won't be displayed on Yves
+    [Setup]    Run Keywords    
+    ...    MP: login on MP with provided credentials:    ${merchant_computer_experts_email}
+    ...    AND    MP: change offer stock:
+    ...    || offer    | stock quantity | is never out of stock ||
+    ...    || offer395 | 10             | true                  ||
+    ...    AND    MP: login on MP with provided credentials:    ${merchant_office_king_email}
+    ...    AND    MP: change offer stock:
+    ...    || offer    | stock quantity | is never out of stock ||
+    ...    || offer193 | 10             | true                  ||
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Marketplace    Merchants  
     Zed: click Action Button in a table for row that contains:     Office King     Deactivate
@@ -983,23 +1012,32 @@ Manage_Merchants_from_Backoffice
     Zed: table should contain non-searchable value:    Active
     Zed: table should contain non-searchable value:    Approved
     Zed: click Action Button in a table for row that contains:    NewMerchant${random}    Edit
-    Zed: update Merchant name on edit page:    NewMerchantUpdated${random}
-    Yves: go to URL:    en/merchant/NewMerchantURL${random}
-    Yves: assert name of merchant on profile page:    NewMerchantUpdated${random}
+    Zed: update Merchant on edit page with the following data:
+    ...    || merchant name               | merchant reference | e-mail  | store | store | en url | de url ||
+    ...    || NewMerchantUpdated${random} |                    |         |       |       |        |        ||
+    Yves: go to newly created page by URL:    en/merchant/NewMerchantURL${random}
+    Yves: assert merchant profile fields:
+    ...    || name                         | email| phone | delivery time | data privacy ||
+    ...    || NewMerchantUpdated${random}  |      |       |               |              ||
 
 Manage_Merchant_Users
     [Documentation]    Checks that backoffice admin is able to create, activate, edit and delete merchant users
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Marketplace    Merchants
     Zed: click Action Button in a table for row that contains:     Office King     Edit
-    Zed: create new Merchant User with the following data:    m_user+${random}@test.com    FName${random}    LName${random}
+    Zed: create new Merchant User with the following data:
+    ...    || e-mail                    | first name     | last name      ||
+    ...    || m_user+${random}@test.com | FName${random} | LName${random} ||
     Zed: perform merchant user search by:     m_user+${random}@test.com
     Zed: table should contain non-searchable value:    Deactivated
     Zed: click Action Button in Merchant Users table for row that contains:    m_user+${random}@test.com    Activate
     Zed: table should contain non-searchable value:    Active
     Zed: click Action Button in Merchant Users table for row that contains:    m_user+${random}@test.com    Edit
-    Zed: update Merchant name on edit page:    UpdatedName${random}
-    Zed: perform merchant user search by:    UpdatedName${random}
+    Zed: update Merchant User on edit page with the following data:
+    ...    || e-mail | first name           | last name ||
+    ...    ||        | UpdatedName${random} |           ||
+    Zed: perform merchant user search by:    m_user+${random}@test.com
+    Zed: table should contain non-searchable value:    UpdatedName${random}
     Zed: click Action Button in Merchant Users table for row that contains:    m_user+${random}@test.com    Deactivate
     Zed: table should contain non-searchable value:    Deactivated
     [Teardown]    Run Keywords    Zed: click Action Button in Merchant Users table for row that contains:    m_user+${random}@test.com    Delete
@@ -1015,12 +1053,18 @@ Create_and_Approve_New_Merchant_Product
     ...    || SKU${random} | NewProduct${random} | packaging_unit       | Item                        | Box                          | material              | Aluminium              ||
     MP: perform search by:    NewProduct${random}
     MP: click on a table row that contains:     NewProduct${random}
-    MP: fill abstract product required fields:    NewProduct${random}    DE    Standard Taxes   
-    MP: fill product price values:    1    Default    DE    EUR    100
+    MP: fill abstract product required fields:
+    ...    || product name DE     | store | tax set        ||
+    ...    || NewProduct${random} | DE    | Standard Taxes ||
+    MP: fill product price values:
+    ...    || product type | row number | customer | store | currency | gross default ||
+    ...    || abstract     | 1          | Default  | DE    | EUR      | 100           ||
     MP: save abstract product 
     MP: click on a table row that contains:    NewProduct${random}
     MP: open concrete drawer by SKU:    SKU${random}-2
-    MP: fill concrete product fields        
+    MP: fill concrete product fields:
+    ...    || is active | stock quantity | use abstract name | searchability ||
+    ...    || true      | 100            | true              | en_US         ||
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Catalog    Products 
     Zed: click Action Button in a table for row that contains:     NewProduct${random}     Approve
@@ -1038,12 +1082,18 @@ Create_New_Offer
     MP: click on create new entity button:    Add Offer
     MP: perform search by:    673327
     MP: click on a table row that contains:    673327  
-    MP: fill offer fields:    merchantSKU${random}    DE
-    MP: add offer price:    1    DE    CHF    100
+    MP: fill offer fields:
+    ...    || is active | merchant sku         | store | stock quantity ||
+    ...    || true      | merchantSKU${random} | DE    | 100            ||
+    MP: add offer price:
+    ...    || row number | store | currency | gross default ||
+    ...    || 1          | DE    | CHF      | 100           ||
     MP: save offer
     MP: perform search by:    merchantSKU${random}
     MP: click on a table row that contains:    merchantSKU${random} 
-    MP: add offer price:    1    DE    EUR    200
+    MP: add offer price:
+    ...    || row number | store | currency | gross default ||
+    ...    || 1          | DE    | EUR      | 200           ||
     MP: save offer
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     Yves: create new 'Shopping Cart' with name:    newOfferCart${random}
@@ -1080,7 +1130,16 @@ Approve_Offer
 
 Fulfill_Order_from_Merchant_Portal
     [Documentation]    Checks that merchant is able to process his order through OMS from merchant portal
-    [Setup]    Run Keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
+    [Setup]    Run Keywords    
+    ...    MP: login on MP with provided credentials:    ${merchant_computer_experts_email}
+    ...    AND    MP: change offer stock:
+    ...    || offer    | stock quantity | is never out of stock ||
+    ...    || offer395 | 10             | true                  ||
+    ...    AND    MP: login on MP with provided credentials:    ${merchant_office_king_email}
+    ...    AND    MP: change offer stock:
+    ...    || offer    | stock quantity | is never out of stock ||
+    ...    || offer193 | 10             | true                  ||
+    ...    AND    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     ...    AND    Yves: delete all shopping carts
     ...    AND    Yves: create new 'Shopping Cart' with name:    MerchantOrder${random}
     Yves: go to PDP of the product with sku:     ${product_with_multiple_offers_abstract_sku}
@@ -1108,8 +1167,8 @@ Fulfill_Order_from_Merchant_Portal
     Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Pay 
     MP: login on MP with provided credentials:    ${merchant_office_king_email}
     MP: open navigation menu tab:    Orders    
-    MP: wait for order to appear:    ${lastPlacedOrder}--MER000009
-    MP: click on a table row that contains:    ${lastPlacedOrder}--MER000009
+    MP: wait for order to appear:    ${lastPlacedOrder}--${merchant_office_king_reference}
+    MP: click on a table row that contains:    ${lastPlacedOrder}--${merchant_office_king_reference}
     MP: order grand total should be:    €31.81
     MP: update order state using header button:    Ship
     MP: order state on drawer should be:    Shipped   
@@ -1134,7 +1193,6 @@ Shopping_List_Contains_Offers
     Yves: assert merchant of product in cart or list:    ${product_with_multiple_offers_concrete_sku}    Computer Experts
     [Teardown]    Yves: delete 'Shopping List' with name:    shoppingListName${random}
 
-
 Merchant_Portal_Customer_Specific_Prices
     [Documentation]    Checks that customer will see product/offer prices specified by merchant for his business unit
     MP: login on MP with provided credentials:    ${merchant_spryker_email}
@@ -1142,7 +1200,9 @@ Merchant_Portal_Customer_Specific_Prices
     MP: perform search by:    ${one_variant_product_of_main_merchant_abstract_sku}
     MP: click on a table row that contains:    ${one_variant_product_of_main_merchant_abstract_sku}
     MP: open concrete drawer by SKU:    ${one_variant_product_of_main_merchant_concrete_sku}
-    MP: fill product price values:    1    5 - Spryker Systems GmbH    DE    EUR    100    true
+    MP: fill product price values:
+    ...    || product type | row number | customer                  | store | currency | gross default ||
+    ...    || concrete     | 1          | 5 - Spryker Systems GmbH  | DE    | EUR      | 100           ||
     MP: save concrete product
     Yves: login on Yves with provided credentials:     ${yves_company_user_custom_merchant_prices_email}
     Yves: go to PDP of the product with sku:    ${one_variant_product_of_main_merchant_abstract_sku}
@@ -1174,24 +1234,3 @@ Search_for_Merchant_Offers_and_Products
     Yves: change sorting order on catalog page:    Sort by name descending
     Yves: go to the PDP of the first available product on open catalog page
     Yves: merchant is (not) displaying in Sold By section of PDP:    Office King    true
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
-
-
-
-
-
-
-

@@ -20,8 +20,8 @@ MP: update profile fields with following data:
     Wait Until Element Is Visible    ${store_status_checkbox}
     FOR    ${key}    ${value}    IN    &{profileData}
         Log    Key is '${key}' and value is '${value}'.
-        IF    '${key}'=='email'    Type Text    ${merchant_profile_email_field}    ${value}
-        IF    '${key}'=='phone'    Type Text    ${merchant_profile_phone_field}    ${value}
-        IF    '${key}'=='delivery time'    Type Text    ${merchant_profile_delivery_time_en_field}    ${value}
-        IF    '${key}'=='data privacy'     Type Text    ${merchant_profile_data_privacy_en_field}    ${value}
+        IF    '${key}'=='email' and '${value}' != '${EMPTY}'    Type Text    ${merchant_profile_email_field}    ${value}
+        IF    '${key}'=='phone' and '${value}' != '${EMPTY}'    Type Text    ${merchant_profile_phone_field}    ${value}
+        IF    '${key}'=='delivery time' and '${value}' != '${EMPTY}'    Type Text    ${merchant_profile_delivery_time_en_field}    ${value}
+        IF    '${key}'=='data privacy' and '${value}' != '${EMPTY}'     Type Text    ${merchant_profile_data_privacy_en_field}    ${value}
     END  

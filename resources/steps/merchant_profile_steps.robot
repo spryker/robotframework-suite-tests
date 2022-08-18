@@ -6,17 +6,25 @@ Resource    ../pages/yves/yves_header_section.robot
 *** Variable ***
 
 *** Keywords ***
-Yves: assert name of merchant on profile page:
-    [Arguments]    ${merchantName}
-    Wait Until Element Is Visible    ${merchant_profile_main_content_locator}
-    Try reloading page until element does/not contain text:    ${merchant_profile_name_header_locator}     ${merchantName}     true    10    15s
-
 Yves: assert merchant profile fields:
-    [Arguments]    ${merchantProfileEmail}    ${merchantProfilePhone}    ${merchantProfileDeliveryTime}    ${merchantProfileDataPrivacy}
+    [Arguments]    @{args}
+    ${profileData}=    Set Up Keyword Arguments    @{args}
     Wait Until Element Is Visible    ${merchant_profile_main_content_locator}
-    Try reloading page until element does/not contain text:    ${merchant_profile_email_locator}    ${merchantProfileEmail}    true    10    15s      
-    Element Text Should Be    ${merchant_profile_phone_locator}    ${merchantProfilePhone}
-    Element Text Should Be    ${merchant_profile_delivery_time_locator}    ${merchantProfileDeliveryTime}
-    Element Text Should Be    ${merchant_profile_data_privacy_locator}    ${merchantProfileDataPrivacy}
+    FOR    ${key}    ${value}    IN    &{profileData}
+        Log    Key is '${key}' and value is '${value}'.
+        IF    '${key}'=='email' and '${value}' != '${EMPTY}'    Run Keywords    
+        ...    Try reloading page until element does/not contain text:    ${merchant_profile_email_locator}    ${value}    true    10    15s
+        ...    AND    Element Text Should Be    ${merchant_profile_email_locator}    ${value}
+        IF    '${key}'=='name' and '${value}' != '${EMPTY}'    Run Keywords    
+            ...    Try reloading page until element does/not contain text:    ${merchant_profile_name_header_locator}    ${value}    true    10    15s
+        ...    AND    Element Text Should Be    ${merchant_profile_name_header_locator}    ${value}
+        IF    '${key}'=='phone' and '${value}' != '${EMPTY}'    Element Text Should Be    ${merchant_profile_phone_locator}    ${value}
+        IF    '${key}'=='delivery time' and '${value}' != '${EMPTY}'    Element Text Should Be    ${merchant_profile_delivery_time_locator}    ${value}
+        IF    '${key}'=='data privacy' and '${value}' != '${EMPTY}'     Element Text Should Be    ${merchant_profile_data_privacy_locator}    ${value}
+    END  
+
+    
+    
+    
 
 

@@ -17,17 +17,35 @@ Zed: create new Merchant with the following data:
     Wait Until Element Is Visible    ${zed_create_merchant_name_field}
     FOR    ${key}    ${value}    IN    &{merchantData}
         Log    Key is '${key}' and value is '${value}'.
-        IF    '${key}'=='merchant name'    Type Text    ${zed_create_merchant_name_field}    ${value}
-        IF    '${key}'=='merchant reference'    Type Text    ${zed_create_merchant_reference_field}    ${value}
-        IF    '${key}'=='e-mail'    Type Text    ${zed_create_merchant_email_field}    ${value}
-        IF    '${key}'=='store'    Zed: Check checkbox by Label:    ${value}
-        IF    '${key}'=='en url'    Type Text    ${zed_create_merchant_url_en_locale_field}    ${value}
-        IF    '${key}'=='de url'    Type Text    ${zed_create_merchant_url_de_locale_field}    ${value}
+        IF    '${key}'=='merchant name' and '${value}' != '${EMPTY}'    Type Text    ${zed_create_merchant_name_field}    ${value}
+        IF    '${key}'=='merchant reference' and '${value}' != '${EMPTY}'    Type Text    ${zed_create_merchant_reference_field}    ${value}
+        IF    '${key}'=='e-mail' and '${value}' != '${EMPTY}'    Type Text    ${zed_create_merchant_email_field}    ${value}
+        IF    '${key}'=='store' and '${value}' != '${EMPTY}'    Zed: Check checkbox by Label:    ${value}
+        IF    '${key}'=='en url' and '${value}' != '${EMPTY}'    Type Text    ${zed_create_merchant_url_en_locale_field}    ${value}
+        IF    '${key}'=='de url' and '${value}' != '${EMPTY}'    Type Text    ${zed_create_merchant_url_de_locale_field}    ${value}
     END  
     Zed: submit the form
     Zed: wait for button in Header to be visible:    Add Merchant    ${browser_timeout}
     Zed: table should contain:    ${MerchantName}
 
+Zed: update Merchant on edit page with the following data:
+    [Arguments]    @{args}
+    ${merchantData}=    Set Up Keyword Arguments    @{args}
+    Wait Until Element Is Visible    ${zed_create_merchant_name_field}
+    FOR    ${key}    ${value}    IN    &{merchantData}
+        Log    Key is '${key}' and value is '${value}'.
+        IF    '${key}'=='merchant name' and '${value}' != '${EMPTY}'    Run Keywords    
+        ...    Type Text    ${zed_create_merchant_name_field}    ${value}
+        ...    AND    Set Test Variable    ${zedMerchantNewName}    ${value}
+        IF    '${key}'=='merchant reference' and '${value}' != '${EMPTY}'    Type Text    ${zed_create_merchant_reference_field}    ${value}
+        IF    '${key}'=='e-mail' and '${value}' != '${EMPTY}'    Type Text    ${zed_create_merchant_email_field}    ${value}
+        IF    '${key}'=='store' and '${value}' != '${EMPTY}'    Zed: Check checkbox by Label:    ${value}
+        IF    '${key}'=='en url' and '${value}' != '${EMPTY}'    Type Text    ${zed_create_merchant_url_en_locale_field}    ${value}
+        IF    '${key}'=='de url' and '${value}' != '${EMPTY}'    Type Text    ${zed_create_merchant_url_de_locale_field}    ${value}
+    END  
+    Zed: submit the form
+    Zed: wait for button in Header to be visible:    Add Merchant    ${browser_timeout}
+    Zed: table should contain:    ${zedMerchantNewName}
 Zed: update Merchant name on edit page:
     [Arguments]    ${zedMerchantNewName}
     Wait Until Element Is Visible    ${zed_create_merchant_name_field}
@@ -37,20 +55,30 @@ Zed: update Merchant name on edit page:
     Zed: table should contain:    ${zedMerchantNewName}
 
 Zed: create new Merchant User with the following data:
-    [Arguments]    ${MerchantUserEmail}    ${MerchantUserFirstName}    ${MerchantUserLastName}
+    [Arguments]    @{args}
+    ${merchantUerData}=    Set Up Keyword Arguments    @{args}
     Zed: go to tab:     Users
     Click    ${zed_add_merchant_user_button}
     Wait Until Element Is Visible    ${zed_create_merchant_user_email_field}
-    Type Text    ${zed_create_merchant_user_email_field}    ${MerchantUserEmail}
-    Type Text    ${zed_create_merchant_user_first_name_field}    ${MerchantUserFirstName}
-    Type Text    ${zed_create_merchant_user_last_name_field}    ${MerchantUserLastName}
+    FOR    ${key}    ${value}    IN    &{merchantUerData}
+        Log    Key is '${key}' and value is '${value}'.
+        IF    '${key}'=='e-mail' and '${value}' != '${EMPTY}'    Type Text    ${zed_create_merchant_user_email_field}    ${value}
+        IF    '${key}'=='first name' and '${value}' != '${EMPTY}'    Type Text    ${zed_create_merchant_user_first_name_field}    ${value}
+        IF    '${key}'=='last name' and '${value}' != '${EMPTY}'    Type Text    ${zed_create_merchant_user_last_name_field}    ${value}
+    END  
     Zed: submit the form
     Wait Until Element Is Visible    ${zed_table_locator}
 
-Zed: update Merchant User name on edit page:
-    [Arguments]    ${MerchantUserNewName}
+Zed: update Merchant User on edit page with the following data:
+    [Arguments]    @{args}
+    ${merchantUerData}=    Set Up Keyword Arguments    @{args}
     Wait Until Element Is Visible    ${zed_create_merchant_user_first_name_field}
-    Type Text    ${zed_create_merchant_user_first_name_field}    ${MerchantUserNewName}
+    FOR    ${key}    ${value}    IN    &{merchantUerData}
+        Log    Key is '${key}' and value is '${value}'.
+        IF    '${key}'=='e-mail' and '${value}' != '${EMPTY}'    Type Text    ${zed_create_merchant_user_email_field}    ${value}
+        IF    '${key}'=='first name' and '${value}' != '${EMPTY}'    Type Text    ${zed_create_merchant_user_first_name_field}    ${value}
+        IF    '${key}'=='last name' and '${value}' != '${EMPTY}'    Type Text    ${zed_create_merchant_user_last_name_field}    ${value}
+    END  
     Zed: submit the form
     Wait Until Element Is Visible    ${zed_table_locator}
 

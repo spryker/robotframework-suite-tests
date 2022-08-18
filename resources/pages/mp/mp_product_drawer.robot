@@ -9,6 +9,7 @@ ${new_product_super_attribute_second_row_values_selector}    xpath=//div[@class=
 ${new_product_add_super_attribute_button}    xpath=//div[contains(@class,'mp-product-attributes-selector__button')]//span[contains(text(),'Add')]
 ${new_product_created_popup}    xpath=//span[contains(@class,'ant-alert')]//span[contains(text(),'Product successfully created')]
 ${new_product_concretes_preview_count}    xpath=//mp-concrete-products-preview//spy-chips
+${new_product_submit_next_button}    xpath=//button[@type='submit'][contains(text(),'Next')]
 ${new_product_submit_create_button}    xpath=//button[@type='submit'][contains(text(),'Create')]
 ${product_concrete_submit_button}    xpath=//div[@class='mp-edit-concrete-product__header']//button[@type='submit']
 ${product_updated_popup}    xpath=//span[contains(@class,'ant-alert')]//span[contains(text(),'The Product is saved')]
