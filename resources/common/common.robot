@@ -273,6 +273,23 @@ Try reloading page until element is/not appear:
         Fail    'Timeout exceeded'
     END
 
+Try reloading page until element does/not contain text:
+    [Documentation]    will reload the page until an element text will be updated. The second argument is the expected condition (true[contains]/false[doesn't contain]) for the element text.
+    [Arguments]    ${element}    ${expectedText}    ${shouldContain}    ${tries}=20    ${timeout}=1s
+    FOR    ${index}    IN RANGE    0    ${tries}
+        ${textAppears}=    Run Keyword And Return Status    Element Text Should Be    ${element}    ${expectedText}
+        IF    '${shouldContain}'=='true' and '${textAppears}'=='False'
+            Run Keywords    Sleep    ${timeout}    AND    Reload
+        ELSE IF     '${shouldContain}'=='false' and '${textAppears}'=='True'
+            Run Keywords    Sleep    ${timeout}    AND    Reload
+        ELSE
+            Exit For Loop
+        END
+    END
+    IF    ('${shouldContain}'=='true' and '${textAppears}'=='False') or ('${shouldContain}'=='false' and '${textAppears}'=='True')
+        Fail    'Timeout exceeded'
+    END
+
 Type Text When Element Is Visible
     [Arguments]    ${selector}    ${text}
     Run keywords
