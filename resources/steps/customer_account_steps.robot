@@ -13,7 +13,7 @@ Yves: go to 'Customer Account' page
 Yves: go to user menu item in the left bar:
     [Documentation]    Case sensitive, accepts: Overview, Profile, Addresses, Order History, Newsletter, Shopping lists, Shopping carts, Quote Requests
     [Arguments]    ${left_navigation_node}
-    IF    '${env}'=='b2b'
+    IF    '${env}' in ['b2b','mp_b2b']
         Run Keywords
             Wait Until Element Is Visible    xpath=//ul[@class='navigation-sidebar__list']//*[contains(.,'${left_navigation_node}')]/a    AND
             Click    xpath=//ul[@class='navigation-sidebar__list']//*[contains(.,'${left_navigation_node}')]/a
@@ -32,7 +32,7 @@ Yves: create a new customer address in profile:
     [Arguments]    ${salutation}    ${firstName}    ${lastName}    ${street}    ${houseNumber}    ${postCode}    ${city}    ${country}    ${isDefaultShipping}=True     ${isDefaultBilling}=True       ${company}=    ${phone}=    ${additionalAddress}=
     IF    '${env}'=='b2c'
         Yves: go to user menu item in header:    My Profile
-    ELSE IF   '${env}'=='b2b'
+    ELSE IF   '${env}' in ['b2b','mp_b2b']
         Yves: go to user menu item in header:    Profile
     END
     Yves: go to user menu item in the left bar:    Addresses
@@ -61,7 +61,7 @@ Yves: check that user has address exists/doesn't exist:
     [Arguments]    ${exists}    ${firstName}    ${lastName}    ${street}    ${houseNumber}    ${postCode}    ${city}    ${country}    ${isDefaultShipping}=True     ${isDefaultBilling}=True       ${company}=NUll    ${phone}=NUll    ${additionalAddress}=NUll
     IF    '${env}'=='b2c'
         Yves: go to user menu item in header:    My Profile
-    ELSE IF     '${env}'=='b2b'
+    ELSE IF     '${env}' in ['b2b','mp_b2b']
         Yves: go to user menu item in header:    Profile
     END
     Yves: go to user menu item in the left bar:    Addresses
@@ -82,13 +82,13 @@ Yves: delete user address:
     [Arguments]    ${street}
     IF    '${env}'=='b2c'
         Yves: go to user menu item in header:    My Profile
-    ELSE IF    '${env}'=='b2b'
+    ELSE IF    '${env}' in ['b2b','mp_b2b']
         Yves: go to user menu item in header:    Profile
     END
     Yves: go to user menu item in the left bar:    Addresses
     IF    '${env}'=='b2c'
         Click    xpath=//li[contains(text(),'${street}')]/ancestor::div[@class='box']//button[contains(text(),'Delete')]
-    ELSE IF    '${env}'=='b2b'
+    ELSE IF    '${env}' in ['b2b','mp_b2b']
         Click    xpath=//li[contains(text(),'${street}')]/ancestor::div[@class='action-card']//button
     END
     Element Should Be Visible    xpath=//flash-message//div[contains(text(),'Address deleted successfully')]   message="Flash message didn't appear"
