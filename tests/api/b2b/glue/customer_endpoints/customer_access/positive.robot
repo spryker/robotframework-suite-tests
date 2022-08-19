@@ -7,7 +7,6 @@ Default Tags    glue
 *** Test Cases ***
 ENABLER
     TestSetup
-
 ##### all negative and positive tests for this endpoint are already covered with other tests (e.g. abstract-product-prices checks that without token proces are not accessible)
 Get_resources_customer_can_access
     When I send a GET request:    /customer-access
@@ -21,7 +20,7 @@ Get_resources_customer_can_access
     And Response body parameter should be:    [data][0][attributes][resourceTypes][2]    checkout
     And Response body parameter should be:    [data][0][attributes][resourceTypes][3]    checkout-data
     And Response body parameter should be:    [data][0][attributes][resourceTypes][4]    guest-cart-items
-    And Response body has correct self link 
+    And Response body has correct self link
 
 Access_restricted_resource_as_authorized_customer
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}

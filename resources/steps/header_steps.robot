@@ -23,8 +23,12 @@ ${wishlistIcon}    ${wishlist_icon_header_navigation_widget}
 *** Keywords ***
 Yves: perform search by:
     [Arguments]    ${searchTerm}
-    IF    '${env}'=='b2c'    Click    xpath=//div[@class='header__search-open js-suggest-search__show']
-    wait until element is visible    ${search_form_header_menu_item}
+    IF    '${env}'=='b2c'    
+        Run Keywords
+            Wait Until Element Is Visible    ${search_form_open_menu_item}
+            Click    ${search_form_open_menu_item}
+    END
+    Wait until element is visible    ${search_form_header_menu_item}
     Type Text    ${search_form_header_menu_item}    ${searchTerm}
     Keyboard Key    press    Enter
     Wait Until Page Contains Element    ${catalog_main_page_locator}[${env}]
@@ -77,7 +81,7 @@ Yves: go to user menu item in header:
     wait until element is visible  ${user_navigation_icon_header_menu_item}[${env}]
     mouse over  ${user_navigation_icon_header_menu_item}[${env}]
     Wait Until Element Is Visible    ${user_navigation_fly_out_header_menu_item}[${env}]
-    IF    '${env}'=='b2b'
+    IF    '${env}' in ['b2b','mp_b2b']
         Click    //li[contains(@class,'user-navigation__item--user')]//nav[contains(@class,'user-navigation__sub-nav')]//ul[contains(@class,'list--secondary')]//a[text()='${user_menu_item}']
     ELSE
         Click    //a[contains(@class,'user-block') and contains(text(),'${user_menu_item}')]
