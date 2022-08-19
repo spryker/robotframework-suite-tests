@@ -42,7 +42,7 @@ Yves: add product to the shopping cart
 
 Yves: change quantity on PDP:
     [Arguments]    ${qtyToSet}
-    IF    '${env}'=='b2b'
+    IF    '${env}' in ['b2b','mp_b2b']
         Type Text    ${pdp_quantity_input_filed}[${env}]    ${qtyToSet}
     ELSE
         Add/Edit element attribute with JavaScript:    ${pdp_quantity_input_filed}[${env}]    value    ${qtyToSet}
@@ -160,3 +160,21 @@ Yves: unsubscribe from availability notifications
     Click    ${pdp_back_in_stock_unsubscribe_button}
     Yves: flash message should be shown:    success    Successfully unsubscribed
     Yves: remove flash messages
+
+Yves: select xxx merchant's offer:
+    [Arguments]    ${merchantName}
+    Wait Until Element Is Visible    ${pdp_product_sku}[${env}]
+    Click    xpath=//section[@data-qa='component product-configurator']//div[contains(text(),'${merchantName}')]/ancestor::div[contains(@class,'offer-item')]//span[contains(@class,'radio__box')]
+    Wait Until Element Contains    ${referrer_url}    offer
+
+Yves: merchant's offer/product price should be:
+    [Arguments]    ${merchantName}    ${expectedProductPrice}
+    Wait Until Element Is Visible    ${pdpPriceLocator}  
+    Try reloading page until element does/not contain text:    xpath=//section[@data-qa='component product-configurator']//div[contains(text(),'${merchantName}')]/ancestor::div[contains(@class,'item')]//span[@itemprop='price']    ${expectedProductPrice}    true    20    5s
+
+Yves: merchant is (not) displaying in Sold By section of PDP:
+    [Arguments]    ${merchantName}    ${condition}
+    Wait Until Element Is Visible    ${pdp_product_sku}[${env}]
+    Try reloading page until element is/not appear:    xpath=//section[@data-qa='component product-configurator']//div[contains(text(),'${merchantName}')]     ${condition}    20    5s  
+   
+    
