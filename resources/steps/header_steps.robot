@@ -81,7 +81,7 @@ Yves: go to user menu item in header:
     wait until element is visible  ${user_navigation_icon_header_menu_item}[${env}]
     mouse over  ${user_navigation_icon_header_menu_item}[${env}]
     Wait Until Element Is Visible    ${user_navigation_fly_out_header_menu_item}[${env}]
-    IF    '${env}'=='b2b'
+    IF    '${env}' in ['b2b','mp_b2b']
         Click    //li[contains(@class,'user-navigation__item--user')]//nav[contains(@class,'user-navigation__sub-nav')]//ul[contains(@class,'list--secondary')]//a[text()='${user_menu_item}']
     ELSE
         Click    //a[contains(@class,'user-block') and contains(text(),'${user_menu_item}')]

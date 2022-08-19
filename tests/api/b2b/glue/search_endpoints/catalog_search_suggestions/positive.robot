@@ -85,7 +85,7 @@ Get_search_suggestions_with_all_attributes_data
     And Response body parameter should be:    [data][0][attributes][abstractProducts][0][abstractName]    ${concrete.alternative_products.product_1.name}
     And Response body parameter should be:    [data][0][attributes][abstractProducts][0][abstractSku]    ${abstract.alternative_products.product_1.sku}
     And Response body parameter should be greater than:    [data][0][attributes][abstractProducts][1][abstractSku]    0
-    And Response body parameter should be:    [data][0][attributes][abstractProducts][1][abstractSku]    ${abstract.alternative_products.product_2.sku}
+    And Response body parameter should be:    [data][0][attributes][abstractProducts][1][abstractSku]    ${abstract.alternative_products.product_3.sku}
     And Each array element of array in response should contain property:    [data][0][attributes][abstractProducts]    price
     And Each array element of array in response should contain property:    [data][0][attributes][abstractProducts]    abstractName
     And Each array element of array in response should contain property:    [data][0][attributes][abstractProducts]    abstractSku
@@ -221,16 +221,16 @@ Get_search_suggestions_with_abstract_product_sku_and_included_abstract_products
     And Response body parameter should be:    [included][0][attributes][reviewCount]    0
     And Response body parameter should be:    [included][0][attributes][name]    ${abstract.available_products.with_stock.name}
     And Response body parameter should be:    [included][0][attributes][description]    ${abstract.available_products.with_stock.description}
+    And Response body parameter should be:    [included][0][attributes][attributes][norm]    ${norm_1}
     And Response body parameter should be:    [included][0][attributes][attributes][preiseinheit]    ${price_unit_1}
-    And Response body parameter should be:    [included][0][attributes][attributes][stapelbar]    No
     And Response body parameter should be:    [included][0][attributes][attributes][reihenverbinder]    No
-    And Response body parameter should be:    [included][0][attributes][attributes][brand]    ${brand_3}
-    And Response body parameter should be in:    [included][0][attributes][superAttributes]    ${abstract.available_products.with_stock.superattribute}    False
-    #And Response body parameter should be:    [included][0][attributes][superAttributes]    ${abstract.available_products.with_stock.superattribute}
-    And Response should contain the array of a certain size:    [included][0][attributes][superAttributesDefinition]    0
+    And Response body parameter should be:    [included][0][attributes][attributes][stapelbar]    No
+    And Response body parameter should be:    [included][0][attributes][attributes][rollenausfuehrung]    ${rollenausfuehrung_1}
+    And Response body parameter should be:    [included][0][attributes][attributes][brand]    ${brand_4}
+    And Response should contain the array of a certain size:    [included][0][attributes][superAttributes]    1
     And Response should contain the array of a certain size:    [included][0][attributes][attributeMap][super_attributes]    1
     And Response body parameter should be:    [included][0][attributes][attributeMap][product_concrete_ids]    ${concrete.available_product.with_stock.product_1.sku}
-    And Response should contain the array of a certain size:    [included][0][attributes][attributeMap][attribute_variants]    0    
+    And Response should contain the array of a certain size:    [included][0][attributes][attributeMap][attribute_variants]    0
     And Response should contain the array of a certain size:    [included][0][attributes][attributeMap][attribute_variant_map]    1
     And Response body parameter should be:    [included][0][attributes][metaKeywords]    ${concrete.available_product.with_stock.product_1.meta_keywords}
     And Response body parameter should be:    [included][0][attributes][metaDescription]     ${concrete.available_product.with_stock.product_1.meta_description}
