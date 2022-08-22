@@ -9,7 +9,6 @@ Default Tags    glue
 ENABLER
     TestSetup
 
-# No Agent User configured - bug CC-16754
 Agent_can_get_access_token
     When I send a POST request:    /agent-access-tokens    {"data": {"type": "agent-access-tokens","attributes": {"username": "${agent.email}","password": "${agent.password}"}}}
     Then Response status code should be:    201

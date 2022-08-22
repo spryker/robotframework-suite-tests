@@ -9,7 +9,7 @@ Yves: 'Product Sets' page contains the following sets:
     ${product_set_list_count}=   get length  ${product_set_list}
     FOR    ${index}    IN RANGE    0    ${product_set_list_count}
         ${product_set_to_check}=    Get From List    ${product_set_list}    ${index}
-        IF    '${env}'=='b2b'
+        IF    '${env}' in ['b2b','mp_b2b']
             Page Should Contain Element    xpath=//*[contains(@class,'product-set-card__name')][text()="${product_set_to_check}"]/ancestor::article
         ELSE
             Page Should Contain Element    xpath=//*[contains(@class,'title')][text()="${product_set_to_check}"]/ancestor::article
@@ -18,7 +18,7 @@ Yves: 'Product Sets' page contains the following sets:
 
 Yves: view the following Product Set:
     [Arguments]    ${productSetName}
-    IF    '${env}'=='b2b'
+    IF    '${env}' in ['b2b','mp_b2b']
         Click    xpath=//*[contains(@class,'product-set-card__name')][text()="${productSetName}"]/ancestor::article
     ELSE
         Click    xpath=//*[contains(@class,'title')][text()="${productSetName}"]/ancestor::article
@@ -35,7 +35,7 @@ Yves: 'Product Set' page contains the following products:
 Yves: change variant of the product on CMS page on:
     [Arguments]    ${productName}    ${variantToSet}
     Mouse Over    xpath=//*[contains(@class,'product-item__container') and descendant::a[contains(.,'${productName}')]]
-    IF    '${env}'=='b2b'
+    IF    '${env}' in ['b2b','mp_b2b']
         Select From List By Label   //*[contains(@class,'custom-element product-set-details')]//div[@class='product-item__variant']/descendant::select    ${variantToSet}
     ELSE
         Select From List By Label    //*[contains(@class,'custom-element custom-select custom-select--expand')]//descendant::select    ${variantToSet}
@@ -43,5 +43,6 @@ Yves: change variant of the product on CMS page on:
 
 
 Yves: add all products to the shopping cart from Product Set
+    Wait Until Element Is Enabled    ${add_all_product_to_the_shopping_cart}
     Click    ${add_all_product_to_the_shopping_cart}
     Yves: remove flash messages
