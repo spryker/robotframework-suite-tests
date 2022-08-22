@@ -104,6 +104,11 @@ Zed: table should contain:
     Zed: perform search by:    ${search_key}
     Table Should Contain    ${zed_table_locator}  ${search_key}
 
+Zed: table should contain non-searchable value:
+    [Arguments]    ${search_key}
+    Wait Until Element Is Visible    ${zed_table_locator}
+    Table Should Contain    ${zed_table_locator}  ${search_key}    
+
 Zed: go to tab:
     [Arguments]    ${tabName}
     Click    xpath=//*[contains(@data-toggle,'tab') and contains(text(),'${tabName}')]

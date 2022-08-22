@@ -26,8 +26,8 @@ Get_category_trees
     And Response body parameter should be:    [data][0][attributes][categoryNodesStorage][1][url]    ${category_node.storage_url}
     And Response body parameter should not be EMPTY:    [data][0][attributes][categoryNodesStorage][1][children][0][nodeId]
     And Response body parameter should not be EMPTY:    [data][0][attributes][categoryNodesStorage][1][children][0][order]
-    And Response body parameter should be:    [data][0][attributes][categoryNodesStorage][1][children][0][name]    ${subcategory_node.storage_name}
-    And Response body parameter should be:    [data][0][attributes][categoryNodesStorage][1][children][0][url]    ${subcategory_node.storage_url}
+    And Response body parameter should be:    [data][0][attributes][categoryNodesStorage][1][children][1][name]    ${subcategory_node.storage_name}
+    And Response body parameter should be:    [data][0][attributes][categoryNodesStorage][1][children][1][url]    ${subcategory_node.storage_url}
     And Response should contain the array of a certain size:    [data][0][attributes][categoryNodesStorage][1][children][0][children]    0
     And Response should contain the array of a certain size:    [data][0][attributes][categoryNodesStorage]    ${qty_of_categories_in_category_trees}
     And Response should contain the array of a certain size:    [data][0][attributes][categoryNodesStorage][1][children]    ${qty_of_subcategories_in_category_trees}
