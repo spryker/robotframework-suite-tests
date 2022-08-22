@@ -35,7 +35,7 @@ Get_product_offer_with_volume_prices_included_for_waiting_for_approval_product_o
     And Response should return error message:    Product offer not found.
 
 Get_product_offer_with_volume_prices_included_for_denied_product_offer
-    When I send a GET request:    /product-offers/offer404?include=product-offer-prices
+    When I send a GET request:    /product-offers/${denied_offer_with_volume_price}?include=product-offer-prices
     Then Response status code should be:    404
     And Response should return error code:    3701
     And Response reason should be:    Not Found
