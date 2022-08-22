@@ -163,7 +163,7 @@ Get_upselling_products_for_empty_cart
     [Teardown]    Run Keyword    Cleanup all items in the cart:    ${cart_id}
 
 
-Guest user cart
+# Guest user cart
 # bug: https://spryker.atlassian.net/browse/CC-17012
 Get_upselling_products_for_guest_cart
     [Setup]    Run Keywords    I set Headers:    Content-Type=${default_header_content_type}    X-Anonymous-Customer-Unique-Id=${random}
