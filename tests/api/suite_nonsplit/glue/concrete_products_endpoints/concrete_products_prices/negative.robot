@@ -39,8 +39,6 @@ Get_product_prices_by_concrete_sku_product_doesn't_exist
 
 
 Request_URL_type_is_wrong
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
-    ...    AND    I set Headers:    Authorization=${token}  
     When I send a GET request:    /concrete-product/${concrete_product.product_with_original_prices.concrete_sku}/concrete-product-prices
     Then Response status code should be:    404
     And Response should return error message:     Not Found
