@@ -355,7 +355,7 @@ Business_Unit_Address_on_Checkout
     Yves: get the last placed order ID by current customer
     Yves: 'View Order/Reorder/Return' on the order history page:    View Order    ${lastPlacedOrder}
     Yves: 'Order Details' page is displayed
-    Yves: shipping address on the order details page is:    Mr. Ahill Grant Ottom ltd Seeburger Str. 270 10115 Berlin, Germany 4908892455
+    Yves: shipping address on the order details page is:    Mr. Armando Richi Spryker Systems GmbH Gurmont Str. 23 8002 Barcelona, Spain 3490284322
 
 Approval_Process
     [Documentation]    Checks role permissions on checkout and Approval process
@@ -693,7 +693,7 @@ Catalog_Actions
     [Documentation]    Checks quick add to cart and product groups
     [Setup]    Run keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     ...    AND    Yves: create new 'Shopping Cart' with name:    catalogActions+${random}
-    Yves: perform search by:    FRIWA stackable chair - with closed back
+    Yves: perform search by:    Verbatim USB stick OTG
     Yves: 1st product card in catalog (not)contains:      Add to Cart    true
     Yves: quick add to cart for first item in catalog
     Yves: perform search by:    New Clairefontaine Collegeblock 8272C DIN A5, 90 sheets
@@ -704,7 +704,7 @@ Catalog_Actions
     Yves: select product color:    Blue
     Yves: quick add to cart for first item in catalog
     Yves: go to the shopping cart through the header with name:    catalogActions+${random}
-    Yves: shopping cart contains the following products:    657712    107255
+    Yves: shopping cart contains the following products:    420573    107255
     [Teardown]    Yves: delete 'Shopping Cart' with name:    catalogActions+${random}
 
 Discounts
@@ -866,4 +866,4 @@ Refunds
     Zed: trigger all matching states inside this order:    Refund
     Zed: grand total for the order equals:    ${lastPlacedOrder}    €0.00
     [Teardown]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    ...    AND    Zed: activate following discounts from Overview page:    10% Discount for all orders above
+    ...    AND    Zed: activate following discounts from Overview page:    20% off storage    10% off minimum order

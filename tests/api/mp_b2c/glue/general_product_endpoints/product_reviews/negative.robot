@@ -16,6 +16,7 @@ Get_a_review_with_non_existent_review_id
     And Response should return error message:    Resource is not available.
 
 
+# will be covered by a separate feature https://spryker.aha.io/features/REVIEW-2
 # bug CC-16486
 Get_a_reviews_with_non_existent_abstract_product
     When I send a GET request:    /abstract-products/fake/product-reviews/78

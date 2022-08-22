@@ -1,23 +1,24 @@
 *** Variables ***
-&{header_login_button}    b2b=xpath=//a[contains(@class,'button') and contains(@class,'header__login')]    b2c=xpath=//a[contains(@class,'button') and contains(@class,'header__login')]    suite-nonsplit=xpath=//header//*[@class='menu__item']//a[contains(@href,'/login')]
+&{header_login_button}    b2b=xpath=//a[contains(@class,'button') and contains(@class,'header__login')]    b2c=xpath=//a[contains(@class,'button') and contains(@class,'header__login')]    suite-nonsplit=xpath=//header//*[@class='menu__item']//a[contains(@href,'/login')]    mp_b2b=xpath=//a[contains(@class,'button') and contains(@class,'header__login')]
 ${user_navigation_menu_login_button}    xpath=//a[@class='user-block__button button col' and contains(text(),'Login')]
-&{user_navigation_icon_header_menu_item}    b2b=xpath=//div[contains(@class,'user-navigation__user-name')]    b2c=xpath=//nav[@data-qa='component navigation-top']//*[@*='user-account']    suite-nonsplit=xpath=//header//a[contains(@href,'/customer/overview')]
-&{user_navigation_fly_out_header_menu_item}    b2b=xpath=//li[contains(@class,'user-navigation__item--user')]//nav[contains(@class,'user-navigation__sub-nav')]//ul[contains(@class,'list--secondary')]    b2c=xpath=//div[contains(@class,'user-block js-nav-overlay__drop-down-block')]
+&{user_navigation_icon_header_menu_item}    b2b=xpath=//div[contains(@class,'user-navigation__user-name')]    b2c=xpath=//nav[@data-qa='component navigation-top']//*[@*='user-account']    suite-nonsplit=xpath=//header//a[contains(@href,'/customer/overview')]    mp_b2b=xpath=//div[contains(@class,'user-navigation__user-name')]
+&{user_navigation_fly_out_header_menu_item}    b2b=xpath=//li[contains(@class,'user-navigation__item--user')]//nav[contains(@class,'user-navigation__sub-nav')]//ul[contains(@class,'list--secondary')]    b2c=xpath=//div[contains(@class,'user-block js-nav-overlay__drop-down-block')]    mp_b2b=xpath=//li[contains(@class,'user-navigation__item--user')]//nav[contains(@class,'user-navigation__sub-nav')]//ul[contains(@class,'list--secondary')]
 ${company_name_icon_header_menu_item}    xpath=//div[@class='header__top']//a[contains(@class,'navigation-top__company')]
 ${company_account_navigation_fly_out_header_menu_item}    xpath=//div[@class='header__top']//a[contains(@class,'navigation-top__company')]/..//nav[contains(@class,'navigation-list')]/ul
 ${price_mode_switcher_header_menu_item}    xpath=//*[@data-qa='component navigation-top']//select[@name='price-mode']
-&{currency_switcher_header_menu_item}    b2b=xpath=//*[@data-qa='component navigation-top']//select[@name='currency-iso-code']    b2c=xpath=//div[@class='header__select']//select[@name='currency-iso-code']
+&{currency_switcher_header_menu_item}    b2b=xpath=//*[@data-qa='component navigation-top']//select[@name='currency-iso-code']    b2c=xpath=//div[@class='header__select']//select[@name='currency-iso-code']    mp_b2b=xpath=//*[@data-qa='component navigation-top']//select[@name='currency-iso-code']
 ${language_switcher_header_menu_item}    xpath=//*[@class='header__top']//*[@data-qa='component language-switcher']//select
 ${quick_order_icon_header_menu_item}    xpath=//*[contains(@class,'icon--quick-order')]/ancestor::a
 ${shopping_list_icon_header_menu_item}    xpath=//*[contains(@class,'icon--header-shopping-list')]/ancestor::a
 ${shopping_list_sub_navigation_widget}    xpath=//*[contains(@class,'icon--header-shopping-list')]/ancestor::li//div[contains(@class,'js-user-navigation__sub-nav-shopping-list')]
 ${shopping_list_sub_navigation_all_lists_button}    //*[contains(@class,'icon--header-shopping-list')]/ancestor::li//div[contains(@class,'js-user-navigation__sub-nav-shopping-list')]//a[contains(.,'All Shopping Lists')]
 ${shopping_list_sub_navigation_create_list_button}    xpath=//*[contains(@class,'icon--header-shopping-list')]/ancestor::li//div[contains(@class,'js-user-navigation__sub-nav-shopping-list')]//a[contains(.,'Create New List')]
-&{shopping_car_icon_header_menu_item}    b2b=xpath=//*[contains(@class,'icon--cart')]/ancestor::a    b2c=xpath=//cart-counter[contains(@class,'navigation-top')]    suite-nonsplit=xpath=//header//cart-counter//a[contains(@href,'/cart')]
+&{shopping_car_icon_header_menu_item}    b2b=xpath=//*[contains(@class,'icon--cart')]/ancestor::a    b2c=xpath=//cart-counter[contains(@class,'navigation-top')]    suite-nonsplit=xpath=//header//cart-counter//a[contains(@href,'/cart')]    mp_b2b=xpath=//*[contains(@class,'icon--cart')]/ancestor::a
 ${shopping_cart_sub_navigation_widget}    xpath=//*[contains(@class,'icon--cart')]/ancestor::li//div[contains(@class,'js-user-navigation__sub-nav-cart')]
 ${shopping_cart_sub_navigation_all_carts_button}    //*[contains(@class,'icon--cart')]/ancestor::li//div[contains(@class,'js-user-navigation__sub-nav-cart')]//a[contains(.,'All Carts')]
 ${shopping_cart_sub_navigation_create_cart_button}    xpath=//*[contains(@class,'icon--cart')]/ancestor::li//div[contains(@class,'js-user-navigation__sub-nav-cart')]//a[contains(.,'Create New Cart')]
 ${search_form_header_menu_item}    xpath=//div[@data-qa='component search-form'][@data-search-id='desktop']//input[@type='text'][@name='q']
+${search_form_open_menu_item}    xpath=//div[@class='header__search-open js-suggest-search__show']
 ${agent_customer_search_widget}    xpath=//autocomplete-form[@data-qa='component autocomplete-form']//input[contains(@class,'autocomplete-form')][@type='text']
 ${agent_confirm_login_button}    xpath=//agent-control-bar[@data-qa='component agent-control-bar']//button[contains(@class,'button--success')]
 ${agent_quote_requests_header_item}    xpath=//agent-control-bar//a[contains(@href,'quote-request')]/ancestor::li[contains(@class,'menu__item--has-children')]
