@@ -7,7 +7,7 @@ Default Tags    glue
 *** Test Cases ***
 ENABLER
     TestSetup
-#CC-16501
+
 Get_my_availability_notifications
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
