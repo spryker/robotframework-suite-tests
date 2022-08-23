@@ -13,6 +13,14 @@ Zed: go to order page:
     Zed: perform search by:    ${orderID}
     Zed: click Action Button in a table for row that contains:    ${orderID}    View
 
+Zed: go to my order page:
+    [Documentation]    Marketplace specific method, to see this page you should be logged in as zed_spryker_merchant_admin_email
+    [Arguments]    ${orderID}
+    Zed: go to second navigation item level:    Sales    My Orders
+    Zed: perform search by:    ${orderID}
+    Try reloading page until element is/not appear:    xpath=//table[contains(@class,'dataTable')]/tbody//td[contains(text(),'${orderID}')]/../td[contains(@class,'column-Action') or contains(@class,'column-action')]    true    20    30s
+    Zed: click Action Button in a table for row that contains:    ${orderID}    View
+
 Zed: trigger all matching states inside xxx order:
     [Arguments]    ${orderID}    ${status}
     Zed: go to order page:    ${orderID}
@@ -37,9 +45,39 @@ Zed: trigger all matching states inside this order:
            Click    xpath=//div[@id='order-overview']//form[@name='oms_trigger_form']//button[@id='oms_trigger_form_submit'][text()='${status}']
     END
 
+Zed: trigger matching state of xxx merchant's shipment:
+    [Documentation]    Marketplace specific method, suitable for My Orders of merchant. Triggers action for whole shipment
+    [Arguments]    ${shipment_number}    ${event}
+    ${elementSelector}=    Set Variable    xpath=//div[@id='items']//h3[contains(.,'Shipment ${shipment_number}')]/../../following-sibling::div[2]//form[@name='event_trigger_form']//button[@id='event_trigger_form_submit'][text()='${event}']
+    Try reloading page until element is/not appear:    ${elementSelector}    true    20    10s
+    Click    ${elementSelector}
+    ${order_changed_status}=    Run Keyword And Ignore Error    Element Should Not Be Visible    ${elementSelector}
+    IF    'FAIL' in ${order_changed_status}
+        Run Keywords
+            Reload
+            Click    ${elementSelector}
+    END
+
+# Zed: trigger matching state of order item inside merchant's shipment:
+#     [Documentation]    Marketplace specific method, suitable for My Orders of merchant. Triggers action for separate item
+#     [Arguments]    ${shipment_number}    ${sku}    ${event}
+#     ${elementSelector}=    Set Variable    xpath=//table[@data-qa='order-item-list'][${shipment_number}]/tbody//td//div[@class='sku'][contains(text(),'${sku}')]/ancestor::tr//td/form[@name='event_item_trigger_form']//button[contains(text(),'${event}')]
+#     Try reloading page until element is/not appear:    ${elementSelector}    true    20    10s
+#     Click    ${elementSelector}
+#     ${order_changed_status}=    Run Keyword And Ignore Error    Element Should Not Be Visible    ${elementSelector}
+#     IF    'FAIL' in ${order_changed_status}
+#         Run Keywords
+#             Reload
+#             Click    ${elementSelector}
+#     END
+
 Zed: trigger matching state of order item inside xxx shipment:
     [Arguments]    ${sku}    ${event}    ${shipment}=1
-    ${elementSelector}=    Set Variable    xpath=//table[@data-qa='order-item-list'][${shipment}]/tbody//td/div[@class='sku'][contains(text(),'${sku}')]/ancestor::tr/td/form[@class='oms-trigger-form']//button[contains(text(),'${event}')]
+    IF    '${env}' in ['mp_b2b','mp_b2c']
+        ${elementSelector}=    Set Variable    xpath=//table[@data-qa='order-item-list'][${shipment}]/tbody//td//div[@class='sku'][contains(text(),'${sku}')]/ancestor::tr//td/form[@name='event_item_trigger_form']//button[contains(text(),'${event}')]
+    ELSE
+       ${elementSelector}=    Set Variable    xpath=//table[@data-qa='order-item-list'][${shipment}]/tbody//td/div[@class='sku'][contains(text(),'${sku}')]/ancestor::tr/td/form[@class='oms-trigger-form']//button[contains(text(),'${event}')] 
+    END   
     Try reloading page until element is/not appear:    ${elementSelector}    true    20    10s
     Click    ${elementSelector}
     ${order_changed_status}=    Run Keyword And Ignore Error    Element Should Not Be Visible    ${elementSelector}

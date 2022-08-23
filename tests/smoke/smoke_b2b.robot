@@ -866,4 +866,4 @@ Refunds
     Zed: trigger all matching states inside this order:    Refund
     Zed: grand total for the order equals:    ${lastPlacedOrder}    €0.00
     [Teardown]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    ...    AND    Zed: activate following discounts from Overview page:    10% Discount for all orders above
+    ...    AND    Zed: activate following discounts from Overview page:    20% off storage    10% off minimum order
