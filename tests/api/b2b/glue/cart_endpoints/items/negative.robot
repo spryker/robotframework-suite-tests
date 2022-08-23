@@ -47,7 +47,7 @@ Add_item_to_cart_with_invalid_token
     And Response reason should be:    Unauthorized
     And Response should return error code:    001
     And Response should return error message:    Invalid access token.
-  
+
 Add_item_to_cart_with_missing_token
     When I send a POST request:    /carts/fake/items    {"data": {"type": "items","attributes": {"sku": "${concrete.available_product.with_stock_and_never_out_of_stock.sku}","quantity": 1}}}
     Then Response status code should be:    403
