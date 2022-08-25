@@ -108,12 +108,14 @@ Get_cart_from_another_customer_id
 
 #POST requests
 Create_cart_with_invalid_access_token
+    [Setup]    I set Headers:    Authorization=u2g3v4b6jk55b
     When I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}"}}}
-    Then Response status code should be:    403
-    And Response reason should be:    Forbidden
-    And Response should return error message:    Missing access token.
-    And Response should return error code:    002
-    
+    Then Response status code should be:    401
+    And Response reason should be:    Unauthorized
+    And Response should return error message:    Invalid access token.
+    And Response should return error code:    001
+
+
 Create_cart_without_access_token
     When I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}"}}}
     Then Response status code should be:    403
@@ -198,7 +200,7 @@ Update_cart_with_invalid_access_token
     And Response should return error code:    001
 
 Update_cart_without_access_token
-    [Setup]    I set Headers:    Authorization=    If-Match=If-Match=ETag
+    [Setup]    I set Headers:    Authorization=    If-Match=ETag
     When I send a PATCH request:    /carts/not-existing-cart    {"data": {"type": "carts","attributes": {"priceMode": "${mode.net}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
     Then Response status code should be:    403
     And Response reason should be:    Forbidden
@@ -211,9 +213,9 @@ Update_cart_with_non_existing_cart_id
     ...  AND    I set Headers:    Authorization=${token}
     ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}"}}}
     ...  AND    Save value to a variable:    [data][id]    cart_id
-    ...  AND    Save Header value to a variable:    ETag    header_tag
-    ...  AND    Response status code should be:    201
-    ...  AND    I set Headers:    Authorization=${token}    If-Match=${header_tag}
+    ...  AND    Get ETag header value from cart
+    ...  AND    Response status code should be:    200
+    ...  AND    I set Headers:    Authorization=${token}    If-Match=${Etag}
     When I send a PATCH request:    /carts/8567km    {"data": {"type": "carts","attributes": {"priceMode": "${mode.net}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
     Then Response status code should be:    412
     And Response reason should be:    Precondition Failed
@@ -227,9 +229,9 @@ Update_cart_without_cart_id
     ...  AND    I set Headers:    Authorization=${token}
     ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}"}}}
     ...  AND    Save value to a variable:    [data][id]    cart_id
-    ...  AND    Save Header value to a variable:    ETag    header_tag
-    ...  AND    Response status code should be:    201
-    ...  AND    I set Headers:    Authorization=${token}    If-Match=${header_tag}
+    ...  AND    Get ETag header value from cart
+    ...  AND    Response status code should be:    200
+    ...  AND    I set Headers:    Authorization=${token}    If-Match=${Etag}
     When I send a PATCH request:    /carts/    {"data": {"type": "carts","attributes": {"priceMode": "${mode.net}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
     Then Response status code should be:    400
     And Response reason should be:    Bad Request
