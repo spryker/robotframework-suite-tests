@@ -180,7 +180,7 @@ Add_configured_bundle_include_concrete_products
 
 Add_configured_bundle_include_bundle_items
     [Setup]    Run Keywords    I set Headers:    Content-Type=${default_header_content_type}    X-Anonymous-Customer-Unique-Id=${random}
-    ...    AND    Create a guest cart:    ${random}    ${bundle_product.concrete.concrete_sku}    1   
+    ...    AND    Create a guest cart:    ${random}    ${bundle_product.concrete.product_4_sku}    1   
     When I send a POST request:    /guest-carts/${guest_cart_id}/guest-configured-bundles?include=bundle-items    {"data": {"type": "guest-configured-bundles","attributes": {"quantity": 1,"templateUuid": "${configurable_bundle_template_2_uuid}","items": [{"sku": "${configurable_bundle.slot_5.product_1}","quantity": 1,"slotUuid": "${configurable_bundle_slot_5_uuid}"}]}}}
     Then Response status code should be:    201
     And Response reason should be:    Created
