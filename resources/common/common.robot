@@ -128,19 +128,19 @@ Remove element attribute with JavaScript:
 
 # Helper keywords for migration from Selenium Library to Browser Library
 Wait Until Element Is Visible
-    [Arguments]    ${locator}    ${message}=${EMPTY}    ${timeout}=0:00:30
+    [Arguments]    ${locator}    ${message}=${EMPTY}    ${timeout}=${browser_timeout}
     Wait For Elements State    ${locator}    visible    ${timeout}    ${message}
 
 Wait Until Page Contains Element
-    [Arguments]    ${locator}    ${message}=${EMPTY}    ${timeout}=0:00:30
+    [Arguments]    ${locator}    ${message}=${EMPTY}    ${timeout}=${browser_timeout}
     Wait For Elements State    ${locator}    attached    ${timeout}    ${message}
 
 Wait Until Page Does Not Contain Element
-    [Arguments]    ${locator}    ${message}=${EMPTY}    ${timeout}=0:00:30
+    [Arguments]    ${locator}    ${message}=${EMPTY}    ${timeout}=${browser_timeout}
     Wait For Elements State    ${locator}    detached    ${timeout}    ${message}
 
 Wait Until Element Is Enabled
-    [Arguments]    ${locator}    ${message}=${EMPTY}    ${timeout}=0:00:30
+    [Arguments]    ${locator}    ${message}=${EMPTY}    ${timeout}=${browser_timeout}
     Wait For Elements State    ${locator}    enabled    ${timeout}    ${message}
 
 Element Should Be Visible
@@ -156,7 +156,7 @@ Get Location
     [Return]    ${current_location}
 
 Wait Until Element Is Not Visible
-    [Arguments]    ${locator}    ${message}=${EMPTY}    ${timeout}=0:00:30
+    [Arguments]    ${locator}    ${message}=${EMPTY}    ${timeout}=${browser_timeout}
     Wait For Elements State    ${locator}    hidden    ${timeout}    ${message}
 
 Page Should Contain Link
@@ -185,7 +185,7 @@ Element Text Should Be
     Get Text    ${locator}    equal    ${expected}    ${message}
 
 Wait Until Element Contains
-    [Arguments]    ${locator}    ${text}    ${timeout}=0:00:30    ${message}=${EMPTY}
+    [Arguments]    ${locator}    ${text}    ${timeout}=${browser_timeout}    ${message}=${EMPTY}
     Get Text    ${locator}    contains    ${text}    ${message}
 
 Page Should Not Contain Element
@@ -270,6 +270,23 @@ Try reloading page until element is/not appear:
         END
     END
     IF    ('${shouldBeDisplayed}'=='true' and '${elementAppears}'=='False') or ('${shouldBeDisplayed}'=='false' and '${elementAppears}'=='True')
+        Fail    'Timeout exceeded'
+    END
+
+Try reloading page until element does/not contain text:
+    [Documentation]    will reload the page until an element text will be updated. The second argument is the expected condition (true[contains]/false[doesn't contain]) for the element text.
+    [Arguments]    ${element}    ${expectedText}    ${shouldContain}    ${tries}=20    ${timeout}=1s
+    FOR    ${index}    IN RANGE    0    ${tries}
+        ${textAppears}=    Run Keyword And Return Status    Element Text Should Be    ${element}    ${expectedText}
+        IF    '${shouldContain}'=='true' and '${textAppears}'=='False'
+            Run Keywords    Sleep    ${timeout}    AND    Reload
+        ELSE IF     '${shouldContain}'=='false' and '${textAppears}'=='True'
+            Run Keywords    Sleep    ${timeout}    AND    Reload
+        ELSE
+            Exit For Loop
+        END
+    END
+    IF    ('${shouldContain}'=='true' and '${textAppears}'=='False') or ('${shouldContain}'=='false' and '${textAppears}'=='True')
         Fail    'Timeout exceeded'
     END
 

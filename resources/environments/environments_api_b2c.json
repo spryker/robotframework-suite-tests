@@ -98,7 +98,7 @@
         }
     },
 
-        "shop": {
+    "shop": {
 
         "currency":{
 
@@ -107,7 +107,6 @@
                 "code": "EUR",
                 "symbol": "€"
             },
-
             "chf":{
                 "name": "Swiss Franc",
                 "code": "CHF",
@@ -118,14 +117,13 @@
                 "name": "US Dollar",
                 "code": "USD",
                 "symbol": "$"
-            },
-        
-            "mode":{
-                "gross": "GROSS_MODE",
-                "net": "NET_MODE"
             }
         },
-
+        "mode":{
+            "gross": "GROSS_MODE",
+            "net": "NET_MODE"
+        },
+        
         "store":{
                 "us": "US",
                 "de": "DE"
@@ -147,7 +145,7 @@
 
     "search": {
 
-        "total_number_of_products_in_search": "215",
+        "total_number_of_products_in_search": "212",
         
         "ipp":{
             "default": "12",
@@ -157,7 +155,7 @@
 
         "default_qty":{
             "ipp_pages": "18",
-            "categories": "15",
+            "categories": "14",
             "colors": "10",
             "weight": "10",
             "labels": "4",
@@ -173,7 +171,7 @@
         },
 
         "default_price":{
-            "min": "0",
+            "min": "1879",
             "max": "345699"
         },
 

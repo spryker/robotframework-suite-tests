@@ -152,11 +152,17 @@ Get_several_shopping_lists_info
 
 Get_shopping_lists_info_with_non_zero_quantity_of_number_of_items
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
-    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}  
-    I send a GET request:    /shopping-lists
+    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
+    ...    AND    I send a POST request:    /shopping-lists    {"data":{"type":"shopping-lists","attributes":{"name":"${shopping_list_name}-${random}"}}}
+    ...    AND    Save value to a variable:    [data][id]    shoppingListId
+    ...    AND    I send a POST request:    /shopping-lists/${shoppingListId}/shopping-list-items    {"data":{"type":"shopping-list-items","attributes":{"sku":"${product_related_product_with_upselling_relation.concrete_available_product.sku}","quantity":3}}}
+    I send a GET request:    /shopping-lists/${shoppingListId}
     And Response status code should be:    200
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
-    And Response body parameter should NOT be:    [data][0][attributes][numberOfItems]    "None"
+    And Response body parameter should be greater than:    [data][attributes][numberOfItems]    0
+    [Teardown]    Run Keywords    I send a DELETE request:    /shopping-lists/${shoppingListId}
+     ...    AND    Response status code should be:    204
+     ...    AND    Response reason should be:    No Content
 
 Get_shopping_lists_info_for_user_with_zero_quantity_of_number_of_shopping_lists
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_fourth_user.email}

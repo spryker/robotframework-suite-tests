@@ -53,6 +53,10 @@ Zed: click button in Header:
     wait until element is visible    xpath=//div[@class='title-action']/a[contains(.,'${button_name}')]
     Click    xpath=//div[@class='title-action']/a[contains(.,'${button_name}')]
 
+Zed: wait for button in Header to be visible:
+    [Arguments]    ${button_name}    ${timeout}
+    Wait until element is visible    xpath=//div[@class='title-action']/a[contains(.,'${button_name}')]
+
 Zed: click Action Button in a table for row that contains:
     [Arguments]    ${row_content}    ${zed_table_action_button_locator}
     Zed: perform search by:    ${row_content}
@@ -77,7 +81,7 @@ Zed: Uncheck Checkbox by Label:
 
 Zed: submit the form
     wait until element is visible    ${zed_save_button}
-    Click   ${zed_save_button}
+    Wait Until Keyword Succeeds    3 x    3 s    Click    ${zed_save_button}    
     Wait Until Element Is Visible    ${zed_log_out_button}
 
 Zed: perform search by:
@@ -99,6 +103,11 @@ Zed: table should contain:
     [Arguments]    ${search_key}
     Zed: perform search by:    ${search_key}
     Table Should Contain    ${zed_table_locator}  ${search_key}
+
+Zed: table should contain non-searchable value:
+    [Arguments]    ${search_key}
+    Wait Until Element Is Visible    ${zed_table_locator}
+    Table Should Contain    ${zed_table_locator}  ${search_key}    
 
 Zed: go to tab:
     [Arguments]    ${tabName}

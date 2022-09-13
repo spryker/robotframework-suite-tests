@@ -21,7 +21,7 @@ Add_voucher_code_to_cart
     And Response reason should be:    Created
     And Response body parameter should be:    [data][type]    carts
     And Response body parameter should be:    [data][id]    ${cart_id}
-    And Response body parameter should be:    [data][attributes][priceMode]    ${currency.mode.gross}
+    And Response body parameter should be:    [data][attributes][priceMode]    ${mode.gross}
     And Response body parameter should be:    [data][attributes][currency]    ${currency.eur.code}
     And Response body parameter should be:    [data][attributes][store]    ${store.de}
     #totals
@@ -49,7 +49,7 @@ Add_voucher_code_to_guest_user_cart
     And Response reason should be:    Created
     And Response body parameter should be:    [data][type]    guest-carts
     And Response body parameter should be:    [data][id]    ${guest_cart_id}
-    And Response body parameter should be:    [data][attributes][priceMode]    ${currency.mode.gross}
+    And Response body parameter should be:    [data][attributes][priceMode]    ${mode.gross}
     And Response body parameter should be:    [data][attributes][currency]    ${currency.eur.code}
     And Response body parameter should be:    [data][attributes][store]    ${store.de}
     #totals
@@ -82,7 +82,7 @@ Add_voucher_code_to_cart_including_vouchers
     And Response reason should be:    Created
     And Response body parameter should be:    [data][type]    carts
     And Response body parameter should be:    [data][id]    ${cart_id}
-    And Response body parameter should be:    [data][attributes][priceMode]    ${currency.mode.gross}
+    And Response body parameter should be:    [data][attributes][priceMode]    ${mode.gross}
     And Response body parameter should be:    [data][attributes][currency]    ${currency.eur.code}
     And Response body parameter should be:    [data][attributes][store]    ${store.de}
     #relationships
@@ -109,7 +109,7 @@ Add_voucher_code_to_guest_user_cart_including_vouchers
     And Response reason should be:    Created
     And Response body parameter should be:    [data][type]    guest-carts
     And Response body parameter should be:    [data][id]    ${guest_cart_id}
-    And Response body parameter should be:    [data][attributes][priceMode]    ${currency.mode.gross}
+    And Response body parameter should be:    [data][attributes][priceMode]    ${mode.gross}
     And Response body parameter should be:    [data][attributes][currency]    ${currency.eur.code}
     And Response body parameter should be:    [data][attributes][store]    ${store.de}
     #relationships

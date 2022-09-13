@@ -11,16 +11,17 @@ Resource    ../common/common.robot
 ${cancelRequestButton}    ${checkout_summary_cancel_request_button}
 ${alertWarning}    ${checkout_summary_alert_warning}
 ${quoteStatus}    ${checkout_summary_quote_status}
-&{submit_checkout_form_button}    b2b=xpath=//div[contains(@class,'form--checkout-form')]//button[@data-qa='submit-button']    b2c=xpath=//div[contains(@class,'form--checkout-form')]//button[@data-qa='submit-button']    suite-nonsplit=xpath=//button[@data-qa='submit-button']
+${selected address}
 
 *** Keywords ***
 Yves: billing address same as shipping address:
     [Arguments]    ${state}
-    IF    '${env}'=='b2b'    Wait Until Page Contains Element    ${manage_your_addresses_link}
+    IF    '${env}' in ['b2b','mp_b2b']    Wait Until Page Contains Element    ${manage_your_addresses_link}
     ${checkboxState}=    Set Variable    ${EMPTY}
     ${checkboxState}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//input[@id='addressesForm_billingSameAsShipping'][@checked]
     IF    '${checkboxState}'=='False' and '${state}' == 'true'    Click Element by xpath with JavaScript    //input[@id='addressesForm_billingSameAsShipping']
     IF    '${checkboxState}'=='True' and '${state}' == 'false'    Click Element by xpath with JavaScript    //input[@id='addressesForm_billingSameAsShipping']
+    Wait Until Element Is Not Visible    ${billing_address_section}[${env}]
 
 Yves: accept the terms and conditions:
     [Documentation]    ${state} can be true or false
@@ -37,8 +38,12 @@ Yves: accept the terms and conditions:
 
 Yves: select the following existing address on the checkout as 'shipping' address and go next:
     [Arguments]    ${addressToUse}
-    Wait Until Element Is Visible    ${checkout_address_delivery_selector}[${env}]
-    Select From List By Label    ${checkout_address_delivery_selector}[${env}]    ${addressToUse}
+    Wait Until Element Is Visible    ${checkout_address_delivery_selector}[${env}] 
+    WHILE  '${selected address}' != '${addressToUse}'
+        Run Keywords         
+            Select From List By Label    ${checkout_address_delivery_selector}[${env}]    ${addressToUse}
+            ${selected address}=    Get Text    xpath=//div[contains(@class,'shippingAddress')]//select[@name='checkout-full-addresses'][contains(@class,'address__form')]/..//span[contains(@id,'checkout-full-address')]
+    END
     Click    ${submit_checkout_form_button}[${env}]
 
 Yves: fill in the following new shipping address:
@@ -135,6 +140,11 @@ Yves: select the following payment method on the checkout and go next:
             Click    //form[@id='payment-form']//li[@class='checkout-list__item'][contains(.,'${paymentMethod}')]//span[contains(@class,'toggler-radio__box')]
             Type Text    ${checkout_payment_invoice_date_of_birth_field}    11.11.1111
             Click    ${submit_checkout_form_button}[${env}]
+    ELSE IF    '${env}' in ['mp_b2b','mp_b2c']
+        Run Keywords
+            Click    //form[@id='payment-form']//li[@class='checkout-list__item'][contains(.,'${paymentMethod}')]//span[contains(@class,'toggler-radio__box')]
+            Type Text    ${checkout_payment_marketplace_invoice_date_field}    11.11.1111
+            Click    ${submit_checkout_form_button}[${env}]
     ELSE IF    ('${env}'=='suite-nonsplit' and '${paymentProvider}'!='${EMPTY}')
         Run Keywords
             Click    //form[@name='paymentForm']//h5[contains(text(), '${paymentProvider}')]/following-sibling::ul//label/span[contains(text(), '${paymentMethod}')]
@@ -188,5 +198,11 @@ Yves: proceed with checkout as guest:
     Type Text    ${yves_checkout_login_guest_email_field}     ${email}
     Yves: accept the terms and conditions:    true    true
     Click    ${yves_checkout_login_buy_as_guest_submit_button}
+
+Yves: assert merchant of product in cart or list:
+    [Documentation]    Method for MP which asserts value in 'Sold by' label of item in cart or list. Requires concrete SKU
+    [Arguments]    ${sku}    ${merchant_name_expected}
+    Page Should Contain Element    xpath=//span[@itemprop='sku'][text()='${sku}']/../../following-sibling::p/a[text()='${merchant_name_expected}']
+
 
 
