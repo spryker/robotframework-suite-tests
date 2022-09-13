@@ -62,7 +62,7 @@ Create_order_include_orders
     And Response body parameter should contain:    [included][0][id]    ${store.de}--
     And Response body parameter should not be EMPTY:    [included][0][attributes][createdAt]
     And Response body parameter should be:    [included][0][attributes][currencyIsoCode]    ${currency.eur.code}
-    And Response body parameter should be:    [included][0][attributes][priceMode]    ${currency.mode.gross}
+    And Response body parameter should be:    [included][0][attributes][priceMode]    ${mode.gross}
     And Response body parameter should be greater than:    [included][0][attributes][totals][expenseTotal]    0
     And Response body parameter should be greater than:    [included][0][attributes][totals][discountTotal]    0
     And Response body parameter should be greater than:    [included][0][attributes][totals][taxTotal]    0
@@ -220,7 +220,7 @@ Create_order_with_chf_currency_&_express_shipment_method
     ...  AND    Cleanup all items in the cart:    ${cart_id}
     ...  AND    Save Header value to a variable:    ETag    header_tag
     ...  AND    I set Headers:    Authorization=${token}    If-Match=${header_tag}
-    ...  AND    I send a PATCH request:    /carts/${cart_id}    {"data": {"type": "carts","attributes": {"priceMode": "${currency.mode.gross}","currency": "${currency.chf.code}","store": "${store.de}"}}}
+    ...  AND    I send a PATCH request:    /carts/${cart_id}    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.chf.code}","store": "${store.de}"}}}
     ...  AND    I send a POST request:    /carts/${cartId}/items    {"data": {"type": "items","attributes": {"sku": "${product_availability.concrete_available_with_stock_and_never_out_of_stock_sku}","quantity": 20}}}
     When I send a POST request:    /checkout?include=orders    {"data": {"type": "checkout","attributes": {"customer": {"email": "${yves_user.email}","salutation": "${yves_user.salutation}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}"},"idCart": "${cart_id}","billingAddress": {"salutation": "${yves_user.salutation}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}","address1": "${default.address1}","address2": "${default.address2}","address3": "${default.address3}","zipCode": "${default.zipCode}","city": "${default.city}","iso2Code": "${default.iso2Code}","company": "${default.company}","phone": "${default.phone}","isDefaultBilling": False,"isDefaultShipping": False},"shippingAddress": {"salutation": "${yves_user.salutation}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}","address1": "${default.address1}","address2": "${default.address2}","address3": "${default.address3}","zipCode": "${default.zipCode}","city": "${default.city}","iso2Code": "${default.iso2Code}","company": "${default.company}","phone": "${default.phone}","isDefaultBilling": False,"isDefaultShipping": False},"payments": [{"paymentProviderName": "${payment.provider_name}","paymentMethodName": "${payment.method_name}"}],"shipment": {"idShipmentMethod": 5},"items": ["${product_availability.concrete_available_with_stock_and_never_out_of_stock_sku}"]}}}
     Then Response status code should be:    201
@@ -231,7 +231,7 @@ Create_order_with_chf_currency_&_express_shipment_method
     And Response body parameter should be:    [data][attributes][redirectUrl]    None
     And Response body parameter should be:    [data][attributes][isExternalRedirect]    None
     And Response body parameter should be:    [included][0][attributes][currencyIsoCode]    ${currency.chf.code}
-    And Response body parameter should be:    [included][0][attributes][priceMode]    ${currency.mode.gross}
+    And Response body parameter should be:    [included][0][attributes][priceMode]    ${mode.gross}
     And Response body parameter should be:    [included][0][attributes][shipments][0][shipmentMethodName]    ${shipment.method_name_5}
     And Response body has correct self link internal
 
