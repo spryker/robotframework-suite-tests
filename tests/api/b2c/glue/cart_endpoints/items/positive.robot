@@ -19,7 +19,7 @@ Add_one_item_to_cart
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response body parameter should be:    [data][id]    ${cart_id}
     And Response body parameter should be:    [data][type]    carts
-    And Response body parameter should be:    [data][attributes][priceMode]    ${currency.mode.gross}
+    And Response body parameter should be:    [data][attributes][priceMode]    ${mode.gross}
     And Response body parameter should be:    [data][attributes][currency]    ${currency.eur.code}
     And Response body parameter should be:    [data][attributes][store]    ${store.de}
     And Response body parameter should not be EMPTY:    [data][attributes][totals][expenseTotal]
@@ -41,7 +41,7 @@ Add_two_items_to_cart_with_included_items_concrete_products_and_abstract_product
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response body parameter should be:    [data][id]    ${cart_id}
     And Response body parameter should be:    [data][type]    carts
-    And Response body parameter should be:    [data][attributes][priceMode]    ${currency.mode.gross}
+    And Response body parameter should be:    [data][attributes][priceMode]    ${mode.gross}
     And Response body parameter should be:    [data][attributes][currency]    ${currency.eur.code}
     And Response body parameter should be:    [data][attributes][store]    ${store.de}
     And Response body parameter should not be EMPTY:    [data][attributes][totals][grandTotal]
@@ -95,7 +95,7 @@ Get_a_cart_with_included_items_and_concrete_products
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response body parameter should be:    [data][id]    ${cart_id}
     And Response body parameter should be:    [data][type]    carts
-    And Response body parameter should be:    [data][attributes][priceMode]    ${currency.mode.gross}
+    And Response body parameter should be:    [data][attributes][priceMode]    ${mode.gross}
     And Response body parameter should be:    [data][attributes][currency]    ${currency.eur.code}
     And Response body parameter should be:    [data][attributes][store]    ${store.de}
     And Response body parameter should not be EMPTY:    [data][attributes][totals][grandTotal]

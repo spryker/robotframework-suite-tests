@@ -18,7 +18,7 @@ Add_configured_bundle_item_to_the_cart_with_included_items
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response body parameter should be:    [data][type]    carts
     And Response body parameter should be:    [data][id]    ${cart_id}
-    And Response body parameter should be:    [data][attributes][priceMode]    ${currency.mode.gross}
+    And Response body parameter should be:    [data][attributes][priceMode]    ${mode.gross}
     And Response body parameter should be:    [data][attributes][currency]    ${currency.eur.code}
     And Response body parameter should be:    [data][attributes][store]    ${store.de}
     And Response should contain the array of a certain size:    [data][relationships][items]   1
@@ -63,7 +63,7 @@ Update_configured_bundle_quantity_in_the cart_to_the_cart
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response body parameter should be:    [data][type]    carts
     And Response body parameter should be:    [data][id]    ${cart_id}
-    And Response body parameter should be:    [data][attributes][priceMode]    ${currency.mode.gross}
+    And Response body parameter should be:    [data][attributes][priceMode]    ${mode.gross}
     And Response body parameter should be:    [data][attributes][currency]    ${currency.eur.code}
     And Response body parameter should be:    [data][attributes][store]    ${store.de}
     And Response body parameter should be:    [included][0][type]    items
