@@ -1526,3 +1526,12 @@ Update order status in Database:
     Connect To Database    pymysql    ${default_db_name}    ${default_db_user}    ${default_db_password}    ${default_db_host}    ${default_db_port}
     Execute Sql String    update spy_sales_order_item set fk_oms_order_item_state = '${state_id}' where uuid = '${Uuid}'
     Disconnect From Database
+
+Create giftcode in Database:
+    [Documentation]    This keyword creates a new entry in the table spy_gift_card with the name, value and gift-card code.
+     [Arguments]    ${spy_gift_card_code}    ${spy_gift_card_value}
+    ${amount}=   Evaluate    ${spy_gift_card_value} / 100
+    ${amount}=    Evaluate    "%.f" % ${amount}
+    Connect To Database    pymysql    ${default_db_name}    ${default_db_user}    ${default_db_password}    ${default_db_host}    ${default_db_port}
+    Execute Sql String    insert ignore into spy_gift_card (code,name,currency_iso_code,value) value ('${spy_gift_card_code}','Gift_card_${amount}','EUR','${spy_gift_card_value}')
+    Disconnect From Database
