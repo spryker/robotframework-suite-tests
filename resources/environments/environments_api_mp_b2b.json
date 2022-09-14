@@ -683,10 +683,12 @@
             },
         "shipment": 
             {
-            "carrier_name": "DHL",
-            "method_name_1": "Standard",
-            "method_name_2": "Express",
-            "delivery_date": "2030-12-31"
+                "carrier_name": "DHL",
+                "carrier_name_1": "Hermes",
+                "method_name_1": "Standard",
+                "method_name_2": "Express",
+                "method_name_3": "Same Day",
+                "delivery_date": "2030-12-31"
             },
 
         "review": 
