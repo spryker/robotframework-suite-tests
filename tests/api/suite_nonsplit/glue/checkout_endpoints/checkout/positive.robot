@@ -545,6 +545,7 @@ create_order_with_configurable_bundle_item
     And Response body parameter should contain:    [included][0][attributes][calculatedDiscounts]    voucherCode
     And Response body parameter should contain:    [included][0][attributes][calculatedDiscounts]    quantity
 
+#bug https://spryker.atlassian.net/browse/CC-21301
 create_checkout_with_gift_card
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_second_user.email}
     ...  AND    I set Headers:    Authorization=${token}
@@ -695,7 +696,8 @@ create_checkout_with_gift_card
     And Response body parameter should contain:    [included][0][attributes][calculatedDiscounts]    description
     And Response body parameter should contain:    [included][0][attributes][calculatedDiscounts]    voucherCode
     And Response body parameter should contain:    [included][0][attributes][calculatedDiscounts]    quantity
-
+    
+#bug https://spryker.atlassian.net/browse/CC-21301
 create_checkout_with_gift_card_covered_some_part
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_second_user.email}
     ...  AND    I set Headers:    Authorization=${token}
