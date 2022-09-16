@@ -597,6 +597,11 @@
             "text": "This is review text",
             "default_rating": "5"
         },
+        "gift_card":{
+            "amount":"10000",
+            "paymentProvider": "GiftCard",
+            "paymentMethod":"GiftCard"
+        },
         "cart_permission_group_id": "1",
         "cart_permission_group_id_2": "2",
         "test_cart_name": "Test-cart",
