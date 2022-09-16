@@ -1,15 +1,12 @@
 *** Settings ***
 Suite Setup    SuiteSetup
 Test Setup    TestSetup
-
 Default Tags    glue
-
 Resource    ../../../../../../resources/common/common_api.robot
 
 *** Test Cases ***
 ENABLER
     TestSetup
-
 
 Create_git_card_code_with_invalid_access_token
      [Setup]    Run Keyword   I set Headers:    Authorization=345A9
