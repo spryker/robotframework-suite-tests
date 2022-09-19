@@ -8,7 +8,7 @@ Default Tags    glue
 ENABLER
     TestSetup
 
-Get_abstract_image_stes_by_concrete_SKU
+Get_abstract_image_sets_by_concrete_SKU
     When I send a GET request:    /abstract-products/${product_with_alternative.concrete_sku}/abstract-product-image-sets
     Then Response status code should be:    404
     And Response reason should be:    Not Found

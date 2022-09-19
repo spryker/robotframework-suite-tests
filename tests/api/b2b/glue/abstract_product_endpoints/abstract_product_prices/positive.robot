@@ -28,7 +28,6 @@ Abstract_prices_detault_only
     And Response should contain the array of a certain size:    [data][0][attributes][prices][0][volumePrices]   0
     And Response body has correct self link
 
-# Bug in B2B - volume prices are not shown in glue
 Abstract_volume_prices
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}  

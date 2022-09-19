@@ -47,3 +47,23 @@ Get_agent_token_with_wrong_type
     Then Response status code should be:    400
     And Response reason should be:    Bad Request
     And Response should return error message:    Invalid type.
+
+Get_agent_access_token_by_empty_email_and_empty_password
+    When I send a POST request:    /agent-access-tokens    {"data": {"type": "agent-access-tokens","attributes": {"username": "","password": ""}}}
+    Then Response status code should be:    401
+    And Response reason should be:    Unauthorized
+    And Response should return error code:    4101
+    And Response should return error message:    Failed to authenticate an agent.
+Get_agent_access_token_with_blank_spaces
+    When I send a POST request:    /agent-access-tokens    {"data": {"type": "agent-access-tokens","attributes": {}}}
+    Then Response status code should be:    401
+    And Response reason should be:    Unauthorized
+    And Response should return error code:    4101
+    And Response should return error message:    Failed to authenticate an agent.
+
+Get_agent_access_token_by_non_existent_user
+    When I send a POST request:    /agent-access-tokens    {"data": {"type": "agent-access-tokens","attributes": {"username": "spryker1232@gmail.com","password": "1234"}}}
+    Then Response status code should be:    401
+    And Response reason should be:    Unauthorized
+    And Response should return error code:    4101
+    And Response should return error message:    Failed to authenticate an agent.
