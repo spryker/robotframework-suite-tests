@@ -16,7 +16,7 @@ Product_has_abstract_alternative
     And Response should contain the array of a certain size:    [data]    1
     And Response body parameter should be:    [data][0][type]    abstract-products
     And Response body parameter should have datatype:    [data][0][attributes][name]    str
-    And Response body parameter should be:    [data][0][attributes][sku]    ${alternative_abstract_product}
+    And Response body parameter should be:    [data][0][attributes][sku]    ${alternative_abstract_product.sku}
     And Response body has correct self link
 
 Product_has_abstract_alternative_with_includes

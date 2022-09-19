@@ -297,13 +297,11 @@
             {
             "id_3": {
                 "name": "5% off white",
-                "description": "Get a 5% discount on all white products with voucher code",
-                "voucher_code": "sprykerxa2s"
+                "description": "Get a 5% discount on all white products with voucher code"
                 },
             "id_4": {
                 "name": "10% off Safescan",
-                "description": "Get a 10% discount on all Safescan brand products with voucher code",
-                "voucher_code": "safescanfa9ja4va8m"
+                "description": "Get a 10% discount on all Safescan brand products with voucher code"
                 },
             "concrete_products_with_discounts": {
                 "concrete_product_with_brand_safescan": "419872",
@@ -474,8 +472,8 @@
                 },
             "product_with_original_prices": {
                 "abstract_sku": "M74972",
-                "concrete_sku": "420687",
-                "concrete_name": "Post-it Index Strong adhesive stripes, 686-F1EU 4 sheets sorted, 4 pieces/pack"
+                "concrete_sku": "101863",
+                "concrete_name": "HSM SECURIO document shredder - for multi-person office, 34 l - stripes, 19 – 21 sheets"
                 },
             "abstract_product_with_label": {
                 "sku": "M21691",
@@ -679,8 +677,8 @@
 
         "payment": 
             {
-            "provider_name": "dummyMarketplacePayment",
-            "method_name": "invoice",
+            "provider_name": "DummyMarketplacePayment",
+            "method_name": "Invoice",
             "selection_name": "dummyMarketplacePaymentInvoice"
             },
         "shipment": 

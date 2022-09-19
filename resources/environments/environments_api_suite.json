@@ -121,7 +121,7 @@
                 "name": "US Dollar",
                 "code": "USD",
                 "symbol": "$"
-            }
+                }
         },
         "locale": {
             "DE": {
@@ -243,7 +243,8 @@
         },
         "alternative_abstract_product": {
             "sku": "155",
-            "price_chf": "42090"
+            "price_chf": "42090",
+            "price_chf_1": "39675"
         },
         "abstract_available_product_with_stock": {
             "sku": "183",
@@ -260,7 +261,7 @@
             "meta_description": "Enjoy greater flexibility  ...than ever before with the Galaxy Tab S2. Remarkably slim and ultra-lightweight, use this device to take your e-books, photos,"
         },
         "product_availability": {
-            "abstract_available_with_stock_and_never_out_of_stock": "130",
+            "abstract_available_with_stock_and_never_out_of_stock": "005",
             "abstract_available_product_with_no_stock_and_never_out_of_stock": "666",
             "abstract_unavailable_product": "189",
             "concrete_available_with_stock_and_never_out_of_stock_sku": "005_30663301",
@@ -409,8 +410,7 @@
             "description": "Free standard delivery for all orders above certain value depending on the currency",
             "total_sum_for_discounts_for_products_1_2": "490"
         }
-     
-    },
+         },
     "discount": {
         "discount_2": {
             "name": "5% discount on all white products"
@@ -694,5 +694,6 @@
         "configurable_bundle_template_name_1": "Configurable Bundle \"All in\"",
         "configured_bundle_quantity": 2,
         "configurable_bundle_first_slot_item_name":"Canon IXUS 160"
+
     }
 }

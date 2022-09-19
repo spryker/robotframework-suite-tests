@@ -98,7 +98,7 @@
         }
     },
 
-        "shop": {
+    "shop": {
 
         "currency":{
 
@@ -107,7 +107,6 @@
                 "code": "EUR",
                 "symbol": "€"
             },
-
             "chf":{
                 "name": "Swiss Franc",
                 "code": "CHF",
@@ -118,14 +117,13 @@
                 "name": "US Dollar",
                 "code": "USD",
                 "symbol": "$"
-            },
-        
-            "mode":{
-                "gross": "GROSS_MODE",
-                "net": "NET_MODE"
             }
         },
-
+        "mode":{
+            "gross": "GROSS_MODE",
+            "net": "NET_MODE"
+        },
+        
         "store":{
                 "us": "US",
                 "de": "DE"

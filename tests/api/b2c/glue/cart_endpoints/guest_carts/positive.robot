@@ -16,7 +16,7 @@ Create_guest_cart
     And Response reason should be:    Created
     And Response body parameter should be:    [data][type]    guest-carts
     And Response body parameter should not be EMPTY:    [data][id]
-    And Response body parameter should be:    [data][attributes][priceMode]    ${currency.mode.gross}
+    And Response body parameter should be:    [data][attributes][priceMode]    ${mode.gross}
     And Response body parameter should be:    [data][attributes][currency]    ${currency.eur.code}
     And Response body parameter should be:    [data][attributes][store]    ${store.de}
     And Response body parameter should not be EMPTY:    [data][attributes][totals][expenseTotal]
@@ -33,7 +33,7 @@ Retrieve_guest_cart
     And Response reason should be:    OK
     And Response body parameter should be:    [data][0][type]    guest-carts
     And Response body parameter should not be EMPTY:    [data][0][id]
-    And Response body parameter should be:    [data][0][attributes][priceMode]    ${currency.mode.gross}
+    And Response body parameter should be:    [data][0][attributes][priceMode]    ${mode.gross}
     And Response body parameter should be:    [data][0][attributes][currency]    ${currency.eur.code}
     And Response body parameter should be:    [data][0][attributes][store]    ${store.de}
     And Response body parameter should not be EMPTY:    [data][0][attributes][totals][expenseTotal]
@@ -50,7 +50,7 @@ Retrieve_guest_cart_by_id
     And Response reason should be:    OK
     And Response body parameter should be:    [data][type]    guest-carts
     And Response body parameter should be:    [data][id]    ${guest_cart_id}
-    And Response body parameter should be:    [data][attributes][priceMode]    ${currency.mode.gross}
+    And Response body parameter should be:    [data][attributes][priceMode]    ${mode.gross}
     And Response body parameter should be:    [data][attributes][currency]    ${currency.eur.code}
     And Response body parameter should be:    [data][attributes][store]    ${store.de}
     And Response body parameter should not be EMPTY:    [data][attributes][totals][expenseTotal]
@@ -67,7 +67,7 @@ Retrieve_guest_cart_including_cart_items
     And Response reason should be:    OK
     And Response body parameter should be:    [data][type]    guest-carts
     And Response body parameter should be:    [data][id]    ${guest_cart_id}
-    And Response body parameter should be:    [data][attributes][priceMode]    ${currency.mode.gross}
+    And Response body parameter should be:    [data][attributes][priceMode]    ${mode.gross}
     And Response body parameter should be:    [data][attributes][currency]    ${currency.eur.code}
     And Response body parameter should be:    [data][attributes][store]    ${store.de}
     And Response body parameter should be:    [data][relationships][guest-cart-items][data][0][type]    guest-cart-items
@@ -112,7 +112,7 @@ Retrieve_guest_cart_including_cart_rules
     And Response reason should be:    OK
     And Response body parameter should be:    [data][type]    guest-carts
     And Response body parameter should be:    [data][id]    ${guest_cart_id}
-    And Response body parameter should be:    [data][attributes][priceMode]    ${currency.mode.gross}
+    And Response body parameter should be:    [data][attributes][priceMode]    ${mode.gross}
     And Response body parameter should be:    [data][attributes][currency]    ${currency.eur.code}
     And Response body parameter should be:    [data][attributes][store]    ${store.de}
     And Each array element of array in response should contain property with value:    [data][relationships][cart-rules][data]    type    cart-rules
@@ -140,7 +140,7 @@ Retrieve_guest_cart_including_vouchers
     And Response reason should be:    OK
     And Response body parameter should be:    [data][type]    guest-carts
     And Response body parameter should be:    [data][id]    ${guest_cart_id}
-    And Response body parameter should be:    [data][attributes][priceMode]    ${currency.mode.gross}
+    And Response body parameter should be:    [data][attributes][priceMode]    ${mode.gross}
     And Response body parameter should be:    [data][attributes][currency]    ${currency.eur.code}
     And Response body parameter should be:    [data][attributes][store]    ${store.de}
     #relationships
@@ -163,12 +163,12 @@ Retrieve_guest_cart_including_vouchers
 Update_guest_cart_with_all_attributes
       [Setup]    Run Keywords    Create a guest cart:    ${random}    ${concrete_product_with_concrete_product_alternative.sku}    1
             ...   AND    I set Headers:     X-Anonymous-Customer-Unique-Id=${x_anonymous_customer_unique_id}
-    When I send a PATCH request:    /guest-carts/${guest_cart_id}    {"data": {"type": "guest-carts","attributes": {"priceMode": "${currency.mode.gross}","currency": "${currency.eur.code}","store": "${store.de}"}}}
+    When I send a PATCH request:    /guest-carts/${guest_cart_id}    {"data": {"type": "guest-carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}"}}}
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response body parameter should be:    [data][type]    guest-carts
     And Response body parameter should be:    [data][id]    ${guest_cart_id}
-    And Response body parameter should be:    [data][attributes][priceMode]    ${currency.mode.gross}
+    And Response body parameter should be:    [data][attributes][priceMode]    ${mode.gross}
     And Response body parameter should be:    [data][attributes][currency]    ${currency.eur.code}
     And Response body parameter should be:    [data][attributes][store]    ${store.de}
     And Response body parameter should not be EMPTY:    [data][attributes][totals][expenseTotal]
@@ -187,7 +187,7 @@ Update_guest_cart_with_empty_priceMod_currency_store
     And Response reason should be:    OK
     And Response body parameter should be:    [data][type]    guest-carts
     And Response body parameter should be:    [data][id]    ${guest_cart_id}
-    And Response body parameter should be:    [data][attributes][priceMode]    ${currency.mode.gross}
+    And Response body parameter should be:    [data][attributes][priceMode]    ${mode.gross}
     And Response body parameter should be:    [data][attributes][currency]    ${currency.eur.code}
     And Response body parameter should be:    [data][attributes][store]    ${store.de}
     And Response body parameter should not be EMPTY:    [data][attributes][totals][expenseTotal]
@@ -212,7 +212,7 @@ Convert_guest_cart_to_customer_cart
     And Response reason should be:    OK
     And Response body parameter should be:    [data][0][type]    carts
     And Response body parameter should be:    [data][0][id]    ${cart_id}
-    And Response body parameter should be:    [data][0][attributes][priceMode]    ${currency.mode.gross}
+    And Response body parameter should be:    [data][0][attributes][priceMode]    ${mode.gross}
     And Response body parameter should be:    [data][0][attributes][currency]    ${currency.eur.code}
     And Response body parameter should be:    [data][0][attributes][store]    ${store.de}
     And Response body parameter should not be EMPTY:    [data][0][attributes][totals][expenseTotal]
