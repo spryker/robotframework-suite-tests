@@ -1,10 +1,14 @@
 *** Settings ***
 Suite Setup       SuiteSetup
+Test Setup    TestSetup
 Resource    ../../../../../../resources/common/common_api.robot
+Default Tags    glue
 
 *** Test Cases ***
+ENABLER
+    TestSetup
 Request_company_by_ID
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}  
     ...    AND    I send a GET request:    /companies/mine
     ...    AND    Save value to a variable:    [data][0][id]    company_id   
@@ -20,7 +24,7 @@ Request_company_by_ID
     And Response should contain the array of a certain size:    [data][attributes]    3
 
 Request_company_by_mine
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}  
     When I send a GET request:    /companies/mine
     Then Response status code should be:    200

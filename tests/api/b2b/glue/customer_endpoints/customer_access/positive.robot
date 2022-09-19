@@ -1,9 +1,12 @@
 *** Settings ***
 Suite Setup       SuiteSetup
 Resource    ../../../../../../resources/common/common_api.robot
+Test Setup    TestSetup
+Default Tags    glue
 
 *** Test Cases ***
-
+ENABLER
+    TestSetup
 ##### all negative and positive tests for this endpoint are already covered with other tests (e.g. abstract-product-prices checks that without token proces are not accessible)
 Get_resources_customer_can_access
     When I send a GET request:    /customer-access
@@ -11,21 +14,21 @@ Get_resources_customer_can_access
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response body parameter should be:    [data][0][type]    customer-access
-    And Response should contain the array of a certain size:    [data][attributes][resourceTypes]    ${restricted_content_qty}
-    And Response body parameter should be:    [data][attributes][resourceTypes][0]    abstract-product-prices
-    And Response body parameter should be:    [data][attributes][resourceTypes][0]    concrete-product-prices
-    And Response body parameter should be:    [data][attributes][resourceTypes][0]    checkout
-    And Response body parameter should be:    [data][attributes][resourceTypes][0]    checkout-data
-    And Response body parameter should be:    [data][attributes][resourceTypes][0]    guest-cart-items
-    And Response body has correct self link internal
+    And Response should contain the array of a certain size:    [data][0][attributes][resourceTypes]    ${restricted_content_qty}
+    And Response body parameter should be:    [data][0][attributes][resourceTypes][0]    abstract-product-prices
+    And Response body parameter should be:    [data][0][attributes][resourceTypes][1]    concrete-product-prices
+    And Response body parameter should be:    [data][0][attributes][resourceTypes][2]    checkout
+    And Response body parameter should be:    [data][0][attributes][resourceTypes][3]    checkout-data
+    And Response body parameter should be:    [data][0][attributes][resourceTypes][4]    guest-cart-items
+    And Response body has correct self link
 
 Access_restricted_resource_as_authorized_customer
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
-    When I send a GET request:    /abstract-products/${abstract_product_with_volume_prices}/abstract-product-prices
+    When I send a GET request:    /abstract-products/${abstract.volume_prices.sku}/abstract-product-prices
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
-    And Response body parameter should be:    [data][0][id]    ${abstract_product_with_volume_prices}
+    And Response body parameter should be:    [data][0][id]    ${abstract.volume_prices.sku}
     And Response body parameter should be greater than:    [data][0][attributes][price]   100
     And Response body has correct self link

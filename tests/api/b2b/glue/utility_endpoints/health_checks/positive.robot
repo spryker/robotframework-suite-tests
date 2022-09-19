@@ -5,6 +5,8 @@ Resource    ../../../../../../resources/common/common_api.robot
 Default Tags    glue
 
 *** Test Cases ***
+ENABLER
+    TestSetup
 # GET requests
 
 ### Precondition: To run commented tests need to enable service endpoints and uncomment tests

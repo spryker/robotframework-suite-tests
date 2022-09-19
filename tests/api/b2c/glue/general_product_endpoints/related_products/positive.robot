@@ -9,32 +9,32 @@ ENABLER
     TestSetup
 
 Product_has_related_products
-    When I send a GET request:    /abstract-products/${product_with_relations_related_products_sku}/related-products
+    When I send a GET request:    /abstract-products/${concrete_available_product.with_stock_one_concrete_with_superattribute.sku}/related-products
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response should contain the array larger than a certain size:    [data]    0
     And Each array element of array in response should contain nested property with value:    [data]    type    abstract-products
-    And Response body parameter should be:    [data][0][id]    ${product_related_product_with_related_relation_sku}
-    And Response body parameter should not be EMPTY:    [data][0][attributes]
-    And Response body parameter should be:    [data][0][attributes][sku]    ${product_related_product_with_related_relation_sku}
-    And Response body parameter should be:    [data][0][attributes][averageRating]    None
-    And Response body parameter should be:    [data][0][attributes][reviewCount]    0
-    And Response body parameter should be:    [data][0][attributes][name]    ${product_related_product_with_related_relation_name}
-    And Response body parameter should not be EMPTY:    [data][0][attributes][description]
-    And Response body parameter should not be EMPTY:    [data][0][attributes][attributes]
-    And Response should contain the array larger than a certain size:    [data][0][attributes][superAttributesDefinition]    0
-    And Response should contain the array larger than a certain size:    [data][0][attributes][superAttributes]    0
-    And Response should contain the array larger than a certain size:    [data][0][attributes][attributeMap]    0
-    And Response should contain the array larger than a certain size:    [data][0][attributes][attributeMap][super_attributes]   0
-    And Response should contain the array larger than a certain size:    [data][0][attributes][attributeMap][product_concrete_ids]   0
-    And Response should contain the array of a certain size:    [data][0][attributes][attributeMap][attribute_variants]    0
-    And Response should contain the array larger than a certain size:    [data][0][attributes][attributeMap][attribute_variant_map]    0
-    And Response should contain the array larger than a certain size:    [data][0][attributes][metaTitle]    0  
-    And Response body parameter should not be EMPTY:    [data][0][attributes][metaKeywords]
-    And Response body parameter should not be EMPTY:    [data][0][attributes][metaDescription]
-    And Response body parameter should not be EMPTY:    [data][0][attributes][attributeNames]
-    And Response body parameter should not be EMPTY:    [data][0][attributes][url]     
+    And Response body parameter should be:    [data][4][id]    ${product_related_product_with_related_relation.sku}
+    And Response body parameter should not be EMPTY:    [data][4][attributes]
+    And Response body parameter should be:    [data][4][attributes][sku]    ${product_related_product_with_related_relation.sku}
+    And Response body parameter should be:    [data][4][attributes][averageRating]    None
+    And Response body parameter should be:    [data][4][attributes][reviewCount]    0
+    And Response body parameter should be:    [data][4][attributes][name]    ${product_related_product_with_related_relation.name}
+    And Response body parameter should not be EMPTY:    [data][4][attributes][description]
+    And Response body parameter should not be EMPTY:    [data][4][attributes][attributes]
+    And Response should contain the array larger than a certain size:    [data][4][attributes][superAttributesDefinition]    0
+    And Response should contain the array larger than a certain size:    [data][4][attributes][superAttributes]    0
+    And Response should contain the array larger than a certain size:    [data][4][attributes][attributeMap]    0
+    And Response should contain the array larger than a certain size:    [data][4][attributes][attributeMap][super_attributes]   0
+    And Response should contain the array larger than a certain size:    [data][4][attributes][attributeMap][product_concrete_ids]   0
+    And Response should contain the array of a certain size:    [data][4][attributes][attributeMap][attribute_variants]    0
+    And Response should contain the array larger than a certain size:    [data][4][attributes][attributeMap][attribute_variant_map]    0
+    And Response should contain the array larger than a certain size:    [data][4][attributes][metaTitle]    0  
+    And Response body parameter should not be EMPTY:    [data][4][attributes][metaKeywords]
+    And Response body parameter should not be EMPTY:    [data][4][attributes][metaDescription]
+    And Response body parameter should not be EMPTY:    [data][4][attributes][attributeNames]
+    And Response body parameter should not be EMPTY:    [data][4][attributes][url]     
     And Each array element of array in response should contain property:    [data]    id
     And Each array element of array in response should contain property:    [data]    attributes   
     And Each array element of array in response should contain nested property:    [data]    [attributes]    sku
@@ -62,9 +62,9 @@ Product_has_related_products
     And Response body has correct self link
 
 Product_has_related_products_with_includes
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
-    When I send a GET request:    /abstract-products/${product_with_relations_related_products_sku}/related-products?include=abstract-product-prices,abstract-product-image-sets,concrete-products,abstract-product-availabilities,product-labels,product-tax-sets,product-options,product-reviews,category-nodes
+    When I send a GET request:    /abstract-products/${product_with_relations.has_related_products.sku}/related-products?include=abstract-product-prices,abstract-product-image-sets,concrete-products,abstract-product-availabilities,product-labels,product-tax-sets,product-options,product-reviews,category-nodes
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
@@ -97,7 +97,7 @@ Product_has_related_products_with_includes
     And Response include element has self link:    category-nodes
 
 Product_has_no_related_products
-    When I send a GET request:    /abstract-products/${abstract_available_product_with_stock}/related-products
+    When I send a GET request:    /abstract-products/${abstract_available_product_with_stock.sku}/related-products
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response should contain the array larger than a certain size:    [data]    0

@@ -1,8 +1,12 @@
 *** Settings ***
-Suite Setup       SuiteSetup
+Suite Setup    SuiteSetup
+Test Setup     TestSetup
 Resource    ../../../../../../resources/common/common_api.robot
+Default Tags    glue
 
 *** Test Cases ***
+ENABLER
+    TestSetup
 # there is a bug - https://spryker.atlassian.net/browse/CC-15994
 Get_bundled_products_with_nonexisting_concrete_sku
     When I send a GET request:    /concrete-products/fake/bundled-products

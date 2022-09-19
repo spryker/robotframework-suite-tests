@@ -1,9 +1,12 @@
 *** Settings ***
-Suite Setup       SuiteSetup
+Suite Setup    SuiteSetup
+Test Setup     TestSetup
 Resource    ../../../../../../resources/common/common_api.robot
+Default Tags    glue
 
 *** Test Cases ***
-
+ENABLER
+    TestSetup
 Request_product_concrete_with_product_doesn't_exist
     When I send a GET request:    /concrete-products/354656u7i8
     Then Response status code should be:    404
@@ -12,7 +15,7 @@ Request_product_concrete_with_product_doesn't_exist
     And Response should return error message:     Concrete product is not found.
 
 Request_product_concrete_with_abstract_SKU
-    When I send a GET request:    /concrete-products/${bundled_product_1_abstract_sku}
+    When I send a GET request:    /concrete-products/${bundled.product_1.abstract_sku}
     Then Response status code should be:    404
     And Response reason should be:    Not Found
     And Response should return error code:    302

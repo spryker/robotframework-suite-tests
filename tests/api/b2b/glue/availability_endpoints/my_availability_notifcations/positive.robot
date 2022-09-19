@@ -8,11 +8,10 @@ Default Tags    glue
 ENABLER
     TestSetup
     
-#https://spryker.atlassian.net/browse/CC-16501
 Get_my_availability_notifications
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
-    ...  AND    I send a POST request:    /availability-notifications    {"data": {"type": "availability-notifications","attributes": {"sku": "${concrete_product_with_alternative_sku}","email": "${yves_user_email}"}}}
+    ...  AND    I send a POST request:    /availability-notifications    {"data": {"type": "availability-notifications","attributes": {"sku": "${concrete.alternative_products.product_1.sku}","email": "${yves_user.email}"}}}
     ...  AND    Save value to a variable:    [data][id]    availability_notification_id
     ...  AND    Response status code should be:    201
     When I send a GET request:    /my-availability-notifications
@@ -20,9 +19,9 @@ Get_my_availability_notifications
     And Response reason should be:    OK
     And Response body parameter should be:    [data][0][type]    availability-notifications
     And Response body parameter should be:    [data][0][id]    ${availability_notification_id}
-    And Response body parameter should be:    [data][0][attributes][localeName]    ${locale_name_EN}
-    And Response body parameter should be:    [data][0][attributes][email]    ${yves_user_email}
-    And Response body parameter should be:    [data][0][attributes][sku]    ${concrete_product_with_alternative_sku}
+    And Response body parameter should be:    [data][0][attributes][localeName]    ${locale.EN.name}
+    And Response body parameter should be:    [data][0][attributes][email]    ${yves_user.email}
+    And Response body parameter should be:    [data][0][attributes][sku]    ${concrete.alternative_products.product_1.sku}
     And Each array element of array in response should contain property:    [data]    type
     And Each array element of array in response should contain property:    [data]    id
     And Each array element of array in response should contain nested property:    [data]    [attributes]    localeName

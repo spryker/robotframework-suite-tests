@@ -33,11 +33,11 @@ def get_url_without_starting_slash(string):
         return string
 
 def fill_variables_from_text_string(*args):
-	# the multi-line variable in a table form is splitted, keys are the 0 element and values are the 1st element. 
+	# the multi-line variable in a table form is splitted, keys are the 0 element and values are the 1st element.
 	#Both are just strings with | separators
     arguments = ' '.join(args)
     keys = (arguments.split(' || '))[0]
-    values = (arguments.split(' || '))[1]   
+    values = (arguments.split(' || '))[1]
     # now the strings are splitted by "|" separator. Also strip() removes all whitespaces
     keys_list = (keys.split('|'))
     values_list = (values.split('|'))

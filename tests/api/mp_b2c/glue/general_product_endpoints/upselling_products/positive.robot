@@ -9,13 +9,13 @@ ENABLER
     TestSetup
 
 #Logged in customer's cart
-
+#bug: https://spryker.atlassian.net/browse/CC-17008
 Get_upselling_products
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     ...    AND    Find or create customer cart
     ...    AND    Cleanup all items in the cart:    ${cart_id}
-    ...    AND    I send a POST request:    /carts/${cart_id}/items    {"data": {"type": "items","attributes": {"sku": "${concrete_of_product_with_relations_upselling_sku}","quantity": 1}}}
+    ...    AND    I send a POST request:    /carts/${cart_id}/items    {"data": {"type": "items","attributes": {"sku": "${product_with_relations.has_upselling_products.concrete_sku}","quantity": 1}}}
     ...    AND    Response status code should be:    201
     When I send a GET request:    /carts/${cart_id}/up-selling-products
     Then Response status code should be:    200
@@ -23,21 +23,18 @@ Get_upselling_products
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response should contain the array larger than a certain size:    [data]    0
     And Each array element of array in response should contain nested property with value:    [data]    type    abstract-products
-    And Response body parameter should be:    [data][0][id]    ${product_related_product_with_upselling_relation_sku}
+    And Response body parameter should be:    [data][0][id]    ${product_related_product_with_upselling_relation.sku}
     And Response body parameter should not be EMPTY:    [data][0][attributes]
-    And Response body parameter should be:    [data][0][attributes][sku]    ${product_related_product_with_upselling_relation_sku}
+    And Response body parameter should be:    [data][0][attributes][sku]    ${product_related_product_with_upselling_relation.sku}
     And Response body parameter should be:    [data][0][attributes][averageRating]    None
     And Response body parameter should be:    [data][0][attributes][reviewCount]    0
-    And Response body parameter should be:    [data][0][attributes][name]    ${product_related_product_with_upselling_relation_name}
+    And Response body parameter should be:    [data][0][attributes][name]    ${product_related_product_with_upselling_relation.name}
     And Response body parameter should not be EMPTY:    [data][0][attributes][description]
     And Response body parameter should not be EMPTY:    [data][0][attributes][attributes]
     And Response should contain the array larger than a certain size:    [data][0][attributes][superAttributesDefinition]    0
-    And Response should contain the array larger than a certain size:    [data][0][attributes][superAttributes]    0
     And Response should contain the array larger than a certain size:    [data][0][attributes][attributeMap]    0
-    And Response should contain the array larger than a certain size:    [data][0][attributes][attributeMap][super_attributes]   0
     And Response should contain the array larger than a certain size:    [data][0][attributes][attributeMap][product_concrete_ids]   0
     And Response should contain the array of a certain size:    [data][0][attributes][attributeMap][attribute_variants]   0
-    And Response should contain the array larger than a certain size:    [data][0][attributes][attributeMap][attribute_variant_map]   0 
     And Response should contain the array larger than a certain size:    [data][0][attributes][metaTitle]    0  
     And Response body parameter should not be EMPTY:    [data][0][attributes][metaKeywords]
     And Response body parameter should not be EMPTY:    [data][0][attributes][metaDescription]
@@ -46,12 +43,11 @@ Get_upselling_products
     And Response body has correct self link
     [Teardown]    Run Keyword    Cleanup all items in the cart:    ${cart_id}
 
-
 Get_upselling_products_plus_includes
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     ...    AND    Find or create customer cart
-    ...    AND    I send a POST request:    /carts/${cart_id}/items    {"data": {"type": "items","attributes": {"sku": "${concrete_of_product_with_relations_upselling_sku}","quantity": 1}}}
+    ...    AND    I send a POST request:    /carts/${cart_id}/items    {"data": {"type": "items","attributes": {"sku": "${product_with_relations.has_upselling_products.concrete_sku}","quantity": 1}}}
     ...    AND    Response status code should be:    201
     When I send a GET request:    /carts/${cart_id}/up-selling-products?include=abstract-product-prices,abstract-product-image-sets,concrete-products,abstract-product-availabilities,product-labels,product-tax-sets,product-options,product-reviews,category-nodes
     Then Response status code should be:    200
@@ -90,15 +86,15 @@ Get_upselling_products_plus_includes
 
 
 Get_upselling_products_for_cart_containing_multiple_products
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     ...    AND    Find or create customer cart
     ...    AND    Cleanup all items in the cart:    ${cart_id}
-    ...    AND    I send a POST request:    /carts/${cart_id}/items    {"data": {"type": "items","attributes": {"sku": "${concrete_of_product_with_relations_upselling_sku}","quantity": 2}}}
+    ...    AND    I send a POST request:    /carts/${cart_id}/items    {"data": {"type": "items","attributes": {"sku": "${product_with_relations.has_upselling_products.concrete_sku}","quantity": 2}}}
     ...    AND    Response status code should be:    201
-    ...    AND    I send a POST request:    /carts/${cart_id}/items    {"data": {"type": "items","attributes": {"sku": "${concrete_of_alternative_product_with_relations_upselling_sku}","quantity": 1}}}
+    ...    AND    I send a POST request:    /carts/${cart_id}/items    {"data": {"type": "items","attributes": {"sku": "${concrete_of_alternative_product_with_relations_upselling.sku}","quantity": 1}}}
     ...    AND    Response status code should be:    201
-    ...    AND    I send a POST request:    /carts/${cart_id}/items    {"data": {"type": "items","attributes": {"sku": "${concrete_of_product_without_relations}","quantity": 1}}}
+    ...    AND    I send a POST request:    /carts/${cart_id}/items    {"data": {"type": "items","attributes": {"sku": "${concrete_product.product_without_relations}","quantity": 1}}}
     ...    AND    Response status code should be:    201
     When I send a GET request:    /carts/${cart_id}/up-selling-products
     Then Response status code should be:    200
@@ -135,11 +131,11 @@ Get_upselling_products_for_cart_containing_multiple_products
  
 
 Get_upselling_products_for_cart_without_upselling_relations
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}
     ...    AND    Find or create customer cart
     ...    AND    Cleanup all items in the cart:    ${cart_id}
-    ...    AND    I send a POST request:    /carts/${cart_id}/items    {"data": {"type": "items","attributes": {"sku": "${concrete_of_product_without_relations}","quantity": 1}}}
+    ...    AND    I send a POST request:    /carts/${cart_id}/items    {"data": {"type": "items","attributes": {"sku": "${concrete_product.product_without_relations}","quantity": 1}}}
     ...    AND    Response status code should be:    201
     When I send a GET request:    /carts/${cart_id}/up-selling-products
     Then Response status code should be:    200
@@ -150,7 +146,7 @@ Get_upselling_products_for_cart_without_upselling_relations
 
 
 Get_upselling_products_for_empty_cart
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}
     ...    AND    Find or create customer cart
     ...    AND    Cleanup all items in the cart:    ${cart_id}
@@ -163,10 +159,10 @@ Get_upselling_products_for_empty_cart
 
 
 #Guest user cart
-
+#bug: https://spryker.atlassian.net/browse/CC-17012
 Get_upselling_products_for_guest_cart
     [Setup]    Run Keywords    I set Headers:    Content-Type=${default_header_content_type}    X-Anonymous-Customer-Unique-Id=${random}
-    ...    AND    Create a guest cart:    ${random}    ${concrete_of_product_with_relations_upselling_sku}    1
+    ...    AND    Create a guest cart:    ${random}    ${product_with_relations.has_upselling_products.concrete_sku}    1
     ...    AND    Response status code should be:    201
     When I send a GET request:    /guest-carts/${guest_cart_id}/up-selling-products
     Then Response status code should be:    200
@@ -174,21 +170,18 @@ Get_upselling_products_for_guest_cart
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response should contain the array larger than a certain size:    [data]    0
     And Each array element of array in response should contain nested property with value:    [data]    type    abstract-products
-    And Response body parameter should be:    [data][0][id]    ${product_related_product_with_upselling_relation_sku}
+    And Response body parameter should be:    [data][0][id]    ${product_related_product_with_upselling_relation.sku}
     And Response body parameter should not be EMPTY:    [data][0][attributes]
-    And Response body parameter should be:    [data][0][attributes][sku]    ${product_related_product_with_upselling_relation_sku}
+    And Response body parameter should be:    [data][0][attributes][sku]    ${product_related_product_with_upselling_relation.sku}
     And Response body parameter should be:    [data][0][attributes][averageRating]    None
     And Response body parameter should be:    [data][0][attributes][reviewCount]    0
-    And Response body parameter should be:    [data][0][attributes][name]    ${product_related_product_with_upselling_relation_name}
+    And Response body parameter should be:    [data][0][attributes][name]    ${product_related_product_with_upselling_relation.name}
     And Response body parameter should not be EMPTY:    [data][0][attributes][description]
     And Response body parameter should not be EMPTY:    [data][0][attributes][attributes]
     And Response should contain the array larger than a certain size:    [data][0][attributes][superAttributesDefinition]    0
-    And Response should contain the array larger than a certain size:    [data][0][attributes][superAttributes]    0
     And Response should contain the array larger than a certain size:    [data][0][attributes][attributeMap]    0
-    And Response should contain the array larger than a certain size:    [data][0][attributes][attributeMap][super_attributes]   0
     And Response should contain the array larger than a certain size:    [data][0][attributes][attributeMap][product_concrete_ids]   0
     And Response should contain the array of a certain size:    [data][0][attributes][attributeMap][attribute_variants]   0
-    And Response should contain the array larger than a certain size:    [data][0][attributes][attributeMap][attribute_variant_map]   0 
     And Response should contain the array larger than a certain size:    [data][0][attributes][metaTitle]    0  
     And Response body parameter should not be EMPTY:    [data][0][attributes][metaKeywords]
     And Response body parameter should not be EMPTY:    [data][0][attributes][metaDescription]
@@ -197,10 +190,9 @@ Get_upselling_products_for_guest_cart
     And Response body has correct self link
     [Teardown]    Run Keyword    Cleanup all items in the guest cart:    ${guest_cart_id}
 
-
 Get_upselling_products_for_guest_cart_plus_includes
     [Setup]    Run Keywords    I set Headers:    Content-Type=${default_header_content_type}    X-Anonymous-Customer-Unique-Id=${random}
-    ...    AND    Create a guest cart:    ${random}    ${concrete_of_product_with_relations_upselling_sku}    1
+    ...    AND    Create a guest cart:    ${random}    ${product_with_relations.has_upselling_products.concrete_sku}    1
     ...    AND    Response status code should be:    201
     When I send a GET request:    /guest-carts/${guest_cart_id}/up-selling-products?include=abstract-product-prices,abstract-product-image-sets,concrete-products,abstract-product-availabilities,product-labels,product-tax-sets,product-options,product-reviews,category-nodes
     Then Response status code should be:    200
@@ -240,11 +232,11 @@ Get_upselling_products_for_guest_cart_plus_includes
 
 Get_upselling_products_for_guest_cart_containing_multiple_products
     [Setup]    Run Keywords    I set Headers:    Content-Type=${default_header_content_type}    X-Anonymous-Customer-Unique-Id=${random}
-    ...    AND    Create a guest cart:    ${random}    ${concrete_of_product_with_relations_upselling_sku}    2
+    ...    AND    Create a guest cart:    ${random}    ${product_with_relations.has_upselling_products.concrete_sku}    2
     ...    AND    Response status code should be:    201
-    ...    AND    I send a POST request:    /guest-carts/${guest_cart_id}/guest-cart-items    {"data": {"type": "guest-cart-items","attributes": {"sku": "${concrete_of_alternative_product_with_relations_upselling_sku}","quantity": 1}}}
+    ...    AND    I send a POST request:    /guest-carts/${guest_cart_id}/guest-cart-items    {"data": {"type": "guest-cart-items","attributes": {"sku": "${concrete_of_alternative_product_with_relations_upselling.sku}","quantity": 1}}}
     ...    AND    Response status code should be:    201
-    ...    AND    I send a POST request:    /guest-carts/${guest_cart_id}/guest-cart-items    {"data": {"type": "guest-cart-items","attributes": {"sku": "${concrete_of_product_without_relations}","quantity": 1}}}
+    ...    AND    I send a POST request:    /guest-carts/${guest_cart_id}/guest-cart-items    {"data": {"type": "guest-cart-items","attributes": {"sku": "${concrete_product.product_without_relations}","quantity": 1}}}
     ...    AND    Response status code should be:    201
     When I send a GET request:    /guest-carts/${guest_cart_id}/up-selling-products
     Then Response status code should be:    200
@@ -282,7 +274,7 @@ Get_upselling_products_for_guest_cart_containing_multiple_products
 
 Get_upselling_products_for_guest_cart_without_upselling_relations
     [Setup]    Run Keywords    I set Headers:    Content-Type=${default_header_content_type}    X-Anonymous-Customer-Unique-Id=${random}
-    ...    AND    Create a guest cart:    ${random}    ${concrete_of_product_without_relations}    1
+    ...    AND    Create a guest cart:    ${random}    ${concrete_product.product_without_relations}    1
     ...    AND    Response status code should be:    201
     When I send a GET request:    /guest-carts/${guest_cart_id}/up-selling-products
     Then Response status code should be:    200

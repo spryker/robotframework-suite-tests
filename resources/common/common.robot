@@ -21,6 +21,7 @@ ${browser_timeout}     60 seconds
 ${email_domain}        @spryker.com
 ${default_password}    change123
 ${admin_email}         admin@spryker.com
+${device}
 # ${fake_email}          test.spryker+${random}@gmail.com
 
 *** Keywords ***
@@ -39,7 +40,7 @@ Set Up Keyword Arguments
     FOR    ${key}    ${value}    IN    &{arguments}
         Log    Key is '${key}' and value is '${value}'.
         ${var_value}=   Get Variable Value  ${${key}}   ${value}
-        Set Test Variable    ${${key}}    ${var_value}    
+        Set Test Variable    ${${key}}    ${var_value}
     END
     [Return]    &{arguments}
 
@@ -50,8 +51,7 @@ SuiteSetup
     Load Variables    ${env}
     New Browser    ${browser}    headless=${headless}    args=['--ignore-certificate-errors']
     Set Browser Timeout    ${browser_timeout}
-    Run Keyword if    '${headless}=true'    Create default Main Context
-    Run Keyword if    '${headless}=false'    Create default Main Context
+    Create default Main Context
     New Page    ${host}
     ${random}=    Generate Random String    5    [NUMBERS]
     Set Global Variable    ${random}
@@ -75,10 +75,16 @@ TestTeardown
     Delete All Cookies
 
 Create default Main Context
-    ${main_context}=    New Context    viewport={'width': 1440, 'height': 1080}
+    Log    ${device}
+    IF  '${device}' == '${EMPTY}'
+        ${main_context}=    New Context    viewport={'width': 1440, 'height': 1080}
+    ELSE
+        ${device}=    Get Device    ${device}
+        ${main_context}=    New Context    &{device}
+    END
     Set Suite Variable    ${main_context}
 
-Variable datatype should be:    
+Variable datatype should be:
     [Arguments]    ${variable}    ${expected_data_type}
     ${actual_data_type}=    Evaluate datatype of a variable:    ${variable}
     Should Be Equal    ${actual_data_type}    ${expected_data_type}
@@ -100,41 +106,41 @@ Select Random Option From List
 
 Click Element by xpath with JavaScript
     [Arguments]    ${xpath}
-    Execute Javascript    document.evaluate("${xpath}", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.click()
+    Evaluate Javascript     ${None}     document.evaluate("${xpath}", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.click()
 
 Click Element by id with JavaScript
     [Arguments]    ${id}
-    Execute Javascript    document.getElementById("${id}").click()
+    Evaluate Javascript     ${None}    document.getElementById("${id}").click()
 
 Remove element from HTML with JavaScript
     [Arguments]    ${xpath}
-    Execute Javascript    var element=document.evaluate("${xpath}", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;element.parentNode.removeChild(element);
+    Evaluate Javascript     ${None}    var element=document.evaluate("${xpath}", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;element.parentNode.removeChild(element);
 
 Add/Edit element attribute with JavaScript:
     [Arguments]    ${xpath}    ${attribute}    ${attributeValue}
     Log    ${attribute}
     Log    ${attributeValue}
-    Execute Javascript    (document.evaluate("${xpath}", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue).setAttribute("${attribute}", "${attributeValue}");
+    Evaluate Javascript     ${None}    (document.evaluate("${xpath}", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue).setAttribute("${attribute}", "${attributeValue}");
 
 Remove element attribute with JavaScript:
     [Arguments]    ${xpath}    ${attribute}
-    Execute Javascript    var element=document.evaluate("${xpath}", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;element.removeAttribute("${attribute}"");
+    Evaluate Javascript     ${None}    var element=document.evaluate("${xpath}", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;element.removeAttribute("${attribute}"");
 
-#Migration to the Browser Library    
+# Helper keywords for migration from Selenium Library to Browser Library
 Wait Until Element Is Visible
-    [Arguments]    ${locator}    ${message}=${EMPTY}    ${timeout}=0:00:30
+    [Arguments]    ${locator}    ${message}=${EMPTY}    ${timeout}=${browser_timeout}
     Wait For Elements State    ${locator}    visible    ${timeout}    ${message}
 
 Wait Until Page Contains Element
-    [Arguments]    ${locator}    ${message}=${EMPTY}    ${timeout}=0:00:30
+    [Arguments]    ${locator}    ${message}=${EMPTY}    ${timeout}=${browser_timeout}
     Wait For Elements State    ${locator}    attached    ${timeout}    ${message}
 
 Wait Until Page Does Not Contain Element
-    [Arguments]    ${locator}    ${message}=${EMPTY}    ${timeout}=0:00:30
+    [Arguments]    ${locator}    ${message}=${EMPTY}    ${timeout}=${browser_timeout}
     Wait For Elements State    ${locator}    detached    ${timeout}    ${message}
 
 Wait Until Element Is Enabled
-    [Arguments]    ${locator}    ${message}=${EMPTY}    ${timeout}=0:00:30
+    [Arguments]    ${locator}    ${message}=${EMPTY}    ${timeout}=${browser_timeout}
     Wait For Elements State    ${locator}    enabled    ${timeout}    ${message}
 
 Element Should Be Visible
@@ -148,9 +154,9 @@ Page Should Contain Element
 Get Location
     ${current_location}=    Get URL
     [Return]    ${current_location}
-    
+
 Wait Until Element Is Not Visible
-    [Arguments]    ${locator}    ${message}=${EMPTY}    ${timeout}=0:00:30
+    [Arguments]    ${locator}    ${message}=${EMPTY}    ${timeout}=${browser_timeout}
     Wait For Elements State    ${locator}    hidden    ${timeout}    ${message}
 
 Page Should Contain Link
@@ -176,10 +182,10 @@ Element Should Contain
 
 Element Text Should Be
     [Arguments]    ${locator}    ${expected}    ${message}=${EMPTY}    ${ignore_case}=${EMPTY}
-    Get Text    ${locator}    equal    ${expected}    ${message} 
+    Get Text    ${locator}    equal    ${expected}    ${message}
 
 Wait Until Element Contains
-    [Arguments]    ${locator}    ${text}    ${timeout}=0:00:30    ${message}=${EMPTY}
+    [Arguments]    ${locator}    ${text}    ${timeout}=${browser_timeout}    ${message}=${EMPTY}
     Get Text    ${locator}    contains    ${text}    ${message}
 
 Page Should Not Contain Element
@@ -187,7 +193,7 @@ Page Should Not Contain Element
     Wait For Elements State    ${locator}    detached    ${timeout}    ${message}
 
 Element Should Not Contain
-    [Arguments]    ${locator}    ${text}    
+    [Arguments]    ${locator}    ${text}
     Get Text    ${locator}    validate    "${text}" not in value
 
 Checkbox Should Be Selected
@@ -238,11 +244,11 @@ Verify the src attribute of the image is accessible:
     [Arguments]    @{image_list}    ${element1}=${EMPTY}     ${element2}=${EMPTY}     ${element3}=${EMPTY}     ${element4}=${EMPTY}     ${element5}=${EMPTY}     ${element6}=${EMPTY}     ${element7}=${EMPTY}     ${element8}=${EMPTY}     ${element9}=${EMPTY}     ${element10}=${EMPTY}     ${element11}=${EMPTY}     ${element12}=${EMPTY}     ${element13}=${EMPTY}     ${element14}=${EMPTY}     ${element15}=${EMPTY}
     ${image_list_count}=   get length  ${image_list}
     FOR    ${index}    IN RANGE    0    ${image_list_count}
-        ${image_to_check}=    Get From List    ${image_list}    ${index}  
+        ${image_to_check}=    Get From List    ${image_list}    ${index}
         ${image_src}=    Get Element Attribute    ${image_to_check}    src
         ${response}=    GET    ${image_src}
         Should Be Equal    '${response.status_code}'    '200'
-    END    
+    END
 
 Conver string to List by separator:
     [Arguments]    ${string}    ${separator}=,
@@ -251,11 +257,47 @@ Conver string to List by separator:
     [Return]    ${covertedList}
 
 Try reloading page until element is/not appear:
-    [Documentation]    will reload page until element is shown/disappear. Secon argument is the expected condition (true/false) for the element.
-    [Arguments]    ${element}    ${shouldBeDisplayed}
-    FOR    ${index}    IN RANGE    0    21
+    [Documentation]    will reload the page until an element is shown or disappears. The second argument is the expected condition (true[shown]/false[disappeared]) for the element.
+    [Arguments]    ${element}    ${shouldBeDisplayed}    ${tries}=20    ${timeout}=1s
+    FOR    ${index}    IN RANGE    0    ${tries}
         ${elementAppears}=    Run Keyword And Return Status    Page Should Contain Element    ${element}
-        Run Keyword If    '${shouldBeDisplayed}'=='true' and '${elementAppears}'=='False'    Run Keywords    Sleep    1s    AND    Reload
-        ...    ELSE    Run Keyword If    '${shouldBeDisplayed}'=='false' and '${elementAppears}'=='True'    Run Keywords    Sleep    1s    AND    Reload
-        ...    ELSE    Exit For Loop
+        IF    '${shouldBeDisplayed}'=='true' and '${elementAppears}'=='False'
+            Run Keywords    Sleep    ${timeout}    AND    Reload
+        ELSE IF     '${shouldBeDisplayed}'=='false' and '${elementAppears}'=='True'
+            Run Keywords    Sleep    ${timeout}    AND    Reload
+        ELSE
+            Exit For Loop
+        END
     END
+    IF    ('${shouldBeDisplayed}'=='true' and '${elementAppears}'=='False') or ('${shouldBeDisplayed}'=='false' and '${elementAppears}'=='True')
+        Fail    'Timeout exceeded'
+    END
+
+Try reloading page until element does/not contain text:
+    [Documentation]    will reload the page until an element text will be updated. The second argument is the expected condition (true[contains]/false[doesn't contain]) for the element text.
+    [Arguments]    ${element}    ${expectedText}    ${shouldContain}    ${tries}=20    ${timeout}=1s
+    FOR    ${index}    IN RANGE    0    ${tries}
+        ${textAppears}=    Run Keyword And Return Status    Element Text Should Be    ${element}    ${expectedText}
+        IF    '${shouldContain}'=='true' and '${textAppears}'=='False'
+            Run Keywords    Sleep    ${timeout}    AND    Reload
+        ELSE IF     '${shouldContain}'=='false' and '${textAppears}'=='True'
+            Run Keywords    Sleep    ${timeout}    AND    Reload
+        ELSE
+            Exit For Loop
+        END
+    END
+    IF    ('${shouldContain}'=='true' and '${textAppears}'=='False') or ('${shouldContain}'=='false' and '${textAppears}'=='True')
+        Fail    'Timeout exceeded'
+    END
+
+Type Text When Element Is Visible
+    [Arguments]    ${selector}    ${text}
+    Run keywords
+        ...    Wait Until Element Is Visible    ${selector}
+        ...    AND    Type Text    ${selector}     ${text}
+
+Select From List By Value When Element Is Visible
+    [Arguments]    ${selector}    ${value}
+    Run keywords
+        ...    Wait Until Element Is Visible    ${selector}
+        ...    AND    Select From List By Value    ${selector}     ${value}

@@ -1,9 +1,13 @@
 *** Settings ***
-Suite Setup       SuiteSetup
+Suite Setup    SuiteSetup
+Test Setup     TestSetup
 Resource    ../../../../../../resources/common/common_api.robot
+Default Tags    glue
 
 *** Test Cases ***
-
+ENABLER
+    TestSetup
+    
 # bug https://spryker.atlassian.net/browse/CC-15983
 Search_without_query_parameter
     When I send a GET request:    /catalog-search?

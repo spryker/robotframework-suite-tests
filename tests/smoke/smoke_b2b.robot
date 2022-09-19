@@ -100,17 +100,17 @@ Quick_Order
     ...    AND    Yves: create new 'Shopping List' with name:    quickOrderList+${random}
     Yves: go to 'Quick Order' page through the header
     Yves: 'Quick Order' page is displayed
-    Yves: add the following articles into the form through quick order text area:    401627,1\n520561,3\n101509,21\n419871,1\n419869,11\n425073,1\n425084,2
+    Yves: add the following articles into the form through quick order text area:    401627,1\n520561,3\n421340,21\n419871,1\n419869,11\n425073,1\n425084,2
     Yves: add products to the shopping cart from quick order page
     Yves: go to the shopping cart through the header with name:    quickOrderCart+${random}
     Yves: 'Shopping Cart' page is displayed
-    Yves: shopping cart contains the following products:    401627    520561    101509    419871    419869    425073    425084
+    Yves: shopping cart contains the following products:    401627    520561    421340    419871    419869    425073    425084
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     Yves: go to 'Quick Order' page through the header
-    Yves: add the following articles into the form through quick order text area:    401627,1\n520561,3\n101509,21\n419871,1\n419869,11\n425073,1\n425084,2
+    Yves: add the following articles into the form through quick order text area:    401627,1\n520561,3\n421340,21\n419871,1\n419869,11\n425073,1\n425084,2
     Yves: add products to the shopping list from quick order page with name:    quickOrderList+${random}
     Yves: 'Shopping List' page is displayed
-    Yves: shopping list contains the following products:    401627    520561    101509    419871    419869    425073    425084
+    Yves: shopping list contains the following products:    401627    520561    421340    419871    419869    425073    425084
     Yves: go to the shopping cart through the header with name:    quickOrderCart+${random}
     ### Order placement ###
     Yves: click on the 'Checkout' button in the shopping cart
@@ -132,7 +132,7 @@ Quick_Order
     Yves: reorder all items from 'View Order' page
     Yves: go to the shopping cart through the header with name:    Cart from order ${lastPlacedOrder}
     Yves: 'Shopping Cart' page is displayed
-    Yves: shopping cart contains the following products:    401627    520561    101509    419871    419869    425073    425084
+    Yves: shopping cart contains the following products:    401627    520561    421340    419871    419869    425073    425084
     [Teardown]    Yves: delete 'Shopping List' with name:    quickOrderList+${random}
 
 Volume_Prices
@@ -231,6 +231,7 @@ Product_Bundles
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     Yves: create new 'Shopping Cart' with name:    productBundleCart+${random}
     Yves: go to PDP of the product with sku:    ${bundle_product_abstract_sku}
+    #Fails due to bug CC-16679
     Yves: PDP contains/doesn't contain:    true    ${bundleItemsSmall}    ${bundleItemsLarge}
     Yves: add product to the shopping cart
     Yves: go to the shopping cart through the header with name:    productBundleCart+${random}
@@ -354,7 +355,7 @@ Business_Unit_Address_on_Checkout
     Yves: get the last placed order ID by current customer
     Yves: 'View Order/Reorder/Return' on the order history page:    View Order    ${lastPlacedOrder}
     Yves: 'Order Details' page is displayed
-    Yves: shipping address on the order details page is:    Mr. Ahill Grant Ottom ltd Seeburger Str. 270 10115 Berlin, Germany 4908892455
+    Yves: shipping address on the order details page is:    Mr. Armando Richi Spryker Systems GmbH Gurmont Str. 23 8002 Barcelona, Spain 3490284322
 
 Approval_Process
     [Documentation]    Checks role permissions on checkout and Approval process
@@ -670,8 +671,8 @@ Product_labels
 Catalog
     [Documentation]    Checks that catalog options and search work
     Yves: login on Yves with provided credentials:    ${yves_user_email}
-    Yves: perform search by:    friwa
-    Yves: 'Catalog' page should show products:    14
+    Yves: perform search by:    claire
+    Yves: 'Catalog' page should show products:    15
     Yves: catalog page contains filter:    Product Ratings     Product Labels     Brand    Color
     Yves: select filter value:    Color    blue
     Yves: 'Catalog' page should show products:    1
@@ -692,7 +693,7 @@ Catalog_Actions
     [Documentation]    Checks quick add to cart and product groups
     [Setup]    Run keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     ...    AND    Yves: create new 'Shopping Cart' with name:    catalogActions+${random}
-    Yves: perform search by:    FRIWA stackable chair - with closed back
+    Yves: perform search by:    Verbatim USB stick OTG
     Yves: 1st product card in catalog (not)contains:      Add to Cart    true
     Yves: quick add to cart for first item in catalog
     Yves: perform search by:    New Clairefontaine Collegeblock 8272C DIN A5, 90 sheets
@@ -703,13 +704,13 @@ Catalog_Actions
     Yves: select product color:    Blue
     Yves: quick add to cart for first item in catalog
     Yves: go to the shopping cart through the header with name:    catalogActions+${random}
-    Yves: shopping cart contains the following products:    657712    107255
+    Yves: shopping cart contains the following products:    420573    107255
     [Teardown]    Yves: delete 'Shopping Cart' with name:    catalogActions+${random}
 
 Discounts
     [Documentation]    Discounts, Promo Products, and Coupon Codes
     [Setup]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    ...    AND    Zed: deactivate following discounts from Overview page:    For every purchase above certain value depending on the currency and net/gross price. you get this promotional product for free    10% Discount for all orders above    €5 every tuesday and wednesday for buying 5 items    5% discount on all white products    10% discount on all products with an Intel Core processor    Free standard delivery
+    ...    AND    Zed: deactivate following discounts from Overview page:    Free chair    Tu & Wed $5 off 5 or more    10% off $100+    Free marker    20% off storage    	Free office chair    Free standard delivery    	10% off Safescan    5% off white    Tu & Wed €5 off 5 or more    10% off minimum order
     ...    AND    Zed: change product stock:    M21777    421538    true    10
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Merchandising    Discount
@@ -742,13 +743,14 @@ Discounts
     Yves: 'Thank you' page is displayed
     Yves: get the last placed order ID by current customer
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    Zed: grand total for the order equals:    ${lastPlacedOrder}    €1,133.86
+    Zed: grand total for the order equals:    ${lastPlacedOrder}    €1,072.31
     [Teardown]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: go to second navigation item level:    Merchandising    Discount
     ...    AND    Zed: Deactivate Following Discounts From Overview Page:    Voucher Code 5% ${random}    Cart Rule 10% ${random}    Promotional Product 100% ${random}        
 
 Back_in_Stock_Notification
     [Documentation]    Back in stock notification is sent and availability check
+    Yves: login on Yves with provided credentials:    ${yves_user_email}
     Yves: go to the PDP of the first available product
     Yves: get sku of the concrete product on PDP
     Yves: get sku of the abstract product on PDP
@@ -832,7 +834,7 @@ Content_Management
 Refunds
     [Documentation]    Checks that refund can be created for an item and the whole order
     [Setup]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    ...    AND    Zed: deactivate following discounts from Overview page:    10% Discount for all orders above
+    ...    AND    Zed: deactivate following discounts from Overview page:    20% off storage    10% off minimum order
     ...    AND    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     ...    AND    Yves: create new 'Shopping Cart' with name:    refunds+${random}
     Yves: go to PDP of the product with sku:    ${one_variant_product_abstract_sku}
@@ -864,4 +866,4 @@ Refunds
     Zed: trigger all matching states inside this order:    Refund
     Zed: grand total for the order equals:    ${lastPlacedOrder}    €0.00
     [Teardown]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    ...    AND    Zed: activate following discounts from Overview page:    10% Discount for all orders above
+    ...    AND    Zed: activate following discounts from Overview page:    20% off storage    10% off minimum order

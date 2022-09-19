@@ -9,28 +9,28 @@ ENABLER
     TestSetup
     
 Restore_password_without_customer_id
-    I send a PATCH request:    /customer-restore-password/   {"data":{"type":"customer-restore-password","attributes":{"restorePasswordKey":"5ec608df9c0dd57c3dd08b540d4a68da","password":"${yves_user_password}","confirmPassword":"${yves_user_password}"}}}
+    I send a PATCH request:    /customer-restore-password/   {"data":{"type":"customer-restore-password","attributes":{"restorePasswordKey":"5ec608df9c0dd57c3dd08b540d4a68da","password":"${yves_user.password}","confirmPassword":"${yves_user.password}"}}}
     And Response status code should be:    400
     And Response reason should be:    Bad Request
     And Response should return error message:    Resource id is not specified.
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
 
 Restore_password_with_empty_type
-    When I send a PATCH request:    /customer-restore-password/${yves_user_reference}   {"data":{"type":"","attributes":{"restorePasswordKey":"5ec608df9c0dd57c3dd08b540d4a68da","password":"${yves_user_password}","confirmPassword":"${yves_user_password}"}}}
+    When I send a PATCH request:    /customer-restore-password/${yves_user.reference}   {"data":{"type":"","attributes":{"restorePasswordKey":"5ec608df9c0dd57c3dd08b540d4a68da","password":"${yves_user.password}","confirmPassword":"${yves_user.password}"}}}
     Then Response status code should be:    400
     And Response reason should be:    Bad Request
     And Response should return error message:    Invalid type.
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
 
 Restore_password_with_incorrect_type
-    When I send a PATCH request:    /customer-restore-password/${yves_user_reference}   {"data":{"type":"customer-restore-password","attributes":{"restorePasswordKey":"5ec608df9c0dd57c3dd08b540d4a68da","password":"${yves_user_password}","confirmPassword":"${yves_user_password}"}}}
+    When I send a PATCH request:    /customer-restore-password/${yves_user.reference}   {"data":{"type":"customer-restore-password","attributes":{"restorePasswordKey":"5ec608df9c0dd57c3dd08b540d4a68da","password":"${yves_user.password}","confirmPassword":"${yves_user.password}"}}}
     Then Response status code should be:    422
     And Response reason should be:    Unprocessable Content
     And Response should return error message:    Restore password key is not valid.
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
 
 Restore_password_without_restorePasswordKey
-    When I send a PATCH request:    /customer-restore-password/${yves_user_reference}   {"data":{"type":"customer-restore-password","attributes":{"restorePasswordKey":"","password":"${yves_user_password}","confirmPassword":"${yves_user_password}"}}}
+    When I send a PATCH request:    /customer-restore-password/${yves_user.reference}   {"data":{"type":"customer-restore-password","attributes":{"restorePasswordKey":"","password":"${yves_user.password}","confirmPassword":"${yves_user.password}"}}}
     Then Response status code should be:    422
     And Response should return error code:    901
     And Response reason should be:    Unprocessable Content
@@ -38,7 +38,7 @@ Restore_password_without_restorePasswordKey
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
 
 Restore_password_with_empty_new_password_value
-    When I send a PATCH request:    /customer-restore-password/${yves_user_reference}   {"data":{"type":"customer-restore-password","attributes":{"restorePasswordKey":"a46b40a8e1befff4cf0df9c7c2ace5f2","password":"","confirmPassword":"${yves_user_password}"}}}
+    When I send a PATCH request:    /customer-restore-password/${yves_user.reference}   {"data":{"type":"customer-restore-password","attributes":{"restorePasswordKey":"a46b40a8e1befff4cf0df9c7c2ace5f2","password":"","confirmPassword":"${yves_user.password}"}}}
     Then Response status code should be:    422
     And Response should return error code:    901
     And Response reason should be:    Unprocessable Content
@@ -47,7 +47,7 @@ Restore_password_with_empty_new_password_value
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
 
 Restore_password_with_empty_new_confirmation_password_value
-    When I send a PATCH request:    /customer-restore-password/${yves_user_reference}   {"data":{"type":"customer-restore-password","attributes":{"restorePasswordKey":"a46b40a8e1befff4cf0df9c7c2ace5f2","password":"${yves_user_password}","confirmPassword":""}}}
+    When I send a PATCH request:    /customer-restore-password/${yves_user.reference}   {"data":{"type":"customer-restore-password","attributes":{"restorePasswordKey":"a46b40a8e1befff4cf0df9c7c2ace5f2","password":"${yves_user.password}","confirmPassword":""}}}
     Then Response status code should be:    422
     And Response should return error code:    901
     And Response reason should be:    Unprocessable Content
@@ -56,7 +56,7 @@ Restore_password_with_empty_new_confirmation_password_value
     And Response header parameter should be:    Content-Type    ${default_header_content_type}    
 
 Restore_password_with_too_short_new_password
-    When I send a PATCH request:    /customer-restore-password/${yves_user_reference}   {"data":{"type":"customer-restore-password","attributes":{"restorePasswordKey":"a46b40a8e1befff4cf0df9c7c2ace5f2","password":"test","confirmPassword":"test"}}}
+    When I send a PATCH request:    /customer-restore-password/${yves_user.reference}   {"data":{"type":"customer-restore-password","attributes":{"restorePasswordKey":"a46b40a8e1befff4cf0df9c7c2ace5f2","password":"test","confirmPassword":"test"}}}
     Then Response status code should be:    422
     And Response should return error code:    901
     And Response reason should be:    Unprocessable Content
@@ -65,7 +65,7 @@ Restore_password_with_too_short_new_password
     And Response header parameter should be:    Content-Type    ${default_header_content_type}    
 
 Restore_password_with_too_long_new_password
-    When I send a PATCH request:    /customer-restore-password/${yves_user_reference}   {"data":{"type":"customer-restore-password","attributes":{"restorePasswordKey":"a46b40a8e1befff4cf0df9c7c2ace5f2","password":"tests1234567890tests1234567890tests1234567890tests1234567890tests1234567890","confirmPassword":"tests1234567890tests1234567890tests1234567890tests1234567890tests1234567890"}}}
+    When I send a PATCH request:    /customer-restore-password/${yves_user.reference}   {"data":{"type":"customer-restore-password","attributes":{"restorePasswordKey":"a46b40a8e1befff4cf0df9c7c2ace5f2","password":"tests1234567890tests1234567890tests1234567890tests1234567890tests1234567890","confirmPassword":"tests1234567890tests1234567890tests1234567890tests1234567890tests1234567890"}}}
     Then Response status code should be:    422
     And Response should return error code:    901
     And Response reason should be:    Unprocessable Content
@@ -74,7 +74,7 @@ Restore_password_with_too_long_new_password
     And Response header parameter should be:    Content-Type    ${default_header_content_type}  
 
 Restore_password_with_not_equal_new_password_and_confirm_password
-    When I send a PATCH request:    /customer-restore-password/${yves_user_reference}   {"data":{"type":"customer-restore-password","attributes":{"restorePasswordKey":"aa2fbd68447da919fcb7da1a8d2d3c7a","password":"${yves_user_password}","confirmPassword":"${yves_user_password_new}"}}}
+    When I send a PATCH request:    /customer-restore-password/${yves_user.reference}   {"data":{"type":"customer-restore-password","attributes":{"restorePasswordKey":"aa2fbd68447da919fcb7da1a8d2d3c7a","password":"${yves_user.password}","confirmPassword":"${yves_user.password_new}"}}}
     Then Response status code should be:    422
     And Response should return error code:    406
     And Response reason should be:    Unprocessable Content
@@ -82,7 +82,7 @@ Restore_password_with_not_equal_new_password_and_confirm_password
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
 
 Restore_password_with_incorrect_url
-    When I send a PATCH request:    /customer-restorepassword/${yves_user_reference}   {"data":{"type":"customer-restore-password","attributes":{"restorePasswordKey":"aa2fbd68447da919fcb7da1a8d2d3c7a","password":"${yves_user_password}","confirmPassword":"${yves_user_password_new}"}}}
+    When I send a PATCH request:    /customer-restorepassword/${yves_user.reference}   {"data":{"type":"customer-restore-password","attributes":{"restorePasswordKey":"aa2fbd68447da919fcb7da1a8d2d3c7a","password":"${yves_user.password}","confirmPassword":"${yves_user.password_new}"}}}
     Then Response status code should be:    404
     And Response reason should be:    Not Found
     And Response header parameter should be:    Content-Type    ${default_header_content_type}

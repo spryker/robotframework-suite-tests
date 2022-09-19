@@ -16,7 +16,7 @@ Get_abstract_product_alternative_for_concrete_product_with_invalid_sku_of_produc
 
 
 Get_abstract_product_alternative_for_concrete_product_using_abstract_product_SKU
-    When I send a GET request:    /concrete-products/${bundled_product_1_abstract_sku}/concrete-alternative-products
+    When I send a GET request:    /concrete-products/${bundle_product.abstract.product_1_sku}/concrete-alternative-products
     Then Response status code should be:    404
     And Response reason should be:    Not Found
     And Response should return error code:    302

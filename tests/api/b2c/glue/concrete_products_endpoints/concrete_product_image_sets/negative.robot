@@ -1,10 +1,14 @@
 *** Settings ***
-Suite Setup       SuiteSetup
+Suite Setup    SuiteSetup
+Test Setup     TestSetup
 Resource    ../../../../../../resources/common/common_api.robot
+Default Tags    glue
 
 *** Test Cases ***
+ENABLER
+    TestSetup
 Request_product_image_with_abstract_SKU
-    When I send a GET request:    /concrete-products/${bundled_product_1_abstract_sku}/concrete-product-image-sets
+    When I send a GET request:    /concrete-products/${bundled.product_1.abstract_sku}/concrete-product-image-sets
     Then Response status code should be:    404
     And Response reason should be:    Not Found
     And Response should return error code:    304

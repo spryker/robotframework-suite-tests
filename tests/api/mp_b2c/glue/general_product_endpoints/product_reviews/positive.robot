@@ -10,7 +10,7 @@ ENABLER
     TestSetup
 
 Get_product_reviews
-    When I send a GET request:    /abstract-products/${abstract_product_with_reviews}/product-reviews
+    When I send a GET request:    /abstract-products/${abstract_product.product_with_reviews.sku}/product-reviews
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
@@ -23,11 +23,8 @@ Get_product_reviews
     And Each array element of array in response should contain nested property:    [data]    [attributes]    description
     And Each array element of array in response should contain nested property:    [data]    [links]    self
     And Response body has correct self link
-
-
-
 Get_subset_of_product_reviews
-    When I send a GET request:    /abstract-products/${abstract_product_with_reviews}/product-reviews?page[offset]=1&page[limit]=1 
+    When I send a GET request:    /abstract-products/${abstract_product.product_with_reviews.sku}/product-reviews?page[offset]=1&page[limit]=1 
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
@@ -46,20 +43,20 @@ Get_subset_of_product_reviews
     And Response body parameter should not be EMPTY:    [links][prev]
     And Response body parameter should not be EMPTY:    [links][next]
 
-    
 Get_product_reviews_for_product_with_no_reviews
-    When I send a GET request:    /abstract-products/${abstract_available_with_stock_and_never_out_of_stock}/product-reviews
+    When I send a GET request:    /abstract-products/${product_availability.abstract_available_with_stock_and_never_out_of_stock}/product-reviews
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response should contain the array of a certain size:    [data]    0
     And Response body has correct self link
 
+# will be covered by a separate feature https://spryker.aha.io/features/REVIEW-2
 # bug CC-16486
 Get_product_review_by_id
-    [Setup]    Run Keywords    I send a GET request:    /abstract-products/${abstract_product_with_reviews}/product-reviews
+    [Setup]    Run Keywords    I send a GET request:    /abstract-products/${abstract_product.product_with_reviews.sku}/product-reviews
     ...    AND    Save value to a variable:    [data][0][id]    review_id
-    When I send a GET request:    /abstract-products/${abstract_product_with_reviews}/product-reviews/${review_id}
+    When I send a GET request:    /abstract-products/${abstract_product.product_with_reviews.sku}/product-reviews/${review_id}
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
@@ -72,19 +69,20 @@ Get_product_review_by_id
     And Response body parameter should not be EMPTY:    [data][attributes][description]
     And Response body parameter should not be EMPTY:    [data][links][self]
 
+# will be covered by a separate feature https://spryker.aha.io/features/REVIEW-2
 # bug CC-16486 - additional issue with self link
 Create_a_product_review
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
-    When I send a POST request:    /abstract-products/${abstract_product_with_options}/product-reviews    {"data": {"type": "product-reviews","attributes": {"rating": ${default_review_rating},"nickname": "${yves_user_first_name}","summary": "${review_title}","description": "${review_text}"}}}
+    When I send a POST request:    /abstract-products/${abstract_product.product_with_options.sku}/product-reviews    {"data": {"type": "product-reviews","attributes": {"rating": ${review.default_rating},"nickname": "${yves_user.first_name}","summary": "${review.title}","description": "${review.text}"}}}
     Then Response status code should be:    202
     And Response reason should be:    Accepted
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response body parameter should not be EMPTY:    [data][id]
     And Save value to a variable:    [data][id]    review_id
     And Response body parameter should be:    [data][type]    product-reviews
-    And Response body parameter should be:    [data][attributes][rating]    ${default_review_rating}
-    And Response body parameter should be:    [data][attributes][nickname]    ${yves_user_first_name}
-    And Response body parameter should be:    [data][attributes][summary]    ${review_title}
-    And Response body parameter should be:    [data][attributes][description]    ${review_text}
+    And Response body parameter should be:    [data][attributes][rating]    ${review.default_rating}
+    And Response body parameter should be:    [data][attributes][nickname]    ${yves_user.first_name}
+    And Response body parameter should be:    [data][attributes][summary]    ${review.title}
+    And Response body parameter should be:    [data][attributes][description]    ${review.text}
     And Response body has correct self link for created entity:    ${review_id}

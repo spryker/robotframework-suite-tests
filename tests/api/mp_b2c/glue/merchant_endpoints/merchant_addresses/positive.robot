@@ -9,13 +9,13 @@ ENABLER
     TestSetup
 
 Retrieves_merchant_addresses
-    When I send a GET request:  /merchants/${merchants.sony_experts.merchant_id}/merchant-addresses
+    When I send a GET request:  /merchants/${merchant.sony_experts.merchant_id}/merchant-addresses
     Then Response status code should be:    200
     And Response reason should be:    OK
-    And Response body parameter should be:    [data][0][id]    ${merchants.sony_experts.merchant_id}
+    And Response body parameter should be:    [data][0][id]    ${merchant.sony_experts.merchant_id}
     And Response body parameter should be:    [data][0][type]    merchant-addresses
-    And Response body parameter should be:    [data][0][attributes][addresses][0][countryName]    ${default_country}
-    And Response body parameter should be:    [data][0][attributes][addresses][0][city]    ${merchants.sony_experts.addresses.city_munchen}
+    And Response body parameter should be:    [data][0][attributes][addresses][0][countryName]    ${default.country}
+    And Response body parameter should be:    [data][0][attributes][addresses][0][city]    ${merchant.sony_experts.addresses.city_munchen}
     And Each array element of array in response should contain property:    [data]    type
     And Each array element of array in response should contain property:    [data]    id
     And Each array element of array in response should contain property:    [data]    attributes
@@ -33,11 +33,11 @@ Retrieves_merchant_addresses
 
 
 Retrieves_merchant_with_include_merchant_addresses
-    When I send a GET request:    /merchants/${merchants.sony_experts.merchant_id}?include=merchant-addresses
+    When I send a GET request:    /merchants/${merchant.sony_experts.merchant_id}?include=merchant-addresses
     Then Response status code should be:    200
     And Response reason should be:    OK    
     And Response body parameter should be:    [data][type]    merchants
-    And Response body parameter should be:    [data][id]    ${merchants.sony_experts.merchant_id}
+    And Response body parameter should be:    [data][id]    ${merchant.sony_experts.merchant_id}
     And Response should contain the array of a certain size:    [included]    1
     And Response body parameter should have datatype:    [data][relationships]    dict
     And Response body parameter should not be EMPTY:    [data][relationships]
@@ -59,6 +59,6 @@ Retrieves_merchant_with_include_merchant_addresses
     And Each array element of array in response should contain nested property:    [included]    [attributes][addresses]    zipCode
     And Each array element of array in response should contain nested property:    [included]    [attributes][addresses]    latitude
     And Each array element of array in response should contain nested property:    [included]    [attributes][addresses]    longitude
-    And Response body parameter should be:    [included][0][attributes][addresses][0][countryName]    ${default_country}
-    And Response body parameter should be:    [included][0][attributes][addresses][0][city]    ${merchants.sony_experts.addresses.city_munchen}
-    And Response body parameter should be:    [included][0][attributes][addresses][0][address1]    ${merchants.sony_experts.addresses.address1}
+    And Response body parameter should be:    [included][0][attributes][addresses][0][countryName]    ${default.country}
+    And Response body parameter should be:    [included][0][attributes][addresses][0][city]    ${merchant.sony_experts.addresses.city_munchen}
+    And Response body parameter should be:    [included][0][attributes][addresses][0][address1]    ${merchant.sony_experts.addresses.address1}

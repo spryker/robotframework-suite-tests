@@ -7,11 +7,8 @@ Default Tags    glue
 *** Test Cases ***
 ENABLER
     TestSetup
-
-
 Get_product_offer_without_volume_price
-
-    I send a GET request:    /concrete-products/${concrete_of_alternative_product_with_relations_upselling_sku}/product-offers
+     I send a GET request:    /concrete-products/${concrete_of_alternative_product_with_relations_upselling.sku}/product-offers
     AND Save value to a variable:    [data][0][id]    offerId
     When I send a GET request:    /product-offers/${offerId}/product-offer-prices
     Then Response status code should be:    200
@@ -26,16 +23,14 @@ Get_product_offer_without_volume_price
     And Each array element of array in response should contain nested property:    [data]    [attributes][prices][0]    netAmount
     And Each array element of array in response should contain nested property:    [data]    [attributes][prices][0]    grossAmount
     And Each array element of array in response should contain nested property:    [data]    [attributes][prices][0]    currency
-    And Each array element of array in response should contain nested property with value:    [data]    [attributes][prices][0][currency][code]    ${currency_code_eur}    
-    And Each array element of array in response should contain nested property with value:    [data]    [attributes][prices][0][currency][name]    ${currency_name_eur}    
-    And Each array element of array in response should contain nested property with value:    [data]    [attributes][prices][0][currency][symbol]    ${currency_symbol_eur}    
+    And Each array element of array in response should contain nested property with value:    [data]    [attributes][prices][0][currency][code]    ${currency.eur.code}    
+    And Each array element of array in response should contain nested property with value:    [data]    [attributes][prices][0][currency][name]    ${currency.eur.name}    
+    And Each array element of array in response should contain nested property with value:    [data]    [attributes][prices][0][currency][symbol]    ${currency.eur.symbol}    
     And Each array element of array in response should contain nested property:    [data]    [links]    self
     And Response body has correct self link
 
 
 Get_product_offer_with_volume_price
-    # There is a bug : https://spryker.atlassian.net/browse/MP-6800
-
     I send a GET request:    /concrete-products/${concrete_available_product.with_stock}/product-offers
     AND Save value to a variable:    [data][0][id]    offerId
     When I send a GET request:    /product-offers/${offerId}/product-offer-prices
@@ -51,9 +46,9 @@ Get_product_offer_with_volume_price
     And Each array element of array in response should contain nested property:    [data]    [attributes][prices][0]    netAmount
     And Each array element of array in response should contain nested property:    [data]    [attributes][prices][0]    grossAmount
     And Each array element of array in response should contain nested property:    [data]    [attributes][prices][0]    currency
-    And Each array element of array in response should contain nested property with value:    [data]    [attributes][prices][0][currency][code]    ${currency_code_eur}    
-    And Each array element of array in response should contain nested property with value:    [data]    [attributes][prices][0][currency][name]    ${currency_name_eur}    
-    And Each array element of array in response should contain nested property with value:    [data]    [attributes][prices][0][currency][symbol]    ${currency_symbol_eur}    
+    And Each array element of array in response should contain nested property with value:    [data]    [attributes][prices][0][currency][code]    ${currency.eur.code}    
+    And Each array element of array in response should contain nested property with value:    [data]    [attributes][prices][0][currency][name]    ${currency.eur.name}    
+    And Each array element of array in response should contain nested property with value:    [data]    [attributes][prices][0][currency][symbol]    ${currency.eur.symbol}    
     And Each array element of array in response should contain nested property:    [data]    [links]    self
     And Each array element of array in response should contain nested property:    [data]    [attributes][prices][0][volumePrices][0]    grossAmount
     And Each array element of array in response should contain nested property with datatype:    [data]    [attributes][prices][0][volumePrices][0][grossAmount]    int
@@ -65,7 +60,7 @@ Get_product_offer_with_volume_price
 
 
 Get_default&original_prices_of_a_product_offer
-    I send a GET request:    /concrete-products/${concrete_available_product_with_stock}/product-offers
+    I send a GET request:    /concrete-products/${concrete_available_product.with_stock}/product-offers
     AND Save value to a variable:    [data][0][id]    offerId
     When I send a GET request:    /product-offers/${offerId}/product-offer-prices
     Then Response status code should be:    200
@@ -83,8 +78,8 @@ Get_default&original_prices_of_a_product_offer
     And Each array element of array in response should contain nested property:    [data]    [attributes][prices][0]    currency
     And Each array element of array in response should contain nested property with value:    [data]    [attributes][prices][0][priceTypeName]    DEFAULT
     And Each array element of array in response should contain nested property with value:    [data]    [attributes][prices][1][priceTypeName]    ORIGINAL    
-    And Each array element of array in response should contain nested property with value:    [data]    [attributes][prices][0][currency][code]    ${currency_code_eur}    
-    And Each array element of array in response should contain nested property with value:    [data]    [attributes][prices][0][currency][name]    ${currency_name_eur}    
-    And Each array element of array in response should contain nested property with value:    [data]    [attributes][prices][0][currency][symbol]    ${currency_symbol_eur}    
+    And Each array element of array in response should contain nested property with value:    [data]    [attributes][prices][0][currency][code]    ${currency.eur.code}    
+    And Each array element of array in response should contain nested property with value:    [data]    [attributes][prices][0][currency][name]    ${currency.eur.name}    
+    And Each array element of array in response should contain nested property with value:    [data]    [attributes][prices][0][currency][symbol]    ${currency.eur.symbol}    
     And Each array element of array in response should contain nested property:    [data]    [links]    self
     And Response body has correct self link

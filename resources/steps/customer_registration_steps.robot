@@ -14,14 +14,13 @@ Register a new customer with data:
     Yves: go to user menu item in header:    Sign Up
     FOR    ${key}    ${value}    IN    &{registrationData}
         Log    Key is '${key}' and value is '${value}'.
-        Run keyword if    '${key}'=='first name'    Type Text    ${registration_first_name_field}    ${value}
-        Run keyword if    '${key}'=='last name'    Type Text    ${registration_last_name_field}    ${value}
-        Run keyword if    '${key}'=='e-mail'    Type Text    ${registration_email_field}     ${value}
-        Run keyword if    '${key}'=='password'    Run keywords    
-        ...    Type Text    ${registration_password_field}     ${value}   AND
-        ...    Type Text    ${registration_password_confirmation_field}     ${value}
+        IF    '${key}'=='first name'    Type Text    ${registration_first_name_field}    ${value}
+        IF    '${key}'=='last name'    Type Text    ${registration_last_name_field}    ${value}
+        IF    '${key}'=='e-mail'    Type Text    ${registration_email_field}     ${value}
+        IF    '${key}'=='password'    Run keywords
+            Type Text    ${registration_password_field}     ${value}
+            Type Text    ${registration_password_confirmation_field}     ${value}
 #        Run keyword if    '${key}'=='salutation'    Type Text    ${checkout_shipping_address_company_name_field}     ${company}
     END
     Click Element by id with JavaScript    registerForm_accept_terms
     Click    ${registration_submit_button}
-    

@@ -24,7 +24,7 @@ Forgot_password_empty_email
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
 
 Forgot_password_incorrect_type
-    I send a POST request:    /customer-forgotten-password    {"data":{"type":"customer","attributes":{"email":"${yves_user_email}"}}}
+    I send a POST request:    /customer-forgotten-password    {"data":{"type":"customer","attributes":{"email":"${yves_user.email}"}}}
     Response status code should be:    400
     And Response reason should be:    Bad Request
     And Response should return error message:    Invalid type.

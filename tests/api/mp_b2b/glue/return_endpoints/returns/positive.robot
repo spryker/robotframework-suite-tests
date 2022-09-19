@@ -10,49 +10,51 @@ ENABLER
     
 ####POST####
 Create_a_return
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+# bug CC-18935
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
-    ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${gross_mode}","currency": "${currency_code_eur}","store": "${store_de}","name": "${test_cart_name}-${random}"}}}
+    ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
     ...  AND    Save value to a variable:    [data][id]    cart_id
-    ...  AND    I send a POST request:    /carts/${cartId}/items    {"data": {"type": "items","attributes": {"sku": "${concrete_product_with_offer_sku}","quantity": 10, "merchantReference" : "${merchant_id}", "productOfferReference" : "${merchant_offer_id}"}}}
-    ...  AND    I send a POST request:    /checkout?include=orders    {"data": {"type": "checkout","attributes": {"customer": {"email": "${yves_user_email}","salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}"},"idCart": "${cart_id}","billingAddress": {"salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}","address1": "${default_address1}","address2": "${default_address2}","address3": "${default_address3}","zipCode": "${default_zipCode}","city": "${default_city}","iso2Code": "${default_iso2Code}","company": "${default_company}","phone": "${default_phone}","isDefaultBilling": False,"isDefaultShipping": False},"shippingAddress": {"salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}","address1": "${default_address1}","address2": "${default_address2}","address3": "${default_address3}","zipCode": "${default_zipCode}","city": "${default_city}","iso2Code": "${default_iso2Code}","company": "${default_company}","phone": "${default_phone}","isDefaultBilling": False,"isDefaultShipping": False},"payments": [{"paymentProviderName": "${payment_provider_name}","paymentMethodName": "${payment_method_name}","paymentSelection": "${payment_selection_name}"}],"shipment": {"idShipmentMethod": 1},"items": ["${concrete_product_with_offer_sku}"]}}}
-    ...  AND    Save value to a variable:    [included][0][attributes][items][0][uuid]    returnableSalesOrderItemUuid
+    ...  AND    I send a POST request:    /carts/${cart_id}/items    {"data": {"type": "items","attributes": {"sku": "${abstract_product.product_availability.concrete_available_with_stock_and_never_out_of_stock}","quantity": 1, "merchantReference" : "${merchants.merchant_spryker_id}"}}}
+    ...  AND    I send a POST request:    /checkout?include=orders    {"data": {"type": "checkout","attributes": {"customer": {"email": "${yves_user.email}","salutation": "${yves_user.salutation}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}"},"idCart": "${cart_id}","billingAddress": {"salutation": "${yves_user.salutation}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}","address1": "${default.address1}","address2": "${default.address2}","address3": "${default.address3}","zipCode": "${default.zipCode}","city": "${default.city}","iso2Code": "${default.iso2Code}","company": "${default.company}","phone": "${default.phone}","isDefaultBilling": False,"isDefaultShipping": False},"shippingAddress": {"salutation": "${yves_user.salutation}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}","address1": "${default.address1}","address2": "${default.address2}","address3": "${default.address3}","zipCode": "${default.zipCode}","city": "${default.city}","iso2Code": "${default.iso2Code}","company": "${default.company}","phone": "${default.phone}","isDefaultBilling": False,"isDefaultShipping": False},"payments": [{"paymentProviderName": "${payment.provider_name}","paymentMethodName": "${payment.method_name}","paymentSelection": "${payment.selection_name}"}],"shipment": {"idShipmentMethod": 1},"items": ["${abstract_product.product_availability.concrete_available_with_stock_and_never_out_of_stock}"]}}}
+    ...  AND    Response status code should be:    201
     ...  AND    Save value to a variable:    [data][attributes][orderReference]    order_reference
+    ...  AND    Save value to a variable:    [included][0][attributes][items][0][uuid]    Uuid
     ...  AND    Save value to a variable:    [included][0][attributes][items][0][refundableAmount]    refundable_amount
-    When I send a POST request:     /returns     {"data":{"type":"returns","attributes":{"store":"${store_de}","returnItems":[{"salesOrderItemUuid":"${returnableSalesOrderItemUuid}","reason":"${return_reason_damaged}"}]}}}
+    ...  AND    Update order status in Database:    shipped
+    When I send a POST request:     /returns     {"data":{"type":"returns","attributes":{"store":"${store.de}","returnItems":[{"salesOrderItemUuid":"${Uuid}","reason":"${return_reason_damaged}"}]}}}
+    And Save value to a variable:    [data][id]    returnId
     Then Response status code should be:     201
     And Response reason should be:     Created
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response body parameter should be:    [data][type]    returns
-    And Response body parameter should contain:    [data][attributes]    merchantReference
-    And Response body parameter should be:    [data][id]    ${order_reference}
-    And Response body parameter should be:    [data][attributes][store]    ${store_de}
-    And Response body parameter should be:    [data][attributes][customerReference]    ${yves_user_reference}
-    And Response body parameter should be:    [data][attributes][returnTotals][refundTotal]    0
+    And Response body parameter should be:    [data][attributes][store]    ${store.de}
+    And Response body parameter should be:    [data][attributes][customerReference]    ${yves_user.reference}
     And Response body parameter should be:    [data][attributes][returnTotals][remunerationTotal]    ${refundable_amount}
-    And Response body has correct self link
-
+    And Response body has correct self link for created entity:    ${returnId}
 
 Create_a_return_with_return_items
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+# bug CC-18935
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
-    ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${gross_mode}","currency": "${currency_code_eur}","store": "${store_de}","name": "${test_cart_name}-${random}"}}}
-    ...  AND    Save value to a variable:    [data][id]    cart_id
-    ...  AND    I send a POST request:    /carts/${cartId}/items    {"data": {"type": "items","attributes": {"sku": "${concrete_product_with_offer_sku}","quantity": 10, "merchantReference" : "${merchant_id}", "productOfferReference" : "${merchant_offer_id}"}}}
-    ...  AND    I send a POST request:    /checkout?include=orders    {"data": {"type": "checkout","attributes": {"customer": {"email": "${yves_user_email}","salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}"},"idCart": "${cart_id}","billingAddress": {"salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}","address1": "${default_address1}","address2": "${default_address2}","address3": "${default_address3}","zipCode": "${default_zipCode}","city": "${default_city}","iso2Code": "${default_iso2Code}","company": "${default_company}","phone": "${default_phone}","isDefaultBilling": False,"isDefaultShipping": False},"shippingAddress": {"salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}","address1": "${default_address1}","address2": "${default_address2}","address3": "${default_address3}","zipCode": "${default_zipCode}","city": "${default_city}","iso2Code": "${default_iso2Code}","company": "${default_company}","phone": "${default_phone}","isDefaultBilling": False,"isDefaultShipping": False},"payments": [{"paymentProviderName": "${payment_provider_name}","paymentMethodName": "${payment_method_name}","paymentSelection": "${payment_selection_name}"}],"shipment": {"idShipmentMethod": 1},"items": ["${concrete_product_with_offer_sku}"]}}}
-    ...  AND    Save value to a variable:    [included][0][attributes][items][0][uuid]    returnableSalesOrderItemUuid
+    ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
+    ...  AND    Save value to a variable:    [data][id]    cart_id    
+    ...  AND    I send a POST request:    /carts/${cartId}/items    {"data": {"type": "items","attributes": {"sku": "${merchants.computer_experts.concrete_product_with_offer_sku}","quantity": 10, "merchantReference" : "${merchants.computer_experts.merchant_id}", "productOfferReference" : "${merchants.computer_experts.merchant_offer_id}"}}}
+    ...  AND    I send a POST request:    /checkout?include=orders    {"data": {"type": "checkout","attributes": {"customer": {"email": "${yves_user.email}","salutation": "${yves_user.salutation}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}"},"idCart": "${cart_id}","billingAddress": {"salutation": "${yves_user.salutation}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}","address1": "${default.address1}","address2": "${default.address2}","address3": "${default.address3}","zipCode": "${default.zipCode}","city": "${default.city}","iso2Code": "${default.iso2Code}","company": "${default.company}","phone": "${default.phone}","isDefaultBilling": False,"isDefaultShipping": False},"shippingAddress": {"salutation": "${yves_user.salutation}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}","address1": "${default.address1}","address2": "${default.address2}","address3": "${default.address3}","zipCode": "${default.zipCode}","city": "${default.city}","iso2Code": "${default.iso2Code}","company": "${default.company}","phone": "${default.phone}","isDefaultBilling": False,"isDefaultShipping": False},"payments": [{"paymentProviderName": "${payment.provider_name}","paymentMethodName": "${payment.method_name}","paymentSelection": "${payment.selection_name}"}],"shipment": {"idShipmentMethod": 1},"items": ["${merchants.computer_experts.concrete_product_with_offer_sku}"]}}}
+    ...  AND    Save value to a variable:    [included][0][attributes][items][0][uuid]    Uuid
     ...  AND    Save value to a variable:    [data][attributes][orderReference]    order_reference
     ...  AND    Save value to a variable:    [included][0][attributes][items][0][refundableAmount]    refundable_amount
+    ...  AND    Update order status in Database:    shipped
 
-    When I send a POST request:     /returns?include=return-items     {"data":{"type":"returns","attributes":{"store":"${store_de}","returnItems":[{"salesOrderItemUuid":"${returnableSalesOrderItemUuid}","reason":"${return_reason_damaged}"}]}}}
+    When I send a POST request:     /returns?include=return-items     {"data":{"type":"returns","attributes":{"store":"${store.de}","returnItems":[{"salesOrderItemUuid":"${Uuid}","reason":"${return_reason_damaged}"}]}}}
     Then Response status code should be:     201
     And Response reason should be:     Created
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response body parameter should be:    [data][type]    returns
-    And Response body parameter should be:    [data][attributes][merchantReference]    ${merchant_id}
+    And Response body parameter should be:    [data][attributes][merchantReference]    ${merchants.computer_experts.merchant_id}
     And Response body parameter should be:    [data][id]    ${order_reference}
-    And Response body parameter should be:    [data][attributes][store]    ${store_de}
-    And Response body parameter should be:    [data][attributes][customerReference]    ${yves_user_reference}
+    And Response body parameter should be:    [data][attributes][store]    ${store.de}
+    And Response body parameter should be:    [data][attributes][customerReference]    ${yves_user.reference}
     And Response body parameter should be:    [data][attributes][returnTotals][refundTotal]    0
     And Response body parameter should be:    [data][attributes][returnTotals][remunerationTotal]    ${refundable_amount}
     And Response should contain the array larger than a certain size:    [included]    0
@@ -64,23 +66,25 @@ Create_a_return_with_return_items
     And Response body parameter should contain:    [data][relationships][return-items][data]    id
     And Response body parameter should not be EMPTY:    [included]  
     And Response include should contain certain entity type:    return-items
-    And Response body parameter should be:    [included][0][attributes][uuid]    ${returnableSalesOrderItemUuid}
+    And Response body parameter should be:    [included][0][attributes][uuid]    ${Uuid}
     And Response body parameter should be:    [included][0][attributes][reason]    ${return_reason_damaged}
     And Response body has correct self link
 
 
 ####GET####
 Retrieves_list_of_returns
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+# bug CC-18935
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
-    ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${gross_mode}","currency": "${currency_code_eur}","store": "${store_de}","name": "${test_cart_name}-${random}"}}}
+    ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
     ...  AND    Save value to a variable:    [data][id]    cart_id
-    ...  AND    I send a POST request:    /carts/${cartId}/items    {"data": {"type": "items","attributes": {"sku": "${concrete_product_with_offer_sku}","quantity": 10, "merchantReference" : "${merchant_id}", "productOfferReference" : "${merchant_offer_id}"}}}
-    ...  AND    I send a POST request:    /checkout?include=orders    {"data": {"type": "checkout","attributes": {"customer": {"email": "${yves_user_email}","salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}"},"idCart": "${cart_id}","billingAddress": {"salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}","address1": "${default_address1}","address2": "${default_address2}","address3": "${default_address3}","zipCode": "${default_zipCode}","city": "${default_city}","iso2Code": "${default_iso2Code}","company": "${default_company}","phone": "${default_phone}","isDefaultBilling": False,"isDefaultShipping": False},"shippingAddress": {"salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}","address1": "${default_address1}","address2": "${default_address2}","address3": "${default_address3}","zipCode": "${default_zipCode}","city": "${default_city}","iso2Code": "${default_iso2Code}","company": "${default_company}","phone": "${default_phone}","isDefaultBilling": False,"isDefaultShipping": False},"payments": [{"paymentProviderName": "${payment_provider_name}","paymentMethodName": "${payment_method_name}","paymentSelection": "${payment_selection_name}"}],"shipment": {"idShipmentMethod": 1},"items": ["${concrete_product_with_offer_sku}"]}}}
-    ...  AND    Save value to a variable:    [included][0][attributes][items][0][uuid]    returnableSalesOrderItemUuid
+    ...  AND    I send a POST request:    /carts/${cartId}/items    {"data": {"type": "items","attributes": {"sku": "${merchants.computer_experts.concrete_product_with_offer_sku}","quantity": 10, "merchantReference" : "${merchants.computer_experts.merchant_id}", "productOfferReference" : "${merchants.computer_experts.merchant_offer_id}"}}}
+    ...  AND    I send a POST request:    /checkout?include=orders    {"data": {"type": "checkout","attributes": {"customer": {"email": "${yves_user.email}","salutation": "${yves_user.salutation}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}"},"idCart": "${cart_id}","billingAddress": {"salutation": "${yves_user.salutation}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}","address1": "${default.address1}","address2": "${default.address2}","address3": "${default.address3}","zipCode": "${default.zipCode}","city": "${default.city}","iso2Code": "${default.iso2Code}","company": "${default.company}","phone": "${default.phone}","isDefaultBilling": False,"isDefaultShipping": False},"shippingAddress": {"salutation": "${yves_user.salutation}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}","address1": "${default.address1}","address2": "${default.address2}","address3": "${default.address3}","zipCode": "${default.zipCode}","city": "${default.city}","iso2Code": "${default.iso2Code}","company": "${default.company}","phone": "${default.phone}","isDefaultBilling": False,"isDefaultShipping": False},"payments": [{"paymentProviderName": "${payment.provider_name}","paymentMethodName": "${payment.method_name}","paymentSelection": "${payment.selection_name}"}],"shipment": {"idShipmentMethod": 1},"items": ["${merchants.computer_experts.concrete_product_with_offer_sku}"]}}}
+    ...  AND    Save value to a variable:    [included][0][attributes][items][0][uuid]    Uuid
     ...  AND    Save value to a variable:    [data][attributes][orderReference]    order_reference
     ...  AND    Save value to a variable:    [included][0][attributes][items][0][refundableAmount]    refundable_amount
-    ...  AND    I send a POST request:     /returns     {"data":{"type":"returns","attributes":{"store":"${store_de}","returnItems":[{"salesOrderItemUuid":"${returnableSalesOrderItemUuid}","reason":"${return_reason_damaged}"}]}}}
+    ...  AND    Update order status in Database:    shipped
+    ...  AND    I send a POST request:     /returns     {"data":{"type":"returns","attributes":{"store":"${store.de}","returnItems":[{"salesOrderItemUuid":"${Uuid}","reason":"${return_reason_damaged}"}]}}}
     When I send a GET request:     /returns
     Then Response status code should be:     200
     And Response reason should be:     OK
@@ -98,16 +102,18 @@ Retrieves_list_of_returns
     And Response body has correct self link
     
 Retrieves_list_of_returns_included_return_items
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+# bug CC-18935
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
-    ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${gross_mode}","currency": "${currency_code_eur}","store": "${store_de}","name": "${test_cart_name}-${random}"}}}
+    ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
     ...  AND    Save value to a variable:    [data][id]    cart_id
-    ...  AND    I send a POST request:    /carts/${cartId}/items    {"data": {"type": "items","attributes": {"sku": "${concrete_product_with_offer_sku}","quantity": 10, "merchantReference" : "${merchant_id}", "productOfferReference" : "${merchant_offer_id}"}}}
-    ...  AND    I send a POST request:    /checkout?include=orders    {"data": {"type": "checkout","attributes": {"customer": {"email": "${yves_user_email}","salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}"},"idCart": "${cart_id}","billingAddress": {"salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}","address1": "${default_address1}","address2": "${default_address2}","address3": "${default_address3}","zipCode": "${default_zipCode}","city": "${default_city}","iso2Code": "${default_iso2Code}","company": "${default_company}","phone": "${default_phone}","isDefaultBilling": False,"isDefaultShipping": False},"shippingAddress": {"salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}","address1": "${default_address1}","address2": "${default_address2}","address3": "${default_address3}","zipCode": "${default_zipCode}","city": "${default_city}","iso2Code": "${default_iso2Code}","company": "${default_company}","phone": "${default_phone}","isDefaultBilling": False,"isDefaultShipping": False},"payments": [{"paymentProviderName": "${payment_provider_name}","paymentMethodName": "${payment_method_name}","paymentSelection": "${payment_selection_name}"}],"shipment": {"idShipmentMethod": 1},"items": ["${concrete_product_with_offer_sku}"]}}}
-    ...  AND    Save value to a variable:    [included][0][attributes][items][0][uuid]    returnableSalesOrderItemUuid
+    ...  AND    I send a POST request:    /carts/${cartId}/items    {"data": {"type": "items","attributes": {"sku": "${merchants.computer_experts.concrete_product_with_offer_sku}","quantity": 10, "merchantReference" : "${merchants.computer_experts.merchant_id}", "productOfferReference" : "${merchants.computer_experts.merchant_offer_id}"}}}
+    ...  AND    I send a POST request:    /checkout?include=orders    {"data": {"type": "checkout","attributes": {"customer": {"email": "${yves_user.email}","salutation": "${yves_user.salutation}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}"},"idCart": "${cart_id}","billingAddress": {"salutation": "${yves_user.salutation}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}","address1": "${default.address1}","address2": "${default.address2}","address3": "${default.address3}","zipCode": "${default.zipCode}","city": "${default.city}","iso2Code": "${default.iso2Code}","company": "${default.company}","phone": "${default.phone}","isDefaultBilling": False,"isDefaultShipping": False},"shippingAddress": {"salutation": "${yves_user.salutation}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}","address1": "${default.address1}","address2": "${default.address2}","address3": "${default.address3}","zipCode": "${default.zipCode}","city": "${default.city}","iso2Code": "${default.iso2Code}","company": "${default.company}","phone": "${default.phone}","isDefaultBilling": False,"isDefaultShipping": False},"payments": [{"paymentProviderName": "${payment.provider_name}","paymentMethodName": "${payment.method_name}","paymentSelection": "${payment.selection_name}"}],"shipment": {"idShipmentMethod": 1},"items": ["${merchants.computer_experts.concrete_product_with_offer_sku}"]}}}
+    ...  AND    Save value to a variable:    [included][0][attributes][items][0][uuid]    Uuid
     ...  AND    Save value to a variable:    [data][attributes][orderReference]    order_reference
     ...  AND    Save value to a variable:    [included][0][attributes][items][0][refundableAmount]    refundable_amount
-    ...  AND    I send a POST request:     /returns     {"data":{"type":"returns","attributes":{"store":"${store_de}","returnItems":[{"salesOrderItemUuid":"${returnableSalesOrderItemUuid}","reason":"${return_reason_damaged}"}]}}}
+    ...  AND    Update order status in Database:    shipped
+    ...  AND    I send a POST request:     /returns     {"data":{"type":"returns","attributes":{"store":"${store.de}","returnItems":[{"salesOrderItemUuid":"${Uuid}","reason":"${return_reason_damaged}"}]}}}
     When I send a GET request:     /returns?include=return-items
     Then Response status code should be:     200
     And Response reason should be:     OK
@@ -130,21 +136,23 @@ Retrieves_list_of_returns_included_return_items
     And Each array element of array in response should contain nested property with value:    [data]    [relationships][return-items][data][0][type]    return-items
     And Response include element has self link:    return-items
     And Response include should contain certain entity type:    return-items
-    And Response body parameter should be:    [included][0][attributes][uuid]    ${returnableSalesOrderItemUuid}
+    And Response body parameter should be:    [included][0][attributes][uuid]    ${Uuid}
     And Response body parameter should be:    [included][0][attributes][reason]    ${return_reason_damaged}
     And Response body has correct self link
 
 Retrieves_list_of_returns_included_merchants
-  [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+# bug CC-18935
+  [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
-    ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${gross_mode}","currency": "${currency_code_eur}","store": "${store_de}","name": "${test_cart_name}-${random}"}}}
+    ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
     ...  AND    Save value to a variable:    [data][id]    cart_id
-    ...  AND    I send a POST request:    /carts/${cartId}/items    {"data": {"type": "items","attributes": {"sku": "${concrete_product_with_offer_sku}","quantity": 10, "merchantReference" : "${merchant_id}", "productOfferReference" : "${merchant_offer_id}"}}}
-    ...  AND    I send a POST request:    /checkout?include=orders    {"data": {"type": "checkout","attributes": {"customer": {"email": "${yves_user_email}","salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}"},"idCart": "${cart_id}","billingAddress": {"salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}","address1": "${default_address1}","address2": "${default_address2}","address3": "${default_address3}","zipCode": "${default_zipCode}","city": "${default_city}","iso2Code": "${default_iso2Code}","company": "${default_company}","phone": "${default_phone}","isDefaultBilling": False,"isDefaultShipping": False},"shippingAddress": {"salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}","address1": "${default_address1}","address2": "${default_address2}","address3": "${default_address3}","zipCode": "${default_zipCode}","city": "${default_city}","iso2Code": "${default_iso2Code}","company": "${default_company}","phone": "${default_phone}","isDefaultBilling": False,"isDefaultShipping": False},"payments": [{"paymentProviderName": "${payment_provider_name}","paymentMethodName": "${payment_method_name}","paymentSelection": "${payment_selection_name}"}],"shipment": {"idShipmentMethod": 1},"items": ["${concrete_product_with_offer_sku}"]}}}
-    ...  AND    Save value to a variable:    [included][0][attributes][items][0][uuid]    returnableSalesOrderItemUuid
+    ...  AND    I send a POST request:    /carts/${cartId}/items    {"data": {"type": "items","attributes": {"sku": "${merchants.computer_experts.concrete_product_with_offer_sku}","quantity": 10, "merchantReference" : "${merchants.computer_experts.merchant_id}", "productOfferReference" : "${merchants.computer_experts.merchant_offer_id}"}}}
+    ...  AND    I send a POST request:    /checkout?include=orders    {"data": {"type": "checkout","attributes": {"customer": {"email": "${yves_user.email}","salutation": "${yves_user.salutation}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}"},"idCart": "${cart_id}","billingAddress": {"salutation": "${yves_user.salutation}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}","address1": "${default.address1}","address2": "${default.address2}","address3": "${default.address3}","zipCode": "${default.zipCode}","city": "${default.city}","iso2Code": "${default.iso2Code}","company": "${default.company}","phone": "${default.phone}","isDefaultBilling": False,"isDefaultShipping": False},"shippingAddress": {"salutation": "${yves_user.salutation}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}","address1": "${default.address1}","address2": "${default.address2}","address3": "${default.address3}","zipCode": "${default.zipCode}","city": "${default.city}","iso2Code": "${default.iso2Code}","company": "${default.company}","phone": "${default.phone}","isDefaultBilling": False,"isDefaultShipping": False},"payments": [{"paymentProviderName": "${payment.provider_name}","paymentMethodName": "${payment.method_name}","paymentSelection": "${payment.selection_name}"}],"shipment": {"idShipmentMethod": 1},"items": ["${merchants.computer_experts.concrete_product_with_offer_sku}"]}}}
+    ...  AND    Save value to a variable:    [included][0][attributes][items][0][uuid]    Uuid
     ...  AND    Save value to a variable:    [data][attributes][orderReference]    order_reference
     ...  AND    Save value to a variable:    [included][0][attributes][items][0][refundableAmount]    refundable_amount
-    ...  AND    I send a POST request:     /returns     {"data":{"type":"returns","attributes":{"store":"${store_de}","returnItems":[{"salesOrderItemUuid":"${returnableSalesOrderItemUuid}","reason":"${return_reason_damaged}"}]}}}
+    ...  AND    Update order status in Database:    shipped
+    ...  AND    I send a POST request:     /returns     {"data":{"type":"returns","attributes":{"store":"${store.de}","returnItems":[{"salesOrderItemUuid":"${Uuid}","reason":"${return_reason_damaged}"}]}}}
     When I send a GET request:     /returns?include=merchants
     Then Response status code should be:     200
     And Response reason should be:     OK
@@ -170,25 +178,27 @@ Retrieves_list_of_returns_included_merchants
     And Response body has correct self link
 
 Retrieves_return_by_id_with_returns_items_included
-  [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+# bug CC-18935
+  [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
-    ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${gross_mode}","currency": "${currency_code_eur}","store": "${store_de}","name": "${test_cart_name}-${random}"}}}
+    ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
     ...  AND    Save value to a variable:    [data][id]    cart_id
-    ...  AND    I send a POST request:    /carts/${cartId}/items    {"data": {"type": "items","attributes": {"sku": "${concrete_product_with_offer_sku}","quantity": 10, "merchantReference" : "${merchant_id}", "productOfferReference" : "${merchant_offer_id}"}}}
-    ...  AND    I send a POST request:    /checkout?include=orders    {"data": {"type": "checkout","attributes": {"customer": {"email": "${yves_user_email}","salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}"},"idCart": "${cart_id}","billingAddress": {"salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}","address1": "${default_address1}","address2": "${default_address2}","address3": "${default_address3}","zipCode": "${default_zipCode}","city": "${default_city}","iso2Code": "${default_iso2Code}","company": "${default_company}","phone": "${default_phone}","isDefaultBilling": False,"isDefaultShipping": False},"shippingAddress": {"salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}","address1": "${default_address1}","address2": "${default_address2}","address3": "${default_address3}","zipCode": "${default_zipCode}","city": "${default_city}","iso2Code": "${default_iso2Code}","company": "${default_company}","phone": "${default_phone}","isDefaultBilling": False,"isDefaultShipping": False},"payments": [{"paymentProviderName": "${payment_provider_name}","paymentMethodName": "${payment_method_name}","paymentSelection": "${payment_selection_name}"}],"shipment": {"idShipmentMethod": 1},"items": ["${concrete_product_with_offer_sku}"]}}}
-    ...  AND    Save value to a variable:    [included][0][attributes][items][0][uuid]    returnableSalesOrderItemUuid
+    ...  AND    I send a POST request:    /carts/${cartId}/items    {"data": {"type": "items","attributes": {"sku": "${merchants.computer_experts.concrete_product_with_offer_sku}","quantity": 10, "merchantReference" : "${merchants.computer_experts.merchant_id}", "productOfferReference" : "${merchants.computer_experts.merchant_offer_id}"}}}
+    ...  AND    I send a POST request:    /checkout?include=orders    {"data": {"type": "checkout","attributes": {"customer": {"email": "${yves_user.email}","salutation": "${yves_user.salutation}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}"},"idCart": "${cart_id}","billingAddress": {"salutation": "${yves_user.salutation}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}","address1": "${default.address1}","address2": "${default.address2}","address3": "${default.address3}","zipCode": "${default.zipCode}","city": "${default.city}","iso2Code": "${default.iso2Code}","company": "${default.company}","phone": "${default.phone}","isDefaultBilling": False,"isDefaultShipping": False},"shippingAddress": {"salutation": "${yves_user.salutation}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}","address1": "${default.address1}","address2": "${default.address2}","address3": "${default.address3}","zipCode": "${default.zipCode}","city": "${default.city}","iso2Code": "${default.iso2Code}","company": "${default.company}","phone": "${default.phone}","isDefaultBilling": False,"isDefaultShipping": False},"payments": [{"paymentProviderName": "${payment.provider_name}","paymentMethodName": "${payment.method_name}","paymentSelection": "${payment.selection_name}"}],"shipment": {"idShipmentMethod": 1},"items": ["${merchants.computer_experts.concrete_product_with_offer_sku}"]}}}
+    ...  AND    Save value to a variable:    [included][0][attributes][items][0][uuid]    Uuid
     ...  AND    Save value to a variable:    [included][0][attributes][items][0][refundableAmount]    refundable_amount
-    ...  AND    I send a POST request:     /returns     {"data":{"type":"returns","attributes":{"store":"${store_de}","returnItems":[{"salesOrderItemUuid":"${returnableSalesOrderItemUuid}","reason":"${return_reason_damaged}"}]}}}
+    ...  AND    Update order status in Database:    shipped
+    ...  AND    I send a POST request:     /returns     {"data":{"type":"returns","attributes":{"store":"${store.de}","returnItems":[{"salesOrderItemUuid":"${Uuid}","reason":"${return_reason_damaged}"}]}}}
     ...  AND    Save value to a variable:    [data][id]    returnId
     When I send a GET request:    /returns/${returnId}?include=return-items
     Then Response status code should be:     200
     And Response reason should be:     OK
     And Response body parameter should be:    [data][type]    returns
     And Response body parameter should be:    [data][id]    ${returnId}
-    And Response body parameter should be:    [data][attributes][merchantReference]    ${merchant_id}
+    And Response body parameter should be:    [data][attributes][merchantReference]    ${merchants.computer_experts.merchant_id}
     And Response body parameter should be:    [data][attributes][returnReference]    ${returnId}
-    And Response body parameter should be:    [data][attributes][store]    ${store_de}
-    And Response body parameter should be:    [data][attributes][customerReference]    ${yves_user_reference}
+    And Response body parameter should be:    [data][attributes][store]    ${store.de}
+    And Response body parameter should be:    [data][attributes][customerReference]    ${yves_user.reference}
     And Response body parameter should be:    [data][attributes][returnTotals][remunerationTotal]    ${refundable_amount}
     And Response should contain the array larger than a certain size:    [included]    0
     And Response should contain the array larger than a certain size:    [data][relationships]    0
@@ -204,20 +214,22 @@ Retrieves_return_by_id_with_returns_items_included
     And Each array element of array in response should contain nested property:    [included]    [links]    self
     And Each array element of array in response should contain nested property:    [included]    [attributes]    uuid
     And Each array element of array in response should contain property with value:    [included]    type    return-items
-    And Each array element of array in response should contain property with value in:    [included]    [attributes][orderItemUuid]    ${returnableSalesOrderItemUuid}    ${returnableSalesOrderItemUuid}
+    And Each array element of array in response should contain property with value in:    [included]    [attributes][orderItemUuid]    ${Uuid}    ${Uuid}
     And Each array element of array in response should contain property with value in:    [included]    [attributes][reason]    ${return_reason_damaged}    ${return_reason_damaged}  
     And Response body has correct self link
 
 Retrieves_return_by_id_for_sales_order
-  [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+# bug CC-18935
+  [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
-    ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${gross_mode}","currency": "${currency_code_eur}","store": "${store_de}","name": "${test_cart_name}-${random}"}}}
+    ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
     ...  AND    Save value to a variable:    [data][id]    cart_id
-    ...  AND    I send a POST request:    /carts/${cartId}/items    {"data": {"type": "items","attributes": {"sku": "${concrete_product_with_offer_sku}","quantity": 10, "merchantReference" : "${merchant_id}", "productOfferReference" : "${merchant_offer_id}"}}}
-    ...  AND    I send a POST request:    /checkout?include=orders    {"data": {"type": "checkout","attributes": {"customer": {"email": "${yves_user_email}","salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}"},"idCart": "${cart_id}","billingAddress": {"salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}","address1": "${default_address1}","address2": "${default_address2}","address3": "${default_address3}","zipCode": "${default_zipCode}","city": "${default_city}","iso2Code": "${default_iso2Code}","company": "${default_company}","phone": "${default_phone}","isDefaultBilling": False,"isDefaultShipping": False},"shippingAddress": {"salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}","address1": "${default_address1}","address2": "${default_address2}","address3": "${default_address3}","zipCode": "${default_zipCode}","city": "${default_city}","iso2Code": "${default_iso2Code}","company": "${default_company}","phone": "${default_phone}","isDefaultBilling": False,"isDefaultShipping": False},"payments": [{"paymentProviderName": "${payment_provider_name}","paymentMethodName": "${payment_method_name}","paymentSelection": "${payment_selection_name}"}],"shipment": {"idShipmentMethod": 1},"items": ["${concrete_product_with_offer_sku}"]}}}
-    ...  AND    Save value to a variable:    [included][0][attributes][items][0][uuid]    returnableSalesOrderItemUuid
+    ...  AND    I send a POST request:    /carts/${cartId}/items    {"data": {"type": "items","attributes": {"sku": "${merchants.computer_experts.concrete_product_with_offer_sku}","quantity": 10, "merchantReference" : "${merchants.computer_experts.merchant_id}", "productOfferReference" : "${merchants.computer_experts.merchant_offer_id}"}}}
+    ...  AND    I send a POST request:    /checkout?include=orders    {"data": {"type": "checkout","attributes": {"customer": {"email": "${yves_user.email}","salutation": "${yves_user.salutation}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}"},"idCart": "${cart_id}","billingAddress": {"salutation": "${yves_user.salutation}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}","address1": "${default.address1}","address2": "${default.address2}","address3": "${default.address3}","zipCode": "${default.zipCode}","city": "${default.city}","iso2Code": "${default.iso2Code}","company": "${default.company}","phone": "${default.phone}","isDefaultBilling": False,"isDefaultShipping": False},"shippingAddress": {"salutation": "${yves_user.salutation}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}","address1": "${default.address1}","address2": "${default.address2}","address3": "${default.address3}","zipCode": "${default.zipCode}","city": "${default.city}","iso2Code": "${default.iso2Code}","company": "${default.company}","phone": "${default.phone}","isDefaultBilling": False,"isDefaultShipping": False},"payments": [{"paymentProviderName": "${payment.provider_name}","paymentMethodName": "${payment.method_name}","paymentSelection": "${payment.selection_name}"}],"shipment": {"idShipmentMethod": 1},"items": ["${merchants.computer_experts.concrete_product_with_offer_sku}"]}}}
+    ...  AND    Save value to a variable:    [included][0][attributes][items][0][uuid]    Uuid
     ...  AND    Save value to a variable:    [included][0][attributes][items][0][refundableAmount]    refundable_amount
-    ...  AND    I send a POST request:     /returns     {"data":{"type":"returns","attributes":{"store":"${store_de}","returnItems":[{"salesOrderItemUuid":"${returnableSalesOrderItemUuid}","reason":"${return_reason_damaged}"}]}}}
+    ...  AND    Update order status in Database:    shipped
+    ...  AND    I send a POST request:     /returns     {"data":{"type":"returns","attributes":{"store":"${store.de}","returnItems":[{"salesOrderItemUuid":"${Uuid}","reason":"${return_reason_damaged}"}]}}}
     ...  AND    Save value to a variable:    [data][id]    returnId
     When I send a GET request:    /returns/${returnId}?include=return-items
     Then Response status code should be:     200
@@ -226,21 +238,23 @@ Retrieves_return_by_id_for_sales_order
     And Response body parameter should be:    [data][type]    returns
     And Response body parameter should contain:    [data][attributes]    merchantReference
     And Response body parameter should be:    [data][id]    ${returnId}
-    And Response body parameter should be:    [data][attributes][store]    ${store_de}
-    And Response body parameter should be:    [data][attributes][customerReference]    ${yves_user_reference}
+    And Response body parameter should be:    [data][attributes][store]    ${store.de}
+    And Response body parameter should be:    [data][attributes][customerReference]    ${yves_user.reference}
     And Response body parameter should be:    [data][attributes][returnTotals][refundTotal]    0
     And Response body parameter should be:    [data][attributes][returnTotals][remunerationTotal]    ${refundable_amount}
 
 Retrieves_return_by_id_with_merchants_included
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+# bug CC-18935
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
-    ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${gross_mode}","currency": "${currency_code_eur}","store": "${store_de}","name": "${test_cart_name}-${random}"}}}
+    ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
     ...  AND    Save value to a variable:    [data][id]    cart_id
-    ...  AND    I send a POST request:    /carts/${cartId}/items    {"data": {"type": "items","attributes": {"sku": "${concrete_product_with_offer_sku}","quantity": 10, "merchantReference" : "${merchant_id}", "productOfferReference" : "${merchant_offer_id}"}}}
-    ...  AND    I send a POST request:    /checkout?include=orders    {"data": {"type": "checkout","attributes": {"customer": {"email": "${yves_user_email}","salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}"},"idCart": "${cart_id}","billingAddress": {"salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}","address1": "${default_address1}","address2": "${default_address2}","address3": "${default_address3}","zipCode": "${default_zipCode}","city": "${default_city}","iso2Code": "${default_iso2Code}","company": "${default_company}","phone": "${default_phone}","isDefaultBilling": False,"isDefaultShipping": False},"shippingAddress": {"salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}","address1": "${default_address1}","address2": "${default_address2}","address3": "${default_address3}","zipCode": "${default_zipCode}","city": "${default_city}","iso2Code": "${default_iso2Code}","company": "${default_company}","phone": "${default_phone}","isDefaultBilling": False,"isDefaultShipping": False},"payments": [{"paymentProviderName": "${payment_provider_name}","paymentMethodName": "${payment_method_name}","paymentSelection": "${payment_selection_name}"}],"shipment": {"idShipmentMethod": 1},"items": ["${concrete_product_with_offer_sku}"]}}}
-    ...  AND    Save value to a variable:    [included][0][attributes][items][0][uuid]    returnableSalesOrderItemUuid
+    ...  AND    I send a POST request:    /carts/${cartId}/items    {"data": {"type": "items","attributes": {"sku": "${merchants.computer_experts.concrete_product_with_offer_sku}","quantity": 10, "merchantReference" : "${merchants.computer_experts.merchant_id}", "productOfferReference" : "${merchants.computer_experts.merchant_offer_id}"}}}
+    ...  AND    I send a POST request:    /checkout?include=orders    {"data": {"type": "checkout","attributes": {"customer": {"email": "${yves_user.email}","salutation": "${yves_user.salutation}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}"},"idCart": "${cart_id}","billingAddress": {"salutation": "${yves_user.salutation}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}","address1": "${default.address1}","address2": "${default.address2}","address3": "${default.address3}","zipCode": "${default.zipCode}","city": "${default.city}","iso2Code": "${default.iso2Code}","company": "${default.company}","phone": "${default.phone}","isDefaultBilling": False,"isDefaultShipping": False},"shippingAddress": {"salutation": "${yves_user.salutation}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}","address1": "${default.address1}","address2": "${default.address2}","address3": "${default.address3}","zipCode": "${default.zipCode}","city": "${default.city}","iso2Code": "${default.iso2Code}","company": "${default.company}","phone": "${default.phone}","isDefaultBilling": False,"isDefaultShipping": False},"payments": [{"paymentProviderName": "${payment.provider_name}","paymentMethodName": "${payment.method_name}","paymentSelection": "${payment.selection_name}"}],"shipment": {"idShipmentMethod": 1},"items": ["${merchants.computer_experts.concrete_product_with_offer_sku}"]}}}
+    ...  AND    Save value to a variable:    [included][0][attributes][items][0][uuid]    Uuid
     ...  AND    Save value to a variable:    [included][0][attributes][items][0][refundableAmount]    refundable_amount
-    ...  AND    I send a POST request:     /returns     {"data":{"type":"returns","attributes":{"store":"${store_de}","returnItems":[{"salesOrderItemUuid":"${returnableSalesOrderItemUuid}","reason":"${return_reason_damaged}"}]}}}
+    ...  AND    Update order status in Database:    shipped
+    ...  AND    I send a POST request:     /returns     {"data":{"type":"returns","attributes":{"store":"${store.de}","returnItems":[{"salesOrderItemUuid":"${Uuid}","reason":"${return_reason_damaged}"}]}}}
     ...  AND    Save value to a variable:    [data][id]    returnId
     When I send a GET request:    /returns/${returnId}?include=merchants
     Then Response status code should be:     200
@@ -248,10 +262,10 @@ Retrieves_return_by_id_with_merchants_included
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response body parameter should be:    [data][type]    returns
     And Response body parameter should be:    [data][id]    ${returnId}
-    And Response body parameter should be:    [data][attributes][merchantReference]    ${merchant_id}
+    And Response body parameter should be:    [data][attributes][merchantReference]    ${merchants.computer_experts.merchant_id}
     And Response body parameter should be:    [data][attributes][returnReference]    ${returnId}
-    And Response body parameter should be:    [data][attributes][store]    ${store_de}
-    And Response body parameter should be:    [data][attributes][customerReference]    ${yves_user_reference}
+    And Response body parameter should be:    [data][attributes][store]    ${store.de}
+    And Response body parameter should be:    [data][attributes][customerReference]    ${yves_user.reference}
     And Response body parameter should be:    [data][attributes][returnTotals][refundTotal]    0
     And Response body parameter should be:    [data][attributes][returnTotals][remunerationTotal]    ${refundable_amount}
     And Response body parameter should not be EMPTY:    [data][relationships]

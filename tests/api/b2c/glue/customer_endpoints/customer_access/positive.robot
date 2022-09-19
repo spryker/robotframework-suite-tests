@@ -5,6 +5,8 @@ Default Tags    glue
 Resource    ../../../../../../resources/common/common_api.robot
 
 *** Test Cases ***
+ENABLER
+    TestSetup
 Resources_list_which_customer_can_access
     I send a GET request:    /customer-access
     Response status code should be:    200
@@ -17,12 +19,20 @@ Resources_list_which_customer_can_access
     And Response body has correct self link
 
 Access_restricted_resource_as_authorized_customer   
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
+    ...    AND    I send a POST request:    /wishlists    {"data": {"type": "wishlists","attributes": {"name": "${wishlist_name}"}}}
+    ...    AND    Save value to a variable:    [data][id]    wishlist_id
+    ...    AND    Response status code should be:    201
+    ...    AND    I send a POST request:    /wishlists/${wishlist_id}/wishlist-items    {"data": {"type": "wishlist-items","attributes": {"sku": "${concrete_available_product.label}"}}}
+    ...    AND    Response status code should be:    201
     I send a GET request:    /wishlists
     Response status code should be:    200
     And Response reason should be:    OK
     And Response body parameter should contain:    [data][0][type]    wishlists
+    And Response body parameter should be:    [data][0][id]    ${wishlist_id}
     And Response body parameter should be:    [data][0][attributes][numberOfItems]    1
-    And Response body parameter should not be EMPTY:    [data][0][attributes][name]
+    And Response body parameter should be:    [data][0][attributes][name]    ${wishlist_name}
     And Response body has correct self link
+    [Teardown]    Run Keywords    I send a DELETE request:    /wishlists/${wishlist_id}
+    ...  AND    Response status code should be:    204

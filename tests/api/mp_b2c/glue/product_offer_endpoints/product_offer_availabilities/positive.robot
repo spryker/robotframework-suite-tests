@@ -10,7 +10,7 @@ ENABLER
 
 
 Get_product_offer_availabilities
-    I send a GET request:    /concrete-products/${merchants.spryker.concrete_product_with_offer_sku}/product-offers
+    I send a GET request:    /concrete-products/${merchant.spryker.concrete_product_with_offer_sku}/product-offers
     AND Save value to a variable:    [data][0][id]    offerId
     When I send a GET request:    /product-offers/${offerId}/product-offer-availabilities
     Then Response status code should be:    200

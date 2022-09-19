@@ -2,11 +2,11 @@
 Resource    ../../../../../../resources/common/common_api.robot
 Suite Setup    SuiteSetup
 Test Setup     TestSetup
-
 Default Tags    glue
 
 *** Test Cases ***
-
+ENABLER
+    TestSetup
 Get_category_node_by_invalid_id
     When I send a GET request:    /category-nodes/test
     Then Response status code should be:    400

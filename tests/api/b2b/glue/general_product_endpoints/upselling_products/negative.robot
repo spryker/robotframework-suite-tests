@@ -9,7 +9,7 @@ ENABLER
     TestSetup
 
 Get_upselling_products_with_missing_cart_id
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     When I send a GET request:    /carts//up-selling-products
     Then Response status code should be:    400
@@ -18,7 +18,7 @@ Get_upselling_products_with_missing_cart_id
     And Response should return error message:    Cart uuid is missing.
     
 Get_upselling_products_with_nonexistent_cart_id
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     When I send a GET request:    /carts/not_a_cart/up-selling-products
     Then Response status code should be:    404
@@ -42,13 +42,13 @@ Get_upselling_products_without_access_token
     And Response should return error message:    Missing access token.
 
 Get_upselling_products_using_cart_of_other_customer
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
     ...  AND    Save value to a variable:    [data][attributes][accessToken]    first_user_token
-    ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${gross_mode}","currency": "${currency_code_eur}","store": "${store_de}","name": "${test_cart_name}"}}}
+    ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}"}}}
     ...  AND    Save value to a variable:    [data][id]    cart_id
     ...  AND    Response status code should be:    201
-    ...  AND    I get access token for the customer:    ${yves_second_user_email}
+    ...  AND    I get access token for the customer:    ${yves_second_user.email}
     ...  AND    I set Headers:    Authorization=${token}
     When I send a GET request:    /carts/${cart_id}/up-selling-products
     Then Response status code should be:    404

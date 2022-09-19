@@ -9,7 +9,7 @@ Resource    ../../../../../../resources/common/common_api.robot
 ENABLER
     TestSetup
 Get_abstract_availability_by_concrete_SKU
-    When I send a GET request:    /abstract-products/${concrete_product_with_abstract_product_alternative_sku}/abstract-product-availabilities
+    When I send a GET request:    /abstract-products/${concrete_product_with_abstract_product_alternative.sku}/abstract-product-availabilities
     Then Response status code should be:    404
     And Response reason should be:    Not Found
     And Response should return error code:    305

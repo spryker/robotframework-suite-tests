@@ -1,14 +1,18 @@
 *** Settings ***
 Suite Setup       SuiteSetup
 Resource    ../../../../../../resources/common/common_api.robot
+Test Setup    TestSetup
+Default Tags    glue
 
 *** Test Cases ***
+ENABLER
+    TestSetup
 Get_abstract_product_alternative_for_concrete_product_with_invalid_sku_of_product
     When I send a GET request:    /concrete-products/65789/concrete-alternative-products
     Then Response status code should be:    404
     And Response body parameter should be:    [errors][0][detail]    Concrete product is not found.
 
 Get_abstract_product_alternative_for_concrete_product_using_abstract_product_SKU
-    When I send a GET request:    /concrete-products/${bundled_product_1_abstract_sku}/concrete-alternative-products
+    When I send a GET request:    /concrete-products/${bundle_product.product_2.abstract_sku}/concrete-alternative-products
     Then Response status code should be:    404
     And Response body parameter should be:    [errors][0][detail]    Concrete product is not found.

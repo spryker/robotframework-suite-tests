@@ -5,6 +5,8 @@ Resource    ../../../../../../resources/common/common_api.robot
 Default Tags    glue
 
 *** Test Cases ***
+ENABLER
+    TestSetup
 Get_url_collection_by_non_exist_url
     When I send a GET request:    /url-resolver?url=/non/exists/url
     Then Response status code should be:    404

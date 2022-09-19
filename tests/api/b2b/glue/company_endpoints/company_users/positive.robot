@@ -1,10 +1,14 @@
 *** Settings ***
 Suite Setup       SuiteSetup
 Resource    ../../../../../../resources/common/common_api.robot
+Test Setup    TestSetup
+Default Tags    glue
 
 *** Test Cases ***
+ENABLER
+    TestSetup
 Request_company_users
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}  
     When I send a GET request:    /company-users
     Then Response status code should be:    200
@@ -20,7 +24,7 @@ Request_company_users
     And Response body has correct self link
 
 Request_company_users_by_id
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}  
     ...    AND    I send a GET request:    /company-users/mine
     ...    AND    Save value to a variable:    [data][id]    company_user_id
@@ -31,7 +35,7 @@ Request_company_users_by_id
     And Response body parameter should be:    [data][0][type]   company-users   
     
 Request_company_users_by_mine
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}  
     When I send a GET request:    /company-users/mine
     Then Response status code should be:    200
@@ -44,7 +48,7 @@ Request_company_users_by_mine
     And Response body parameter should be:    [data][0][attributes][isDefault]    False
 
 Request_company_users_include_customers_and_roles_and_business_units
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}  
     When I send a GET request:    /company-users?include=customers,company-business-units,company-roles
     Then Response status code should be:    200
@@ -70,7 +74,7 @@ Request_companies_users_if_user_has_4_companies
     And Each array element of array in response should contain property with value:    [data]   type    company-users
 
 Request_companies_users_with_include_customers_and_filtered_by_company_role
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}  
     ...    AND    I send a GET request:    /company-roles/mine
     ...    AND    Save value to a variable:    [data][0][id]    company-role-uuid   

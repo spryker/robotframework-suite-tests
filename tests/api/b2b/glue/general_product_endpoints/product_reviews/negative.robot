@@ -1,11 +1,15 @@
 *** Settings ***
 Suite Setup       SuiteSetup
 Resource    ../../../../../../resources/common/common_api.robot
+Test Setup    TestSetup
+Default Tags    glue
 
 *** Test Cases ***
-# bug CC-16486
+ENABLER
+    TestSetup
+# not impemented yet - will be covered as part of https://spryker.aha.io/features/REVIEW-2
 Get_a_review_with_non_existent_review_id
-    When I send a GET request:    /abstract-products/${abstract_product_with_reviews}/product-reviews/fake
+    When I send a GET request:    /abstract-products/${abstract.with_review.sku}/product-reviews/fake
     Then Response status code should be:    404
     And Response reason should be:    Not Found
     And Response should return error code:    3402
@@ -25,6 +29,7 @@ Get_reviews_with_missing_abstract_product
     And Response should return error code:    311
     And Response should return error message:    Abstract product sku is not specified.
 
+# not impemented yet - will be covered as part of https://spryker.aha.io/features/REVIEW-2
 Get_review_by_id_with_missing_abstract_product
     When I send a GET request:    /abstract-products//product-reviews/78
     Then Response status code should be:    400
@@ -32,7 +37,7 @@ Get_review_by_id_with_missing_abstract_product
     And Response should return error code:    311
     And Response should return error message:    Abstract product sku is not specified.
 
-# bug CC-16486
+# not impemented yet - will be covered as part of https://spryker.aha.io/features/REVIEW-2
 Get_a_reviews_with_non_existent_abstract_product
     When I send a GET request:    /abstract-products/fake/product-reviews/78
     Then Response status code should be:    404
@@ -41,7 +46,7 @@ Get_a_reviews_with_non_existent_abstract_product
     And Response should return error message:    Product review not found.
 
 Create_a_product_review_without_token
-    When I send a POST request:    /abstract-products/${abstract_product_with_reviews}/product-reviews    {"data": {"type": "product-reviews","attributes": {"rating": ${default_review_rating},"nickname": "${yves_user_first_name}","summary": "${review_title}","description": "${review_text}"}}}
+    When I send a POST request:    /abstract-products/${abstract.with_review.sku}/product-reviews    {"data": {"type": "product-reviews","attributes": {"rating": ${review.default_rating},"nickname": "${yves_user.first_name}","summary": "${review.title}","description": "${review.text}"}}}
     Then Response status code should be:    403
     And Response reason should be:    Forbidden
     And Response should return error code:    002
@@ -49,32 +54,32 @@ Create_a_product_review_without_token
 
 Create_a_product_review_with_invalid_token
     [Setup]    I set Headers:    Authorization=fake
-    When I send a POST request:    /abstract-products/${abstract_product_with_reviews}/product-reviews    {"data": {"type": "product-reviews","attributes": {"rating": ${default_review_rating},"nickname": "${yves_user_first_name}","summary": "${review_title}","description": "${review_text}"}}}
+    When I send a POST request:    /abstract-products/${abstract.with_review.sku}/product-reviews    {"data": {"type": "product-reviews","attributes": {"rating": ${review.default_rating},"nickname": "${yves_user.first_name}","summary": "${review.title}","description": "${review.text}"}}}
     Then Response status code should be:    401
     And Response reason should be:    Unauthorized
     And Response should return error code:    001
     And Response should return error message:    Invalid access token.
 
 Create_a_product_review_with_invalid_type
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
-    When I send a POST request:    /abstract-products/${abstract_product_with_reviews}/product-reviews    {"data": {"type": "product-review","attributes": {"rating": ${default_review_rating},"nickname": "${yves_user_first_name}","summary": "${review_title}","description": "${review_text}"}}}
+    When I send a POST request:    /abstract-products/${abstract.with_review.sku}/product-reviews    {"data": {"type": "product-review","attributes": {"rating": ${review.default_rating},"nickname": "${yves_user.first_name}","summary": "${review.title}","description": "${review.text}"}}}
     Then Response status code should be:    400
     And Response reason should be:    Bad Request
     And Response should return error message:    Invalid type.
 
 Create_a_product_review_with_missing_type
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
-    When I send a POST request:    /abstract-products/${abstract_product_with_reviews}/product-reviews    {"data": {"attributes": {"rating": ${default_review_rating},"nickname": "${yves_user_first_name}","summary": "${review_title}","description": "${review_text}"}}}
+    When I send a POST request:    /abstract-products/${abstract.with_review.sku}/product-reviews    {"data": {"attributes": {"rating": ${review.default_rating},"nickname": "${yves_user.first_name}","summary": "${review.title}","description": "${review.text}"}}}
     Then Response status code should be:    400
     And Response reason should be:    Bad Request
     And Response should return error message:    Post data is invalid.
 
 Create_a_product_review_with_empty_fields
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
-    When I send a POST request:    /abstract-products/${abstract_product_with_reviews}/product-reviews    {"data": {"type": "product-reviews","attributes": {"rating": "","nickname": "","summary": "","description": ""}}}
+    When I send a POST request:    /abstract-products/${abstract.with_review.sku}/product-reviews    {"data": {"type": "product-reviews","attributes": {"rating": "","nickname": "","summary": "","description": ""}}}
     Then Response status code should be:    422
     And Response reason should be:    Unprocessable Content
     And Each array element of array in response should contain property with value:    [errors]    code    901
@@ -85,9 +90,9 @@ Create_a_product_review_with_empty_fields
     And Array in response should contain property with value:    [errors]    detail    nickname => This value should not be blank.
 
 Create_a_product_review_with_missing_fields
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user_email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
-    When I send a POST request:    /abstract-products/${abstract_product_with_reviews}/product-reviews    {"data": {"type": "product-reviews","attributes": {}}}
+    When I send a POST request:    /abstract-products/${abstract.with_review.sku}/product-reviews    {"data": {"type": "product-reviews","attributes": {}}}
     Then Response status code should be:    422
     And Response reason should be:    Unprocessable Content
     And Each array element of array in response should contain property with value:    [errors]    code    901
