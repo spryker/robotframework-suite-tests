@@ -103,7 +103,7 @@ Create_quote_request_from_another_customer
 Create_quote_request_for_cart_with_read_only_access
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    Save value to a variable:    [data][attributes][accessToken]    userToken
-    ...    AND    I set Headers:    Authorization=${token}  
+    ...    AND    I set Headers:    Authorization=Bearer ${userToken}  
     ...    AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
     ...    AND    Save value to a variable:    [data][id]    cartId
     ...    AND    I send a POST request:    /carts/${cartId}/items    {"data":{"type":"items","attributes":{"sku":"${concrete.available_product.with_stock_and_never_out_of_stock.sku_1}","quantity":1}}}

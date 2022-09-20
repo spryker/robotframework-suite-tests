@@ -129,6 +129,65 @@ Create_quote_request_with_included_customers_&_comapny_users_&_company_business_
     ...    AND    Response status code should be:    204
 
 
+
+Create_quote_request_without_delivery_date_and_note
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
+    ...  AND    I set Headers:    Authorization=${token}
+    When I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
+    And Save value to a variable:    [data][id]    cart_id
+    And I send a POST request:    /carts/${cart_id}/items    {"data": {"type": "items","attributes": {"sku": "${concrete.available_product.with_stock_and_never_out_of_stock.sku_1}","quantity": 1}}}
+    And I send a POST request:    /carts/${cart_id}/items    {"data": {"type": "items","attributes": {"sku": "${concrete.available_product.with_stock_and_never_out_of_stock.sku_2}","quantity": 1}}}
+    When I send a POST request:    /quote-requests    {"data":{"type":"quote-requests","attributes":{"cartUuid":"${cart_id}","meta":{"purchase_order_number":"${quote_request.purchase_order_number}"}}}}
+    Then Response status code should be:    201
+    And Response reason should be:    Created
+    And Response header parameter should be:    Content-Type    ${default_header_content_type}
+    And Response body parameter should be:    [data][type]    quote-requests
+    And Response body parameter should not be EMPTY:    [data][id]
+    And Save value to a variable:    [data][id]    quote_request_id
+    And Response body parameter should contain:    [data][attributes]    quoteRequestReference
+    And Response body parameter should contain:    [data][attributes]    status
+    And Response body parameter should contain:    [data][attributes]    isLatestVersionVisible
+    And Response body parameter should contain:    [data][attributes]    createdAt
+    And Response body parameter should contain:    [data][attributes]    validUntil
+    And Response body parameter should not be EMPTY:    [data][attributes][versions][0]
+    And Response body parameter should contain:    [data][attributes][shownVersion]    version
+    And Response body parameter should contain:    [data][attributes][shownVersion]    versionReference
+    And Response body parameter should contain:    [data][attributes][shownVersion]    createdAt
+    And Response body parameter should be:    [data][attributes][shownVersion][cart][priceMode]    ${mode.gross}
+    And Response body parameter should be:    [data][attributes][shownVersion][cart][store]    ${store.de}
+    And Response body parameter should be:    [data][attributes][shownVersion][cart][currency]    ${currency.eur.code}
+    And Response body parameter should not be EMPTY:    [data][attributes][shownVersion][cart][totals][expenseTotal]
+    And Response body parameter should contain:    [data][attributes][shownVersion][cart][totals]    discountTotal
+    And Response body parameter should contain:    [data][attributes][shownVersion][cart][totals][taxTotal]    tax_rate
+    And Response body parameter should be greater than:    [data][attributes][shownVersion][cart][totals][taxTotal][amount]    1
+    And Response body parameter should be greater than:    [data][attributes][shownVersion][cart][totals][subtotal]    1
+    And Response body parameter should be greater than:    [data][attributes][shownVersion][cart][totals][grandTotal]    1
+    And Response body parameter should be greater than:    [data][attributes][shownVersion][cart][totals][priceToPay]    1
+    And Response body parameter should contain:    [data][attributes][shownVersion][cart]    billingAddress
+    And Response body parameter should be:    [data][attributes][shownVersion][cart][items][0][groupKey]    ${concrete.available_product.with_stock_and_never_out_of_stock.sku_1}
+    And Response body parameter should be:    [data][attributes][shownVersion][cart][items][1][groupKey]    ${concrete.available_product.with_stock_and_never_out_of_stock.sku_2}
+    And Each array element of array in response should contain property:    [data][attributes][shownVersion][cart][items]    productOfferReference
+    And Each array element of array in response should contain property:    [data][attributes][shownVersion][cart][items]    merchantReference
+    And Response body parameter should be:    [data][attributes][shownVersion][cart][items][0][sku]    ${concrete.available_product.with_stock_and_never_out_of_stock.sku_1}
+    And Response body parameter should be:    [data][attributes][shownVersion][cart][items][0][sku]    ${concrete.available_product.with_stock_and_never_out_of_stock.sku_1}
+    And Each array element of array in response should contain nested property with value:    [data][attributes][shownVersion][cart][items]    quantity    1
+    And Each array element of array in response should contain property:    [data][attributes][shownVersion][cart][items]    quantity
+    And Each array element of array in response should contain property:    [data][attributes][shownVersion][cart][items]    abstractSku
+    And Each array element of array in response should contain property:    [data][attributes][shownVersion][cart][items]    amount
+    And Each array element of array in response should contain property:    [data][attributes][shownVersion][cart][items]    configuredBundle
+    And Each array element of array in response should contain property:    [data][attributes][shownVersion][cart][items]    configuredBundleItem
+    And Each array element of array in response should contain property:    [data][attributes][shownVersion][cart][items]    salesUnit
+    And Each array element of array in response should contain property:    [data][attributes][shownVersion][cart][items]    calculations
+    And Each array element of array in response should contain property:    [data][attributes][shownVersion][cart][items]    selectedProductOptions
+    And Response body parameter should contain:    [data][attributes][shownVersion][cart]    discounts
+    And Response body parameter should contain:    [data][attributes][shownVersion][cart]    shipments
+    And Response body has correct self link for created entity:   ${quote_request_id}
+    [Teardown]    Run Keywords    I send a DELETE request:     /carts/${cart_id}
+    ...    AND    Response status code should be:    204
+
+
+
+
 Create_quote_request_with_empty_meta_data
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
@@ -192,7 +251,8 @@ Create_quote_request_for_cart_with_full_access_permissions
     ...    AND    Response status code should be:    201
     ...    AND    I send a GET request:    /company-users
     ...    AND    Save value to a variable:    [data][6][id]    companyUserId
-    ...    AND    I send a POST request:    /carts/${cartId}/shared-carts    {"data":{"type":"shared-carts","attributes":{"idCompanyUser":"${companyUserId}","idCartPermissionGroup":2}}}
+    ## Giving_full_cart_access_to_the_User_by_using_quote_request.cart_permission_id ##
+    ...    AND    I send a POST request:    /carts/${cartId}/shared-carts    {"data":{"type":"shared-carts","attributes":{"idCompanyUser":"${companyUserId}","idCartPermissionGroup":${quote_request.cart_permission_id}}}
     ...    AND    Save value to a variable:    [data][id]    shared_cart_id
     ...    AND    I get access token for the customer:    ${yves_fifth_user.email}
     ...    AND    I set Headers:    Authorization=${token}
