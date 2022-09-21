@@ -106,6 +106,8 @@ Add_voucher_code_to_cart_including_vouchers
 
 Add_voucher_code_to_guest_user_cart_including_vouchers
     [Setup]    Run Keywords    Create a guest cart:    ${x_anonymous_prefix}${random}    ${product_with_voucher_code.concrete_sku}    1
+    ...    AND    Cleanup all items in the guest cart:    ${guest_cart_id}
+    ...    AND    I send a POST request:    /guest-carts/${guest_cart_id}/guest-cart-items    {"data": {"type": "guest-cart-items","attributes": {"sku": "${product_with_voucher_code.concrete_sku}","quantity": 3}}}
     ...    AND    Get voucher code by discountId from Database:    ${discountId}
     When I send a POST request:    /guest-carts/${guest_cart_id}/vouchers?include=vouchers    {"data": {"type": "vouchers","attributes": {"code": "${discount_voucher_code}"}}}
     Then Response status code should be:    201
