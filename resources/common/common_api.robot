@@ -1555,3 +1555,11 @@ Get voucher code by discountId from Database:
     [Arguments]    ${discount_id}
     Save the result of a SELECT DB query to a variable:    select fk_discount_voucher_pool from spy_discount where id_discount = ${discount_id}    discount_voucher_pool_id
     Save the result of a SELECT DB query to a variable:    select code from spy_discount_voucher where fk_discount_voucher_pool = ${discount_voucher_pool_id} and is_active = 1 limit 1    discount_voucher_code
+Create giftcode in Database:
+    [Documentation]    This keyword creates a new entry in the table spy_gift_card with the name, value and gift-card code.
+     [Arguments]    ${spy_gift_card_code}    ${spy_gift_card_value}
+    ${amount}=   Evaluate    ${spy_gift_card_value} / 100
+    ${amount}=    Evaluate    "%.f" % ${amount}
+    Connect To Database    pymysql    ${default_db_name}    ${default_db_user}    ${default_db_password}    ${default_db_host}    ${default_db_port}
+    Execute Sql String    insert ignore into spy_gift_card (code,name,currency_iso_code,value) value ('${spy_gift_card_code}','Gift_card_${amount}','EUR','${spy_gift_card_value}')
+    Disconnect From Database
