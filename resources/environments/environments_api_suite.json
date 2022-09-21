@@ -410,7 +410,7 @@
             "description": "Free standard delivery for all orders above certain value depending on the currency",
             "total_sum_for_discounts_for_products_1_2": "490"
         }
-         },
+    },
     "discount": {
         "discount_2": {
             "name": "5% discount on all white products"
@@ -606,6 +606,11 @@
             "text": "This is review text",
             "default_rating": "5"
         },
+        "gift_card":{
+            "amount":"10000",
+            "paymentProvider": "GiftCard",
+            "paymentMethod":"GiftCard"
+        },
         "cart_permission_group_id": "1",
         "cart_permission_group_id_2": "2",
         "test_cart_name": "Test-cart",
@@ -634,7 +639,8 @@
         "quote_request": {
             "purchase_order_number": "7711",
             "delivery_date": "2023-12-31",
-            "note": "Test note"
+            "note": "Test note",
+            "cart_permission_id": "2"
         }
     },
     "return_reason": {
