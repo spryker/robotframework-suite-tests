@@ -9,7 +9,6 @@ ENABLER
     TestSetup
 
 ### POST ###
-# bug https://spryker.atlassian.net/browse/CC-19233
 Add_configured_bundle_with_1_slot_1_product_new_cart   
     [Setup]    Run Keywords    I set Headers:    Content-Type=${default_header_content_type}    X-Anonymous-Customer-Unique-Id=${random}
     ...    AND    Create a guest cart:    ${random}    ${abstract_available_product_with_stock.concrete_sku}    1
@@ -37,7 +36,6 @@ Add_configured_bundle_with_1_slot_1_product_new_cart
     And Response body parameter should be:    [data][links][self]    ${glue_url}/guest-carts/${guest_cart_id}
     [Teardown]    Run Keyword    Cleanup all items in the guest cart:    ${guest_cart_id}
 
-# bug https://spryker.atlassian.net/browse/CC-19233
 Add_configured_bundle_with_multiple_slots_and_products_to_existing_cart
     [Setup]    Run Keywords    I set Headers:    Content-Type=${default_header_content_type}    X-Anonymous-Customer-Unique-Id=${random}
     ...    AND    Create a guest cart:    ${random}    ${abstract_available_product_with_stock.concrete_sku}    1
@@ -65,10 +63,11 @@ Add_configured_bundle_with_multiple_slots_and_products_to_existing_cart
     And Response body parameter should be:    [data][links][self]    ${glue_url}/guest-carts/${guest_cart_id}
     [Teardown]    Run Keyword    Cleanup all items in the guest cart:    ${guest_cart_id}
 
-# bug https://spryker.atlassian.net/browse/CC-19233
 Add_configured_bundle_include_cart_rules
-    [Setup]    Run Keyword    I set Headers:    Content-Type=${default_header_content_type}    X-Anonymous-Customer-Unique-Id=${random}
-    When I send a POST request:    /guest-carts//guest-configured-bundles?include=cart-rules    {"data": {"type": "guest-configured-bundles","attributes": {"quantity": 1,"templateUuid": "${configurable_bundle_template_2_uuid}","items": [{"sku": "${configurable_bundle.slot_5.product_1}","quantity": 1,"slotUuid": "${configurable_bundle_slot_5_uuid}"}]}}}
+    [Setup]    Run Keywords    I set Headers:    Content-Type=${default_header_content_type}    X-Anonymous-Customer-Unique-Id=${random}
+     ...    AND    Create a guest cart:    ${random}    ${abstract_available_product_with_stock.concrete_sku}    1
+    ...    AND    Cleanup all items in the guest cart:    ${guest_cart_id}
+    When I send a POST request:    /guest-carts/${guest_cart_id}/guest-configured-bundles?include=cart-rules    {"data": {"type": "guest-configured-bundles","attributes": {"quantity": 1,"templateUuid": "${configurable_bundle_template_2_uuid}","items": [{"sku": "${configurable_bundle.slot_5.product_1}","quantity": 1,"slotUuid": "${configurable_bundle_slot_5_uuid}"}]}}}
     Then Response status code should be:    201
     And Response reason should be:    Created
     And Save value to a variable:    [data][id]    guest_cart_id
@@ -94,8 +93,10 @@ Add_configured_bundle_include_cart_rules
     [Teardown]    Run Keyword    Cleanup all items in the guest cart:    ${guest_cart_id}
 
 Add_configured_bundle_include_guest_cart_items
-    [Setup]    Run Keyword    I set Headers:    Content-Type=${default_header_content_type}    X-Anonymous-Customer-Unique-Id=${random}
-    When I send a POST request:    /guest-carts//guest-configured-bundles?include=guest-cart-items    {"data": {"type": "guest-configured-bundles","attributes": {"quantity": 1,"templateUuid": "${configurable_bundle_template_2_uuid}","items": [{"sku": "${configurable_bundle.slot_5.product_1}","quantity": 1,"slotUuid": "${configurable_bundle_slot_5_uuid}"}]}}}
+    [Setup]    Run Keywords    I set Headers:    Content-Type=${default_header_content_type}    X-Anonymous-Customer-Unique-Id=${random}
+    ...    AND    Create a guest cart:    ${random}    ${abstract_available_product_with_stock.concrete_sku}    1
+    ...    AND    Cleanup all items in the guest cart:    ${guest_cart_id}
+    When I send a POST request:    /guest-carts/${guest_cart_id}/guest-configured-bundles?include=guest-cart-items    {"data": {"type": "guest-configured-bundles","attributes": {"quantity": 1,"templateUuid": "${configurable_bundle_template_2_uuid}","items": [{"sku": "${configurable_bundle.slot_5.product_1}","quantity": 1,"slotUuid": "${configurable_bundle_slot_5_uuid}"}]}}}
     Then Response status code should be:    201
     And Response reason should be:    Created
     And Save value to a variable:    [data][id]    guest_cart_id
@@ -148,8 +149,10 @@ Add_configured_bundle_include_guest_cart_items
     [Teardown]    Run Keyword    Cleanup all items in the guest cart:    ${guest_cart_id}
 
 Add_configured_bundle_include_concrete_products
-    [Setup]    Run Keyword    I set Headers:    Content-Type=${default_header_content_type}    X-Anonymous-Customer-Unique-Id=${random}
-    When I send a POST request:    /guest-carts//guest-configured-bundles?include=concrete-products,guest-cart-items    {"data": {"type": "guest-configured-bundles","attributes": {"quantity": 1,"templateUuid": "${configurable_bundle_template_2_uuid}","items": [{"sku": "${configurable_bundle.slot_5.product_1}","quantity": 1,"slotUuid": "${configurable_bundle_slot_5_uuid}"}]}}}
+    [Setup]    Run Keywords    I set Headers:    Content-Type=${default_header_content_type}    X-Anonymous-Customer-Unique-Id=${random}
+    ...    AND    Create a guest cart:    ${random}    ${abstract_available_product_with_stock.concrete_sku}    1
+    ...    AND    Cleanup all items in the guest cart:    ${guest_cart_id}
+    When I send a POST request:    /guest-carts/${guest_cart_id}/guest-configured-bundles?include=concrete-products,guest-cart-items    {"data": {"type": "guest-configured-bundles","attributes": {"quantity": 1,"templateUuid": "${configurable_bundle_template_2_uuid}","items": [{"sku": "${configurable_bundle.slot_5.product_1}","quantity": 1,"slotUuid": "${configurable_bundle_slot_5_uuid}"}]}}}
     Then Response status code should be:    201
     And Response reason should be:    Created
     And Save value to a variable:    [data][id]    guest_cart_id
@@ -208,8 +211,10 @@ Add_configured_bundle_include_bundle_items
 
 
 Add_same_configured_bundle_again_to_check_quantity_not_merged
-    [Setup]    Run Keyword    I set Headers:    Content-Type=${default_header_content_type}    X-Anonymous-Customer-Unique-Id=${random}
-    When I send a POST request:    /guest-carts//guest-configured-bundles    {"data": {"type": "guest-configured-bundles","attributes": {"quantity": 1,"templateUuid": "${configurable_bundle_template_2_uuid}","items": [{"sku": "${configurable_bundle.slot_5.product_1}","quantity": 1,"slotUuid": "${configurable_bundle_slot_5_uuid}"}]}}}
+    [Setup]    Run Keywords    I set Headers:    Content-Type=${default_header_content_type}    X-Anonymous-Customer-Unique-Id=${random}
+    ...    AND    Create a guest cart:    ${random}    ${abstract_available_product_with_stock.concrete_sku}    1
+    ...    AND    Cleanup all items in the guest cart:    ${guest_cart_id}
+    When I send a POST request:    /guest-carts/${guest_cart_id}/guest-configured-bundles    {"data": {"type": "guest-configured-bundles","attributes": {"quantity": 1,"templateUuid": "${configurable_bundle_template_2_uuid}","items": [{"sku": "${configurable_bundle.slot_5.product_1}","quantity": 1,"slotUuid": "${configurable_bundle_slot_5_uuid}"}]}}}
     And Save value to a variable:    [data][id]    guest_cart_id
     And I send a POST request:    /guest-carts/${guest_cart_id}/guest-configured-bundles?include=guest-cart-items    {"data": {"type": "guest-configured-bundles","attributes": {"quantity": 1,"templateUuid": "${configurable_bundle_template_2_uuid}","items": [{"sku": "${configurable_bundle.slot_5.product_1}","quantity": 1,"slotUuid": "${configurable_bundle_slot_5_uuid}"}]}}}
     Then Response status code should be:    201   
@@ -239,8 +244,10 @@ Add_configured_bundle_to_cart_that_contains_same_product
     [Teardown]    Run Keyword    Cleanup all items in the guest cart:    ${guest_cart_id}
 
 Add_other_configured_bundle_product_with_same_template
-    [Setup]    Run Keyword    I set Headers:    Content-Type=${default_header_content_type}    X-Anonymous-Customer-Unique-Id=${random}
-    When I send a POST request:    /guest-carts//guest-configured-bundles    {"data": {"type": "guest-configured-bundles","attributes": {"quantity": 1,"templateUuid": "${configurable_bundle_template_2_uuid}","items": [{"sku": "${configurable_bundle.slot_5.product_1}","quantity": 1,"slotUuid": "${configurable_bundle_slot_5_uuid}"}]}}}
+    [Setup]    Run Keywords    I set Headers:    Content-Type=${default_header_content_type}    X-Anonymous-Customer-Unique-Id=${random}
+    ...    AND    Create a guest cart:    ${random}    ${abstract_available_product_with_stock.concrete_sku}    1
+    ...    AND    Cleanup all items in the guest cart:    ${guest_cart_id}
+    When I send a POST request:    /guest-carts/${guest_cart_id}/guest-configured-bundles    {"data": {"type": "guest-configured-bundles","attributes": {"quantity": 1,"templateUuid": "${configurable_bundle_template_2_uuid}","items": [{"sku": "${configurable_bundle.slot_5.product_1}","quantity": 1,"slotUuid": "${configurable_bundle_slot_5_uuid}"}]}}}
     And Save value to a variable:    [data][id]    guest_cart_id
     And I send a POST request:    /guest-carts/${guest_cart_id}/guest-configured-bundles?include=guest-cart-items    {"data": {"type": "guest-configured-bundles","attributes": {"quantity": 1,"templateUuid": "${configurable_bundle_template_2_uuid}","items": [{"sku": "${configurable_bundle.slot_5.product_2}","quantity": 1,"slotUuid": "${configurable_bundle_slot_5_uuid}"}]}}}
     Then Response status code should be:    201   
@@ -258,11 +265,11 @@ Add_other_configured_bundle_product_with_same_template
 
 
 ### PATCH ###
-# bug https://spryker.atlassian.net/browse/CC-19233
 Update_configured_bundle_product_quantity  
     [Setup]    Run Keywords    I set Headers:    Content-Type=${default_header_content_type}    X-Anonymous-Customer-Unique-Id=${random}
-    ...    AND    I send a POST request:    /guest-carts//guest-configured-bundles?include=guest-cart-items    {"data": {"type": "guest-configured-bundles","attributes": {"quantity": 1,"templateUuid": "${configurable_bundle_template_2_uuid}","items": [{"sku": "${configurable_bundle.slot_5.product_1}","quantity": 1,"slotUuid": "${configurable_bundle_slot_5_uuid}"}]}}}
-    ...    AND    Save value to a variable:    [data][id]    guest_cart_id
+    ...    AND    Create a guest cart:    ${random}    ${abstract_available_product_with_stock.concrete_sku}    1
+    ...    AND    Cleanup all items in the guest cart:    ${guest_cart_id}
+    ...    AND    I send a POST request:    /guest-carts/${guest_cart_id}/guest-configured-bundles?include=guest-cart-items    {"data": {"type": "guest-configured-bundles","attributes": {"quantity": 1,"templateUuid": "${configurable_bundle_template_2_uuid}","items": [{"sku": "${configurable_bundle.slot_5.product_1}","quantity": 1,"slotUuid": "${configurable_bundle_slot_5_uuid}"}]}}}
     ...    AND    Save value to a variable:    [included][0][attributes][configuredBundle][groupKey]    bundle_id
     When I send a PATCH request:    /guest-carts/${guest_cart_id}/guest-configured-bundles/${bundle_id}?include=guest-cart-items    {"data":{"type": "guest-configured-bundles","attributes":{"quantity": 2}}}
     Then Response status code should be:    200
@@ -292,8 +299,9 @@ Update_configured_bundle_product_quantity
 ### DELETE ###
 Delete_configured_bundle_from_cart 
     [Setup]    Run Keywords    I set Headers:    Content-Type=${default_header_content_type}    X-Anonymous-Customer-Unique-Id=${random}
-    ...    AND    I send a POST request:    /guest-carts//guest-configured-bundles?include=guest-cart-items    {"data": {"type": "guest-configured-bundles","attributes": {"quantity": 1,"templateUuid": "${configurable_bundle_template_2_uuid}","items": [{"sku": "${configurable_bundle.slot_5.product_1}","quantity": 1,"slotUuid": "${configurable_bundle_slot_5_uuid}"}]}}}
-    ...    AND    Save value to a variable:    [data][id]    guest_cart_id
+     ...    AND    Create a guest cart:    ${random}    ${abstract_available_product_with_stock.concrete_sku}    1
+    ...    AND    Cleanup all items in the guest cart:    ${guest_cart_id}
+    ...    AND    I send a POST request:    /guest-carts/${guest_cart_id}/guest-configured-bundles?include=guest-cart-items    {"data": {"type": "guest-configured-bundles","attributes": {"quantity": 1,"templateUuid": "${configurable_bundle_template_2_uuid}","items": [{"sku": "${configurable_bundle.slot_5.product_1}","quantity": 1,"slotUuid": "${configurable_bundle_slot_5_uuid}"}]}}}
     ...    AND    Save value to a variable:    [included][0][attributes][configuredBundle][groupKey]    bundle_id
     When I send a DELETE request:    /guest-carts/${guest_cart_id}/guest-configured-bundles/${bundle_id}
     Then Response status code should be:    204
