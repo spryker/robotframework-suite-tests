@@ -241,7 +241,8 @@
         },
         "alternative_abstract_product": {
             "sku": "155",
-            "price_chf": "42090"
+            "price_chf": "42090",
+            "price_chf_1": "39675"
         },
         "abstract_available_product_with_stock": {
             "sku": "183",
@@ -258,7 +259,7 @@
             "meta_description": "Enjoy greater flexibility  ...than ever before with the Galaxy Tab S2. Remarkably slim and ultra-lightweight, use this device to take your e-books, photos,"
         },
         "product_availability": {
-            "abstract_available_with_stock_and_never_out_of_stock": "130",
+            "abstract_available_with_stock_and_never_out_of_stock": "005",
             "abstract_available_product_with_no_stock_and_never_out_of_stock": "666",
             "abstract_unavailable_product": "189",
             "concrete_available_with_stock_and_never_out_of_stock_sku": "005_30663301",
@@ -406,7 +407,6 @@
             "description": "Free standard delivery for all orders above certain value depending on the currency",
             "total_sum_for_discounts_for_products_1_2": "490"
         }
-     
     },
     "discount": {
         "discount_2": {
@@ -598,7 +598,9 @@
             "default_rating": "5"
         },
         "gift_card":{
-            "amount":"10000"
+            "amount":"10000",
+            "paymentProvider": "GiftCard",
+            "paymentMethod":"GiftCard"
         },
         "cart_permission_group_id": "1",
         "cart_permission_group_id_2": "2",
@@ -629,7 +631,8 @@
         "quote_request": {
             "purchase_order_number": "7711",
             "delivery_date": "2023-12-31",
-            "note": "Test note"
+            "note": "Test note",
+            "cart_permission_id": "2"
         }
     },
     "return_reason": {
