@@ -243,7 +243,6 @@
             "sku": "155",
             "price_chf": "42090",
             "price_chf_1": "39675"
-
         },
         "abstract_available_product_with_stock": {
             "sku": "183",
@@ -408,7 +407,6 @@
             "description": "Free standard delivery for all orders above certain value depending on the currency",
             "total_sum_for_discounts_for_products_1_2": "490"
         }
-     
     },
     "discount": {
         "discount_2": {
@@ -598,6 +596,11 @@
             "title": "This is a review",
             "text": "This is review text",
             "default_rating": "5"
+        },
+        "gift_card":{
+            "amount":"10000",
+            "paymentProvider": "GiftCard",
+            "paymentMethod":"GiftCard"
         },
         "cart_permission_group_id": "1",
         "cart_permission_group_id_2": "2",
