@@ -630,7 +630,8 @@
         "quote_request": {
             "purchase_order_number": "7711",
             "delivery_date": "2023-12-31",
-            "note": "Test note"
+            "note": "Test note",
+            "cart_permission_id": "2"
         }
     },
     "return_reason": {
