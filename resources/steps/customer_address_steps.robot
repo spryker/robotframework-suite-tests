@@ -9,7 +9,6 @@ Yves:login:
     Input Text    ${email_input_field_locator}    ${user_email}
     Input Text    ${password_input_field_locator}    ${user_password}
      Click    ${login_button_locator}
-
 Yves:Address registration through customer profile
     [Arguments]    @{args}
      Go To    ${host}${adress}

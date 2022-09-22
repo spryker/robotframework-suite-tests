@@ -4,10 +4,10 @@ Suite Teardown    SuiteTeardown
 Test Setup        TestSetup
 Test Teardown     TestTeardown
 Resource    ../../resources/common/common.robot
-Resource    ../../resources/pages/yves/Yves_b2c_variable.robot
-Resource    ../../resources/steps/Yves_b2c_logic.robot
+Resource    ../../resources/pages/yves/yves_customer_address_page.robot
+Resource    ../../resources/steps/customer_address_steps.robot
 Resource    ../../resources/pages/zed/zed_login_page.robot
-Resource    ../../resources/steps/zed_b2c.robot
+Resource    ../../resources/steps/zed_customer_address_steps.robot
 Resource    ../../resources/steps/shopping_lists_steps.robot
 
 *** Test Cases ***

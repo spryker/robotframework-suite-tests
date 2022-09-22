@@ -36,7 +36,7 @@ Zed:Edit customer address:
     Click    xpath=//li[4]//a[1]//span[2]
      Click    xpath=//a[@href='/customer']//span[@class='nav-label'][normalize-space()='Customers']
      Click    xpath=//tbody/tr[4]/td[7]/a[2]
-     Select From List By Label    ${billing address}   Bill Martin (Abramova ulica, 1000 Ljubljana)
+     Select From List By Label    ${billing address}   Bill Martin (Vrhloga, 1000 Ljubljana)
      Click    ${save}
 Zed:message should be shown:
     [Documentation]    ${type} can be: error, success
