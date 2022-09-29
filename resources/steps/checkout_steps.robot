@@ -66,7 +66,7 @@ Yves: fill in the following new shipping address:
         IF    '${key}'=='phone' and '${value}' != '${EMPTY}'    Type Text    ${checkout_shipping_address_phone_field}    ${value}
         IF    '${key}'=='additionalAddress' and '${value}' != '${EMPTY}'    Type Text    ${checkout_shipping_address_additional_address_field}    ${value}
     END
-
+         Click    ${submit_checkout_form_button}[${env}]
 Yves: fill in the following new billing address:
     [Documentation]    Possible argument names: salutation, firstName, lastName, street, houseNumber, postCode, city, country, company, phone, additionalAddress
     [Arguments]    @{args}
@@ -87,7 +87,7 @@ Yves: fill in the following new billing address:
         IF    '${key}'=='phone' and '${value}' != '${EMPTY}'    Type Text    ${checkout_billing_address_phone_field}    ${value}
         IF    '${key}'=='additionalAddress' and '${value}' != '${EMPTY}'    Type Text    ${checkout_billing_address_additional_address_field}    ${value}
     END
-
+    
 Yves: select delivery to multiple addresses
     Select From List By Label    ${checkout_address_delivery_selector}[${env}]    Deliver to multiple addresses
 

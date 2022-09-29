@@ -3,18 +3,20 @@ ${login_page_url}    en/login
 ${host}    http://yves.de.spryker.local/
 ${adress}    en/customer/address
 ${checkout address}    en/checkout/address
-${email_input_field_locator}    id=loginForm_email
-${password_input_field_locator}    id=loginForm_password
-${login_button_locator}    xpath=//button[normalize-space()='Login']
+# ${email_input_field_locator}    id=loginForm_email
+# ${password_input_field_locator}    id=loginForm_password
+# ${login_button_locator}    xpath=//button[normalize-space()='Login']
+
+
 ${add_new_address}    xpath=//a[normalize-space()='Add new address']
-${street}    xpath=//input[@id='addressForm_address1']
-${house_no}    xpath=//input[@id='addressForm_address2']
-${post_code}    xpath=//input[@id='addressForm_zip_code']
-${city}    xpath=//input[@id='addressForm_city']
-${phone}    xpath=//input[@id='addressForm_phone']
-${Is default shipping address}    xpath=//span[@class="checkbox__label " and text()='Is default shipping address']//parent::label//child::span[@class="checkbox__box"]
-${Is default billing address}    xpath=//span[@class="checkbox__label " and text()='Is default billing address']//parent::label//child::span[@class="checkbox__box"]
-${submit}    xpath=//button[normalize-space()='Submit']
+# ${street}    xpath=//input[@id='addressForm_address1']
+# ${house_no}    xpath=//input[@id='addressForm_address2']
+# ${post_code}    xpath=//input[@id='addressForm_zip_code']
+# ${city}    xpath=//input[@id='addressForm_city']
+# ${phone}    xpath=//input[@id='addressForm_phone']
+# ${Is default shipping address}    xpath=//span[@class="checkbox__label " and text()='Is default shipping address']//parent::label//child::span[@class="checkbox__box"]
+# ${Is default billing address}    xpath=//span[@class="checkbox__label " and text()='Is default billing address']//parent::label//child::span[@class="checkbox__box"]
+# ${submit}    xpath=//button[normalize-space()='Submit']
 ${camera category}    xpath=//a[contains(@class,'navigation-multilevel-node__link navigation-multilevel-node__link--flyout navigation-multilevel-node__link--lvl-1 flyout-fullscreen')][normalize-space()='Cameras']
 ${digital camera}    xpath=//a[contains(@class,'navigation-multilevel-node__link navigation-multilevel-node__link--flyout navigation-multilevel-node__link--lvl-2')][normalize-space()='Digital Cameras']
 ${Add to cart}    xpath=//button[normalize-space()='Add to Cart']

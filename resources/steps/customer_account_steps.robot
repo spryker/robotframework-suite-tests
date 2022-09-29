@@ -39,8 +39,8 @@ Yves: create a new customer address in profile:
     Wait Until Element Is Visible    ${customer_account_add_new_address_button}[${env}]
     Click    ${customer_account_add_new_address_button}[${env}]
     Wait Until Element Is Visible    ${customer_account_address_form}
-#  Click    ${customer_account_address_salutation_dropdown_field}
-#  Click    xpath=//li[@class='select2-results__option' and contains(text(),'${salutation}')]
+     Click    ${customer_account_address_salutation_dropdown_field}
+     Click    xpath=//li[@class='select2-results__option' and contains(text(),'${salutation}')]
     Type Text    ${customer_account_address_first_name_field}     ${firstName}
     Type Text    ${customer_account_address_last_name_field}     ${lastName}
     Type Text    ${customer_account_address_company_name_field}     ${company}
@@ -49,8 +49,8 @@ Yves: create a new customer address in profile:
     Type Text    ${customer_account_address_additional_address_field}     ${additionalAddress}
     Type Text    ${customer_account_address_zip_code_field}     ${postCode}
     Type Text    ${customer_account_address_city_field}     ${city}
-#  Click    ${customer_account_address_country_drop_down_field}
-#  Click    xpath=//li[contains(@class,'select2-results__option') and contains(text(),'${country}')]
+     Click    ${customer_account_address_country_drop_down_field}
+     Click    xpath=//li[contains(@class,'select2-results__option') and contains(text(),'${country}')]
     Type Text    ${customer_account_address_phone_field}     ${phone}
 #    Run keyword if    '${isDefaultShipping}'=='True'    Add/Edit element attribute with JavaScript:    ${customer_account_address_is_default_shipping_checkbox}    checked    checked
 #    Run keyword if    '${isDefaultBilling}'=='True'    Add/Edit element attribute with JavaScript:    ${customer_account_address_is_default_billing_checkbox}
@@ -92,3 +92,27 @@ Yves: delete user address:
         Click    xpath=//li[contains(text(),'${street}')]/ancestor::div[@class='action-card']//button
     END
     Element Should Be Visible    xpath=//flash-message//div[contains(text(),'Address deleted successfully')]   message="Flash message didn't appear"
+Yves: Change customer address:
+    [Arguments]    @{args}
+    
+    ${registrationData}=    Set Up Keyword Arguments    @{args}
+    FOR    ${key}    ${value}    IN    &{registrationData}
+        Log    Key is '${key}' and value is '${value}'.
+        IF    '${key}'=='street'    Type Text    ${customer_account_address_street_field}    ${value}
+        IF    '${key}'=='house_no'    Type Text    ${customer_account_address_house_number_field}    ${value}
+         IF    '${key}'=='post_code'    Type Text    ${customer_account_address_zip_code_field}    ${value}
+        IF    '${key}'=='city'    Type Text    ${customer_account_address_city_field}     ${value}
+        IF    '${key}'=='phone'    Type Text    ${customer_account_address_phone_field}     ${value}
+    END
+    Click    ${customer_account_address_submit_button}
+Yves:Edit the latest address created
+     ${counter}    Get Element Count    xpath=${customer_account_address_edit_button}
+    Log    ${counter}
+    Click    xpath=(${customer_account_address_edit_button})[${counter}] 
+
+Yves:clear customer address fields
+    Clear Text    ${customer_account_address_street_field}
+   Clear Text    ${customer_account_address_house_number_field}
+   Clear Text    ${customer_account_address_zip_code_field}
+   Clear Text    ${customer_account_address_city_field}
+   Clear Text    ${customer_account_address_phone_field}

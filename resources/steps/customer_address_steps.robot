@@ -1,6 +1,7 @@
 *** Settings ***
 Resource    ../common/common.robot
 Resource    ../../resources/common/common.robot
+Resource    ../../resources/pages/yves/yves_customer_address_page.robot
 
 *** Keywords ***
 Yves:login:
@@ -75,7 +76,7 @@ Yves:change address:
         IF    '${key}'=='phone'    Type Text    ${phone}     ${value}
     END
     Click    ${submit}
-Yves:clear text in address
+Yves:clear customer address fields
    
    Clear Text    ${house_no}
    Clear Text    ${post_code}
