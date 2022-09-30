@@ -24,6 +24,7 @@ Resource    ../../resources/steps/zed_customer_steps.robot
 Resource    ../../resources/steps/zed_discount_steps.robot
 Resource    ../../resources/steps/zed_availability_steps.robot
 Resource    ../../resources/steps/zed_cms_page_steps.robot
+Resource    ../../resources/steps/shopping_lists_steps.robot
  
 *** Test Cases ***
 Guest_User_Access_Restrictions
@@ -867,3 +868,59 @@ Refunds
     Zed: grand total for the order equals:    ${lastPlacedOrder}    €0.00
     [Teardown]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: activate following discounts from Overview page:    20% off storage    10% off minimum order
+Shopping list creation 
+    Yves: login on Yves with provided credentials:    ${yves_user_email}
+    Yves: create new 'Shopping List' with name:    shoppingListName+${random}
+    [Teardown]    Run Keywords    Yves: delete 'Shopping List' with name:    shoppingListName+${random}
+    ...    AND    Reload
+Add_product_to_SL
+    [Documentation]    adding product to shopping list
+    Yves: login on Yves with provided credentials:    ${yves_user_email}
+    Yves: go To 'Shopping Lists' Page
+    Yves: create new 'Shopping List' with name:    shoppingListName+${random}
+    Yves: view shopping list with name:    shoppingListName+${random}
+    Yves: Add products to an SL:    shoppingListName+${random}    213103 
+    Yves: Add products to an SL:    shoppingListName+${random}    421261    
+    [Teardown]    Run Keywords    Yves: go To 'Shopping Lists' Page    
+    ...    AND    Yves: delete 'Shopping List' with name:    shoppingListName+${random}
+ Adding_from_an_SL_to_the_cart
+     [Documentation]    adding item from shopping list to cart
+    Yves: login on Yves with provided credentials:    ${yves_user_email}
+    Yves: go To 'Shopping Lists' Page
+    Yves: 'Shopping Lists' page is displayed
+    Yves: Adding from an SL to the cart
+    [Teardown]    Run Keywords    Yves: logout on Yves as a customer
+    ...    AND    Reload
+Deleting_a_shopping_list
+    Yves: login on Yves with provided credentials:    ${yves_user_email}
+    Yves: create new 'Shopping List' with name:    shoppingListName+${random}
+    Yves: delete 'Shopping List' with name:    shoppingListName+${random}
+    [Teardown]    Reload
+Multiple_SLs_select_an_SL_on_PDP_page
+    [Documentation]    selects shopping list on pdp page
+    Yves: login on Yves with provided credentials:    ${yves_user_email}
+    Yves: go To 'Shopping Lists' Page
+    Yves: create new 'Shopping List' with name:    shoppingListName+${random}
+    Yves: view shopping list with name:    shoppingListName+${random}
+    Yves: select shopping list on pdp:    213103
+    [Teardown]    Run Keywords    Delete All Cookies
+    ...    AND    Reload
+Adding_the_whole_SL_to_the_cart_when_some_products_inside_are_not_available
+    [Documentation]    removes one item to out of stock state and then adding to cart
+    Yves: login on Yves with provided credentials:    ${yves_user_email}
+    Yves: go To 'Shopping Lists' Page
+    Yves: create new 'Shopping List' with name:    shoppingListName+${random}
+    Yves: view shopping list with name:    shoppingListName+${random}
+    Yves: Add products to an SL:    shoppingListName+${random}    213103 
+    Yves: Add products to an SL:    shoppingListName+${random}    421261 
+    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: change product stock:    M21646    421261    false   0  
+    Yves: login on Yves with provided credentials:    ${yves_user_email}
+    Yves: go To 'Shopping Lists' Page
+    Yves: view shopping list with name:    shoppingListName+${random}
+    Try reloading page until element is/not appear:    //span[normalize-space()='Currently not available']    true
+    Click    //button[normalize-space()='Add all available products to cart']
+    Yves: flash message should be shown:    error    Product '${product_sku}' is not available at the moment.
+    Yves: flash message should be shown:    success    Item added to cart successfully.
+    [Teardown]    Run Keywords    Zed: check and restore product availability in Zed:    M21646    Available    421261
+    ...    AND    Yves: delete 'Shopping List' with name:    shoppingListName+${random}

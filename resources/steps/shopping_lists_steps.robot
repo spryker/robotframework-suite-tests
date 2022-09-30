@@ -3,6 +3,7 @@ Resource    ../common/common.robot
 Resource    ../pages/yves/yves_shopping_lists_page.robot
 Resource    ../common/common_yves.robot
 Resource    ../pages/yves/yves_delete_shopping_list_page.robot
+Resource    ../pages/yves/yves_shopping_list_page.robot
 
 *** Keywords ***
 Yves: 'Shopping List' widget contains:
@@ -65,3 +66,24 @@ Yves: view shopping list with name:
 Yves: add all available products from list to cart
     Wait Until Element Is Visible    ${shopping_list_main_content_locator}
     Click    ${add_all_available_products_to_cart_locator} 
+
+Yves: select shopping list on pdp:
+    [Arguments]    ${product_sku}
+    Input Text    ${searchbox_input_field_locator}    ${product_sku}
+    Keyboard Key    press    Enter
+    Click    ${product_213103}
+    Click    ${shoppingList_dropdown} 
+    Click    ${shoppinglist_dropdown_value}
+    Click    ${add_to_shopinglist_button}
+Yves: Add products to an SL:
+    [Arguments]    ${shopinglist_name}    ${product_sku}
+    Input Text    //input[@placeholder='Search by SKU or Name']    ${product_sku}
+    Wait Until Element Is Visible    //li[contains(text(),'${product_sku}')]
+    Keyboard Key    press    Enter
+    Input Text    //input[@id='quantity']    1
+    Click    //button[normalize-space()='Add']    
+    Yves: flash message should be shown:    success    Item ${product_sku} was added to the List.
+    Yves: flash message should be shown:    success    Item has been added to the shopping list.
+Yves: Adding from an SL to the cart
+    Click    //a[normalize-space()='Newcomers']
+    Click    ${add_to_cart_button}
