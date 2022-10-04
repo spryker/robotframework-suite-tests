@@ -618,7 +618,7 @@ Refunds
     [Teardown]    Zed: delete customer:
     ...    || email             ||
     ...    || abc1234@gmail.com ||
-Add_to_cart_products_as_a_guest_user_and_ login_during_checkout
+Add_to_cart_products_as_a_guest_user_and_login_during_checkout
     Yves: go to the 'Home' page
     Yves: go to PDP of the product with sku:    207_15721464
     Yves: add a product to cart on clicking add to cart button on PDP
@@ -636,7 +636,7 @@ Add_to_cart_products_as_a_guest_user_and_ login_during_checkout
     Yves: 'Thank you' page is displayed
     [Teardown]    Run Keywords    Delete All Cookies
     ...    AND       Reload
-Add_to_cart_products_as_a_guest_user_and_ register_during_checkout
+Add_to_cart_products_as_a_guest_user_and_register_during_checkout
     Yves: go to the 'Home' page
     Yves: go to PDP of the product with sku:    207_15721464
     Yves: add a product to cart on clicking add to cart button on PDP
