@@ -598,4 +598,69 @@ Refunds
     Zed: grand total for the order equals:    ${lastPlacedOrder}    €0.00
     [Teardown]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: activate following discounts from Overview page:    Tu & Wed $5 off 5 or more    10% off $100+    20% off cameras    Tu & Wed €5 off 5 or more    10% off minimum order
- 
+ Add_to_cart_products_as_a_guest_user_and_place_order_as_a_guest_user
+    Yves: go to the 'Home' page
+    Yves: go to PDP of the product with sku:    207_15721464
+    Yves: add a product to cart on clicking add to cart button on PDP
+    Yves: go to b2c shopping cart  
+    Yves: click on the 'Checkout' button in the shopping cart
+    Yves: proceed with checkout as guest:    MR    hp    tin    abc1234@gmail.com
+    Yves: billing address same as shipping address:    true
+    Yves: fill in the following new shipping address:
+    ...    || salutation | firstName | lastName | street        | houseNumber | postCode | city   | country | company | phone     | additionalAddress ||
+    ...    || Mr.        | Guest     | User     | Kirncher Str. | 7           | 10247    | Berlin | Germany | Spryker | 123456789 | Additional street ||
+    Yves: submit form on the checkout
+    Yves: select the following shipping method on the checkout and go next:    Express
+    Yves: select the following payment method on the checkout and go next:    Invoice
+    Yves: accept the terms and conditions:    true
+    Yves: 'submit the order' on the summary page
+    Yves: 'Thank you' page is displayed
+    [Teardown]    Zed: delete customer:
+    ...    || email             ||
+    ...    || abc1234@gmail.com ||
+Add_to_cart_products_as_a_guest_user_and_ login_during_checkout
+    Yves: go to the 'Home' page
+    Yves: go to PDP of the product with sku:    207_15721464
+    Yves: add a product to cart on clicking add to cart button on PDP
+    Yves: go to b2c shopping cart  
+    Yves: click on the 'Checkout' button in the shopping cart
+    Yves: proceed with checkout and login as a guest user:    ${yves_second_user_email}
+     Yves: fill in the following new shipping address:
+    ...    || salutation | firstName | lastName | street        | houseNumber | postCode | city   | country | company | phone     | additionalAddress ||
+    ...    || Mr.        | Guest     | User     | Kirncher Str. | 7           | 10247    | Berlin | Germany | Spryker | 123456789 | Additional street ||
+    Yves: submit form on the checkout
+    Yves: select the following shipping method on the checkout and go next:    Express
+    Yves: select the following payment method on the checkout and go next:    Invoice
+    Yves: accept the terms and conditions:    true
+    Yves: 'submit the order' on the summary page
+    Yves: 'Thank you' page is displayed
+    [Teardown]    Run Keywords    Delete All Cookies
+    ...    AND       Reload
+Add_to_cart_products_as_a_guest_user_and_ register_during_checkout
+    Yves: go to the 'Home' page
+    Yves: go to PDP of the product with sku:    207_15721464
+    Yves: add a product to cart on clicking add to cart button on PDP
+    Yves: go to b2c shopping cart  
+    Yves: click on the 'Checkout' button in the shopping cart
+    Yves: proceed with checkout as guest user:    test    user    abc${random}@gmail.com    Abc#${random}    Abc#${random}
+    Save the result of a SELECT DB query to a variable:    select registration_key from spy_customer where email = 'abc${random}@gmail.com'    confirmation_key
+    I send a POST request:     /customer-confirmation   {"data":{"type":"customer-confirmation","attributes":{"registrationKey":"${confirmation_key}"}}}
+    Yves: login after signup during checkout:    abc${random}@gmail.com    Abc#${random}
+    Yves: fill in the following new shipping address:
+    ...    || salutation | firstName | lastName | street        | houseNumber | postCode | city   | country | company | phone     | additionalAddress ||
+    ...    || Mr.        | Guest     | User     | Kirncher Str. | 7           | 10247    | Berlin | Germany | Spryker | 123456789 | Additional street ||
+    Yves: submit form on the checkout
+    Yves: select the following shipping method on the checkout and go next:    Express
+    Yves: select the following payment method on the checkout and go next:    Invoice
+    Yves: accept the terms and conditions:    true
+    Yves: 'submit the order' on the summary page
+    Yves: 'Thank you' page is displayed
+     [Teardown]    Zed: delete customer:
+    ...    || email                          ||
+    ...    || abc${random}@gmail.com ||
+Check_guest_has_no_access_to_wishlist
+    Yves: go to the 'Home' page
+    Yves: login on Yves with provided credentials:    ${yves_second_user_email}
+    Yves: go to PDP of the product with sku:    207_15721464
+    Delete All Cookies
+    Yves: click on button redirects to login page

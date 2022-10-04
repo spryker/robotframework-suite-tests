@@ -203,6 +203,25 @@ Yves: assert merchant of product in cart or list:
     [Documentation]    Method for MP which asserts value in 'Sold by' label of item in cart or list. Requires concrete SKU
     [Arguments]    ${sku}    ${merchant_name_expected}
     Page Should Contain Element    xpath=//span[@itemprop='sku'][text()='${sku}']/../../following-sibling::p/a[text()='${merchant_name_expected}']
-
-
-
+ Yves: proceed with checkout and login as a guest user:
+    [Arguments]    ${email}    ${password}=${default_password}   
+    Wait Until Page Contains Element    ${yves_checkout_login_tab} 
+    Click Element by xpath with JavaScript    //span[normalize-space()='Login']
+    Type Text    ${email_field}    ${email}
+    Type Text    ${password_field}    ${password}
+    Click    ${form_login_button}
+Yves: proceed with checkout as guest user:
+      [Arguments]      ${firstName}    ${lastName}    ${email}     ${password}      ${confirmpassword} 
+    Wait Until Page Contains Element    ${yves_checkout_signup_button} 
+    Click Element by xpath with JavaScript    //span[normalize-space()='Sign Up']
+    Type Text    ${yves_checkout_signup_first_name}    ${firstname}
+    Type Text    ${yves_checkout_signup_last_name}    ${lastname}
+    Type Text    ${yves_checkout_signup_email}    ${email}
+    Type Text    ${yves_checkout_signup_password}    ${password}
+    Type Text    ${yves_checkout_signup_confirm_password}    ${confirmpassword}
+    Wait Until Element Is Visible   ${yves_checkout_signup_accept_terms}
+    Check Checkbox  ${yves_checkout_signup_accept_terms}
+    Click    ${yves_checkout_signup_tab}   
+Yves: click on button redirects to login page
+    Click    ${pdp_add_to_wishlist_button}
+    Wait Until Element Is Visible    ${email_field}
