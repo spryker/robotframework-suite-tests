@@ -24,6 +24,7 @@ Resource    ../../resources/steps/zed_customer_steps.robot
 Resource    ../../resources/steps/zed_discount_steps.robot
 Resource    ../../resources/steps/zed_availability_steps.robot
 Resource    ../../resources/steps/zed_cms_page_steps.robot
+Resource    ../../resources/steps/zed_order_shipment_steps.robot
  
 *** Test Cases ***
 Guest_User_Access_Restrictions
@@ -867,3 +868,42 @@ Refunds
     Zed: grand total for the order equals:    ${lastPlacedOrder}    €0.00
     [Teardown]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: activate following discounts from Overview page:    20% off storage    10% off minimum order
+Create_order_in_yves
+    [Documentation]    creating an order in yves
+    Yves: login on Yves with provided credentials:    ${yves_company_user_shared_permission_owner_email}
+    Yves: go to 'Shopping Carts' page through the header
+    Yves: 'Shopping Carts' page is displayed
+    Yves: create new 'Shopping Cart' with name:    shoppingCartName+${random}
+    Yves: 'Shopping Carts' widget contains:    shoppingCartName+${random}    Owner access
+    Yves: go to 'Shopping Carts' page through the header
+    Yves: 'Shopping Carts' page is displayed
+    Yves: the following shopping cart is shown:    shoppingCartName+${random}    Owner access
+    Yves: go to PDP of the product with sku:    M10569
+    Yves: add product to the shopping cart
+    Yves: go to PDP of the product with sku:    M1000786
+    Yves: add product to the shopping cart
+    Yves: go to the shopping cart through the header with name:    shoppingCartName+${random}
+    Yves: 'Shopping Cart' page is displayed
+    Yves: shopping cart contains the following products:    100414
+    Yves: click on the 'Checkout' button in the shopping cart
+    Yves: billing address same as shipping address:    true
+    Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${yves_company_user_shared_permission_owner_address}
+    Yves: select the following shipping method on the checkout and go next:    Express
+    Yves: select the following payment method on the checkout and go next:    Invoice
+    Yves: accept the terms and conditions:    true
+    Yves: 'submit the order' on the summary page
+    Yves: 'Thank you' page is displayed
+    [Teardown]    Run Keywords    Yves: logout on Yves as a customer
+    ...    AND    Reload
+Creating_shipment_in_zed
+    [Documentation]    creating new shippment on order in zed
+    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: go to second navigation item level:    Sales    Orders
+    Zed: create shipment 
+    Zed: flash message should be shown:    success
+Editing_shipment_in_zed
+    [Documentation]    editing shippment on order in zed
+    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: go to second navigation item level:    Sales    Orders
+    Zed: edit shipment
+    Zed: flash message should be shown:    success
