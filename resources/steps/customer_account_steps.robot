@@ -105,10 +105,10 @@ Yves: Change customer address:
         IF    '${key}'=='phone'    Type Text    ${customer_account_address_phone_field}     ${value}
     END
     Click    ${customer_account_address_submit_button}
-Yves:Edit the latest address created
-     ${counter}    Get Element Count    xpath=${customer_account_address_edit_button}
+Yves:Edit the latest address created  
+     ${counter}    Get Element Count    ${customer_account_address_edit_button}
     Log    ${counter}
-    Click    xpath=(${customer_account_address_edit_button})[${counter}] 
+    Click    (${customer_account_address_edit_button})[${counter}] 
 
 Yves:clear customer address fields
     Clear Text    ${customer_account_address_street_field}

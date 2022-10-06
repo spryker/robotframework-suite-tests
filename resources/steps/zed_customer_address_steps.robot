@@ -1,11 +1,15 @@
 *** Settings ***
 Resource    ../common/common.robot
 Resource    ../../resources/common/common.robot
+Resource    ../../resources/common/common_zed.robot
 
 *** Keywords **    
 Zed: Go to customer new address creation page
+    [Arguments]    ${customer_email}
+    Zed: perform search by:     ${customer_email}    
     Click    ${zed_customer_view_button}
      Click   ${zed_Add_new_address_button}  
+     
 Zed:New address addition:
       [Arguments]    @{args}
     ${registrationData}=    Set Up Keyword Arguments    @{args}
@@ -22,7 +26,10 @@ Zed:New address addition:
     Select From List By Label    ${zed_customer_salutation}    Mr
     Select From List By Label    ${zed_customer_country}    Norway
     Click    ${zed_customer_save_button}
+
 Zed:Edit customer address
+     [Arguments]    ${customer_email}
+    Zed: perform search by:     ${customer_email}  
     Click    ${zed_customer_edit_button}
-     Select From List By Label    ${zed_customer_billing_address}   Bill Martin (Vrhloga, 1000 Ljubljana)
+     Select From List By Label    ${zed_customer_billing_address}   Bill Martin (09388, 09388 Berlin)
      Click    ${zed_customer_save_button}

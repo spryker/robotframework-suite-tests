@@ -66,7 +66,8 @@ Yves: fill in the following new shipping address:
         IF    '${key}'=='phone' and '${value}' != '${EMPTY}'    Type Text    ${checkout_shipping_address_phone_field}    ${value}
         IF    '${key}'=='additionalAddress' and '${value}' != '${EMPTY}'    Type Text    ${checkout_shipping_address_additional_address_field}    ${value}
     END
-         Click    ${submit_checkout_form_button}[${env}]
+
+
 Yves: fill in the following new billing address:
     [Documentation]    Possible argument names: salutation, firstName, lastName, street, houseNumber, postCode, city, country, company, phone, additionalAddress
     [Arguments]    @{args}
@@ -203,6 +204,3 @@ Yves: assert merchant of product in cart or list:
     [Documentation]    Method for MP which asserts value in 'Sold by' label of item in cart or list. Requires concrete SKU
     [Arguments]    ${sku}    ${merchant_name_expected}
     Page Should Contain Element    xpath=//span[@itemprop='sku'][text()='${sku}']/../../following-sibling::p/a[text()='${merchant_name_expected}']
-
-
-
