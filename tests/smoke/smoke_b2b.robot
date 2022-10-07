@@ -867,3 +867,30 @@ Refunds
     Zed: grand total for the order equals:    ${lastPlacedOrder}    €0.00
     [Teardown]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: activate following discounts from Overview page:    20% off storage    10% off minimum order
+Share_Shopping_Carts_with_read_only_access
+    [Documentation]    Checks that cart can be shared with a user with read-only permissions
+    Yves: login on Yves with provided credentials:    ${yves_company_user_shared_permission_owner_email}
+    Yves: go to 'Shopping Carts' page through the header
+    Yves: 'Shopping Carts' page is displayed
+    Yves: create new 'Shopping Cart' with name:    shoppingCartName+${random}
+    Yves: 'Shopping Carts' widget contains:    shoppingCartName+${random}    Owner access
+    Yves: go to 'Shopping Carts' page through the header
+    Yves: 'Shopping Carts' page is displayed
+    Yves: the following shopping cart is shown:    shoppingCartName+${random}    Owner access
+    Yves: share shopping cart with user:    shoppingCartName+${random}    ${yves_company_user_shared_permission_receiver_lastname} ${yves_company_user_shared_permission_receiver_firstname}    Read-only
+    Yves: go to PDP of the product with sku:    ${concrete_avaiable_product_sku}
+    Yves: add product to the shopping cart
+    Yves: logout on Yves as a customer
+    Yves: login on Yves with provided credentials:    ${yves_company_user_shared_permission_receiver_email}
+    Yves: 'Shopping Carts' widget contains:    shoppingCartName+${random}    Read-only
+    Yves: go to 'Shopping Carts' page through the header
+    Yves: 'Shopping Carts' page is displayed
+    Yves: the following shopping cart is shown:    shoppingCartName+${random}    Read-only
+    Yves: go to the shopping cart through the header with name:    shoppingCartName+${random}
+    Yves: 'Shopping Cart' page is displayed
+    Yves: shopping cart contains the following products:    ${concrete_avaiable_product_sku}
+    Yves: shopping cart contains product with unit price:    ${concrete_avaiable_product_sku}    ${concrete_avaiable_product_name}        ${concrete_avaiable_product_price}
+    Yves: shopping cart contains/doesn't contain the following elements:   false    ${shopping_cart_checkout_button}
+    Yves: flash message 'should' be shown
+    [Teardown]    Run Keywords    Yves: logout on Yves as a customer
+    ...    AND    Reload
