@@ -25,6 +25,7 @@ Resource    ../../resources/steps/zed_discount_steps.robot
 Resource    ../../resources/steps/zed_availability_steps.robot
 Resource    ../../resources/steps/zed_cms_page_steps.robot
 Resource    ../../resources/steps/zed_order_shipment_steps.robot
+Resource    ../../resources/steps/comments_order_steps.robot
  
 *** Test Cases ***
 Guest_User_Access_Restrictions
@@ -868,6 +869,7 @@ Refunds
     Zed: grand total for the order equals:    ${lastPlacedOrder}    €0.00
     [Teardown]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: activate following discounts from Overview page:    20% off storage    10% off minimum order
+
 Create_order_in_yves
     [Documentation]    creating an order in yves
     Yves: login on Yves with provided credentials:    ${yves_company_user_shared_permission_owner_email}
@@ -895,15 +897,91 @@ Create_order_in_yves
     Yves: 'Thank you' page is displayed
     [Teardown]    Run Keywords    Yves: logout on Yves as a customer
     ...    AND    Reload
+
 Creating_shipment_in_zed
     [Documentation]    creating new shippment on order in zed
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Sales    Orders
     Zed: create shipment 
     Zed: flash message should be shown:    success
-Editing_shipment_in_zed
+
+Edit_shipment_in_zed
     [Documentation]    editing shippment on order in zed
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Sales    Orders
     Zed: edit shipment
     Zed: flash message should be shown:    success
+
+Add_comment_on_carts
+    [Documentation]    adding comments to cart
+    Yves: login on Yves with provided credentials:    ${yves_company_user_shared_permission_owner_email}
+    Yves: go to 'Shopping Carts' page through the header
+    Yves: 'Shopping Carts' page is displayed
+    Yves: create new 'Shopping Cart' with name:    shoppingCartName+${random}
+    Yves: 'Shopping Carts' widget contains:    shoppingCartName+${random}    Owner access
+    Yves: go to 'Shopping Carts' page through the header
+    Yves: 'Shopping Carts' page is displayed
+    Yves: the following shopping cart is shown:    shoppingCartName+${random}    Owner access
+    Yves: go to PDP of the product with sku:    ${bundled_product_3_abstract_sku}
+    Yves: add product to the shopping cart
+    Yves: go to PDP of the product with sku:    ${bundled_product_2_abstract_sku
+    Yves: add product to the shopping cart
+    Yves: go to the shopping cart through the header with name:    shoppingCartName+${random}
+    Yves: 'Shopping Cart' page is displayed
+    Yves: shopping cart contains the following products:    ${bundled_product_3_concrete_sku}
+    Yves: adding comments on cart before checkout
+    Yves: click on the 'Checkout' button in the shopping cart
+    Yves: billing address same as shipping address:    true
+    Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${yves_company_user_shared_permission_owner_address}
+    Yves: select the following shipping method on the checkout and go next:    Express
+    Yves: select the following payment method on the checkout and go next:    Invoice
+    Yves: accept the terms and conditions:    true
+    Yves: 'submit the order' on the summary page
+    Yves: 'Thank you' page is displayed
+    Yves: go to 'Order History' page to check comments
+    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: go to second navigation item level:    Sales    Orders
+    Zed: checking comments added in zed
+    [Teardown]    Run Keywords    Yves: logout on Yves as a customer
+    ...    AND    Reload
+
+At_Yves_Add_Edit_Delete_comments_in_Cart
+    [Documentation]    adding editing and deleting comments in carts
+    Yves: login on Yves with provided credentials:    ${yves_company_user_shared_permission_owner_email}
+    Yves: go to 'Shopping Carts' page through the header
+    Yves: 'Shopping Carts' page is displayed
+    Yves: create new 'Shopping Cart' with name:    shoppingCartName+${random}
+    Yves: 'Shopping Carts' widget contains:    shoppingCartName+${random}    Owner access
+    Yves: go to 'Shopping Carts' page through the header
+    Yves: 'Shopping Carts' page is displayed
+    Yves: the following shopping cart is shown:    shoppingCartName+${random}    Owner access
+    Yves: go to PDP of the product with sku:    ${bundled_product_3_abstract_sku}
+    Yves: add product to the shopping cart
+    Yves: go to PDP of the product with sku:    ${bundled_product_2_abstract_sku}
+    Yves: add product to the shopping cart
+    Yves: go to the shopping cart through the header with name:    shoppingCartName+${random}
+    Yves: 'Shopping Cart' page is displayed
+    Yves: shopping cart contains the following products:    ${bundled_product_2_abstract_sku}
+    Yves: add edit delete comments on cart
+    [Teardown]    Run KeywordS    Yves: delete 'Shopping Cart' with name:    shoppingCartName+${random}
+    ...    AND     Yves: logout on Yves as a customer
+        
+At_Yves_attach_few_comments_to_order_check_they_appeared_in_Zed
+    [Documentation]    adding comments in yves and checking they appears in zed
+    Yves: login on Yves with provided credentials:    ${yves_company_user_shared_permission_owner_email}
+    Yves: go to 'Shopping Carts' page through the header
+    Yves: 'Shopping Carts' page is displayed
+    Yves: create new 'Shopping Cart' with name:    shoppingCartName+${random}
+    Yves: 'Shopping Carts' widget contains:    shoppingCartName+${random}    Owner access
+    Yves: go to 'Shopping Carts' page through the header
+    Yves: 'Shopping Carts' page is displayed
+    Yves: the following shopping cart is shown:    shoppingCartName+${random}    Owner access
+    Yves: go to PDP of the product with sku:    ${bundled_product_3_abstract_sku}
+    Yves: add product to the shopping cart
+    Yves: go to PDP of the product with sku:    ${bundled_product_2_abstract_sku}
+    Yves: add product to the shopping cart
+    Yves: go to the shopping cart through the header with name:    shoppingCartName+${random}
+    Yves: 'Shopping Cart' page is displayed
+    Yves: shopping cart contains the following products:    ${bundled_product_2_abstract_sku}
+    Yves: go to 'Customer Account' page
+    Yves: go to user menu item in the left bar:    Order History
