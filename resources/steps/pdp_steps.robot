@@ -177,4 +177,5 @@ Yves: merchant is (not) displaying in Sold By section of PDP:
     Wait Until Element Is Visible    ${pdp_product_sku}[${env}]
     Try reloading page until element is/not appear:    xpath=//section[@data-qa='component product-configurator']//div[contains(text(),'${merchantName}')]     ${condition}    20    5s  
    
-    
+Yves: add a product to cart by clicking add to cart button
+    Click     ${pdp_add_to_cart_button}

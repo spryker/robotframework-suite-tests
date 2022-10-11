@@ -27,6 +27,7 @@ Resource    ../../resources/steps/zed_availability_steps.robot
 Resource    ../../resources/steps/zed_discount_steps.robot
 Resource    ../../resources/steps/zed_cms_page_steps.robot
 Resource    ../../resources/steps/zed_customer_steps.robot
+Resource    ../../resources/steps/zed_glossary_steps.robot
 
 *** Test Cases ***
 New_Customer_Registration
@@ -599,3 +600,32 @@ Refunds
     [Teardown]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: activate following discounts from Overview page:    Tu & Wed $5 off 5 or more    10% off $100+    20% off cameras    Tu & Wed €5 off 5 or more    10% off minimum order
  
+Create_a_new_glossary_translation_in_zed
+    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: go to first navigation item level:    Administration
+    Zed: go to second navigation item level:    Administration    Glossary  
+    Zed: click button in Header:    Create Translation
+    Zed: Add details to glossary section:
+     ...    || Name               | EN_US        |    DE_DE           ||
+    ...    || cart.price.test${random}       | This is a sample translation         |    Dies ist eine Beispielübersetzung       ||
+    Zed: submit the form
+    [Teardown]    Run Keywords    Delete All Cookies
+    ...    AND       Reload  
+
+Edit_a_glossary_translation_and_check_text_change_in_Yves
+    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: go to first navigation item level:    Administration
+    Zed: go to second navigation item level:    Administration    Glossary 
+    Zed: Edit a glossary translation    	cart.add.items.success  
+    Zed: Clear text
+    Zed: Add details to glossary section:
+     ...    ||     DE_DE         |     EN_US        ||
+    ...    ||        Produkte erfolgreich der Wunschliste hinzugefügt-Test-${random}   |   Items added successfully-Test     ||
+    Zed: submit the form
+     Yves: login on Yves with provided credentials:    ${yves_second_user_email}
+     Yves: go to PDP of the product with sku:    207_15721464
+     Yves: add a product to cart by clicking add to cart button
+     Yves: flash message should be shown:    success    Items added successfully-Test
+     [Teardown]    Run Keywords    Zed: Undo the changes in glossary translation
+     ...    AND    Delete All Cookies
+    ...    AND       Reload 
