@@ -67,23 +67,30 @@ Yves: add all available products from list to cart
     Wait Until Element Is Visible    ${shopping_list_main_content_locator}
     Click    ${add_all_available_products_to_cart_locator} 
 
-Yves: select shopping list on pdp:
-    [Arguments]    ${product_sku}
+Yves: Select shopping list on PDP from multiple lists:    [Arguments]    ${product_sku}    ${shopping_list_name}
     Input Text    ${searchbox_input_field_locator}    ${product_sku}
     Keyboard Key    press    Enter
-    Click    ${product_213103}
+    Click    ${searched_product}
     Click    ${shoppingList_dropdown} 
-    Click    ${shoppinglist_dropdown_value}
+    Click    //li[contains(text(),'${shopping_list_name}')]
     Click    ${add_to_shopinglist_button}
+
 Yves: Add products to an SL:
     [Arguments]    ${shopinglist_name}    ${product_sku}
     Input Text    //input[@placeholder='Search by SKU or Name']    ${product_sku}
     Wait Until Element Is Visible    //li[contains(text(),'${product_sku}')]
     Keyboard Key    press    Enter
     Input Text    //input[@id='quantity']    1
-    Click    //button[normalize-space()='Add']    
+    Click    ${add_button_shoppinglist_page}    
     Yves: flash message should be shown:    success    Item ${product_sku} was added to the List.
     Yves: flash message should be shown:    success    Item has been added to the shopping list.
-Yves: Adding from an SL to the cart
-    Click    //a[normalize-space()='Newcomers']
-    Click    ${add_to_cart_button}
+
+Yves: Add all products from a shopping list to the cart:    
+    [Arguments]    ${shopping_list_name}=${EMPTY}
+    IF    '${shopping_list_name}'!= '${EMPTY}'
+        Yves: go To 'Shopping Lists' Page
+        Yves: 'Shopping Lists' page is displayed
+        Yves: view shopping list with name:    ${shopping_list_name} 
+    END
+    Wait Until Element Is Visible    ${add_product_to_cart}
+    Click    ${add_product_to_cart}
