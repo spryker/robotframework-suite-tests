@@ -205,17 +205,19 @@ Yves: assert merchant of product in cart or list:
     [Documentation]    Method for MP which asserts value in 'Sold by' label of item in cart or list. Requires concrete SKU
     [Arguments]    ${sku}    ${merchant_name_expected}
     Page Should Contain Element    xpath=//span[@itemprop='sku'][text()='${sku}']/../../following-sibling::p/a[text()='${merchant_name_expected}']
+
  Yves: proceed as a guest user and login during checkout:
     [Arguments]    ${email}    ${password}=${default_password}   
     Wait Until Page Contains Element    ${yves_checkout_login_tab} 
-    Click Element by xpath with JavaScript    //span[normalize-space()='Login']
+    Click    ${yves_checkout_login_tab} 
     Type Text    ${email_field}    ${email}
     Type Text    ${password_field}    ${password}
     Click    ${form_login_button}
+
 Yves: signup guest user during checkout:
       [Arguments]      ${firstName}    ${lastName}    ${email}     ${password}      ${confirmpassword} 
     Wait Until Page Contains Element    ${yves_checkout_signup_button} 
-    Click Element by xpath with JavaScript    //span[normalize-space()='Sign Up']
+    Click    ${yves_checkout_signup_button}
     Type Text    ${yves_checkout_signup_first_name}    ${firstname}
     Type Text    ${yves_checkout_signup_last_name}    ${lastname}
     Type Text    ${yves_checkout_signup_email}    ${email}
@@ -224,6 +226,7 @@ Yves: signup guest user during checkout:
     Wait Until Element Is Visible   ${yves_checkout_signup_accept_terms}
     Check Checkbox  ${yves_checkout_signup_accept_terms}
     Click    ${yves_checkout_signup_tab}   
+    
 Yves: Add product to wishlist as guest user
     Click    ${pdp_add_to_wishlist_button}
     Wait Until Element Is Visible    ${email_field}
