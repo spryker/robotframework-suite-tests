@@ -599,3 +599,9 @@ Refunds
     [Teardown]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: activate following discounts from Overview page:    Tu & Wed $5 off 5 or more    10% off $100+    20% off cameras    Tu & Wed €5 off 5 or more    10% off minimum order
  
+User_can_add_product_to_cart_and_wishlist_on_PDP
+    Yves: login on Yves with provided credentials:    ${yves_second_user_email}
+    Yves: go to PDP of the product with sku:    ${multi_variant_product_concrete_sku}
+    Yves: add product to the shopping cart
+    Yves: add product to wishlist:    My wishlist
+    [Teardown]    Yves: check if cart is not empty and clear it
