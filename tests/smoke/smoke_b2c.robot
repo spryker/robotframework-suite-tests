@@ -599,67 +599,30 @@ Refunds
     [Teardown]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: activate following discounts from Overview page:    Tu & Wed $5 off 5 or more    10% off $100+    20% off cameras    Tu & Wed €5 off 5 or more    10% off minimum order
 
-Add_new_address_in_Customer's_profile 
+Add_new_Customer_address_and_edit_it_in_Customer's_profile
   Yves: login on Yves with provided credentials:    ${yves_second_user_email}
   Yves: go to 'Customer Account' page
-  Yves: create a new customer address in profile:   Mr    ${yves_second_user_first_name}    ${yves_second_user_last_name}    ${random}    ${random}    ${random}    Berlin       Norway
+  Yves: create a new customer address in profile:   ${salutation}    ${yves_second_user_first_name}    ${yves_second_user_last_name}    ${random}    ${random}    ${random}    ${city}   
   Yves: flash message should be shown:   success    Address was successfully added
-  [Teardown]    Run Keywords     Yves: delete user address:    ${random}
-     ...    AND         Yves: logout on Yves as a customer
-
-Update_the_customer_address_in_profile_section
-  Yves: login on Yves with provided credentials:    ${yves_second_user_email}
-  Yves: go to 'Customer Account' page
-  Yves: create a new customer address in profile:   Mr    ${yves_second_user_first_name}    ${yves_second_user_last_name}    ${random}    ${random}    ${random}    Berlin       Germany
-  Yves:Edit the latest address created
+     Yves:Edit the latest address created
   Yves:clear customer address fields
   Yves: Change customer address:
   ...    || street               | house_no        |    post_code        |    city                 |    phone            ||
-  ...    || ab${random}          | ${random}       |    ${random}        |    Frankfurt${random}   |    ${random}        ||
+  ...    || ab${random}          | ${random}       |    ${random}        |    ${city}   |    ${random}        ||
     Yves: flash message should be shown:   success    Address was successfully updated
-      [Teardown]    Run Keywords     Yves: delete user address:    ab${random}
+  [Teardown]    Run Keywords     Yves: delete user address:    ${random}
      ...    AND         Yves: logout on Yves as a customer
-     
-Delete_address_in_Yves
-  Yves: login on Yves with provided credentials:    ${yves_second_user_email}
-  Yves: go to 'Customer Account' page
-  Yves: create a new customer address in profile:   Mr    ${yves_second_user_first_name}${random}    ${yves_second_user_last_name}    ${random}    ${random}    ${random}    Berlin       Germany
-  Yves: delete user address:    ${random}
-  Yves: flash message should be shown:   success    Address deleted successfully
-   [Teardown]    Run Keywords     Yves: logout on Yves as a customer
 
-Add_new_address_in_Zed
+Add_and_change_customer_address_in_Zed
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to first navigation item level:    Customers
     Zed: go to second navigation item level:    Customers    Customers   
     Zed: Go to customer new address creation page    ${yves_second_user_email}
     Zed:New address addition:
      ...    ||     customer_first_name              | customer_last_name              |    address line 1        |    address line 2        |    customer_zipcode    |    customer_phone    |    customer_city    ||
-    ...    || ${yves_second_user_first_name}     | ${yves_second_user_last_name}   |   abc${random}           |   street${random}        |    ${random}          |   123${random}        |        Berlin      ||   
-    [Teardown]    Run Keywords    Delete All Cookies
-    ...    AND    Reload
-
-Change_address_in_Zed
-    Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    Zed: go to first navigation item level:    Customers
-    Zed: go to second navigation item level:    Customers    Customers  
-    Zed:Edit customer address    ${yves_second_user_email}
-     [Teardown]    Run Keywords    Delete All Cookies
-    ...    AND       Reload
-
-Add_new_address_in_Checkout_and_save_it
-     Yves: login on Yves with provided credentials:    ${yves_second_user_email}
-     Yves: go to PDP of the product with sku:    ${bundled_product_3_concrete_sku}
-     Yves: add a product to cart via add to cart button
-     Yves: go to b2c shopping cart    
-     Yves: click on the 'Checkout' button in the shopping cart
-     Yves: fill in the following new shipping address:
-    ...    || firstName               |     lastName                    |    street        |    houseNumber      |    city          |    postCode    |    phone        ||
-    ...     || ${yves_second_user_first_name}    |     ${yves_second_user_last_name}         |    st${random}              |    ${random}              |    Berlin${random}        |   ${random}              |    ${random}       ||
-    Yves: click checkout button:    Next
-    Yves: select the following shipping method on the checkout and go next:     Standard: €4.90
-    Yves: select the following payment method on the checkout and go next:    Invoice
-    Yves: accept the terms and conditions:    true
-    Yves: 'submit the order' on the summary page
-    [Teardown]    Run Keywords     Yves: delete user address:    st${random}
-     ...    AND         Yves: logout on Yves as a customer 
+    ...    || ${yves_second_user_first_name}     | ${yves_second_user_last_name}   |   abc${random}           |   street${random}        |    ${random}          |   123${random}        |        ${city}      ||   
+    Zed:Edit customer address
+    [Teardown]    Run Keywords    Yves: login on Yves with provided credentials:    ${yves_second_user_email}
+    ...    AND    Yves: go to 'Customer Account' page
+    ...    AND    Yves: delete user address:    ${random}
+    ...    AND    Yves: logout on Yves as a customer

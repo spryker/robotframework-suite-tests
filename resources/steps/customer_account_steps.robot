@@ -29,7 +29,7 @@ Yves: go to user menu item in the left bar:
 
 Yves: create a new customer address in profile:
     [Documentation]
-    [Arguments]    ${salutation}    ${firstName}    ${lastName}    ${street}    ${houseNumber}    ${postCode}    ${city}    ${country}    ${isDefaultShipping}=True     ${isDefaultBilling}=True       ${company}=    ${phone}=    ${additionalAddress}=
+    [Arguments]    ${salutation}  ${firstName}    ${lastName}    ${street}    ${houseNumber}    ${postCode}    ${city}    ${country}=Germany    ${isDefaultShipping}=True     ${isDefaultBilling}=True       ${company}=    ${phone}=    ${additionalAddress}=
     IF    '${env}'=='b2c'
         Yves: go to user menu item in header:    My Profile
     ELSE IF   '${env}' in ['b2b','mp_b2b']
@@ -39,8 +39,8 @@ Yves: create a new customer address in profile:
     Wait Until Element Is Visible    ${customer_account_add_new_address_button}[${env}]
     Click    ${customer_account_add_new_address_button}[${env}]
     Wait Until Element Is Visible    ${customer_account_address_form}
-     Click    ${customer_account_address_salutation_dropdown_field}
-     Click    xpath=//li[@class='select2-results__option' and contains(text(),'${salutation}')]
+    #  Click    ${customer_account_address_salutation_dropdown_field}
+    #  Click    xpath=//li[@class='select2-results__option' and contains(text(),'${salutation}')]
     Type Text    ${customer_account_address_first_name_field}     ${firstName}
     Type Text    ${customer_account_address_last_name_field}     ${lastName}
     Type Text    ${customer_account_address_company_name_field}     ${company}
@@ -49,8 +49,8 @@ Yves: create a new customer address in profile:
     Type Text    ${customer_account_address_additional_address_field}     ${additionalAddress}
     Type Text    ${customer_account_address_zip_code_field}     ${postCode}
     Type Text    ${customer_account_address_city_field}     ${city}
-     Click    ${customer_account_address_country_drop_down_field}
-     Click    xpath=//li[contains(@class,'select2-results__option') and contains(text(),'${country}')]
+    #  Click    ${customer_account_address_country_drop_down_field}
+    #  Click    xpath=//li[contains(@class,'select2-results__option') and contains(text(),'${country}')]
     Type Text    ${customer_account_address_phone_field}     ${phone}
 #    Run keyword if    '${isDefaultShipping}'=='True'    Add/Edit element attribute with JavaScript:    ${customer_account_address_is_default_shipping_checkbox}    checked    checked
 #    Run keyword if    '${isDefaultBilling}'=='True'    Add/Edit element attribute with JavaScript:    ${customer_account_address_is_default_billing_checkbox}

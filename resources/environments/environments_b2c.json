@@ -6,7 +6,7 @@
         "zed_url": "http://backoffice.de.spryker.local/"
     },
 
-    "users": {    
+    "users": {   
         "yves_user_email": "george.freeman@spryker.com",
         "yves_user_first_name": "George",
         "yves_user_last_name": "Freeman",
@@ -44,5 +44,9 @@
         "product_with_relations_alternative_products_sku": "145",
         "product_with_relations_upselling_sku": "018"
             
+    },
+    "address":{
+        "customer_address_1":"Bill Martin (09388, 09388 Berlin)",
+        "city":"Berlin"  
     }
 }

@@ -28,8 +28,6 @@ Zed:New address addition:
     Click    ${zed_customer_save_button}
 
 Zed:Edit customer address
-     [Arguments]    ${customer_email}
-    Zed: perform search by:     ${customer_email}  
     Click    ${zed_customer_edit_button}
-     Select From List By Label    ${zed_customer_billing_address}   Bill Martin (09388, 09388 Berlin)
+     Select From List By Label    ${zed_customer_billing_address}   ${customer_address_1}
      Click    ${zed_customer_save_button}
