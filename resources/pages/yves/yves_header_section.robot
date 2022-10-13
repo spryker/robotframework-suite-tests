@@ -25,6 +25,8 @@ ${agent_quote_requests_header_item}    xpath=//agent-control-bar//a[contains(@hr
 ${agent_quote_requests_widget}    xpath=//agent-control-bar//a[contains(@href,'quote-request')]/ancestor::li[contains(@class,'menu__item--has-children')]//ul[contains(@class,'menu--wider')]
 ${wishlist_icon_header_navigation_widget}    xpath=//nav[@data-qa='component navigation-top']//*[@*='#:wishlist']/ancestor::*[@data-qa='component icon']
 ${cart_widget_item_quantity_counter}    xpath=//*[@data-qa='component navigation-top']//span[contains(@class,'cart-counter__quantity js-cart-counter__quantity')]
-
-
-    
+${overview_page_locator}    xpath=//a[@class='button button--hollow action-bar__action']
+${newsletter_page_locator}    xpath=//h3[@class="action-bar__title action-bar__title--first action-bar__title--middle"]
+${addresses_page_locator}    xpath=//a[@class='button button--hollow action-bar__action']
+${returns_page_locator}    xpath=//h3[@class='action-bar__title action-bar__title--first']
+${my_profile_page_locator}    xpath=//a[@class='button button--expand-sm-only button--alert button--hollow']
