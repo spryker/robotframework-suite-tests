@@ -27,6 +27,7 @@ Resource    ../../resources/steps/zed_availability_steps.robot
 Resource    ../../resources/steps/zed_discount_steps.robot
 Resource    ../../resources/steps/zed_cms_page_steps.robot
 Resource    ../../resources/steps/zed_customer_steps.robot
+Resource    ../../resources/steps/zed_administration_steps.robot
 
 *** Test Cases ***
 New_Customer_Registration
@@ -599,3 +600,8 @@ Refunds
     [Teardown]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: activate following discounts from Overview page:    Tu & Wed $5 off 5 or more    10% off $100+    20% off cameras    Tu & Wed €5 off 5 or more    10% off minimum order
  
+Display_stores_in_zed
+    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: go to first navigation item level:    Administration
+    Zed: go to second navigation item level:    Administration    Stores
+    Zed: check the avaialbe Stores    ${store_AT}    ${store_DE}

@@ -18,7 +18,9 @@
         "yves_second_user_password": "change123",
 
         "zed_admin_email": "admin@spryker.com",
-        "zed_admin_password": "change123"
+        "zed_admin_password": "change123",
+        "store_AT":"AT",
+        "store_DE":"DE"
     },
         
     "products": {
@@ -45,4 +47,6 @@
         "product_with_relations_upselling_sku": "018"
             
     }
+    
+   
 }
