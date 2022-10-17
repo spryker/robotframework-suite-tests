@@ -391,6 +391,9 @@
                 "with_discount_10_percentage_off_minimum_order_1": "2760"
             }
         },
+        "configurable_product": {
+            "sku": "093_24495843"
+        },
         "discount_1": {
             "name": "10% off minimum order",
             "name_1": "20% off cameras",
@@ -686,5 +689,13 @@
         "configurable_bundle_slot_6_uuid": "2a5e55b1-993a-5510-864c-a4a18558aa75",
         "configurable_bundle_template_name_1": "Configurable Bundle \"All in\"",
         "configured_bundle_quantity": 2
+    },
+    "productConfigurationInstance": {
+        "productConfigurationInstance":{
+        "displayData": "{\"Preferred time of the day\": \"Afternoon\", \"Date\": \"9.09.2050\"}",
+        "configuration": "{\"time_of_day\": \"3\"}",
+        "configuratorKey": "DATE_TIME_CONFIGURATOR",
+        "isComplete": true
     }
+}
 }

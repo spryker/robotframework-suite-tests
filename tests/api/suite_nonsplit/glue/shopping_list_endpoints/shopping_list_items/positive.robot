@@ -262,3 +262,52 @@ Remove_a_concrete_product_from_the_shared_shopping_list
     I send a DELETE request:    /shopping-lists/${sharedShoppingListId}/shopping-list-items/${shoppingListItemId}
     And Response status code should be:    204
     And Response reason should be:    No Content
+
+Add_a_configurable_product_to_the_shopping_list
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
+    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
+    ...    AND    I send a POST request:    /shopping-lists    {"data":{"type":"shopping-lists","attributes":{"name":"${shopping_list_name}${random}"}}}
+    ...    AND    Response status code should be:    201
+    ...    AND    Save value to a variable:    [data][id]    shoppingListId
+    I send a POST request:    /shopping-lists/${shoppingListId}/shopping-list-items    {"data":{"type":"shopping-list-items","attributes":{"sku":"${configurable_product.sku}","quantity":3,"productConfigurationInstance":{"displayData":'{"Preferred_time_of_the_day":"Afternoon","Date":"9.09.2050"}',"configuration":'{"time_of_day":"4"}',"configuratorKey":"DATE_TIME_CONFIGURATOR","isComplete":True,"quantity":3,"availableQuantity":4,"prices":[{"priceTypeName":"DEFAULT","netAmount":23434,"grossAmount":42502,"currency":{"code":"EUR","name":"Euro","symbol":"€"},"volumePrices":[{"netAmount":150,"grossAmount":165,"quantity":5},{"netAmount":145,"grossAmount":158,"quantity":10},{"netAmount":140,"grossAmount":152,"quantity":20}]}]}}}}
+    And Response status code should be:    201
+    And Response body parameter should be:    [data][attributes][quantity]    3
+    And Response body parameter should be:    [data][attributes][sku]    ${configurable_product.sku}
+   [Teardown]    Run Keywords    I send a DELETE request:    /shopping-lists/${shoppingListId}
+   ...    AND    Response status code should be:    204
+   ...    AND    Response reason should be:    No Content
+
+Change_preferred_time_of_the_day_of_the_configurable_product_in_the_shopping_list
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
+    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
+    ...    AND    I send a POST request:    /shopping-lists    {"data":{"type":"shopping-lists","attributes":{"name":"${shopping_list_name}${random}"}}}
+    ...    AND    Response status code should be:    201
+    ...    AND    Save value to a variable:    [data][id]    shoppingListId
+    I send a POST request:    /shopping-lists/${shoppingListId}/shopping-list-items    {"data":{"type":"shopping-list-items","attributes":{"sku":"${configurable_product.sku}","quantity":3,"productConfigurationInstance":{"displayData":'{"Preferred_time_of_the_day":"Afternoon","Date":"9.09.2050"}',"configuration":'{"time_of_day":"4"}',"configuratorKey":"${productConfigurationInstance.configuratorKey}","isComplete":True,"quantity":3,"availableQuantity":4,"prices":[{"priceTypeName":"DEFAULT","netAmount":23434,"grossAmount":42502,"currency":{"code":"EUR","name":"Euro","symbol":"€"},"volumePrices":[{"netAmount":150,"grossAmount":165,"quantity":5},{"netAmount":145,"grossAmount":158,"quantity":10},{"netAmount":140,"grossAmount":152,"quantity":20}]}]}}}}
+    And Response status code should be:    201
+    And Save value to a variable:    [data][id]    shoppingListItemId
+    I send a PATCH request:    /shopping-lists/${shoppingListId}/shopping-list-items/${shoppingListItemId}?include=concrete-products    {"data":{"type":"shopping-list-items","attributes":{"sku":"${configurable_product.sku}","quantity":3,"productConfigurationInstance":{"displayData":'{"Preferred_time_of_the_day":"Evening","Date":"9.09.2050"}',"configuration":'{"time_of_day":"4"}',"configuratorKey":"${productConfigurationInstance.configuratorKey}","isComplete":True,"quantity":3,"availableQuantity":4,"prices":[{"priceTypeName":"DEFAULT","netAmount":23434,"grossAmount":42502,"currency":{"code":"EUR","name":"Euro","symbol":"€"},"volumePrices":[{"netAmount":150,"grossAmount":165,"quantity":5},{"netAmount":145,"grossAmount":158,"quantity":10},{"netAmount":140,"grossAmount":152,"quantity":20}]}]}}}}
+    And Response status code should be:    200
+    And Response header parameter should be:    Content-Type    ${default_header_content_type}
+    And Response body parameter should be:    [data][id]    ${shoppingListItemId}
+    And Response body parameter should be:    [data][attributes][sku]    ${configurable_product.sku}
+    [Teardown]    Run Keywords    I send a DELETE request:    /shopping-lists/${ShoppingListId}
+    ...    AND    Response status code should be:    204
+    ...    AND    Response reason should be:    No Content
+    
+Change_preferred_date_of_the_configurable_product_in_the_shopping_list
+   [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
+    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
+    ...    AND    I send a POST request:    /shopping-lists    {"data":{"type":"shopping-lists","attributes":{"name":"${shopping_list_name}${random}"}}}
+    ...    AND    Response status code should be:    201
+    ...    AND    Save value to a variable:    [data][id]    shoppingListId
+   I send a POST request:    /shopping-lists/${shoppingListId}/shopping-list-items    {"data":{"type":"shopping-list-items","attributes":{"sku":"${configurable_product.sku}","quantity":3,"productConfigurationInstance":{"displayData":'{"Preferred_time_of_the_day":"Afternoon","Date":"9.09.2050"}',"configuration":'{"time_of_day":"4"}',"configuratorKey":"${productConfigurationInstance.configuratorKey}","isComplete":True,"quantity":3,"availableQuantity":4,"prices":[{"priceTypeName":"DEFAULT","netAmount":23434,"grossAmount":42502,"currency":{"code":"EUR","name":"Euro","symbol":"€"},"volumePrices":[{"netAmount":150,"grossAmount":165,"quantity":5},{"netAmount":145,"grossAmount":158,"quantity":10},{"netAmount":140,"grossAmount":152,"quantity":20}]}]}}}}
+   And Response status code should be:    201
+   And Save value to a variable:    [data][id]    shoppingListItemId
+   I send a PATCH request:    /shopping-lists/${shoppingListId}/shopping-list-items/${shoppingListItemId}?include=concrete-products    {"data":{"type":"shopping-list-items","attributes":{"sku":"${configurable_product.sku}","quantity":3,"productConfigurationInstance":{"displayData":'{"Preferred_time_of_the_day":"Afternoon","Date":"20.10.2030"}',"configuration":'{"time_of_day":"4"}',"configuratorKey":"${productConfigurationInstance.configuratorKey}","isComplete":True,"quantity":3,"availableQuantity":4,"prices":[{"priceTypeName":"DEFAULT","netAmount":23434,"grossAmount":42502,"currency":{"code":"EUR","name":"Euro","symbol":"€"},"volumePrices":[{"netAmount":150,"grossAmount":165,"quantity":5},{"netAmount":145,"grossAmount":158,"quantity":10},{"netAmount":140,"grossAmount":152,"quantity":20}]}]}}}}
+   And Response status code should be:    200
+   And Response header parameter should be:    Content-Type    ${default_header_content_type}
+   And Response body parameter should be:    [data][attributes][sku]    ${configurable_product.sku}
+   [Teardown]    Run Keywords    I send a DELETE request:    /shopping-lists/${ShoppingListId}/shopping-list-items/${shoppingListItemId}
+    ...    AND    Response status code should be:    204
+    ...    AND    Response reason should be:    No Content 
