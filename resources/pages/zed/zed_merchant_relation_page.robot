@@ -1,0 +1,12 @@
+*** Variables ***
+${merchant_dropdown_locator}    xpath=(//span[@class='select2-selection__arrow'])[1]
+${company_dropdown_locator}    xpath=//span[@Title='Select Company']
+${confirm_button_locator}    xpath=//input[@name='submit-confirm']
+${Bussiness_unit_owner_locator}    xpath=(//span[@role='presentation'])[3]
+${Assigned_bussiness_units_locator}    xpath=(//span[@role='combobox'])[4]
+${Assigned_product_lists_locator}    xpath=(//span[@role='combobox'])[5]
+${dropdown_value_Impala_locator}    xpath=//li[@class="select2-results__option" and text()='5 - Impala Merchant']
+${dropdown_value_Proof_locator}    xpath=//li[@class="select2-results__option" and contains(text(),'Proof')]
+${dropdown_value_Bar_locator}    xpath=//li[@class="select2-results__option" and contains(text(),'Bar' )]
+${dropdown_value_Cleaning_locator}    xpath=//li[@class="select2-results__option" and contains(text(),'Cleaning')]
+${dropdown_value_Computer_locator}    xpath=//li[@class="select2-results__option" and contains(text(),'Computer')]

@@ -24,6 +24,7 @@ Resource    ../../resources/steps/zed_customer_steps.robot
 Resource    ../../resources/steps/zed_discount_steps.robot
 Resource    ../../resources/steps/zed_availability_steps.robot
 Resource    ../../resources/steps/zed_cms_page_steps.robot
+Resource   ../../resources/steps/merchant_steps.robot
  
 *** Test Cases ***
 Guest_User_Access_Restrictions
@@ -867,3 +868,23 @@ Refunds
     Zed: grand total for the order equals:    ${lastPlacedOrder}    €0.00
     [Teardown]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: activate following discounts from Overview page:    20% off storage    10% off minimum order
+
+Create_Merchant_in_Zed
+   Zed: login on Zed with provided credentials:    ${zed_admin_email}
+   Zed: go to second navigation item level:    Marketplace    Merchants
+   Zed: click button in Header:    Add Merchant
+   Zed: Add new merchant:  
+   ...    ||  Name  |  Registration_number  |  Reference_number  |  Email  |  En_url  |  De_url||
+   ...    ||  name${random}  |  reg${random}  |  ref${random}  |  abc${random}@mail.com  |  eng${random}  |  ger${random}  ||
+   Zed: submit the form
+   [Teardown]    Run Keywords    Delete All Cookies
+   ...    AND       Reload
+  
+Create_a_merchant_relation_between_a_BU_of_a_company_and_the_merchant
+   Zed: login on Zed with provided credentials:    ${zed_admin_email}
+   Zed: go to second navigation item level:    Marketplace    Merchant Relations
+   Zed: click button in Header:    Add Merchant relation
+   Zed: Create Merchant Relation between a BU of a company and the merchant
+   Zed: submit the form
+   [Teardown]    Run Keywords    Delete All Cookies
+   ...    AND       Reload
