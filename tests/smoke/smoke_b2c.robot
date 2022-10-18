@@ -601,7 +601,7 @@ Refunds
     [Teardown]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: activate following discounts from Overview page:    Tu & Wed $5 off 5 or more    10% off $100+    20% off cameras    Tu & Wed €5 off 5 or more    10% off minimum order
  
-Warehouse_create_edit_view_set_stock_deactivate_store_scenarios
+Warehouse_create_edit_view_set_stock_deactivate_warehouse_scenarios
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to first navigation item level:    Administration
     Zed: go to second navigation item level:    Administration    Warehouses
