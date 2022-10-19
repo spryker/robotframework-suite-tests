@@ -599,3 +599,23 @@ Refunds
     [Teardown]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: activate following discounts from Overview page:    Tu & Wed $5 off 5 or more    10% off $100+    20% off cameras    Tu & Wed €5 off 5 or more    10% off minimum order
  
+User_login_after_10_failed_attempts
+    Yves:login on yves with invalid password:    ${yves_user_email}    ${random}
+    Yves: login on Yves with provided credentials:    ${yves_user_email}
+    Yves: validatation of redirected url
+    Sleep    5m 01s
+    Yves: logout on Yves as a customer
+    Yves: login on Yves with provided credentials:    ${yves_user_email}
+    [Teardown]    Run Keywords    Delete All Cookies
+    ...    AND       Reload  
+    
+Agent_login_after_9_failed_attempts
+    Open Browser
+    Yves: go to URL:    /agent/login
+    Yves:agent login with invalid password:    ${yves_agent_user_email}    ${random}
+    Yves: agent login with proper credentials:   ${yves_agent_user_email}    ${yves_agent_user_password}
+    Yves: agent login redirected url validation
+    Sleep    6m 01s
+    Yves: logout on Yves as a customer
+    Yves: agent login with proper credentials:    ${yves_agent_user_email}    ${yves_agent_user_password} 
+    Pause Execution

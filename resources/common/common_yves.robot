@@ -298,3 +298,47 @@ Yves: page should contain script with attribute:
 Yves: page should contain script with id:
     [Arguments]    ${scriptId}
     Yves: page should contain script with attribute:    id    ${scriptId}
+
+Yves:login on yves with invalid password:
+    [Arguments]    ${email}    ${password}      
+    ${counter}=    Set Variable    1
+    WHILE  True
+        Log    ${counter}
+    Yves: login on Yves with provided credentials:    ${email}    ${password}
+    Wait Until Element Is Visible    ${form_login_button}
+    ${counter}=    Evaluate    ${counter} + 1
+     IF    ${counter} == 11
+            BREAK
+        END
+    END
+
+Yves:agent login with invalid password:
+    [Arguments]    ${email}    ${password}
+    ${counter}=    Set Variable    1
+    WHILE  True
+        Log    ${counter}
+    Yves: go to URL:    /agent/login
+    Type Text    ${email_field}   ${email}
+    Type Text    ${password_field}    ${password}
+     Click    ${form_login_button}
+     Yves: flash message should be shown:    error    Authentication failed
+    ${counter}=    Evaluate    ${counter} + 1
+     IF    ${counter} == 10
+            BREAK
+        END
+    END
+
+Yves: agent login with proper credentials:
+    [Arguments]    ${email}    ${password}
+    Yves: go to URL:    /agent/login
+    Type Text    ${email_field}   ${email}
+    Type Text    ${password_field}    ${password}
+    Click    ${form_login_button}
+
+Yves: validatation of redirected url
+    ${url}    Get Url
+    Should Contain    ${url}    /login_check
+
+Yves: agent login redirected url validation
+    ${url}    Get Url
+    Should Contain    ${url}    /agent/login_check
