@@ -27,6 +27,7 @@ Resource    ../../resources/steps/zed_availability_steps.robot
 Resource    ../../resources/steps/zed_discount_steps.robot
 Resource    ../../resources/steps/zed_cms_page_steps.robot
 Resource    ../../resources/steps/zed_customer_steps.robot
+Resource    ../../resources/steps/zed_customer_steps.robot
 
 *** Test Cases ***
 New_Customer_Registration
@@ -599,3 +600,31 @@ Refunds
     [Teardown]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: activate following discounts from Overview page:    Tu & Wed $5 off 5 or more    10% off $100+    20% off cameras    Tu & Wed €5 off 5 or more    10% off minimum order
  
+User_control_functionality
+    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: go to second navigation item level:    Users    Users
+    Zed: click button in Header:    Add New User
+    Zed: add a new user detatils:    abc${random}@gmail.com   change${random}   change${random}    khushal    singh
+    Zed: logout
+    Zed: login on Zed with provided credentials:    abc${random}@gmail.com    change${random}
+    Zed: go to second navigation item level:    Users    User Roles
+    Zed: click button in Header:    Add new Role
+    Zed: Add role name:    role${random}
+    Zed: submit the form
+    Zed: go to second navigation item level:    Users    User Groups
+    Zed: click button in Header:    Create Group
+    Zed: add new group:   Group${random}
+    Zed: go to second navigation item level:    Users    Users
+    Zed: perform search by:    abc${random}@gmail.com
+    Zed: edit user Details
+    Zed: Check checkbox by Label:    Group${random}
+    Zed: submit the form
+    Zed: message should be shown:    User was updated successfully.
+    Zed: logout
+    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: go to second navigation item level:    Users    Users
+    Zed: perform search by:    abc${random}@gmail.com
+    Zed: deactivate user
+    Zed: message should be shown:    User was deactivated successfully.
+    Zed: delete Zed user with the following email:    abc${random}@gmail.com
+    Zed: message should be shown:    User was deleted successfully.
