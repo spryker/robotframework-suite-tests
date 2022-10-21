@@ -867,3 +867,27 @@ Refunds
     Zed: grand total for the order equals:    ${lastPlacedOrder}    €0.00
     [Teardown]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: activate following discounts from Overview page:    20% off storage    10% off minimum order
+
+Back_office_translation
+   Zed: login on Zed with provided credentials:    ${zed_admin_email}
+   Zed: go to second navigation item level:    Users    Users
+   Zed: click button in Header:    Add New User
+   Zed: Add new users in with following email:   
+   ...    || Email  |  Password  |  Repeat password  |  First name  |  Last name  ||
+   ...    || abc${random}@mail.com  | change${random}  |  change${random}  |  abcd  |  wxyz  ||
+   Zed: submit the form
+   Delete All Cookies
+   Reload
+   Zed: login on Zed with provided credentials:    abc${random}@mail.com    change${random}
+   Zed: validation of translation:    EN   
+   Zed: login on Zed with provided credentials:    ${zed_admin_email}
+   Zed: go to second navigation item level:    Users    Users
+   Zed: click Action Button in a table for row that contains:    abc${random}@mail.com    Edit   
+   Zed: select interface language:    de_DE
+   Zed: submit the form
+   Delete All Cookies
+   Reload
+   Zed: login on Zed with provided credentials:    abc${random}@mail.com    change${random}
+   Zed: validation of translation:    DE
+   [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+   ...    AND    Zed: delete Zed user with the following email:    abc${random}@mail.com
