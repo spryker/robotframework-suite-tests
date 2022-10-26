@@ -40,3 +40,5 @@ Yves: As an Agent login under the customer:
     Click    xpath=//ul[@data-qa='component customer-list']/li[@data-value='${searchQuery}']
     Click    ${agent_confirm_login_button}
 
+Yves: End customer assistance
+    Click    ${end_customer_assistance}
