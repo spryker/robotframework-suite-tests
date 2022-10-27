@@ -24,6 +24,8 @@ Resource    ../../resources/steps/zed_customer_steps.robot
 Resource    ../../resources/steps/zed_discount_steps.robot
 Resource    ../../resources/steps/zed_availability_steps.robot
 Resource    ../../resources/steps/zed_cms_page_steps.robot
+Resource    ../../resources/steps/zed_delivery_methods_steps.robot
+
  
 *** Test Cases ***
 Guest_User_Access_Restrictions
@@ -867,3 +869,56 @@ Refunds
     Zed: grand total for the order equals:    ${lastPlacedOrder}    €0.00
     [Teardown]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: activate following discounts from Overview page:    20% off storage    10% off minimum order
+
+delivery methods
+    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: go to second navigation item level:    Administration    Delivery Methods
+    Zed: table should contain non-searchable value:    Edit
+    Zed: go to second navigation item level:    Administration    Delivery Methods
+    Zed: create carrier company:    company${random}
+    Zed: create delivery method
+    Zed: delivery method details:
+    ...    ||  Method_key  |  Name  |  Carrier  ||
+    ...    ||  Key${random}  |  Name${random}  |  company${random}  ||
+    Zed: Check checkbox by Label:     Is active
+    Zed: go to tab:    Price & Tax
+    Zed: Price & Tax:
+    ...    || gross_price_de_chf | gross_price_de_euro | gross_price_at_chf | gross_price_at_euro | net_price_de_chf  | net_price_de_euro | net_price_at_chf | net_price_at_euro  |  tax_set  ||
+    ...    ||  15  |  15  | 15  |  15  |  17 |  17  | 17  |  17  |  Standard Taxes  ||
+    Zed: go to tab:    Store Relation
+    Zed: Store Relation checkbox
+    Zed: submit the form
+    Zed: go to second navigation item level:    Administration    Delivery Methods
+    Zed: click Action Button in a table for row that contains:    Name${random}    View
+    Yves: login on Yves with provided credentials:    ${yves_user_email}
+    Yves: create new 'Shopping Cart' with name:    carting+${random}
+    Yves: go to PDP of the product with sku:    M90802
+    Yves: add product to the shopping cart
+    Yves: go to the shopping cart through the header with name:    carting+${random}
+    Yves: click on the 'Checkout' button in the shopping cart
+    Yves: billing address same as shipping address:    true
+    Yves: submit form on the checkout
+    Yves: Check carrier company:    company${random}
+    Yves: Check delivery method:    Name${random}
+    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: go to second navigation item level:    Administration    Delivery Methods
+    Zed: click Action Button in a table for row that contains:    Name${random}    Edit
+    Zed: edit delivery method:    new_name${random}
+    Zed: submit the form
+    Yves: login on Yves with provided credentials:    ${yves_user_email}
+    Yves: go to the shopping cart through the header with name:    carting+${random}
+    Yves: click on the 'Checkout' button in the shopping cart
+    Yves: submit form on the checkout   
+    Yves: Check delivery method:    new_name${random}
+    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: go to second navigation item level:    Administration    Delivery Methods
+    Zed: deactivate/unset delivery method:    new_name${random}
+    Yves: login on Yves with provided credentials:    ${yves_user_email}
+    Yves: go to the shopping cart through the header with name:    carting+${random}
+    Yves: click on the 'Checkout' button in the shopping cart
+    Yves: submit form on the checkout   
+    Yves: verifying deactivated/unset delivery method not present on page:    new_name${random}
+    [Teardown]    Run Keywords    Yves: delete 'Shopping Cart' with name:    carting+${random}
+    ...    AND    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    ...    AND    Zed: delete delivery method:    new_name${random}
+    
