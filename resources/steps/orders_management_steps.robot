@@ -151,3 +151,22 @@ Zed: order has the following number of shipments:
     Wait Until Element Is Visible    xpath=//table[@data-qa='order-item-list'][1]
     ${actualShipments}=    Get Element Count    xpath=//table[@data-qa='order-item-list']
     Should Be Equal    '${expectedShipments}'    '${actualShipments}'
+
+Zed: trigger all matching states inside this return:
+    [Arguments]    ${status}
+    Reload
+    FOR    ${index}    IN RANGE    0    21
+        ${order_state_reached}=    Run Keyword And Return Status    Page Should Contain Element    xpath=(//form[@name='oms_trigger_form']//button[@id='oms_trigger_form_submit'][text()='${status}'])[1]
+        IF    '${order_state_reached}'=='False'
+            Run Keywords    Sleep    3s    AND    Reload
+        ELSE
+            Exit For Loop
+        END
+    END
+    Click    xpath=(//form[@name='oms_trigger_form']//button[@id='oms_trigger_form_submit'][text()='${status}'])[1]
+    ${order_changed_status}=    Run Keyword And Ignore Error    Element Should Not Be Visible    xpath=(//form[@name='oms_trigger_form']//button[@id='oms_trigger_form_submit'][text()='${status}'])[1]
+    IF    'FAIL' in ${order_changed_status}
+        Run Keywords
+           Reload
+           Click    xpath=(//form[@name='oms_trigger_form']//button[@id='oms_trigger_form_submit'][text()='${status}'])[1]
+    END

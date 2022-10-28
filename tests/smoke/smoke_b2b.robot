@@ -867,3 +867,60 @@ Refunds
     Zed: grand total for the order equals:    ${lastPlacedOrder}    €0.00
     [Teardown]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: activate following discounts from Overview page:    20% off storage    10% off minimum order
+
+Zed_part_OMS_order_close
+    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
+    Yves: create new 'Shopping Cart' with name:    complete+${random}
+    Yves: go to PDP of the product with sku:    M90802
+    Yves: add product to the shopping cart
+    Yves: go to PDP of the product with sku:    M21711
+    Yves: add product to the shopping cart
+    Yves: go to PDP of the product with sku:    M90737
+    Yves: add product to the shopping cart
+    Yves: go to the shopping cart through the header with name:    complete+${random}
+    Yves: click on the 'Checkout' button in the shopping cart
+    Yves: billing address same as shipping address:    true
+    Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${yves_company_user_buyer_address}
+    Yves: select the following shipping method on the checkout and go next:    Express
+    Yves: select the following payment method on the checkout and go next:    Invoice
+    Yves: accept the terms and conditions:    true
+    Yves: 'submit the order' on the summary page
+    Yves: 'Thank you' page is displayed
+    Yves: get the last placed order ID by current customer
+    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Pay
+    Zed: trigger all matching states inside this order:    Skip timeout
+    Zed: trigger all matching states inside this order:    Ship
+    Zed: trigger all matching states inside this order:    Stock update
+    Zed: trigger all matching states inside this order:    Close
+
+Zed_part_OMS_refund_and_return_then_refund
+    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
+    Yves: create new 'Shopping Cart' with name:    complete+${random}
+    Yves: go to PDP of the product with sku:    M90802
+    Yves: add product to the shopping cart
+    Yves: go to PDP of the product with sku:    M21711
+    Yves: add product to the shopping cart
+    Yves: go to PDP of the product with sku:    M90737
+    Yves: add product to the shopping cart
+    Yves: go to the shopping cart through the header with name:    complete+${random}
+    Yves: click on the 'Checkout' button in the shopping cart
+    Yves: billing address same as shipping address:    true
+    Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${yves_company_user_buyer_address}
+    Yves: select the following shipping method on the checkout and go next:    Express
+    Yves: select the following payment method on the checkout and go next:    Invoice
+    Yves: accept the terms and conditions:    true
+    Yves: 'submit the order' on the summary page
+    Yves: 'Thank you' page is displayed
+    Yves: get the last placed order ID by current customer
+    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Pay
+    Zed: trigger all matching states inside this order:    Skip timeout
+    Zed: trigger matching state of order item inside xxx shipment:    410083    Ship
+    Zed: trigger matching state of order item inside xxx shipment:    410083    Stock update
+    Zed: trigger matching state of order item inside xxx shipment:    410083    Refund
+    Zed: trigger matching state of order item inside xxx shipment:    421426    Ship
+    Zed: trigger matching state of order item inside xxx shipment:    421426    Stock update
+    Zed: create a return for the following order and product in it:    ${lastPlacedOrder}    421426
+    Zed: trigger all matching states inside this return:    Execute return
+    Zed: trigger all matching states inside this return:    Refund
