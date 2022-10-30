@@ -598,6 +598,8 @@ Return_Management
     Zed: go to order page:    ${lastPlacedOrder}
     Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Pay
     Zed: go to my order page:    ${lastPlacedOrder}
+    Zed: trigger matching state of xxx merchant's shipment:    1    send to distribution
+    Zed: trigger matching state of xxx merchant's shipment:    1    confirm at center
     Zed: trigger matching state of xxx merchant's shipment:    1    Ship   
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     Yves: go to user menu item in header:    Order History
@@ -852,6 +854,8 @@ Refunds
     Zed: go to order page:    ${lastPlacedOrder}
     Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Pay   
     Zed: go to my order page:    ${lastPlacedOrder}
+    Zed: trigger matching state of xxx merchant's shipment:    1    send to distribution
+    Zed: trigger matching state of xxx merchant's shipment:    1    confirm at center
     Zed: trigger matching state of order item inside xxx shipment:    107254    Ship
     Zed: trigger matching state of order item inside xxx shipment:    107254    deliver
     Zed: trigger matching state of order item inside xxx shipment:    107254    Refund

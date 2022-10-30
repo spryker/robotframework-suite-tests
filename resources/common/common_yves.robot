@@ -201,7 +201,7 @@ Yves: get index of the first available product
     Log    ${productsCount}
     FOR    ${index}    IN RANGE    1    ${productsCount}+1
         ${status}=    IF    '${env}'=='b2b'    Run Keyword And Ignore Error     Page should contain element    xpath=//product-item[@data-qa='component product-item'][${index}]//*[@class='product-item__actions']//ajax-add-to-cart//button[@disabled='']
-        ...    ELSE IF    '${env}'=='b2c'    Run Keyword And Ignore Error    Page should contain element    xpath=//product-item[@data-qa='component product-item'][${index}]//ajax-add-to-cart//button    Add to cart button is missing    ${browser_timeout}
+        ...    ELSE IF    '${env}' in ['b2c','mp_b2c']    Run Keyword And Ignore Error    Page should contain element    xpath=//product-item[@data-qa='component product-item'][${index}]//ajax-add-to-cart//button    Add to cart button is missing    ${browser_timeout}
         Log    ${index}
         ${pdp_url}=    IF    '${env}'=='b2b'    Get Element Attribute    xpath=//product-item[@data-qa='component product-item'][${index}]//a[@itemprop='url']    href
         IF    'PASS' in ${status} and '${env}'=='b2b'    Continue For Loop
@@ -212,10 +212,10 @@ Yves: get index of the first available product
                 Log ${index}
                 Exit For Loop
         END
-        ${pdp_url}=    IF    '${env}'=='b2c'    Get Element Attribute    xpath=//product-item[@data-qa='component product-item'][${index}]//div[contains(@class,'product-item__image')]//a[contains(@class,'link-detail-page')]    href
-        IF    'FAIL' in ${status} and '${env}'=='b2c'    Continue For Loop
-        IF    'bundle' in '${pdp_url}' and '${env}'=='b2c'    Continue For Loop
-        IF    'PASS' in ${status} and '${env}'=='b2c'
+        ${pdp_url}=    IF    '${env}' in ['b2c','mp_b2c']    Get Element Attribute    xpath=//product-item[@data-qa='component product-item'][${index}]//div[contains(@class,'product-item__image')]//a[contains(@class,'link-detail-page')]    href
+        IF    'FAIL' in ${status} and '${env}' in ['b2c','mp_b2c']    Continue For Loop
+        IF    'bundle' in '${pdp_url}' and '${env}' in ['b2c','mp_b2c']    Continue For Loop
+        IF    'PASS' in ${status} and '${env}' in ['b2c','mp_b2c']
             Run Keywords
                 Return From Keyword    ${index}
                 Log ${index}
@@ -278,9 +278,9 @@ Yves: try reloading page if element is/not appear:
     FOR    ${index}    IN RANGE    0    26
         ${elementAppears}=    Run Keyword And Return Status    Element Should Be Visible    ${element}
         IF    '${isDisplayed}'=='True' and '${elementAppears}'=='False'
-            Run Keywords    Sleep    1s    AND    Reload
+            Run Keywords    Sleep    3s    AND    Reload
         ELSE IF    '${isDisplayed}'=='False' and '${elementAppears}'=='True'
-            Run Keywords    Sleep    1s    AND    Reload
+            Run Keywords    Sleep    3s    AND    Reload
         ELSE
             Exit For Loop
         END

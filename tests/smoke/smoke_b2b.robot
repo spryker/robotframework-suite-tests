@@ -223,7 +223,7 @@ Product_Sets
     [Teardown]    Yves: delete 'Shopping Cart' with name:    productSetsCart+${random}
 
 Product_Bundles
-    [Documentation]    Checks checkout with Bundle product
+    [Documentation]    Checks checkout with Bundle product. Fails due to bug CC-16679
     [Setup]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: change product stock:    ${bundled_product_1_abstract_sku}    ${bundled_product_1_concrete_sku}    true    10
     ...    AND    Zed: change product stock:    ${bundled_product_2_abstract_sku}    ${bundled_product_2_concrete_sku}    true    10
@@ -306,7 +306,7 @@ Customer_Specific_Prices
     [Teardown]    Yves: delete 'Shopping Cart' with name:    customerPrices+${random}
 
 Agent_Assist
-    [Documentation]    Checks Agent creation and that it can login under customer
+    [Documentation]    Checks Agent creation and that it can login under customer. Fails due to bug CC-17232
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: create new Zed user with the following data:    agent+${random}@spryker.com    change123${random}    Agent    Assist    Root group    This user is an agent    en_US
     Yves: go to the 'Home' page
@@ -439,7 +439,7 @@ Approval_Process
     Yves: 'Thank you' page is displayed
 
 Request_for_Quote
-    [Documentation]    Checks user can request and receive quote
+    [Documentation]    Checks user can request and receive quote. Fails due to bug CC-17232
     [Setup]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: create new Zed user with the following data:    agent_quote+${random}@spryker.com    change123${random}    Request    Quote    Root group    This user is an agent    en_US
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
@@ -562,7 +562,7 @@ Configurable_Bundle
     Yves: 'Order Details' page contains the following product title N times:    Presentation bundle    3
 
 Return_Management
-    [Documentation]    Checks OMS and that Yves and Zed users can create returns
+    [Documentation]    Checks OMS and that Yves and Zed users can create returns. Fails due to bug CC-17232
     [Setup]    Run keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     ...    AND    Yves: create new 'Shopping Cart' with name:    returnCart+${random}
     Yves: go to PDP of the product with sku:    M90802
