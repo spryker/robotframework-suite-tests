@@ -868,7 +868,8 @@ Refunds
     [Teardown]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: activate following discounts from Overview page:    20% off storage    10% off minimum order
 
-Zed_part_OMS_order_close
+OMS_Close_Items
+    [Documentation]    process the order up to the closed state
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     Yves: create new 'Shopping Cart' with name:    complete+${random}
     Yves: go to PDP of the product with sku:    M90802
@@ -891,10 +892,19 @@ Zed_part_OMS_order_close
     Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Pay
     Zed: trigger all matching states inside this order:    Skip timeout
     Zed: trigger all matching states inside this order:    Ship
+    Zed: trigger matching state of order item inside xxx shipment:    108278    Stock update
+    Zed: trigger matching state of order item inside xxx shipment:    108278    Close
+    Zed: wait for order item to be in state:    108278    closed
     Zed: trigger all matching states inside this order:    Stock update
     Zed: trigger all matching states inside this order:    Close
+    Zed: wait for order item to be in state:    410083    closed
+    Zed: wait for order item to be in state:    421426    closed
+    Zed: go to second navigation item level:    Sales    Orders
+    Zed: perform search by:    ${lastPlacedOrder}
+    Zed: table should contain non-searchable value:    Closed
 
-Zed_part_OMS_refund_and_return_then_refund
+OMS_Refund_After_Delivery
+    [Documentation]    Process the order delivery state and then initiate the refund
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     Yves: create new 'Shopping Cart' with name:    complete+${random}
     Yves: go to PDP of the product with sku:    M90802
@@ -914,13 +924,14 @@ Zed_part_OMS_refund_and_return_then_refund
     Yves: 'Thank you' page is displayed
     Yves: get the last placed order ID by current customer
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: grand total for the order equals:    ${lastPlacedOrder}    €493.72
     Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Pay
     Zed: trigger all matching states inside this order:    Skip timeout
-    Zed: trigger matching state of order item inside xxx shipment:    410083    Ship
-    Zed: trigger matching state of order item inside xxx shipment:    410083    Stock update
-    Zed: trigger matching state of order item inside xxx shipment:    410083    Refund
-    Zed: trigger matching state of order item inside xxx shipment:    421426    Ship
-    Zed: trigger matching state of order item inside xxx shipment:    421426    Stock update
-    Zed: create a return for the following order and product in it:    ${lastPlacedOrder}    421426
-    Zed: trigger all matching states inside this return:    Execute return
-    Zed: trigger all matching states inside this return:    Refund
+    Zed: trigger matching state of order item inside xxx shipment:    108278    Ship
+    Zed: trigger matching state of order item inside xxx shipment:    108278    Stock update
+    Zed: trigger matching state of order item inside xxx shipment:    108278    Refund
+    Zed: grand total for the order equals:    ${lastPlacedOrder}    €369.42
+    Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Ship
+    Zed: trigger all matching states inside this order:    Stock update
+    Zed: trigger all matching states inside this order:    Refund
+    Zed: grand total for the order equals:    ${lastPlacedOrder}    €0.00
