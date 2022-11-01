@@ -270,7 +270,8 @@ Try reloading page until element is/not appear:
         END
     END
     IF    ('${shouldBeDisplayed}'=='true' and '${elementAppears}'=='False') or ('${shouldBeDisplayed}'=='false' and '${elementAppears}'=='True')
-        Fail    'Timeout exceeded'
+        Take Screenshot
+        Fail    'Timeout exceeded, element state doesn't match the expected'
     END
 
 Try reloading page until element does/not contain text:

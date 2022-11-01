@@ -42,9 +42,15 @@ Yves: select the following existing address on the checkout as 'shipping' addres
     WHILE  '${selected address}' != '${addressToUse}'
         Run Keywords         
             Select From List By Label    ${checkout_address_delivery_selector}[${env}]    ${addressToUse}
-            ${selected address}=    Get Text    xpath=//div[contains(@class,'shippingAddress')]//select[@name='checkout-full-addresses'][contains(@class,'address__form')]/..//span[contains(@id,'checkout-full-address')]
+                IF    '${env}' in ['b2c','mp_b2c']
+                    ${selected address}=    Get Text    xpath=//select[contains(@name,'shippingAddress')][contains(@id,'addressesForm_shippingAddress_id')]/..//span[contains(@id,'shippingAddress_id')]
+                ELSE IF    '${env}' in ['b2b','mp_b2b']
+                    ${selected address}=    Get Text    xpath=//div[contains(@class,'shippingAddress')]//select[@name='checkout-full-addresses'][contains(@class,'address__form')]/..//span[contains(@id,'checkout-full-address')]
+                END
     END
     Click    ${submit_checkout_form_button}[${env}]
+
+    
 
 Yves: fill in the following new shipping address:
     [Documentation]    Possible argument names: salutation, firstName, lastName, street, houseNumber, postCode, city, country, company, phone, additionalAddress

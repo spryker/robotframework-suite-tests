@@ -239,3 +239,9 @@ Yves: change quantity of promotional product and add to cart:
     Click    ${shopping_cart_promotional_product_add_to_cart_button}
     Yves: flash message should be shown:    success    Items added successfully
     Yves: remove flash messages
+
+Yves: assert merchant of product in b2c cart:
+    [Documentation]    Method for MP which asserts value in 'Sold by' label of item in cart or list. Requires concrete SKU
+    [Arguments]    ${product_name}    ${merchant_name_expected}
+    Page Should Contain Element    xpath=//main[contains(@class,'cart')]//article[contains(@data-qa,'component product-card-item')]//*[contains(.,'${product_name}')]/ancestor::article//*[@data-qa='component sold-by-merchant']/a[text()='${merchant_name_expected}']
+

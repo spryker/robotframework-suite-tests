@@ -37,4 +37,4 @@ ${pdp_back_in_stock_unsubscribe_button}    xpath=//form[@id='availability_unsubs
 ${pdp_bazaarvoice_write_review_button}    xpath=//button[contains(@class,'bv-write-review')]
 ${pdp_bazaarvoice_questions_locator}    xpath=//div[@data-bv-show='questions']
 ${pdp_bazaarvoice_intine_rating_locator}    xpath=//section[@data-bv-show='inline_rating']
-${referrer_url}    xpath=//div[contains(@class,'navigation-top-actions')]//form[contains(@action,'currency')]//input[@name='referrer-url']
+${referrer_url}    xpath=//header//form[contains(@action,'currency/switch')]//input[@name='referrer-url']

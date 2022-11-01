@@ -950,8 +950,7 @@ Merchant_Profile_Set_to_Offline_from_MP
     MP: login on MP with provided credentials:    ${merchant_office_king_email}
     MP: open navigation menu tab:    Profile
     MP: open profile tab:    Online Profile
-    MP: change store status
-    MP: click submit button
+    MP: change store status to:    offline
     Yves: go to URL:    en/merchant/office-king
     Yves: try reloading page if element is/not appear:    ${merchant_profile_main_content_locator}    false
     Yves: perform search by:    Office King
@@ -964,8 +963,7 @@ Merchant_Profile_Set_to_Offline_from_MP
     MP: login on MP with provided credentials:    ${merchant_office_king_email}
     MP: open navigation menu tab:    Profile
     MP: open profile tab:    Online Profile
-    MP: change store status
-    MP: click submit button
+    MP: change store status to:    online
     Yves: go to the 'Home' page
     Yves: go to PDP of the product with sku:    ${one_variant_product_abstract_sku}
     Yves: merchant is (not) displaying in Sold By section of PDP:    Office King    true
