@@ -409,6 +409,14 @@ Agent_Assist
     Yves: perform search by customer:    ${yves_second_user_first_name}
     Yves: agent widget contains:    ${yves_second_user_email}
     Yves: as an agent login under the customer:    ${yves_second_user_email}
+    Yves: end customer assistance
+    Yves: perform search by customer:    ${yves_second_user_last_name}
+    Yves: agent widget contains:    ${yves_second_user_email}
+    Yves: as an agent login under the customer:    ${yves_second_user_email}
+    Yves: end customer assistance
+    Yves: perform search by customer:    ${yves_second_user_email}
+    Yves: agent widget contains:    ${yves_second_user_email}
+    Yves: as an agent login under the customer:    ${yves_second_user_email}
     Yves: perform search by:    020
     Yves: product with name in the catalog should have price:    Sony Cyber-shot DSC-W830    €105.80
     Yves: go to PDP of the product with sku:    020
@@ -615,4 +623,3 @@ Refunds
     Zed: grand total for the order equals:    ${lastPlacedOrder}    €0.00
     [Teardown]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: activate following discounts from Overview page:    Tu & Wed $5 off 5 or more    10% off $100+    20% off cameras    Tu & Wed €5 off 5 or more    10% off minimum order
- 
