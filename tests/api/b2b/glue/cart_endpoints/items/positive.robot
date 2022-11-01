@@ -64,10 +64,8 @@ Add_two_items_to_cart_with_included_items_concrete_products_and_abstract_product
     And Response include element has self link:   concrete-products
     And Response include element has self link:   abstract-products
     And Response body parameter should be:    [included][2][type]    items
-    And Response body parameter should be:    [included][2][id]    ${concrete.available_product.with_stock_and_never_out_of_stock.sku}
     And Response body parameter should be:    [included][2][attributes][sku]    ${concrete.available_product.with_stock_and_never_out_of_stock.sku}
     And Response body parameter should be:    [included][2][attributes][quantity]    2
-    And Response body parameter should be:    [included][2][attributes][groupKey]    ${concrete.available_product.with_stock_and_never_out_of_stock.sku}
     And Response body parameter should be:    [included][2][attributes][abstractSku]    ${abstract.available_products.with_stock_and_never_out_of_stock_sku}
     And Response body parameter should be:    [included][2][attributes][amount]    None
     And Response body parameter should not be EMPTY:    [included][2][attributes][calculations][unitPrice] 
@@ -122,10 +120,8 @@ Get_a_cart_with_included_items_and_concrete_products
     And Response include element has self link:   items
     And Response include element has self link:   concrete-products
     And Response body parameter should be:    [included][1][type]    items
-    And Response body parameter should be:    [included][1][id]    ${concrete.available_product.with_stock_and_never_out_of_stock.sku}
     And Response body parameter should be:    [included][1][attributes][sku]    ${concrete.available_product.with_stock_and_never_out_of_stock.sku}
     And Response body parameter should be:    [included][1][attributes][quantity]    2
-    And Response body parameter should be:    [included][1][attributes][groupKey]    ${concrete.available_product.with_stock_and_never_out_of_stock.sku}
     And Response body parameter should be:    [included][1][attributes][abstractSku]    ${abstract.available_products.with_stock_and_never_out_of_stock_sku}
     And Response body parameter should be:    [included][1][attributes][amount]    None
     And Response body parameter should not be EMPTY:    [included][1][attributes][calculations][unitPrice] 
