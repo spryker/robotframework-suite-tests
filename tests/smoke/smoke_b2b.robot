@@ -24,6 +24,7 @@ Resource    ../../resources/steps/zed_customer_steps.robot
 Resource    ../../resources/steps/zed_discount_steps.robot
 Resource    ../../resources/steps/zed_availability_steps.robot
 Resource    ../../resources/steps/zed_cms_page_steps.robot
+Resource    ../../resources/steps/zed_root_menus_steps.robot
  
 *** Test Cases ***
 Guest_User_Access_Restrictions
@@ -867,3 +868,11 @@ Refunds
     Zed: grand total for the order equals:    ${lastPlacedOrder}    €0.00
     [Teardown]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: activate following discounts from Overview page:    20% off storage    10% off minimum order
+
+Zed_navigation_ordering_and_naming
+    [Documentation]    verifying root menus and icons in zed
+    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: validating root menus:    Dashboard    Sales    Customers    Catalog    Content    Merchandising    Marketplace    Users    Apps    Administration    Maintenance
+    Zed: login on Zed with provided credentials:    ${zed_admin_email_de}
+    Zed: validating root menu icons
+    Zed: validating root menus:    Dashboard    Verkauf    Kunden    Katalog    Inhalt    Merchandising    Marktplatz    Benutzer    Apps    Administration    Maintenance 

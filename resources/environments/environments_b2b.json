@@ -49,7 +49,9 @@
             "yves_company_user_bob_email": "donald@spryker.com",
             
             "zed_admin_email": "admin@spryker.com",
-            "zed_admin_password": "change123"},
+            "zed_admin_password": "change123",
+            "zed_admin_email_de": "admin_de@spryker.com",
+            "zed_admin_password_de": "change123"},
         
         "products": {
             "one_variant_product_abstract_sku": "M70208",
