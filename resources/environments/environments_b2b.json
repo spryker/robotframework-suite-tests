@@ -79,5 +79,9 @@
             "bundled_product_1_concrete_sku": "104939",
             "bundled_product_2_concrete_sku": "574995",
             "bundled_product_3_concrete_sku": "426581"
+        },
+        "translation":{
+            "logout_button_de": "Abmelden",
+            "logout_button_en": " Log out"
         }
 }
