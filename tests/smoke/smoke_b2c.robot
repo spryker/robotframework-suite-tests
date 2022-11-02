@@ -406,13 +406,38 @@ Agent_Assist
     Yves: go to URL:    agent/login
     Yves: login on Yves with provided credentials:    agent+${random}@spryker.com    change${random}
     Yves: header contains/doesn't contain:    true    ${customerSearchWidget}
-    Yves: perform search by customer:    ${yves_user_first_name}
-    Yves: agent widget contains:    ${yves_user_email}
-    Yves: As an Agent login under the customer:    ${yves_user_email}
-    Yves: perform search by:    031
-    Yves: product with name in the catalog should have price:    Canon PowerShot G9 X    €400.24
-    Yves: go to PDP of the product with sku:    031
-    Yves: product price on the PDP should be:    €400.24
+    Yves: perform search by customer:    ${yves_second_user_first_name}
+    Yves: agent widget contains:    ${yves_second_user_email}
+    Yves: as an agent login under the customer:    ${yves_second_user_email}
+    Yves: end customer assistance
+    Yves: perform search by customer:    ${yves_second_user_last_name}
+    Yves: agent widget contains:    ${yves_second_user_email}
+    Yves: as an agent login under the customer:    ${yves_second_user_email}
+    Yves: end customer assistance
+    Yves: perform search by customer:    ${yves_second_user_email}
+    Yves: agent widget contains:    ${yves_second_user_email}
+    Yves: as an agent login under the customer:    ${yves_second_user_email}
+    Yves: perform search by:    020
+    Yves: product with name in the catalog should have price:    Sony Cyber-shot DSC-W830    €105.80
+    Yves: go to PDP of the product with sku:    020
+    Yves: product price on the PDP should be:    €105.80
+    Yves: add product to the shopping cart
+    Yves: go to b2c shopping cart    
+    Yves: click on the 'Checkout' button in the shopping cart
+    Yves: fill in the following new shipping address:
+    ...    || firstName                         |     lastName                          |    street          |    houseNumber      |    city                |    postCode     |    phone         ||
+    ...    || ${yves_second_user_first_name}    |     ${yves_second_user_last_name}     |    ${random}       |    ${random}        |    Berlin${random}     |   ${random}     |    ${random}     ||
+    Yves: submit form on the checkout
+    Yves: select the following shipping method on the checkout and go next:     Standard: €4.90
+    Yves: select the following payment method on the checkout and go next:    Invoice
+    Yves: accept the terms and conditions:    true
+    Yves: 'submit the order' on the summary page
+    Yves: get the last placed order ID by current customer
+    Yves: end customer assistance
+    Yves: logout as an agent
+    Yves: login on Yves with provided credentials:    ${yves_second_user_email}
+    Yves: go to 'Order History' page
+    Yves: 'Order History' page contains the following order with a status:    ${lastPlacedOrder}    ${order_state}
     [Teardown]    Run Keywords    Yves: check if cart is not empty and clear it
     ...    AND    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: delete Zed user with the following email:    agent+${random}@spryker.com
@@ -463,7 +488,7 @@ Return_Management
     Yves: header contains/doesn't contain:    true    ${customerSearchWidget}
     Yves: perform search by customer:    ${yves_user_email}
     Yves: agent widget contains:    ${yves_user_email}
-    Yves: As an Agent login under the customer:    ${yves_user_email}
+    Yves: as an agent login under the customer:    ${yves_user_email}
     Yves: go to user menu item in header:    Orders History
     Yves: 'View Order/Reorder/Return' on the order history page:     Return    ${lastPlacedOrder}
     Yves: 'Create Return' page is displayed
@@ -599,4 +624,3 @@ Refunds
     Zed: grand total for the order equals:    ${lastPlacedOrder}    €0.00
     [Teardown]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: activate following discounts from Overview page:    Tu & Wed $5 off 5 or more    10% off $100+    20% off cameras    Tu & Wed €5 off 5 or more    10% off minimum order
- 
