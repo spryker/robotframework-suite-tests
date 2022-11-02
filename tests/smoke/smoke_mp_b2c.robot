@@ -801,37 +801,37 @@ Manage_Merchant_Users
     [Teardown]    Run Keywords    Zed: click Action Button in Merchant Users table for row that contains:    m_user+${random}@test.com    Delete
     ...    AND    Zed: submit the form
 
-# Create_and_Approve_New_Merchant_Product
-#     [Documentation]    Checks that merchant is able to create new multi-SKU product and marketplace operator is able to approve it in BO
-#     MP: login on MP with provided credentials:    ${merchant_budget_cameras_email}
-#     MP: open navigation menu tab:    Products    
-#     MP: click on create new entity button:    Create Product
-#     MP: create multi sku product with following data:
-#     ...    || product sku  | product name        | first attribute name | first attribute first value | first attribute second value | second attribute name | second attribute value ||
-#     ...    || SKU${random} | NewProduct${random} | packaging_unit       | Item                        | Box                          | material              | Aluminium              ||
-#     MP: perform search by:    NewProduct${random}
-#     MP: click on a table row that contains:     NewProduct${random}
-#     MP: fill abstract product required fields:
-#     ...    || product name DE     | store | tax set        ||
-#     ...    || NewProduct${random} | DE    | Standard Taxes ||
-#     MP: fill product price values:
-#     ...    || product type | row number | customer | store | currency | gross default ||
-#     ...    || abstract     | 1          | Default  | DE    | EUR      | 100           ||
-#     MP: save abstract product 
-#     MP: click on a table row that contains:    NewProduct${random}
-#     MP: open concrete drawer by SKU:    SKU${random}-2
-#     MP: fill concrete product fields:
-#     ...    || is active | stock quantity | use abstract name | searchability ||
-#     ...    || true      | 100            | true              | en_US         ||
-#     Zed: login on Zed with provided credentials:    ${zed_admin_email}
-#     Zed: go to second navigation item level:    Catalog    Products 
-#     Zed: click Action Button in a table for row that contains:     NewProduct${random}     Approve
-#     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}   
-#     Yves: go to URL:    en/search?q=SKU${random}
-#     Try reloading page until element is/not appear:    ${catalog_product_card_locator}    true    15    5s
-#     Yves: go to PDP of the product with sku:     SKU${random}
-#     Yves: merchant is (not) displaying in Sold By section of PDP:    Office King    true
-#     Yves: product price on the PDP should be:    €100.00
+Create_and_Approve_New_Merchant_Product
+    [Documentation]    Checks that merchant is able to create new multi-SKU product and marketplace operator is able to approve it in BO
+    MP: login on MP with provided credentials:    ${merchant_budget_cameras_email}
+    MP: open navigation menu tab:    Products    
+    MP: click on create new entity button:    Create Product
+    MP: create multi sku product with following data:
+    ...    || product sku  | product name        | first attribute name | first attribute first value | first attribute second value | second attribute name | second attribute value ||
+    ...    || SKU${random} | NewProduct${random} | packaging_unit       | Item                        | Box                          | series                | Ace Plus               ||
+    MP: perform search by:    NewProduct${random}
+    MP: click on a table row that contains:     NewProduct${random}
+    MP: fill abstract product required fields:
+    ...    || product name DE     | store | tax set           ||
+    ...    || NewProduct${random} | DE    | Smart Electronics ||
+    MP: fill product price values:
+    ...    || product type | row number  | store | currency | gross default ||
+    ...    || abstract     | 1           | DE    | EUR      | 100           ||
+    MP: save abstract product 
+    MP: click on a table row that contains:    NewProduct${random}
+    MP: open concrete drawer by SKU:    SKU${random}-2
+    MP: fill concrete product fields:
+    ...    || is active | stock quantity | use abstract name | searchability ||
+    ...    || true      | 100            | true              | en_US         ||
+    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: go to second navigation item level:    Catalog    Products 
+    Zed: click Action Button in a table for row that contains:     NewProduct${random}     Approve
+    Yves: login on Yves with provided credentials:    ${yves_user_email}   
+    Yves: go to URL:    en/search?q=SKU${random}
+    Try reloading page until element is/not appear:    ${catalog_product_card_locator}    true    15    5s
+    Yves: go to PDP of the product with sku:     SKU${random}
+    Yves: merchant is (not) displaying in Sold By section of PDP:    Budget Cameras    true
+    Yves: product price on the PDP should be:    €100.00
 
 # Create_New_Offer
 #     [Documentation]    Checks that merchant is able to create new offer and it will be displayed on Yves

@@ -20,16 +20,27 @@ MP: fill product price values:
         ELSE    
             Set Test Variable    ${rowNumber}    1
         END
-        IF    '${key}'=='customer' and '${value}' != '${EMPTY}'    Run Keywords
-        ...    Click    xpath=//web-spy-card[@spy-title='Price']//tbody/tr[${rowNumber}]/td[1]//spy-select
-        ...    AND    MP: select option in expanded dropdown:    ${value}
-        IF    '${key}'=='store' and '${value}' != '${EMPTY}'    Run Keywords
-        ...    Click    xpath=//web-spy-card[@spy-title='Price']//tbody/tr[${rowNumber}]/td[2]//spy-select
-        ...    AND    MP: select option in expanded dropdown:    ${value}
-        IF    '${key}'=='currency' and '${value}' != '${EMPTY}'    Run Keywords
-        ...    Click    xpath=//web-spy-card[@spy-title='Price']//tbody/tr[${rowNumber}]/td[3]//spy-select
-        ...    AND    MP: select option in expanded dropdown:    ${value}
-        IF    '${key}'=='gross default' and '${value}' != '${EMPTY}'    Type Text    xpath=//web-spy-card[@spy-title='Price']//tbody/tr[${rowNumber}]/td[5]//input    ${value}
+        IF    '${env}' in ['mp_b2b']
+            IF    '${key}'=='customer' and '${value}' != '${EMPTY}'    Run Keywords
+            ...    Click    xpath=//web-spy-card[@spy-title='Price']//tbody/tr[${rowNumber}]/td[1]//spy-select
+            ...    AND    MP: select option in expanded dropdown:    ${value}
+            IF    '${key}'=='store' and '${value}' != '${EMPTY}'    Run Keywords
+            ...    Click    xpath=//web-spy-card[@spy-title='Price']//tbody/tr[${rowNumber}]/td[2]//spy-select
+            ...    AND    MP: select option in expanded dropdown:    ${value}
+            IF    '${key}'=='currency' and '${value}' != '${EMPTY}'    Run Keywords
+            ...    Click    xpath=//web-spy-card[@spy-title='Price']//tbody/tr[${rowNumber}]/td[3]//spy-select
+            ...    AND    MP: select option in expanded dropdown:    ${value}
+            IF    '${key}'=='gross default' and '${value}' != '${EMPTY}'    Type Text    xpath=//web-spy-card[@spy-title='Price']//tbody/tr[${rowNumber}]/td[5]//input    ${value}
+        END
+        IF    '${env}' in ['mp_b2c']
+            IF    '${key}'=='store' and '${value}' != '${EMPTY}'    Run Keywords
+            ...    Click    xpath=//web-spy-card[@spy-title='Price']//tbody/tr[${rowNumber}]/td[1]//spy-select
+            ...    AND    MP: select option in expanded dropdown:    ${value}
+            IF    '${key}'=='currency' and '${value}' != '${EMPTY}'    Run Keywords
+            ...    Click    xpath=//web-spy-card[@spy-title='Price']//tbody/tr[${rowNumber}]/td[2]//spy-select
+            ...    AND    MP: select option in expanded dropdown:    ${value}
+            IF    '${key}'=='gross default' and '${value}' != '${EMPTY}'    Type Text    xpath=//web-spy-card[@spy-title='Price']//tbody/tr[${rowNumber}]/td[4]//input    ${value}
+        END
     END  
     
 MP: create multi sku product with following data:
