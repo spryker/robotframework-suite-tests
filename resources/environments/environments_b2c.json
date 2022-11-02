@@ -44,5 +44,10 @@
         "product_with_relations_alternative_products_sku": "145",
         "product_with_relations_upselling_sku": "018"
             
+    },
+    "glossary":{
+        "glossary_name":"customer.account.overview",
+        "original_EN_text":"Overview",
+        "original_DE_text":"Übersicht"
     }
 }
