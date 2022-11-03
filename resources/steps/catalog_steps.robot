@@ -96,10 +96,10 @@ Yves: catalog page contains filter:
 
 Yves: select filter value:
     [Arguments]    ${filter}    ${filterValue}
-    Wait Until Element Is Visible    xpath=//section[contains(@data-qa,'component filter-section')]//*[contains(text(),'${filter}')]
-    Click    xpath=//section[contains(@data-qa,'component filter-section')]//*[contains(text(),'${filter}')]
-    Wait Until Element Is Visible    xpath=//section[contains(@data-qa,'component filter-section')]//*[contains(text(),'${filter}')]/following-sibling::*//span[contains(@value,'${filterValue}')]
-    Click    xpath=//section[contains(@data-qa,'component filter-section')]//*[contains(text(),'${filter}')]/following-sibling::*//span[contains(@value,'${filterValue}')]
+    Wait Until Element Is Visible    xpath=//section[contains(@data-qa,'component filter-section')]//*[contains(@class,'filter-section')][contains(text(),'${filter}')]
+    Click    xpath=//section[contains(@data-qa,'component filter-section')]//*[contains(@class,'filter-section')][contains(text(),'${filter}')]
+    Wait Until Element Is Visible    xpath=//section[contains(@data-qa,'component filter-section')]//*[contains(@class,'filter-section')][contains(text(),'${filter}')]/following-sibling::*//span[contains(@data-qa,'checkbox')][contains(.,'${filterValue}')]
+    Click    xpath=//section[contains(@data-qa,'component filter-section')]//*[contains(@class,'filter-section')][contains(text(),'${filter}')]/following-sibling::*//span[contains(@data-qa,'checkbox')][contains(.,'${filterValue}')]
     Click    ${catalog_filter_apply_button}
 
 Yves: quick add to cart for first item in catalog

@@ -232,6 +232,7 @@ Add_to_Wishlist
     [Documentation]    Check creation of wishlist and adding to different wishlists
     Yves: login on Yves with provided credentials:    ${yves_user_email}
     Yves: delete all wishlists
+    Yves: create wishlist with name:    My wishlist
     Yves: go to PDP of the product with sku:  003
     Yves: add product to wishlist:    My wishlist
     Yves: go To 'Wishlist' Page
@@ -371,7 +372,6 @@ Discounts
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: grand total for the order equals:    ${lastPlacedOrder}    €765.35
     [Teardown]    Run keywords    Yves: check if cart is not empty and clear it
-    ...    AND    Yves: delete all user addresses
     ...    AND    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: deactivate following discounts from Overview page:    Voucher Code 5% ${random}    Cart Rule 10% ${random}    Promotional Product 100% ${random}
     ...    AND    Zed: activate following discounts from Overview page:    Free Acer Notebook    Tu & Wed $5 off 5 or more    10% off $100+    Free smartphone    20% off cameras    Free Acer M2610    Free standard delivery    10% off Intel Core    5% off white    Tu & Wed €5 off 5 or more    10% off minimum order
@@ -631,6 +631,9 @@ Multiple_Merchants_Order
     ...    AND    Yves: delete all user addresses
     ...    AND    Yves: check if cart is not empty and clear it
     ...    AND    Yves: create a new customer address in profile:     Mr    ${yves_user_first_name}    ${yves_user_last_name}    Kirncher Str.    7    10247    Berlin    Germany
+    ...    AND    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    ...    AND    Zed: change product stock:    ${one_variant_product_of_main_merchant_abstract_sku}    ${one_variant_product_of_main_merchant_concrete_sku}    true    10    10
+    Yves: login on Yves with provided credentials:    ${yves_user_email}
     Yves: go to PDP of the product with sku:    ${one_variant_product_of_main_merchant_abstract_sku}
     Yves: add product to the shopping cart
     Yves: go to PDP of the product with sku:     ${product_with_multiple_offers_abstract_sku}
@@ -833,134 +836,180 @@ Create_and_Approve_New_Merchant_Product
     Yves: merchant is (not) displaying in Sold By section of PDP:    Budget Cameras    true
     Yves: product price on the PDP should be:    €100.00
 
-# Create_New_Offer
-#     [Documentation]    Checks that merchant is able to create new offer and it will be displayed on Yves
-#     MP: login on MP with provided credentials:    ${merchant_budget_cameras_email}
-#     MP: open navigation menu tab:    Offers
-#     MP: click on create new entity button:    Add Offer
-#     MP: perform search by:    673327
-#     MP: click on a table row that contains:    673327  
-#     MP: fill offer fields:
-#     ...    || is active | merchant sku         | store | stock quantity ||
-#     ...    || true      | merchantSKU${random} | DE    | 100            ||
-#     MP: add offer price:
-#     ...    || row number | store | currency | gross default ||
-#     ...    || 1          | DE    | CHF      | 100           ||
-#     MP: save offer
-#     MP: perform search by:    merchantSKU${random}
-#     MP: click on a table row that contains:    merchantSKU${random} 
-#     MP: add offer price:
-#     ...    || row number | store | currency | gross default ||
-#     ...    || 1          | DE    | EUR      | 200           ||
-#     MP: save offer
-#     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
-#     Yves: create new 'Shopping Cart' with name:    newOfferCart${random}
-#     Yves: go to PDP of the product with sku:     673327
-#     Yves: merchant is (not) displaying in Sold By section of PDP:    Office King    true
-#     Yves: merchant's offer/product price should be:    Office King    €200.00
-#     Yves: select xxx merchant's offer:    Office King
-#     Yves: add product to the shopping cart
-#     Yves: go to the shopping cart through the header with name:    newOfferCart${random}
-#     Yves: 'Shopping Cart' page is displayed
-#     Yves: assert merchant of product in cart or list:    673327    Office King
-#     Yves: shopping cart contains product with unit price:    673327    Estucado upholstered chair with armrests, leader, white - white    200
-#     [Teardown]    Yves: delete 'Shopping Cart' with name:    newOfferCart${random}
+Create_New_Offer
+    [Documentation]    Checks that merchant is able to create new offer and it will be displayed on Yves
+    Yves: go to the PDP of the first available product
+    Yves: get sku of the concrete product on PDP
+    Yves: get name of the product on PDP
+    MP: login on MP with provided credentials:    ${merchant_budget_cameras_email}
+    MP: open navigation menu tab:    Offers
+    MP: click on create new entity button:    Add Offer
+    MP: perform search by:    ${got_concrete_product_sku}
+    MP: click on a table row that contains:    ${got_concrete_product_sku}
+    MP: fill offer fields:
+    ...    || is active | merchant sku         | store | stock quantity ||
+    ...    || true      | merchantSKU${random} | DE    | 100            ||
+    MP: add offer price:
+    ...    || row number | store | currency | gross default ||
+    ...    || 1          | DE    | CHF      | 100           ||
+    MP: save offer
+    MP: perform search by:    merchantSKU${random}
+    MP: click on a table row that contains:    merchantSKU${random} 
+    MP: add offer price:
+    ...    || row number | store | currency | gross default ||
+    ...    || 1          | DE    | EUR      | 200           ||
+    MP: save offer
+    Yves: login on Yves with provided credentials:    ${yves_user_email}
+    Yves: check if cart is not empty and clear it
+    Yves: go to PDP of the product with sku:     ${got_concrete_product_sku}
+    Yves: merchant is (not) displaying in Sold By section of PDP:    Budget Cameras    true
+    Yves: merchant's offer/product price should be:    Budget Cameras    €200.00
+    Yves: select xxx merchant's offer:    Budget Cameras
+    Yves: add product to the shopping cart
+    Yves: go to b2c shopping cart
+    Yves: 'Shopping Cart' page is displayed
+    Yves: assert merchant of product in b2c cart:    ${got_product_name}    Budget Cameras
+    Yves: shopping cart contains product with unit price:    ${got_concrete_product_sku}    ${got_product_name}    200
+    [Teardown]    Yves: check if cart is not empty and clear it
 
-# Approve_Offer
-#     [Documentation]    Checks that marketplace operator is able to approve or deny merchant's offer and it will be available or not in store due to this status
-#     Zed: login on Zed with provided credentials:    ${zed_admin_email}
-#     Zed: go to second navigation item level:    Marketplace    Offers
-#     Zed: select merchant in filter:    Office King
-#     Zed: click Action Button in a table for row that contains:     ${product_with_multiple_offers_concrete_sku}     Deny
-#     Yves: go to the 'Home' page
-#     Yves: go to PDP of the product with sku:     ${product_with_multiple_offers_abstract_sku}
-#     Yves: merchant is (not) displaying in Sold By section of PDP:    Office King    false
-#     Zed: login on Zed with provided credentials:    ${zed_admin_email}
-#     Zed: go to second navigation item level:    Marketplace    Offers
-#     Zed: select merchant in filter:    Office King
-#     Zed: click Action Button in a table for row that contains:     ${product_with_multiple_offers_concrete_sku}    Approve
-#     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
-#     Yves: go to PDP of the product with sku:    ${product_with_multiple_offers_abstract_sku}
-#     Yves: merchant is (not) displaying in Sold By section of PDP:    Office King    true
-#     Yves: merchant's offer/product price should be:    Office King    ${product_with_multiple_offers_video_king_price}
-#     Yves: select xxx merchant's offer:    Office King
-#     Yves: product price on the PDP should be:     ${product_with_multiple_offers_video_king_price}
+Approve_Offer
+    [Documentation]    Checks that marketplace operator is able to approve or deny merchant's offer and it will be available or not in store due to this status
+    [Setup]    Run Keywords    
+    ...    MP: login on MP with provided credentials:    ${merchant_video_king_email}
+    ...    AND    MP: change offer stock:
+    ...    || offer   | stock quantity | is never out of stock ||
+    ...    || offer30 | 10             | true                  ||
+    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: go to second navigation item level:    Marketplace    Offers
+    Zed: select merchant in filter:    Video King
+    Zed: click Action Button in a table for row that contains:     ${second_product_with_multiple_offers_concrete_sku}     Deny
+    Yves: go to the 'Home' page
+    Yves: go to PDP of the product with sku:     ${second_product_with_multiple_offers_concrete_sku}
+    Yves: merchant is (not) displaying in Sold By section of PDP:    Video King    false
+    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: go to second navigation item level:    Marketplace    Offers
+    Zed: select merchant in filter:    Video King
+    Zed: click Action Button in a table for row that contains:     ${second_product_with_multiple_offers_concrete_sku}    Approve
+    Yves: login on Yves with provided credentials:    ${yves_user_email}
+    Yves: go to PDP of the product with sku:    ${second_product_with_multiple_offers_abstract_sku}
+    Yves: merchant is (not) displaying in Sold By section of PDP:    Video King    true
+    Yves: merchant's offer/product price should be:    Video King    ${second_product_with_multiple_offers_video_king_price}
+    Yves: select xxx merchant's offer:    Video King
+    Yves: product price on the PDP should be:     ${second_product_with_multiple_offers_video_king_price}
 
-# Fulfill_Order_from_Merchant_Portal
-#     [Documentation]    Checks that merchant is able to process his order through OMS from merchant portal
-#     [Setup]    Run Keywords    
-#     ...    MP: login on MP with provided credentials:    ${merchant_video_king_email}
-#     ...    AND    MP: change offer stock:
-#     ...    || offer    | stock quantity | is never out of stock ||
-#     ...    || offer395 | 10             | true                  ||
-#     ...    AND    MP: login on MP with provided credentials:    ${merchant_budget_cameras_email}
-#     ...    AND    MP: change offer stock:
-#     ...    || offer    | stock quantity | is never out of stock ||
-#     ...    || offer193 | 10             | true                  ||
-#     ...    AND    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
-#     ...    AND    Yves: delete all shopping carts
-#     ...    AND    Yves: create new 'Shopping Cart' with name:    MerchantOrder${random}
-#     Yves: go to PDP of the product with sku:     ${product_with_multiple_offers_abstract_sku}
-#     Yves: add product to the shopping cart
-#     Yves: select xxx merchant's offer:    Computer Experts
-#     Yves: add product to the shopping cart
-#     Yves: select xxx merchant's offer:    Office King
-#     Yves: add product to the shopping cart
-#     Yves: go to the shopping cart through the header with name:    MerchantOrder${random}
-#     Yves: assert merchant of product in cart or list:    ${product_with_multiple_offers_concrete_sku}     Office King
-#     Yves: assert merchant of product in cart or list:    ${product_with_multiple_offers_concrete_sku}     Computer Experts
-#     Yves: click on the 'Checkout' button in the shopping cart
-#     Yves: billing address same as shipping address:    true
-#     Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${yves_company_user_buyer_address}
-#     Yves: select the following shipping method for the shipment:    1    DHL    Standard    
-#     Yves: select the following shipping method for the shipment:    2    Hermes    Same Day
-#     Yves: select the following shipping method for the shipment:    3    Hermes    Next Day
-#     Yves: submit form on the checkout
-#     Yves: select the following payment method on the checkout and go next:    Invoice
-#     Yves: accept the terms and conditions:    true
-#     Yves: 'submit the order' on the summary page
-#     Yves: 'Thank you' page is displayed
-#     Yves: get the last placed order ID by current customer
-#     Zed: login on Zed with provided credentials:    ${zed_admin_email}
-#     Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Pay 
-#     MP: login on MP with provided credentials:    ${merchant_budget_cameras_email}
-#     MP: open navigation menu tab:    Orders    
-#     MP: wait for order to appear:    ${lastPlacedOrder}--${merchant_budget_cameras_reference}
-#     MP: click on a table row that contains:    ${lastPlacedOrder}--${merchant_budget_cameras_reference}
-#     MP: order grand total should be:    €31.81
-#     MP: update order state using header button:    Ship
-#     MP: order state on drawer should be:    Shipped   
-#     MP: update order state using header button:    deliver
-#     MP: order state on drawer should be:    Delivered
+Fulfill_Order_from_Merchant_Portal
+    [Documentation]    Checks that merchant is able to process his order through OMS from merchant portal
+    [Setup]    Run Keywords    
+    ...    MP: login on MP with provided credentials:    ${merchant_video_king_email}
+    ...    AND    MP: change offer stock:
+    ...    || offer    | stock quantity | is never out of stock ||
+    ...    || offer30 | 10             | true                  ||
+    ...    AND    MP: login on MP with provided credentials:    ${merchant_budget_cameras_email}
+    ...    AND    MP: change offer stock:
+    ...    || offer   | stock quantity | is never out of stock ||
+    ...    || offer89 | 10             | true                  ||
+    ...    AND    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    ...    AND    Zed: change product stock:    ${one_variant_product_of_main_merchant_abstract_sku}    ${one_variant_product_of_main_merchant_concrete_sku}    true    10    10
+    ...    AND    Yves: login on Yves with provided credentials:    ${yves_user_email}
+    ...    AND    Yves: check if cart is not empty and clear it
+    Yves: go to PDP of the product with sku:    ${one_variant_product_of_main_merchant_abstract_sku}
+    Yves: add product to the shopping cart
+    Yves: go to PDP of the product with sku:     ${product_with_multiple_offers_abstract_sku}
+    Yves: merchant's offer/product price should be:    Budget Cameras    ${product_with_multiple_offers_budget_cameras_price}
+    Yves: merchant's offer/product price should be:    Video King    ${product_with_multiple_offers_video_king_price}
+    Yves: select xxx merchant's offer:    Budget Cameras
+    Yves: product price on the PDP should be:    ${product_with_multiple_offers_budget_cameras_price}
+    Yves: add product to the shopping cart
+    Yves: go to PDP of the product with sku:     ${second_product_with_multiple_offers_abstract_sku}
+    Yves: select xxx merchant's offer:    Video King
+    Yves: product price on the PDP should be:    ${second_product_with_multiple_offers_video_king_price}
+    Yves: add product to the shopping cart
+    Yves: go to b2c shopping cart
+    Yves: assert merchant of product in b2c cart:    ${one_variant_product_of_main_merchant_abstract_name}    Spryker
+    Yves: assert merchant of product in b2c cart:    ${product_with_multiple_offers_abstract_name}    Budget Cameras
+    Yves: assert merchant of product in b2c cart:    ${second_product_with_multiple_offers_abstract_name}    Video King
+    Yves: click on the 'Checkout' button in the shopping cart
+    Yves: billing address same as shipping address:    true
+    Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${yves_user_address}
+    Yves: submit form on the checkout
+    Yves: select the following shipping method for the shipment:    1    Hermes    Next Day
+    Yves: select the following shipping method for the shipment:    2    Hermes    Same Day
+    Yves: select the following shipping method for the shipment:    3    DHL    Express
+    Yves: submit form on the checkout
+    Yves: select the following payment method on the checkout and go next:    Invoice
+    Yves: accept the terms and conditions:    true
+    Yves: 'submit the order' on the summary page
+    Yves: 'Thank you' page is displayed
+    Yves: get the last placed order ID by current customer
+    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Pay
+    Zed: wait for order item to be in state:    ${product_with_multiple_offers_concrete_sku}    sent to merchant    2
+    MP: login on MP with provided credentials:    ${merchant_budget_cameras_email}
+    MP: open navigation menu tab:    Orders    
+    MP: wait for order to appear:    ${lastPlacedOrder}--${merchant_budget_cameras_reference}
+    MP: click on a table row that contains:    ${lastPlacedOrder}--${merchant_budget_cameras_reference}
+    MP: order grand total should be:    €103.42
+    MP: update order state using header button:    Ship
+    MP: order state on drawer should be:    Shipped   
+    MP: update order state using header button:    deliver
+    MP: order state on drawer should be:    Delivered
 
-# Shopping_List_Contains_Offers
-#     [Documentation]    Checks that customer is able to add merchant products and offers to list and merchant relation won't be lost in list and afterwards in cart
-#     [Setup]    Run Keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
-#     ...    AND    Yves: delete all shopping carts
-#     Yves: create new 'Shopping List' with name:    shoppingListName${random}
-#     Yves: go to PDP of the product with sku:    ${product_with_multiple_offers_abstract_sku}
-#     Yves: add product to the shopping list:    shoppingListName${random}
-#     Yves: select xxx merchant's offer:    Computer Experts
-#     Yves: add product to the shopping list:    shoppingListName${random}
-#     Yves: view shopping list with name:    shoppingListName${random}
-#     Yves: assert merchant of product in cart or list:    ${product_with_multiple_offers_concrete_sku}    Spryker
-#     Yves: assert merchant of product in cart or list:    ${product_with_multiple_offers_concrete_sku}    Computer Experts
-#     Yves: add all available products from list to cart  
-#     Yves: 'Shopping Cart' page is displayed
-#     Yves: assert merchant of product in cart or list:    ${product_with_multiple_offers_concrete_sku}    Spryker
-#     Yves: assert merchant of product in cart or list:    ${product_with_multiple_offers_concrete_sku}    Computer Experts
-#     [Teardown]    Yves: delete 'Shopping List' with name:    shoppingListName${random}
+Wishlist_List_Supports_Offers
+    [Documentation]    Checks that customer is able to add merchant products and offers to list and merchant relation won't be lost in list and afterwards in cart
+    [Setup]    Run Keywords    Yves: login on Yves with provided credentials:    ${yves_user_email}
+    ...    AND    Yves: delete all wishlists
+    ...    AND    Yves: check if cart is not empty and clear it
+    ...    AND    Yves: go To 'Wishlist' Page
+    ...    AND    Yves: create wishlist with name:    Offer wishlist
+    Yves: go to PDP of the product with sku:    ${product_with_multiple_offers_abstract_sku}
+    Yves: add product to wishlist:    Offer wishlist
+    Yves: select xxx merchant's offer:    Budget Cameras
+    Yves: add product to wishlist:    Offer wishlist
+    Yves: go To 'Wishlist' Page
+    Yves: go to wishlist with name:    Offer wishlist
+    Yves: assert merchant of product in wishlist:    ${product_with_multiple_offers_concrete_sku}    Spryker
+    Yves: assert merchant of product in wishlist:    ${product_with_multiple_offers_concrete_sku}    Budget Cameras
+    Yves: add all available products from wishlist to cart
+    Yves: go to b2c shopping cart
+    Yves: assert merchant of product in b2c cart:    ${product_with_multiple_offers_abstract_name}    Spryker
+    Yves: assert merchant of product in b2c cart:    ${product_with_multiple_offers_abstract_name}    Budget Cameras
+    [Teardown]    Run keywords    Yves: delete all wishlists    AND    Yves: check if cart is not empty and clear it
 
-# Merchant_Portal_Customer_Specific_Prices
-#     [Documentation]    Checks that customer will see product/offer prices specified by merchant for his business unit
+Search_for_Merchant_Offers_and_Products
+    [Documentation]    Checks that through search customer is able to see the list of merchant's products and offers
+    Yves: go to the 'Home' page
+    Yves: perform search by:    Video King
+    Yves: go to the PDP of the first available product on open catalog page
+    Yves: select random varian if variant selector is available
+    Yves: merchant is (not) displaying in Sold By section of PDP:    Video King    true
+    Yves: perform search by:    Spryker
+    Yves: change sorting order on catalog page:    Sort by name ascending
+    Yves: go to the PDP of the first available product on open catalog page
+    Yves: select random varian if variant selector is available
+    Yves: merchant is (not) displaying in Sold By section of PDP:    Spryker    true
+    Yves: perform search by:    ${EMPTY}
+    Yves: select filter value:    Merchant    Budget Cameras
+    Yves: go to the PDP of the first available product on open catalog page
+    Yves: select random varian if variant selector is available
+    Yves: merchant is (not) displaying in Sold By section of PDP:    Budget Cameras    true
+
+###TO DO###
+# Merchant_Portal_Price_Management
+#     ###TODO###
+#     [Documentation]    Checks that merchant is able to manage product prices (not offers) per different currencies
 #     MP: login on MP with provided credentials:    ${merchant_spryker_email}
 #     MP: open navigation menu tab:    Products
 #     MP: perform search by:    ${one_variant_product_of_main_merchant_abstract_sku}
 #     MP: click on a table row that contains:    ${one_variant_product_of_main_merchant_abstract_sku}
 #     MP: open concrete drawer by SKU:    ${one_variant_product_of_main_merchant_concrete_sku}
 #     MP: fill product price values:
-#     ...    || product type | row number | customer                  | store | currency | gross default ||
-#     ...    || concrete     | 1          | 5 - Spryker Systems GmbH  | DE    | EUR      | 100           ||
+#     ...    || product type | row number | store | currency | gross default ||
+#     ...    || concrete     | 1          | DE    | EUR      | 100           ||
+#     MP: save concrete product
+#     MP: open concrete drawer by SKU:    ${one_variant_product_of_main_merchant_concrete_sku}
+#     MP: fill product price values:
+#     ...    || product type | row number | store | currency | gross default ||
+#     ...    || concrete     | 1          | DE    | CHF      | 200           ||
 #     MP: save concrete product
 #     Yves: login on Yves with provided credentials:     ${yves_company_user_custom_merchant_prices_email}
 #     Yves: go to PDP of the product with sku:    ${one_variant_product_of_main_merchant_abstract_sku}
@@ -972,23 +1021,9 @@ Create_and_Approve_New_Merchant_Product
 #     MP: open concrete drawer by SKU:    ${one_variant_product_of_main_merchant_concrete_sku}
 #     MP: delete price row that contains text:    5 - Spryker Systems GmbH
 #     MP: save concrete product
-#     Yves: login on Yves with provided credentials:     ${yves_company_user_custom_merchant_prices_email}
 #     Yves: go to PDP of the product with sku:    ${one_variant_product_of_main_merchant_abstract_sku}
-#     Yves: merchant's offer/product price should be:    Spryker     €632.12
+#     Yves: merchant's offer/product price should be:    Spryker     €100
 
-# Search_for_Merchant_Offers_and_Products
-#     [Documentation]    Checks that through search customer is able to see the list of merchant's products and offers
-#     Yves: go to the 'Home' page
-#     Yves: perform search by:    Office King
-#     Yves: go to the PDP of the first available product on open catalog page
-#     Yves: merchant is (not) displaying in Sold By section of PDP:    Office King    true
-#     Yves: perform search by:    Office King
-#     Yves: select filter value:    Merchant    Office King
-#     Yves: change sorting order on catalog page:    Sort by name ascending
-#     Yves: go to the PDP of the first available product on open catalog page
-#     Yves: merchant is (not) displaying in Sold By section of PDP:    Office King    true
-#     Yves: perform search by:    Office King
-#     Yves: select filter value:    Merchant    Office King
-#     Yves: change sorting order on catalog page:    Sort by name descending
-#     Yves: go to the PDP of the first available product on open catalog page
-#     Yves: merchant is (not) displaying in Sold By section of PDP:    Office King    true
+# Merchant_Portal_Volume_Prices
+# ###TODO###
+# [Documentation]    Checks that merchant is able to add, edit, delete volume prices per currency. Covers products and offers

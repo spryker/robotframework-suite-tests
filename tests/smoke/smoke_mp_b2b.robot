@@ -1167,6 +1167,7 @@ Fulfill_Order_from_Merchant_Portal
     Yves: get the last placed order ID by current customer
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Pay 
+    Zed: wait for order item to be in state:    ${product_with_multiple_offers_concrete_sku}    sent to merchant    2
     MP: login on MP with provided credentials:    ${merchant_office_king_email}
     MP: open navigation menu tab:    Orders    
     MP: wait for order to appear:    ${lastPlacedOrder}--${merchant_office_king_reference}
@@ -1222,17 +1223,23 @@ Merchant_Portal_Customer_Specific_Prices
 
 Search_for_Merchant_Offers_and_Products
     [Documentation]    Checks that through search customer is able to see the list of merchant's products and offers
-    Yves: go to the 'Home' page
+    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     Yves: perform search by:    Office King
     Yves: go to the PDP of the first available product on open catalog page
+    Yves: select random varian if variant selector is available
     Yves: merchant is (not) displaying in Sold By section of PDP:    Office King    true
-    Yves: perform search by:    Office King
-    Yves: select filter value:    Merchant    Office King
+    Yves: perform search by:    Spryker
     Yves: change sorting order on catalog page:    Sort by name ascending
     Yves: go to the PDP of the first available product on open catalog page
-    Yves: merchant is (not) displaying in Sold By section of PDP:    Office King    true
-    Yves: perform search by:    Office King
-    Yves: select filter value:    Merchant    Office King
-    Yves: change sorting order on catalog page:    Sort by name descending
+    Yves: select random varian if variant selector is available
+    Yves: merchant is (not) displaying in Sold By section of PDP:    Spryker    true
+    Yves: perform search by:    ${EMPTY}
+    Yves: select filter value:    Merchant    Budget Stationery
     Yves: go to the PDP of the first available product on open catalog page
-    Yves: merchant is (not) displaying in Sold By section of PDP:    Office King    true
+    Yves: select random varian if variant selector is available
+    Yves: merchant is (not) displaying in Sold By section of PDP:    Budget Stationery    true
+
+###TO DO###
+# Merchant_Portal_Volume_Prices
+# ###TODO###
+# [Documentation]    Checks that merchant is able to add, edit, delete volume prices per currency. Covers products and offers

@@ -302,3 +302,9 @@ Select From List By Value When Element Is Visible
     Run keywords
         ...    Wait Until Element Is Visible    ${selector}
         ...    AND    Select From List By Value    ${selector}     ${value}
+
+Remove leading and trailing whitespace from a string:
+    [Arguments]    ${string}
+    ${string}=    Replace String Using Regexp    ${string}    (^[ ]+|[ ]+$)    ${EMPTY}
+    Set Global Variable    ${string}
+    [Return]    ${string}

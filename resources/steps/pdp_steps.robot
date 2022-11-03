@@ -35,7 +35,7 @@ Yves: PDP contains/doesn't contain:
     END
 
 Yves: add product to the shopping cart
-    ${variants_present_status}=    Run Keyword And Return Status    Page should contain element    ${pdp_variant_selector}
+    ${variants_present_status}=    Run Keyword And Return Status    Page should contain element    ${pdp_variant_selector}    ${EMPTY}    0:00:01
     IF    '${variants_present_status}'=='True'    Yves: change variant of the product on PDP on random value
     Click    ${pdp_add_to_cart_button}
     Yves: remove flash messages
@@ -94,7 +94,7 @@ Yves: add product to the shopping list:
 Yves: change variant of the product on PDP on random value
     Wait Until Element Is Visible    ${pdp_variant_selector}
     Select Random Option From List    ${pdp_variant_selector}    xpath=//*[@data-qa='component variant']//select//option[@value]
-
+    Sleep    3s
 
 Yves: get sku of the concrete product on PDP
     Wait Until Element Is Visible    ${pdp_product_sku}[${env}]
@@ -104,7 +104,15 @@ Yves: get sku of the concrete product on PDP
     Set Global Variable    ${got_concrete_product_sku}
     [Return]    ${got_concrete_product_sku}
 
+Yves: get name of the product on PDP
+    Wait Until Element Is Visible    ${pdp_main_container_locator}[${env}]
+    ${got_product_name}=    Get Text    ${pdp_product_name}
+    ${got_product_name}=    Remove leading and trailing whitespace from a string:    ${got_product_name}
+    Set Global Variable    ${got_product_name}
+    [Return]    ${got_product_name}
+
 Yves: get sku of the abstract product on PDP
+    Wait Until Element Is Visible    ${pdp_main_container_locator}[${env}]
     ${currentURL}=    Get Url
     Log    current url: ${currentURL}
     ${got_abstract_product_sku}=    Get Regexp Matches    ${currentURL}    ([^-]+$)
@@ -114,6 +122,7 @@ Yves: get sku of the abstract product on PDP
     ${got_abstract_product_sku}=    Replace String    ${got_abstract_product_sku}    ]    ${EMPTY}
     ${sku_length}=    Get Length    ${got_abstract_product_sku}
     ${got_abstract_product_sku}=    Set Variable If    '${env}'!='b2b' and '${sku_length}'=='2'    0${got_abstract_product_sku}    ${got_abstract_product_sku}
+    ${got_abstract_product_sku}=    Set Variable If    '${env}'!='b2b' and '${sku_length}'=='1'    00${got_abstract_product_sku}    ${got_abstract_product_sku}
     Set Global Variable    ${got_abstract_product_sku}
     [Return]    ${got_abstract_product_sku}
 
@@ -177,4 +186,6 @@ Yves: merchant is (not) displaying in Sold By section of PDP:
     Wait Until Element Is Visible    ${pdp_product_sku}[${env}]
     Try reloading page until element is/not appear:    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]     ${condition}    26    3s  
    
-    
+Yves: select random varian if variant selector is available
+    ${variants_present_status}=    Run Keyword And Return Status    Page should contain element    ${pdp_variant_selector}    ${EMPTY}    0:00:01
+    IF    '${variants_present_status}'=='True'    Yves: change variant of the product on PDP on random value
