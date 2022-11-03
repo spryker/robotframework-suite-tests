@@ -628,7 +628,7 @@ User_Account
     Yves: go to user menu item in header:    Order History
     Yves: 'Order History' page is displayed
     Yves: go to user menu item in header:    Profile
-    Yves: 'My Profile' page is displayed
+    Yves: 'Profile' page is displayed
     Yves: go to user menu item in the left bar:    Addresses
     Yves: 'Addresses' page is displayed
     Yves: go to user menu item in the left bar:    Newsletter

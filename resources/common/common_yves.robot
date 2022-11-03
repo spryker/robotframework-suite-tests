@@ -22,9 +22,6 @@ Resource    ../pages/yves/yves_return_details_page.robot
 Resource    ../pages/yves/yves_checkout_summary_page.robot
 Resource    ../pages/yves/yves_checkout_cancel_payment_page.robot
 Resource    ../steps/header_steps.robot
-Resource    ../pages/yves/yves_newsletter_page.robot
-Resource    ../pages/yves/yves_overview_page.robot
-Resource    ../pages/yves/yves_profile_page.robot
 
 *** Variable ***
 ${notification_area}    xpath=//section[@data-qa='component notification-area']
@@ -90,11 +87,12 @@ Yves: '${pageName}' page is displayed
     ...    ELSE IF    '${pageName}' == 'Return Details'    Page Should Contain Element    ${return_details_main_content_locator}    ${pageName} page is not displayed
     ...    ELSE IF    '${pageName}' == 'Payment cancellation'    Page Should Contain Element    ${cancel_payment_page_main_container_locator}    ${pageName} page is not displayed
     ...    ELSE IF    '${pageName}' == 'Merchant Profile'    Page Should Contain Element    ${merchant_profile_main_content_locator}    ${pageName} page is not displayed
-    ...    ELSE IF    '${pageName}' == 'Overview'    Page Should Contain Element    ${overview_page_locator}    ${pageName} page is not displayed
-    ...    ELSE IF    '${pageName}' == 'Newsletter'    Page Should Contain Element    ${newsletter_page_locator}    ${pageName} page is not displayed
-    ...    ELSE IF    '${pageName}' == 'Addresses'    Page Should Contain Element    ${addresses_page_locator}    ${pageName} page is not displayed
-    ...    ELSE IF    '${pageName}' == 'Returns'    Page Should Contain Element    ${returns_page_locator}    ${pageName} page is not displayed
-    ...    ELSE IF    '${pageName}' == 'My Profile'    Page Should Contain Element    ${my_profile_page_locator}    ${pageName} page is not displayed
+    ...    ELSE IF    '${pageName}' == 'Overview'    Yves: assertion of page title:    ${pageName}
+    ...    ELSE IF    '${pageName}' == 'Newsletter'    Yves: assertion of page title:    ${pageName}
+    ...    ELSE IF    '${pageName}' == 'Addresses'    Yves: assertion of page title:    ${pageName}
+    ...    ELSE IF    '${pageName}' == 'Returns'    Yves: assertion of page title:    ${pageName}
+    ...    ELSE IF    '${pageName}' == 'Profile'    Yves: assertion of page title:    ${pageName}
+
 Yves: remove flash messages
     ${flash_massage_state}=    Run Keyword And Ignore Error    Page Should Contain Element    ${notification_area}    1s
     Log    ${flash_massage_state}
@@ -305,3 +303,8 @@ Yves: page should contain script with attribute:
 Yves: page should contain script with id:
     [Arguments]    ${scriptId}
     Yves: page should contain script with attribute:    id    ${scriptId}
+
+Yves: assertion of page title:
+    [Arguments]    ${page_name}
+    ${title}    Get Title
+    Should Contain    ${title}    ${page_name}
