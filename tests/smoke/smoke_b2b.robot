@@ -91,6 +91,33 @@ Share_Shopping_Carts
     Yves: get the last placed order ID by current customer
     Yves: 'View Order/Reorder/Return' on the order history page:     View Order    ${lastPlacedOrder}
     Yves: 'View Order' page is displayed
+    
+    #Checks that cart can be shared with a user with read-only permissions
+    Yves: login on Yves with provided credentials:    ${yves_company_user_shared_permission_owner_email}
+    Yves: go to 'Shopping Carts' page through the header
+    Yves: 'Shopping Carts' page is displayed
+    Yves: create new 'Shopping Cart' with name:    shoppingCartName+${random}
+    Yves: 'Shopping Carts' widget contains:    shoppingCartName+${random}    Owner access
+    Yves: go to 'Shopping Carts' page through the header
+    Yves: 'Shopping Carts' page is displayed
+    Yves: the following shopping cart is shown:    shoppingCartName+${random}    Owner access
+    Yves: share shopping cart with user:    shoppingCartName+${random}    ${yves_company_user_shared_permission_receiver_lastname} ${yves_company_user_shared_permission_receiver_firstname}    Read-only
+    Yves: go to PDP of the product with sku:    ${concrete_avaiable_product_sku}
+    Yves: add product to the shopping cart
+    Yves: logout on Yves as a customer
+    Yves: login on Yves with provided credentials:    ${yves_company_user_shared_permission_receiver_email}
+    Yves: 'Shopping Carts' widget contains:    shoppingCartName+${random}    Read-only
+    Yves: go to 'Shopping Carts' page through the header
+    Yves: 'Shopping Carts' page is displayed
+    Yves: the following shopping cart is shown:    shoppingCartName+${random}    Read-only
+    Yves: go to the shopping cart through the header with name:    shoppingCartName+${random}
+    Yves: 'Shopping Cart' page is displayed
+    Yves: shopping cart contains the following products:    ${concrete_avaiable_product_sku}
+    Yves: shopping cart contains product with unit price:    ${concrete_avaiable_product_sku}    ${concrete_avaiable_product_name}        ${concrete_avaiable_product_price}
+    Yves: shopping cart contains/doesn't contain the following elements:   false    ${shopping_cart_checkout_button}
+    Yves: flash message 'should' be shown
+    [Teardown]    Run Keywords    Yves: logout on Yves as a customer
+    ...    AND    Reload
 
 Quick_Order
     [Documentation]    Checks Quick Order, checkout and Reorder
@@ -223,7 +250,7 @@ Product_Sets
     [Teardown]    Yves: delete 'Shopping Cart' with name:    productSetsCart+${random}
 
 Product_Bundles
-    [Documentation]    Checks checkout with Bundle product
+    [Documentation]    Checks checkout with Bundle product. Fails due to bug CC-16679
     [Setup]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: change product stock:    ${bundled_product_1_abstract_sku}    ${bundled_product_1_concrete_sku}    true    10
     ...    AND    Zed: change product stock:    ${bundled_product_2_abstract_sku}    ${bundled_product_2_concrete_sku}    true    10
@@ -306,7 +333,7 @@ Customer_Specific_Prices
     [Teardown]    Yves: delete 'Shopping Cart' with name:    customerPrices+${random}
 
 Agent_Assist
-    [Documentation]    Checks Agent creation and that it can login under customer
+    [Documentation]    Checks Agent creation and that it can login under customer. Fails due to bug CC-17232
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: create new Zed user with the following data:    agent+${random}@spryker.com    change123${random}    Agent    Assist    Root group    This user is an agent    en_US
     Yves: go to the 'Home' page
@@ -315,7 +342,7 @@ Agent_Assist
     Yves: header contains/doesn't contain:    true    ${customerSearchWidget}
     Yves: perform search by customer:    ${yves_company_user_special_prices_customer_firstname}
     Yves: agent widget contains:    ${yves_company_user_special_prices_customer_email}
-    Yves: As an Agent login under the customer:    ${yves_company_user_special_prices_customer_email}
+    Yves: as an agent login under the customer:    ${yves_company_user_special_prices_customer_email}
     Yves: perform search by:    ${one_variant_product_abstract_name}
     Yves: product with name in the catalog should have price:    ${one_variant_product_abstract_name}    ${one_variant_product_merchant_price}
     Yves: go to PDP of the product with sku:    ${one_variant_product_abstract_sku}
@@ -439,7 +466,7 @@ Approval_Process
     Yves: 'Thank you' page is displayed
 
 Request_for_Quote
-    [Documentation]    Checks user can request and receive quote
+    [Documentation]    Checks user can request and receive quote. Fails due to bug CC-17232
     [Setup]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: create new Zed user with the following data:    agent_quote+${random}@spryker.com    change123${random}    Request    Quote    Root group    This user is an agent    en_US
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
@@ -562,7 +589,7 @@ Configurable_Bundle
     Yves: 'Order Details' page contains the following product title N times:    Presentation bundle    3
 
 Return_Management
-    [Documentation]    Checks OMS and that Yves and Zed users can create returns
+    [Documentation]    Checks OMS and that Yves and Zed users can create returns. Fails due to bug CC-17232
     [Setup]    Run keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     ...    AND    Yves: create new 'Shopping Cart' with name:    returnCart+${random}
     Yves: go to PDP of the product with sku:    M90802
@@ -604,7 +631,7 @@ Return_Management
     Yves: header contains/doesn't contain:    true    ${customerSearchWidget}
     Yves: perform search by customer:    ${yves_company_user_buyer_email}
     Yves: agent widget contains:    ${yves_company_user_buyer_email}
-    Yves: As an Agent login under the customer:    ${yves_company_user_buyer_email}
+    Yves: as an agent login under the customer:    ${yves_company_user_buyer_email}
     Yves: go to user menu item in header:    Order History
     Yves: 'View Order/Reorder/Return' on the order history page:     Return    ${lastPlacedOrder}
     Yves: 'Create Return' page is displayed

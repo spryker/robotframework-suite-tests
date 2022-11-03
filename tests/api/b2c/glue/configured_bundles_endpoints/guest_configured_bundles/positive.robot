@@ -17,7 +17,7 @@ Add_configured_bundle_with_1_slot_1_product_new_cart
     And Save value to a variable:    [data][id]    guest_cart_id
     And Response should contain the array larger than a certain size:    [data]    0
     And Response body parameter should be:    [data][type]    guest-carts
-    And Response body parameter should be:    [data][attributes][priceMode]    ${currency.mode.gross}
+    And Response body parameter should be:    [data][attributes][priceMode]    ${mode.gross}
     And Response body parameter should be:    [data][attributes][currency]    ${currency.eur.code}
     And Response body parameter should be:    [data][attributes][store]    ${store.de}
     And Response body parameter should not be EMPTY:    [data][attributes][totals][expenseTotal]
@@ -44,7 +44,7 @@ Add_configured_bundle_with_multiple_slots_and_products_to_existing_cart
     And Response reason should be:    Created
     And Response should contain the array larger than a certain size:    [data]    0
     And Response body parameter should be:    [data][type]    guest-carts
-    And Response body parameter should be:    [data][attributes][priceMode]    ${currency.mode.gross}
+    And Response body parameter should be:    [data][attributes][priceMode]    ${mode.gross}
     And Response body parameter should be:    [data][attributes][currency]    ${currency.eur.code}
     And Response body parameter should be:    [data][attributes][store]    ${store.de}
     And Response body parameter should not be EMPTY:    [data][attributes][totals][expenseTotal]
@@ -263,7 +263,7 @@ Update_configured_bundle_product_quantity
     And Response reason should be:    OK
     And Response should contain the array larger than a certain size:    [data]    0
     And Response body parameter should be:    [data][type]    guest-carts
-    And Response body parameter should be:    [data][attributes][priceMode]    ${currency.mode.gross}
+    And Response body parameter should be:    [data][attributes][priceMode]    ${mode.gross}
     And Response body parameter should be:    [data][attributes][currency]    ${currency.eur.code}
     And Response body parameter should be:    [data][attributes][store]    ${store.de}
     And Response body parameter should not be EMPTY:    [data][attributes][totals][expenseTotal]

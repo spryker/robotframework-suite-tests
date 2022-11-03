@@ -17,7 +17,7 @@ Get_cart_by_cart_id
     Then Response reason should be:    OK
     And Response body parameter should be:    [data][type]    carts
     And Response body parameter should be:    [data][id]    ${cart_id}
-    And Response body parameter should be:    [data][attributes][priceMode]    ${currency.mode.gross}
+    And Response body parameter should be:    [data][attributes][priceMode]    ${mode.gross}
     And Response body parameter should be:    [data][attributes][currency]    ${currency.eur.code}
     And Response body parameter should be:    [data][attributes][store]    ${store.de}
     And Response body parameter should be:    [data][attributes][totals][expenseTotal]    0
@@ -54,7 +54,7 @@ Get_cart_by_cart_id_with_included_items
     And Response reason should be:    OK
     And Response body parameter should be:    [data][type]    carts
     And Response body parameter should be:    [data][id]   ${cart_id}
-    And Response body parameter should be:    [data][attributes][priceMode]    ${currency.mode.gross}
+    And Response body parameter should be:    [data][attributes][priceMode]    ${mode.gross}
     And Response body parameter should be:    [data][attributes][currency]    ${currency.eur.code}
     And Response body parameter should be:    [data][attributes][store]    ${store.de}
     And Response body parameter should not be EMPTY:    [data][attributes][totals][expenseTotal]
@@ -123,7 +123,7 @@ Get_cart_with_included_cart_rules
     And Response reason should be:    OK
     And Response body parameter should be:    [data][0][type]    carts
     And Response body parameter should be:    [data][0][id]   ${cart_id}
-    And Response body parameter should be:    [data][0][attributes][priceMode]    ${currency.mode.gross}
+    And Response body parameter should be:    [data][0][attributes][priceMode]    ${mode.gross}
     And Response body parameter should be:    [data][0][attributes][currency]    ${currency.eur.code}
     And Response body parameter should be:    [data][0][attributes][store]    ${store.de}
     And Response body parameter should not be EMPTY:    [data][0][attributes][totals][expenseTotal]
@@ -163,7 +163,7 @@ Get_cart_with_included_promotional_items
     And Response reason should be:    OK
     And Response body parameter should be:    [data][0][type]    carts
     And Response body parameter should be:    [data][0][id]   ${cart_id}
-    And Response body parameter should be:    [data][0][attributes][priceMode]    ${currency.mode.gross}
+    And Response body parameter should be:    [data][0][attributes][priceMode]    ${mode.gross}
     And Response body parameter should be:    [data][0][attributes][currency]    ${currency.eur.code}
     And Response body parameter should be:    [data][0][attributes][store]    ${store.de}
     And Response body parameter should not be EMPTY:    [data][0][attributes][totals][expenseTotal]
@@ -194,7 +194,7 @@ Get_cart_by_cart_id_with_included_vouchers
     When I send a GET request:    /carts/${cart_id}?include=vouchers
     Then Response body parameter should be:    [data][type]    carts
     And Response body parameter should be:    [data][id]    ${cart_id}
-    And Response body parameter should be:    [data][attributes][priceMode]    ${currency.mode.gross}
+    And Response body parameter should be:    [data][attributes][priceMode]    ${mode.gross}
     And Response body parameter should be:    [data][attributes][currency]    ${currency.eur.code}
     And Response body parameter should be:    [data][attributes][store]    ${store.de}
     #relationships
@@ -221,12 +221,12 @@ Update_cart_by_cart_id_with_all_attributes
           ...  AND    Cleanup all items in the cart:    ${cart_id}
           ...  AND    Get ETag header value from cart
           ...  AND    I set Headers:    Authorization=${token}    If-Match=${ETag}
-    When I send a PATCH request:    /carts/${cart_id}    {"data": {"type": "carts","attributes": {"priceMode": "${currency.mode.net}","currency": "${currency.eur.code}","store": "${store.de}"}}}
+    When I send a PATCH request:    /carts/${cart_id}    {"data": {"type": "carts","attributes": {"priceMode": "${mode.net}","currency": "${currency.eur.code}","store": "${store.de}"}}}
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response body parameter should be:    [data][type]    carts
     And Response body parameter should be:    [data][id]    ${cart_id}
-    And Response body parameter should be:    [data][attributes][priceMode]    ${currency.mode.net}
+    And Response body parameter should be:    [data][attributes][priceMode]    ${mode.net}
     And Response body parameter should be:    [data][attributes][currency]    ${currency.eur.code}
     And Response body parameter should be:    [data][attributes][store]    ${store.de}
     And Response body parameter should be:    [data][attributes][totals][expenseTotal]    0
@@ -238,7 +238,7 @@ Update_cart_by_cart_id_with_all_attributes
     And Response body has correct self link internal
     [Teardown]    Run Keywords    Get ETag header value from cart
         ...  AND    I set Headers:    Authorization=${token}    If-Match=${ETag}
-        ...  AND    I send a PATCH request:    /carts/${cart_id}    {"data": {"type": "carts","attributes": {"priceMode": "${currency.mode.gross}"}}}
+        ...  AND    I send a PATCH request:    /carts/${cart_id}    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}"}}}
         ...  AND    Response status code should be:    200
 
 Update_cart_with_empty_priceMod_currency_store
@@ -254,7 +254,7 @@ Update_cart_with_empty_priceMod_currency_store
     And Response reason should be:    OK
     And Response body parameter should be:    [data][type]    carts
     And Response body parameter should be:    [data][id]    ${cart_id}
-    And Response body parameter should be:    [data][attributes][priceMode]    ${currency.mode.gross}
+    And Response body parameter should be:    [data][attributes][priceMode]    ${mode.gross}
     And Response body parameter should be:    [data][attributes][currency]    ${currency.eur.code}
     And Response body parameter should be:    [data][attributes][store]    ${store.de}
     And Response body parameter should be:    [data][attributes][totals][expenseTotal]    0
