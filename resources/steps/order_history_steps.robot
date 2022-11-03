@@ -9,8 +9,12 @@ Resource    ../pages/yves/yves_order_details_page.robot
 *** Keywords ***
 Yves: go to 'Order History' page
     Yves: go to 'Customer Account' page
-    Yves: go to user menu item in the left bar:    Order History
-
+   IF   '${env}' in ['b2c','mp_b2c']
+       Yves: go to user menu item in the left bar:    Orders History
+   ELSE
+       Yves: go to user menu item in the left bar:    Order History
+   END
+    
 Yves: 'View Order/Reorder/Return' on the order history page:
     [Arguments]    ${orderAction}    ${lastPlacedOrder}
     IF    '${orderAction}' == 'View Order'

@@ -2,6 +2,7 @@
 Resource    ../pages/zed/zed_create_zed_user_page.robot
 Resource    ../common/common_zed.robot
 Resource    ../common/common.robot
+Resource    ../pages/yves/yves_agent_assist_page.robot
 
 *** Keywords ***
 Zed: create new Zed user with the following data:
@@ -26,17 +27,20 @@ Yves: perform search by customer:
     [Arguments]    ${searchQuery}
     Type Text    ${agent_customer_search_widget}    ${searchQuery}
 
-
-
 Yves: agent widget contains:
     [Arguments]    ${searchQuery}
     Wait Until Element Is Visible    xpath=//ul[@data-qa='component customer-list']/li[@data-value='${searchQuery}']
     Page Should Contain Element    xpath=//ul[@data-qa='component customer-list']/li[@data-value='${searchQuery}']
 
-Yves: As an Agent login under the customer:
+Yves: as an agent login under the customer:
     [Arguments]    ${searchQuery}
     Yves: perform search by customer:    ${searchQuery}
     Wait Until Element Is Visible    //ul[@data-qa='component customer-list']/li[@data-value='${searchQuery}']
     Click    xpath=//ul[@data-qa='component customer-list']/li[@data-value='${searchQuery}']
     Click    ${agent_confirm_login_button}
 
+Yves: end customer assistance
+    Click    ${end_customer_assistance}
+
+Yves: logout as an agent
+    Click    ${agent_logout}
