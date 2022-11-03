@@ -601,7 +601,7 @@ Refunds
     ...    AND    Zed: activate following discounts from Overview page:    Tu & Wed $5 off 5 or more    10% off $100+    20% off cameras    Tu & Wed €5 off 5 or more    10% off minimum order
  
 Display_stores_in_zed
+    [Documentation]     Checks the stores availabilty  in zed 
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    Zed: go to first navigation item level:    Administration
     Zed: go to second navigation item level:    Administration    Stores
-    Zed: check the avaialbe Stores    ${store_AT}    ${store_DE}
+    Zed: check the avaialbe Stores:    ${store_name_1}    ${store_name_2}
