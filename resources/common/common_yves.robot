@@ -22,6 +22,9 @@ Resource    ../pages/yves/yves_return_details_page.robot
 Resource    ../pages/yves/yves_checkout_summary_page.robot
 Resource    ../pages/yves/yves_checkout_cancel_payment_page.robot
 Resource    ../steps/header_steps.robot
+Resource    ../pages/yves/yves_newsletter_page.robot
+Resource    ../pages/yves/yves_overview_page.robot
+Resource    ../pages/yves/yves_profile_page.robot
 
 *** Variable ***
 ${notification_area}    xpath=//section[@data-qa='component notification-area']
