@@ -5,26 +5,11 @@ Resource   ../common/common_zed.robot
 Resource   ../pages/zed/zed_attach_to_business_unit_page.robot
 Resource   ../pages/yves/yves_customer_account_page.robot
 Resource   ../pages/zed/zed_delete_company_user_page.robot
- 
-*** Variables ***
-${zed_company_name_input_field}    id=company_name
-${zed_bu_company_dropdown_locator}    //select[@id='company-business-unit_fk_company']
-${zed_bu_name_field}    id=company-business-unit_name
-${zed_bu_iban_field}    id=company-business-unit_iban
-${zed_bu_bic_field}    id=company-business-unit_bic
-${zed_role_name_field}    id=company_role_create_form_name
-${zed_role_company_dropdown_locator}    id=company_role_create_form_fkCompany
-${zed_create_company_user_email_field}    id=company-user_customer_email
-${zed_create__company_user_salutation_dropdown}    id=company-user_customer_salutation
-${zed_create_company_user_first_name_field}    id=company-user_customer_first_name
-${zed_create_company_user_last_name_field}    id=company-user_customer_last_name
-${zed_create_company_user_gender_dropdow}    id=company-user_customer_gender
-${zed_create_company_user_dob_picker}    id=company-user_customer_date_of_birth
-${zed_create_company_user_phone_field}    id=company-user_customer_phone
-${zed_create_company_company_name_dropdown}    xpath=(//b[@role="presentation"])[1]
-${zed_create_company_business_unit_dropdown}    xpath=(//b[@role="presentation"])[2]
-${zed_save_button}    xpath=//input[@value="Save"]
- 
+Resource   ../pages/zed/zed_create_company_business_unit_page.robot
+Resource   ../pages/zed/zed_create_company_user_page.robot
+Resource   ../pages/zed/zed_create_company_role_page.robot
+Resource   ../pages/zed/zed_create_company_page.robot
+
 *** Keywords ***
 Zed: create new Company Business Unit with provided name and company:
    [Documentation]     Creates new company BU with provided BU Name and for provided company.
@@ -36,7 +21,6 @@ Zed: create new Company Business Unit with provided name and company:
    Type Text    ${zed_bu_iban_field}    testiban+${random}
    Type Text    ${zed_bu_bic_field}    testbic+${random}
    Zed: submit the form
-   # wait until element is visible    ${zed_success_flash_message}
    wait until element is visible    ${zed_table_locator}
    Zed: perform search by:    ${bu_name_to_set}
    Table Should Contain    ${zed_table_locator}    ${bu_name_to_set}
@@ -84,7 +68,7 @@ Zed: Create new Company User with provided email/company/business unit and role(
    Zed: Check checkbox by Label:    Send password token through email
    Type Text    ${zed_create_company_user_first_name_field}    Robot First+${random}
    Type Text    ${zed_create_company_user_last_name_field}    robot Last+${random}
-   select from list by label    ${zed_create_company_user_gender_dropdow}    Male
+   select from list by label    ${zed_create_company_user_gender_dropdown}    Male
    Type Text    ${zed_create_company_user_dob_picker}    25.10.1989
    Keyboard Key    Press    Enter
    Type Text    ${zed_create_company_user_phone_field}    495-123-45-67
@@ -135,15 +119,29 @@ Zed: delete company user xxx withing xxx company business unit:
            Click    ${zed_confirm_delete_company_user_button}
    END
  
-Zed: Business Unit Address
-   Select From List By Text    id=company_unit_address_fkCompany    meta
-   Select From List By Label    id=company_unit_address_fkCountry    France
-   Type Text    id=company_unit_address_city    singapore
-   Type Text    id=company_unit_address_zipCode    ${random}
-   Type Text    id=company_unit_address_address1    address1${random}
+Zed: add business unit address:
+   [Arguments]    ${company}    ${country}    ${city}    ${ziprode}    ${street}
+   Select From List By Text    ${zed_comapny_unit_address_company_dropdown_locator}    meta
+   Select From List By Label    ${zed_comapny_unit_address_country_dropdown_locator}    France
+   Type Text    ${zed_company_unit_address_city_input_field_locator}    singapore
+   Type Text    ${zed_company_unit_address_zipcode_input_field_locator}    ${random}
+   Type Text    ${zed_company_unit_address_street_input_field_locator}    address1${random}
    Zed: submit the form
  
-Zed: Delete Company Business Unit:
+Zed: delete company business unit:
    [Arguments]    ${name}
    Zed: go to second navigation item level:    Customers    Company Units
    Zed: click Action Button in a table for row that contains:    ${name}   Delete
+
+Yves: validate and set password for newly created company user:
+    [Arguments]    ${email}
+   Save the result of a SELECT DB query to a variable:    select registration_key from spy_customer where email = '${email}'    confirmation_key
+   Save the result of a SELECT DB query to a variable:    select customer_reference from spy_customer where email = '${email}'    customer_id
+   I send a POST request:     /customer-confirmation   {"data":{"type":"customer-confirmation","attributes":{"registrationKey":"${confirmation_key}"}}}
+   Save the result of a SELECT DB query to a variable:    select restore_password_key from spy_customer where email = '${email}'    restore_key
+   I send a PATCH request:    /customer-restore-password/${customer_id}   {"data":{"type":"customer-restore-password","id":"${customer_id}","attributes":{"restorePasswordKey":"${restore_key}","password":"${yves_user_password}","confirmPassword":"${yves_user_password}"}}}
+
+Yves: check details of users:
+   [Arguments]    ${name1}    ${name2}   
+   Page Should Contain Element    //strong[normalize-space()='${name1}']
+   Page Should Contain Element    //p[contains(text(),'${name2}')]
