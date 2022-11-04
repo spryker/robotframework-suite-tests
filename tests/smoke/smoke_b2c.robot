@@ -1,5 +1,6 @@
 *** Settings ***
 Library    BuiltIn
+Library    XML
 Suite Setup       SuiteSetup
 Suite Teardown    SuiteTeardown
 Test Setup        TestSetup
@@ -600,31 +601,19 @@ Refunds
     [Teardown]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: activate following discounts from Overview page:    Tu & Wed $5 off 5 or more    10% off $100+    20% off cameras    Tu & Wed €5 off 5 or more    10% off minimum order
  
-User_control_functionality
+User_Control
+    [Documentation]    Create a user with role having limited access and group assigned to it,deactivate the user as well.
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    Zed: go to second navigation item level:    Users    Users
-    Zed: click button in Header:    Add New User
-    Zed: add a new user detatils:    abc${random}@gmail.com   change${random}   change${random}    khushal    singh
+    Zed: create new Zed user with the following data:    abc${random}@gmail.com   change${random}    Test    last    Root group    This user is an agent    en_US    
+    Zed: create new role with name:    role${random}
+    Zed: apply restrictions for user role:    ${bundle_access}    ${controller_access}    ${action_access}    ${permission_deny}
+    Zed: create new group with role assigned:   Group${random}    role${random}
+    Zed: add the created group to created user:    Group${random}
     Zed: logout
     Zed: login on Zed with provided credentials:    abc${random}@gmail.com    change${random}
-    Zed: go to second navigation item level:    Users    User Roles
-    Zed: click button in Header:    Add new Role
-    Zed: Add role name:    role${random}
-    Zed: submit the form
-    Zed: go to second navigation item level:    Users    User Groups
-    Zed: click button in Header:    Create Group
-    Zed: add new group:   Group${random}
-    Zed: go to second navigation item level:    Users    Users
-    Zed: perform search by:    abc${random}@gmail.com
-    Zed: edit user Details
-    Zed: Check checkbox by Label:    Group${random}
-    Zed: submit the form
-    Zed: message should be shown:    User was updated successfully.
-    Zed: logout
+    Zed: go to second navigation item level:    Catalog    Attributes
+    Zed: click button in Header:    Create Product Attribute
+    Zed: validate the message when permission is restricted:    Access denied
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    Zed: go to second navigation item level:    Users    Users
-    Zed: perform search by:    abc${random}@gmail.com
-    Zed: deactivate user
-    Zed: message should be shown:    User was deactivated successfully.
-    Zed: delete Zed user with the following email:    abc${random}@gmail.com
-    Zed: message should be shown:    User was deleted successfully.
+    Zed: deactivate the created user:    abc${random}@gmail.com
+    Zed: login with deactivated user:    abc${random}@gmail.com    change${random}

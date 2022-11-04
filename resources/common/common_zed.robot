@@ -114,8 +114,13 @@ Zed: go to tab:
     Click    xpath=//*[contains(@data-toggle,'tab') and contains(text(),'${tabName}')]
 
 Zed: message should be shown:
-    [Arguments]    ${text}
-    Wait Until Element Is Visible    xpath=//div[contains(@class,'alert alert-success')]//*[contains(text(),'${text}')]    message=Success message is not shown
+    [Arguments]    ${type}    ${text}
+    IF    '${type}' == 'success'
+        Wait Until Element Is Visible    xpath=//div[contains(@class,'alert alert-success')]//*[contains(text(),'${text}')]    message=Success message is not shown
+    ELSE IF    '${type}' == 'fail'
+        Wait Until Element Is Visible    xpath=//div[contains(@class,'alert alert-danger')]//*[contains(text(),'${text}')]    message=Success message is not shown
+    END
+    
 
 Zed: flash message should be shown:
     [Documentation]    Possible values: 'success', 'info' and 'danger'

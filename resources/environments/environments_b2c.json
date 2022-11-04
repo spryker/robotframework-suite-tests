@@ -44,5 +44,12 @@
         "product_with_relations_alternative_products_sku": "145",
         "product_with_relations_upselling_sku": "018"
             
+    },
+    "user_role":{
+            "bundle_access":"product-attribute-gui",
+            "controller_access":"attribute",
+            "action_access":"create",
+            "permission_allow":"allow",
+            "permission_deny":"deny"
     }
 }
