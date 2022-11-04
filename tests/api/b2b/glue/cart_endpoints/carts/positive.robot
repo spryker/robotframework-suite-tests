@@ -71,11 +71,11 @@ Get_cart_by_cart_id_with_included_items
     ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
     ...  AND    Save value to a variable:    [data][id]    cart_id
     ...  AND    I send a POST request:    /carts/${cartId}/items?include=items    {"data": {"type": "items","attributes": {"sku": "${concrete.available_product.with_stock.product_1.sku}","quantity": 1}}}
-    ...  AND    Save value to a variable:    [included][0][id]    first_item_id
+    ...  AND    Save value to a variable:    [included][0][id]    concrete.available_product.with_stock.product_1.id
     ...  AND    I send a POST request:    /carts/${cartId}/items?include=items    {"data": {"type": "items","attributes": {"sku": "${concrete.with_options.sku}","quantity": 1}}}
-    ...  AND    Save value to a variable:    [included][1][id]    second_item_id
+    ...  AND    Save value to a variable:    [included][1][id]    concrete.with_options.id
     ...  AND    I send a POST request:    /carts/${cartId}/items?include=items    {"data": {"type": "items","attributes": {"sku": "${concrete.with_original_prices.sku}","quantity": 1}}}
-    ...  AND    Save value to a variable:    [included][2][id]    third_item_id
+    ...  AND    Save value to a variable:    [included][2][id]    concrete.with_original_prices.id
     When I send a GET request:    /carts/${cart_id}?include=items
     Then Response status code should be:    200
     And Response reason should be:    OK
@@ -96,14 +96,14 @@ Get_cart_by_cart_id_with_included_items
     And Response body has correct self link internal
     And Response should contain the array of a certain size:    [data][relationships][items][data]    3
     And Each array element of array in response should contain property with value:    [data][relationships][items][data]    type    items
-    And Response body parameter should be:    [data][relationships][items][data][0][id]    ${first_item_id}
-    And Response body parameter should be:    [data][relationships][items][data][1][id]    ${second_item_id}
-    And Response body parameter should be:    [data][relationships][items][data][2][id]    ${third_item_id}
+    And Response body parameter should be:    [data][relationships][items][data][0][id]    ${concrete.available_product.with_stock.product_1.id}
+    And Response body parameter should be:    [data][relationships][items][data][1][id]    ${concrete.with_options.id}
+    And Response body parameter should be:    [data][relationships][items][data][2][id]    ${concrete.with_original_prices.id}
     And Response should contain the array of a certain size:    [included]    3
     And Each array element of array in response should contain property with value:    [included]    type    items
-    And Response body parameter should be:    [included][0][id]    ${first_item_id}
-    And Response body parameter should be:    [included][1][id]    ${second_item_id}
-    And Response body parameter should be:    [included][2][id]    ${third_item_id}
+    And Response body parameter should be:    [included][0][id]    ${concrete.available_product.with_stock.product_1.id}
+    And Response body parameter should be:    [included][1][id]    ${concrete.with_options.id}
+    And Response body parameter should be:    [included][2][id]    ${concrete.with_original_prices.id}
     And Each array element of array in response should contain property:    [included]    attributes
     And Each array element of array in response should contain property:    [included]    links
     And Response body parameter should be:    [included][0][attributes][sku]    ${concrete.available_product.with_stock.product_1.sku}
@@ -146,11 +146,11 @@ Get_cart_by_cart_id_with_2_product_discounts
     ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
     ...  AND    Save value to a variable:    [data][id]    cart_id
     ...  AND    I send a POST request:    /carts/${cartId}/items?include=items    {"data": {"type": "items","attributes": {"sku": "${discount.product_1.sku}","quantity": 1}}}
-    ...  AND    Save value to a variable:    [included][0][id]    first_item_id    
+    ...  AND    Save value to a variable:    [included][0][id]    discount.product_1.id    
     ...  AND    I send a POST request:    /carts/${cartId}/items?include=items    {"data": {"type": "items","attributes": {"sku": "${discount.product_2.sku}","quantity": 1}}}
-    ...  AND    Save value to a variable:    [included][1][id]    second_item_id    
+    ...  AND    Save value to a variable:    [included][1][id]    discount.product_2.id    
     ...  AND    I send a POST request:    /carts/${cartId}/items?include=items    {"data": {"type": "items","attributes": {"sku": "${discount.product_3.sku}","quantity": 1}}}
-    ...  AND    Save value to a variable:    [included][2][id]    third_item_id    
+    ...  AND    Save value to a variable:    [included][2][id]    discount.product_3.id    
     When I send a GET request:    /carts/${cart_id}?include=items
     Then Response status code should be:    200
     And Response reason should be:    OK
@@ -179,14 +179,14 @@ Get_cart_by_cart_id_with_2_product_discounts
     #items
     And Response should contain the array of a certain size:    [data][relationships][items][data]    3
     And Each array element of array in response should contain property with value:    [data][relationships][items][data]    type    items
-    And Response body parameter should be:    [data][relationships][items][data][0][id]    ${first_item_id}
-    And Response body parameter should be:    [data][relationships][items][data][1][id]    ${second_item_id}
-    And Response body parameter should be:    [data][relationships][items][data][2][id]    ${third_item_id}
+    And Response body parameter should be:    [data][relationships][items][data][0][id]    ${discount.product_1.id}
+    And Response body parameter should be:    [data][relationships][items][data][1][id]    ${discount.product_2.id}
+    And Response body parameter should be:    [data][relationships][items][data][2][id]    ${discount.product_3.id}
     #included
     And Response should contain the array of a certain size:    [included]    3
     And Each array element of array in response should contain property with value:    [included]    type    items
     #item 1
-    And Response body parameter should be:    [included][0][id]    ${first_item_id}
+    And Response body parameter should be:    [included][0][id]    ${discount.product_1.id}
     And Response body parameter should be:    [included][0][attributes][sku]    ${discount.product_1.sku}
     And Response body parameter should be:    [included][0][attributes][quantity]    1
     And Response body parameter should be:    [included][0][attributes][calculations][unitDiscountAmountAggregation]    ${discount.product_1.total_sum_of_discounts}
@@ -194,7 +194,7 @@ Get_cart_by_cart_id_with_2_product_discounts
     And Response body parameter should be:    [included][0][attributes][calculations][unitDiscountAmountFullAggregation]    ${discount.product_1.total_sum_of_discounts}
     And Response body parameter should be:    [included][0][attributes][calculations][sumDiscountAmountFullAggregation]    ${discount.product_1.total_sum_of_discounts}
     #item 2
-    And Response body parameter should be:    [included][1][id]    ${second_item_id}
+    And Response body parameter should be:    [included][1][id]    ${discount.product_2.id}
     And Response body parameter should be:    [included][1][attributes][sku]    ${discount.product_2.sku}
     And Response body parameter should be:    [included][1][attributes][quantity]    1
     And Response body parameter should be:    [included][1][attributes][calculations][unitDiscountAmountAggregation]    ${discount.product_2.total_sum_of_discounts}
@@ -202,7 +202,7 @@ Get_cart_by_cart_id_with_2_product_discounts
     And Response body parameter should be:    [included][1][attributes][calculations][unitDiscountAmountFullAggregation]    ${discount.product_2.total_sum_of_discounts}
     And Response body parameter should be:    [included][1][attributes][calculations][sumDiscountAmountFullAggregation]    ${discount.product_2.total_sum_of_discounts}
     #item 3
-    And Response body parameter should be:    [included][2][id]    ${third_item_id}
+    And Response body parameter should be:    [included][2][id]    ${discount.product_3.id}
     And Response body parameter should be:    [included][2][attributes][sku]    ${discount.product_3.sku}
     And Response body parameter should be:    [included][2][attributes][quantity]    1
     And Response body parameter should be:    [included][2][attributes][calculations][unitDiscountAmountAggregation]    ${discount.product_3.with_10_percent_discount_amount}

@@ -43,8 +43,8 @@ Add_two_items_to_cart_with_included_items_concrete_products_and_abstract_product
     ...    AND    I send a POST request:    /carts    {"data":{"type":"carts","attributes":{"priceMode":"${mode.gross}","currency":"${currency.eur.code}","store":"${store.de}","name":"Cart-${random}"}}}
     ...    AND    Save value to a variable:    [data][id]    cart_uid
     When I send a POST request:    /carts/${cart_uid}/items?include=items,concrete-products,abstract-products    {"data":{"type": "items","attributes": {"sku": "${concrete.available_product.with_stock_and_never_out_of_stock.sku}","quantity": 2}}}
-    Then Save value to a variable:    [included][2][id]    first_item_id
-    And Save value to a variable:    [included][2][attributes][groupKey]    groupKey
+    Then Save value to a variable:    [included][2][id]    concrete.available_product.with_stock_and_never_out_of_stock.id
+    And Save value to a variable:    [included][2][attributes][groupKey]    concrete.available_product.with_stock_and_never_out_of_stock.groupKey
     And Response status code should be:    201
     And Response reason should be:    Created
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
@@ -67,10 +67,10 @@ Add_two_items_to_cart_with_included_items_concrete_products_and_abstract_product
     And Response include element has self link:   concrete-products
     And Response include element has self link:   abstract-products
     And Response body parameter should be:    [included][2][type]    items
-    And Response body parameter should be:    [included][2][id]    ${first_item_id}
+    And Response body parameter should be:    [included][2][id]    ${concrete.available_product.with_stock_and_never_out_of_stock.id}
     And Response body parameter should be:    [included][2][attributes][sku]    ${concrete.available_product.with_stock_and_never_out_of_stock.sku}
     And Response body parameter should be:    [included][2][attributes][quantity]    2
-    And Response body parameter should be:    [included][2][attributes][groupKey]    ${groupKey}
+    And Response body parameter should be:    [included][2][attributes][groupKey]    ${concrete.available_product.with_stock_and_never_out_of_stock.groupKey}
     And Response body parameter should be:    [included][2][attributes][abstractSku]    ${abstract.available_products.with_stock_and_never_out_of_stock_sku}
     And Response body parameter should be:    [included][2][attributes][amount]    None
     And Response body parameter should not be EMPTY:    [included][2][attributes][calculations][unitPrice] 
@@ -103,8 +103,8 @@ Get_a_cart_with_included_items_and_concrete_products
     ...    AND    I send a POST request:    /carts    {"data":{"type":"carts","attributes":{"priceMode":"${mode.gross}","currency":"${currency.eur.code}","store":"${store.de}","name":"Cart-${random}"}}}
     ...    AND    Save value to a variable:    [data][id]    cart_uid
     ...    AND    I send a POST request:    /carts/${cart_uid}/items?include=items   {"data": {"type": "items","attributes": {"sku": "${concrete.available_product.with_stock_and_never_out_of_stock.sku}","quantity": 2}}}
-    ...    AND    Save value to a variable:    [included][0][id]    first_item_id 
-    ...    AND    Save value to a variable:    [included][0][attributes][groupKey]    groupKey  
+    ...    AND    Save value to a variable:    [included][0][id]    concrete.available_product.with_stock_and_never_out_of_stock.id 
+    ...    AND    Save value to a variable:    [included][0][attributes][groupKey]    concrete.available_product.with_stock_and_never_out_of_stock.groupKey  
     ...    AND    Response status code should be:    201
     When I send a GET request:    /carts/${cart_uid}?include=items,concrete-products 
     Then Response status code should be:    200
@@ -127,10 +127,10 @@ Get_a_cart_with_included_items_and_concrete_products
     And Response include element has self link:   items
     And Response include element has self link:   concrete-products
     And Response body parameter should be:    [included][1][type]    items
-    And Response body parameter should be:    [included][1][id]    ${first_item_id}
+    And Response body parameter should be:    [included][1][id]    ${concrete.available_product.with_stock_and_never_out_of_stock.id}
     And Response body parameter should be:    [included][1][attributes][sku]    ${concrete.available_product.with_stock_and_never_out_of_stock.sku}
     And Response body parameter should be:    [included][1][attributes][quantity]    2
-    And Response body parameter should be:    [included][1][attributes][groupKey]    ${groupKey}
+    And Response body parameter should be:    [included][1][attributes][groupKey]    ${concrete.available_product.with_stock_and_never_out_of_stock.groupKey}
     And Response body parameter should be:    [included][1][attributes][abstractSku]    ${abstract.available_products.with_stock_and_never_out_of_stock_sku}
     And Response body parameter should be:    [included][1][attributes][amount]    None
     And Response body parameter should not be EMPTY:    [included][1][attributes][calculations][unitPrice] 
