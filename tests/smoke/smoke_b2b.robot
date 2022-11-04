@@ -869,15 +869,15 @@ Refunds
     [Teardown]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: activate following discounts from Overview page:    20% off storage    10% off minimum order
 
- Add_product_to_shopping_list_and_from_SL_to_cart
+Add_product_to_shopping_list_and_from_SL_to_cart
     [Documentation]    Adding a product to a newly created shopping list from the shopping list page and then adding product from that shopping list to cart
     Yves: login on Yves with provided credentials:    ${yves_user_email}
     Yves: go To 'Shopping Lists' Page
     Yves: create new 'Shopping List' with name:    shoppingListName+${random}
     Yves: view shopping list with name:    shoppingListName+${random}
-    Yves: Add products to an SL:    shoppingListName+${random}    ${bundled_product_2_concrete_sku} 
-    Yves: Add products to an SL:    shoppingListName+${random}    ${bundled_product_1_concrete_sku}    
-    Yves: Add all products from a shopping list to the cart:    shoppingListName+${random}
+    Yves: add products to a SL:    shoppingListName+${random}    ${bundled_product_2_concrete_sku} 
+    Yves: add products to a SL:    shoppingListName+${random}    ${bundled_product_1_concrete_sku}    
+    Yves: add all products from a shopping list to the cart:    shoppingListName+${random}
     Yves: shopping cart contains the following products:    ${bundled_product_2_concrete_sku}    ${bundled_product_1_concrete_sku}    
     Yves: go To 'Shopping Lists' Page
     [Teardown]    Run Keywords    Yves: delete 'Shopping List' with name:    shoppingListName+${random}
@@ -899,15 +899,15 @@ Adding_the_whole_SL_to_the_cart_when_some_products_inside_are_not_available
     Yves: go To 'Shopping Lists' Page
     Yves: create new 'Shopping List' with name:    shoppingListName+${random}
     Yves: view shopping list with name:    shoppingListName+${random}
-    Yves: Add products to an SL:    shoppingListName+${random}    ${bundled_product_2_concrete_sku}
-    Yves: Add products to an SL:    shoppingListName+${random}    ${bundled_product_1_concrete_sku}
+    Yves: add products to a SL:    shoppingListName+${random}    ${bundled_product_2_concrete_sku}
+    Yves: add products to a SL:    shoppingListName+${random}    ${bundled_product_1_concrete_sku}
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: change product stock:    ${bundled_product_2_abstract_sku}    ${bundled_product_2_concrete_sku}    false   0  
     Yves: login on Yves with provided credentials:    ${yves_user_email}
     Yves: go To 'Shopping Lists' Page
     Yves: view shopping list with name:    shoppingListName+${random}
-    Try reloading page until element is/not appear:    //span[normalize-space()='Currently not available']    true
-    Click    //button[normalize-space()='Add all available products to cart']
+    Try reloading page until element is/not appear:    ${currently_not_available_text_locator}    true
+    Click    ${add_all_available_products_to_cart_locator} 
     Yves: flash message should be shown:    error    Product '${bundled_product_2_concrete_sku}' is not available at the moment.
     Yves: flash message should be shown:    success    Item added to cart successfully.
     [Teardown]    Run Keywords    Zed: check and restore product availability in Zed:    ${bundled_product_2_abstract_sku}    Available    ${bundled_product_2_concrete_sku}

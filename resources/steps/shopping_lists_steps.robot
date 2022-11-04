@@ -75,18 +75,18 @@ Yves: Select shopping list on PDP from multiple lists:    [Arguments]    ${produ
     Click    //li[contains(text(),'${shopping_list_name}')]
     Click    ${add_to_shopinglist_button}
 
-Yves: Add products to an SL:
+Yves: add products to a SL:
     [Arguments]    ${shopinglist_name}    ${product_sku}
-    Input Text    //input[@placeholder='Search by SKU or Name']    ${product_sku}
+    Input Text    ${shoppinglist_page_searchbox_input_field_locator}    ${product_sku}
     Wait Until Element Is Visible    //li[contains(text(),'${product_sku}')]
     Keyboard Key    press    Enter
-    Input Text    //input[@id='quantity']    1
+    Input Text    ${quantity_input_field}    1
     Click    ${add_button_shoppinglist_page}    
     Yves: flash message should be shown:    success    Item ${product_sku} was added to the List.
     Yves: flash message should be shown:    success    Item has been added to the shopping list.
 
-Yves: Add all products from a shopping list to the cart:    
-    [Arguments]    ${shopping_list_name}=${EMPTY}
+Yves: add all products from a shopping list to the cart:    
+    [Arguments]    ${shopping_list_name}
     IF    '${shopping_list_name}'!= '${EMPTY}'
         Yves: go To 'Shopping Lists' Page
         Yves: 'Shopping Lists' page is displayed
