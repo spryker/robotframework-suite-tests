@@ -19,8 +19,11 @@
 
         "zed_admin_email": "admin@spryker.com",
         "zed_admin_password": "change123",
-        "yves_agent_user_email": "agent+77359@spryker.com",
-        "yves_agent_user_password": "change123"
+
+        "yves_third_user_email": "oslo.test@spryker.com",
+        "yves_third_user_first_name": "oslo",
+        "yves_third_user_last_name": "test",
+        "yves_third_user_password": "change123"
 
     },
         

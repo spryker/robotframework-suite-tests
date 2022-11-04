@@ -27,6 +27,7 @@ Resource    ../../resources/steps/zed_availability_steps.robot
 Resource    ../../resources/steps/zed_discount_steps.robot
 Resource    ../../resources/steps/zed_cms_page_steps.robot
 Resource    ../../resources/steps/zed_customer_steps.robot
+Resource    ../../resources/steps/yves_login_steps.robot
 
 *** Test Cases ***
 New_Customer_Registration
@@ -599,23 +600,18 @@ Refunds
     [Teardown]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: activate following discounts from Overview page:    Tu & Wed $5 off 5 or more    10% off $100+    20% off cameras    Tu & Wed €5 off 5 or more    10% off minimum order
  
-User_login_after_10_failed_attempts
-    Yves:login on yves with invalid password:    ${yves_user_email}    ${random}
-    Yves: login on Yves with provided credentials:    ${yves_user_email}
-    Yves: validatation of redirected url
-    Sleep    5m 01s
-    Yves: logout on Yves as a customer
-    Yves: login on Yves with provided credentials:    ${yves_user_email}
-    [Teardown]    Run Keywords    Delete All Cookies
-    ...    AND       Reload  
+User_cannot_login_with_valid_credentials_after_10_failed_attempts_with_invalid_credentials
+    [Documentation]    User tries to login with invalid password for 10 times, then try to login with valid credential, but unable to login
+    Yves: login with invalid password:    ${yves_third_user_email}
+    Yves: login on Yves with provided credentials:    ${yves_third_user_email}
+    Yves: redirected url for user after login with valid credentials should contain:   /login_check
+    Yves: error message should be shown:    TOO MANY REQUESTS
     
-Agent_login_after_9_failed_attempts
-    Open Browser
-    Yves: go to URL:    /agent/login
-    Yves:agent login with invalid password:    ${yves_agent_user_email}    ${random}
-    Yves: agent login with proper credentials:   ${yves_agent_user_email}    ${yves_agent_user_password}
-    Yves: agent login redirected url validation
-    Sleep    6m 01s
-    Yves: logout on Yves as a customer
-    Yves: agent login with proper credentials:    ${yves_agent_user_email}    ${yves_agent_user_password} 
-    Pause Execution
+Agent_cannot_login_with_valid_credentials_after_9_failed_attempts_with_invalid_credentials
+    [Documentation]    Agent tries to login with invalid password for 9 times, then try to login with valid credential, but unable to login
+    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: create new Zed user with the following data:    agent+${random}@spryker.com    change${random}    Agent    Assist    Root group    This user is an agent    en_US
+    Yves: login with invalid agent password:    agent+${random}@spryker.com
+    Yves: login on Yves with valid agent credentials:   agent+${random}@spryker.com    change${random}
+    Yves: redirected url for agent after login with valid credentials should contain:    /agent/login_check
+    Yves: error message should be shown:    TOO MANY REQUESTS
