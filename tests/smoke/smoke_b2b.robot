@@ -870,7 +870,8 @@ Refunds
     ...    AND    Zed: activate following discounts from Overview page:    20% off storage    10% off minimum order
 
 Reclaimation
-    Yves: login on Yves with provided credentials:    ${yves_user_email}
+    [Documentation]    create reclaimation for parts of the order and check its details
+    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     Yves: create new 'Shopping Cart' with name:    reclaim+${random}
     Yves: go to PDP of the product with sku:    M21711
     Yves: add product to the shopping cart
@@ -879,7 +880,7 @@ Reclaimation
     Yves: go to the shopping cart through the header with name:    reclaim+${random}
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: billing address same as shipping address:    true
-    Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${yves_user_email}
+    Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${yves_company_user_buyer_email}
     Yves: select the following shipping method on the checkout and go next:    Express
     Yves: select the following payment method on the checkout and go next:    Invoice
     Yves: accept the terms and conditions:    true
@@ -889,7 +890,11 @@ Reclaimation
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Sales    Orders
     Zed: click Action Button in a table for row that contains:    ${lastPlacedOrder}   Claim
-    zed: create reclaimation
+    Zed: create reclaimation for part of order:    421426
+    Zed: submit reclaimation
     Zed: go to second navigation item level:    Sales    Reclamations
-    Zed: select latest Reclamation
-    Zed: table should contain non-searchable value:    Close
+    Zed: check details of latest created reclaimation:    421426
+    Zed: go to second navigation item level:    Sales    Reclamations
+    Zed: reclamation table sorting in descending order
+    Zed: close latest created reclaimation
+    Zed: check state of latest reclaimation:    Closed
