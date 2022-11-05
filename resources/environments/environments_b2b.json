@@ -56,9 +56,11 @@
             "one_variant_product_abstract_name": "EUROKRAFT trolley - with open shovel",
             "one_variant_product_default_price": "€235.43",
             "one_variant_product_merchant_price": "€188.34",
+            "one_variant_product_concreate_sku": "403125",
             "concrete_avaiable_product_sku":"100414",
             "concrete_avaiable_product_name":"Topstar executive chair - black leather - armrests with leather cover",
             "concrete_avaiable_product_price":"335.13",
+            
             
 
             "multi_variant_product_abstract_sku": "M58035",

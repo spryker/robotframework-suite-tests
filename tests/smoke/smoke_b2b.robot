@@ -24,6 +24,8 @@ Resource    ../../resources/steps/zed_customer_steps.robot
 Resource    ../../resources/steps/zed_discount_steps.robot
 Resource    ../../resources/steps/zed_availability_steps.robot
 Resource    ../../resources/steps/zed_cms_page_steps.robot
+Resource    ../../resources/steps/zed_catalog_categories_steps.robot
+Resource    ../../resources/steps/zed_catalog_products_steps.robot
  
 *** Test Cases ***
 Guest_User_Access_Restrictions
@@ -894,3 +896,29 @@ Refunds
     Zed: grand total for the order equals:    ${lastPlacedOrder}    €0.00
     [Teardown]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: activate following discounts from Overview page:    20% off storage    10% off minimum order
+
+Redirects
+    [Documentation]    Change name of a category, name of a product, check that redirect is created automatically
+    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: go to second navigation item level:    Catalog    Categories
+    Zed: perform search by:    pens
+    Zed: Edit the category name:    Pens-twoss
+    Zed: message should be shown:    The category was updated successfully.
+    Zed: go to second navigation item level:    Catalog    Products
+    Zed: click Action Button in a table for row that contains:    ${one_variant_product_abstract_sku}    Edit
+    Zed: go to tab:    Variants
+    Zed: click Action Button in Variant table for row that contains:    ${one_variant_product_concreate_sku}    Edit
+    Zed: edit product description:    ${one_variant_product_abstract_name}${random}
+    yves: verify redirect category url:    /en/stationery/writing-materials/pens
+    Yves: go to PDP of the product with sku:    ${one_variant_product_abstract_sku}
+    Yves: check the edited product title:    ${one_variant_product_abstract_name}${random}
+    [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    ...    AND    Zed: go to second navigation item level:    Catalog    Categories
+    ...    AND    Zed: perform search by:    pens-twoss
+    ...    AND    Zed: Edit the category name:    Pens
+    ...    AND    Zed: message should be shown:    The category was updated successfully.
+    ...    AND    Zed: go to second navigation item level:    Catalog    Products
+    ...    AND    Zed: click Action Button in a table for row that contains:    ${one_variant_product_abstract_sku}   Edit
+    ...    AND    Zed: go to tab:    Variants
+    ...    AND    Zed: click Action Button in Variant table for row that contains:    ${one_variant_product_concreate_sku}    Edit
+    ...    AND    Zed: edit product description:    ${one_variant_product_abstract_name}
