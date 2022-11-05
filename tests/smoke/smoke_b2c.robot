@@ -600,28 +600,27 @@ Refunds
     ...    AND    Zed: activate following discounts from Overview page:    Tu & Wed $5 off 5 or more    10% off $100+    20% off cameras    Tu & Wed €5 off 5 or more    10% off minimum order
 
 Add_new_Customer_address_and_edit_it_in_Customer's_profile
+    [Documentation]    Add and edit new address in yves
   Yves: login on Yves with provided credentials:    ${yves_second_user_email}
   Yves: go to 'Customer Account' page
   Yves: create a new customer address in profile:   ${salutation}    ${yves_second_user_first_name}    ${yves_second_user_last_name}    ${random}    ${random}    ${random}    ${city}   
   Yves: flash message should be shown:   success    Address was successfully added
-     Yves:Edit the latest address created
-  Yves:clear customer address fields
-  Yves: Change customer address:
-  ...    || street               | house_no        |    post_code        |    city                 |    phone            ||
-  ...    || ab${random}          | ${random}       |    ${random}        |    ${city}   |    ${random}        ||
-    Yves: flash message should be shown:   success    Address was successfully updated
+  Yves: edit the latest address created 
+  Yves: change customer street address:    grandst
+  Yves: flash message should be shown:   success    Address was successfully updated
   [Teardown]    Run Keywords     Yves: delete user address:    ${random}
-     ...    AND         Yves: logout on Yves as a customer
+   ...    AND         Yves: logout on Yves as a customer
 
 Add_and_change_customer_address_in_Zed
+     [Documentation]    Add and edit new address in zed
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to first navigation item level:    Customers
     Zed: go to second navigation item level:    Customers    Customers   
-    Zed: Go to customer new address creation page    ${yves_second_user_email}
-    Zed:New address addition:
-     ...    ||     customer_first_name              | customer_last_name              |    address line 1        |    address line 2        |    customer_zipcode    |    customer_phone    |    customer_city    ||
-    ...    || ${yves_second_user_first_name}     | ${yves_second_user_last_name}   |   abc${random}           |   street${random}        |    ${random}          |   123${random}        |        ${city}      ||   
-    Zed:Edit customer address
+    Zed: go to customer new address creation page through view mode:    ${yves_second_user_email}
+    Zed: add new address details:
+    ...    ||     customer_first_name          | customer_last_name              |    address line 1        |    address line 2        |    customer_zipcode    |    customer_phone    |    customer_city    ||
+    ...    || ${yves_second_user_first_name}   | ${yves_second_user_last_name}   |   abc${random}           |   street${random}        |    ${random}           |   123${random}       |        ${city}      ||   
+    Zed: edit customer address by selecting address from billing address dropdown:    Martin Bill (71148, 71148 Berlin71148)
     [Teardown]    Run Keywords    Yves: login on Yves with provided credentials:    ${yves_second_user_email}
     ...    AND    Yves: go to 'Customer Account' page
     ...    AND    Yves: delete user address:    ${random}

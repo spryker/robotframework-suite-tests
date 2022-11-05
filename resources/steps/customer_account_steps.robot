@@ -92,27 +92,12 @@ Yves: delete user address:
         Click    xpath=//li[contains(text(),'${street}')]/ancestor::div[@class='action-card']//button
     END
     Element Should Be Visible    xpath=//flash-message//div[contains(text(),'Address deleted successfully')]   message="Flash message didn't appear"
-Yves: Change customer address:
-    [Arguments]    @{args}
-    
-    ${registrationData}=    Set Up Keyword Arguments    @{args}
-    FOR    ${key}    ${value}    IN    &{registrationData}
-        Log    Key is '${key}' and value is '${value}'.
-        IF    '${key}'=='street'    Type Text    ${customer_account_address_street_field}    ${value}
-        IF    '${key}'=='house_no'    Type Text    ${customer_account_address_house_number_field}    ${value}
-         IF    '${key}'=='post_code'    Type Text    ${customer_account_address_zip_code_field}    ${value}
-        IF    '${key}'=='city'    Type Text    ${customer_account_address_city_field}     ${value}
-        IF    '${key}'=='phone'    Type Text    ${customer_account_address_phone_field}     ${value}
-    END
+Yves: change customer street address:
+    [Arguments]    ${street_name}
+    Type Text    ${customer_account_address_street_field}    ${street_name}
     Click    ${customer_account_address_submit_button}
-Yves:Edit the latest address created  
+        
+Yves: edit the latest address created  
      ${counter}    Get Element Count    ${customer_account_address_edit_button}
     Log    ${counter}
     Click    (${customer_account_address_edit_button})[${counter}] 
-
-Yves:clear customer address fields
-    Clear Text    ${customer_account_address_street_field}
-   Clear Text    ${customer_account_address_house_number_field}
-   Clear Text    ${customer_account_address_zip_code_field}
-   Clear Text    ${customer_account_address_city_field}
-   Clear Text    ${customer_account_address_phone_field}
