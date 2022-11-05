@@ -5,7 +5,7 @@ Resource    ../common/common.robot
 Resource    ../pages/zed/zed_catalog_categories_page.robot
 
 ** Keywords ***
-Zed: Edit the category name:
+Zed: edit the category name:
     [Arguments]    ${name}
     click   ${categories_product_actions_button}
     Click   ${categories_product_actions_edit}
