@@ -601,55 +601,44 @@ Refunds
     [Teardown]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: activate following discounts from Overview page:    Tu & Wed $5 off 5 or more    10% off $100+    20% off cameras    Tu & Wed €5 off 5 or more    10% off minimum order
  
-Warehouse_create_edit_view_set_stock_deactivate_warehouse_scenarios
+Warehouse_Management
+    [Documentation]    Create a warehouse, edit its status such as activate, deactivate and edit its  stores and see the changes on product addtion to cart  in yves.
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    Zed: go to first navigation item level:    Administration
-    Zed: go to second navigation item level:    Administration    Warehouses
-    Zed: click button in Header:    Create Warehouse
-    Zed: Enter a warehouse name    ${random}
-    Zed: Is the warehouse avaialbe:    yes
-    Zed: go to tab:    Store Relation
-    Zed: Check checkbox by Label:    DE
-    Zed: Check checkbox by Label:    AT
-    Zed: submit the form
-    Zed: message should be shown:    Warehouse has been successfully saved
-    Zed: perform search by:    ${random}
-    Zed: Navigate to view mode
-    Zed: go to second navigation item level:    Administration    Warehouses
-    Zed: perform search by:    ${random}
-    zed: edit warehouse
-    Zed: Is the warehouse avaialbe:    no
-    Zed: submit the form
-    Zed: message should be shown:    Warehouse has been successfully updated
-    Zed: go to second navigation item level:    Catalog    Products
-    Zed: perform search by:    009
-    Zed: navigate to edit page of product from product listing page
-    Zed: go to tab:    Variants
-    Zed: edit product details
-    Zed: go to tab:    Price & Stock
-    Zed: update stock quantity of product for created warehouse
-    Zed: submit the form
+    Zed: create a warehouse:    wareshouse${random}    
+    Zed: check the warehouse status:    wareshouse${random}    DE AT    Active
+    Zed: check the warehouse details in view mode:    wareshouse${random}    View Warehouse: wareshouse${random}
+    Zed: update stock quantity of product for selected warehouse:    wareshouse${random}    ${abstract_product_sku}    ${concrete_product_sku}      ${product_quantity}
     Yves: login on Yves with provided credentials:    ${yves_second_user_email}
-    Yves: go to PDP of the product with sku:    009_30692991
-    Yves: change quantity on PDP:    10
-    Yves: add a concrete product to cart 
-    Yves: flash message should be shown:    error    Item 009_30692991 only has availability of 5.
+    Yves: go to PDP of the product with sku:    ${abstract_product_sku}
+    Yves: change quantity on PDP:    7
+    Yves: add product to the shopping cart
+    Yves: flash message should be shown:    error    Item ${concrete_product_sku} only has availability of 5.
+    Yves: change quantity on PDP:    4
+    Yves: add product to the shopping cart
+    Yves: flash message should be shown:    success    Items added successfully
+    Yves: check if cart is not empty and clear it
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    Zed: go to first navigation item level:    Administration
-    Zed: go to second navigation item level:    Administration    Warehouses
-    Zed: perform search by:    Warehouse1
-    zed: edit warehouse
-    Zed: go to tab:    Store Relation
-    Zed: Uncheck Checkbox by Label:    AT
-    Zed: Uncheck Checkbox by Label:    DE
-    Zed: submit the form
-    Zed: go to second navigation item level:    Catalog    Availability
-    Zed: perform search by:    009
-     Yves: login on Yves with provided credentials:    ${yves_second_user_email}
-     Yves: go to PDP of the product with sku:    009_30692991
-     Yves: add a concrete product to cart
-    Yves: flash message should be shown:    error    Item 009_30692991 no longer available.
-    [Teardown]    Run Keywords    Zed: update stock quantity of product for selected warehouse to null  
-    ...    AND    Zed: activate warehouse:    Warehouse1
-    ...    AND    Delete All Cookies
-    ...    AND    Reload
+    Zed: activate/deactivate warehouse:    wareshouse${random}    False
+    Zed: check the warehouse status:    wareshouse${random}    DE AT    Inactive
+    Yves: login on Yves with provided credentials:    ${yves_second_user_email}
+    Yves: go to PDP of the product with sku:    ${abstract_product_sku}
+    Yves: add product to the shopping cart
+    Yves: flash message should be shown:    error    Item ${concrete_product_sku} no longer available.
+    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: activate/deactivate warehouse:    wareshouse${random}    True
+    Zed: check the warehouse status:    wareshouse${random}    DE AT    Active
+    Yves: login on Yves with provided credentials:    ${yves_second_user_email}
+    Yves: go to PDP of the product with sku:    ${abstract_product_sku}
+    Yves: add product to the shopping cart
+    Yves: flash message should be shown:    success    Items added successfully
+    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: set warehouse for particular store:    wareshouse${random}    AT
+    Zed: check the warehouse status:    wareshouse${random}    AT    Active
+    Yves: login on Yves with provided credentials:    ${yves_second_user_email}
+    Yves: go to PDP of the product with sku:    ${abstract_product_sku}
+    Yves: add product to the shopping cart
+    Yves: flash message should be shown:    error    Item ${concrete_product_sku} no longer available.
+    [Teardown]    Run Keywords   Yves: check if cart is not empty and clear it 
+     ...    AND    Zed: login on Zed with provided credentials:    ${zed_admin_email}   
+     ...    AND    Zed: update stock quantity of product for selected warehouse:    wareshouse${random}    ${abstract_product_sku}    ${concrete_product_sku}    0
+     ...    AND    Zed: activate/deactivate warehouse:    wareshouse${random}    False
