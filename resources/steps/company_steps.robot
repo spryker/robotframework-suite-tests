@@ -5,7 +5,7 @@ Resource    ../common/common_zed.robot
 Resource    ../pages/zed/zed_attach_to_business_unit_page.robot
 Resource    ../pages/yves/yves_customer_account_page.robot
 Resource    ../pages/zed/zed_delete_company_user_page.robot
-
+Resource    ../pages/yves/yves_company_business_unit_page.robot
 
 *** Keywords ***
 Zed: create new Company Business Unit with provided name and company:
@@ -108,3 +108,32 @@ Zed: delete company user xxx withing xxx company business unit:
             Zed: click Action Button(without search) in a table for row that contains:    ${companyBusinessUnit}    Delete
             Click    ${zed_confirm_delete_company_user_button}
     END
+
+Zed: disable company user xxx withing xxx company business unit:
+    [Documentation]    Possible argument names: company user name, company business unit name
+    [Arguments]    ${companyUserName}    ${companyBusinessUnit}
+    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    ${currentURL}=    Get Location
+    IF    '/customer' not in '${currentURL}'    Zed: go to second navigation item level:    Customers    Company Users
+    Zed: perform search by:    ${companyUserName}
+    ${customerExists}=    Run Keyword And Return Status    Table should contain    ${zed_table_locator}    ${companyBusinessUnit}
+    IF    '${customerExists}'=='True'
+        Run keywords
+            Zed: click Action Button(without search) in a table for row that contains:    ${companyBusinessUnit}    Disable
+    END
+
+Yves: select businees unit name and click on remember me:
+    [Documentation]    select businees unit name and click on remember me choice
+    [Arguments]    ${text}
+    Click    ${yves_business_unit_selector}
+    Click    xpath=//ul[@id='select2-company_user_account_selector_form_companyUserAccount-results']/li[contains(text(),'${text}')]
+    Check Checkbox    ${remember_me_locator}
+    Click     ${bob_submit_locator}
+
+Yves: check company selection is pre-defined
+    Element Should Contain    ${yves_business_unit_selector}    Spryker Systems GmbH / Spryker Systems Zurich
+
+Yves: check the company name is not shown in drop-down:
+    [Arguments]    ${text}
+    Click    ${yves_business_unit_selector}
+    Page Should Not Contain Element    xpath=//ul[@id='select2-company_user_account_selector_form_companyUserAccount-results']/li[contains(text(),'${text}')]

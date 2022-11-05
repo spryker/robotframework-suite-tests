@@ -24,6 +24,7 @@ Resource    ../../resources/steps/zed_customer_steps.robot
 Resource    ../../resources/steps/zed_discount_steps.robot
 Resource    ../../resources/steps/zed_availability_steps.robot
 Resource    ../../resources/steps/zed_cms_page_steps.robot
+Resource    ../../resources/steps/gaurav_steps.robot
  
 *** Test Cases ***
 Guest_User_Access_Restrictions
@@ -329,10 +330,25 @@ Business_on_Behalf
     Zed: go to second navigation item level:    Customers    Company Users
     Zed: click Action Button in a table for row that contains:    Donald    Attach to BU
     Zed: attach company user to the following BU with role:    Spryker Systems Zurich (id: 25)    Admin
+    Zed: message should be shown:    Customer has been assigned to business unit.
     Yves: login on Yves with provided credentials:    ${yves_company_user_bob_email}
     Yves: go to URL:    en/company/user/select
     Yves: 'Select Business Unit' page is displayed
     Yves: 'Business Unit' dropdown contains:    Spryker Systems GmbH / Spryker Systems Berlin    Spryker Systems GmbH / Spryker Systems Zurich
+    Yves: select businees unit name and click on remember me:    Spryker Systems GmbH / Spryker Systems Zurich
+    Yves: logout on Yves as a customer
+    Yves: login on Yves with provided credentials:    ${yves_company_user_bob_email}
+    Yves: go to URL:    en/company/user/select
+    Yves: 'Select Business Unit' page is displayed
+    Yves: check company selection is pre-defined
+    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: go to second navigation item level:    Customers    Company Users
+    Zed: disable company user xxx withing xxx company business unit:    Donald    Spryker Systems Zurich
+    Zed: message should be shown:    Company user successfully disabled
+    Yves: login on Yves with provided credentials:    ${yves_company_user_bob_email}
+    Yves: go to URL:    en/company/user/select
+    Yves: 'Select Business Unit' page is displayed
+    Yves: check the company name is not shown in drop-down:    Spryker Systems GmbH / Spryker Systems Zurich
     [Teardown]    Zed: delete company user xxx withing xxx company business unit:    Donald    Spryker Systems Zurich
 
 Business_Unit_Address_on_Checkout
