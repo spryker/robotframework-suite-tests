@@ -69,7 +69,7 @@ Update_a_shopping_list_name
     ...    AND    Response status code should be:    204
     ...    AND    Response reason should be:    No Content
 
-# b2b2 - There is a bug CC-16543
+# b2b2 - There is a bug CC-16543. Bug is resolved but it looks like we need integration to b2b public demoshop
 Update_a_shopping_list_name_with_includes
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}  
