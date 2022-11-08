@@ -4,7 +4,6 @@ ${zed_create_merchant_reference_field}    id=merchant_merchant_reference
 ${zed_create_merchant_email_field}    id=merchant_email
 ${zed_create_merchant_url_en_locale_field}    id=merchant_urlCollection_0_url
 ${zed_create_merchant_url_de_locale_field}    id=merchant_urlCollection_1_url
-${zed_create_merchant_registration_number_filed}    id=merchant_registration_number
 ${merchant_is_active_checkbox_locator}    id=merchant_is_active
 ${merchant_checkbox_en_locator}    id=merchant_storeRelation_id_stores_0
 ${merchant_checkbox_de_locator}    id=merchant_storeRelation_id_stores_1

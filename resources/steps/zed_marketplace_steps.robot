@@ -24,6 +24,7 @@ Zed: create new Merchant with the following data:
         IF    '${key}'=='en url' and '${value}' != '${EMPTY}'    Type Text    ${zed_create_merchant_url_en_locale_field}    ${value}
         IF    '${key}'=='de url' and '${value}' != '${EMPTY}'    Type Text    ${zed_create_merchant_url_de_locale_field}    ${value}
     END  
+    Check Checkbox    ${merchant_is_active_checkbox_locator} 
     Zed: submit the form
     Zed: wait for button in Header to be visible:    Add Merchant    ${browser_timeout}
     Zed: table should contain:    ${MerchantName}

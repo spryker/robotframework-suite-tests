@@ -4,35 +4,45 @@ Resource    ../../resources/common/common_zed.robot
 Resource    ../pages/yves/yves_merchant_profile.robot
 Resource    ../pages/yves/yves_header_section.robot
 Resource    ../../resources/pages/zed/zed_create_merchant_page.robot
+Resource    ../../resources/pages/zed/zed_merchant_relation_page.robot
+Resource    ../../resources/steps/zed_marketplace_steps.robot
 
 *** Keywords ***
-Zed: Add new merchant:
-    [Arguments]    @{args}
-    ${merchantdata}=    Set Up Keyword Arguments    @{args}
-    FOR    ${key}    ${value}    IN    &{merchantdata}
-        Log    Key is '${key}' and value is '${value}'.
-        IF    '${key}'=='Name' and '${value}' != '${EMPTY}'    Type Text    ${zed_create_merchant_name_field}    ${value}
-        IF    '${key}'=='Registration_number' and '${value}' != '${EMPTY}'    Type Text    ${zed_create_merchant_registration_number_filed}    ${value}
-        IF    '${key}'=='Reference_number' and '${value}' != '${EMPTY}'    Type Text    ${zed_create_merchant_reference_field}    ${value}
-        IF    '${key}'=='Email' and '${value}' != '${EMPTY}'     Type Text    ${zed_create_merchant_email_field}    ${value}
-        IF    '${key}'=='En_url' and '${value}' != '${EMPTY}'     Type Text    ${zed_create_merchant_url_en_locale_field}    ${value}
-        IF    '${key}'=='De_url' and '${value}' != '${EMPTY}'     Type Text    ${zed_create_merchant_url_de_locale_field}    ${value}
-    END  
-    Check Checkbox    ${merchant_is_active_checkbox_locator} 
-    Check Checkbox    ${merchant_checkbox_en_locator}
-    Check Checkbox    ${merchant_checkbox_de_locator}
-   
-Zed: Create Merchant Relation between a BU of a company and the merchant
+Zed: create merchant relation between a BU of a company and the merchant:
+    [Arguments]    ${merchant}    ${company}    ${bussiness_unit_owner}    ${assigned_bussiness_units}    ${assigned_product}
     Click    ${merchant_dropdown_locator}
-    Click    ${dropdown_value_Impala_locator}
+    Type Text    ${input_field_locator}    ${merchant}
+    Keyboard Key    Press    Enter
     Click    ${company_dropdown_locator}
-    Click    ${dropdown_value_Proof_locator}
+    Type Text    ${input_field_locator}    ${company}
+    Keyboard Key    Press    Enter
     click    ${confirm_button_locator}
-    Wait Until Element Is Visible    ${Bussiness_unit_owner_locator}
-    Click    ${Bussiness_unit_owner_locator}
-    Click    ${dropdown_value_Bar_locator}
-    Click    ${Assigned_bussiness_units_locator} 
-    Click    ${dropdown_value_Cleaning_locator}
-    Click    ${Assigned_product_lists_locator} 
-    Wait Until Element Is Visible    ${dropdown_value_Computer_locator} 
-    Click    ${dropdown_value_Computer_locator} 
+    Wait Until Element Is Visible    ${bussiness_unit_owner_locator}
+    Click    ${bussiness_unit_owner_locator}
+    Type Text    ${bussiness_unit_owner_input_locator}     ${bussiness_unit_owner}
+    Keyboard Key    Press    Enter
+    Click    ${assigned_product_lists_locator} 
+    Type Text    ${assigned_product_lists_input_locator}    ${assigned_bussiness_units}
+    Keyboard Key    Press    Enter
+    Click    ${assigned_product_lists_locator}
+    Type Text    ${assigned_product_lists_input_locator}    ${assigned_product}
+    Keyboard Key    Press    Enter
+    Zed: submit the form
+    Zed: message should be shown:    Merchant relation created successfully.
+
+Zed: deactivate merchant:
+    [Arguments]    ${merchant_name}
+    Zed: go to second navigation item level:    Marketplace    Merchants  
+    Zed: click Action Button in a table for row that contains:    ${merchant_name}    Deactivate 
+
+Zed: delete merchant relation:
+    [Arguments]    ${merchant_name}   
+    Zed: go to second navigation item level:    Marketplace    Merchant Relations
+    Zed: click Action Button in a table for row that contains:    ${merchant_name}    Delete 
+
+Zed: verify merchant relation:
+    [Arguments]    ${company_name}    ${merchant_name}
+    Zed: go to second navigation item level:    Marketplace    Merchant Relations
+    Select From List By Label    ${company_dropdown_merchant_relation_locator}    ${company_name}
+    Zed: table should contain:    ${merchant_name}
+    
