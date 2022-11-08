@@ -151,9 +151,9 @@ Product_PDP
     Yves: PDP contains/doesn't contain:    false    ${pdp_add_to_wishlist_button}
     Yves: login on Yves with provided credentials:    ${yves_user_email}
     Yves: go to PDP of the product with sku:    135
-    Yves: PDP contains/doesn't contain:    true    ${pdpPriceLocator}   ${pdp_add_to_cart_disabled_button}[${env}]    ${pdp_warranty_option}    ${pdp_gift_wrapping_option}     ${pdp_add_to_wishlist_button}    ${relatedProducts}
+    Yves: PDP contains/doesn't contain:    true    ${pdpPriceLocator}   ${pdp_add_to_cart_disabled_button}[${env}]    ${pdp_warranty_option}    ${pdp_gift_wrapping_option}     ${pdp_add_to_wishlist_button}    ${relatedProducts}    ${pdp_description_text}    ${pdp_product_image} 
     Yves: change variant of the product on PDP on:    Flash
-    Yves: PDP contains/doesn't contain:    true    ${pdpPriceLocator}    ${addToCartButton}    ${pdp_warranty_option}    ${pdp_gift_wrapping_option}     ${pdp_add_to_wishlist_button}    ${relatedProducts}
+    Yves: PDP contains/doesn't contain:    true    ${pdpPriceLocator}    ${addToCartButton}    ${pdp_warranty_option}    ${pdp_gift_wrapping_option}     ${pdp_add_to_wishlist_button}    ${relatedProducts}    ${pdp_description_text}    ${pdp_product_image} 
 
 Volume_Prices
     [Documentation]    Checks volume prices are applied
@@ -600,8 +600,40 @@ Refunds
     ...    AND    Zed: activate following discounts from Overview page:    Tu & Wed $5 off 5 or more    10% off $100+    20% off cameras    Tu & Wed €5 off 5 or more    10% off minimum order
  
 User_can_add_product_to_cart_and_wishlist_on_PDP
+    [Documentation]    Add a product to wishlist and cart and verify its pdp.
     Yves: login on Yves with provided credentials:    ${yves_second_user_email}
+    Yves: go To 'Wishlist' Page
+    Yves: create wishlist with name:    test
     Yves: go to PDP of the product with sku:    ${multi_variant_product_concrete_sku}
+    Yves: PDP contains/doesn't contain:    true    ${pdpPriceLocator}    ${addToCartButton}    ${pdp_warranty_option}    ${pdp_gift_wrapping_option}     ${pdp_add_to_wishlist_button}    ${pdp_description_text}    ${pdp_product_image} 
+    Yves: change variant of the product on PDP on:    Windows 8.1 Pro 
     Yves: add product to the shopping cart
-    Yves: add product to wishlist:    My wishlist
+    Yves: add product to wishlist:   test
+    Yves: get sku of the concrete product on PDP
+    Yves: go to wishlist with name:    test
+    Yves: wishlist contains product with sku:    ${got_concrete_product_sku}
+    Yves: go to b2c shopping cart
+    Yves: shopping cart contains the following products:    ${multi_variant_product_name}
+    Yves: delete all wishlists
+    [Teardown]    Run keywords    Yves: check if cart is not empty and clear it
+    ...    AND    Yves: delete all wishlists
+
+Add_individual_product_to_cart_from_product_set
+    [Documentation]    Check the usage of product sets, add individual product from product set to cart
+    Yves: login on Yves with provided credentials:    ${yves_user_email}
+    Yves: go to URL:    en/product-sets
+    Yves: 'Product Sets' page contains the following sets:    HP Product Set    Sony Product Set    Upgrade your running game
+    Yves: view the following Product Set:    Upgrade your running game
+    Yves: 'Product Set' page contains the following products:    TomTom Golf    Samsung Galaxy S6 edge
+    Yves: add an individual product to cart from product set:    TomTom Golf
+    Yves: go to b2c shopping cart
+    Yves: shopping cart contains the following products:    TomTom Golf
+    Yves: delete from b2c cart products with name:    TomTom Golf
     [Teardown]    Yves: check if cart is not empty and clear it
+
+View_product_group_on_PDP
+     [Documentation]    Check the user is able to change the colour of product on pdp.
+    Yves: login on Yves with provided credentials:    ${yves_user_email}
+    Yves: go to PDP of the product with sku:    ${multi_colour_variant_product_sku}
+    Yves: change product colour on pdp:    ${colour_1}
+    Yves: change product colour on pdp:    ${colour_2}

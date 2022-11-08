@@ -38,3 +38,5 @@ ${pdp_bazaarvoice_write_review_button}    xpath=//button[contains(@class,'bv-wri
 ${pdp_bazaarvoice_questions_locator}    xpath=//div[@data-bv-show='questions']
 ${pdp_bazaarvoice_intine_rating_locator}    xpath=//section[@data-bv-show='inline_rating']
 ${referrer_url}    xpath=//div[contains(@class,'navigation-top-actions')]//form[contains(@action,'currency')]//input[@name='referrer-url']
+${pdp_description_text}    xpath=//span[@itemprop='description']
+${pdp_product_image}    xpath=//div[@class='image-gallery__container image-gallery__container--single-image']

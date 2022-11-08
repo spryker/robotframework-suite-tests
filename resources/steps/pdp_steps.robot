@@ -177,4 +177,8 @@ Yves: merchant is (not) displaying in Sold By section of PDP:
     Wait Until Element Is Visible    ${pdp_product_sku}[${env}]
     Try reloading page until element is/not appear:    xpath=//section[@data-qa='component product-configurator']//div[contains(text(),'${merchantName}')]     ${condition}    20    5s  
    
-    
+Yves: change product colour on pdp:
+    [Arguments]    ${colour}
+    Click    //span[@class="product-detail-color-selector__tooltip" and contains(text(),'${colour}')]//parent::a
+    Wait Until Element Is Visible    //div[contains(text(),'${colour}')]
+    Page Should Contain Element    //div[contains(text(),'${colour}')]

@@ -46,3 +46,8 @@ Yves: add all products to the shopping cart from Product Set
     Wait Until Element Is Enabled    ${add_all_product_to_the_shopping_cart}
     Click    ${add_all_product_to_the_shopping_cart}
     Yves: remove flash messages
+
+Yves: add an individual product to cart from product set:
+    [Arguments]    ${product_name}
+    Click    //span[contains(text(),'${product_name}')]//parent::div//parent::a//following-sibling::remote-form-submit//button
+    Yves: flash message should be shown:    success    Items added successfully

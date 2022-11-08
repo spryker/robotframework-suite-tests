@@ -37,6 +37,9 @@
 
         "multi_variant_product_abstract_sku": "051",
         "multi_variant_product_concrete_sku": "134_26145012",
+        "multi_variant_product_name":"Acer Aspire S7",
+        "multi_colour_variant_product_sku":"096_30856274",
+        
 
         "measurement_unit_product_abstract_sku": "215",
         "packaging_unit_product_abstract_sku": "218",
@@ -45,5 +48,9 @@
         "product_with_relations_alternative_products_sku": "145",
         "product_with_relations_upselling_sku": "018"
             
+    },
+    "misc":{
+        "colour_1":"green",
+        "colour_2":"blue"
     }
 }
