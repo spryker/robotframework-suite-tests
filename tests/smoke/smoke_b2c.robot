@@ -26,6 +26,7 @@ Resource    ../../resources/steps/wishlist_steps.robot
 Resource    ../../resources/steps/zed_availability_steps.robot
 Resource    ../../resources/steps/zed_discount_steps.robot
 Resource    ../../resources/steps/zed_cms_page_steps.robot
+
 Resource    ../../resources/steps/zed_customer_steps.robot
 
 *** Test Cases ***
@@ -624,3 +625,49 @@ Refunds
     Zed: grand total for the order equals:    ${lastPlacedOrder}    €0.00
     [Teardown]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: activate following discounts from Overview page:    Tu & Wed $5 off 5 or more    10% off $100+    20% off cameras    Tu & Wed €5 off 5 or more    10% off minimum order
+
+Add_to_cart_products_as_a_guest_user_and_login_during_checkout
+    Yves: go to the 'Home' page
+    Yves: go to PDP of the product with sku:    ${bundled_product_3_concrete_sku}
+    Yves: add a product to cart on clicking add to cart button on PDP
+    Yves: go to b2c shopping cart  
+    Yves: click on the 'Checkout' button in the shopping cart
+     Yves: proceed as a guest user and login during checkout:   ${yves_second_user_email}
+     Yves: fill in the following new shipping address:
+     ...    || salutation     | firstName                    | lastName                    | street        | houseNumber       | postCode     | city       | country     | company    | phone           | additionalAddress     ||
+    ...    || ${Salutation}  | ${Guest_user_first_name}     | ${Guest_user_last_name}     | ${random}     | ${random}         | ${random}    | ${city}    | ${country}  | ${company} | ${random} | ${additional_address} ||
+    Yves: submit form on the checkout
+    Yves: select the following shipping method on the checkout and go next:    Express
+    Yves: select the following payment method on the checkout and go next:    Invoice
+    Yves: accept the terms and conditions:    true
+    Yves: 'submit the order' on the summary page
+    Yves: 'Thank you' page is displayed
+
+Add_to_cart_products_as_a_guest_user_and_register_during_checkout
+    Yves: go to the 'Home' page
+    Yves: go to PDP of the product with sku:    ${bundled_product_3_concrete_sku}
+    Yves: add a product to cart on clicking add to cart button on PDP
+    Page Should Not Contain Element    ${pdp_add_to_wishlist_button}
+    Yves: go to b2c shopping cart  
+    Yves: click on the 'Checkout' button in the shopping cart
+    Yves: signup guest user during checkout:    ${Guest_user_first_name}    ${Guest_user_last_name}    abc${random}@gmail.com    Abc#${random}    Abc#${random}
+    Save the result of a SELECT DB query to a variable:    select registration_key from spy_customer where email = 'abc${random}@gmail.com'    confirmation_key
+    I send a POST request:     /customer-confirmation   {"data":{"type":"customer-confirmation","attributes":{"registrationKey":"${confirmation_key}"}}}
+    Yves: login after signup during checkout:    abc${random}@gmail.com    Abc#${random}
+    Yves: fill in the following new shipping address:
+    ...    || salutation     | firstName                    | lastName                    | street        | houseNumber       | postCode     | city       | country     | company    | phone           | additionalAddress     ||
+    ...    || ${Salutation}  | ${Guest_user_first_name}     | ${Guest_user_last_name}     | ${random}     | ${random}         | ${random}    | ${city}    | ${country}  | ${company} | ${random} | ${additional_address} ||
+    Yves: submit form on the checkout
+    Yves: select the following shipping method on the checkout and go next:    Express
+    Yves: select the following payment method on the checkout and go next:    Invoice
+    Yves: accept the terms and conditions:    true
+    Yves: 'submit the order' on the summary page
+    Yves: 'Thank you' page is displayed
+    Yves: go to the 'Home' page
+    Yves: login on Yves with provided credentials:    ${yves_second_user_email}
+    Yves: go to PDP of the product with sku:    ${bundled_product_3_concrete_sku}
+    Delete All Cookies
+    Yves: Add product to wishlist as guest user
+     [Teardown]    Zed: delete customer:
+    ...    || email                          ||
+    ...    || abc${random}@gmail.com ||
