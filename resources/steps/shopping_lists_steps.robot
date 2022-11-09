@@ -92,5 +92,5 @@ Yves: add all products from a shopping list to the cart:
         Yves: 'Shopping Lists' page is displayed
         Yves: view shopping list with name:    ${shopping_list_name} 
     END
-    Wait Until Element Is Visible    ${add_product_to_cart}
-    Click    ${add_product_to_cart}
+    Wait Until Element Is Visible    ${add_all_available_product_to_cart}
+    Click    ${add_all_available_product_to_cart}
