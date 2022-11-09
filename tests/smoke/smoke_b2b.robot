@@ -24,6 +24,7 @@ Resource    ../../resources/steps/zed_customer_steps.robot
 Resource    ../../resources/steps/zed_discount_steps.robot
 Resource    ../../resources/steps/zed_availability_steps.robot
 Resource    ../../resources/steps/zed_cms_page_steps.robot
+Resource    ../../resources/steps/zed_order_steps.robot
  
 *** Test Cases ***
 Guest_User_Access_Restrictions
@@ -91,7 +92,6 @@ Share_Shopping_Carts
     Yves: get the last placed order ID by current customer
     Yves: 'View Order/Reorder/Return' on the order history page:     View Order    ${lastPlacedOrder}
     Yves: 'View Order' page is displayed
-    
     #Checks that cart can be shared with a user with read-only permissions
     Yves: login on Yves with provided credentials:    ${yves_company_user_shared_permission_owner_email}
     Yves: go to 'Shopping Carts' page through the header
@@ -119,49 +119,65 @@ Share_Shopping_Carts
     [Teardown]    Run Keywords    Yves: logout on Yves as a customer
     ...    AND    Reload
 
+Creating_shipment_in_zed
+    [Documentation]    creating new shippment on order in zed
+    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: go to second navigation item level:    Sales    Orders
+    Zed: Create a new shipment for order
+    Zed: flash message should be shown:    success
+    ### Editing shippment on order in zed ###
+    Zed: go to second navigation item level:    Sales    Orders
+    Zed: Edit order shipment    
+    Zed: flash message should be shown:    success
+    
 Quick_Order
-    [Documentation]    Checks Quick Order, checkout and Reorder
-    [Setup]    Run keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
-    ...    AND    Yves: delete all shopping carts
-    ...    AND    Yves: create new 'Shopping Cart' with name:    quickOrderCart+${random}
-    ...    AND    Yves: create new 'Shopping List' with name:    quickOrderList+${random}
-    Yves: go to 'Quick Order' page through the header
-    Yves: 'Quick Order' page is displayed
-    Yves: add the following articles into the form through quick order text area:    401627,1\n520561,3\n421340,21\n419871,1\n419869,11\n425073,1\n425084,2
-    Yves: add products to the shopping cart from quick order page
-    Yves: go to the shopping cart through the header with name:    quickOrderCart+${random}
-    Yves: 'Shopping Cart' page is displayed
-    Yves: shopping cart contains the following products:    401627    520561    421340    419871    419869    425073    425084
-    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
-    Yves: go to 'Quick Order' page through the header
-    Yves: add the following articles into the form through quick order text area:    401627,1\n520561,3\n421340,21\n419871,1\n419869,11\n425073,1\n425084,2
-    Yves: add products to the shopping list from quick order page with name:    quickOrderList+${random}
-    Yves: 'Shopping List' page is displayed
-    Yves: shopping list contains the following products:    401627    520561    421340    419871    419869    425073    425084
-    Yves: go to the shopping cart through the header with name:    quickOrderCart+${random}
-    ### Order placement ###
-    Yves: click on the 'Checkout' button in the shopping cart
-    Yves: billing address same as shipping address:    true
-    Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${yves_company_user_buyer_address}
-    Yves: select the following shipping method on the checkout and go next:    Express
-    Yves: select the following payment method on the checkout and go next:    Invoice
-    Yves: accept the terms and conditions:    true
-    Yves: 'submit the order' on the summary page
-    Yves: 'Thank you' page is displayed
-    ### Order History ###
-    Yves: go to the 'Home' page
-    Yves: go to user menu item in header:    Order History
-    Yves: 'Order History' page is displayed
-    Yves: get the last placed order ID by current customer
-    Yves: 'View Order/Reorder/Return' on the order history page:     View Order    ${lastPlacedOrder}
-    Yves: 'View Order' page is displayed
-    ### Reorder ###
-    Yves: reorder all items from 'View Order' page
-    Yves: go to the shopping cart through the header with name:    Cart from order ${lastPlacedOrder}
-    Yves: 'Shopping Cart' page is displayed
-    Yves: shopping cart contains the following products:    401627    520561    421340    419871    419869    425073    425084
-    [Teardown]    Yves: delete 'Shopping List' with name:    quickOrderList+${random}
-
+   [Documentation]    Checks Quick Order, checkout and Reorder
+   [Setup]    Run keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
+   ...    AND    Yves: delete all shopping carts
+   ...    AND    Yves: create new 'Shopping Cart' with name:    quickOrderCart+${random}
+   ...    AND    Yves: create new 'Shopping List' with name:    quickOrderList+${random}
+   Yves: go to 'Quick Order' page through the header
+   Yves: 'Quick Order' page is displayed
+   Yves: add the following articles into the form through quick order text area:    401627,1\n520561,3\n421340,21\n419871,1\n419869,11\n425073,1\n425084,2
+   Yves: add products to the shopping cart from quick order page
+   Yves: go to the shopping cart through the header with name:    quickOrderCart+${random}
+   Yves: 'Shopping Cart' page is displayed
+   Yves: shopping cart contains the following products:    401627    520561    421340    419871    419869    425073    425084
+   Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
+   Yves: go to 'Quick Order' page through the header
+   Yves: add the following articles into the form through quick order text area:    401627,1\n520561,3\n421340,21\n419871,1\n419869,11\n425073,1\n425084,2
+   Yves: add products to the shopping list from quick order page with name:    quickOrderList+${random}
+   Yves: 'Shopping List' page is displayed
+   Yves: shopping list contains the following products:    401627    520561    421340    419871    419869    425073    425084
+   Yves: go to the shopping cart through the header with name:    quickOrderCart+${random}
+   ### Order placement ###
+   Yves: click on the 'Checkout' button in the shopping cart
+   Yves: billing address same as shipping address:    true
+   Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${yves_company_user_buyer_address}
+   Yves: select the following shipping method on the checkout and go next:    Express
+   Yves: select the following payment method on the checkout and go next:    Invoice
+   Yves: accept the terms and conditions:    true
+   Yves: 'submit the order' on the summary page
+   Yves: 'Thank you' page is displayed
+   ### Order History ###
+   Yves: go to the 'Home' page
+   Yves: go to user menu item in header:    Order History
+   Yves: 'Order History' page is displayed
+   Yves: get the last placed order ID by current customer
+   Yves: 'View Order/Reorder/Return' on the order history page:     View Order    ${lastPlacedOrder}
+   Yves: 'View Order' page is displayed
+   ### Reorder ###
+   Yves: reorder all items from 'View Order' page
+   Yves: go to the shopping cart through the header with name:    Cart from order ${lastPlacedOrder}
+   Yves: 'Shopping Cart' page is displayed
+   Yves: shopping cart contains the following products:    401627    520561    421340    419871    419869    425073    425084
+   Yves: get the last placed order ID by current customer
+   Zed: login on Zed with provided credentials:    ${zed_admin_email}
+   Zed: go to second navigation item level:    Sales    Orders
+   Zed: Create a new shipment for order
+   Zed: go to second navigation item level:    Sales    Orders
+   Zed: Edit order shipment  
+ 
 Volume_Prices
     [Documentation]    Checks that volume prices are applied in cart
     [Setup]    Run keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
@@ -212,7 +228,7 @@ Measurement_Units
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
-
+       
 Packaging_Units
     [Documentation]    Checks checkout with Packaging Unit product
     [Setup]    Run keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_manager_and_buyer_email}
