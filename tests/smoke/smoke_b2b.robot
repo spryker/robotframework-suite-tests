@@ -870,55 +870,55 @@ Refunds
     [Teardown]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: activate following discounts from Overview page:    20% off storage    10% off minimum order
 
-delivery methods
+Delivery_Methods
+    [Documentation]    performed actions on delivery method such as create, edit, delete, deactivate and unset
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Administration    Delivery Methods
-    Zed: table should contain non-searchable value:    Edit
-    Zed: go to second navigation item level:    Administration    Delivery Methods
     Zed: create carrier company:    company${random}
-    Zed: create delivery method
-    Zed: delivery method details:
-    ...    ||  Method_key  |  Name  |  Carrier  ||
-    ...    ||  Key${random}  |  Name${random}  |  company${random}  ||
-    Zed: Check checkbox by Label:     Is active
-    Zed: go to tab:    Price & Tax
-    Zed: Price & Tax:
-    ...    || gross_price_de_chf | gross_price_de_euro | gross_price_at_chf | gross_price_at_euro | net_price_de_chf  | net_price_de_euro | net_price_at_chf | net_price_at_euro  |  tax_set  ||
-    ...    ||  15  |  15  | 15  |  15  |  17 |  17  | 17  |  17  |  Standard Taxes  ||
-    Zed: go to tab:    Store Relation
-    Zed: Store Relation checkbox
-    Zed: submit the form
+    Zed: create delivery method:
+    ...    ||  Method_key    |  Method_Name          |  Carrier           ||
+    ...    ||  Key${random}  |  MethodName${random}  |  company${random}  ||
+    Zed: add price & tax of delivery method and store relation:
+    ...    || gross_price_de_chf | gross_price_de_euro | gross_price_at_chf | gross_price_at_euro | net_price_de_chf  | net_price_de_euro | net_price_at_chf | net_price_at_euro  |  tax_set         |  store_1  |  store_2  ||
+    ...    ||  15                |  15                 | 15                 |  15                 |  17               |  17               | 17               |  17                |  Standard Taxes  |  DE       |  AT       ||
     Zed: go to second navigation item level:    Administration    Delivery Methods
-    Zed: click Action Button in a table for row that contains:    Name${random}    View
-    Yves: login on Yves with provided credentials:    ${yves_user_email}
+    Zed: check the delivery method status:    MethodName${random}    company${random}    Active
+    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     Yves: create new 'Shopping Cart' with name:    carting+${random}
-    Yves: go to PDP of the product with sku:    M90802
+    Yves: go to PDP of the product with sku:    M90737
     Yves: add product to the shopping cart
     Yves: go to the shopping cart through the header with name:    carting+${random}
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: billing address same as shipping address:    true
+    Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${yves_company_user_buyer_address}
     Yves: submit form on the checkout
-    Yves: Check carrier company:    company${random}
-    Yves: Check delivery method:    Name${random}
+    Yves: check availability carrier company and delivery method:    company${random}    MethodName${random}    true    
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Administration    Delivery Methods
-    Zed: click Action Button in a table for row that contains:    Name${random}    Edit
-    Zed: edit delivery method:    new_name${random}
+    Zed: click Action Button in a table for row that contains:    MethodName${random}    Edit
+    Zed: edit delivery method:
+    ...    ||  Method_Name              ||
+    ...    ||  new_MethodName${random}  ||
     Zed: submit the form
-    Yves: login on Yves with provided credentials:    ${yves_user_email}
+    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     Yves: go to the shopping cart through the header with name:    carting+${random}
     Yves: click on the 'Checkout' button in the shopping cart
+    Yves: billing address same as shipping address:    true
+    Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${yves_company_user_buyer_address}
     Yves: submit form on the checkout   
-    Yves: Check delivery method:    new_name${random}
+    Yves: check availability carrier company and delivery method:    company${random}    new_MethodName${random}    true    
+    Yves: check availability carrier company and delivery method:    new_MethodName${random}    MethodName${random}    true    
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Administration    Delivery Methods
-    Zed: deactivate/unset delivery method:    new_name${random}
-    Yves: login on Yves with provided credentials:    ${yves_user_email}
+    Zed: deactivate/unset delivery method:    new_MethodName${random}    DE    AT
+    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     Yves: go to the shopping cart through the header with name:    carting+${random}
     Yves: click on the 'Checkout' button in the shopping cart
-    Yves: submit form on the checkout   
-    Yves: verifying deactivated/unset delivery method not present on page:    new_name${random}
+    Yves: billing address same as shipping address:    true
+    Yves: submit form on the checkout
+    Yves: check availability carrier company and delivery method:    company${random}    new_MethodName${random}    true    
+    Yves: verifying deactivated/unset delivery method not present on page:    new_MethodName${random}
     [Teardown]    Run Keywords    Yves: delete 'Shopping Cart' with name:    carting+${random}
     ...    AND    Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    ...    AND    Zed: delete delivery method:    new_name${random}
+    ...    AND    Zed: delete delivery method:    new_MethodName${random}
     

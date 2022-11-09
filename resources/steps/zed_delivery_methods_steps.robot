@@ -1,119 +1,105 @@
 *** Settings ***
 Resource    ../common/common_zed.robot
 Resource    ../common/common.robot
-
-*** Variables ***
-${create_company_button_locator}    xpath=//a[contains(@href,"/shipment-gui/create-carrier/index")]
-${create_delivery_method_button_locator}    xpath=//a[contains(@href,"/shipment-gui/create-shipment-method")]
-${delivery_method_key_locator}    id=shipment_method_shipmentMethodKey
-${name_locator}    id=shipment_method_name
-${carrier_dropdown_locator}    id=shipment_method_fkShipmentCarrier
-${de_locator}    xpath=//input[@type='checkbox']/../../label[contains(text(),'DE')]//input
-${at_locator}    xpath=//input[@type='checkbox']/../../label[contains(text(),'AT')]//input
-${is_active_chekbox_locator}    id=shipment_method_isActive
-${gross_price_de_chf}    id=shipment_method_prices_0_gross_amount
-${gross_price_de_euro}    id=shipment_method_prices_1_gross_amount
-${gross_price_at_chf}    id=shipment_method_prices_2_gross_amount
-${gross_price_at_euro}    id=shipment_method_prices_3_gross_amount
-${net_price_de_chf}    id=shipment_method_prices_0_net_amount
-${net_price_de_euro}    id=shipment_method_prices_1_net_amount
-${net_price_at_chf}    id=shipment_method_prices_2_net_amount
-${net_price_at_euro}    id=shipment_method_prices_3_net_amount
-${tax_set_locator}    id=shipment_method_fkTaxSet
-${confirm_delete_button_locator}    id=shipment_method_delete_form_submit
-
+Resource    ../../resources/pages/zed/zed_delivery_method_pages.robot
 *** Keywords ***
 
 Zed: create carrier company:
     [Arguments]    ${carrier_name}
-    Click    xpath=//a[contains(@href,"/shipment-gui/create-carrier/index")]
-    Type Text    id=shipment_carrier_name    ${carrier_name}
+    Click    ${create_carrier_company_button_locator}
+    Type Text    ${shipment_carrier_name_input_field_locator}    ${carrier_name}
     Zed: Check checkbox by Label:    Enabled?
     Zed: submit the form
-Zed: create delivery method
-     Click    ${create_delivery_method_button_locator}
-
-Zed: delivery method details:
+Zed: create delivery method:
     [Arguments]    @{args}
+    Click    ${create_delivery_method_button_locator}
     ${deliverymethod}=    Set Up Keyword Arguments    @{args}
     FOR    ${key}    ${value}    IN    &{deliverymethod}
         Log    Key is '${key}' and value is '${value}'.
         IF    '${key}'=='Method_key' and '${value}' != '${EMPTY}'    Type Text    ${delivery_method_key_locator}    ${value}
-        IF    '${key}'=='Name' and '${value}' != '${EMPTY}'    Type Text    ${name_locator}    ${value}
+        IF    '${key}'=='Method_Name' and '${value}' != '${EMPTY}'    Type Text    ${shipment_method_name_locator}    ${value}
         IF    '${key}'=='Carrier' and '${value}' != '${EMPTY}'    Select From List By Text    ${carrier_dropdown_locator}    ${value}
     END  
     Check Checkbox    ${is_active_chekbox_locator}
+    Zed: Check checkbox by Label:     Is active
     
-Zed: Price & Tax:
+Zed: add price & tax of delivery method and store relation:
     [Arguments]    @{args}
     ${deliverymethod}=    Set Up Keyword Arguments    @{args}
+    Zed: go to tab:    Price & Tax
     FOR    ${key}    ${value}    IN    &{deliverymethod}
         Log    Key is '${key}' and value is '${value}'.
         IF    '${key}'=='gross_price_de_chf' and '${value}' != '${EMPTY}'    Type Text    ${gross_price_de_chf}    ${value}
         IF    '${key}'=='gross_price_de_euro' and '${value}' != '${EMPTY}'    Type Text    ${gross_price_de_euro}    ${value}
         IF    '${key}'=='gross_price_at_chf' and '${value}' != '${EMPTY}'    Type Text    ${gross_price_at_chf}    ${value}
         IF    '${key}'=='gross_price_at_euro' and '${value}' != '${EMPTY}'    Type Text    ${gross_price_at_euro}    ${value}
-         IF    '${key}'=='net_price_de_chf' and '${value}' != '${EMPTY}'    Type Text    ${net_price_de_chf}    ${value}
+        IF    '${key}'=='net_price_de_chf' and '${value}' != '${EMPTY}'    Type Text    ${net_price_de_chf}    ${value}
         IF    '${key}'=='net_price_de_euro' and '${value}' != '${EMPTY}'    Type Text    ${net_price_de_euro}    ${value}
         IF    '${key}'=='net_price_at_chf' and '${value}' != '${EMPTY}'    Type Text    ${net_price_at_chf}    ${value}
         IF    '${key}'=='net_price_at_euro' and '${value}' != '${EMPTY}'    Type Text    ${net_price_at_euro}    ${value}
         IF    '${key}'=='tax_set' and '${value}' != '${EMPTY}'    Select From List By Text    ${tax_set_locator}    ${value}
+        
+        IF    '${key}'=='store_1' and '${value}' == 'DE'   
+            Zed: go to tab:    Store Relation
+            Zed: checkbox/uncheckbox store relation in delivery method:    DE    true
+        END        
+        IF    '${key}'=='store_2' and '${value}' == 'AT'
+            Zed: go to tab:    Store Relation
+            Zed: checkbox/uncheckbox store relation in delivery method:    AT    true
+        END
     END  
+    Zed: submit the form
+    
+Zed: checkbox/uncheckbox store relation in delivery method:
+    [Arguments]    ${store_name}    ${state}
+    ${checkboxState}=    Set Variable    ${EMPTY}
+    ${checkboxState}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//input[@type='checkbox']/../../label[contains(text(),'${store_name}')]//input[@checked]
+    IF    '${checkboxState}'=='False' and '${state}' == 'true'    Click     xpath=//input[@type='checkbox']/../../label[contains(text(),'${store_name}')]//input
+    IF    '${checkboxState}'=='True' and '${state}' == 'false'    Click     xpath=//input[@type='checkbox']/../../label[contains(text(),'${store_name}')]//input
 
-Zed: Store Relation checkbox
-    ${state_de}=    Get Checkbox State    ${de_locator}
-    ${state_at}=    Get Checkbox State    ${at_locator}
-    IF    '${state_de}' == 'False'
-        Zed: Check checkbox by Label:     DE
-    END
-    IF    '${state_at}' == 'False'
-        Zed: Check checkbox by Label:     AT
-    END
-
-Zed: Store Relation uncheckbox
-    ${state_de}=    Get Checkbox State    ${de_locator}
-    ${state_at}=    Get Checkbox State    ${at_locator}
-    IF    '${state_de}' == 'True'
-        Zed: Uncheck checkbox by Label:     DE
-    END
-    IF    '${state_at}' == 'True'
-        Zed: Uncheck checkbox by Label:     AT
-    END
-
-Yves: Check carrier company:
-    [Arguments]    ${carrier_name}
-    Page Should Contain Element    xpath=//span[contains(text(),'${carrier_name}')]    
-
-Yves: Check delivery method:
-    [Arguments]    ${delivery_method_name}
-    Page Should Contain Element    xpath=//span[@class="radio__label radio__label--expand label "]//span[contains(text(),'${delivery_method_name}')] 
+Yves: check availability carrier company and delivery method:
+    [Arguments]    ${delivery_method_name}    ${carrier_name}    ${condition}
+    Page Should Contain Element    xpath=(//span[contains(text(),'${delivery_method_name}')]//parent::h4//following-sibling::ul)[1]//span[contains(text(),'${carrier_name}')] 
+    IF    '${condition}' == 'true'    Page Should Contain Element    xpath=(//span[contains(text(),'${delivery_method_name}')]//parent::h4//following-sibling::ul)[1]//span[contains(text(),'${carrier_name}')]
+    IF    '${condition}' == 'false'    Page Should Not Contain Element    xpath=(//span[contains(text(),'${delivery_method_name}')]//parent::h4//following-sibling::ul)[1]//span[contains(text(),'${carrier_name}')]
 
 Zed: delete delivery method:
     [Arguments]    ${delivery_method_name}
     Zed: go to second navigation item level:    Administration    Delivery Methods
     Zed: click Action Button in a table for row that contains:    ${delivery_method_name}    Delete
-    Wait Until Element Is Visible    ${confirm_delete_button_locator}
-    Click    ${confirm_delete_button_locator}
+    Wait Until Element Is Visible    ${confirm_delete_shipment_method_button_locator}
+    Click    ${confirm_delete_shipment_method_button_locator}
 
 Zed: deactivate/unset delivery method:
-    [Arguments]    ${delivery_method_name}   
+    [Documentation]    deactivating delivery method and removing relations from all demoshops
+    [Arguments]    ${delivery_method_name}    @{storelist}
     Zed: click Action Button in a table for row that contains:    ${delivery_method_name}    Edit
     Zed: Uncheck checkbox by Label:    Is active
     Zed: go to tab:    Store Relation
-    Zed: Store Relation uncheckbox
+    FOR    ${element}    IN    @{storelist}
+        Log    ${element}
+            Zed: checkbox/uncheckbox store relation in delivery method:    ${element}    false
+    END
     Zed: submit the form
 
-Zed: unset delivery method for store:
-    [Arguments]    ${delivery_method_name} 
-    Zed: click Action Button in a table for row that contains:    ${delivery_method_name}     View
-    Zed: Store Relation uncheckbox
-
 Zed: edit delivery method:
-    [Arguments]    ${new_name}
-    Click    ${name_locator}
-    Clear Text    ${name_locator}
-    Type Text    ${name_locator}    ${new_name}
-
+    [Arguments]    @{args}
+    ${deliverymethod}=    Set Up Keyword Arguments    @{args}
+    FOR    ${key}    ${value}    IN    &{deliverymethod}
+        Log    Key is '${key}' and value is '${value}'.
+        IF    '${key}'=='Method_Name' and '${value}' != '${EMPTY}'    Type Text    ${shipment_method_name_locator}    ${value}
+        IF    '${key}'=='Carrier' and '${value}' != '${EMPTY}'    Select From List By Text    ${carrier_dropdown_locator}    ${value}
+        IF    '${key}'=='availability_plugin' and '${value}' != '${EMPTY}'    Select From List By Text    ${availability_plugin_dropdown_locator}    ${value}
+        IF    '${key}'=='price_plugin' and '${value}' != '${EMPTY}'    Select From List By Text    ${price_plugin_dropdown_locator}    ${value}
+        IF    '${key}'=='delivery_time_plugin' and '${value}' != '${EMPTY}'    Select From List By Text    ${delivery_time_plugin}    ${value}
+    END  
+    
 Yves: verifying deactivated/unset delivery method not present on page:
     [Arguments]    ${delivery_method_name}
-    Page Should Not Contain Element    xpath=//span[@class="radio__label radio__label--expand label "]//span[contains(text(),'${delivery_method_name}')] 
+    Page Should Not Contain Element    xpath=//span[contains(@class,"radio__label")]//span[contains(text(),'${delivery_method_name}')] 
+
+Zed: check the delivery method status:
+    [Arguments]    ${delivery_method}    ${carrier_company}    ${status}
+    Zed: table should contain:    ${delivery_method}
+    Zed: table should contain non-searchable value:    ${carrier_company}
+    Zed: table should contain non-searchable value:    ${status}
