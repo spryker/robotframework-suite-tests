@@ -671,3 +671,64 @@ Add_to_cart_products_as_a_guest_user_and_register_during_checkout
      [Teardown]    Zed: delete customer:
     ...    || email                          ||
     ...    || abc${random}@gmail.com ||
+
+Order_cancelation
+    [Documentation]    Cancel  order within a time period
+    Yves: login on Yves with provided credentials:    ${yves_second_user_email}
+    Yves: go to PDP of the product with sku:    ${one_variant_product_abstract_sku}
+    Yves: add product to the shopping cart
+    Yves: go to b2c shopping cart
+    Yves: click on the 'Checkout' button in the shopping cart
+    Yves: billing address same as shipping address:    true
+    Yves: fill in the following new shipping address:
+    ...    || salutation | firstName                      | lastName                      | street        | houseNumber | postCode | city   | country | company | phone     | additionalAddress ||
+    ...    || Mr.        | ${yves_second_user_first_name} | ${yves_second_user_last_name} | Kirncher Str. | 7           | 10247    | Berlin | Germany | Spryker | 123456789 | Additional street ||
+    Yves: submit form on the checkout
+    Yves: select the following shipping method on the checkout and go next:    Express
+    Yves: select the following payment method on the checkout and go next:    Invoice
+    Yves: accept the terms and conditions:    true
+    Yves: 'submit the order' on the summary page
+    Yves: 'Thank you' page is displayed    
+    Yves: go to 'Order History' page
+    Yves: get the last placed order ID by current customer
+    Yves: cancel the order:    ${lastPlacedOrder}
+    
+Order_cancelation_after_time_skipout
+    Yves: login on Yves with provided credentials:    ${yves_second_user_email}
+    Yves: go to PDP of the product with sku:    ${one_variant_product_abstract_sku}
+    Yves: add product to the shopping cart
+    Yves: go to PDP of the product with sku:    ${bundled_product_1_concrete_sku}
+    Yves: add product to the shopping cart
+    Yves: go to b2c shopping cart
+    Yves: shopping cart contains the following products:    ${one_variant_product_abstract_sku}    ${bundled_product_1_concrete_sku}
+    Yves: click on the 'Checkout' button in the shopping cart
+    Yves: billing address same as shipping address:    true
+    Yves: fill in the following new shipping address:
+    ...    || salutation | firstName                      | lastName                      | street        | houseNumber | postCode | city   | country | company | phone     | additionalAddress ||
+    ...    || Mr.        | ${yves_second_user_first_name} | ${yves_second_user_last_name} | Kirncher Str. | 7           | 10247    | Berlin | Germany | Spryker | 123456789 | Additional street ||
+    Yves: submit form on the checkout
+    Yves: select the following shipping method on the checkout and go next:    Express
+    Yves: select the following payment method on the checkout and go next:    Invoice
+    Yves: 'submit the order' on the summary page
+    Yves: accept the terms and conditions:    true
+    Yves: 'Thank you' page is displayed    
+    Yves: go to 'Order History' page
+    Yves: get the last placed order ID by current customer
+    #change the order state of one product 
+    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: go to order page:    ${lastPlacedOrder}
+    Zed: trigger matching state of order item inside xxx shipment:    ${one_variant_product_concrete_sku}    Pay
+    Zed: trigger matching state of order item inside xxx shipment:    ${one_variant_product_concrete_sku}    Skip timeout 
+    Yves: login on Yves with provided credentials:    ${yves_second_user_email}
+    Yves: go to URL:    /en/customer/order
+    Yves: 'View Order/Reorder/Return' on the order history page:    View Order    ${lastPlacedOrder}
+    Yves: 'Order Details' page contains the cancel order button:    False
+    #change state of state of all products 
+    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: go to order page:    ${lastPlacedOrder}
+    Zed: trigger matching state of order item inside xxx shipment:    ${bundled_product_1_concrete_sku}    Pay
+    Zed: trigger matching state of order item inside xxx shipment:    ${bundled_product_1_concrete_sku}    Skip timeout
+    Yves: login on Yves with provided credentials:    ${yves_second_user_email}
+    Yves: go to URL:    /en/customer/order
+    Yves: 'View Order/Reorder/Return' on the order history page:    View Order    ${lastPlacedOrder}
+    Yves: 'Order Details' page contains the cancel order button:    False

@@ -48,3 +48,8 @@ Yves: 'Order History' page contains the following order with a status:
     [Arguments]    ${orderID}    ${expectedStatus}
     ${actualOrderStatus}=    Get Text    xpath=//div[contains(@data-qa,'component order-table')]//td[text()='${orderID}']/..//span[@data-qa='component status']
     Should Be Equal    ${actualOrderStatus}    ${expectedStatus}    msg=None    values=True    ignore_case=True    formatter=str
+
+Yves: 'Order Details' page contains the cancel order button:
+    [Arguments]    ${condition}
+    IF    '${condition}' == 'True'    Element Should Be Visible    ${order_cancel_button_locator}
+    IF    '${condition}' == 'False'    Element Should Not Be Visible    ${order_cancel_button_locator} 

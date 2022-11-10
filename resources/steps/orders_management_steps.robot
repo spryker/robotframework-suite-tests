@@ -5,6 +5,7 @@ Resource    ../pages/yves/yves_return_slip_page.robot
 Resource    ../pages/zed/zed_create_return_page.robot
 Resource    ../pages/zed/zed_return_details_page.robot
 Resource    ../steps/order_history_steps.robot
+Resource    ../pages/yves/yves_order_details_page.robot
 
 *** Keywords ***
 Zed: go to order page:
@@ -151,3 +152,10 @@ Zed: order has the following number of shipments:
     Wait Until Element Is Visible    xpath=//table[@data-qa='order-item-list'][1]
     ${actualShipments}=    Get Element Count    xpath=//table[@data-qa='order-item-list']
     Should Be Equal    '${expectedShipments}'    '${actualShipments}'
+
+Yves: cancel the order:
+    [Arguments]    ${order_id}
+    Yves: 'View Order/Reorder/Return' on the order history page:    View Order    ${order_id}
+    Click    ${order_cancel_button_locator}
+    Yves: go to 'Order History' page
+    Yves: 'Order History' page contains the following order with a status:    ${order_id}    Canceled
