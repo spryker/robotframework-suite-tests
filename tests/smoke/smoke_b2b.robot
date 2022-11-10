@@ -923,6 +923,7 @@ At_Yves_attach_few_comments_to_order_check_they_appeared_in_Zed
     Yves: get the last placed order ID by current customer
     Yves: go to 'Order History' page
     Yves: 'View Order/Reorder/Return' on the order history page:    View Order    ${lastPlacedOrder}
+    # Bug: https://spryker.atlassian.net/browse/CC-23306
     Yves: add comment on order:    abc${random}
     Zed: login on Zed with provided credentials:    ${zed_admin_email}    
     Zed: checking comments added in zed:    abc${random}    ${lastPlacedOrder}
