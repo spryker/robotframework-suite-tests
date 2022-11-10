@@ -44,6 +44,9 @@ Yves: change quantity on PDP:
     [Arguments]    ${qtyToSet}
     IF    '${env}' in ['b2b','mp_b2b']
         Type Text    ${pdp_quantity_input_filed}[${env}]    ${qtyToSet}
+        Click    ${pdp_price_element_locator}
+        Click    ${pdp_product_name}  
+        Sleep    1s
     ELSE
         Add/Edit element attribute with JavaScript:    ${pdp_quantity_input_filed}[${env}]    value    ${qtyToSet}
     END
@@ -62,12 +65,21 @@ Yves: change quantity using '+' or '-' button № times:
         ELSE IF    '${action}' == '-'
             Click    ${pdp_decrease_quantity_button}
         END
+        Sleep    1s
     END
 
 Yves: change variant of the product on PDP on:
     [Arguments]    ${variantToChoose}
-    Click    ${pdp_variant_custom_selector}
-    Select From List By Value    ${pdp_variant_selector}    ${variantToChoose}
+    Wait Until Page Contains Element    ${pdp_variant_selector}
+    TRY    
+        Set Browser Timeout    10s
+        Click    ${pdp_variant_custom_selector}    force=True
+        Wait Until Element Is Visible    ${pdp_variant_custom_selector_results}
+        Click    xpath=//ul[contains(@id,'select2-attribute')][contains(@id,'results')]/li[contains(@id,'select2-attribute')][contains(.,'${variantToChoose}')]
+    EXCEPT
+        Run Keyword And Ignore Error    Select From List By Value    ${pdp_variant_selector}    ${variantToChoose}
+    END
+    Set Browser Timeout    ${browser_timeout}
     Wait For Elements State    ${pdp_reset_selected_variant_locator}    attached
 
 Yves: change amount on PDP:
@@ -93,7 +105,7 @@ Yves: add product to the shopping list:
 
 Yves: change variant of the product on PDP on random value
     Wait Until Element Is Visible    ${pdp_variant_selector}
-    Select Random Option From List    ${pdp_variant_selector}    xpath=//*[@data-qa='component variant']//select//option[@value]
+    Run Keyword And Ignore Error    Select Random Option From List    ${pdp_variant_selector}    xpath=//*[@data-qa='component variant']//select//option[@value]
     Sleep    3s
 
 Yves: get sku of the concrete product on PDP
@@ -174,6 +186,7 @@ Yves: select xxx merchant's offer:
     [Arguments]    ${merchantName}
     Wait Until Element Is Visible    ${pdp_product_sku}[${env}]
     Click    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]/ancestor::div[contains(@class,'offer-item')]//span[contains(@class,'radio__box')]
+    Sleep    3s
     Wait Until Element Contains    ${referrer_url}    offer
 
 Yves: merchant's offer/product price should be:

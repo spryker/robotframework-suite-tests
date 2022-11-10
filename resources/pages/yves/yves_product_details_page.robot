@@ -11,10 +11,11 @@ ${pdp_measurement_unit_notification}    id=measurement-unit-choices
 ${pdp_increase_quantity_button}    xpath=//div[@class='product-configurator__add-to-cart']//button[contains(@class,'quantity-counter__button--increment')]
 ${pdp_decrease_quantity_button}    xpath=//div[@class='product-configurator__add-to-cart']//button[contains(@class,'quantity-counter__button--decrement')]
 ${pdp_variant_selector}    xpath=//*[@data-qa='component variant']//select
-${pdp_variant_custom_selector}    xpath=//*[@data-qa='component variant']//custom-select
+${pdp_variant_custom_selector}    xpath=//section[@data-qa='component variant-configurator']//span[contains(@id,'select2-attribute')]
+${pdp_variant_custom_selector_results}    xpath=//ul[contains(@id,'select2-attribute')][contains(@id,'results')]
 ${pdp_amount_input_filed}    id=user-amount
 ${pdp_packaging_unit_notification}    xpath=//*[@class='packaging-unit-notifications']
-&{pdp_product_bundle_include_small}    b2b=xpath=//div[@class='js-product-options-bundle__target']    b2c=xpath=//ul[@class='bundle-option-list grid']    mp_b2b=xpath=//div[@class='js-product-options-bundle__target']    mp_b2c=xpath=//ul[@class='bundle-option-list grid']
+&{pdp_product_bundle_include_small}    b2b=xpath=//div[contains(@data-qa,'component bundle-items')]    b2c=xpath=//div[contains(@data-qa,'component bundle-items')]    mp_b2b=xpath=//div[contains(@data-qa,'component bundle-items')]    mp_b2c=xpath=//div[contains(@data-qa,'component bundle-items')]
 ${pdp_product_bundle_include_large}    xpath=//div[@data-qa='component product-bundle']
 &{pdp_related_products}    b2b=xpath=//*[contains(@class,'title--product-slider')][contains(.,'Similar products')]/../slick-carousel    b2c=xpath=//*[contains(@class,'product-slider')][contains(.,'You might also like')]/../slick-carousel    mp_b2b=xpath=//*[contains(@class,'title--product-slider')][contains(.,'Similar products')]/../slick-carousel    mp_b2c=xpath=//*[contains(@class,'product-slider')][contains(.,'You might also like')]/../slick-carousel
 ${pdp_add_to_shopping_list_button}    xpath=//button[@data-qa='add-to-shopping-list-button']

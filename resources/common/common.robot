@@ -14,7 +14,7 @@ Resource                  ../pages/yves/yves_login_page.robot
 
 *** Variables ***
 # *** SUITE VARIABLES ***
-${env}                 b2b
+${env}                 mp_b2b
 ${headless}            true
 ${browser}             chromium
 ${browser_timeout}     60 seconds
@@ -22,6 +22,7 @@ ${email_domain}        @spryker.com
 ${default_password}    change123
 ${admin_email}         admin@spryker.com
 ${device}
+# ${device}              Desktop Chrome
 # ${fake_email}          test.spryker+${random}@gmail.com
 
 *** Keywords ***
@@ -77,7 +78,7 @@ TestTeardown
 Create default Main Context
     Log    ${device}
     IF  '${device}' == '${EMPTY}'
-        ${main_context}=    New Context    viewport={'width': 1440, 'height': 1080}
+        ${main_context}=    New Context    viewport={'width': 1280, 'height': 1080}
     ELSE
         ${device}=    Get Device    ${device}
         ${main_context}=    New Context    &{device}
@@ -153,7 +154,9 @@ Page Should Contain Element
 
 Get Location
     ${current_location}=    Get URL
-    [Return]    ${current_location}
+    ${location}=    Set Variable    ${current_location}
+    Set Test Variable    ${location}    ${location}
+    [Return]    ${location}
 
 Wait Until Element Is Not Visible
     [Arguments]    ${locator}    ${message}=${EMPTY}    ${timeout}=${browser_timeout}

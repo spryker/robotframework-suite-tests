@@ -30,8 +30,9 @@ Resource    ../../resources/steps/mp_profile_steps.robot
 Resource    ../../resources/steps/mp_orders_steps.robot
 Resource    ../../resources/steps/mp_offers_steps.robot
 Resource    ../../resources/steps/mp_products_steps.robot
+Resource    ../../resources/steps/mp_account_steps.robot
+Resource    ../../resources/steps/mp_dashboard_steps.robot
 
- 
 *** Test Cases ***
 Guest_User_Access_Restrictions
     [Documentation]    Checks that guest users are not able to see: Prices, Availability, Quick Order, "My Account" features
@@ -51,29 +52,49 @@ Share_Shopping_Lists
     Yves: login on Yves with provided credentials:    ${yves_company_user_shared_permission_owner_email}
     Yves: go to 'Shopping Lists' page
     Yves: 'Shopping Lists' page is displayed
-    Yves: create new 'Shopping List' with name:    shoppingListName+${random}
-    Yves: the following shopping list is shown:    shoppingListName+${random}    ${yves_company_user_shared_permission_owner_firstname} ${yves_company_user_shared_permission_owner_lastname}    Full access
-    Yves: share shopping list with user:    shoppingListName+${random}    ${yves_company_user_shared_permission_receiver_firstname} ${yves_company_user_shared_permission_receiver_lastname}    Full access
+    Yves: create new 'Shopping List' with name:    shareShoppingList+${random}
+    Yves: the following shopping list is shown:    shareShoppingList+${random}    ${yves_company_user_shared_permission_owner_firstname} ${yves_company_user_shared_permission_owner_lastname}    Full access
+    Yves: share shopping list with user:    shareShoppingList+${random}    ${yves_company_user_shared_permission_receiver_firstname} ${yves_company_user_shared_permission_receiver_lastname}    Full access
+    Yves: go to PDP of the product with sku:    ${product_with_multiple_offers_abstract_sku}
+    Yves: add product to the shopping list:    shareShoppingList+${random}
+    Yves: select xxx merchant's offer:    Computer Experts
+    Yves: add product to the shopping list:    shareShoppingList+${random}
     Create New Context
     Yves: login on Yves with provided credentials:    ${yves_company_user_shared_permission_receiver_email}
-    Yves: 'Shopping List' widget contains:    shoppingListName+${random}    Full access
+    Yves: 'Shopping List' widget contains:    shareShoppingList+${random}    Full access
     Yves: go to 'Shopping Lists' page
     Yves: 'Shopping Lists' page is displayed
-    Yves: the following shopping list is shown:    shoppingListName+${random}    ${yves_company_user_shared_permission_owner_firstname} ${yves_company_user_shared_permission_owner_lastname}    Full access
-    [Teardown]    Run Keywords    Close Context    CURRENT    AND    Yves: delete 'Shopping List' with name:    shoppingListName+${random}
+    Yves: the following shopping list is shown:    shareShoppingList+${random}    ${yves_company_user_shared_permission_owner_firstname} ${yves_company_user_shared_permission_owner_lastname}    Full access
+    Yves: view shopping list with name:    shareShoppingList+${random}
+    Yves: assert merchant of product in cart or list:    ${product_with_multiple_offers_concrete_sku}    Spryker
+    Yves: assert merchant of product in cart or list:    ${product_with_multiple_offers_concrete_sku}    Computer Experts
+    Yves: add all available products from list to cart  
+    Yves: 'Shopping Cart' page is displayed
+    Yves: assert merchant of product in cart or list:    ${product_with_multiple_offers_concrete_sku}    Spryker
+    Yves: assert merchant of product in cart or list:    ${product_with_multiple_offers_concrete_sku}    Computer Experts
+    [Teardown]    Run Keywords    Close Context    CURRENT    AND    Yves: delete 'Shopping List' with name:    shareShoppingList+${random}
 
 Share_Shopping_Carts
     [Documentation]    Checks that cart can be shared and used for checkout
+    [Setup]    Run Keywords    
+    ...    MP: login on MP with provided credentials:    ${merchant_computer_experts_email}
+    ...    AND    MP: change offer stock:
+    ...    || offer    | stock quantity | is never out of stock ||
+    ...    || offer395 | 10             | true                  ||
     Yves: login on Yves with provided credentials:    ${yves_company_user_shared_permission_owner_email}
     Yves: go to 'Shopping Carts' page through the header
     Yves: 'Shopping Carts' page is displayed
+    Yves: delete all shopping carts
     Yves: create new 'Shopping Cart' with name:    shoppingCartName+${random}
     Yves: 'Shopping Carts' widget contains:    shoppingCartName+${random}    Owner access
     Yves: go to 'Shopping Carts' page through the header
     Yves: 'Shopping Carts' page is displayed
     Yves: the following shopping cart is shown:    shoppingCartName+${random}    Owner access
     Yves: share shopping cart with user:    shoppingCartName+${random}    ${yves_company_user_shared_permission_receiver_lastname} ${yves_company_user_shared_permission_receiver_firstname}    Full access
-    Yves: go to PDP of the product with sku:    M10569
+    Yves: go to PDP of the product with sku:    ${product_with_multiple_offers_abstract_sku}
+    Yves: change quantity on PDP:    2
+    Yves: add product to the shopping cart
+    Yves: select xxx merchant's offer:    Computer Experts
     Yves: add product to the shopping cart
     Yves: logout on Yves as a customer
     Yves: login on Yves with provided credentials:    ${yves_company_user_shared_permission_receiver_email}
@@ -83,11 +104,14 @@ Share_Shopping_Carts
     Yves: the following shopping cart is shown:    shoppingCartName+${random}    Full access
     Yves: go to the shopping cart through the header with name:    shoppingCartName+${random}
     Yves: 'Shopping Cart' page is displayed
-    Yves: shopping cart contains the following products:    100414
+    Yves: assert merchant of product in cart or list:    ${product_with_multiple_offers_concrete_sku}    Spryker
+    Yves: assert merchant of product in cart or list:    ${product_with_multiple_offers_concrete_sku}    Computer Experts
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: billing address same as shipping address:    true
     Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${yves_company_user_shared_permission_receiver_address}
-    Yves: select the following shipping method on the checkout and go next:    Express
+    Yves: select the following shipping method for the shipment:    1    Hermes    Next Day
+    Yves: select the following shipping method for the shipment:    2    Hermes    Same Day
+    Yves: submit form on the checkout
     Yves: select the following payment method on the checkout and go next:    Invoice
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
@@ -100,7 +124,7 @@ Share_Shopping_Carts
     Yves: 'View Order' page is displayed
 
 Quick_Order
-    [Documentation]    Checks Quick Order, checkout and Reorder
+    [Documentation]    Checks Quick Order, checkout and Reorder. Bug: CC-17057
     [Setup]    Run keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     ...    AND    Yves: delete all shopping carts
     ...    AND    Yves: create new 'Shopping Cart' with name:    quickOrderCart+${random}
@@ -108,16 +132,25 @@ Quick_Order
     Yves: go to 'Quick Order' page through the header
     Yves: 'Quick Order' page is displayed
     Yves: add the following articles into the form through quick order text area:     213103,1\n520561,3\n421340,21\n419871,1\n419869,11\n425073,1\n425084,2
+    Yves: find and add new item in the quick order form:
+    ...    || searchQuery                                  | merchant         || 
+    ...    || ${product_with_multiple_offers_concrete_sku} | Computer Experts ||
     Yves: add products to the shopping cart from quick order page
     Yves: go to the shopping cart through the header with name:    quickOrderCart+${random}
     Yves: 'Shopping Cart' page is displayed
     Yves: shopping cart contains the following products:     213103    520561    421340    419871    419869    425073    425084
-    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
+    Yves: assert merchant of product in cart or list:    213103    Spryker
+    Yves: assert merchant of product in cart or list:    ${product_with_multiple_offers_concrete_sku}    Computer Experts
     Yves: go to 'Quick Order' page through the header
     Yves: add the following articles into the form through quick order text area:     213103,1\n520561,3\n421340,21\n419871,1\n419869,11\n425073,1\n425084,2
+    Yves: find and add new item in the quick order form:
+    ...    || searchQuery                                  | merchant         || 
+    ...    || ${product_with_multiple_offers_concrete_sku} | Computer Experts ||
     Yves: add products to the shopping list from quick order page with name:    quickOrderList+${random}
     Yves: 'Shopping List' page is displayed
     Yves: shopping list contains the following products:     213103    520561    421340    419871    419869    425073    425084
+    Yves: assert merchant of product in cart or list:    213103    Spryker
+    Yves: assert merchant of product in cart or list:    ${product_with_multiple_offers_concrete_sku}    Computer Experts
     Yves: go to the shopping cart through the header with name:    quickOrderCart+${random}
     ### Order placement ###
     Yves: click on the 'Checkout' button in the shopping cart
@@ -140,6 +173,8 @@ Quick_Order
     Yves: go to the shopping cart through the header with name:    Cart from order ${lastPlacedOrder}
     Yves: 'Shopping Cart' page is displayed
     Yves: shopping cart contains the following products:     213103    520561    421340    419871    419869    425073    425084
+    Yves: assert merchant of product in cart or list:    213103    Spryker
+    Yves: assert merchant of product in cart or list:    ${product_with_multiple_offers_concrete_sku}    Computer Experts
     [Teardown]    Yves: delete 'Shopping List' with name:    quickOrderList+${random}
 
 Volume_Prices
@@ -158,7 +193,6 @@ Volume_Prices
 
 Discontinued_Alternative_Products
     [Documentation]    Checks that product can be discontinued in Zed
-    #Todo: extend methods "Zed: discontinue the following product:" and "Zed: undo discontinue the following product:" to check first that the product can be discontinued or undicontinued
     Yves: go to PDP of the product with sku:  M21100
     Yves: PDP contains/doesn't contain:    true    ${alternativeProducts}
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
@@ -219,7 +253,7 @@ Packaging_Units
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
 
-#### Product Sets Bundles is not present in marketplace for now ####
+#### Product Sets feature is not present in marketplace for now ####
 # Product_Sets
 #     [Documentation]    Checks that product set can be added into cart
 #     [Setup]    Run keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
@@ -244,7 +278,7 @@ Packaging_Units
 #     Yves: create new 'Shopping Cart' with name:    productBundleCart+${random}
 #     Yves: go to PDP of the product with sku:    ${bundle_product_abstract_sku}
 #     #Fails due to bug CC-16679
-#     Yves: PDP contains/doesn't contain:    true    ${bundleItemsSmall}    ${bundleItemsLarge}
+#     Yves: PDP contains/doesn't contain:    true    ${bundleItemsSmall}
 #     Yves: add product to the shopping cart
 #     Yves: go to the shopping cart through the header with name:    productBundleCart+${random}
 #     Yves: shopping cart contains the following products:    ${bundle_product_concrete_sku}
@@ -702,7 +736,7 @@ Catalog
     Yves: change sorting order on catalog page:    Sort by price descending
     Yves: 1st product card in catalog (not)contains:      Price    €41.68
     Yves: go to catalog page:    2
-    Yves: catalog page contains filter:    Product Ratings     Product Labels     Brand    Color
+    Yves: catalog page contains filter:    Product Ratings     Product Labels     Brand    Color    Merchant
     Yves: select filter value:    Color    blue
     Yves: 'Catalog' page should show products:    3
 
@@ -825,6 +859,9 @@ Content_Management
     Yves: go to newly created page by URL:    en/test-page${random}
     Yves: page contains CMS element:    CMS Page Title    Page Title
     Yves: page contains CMS element:    CMS Page Content    Page text
+    [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    ...    AND    Zed: go to second navigation item level:    Content    Pages
+    ...    AND    Zed: click Action Button in a table for row that contains:    Test Page${random}    Deactivate
 
 Refunds
     [Documentation]    Checks that refund can be created for an item and the whole order of merchant
@@ -1021,9 +1058,12 @@ Manage_Merchants_from_Backoffice
     Yves: assert merchant profile fields:
     ...    || name                         | email| phone | delivery time | data privacy ||
     ...    || NewMerchantUpdated${random}  |      |       |               |              ||
+    [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    ...    AND    Zed: go to second navigation item level:    Marketplace    Merchants  
+    ...    AND    Zed: click Action Button in a table for row that contains:     NewMerchantUpdated${random}     Deactivate
 
 Manage_Merchant_Users
-    [Documentation]    Checks that backoffice admin is able to create, activate, edit and delete merchant users
+    [Documentation]    Checks that backoffice admin is able to create, activate, edit and delete merchant users. Bug: CC-23118
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Marketplace    Merchants
     Zed: click Action Button in a table for row that contains:     Office King     Edit
@@ -1040,9 +1080,22 @@ Manage_Merchant_Users
     ...    ||        | UpdatedName${random} |           ||
     Zed: perform merchant user search by:    m_user+${random}@test.com
     Zed: table should contain non-searchable value:    UpdatedName${random}
+    Zed: update Zed user:
+    ...    || oldEmail                  | newEmail | password      | firstName | lastName ||
+    ...    || m_user+${random}@test.com |          | Change123!321 |           |          ||
+    MP: login on MP with provided credentials:    m_user+${random}@test.com    Change123!321
+    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: go to second navigation item level:    Marketplace    Merchants
+    Zed: click Action Button in a table for row that contains:     Office King     Edit
+    Zed: go to tab:     Users
     Zed: click Action Button in Merchant Users table for row that contains:    m_user+${random}@test.com    Deactivate
     Zed: table should contain non-searchable value:    Deactivated
-    [Teardown]    Run Keywords    Zed: click Action Button in Merchant Users table for row that contains:    m_user+${random}@test.com    Delete
+    MP: login on MP with provided credentials and expect error:    m_user+${random}@test.com    Change123!321
+    [Teardown]    Run Keywords     Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    ...    AND    Zed: go to second navigation item level:    Marketplace    Merchants
+    ...    AND    Zed: click Action Button in a table for row that contains:     Office King     Edit
+    ...    AND    Zed: go to tab:     Users
+    ...    AND    Zed: click Action Button in Merchant Users table for row that contains:    m_user+${random}@test.com    Delete
     ...    AND    Zed: submit the form
 
 Create_and_Approve_New_Merchant_Product
@@ -1074,16 +1127,45 @@ Create_and_Approve_New_Merchant_Product
     Yves: go to URL:    en/search?q=SKU${random}
     Try reloading page until element is/not appear:    ${catalog_product_card_locator}    true    15    5s
     Yves: go to PDP of the product with sku:     SKU${random}
+    Get Location
     Yves: merchant is (not) displaying in Sold By section of PDP:    Office King    true
     Yves: product price on the PDP should be:    €100.00
+    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: go to second navigation item level:    Catalog    Products 
+    Zed: click Action Button in a table for row that contains:     NewProduct${random}     Deny
+    Yves: go to the 'Home' page
+    Yves: go to URL and refresh until 404 occurs:    ${location}
 
 Create_New_Offer
     [Documentation]    Checks that merchant is able to create new offer and it will be displayed on Yves
+    MP: login on MP with provided credentials:    ${merchant_spryker_email}
+    MP: open navigation menu tab:    Products    
+    MP: click on create new entity button:    Create Product
+    MP: create multi sku product with following data:
+    ...    || product sku         | product name            | first attribute name | first attribute first value | first attribute second value | second attribute name | second attribute value ||
+    ...    || SprykerSKU${random} | SprykerProduct${random} | packaging_unit       | Item                        | Box                          | material              | Aluminium              ||
+    MP: perform search by:    SprykerProduct${random} 
+    MP: click on a table row that contains:     SprykerSKU${random}
+    MP: fill abstract product required fields:
+    ...    || product name DE         | store | tax set        ||
+    ...    || SprykerProduct${random} | DE    | Standard Taxes ||
+    MP: fill product price values:
+    ...    || product type | row number | customer | store | currency | gross default ||
+    ...    || abstract     | 1          | Default  | DE    | EUR      | 100           ||
+    MP: save abstract product 
+    MP: click on a table row that contains:    SprykerSKU${random}
+    MP: open concrete drawer by SKU:    SprykerSKU${random}-2
+    MP: fill concrete product fields:
+    ...    || is active | stock quantity | use abstract name | searchability ||
+    ...    || true      | 100            | true              | en_US         ||
+    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: go to second navigation item level:    Catalog    Products 
+    Zed: click Action Button in a table for row that contains:     SprykerSKU${random}     Approve
     MP: login on MP with provided credentials:    ${merchant_office_king_email}
     MP: open navigation menu tab:    Offers
     MP: click on create new entity button:    Add Offer
-    MP: perform search by:    673327
-    MP: click on a table row that contains:    673327  
+    MP: perform search by:    SprykerSKU${random}-2
+    MP: click on a table row that contains:    SprykerSKU${random}-2  
     MP: fill offer fields:
     ...    || is active | merchant sku         | store | stock quantity ||
     ...    || true      | merchantSKU${random} | DE    | 100            ||
@@ -1099,16 +1181,19 @@ Create_New_Offer
     MP: save offer
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     Yves: create new 'Shopping Cart' with name:    newOfferCart${random}
-    Yves: go to PDP of the product with sku:     673327
+    Yves: go to PDP of the product with sku:     SprykerSKU${random}-2
     Yves: merchant is (not) displaying in Sold By section of PDP:    Office King    true
     Yves: merchant's offer/product price should be:    Office King    €200.00
     Yves: select xxx merchant's offer:    Office King
     Yves: add product to the shopping cart
     Yves: go to the shopping cart through the header with name:    newOfferCart${random}
     Yves: 'Shopping Cart' page is displayed
-    Yves: assert merchant of product in cart or list:    673327    Office King
-    Yves: shopping cart contains product with unit price:    673327    Estucado upholstered chair with armrests, leader, white - white    200
-    [Teardown]    Yves: delete 'Shopping Cart' with name:    newOfferCart${random}
+    Yves: assert merchant of product in cart or list:    SprykerSKU${random}-2    Office King
+    Yves: shopping cart contains product with unit price:    SprykerSKU${random}-2    SprykerProduct${random}    200
+    [Teardown]    Run Keywords    Yves: delete 'Shopping Cart' with name:    newOfferCart${random}
+    ...    AND    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    ...    AND    Zed: go to second navigation item level:    Catalog    Products 
+    ...    AND    Zed: click Action Button in a table for row that contains:     SprykerProduct${random}     Deny
 
 Approve_Offer
     [Documentation]    Checks that marketplace operator is able to approve or deny merchant's offer and it will be available or not in store due to this status
@@ -1173,7 +1258,7 @@ Fulfill_Order_from_Merchant_Portal
     MP: wait for order to appear:    ${lastPlacedOrder}--${merchant_office_king_reference}
     MP: click on a table row that contains:    ${lastPlacedOrder}--${merchant_office_king_reference}
     MP: order grand total should be:    €31.81
-    MP: update order state using header button:    Ship
+    MP: update order state using header button:    ship
     MP: order state on drawer should be:    Shipped   
     MP: update order state using header button:    deliver
     MP: order state on drawer should be:    Delivered
@@ -1215,7 +1300,7 @@ Merchant_Portal_Customer_Specific_Prices
     MP: perform search by:    ${one_variant_product_of_main_merchant_abstract_sku}
     MP: click on a table row that contains:    ${one_variant_product_of_main_merchant_abstract_sku}
     MP: open concrete drawer by SKU:    ${one_variant_product_of_main_merchant_concrete_sku}
-    MP: delete price row that contains text:    5 - Spryker Systems GmbH
+    MP: delete product price row that contains text:    5 - Spryker Systems GmbH
     MP: save concrete product
     Yves: login on Yves with provided credentials:     ${yves_company_user_custom_merchant_prices_email}
     Yves: go to PDP of the product with sku:    ${one_variant_product_of_main_merchant_abstract_sku}
@@ -1239,7 +1324,197 @@ Search_for_Merchant_Offers_and_Products
     Yves: select random varian if variant selector is available
     Yves: merchant is (not) displaying in Sold By section of PDP:    Budget Stationery    true
 
-###TO DO###
-# Merchant_Portal_Volume_Prices
-# ###TODO###
-# [Documentation]    Checks that merchant is able to add, edit, delete volume prices per currency. Covers products and offers
+Merchant_Portal_Product_Volume_Prices
+    [Documentation]    Checks that merchant is able to create new multi-SKU product with volume prices. Falback to default price after delete
+    MP: login on MP with provided credentials:    ${merchant_office_king_email}
+    MP: open navigation menu tab:    Products    
+    MP: click on create new entity button:    Create Product
+    MP: create multi sku product with following data:
+    ...    || product sku    | product name          | first attribute name | first attribute first value | first attribute second value | second attribute name | second attribute value ||
+    ...    || VPSKU${random} | VPNewProduct${random} | packaging_unit       | Item                        | Box                          | material              | Aluminium              ||
+    MP: perform search by:    VPNewProduct${random}
+    MP: click on a table row that contains:     VPNewProduct${random}
+    MP: fill abstract product required fields:
+    ...    || product name DE     | store | tax set        ||
+    ...    || VPNewProduct${random} | DE    | Standard Taxes ||
+    MP: fill product price values:
+    ...    || product type | row number | customer | store | currency | gross default ||
+    ...    || abstract     | 1          | Default  | DE    | EUR      | 100           ||
+    MP: fill product price values:
+    ...    || product type | row number | customer | store | currency | gross default | quantity ||
+    ...    || abstract     | 2          | Default  | DE    | EUR      | 10            | 2        ||
+    MP: save abstract product 
+    MP: click on a table row that contains:    VPNewProduct${random}
+    MP: open concrete drawer by SKU:    VPSKU${random}-2
+    MP: fill concrete product fields:
+    ...    || is active | stock quantity | use abstract name | searchability ||
+    ...    || true      | 100            | true              | en_US         ||
+    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: go to second navigation item level:    Catalog    Products 
+    Zed: click Action Button in a table for row that contains:     VPNewProduct${random}     Approve
+    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}  
+    Yves: delete all shopping carts
+    Yves: create new 'Shopping Cart' with name:    MPVolumePriceCart+${random}
+    Yves: go to URL:    en/search?q=VPSKU${random}
+    Try reloading page until element is/not appear:    ${catalog_product_card_locator}    true    15    5s
+    Yves: go to PDP of the product with sku:     VPSKU${random}
+    Yves: merchant is (not) displaying in Sold By section of PDP:    Office King    true
+    Yves: product price on the PDP should be:    €100.00
+    Reload
+    Yves: change quantity on PDP:    2
+    Yves: product price on the PDP should be:    €10.00
+    Yves: merchant's offer/product price should be:    Office King     €10.00
+    Yves: add product to the shopping cart
+    Yves: go to the shopping cart through the header with name:    MPVolumePriceCart+${random}
+    Yves: shopping cart contains product with unit price:    VPSKU${random}-2    VPNewProduct${random}    10.00
+    Yves: assert merchant of product in cart or list:    VPSKU${random}-2    Office King
+    MP: login on MP with provided credentials:    ${merchant_office_king_email}
+    MP: open navigation menu tab:    Products
+    MP: perform search by:    VPNewProduct${random}
+    MP: click on a table row that contains:    VPNewProduct${random}
+    MP: delete product price row that contains quantity:    2
+    MP: save abstract product
+    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
+    Yves: go to PDP of the product with sku:     VPSKU${random}
+    Yves: change quantity on PDP:    2
+    Yves: product price on the PDP should be:    €100.00
+    Yves: merchant's offer/product price should be:    Office King     €100.00
+    Yves: go to the shopping cart through the header with name:    MPVolumePriceCart+${random}
+    Yves: shopping cart contains product with unit price:    VPSKU${random}-2    VPNewProduct${random}    100.00
+    [Teardown]    Run Keywords    Yves: delete 'Shopping Cart' with name:    MPVolumePriceCart+${random}
+    ...    AND    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    ...    AND    Zed: go to second navigation item level:    Catalog    Products 
+    ...    AND    Zed: click Action Button in a table for row that contains:     VPNewProduct${random}     Deny
+
+Merchant_Portal_Offer_Volume_Prices
+    [Documentation]    Checks that merchant is able to create new offer with volume prices and it will be displayed on Yves. Falback to default price after delete
+    MP: login on MP with provided credentials:    ${merchant_spryker_email}
+    MP: open navigation menu tab:    Products    
+    MP: click on create new entity button:    Create Product
+    MP: create multi sku product with following data:
+    ...    || product sku       | product name             | first attribute name | first attribute first value | first attribute second value | second attribute name | second attribute value ||
+    ...    || OfferSKU${random} | OfferNewProduct${random} | packaging_unit       | Item                        | Box                          | material              | Aluminium              ||
+    MP: perform search by:    OfferNewProduct${random}
+    MP: click on a table row that contains:     OfferNewProduct${random}
+    MP: fill abstract product required fields:
+    ...    || product name DE          | store | tax set        ||
+    ...    || OfferNewProduct${random} | DE    | Standard Taxes ||
+    MP: fill product price values:
+    ...    || product type | row number | customer | store | currency | gross default ||
+    ...    || abstract     | 1          | Default  | DE    | EUR      | 100           ||
+    MP: save abstract product 
+    MP: click on a table row that contains:    OfferNewProduct${random}
+    MP: open concrete drawer by SKU:    OfferSKU${random}-2
+    MP: fill concrete product fields:
+    ...    || is active | stock quantity | use abstract name | searchability ||
+    ...    || true      | 100            | true              | en_US         ||
+    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: go to second navigation item level:    Catalog    Products 
+    Zed: click Action Button in a table for row that contains:     OfferNewProduct${random}     Approve
+    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}  
+    Yves: delete all shopping carts
+    Yves: create new 'Shopping Cart' with name:    MPVolumePriceCart+${random}
+    Yves: go to URL:    en/search?q=OfferSKU${random}
+    Try reloading page until element is/not appear:    ${catalog_product_card_locator}    true    15    5s
+    Yves: go to PDP of the product with sku:     OfferSKU${random}
+    Yves: merchant is (not) displaying in Sold By section of PDP:    Spryker    true
+    MP: login on MP with provided credentials:    ${merchant_office_king_email}
+    MP: open navigation menu tab:    Offers
+    MP: click on create new entity button:    Add Offer
+    MP: perform search by:    OfferSKU${random}-2
+    MP: click on a table row that contains:    OfferSKU${random}-2
+    MP: fill offer fields:
+    ...    || is active | merchant sku               | store | stock quantity ||
+    ...    || true      | volumeMerchantSKU${random} | DE    | 100            ||
+    MP: add offer price:
+    ...    || row number | store | currency | gross default ||
+    ...    || 1          | DE    | CHF      | 100           ||
+    MP: add offer price:
+    ...    || row number | store | currency | gross default | quantity ||
+    ...    || 2          | DE    | EUR      | 200           | 1        ||
+    MP: add offer price:
+    ...    || row number | store | currency | gross default | quantity ||
+    ...    || 3          | DE    | EUR      | 10            | 2        ||
+    MP: save offer
+    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
+    Yves: create new 'Shopping Cart' with name:    volumeOfferCart${random}
+    Yves: go to PDP of the product with sku:     OfferSKU${random}
+    Yves: merchant is (not) displaying in Sold By section of PDP:    Office King    true
+    Yves: merchant's offer/product price should be:    Office King    €200.00
+    Yves: select xxx merchant's offer:    Office King
+    Yves: change quantity on PDP:    2
+    Yves: product price on the PDP should be:    €10.00
+    Yves: merchant's offer/product price should be:    Office King     €10.00
+    Yves: add product to the shopping cart
+    Yves: go to the shopping cart through the header with name:    volumeOfferCart${random}
+    Yves: 'Shopping Cart' page is displayed
+    Yves: assert merchant of product in cart or list:    OfferSKU${random}-2    Office King
+    Yves: shopping cart contains product with unit price:    OfferSKU${random}-2    OfferNewProduct${random}    10
+    MP: login on MP with provided credentials:    ${merchant_office_king_email}
+    MP: open navigation menu tab:    Offers
+    MP: perform search by:    OfferSKU${random}-2
+    MP: click on a table row that contains:    volumeMerchantSKU${random}
+    MP: delete offer price row that contains quantity:    2
+    MP: save offer
+    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
+    Yves: go to PDP of the product with sku:     OfferSKU${random}
+    Yves: select xxx merchant's offer:    Office King
+    Yves: change quantity on PDP:    2
+    Yves: product price on the PDP should be:    €200.00
+    Yves: merchant's offer/product price should be:    Office King     €200.00
+    Yves: go to the shopping cart through the header with name:    volumeOfferCart${random}
+    Yves: shopping cart contains product with unit price:    OfferSKU${random}-2    OfferNewProduct${random}    200
+    [Teardown]    Run Keywords    Yves: delete 'Shopping Cart' with name:    volumeOfferCart${random}
+    ...    AND    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    ...    AND    Zed: go to second navigation item level:    Catalog    Products 
+    ...    AND    Zed: click Action Button in a table for row that contains:     OfferNewProduct${random}     Deny
+
+Merchant_Portal_My_Account
+    [Documentation]    Checks that MU can edit personal data in MP. Bug: CC-23118
+    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: go to second navigation item level:    Marketplace    Merchants
+    Zed: click Action Button in a table for row that contains:     Oryx Merchant     Edit
+    Zed: create new Merchant User with the following data:
+    ...    || e-mail                       | first name     | last name      ||
+    ...    || edit_user+${random}@test.com | FName${random} | LName${random} ||
+    Zed: perform merchant user search by:     edit_user+${random}@test.com
+    Zed: table should contain non-searchable value:    Deactivated
+    Zed: click Action Button in Merchant Users table for row that contains:    edit_user+${random}@test.com    Activate
+    Zed: table should contain non-searchable value:    Active
+    Zed: update Zed user:
+    ...    || oldEmail                     | newEmail | password      | firstName | lastName ||
+    ...    || edit_user+${random}@test.com |          | Change123!321 |           |          ||
+    MP: login on MP with provided credentials:    edit_user+${random}@test.com    Change123!321
+    MP: update merchant personal details with data:
+    ...    || firstName               | lastName                | email                            | currentPassword | newPassword          ||
+    ...    || MPUpdatedFName${random} | MPUpdatedLName${random} | new_edit_user+${random}@test.com | Change123!321   | UpdatedChange123!321 ||
+    MP: click submit button
+    MP: login on MP with provided credentials:    new_edit_user+${random}@test.com    UpdatedChange123!321
+    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: go to second navigation item level:    Users    Users
+    Zed: table should contain:    MPUpdatedFName${random}
+    Zed: table should contain:    MPUpdatedLName${random}
+    [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    ...    AND    Zed: delete Zed user with the following email:    new_edit_user+${random}@test.com
+    
+Merchant_Portal_Dashboard
+    [Documentation]    Checks that merchant user is able to access the dashboard page. Bug: CC-23118
+    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: go to second navigation item level:    Marketplace    Merchants
+    Zed: click Action Button in a table for row that contains:     Oryx Merchant     Edit
+    Zed: create new Merchant User with the following data:
+    ...    || e-mail                            | first name     | last name      ||
+    ...    || dashboard_user+${random}@test.com | FName${random} | LName${random} ||
+    Zed: perform merchant user search by:     dashboard_user+${random}@test.com
+    Zed: table should contain non-searchable value:    Deactivated
+    Zed: click Action Button in Merchant Users table for row that contains:    dashboard_user+${random}@test.com    Activate
+    Zed: table should contain non-searchable value:    Active
+    Zed: update Zed user:
+    ...    || oldEmail                          | newEmail | password      | firstName | lastName ||
+    ...    || dashboard_user+${random}@test.com |          | Change123!321 |           |          ||
+    MP: login on MP with provided credentials:    dashboard_user+${random}@test.com    Change123!321
+    MP: click button on dashboard page and check url:    Manage Offers    /product-offers
+    MP: click button on dashboard page and check url:    Add Offer    /product-list
+    MP: click button on dashboard page and check url:    Manage Orders    /orders
+    [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    ...    AND    Zed: delete Zed user with the following email:    dashboard_user+${random}@test.com

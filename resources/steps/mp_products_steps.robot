@@ -31,6 +31,7 @@ MP: fill product price values:
             ...    Click    xpath=//web-spy-card[@spy-title='Price']//tbody/tr[${rowNumber}]/td[3]//spy-select
             ...    AND    MP: select option in expanded dropdown:    ${value}
             IF    '${key}'=='gross default' and '${value}' != '${EMPTY}'    Type Text    xpath=//web-spy-card[@spy-title='Price']//tbody/tr[${rowNumber}]/td[5]//input    ${value}
+            IF    '${key}'=='quantity' and '${value}' != '${EMPTY}'    Type Text    xpath=//web-spy-card[@spy-title='Price']//tbody/tr[${rowNumber}]/td[8]//input    ${value}
         END
         IF    '${env}' in ['mp_b2c']
             IF    '${key}'=='store' and '${value}' != '${EMPTY}'    Run Keywords
@@ -40,6 +41,7 @@ MP: fill product price values:
             ...    Click    xpath=//web-spy-card[@spy-title='Price']//tbody/tr[${rowNumber}]/td[2]//spy-select
             ...    AND    MP: select option in expanded dropdown:    ${value}
             IF    '${key}'=='gross default' and '${value}' != '${EMPTY}'    Type Text    xpath=//web-spy-card[@spy-title='Price']//tbody/tr[${rowNumber}]/td[4]//input    ${value}
+            IF    '${key}'=='quantity' and '${value}' != '${EMPTY}'    Type Text    xpath=//web-spy-card[@spy-title='Price']//tbody/tr[${rowNumber}]/td[7]//input    ${value}
         END
     END  
     
@@ -146,7 +148,7 @@ MP: save concrete product
     Wait Until Element Is Visible    ${product_updated_popup}
     Wait Until Element Is Not Visible    ${product_updated_popup}
 
-MP: delete price row that contains text:
+MP: delete product price row that contains text:
     [Arguments]    ${rowContent}
     Scroll Element Into View    xpath=//spy-chips[contains(text(),'${rowContent}')]/ancestor::tr//td[@class='ng-star-inserted']/div
     Hover    xpath=//spy-chips[contains(text(),'${rowContent}')]/ancestor::tr//td[@class='ng-star-inserted']/div
@@ -160,3 +162,11 @@ MP: open concrete drawer by SKU:
     MP: click on a table row that contains:    ${concreteSKU}
     Wait Until Element Is Visible    ${spinner_loader}
     Wait Until Element Is Not Visible    ${spinner_loader}
+
+MP: delete product price row that contains quantity:
+    [Arguments]    ${quantity}
+    Scroll Element Into View    xpath=//web-spy-card[@spy-title='Price']//tbody/tr/td[8][contains(.,'${quantity}')]/ancestor::tr//td[@class='ng-star-inserted']/div
+    Hover    xpath=//web-spy-card[@spy-title='Price']//tbody/tr/td[8][contains(.,'${quantity}')]/ancestor::tr//td[@class='ng-star-inserted']/div
+    Click    ${product_delete_price_row_button}
+    Wait Until Element Is Visible    ${product_price_deleted_popup}
+    Wait Until Element Is Not Visible    ${product_price_deleted_popup}
