@@ -1075,13 +1075,13 @@ Merchant_Portal_Product_Volume_Prices
     Yves: merchant is (not) displaying in Sold By section of PDP:    Video King    true
     Yves: product price on the PDP should be:    €100.00
     Reload
-    Yves: change quantity on PDP:    2
+    Yves: change quantity using '+' or '-' button № times:    +    3
     Yves: product price on the PDP should be:    €10.00
     Yves: merchant's offer/product price should be:    Video King     €10.00
     Yves: add product to the shopping cart
     Yves: go to b2c shopping cart
-    Yves: shopping cart contains product with unit price:    VPSKU${random}-2    VPNewProduct${random}    10.00
-    Yves: assert merchant of product in cart or list:    VPSKU${random}-2    Video King
+    Yves: shopping cart contains product with unit price:    VPNewProduct${random}    VPNewProduct${random}    40.00
+    Yves: assert merchant of product in b2c cart:    VPNewProduct${random}    Video King
     MP: login on MP with provided credentials:    ${merchant_video_king_email}
     MP: open navigation menu tab:    Products
     MP: perform search by:    VPNewProduct${random}
@@ -1090,11 +1090,11 @@ Merchant_Portal_Product_Volume_Prices
     MP: save abstract product
     Yves: login on Yves with provided credentials:    ${yves_user_email}
     Yves: go to PDP of the product with sku:     VPSKU${random}
-    Yves: change quantity on PDP:    2
+    Yves: change quantity using '+' or '-' button № times:    +    3
     Yves: product price on the PDP should be:    €100.00
     Yves: merchant's offer/product price should be:    Video King     €100.00
     Yves: go to b2c shopping cart
-    Yves: shopping cart contains product with unit price:    VPSKU${random}-2    VPNewProduct${random}    100.00
+    Yves: shopping cart contains product with unit price:    VPNewProduct${random}    VPNewProduct${random}    400.00
     [Teardown]    Run Keywords    Yves: check if cart is not empty and clear it
     ...    AND    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: go to second navigation item level:    Catalog    Products 
@@ -1155,13 +1155,13 @@ Merchant_Portal_Offer_Volume_Prices
     Yves: merchant's offer/product price should be:    Video King    €200.00
     Reload
     Yves: select xxx merchant's offer:    Video King
-    Yves: change quantity on PDP:    2
+    Yves: change quantity using '+' or '-' button № times:    +    3
     Yves: product price on the PDP should be:    €10.00
     Yves: merchant's offer/product price should be:    Video King     €10.00
     Yves: add product to the shopping cart
     Yves: go to b2c shopping cart
-    Yves: assert merchant of product in cart or list:    OfferSKU${random}-2    Video King
-    Yves: shopping cart contains product with unit price:    OfferSKU${random}-2    OfferNewProduct${random}    10
+    Yves: assert merchant of product in b2c cart:    OfferNewProduct${random}    Video King
+    Yves: shopping cart contains product with unit price:    OfferNewProduct${random}    OfferNewProduct${random}    40
     MP: login on MP with provided credentials:    ${merchant_video_king_email}
     MP: open navigation menu tab:    Offers
     MP: perform search by:    OfferSKU${random}-2
@@ -1172,11 +1172,11 @@ Merchant_Portal_Offer_Volume_Prices
     Yves: go to PDP of the product with sku:     OfferSKU${random}
     Reload
     Yves: select xxx merchant's offer:    Video King
-    Yves: change quantity on PDP:    2
+    Yves: change quantity using '+' or '-' button № times:    +    3
     Yves: product price on the PDP should be:    €200.00
     Yves: merchant's offer/product price should be:    Video King     €200.00
     Yves: go to b2c shopping cart
-    Yves: shopping cart contains product with unit price:    OfferSKU${random}-2    OfferNewProduct${random}    200
+    Yves: shopping cart contains product with unit price:    OfferNewProduct${random}    OfferNewProduct${random}    800
     [Teardown]    Run Keywords    Yves: check if cart is not empty and clear it
     ...    AND    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: go to second navigation item level:    Catalog    Products 

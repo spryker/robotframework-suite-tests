@@ -14,10 +14,10 @@ Resource                  ../pages/yves/yves_login_page.robot
 
 *** Variables ***
 # *** SUITE VARIABLES ***
-${env}                 mp_b2b
+${env}                 b2b
 ${headless}            true
 ${browser}             chromium
-${browser_timeout}     60 seconds
+${browser_timeout}     30 seconds
 ${email_domain}        @spryker.com
 ${default_password}    change123
 ${admin_email}         admin@spryker.com

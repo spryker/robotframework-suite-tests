@@ -165,8 +165,17 @@ MP: open concrete drawer by SKU:
 
 MP: delete product price row that contains quantity:
     [Arguments]    ${quantity}
-    Scroll Element Into View    xpath=//web-spy-card[@spy-title='Price']//tbody/tr/td[8][contains(.,'${quantity}')]/ancestor::tr//td[@class='ng-star-inserted']/div
-    Hover    xpath=//web-spy-card[@spy-title='Price']//tbody/tr/td[8][contains(.,'${quantity}')]/ancestor::tr//td[@class='ng-star-inserted']/div
-    Click    ${product_delete_price_row_button}
-    Wait Until Element Is Visible    ${product_price_deleted_popup}
-    Wait Until Element Is Not Visible    ${product_price_deleted_popup}
+    IF    '${env}' in ['mp_b2b']
+        Scroll Element Into View    xpath=//web-spy-card[@spy-title='Price']//tbody/tr/td[8][contains(.,'${quantity}')]/ancestor::tr//td[@class='ng-star-inserted']/div
+        Hover    xpath=//web-spy-card[@spy-title='Price']//tbody/tr/td[8][contains(.,'${quantity}')]/ancestor::tr//td[@class='ng-star-inserted']/div
+        Click    ${product_delete_price_row_button}
+        Wait Until Element Is Visible    ${product_price_deleted_popup}
+        Wait Until Element Is Not Visible    ${product_price_deleted_popup}
+    END
+    IF    '${env}' in ['mp_b2c']
+        Scroll Element Into View    xpath=//web-spy-card[@spy-title='Price']//tbody/tr/td[7][contains(.,'${quantity}')]/ancestor::tr//td[@class='ng-star-inserted']/div
+        Hover    xpath=//web-spy-card[@spy-title='Price']//tbody/tr/td[7][contains(.,'${quantity}')]/ancestor::tr//td[@class='ng-star-inserted']/div
+        Click    ${product_delete_price_row_button}
+        Wait Until Element Is Visible    ${product_price_deleted_popup}
+        Wait Until Element Is Not Visible    ${product_price_deleted_popup}
+    END

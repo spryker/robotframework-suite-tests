@@ -149,8 +149,8 @@ Yves: Shopping Cart title should be equal:
 Yves: change quantity of the configurable bundle in the shopping cart on:
     [Documentation]    In case of multiple matches, changes quantity for the first product in the shopping cart
     [Arguments]    ${confBundleTitle}    ${quantity}
-    Type Text    xpath=//main//article[contains(@data-qa,'configured-bundle')][1]//*[contains(@class,'configured-bundle') and text()='${confBundleTitle}']/ancestor::article//input[@data-qa='quantity-input']    ${quantity}
-    Click    xpath=//main//article[contains(@data-qa,'configured-bundle')][1]//*[contains(@class,'configured-bundle') and text()='${confBundleTitle}']
+    Type Text    xpath=//main//article[contains(@data-qa,'configured-bundle')][1]//a[text()='${confBundleTitle}']/ancestor::article//input[@data-qa='quantity-input']    ${quantity}
+    Click    xpath=//main//article[contains(@data-qa,'configured-bundle')][1]//a[text()='${confBundleTitle}']/ancestor::article
     Sleep    1s
     Yves: remove flash messages
 

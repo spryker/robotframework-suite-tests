@@ -49,6 +49,7 @@ Yves: change quantity on PDP:
         Sleep    1s
     ELSE
         Add/Edit element attribute with JavaScript:    ${pdp_quantity_input_filed}[${env}]    value    ${qtyToSet}
+        Click    ${pdp_product_name}  
     END
 
 Yves: select the following 'Sales Unit' on PDP:
@@ -61,9 +62,9 @@ Yves: change quantity using '+' or '-' button № times:
     [Arguments]    ${action}    ${clicksCount}
     FOR    ${index}    IN RANGE    0    ${clicksCount}
         IF    '${action}' == '+'
-            Click    ${pdp_increase_quantity_button}
+            Click    ${pdp_increase_quantity_button}[${env}]
         ELSE IF    '${action}' == '-'
-            Click    ${pdp_decrease_quantity_button}
+            Click    ${pdp_decrease_quantity_button}[${env}]
         END
         Sleep    1s
     END

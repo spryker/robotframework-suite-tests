@@ -556,21 +556,21 @@ Request_for_Quote
     [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: delete Zed user with the following email:    agent_quote+${random}@spryker.com
 
-# Unique_URL
-#     [Documentation]    Fails due to Bug:CC-12380
-#     Yves: login on Yves with provided credentials:    ${yves_company_user_manager_and_buyer_email}
-#     Yves: create new 'Shopping Cart' with name:    externalCart+${random}
-#     Yves: go to PDP of the product with sku:    M90806
-#     Yves: add product to the shopping cart
-#     Yves: go to the shopping cart through the header with name:    externalCart+${random}
-#     Yves: 'Shopping Cart' page is displayed
-#     Yves: get link for external cart sharing
-#     Yves: logout on Yves as a customer
-#     Yves: go to URL:    ${externalURL}
-#     Yves: 'Shopping Cart' page is displayed
-#     Yves: Shopping Cart title should be equal:    Preview: externalCart+${random}
-#     Yves: shopping cart contains the following products:    108302
-#     [Teardown]    Yves: delete 'Shopping Cart' with name:    externalCart+${random}
+Unique_URL
+    [Documentation]    Fails due to Bug:CC-12380
+    Yves: login on Yves with provided credentials:    ${yves_company_user_manager_and_buyer_email}
+    Yves: create new 'Shopping Cart' with name:    externalCart+${random}
+    Yves: go to PDP of the product with sku:    M90806
+    Yves: add product to the shopping cart
+    Yves: go to the shopping cart through the header with name:    externalCart+${random}
+    Yves: 'Shopping Cart' page is displayed
+    Yves: get link for external cart sharing
+    Yves: logout on Yves as a customer
+    Yves: go to URL:    ${externalURL}
+    Yves: 'Shopping Cart' page is displayed
+    Yves: Shopping Cart title should be equal:    Preview: externalCart+${random}
+    Yves: shopping cart contains the following products:    108302
+    [Teardown]    Yves: delete 'Shopping Cart' with name:    externalCart+${random}
 
 #### Configurable Bundles feature is not present in marketplace for now ####
 # Configurable_Bundle
@@ -736,7 +736,7 @@ Catalog
     Yves: change sorting order on catalog page:    Sort by price descending
     Yves: 1st product card in catalog (not)contains:      Price    €41.68
     Yves: go to catalog page:    2
-    Yves: catalog page contains filter:    Product Ratings     Product Labels     Brand    Color    Merchant
+    Yves: catalog page contains filter:    Product Ratings     Product Labels     Brand    Color
     Yves: select filter value:    Color    blue
     Yves: 'Catalog' page should show products:    3
 
@@ -1258,7 +1258,7 @@ Fulfill_Order_from_Merchant_Portal
     MP: wait for order to appear:    ${lastPlacedOrder}--${merchant_office_king_reference}
     MP: click on a table row that contains:    ${lastPlacedOrder}--${merchant_office_king_reference}
     MP: order grand total should be:    €31.81
-    MP: update order state using header button:    ship
+    MP: update order state using header button:    Ship
     MP: order state on drawer should be:    Shipped   
     MP: update order state using header button:    deliver
     MP: order state on drawer should be:    Delivered
