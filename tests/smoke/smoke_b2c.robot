@@ -26,7 +26,7 @@ Resource    ../../resources/steps/wishlist_steps.robot
 Resource    ../../resources/steps/zed_availability_steps.robot
 Resource    ../../resources/steps/zed_discount_steps.robot
 Resource    ../../resources/steps/zed_cms_page_steps.robot
-
+Resource    ../../resources/steps/zed_order_steps.robot
 Resource    ../../resources/steps/zed_customer_steps.robot
 
 *** Test Cases ***
@@ -277,6 +277,20 @@ Product_Bundles
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
+    ### Creating new shippment on order in zed ###
+    Yves: get the last placed order ID by current customer
+    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: go to second navigation item level:    Sales    Orders
+    Zed: create a new shipment for order:    ${lastPlacedOrder}
+    Zed: enter shipment details for order:         
+    ...    ||  fname                             |  lname                   |  email                        |  address1            |  address2            |  city    |  zipcode      |  salutation  |  country  |  shipmentmethod  ||
+    ...    ||  ${yves_user_first_name}${random}  |  ${yves_user_last_name}  |  ${yves_user_email}${random}  |  address1+${random}  |  address2+${random}  |  Berlin  |  11${random}  |  Mr          |  Germany  |  DHL - Express   ||
+    ### Editing shippment on order in zed ###
+    Zed: go to second navigation item level:    Sales    Orders
+    Zed: edit order shipment:    ${lastPlacedOrder}
+    Zed: enter shipment details for order:
+    ...    ||  fname                             |  lname                   |  email                        |  address1            |  address2            |  city    |  zipcode      |  salutation  |  country  |  shipmentmethod  ||
+    ...    ||  ${yves_user_first_name}${random}  |  ${yves_user_last_name}  |  ${yves_user_email}${random}  |  address1+${random}  |  address2+${random}  |  Berlin  |  11${random}  |  Mr          |  Germany  |  DHL - Standard  ||   
     [Teardown]    Yves: check if cart is not empty and clear it
 
 Configurable_Bundle

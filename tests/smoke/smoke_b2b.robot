@@ -119,17 +119,6 @@ Share_Shopping_Carts
     [Teardown]    Run Keywords    Yves: logout on Yves as a customer
     ...    AND    Reload
 
-Creating_shipment_in_zed
-    [Documentation]    creating new shippment on order in zed
-    Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    Zed: go to second navigation item level:    Sales    Orders
-    Zed: Create a new shipment for order
-    Zed: flash message should be shown:    success
-    ### Editing shippment on order in zed ###
-    Zed: go to second navigation item level:    Sales    Orders
-    Zed: Edit order shipment    
-    Zed: flash message should be shown:    success
-    
 Quick_Order
    [Documentation]    Checks Quick Order, checkout and Reorder
    [Setup]    Run keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
@@ -172,12 +161,20 @@ Quick_Order
    Yves: 'Shopping Cart' page is displayed
    Yves: shopping cart contains the following products:    401627    520561    421340    419871    419869    425073    425084
    Yves: get the last placed order ID by current customer
-   Zed: login on Zed with provided credentials:    ${zed_admin_email}
-   Zed: go to second navigation item level:    Sales    Orders
-   Zed: Create a new shipment for order
-   Zed: go to second navigation item level:    Sales    Orders
-   Zed: Edit order shipment  
- 
+    ### Creating new shippment on order in zed ###
+    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: go to second navigation item level:    Sales    Orders
+    Zed: Create a new shipment for order:    ${lastPlacedOrder}
+    Zed: Enter shipment details for order:         
+    ...    ||  fname                             |  lname                   |  email                        |  address1            |  address2            |  city    |  zipcode      |  salutation  |  country  |  shipmentmethod  ||
+    ...    ||  ${yves_user_first_name}${random}  |  ${yves_user_last_name}  |  ${yves_user_email}${random}  |  address1+${random}  |  address2+${random}  |  Berlin  |  11${random}  |  Mr          |  Germany  |  DHL - Express   ||
+    ### Editing shippment on order in zed ###
+    Zed: go to second navigation item level:    Sales    Orders
+    Zed: Edit order shipment:    ${lastPlacedOrder}
+    Zed: Enter shipment details for order:
+    ...    ||  fname                             |  lname                   |  email                        |  address1            |  address2            |  city    |  zipcode      |  salutation  |  country  |  shipmentmethod  ||
+    ...    ||  ${yves_user_first_name}${random}  |  ${yves_user_last_name}  |  ${yves_user_email}${random}  |  address1+${random}  |  address2+${random}  |  Berlin  |  11${random}  |  Mr          |  Germany  |  DHL - Standard  ||
+
 Volume_Prices
     [Documentation]    Checks that volume prices are applied in cart
     [Setup]    Run keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
