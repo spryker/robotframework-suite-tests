@@ -25,3 +25,8 @@ Zed: delete customer:
                     Zed: message should be shown:    Customer successfully deleted
             END
         END
+
+Zed: check the status of user:
+    [Arguments]    ${email}    ${status}
+    Zed: perform search by:    ${email}
+    Zed: table should contain non-searchable value:    ${status}

@@ -27,17 +27,56 @@ Resource    ../../resources/steps/zed_availability_steps.robot
 Resource    ../../resources/steps/zed_discount_steps.robot
 Resource    ../../resources/steps/zed_cms_page_steps.robot
 Resource    ../../resources/steps/zed_customer_steps.robot
+Resource    ../../resources/steps/zed_add_customer_steps.robot
+Resource    ../../resources/steps/yves_customer_profile_steps.robot
+Resource    ../../resources/steps/yves_customer_newsletter_steps.robot
 
 *** Test Cases ***
 New_Customer_Registration
-    [Documentation]    Check that a new user can be registered in the system
-    Register a new customer with data:
+    [Documentation]    Check that a new user can be registered in the system.Create new user from yves and zed,update profile details,password reset and newsletter subscription.
+    Yves: go to the 'Home' page
+    Yves: register a new customer with data:
     ...    || salutation | first name          | last name | e-mail                       | password            ||
     ...    || Mr.        | Test${random}       | User      |  sonia+${random}@spryker.com | Change123!${random} ||
     Yves: flash message should be shown:    success    Almost there! We send you an email to validate your email address. Please confirm it to be able to log in.
+    Yves: login on Yves with provided credentials:    sonia+${random}@spryker.com    Change123!${random}
+    Yves: validate the newly created user:   sonia+${random}@spryker.com
+    Yves: login on Yves with provided credentials:    sonia+${random}@spryker.com    Change123!${random}
+    Yves: validate profile section:   Test${random}    User    sonia+${random}@spryker.com  
+    Yves: edit profile details of user:    alpha${random}    user    soniatest+${random}@spryker.com
+    Yves: flash message should be shown:    success    Profile was successfully saved
+    Yves: reset login credentials for user:   soniatest+${random}@spryker.com    Change123!${random}    Tesla123@${random}
+    Yves: flash message should be shown:    success    Password change successful
+    Yves: login on Yves with provided credentials:    soniatest+${random}@spryker.com    Tesla123@${random}
+    Yves: validate profile section:   alpha${random}    user    soniatest+${random}@spryker.com 
+    Yves: subscribe to newsletter
+    Yves: flash message should be shown:    success    You successfully subscribed to the newsletter
+    Yves: newletters confirmation:    soniatest+${random}@spryker.com    
+    Yves: logout on Yves as a customer
+    Yves: login on Yves with provided credentials:    soniatest+${random}@spryker.com    ${random}
+    Yves: forgot password:    soniatest+${random}@spryker.com
+    Yves: flash message should be shown:    success    If there is an account associated with this email address, you will receive an email with further instructions
+    Yves: restore password:    soniatest+${random}@spryker.com 
+    Yves: login on Yves with provided credentials:    soniatest+${random}@spryker.com    ${yves_user_password}
+    Yves: delete the customer
+    Yves: flash message should be shown:    success    Customer successfully deleted
+    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: go to second navigation item level:    Customers    Customers
+    Zed: click button in Header:    Add Customer
+    Zed: add customer:    abc+${random}@spryker.com    Mr    Test    user    Male    en_US    11/11/2011    ${random}    company${random}
+    Zed: message should be shown:    Customer was created successfully.
+    Zed: check the status of user:    abc+${random}@spryker.com    Unverified
+    Zed: click Action Button in a table for row that contains:    abc+${random}@spryker.com    Edit
+    Zed: edit customer details:
+    ...   || salutation   | first name           | gender        ||
+    ...   || Mrs         | Test${random}       | Female       ||
+    Zed: message should be shown:    Customer was updated successfully.
+    Yves: validate the newly created user:    abc+${random}@spryker.com
+    Yves: restore password:    abc+${random}@spryker.com 
+    Yves: login on Yves with provided credentials:    abc+${random}@spryker.com
     [Teardown]    Zed: delete customer:
-    ...    || email                       ||
-    ...    || sonia+${random}@spryker.com ||
+    ...    ||            email            ||
+    ...    || abc+${random}@spryker.com   ||
 
 Guest_User_Access_Restrictions
     [Documentation]    Checks that guest users see products info and cart but not profile
