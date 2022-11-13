@@ -7,3 +7,6 @@ ${zed_pdp_alternative_products_suggestion}    xpath=//ul[@id='select2-product_co
 ${zed_pdp_restore_button}    xpath=//form[@name='product_concrete_form_edit']//div[@id='tab-content-discontinue']//a[contains(@href,'restore')]
 ${zed_dpd_save_button}    xpath=//input[@type='submit' and @value='Save']
 ${zed_product_variant_table_processing_locator}    xpath=//div[@id='product-variant-table_processing']
+${alert_message}    xpath=//p[@class="text-alert"]
+${alternative_for_section}    xpath=//h2[@class="product-alternative-slider__title title title--h4"]
+${replacement_for_section}    xpath=//h2[@class="product-replacement__title title title--h4"]

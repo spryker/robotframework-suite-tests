@@ -191,20 +191,49 @@ Volume_Prices
 
 Discontinued_Alternative_Products
     [Documentation]    Checks that product can be discontinued in Zed
-    #Todo: extend methods "Zed: discontinue the following product:" and "Zed: undo discontinue the following product:" to check first that the product can be discontinued or undicontinued
-    Yves: go to PDP of the product with sku:  M21100
-    Yves: PDP contains/doesn't contain:    true    ${alternativeProducts}
-    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
-    Yves: go to the PDP of the first available product
-    Yves: get sku of the concrete product on PDP
-    Yves: get sku of the abstract product on PDP
+   # Assign alternatives without making a product discontinued
+    Yves: go to PDP of the product with sku:    ${available_product_abstract_sku}
+    Yves: PDP contains/doesn't contain:    false    ${alternativeProducts}
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    Zed: discontinue the following product:    ${got_abstract_product_sku}    ${got_concrete_product_sku}
+    Zed: go to second navigation item level:    Catalog    Products
+    Zed: click Action Button in a table for row that contains:    ${available_product_abstract_sku}    Edit
+    Wait Until Element Is Visible    ${zed_pdp_abstract_main_content_locator}
+    Zed: switch to the tab on 'Edit product' page:    Variants
+    Zed: click Action Button in Variant table for row that contains:    ${available_product_concrete_sku}    Edit
+    Wait Until Element Is Visible    ${zed_pdp_concrete_main_content_locator}
+    Zed: switch to the tab on 'Edit product' page:    Product Alternatives
+    Zed: add following alternative products to the concrete:    M21648
+    Yves: login on Yves with provided credentials:    ${yves_user_email}
+    Yves: go to the 'Home' page
+    Yves: go to PDP of the product with sku:    ${available_product_abstract_sku}
+    Yves: PDP contains/doesn't contain:    false    ${alternativeProducts}
+   # making product not available in Zed 
+    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: change product stock:    ${available_product_abstract_sku}    ${available_product_concrete_sku}    false    0  
+    Yves: login on Yves with provided credentials:    ${yves_user_email}
+    Yves: go to the 'Home' page
+    Yves: go to PDP of the product with sku:    ${available_product_abstract_sku}
+    Yves: PDP contains/doesn't contain:    true    ${alternativeProducts}
+    Yves: check product status:    alternative
+    Yves: check product not available on pdp
+    Yves: go to PDP of the product with sku:    M21648
+    Yves: check product section:    replacement
+   #  Discontinue a product in Zed
+    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: discontinue the following product:    ${available_product_abstract_sku}    ${available_product_concrete_sku}
     Zed: product is successfully discontinued
-    Zed: add following alternative products to the concrete:    M22613
-    Zed: submit the form
-    [Teardown]    Zed: undo discontinue the following product:    ${got_abstract_product_sku}    ${got_concrete_product_sku}
-
+    Yves: go to the 'Home' page
+    Yves: go to PDP of the product with sku:    ${available_product_abstract_sku}
+    Yves: check product status:    alternative
+    Yves: check product status:    discontinued
+    Yves: PDP contains/doesn't contain:    true    ${alternativeProducts}
+    Yves: go to PDP of the product with sku:    M21648
+    Yves: check product section:    replacement
+    [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    admin@spryker.com  
+    ...    AND    Zed: remove alternative product from the concrete:    ${available_product_abstract_sku}    ${available_product_concrete_sku}    M21648
+    ...    AND    Zed: change product stock:    ${available_product_abstract_sku}    ${available_product_concrete_sku}    true    20  
+    ...    AND    Zed: undo discontinue the following product:    ${available_product_abstract_sku}    ${available_product_concrete_sku}
+    
 Measurement_Units
     [Documentation]    Checks checkout with Measurement Unit product
     [Setup]    Run keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_manager_and_buyer_email}

@@ -62,3 +62,29 @@ Zed: product is successfully discontinued
     ${currentURL}=    Get Location
     IF    'discontinue' not in '${currentURL}'    Zed: switch to the tab on 'Edit product' page:    Discontinue
     Page Should Contain Element    ${zed_pdp_restore_button}
+
+Yves: check product status:
+    [Documentation]    can be alternative or discontinued
+    [Arguments]    ${status}   
+    Try reloading page until element is/not appear:    //h1[@class="page-info__title title title--h3"]/label-group//span/span[contains(@class,'${status}')]    true
+    Wait Until Element Is Visible    //h1[@class="page-info__title title title--h3"]/label-group//span/span[contains(@class,'${status}')]
+
+Zed: remove alternative product from the concrete:
+    [Arguments]    ${productAbstract}    ${productConcrete}    ${abstractRemoveSku}
+    Wait Until Element Is Visible    ${zed_log_out_button}
+    Zed: go to second navigation item level:    Catalog    Products
+    Zed: perform search by:    ${productAbstract}
+    Zed: click Action Button in a table for row that contains:    ${productAbstract}    Edit
+    Zed: switch to the tab on 'Edit product' page:    Variants
+    Zed: click Action Button in Variant table for row that contains:    ${productConcrete}    Edit
+    Zed: switch to the tab on 'Edit product' page:    Product Alternatives
+    Click    //td[contains(text(),'${abstractRemoveSku}')]//parent::tr//td//a[contains(@class,"btn-danger")]
+
+Yves: check product section:
+    [Arguments]    ${alternative_products}
+    IF    '${alternative_products}' == 'alternative'    Element Should Be Visible    ${alternative_for_section}
+    IF    '${alternative_products}' == 'replacement'    Element Should Be Visible    ${replacement_for_section}
+
+Yves: check product not available on pdp
+    Wait Until Element Is Visible    ${alert_message}
+    Page Should Contain Element    ${alert_message}
