@@ -9,7 +9,7 @@ Resource    ../pages/yves/yves_newsletter_page.robot
 Yves: subscribe to newsletter
     Yves: go to user menu item in the left bar:    Newsletter
     Check Checkbox    ${newletter_checkbox}
-    Click    ${newsletter_subscription_checkbox}
+    Click    ${newsletter_subscription_submit_button}
 
 Yves: newletters confirmation:
     [Arguments]    ${email}
