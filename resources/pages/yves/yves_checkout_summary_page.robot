@@ -9,3 +9,4 @@ ${checkout_summary_quote_status}    xpath=//div[contains(@data-qa,'component quo
 ${checkout_summary_approve_request_button}    xpath=//main[contains(@class,'page-layout-main--checkout-page')]//form[contains(@action,'approve')]//button
 ${checkout_summary_decline_request_button}    xpath=//main[contains(@class,'page-layout-main--checkout-page')]//form[contains(@action,'decline')]//button
 &{submit_checkout_form_button}    b2b=xpath=//div[contains(@class,'form--checkout-form')]//button[@data-qa='submit-button']    b2c=xpath=//div[contains(@class,'form--checkout-form')]//button[@data-qa='submit-button']    suite-nonsplit=xpath=//button[@data-qa='submit-button']    mp_b2b=xpath=//div[contains(@class,'form--checkout-form')]//button[@data-qa='submit-button']    mp_b2c=xpath=//div[contains(@class,'form--checkout-form')]//button[@data-qa='submit-button']
+${checkout_summary_term_and_conditions_locator}    xpath=//span[@class="checkbox__label label "]//a[contains(@href,'gtc')]

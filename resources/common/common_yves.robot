@@ -356,3 +356,14 @@ I send a POST request:
     Set Test Variable    ${response}    ${response}
     Set Test Variable    ${expected_self_link}    ${current_url}${path}
     [Return]    ${response_body}
+
+Yves: change current locale language:
+    [Documentation]    Change locale language to EN,DE 
+    [Arguments]    ${language}
+    Select From List By Text     ${yves_language_dropdown_locator}    ${language}  
+
+Yves: verify current locale language:
+    [Arguments]    ${current_lang}
+    ${lang}=    Yves: get current lang
+    ${lang}=    Convert To Upper Case    ${lang}
+    Should Be Equal    ${current_lang}    ${lang}    msg= Current locale language is not changed

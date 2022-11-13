@@ -243,3 +243,12 @@ Yves: signup guest user during checkout:
 Yves: Add product to wishlist as guest user
     Click    ${pdp_add_to_wishlist_button}
     Wait Until Element Is Visible    ${email_field}
+
+Yves: check states of 'Submit your order' button:
+    [Documentation]    Checks submit your order button is disabled without check t&c checkbox and enabled after check checkbox
+    [Arguments]    ${condition}
+    IF    '${condition}' == 'true'    Get Element States    ${checkout_summary_submit_order_button}    contains    enabled    return_names=True    message='Submit your order' Button is disabled
+    IF    '${condition}' == 'false'    Get Element States    ${checkout_summary_submit_order_button}    contains    disabled    return_names=True    message='Submit your order' Button is enabled
+
+Yves: click on term and conditions
+    Click    ${checkout_summary_term_and_conditions_locator}
