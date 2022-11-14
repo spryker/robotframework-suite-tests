@@ -34,6 +34,7 @@ Add_a_product_to_the_non_existing_shopping_list
     And Response reason should be:    Not Found
     And Response should return error message:    Shopping list not found.
 
+# we need integration of this fix https://spryker.atlassian.net/browse/CC-19379 to b2b-mp
 Add_a_product_with_non_existing_sku_to_the_shopping_list    
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}  
@@ -109,6 +110,7 @@ Add_too_big_amount_of_concrete_product_to_the_shopping_list
     ...    AND    Response status code should be:    204
     ...    AND    Response reason should be:    No Content
 
+# we need integration of this fix https://spryker.atlassian.net/browse/CC-19379 to b2b-mp
 Add_an_abstract_product_to_the_shopping_list    
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}  

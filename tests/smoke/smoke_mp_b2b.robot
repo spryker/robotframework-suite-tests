@@ -327,7 +327,7 @@ Agent_Assist
     Yves: header contains/doesn't contain:    true    ${customerSearchWidget}
     Yves: perform search by customer:    ${yves_company_user_special_prices_customer_firstname}
     Yves: agent widget contains:    ${yves_company_user_special_prices_customer_email}
-    Yves: As an Agent login under the customer:    ${yves_company_user_special_prices_customer_email}
+    Yves: as an agent login under the customer:    ${yves_company_user_special_prices_customer_email}
     Yves: perform search by:    ${one_variant_product_abstract_name}
     Yves: product with name in the catalog should have price:    ${one_variant_product_abstract_name}    ${one_variant_product_merchant_price}
     Yves: go to PDP of the product with sku:    ${one_variant_product_abstract_sku}
@@ -598,6 +598,8 @@ Return_Management
     Zed: go to order page:    ${lastPlacedOrder}
     Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Pay
     Zed: go to my order page:    ${lastPlacedOrder}
+    Zed: trigger matching state of xxx merchant's shipment:    1    send to distribution
+    Zed: trigger matching state of xxx merchant's shipment:    1    confirm at center
     Zed: trigger matching state of xxx merchant's shipment:    1    Ship   
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     Yves: go to user menu item in header:    Order History
@@ -618,7 +620,7 @@ Return_Management
     Yves: header contains/doesn't contain:    true    ${customerSearchWidget}
     Yves: perform search by customer:    ${yves_company_user_buyer_email}
     Yves: agent widget contains:    ${yves_company_user_buyer_email}
-    Yves: As an Agent login under the customer:    ${yves_company_user_buyer_email}
+    Yves: as an agent login under the customer:    ${yves_company_user_buyer_email}
     Yves: go to user menu item in header:    Order History
     Yves: 'View Order/Reorder/Return' on the order history page:     Return    ${lastPlacedOrder}
     Yves: 'Create Return' page is displayed
@@ -852,6 +854,8 @@ Refunds
     Zed: go to order page:    ${lastPlacedOrder}
     Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Pay   
     Zed: go to my order page:    ${lastPlacedOrder}
+    Zed: trigger matching state of xxx merchant's shipment:    1    send to distribution
+    Zed: trigger matching state of xxx merchant's shipment:    1    confirm at center
     Zed: trigger matching state of order item inside xxx shipment:    107254    Ship
     Zed: trigger matching state of order item inside xxx shipment:    107254    deliver
     Zed: trigger matching state of order item inside xxx shipment:    107254    Refund

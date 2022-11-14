@@ -69,7 +69,7 @@ Update_a_shopping_list_name
     ...    AND    Response status code should be:    204
     ...    AND    Response reason should be:    No Content
 
-# b2b2 - There is a bug CC-16543
+# b2b2 - There is a bug CC-16543. Bug is resolved but it looks like we need integration to b2b public demoshop
 Update_a_shopping_list_name_with_includes
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}  
@@ -200,13 +200,13 @@ Get_several_shopping_lists_info_with_includes
     I send a GET request:    /shopping-lists?include=shopping-list-items,concrete-products
     And Response status code should be:    200
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
-    And Each array element of array in response should contain nested property with value:    [data][relationships][shopping-list-items][data]    [type]    shopping-list-items
-    And Each array element of array in response should contain nested property with datatype:    [data][relationships][shopping-list-items][data]    [id]    str
+    And Each array element of array in response should contain nested property with value:    [data]    [relationships][shopping-list-items][data][0][type]    shopping-list-items
+    And Each array element of array in response should contain nested property with datatype:    [data]    [relationships][shopping-list-items][data][0][id]    str
     And Each array element of array in response should contain nested property with datatype:    [included]    [type]    str
     And Each array element of array in response should contain nested property with datatype:    [included]    [id]    str
-    And Response body parameter should be:    [data][type]    shopping-lists
-    And Response should contain the array of a certain size:    [included]    2
-    And Response should contain the array larger than a certain size:    [data][relationships]    0
+    And Each array element of array in response should contain nested property with value:    [data]    type    shopping-lists
+    And Response should contain the array larger than a certain size:    [included]    2
+    And Response should contain the array larger than a certain size:    [data][0][relationships]    0
     And Response include should contain certain entity type:    concrete-products
     And Response include should contain certain entity type:    shopping-list-items
     And Response include element has self link:   concrete-products
