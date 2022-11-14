@@ -85,12 +85,13 @@ Add_configured_bundle_item_to_cart_with_invalid_properties
     And Response should return error code:    4003
     And Response should return error message:    The quantity of the configured bundle should be more than zero.
 
+# https://spryker.atlassian.net/browse/CC-23359
 Add_configured_bundle_item_to_cart_with_invalid_qty
    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     ...  AND    Find or create customer cart
     ...  AND    Cleanup all items in the cart:    ${cart_id}
-    When I send a POST request:    /carts/${cart_id}/configured-bundles    {"data": {"type": "configured-bundles","attributes": {"quantity": "abc"}}}
+    When I send a POST request:    /carts/${cart_id}/configured-bundles    {"data": {"type": "configured-bundles","attributes": {"quantity": "abc","templateUuid": "${configurable_bundle_template_1_uuid}","items": [{"sku": "${configurable_bundle_first_slot_item_sku}","quantity": "abc","slotUuid": "${configurable_bundle_slot_1_uuid}"}]}}}
     Then Response status code should be:    422
     And Response should return error code:     4003
     And Response reason should be:    Unprocessable Content
@@ -108,6 +109,7 @@ Update_configured_bundle_item_in_cart_with_non_existing_bundle_group_key
     And Response should return error code:    4004
     And Response should return error message:    Configured bundle with provided group key not found in cart.
 
+# https://spryker.atlassian.net/browse/CC-23359
 Update_configured_bundle_item_in_cart_with_invalid_qty
   [Setup]    Run Keywords    I get access token for the customer:    ${yves_second_user.email}
     ...  AND    I set Headers:    Authorization=${token}
@@ -116,7 +118,7 @@ Update_configured_bundle_item_in_cart_with_invalid_qty
     ...  AND    I send a POST request:    /carts/${cart_id}/configured-bundles?include=items    {"data": {"type": "configured-bundles","attributes": {"quantity": "${configured_bundle_quantity}","templateUuid": "${configurable_bundle_template_1_uuid}","items": [{"sku": "${configurable_bundle_first_slot_item_sku}","quantity": 2,"slotUuid": "${configurable_bundle_slot_1_uuid}"}]}}}
     ...  AND    Save value to a variable:    [included][0][attributes][configuredBundle][groupKey]    bundle_group_key
     ...  AND    Response status code should be:    201
-    When I send a PATCH request:    /carts/${cart_id}/configured-bundles/${bundle_group_key}?include=items    {"data": {"type": "configured-bundles","attributes": {"quantity": "abc"}}}
+    When I send a PATCH request:    /carts/${cart_id}/configured-bundles/${bundle_group_key}?include=items    {"data": {"type": "configured-bundles","attributes": {"quantity": "abc","templateUuid": "${configurable_bundle_template_1_uuid}","items": [{"sku": "${configurable_bundle_first_slot_item_sku}","quantity": "abc","slotUuid": "${configurable_bundle_slot_1_uuid}"}]}}}
     Then Response status code should be:    422
     And Response reason should be:    Unprocessable Content
     And Response should return error code:    4003

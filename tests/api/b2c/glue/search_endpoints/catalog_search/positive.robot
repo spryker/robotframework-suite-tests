@@ -9,6 +9,7 @@ Default Tags    glue
 ##### SEARCH PARAMETERS #####
 ENABLER
     TestSetup
+# https://spryker.atlassian.net/browse/CC-23357
 Search_with_empty_search_criteria_all_default_values_check
     When I send a GET request:    /catalog-search?q=
     Then Response status code should be:    200
@@ -248,6 +249,7 @@ Search_by_attribute_(brand)
     And Response body parameter should be:    [data][0][attributes][valueFacets][4][values][0][value]    ${brand_4}
     And Response body has correct self link
 
+# https://spryker.atlassian.net/browse/CC-23358
 Search_by_several_attributes
     When I send a GET request:    /catalog-search?q=${color_3}+${aspect_ratio}
     Then Response status code should be:    200
@@ -325,12 +327,12 @@ Filter_by_price_only_max
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response body parameter should be:    [data][0][type]    catalog-search
-    And Response body parameter should be:    [data][0][attributes][pagination][numFound]    211
+    And Response body parameter should be:    [data][0][attributes][pagination][numFound]    213
     And Response body parameter should be:    [data][0][attributes][pagination][currentPage]    1
     And Response body parameter should be:    [data][0][attributes][pagination][maxPage]    18
     And Response should contain the array of a certain size:    [data][0][attributes][abstractProducts]    12
     #rating facets
-    And Response body parameter should be:    [data][0][attributes][rangeFacets][0][activeMin]    ${default_price.min}
+    And Response body parameter should be:    [data][0][attributes][rangeFacets][0][activeMin]    ${default_price.activeMin}
     And Response body parameter should be:    [data][0][attributes][rangeFacets][0][activeMax]    300000
 
 Filter_by_price_Min_max
@@ -405,10 +407,10 @@ Filter_by_label_one_label
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response body parameter should be:    [data][0][type]    catalog-search
-    And Response body parameter should be:    [data][0][attributes][pagination][numFound]    6
+    And Response body parameter should be:    [data][0][attributes][pagination][numFound]    7
     And Response body parameter should be:    [data][0][attributes][pagination][currentPage]    1
     And Response body parameter should be:    [data][0][attributes][pagination][maxPage]    1
-    And Response should contain the array of a certain size:    [data][0][attributes][abstractProducts]    6
+    And Response should contain the array of a certain size:    [data][0][attributes][abstractProducts]    7
     And Response body parameter should be:    [data][0][attributes][valueFacets][1][activeValue]    ${label.new}
     And Response body has correct self link
 
@@ -418,7 +420,7 @@ Filter_by_label_two_labels
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response body parameter should be:    [data][0][type]    catalog-search
-    And Response body parameter should be:    [data][0][attributes][pagination][numFound]    65
+    And Response body parameter should be:    [data][0][attributes][pagination][numFound]    67
     And Response body parameter should be:    [data][0][attributes][pagination][currentPage]    1
     And Response body parameter should be greater than:    [data][0][attributes][pagination][maxPage]    1
     And Response should contain the array of a certain size:    [data][0][attributes][abstractProducts]    ${ipp.default}
@@ -516,7 +518,7 @@ Filter_by_valid_main_category
     # check that category tree is correctly updated
     And Response should contain the array of a certain size:    [data][0][attributes][categoryTreeFilter]    ${category_tree_branches_qty}
     And Response body parameter should be:    [data][0][attributes][categoryTreeFilter][0][docCount]    0
-    And Response body parameter should be:    [data][0][attributes][categoryTreeFilter][4][docCount]    ${category_lvl1.qty}
+    And Response body parameter should be:    [data][0][attributes][categoryTreeFilter][3][docCount]    ${category_lvl1.qty}
     And Response body has correct self link
 
 Filter_by_valid_subcategory
@@ -533,7 +535,7 @@ Filter_by_valid_subcategory
     # check that category tree is correctly updated
     And Response should contain the array of a certain size:    [data][0][attributes][categoryTreeFilter]    ${category_tree_branches_qty}
     And Response body parameter should be:    [data][0][attributes][categoryTreeFilter][0][docCount]    0
-    And Response body parameter should be:    [data][0][attributes][categoryTreeFilter][4][children][0][docCount]    ${category_lvl2.qty}
+    And Response body parameter should be:    [data][0][attributes][categoryTreeFilter][3][children][0][docCount]    ${category_lvl2.qty}
     And Response body has correct self link
 
 Search_with_specific_currency
