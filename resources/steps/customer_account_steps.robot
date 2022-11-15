@@ -29,8 +29,8 @@ Yves: go to user menu item in the left bar:
 
 Yves: create a new customer address in profile:
     [Documentation]
-    [Arguments]    ${salutation}  ${firstName}    ${lastName}    ${street}    ${houseNumber}    ${postCode}    ${city}    ${country}=Germany    ${isDefaultShipping}=True     ${isDefaultBilling}=True       ${company}=    ${phone}=    ${additionalAddress}=
-    IF    '${env}'=='b2c'
+    [Arguments]    ${salutation}    ${firstName}    ${lastName}    ${street}    ${houseNumber}    ${postCode}    ${city}    ${country}=Germany    ${isDefaultShipping}=True     ${isDefaultBilling}=True       ${company}=    ${phone}=    ${additionalAddress}=
+    IF    '${env}' in ['b2c','mp_b2c']
         Yves: go to user menu item in header:    My Profile
     ELSE IF   '${env}' in ['b2b','mp_b2b']
         Yves: go to user menu item in header:    Profile
@@ -59,7 +59,7 @@ Yves: create a new customer address in profile:
 
 Yves: check that user has address exists/doesn't exist:
     [Arguments]    ${exists}    ${firstName}    ${lastName}    ${street}    ${houseNumber}    ${postCode}    ${city}    ${country}    ${isDefaultShipping}=True     ${isDefaultBilling}=True       ${company}=NUll    ${phone}=NUll    ${additionalAddress}=NUll
-    IF    '${env}'=='b2c'
+    IF    '${env}' in ['b2c','mp_b2c']
         Yves: go to user menu item in header:    My Profile
     ELSE IF     '${env}' in ['b2b','mp_b2b']
         Yves: go to user menu item in header:    Profile
@@ -80,18 +80,19 @@ Yves: check that user has address exists/doesn't exist:
 
 Yves: delete user address:
     [Arguments]    ${street}
-    IF    '${env}'=='b2c'
+    IF    '${env}' in ['b2c','mp_b2c']
         Yves: go to user menu item in header:    My Profile
     ELSE IF    '${env}' in ['b2b','mp_b2b']
         Yves: go to user menu item in header:    Profile
     END
     Yves: go to user menu item in the left bar:    Addresses
-    IF    '${env}'=='b2c'
+    IF    '${env}' in ['b2c','mp_b2c']
         Click    xpath=//li[contains(text(),'${street}')]/ancestor::div[@class='box']//button[contains(text(),'Delete')]
     ELSE IF    '${env}' in ['b2b','mp_b2b']
         Click    xpath=//li[contains(text(),'${street}')]/ancestor::div[@class='action-card']//button
     END
     Element Should Be Visible    xpath=//flash-message//div[contains(text(),'Address deleted successfully')]   message="Flash message didn't appear"
+    
 Yves: change customer street address:
     [Arguments]    ${street_name}
     Type Text    ${customer_account_address_street_field}    ${street_name}

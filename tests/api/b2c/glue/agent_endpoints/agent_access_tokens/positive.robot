@@ -8,7 +8,7 @@ Default Tags    glue
 ENABLER
     TestSetup
 
-#bug CC-16754
+#bug CC-16754 is fixed, but there is no fix in public b2c demoshop
 Get_agent_access_tokens
     When I send a POST request:    /agent-access-tokens    {"data": {"type": "agent-access-tokens","attributes": {"username": "${agent.email}","password": "${agent.password}"}}}
     Then Response status code should be:    201

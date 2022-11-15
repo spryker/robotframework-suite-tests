@@ -26,17 +26,18 @@ Resource    ../../resources/steps/wishlist_steps.robot
 Resource    ../../resources/steps/zed_availability_steps.robot
 Resource    ../../resources/steps/zed_discount_steps.robot
 Resource    ../../resources/steps/zed_cms_page_steps.robot
+
 Resource    ../../resources/steps/zed_customer_steps.robot
 Resource    ../../resources/steps/zed_customer_address_steps.robot
 *** Test Cases ***
 New_Customer_Registration
     [Documentation]    Check that a new user can be registered in the system
     Register a new customer with data:
-    ...    || salutation | first name          | last name | e-mail                         | password           ||
+    ...    || salutation | first name          | last name | e-mail                       | password            ||
     ...    || Mr.        | Test${random}       | User      |  sonia+${random}@spryker.com | Change123!${random} ||
     Yves: flash message should be shown:    success    Almost there! We send you an email to validate your email address. Please confirm it to be able to log in.
     [Teardown]    Zed: delete customer:
-    ...    || email                          ||
+    ...    || email                       ||
     ...    || sonia+${random}@spryker.com ||
 
 Guest_User_Access_Restrictions
@@ -253,7 +254,7 @@ Product_Sets
     [Teardown]    Yves: check if cart is not empty and clear it
 
 Product_Bundles
-    [Documentation]    Checks checkout with Bundle product
+    [Documentation]    Checks checkout with Bundle product. Fails due to bug CC-16679
     [Setup]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: change product stock:    ${bundled_product_1_abstract_sku}    ${bundled_product_1_concrete_sku}    true    10
     ...    AND    Zed: change product stock:    ${bundled_product_2_abstract_sku}    ${bundled_product_2_concrete_sku}    true    10
@@ -406,13 +407,38 @@ Agent_Assist
     Yves: go to URL:    agent/login
     Yves: login on Yves with provided credentials:    agent+${random}@spryker.com    change${random}
     Yves: header contains/doesn't contain:    true    ${customerSearchWidget}
-    Yves: perform search by customer:    ${yves_user_first_name}
-    Yves: agent widget contains:    ${yves_user_email}
-    Yves: As an Agent login under the customer:    ${yves_user_email}
-    Yves: perform search by:    031
-    Yves: product with name in the catalog should have price:    Canon PowerShot G9 X    €400.24
-    Yves: go to PDP of the product with sku:    031
-    Yves: product price on the PDP should be:    €400.24
+    Yves: perform search by customer:    ${yves_second_user_first_name}
+    Yves: agent widget contains:    ${yves_second_user_email}
+    Yves: as an agent login under the customer:    ${yves_second_user_email}
+    Yves: end customer assistance
+    Yves: perform search by customer:    ${yves_second_user_last_name}
+    Yves: agent widget contains:    ${yves_second_user_email}
+    Yves: as an agent login under the customer:    ${yves_second_user_email}
+    Yves: end customer assistance
+    Yves: perform search by customer:    ${yves_second_user_email}
+    Yves: agent widget contains:    ${yves_second_user_email}
+    Yves: as an agent login under the customer:    ${yves_second_user_email}
+    Yves: perform search by:    020
+    Yves: product with name in the catalog should have price:    Sony Cyber-shot DSC-W830    €105.80
+    Yves: go to PDP of the product with sku:    020
+    Yves: product price on the PDP should be:    €105.80
+    Yves: add product to the shopping cart
+    Yves: go to b2c shopping cart    
+    Yves: click on the 'Checkout' button in the shopping cart
+    Yves: fill in the following new shipping address:
+    ...    || firstName                         |     lastName                          |    street          |    houseNumber      |    city                |    postCode     |    phone         ||
+    ...    || ${yves_second_user_first_name}    |     ${yves_second_user_last_name}     |    ${random}       |    ${random}        |    Berlin${random}     |   ${random}     |    ${random}     ||
+    Yves: submit form on the checkout
+    Yves: select the following shipping method on the checkout and go next:     Standard: €4.90
+    Yves: select the following payment method on the checkout and go next:    Invoice
+    Yves: accept the terms and conditions:    true
+    Yves: 'submit the order' on the summary page
+    Yves: get the last placed order ID by current customer
+    Yves: end customer assistance
+    Yves: logout as an agent
+    Yves: login on Yves with provided credentials:    ${yves_second_user_email}
+    Yves: go to 'Order History' page
+    Yves: 'Order History' page contains the following order with a status:    ${lastPlacedOrder}    ${order_state}
     [Teardown]    Run Keywords    Yves: check if cart is not empty and clear it
     ...    AND    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: delete Zed user with the following email:    agent+${random}@spryker.com
@@ -463,7 +489,7 @@ Return_Management
     Yves: header contains/doesn't contain:    true    ${customerSearchWidget}
     Yves: perform search by customer:    ${yves_user_email}
     Yves: agent widget contains:    ${yves_user_email}
-    Yves: As an Agent login under the customer:    ${yves_user_email}
+    Yves: as an agent login under the customer:    ${yves_user_email}
     Yves: go to user menu item in header:    Orders History
     Yves: 'View Order/Reorder/Return' on the order history page:     Return    ${lastPlacedOrder}
     Yves: 'Create Return' page is displayed
@@ -508,7 +534,7 @@ Product_Relations
     [Teardown]    Yves: check if cart is not empty and clear it
 
 Guest_Checkout
-    [Documentation]    Guest checkout with bundles, discounts and OMS
+    [Documentation]    Guest checkout with bundles, discounts and OMS Fails due to bug CC-16679
     [Setup]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: change product stock:    ${bundled_product_1_abstract_sku}    ${bundled_product_1_concrete_sku}    true    10
     ...    AND    Zed: change product stock:    ${bundled_product_2_abstract_sku}    ${bundled_product_2_concrete_sku}    true    10
@@ -518,6 +544,7 @@ Guest_Checkout
     ...    AND    Zed: create a discount and activate it:    voucher    Percentage    5    sku = '*'    guestTest${random}    discountName=Guest Voucher Code 5% ${random}
     ...    AND    Zed: create a discount and activate it:    cart rule    Percentage    10    sku = '*'    discountName=Guest Cart Rule 10% ${random}
     Yves: go to the 'Home' page
+    Yves: logout on Yves as a customer
     Yves: go to PDP of the product with sku:    ${bundle_product_abstract_sku}
     #Fails due to bug CC-16679
     Yves: PDP contains/doesn't contain:    true    ${bundleItemsSmall}    ${bundleItemsLarge}
@@ -625,3 +652,51 @@ Add_and_change_customer_address_in_Zed
     ...    AND    Yves: go to 'Customer Account' page
     ...    AND    Yves: delete user address:    ${random}
     ...    AND    Yves: logout on Yves as a customer
+
+Add_to_cart_products_as_a_guest_user_and_login_during_checkout
+    [Documentation]    Add a product to cart and login during checkout
+    Yves: go to the 'Home' page
+    Yves: go to PDP of the product with sku:    ${bundled_product_3_concrete_sku}
+    Yves: add product to the shopping cart
+    Yves: go to b2c shopping cart  
+    Yves: click on the 'Checkout' button in the shopping cart
+     Yves: proceed as a guest user and login during checkout:   ${yves_second_user_email}
+     Yves: fill in the following new shipping address:
+     ...    || salutation     | firstName                    | lastName                    | street        | houseNumber       | postCode     | city       | country     | company    | phone           | additionalAddress     ||
+    ...    || ${Salutation}  | ${Guest_user_first_name}     | ${Guest_user_last_name}     | ${random}     | ${random}         | ${random}    | ${city}    | ${country}  | ${company} | ${random} | ${additional_address} ||
+    Yves: submit form on the checkout
+    Yves: select the following shipping method on the checkout and go next:    Express
+    Yves: select the following payment method on the checkout and go next:    Invoice
+    Yves: accept the terms and conditions:    true
+    Yves: 'submit the order' on the summary page
+    Yves: 'Thank you' page is displayed
+
+Add_to_cart_products_as_a_guest_user_and_register_during_checkout
+    [Documentation]    Add a product to cart and register guest user during checkout
+    Yves: go to the 'Home' page
+    Yves: go to PDP of the product with sku:    ${bundled_product_3_concrete_sku}
+    Yves: add product to the shopping cart
+    Page Should Not Contain Element    ${pdp_add_to_wishlist_button}
+    Yves: go to b2c shopping cart  
+    Yves: click on the 'Checkout' button in the shopping cart
+    Yves: signup guest user during checkout:    ${Guest_user_first_name}    ${Guest_user_last_name}    abc${random}@gmail.com    Abc#${random}    Abc#${random}
+    Save the result of a SELECT DB query to a variable:    select registration_key from spy_customer where email = 'abc${random}@gmail.com'    confirmation_key
+    I send a POST request:     /customer-confirmation   {"data":{"type":"customer-confirmation","attributes":{"registrationKey":"${confirmation_key}"}}}
+    Yves: login after signup during checkout:    abc${random}@gmail.com    Abc#${random}
+    Yves: fill in the following new shipping address:
+    ...    || salutation     | firstName                    | lastName                    | street        | houseNumber       | postCode     | city       | country     | company    | phone           | additionalAddress     ||
+    ...    || ${Salutation}  | ${Guest_user_first_name}     | ${Guest_user_last_name}     | ${random}     | ${random}         | ${random}    | ${city}    | ${country}  | ${company} | ${random} | ${additional_address} ||
+    Yves: submit form on the checkout
+    Yves: select the following shipping method on the checkout and go next:    Express
+    Yves: select the following payment method on the checkout and go next:    Invoice
+    Yves: accept the terms and conditions:    true
+    Yves: 'submit the order' on the summary page
+    Yves: 'Thank you' page is displayed
+    Yves: go to the 'Home' page
+    Yves: login on Yves with provided credentials:    ${yves_second_user_email}
+    Yves: go to PDP of the product with sku:    ${bundled_product_3_concrete_sku}
+    Delete All Cookies
+    Yves: Add product to wishlist as guest user
+     [Teardown]    Zed: delete customer:
+    ...    || email                          ||
+    ...    || abc${random}@gmail.com ||

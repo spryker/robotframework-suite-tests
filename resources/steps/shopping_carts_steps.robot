@@ -194,8 +194,8 @@ Yves: delete from b2c cart products with name:
 Yves: apply discount voucher to cart:
     [Arguments]    ${voucherCode}
     ${expanded}=    Set Variable    ${EMPTY}
-    ${expanded}=    IF    '${env}'=='b2c'    Run Keyword And Return Status    Get Element States    ${shopping_cart_voucher_code_field}    ==    hidden    return_names=False
-    IF    '${env}'=='b2c' and '${expanded}'=='False'    Click    ${shopping_cart_voucher_code_section_toggler}
+    ${expanded}=    IF    '${env}' in ['b2c','mp_b2c']    Run Keyword And Return Status    Get Element States    ${shopping_cart_voucher_code_field}    ==    hidden    return_names=False
+    IF    '${env}' in ['b2c','mp_b2c'] and '${expanded}'=='False'    Click    ${shopping_cart_voucher_code_section_toggler}
     Type Text    ${shopping_cart_voucher_code_field}    ${voucherCode}
     Click    ${shopping_cart_voucher_code_redeem_button}
     Yves: flash message should be shown:    success    Your voucher code has been applied
@@ -205,9 +205,9 @@ Yves: apply discount voucher to cart:
 Yves: discount is applied:
 #TODO: make from this method somth real, because Sum is not used
     [Arguments]    ${discountType}    ${discountName}    ${expectedDiscountSum}
-    IF    '${env}'=='b2c' and '${discountType}'=='voucher'
+    IF    '${env}' in ['b2c','mp_b2c'] and '${discountType}'=='voucher'
         Element should be visible    xpath=//span[contains(text(),'${expectedDiscountSum}')]/preceding-sibling::span[contains(text(),'${discountName}')]/ancestor::*[contains(@data-qa,'cart-discount-summary')]/*[contains(.,'Vouchers')]
-    ELSE IF    '${env}'=='b2c' and '${discountType}'=='cart rule'
+    ELSE IF    '${env}' in ['b2c','mp_b2c'] and '${discountType}'=='cart rule'
         Element should be visible    xpath=//span[contains(text(),'${expectedDiscountSum}')]/preceding-sibling::span[contains(text(),'${discountName}')]/ancestor::*[contains(@data-qa,'cart-discount-summary')]/*[contains(.,'Discounts')]
     ELSE IF     '${env}' in ['b2b','mp_b2b'] and '${discountType}'=='voucher'
         Element should be visible    xpath=//span[contains(text(),'${expectedDiscountSum}')]/preceding-sibling::span[contains(text(),'${discountName}')]/ancestor::*[contains(@data-qa,'cart-code-summary')]/*[contains(.,'Vouchers')]
@@ -218,10 +218,13 @@ Yves: discount is applied:
 Yves: promotional product offer is/not shown in cart:
     [Arguments]    ${isShown}
     IF    '${isShown}'=='true'
+        Try reloading page until element is/not appear:    ${shopping_cart_promotional_product_section}    true    5
         Element Should Be Visible    ${shopping_cart_promotional_product_section}    message=Promotional products are not displayed but should be    timeout=${browser_timeout}
     ELSE IF    '${isShown}'=='false'
+        Try reloading page until element is/not appear:    ${shopping_cart_promotional_product_section}    false    5
         Element Should Not Be Visible    ${shopping_cart_promotional_product_section}    message=Promotional products are displayed but should not    timeout=${browser_timeout}
     END
+    
 
 Yves: change quantity of promotional product and add to cart:
     [Documentation]    set ${action} to + or - to change quantity. ${clickCount} indicates how many times to click

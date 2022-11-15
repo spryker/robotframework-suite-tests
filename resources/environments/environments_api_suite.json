@@ -121,7 +121,7 @@
                 "name": "US Dollar",
                 "code": "USD",
                 "symbol": "$"
-            }
+                }
         },
         "locale": {
             "DE": {
@@ -233,7 +233,9 @@
             "sku": "134_29759322",
             "abstract_sku": "134",
             "name": "Acer Aspire S7",
-            "name_lower_case": "acer aspire s7"
+            "name_lower_case": "acer aspire s7",
+            "product_sku1":"014_25919241",
+            "product_sku1_name": "Canon IXUS 177"
         },
         "abstract_product_with_alternative": {
             "sku": "155",
@@ -241,7 +243,8 @@
         },
         "alternative_abstract_product": {
             "sku": "155",
-            "price_chf": "42090"
+            "price_chf": "42090",
+            "price_chf_1": "39675"
         },
         "abstract_available_product_with_stock": {
             "sku": "183",
@@ -258,7 +261,7 @@
             "meta_description": "Enjoy greater flexibility  ...than ever before with the Galaxy Tab S2. Remarkably slim and ultra-lightweight, use this device to take your e-books, photos,"
         },
         "product_availability": {
-            "abstract_available_with_stock_and_never_out_of_stock": "130",
+            "abstract_available_with_stock_and_never_out_of_stock": "005",
             "abstract_available_product_with_no_stock_and_never_out_of_stock": "666",
             "abstract_unavailable_product": "189",
             "concrete_available_with_stock_and_never_out_of_stock_sku": "005_30663301",
@@ -373,7 +376,7 @@
                 "total_sum_of_discounts_1": "1400",
                 "with_discount_20_percentage_off_storage": "4000",
                 "with_discount_10_percentage_off_minimum_order": "1600",
-                "with_discount_20_percentage_off_storage_1": "1400",
+                "with_discount_20_percentage_off_storage_1": "3467",
                 "with_discount_10_percentage_off_minimum_order_1": "560"
             },
             "product_2": {
@@ -392,12 +395,13 @@
         "discount_1": {
             "name": "10% off minimum order",
             "name_1": "20% off cameras",
-            "description_1": "20% off all digital cameras in the store",
-            "total_sum_for_discounts_for_products_1_and_2": "8300"
+            "description": "Get a 10% discount on all orders above 100 EUR or 115 CHF",
+            "description_1":"20% off all digital cameras in the store",
+            "total_sum_for_discounts_for_products_1_and_2": "6227"
         },
         "discount_2": {
             "name": "20% off cameras",
-            "total_sum_for_discounts_for_products_1_2": "3320",
+            "total_sum_for_discounts_for_products_1_2": "6900",
             "description": "Get a 10% discount on all orders above 100 EUR or 115 CHF"
         },
         "discount_3": {
@@ -406,10 +410,9 @@
             "description": "Free standard delivery for all orders above certain value depending on the currency",
             "total_sum_for_discounts_for_products_1_2": "490"
         }
-     
     },
     "discount": {
-        "discount_2": {
+        "voucher": {
             "name": "5% discount on all white products"
         },
         "product_with_voucher_code": {
@@ -589,16 +592,25 @@
         "default_header_content_type": "application/vnd.api+json",
         "urlencoded_header_content_type": "application/x-www-form-urlencoded",
         "qty_of_categories_in_category_trees": "6",
+        "discountId": "3",
         "color_name": "Black",
         "x_anonymous_prefix": "anonymous",
-        "qty_of_subcategories_in_category_trees": "2",
+        "qty_of_subcategories_in_category_trees": "2"
+        ,
+        "gift_card":{
+            "amount":"10000",
+            "paymentProvider": "GiftCard",
+            "paymentMethod":"GiftCard"
+        },
         "review": {
             "title": "This is a review",
             "text": "This is review text",
             "default_rating": "5"
         },
         "gift_card":{
-            "amount":"10000"
+            "amount":"10000",
+            "paymentProvider": "GiftCard",
+            "paymentMethod":"GiftCard"
         },
         "cart_permission_group_id": "1",
         "cart_permission_group_id_2": "2",
@@ -629,7 +641,8 @@
         "quote_request": {
             "purchase_order_number": "7711",
             "delivery_date": "2023-12-31",
-            "note": "Test note"
+            "note": "Test note",
+            "cart_permission_id": "2"
         }
     },
     "return_reason": {
@@ -687,6 +700,8 @@
         "configurable_bundle_slot_5_uuid": "9626de80-6caa-57a9-a683-2846ec5b6914",
         "configurable_bundle_slot_6_uuid": "2a5e55b1-993a-5510-864c-a4a18558aa75",
         "configurable_bundle_template_name_1": "Configurable Bundle \"All in\"",
-        "configured_bundle_quantity": 2
+        "configured_bundle_quantity": 2,
+        "configurable_bundle_first_slot_item_name":"Canon IXUS 160"
+
     }
 }

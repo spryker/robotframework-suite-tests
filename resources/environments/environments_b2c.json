@@ -46,7 +46,22 @@
             
     },
     "address":{
-        "city":"Berlin" 
-        
+
+            "street_name":"st",
+            "city":"Berlin",
+            "country":"Germany",
+            "additional_address":"additional street",
+            "company":"spryker"
+            },
+    "guest_user": {
+                "Salutation":"Mr.",
+                "Guest_user_first_name":"Guest",
+                "Guest_user_last_name":"martin"
+            },
+
+    "misc":
+    {
+        "order_state":"New"
     }
 }
+
