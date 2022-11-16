@@ -213,8 +213,9 @@ Yves: discount is applied:
         Element should be visible    xpath=//span[contains(text(),'${expectedDiscountSum}')]/preceding-sibling::span[contains(text(),'${discountName}')]/ancestor::*[contains(@data-qa,'cart-code-summary')]/*[contains(.,'Vouchers')]
     ELSE IF    '${env}' in ['b2b','mp_b2b'] and '${discountType}'=='cart rule'
         Element should be visible    xpath=//span[contains(text(),'${expectedDiscountSum}')]/preceding-sibling::span[contains(text(),'${discountName}')]/ancestor::*[contains(@data-qa,'cart-code-summary')]/*[contains(.,'Discounts')]
+    ELSE IF    '${env}' in ['b2c','mp_b2c'] and '${discountType}'=='gift card'
+        Element should be visible    xpath=//span[contains(text(),'${expectedDiscountSum}')]/preceding-sibling::div/div[contains(text(),'${discountName}')]
     END
-
 Yves: promotional product offer is/not shown in cart:
     [Arguments]    ${isShown}
     IF    '${isShown}'=='true'
