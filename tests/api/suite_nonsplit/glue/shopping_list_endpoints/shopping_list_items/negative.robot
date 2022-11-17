@@ -459,3 +459,64 @@ Remove_a_concrete_product_from_the_shared_shopping_list_without_write_access_per
     ...    AND    I send a DELETE request:    /shopping-lists/${sharedShoppingListId}/shopping-list-items/${shoppingListItemId}
     ...    AND    Response status code should be:    204
     ...    AND    Response reason should be:    No Content
+
+# negative scenarios aren't processes correctly, bugs were created for clarification expected result and fixing https://spryker.atlassian.net/browse/CC-23113 https://spryker.atlassian.net/browse/CC-23115
+# Add_a_configurable_product_to_the_shopping_list_with_invalid_preferred_time_of_the_day
+#     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
+#     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
+#     ...    AND    I send a POST request:    /shopping-lists    {"data":{"type":"shopping-lists","attributes":{"name":"${shopping_list_name}${random}"}}}
+#     ...    AND    Response status code should be:    201
+#     ...    AND    Save value to a variable:    [data][id]    shoppingListId
+#     I send a POST request:    /shopping-lists/${shoppingListId}/shopping-list-items    {"data":{"type":"shopping-list-items","attributes":{"sku":"${configurable_product.sku}","quantity":3,"productConfigurationInstance":{"displayData":'{"Preferred time of the day":"invalid","Date":"9.09.2050"}',"configuration":'{"time_of_day":"4"}',"configuratorKey":"DATE_TIME_CONFIGURATOR","isComplete":True,"quantity":3,"availableQuantity":4,"prices":[{"priceTypeName":"DEFAULT","netAmount":23434,"grossAmount":42502,"currency":{"code":"EUR","name":"Euro","symbol":"€"},"volumePrices":[{"netAmount":150,"grossAmount":165,"quantity":5},{"netAmount":145,"grossAmount":158,"quantity":10},{"netAmount":140,"grossAmount":152,"quantity":20}]}]}}}}
+#     And Response header parameter should be:    Content-Type    ${default_header_content_type}
+#     And Response status code should be:    422
+#     And Response should return error code:    901
+#     And Response reason should be:    Unprocessable Content
+#   [Teardown]    Run Keywords    I send a DELETE request:    /shopping-lists/${shoppingListId}
+#    ...    AND    Response status code should be:    204
+#    ...    AND    Response reason should be:    No Content
+
+# Add_a_configurable_product_to_the_shopping_list_with_missed_date
+#     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
+#     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
+#     ...    AND    I send a POST request:    /shopping-lists    {"data":{"type":"shopping-lists","attributes":{"name":"${shopping_list_name}${random}"}}}
+#     ...    AND    Response status code should be:    201
+#     ...    AND    Save value to a variable:    [data][id]    shoppingListId
+#     I send a POST request:    /shopping-lists/${shoppingListId}/shopping-list-items    {"data":{"type":"shopping-list-items","attributes":{"sku":"${configurable_product.sku}","quantity":3,"productConfigurationInstance":{"displayData":'{"Preferred time of the day":"Morning","Date":""}',"configuration":'{"time_of_day":"4"}',"configuratorKey":"DATE_TIME_CONFIGURATOR","isComplete":True,"quantity":3,"availableQuantity":4,"prices":[{"priceTypeName":"DEFAULT","netAmount":23434,"grossAmount":42502,"currency":{"code":"EUR","name":"Euro","symbol":"€"},"volumePrices":[{"netAmount":150,"grossAmount":165,"quantity":5},{"netAmount":145,"grossAmount":158,"quantity":10},{"netAmount":140,"grossAmount":152,"quantity":20}]}]}}}}
+#     And Response header parameter should be:    Content-Type    ${default_header_content_type}
+#     And Response status code should be:    422
+#     And Response should return error code:    901
+#     And Response reason should be:    Unprocessable Content
+#   [Teardown]    Run Keywords    I send a DELETE request:    /shopping-lists/${shoppingListId}
+#    ...    AND    Response status code should be:    204
+#    ...    AND    Response reason should be:    No Content
+
+# Add_a_configurable_product_to_the_shopping_list_with_past_date
+#     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
+#     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
+#     ...    AND    I send a POST request:    /shopping-lists    {"data":{"type":"shopping-lists","attributes":{"name":"${shopping_list_name}${random}"}}}
+#     ...    AND    Response status code should be:    201
+#     ...    AND    Save value to a variable:    [data][id]    shoppingListId
+#     I send a POST request:    /shopping-lists/${shoppingListId}/shopping-list-items    {"data":{"type":"shopping-list-items","attributes":{"sku":"${configurable_product.sku}","quantity":3,"productConfigurationInstance":{"displayData":'{"Preferred time of the day":"Morning","Date":"01.01.01"}',"configuration":'{"time_of_day":"4"}',"configuratorKey":"DATE_TIME_CONFIGURATOR","isComplete":True,"quantity":3,"availableQuantity":4,"prices":[{"priceTypeName":"DEFAULT","netAmount":23434,"grossAmount":42502,"currency":{"code":"EUR","name":"Euro","symbol":"€"},"volumePrices":[{"netAmount":150,"grossAmount":165,"quantity":5},{"netAmount":145,"grossAmount":158,"quantity":10},{"netAmount":140,"grossAmount":152,"quantity":20}]}]}}}}
+#     And Response header parameter should be:    Content-Type    ${default_header_content_type}
+#     And Response status code should be:    422
+#     And Response should return error code:    901
+#     And Response reason should be:    Unprocessable Content
+#   [Teardown]    Run Keywords    I send a DELETE request:    /shopping-lists/${shoppingListId}
+#    ...    AND    Response status code should be:    204
+#    ...    AND    Response reason should be:    No Content
+
+# Add_a_ordinary_product_to_the_shopping_list_with_configuration
+#     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
+#     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
+#     ...    AND    I send a POST request:    /shopping-lists    {"data":{"type":"shopping-lists","attributes":{"name":"${shopping_list_name}${random}"}}}
+#     ...    AND    Response status code should be:    201
+#     ...    AND    Save value to a variable:    [data][id]    shoppingListId
+#     I send a POST request:    /shopping-lists/${shoppingListId}/shopping-list-items    {"data":{"type":"shopping-list-items","attributes":{"sku":"${concrete_available_product.sku}","quantity":3,"productConfigurationInstance":{"displayData":'{"Preferred time of the day":"Morning","Date":"01.01.01"}',"configuration":'{"time_of_day":"4"}',"configuratorKey":"DATE_TIME_CONFIGURATOR","isComplete":True,"quantity":3,"availableQuantity":4,"prices":[{"priceTypeName":"DEFAULT","netAmount":23434,"grossAmount":42502,"currency":{"code":"EUR","name":"Euro","symbol":"€"},"volumePrices":[{"netAmount":150,"grossAmount":165,"quantity":5},{"netAmount":145,"grossAmount":158,"quantity":10},{"netAmount":140,"grossAmount":152,"quantity":20}]}]}}}}
+#     And Response header parameter should be:    Content-Type    ${default_header_content_type}
+#     And Response status code should be:    422
+#     And Response should return error code:    901
+#     And Response reason should be:    Unprocessable Content
+#   [Teardown]    Run Keywords    I send a DELETE request:    /shopping-lists/${shoppingListId}
+#    ...    AND    Response status code should be:    204
+#    ...    AND    Response reason should be:    No Content
