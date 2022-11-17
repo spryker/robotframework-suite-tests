@@ -612,7 +612,7 @@ Payment_method_update
     ...    || ${yves_second_user_first_name}    |     ${yves_second_user_last_name}   |    ${random}        |    ${random}       |    Berlin    |   ${random}    |    ${random}    ||
     Yves: submit form on the checkout
     Yves: select the following shipping method on the checkout and go next:     Standard: €4.90
-    Yves: check payment method presence in checkout process:    ${checkout_payment_invoice_locator}    True
+    Yves: check that the payment method is/not present in the checkout process:    ${checkout_payment_invoice_locator}    true
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Administration    Payment Methods
     Zed: activate/deactivate payment method:    Dummy Payment    Invoice    False
@@ -624,7 +624,7 @@ Payment_method_update
     ...    || ${yves_second_user_first_name}    |     ${yves_second_user_last_name}   |    ${random}        |    ${random}       |    Berlin   |   ${random}    |    ${random}    ||
     Yves: submit form on the checkout
     Yves: select the following shipping method on the checkout and go next:     Standard: €4.90
-    Yves: check payment method presence in checkout process:     ${checkout_payment_invoice_locator}    False
+    Yves: check that the payment method is/not present in the checkout process:     ${checkout_payment_invoice_locator}    false
     [Teardown]    Run keywords    Yves: check if cart is not empty and clear it
     ...    AND    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: go to second navigation item level:    Administration    Payment Methods

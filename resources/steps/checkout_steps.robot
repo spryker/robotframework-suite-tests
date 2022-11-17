@@ -204,10 +204,10 @@ Yves: assert merchant of product in cart or list:
     [Arguments]    ${sku}    ${merchant_name_expected}
     Page Should Contain Element    xpath=//span[@itemprop='sku'][text()='${sku}']/../../following-sibling::p/a[text()='${merchant_name_expected}']
 
-Yves: check payment method presence in checkout process:
+Yves: check that the payment method is/not present in the checkout process:
     [Arguments]    ${payment_method_locator}    ${condition}
-    IF    '${condition}' == 'True'
+    IF    '${condition}' == 'true'
         Page Should Contain Element    ${payment_method_locator}
-    ELSE IF    '${condition}' == 'False'
+    ELSE IF    '${condition}' == 'false'
         Page Should not Contain Element    ${payment_method_locator}   
     END
