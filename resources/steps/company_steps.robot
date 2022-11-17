@@ -5,7 +5,7 @@ Resource    ../common/common_zed.robot
 Resource    ../pages/zed/zed_attach_to_business_unit_page.robot
 Resource    ../pages/yves/yves_customer_account_page.robot
 Resource    ../pages/zed/zed_delete_company_user_page.robot
-
+Resource    ../pages/yves/yves_configure_permission_page.robot
 
 *** Keywords ***
 Zed: create new Company Business Unit with provided name and company:
@@ -108,3 +108,22 @@ Zed: delete company user xxx withing xxx company business unit:
             Zed: click Action Button(without search) in a table for row that contains:    ${companyBusinessUnit}    Delete
             Click    ${zed_confirm_delete_company_user_button}
     END
+
+Yves: configure permission to users with 'Buyer With Limit' role:
+    [Arguments]    ${role}    ${amount_EUR}    ${amount_CHF}    
+    Yves: go to company menu item:    Roles    
+    Click    //td[contains(text(),'${role}')]//following-sibling::td[contains(@class,'table__actions')]/div//a[contains(@href,'update')]
+    Click    ${buy_upto_grandtotal_edit_button} 
+    Input Text    ${configure_amount_EUR}    ${amount_EUR}
+    Input Text    ${configure_amount_CHF}    ${amount_CHF}
+    Click    ${submit_button_configure_permission}
+
+Yves: configure permission to user with 'Approver' role:
+    [Arguments]    ${role}    ${amount_EUR}    ${amount_CHF}    
+    Yves: go to company menu item:    Roles    
+    Click    //td[contains(text(),'${role}')]//following-sibling::td[contains(@class,'table__actions')]/div//a[contains(@href,'update')]
+    Click    ${approve_upto_grand_total_edit_button}
+    Input Text    ${configure_amount_EUR}    ${amount_EUR}
+    Input Text    ${configure_amount_CHF}    ${amount_CHF}
+    Click    ${submit_button_configure_permission}
+

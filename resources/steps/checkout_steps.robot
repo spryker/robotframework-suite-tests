@@ -179,6 +179,8 @@ Yves: '${checkoutAction}' on the summary page
         Click    ${checkout_summary_send_request_button}
     ELSE IF    '${checkoutAction}' == 'approve the cart'
         Click    ${checkout_summary_approve_request_button}
+    ELSE IF    '${checkoutAction}' == 'decline the cart'
+        Click    ${checkout_summary_decline_request_button}
     END
 
 Yves: select approver on the 'Summary' page:
