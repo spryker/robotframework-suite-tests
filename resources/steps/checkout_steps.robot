@@ -243,3 +243,11 @@ Yves: signup guest user during checkout:
 Yves: Add product to wishlist as guest user
     Click    ${pdp_add_to_wishlist_button}
     Wait Until Element Is Visible    ${email_field}
+
+Yves: check that the payment method is/not present in the checkout process
+    [Arguments]    ${payment_method_locator}    ${condition}
+    IF    '${condition}' == 'true'
+        Page Should Contain Element    ${payment_method_locator}
+    ELSE IF    '${condition}' == 'false'
+        Page Should not Contain Element    ${payment_method_locator}   
+    END

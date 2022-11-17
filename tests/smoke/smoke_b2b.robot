@@ -25,7 +25,8 @@ Resource    ../../resources/steps/zed_discount_steps.robot
 Resource    ../../resources/steps/zed_availability_steps.robot
 Resource    ../../resources/steps/zed_cms_page_steps.robot
 Resource    ../../resources/steps/zed_order_steps.robot
- 
+Resource    ../../resources/steps/zed_payment_methods_steps.robot
+
 *** Test Cases ***
 Guest_User_Access_Restrictions
     [Documentation]    Checks that guest users are not able to see: Prices, Availability, Quick Order, "My Account" features
@@ -910,3 +911,31 @@ Refunds
     Zed: grand total for the order equals:    ${lastPlacedOrder}    €0.00
     [Teardown]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: activate following discounts from Overview page:    20% off storage    10% off minimum order
+
+Payment_method
+    [Documentation]    Deactivate payment method, unset payment method for stores in zed and check its impact on yves.
+    Yves: login on Yves with provided credentials:    ${yves_user_email}
+    Yves: go to 'Shopping_Carts' page through the header
+    Yves: create new 'Shopping Cart' with name:    paymentcart
+    Yves: go to PDP of the product with sku:    0300
+    Yves: add product to the shopping cart
+    Yves: go to the shopping cart through the header with name:    paymentcart
+    Yves: click on the 'Checkout' button in the shopping cart
+    Yves: billing address same as shipping address:    true
+    Yves: select the following existing address on the checkout as 'shipping' address and go next:    Ms Sonia Wagner, Kirncher Str. 7, 10247 Berlin
+    Yves: select the following shipping method on the checkout and go next:     Express
+    Yves: check that the payment method is/not present in the checkout process    ${checkout_payment_invoice_locator}[${env}]    true
+    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: go to second navigation item level:    Administration    Payment Methods
+    Zed: activate/deactivate payment method:    Dummy Payment    Invoice    False
+    Yves: login on Yves with provided credentials:    ${yves_user_email}
+    Yves: go to the shopping cart through the header with name:    paymentcart
+    Yves: click on the 'Checkout' button in the shopping cart
+    Yves: billing address same as shipping address:    true
+    Yves: select the following existing address on the checkout as 'shipping' address and go next:    Ms Sonia Wagner, Kirncher Str. 7, 10247 Berlin  
+    Yves: select the following shipping method on the checkout and go next:     Express
+    Yves: check that the payment method is/not present in the checkout process    ${checkout_payment_invoice_locator}[${env}]    false
+    [Teardown]    Run keywords    yves: delete 'Shopping Cart' with name:    paymentcart
+    ...    AND    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    ...    AND    Zed: go to second navigation item level:    Administration    Payment Methods
+    ...    AND    Zed: activate/deactivate payment method:    Dummy Payment    Invoice    True
