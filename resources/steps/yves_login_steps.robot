@@ -3,7 +3,7 @@ Resource    ../common/common.robot
 Resource    ../../resources/common/common_yves.robot
 
 *** Keywords ***
-Yves: login with invalid password:
+Yves: login with invalid password for consecutive 10 times:
     [Arguments]    ${email}    ${password}=${random}       
     ${counter}=    Set Variable    1
     WHILE  True
@@ -15,7 +15,7 @@ Yves: login with invalid password:
         END
     END
 
-Yves: login with invalid agent password:
+Yves: login with invalid agent password for consecutive 9 times:
     [Arguments]    ${email}    ${password}=${random}
     ${counter}=    Set Variable    1
     WHILE  True
@@ -47,6 +47,6 @@ Yves: redirected url for agent after login with valid credentials should contain
     ${url}    Get Url   
     Should Contain   ${url}    ${expected_url}
 
-Yves: error message should be shown:
+Yves: error message should be shown after multiple login attempts failed:
     [Arguments]    ${text}
-    Element Text Should Be    ${login_error_message_header}     ${text}
+    Element Text Should Be    ${blocked_login_error_message_header}     ${text}

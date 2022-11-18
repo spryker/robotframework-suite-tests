@@ -602,16 +602,16 @@ Refunds
  
 User_cannot_login_with_valid_credentials_after_10_failed_attempts_with_invalid_credentials
     [Documentation]    User tries to login with invalid password for 10 times, then try to login with valid credential, but unable to login
-    Yves: login with invalid password:    ${yves_third_user_email}
-    Yves: login on Yves with provided credentials:    ${yves_third_user_email}
+    Yves: login with invalid password for consecutive 10 times:   ${yves_demo_user_email_for_login_test}
+    Yves: login on Yves with provided credentials:    ${yves_demo_user_email_for_login_test}
     Yves: redirected url for user after login with valid credentials should contain:   /login_check
-    Yves: error message should be shown:    TOO MANY REQUESTS
+    Yves: error message should be shown after multiple login attempts failed:    TOO MANY REQUESTS
     
 Agent_cannot_login_with_valid_credentials_after_9_failed_attempts_with_invalid_credentials
     [Documentation]    Agent tries to login with invalid password for 9 times, then try to login with valid credential, but unable to login
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    Zed: create new Zed user with the following data:    agent+${random}@spryker.com    change${random}    Agent    Assist    Root group    This user is an agent    en_US
-    Yves: login with invalid agent password:    agent+${random}@spryker.com
-    Yves: login on Yves with valid agent credentials:   agent+${random}@spryker.com    change${random}
+    Zed: create new Zed user with the following data:    login+agent+${random}@spryker.com    change${random}    Agent    Assist    Root group    This user is an agent    en_US
+    Yves: login with invalid agent password for consecutive 9 times:    login+agent+${random}@spryker.com
+    Yves: login on Yves with valid agent credentials:   login+agent+${random}@spryker.com    change${random}
     Yves: redirected url for agent after login with valid credentials should contain:    /agent/login_check
-    Yves: error message should be shown:    TOO MANY REQUESTS
+    Yves: error message should be shown after multiple login attempts failed:    TOO MANY REQUESTS

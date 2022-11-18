@@ -20,10 +20,10 @@
         "zed_admin_email": "admin@spryker.com",
         "zed_admin_password": "change123",
 
-        "yves_third_user_email": "oslo.test@spryker.com",
-        "yves_third_user_first_name": "oslo",
-        "yves_third_user_last_name": "test",
-        "yves_third_user_password": "change123"
+        "yves_demo_user_email_for_login_test": "oslo.test@spryker.com",
+        "yves_demo_user_first_name_for_login_test": "oslo",
+        "yves_demo_user_last_name_for_login_test": "test",
+        "yves_demo_user_password_for_login_test": "change123"
 
     },
         
