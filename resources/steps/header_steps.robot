@@ -23,7 +23,7 @@ ${wishlistIcon}    ${wishlist_icon_header_navigation_widget}
 *** Keywords ***
 Yves: perform search by:
     [Arguments]    ${searchTerm}
-    IF    '${env}'=='b2c'    
+    IF    '${env}' in ['b2c','mp_b2c']    
         Run Keywords
             Wait Until Element Is Visible    ${search_form_open_menu_item}
             Click    ${search_form_open_menu_item}

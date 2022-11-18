@@ -16,4 +16,4 @@ ${customer_account_address_phone_field}    id=addressForm_phone
 ${customer_account_address_is_default_shipping_checkbox}    id=addressForm_is_default_shipping
 ${customer_account_address_is_default_billing_checkbox}    id=addressForm_is_default_billing
 ${customer_account_address_submit_button}    xpath=//main//button[@data-qa='submit-button']
-&{customer_account_add_new_address_button}     b2c=xpath=//a[@data-qa='customer-add-new-address']    b2b=xpath=//a[contains(@href,'address/new')]    mp_b2b=xpath=//a[contains(@href,'address/new')]
+&{customer_account_add_new_address_button}     b2c=xpath=//a[@data-qa='customer-add-new-address']    b2b=xpath=//a[contains(@href,'address/new')]    mp_b2b=xpath=//a[contains(@href,'address/new')]    mp_b2c=xpath=//a[@data-qa='customer-add-new-address']

@@ -14,7 +14,7 @@ Get_concrete_product_without_offers
     And Response reason should be:    OK
     And Response should contain the array of a certain size:    [data]    0
 
-# Due to the MP-6749 there is no product-offer-availabilities include displayed
+# Due to the https://spryker.atlassian.net/browse/CC-17140 there is no product-offer-availabilities include displayed
 Get_all_concrete_product_offer_info_with_product_offer_prices_and_product_offer_availabilities_and_merchants_included
     When I send a GET request:    /concrete-products/${abstract_product.product_with_volume_prices.concrete_sku}/product-offers?include=product-offer-prices,product-offer-availabilities,merchants
     Then Response status code should be:    200
@@ -36,7 +36,7 @@ Get_all_concrete_product_offer_info_with_product_offer_prices_and_product_offer_
     And Response include element has self link:    merchants
     And Response body has correct self link
 
-# Due to the MP-6749 there is no product-offer-availabilities include displayed
+# Due to the https://spryker.atlassian.net/browse/CC-17140 there is no product-offer-availabilities include displayed
 Get_all_product_offer_info_with_product_offer_prices_and_product_offer_availabilities_and_merchants_included
     When I send a GET request:    /product-offers/${active_offer}?include=product-offer-prices,product-offer-availabilities,merchants
     Then Response status code should be:    200

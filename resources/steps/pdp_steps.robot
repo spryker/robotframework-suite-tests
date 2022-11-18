@@ -25,7 +25,7 @@ Yves: PDP contains/doesn't contain:
         IF    '${condition}' == 'true'
             Run Keywords
                 Log    ${pdp_element_to_check}    #Left as an example of multiple actions in Condition
-                Page Should Contain Element    ${pdp_element_to_check}    message=${pdp_element_to_check} is not
+                Page Should Contain Element    ${pdp_element_to_check}    message=${pdp_element_to_check} is not displayed
         END
         IF    '${condition}' == 'false'
             Run Keywords
@@ -176,3 +176,6 @@ Yves: merchant is (not) displaying in Sold By section of PDP:
     [Arguments]    ${merchantName}    ${condition}
     Wait Until Element Is Visible    ${pdp_product_sku}[${env}]
     Try reloading page until element is/not appear:    xpath=//section[@data-qa='component product-configurator']//div[contains(text(),'${merchantName}')]     ${condition}    20    5s  
+   
+Yves: add a product to cart on clicking add to cart button on PDP
+    Click    ${pdp_add_to_cart_button} 
