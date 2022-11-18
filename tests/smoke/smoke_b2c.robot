@@ -28,6 +28,7 @@ Resource    ../../resources/steps/zed_discount_steps.robot
 Resource    ../../resources/steps/zed_cms_page_steps.robot
 
 Resource    ../../resources/steps/zed_customer_steps.robot
+Resource    ../../resources/steps/zed_dashboard_steps.robot
 
 *** Test Cases ***
 New_Customer_Registration
@@ -364,7 +365,7 @@ Discounts
     ...    AND    Zed: activate following discounts from Overview page:    Free Acer Notebook    Tu & Wed $5 off 5 or more    10% off $100+    Free smartphone    20% off cameras    Free Acer M2610    Free standard delivery    10% off Intel Core    5% off white    Tu & Wed €5 off 5 or more    10% off minimum order
 
 Split_Delivery
-    [Documentation]    Checks split delivery in checkout
+    [Documentation]    Checks split delivery in checkout and check dashboard graph created in zed.
     Yves: login on Yves with provided credentials:    ${yves_user_email}
     Yves: check if cart is not empty and clear it
     Yves: go to PDP of the product with sku:    007
@@ -379,10 +380,10 @@ Split_Delivery
     Yves: fill in new delivery address for a product:
     ...    || product        | salutation | firstName | lastName | street       | houseNumber | postCode | city   | country | company | phone     | additionalAddress ||
     ...    || Canon IXUS 285 | Dr.        | First     | Last     | First Street | 1           | 10247    | Berlin | Germany | Spryker | 123456789 | Additional street ||
-   Yves: fill in new delivery address for a product:
+    Yves: fill in new delivery address for a product:
     ...    || product        | salutation | firstName | lastName | street        | houseNumber | postCode | city   | country | company | phone     | additionalAddress ||
     ...    || Canon IXUS 175 | Dr.        | First     | Last     | Second Street | 2           | 10247    | Berlin | Germany | Spryker | 123456789 | Additional street ||
-   Yves: fill in new delivery address for a product:
+    Yves: fill in new delivery address for a product:
     ...    || product        | salutation | firstName | lastName | street       | houseNumber | postCode | city   | country | company | phone     | additionalAddress ||
     ...    || Canon IXUS 165 | Dr.        | First     | Last     | Third Street | 3           | 10247    | Berlin | Germany | Spryker | 123456789 | Additional street ||
     Yves: fill in the following new billing address:
@@ -397,6 +398,9 @@ Split_Delivery
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
+    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: go to first navigation item level:    Dashboard
+    Zed: check the charts and graphs present on dashboard
     [Teardown]    Yves: check if cart is not empty and clear it
 
 Agent_Assist
