@@ -1,6 +1,5 @@
 *** Settings ***
 Library    BuiltIn
-Library    XML
 Suite Setup       SuiteSetup
 Suite Teardown    SuiteTeardown
 Test Setup        TestSetup
@@ -604,11 +603,11 @@ Refunds
 User_Control
     [Documentation]    Create a user with role having limited access and group assigned to it,deactivate the user as well.
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    Zed: create new Zed user with the following data:    abc${random}@gmail.com   change${random}    Test    last    Root group    This user is an agent    en_US    
     Zed: create new role with name:    role${random}
     Zed: apply restrictions for user role:    ${bundle_access}    ${controller_access}    ${action_access}    ${permission_deny}
     Zed: create new group with role assigned:   Group${random}    role${random}
-    Zed: add the created group to created user:    Group${random}
+    Zed: create new Zed user with the following data:    abc${random}@gmail.com   change${random}    Test    last    Root group    This user is an agent    en_US    
+    Zed: add the created group to created user:    abc${random}@gmail.com    Group${random}
     Zed: logout
     Zed: login on Zed with provided credentials:    abc${random}@gmail.com    change${random}
     Zed: go to second navigation item level:    Catalog    Attributes

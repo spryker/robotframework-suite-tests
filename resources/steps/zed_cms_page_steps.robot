@@ -38,9 +38,9 @@ Zed: create a cms page and publish it:
     Type Text    ${zed_cms_page_placeholder_content_enUS_field}    ${enContentPlaceholder}
 # Save and publish
     Click    ${zed_cms_page_save_button}
-    Zed: message should be shown:    Placeholder translations successfully updated.
+    Zed: message should be shown:    success    Placeholder translations successfully updated.
     Click    ${zed_cms_page_publish_button}
-    Zed: message should be shown:    successfully published
+    Zed: message should be shown:    success    successfully published
 # Check the CMS page in
     Zed: go to second navigation item level:    Content    Pages
     Zed: perform search by:    ${enName}

@@ -50,6 +50,7 @@
             "controller_access":"attribute",
             "action_access":"create",
             "permission_allow":"allow",
-            "permission_deny":"deny"
+            "permission_deny":"deny",
+            "full_access":"*"
     }
 }

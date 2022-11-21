@@ -22,6 +22,6 @@ Zed: delete customer:
                     Click    ${zed_customer_delete_button}
                     Wait Until Element Is Visible     ${zed_customer_delete_confirm_button}
                     Click    ${zed_customer_delete_confirm_button}
-                    Zed: message should be shown:    Customer successfully deleted
+                    Zed: message should be shown:    success    Customer successfully deleted
             END
         END
