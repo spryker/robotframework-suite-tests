@@ -11,10 +11,10 @@ Resource    ../../resources/steps/zed_marketplace_steps.robot
 Zed: create merchant relation between a BU of a company and the merchant:
     [Arguments]    ${merchant}    ${company}    ${bussiness_unit_owner}    ${assigned_bussiness_units}    ${assigned_product}
     Click    ${merchant_dropdown_locator}
-    Type Text    ${input_field_locator}    ${merchant}
+    Type Text    ${merchant_input_filed_locator}    ${merchant}
     Keyboard Key    Press    Enter
     Click    ${company_dropdown_locator}
-    Type Text    ${input_field_locator}    ${company}
+    Type Text    ${company_input_filed_locator}    ${company}
     Keyboard Key    Press    Enter
     click    ${confirm_button_locator}
     Wait Until Element Is Visible    ${bussiness_unit_owner_locator}

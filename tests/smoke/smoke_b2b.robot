@@ -876,6 +876,15 @@ Create_a_merchant_relation_between_a_BU_of_a_company_and_the_merchant
     ...    AND    Zed: create new Merchant with the following data:
     ...    ...    || merchant name        | merchant reference            | e-mail                      | store | store | en url                  | de url                  ||
     ...    ...    || NewMerchant${random} | NewMerchantReference${random} | merchant+${random}@test.com | DE    | DE    | NewMerchantURL${random} | NewMerchantURL${random} ||
+    Zed: perform search by:    NewMerchant${random}
+    Zed: table should contain non-searchable value:    Inactive
+    Zed: table should contain non-searchable value:    Waiting for Approval
+    Zed: table should contain non-searchable value:    DE
+    Zed: click Action Button in a table for row that contains:    NewMerchant${random}    Activate
+    Zed: click Action Button in a table for row that contains:    NewMerchant${random}    Approve Access
+    Zed: perform search by:    NewMerchant${random}
+    Zed: table should contain non-searchable value:    Active
+    Zed: table should contain non-searchable value:    Approved
     Zed: go to second navigation item level:    Marketplace    Merchant Relations
     Zed: click button in Header:    Add Merchant relation
     Zed: create merchant relation between a BU of a company and the merchant:    NewMerchant${random}    Test Company    Hotel Tommy Berlin    Hotel Tommy Berlin    Desks
