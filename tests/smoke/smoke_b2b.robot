@@ -889,12 +889,15 @@ OMS_Close_Items
     Yves: 'Thank you' page is displayed
     Yves: get the last placed order ID by current customer
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: go to second navigation item level:    Sales    Orders
     Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Pay
     Zed: trigger all matching states inside this order:    Skip timeout
     Zed: trigger all matching states inside this order:    Ship
     Zed: trigger matching state of order item inside xxx shipment:    108278    Stock update
     Zed: trigger matching state of order item inside xxx shipment:    108278    Close
     Zed: wait for order item to be in state:    108278    closed
+    Zed: wait for order item to be in state:    410083    shipped
+    Zed: wait for order item to be in state:    421426    shipped
     Zed: trigger all matching states inside this order:    Stock update
     Zed: trigger all matching states inside this order:    Close
     Zed: wait for order item to be in state:    410083    closed
@@ -906,14 +909,14 @@ OMS_Close_Items
 OMS_Refund_After_Delivery
     [Documentation]    Process the order delivery state and then initiate the refund
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
-    Yves: create new 'Shopping Cart' with name:    complete+${random}
+    Yves: create new 'Shopping Cart' with name:    omsRefund+${random}
     Yves: go to PDP of the product with sku:    M90802
     Yves: add product to the shopping cart
     Yves: go to PDP of the product with sku:    M21711
     Yves: add product to the shopping cart
     Yves: go to PDP of the product with sku:    M90737
     Yves: add product to the shopping cart
-    Yves: go to the shopping cart through the header with name:    complete+${random}
+    Yves: go to the shopping cart through the header with name:    omsRefund+${random}
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: billing address same as shipping address:    true
     Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${yves_company_user_buyer_address}
