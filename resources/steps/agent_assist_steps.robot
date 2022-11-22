@@ -2,13 +2,18 @@
 Resource    ../pages/zed/zed_create_zed_user_page.robot
 Resource    ../common/common_zed.robot
 Resource    ../common/common.robot
+Resource    ../pages/yves/yves_agent_assist_page.robot
 
 *** Keywords ***
 Zed: create new Zed user with the following data:
     [Arguments]    ${zedUserEmail}    ${zedUserPassword}   ${zedUserFirstName}    ${zedUserLastName}    ${checkboxGroup}   ${checkboxAgent}    ${userInterfaceLanguage}
     ${currentURL}=    Get Location
     IF    '/user' not in '${currentURL}'    Zed: go to second navigation item level:    Users    Users
-    Zed: click button in Header:    Add New User
+    IF    '${env}' in ['mp_b2b']
+        Zed: click button in Header:    Add New User
+    ELSE 
+        Zed: click button in Header:    Add New User
+    END
     Wait Until Element Is Visible    ${zed_user_email_field}
     Type Text    ${zed_user_email_field}    ${zedUserEmail}
     Type Text    ${zed_user_password_filed}    ${zedUserPassword}
@@ -19,24 +24,31 @@ Zed: create new Zed user with the following data:
     Zed: Check checkbox by Label:    ${checkboxAgent}
     Select From List By Label    ${zed_user_interface_language}    ${userInterfaceLanguage}
     Zed: submit the form
-    Zed: wait for button in Header to be visible:    Add New User    ${browser_timeout}
+    IF    '${env}' in ['mp_b2b']
+        Zed: wait for button in Header to be visible:    Add New User    ${browser_timeout}
+    ELSE 
+        Zed: wait for button in Header to be visible:    Add New User    ${browser_timeout}
+    END
     Zed: table should contain:    ${zedUserEmail}
 
 Yves: perform search by customer:
     [Arguments]    ${searchQuery}
     Type Text    ${agent_customer_search_widget}    ${searchQuery}
 
-
-
 Yves: agent widget contains:
     [Arguments]    ${searchQuery}
     Wait Until Element Is Visible    xpath=//ul[@data-qa='component customer-list']/li[@data-value='${searchQuery}']
     Page Should Contain Element    xpath=//ul[@data-qa='component customer-list']/li[@data-value='${searchQuery}']
 
-Yves: As an Agent login under the customer:
+Yves: as an agent login under the customer:
     [Arguments]    ${searchQuery}
     Yves: perform search by customer:    ${searchQuery}
     Wait Until Element Is Visible    //ul[@data-qa='component customer-list']/li[@data-value='${searchQuery}']
     Click    xpath=//ul[@data-qa='component customer-list']/li[@data-value='${searchQuery}']
     Click    ${agent_confirm_login_button}
 
+Yves: end customer assistance
+    Click    ${end_customer_assistance}
+
+Yves: logout as an agent
+    Click    ${agent_logout}

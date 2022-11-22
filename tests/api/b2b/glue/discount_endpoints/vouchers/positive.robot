@@ -9,7 +9,7 @@ ENABLER
     TestSetup
 
 #####POST#####
-# Fails because of CC-16719
+# Fails because of CC-16735 ( CC-16719 is closed as duplicate)
 Adding_voucher_code_to_cart_of_logged_in_customer
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}
@@ -38,7 +38,7 @@ Adding_voucher_code_to_cart_of_logged_in_customer
     [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cart_id}
     ...  AND    Response status code should be:    204
 
-# Fails because of CC-16719
+# Fails because of CC-16735 ( CC-16719 is closed as duplicate)
 Checking_voucher_is_applied_after_order_is_placed
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_second_user.email}
     ...    AND    I set Headers:    Authorization=${token}
@@ -70,7 +70,7 @@ Checking_voucher_is_applied_after_order_is_placed
     And Response body parameter should contain:    [included][0][attributes][calculatedDiscounts]["${discounts.id_4.name}"][voucherCode]    ${discount_voucher_code}
 
 
-# Fails because of CC-16719
+# Fails because of CC-16735 ( CC-16719 is closed as duplicate)
 Adding_two_vouchers_with_different_priority_to_the_same_cart
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}
@@ -111,7 +111,7 @@ Adding_two_vouchers_with_different_priority_to_the_same_cart
     ...  AND    Response status code should be:    204
 
 
-# Fails because of CC-16719
+# Fails because of CC-16735 ( CC-16719 is closed as duplicate)
 Adding_voucher_with_cart_rule_with_to_the_same_cart
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}
@@ -143,7 +143,7 @@ Adding_voucher_with_cart_rule_with_to_the_same_cart
     ...  AND    Response status code should be:    204
 
 ####### DELETE #######
-# Fails because of CC-16719
+# Fails because of CC-16735 ( CC-16719 is closed as duplicate)
 Deleting_voucher_from_cart_of_logged_in_customer
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}
