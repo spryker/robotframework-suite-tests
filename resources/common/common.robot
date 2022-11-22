@@ -15,7 +15,7 @@ Resource                  ../pages/yves/yves_login_page.robot
 *** Variables ***
 # *** SUITE VARIABLES ***
 ${env}                 b2b
-${headless}            true
+${headless}            false
 ${browser}             chromium
 ${browser_timeout}     30 seconds
 ${email_domain}        @spryker.com
@@ -78,7 +78,7 @@ TestTeardown
 Create default Main Context
     Log    ${device}
     IF  '${device}' == '${EMPTY}'
-        ${main_context}=    New Context    viewport={'width': 1280, 'height': 1080}
+        ${main_context}=    New Context    viewport={'width': 1440, 'height': 1080}
     ELSE
         ${device}=    Get Device    ${device}
         ${main_context}=    New Context    &{device}
