@@ -8,13 +8,14 @@ ${pdp_add_to_wishlist_button}    xpath=//button[@type='submit'][contains(.,'Wish
 &{pdp_alternative_products_slider}    b2b=xpath=//*[@data-qa='component product-alternative-slider']    b2c=xpath=//*[contains(@class,'product-slider')][contains(.,'Alternative products')]/../slick-carousel    mp_b2b=xpath=//*[@data-qa='component product-alternative-slider']    mp_b2c=xpath=//*[contains(@class,'product-slider')][contains(.,'Alternative products')]/../slick-carousel
 ${pdp_measurement_sales_unit_selector}    css=*[name=id-product-measurement-sales-unit]
 ${pdp_measurement_unit_notification}    id=measurement-unit-choices
-${pdp_increase_quantity_button}    xpath=//div[@class='product-configurator__add-to-cart']//button[contains(@class,'quantity-counter__button--increment')]
-${pdp_decrease_quantity_button}    xpath=//div[@class='product-configurator__add-to-cart']//button[contains(@class,'quantity-counter__button--decrement')]
+&{pdp_increase_quantity_button}    b2b=xpath=//div[@class='product-configurator__add-to-cart']//button[contains(@class,'quantity-counter__button--increment')]    mp_b2b=xpath=//div[@class='product-configurator__add-to-cart']//button[contains(@class,'quantity-counter__button--increment')]    b2c=xpath=//quantity-counter[@data-qa='component quantity-counter']//*[contains(@class,'quantity-counter__incr')]    mp_b2c=xpath=//quantity-counter[@data-qa='component quantity-counter']//*[contains(@class,'quantity-counter__incr')]
+&{pdp_decrease_quantity_button}    b2b=xpath=//div[@class='product-configurator__add-to-cart']//button[contains(@class,'quantity-counter__button--decrement')]    mp_b2b=xpath=//div[@class='product-configurator__add-to-cart']//button[contains(@class,'quantity-counter__button--decrement')]    b2c=xpath=//quantity-counter[@data-qa='component quantity-counter']//*[contains(@class,'quantity-counter__decr')]    mp_b2c=xpath=//quantity-counter[@data-qa='component quantity-counter']//*[contains(@class,'quantity-counter__decr')]
 ${pdp_variant_selector}    xpath=//*[@data-qa='component variant']//select
-${pdp_variant_custom_selector}    xpath=//*[@data-qa='component variant']//custom-select
+${pdp_variant_custom_selector}    xpath=//section[@data-qa='component variant-configurator']//span[contains(@id,'select2-attribute')]
+${pdp_variant_custom_selector_results}    xpath=//ul[contains(@id,'select2-attribute')][contains(@id,'results')]
 ${pdp_amount_input_filed}    id=user-amount
 ${pdp_packaging_unit_notification}    xpath=//*[@class='packaging-unit-notifications']
-&{pdp_product_bundle_include_small}    b2b=xpath=//div[@class='js-product-options-bundle__target']    b2c=xpath=//ul[@class='bundle-option-list grid']    mp_b2b=xpath=//div[@class='js-product-options-bundle__target']    mp_b2c=xpath=//ul[@class='bundle-option-list grid']
+&{pdp_product_bundle_include_small}    b2b=xpath=//div[contains(@data-qa,'component bundle-items')]    b2c=xpath=//div[contains(@data-qa,'component bundle-items')]    mp_b2b=xpath=//div[contains(@data-qa,'component bundle-items')]    mp_b2c=xpath=//div[contains(@data-qa,'component bundle-items')]
 ${pdp_product_bundle_include_large}    xpath=//div[@data-qa='component product-bundle']
 &{pdp_related_products}    b2b=xpath=//*[contains(@class,'title--product-slider')][contains(.,'Similar products')]/../slick-carousel    b2c=xpath=//*[contains(@class,'product-slider')][contains(.,'You might also like')]/../slick-carousel    mp_b2b=xpath=//*[contains(@class,'title--product-slider')][contains(.,'Similar products')]/../slick-carousel    mp_b2c=xpath=//*[contains(@class,'product-slider')][contains(.,'You might also like')]/../slick-carousel
 ${pdp_add_to_shopping_list_button}    xpath=//button[@data-qa='add-to-shopping-list-button']
@@ -37,4 +38,5 @@ ${pdp_back_in_stock_unsubscribe_button}    xpath=//form[@id='availability_unsubs
 ${pdp_bazaarvoice_write_review_button}    xpath=//button[contains(@class,'bv-write-review')]
 ${pdp_bazaarvoice_questions_locator}    xpath=//div[@data-bv-show='questions']
 ${pdp_bazaarvoice_intine_rating_locator}    xpath=//section[@data-bv-show='inline_rating']
-${referrer_url}    xpath=//div[contains(@class,'navigation-top-actions')]//form[contains(@action,'currency')]//input[@name='referrer-url']
+${referrer_url}    xpath=//header//form[contains(@action,'currency/switch')]//input[@name='referrer-url']
+${pdp_product_name}    xpath=//h1[contains(@class,'title')]

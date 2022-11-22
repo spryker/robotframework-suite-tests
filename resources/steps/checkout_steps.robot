@@ -41,10 +41,20 @@ Yves: accept the terms and conditions:
 Yves: select the following existing address on the checkout as 'shipping' address and go next:
     [Arguments]    ${addressToUse}
     Wait Until Element Is Visible    ${checkout_address_delivery_selector}[${env}] 
-    WHILE  '${selected address}' != '${addressToUse}'
+    WHILE  '${selected_address}' != '${addressToUse}'
         Run Keywords         
-            Select From List By Label    ${checkout_address_delivery_selector}[${env}]    ${addressToUse}
-            ${selected address}=    Get Text    xpath=//div[contains(@class,'shippingAddress')]//select[@name='checkout-full-addresses'][contains(@class,'address__form')]/..//span[contains(@id,'checkout-full-address')]
+                IF    '${env}' in ['b2c','mp_b2c']
+                    Select From List By Label    ${checkout_address_delivery_selector}[${env}]    ${addressToUse}
+                    Sleep    1s
+                    ${selected_address}=    Get Text    xpath=//select[contains(@name,'shippingAddress')][contains(@id,'addressesForm_shippingAddress_id')]/..//span[contains(@id,'shippingAddress_id')]
+                ELSE IF    '${env}' in ['b2b','mp_b2b']
+                    Click    xpath=//div[contains(@class,'shippingAddress')]//select[@name='checkout-full-addresses'][contains(@class,'address__form')]/..//span[contains(@id,'checkout-full-address')]
+                    Wait Until Element Is Visible    xpath=//span[@class='select2-results']
+                    Sleep    1s
+                    Click    xpath=//ul[contains(@id,'checkout-full-addresses')]//li[@role='option'][contains(.,'${addressToUse}')]
+                    Sleep    3s
+                    ${selected_address}=    Get Text    xpath=//div[contains(@class,'shippingAddress')]//select[@name='checkout-full-addresses'][contains(@class,'address__form')]/..//span[contains(@id,'checkout-full-address')]
+                END
     END
     Click    ${submit_checkout_form_button}[${env}]
 
