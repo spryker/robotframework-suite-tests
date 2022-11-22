@@ -19,8 +19,8 @@
 
         "zed_admin_email": "admin@spryker.com",
         "zed_admin_password": "change123",
-        "store_name_1":"AT",
-        "store_name_2":"DE"
+        "store_name_at":"AT",
+        "store_name_de":"DE"
     },
         
     "products": {

@@ -4,7 +4,7 @@ Resource    ../../resources/common/common_zed.robot
 
 *** Keywords ***
 
-Zed: check the avaialbe Stores:
+Zed: check the available stores:
     [Arguments]    @{stores}
     FOR    ${element}    IN    @{stores}
          Zed: table should contain:    ${element}  

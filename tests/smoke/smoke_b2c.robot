@@ -38,7 +38,7 @@ New_Customer_Registration
     Yves: flash message should be shown:    success    Almost there! We send you an email to validate your email address. Please confirm it to be able to log in.
     [Teardown]    Zed: delete customer:
     ...    || email                          ||
-    ...    || sonia+${random}@spryker.com ||
+    ...    || sonia+${random}@spryker.com    ||
 
 Guest_User_Access_Restrictions
     [Documentation]    Checks that guest users see products info and cart but not profile
@@ -604,4 +604,4 @@ Display_stores_in_zed
     [Documentation]     Checks the stores availabilty  in zed 
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Administration    Stores
-    Zed: check the avaialbe Stores:    ${store_name_1}    ${store_name_2}
+    Zed: check the available stores:   ${store_name_at}    ${store_name_de}
