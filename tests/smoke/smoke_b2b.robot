@@ -871,23 +871,22 @@ Refunds
 Company_Account_in_Zed
     [Documentation]    creating new company, BU, company role, company user and validate user details
     Zed: login on Zed with provided credentials:    ${zed_admin_email}     
-    Zed: create new Company with provided name:    ${random}
-    Zed: click Action Button in a table for row that contains:    ${random}   Activate
-    Reload
-    Zed: click Action Button in a table for row that contains:    ${random}   Approve
-    Zed: create new Company Business Unit with provided name and company:    Meta12BU    meta    
-    Zed: create new Company Role with provided permissions:    meta    Meta12role    true    
-    Zed: Create new Company User with provided email/company/business unit and role(s):    abc${random}@mail.com    spryker    spryker    ADMINISTRATOR
-    Yves: validate and set password for newly created company user:    abc${random}@mail.com
+    Zed: create new Company with provided name:    Robot+${random}
+    Zed: click Action Button in a table for row that contains:    Robot+${random}   Activate
+    Zed: click Action Button in a table for row that contains:    Robot+${random}   Approve
+    Zed: create new Company Business Unit with provided name and company:    Test Robot BU+${random}    Robot+${random}
+    Zed: create new Company Role with provided permissions:    Robot+${random}    Test Robot Role+${random}    false    Add company users    Invite users    Enable / Disable company users    See Company Menu    Add item to cart    Change item in cart    Remove item from cart    Place Order
+    Zed: Create new Company User with provided email/company/business unit and role(s):    ${test_customer_email}    Robot+${random}    Test Robot BU+${random}    Test Robot Role+${random}
+    Yves: validate and set password for newly created company user:    ${test_customer_email}
     Zed: go to second navigation item level:    Customers    Customers
-    Zed: click Action Button in a table for row that contains:    abc${random}@mail.com  Attach to company
+    Zed: click Action Button in a table for row that contains:    ${test_customer_email}  Attach to company
     Zed: go to second navigation item level:    Customers    Company Users
-    Zed: click Action Button in a table for row that contains:    Test  Attach to BU
+    Zed: click Action Button in a table for row that contains:    Robot+${random}  Attach to BU
     Zed: go to second navigation item level:    Customers    Company Unit Addresses
     Zed: click button in Header:    Create Company Unit Address
-    Zed: add business unit address:    meta    France    singapore    ${random}    address1${random}
-    Yves: login on Yves with provided credentials:    abc${random}@mail.com
+    Zed: add business unit address:    Robot+${random}    France    singapore    ${random}    address1${random}
+    Yves: login on Yves with provided credentials:    ${test_customer_email}
     Yves: go to company menu item:    Users
-    Yves: check details of users:    Robot First+${random}    Spryker Systems GmbH    
+    Yves: check the user info of company users:    Robot First+${random}    Test Robot BU+${random}
     [Teardown]    Run Keywords    Zed: delete company user xxx withing xxx company business unit:    ${random}    spryker
-    ...    AND    Zed: delete company business unit:    ${random}
+    ...    AND    Zed: delete company business unit:    Test Robot BU+${random}

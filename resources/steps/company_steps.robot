@@ -9,6 +9,7 @@ Resource   ../pages/zed/zed_create_company_business_unit_page.robot
 Resource   ../pages/zed/zed_create_company_user_page.robot
 Resource   ../pages/zed/zed_create_company_role_page.robot
 Resource   ../pages/zed/zed_create_company_page.robot
+Resource   ../pages/zed/zed_create_comapany_unit_address_pages.robot
 
 *** Keywords ***
 Zed: create new Company Business Unit with provided name and company:
@@ -59,7 +60,7 @@ Zed: create new Company Role with provided permissions:
    Table Should Contain    ${zed_table_locator}    ${new_role_name}
  
 Zed: Create new Company User with provided email/company/business unit and role(s):
-   [Arguments]    ${email}    ${company}    ${business_unit}    ${role}
+   [Arguments]    ${email}    ${company}    ${business_unit}    @{role}
    Zed: go to second navigation item level:    Customers    Company Users
    wait until element is visible    ${zed_table_locator}
    Zed: click button in Header:    Add User
@@ -75,15 +76,22 @@ Zed: Create new Company User with provided email/company/business unit and role(
    Click    ${zed_create_company_company_name_dropdown}
    Wait Until Element Is Visible    //input[@role="searchbox"]
    Type Text    //input[@role="searchbox"]    ${company}
-   Wait Until Element Is Visible    (//ul[@class="select2-results__options"]/li)[3]
-   Click    (//ul[@class="select2-results__options"]//li)[3]
-   Sleep    3s
+   Wait Until Element Is Visible    (//ul[@class="select2-results__options"]/li)[1]
+   # Keyboard Key    Press    Enter
+   Click    (//ul[@class="select2-results__options"]//li)[1]
+   Wait Until Element Is Visible   ${zed_create_company_business_unit_dropdown}
    Click    ${zed_create_company_business_unit_dropdown}
    Wait Until Element Is Visible    //input[@role="searchbox"]
-   Type Text    //input[@role="searchbox"]    Headquarters
+   Type Text    //input[@role="searchbox"]    ${business_unit}
    Wait Until Element Is Visible    (//ul[@class="select2-results__options"]//li)
    Click    (//ul[@class="select2-results__options"]//li)
+   
+   FOR    ${value}    IN    @{role}
+      Zed: Check checkbox by Label:   ${value}
+   END
+   # Check Checkbox    id=company-user_company_role_collection_0
    Zed: submit the form
+   # Click    //input[contains(@class,'safe-submit')]
    wait until element is visible    ${zed_success_flash_message}
    wait until element is visible    ${zed_table_locator}
    Zed: perform search by:    Robot First+${random}
@@ -120,12 +128,12 @@ Zed: delete company user xxx withing xxx company business unit:
    END
  
 Zed: add business unit address:
-   [Arguments]    ${company}    ${country}    ${city}    ${ziprode}    ${street}
-   Select From List By Text    ${zed_comapny_unit_address_company_dropdown_locator}    meta
-   Select From List By Label    ${zed_comapny_unit_address_country_dropdown_locator}    France
-   Type Text    ${zed_company_unit_address_city_input_field_locator}    singapore
-   Type Text    ${zed_company_unit_address_zipcode_input_field_locator}    ${random}
-   Type Text    ${zed_company_unit_address_street_input_field_locator}    address1${random}
+   [Arguments]    ${company}    ${country}    ${city}    ${zipcode}    ${street}
+   Select From List By Text    ${zed_company_unit_address_company_dropdown_locator}    ${company}
+   Select From List By Text    ${zed_company_unit_address_country_dropdown_locator}    ${country}
+   Type Text    ${zed_company_unit_address_city_input_field_locator}    ${city}
+   Type Text    ${zed_company_unit_address_zipcode_input_field_locator}    ${zipcode}
+   Type Text    ${zed_company_unit_address_street_input_field_locator}    ${street}
    Zed: submit the form
  
 Zed: delete company business unit:
@@ -134,14 +142,13 @@ Zed: delete company business unit:
    Zed: click Action Button in a table for row that contains:    ${name}   Delete
 
 Yves: validate and set password for newly created company user:
-    [Arguments]    ${email}
+    [Arguments]    ${email}    ${password}=${yves_user_password}
    Save the result of a SELECT DB query to a variable:    select registration_key from spy_customer where email = '${email}'    confirmation_key
    Save the result of a SELECT DB query to a variable:    select customer_reference from spy_customer where email = '${email}'    customer_id
    I send a POST request:     /customer-confirmation   {"data":{"type":"customer-confirmation","attributes":{"registrationKey":"${confirmation_key}"}}}
    Save the result of a SELECT DB query to a variable:    select restore_password_key from spy_customer where email = '${email}'    restore_key
-   I send a PATCH request:    /customer-restore-password/${customer_id}   {"data":{"type":"customer-restore-password","id":"${customer_id}","attributes":{"restorePasswordKey":"${restore_key}","password":"${yves_user_password}","confirmPassword":"${yves_user_password}"}}}
+   I send a PATCH request:    /customer-restore-password/${customer_id}   {"data":{"type":"customer-restore-password","id":"${customer_id}","attributes":{"restorePasswordKey":"${restore_key}","password":"${password}","confirmPassword":"${password}"}}}
 
-Yves: check details of users:
-   [Arguments]    ${name1}    ${name2}   
-   Page Should Contain Element    //strong[normalize-space()='${name1}']
-   Page Should Contain Element    //p[contains(text(),'${name2}')]
+Yves: check the user info of company users:
+   [Arguments]    ${company_user_first_name}    ${bu_name}   
+   Page Should Contain Element    //td[@data-content='Name']/*[contains(text(),'${company_user_first_name}')]//parent::td//following-sibling::td[@data-content="Business unit" and contains(text(),'${bu_name}')]
