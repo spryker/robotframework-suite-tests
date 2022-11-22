@@ -25,7 +25,8 @@ Resource    ../../resources/steps/zed_discount_steps.robot
 Resource    ../../resources/steps/zed_availability_steps.robot
 Resource    ../../resources/steps/zed_cms_page_steps.robot
 Resource    ../../resources/steps/zed_order_steps.robot
- 
+Resource    ../../resources/steps/zed_administration_steps.robot
+
 *** Test Cases ***
 Guest_User_Access_Restrictions
     [Documentation]    Checks that guest users are not able to see: Prices, Availability, Quick Order, "My Account" features
@@ -910,3 +911,9 @@ Refunds
     Zed: grand total for the order equals:    ${lastPlacedOrder}    €0.00
     [Teardown]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: activate following discounts from Overview page:    20% off storage    10% off minimum order
+
+Display_stores_in_zed
+    [Documentation]     Checks stores availability  in zed 
+    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: go to second navigation item level:    Administration    Stores
+    Zed: check available stores:    ${store_name_at}    ${store_name_de}

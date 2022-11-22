@@ -82,5 +82,10 @@
             "bundled_product_1_concrete_sku": "104939",
             "bundled_product_2_concrete_sku": "574995",
             "bundled_product_3_concrete_sku": "426581"
+        },
+
+        "stores": {
+            "store_name_at":"AT",
+            "store_name_de":"DE"
         }
 }
