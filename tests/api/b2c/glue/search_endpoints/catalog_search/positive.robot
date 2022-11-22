@@ -254,7 +254,7 @@ Search_by_several_attributes
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response body parameter should be:    [data][0][type]    catalog-search
-    And Response body parameter should be:    [data][0][attributes][pagination][numFound]    61
+    And Response body parameter should be:    [data][0][attributes][pagination][numFound]    62
     And Response body parameter should be:    [data][0][attributes][pagination][currentPage]    1
     And Response body parameter should be:    [data][0][attributes][pagination][maxPage]    6
     And Response should contain the array of a certain size:    [data][0][attributes][abstractProducts]    ${ipp.default}
@@ -325,7 +325,7 @@ Filter_by_price_only_max
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response body parameter should be:    [data][0][type]    catalog-search
-    And Response body parameter should be:    [data][0][attributes][pagination][numFound]    210
+    And Response body parameter should be:    [data][0][attributes][pagination][numFound]    211
     And Response body parameter should be:    [data][0][attributes][pagination][currentPage]    1
     And Response body parameter should be:    [data][0][attributes][pagination][maxPage]    18
     And Response should contain the array of a certain size:    [data][0][attributes][abstractProducts]    12
@@ -418,7 +418,7 @@ Filter_by_label_two_labels
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response body parameter should be:    [data][0][type]    catalog-search
-    And Response body parameter should be:    [data][0][attributes][pagination][numFound]    64
+    And Response body parameter should be:    [data][0][attributes][pagination][numFound]    65
     And Response body parameter should be:    [data][0][attributes][pagination][currentPage]    1
     And Response body parameter should be greater than:    [data][0][attributes][pagination][maxPage]    1
     And Response should contain the array of a certain size:    [data][0][attributes][abstractProducts]    ${ipp.default}
@@ -516,7 +516,7 @@ Filter_by_valid_main_category
     # check that category tree is correctly updated
     And Response should contain the array of a certain size:    [data][0][attributes][categoryTreeFilter]    ${category_tree_branches_qty}
     And Response body parameter should be:    [data][0][attributes][categoryTreeFilter][0][docCount]    0
-    And Response body parameter should be:    [data][0][attributes][categoryTreeFilter][3][docCount]    ${category_lvl1.qty}
+    And Response body parameter should be:    [data][0][attributes][categoryTreeFilter][4][docCount]    ${category_lvl1.qty}
     And Response body has correct self link
 
 Filter_by_valid_subcategory
@@ -533,7 +533,7 @@ Filter_by_valid_subcategory
     # check that category tree is correctly updated
     And Response should contain the array of a certain size:    [data][0][attributes][categoryTreeFilter]    ${category_tree_branches_qty}
     And Response body parameter should be:    [data][0][attributes][categoryTreeFilter][0][docCount]    0
-    And Response body parameter should be:    [data][0][attributes][categoryTreeFilter][3][children][0][docCount]    ${category_lvl2.qty}
+    And Response body parameter should be:    [data][0][attributes][categoryTreeFilter][4][children][0][docCount]    ${category_lvl2.qty}
     And Response body has correct self link
 
 Search_with_specific_currency
@@ -542,7 +542,7 @@ Search_with_specific_currency
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response body parameter should be:    [data][0][type]    catalog-search
-    And Response body parameter should be:    [data][0][attributes][pagination][numFound]    ${total_number_of_products_in_search}
+    And Response body parameter should be:    [data][0][attributes][pagination][numFound]    ${total_number_of_products_in_search_CHF}
     And Response body parameter should be greater than:    [data][0][attributes][pagination][numFound]    1
     And Response body parameter should be:    [data][0][attributes][pagination][currentPage]    1
     And Response body parameter should be greater than:    [data][0][attributes][pagination][maxPage]    1
