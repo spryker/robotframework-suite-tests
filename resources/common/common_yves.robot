@@ -325,9 +325,9 @@ Yves: page should contain script with id:
     [Arguments]    ${scriptId}
     Yves: page should contain script with attribute:    id    ${scriptId}
 
-Yves: assertion of page title:
+Yves: page title should contain:
     [Arguments]    ${page_name}
-    ${title}    Get Title
+    ${title}=    Get Title
     Should Contain    ${title}    ${page_name}
 Yves: login after signup during checkout:
     [Arguments]    ${email}    ${password}
