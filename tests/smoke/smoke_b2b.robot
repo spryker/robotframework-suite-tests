@@ -888,5 +888,5 @@ Company_Account_in_Zed
     Yves: login on Yves with provided credentials:    ${test_customer_email}
     Yves: go to company menu item:    Users
     Yves: check the user info of company users:    Robot First+${random}    Test Robot BU+${random}
-    [Teardown]    Run Keywords    Zed: delete company user xxx withing xxx company business unit:    ${random}    spryker
+    [Teardown]    Run Keywords    Zed: delete company user xxx withing xxx company business unit:    Robot+${random}    Test Robot BU+${random}
     ...    AND    Zed: delete company business unit:    Test Robot BU+${random}
