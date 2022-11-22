@@ -24,12 +24,13 @@ Agent_cannot_impersonate_customer_with_wrong_token_type
     And Response should return error code:    4103
     And Response should return error message:    Action is available to agent user only.
 
+https://spryker.atlassian.net/browse/CC-23418
 Agent_cannot_impersonate_customer_with_invalid_token
     [Setup]    I Set Headers:    Content-Type=${default_header_content_type}    Authorization=Bearer fake
     When I send a POST request:    /agent-customer-impersonation-access-tokens    {"data": {"type": "agent-customer-impersonation-access-tokens","attributes":{"customerReference": "${yves_user.reference}"}}}
     Then Response status code should be:    401
     And Response reason should be:    Unauthorized
-    And Response should return error code:    4103
+    And Response should return error code:    001
     And Response should return error message:    Action is available to agent user only.
     
 #bug:https://spryker.atlassian.net/browse/CC-17010

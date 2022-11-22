@@ -135,7 +135,7 @@ Abstract_product_with_3_concrete_and_concrete_nested_includes
     And Response body parameter should be:    [data][attributes][name]    ${abstract_available_product_with.concretes_name_3}
     And Response body has correct self link internal
     And Response should contain the array of a certain size:    [data][relationships][concrete-products][data]    4
-    And Response should contain the array larger than a certain size:    [included]    16
+    And Response should contain the array of a certain size:    [included]    16
     And Response include should contain certain entity type:    concrete-products
     And Response include should contain certain entity type:    concrete-product-prices
     And Response include should contain certain entity type:    concrete-product-image-sets

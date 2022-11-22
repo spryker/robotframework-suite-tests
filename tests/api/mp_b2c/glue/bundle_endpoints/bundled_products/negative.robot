@@ -9,6 +9,7 @@ ENABLER
     TestSetup
     
 # there is a bug - https://spryker.atlassian.net/browse/CC-15994
+# bundled products are not supported yet on b2c-mp
 Get_bundled_products_with_nonexisting_concrete_sku
     When I send a GET request:    /concrete-products/fake/bundled-products
     Then Response status code should be:    404
@@ -17,6 +18,7 @@ Get_bundled_products_with_nonexisting_concrete_sku
     And Response should return error message:    Concrete product is not found.
 
 # there is a bug - https://spryker.atlassian.net/browse/CC-15994
+# bundled products are not supported yet on b2c-mp
 Get_bundled_products_with_invalid_concrete_sku
     When I send a GET request:    /concrete-products/:sku/bundled-products
     Then Response status code should be:    400

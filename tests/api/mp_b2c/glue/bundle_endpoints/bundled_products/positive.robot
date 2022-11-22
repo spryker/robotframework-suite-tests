@@ -56,6 +56,7 @@ Get_concrete_bundle_product_with_bundled_products_include
     And Response include element has self link:   concrete-products
     And Response include element has self link:   bundled-products
 
+# check if test is correct - if abstract-products can be within included
 Get_abstract_bundle_product_with_bundled_products_include
     When I send a GET request:    /abstract-products/${bundle_product.abstract.product_1_sku}?include=bundled-products,concrete-products
     Then Response status code should be:    200

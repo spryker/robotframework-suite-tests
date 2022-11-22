@@ -81,6 +81,7 @@ Delete_refresh_token_with_no_access_token
     And Response should return error message:    Missing access token.
 
 # Spryker is designed so that deleting will return 204, but the token will not be removed and can be used (done for security reasons)
+# https://spryker.atlassian.net/browse/CC-23399
 Delete_refresh_token_for_another_user
     [Setup]    Run Keywords    I send a POST request:    /access-tokens    {"data":{"type":"access-tokens","attributes":{"username":"${yves_user.email}","password":"${yves_user.password}"}}}
     ...    AND    Response status code should be:    201
