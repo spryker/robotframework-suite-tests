@@ -35,11 +35,9 @@ Yves: 'Product Set' page contains the following products:
 Yves: change variant of the product on CMS page on:
     [Arguments]    ${productName}    ${variantToSet}
     Mouse Over    xpath=//*[contains(@class,'product-item__container') and descendant::a[contains(.,'${productName}')]]
-    IF    '${env}' in ['b2b','mp_b2b']
-        Select From List By Label   //*[contains(@class,'custom-element product-set-details')]//div[@class='product-item__variant']/descendant::select    ${variantToSet}
-    ELSE
-        Select From List By Label    //*[contains(@class,'custom-element custom-select custom-select--expand')]//descendant::select    ${variantToSet}
-    END
+    Click    xpath=//*[contains(@class,'product-item__container') and descendant::a[contains(.,'${productName}')]]/ancestor::product-item//span[contains(@class,'selection--single')]
+    Wait Until Element Is Visible    xpath=//span[contains(@class,'select2-results')]//li[contains(text(),'${variantToSet}')]
+    Click    xpath=//span[contains(@class,'select2-results')]//li[contains(text(),'${variantToSet}')]
 
 
 Yves: add all products to the shopping cart from Product Set

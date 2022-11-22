@@ -18,7 +18,7 @@ Select access level to share shopping list with:
 
 Edit shopping list with name:
     [Arguments]    ${shoppingListName}       
-    Click    xpath=xpath=//*[@data-qa="component shopping-list-overview-table"]//table//td[@data-content='Name'][contains(.,'${shoppingListName}')]/..//div[@data-qa='component table-action-list']//a[contains(.,'Edit')]
+    Click    xpath=//*[@data-qa="component shopping-list-overview-table"]//table//td[@data-content='Name'][contains(.,'${shoppingListName}')]/..//div[@data-qa='component table-action-list']//a[contains(.,'Edit')]
 
 Share shopping list with name:
     [Arguments]    ${shoppingListName}       
