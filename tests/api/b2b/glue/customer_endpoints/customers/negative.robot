@@ -11,7 +11,7 @@ Create_a_customer_with_already_existing_email
     Then Response status code should be:    422
     And Response reason should be:    Unprocessable Content
     And Response should return error code:    400
-    And Response should return error message:    If this email address is already in use you will receive a password reset link otherwise you must first validate your e-mail address to finish registration. Please check your e-mail.
+    And Response should return error message:    Customer with this email already exists.
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
 
 Create_a_customer_with_too_short_password

@@ -17,8 +17,8 @@ Zed: create a discount and activate it:
     END
     Type Text    ${zed_discount_name_field}     ${discountName}
     Type Text    ${zed_discount_description_field}     ${discountDescription}
-    Evaluate Javascript    ${None}  document.getElementById("discount_discountGeneral_valid_from").setAttribute("value", "31.05.2021 00:00")
-    Evaluate JavaScript    ${None}   document.getElementById("discount_discountGeneral_valid_to").setAttribute("value", "01.01.2050 00:00")
+    Evaluate Javascript    ${None}  document.getElementById("discount_discountGeneral_valid_from").setAttribute("value", "01.01.2021 01:00")
+    Evaluate JavaScript    ${None}   document.getElementById("discount_discountGeneral_valid_to").setAttribute("value", "01.01.2025 01:00")
 # Discount calculation
     Zed: go to tab:    Discount calculation
     Wait For Elements State    ${zed_discount_query_builder_first_calculation_group}    visible    15s
@@ -43,7 +43,9 @@ Zed: create a discount and activate it:
     Wait For Elements State    ${zed_discount_query_builder_first_condition_group}    visible    15s
     Click    ${zed_discount_plain_query_apply_when__button}
     Wait Until Element Is Visible    ${zed_discount_plain_query_apply_when_field}
-    Type Text    ${zed_discount_plain_query_apply_when_field}     ${applyWhenQuery}
+    IF    '${applyWhenQuery}' != '${EMPTY}'
+        Type Text    ${zed_discount_plain_query_apply_when_field}     ${applyWhenQuery}
+    END
     Click    ${zed_discount_save_button}
     Click    ${zed_discount_activate_button}
     # Voucher codes

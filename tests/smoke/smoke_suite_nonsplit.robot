@@ -357,7 +357,7 @@
 #     Yves: header contains/doesn't contain:    true    ${customerSearchWidget}
 #     Yves: perform search by customer:    ${yves_user_first_name}
 #     Yves: agent widget contains:    ${yves_user_email}
-#     Yves: As an Agent login under the customer:    ${yves_user_email}
+#     Yves: as an agent login under the customer:    ${yves_user_email}
 #     Yves: perform search by:    031
 #     Yves: product with name in the catalog should have price:    Canon PowerShot G9 X    €400.24
 #     Yves: go to PDP of the product with sku:    031
@@ -408,7 +408,7 @@
 #     Yves: header contains/doesn't contain:    true    ${customerSearchWidget}
 #     Yves: perform search by customer:    ${yves_user_email}
 #     Yves: agent widget contains:    ${yves_user_email}
-#     Yves: As an Agent login under the customer:    ${yves_user_email}
+#     Yves: as an agent login under the customer:    ${yves_user_email}
 #     Yves: go to user menu item in header:    Orders History
 #     Yves: 'View Order/Reorder/Return' on the order history page:     Return    ${lastPlacedOrder}
 #     Yves: 'Create Return' page is displayed
