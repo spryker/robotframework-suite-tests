@@ -28,6 +28,7 @@ Resource    ../../resources/steps/zed_discount_steps.robot
 Resource    ../../resources/steps/zed_cms_page_steps.robot
 
 Resource    ../../resources/steps/zed_customer_steps.robot
+Resource    ../../resources/steps/zed_payment_methods_steps.robot
 Resource    ../../resources/steps/zed_dashboard_steps.robot
 
 *** Test Cases ***
@@ -636,6 +637,36 @@ Refunds
     Zed: grand total for the order equals:    ${lastPlacedOrder}    €0.00
     [Teardown]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: activate following discounts from Overview page:    Tu & Wed $5 off 5 or more    10% off $100+    20% off cameras    Tu & Wed €5 off 5 or more    10% off minimum order
+
+Payment_method_update
+     [Documentation]    Deactivate payment method, unset payment method for stores in zed and check its impact on yves.
+    Yves: login on Yves with provided credentials:    ${yves_second_user_email}
+    Yves: go to PDP of the product with sku:    020
+    Yves: add product to the shopping cart
+    Yves: go to b2c shopping cart    
+    Yves: click on the 'Checkout' button in the shopping cart
+    Yves: fill in the following new shipping address:
+    ...    ||      firstName                    |           lastName                  |    street           |    houseNumber     |    city      |    postCode    |    phone        ||
+    ...    || ${yves_second_user_first_name}    |     ${yves_second_user_last_name}   |    ${random}        |    ${random}       |    Berlin    |   ${random}    |    ${random}    ||
+    Yves: submit form on the checkout
+    Yves: select the following shipping method on the checkout and go next:     Standard: €4.90
+    Yves: check that the payment method is/not present in the checkout process:    ${checkout_payment_invoice_locator}    true
+    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: go to second navigation item level:    Administration    Payment Methods
+    Zed: activate/deactivate payment method:    Dummy Payment    Invoice    False
+    Yves: login on Yves with provided credentials:    ${yves_second_user_email}
+    Yves: go to b2c shopping cart    
+    Yves: click on the 'Checkout' button in the shopping cart
+    Yves: fill in the following new shipping address:
+    ...    ||      firstName                    |           lastName                  |    street           |    houseNumber     |    city     |    postCode    |    phone        ||
+    ...    || ${yves_second_user_first_name}    |     ${yves_second_user_last_name}   |    ${random}        |    ${random}       |    Berlin   |   ${random}    |    ${random}    ||
+    Yves: submit form on the checkout
+    Yves: select the following shipping method on the checkout and go next:     Standard: €4.90
+    Yves: check that the payment method is/not present in the checkout process:     ${checkout_payment_invoice_locator}    false
+    [Teardown]    Run keywords    Yves: check if cart is not empty and clear it
+    ...    AND    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    ...    AND    Zed: go to second navigation item level:    Administration    Payment Methods
+    ...    AND    Zed: activate/deactivate payment method:    Dummy Payment    Invoice    True
 
 Add_to_cart_products_as_a_guest_user_and_login_during_checkout
     Yves: go to the 'Home' page
