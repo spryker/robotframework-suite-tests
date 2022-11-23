@@ -84,9 +84,18 @@ Zed: update Merchant User on edit page with the following data:
 
 Zed: perform Merchant User search by:
     [Arguments]    ${search_key}
+    Wait Until Page Contains Element    ${zed_table_locator}
     Type Text    ${zed_merchant_user_search_field_locator}    ${search_key}
-    Wait Until Element Is Visible    ${zed_processing_block_locator}
-    Wait Until Element Is Not Visible    ${zed_processing_block_locator}
+    TRY
+        Wait Until Element Is Visible    ${zed_processing_block_locator}
+    EXCEPT    
+        Log    processing locator is now shown
+    END
+    TRY
+        Wait Until Element Is Not Visible    ${zed_processing_block_locator}
+    EXCEPT    
+        Log    processing locator is now shown
+    END
     Sleep    3s
 
 Zed: click Action Button in Merchant Users table for row that contains:

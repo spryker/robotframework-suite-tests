@@ -13,8 +13,8 @@
         "yves_user_password": "change123",
 
         "yves_second_user_email": "bill.martin@spryker.com",
-        "yves_second_user_first_name": "Martin",
-        "yves_second_user_last_name": "Bill",
+        "yves_second_user_first_name": "Bill",
+        "yves_second_user_last_name": "Martin",
         "yves_second_user_password": "change123",
 
         "zed_admin_email": "admin@spryker.com",
@@ -50,5 +50,23 @@
         "product_with_relations_alternative_products_sku": "145",
         "product_with_relations_upselling_sku": "018"
             
+    },
+    "address":{
+            "street_name":"st",
+            "city":"Berlin",
+            "country":"Germany",
+            "additional_address":"additional street",
+            "company":"spryker"
+            } ,
+    "guest_user": {
+                "Salutation":"Mr.",
+                "Guest_user_first_name":"Guest",
+                "Guest_user_last_name":"martin"
+            },
+
+    "misc":
+    {
+        "order_state":"New"
     }
 }
+

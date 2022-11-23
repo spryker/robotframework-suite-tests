@@ -21,7 +21,7 @@ Abstract_product_with_one_concrete
     And Response body parameter should be:    [data][attributes][name]    ${abstract.available_products.with_stock.name}
     And Response body parameter should not be EMPTY:    [data][attributes][description]
     And Response body parameter should not be EMPTY:    [data][attributes][attributes]
-    And Response should contain the array larger than a certain size:    [data][attributes][superAttributesDefinition]    0
+    And Response should contain the array of a certain size:    [data][attributes][superAttributesDefinition]    0
     And Response should contain the array of a certain size:    [data][attributes][attributeMap]    4
     And Response should contain the array of a certain size:    [data][attributes][attributeMap][product_concrete_ids]    1
     And Response body parameter should contain:    [data][attributes][superAttributes]    ${abstract.available_products.with_stock.superattribute}
@@ -45,7 +45,7 @@ Abstract_product_with_3_concrete3
     And Response body parameter should be:    [data][attributes][name]    ${abstract.available_products.with_3_concretes.name}
     And Response body parameter should not be EMPTY:    [data][attributes][description]
     And Response body parameter should not be EMPTY:    [data][attributes][attributes]
-    And Response should contain the array larger than a certain size:    [data][attributes][superAttributesDefinition]    0
+    And Response should contain the array of a certain size:    [data][attributes][superAttributesDefinition]    0
     And Response should contain the array of a certain size:    [data][attributes][attributeMap]    4
     And Response should contain the array of a certain size:    [data][attributes][attributeMap][product_concrete_ids]    2
     And Response body parameter should contain:    [data][attributes][superAttributes]    ${abstract.available_products.with_3_concretes.superattribute}

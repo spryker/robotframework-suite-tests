@@ -10,9 +10,17 @@ MP: open profile tab:
     Wait Until Element Is Visible    xpath=//div[@class='ant-tabs-nav-list']//div[contains(text(),'${profileTabName}')]
     Click    xpath=//div[@class='ant-tabs-nav-list']//div[contains(text(),'${profileTabName}')]
 
-MP: change store status
+MP: change store status to:
+    [Arguments]    ${store_status}
     Wait Until Element Is Visible    ${store_status_checkbox}
-    Click    ${store_status_checkbox}
+    ${store_is_online}=    Get Element Attribute    ${store_status_checkbox}    checked
+    IF    ('${store_status}' == 'true' or '${store_status}' == 'online') and '${store_is_online}' != 'true'
+        Click    ${store_status_checkbox}
+    ELSE IF    ('${store_status}' == 'false' or '${store_status}' == 'offline') and '${store_is_online}' == 'true'
+    
+        Click    ${store_status_checkbox}
+    END
+    MP: click submit button
 
 MP: update profile fields with following data:
     [Arguments]    @{args}

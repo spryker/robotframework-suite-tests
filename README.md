@@ -113,9 +113,9 @@ There is often a need to re-execute a subset of tests, for example, after fixing
 Combining re-execution results with the original results using the default combining outputs approach does not work too well. The main problem is that you get separate test suites and possibly already fixed failures are also shown. In this situation it is better to use --merge (-R) option to tell Rebot to merge the results instead. In practice this means that tests from the latter test runs replace tests in the original.
 | Command  	|Description| 
 |:--- |:--- |
-|`robot -v env:b2b -v browser:chromium -d results tests/smoke/smoke_b2b.robot`|first execute all tests|
-|`robot -v env:b2b -v browser:chromium -d results --rerunfailed results/output.xml --output results/rerun.xml tests/smoke/smoke_b2b.robot`|then re-execute failing|
-|`robot -v env:b2b -v browser:chromium -d results --merge results/output.xml results/rerun.xml`| finally merge results|
+|`robot -v env:b2c -d results tests/smoke/smoke_b2c.robot`|first execute all tests|
+|`robot -v env:b2c --rerunfailed results/output.xml --output results/rerun.xml tests/smoke/smoke_b2c.robot`|then re-execute failing|
+|`rebot --merge results/output.xml results/rerun.xml`| finally merge results|
 
 The message of the merged tests contains a note that results have been replaced. The message also shows the old status and message of the test.
 
