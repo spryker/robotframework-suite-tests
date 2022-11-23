@@ -7,7 +7,7 @@ Resource    ../pages/mp/mp_login_page.robot
 ${mp_user_menu_button}    xpath=//button[contains(@class,'spy-user-menu__action')]
 ${mp_navigation_slider_menu}    xpath=//spy-navigation
 ${mp_submit_button}    xpath=//button[@type='submit']
-${mp_items_table}    xpath=//nz-table-inner-default//table/tbody
+${mp_items_table}    xpath=//nz-table-inner-default//table
 ${mp_search_box}    xpath=//spy-table//input[contains(@placeholder,'Search')]
 ${mp_close_drawer_button}    xpath=//button[contains(@class,'spy-drawer-wrapper__action--close')]
 ${spinner_loader}    xpath=//span[contains(@class,'ant-spin-dot')]
@@ -23,6 +23,18 @@ MP: login on MP with provided credentials:
     Type Text    ${mp_password_field}    ${password}
     Click    ${mp_login_button}
     Wait Until Element Is Visible    ${mp_user_menu_button}    MP: user menu is not displayed
+
+MP: login on MP with provided credentials and expect error:
+    [Arguments]    ${email}    ${password}=${default_password}
+    go to    ${mp_url}
+    delete all cookies
+    Reload
+    Wait Until Element Is Visible    ${mp_user_name_field}
+    Type Text    ${mp_user_name_field}    ${email}
+    Type Text    ${mp_password_field}    ${password}
+    Click    ${mp_login_button}
+    Wait Until Element Is Visible    ${mp_login_failed_message}
+    Page Should Not Contain Element    ${mp_user_menu_button}
 
 MP: open navigation menu tab:
     [Arguments]    ${tabName}
@@ -60,6 +72,7 @@ MP: click on create new entity button:
 
 MP: select option in expanded dropdown:
     [Arguments]    ${optionName}
+    Wait Until Element Is Visible    xpath=//nz-option-container[contains(@class,'ant-select-dropdown')]//span[contains(text(),'${optionName}')]
     Click    xpath=//nz-option-container[contains(@class,'ant-select-dropdown')]//span[contains(text(),'${optionName}')]
 
     

@@ -71,6 +71,7 @@ Yves: login on Yves with provided credentials:
 
 Yves: go to PDP of the product with sku:
     [Arguments]    ${sku}
+    Yves: go to the 'Home' page
     Yves: perform search by:    ${sku}
     Wait Until Page Contains Element    ${catalog_product_card_locator}
     Click    ${catalog_product_card_locator}
@@ -155,6 +156,18 @@ Yves: go to newly created page by URL:
         ${page_not_published}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//main//*[contains(text(),'ERROR 404')]
         Log    ${page_not_published}
         IF    '${page_not_published}'=='True'
+            Run Keyword    Sleep    3s
+        ELSE
+            Exit For Loop
+        END
+    END
+Yves: go to URL and refresh until 404 occurs:
+    [Arguments]    ${url}
+    FOR    ${index}    IN RANGE    0    26
+        Go To    ${url}
+        ${page_not_published}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//main//*[contains(text(),'ERROR 404')]
+        Log    ${page_not_published}
+        IF    '${page_not_published}'=='False'
             Run Keyword    Sleep    3s
         ELSE
             Exit For Loop

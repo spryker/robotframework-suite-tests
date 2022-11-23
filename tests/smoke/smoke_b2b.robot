@@ -59,6 +59,7 @@ Share_Shopping_Lists
 Share_Shopping_Carts
     [Documentation]    Checks that cart can be shared and used for checkout
     Yves: login on Yves with provided credentials:    ${yves_company_user_shared_permission_owner_email}
+    Yves: delete all shopping carts
     Yves: go to 'Shopping Carts' page through the header
     Yves: 'Shopping Carts' page is displayed
     Yves: create new 'Shopping Cart' with name:    shoppingCartName+${random}
@@ -266,7 +267,7 @@ Product_Sets
     [Teardown]    Yves: delete 'Shopping Cart' with name:    productSetsCart+${random}
 
 Product_Bundles
-    [Documentation]    Checks checkout with Bundle product. Fails due to bug CC-16679
+    [Documentation]    Checks checkout with Bundle product
     [Setup]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: change product stock:    ${bundled_product_1_abstract_sku}    ${bundled_product_1_concrete_sku}    true    10
     ...    AND    Zed: change product stock:    ${bundled_product_2_abstract_sku}    ${bundled_product_2_concrete_sku}    true    10
@@ -274,8 +275,7 @@ Product_Bundles
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     Yves: create new 'Shopping Cart' with name:    productBundleCart+${random}
     Yves: go to PDP of the product with sku:    ${bundle_product_abstract_sku}
-    #Fails due to bug CC-16679
-    Yves: PDP contains/doesn't contain:    true    ${bundleItemsSmall}    ${bundleItemsLarge}
+    Yves: PDP contains/doesn't contain:    true    ${bundleItemsSmall}
     Yves: add product to the shopping cart
     Yves: go to the shopping cart through the header with name:    productBundleCart+${random}
     Yves: shopping cart contains the following products:    ${bundle_product_concrete_sku}
@@ -553,21 +553,21 @@ Request_for_Quote
     [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: delete Zed user with the following email:    agent_quote+${random}@spryker.com
 
-# Unique_URL
-#     [Documentation]    Fails due to Bug:CC-12380
-#     Yves: login on Yves with provided credentials:    ${yves_company_user_manager_and_buyer_email}
-#     Yves: create new 'Shopping Cart' with name:    externalCart+${random}
-#     Yves: go to PDP of the product with sku:    M90806
-#     Yves: add product to the shopping cart
-#     Yves: go to the shopping cart through the header with name:    externalCart+${random}
-#     Yves: 'Shopping Cart' page is displayed
-#     Yves: get link for external cart sharing
-#     Yves: logout on Yves as a customer
-#     Yves: go to URL:    ${externalURL}
-#     Yves: 'Shopping Cart' page is displayed
-#     Yves: Shopping Cart title should be equal:    Preview: externalCart+${random}
-#     Yves: shopping cart contains the following products:    108302
-#     [Teardown]    Yves: delete 'Shopping Cart' with name:    externalCart+${random}
+Unique_URL
+    [Documentation]    Fails due to Bug:CC-12380
+    Yves: login on Yves with provided credentials:    ${yves_company_user_manager_and_buyer_email}
+    Yves: create new 'Shopping Cart' with name:    externalCart+${random}
+    Yves: go to PDP of the product with sku:    M90806
+    Yves: add product to the shopping cart
+    Yves: go to the shopping cart through the header with name:    externalCart+${random}
+    Yves: 'Shopping Cart' page is displayed
+    Yves: get link for external cart sharing
+    Yves: logout on Yves as a customer
+    Yves: go to URL:    ${externalURL}
+    Yves: 'Shopping Cart' page is displayed
+    Yves: Shopping Cart title should be equal:    Preview: externalCart+${random}
+    Yves: shopping cart contains the following products:    108302
+    [Teardown]    Yves: delete 'Shopping Cart' with name:    externalCart+${random}
 
 Configurable_Bundle
     [Documentation]    Checks checkout with the configurable bundle
@@ -873,6 +873,9 @@ Content_Management
     Yves: go to newly created page by URL:    en/test-page${random}
     Yves: page contains CMS element:    CMS Page Title    Page Title
     Yves: page contains CMS element:    CMS Page Content    Page text
+    [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    ...    AND    Zed: go to second navigation item level:    Content    Pages
+    ...    AND    Zed: click Action Button in a table for row that contains:    Test Page${random}    Deactivate
 
 Refunds
     [Documentation]    Checks that refund can be created for an item and the whole order

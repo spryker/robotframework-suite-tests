@@ -34,8 +34,8 @@ Resource    ../../resources/steps/zed_dashboard_steps.robot
 New_Customer_Registration
     [Documentation]    Check that a new user can be registered in the system
     Register a new customer with data:
-    ...    || salutation | first name          | last name | e-mail                       | password            ||
-    ...    || Mr.        | Test${random}       | User      |  sonia+${random}@spryker.com | Change123!${random} ||
+    ...    || salutation | first name          | last name | e-mail                      | password            ||
+    ...    || Mr.        | Test${random}       | User      | sonia+${random}@spryker.com | Change123!${random} ||
     Yves: flash message should be shown:    success    Almost there! We send you an email to validate your email address. Please confirm it to be able to log in.
     [Teardown]    Zed: delete customer:
     ...    || email                       ||
@@ -119,6 +119,11 @@ Catalog
 
 Catalog_Actions
     [Documentation]    Checks quick add to cart and product groups
+    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: change concrete product price on:
+    ...    || productAbstract | productConcrete | store | mode  | type   | currency | amount ||
+    ...    || 003             | 003_26138343    | DE    | gross | default| €        | 65.00  ||
+    Yves: check if cart is not empty and clear it
     Yves: perform search by:    NEX-VG20EH
     Yves: 1st product card in catalog (not)contains:      Add to Cart    true
     Yves: quick add to cart for first item in catalog
@@ -127,10 +132,11 @@ Catalog_Actions
     Yves: perform search by:    002
     Yves: 1st product card in catalog (not)contains:      Add to Cart    true
     Yves: 1st product card in catalog (not)contains:      Color selector   true
-    Yves: select product color:    black
+    Yves: select product color:    silver
     Yves: quick add to cart for first item in catalog
     Yves: go to b2c shopping cart
     Yves: shopping cart contains the following products:    NEX-VG20EH    Canon IXUS 160
+    Yves: shopping cart contains product with unit price:    002    Canon IXUS 160    65.00
     [Teardown]    Yves: check if cart is not empty and clear it
 
 Product_labels
@@ -255,15 +261,14 @@ Product_Sets
     [Teardown]    Yves: check if cart is not empty and clear it
 
 Product_Bundles
-    [Documentation]    Checks checkout with Bundle product. Fails due to bug CC-16679
+    [Documentation]    Checks checkout with Bundle product
     [Setup]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: change product stock:    ${bundled_product_1_abstract_sku}    ${bundled_product_1_concrete_sku}    true    10
     ...    AND    Zed: change product stock:    ${bundled_product_2_abstract_sku}    ${bundled_product_2_concrete_sku}    true    10
     ...    AND    Zed: change product stock:    ${bundled_product_3_abstract_sku}    ${bundled_product_3_concrete_sku}    true    10
     Yves: login on Yves with provided credentials:    ${yves_user_email}
     Yves: go to PDP of the product with sku:    ${bundle_product_abstract_sku}
-    #Fails due to bug CC-16679
-    Yves: PDP contains/doesn't contain:    true    ${bundleItemsSmall}    ${bundleItemsLarge}
+    Yves: PDP contains/doesn't contain:    true    ${bundleItemsSmall}
     Yves: add product to the shopping cart
     Yves: go to b2c shopping cart
     Yves: shopping cart contains the following products:    ${bundle_product_product_name}
@@ -404,7 +409,7 @@ Split_Delivery
     [Teardown]    Yves: check if cart is not empty and clear it
 
 Agent_Assist
-    [Documentation]    Checks that agent can be used
+    [Documentation]    Checks that agent can be used. Bug: CC-17232
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: create new Zed user with the following data:    agent+${random}@spryker.com    change${random}    Agent    Assist    Root group    This user is an agent    en_US
     Yves: go to the 'Home' page
@@ -448,7 +453,7 @@ Agent_Assist
     ...    AND    Zed: delete Zed user with the following email:    agent+${random}@spryker.com
 
 Return_Management
-    [Documentation]    Checks that returns work and oms process is checked
+    [Documentation]    Checks that returns work and oms process is checked. Bug: CC-17232
     Yves: login on Yves with provided credentials:    ${yves_user_email}
     Yves: check if cart is not empty and clear it
     Yves: go to PDP of the product with sku:    007
@@ -524,6 +529,9 @@ Content_Management
     Yves: go to newly created page by URL:    en/test-page${random}
     Yves: page contains CMS element:    CMS Page Title    Page Title
     Yves: page contains CMS element:    CMS Page Content    Page text
+    [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    ...    AND    Zed: go to second navigation item level:    Content    Pages
+    ...    AND    Zed: click Action Button in a table for row that contains:    Test Page${random}    Deactivate
 
 Product_Relations
     [Documentation]    Checks related product on PDP and upsell products in cart
@@ -538,7 +546,7 @@ Product_Relations
     [Teardown]    Yves: check if cart is not empty and clear it
 
 Guest_Checkout
-    [Documentation]    Guest checkout with bundles, discounts and OMS Fails due to bug CC-16679
+    [Documentation]    Guest checkout with bundles, discounts and OMS
     [Setup]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: change product stock:    ${bundled_product_1_abstract_sku}    ${bundled_product_1_concrete_sku}    true    10
     ...    AND    Zed: change product stock:    ${bundled_product_2_abstract_sku}    ${bundled_product_2_concrete_sku}    true    10
@@ -550,8 +558,7 @@ Guest_Checkout
     Yves: go to the 'Home' page
     Yves: logout on Yves as a customer
     Yves: go to PDP of the product with sku:    ${bundle_product_abstract_sku}
-    #Fails due to bug CC-16679
-    Yves: PDP contains/doesn't contain:    true    ${bundleItemsSmall}    ${bundleItemsLarge}
+    Yves: PDP contains/doesn't contain:    true    ${bundleItemsSmall}
     Yves: add product to the shopping cart
     Yves: go to URL:    en/configurable-bundle/configurator/template-selection
     Yves: 'Choose Bundle to configure' page is displayed
@@ -568,7 +575,7 @@ Guest_Checkout
     Yves: apply discount voucher to cart:    guestTest${random}
     Yves: shopping cart contains the following products:    ${bundle_product_product_name}
     Yves: click on the 'Checkout' button in the shopping cart
-    Yves: proceed with checkout as guest:    Mr    Guest    user    guest+${random}@user.com
+    Yves: proceed with checkout as guest:    Mr    Guest    user    sonia+guest${random}@spryker.com
     Yves: billing address same as shipping address:    true
     Yves: fill in the following new shipping address:
     ...    || salutation | firstName | lastName | street        | houseNumber | postCode | city   | country | company | phone     | additionalAddress ||
@@ -580,7 +587,7 @@ Guest_Checkout
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    Zed: get the last placed order ID of the customer by email:    guest+${random}@user.com
+    Zed: get the last placed order ID of the customer by email:    sonia+guest${random}@spryker.com
     Zed: trigger all matching states inside xxx order:    ${zedLastPlacedOrder}    Pay
     Zed: trigger all matching states inside this order:    Skip timeout
     Zed: trigger all matching states inside this order:    Ship

@@ -17,11 +17,12 @@ Resource                  ../pages/yves/yves_login_page.robot
 ${env}                 b2b
 ${headless}            true
 ${browser}             chromium
-${browser_timeout}     60 seconds
+${browser_timeout}     30 seconds
 ${email_domain}        @spryker.com
 ${default_password}    change123
 ${admin_email}         admin@spryker.com
 ${device}
+# ${device}              Desktop Chrome
 # ${fake_email}          test.spryker+${random}@gmail.com
 
 *** Keywords ***
@@ -153,7 +154,9 @@ Page Should Contain Element
 
 Get Location
     ${current_location}=    Get URL
-    [Return]    ${current_location}
+    ${location}=    Set Variable    ${current_location}
+    Set Test Variable    ${location}    ${location}
+    [Return]    ${location}
 
 Wait Until Element Is Not Visible
     [Arguments]    ${locator}    ${message}=${EMPTY}    ${timeout}=${browser_timeout}
@@ -270,7 +273,8 @@ Try reloading page until element is/not appear:
         END
     END
     IF    ('${shouldBeDisplayed}'=='true' and '${elementAppears}'=='False') or ('${shouldBeDisplayed}'=='false' and '${elementAppears}'=='True')
-        Fail    'Timeout exceeded'
+        Take Screenshot
+        Fail    'Timeout exceeded, element state doesn't match the expected'
     END
 
 Try reloading page until element does/not contain text:
@@ -301,3 +305,9 @@ Select From List By Value When Element Is Visible
     Run keywords
         ...    Wait Until Element Is Visible    ${selector}
         ...    AND    Select From List By Value    ${selector}     ${value}
+
+Remove leading and trailing whitespace from a string:
+    [Arguments]    ${string}
+    ${string}=    Replace String Using Regexp    ${string}    (^[ ]+|[ ]+$)    ${EMPTY}
+    Set Global Variable    ${string}
+    [Return]    ${string}
