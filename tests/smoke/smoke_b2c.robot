@@ -616,11 +616,11 @@ Edit_a_glossary_translation_and_check_text_change_in_Yves
     [Documentation]    Edit a glossary in zed and check the updated translation on yves
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Administration    Glossary 
-    Zed: edit a glossary translation    	${glossary_name}
+    Zed: click Action Button in a table for row that contains:    ${glossary_name}    Edit
     Zed: add details to glossary section:
-    ...    ||          DE_DE                |              EN_US                       ||
-    ...    ||     ${original_DE_text}-test  |   ${original_EN_text}-test-${random}     ||
+    ...    ||          DE_DE                |              EN_US                   ||
+    ...    ||     ${original_DE_text}-Test  |   ${original_EN_text}-Test-${random} ||
     Zed: submit the form
     Yves: login on Yves with provided credentials:    ${yves_second_user_email}
-    Yves: validate the page title:    ${original_EN_text}-test-${random}
+    Yves: validate the page title:    ${original_EN_text}-Test-${random}
     [Teardown]    Zed: undo the changes in glossary translation:    ${glossary_name}     ${original_DE_text}    ${original_EN_text}
