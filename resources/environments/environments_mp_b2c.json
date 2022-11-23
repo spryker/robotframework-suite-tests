@@ -1,9 +1,10 @@
 {
-    "environment": "b2c", 
+    "environment": "mp_b2c", 
 
     "env": {
         "host": "http://yves.de.spryker.local/",
-        "zed_url": "http://backoffice.de.spryker.local/"
+        "zed_url": "http://backoffice.de.spryker.local/",
+        "mp_url": "http://mp.de.spryker.local/security-merchant-portal-gui/login/"
     },
 
     "users": {    
@@ -13,12 +14,13 @@
         "yves_user_password": "change123",
 
         "yves_second_user_email": "bill.martin@spryker.com",
-        "yves_second_user_first_name": "Bill",
-        "yves_second_user_last_name": "Martin",
+        "yves_second_user_first_name": "Martin",
+        "yves_second_user_last_name": "Bill",
         "yves_second_user_password": "change123",
 
         "zed_admin_email": "admin@spryker.com",
-        "zed_admin_password": "change123"
+        "zed_admin_password": "change123",
+        "zed_main_merchant_email": "richard@spryker.com"
     },
         
     "products": {
@@ -36,10 +38,6 @@
         "bundled_product_3_concrete_sku": "150_29554292",
 
         "multi_variant_product_abstract_sku": "051",
-        "multi_variant_product_concrete_sku": "134_26145012",
-        "multi_variant_product_name":"Acer Aspire S7",
-        "multi_colour_variant_product_sku":"096_30856274",
-        
 
         "measurement_unit_product_abstract_sku": "215",
         "packaging_unit_product_abstract_sku": "218",
@@ -48,27 +46,5 @@
         "product_with_relations_alternative_products_sku": "145",
         "product_with_relations_upselling_sku": "018"
             
-    },
-    
-    "address":{
-            "street_name":"st",
-            "city":"Berlin",
-            "country":"Germany",
-            "additional_address":"additional street",
-            "company":"spryker"
-            } ,
-    "guest_user": {
-                "Salutation":"Mr.",
-                "Guest_user_first_name":"Guest",
-                "Guest_user_last_name":"martin"
-            },
-
-    "misc":
-    {
-        "order_state":"New",
-        "colour_1":"green",
-        "colour_2":"blue"
-
     }
 }
-
