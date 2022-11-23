@@ -861,6 +861,13 @@ Refunds
     Zed: trigger matching state of order item inside xxx shipment:    107254    Stock update
     Zed: trigger matching state of order item inside xxx shipment:    107254    Refund
     Zed: grand total for the order equals:    ${lastPlacedOrder}    €1,162.87
+    Zed: trigger matching state of order item inside xxx shipment:    403125    Ship
+    Zed: trigger matching state of order item inside xxx shipment:    403125    Stock update
+    Zed: create a return for the following order and product in it:    ${lastPlacedOrder}    403125
+    Zed: go to second navigation item level:    Sales    Orders
+    Zed: click Action Button in a table for row that contains:    ${lastPlacedOrder}    View
+    Zed: trigger matching state of order item inside xxx shipment:    403125    Execute return
+    Zed: trigger matching state of order item inside xxx shipment:    403125    Refund
     Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Ship
     Zed: trigger all matching states inside this order:    Stock update
     Zed: trigger all matching states inside this order:    Refund
@@ -905,36 +912,3 @@ OMS_Close_Items
     Zed: go to second navigation item level:    Sales    Orders
     Zed: perform search by:    ${lastPlacedOrder}
     Zed: table should contain non-searchable value:    Closed
-
-OMS_Refund_After_Delivery
-    [Documentation]    Process the order delivery state and then initiate the refund
-    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
-    Yves: create new 'Shopping Cart' with name:    omsRefund+${random}
-    Yves: go to PDP of the product with sku:    M90802
-    Yves: add product to the shopping cart
-    Yves: go to PDP of the product with sku:    M21711
-    Yves: add product to the shopping cart
-    Yves: go to PDP of the product with sku:    M90737
-    Yves: add product to the shopping cart
-    Yves: go to the shopping cart through the header with name:    omsRefund+${random}
-    Yves: click on the 'Checkout' button in the shopping cart
-    Yves: billing address same as shipping address:    true
-    Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${yves_company_user_buyer_address}
-    Yves: select the following shipping method on the checkout and go next:    Express
-    Yves: select the following payment method on the checkout and go next:    Invoice
-    Yves: accept the terms and conditions:    true
-    Yves: 'submit the order' on the summary page
-    Yves: 'Thank you' page is displayed
-    Yves: get the last placed order ID by current customer
-    Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    Zed: grand total for the order equals:    ${lastPlacedOrder}    €493.72
-    Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Pay
-    Zed: trigger all matching states inside this order:    Skip timeout
-    Zed: trigger matching state of order item inside xxx shipment:    108278    Ship
-    Zed: trigger matching state of order item inside xxx shipment:    108278    Stock update
-    Zed: trigger matching state of order item inside xxx shipment:    108278    Refund
-    Zed: grand total for the order equals:    ${lastPlacedOrder}    €369.42
-    Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Ship
-    Zed: trigger all matching states inside this order:    Stock update
-    Zed: trigger all matching states inside this order:    Refund
-    Zed: grand total for the order equals:    ${lastPlacedOrder}    €0.00
