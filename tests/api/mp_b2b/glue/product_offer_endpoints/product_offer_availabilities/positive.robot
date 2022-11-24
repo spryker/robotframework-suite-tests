@@ -8,7 +8,7 @@ Default Tags    glue
 ENABLER
     TestSetup
 
-# There is a bug MP-6749
+# There is a bug https://spryker.atlassian.net/browse/CC-17140
 Get_product_offer_availabilities
     When I send a GET request:    /product-offers/${second_offer_with_volume_price}/product-offer-availabilities
     Then Response status code should be:    200

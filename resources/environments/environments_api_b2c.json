@@ -145,7 +145,8 @@
 
     "search": {
 
-        "total_number_of_products_in_search": "212",
+        "total_number_of_products_in_search": "213",
+        "total_number_of_products_in_search_CHF": "212",
         
         "ipp":{
             "default": "12",
