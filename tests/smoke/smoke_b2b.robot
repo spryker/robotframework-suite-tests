@@ -870,14 +870,14 @@ Refunds
     ...    AND    Zed: activate following discounts from Overview page:    20% off storage    10% off minimum order
 
 Comments_in_Cart
-    [Documentation]    adding comments to cart and verify comments in Yves and zed
+    [Documentation]    Adding comments to cart and verify comments in Yves and zed
     Yves: login on Yves with provided credentials:    ${yves_company_user_shared_permission_owner_email}
-    Yves: create new 'Shopping Cart' with name:    comments+${random}
+    Yves: create new 'Shopping Cart' with name:    commentCart+${random}
     Yves: go to PDP of the product with sku:    ${bundled_product_3_abstract_sku}
     Yves: add product to the shopping cart
-    Yves: go to the shopping cart through the header with name:    comments+${random}
-    Yves: shopping cart contains the following products:    ${bundled_product_3_concrete_sku}
-    Yves: adding comments on cart before checkout:    abc${random}
+    Yves: go to the shopping cart through the header with name:    commentCart+${random}
+    Yves: add comment on cart:    abc${random}
+    Yves: check comments are visible or not in cart:    abc${random}
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: billing address same as shipping address:    true
     Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${yves_company_user_shared_permission_owner_address}
@@ -887,31 +887,32 @@ Comments_in_Cart
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
     Yves: get the last placed order ID by current customer
-    Yves: go to 'Order History' page to check comments:    abc${random}    ${lastPlacedOrder}
+    Yves: go to order details page to check comment:    abc${random}    ${lastPlacedOrder}
     Zed: login on Zed with provided credentials:    ${zed_admin_email}    
-    Zed: checking comments added in zed:    abc${random}    ${lastPlacedOrder}
-    [Teardown]    Run Keywords    Yves: logout on Yves as a customer
+    Zed: check comment appears at order detailed page in zed:    abc${random}    ${lastPlacedOrder}
 
-Comments_Management_in_the_Cart
-    [Documentation]    adding editing and deleting comments in carts
+Comment_Management_in_the_Cart
+    [Documentation]    Adding editing and deleting comments in carts
     Yves: login on Yves with provided credentials:    ${yves_company_user_shared_permission_owner_email}
-    Yves: create new 'Shopping Cart' with name:    comments+${random}
+    Yves: create new 'Shopping Cart' with name:    commentManagement+${random}
     Yves: go to PDP of the product with sku:    ${bundled_product_3_abstract_sku}
     Yves: add product to the shopping cart
-    Yves: go to the shopping cart through the header with name:    comments+${random}
-    Yves: add comments on cart:    abc${random}
-    Yves: edit comments on cart:    xyz${random}
-    Yves: delete comments on cart
-    [Teardown]    Run Keyword    Yves: delete 'Shopping Cart' with name:    comments+${random}
+    Yves: go to the shopping cart through the header with name:    commentManagement+${random}
+    Yves: add comment on cart:    abc${random}
+    Yves: check comments are visible or not in cart:    true    abc${random}    
+    Yves: edit comment on cart:    xyz${random}
+    Yves: check comments are visible or not in cart:    true    xyz${random}    
+    Yves: delete comment on cart
+    Yves: check comments are visible or not in cart:    false    xyz${random}
+    [Teardown]    Run Keyword    Yves: delete 'Shopping Cart' with name:    commentManagement+${random}
         
-At_Yves_attach_few_comments_to_order_check_they_appeared_in_Zed
-    [Documentation]    adding comments in yves and checking they appears in zed
+Comment_Management_in_Order
+    [Documentation]    Adding comments in yves and checking they appears in zed
     Yves: login on Yves with provided credentials:    ${yves_company_user_shared_permission_owner_email}
     Yves: create new 'Shopping Cart' with name:    comments+${random}
     Yves: go to PDP of the product with sku:    ${bundled_product_3_abstract_sku}
     Yves: add product to the shopping cart
     Yves: go to the shopping cart through the header with name:    comments+${random}
-    Yves: shopping cart contains the following products:    ${bundled_product_3_abstract_sku}
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: billing address same as shipping address:    true
     Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${yves_company_user_shared_permission_owner_address}
@@ -923,6 +924,8 @@ At_Yves_attach_few_comments_to_order_check_they_appeared_in_Zed
     Yves: get the last placed order ID by current customer
     Yves: go to 'Order History' page
     Yves: 'View Order/Reorder/Return' on the order history page:    View Order    ${lastPlacedOrder}
-    Yves: add comment on order:    abc${random}
+   # Bug: https://spryker.atlassian.net/browse/CC-23306
+    Yves: add comment on order in order detail page:    abc${random}
+    Yves: check comments is visible or not in order:    true    abc${random}
     Zed: login on Zed with provided credentials:    ${zed_admin_email}    
-    Zed: checking comments added in zed:    abc${random}    ${lastPlacedOrder}
+    Zed: check comment appears at order detailed page in zed:    abc${random}    ${lastPlacedOrder}
