@@ -109,7 +109,7 @@ Zed: delete company user xxx withing xxx company business unit:
             Click    ${zed_confirm_delete_company_user_button}
     END
 
-Zed: disable company user xxx withing xxx company business unit:
+Zed: disable company user xxx within xxx company business unit:
     [Documentation]    Possible argument names: company user name, company business unit name
     [Arguments]    ${companyUserName}    ${companyBusinessUnit}
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
@@ -124,16 +124,20 @@ Zed: disable company user xxx withing xxx company business unit:
 
 Yves: select businees unit name and click on remember me:
     [Documentation]    select businees unit name and click on remember me choice
-    [Arguments]    ${text}
-    Click    ${yves_business_unit_selector}
+    [Arguments]    ${text}    ${checkbox}=false
+    Click    ${bob_business_unit_selector}
     Click    xpath=//ul[@id='select2-company_user_account_selector_form_companyUserAccount-results']/li[contains(text(),'${text}')]
-    Check Checkbox    ${remember_me_locator}
+    IF    '${checkbox}' == 'true'    Check Checkbox   ${bob_remember_me_locator}   
     Click     ${bob_submit_locator}
 
-Yves: check company selection is pre-defined
-    Element Should Contain    ${yves_business_unit_selector}    Spryker Systems GmbH / Spryker Systems Zurich
+Yves: verify business unit is pre-defined in drop-down:
+    [Arguments]    ${business_unit}
+    ${checbox_state}=    Get Checkbox State    ${bob_remember_me_locator} 
+    IF    '${checbox_state}'=='True'
+       Element Should Contain    ${bob_business_unit_selector}    ${business_unit}
+    END
 
-Yves: check the company name is not shown in drop-down:
+Yves: verify business unit is not shown in drop-down:
     [Arguments]    ${text}
-    Click    ${yves_business_unit_selector}
+    Click    ${bob_business_unit_selector}
     Page Should Not Contain Element    xpath=//ul[@id='select2-company_user_account_selector_form_companyUserAccount-results']/li[contains(text(),'${text}')]
