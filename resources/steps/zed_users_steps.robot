@@ -17,16 +17,15 @@ Zed: delete Zed user with the following email:
     Click    ${zed_confirm_delete_user_button}
 
 Zed: create new role with name:
-    [Documentation]    Create a new role with full access.
+    [Documentation]    Create a new role.
     [Arguments]    ${name}
     Zed: go to second navigation item level:    Users    User Roles
     Zed: click button in Header:    Add new Role
     Type Text    ${zed_user_role_name}      ${name}
     Zed: submit the form
     Zed: message should be shown:    success    Role "${name}" successfully added.
-    Zed: apply restrictions for user role:    ${full_access}    ${full_access}    ${full_access}   ${permission_allow}
     
-Zed: apply restrictions for user role:
+Zed: apply access permissions for user role:
     [Arguments]    ${zed_user_role_bundle_access}    ${zed_user_role_controller_access}    ${zed_user_role_action_access}    ${permission_access}
     Type Text    ${zed_user_role_bundle_locator}     ${zed_user_role_bundle_access}
     Type Text    ${zed_user_role_controller_locator}    ${zed_user_role_controller_access}
@@ -54,15 +53,6 @@ Zed: deactivate the created user:
     Zed: go to second navigation item level:    Users    Users
     Zed: click Action Button in a table for row that contains:    ${email}    Deactivate
     Zed: message should be shown:    success   User was deactivated successfully.
-
-Zed: add the created group to created user:
-    [Arguments]    ${user_email}    ${group_name}
-    Zed: go to second navigation item level:    Users    Users
-    Zed: click Action Button in a table for row that contains:    ${user_email}    Edit
-    Zed: Check checkbox by Label:    ${group_name}
-    Zed: Uncheck Checkbox by Label:    Root group
-    Zed: submit the form
-    Zed: message should be shown:    success    User was updated successfully.
 
 Zed: login with deactivated user:
     [Arguments]    ${email}    ${password}

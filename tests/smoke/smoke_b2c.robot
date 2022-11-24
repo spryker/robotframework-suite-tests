@@ -27,7 +27,6 @@ Resource    ../../resources/steps/zed_availability_steps.robot
 Resource    ../../resources/steps/zed_discount_steps.robot
 Resource    ../../resources/steps/zed_cms_page_steps.robot
 Resource    ../../resources/steps/zed_customer_steps.robot
-Resource    ../../resources/steps/zed_customer_steps.robot
 
 *** Test Cases ***
 New_Customer_Registration
@@ -604,10 +603,10 @@ User_Control
     [Documentation]    Create a user with role having limited access and group assigned to it,deactivate the user as well.
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: create new role with name:    role${random}
-    Zed: apply restrictions for user role:    ${bundle_access}    ${controller_access}    ${action_access}    ${permission_deny}
+    Zed: apply access permissions for user role:    ${full_access}    ${full_access}    ${full_access}   ${permission_allow}
+    Zed: apply access permissions for user role:    ${bundle_access}    ${controller_access}    ${action_access}    ${permission_deny}
     Zed: create new group with role assigned:   Group${random}    role${random}
-    Zed: create new Zed user with the following data:    abc${random}@gmail.com   change${random}    Test    last    Root group    This user is an agent    en_US    
-    Zed: add the created group to created user:    abc${random}@gmail.com    Group${random}
+    Zed: create new Zed user with the following data:    abc${random}@gmail.com   change${random}    Test    last    Group${random}    This user is an agent    en_US    
     Zed: logout
     Zed: login on Zed with provided credentials:    abc${random}@gmail.com    change${random}
     Zed: go to second navigation item level:    Catalog    Attributes
