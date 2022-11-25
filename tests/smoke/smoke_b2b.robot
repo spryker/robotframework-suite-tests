@@ -24,7 +24,7 @@ Resource    ../../resources/steps/zed_customer_steps.robot
 Resource    ../../resources/steps/zed_discount_steps.robot
 Resource    ../../resources/steps/zed_availability_steps.robot
 Resource    ../../resources/steps/zed_cms_page_steps.robot
-Resource    ../../resources/steps/reclaimation_steps.robot
+Resource    ../../resources/steps/reclamation_steps.robot
 
 *** Test Cases ***
 Guest_User_Access_Restrictions
@@ -869,10 +869,10 @@ Refunds
     [Teardown]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: activate following discounts from Overview page:    20% off storage    10% off minimum order
 
-Reclaimation
-    [Documentation]    create reclaimation for parts of the order and check its details
+Reclamation
+    [Documentation]    create reclamation for parts of the order and check its details
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
-    Yves: create new 'Shopping Cart' with name:    reclaim+${random}
+    Yves: create new 'Shopping Cart' with name:    reclaim1+${random}
     Yves: go to PDP of the product with sku:    M21711
     Yves: add product to the shopping cart
     Yves: go to PDP of the product with sku:    M90737
@@ -890,11 +890,11 @@ Reclaimation
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Sales    Orders
     Zed: click Action Button in a table for row that contains:    ${lastPlacedOrder}   Claim
-    Zed: create reclaimation for part of order:    421426
-    Zed: submit reclaimation
+    Zed: create reclamation for part of order:    421426
+    Zed: submit reclamation
     Zed: go to second navigation item level:    Sales    Reclamations
-    Zed: check details of latest created reclaimation:    421426
+    Zed: verify latest created reclamation contains product with SKU(s):    421426
     Zed: go to second navigation item level:    Sales    Reclamations
-    Zed: reclamation table sorting in descending order
-    Zed: close latest created reclaimation
-    Zed: check state of latest reclaimation:    Closed
+    Zed: sort reclamation table in ascending/descending order:    desc
+    Zed: close latest created reclamation
+    Zed: check state of latest reclamation is open/closed:    Closed
