@@ -18,8 +18,6 @@ Zed: discontinue the following product:
     ${can_be_discontinued}=    Run Keyword And Return Status    Page Should Contain Element    ${zed_pdp_discontinue_button}
     IF    '${can_be_discontinued}'=='True'    Click    ${zed_pdp_discontinue_button}
 
-
-
 Zed: undo discontinue the following product:
     [Arguments]    ${productAbstract}    ${productConcrete}
     Zed: go to second navigation item level:    Catalog    Products
@@ -62,3 +60,36 @@ Zed: product is successfully discontinued
     ${currentURL}=    Get Location
     IF    'discontinue' not in '${currentURL}'    Zed: switch to the tab on 'Edit product' page:    Discontinue
     Page Should Contain Element    ${zed_pdp_restore_button}
+
+Zed: update stock quantity of product for selected warehouse:
+    [Arguments]    ${warehouse}    ${abstract_sku}    ${concrete_sku}     ${quantity}    ${never_out_of_stock}
+    Zed: go to second navigation item level:    Catalog    Products
+    Zed: click Action Button in a table for row that contains:    ${abstract_sku}    Edit
+    Zed: go to tab:    Variants
+    Zed: click Action Button in Variant table for row that contains:    ${concrete_sku}    Edit
+    Zed: go to tab:    Price & Stock
+    Zed: make product out of stock for all warehouses
+    Type Text    xpath=//input[@value='${warehouse}']//parent::div/following-sibling::div[1]//child::input    ${quantity}
+    Zed: check/uncheck never out of stock checkbox for particular warehouse:    ${warehouse}    ${never_out_of_stock}
+    
+Zed: check/uncheck never out of stock checkbox for particular warehouse:
+    [Arguments]    ${warehouse}    ${never_out_of_stock}
+    ${checkboxState}=    Set Variable    ${EMPTY}
+    ${checkboxState}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//input[@value='${warehouse}']//parent::div/following-sibling::div[2]//input[@checked='1']
+    IF    '${checkboxState}'=='False' and '${never_out_of_stock}' == 'true'    Click     xpath=//input[@value='${warehouse}']//parent::div/following-sibling::div[2]//input
+    IF    '${checkboxState}'=='True' and '${never_out_of_stock}' == 'false'    Click     xpath=//input[@value='${warehouse}']//parent::div/following-sibling::div[2]//input
+    Zed: submit the form
+
+Zed: make product out of stock for all warehouses
+    ${never_out_of_stock_count}=    Get Element Count    //input[@type='checkbox']/../../label[contains(@for,'product_concrete_form_edit_price')]//input
+    ${counter}=    Set Variable    1
+    WHILE    ${counter} <= ${never_out_of_stock_count}
+        Type Text    (//input[@class="form-control" and not (contains(@readonly,'readonly'))] )[${counter}]   0
+        Log    ${counter}
+        ${state}=    Get Checkbox State    (//input[@type='checkbox']/../../label[contains(@for,'product_concrete_form_edit_price')]//input)[${counter}]
+        Log    ${state}
+        IF    '${state}' == 'True'
+            Uncheck Checkbox    (//input[@type='checkbox']/../../label[contains(@for,'product_concrete_form_edit_price')]//input)[${counter}]
+        END
+        ${counter}=    Evaluate    ${counter} + 1
+    END   

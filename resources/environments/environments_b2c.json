@@ -43,9 +43,9 @@
         "product_with_relations_related_products_sku": "200",
         "product_with_relations_alternative_products_sku": "145",
         "product_with_relations_upselling_sku": "018",
-        "abstract_product_sku":"178",
-        "concrete_product_sku":"178_29658415",
-        "product_quantity":"5"
+        "warehouse_abstract_product_sku":"178",
+        "warehouse_concrete_product_sku":"178_29658415",
+        "warehouse_product_quantity":"5"
             
     }
 }

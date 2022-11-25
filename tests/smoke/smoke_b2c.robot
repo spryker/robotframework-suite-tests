@@ -28,7 +28,6 @@ Resource    ../../resources/steps/zed_discount_steps.robot
 Resource    ../../resources/steps/zed_cms_page_steps.robot
 Resource    ../../resources/steps/zed_customer_steps.robot
 Resource    ../../resources/steps/zed_warehouse_steps.robot
-Resource    ../../resources/steps/zed_product_steps.robot
 
 *** Test Cases ***
 New_Customer_Registration
@@ -604,41 +603,39 @@ Refunds
 Warehouse_Management
     [Documentation]    Create a warehouse, edit its status such as activate, deactivate and edit its  stores and see the changes on product addtion to cart  in yves.
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    Zed: create a warehouse:    wareshouse${random}    
-    Zed: check the warehouse status:    wareshouse${random}    DE AT    Active
+    Zed: create a warehouse:    wareshouse${random}    activate    DE    AT    check    check
+    Zed: check the warehouse status:    wareshouse${random}    Active    DE    AT
     Zed: check the warehouse details in view mode:    wareshouse${random}    View Warehouse: wareshouse${random}
-    Zed: update stock quantity of product for selected warehouse:    wareshouse${random}    ${abstract_product_sku}    ${concrete_product_sku}      ${product_quantity}
+    Zed: update stock quantity of product for selected warehouse:    wareshouse${random}    ${warehouse_abstract_product_sku}    ${warehouse_concrete_product_sku}    ${warehouse_product_quantity}    false
     Yves: login on Yves with provided credentials:    ${yves_second_user_email}
-    Yves: go to PDP of the product with sku:    ${abstract_product_sku}
+    Yves: go to PDP of the product with sku:    ${warehouse_abstract_product_sku}
     Yves: change quantity on PDP:    7
     Yves: add product to the shopping cart
-    Yves: flash message should be shown:    error    Item ${concrete_product_sku} only has availability of 5.
+    Yves: flash message should be shown:    error    Item ${warehouse_concrete_product_sku} only has availability of 5.
     Yves: change quantity on PDP:    4
     Yves: add product to the shopping cart
     Yves: flash message should be shown:    success    Items added successfully
     Yves: check if cart is not empty and clear it
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    Zed: activate/deactivate warehouse:    wareshouse${random}    False
-    Zed: check the warehouse status:    wareshouse${random}    DE AT    Inactive
+    Zed: activate/deactivate warehouse:    wareshouse${random}    deactivate
+    Zed: check the warehouse status:    wareshouse${random}    Inactive    DE    AT
     Yves: login on Yves with provided credentials:    ${yves_second_user_email}
-    Yves: go to PDP of the product with sku:    ${abstract_product_sku}
-    Yves: add product to the shopping cart
-    Yves: flash message should be shown:    error    Item ${concrete_product_sku} no longer available.
+    Yves: go to PDP of the product with sku:    ${warehouse_abstract_product_sku}
+    Yves: check if product is available on PDP:    ${warehouse_abstract_product_sku}    false
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    Zed: activate/deactivate warehouse:    wareshouse${random}    True
-    Zed: check the warehouse status:    wareshouse${random}    DE AT    Active
+    Zed: activate/deactivate warehouse:    wareshouse${random}    activate
+    Zed: check the warehouse status:    wareshouse${random}    Active    DE    AT
     Yves: login on Yves with provided credentials:    ${yves_second_user_email}
-    Yves: go to PDP of the product with sku:    ${abstract_product_sku}
+    Yves: go to PDP of the product with sku:    ${warehouse_abstract_product_sku}
     Yves: add product to the shopping cart
     Yves: flash message should be shown:    success    Items added successfully
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    Zed: set warehouse for particular store:    wareshouse${random}    AT
-    Zed: check the warehouse status:    wareshouse${random}    AT    Active
+    Zed: set warehouse for particular store:    wareshouse${random}    DE    AT    uncheck    check
+    Zed: check the warehouse status:    wareshouse${random}    Active    AT
     Yves: login on Yves with provided credentials:    ${yves_second_user_email}
-    Yves: go to PDP of the product with sku:    ${abstract_product_sku}
-    Yves: add product to the shopping cart
-    Yves: flash message should be shown:    error    Item ${concrete_product_sku} no longer available.
+    Yves: go to PDP of the product with sku:    ${warehouse_abstract_product_sku}
+    Yves: check if product is available on PDP:    ${warehouse_abstract_product_sku}    false
     [Teardown]    Run Keywords   Yves: check if cart is not empty and clear it 
      ...    AND    Zed: login on Zed with provided credentials:    ${zed_admin_email}   
-     ...    AND    Zed: update stock quantity of product for selected warehouse:    wareshouse${random}    ${abstract_product_sku}    ${concrete_product_sku}    0
-     ...    AND    Zed: activate/deactivate warehouse:    wareshouse${random}    False
+     ...    AND    Zed: update stock quantity of product for selected warehouse:    wareshouse${random}    ${warehouse_abstract_product_sku}    ${warehouse_concrete_product_sku}    0    false
+     ...    AND    Zed: activate/deactivate warehouse:    wareshouse${random}    deactivate
