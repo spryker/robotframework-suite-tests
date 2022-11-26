@@ -5,7 +5,7 @@ Resource    ../common/common.robot
 Resource    ../pages/zed/zed_catalog_categories_page.robot
 Resource    ../steps/zed_catalog_products_steps.robot
 
-** Keywords ***
+*** Keywords ***
 Zed: verify categories redirect created or not:
     [Arguments]    ${redirect_name}
     Zed: go to second navigation item level:    Content    Redirects
@@ -14,7 +14,6 @@ Zed: verify categories redirect created or not:
     Zed: table should contain non-searchable value:    ${redirect_name}
     ${redirect_name}=     Set Test Variable    ${redirect_name}
     [Return]    ${redirect_name}
-    
 
 Yves: get current category title
     ${categoryTitle}=    Get Title
@@ -37,4 +36,3 @@ Yves: get current page URL
     ${currentURL}=    Get Url
     ${currentURL}=    Set Test Variable    ${currentURL}
     [Return]    ${currentURL}
-
