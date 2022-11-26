@@ -204,5 +204,10 @@ Yves: assert merchant of product in cart or list:
     [Arguments]    ${sku}    ${merchant_name_expected}
     Page Should Contain Element    xpath=//span[@itemprop='sku'][text()='${sku}']/../../following-sibling::p/a[text()='${merchant_name_expected}']
 
-
-
+Yves: check that the delivery method of a carrier is/not available:
+    [Arguments]    ${delivery_method_name}    ${carrier_name}    ${price}    ${condition}
+    IF    '${condition}' == 'true'    
+        Page Should Contain Element    xpath=(//span[contains(text(),'${delivery_method_name}')]//parent::h4//following-sibling::ul)[1]//span[contains(text(),'${carrier_name}')]
+        Page Should Contain Element    xpath=(//span[contains(text(),'${delivery_method_name}')]//parent::h4//following-sibling::ul)[1]//span[2][contains(text(),'${price}')]
+    END
+    IF    '${condition}' == 'false'    Page Should Not Contain Element    xpath=(//span[contains(text(),'${delivery_method_name}')]//parent::h4//following-sibling::ul)[1]//span[contains(text(),'${carrier_name}')]
