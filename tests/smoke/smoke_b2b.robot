@@ -899,26 +899,26 @@ Refunds
 
 Redirects
     [Documentation]    Change name of a category, name of a product, check that redirect is created automatically
+    Yves: go to the 'Home' page
+    Yves: go to second navigation item level:     Stationery    Writing Materials
+    Yves: get current category title
+    Yves: get current page URL
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    Zed: go to second navigation item level:    Catalog    Categories
-    Zed: perform search by:    pens
-    Zed: Edit the category name:    Pens-twoss
-    Zed: message should be shown:    The category was updated successfully.
-    Zed: go to second navigation item level:    Catalog    Products
-    Zed: click Action Button in a table for row that contains:    ${one_variant_product_abstract_sku}    Edit
-    Zed: go to tab:    Variants
-    Zed: click Action Button in Variant table for row that contains:    ${one_variant_product_concreate_sku}    Edit
-    Zed: edit product description:    ${one_variant_product_abstract_name}${random}
-    yves: verify redirect category url:    /en/stationery/writing-materials/pens
-    Yves: go to PDP of the product with sku:    ${one_variant_product_abstract_sku}
-    Yves: check the edited product title:    ${one_variant_product_abstract_name}${random}
+    Zed: change category name on:    ${categoryTitle}    ${categoryTitle}${random}    EN
+    Zed: go to second navigation item level:    Content    Redirects
+    Zed: verify categories redirect created or not:    ${categoryTitle}
+    Yves: go to the 'Home' page
+    Yves: go to second navigation item level:     Stationery    Writing Materials
+    Yves: go to URL and check that redirect is in place:     ${currentURL}    ${redirect_name}    
+    Yves: go to the 'Home' page
+    Yves: go to PDP of the product with sku:    ${redirect_product_abstract_sku}
+    Yves: get current product Title
+    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: edit product name:    ${redirect_product_abstract_sku}    ${productTitle}${random}    EN
+    Zed: verify product redirect is created or not:    ${redirect_product_abstract_sku}
+    Yves: go to the 'Home' page
+    Yves: go to PDP of the product with sku:    ${redirect_product_abstract_sku}
+    Yves: go to URL and check that redirect is in place:     ${fromURL}    ${toURL}    
     [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    ...    AND    Zed: go to second navigation item level:    Catalog    Categories
-    ...    AND    Zed: perform search by:    pens-twoss
-    ...    AND    Zed: Edit the category name:    Pens
-    ...    AND    Zed: message should be shown:    The category was updated successfully.
-    ...    AND    Zed: go to second navigation item level:    Catalog    Products
-    ...    AND    Zed: click Action Button in a table for row that contains:    ${one_variant_product_abstract_sku}   Edit
-    ...    AND    Zed: go to tab:    Variants
-    ...    AND    Zed: click Action Button in Variant table for row that contains:    ${one_variant_product_concreate_sku}    Edit
-    ...    AND    Zed: edit product description:    ${one_variant_product_abstract_name}
+    ...    AND    Zed: edit product name:    ${redirect_product_abstract_sku}    ${productTitle}    EN
+    ...    AND    Zed: change category name on:    ${categoryTitle}${random}    ${categoryTitle}    EN

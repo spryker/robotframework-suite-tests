@@ -298,3 +298,13 @@ Yves: page should contain script with attribute:
 Yves: page should contain script with id:
     [Arguments]    ${scriptId}
     Yves: page should contain script with attribute:    id    ${scriptId}
+
+Yves: go to URL and check that redirect is in place: 
+    [Arguments]    ${url}    ${expected_redirect_url}
+    IF    '${host}' in '${url}'
+        Go To    ${url}
+    ELSE
+        Yves: go to URL:    ${url}
+    END
+    ${currentURL}=    Get Url
+    Should Contain    ${currentURL}    ${expected_redirect_url}

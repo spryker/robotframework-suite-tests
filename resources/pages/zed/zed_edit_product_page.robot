@@ -7,3 +7,5 @@ ${zed_pdp_alternative_products_suggestion}    xpath=//ul[@id='select2-product_co
 ${zed_pdp_restore_button}    xpath=//form[@name='product_concrete_form_edit']//div[@id='tab-content-discontinue']//a[contains(@href,'restore')]
 ${zed_dpd_save_button}    xpath=//input[@type='submit' and @value='Save']
 ${zed_product_variant_table_processing_locator}    xpath=//div[@id='product-variant-table_processing']
+${zed_edit_product_en_name}    id=product_form_edit_general_en_US_name
+${zed_edit_product_de_name}    id=product_form_edit_general_de_DE_name

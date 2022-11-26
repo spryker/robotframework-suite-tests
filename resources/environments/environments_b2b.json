@@ -83,6 +83,7 @@
 
             "bundled_product_1_concrete_sku": "104939",
             "bundled_product_2_concrete_sku": "574995",
-            "bundled_product_3_concrete_sku": "426581"
+            "bundled_product_3_concrete_sku": "426581",
+            "redirect_product_abstract_sku": "potato-1"
         }
 }
