@@ -693,7 +693,8 @@ Order_cancelation
     Yves: get the last placed order ID by current customer
     Yves: cancel the order:    ${lastPlacedOrder}
     
-Order_cancelation_after_time_skipout
+Order_cancelation
+    [Documentation]    Check cancel order functionality in yves after trigger order states in zed
     Yves: login on Yves with provided credentials:    ${yves_second_user_email}
     Yves: go to PDP of the product with sku:    ${one_variant_product_abstract_sku}
     Yves: add product to the shopping cart
@@ -718,17 +719,23 @@ Order_cancelation_after_time_skipout
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to order page:    ${lastPlacedOrder}
     Zed: trigger matching state of order item inside xxx shipment:    ${one_variant_product_concrete_sku}    Pay
+    Yves: login on Yves with provided credentials:    ${yves_second_user_email}
+    Yves: go to URL:    /customer/order
+    Yves: 'View Order/Reorder/Return' on the order history page:    View Order    ${lastPlacedOrder}
+    Yves: 'Order Details' page contains the cancel order button:    true
+    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: go to order page:    ${lastPlacedOrder}
     Zed: trigger matching state of order item inside xxx shipment:    ${one_variant_product_concrete_sku}    Skip timeout 
     Yves: login on Yves with provided credentials:    ${yves_second_user_email}
-    Yves: go to URL:    /en/customer/order
+    Yves: go to URL:    /customer/order
     Yves: 'View Order/Reorder/Return' on the order history page:    View Order    ${lastPlacedOrder}
-    Yves: 'Order Details' page contains the cancel order button:    False
+    Yves: 'Order Details' page contains the cancel order button:    false
     #change state of state of all products 
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to order page:    ${lastPlacedOrder}
     Zed: trigger matching state of order item inside xxx shipment:    ${bundled_product_1_concrete_sku}    Pay
     Zed: trigger matching state of order item inside xxx shipment:    ${bundled_product_1_concrete_sku}    Skip timeout
     Yves: login on Yves with provided credentials:    ${yves_second_user_email}
-    Yves: go to URL:    /en/customer/order
+    Yves: go to URL:    /customer/order
     Yves: 'View Order/Reorder/Return' on the order history page:    View Order    ${lastPlacedOrder}
-    Yves: 'Order Details' page contains the cancel order button:    False
+    Yves: 'Order Details' page contains the cancel order button:    false

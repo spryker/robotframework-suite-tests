@@ -156,6 +156,6 @@ Zed: order has the following number of shipments:
 Yves: cancel the order:
     [Arguments]    ${order_id}
     Yves: 'View Order/Reorder/Return' on the order history page:    View Order    ${order_id}
-    Click    ${order_cancel_button_locator}
+    Click    ${order_details_cancel_button_locator}
     Yves: go to 'Order History' page
     Yves: 'Order History' page contains the following order with a status:    ${order_id}    Canceled

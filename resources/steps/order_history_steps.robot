@@ -51,5 +51,8 @@ Yves: 'Order History' page contains the following order with a status:
 
 Yves: 'Order Details' page contains the cancel order button:
     [Arguments]    ${condition}
-    IF    '${condition}' == 'True'    Element Should Be Visible    ${order_cancel_button_locator}
-    IF    '${condition}' == 'False'    Element Should Not Be Visible    ${order_cancel_button_locator} 
+    IF    '${condition}' == 'true'    
+        Element Should Be Visible    ${order_details_cancel_button_locator}
+    ELSE
+        Element Should Not Be Visible    ${order_details_cancel_button_locator}
+    END    
