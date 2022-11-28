@@ -26,7 +26,6 @@ Resource    ../../resources/steps/wishlist_steps.robot
 Resource    ../../resources/steps/zed_availability_steps.robot
 Resource    ../../resources/steps/zed_discount_steps.robot
 Resource    ../../resources/steps/zed_cms_page_steps.robot
-
 Resource    ../../resources/steps/zed_customer_steps.robot
 Resource    ../../resources/steps/zed_payment_methods_steps.robot
 Resource    ../../resources/steps/zed_dashboard_steps.robot
@@ -713,3 +712,29 @@ Add_to_cart_products_as_a_guest_user_and_register_during_checkout
      [Teardown]    Zed: delete customer:
     ...    || email                          ||
     ...    || abc${random}@gmail.com ||
+
+Back_office_translation
+    [Documentation]    checking the translation of user in DE,EN
+    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: create new Zed user with the following data:    user+${random}@spryker.com    change123${random}    Firstname    Lastname    Root group    This user is an agent    de_DE
+    Zed: logout on Zed 
+    Zed: login on Zed with provided credentials:    user+${random}@spryker.com    change123${random}
+    Zed: validate that the back office content is in:    DE  
+    Zed: logout on Zed  
+    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: create new Zed user with the following data:    user1+${random}@spryker.com    change123${random}    Firstname    Lastname    Root group    This user is an agent    en_US
+    Zed: logout on Zed 
+    Zed: login on Zed with provided credentials:    user1+${random}@spryker.com    change123${random}
+    Zed: validate that the back office content is in:    EN  
+    Zed: logout on Zed 
+    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: go to second navigation item level:    Users    Users
+    Zed: click Action Button in a table for row that contains:    user1+${random}@spryker.com    Edit   
+    Zed: select interface language:    de_DE
+    Zed: submit the form
+    Zed: logout on Zed 
+    Zed: login on Zed with provided credentials:    user1+${random}@spryker.com    change123${random}
+    Zed: validate that the back office content is in:    DE
+    [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    ...    AND    Zed: delete Zed user with the following email:    user+${random}@spryker.com
+    ...    AND    Zed: delete Zed user with the following email:    user1+${random}@spryker.com

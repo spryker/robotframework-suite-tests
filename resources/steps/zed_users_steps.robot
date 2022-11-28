@@ -31,3 +31,20 @@ Zed: update Zed user:
     END
     Zed: submit the form
 
+Zed: select interface language:
+   [Arguments]    ${interface_language}
+   IF    '${interface_language}' == 'en_US'
+       Select From List By Label    ${zed_user_interface_language}    en_US
+   ELSE
+       Select From List By Label    ${zed_user_interface_language}    de_DE
+   END
+
+Zed: validate that the back office content is in:
+   [Documentation]    ${locale} can be: EN,DE
+   [Arguments]    ${locale}   
+   IF    '${locale}' == 'EN'
+       Element Should Contain    ${zed_log_out_button}    ${logout_button_en}
+   END
+   IF  '${locale}' == 'DE' 
+       Element Should Contain    ${zed_log_out_button}    ${logout_button_de}
+   END

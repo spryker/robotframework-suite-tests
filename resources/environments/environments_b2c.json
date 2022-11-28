@@ -61,6 +61,11 @@
     "misc":
     {
         "order_state":"New"
+    },
+    "translation":{
+        "logout_button_de": "Abmelden",
+        "logout_button_en": " Log out"
     }
+
 }
 
