@@ -634,7 +634,7 @@ Return_Management
     Zed: go to my order page:    ${lastPlacedOrder}
     Zed: trigger matching state of xxx merchant's shipment:    1    send to distribution
     Zed: trigger matching state of xxx merchant's shipment:    1    confirm at center
-    Zed: trigger matching state of xxx merchant's shipment:    1    ship   
+    Zed: trigger matching state of xxx merchant's shipment:    1    Ship   
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     Yves: go to user menu item in header:    Order History
     Yves: 'Order History' page is displayed
@@ -1021,7 +1021,7 @@ Merchant_Profile_Set_to_Inactive_from_Backoffice
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Marketplace    Merchants  
     Zed: click Action Button in a table for row that contains:     Office King     Deactivate
-    Yves: go to the 'Home' page
+    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     Yves: go to URL:    en/merchant/office-king
     Yves: try reloading page if element is/not appear:    ${merchant_profile_main_content_locator}    false
     Yves: perform search by:    Office King

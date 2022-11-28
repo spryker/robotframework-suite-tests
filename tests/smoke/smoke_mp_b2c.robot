@@ -435,6 +435,8 @@ Agent_Assist
     ...    AND    Zed: delete Zed user with the following email:    agent+${random}@spryker.com
 
 Return_Management
+### TODO add return item sstep from the MP
+### Check that main merchant can see merchant return in My Returns
     [Documentation]    Checks that returns work and oms process is checked. 
     Yves: login on Yves with provided credentials:    ${yves_user_email}
     Yves: check if cart is not empty and clear it
@@ -534,6 +536,7 @@ Product_Relations
 
 Guest_Checkout
     [Documentation]    Guest checkout with discounts and OMS
+#TODO check that billing in Zed = from Yves and the same for shipping address
     Yves: go to the 'Home' page
     Yves: logout on Yves as a customer
     Yves: go to PDP of the product with sku:    007
@@ -759,6 +762,7 @@ Merchant_Profile_Set_to_Inactive_from_Backoffice
     ...    AND    Zed: click Action Button in a table for row that contains:     Video King     Activate
 
 Manage_Merchants_from_Backoffice
+#TODO# remove store relation -> check that mechant profile returns 404
     [Documentation]    Checks that backoffice admin is able to create, approve, edit merchants
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: create new Merchant with the following data:
@@ -946,6 +950,7 @@ Approve_Offer
     Yves: product price on the PDP should be:     ${second_product_with_multiple_offers_video_king_price}
 
 Fulfill_Order_from_Merchant_Portal
+##TODO add spec to change state only for one of the order items and check that other remain in their previous states
     [Documentation]    Checks that merchant is able to process his order through OMS from merchant portal
     [Setup]    Run Keywords    
     ...    MP: login on MP with provided credentials:    ${merchant_video_king_email}
@@ -1233,3 +1238,18 @@ Merchant_Portal_Dashboard
     MP: click button on dashboard page and check url:    Manage Orders    /orders
     [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: delete Zed user with the following email:    dashboard_user+${random}@test.com
+
+
+#TODO Add filter dropdown in BO + view offer + view Volume price
+#TODO: add new product from MP -> Set new from to -> check label -> check price -> Add new concrete with another price -> switch concrete check price -> View new product in BO -> change product name and price ->see changes
+#TODO: on checkout retunr and change shipment method -> place an order and check in Zed applied shipment
+#TODO Create shipment in backoffice + Edit shipment in backoffice
+#TODO Order Cancelation
+# #TODO: Minimum Order value:
+# check hard global threshold (maximum)-> blocked on checkout
+# add global soft minimum - see fee in cart and on checkout -> change cart items to pass only hard -> place order -> check grand total (fee was added)
+#TODO Multistore: Different price on AT and DE + Discont + CMS page + availability + store relation for the product
+#TODO: MP product and MP offer availability
+# TODOD: Reorder
+# GLOSARY 
+# USER CONTROL
