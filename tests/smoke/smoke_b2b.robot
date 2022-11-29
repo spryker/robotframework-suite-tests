@@ -408,10 +408,10 @@ Approval_Process
     Yves: configure permission to user with 'Approver' role:    Approver    100000    100000
     Yves: logout on Yves as a customer
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_with_limit_email}
-    Yves: create new 'Shopping Cart' with name:    approvalCartProcess+${random}
+    Yves: create new 'Shopping Cart' with name:    approvalProcessCart+${random}
     Yves: go to PDP of the product with sku:    M2366
     Yves: add product to the shopping cart
-    Yves: go to the shopping cart through the header with name:    approvalCartProcess+${random}
+    Yves: go to the shopping cart through the header with name:    approvalProcessCart+${random}
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: billing address same as shipping address:    true
     Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${yves_company_user_buyer_with_limit_address}
@@ -422,7 +422,7 @@ Approval_Process
     Yves: go to the 'Home' page
     Yves: go to PDP of the product with sku:    M2366
     Yves: add product to the shopping cart
-    Yves: go to the shopping cart through the header with name:    approvalCartProcess+${random}
+    Yves: go to the shopping cart through the header with name:    approvalProcessCart+${random}
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: billing address same as shipping address:    true
     Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${yves_company_user_buyer_with_limit_address}
@@ -438,9 +438,9 @@ Approval_Process
     Yves: login on Yves with provided credentials:    ${yves_company_user_approver_email}
     Yves: go to user menu item in the left bar:    Shopping carts
     Yves: 'Shopping Carts' page is displayed
-    Yves: the following shopping cart is shown:    approvalCartProcess+${random}    Read-only
-    Yves: shopping cart with name xxx has the following status:    approvalCartProcess+${random}    Waiting
-    Yves: go to the shopping cart through the header with name:    approvalCartProcess+${random}
+    Yves: the following shopping cart is shown:    approvalProcessCart+${random}    Read-only
+    Yves: shopping cart with name xxx has the following status:    approvalProcessCart+${random}    Waiting
+    Yves: go to the shopping cart through the header with name:    approvalProcessCart+${random}
     Yves: shopping cart contains/doesn't contain the following elements:    true    ${lockedCart}
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: 'Summary' page is displayed
@@ -450,11 +450,11 @@ Approval_Process
     Yves: go to the 'Home' page
     Yves: Go to 'Shopping Carts' page
     Yves: 'Shopping Carts' page is displayed
-    Yves: the following shopping cart is shown:    approvalCartProcess+${random}    Read-only
-    Yves: shopping cart with name xxx has the following status:    approvalCartProcess+${random}    Decline
+    Yves: the following shopping cart is shown:    approvalProcessCart+${random}    Read-only
+    Yves: shopping cart with name xxx has the following status:    approvalProcessCart+${random}    Decline
     Yves: logout on Yves as a customer
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_with_limit_email}    
-    Yves: go to the shopping cart through the header with name:    approvalCartProcess+${random}
+    Yves: go to the shopping cart through the header with name:    approvalProcessCart+${random}
     Yves: shopping cart contains/doesn't contain the following elements:    false    ${lockedCart}
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: billing address same as shipping address:    true
@@ -467,18 +467,18 @@ Approval_Process
     Yves: 'Summary' page is displayed
     Yves: logout on Yves as a customer
     Yves: login on Yves with provided credentials:    ${yves_company_user_approver_email}
-    Yves: go to the shopping cart through the header with name:    approvalCartProcess+${random}
+    Yves: go to the shopping cart through the header with name:    approvalProcessCart+${random}
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: 'Summary' page is displayed
     Yves: 'approve the cart' on the summary page
     Yves: go to the 'Home' page
     Yves: Go to 'Shopping Carts' page
-    Yves: shopping cart with name xxx has the following status:    approvalCartProcess+${random}    Approved
+    Yves: shopping cart with name xxx has the following status:    approvalProcessCart+${random}    Approved
     Yves: logout on Yves as a customer
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_with_limit_email}    
     Yves: Go to 'Shopping Carts' page
-    Yves: shopping cart with name xxx has the following status:    approvalCartProcess+${random}    Approved
-    Yves: go to the shopping cart through the header with name:    approvalCartProcess+${random}
+    Yves: shopping cart with name xxx has the following status:    approvalProcessCart+${random}    Approved
+    Yves: go to the shopping cart through the header with name:    approvalProcessCart+${random}
     Yves: shopping cart contains/doesn't contain the following elements:    true    ${lockedCart}
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: 'Summary' page is displayed
