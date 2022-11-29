@@ -26,10 +26,10 @@ Resource    ../../resources/steps/wishlist_steps.robot
 Resource    ../../resources/steps/zed_availability_steps.robot
 Resource    ../../resources/steps/zed_discount_steps.robot
 Resource    ../../resources/steps/zed_cms_page_steps.robot
-
 Resource    ../../resources/steps/zed_customer_steps.robot
 Resource    ../../resources/steps/zed_payment_methods_steps.robot
 Resource    ../../resources/steps/zed_dashboard_steps.robot
+Resource    ../../resources/steps/zed_root_menu_steps.robot
 
 *** Test Cases ***
 New_Customer_Registration
@@ -713,3 +713,10 @@ Add_to_cart_products_as_a_guest_user_and_register_during_checkout
      [Teardown]    Zed: delete customer:
     ...    || email                          ||
     ...    || abc${random}@gmail.com ||
+
+Zed_navigation_ordering_and_naming
+    [Documentation]    Verifying root menus and icons in zed
+    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: verify first navigation root menus
+    Zed: verify root menu icons
+    Zed: verify second navigation root menus
