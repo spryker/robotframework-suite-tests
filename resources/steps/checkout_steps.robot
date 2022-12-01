@@ -261,3 +261,11 @@ Yves: signup guest user during checkout:
 Yves: Add product to wishlist as guest user
     Click    ${pdp_add_to_wishlist_button}
     Wait Until Element Is Visible    ${email_field}
+
+Yves: check that the delivery method of a carrier is/not available:
+    [Arguments]    ${delivery_method_name}    ${carrier_name}    ${price}    ${condition}
+    IF    '${condition}' == 'true'    
+        Page Should Contain Element    xpath=(//span[contains(text(),'${delivery_method_name}')]//parent::h4//following-sibling::ul)[1]//span[contains(text(),'${carrier_name}')]
+        Page Should Contain Element    xpath=(//span[contains(text(),'${delivery_method_name}')]//parent::h4//following-sibling::ul)[1]//span[2][contains(text(),'${price}')]
+    END
+    IF    '${condition}' == 'false'    Page Should Not Contain Element    xpath=(//span[contains(text(),'${delivery_method_name}')]//parent::h4//following-sibling::ul)[1]//span[contains(text(),'${carrier_name}')]

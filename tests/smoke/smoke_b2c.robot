@@ -26,10 +26,11 @@ Resource    ../../resources/steps/wishlist_steps.robot
 Resource    ../../resources/steps/zed_availability_steps.robot
 Resource    ../../resources/steps/zed_discount_steps.robot
 Resource    ../../resources/steps/zed_cms_page_steps.robot
-
 Resource    ../../resources/steps/zed_customer_steps.robot
 Resource    ../../resources/steps/zed_payment_methods_steps.robot
 Resource    ../../resources/steps/zed_dashboard_steps.robot
+Resource    ../../resources/steps/zed_delivery_methods_steps.robot
+Resource    ../../resources/steps/zed_marketplace_steps.robot
 
 *** Test Cases ***
 New_Customer_Registration
@@ -713,3 +714,69 @@ Add_to_cart_products_as_a_guest_user_and_register_during_checkout
      [Teardown]    Zed: delete customer:
     ...    || email                          ||
     ...    || abc${random}@gmail.com ||
+
+Delivery_Methods
+    [Documentation]    Performed actions on delivery method such as create,view, edit, delete, acitvate/deactivate and set/unset
+    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: go to second navigation item level:    Administration    Delivery Methods
+    Zed: create carrier company:    company${random}
+    Zed: create delivery method:
+    ...    ||  method_key    |  method_name          |  carrier           |  label      |  current_page_1    |  gross_price_de_chf | gross_price_de_euro | gross_price_at_chf | gross_price_at_euro | net_price_de_chf  | net_price_de_euro | net_price_at_chf | net_price_at_euro  |  tax_set         |  current_page_2  |  store_1  |  store_2  ||
+    ...    ||  Key${random}  |  MethodName${random}  |  company${random}  |  Is active  |  Price & Tax       |  15                 |  15                 | 15                 |  15                 |  17               |  17               | 17               |  17                |  Smart Electronics  |  Store Relation  |  DE       |  AT       ||
+    Zed: go to second navigation item level:    Administration    Delivery Methods
+    Zed: check the delivery method status:    MethodName${random}    company${random}    Active
+    Zed: click Action Button in Merchant Users table for row that contains:    MethodName${random}    View
+    Zed: verify the header text of delivery method in view mode:    MethodName${random}
+    Yves: login on Yves with provided credentials:    ${yves_second_user_email}
+    Yves: go to PDP of the product with sku:    188
+    Yves: add product to the shopping cart
+    Yves: go to b2c shopping cart
+    Yves: click on the 'Checkout' button in the shopping cart
+    Yves: billing address same as shipping address:    true
+    Yves: fill in the following new shipping address:
+    ...    || salutation | firstName | lastName | street        | houseNumber | postCode | city   | country | company | phone     | additionalAddress ||
+    ...    || Mr.        | Guest     | User     | Kirncher Str. | 7           | 10247    | Berlin | Germany | Spryker | 123456789 | Additional street ||
+    Yves: submit form on the checkout
+    Yves: check that the delivery method of a carrier is/not available:    company${random}    MethodName${random}    15    true    
+    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: go to second navigation item level:    Administration    Delivery Methods
+    Zed: click Action Button in a table for row that contains:    MethodName${random}    Edit
+    Zed: edit delivery method:
+    ...    ||  method_name              |  current_page_1    |  gross_price_de_euro ||
+    ...    ||  new_MethodName${random}  |  Price & Tax       |  10                  ||
+    Zed: submit the form
+    Yves: login on Yves with provided credentials:    ${yves_second_user_email}
+    Yves: go to b2c shopping cart
+    Yves: click on the 'Checkout' button in the shopping cart
+    Yves: billing address same as shipping address:    true
+    Yves: submit form on the checkout   
+    Yves: check that the delivery method of a carrier is/not available:    company${random}    new_MethodName${random}    10    true    
+    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: go to second navigation item level:    Administration    Delivery Methods
+    Zed: activate/deactivate delivery method:    new_MethodName${random}    deactivate
+    Yves: login on Yves with provided credentials:    ${yves_second_user_email}
+    Yves: go to b2c shopping cart
+    Yves: click on the 'Checkout' button in the shopping cart
+    Yves: billing address same as shipping address:    true
+    Yves: submit form on the checkout   
+    Yves: check that the delivery method of a carrier is/not available:    company${random}    new_MethodName${random}    10    false    
+    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: go to second navigation item level:    Administration    Delivery Methods
+    Zed: activate/deactivate delivery method:    new_MethodName${random}    activate
+    Zed: go to second navigation item level:    Administration    Delivery Methods
+    Zed: unset delivery method for store:    new_MethodName${random}    DE
+    Yves: login on Yves with provided credentials:    ${yves_second_user_email}
+    Yves: go to b2c shopping cart
+    Yves: click on the 'Checkout' button in the shopping cart
+    Yves: billing address same as shipping address:    true
+    Yves: submit form on the checkout   
+    Yves: check that the delivery method of a carrier is/not available:    company${random}    new_MethodName${random}    10    false    
+    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: delete delivery method:    new_MethodName${random}
+    Yves: login on Yves with provided credentials:    ${yves_second_user_email}
+    Yves: go to b2c shopping cart
+    Yves: click on the 'Checkout' button in the shopping cart
+    Yves: billing address same as shipping address:    true
+    Yves: submit form on the checkout   
+    Yves: check that the delivery method of a carrier is/not available:    company${random}    new_MethodName${random}    10    false
+    [Teardown]    Yves: check if cart is not empty and clear it
