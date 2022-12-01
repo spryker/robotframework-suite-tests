@@ -369,3 +369,31 @@ I send a POST request:
     Set Test Variable    ${response}    ${response}
     Set Test Variable    ${expected_self_link}    ${current_url}${path}
     [Return]    ${response_body}
+
+I send a PATCH request:
+    [Documentation]    This keyword is used to make PATCH requests. It accepts the endpoint *without the domain* and the body in JOSN.
+    ...    Variables can and should be used in the endpoint url and in the body JSON.
+    ...
+    ...    If the endpoint needs to have any headers (e.g. token for authorisation), ``I set Headers`` keyword should be called before this keyword to set the headers beforehand.
+    ...    If this keyword was already called within this test case (e.g. before POST request), there is no need to call it again.
+    ...
+    ...    Usually for PATCH requests you need to know and use the ID (UID) if the resource you need to update.
+    ...    To  get the ID you need forst to make a POST or GET request to get the data and then call ``Save value to a variable:`` endpoint to save the ID to a test variable to be able to use it in the PATCH request.
+    ...
+    ...    After this keyword is called, response body, selflink, response status and headers are recorded into the test variables which have the scope of the current test and can then be used by other keywords to get and compare data.
+    ...
+    ...    *Example:*
+    ...
+    ...    ``I send a PATCH request:    /carts/${cartUID}/items/${itemUID}    {"data": {"type": "items","attributes": {"quantity": 5}}}``
+    [Arguments]   ${path}    ${json}    ${timeout}=${api_timeout}    ${allow_redirects}=${default_allow_redirects}    ${auth}=${default_auth}    ${expected_status}=ANY
+    ${data}=    Evaluate    ${json}
+    ${hasValue}    Run Keyword and return status     Should not be empty    ${headers}
+    ${response}=    IF    ${hasValue}   run keyword    PATCH   ${current_url}${path}    json=${data}    headers=${headers}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}
+    ...    ELSE    PATCH    ${current_url}${path}    json=${data}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}
+    ${response_body}=    IF    ${response.status_code} != 204    Set Variable    ${response.json()}
+    ${response_headers}=    Set Variable    ${response.headers}
+    Set Test Variable    ${response_headers}    ${response_headers}
+    Set Test Variable    ${response_body}    ${response_body}
+    Set Test Variable    ${response}    ${response}
+    Set Test Variable    ${expected_self_link}    ${current_url}${path}
+    [Return]    ${response_body}

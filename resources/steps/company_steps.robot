@@ -5,7 +5,10 @@ Resource    ../common/common_zed.robot
 Resource    ../pages/zed/zed_attach_to_business_unit_page.robot
 Resource    ../pages/yves/yves_customer_account_page.robot
 Resource    ../pages/zed/zed_delete_company_user_page.robot
-
+Resource    ../pages/yves/yves_company_business_unit_page.robot
+Resource    ../pages/yves/yves_company_register_page.robot
+Resource    ../pages/yves/yves_company_role_page.robot
+Resource    ../pages/yves/yves_company_users_page.robot
 
 *** Keywords ***
 Zed: create new Company Business Unit with provided name and company:
@@ -108,3 +111,213 @@ Zed: delete company user xxx withing xxx company business unit:
             Zed: click Action Button(without search) in a table for row that contains:    ${companyBusinessUnit}    Delete
             Click    ${zed_confirm_delete_company_user_button}
     END
+
+Yves: company registration:
+    [Arguments]    @{args}
+    Yves: go to URL:   company/register
+    ${registrationData}=    Set Up Keyword Arguments    @{args}
+    FOR    ${key}    ${value}    IN    &{registrationData}
+        IF    '${key}' == 'salutation'    Select From List By Text    ${yves_register_company_user_salutation}    ${value}
+        IF    '${key}' == 'firstName'    Type Text    ${yves_register_company_first_name}    ${value}
+        IF    '${key}' == 'lastName'    Type Text  ${yves_register_company_last_name}    ${value}
+        IF    '${key}' == 'company'    Type Text    ${yves_register_company_name}    ${value}
+        IF    '${key}' == 'email'    Type Text    ${yves_register_company_email}    ${value}
+        IF    '${key}' == 'password'    Type Text    ${yves_register_company_password}    ${value}
+        IF    '${key}' == 'confirmPassword'    Type Text    ${yves_register_company_confirm_password}    ${value}
+    END    
+    Check Checkbox    ${yves_register_accept_company_terms}
+    Click    ${yves_register_company_click_submit_button}
+    Yves: flash message 'should' be shown
+
+Yves: confirm newly created company user:
+    [Arguments]    ${email}
+    Save the result of a SELECT DB query to a variable:    select registration_key from spy_customer where email = '${email}'    confirmation_key
+    I send a POST request:     /customer-confirmation   {"data":{"type":"customer-confirmation","attributes":{"registrationKey":"${confirmation_key}"}}}
+
+Zed: approve/deny company by admin:
+    [Arguments]    ${company_name}     ${condition}
+    IF    '${condition}' == 'approve'
+        Zed: click Action Button in a table for row that contains:    ${company_name}    Approve
+    ELSE
+        Zed: click Action Button in a table for row that contains:    ${company_name}    Deny    
+    END
+    Zed: flash message should be shown:    success
+
+Zed: activate/deactivate company by admin:
+    [Arguments]    ${company_name}     ${condition}
+    IF    '${condition}' == 'activate'
+        Zed: click Action Button in a table for row that contains:    ${company_name}    Activate
+    ELSE
+        Zed: click Action Button in a table for row that contains:    ${company_name}    Deactivate
+    END
+    Zed: flash message should be shown:    success    
+
+    
+Yves: create company user:
+    [Arguments]    @{args}
+    Yves: go to company menu item:    Users
+    Click    ${yves_company_create_user_button}
+    ${userregistrationData}=    Set Up Keyword Arguments    @{args}
+    FOR    ${key}    ${value}    IN    &{userregistrationData}
+        IF    '${key}' == 'companyBusinessUnit'    Select From List By Label    ${yves_company_user_bu_dropdown}    ${value}
+        IF    'role' in '${key}'    Yves: Check checkbox by Label:    ${value}
+        IF    '${key}' == 'salutation'    Select From List By Text    ${yves_company_user_salutation_locator}    ${value}
+        IF    '${key}' == 'firstName'    Type Text    ${yves_company_user_first_name}    ${value}
+        IF    '${key}' == 'lastName'    Type Text  ${yves_company_user_last_name}    ${value}
+        IF    '${key}' == 'email'    Type Text    ${yves_company_user_email}    ${value}
+    END
+    Click    ${yves_company_user_submit}
+
+Yves: check checkbox by Label:
+    [Arguments]    ${checkbox_label}
+    ${state}=    Get Checkbox State    xpath=(//span[contains(text(),'${checkbox_label}')]//parent::label//child::span)[1]
+    IF    '${state}' == 'False'
+        wait until element is visible    xpath=(//span[contains(text(),'${checkbox_label}')]//parent::label//child::span)[1]
+        Check checkbox    xpath=(//span[contains(text(),'${checkbox_label}')]//parent::label//child::span)[1]
+    END
+
+Yves: uncheck checkbox by label:
+    [Arguments]    ${checkbox_label}
+    ${state}=    Get Checkbox State    xpath=(//span[contains(text(),'${checkbox_label}')]//parent::label//child::span)[1]
+    IF    '${state}' == 'True'
+        wait until element is visible    xpath=(//span[contains(text(),'${checkbox_label}')]//parent::label//child::span)[1]
+        Uncheck Checkbox    xpath=(//span[contains(text(),'${checkbox_label}')]//parent::label//child::span)[1]
+    END
+
+Yves: create Business unit:
+    [Arguments]    @{args}
+    Yves: go to company menu item:    Business Units
+    Click    ${create_business_unit_button}
+    ${businessUnitData}=    Set Up Keyword Arguments    @{args}
+    FOR    ${key}    ${value}    IN    &{businessUnitData}
+        IF    '${key}' == 'businessUnitName'    Type Text    ${create_business_name_locator}    ${value}
+        IF    '${key}' == 'parent'    Select From List By Text    ${create_business_parent_bu_locator}    ${value}
+        IF    '${key}' == 'email'    Type Text    ${create_business_unit_email_locator}    ${value}
+        IF    '${key}' == 'phone'    Type Text    ${create_business_unit_phone_number_locator}    ${value}
+        IF    '${key}' == 'externalURL'    Type Text    ${business_unit_external_url_locator}    ${value}
+    END 
+    Click    ${business_unit_submit_button}
+
+Yves: go to business unit with name:
+    [Arguments]    ${businessUnit}
+    Yves: go to company menu item:    Business Units
+    Click    xpath=//a[contains(@class,"business-unit-chart-item__link--level-1")]//span[contains(text(),'${businessUnit}')]
+
+Yves: create new business unit address of a business unit:
+    [Arguments]    ${businessUnit}    @{args}
+    Yves: go to business unit with name:    ${businessUnit}
+    Click    ${create_business_unit_button}
+    ${addressData}=    Set Up Keyword Arguments    @{args}
+    FOR    ${key}    ${value}    IN    &{addressData}
+        IF    '${key}' == 'street'    Type Text    ${business_unit_street_locator}    ${value}
+        IF    '${key}' == 'number'    Type Text    ${business_unit_number_locator}    ${value}
+        IF    '${key}' == 'address'    Type Text    ${business_unit_address_locator}    ${value}
+        IF    '${key}' == 'zipcode'    Type Text    ${business_unit_zipcode_locator}    ${value}
+        IF    '${key}' == 'city'    Type Text    ${business_unit_city_locator}    ${value}
+        IF    '${key}' == 'country'    Select From List By Text    ${business_unit_country_locator}        ${value}
+        IF    '${key}' == 'phoneNumber'    Type Text    ${business_unit_phone_number_locator}    ${value}
+    END
+    Click    ${business_unit_submit_button}
+
+Yves: add multiple company user:
+    [Arguments]    ${path}
+    Yves: go to company menu item:    Users
+    Click    ${yves_company_invite_user_button}
+    Upload File By Selector    ${yves_company_user_invitation_file_import_button}    ${EXECDIR}/${path}
+    Click    ${yves_company_user_import_submit_button}
+
+Yves: check user invitation import successfully or not:
+    [Arguments]    ${state}
+    IF    '${state}' == 'true'
+        Page Should Not Contain Element    ${yves_company_user_import_error_locator}
+        Page Should Contain Element   ${yves_company_all_invite_user_table_locator}    
+    ELSE
+        Page Should Contain Element    ${yves_company_user_import_error_locator}
+    END
+Yves: send invitations to all new company users
+    Wait Until Element Is Visible    ${yves_company_user_send_all_button}
+    Click    ${yves_company_user_send_all_button}
+    Yves: flash message should be shown:    success    All invitations sent successfully 
+
+Yves: send/delete invitation to a company user:
+    [Documentation]    accepts arguments email and action(send, delete) 
+    [Arguments]    ${email}    ${action}
+    Click    xpath=//td[@data-content="Mail" and text()='${email}']//following-sibling::td[contains(@class,'spacing--reset')]//div//div//a[contains(@href,'${action}')]
+
+Yves: check new company user get the invitation mail:
+    [Arguments]    ${email}
+    Save the result of a SELECT DB query to a variable:    select registration_key from spy_customer where email = '${email}'    confirmation_key
+    Should Not Be Empty    ${confirmation_key}    Company user doesn't get any invitation mail
+
+Yves: create new company role:
+    [Arguments]    ${role_name}    ${default_status}=false
+    Yves: go to company menu item:    Roles
+    Click    ${yves_company_role_create_button}
+    Wait Until Element Is Visible    ${yves_company_role_name_locator}
+    Type Text    ${yves_company_role_name_locator}    ${role_name}
+    IF    '${default_status}' == 'true'    Check Checkbox    ${yves_company_role_is_default_checkbox}
+    Click    ${yves_company_role_submit_button}
+    Yves: flash message should be shown:    success    Role has been successfully created.
+
+Yves: verify new user role is created:
+    [Arguments]    ${role_name}
+    Page Should Contain Element    xpath=//td[contains(@class,"spacing-top--big") and text()='${role_name}']
+
+Yves: validate and set password for newly created company user:
+    [Arguments]    ${email}    ${password}=${yves_user_password}
+   Save the result of a SELECT DB query to a variable:    select registration_key from spy_customer where email = '${email}'    confirmation_key
+   Save the result of a SELECT DB query to a variable:    select customer_reference from spy_customer where email = '${email}'    customer_id
+   I send a POST request:     /customer-confirmation   {"data":{"type":"customer-confirmation","attributes":{"registrationKey":"${confirmation_key}"}}}
+   Save the result of a SELECT DB query to a variable:    select restore_password_key from spy_customer where email = '${email}'    restore_key
+   I send a PATCH request:    /customer-restore-password/${customer_id}   {"data":{"type":"customer-restore-password","id":"${customer_id}","attributes":{"restorePasswordKey":"${restore_key}","password":"${password}","confirmPassword":"${password}"}}}
+
+Yves: add all permission to a role:
+    [Arguments]    ${role_name}
+    Yves: go to company menu item:    Roles
+    Click    xpath=//td[text()='${role_name}']//following-sibling::td[contains(@class,'spacing--reset')]/div/div/a[contains(@href,'update')]
+    ${permissionCount}=    Get Element Count    ${yves_company_role_permission_toggle_button}
+    ${counter}=    Set Variable    1
+    WHILE    ${counter} <= ${permissionCount}
+        Wait Until Element Is Visible    xpath=(//a[contains(@class,"switch") and not (contains(@class,'switch--active'))])[${counter}]
+        Click    xpath=(//a[contains(@class,"switch") and not (contains(@class,'switch--active'))])[${counter}]
+        ${counter}=    Evaluate    ${counter}+1
+    END
+
+Yves: enable/disable role permission:
+    [Arguments]    ${role_name}    ${permissionName}    ${state}
+    Yves: go to company menu item:    Roles
+    Click    xpath=//td[text()='${role_name}']//following-sibling::td[contains(@class,'spacing--reset')]/div/div/a[contains(@href,'update')]
+    ${currentState}=    Get Attribute    xpath=//td[text()='${permissionName}']//following-sibling::td//a[contains(@class,'switch')]    class
+    IF    'active' not in '${currentState}' and '${state}' == 'activate'
+        Click    xpath=//td[text()='${permissionName}']//following-sibling::td//a[contains(@class,'switch')]
+    ELSE IF    'active' in '${currentState}' and '${state}' == 'deactivate'
+        Click    xpath=//td[text()='${permissionName}']//following-sibling::td//a[contains(@class,'switch')]
+    END
+
+Yves: assign/unassign a role to company user:
+    [Arguments]    ${userFullName}    ${role_name}    ${condition}
+    Yves: go to company menu item:    Users
+    Click    xpath=//td[contains(@class,"spacing-top--big")]/strong[contains(text(),'${userFullName}')]//parent::td//following-sibling::td/div/div/a[contains(@href,'update')]
+    IF    '${condition}' == 'true' 
+        Yves: check checkbox by Label:    ${role_name}
+    ELSE IF    '${condition}' == 'false' 
+        Yves: uncheck checkbox by label:    ${role_name}
+    END
+    ${yves_company_user_submit}
+
+Yves: delete a company role:
+    [Arguments]    ${role_name}
+    Yves: go to company menu item:    Roles
+    Click    xpath=//td[text()='${role_name}']//following-sibling::td[contains(@class,'spacing--reset')]/div/div/a[contains(@href,'delete')]
+    Wait Until Element Is Visible    ${yves_company_role_delete_button}
+    Click    ${yves_company_role_delete_button}
+    Yves: flash message 'should' be shown
+
+Yves: check the user info of company users:
+   [Arguments]    ${company_user_first_name}    ${bu_name}   
+   Page Should Contain Element    xpath=//td[@data-content='Name']/*[contains(text(),'${company_user_first_name}')]//parent::td//following-sibling::td[@data-content="Business unit" and contains(text(),'${bu_name}')]
+    
+Yves: check the business unit info of company:
+    [Arguments]    ${businessUnit}
+    Yves: go to company menu item:    Business Units
+    Page Should Contain Element    xpath=//span[@class="business-unit-chart-item__name" and text()='${businessUnit}']

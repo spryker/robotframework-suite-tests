@@ -913,3 +913,43 @@ Refunds
     Zed: grand total for the order equals:    ${lastPlacedOrder}    €0.00
     [Teardown]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: activate following discounts from Overview page:    20% off storage    10% off minimum order
+
+Company_Account_in_Yves
+    [Documentation]    creating new company, BU, company role, company user and importing multiple company users
+    Yves: company registration:
+    ...    ||  salutation  |  firstName  |  lastName  |  company            |  email                          |  password               | confirmPassword         ||
+    ...    || Mr.          |  Guest      |  User      |  Company+${random}  |  company+${random}@spryker.com  |  ${yves_user_password}  |  ${yves_user_password}  ||
+    Yves: confirm newly created company user:    ${email}
+    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: go to second navigation item level:    Customers    Companies
+    Zed: approve/deny company by admin:    Company+${random}    approve
+    Zed: activate/deactivate company by admin:    Company+${random}    activate
+    Yves: login on Yves with provided credentials:    company+${random}@spryker.com    ${yves_user_password}
+    Yves: create company user:
+    ...    ||  companyBusinessUnit  |  role   |  firstName         |  lastName  |  email                              ||
+    ...    ||  Headquarters         |  Buyer  |  user+${random}    |  user      |  companyUser+${random}@spryker.com  ||
+    Yves: check the user info of company users:    user+${random}    Headquarters
+    Yves: validate and set password for newly created company user:    companyUser+${random}@spryker.com 
+    Yves: create Business unit:
+    ...    ||  businessUnitName    |  email                              ||
+    ...    ||   Test-BU            |  companyUser+${random}@spryker.com  ||  
+    Yves: check the business unit info of company:    Test-BU
+    Yves: create new business unit address of a business unit:    Test-BU
+    ...    ||  street   |  number  |  address       |  zipcode   |  city    |  country         |  phoneNumber  ||
+    ...    ||  street1  |  1234    |  address-test  |  678901    |  Berlin  |  Germany         |  123456789    ||
+    Yves: add multiple company user:    tests/user_journeys/Sheet1.csv
+    Yves: check user invitation import successfully or not:    true
+    Yves: send/delete invitation to a company user:    asdf@spryker.com    send
+    Yves: check new company user get the invitation mail:    asdf@spryker.com
+    Yves: send invitations to all new company users
+    Yves: create new company role:    test-role
+    Yves: verify new user role is created:    test-role
+    Yves: enable/disable role permission:    test-role    Add company users    active
+    Yves: assign/unassign a role to company user:    user+${random} user    test-role    true
+    Yves: add all permission to a role:    test-role
+    [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    ...    AND    Zed: go to second navigation item level:    Customers    Companies
+    ...    AND    Zed: approve/deny company by admin:    Company+${random}    deny
+    ...    AND    Zed: activate/deactivate company by admin:    Company+${random}    deactivate
+    ...    AND    Zed: delete company user xxx withing xxx company business unit:    user+${random}    Headquarters
+    ...    AND    Zed: delete company user xxx withing xxx company business unit:    company+${random}@spryker.com    Headquarters
