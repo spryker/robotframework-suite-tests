@@ -26,10 +26,11 @@ Resource    ../../resources/steps/wishlist_steps.robot
 Resource    ../../resources/steps/zed_availability_steps.robot
 Resource    ../../resources/steps/zed_discount_steps.robot
 Resource    ../../resources/steps/zed_cms_page_steps.robot
-
 Resource    ../../resources/steps/zed_customer_steps.robot
 Resource    ../../resources/steps/zed_payment_methods_steps.robot
 Resource    ../../resources/steps/zed_dashboard_steps.robot
+Resource    ../../resources/steps/reclamation_steps.robot
+
 
 *** Test Cases ***
 New_Customer_Registration
@@ -713,3 +714,33 @@ Add_to_cart_products_as_a_guest_user_and_register_during_checkout
      [Teardown]    Zed: delete customer:
     ...    || email                          ||
     ...    || abc${random}@gmail.com ||
+
+Reclamation
+    [Documentation]    create reclamation for parts of the order and check its details
+    Yves: login on Yves with provided credentials:    ${yves_second_user_email}
+    Yves: go to PDP of the product with sku:    188
+    Yves: add product to the shopping cart
+    Yves: go to b2c shopping cart
+    Yves: click on the 'Checkout' button in the shopping cart
+    Yves: billing address same as shipping address:    true
+    Yves: fill in the following new shipping address:
+    ...    || salutation | firstName                      | lastName                      | street        | houseNumber | postCode     | city   | country | company | phone     | additionalAddress ||
+    ...    || Mr.        | ${yves_second_user_first_name} | ${yves_second_user_last_name} | Kirncher Str. | 7           | ${random}    | Berlin | Germany | Spryker | 123456789 | Additional street ||
+    Yves: submit form on the checkout
+    Yves: select the following shipping method on the checkout and go next:    Express
+    Yves: select the following payment method on the checkout and go next:    Invoice
+    Yves: accept the terms and conditions:    true
+    Yves: 'submit the order' on the summary page
+    Yves: 'Thank you' page is displayed
+    Yves: get the last placed order ID by current customer
+    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: go to second navigation item level:    Sales    Orders
+    Zed: click Action Button in a table for row that contains:    ${lastPlacedOrder}   Claim
+    Zed: create reclamation for part of order:    188
+    Zed: submit reclamation
+    Zed: go to second navigation item level:    Sales    Reclamations
+    Zed: verify latest created reclamation contains product with SKU(s):    188
+    Zed: go to second navigation item level:    Sales    Reclamations
+    Zed: sort reclamation table in ascending/descending order:    desc
+    Zed: close latest created reclamation
+    Zed: check state of latest reclamation is open/closed:    Closed
