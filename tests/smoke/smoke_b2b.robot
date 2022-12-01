@@ -913,3 +913,22 @@ Refunds
     Zed: grand total for the order equals:    ${lastPlacedOrder}    €0.00
     [Teardown]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: activate following discounts from Overview page:    20% off storage    10% off minimum order
+
+Search_Widget
+    Yves: login on Yves with provided credentials:    ${yves_user_email}
+    Yves: go to 'Quick Order' page through the header
+    Yves: search for product by its name or by its sku in quickorder page:    Bamberg potato
+    Yves: create new 'Shopping Cart' with name:    searchWidgetCart+${random}
+    Yves: go to the shopping cart through the header with name:    searchWidgetCart+${random}
+    Yves: search and add product in cart page:    421426    2    
+    Yves: shopping cart contains the following products:    421426
+    Yves: create new 'Shopping List' with name:    searchWidgetShoppingList+${random}
+    Yves: view shopping list with name:    searchWidgetShoppingList+${random}
+    Yves: search and add product in shopping list:    421426    2
+    Yves: shopping list contains the following products:    421426
+    Yves: go To 'Shopping Lists' Page
+    [Teardown]    Run Keywords    Yves: go To 'Shopping Lists' Page
+    ...    AND    Yves: delete 'Shopping List' with name:    searchWidgetShoppingList+${random}
+    ...    AND    Yves: go to the 'Home' page
+    ...    AND    Yves: delete 'Shopping Cart' with name:    searchWidgetCart+${random}
+    

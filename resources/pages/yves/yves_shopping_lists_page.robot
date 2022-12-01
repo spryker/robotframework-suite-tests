@@ -9,6 +9,9 @@ ${create_shopping_list_button}    xpath=//form[@name='shopping_list_form']//butt
 ${share_shopping_list_customers_section}    xpath=//div[@data-qa="component company-dashbord-item"]//*[text()='Customer']/../../div[@data-qa='component share-list']
 ${share_shopping_list_business_unit_section}    xpath=//div[@data-qa="component company-dashbord-item"]//*[text()='Business Unit']/../../div[@data-qa='component share-list']
 ${share_shopping_list_confirm_button}    xpath=//form[@name='share_shopping_list_form']//button[@data-qa='submit-button']
+${shopping_list_search_product_input_field_locator}    xpath=//input[contains(@class,"product-search-autocomplete-form__input js-product-search-autocomplete-form__input")]
+${shopping_list_searched_product_quantity_input_field_locator}    id=quantity
+${shopping_list_add_button}    xpath=//button[contains(@class,"button--success")]
 
 
 *** Keywords ***

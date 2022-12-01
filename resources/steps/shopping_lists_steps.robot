@@ -65,3 +65,13 @@ Yves: view shopping list with name:
 Yves: add all available products from list to cart
     Wait Until Element Is Visible    ${shopping_list_main_content_locator}
     Click    ${add_all_available_products_to_cart_locator} 
+
+Yves: search and add product in shopping list:
+    [Arguments]    ${product}    ${quantity}
+    Wait Until Element Is Visible    ${shopping_list_search_product_input_field_locator}
+    Type Text    ${shopping_list_search_product_input_field_locator}    ${product}
+    Wait Until Element Is Visible    xpath=//li[contains(@class,"products-list__item--selected") and contains(text(),'${product}')]
+    Page Should Contain Element    xpath=//li[contains(@class,"products-list__item--selected") and contains(text(),'${product}')]
+    Keyboard Key    Press    Enter
+    Type Text    ${shopping_list_searched_product_quantity_input_field_locator}    ${quantity}
+    Click    ${shopping_list_add_button}

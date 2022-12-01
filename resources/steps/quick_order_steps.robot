@@ -45,3 +45,9 @@ Yves: find and add new item in the quick order form:
     Select From List By Label    ${quick_order_row_merchant_selector}    ${merchant}
     Clear Text    ${quick_order_add_articles_text_area}
     Click    ${quick_order_verify_button}
+
+Yves: search for product by its name or by its sku in quickorder page:
+    [Arguments]    ${product}  
+    Type Text    ${quick_order_first_empty_row}    ${product}
+    Wait Until Element Is Visible    xpath=//li[contains(@class,"products-list__item--selected") and contains(text(),'${product}')]
+    Page Should Contain Element    xpath=//li[contains(@class,"products-list__item--selected") and contains(text(),'${product}')]

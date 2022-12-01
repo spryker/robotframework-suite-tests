@@ -245,3 +245,12 @@ Yves: assert merchant of product in b2c cart:
     [Arguments]    ${product_name}    ${merchant_name_expected}
     Page Should Contain Element    xpath=//main[contains(@class,'cart')]//article[contains(@data-qa,'component product-card-item')]//*[contains(.,'${product_name}')]/ancestor::article//*[@data-qa='component sold-by-merchant']/a[text()='${merchant_name_expected}']
 
+Yves: search and add product in cart page:
+    [Arguments]    ${product}    ${quantity}
+    Wait Until Element Is Visible    ${shopping_cart_search_product_input_field_locator}
+    Type Text    ${shopping_cart_search_product_input_field_locator}    ${product}
+    Wait Until Element Is Visible    xpath=//li[contains(@class,"products-list__item--selected") and contains(text(),'${product}')]
+    Page Should Contain Element    xpath=//li[contains(@class,"products-list__item--selected") and contains(text(),'${product}')]
+    Keyboard Key    Press    Enter
+    Type Text    ${shopping_cart_searched_product_quantity_input_field_locator}    ${quantity}
+    Click    ${shopping_cart_add_button}  
