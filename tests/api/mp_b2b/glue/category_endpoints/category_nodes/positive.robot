@@ -17,7 +17,7 @@ Get_category_node_is_root_by_id
     And Response body parameter should be:    [data][id]    ${category_node_is_root_id}
     And Response Body parameter should have datatype:    [data][attributes][name]    str
     And Response Body parameter should have datatype:    [data][attributes][nodeId]    int
-    And Response Body parameter should have datatype:    [data][attributes][order]    NoneType
+    And Response Body parameter should have datatype:    [data][attributes][order]    int
     And Response Body parameter should have datatype:    [data][attributes][url]    str
     And Response should contain the array of a certain size:    [data][attributes][parents]    0
     And Response should contain the array larger than a certain size:   [data][attributes][children]    1
