@@ -26,7 +26,8 @@
         "merchant_budget_cameras_email": "jason.weidmann@budgetcamerasonline.com",
         "merchant_budget_cameras_reference": "MER000005",
         "merchant_video_king_email": "martha@video-king.nl",
-        "merchant_spryker_email": "harald@spryker.com"
+        "merchant_spryker_email": "harald@spryker.com",
+        "merchant_spryker_reference": "MER000001"
     },
         
     "products": {

@@ -14,7 +14,7 @@ Resource                  ../pages/yves/yves_login_page.robot
 
 *** Variables ***
 # *** SUITE VARIABLES ***
-${env}                 b2b
+${env}                 mp_b2c
 ${headless}            true
 ${browser}             chromium
 ${browser_timeout}     30 seconds
@@ -178,6 +178,10 @@ Input Text
 Table Should Contain
     [Arguments]    ${locator}    ${expected}    ${message}=${EMPTY}    ${ignore_case}=${EMPTY}
     Get Text    ${locator}    contains    ${expected}    ${message}
+
+Table Should Not Contain
+    [Arguments]    ${locator}    ${expected}    ${message}=${EMPTY}    ${ignore_case}=${EMPTY}
+    Get Text    ${locator}    not contains    ${expected}    ${message}
 
 Element Should Contain
     [Arguments]    ${locator}    ${expected}    ${message}=${EMPTY}    ${ignore_case}=${EMPTY}

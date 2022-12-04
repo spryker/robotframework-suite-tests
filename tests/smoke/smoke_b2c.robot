@@ -401,6 +401,9 @@ Split_Delivery
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
+    Yves: get the last placed order ID by current customer
+    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: order has the following number of shipments:    ${lastPlacedOrder}    3
     [Teardown]    Yves: check if cart is not empty and clear it
 
 Agent_Assist

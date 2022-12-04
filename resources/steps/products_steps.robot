@@ -2,6 +2,8 @@
 Resource    ../common/common_zed.robot
 Resource    ../common/common.robot
 Resource    ../pages/zed/zed_edit_product_page.robot
+Resource    ../pages/zed/zed_view_abstract_product_page.robot
+Resource    ../pages/zed/zed_view_concrete_product_page.robot
 
 *** Keywords ***
 Zed: discontinue the following product:
@@ -17,8 +19,6 @@ Zed: discontinue the following product:
     Zed: switch to the tab on 'Edit product' page:    Discontinue
     ${can_be_discontinued}=    Run Keyword And Return Status    Page Should Contain Element    ${zed_pdp_discontinue_button}
     IF    '${can_be_discontinued}'=='True'    Click    ${zed_pdp_discontinue_button}
-
-
 
 Zed: undo discontinue the following product:
     [Arguments]    ${productAbstract}    ${productConcrete}
@@ -98,3 +98,96 @@ Zed: product is successfully discontinued
     ${currentURL}=    Get Location
     IF    'discontinue' not in '${currentURL}'    Zed: switch to the tab on 'Edit product' page:    Discontinue
     Page Should Contain Element    ${zed_pdp_restore_button}
+
+Zed: view product page is displayed
+     Wait Until Element Is Visible    ${zed_view_abstract_product_main_content_locator}
+
+Zed: view abstract product page contains:
+    [Arguments]    @{args}
+    ${abstractProductData}=    Set Up Keyword Arguments    @{args}
+    FOR    ${key}    ${value}    IN    &{abstractProductData}
+        IF    '${key}'=='merchant' and '${value}' != '${EMPTY}'    
+            Element Should Contain    ${zed_view_abstract_product_merchant}    ${value}
+        END
+        IF    '${key}'=='status' and '${value}' != '${EMPTY}'    
+            Element Should Contain    ${zed_view_abstract_product_status}    ${value}
+        END
+        IF    '${key}'=='store' and '${value}' != '${EMPTY}'    
+            Element Should Contain    ${zed_view_abstract_product_store}    ${value}
+        END
+        IF    '${key}'=='sku' and '${value}' != '${EMPTY}'    
+            Element Should Contain    ${zed_view_abstract_product_sku}    ${value}
+        END
+        IF    '${key}'=='name' and '${value}' != '${EMPTY}'    
+            Element Should Contain    ${zed_view_abstract_product_name}    ${value}
+        END
+        IF    '${key}'=='variants count' and '${value}' != '${EMPTY}'    
+            ${actualVariantsCount}=    Get Element Count    xpath=//table[@id='product-variant-table']//tbody/tr
+            Should Be Equal    '${actualVariantsCount}'    '${value}'
+        END
+    END
+
+Zed: update abstract product data:
+    [Arguments]    @{args}
+    ${abstractProductData}=    Set Up Keyword Arguments    @{args}
+    Zed: go to second navigation item level:    Catalog    Products 
+    Zed: click Action Button in a table for row that contains:     ${productAbstract}     Edit
+    FOR    ${key}    ${value}    IN    &{abstractProductData}
+        IF    '${key}'=='store' and '${value}' != '${EMPTY}'    
+            Zed: Check checkbox by Label:    ${value}
+        END
+        IF    '${key}'=='name en' and '${value}' != '${EMPTY}'  
+            Wait Until Element Is Visible    ${zed_product_name_en_input}
+            Type Text    ${zed_product_name_en_input}    ${value}
+        END
+        IF    '${key}'=='name de' and '${value}' != '${EMPTY}'  
+            ${de_section_expanded}=    Run Keyword And Return Status    Wait Until Element Is Visible    ${zed_product_name_de_input}
+            IF    '${de_section_expanded}'=='False'
+                Scroll Element Into View    ${zed_product_general_deDE_collapsed_section}
+                Click    ${zed_product_general_deDE_collapsed_section}
+                Type Text    ${zed_product_name_de_input}    ${value}
+            END
+        END
+        IF    '${key}'=='new from' and '${value}' != '${EMPTY}'    
+            Type Text    ${zed_product_new_from}    ${value}
+            Keyboard Key    press    Enter
+        END
+        IF    '${key}'=='new to' and '${value}' != '${EMPTY}'    
+            Type Text    ${zed_product_new_to}    ${value}
+            Keyboard Key    press    Enter
+        END
+    END
+    Click    ${zed_pdp_save_button}
+
+Zed: update abstract product price on:
+    [Arguments]    @{args}
+    ${priceData}=    Set Up Keyword Arguments    @{args}
+    Zed: go to second navigation item level:    Catalog    Products
+    Zed: click Action Button in a table for row that contains:    ${productAbstract}    Edit
+    Wait Until Element Is Visible    ${zed_pdp_abstract_main_content_locator}
+    Zed: switch to the tab on 'Edit product' page:    Price & Tax
+    FOR    ${key}    ${value}    IN    &{priceData}
+        Log    Key is '${key}' and value is '${value}'.
+        IF    '${key}'=='store' and '${value}' != '${EMPTY}'
+            ${store}=    Set Variable    ${value}
+        END
+        IF    '${key}'=='mode' and '${value}' != '${EMPTY}'
+            ${mode}=    Set Variable    ${value}_amount
+        END
+        IF    '${key}'=='type' and '${value}' == 'default'
+            ${type}=    Set Variable    DEFAULT
+        END
+        IF    '${key}'=='type' and '${value}' == 'original'
+            ${type}=    Set Variable    ORIGINAL
+        END
+        IF    '${key}'=='currency' and '${value}' == '€'
+        ${inputField}=    Set Variable    xpath=//table[@id='price-table-collection']//td[1][contains(text(),'${store}')]/../following-sibling::tr[1]//input[contains(@id,'${mode}')][contains(@id,'${type}')]
+        END
+        IF    '${key}'=='currency' and '${value}' == 'CHF'
+        ${inputField}=    Set Variable    xpath=//table[@id='price-table-collection']//td[1][contains(text(),'${store}')]/ancestor::tr//input[contains(@id,'${mode}')][contains(@id,'${type}')]
+        END
+        IF    '${key}'=='amount' and '${value}' != '${EMPTY}'
+            Type Text    ${inputField}    ${value}
+        END
+    END
+    Click    ${zed_pdp_save_button}

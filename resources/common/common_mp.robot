@@ -49,9 +49,14 @@ MP: click submit button
 MP: perform search by:
     [Arguments]    ${searchKey}
     Type Text    ${mp_search_box}    ${searchKey}
-    Wait Until Element Is Visible    ${spinner_loader}
-    Wait Until Element Is Not Visible    ${spinner_loader}
-    Wait Until Element Is Enabled    ${mp_items_table}
+    TRY
+        Wait Until Element Is Visible    ${spinner_loader}
+        Wait Until Element Is Not Visible    ${spinner_loader}
+        Wait Until Element Is Enabled    ${mp_items_table}
+    EXCEPT    
+        Log    Spinner was not shown
+    END
+
 
 MP: click on a table row that contains:
     [Arguments]    ${rowContent}
@@ -76,5 +81,8 @@ MP: select option in expanded dropdown:
     Click    xpath=//nz-option-container[contains(@class,'ant-select-dropdown')]//span[contains(text(),'${optionName}')]
 
     
-
+MP: switch to the tab:
+    [Arguments]    ${tabName}
+    Wait Until Element Is Visible    xpath=//web-spy-tabs[@class='spy-tabs']//div[@role='tab'][contains(@class,'ant-tabs')]//div[contains(text(),'${tabName}')]
+    Click    xpath=//web-spy-tabs[@class='spy-tabs']//div[@role='tab'][contains(@class,'ant-tabs')]//div[contains(text(),'${tabName}')]
     

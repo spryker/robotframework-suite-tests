@@ -1068,34 +1068,34 @@ Manage_Merchant_Users
     Zed: go to second navigation item level:    Marketplace    Merchants
     Zed: click Action Button in a table for row that contains:     Office King     Edit
     Zed: create new Merchant User with the following data:
-    ...    || e-mail                    | first name     | last name      ||
-    ...    || m_user+${random}@test.com | FName${random} | LName${random} ||
-    Zed: perform merchant user search by:     m_user+${random}@test.com
+    ...    || e-mail                         | first name     | last name      ||
+    ...    || sonia+mu+${random}@spryker.com | FName${random} | LName${random} ||
+    Zed: perform merchant user search by:     sonia+mu+${random}@spryker.com
     Zed: table should contain non-searchable value:    Deactivated
-    Zed: click Action Button in Merchant Users table for row that contains:    m_user+${random}@test.com    Activate
+    Zed: click Action Button in Merchant Users table for row that contains:    sonia+mu+${random}@spryker.com    Activate
     Zed: table should contain non-searchable value:    Active
-    Zed: click Action Button in Merchant Users table for row that contains:    m_user+${random}@test.com    Edit
+    Zed: click Action Button in Merchant Users table for row that contains:    sonia+mu+${random}@spryker.com    Edit
     Zed: update Merchant User on edit page with the following data:
     ...    || e-mail | first name           | last name ||
     ...    ||        | UpdatedName${random} |           ||
-    Zed: perform merchant user search by:    m_user+${random}@test.com
+    Zed: perform merchant user search by:    sonia+mu+${random}@spryker.com
     Zed: table should contain non-searchable value:    UpdatedName${random}
     Zed: update Zed user:
-    ...    || oldEmail                  | newEmail | password      | firstName | lastName ||
-    ...    || m_user+${random}@test.com |          | Change123!321 |           |          ||
-    MP: login on MP with provided credentials:    m_user+${random}@test.com    Change123!321
+    ...    || oldEmail                       | newEmail | password      | firstName | lastName ||
+    ...    || sonia+mu+${random}@spryker.com |          | Change123!321 |           |          ||
+    MP: login on MP with provided credentials:    sonia+mu+${random}@spryker.com    Change123!321
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Marketplace    Merchants
     Zed: click Action Button in a table for row that contains:     Office King     Edit
     Zed: go to tab:     Users
-    Zed: click Action Button in Merchant Users table for row that contains:    m_user+${random}@test.com    Deactivate
+    Zed: click Action Button in Merchant Users table for row that contains:    sonia+mu+${random}@spryker.com    Deactivate
     Zed: table should contain non-searchable value:    Deactivated
-    MP: login on MP with provided credentials and expect error:    m_user+${random}@test.com    Change123!321
+    MP: login on MP with provided credentials and expect error:    sonia+mu+${random}@spryker.com    Change123!321
     [Teardown]    Run Keywords     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: go to second navigation item level:    Marketplace    Merchants
     ...    AND    Zed: click Action Button in a table for row that contains:     Office King     Edit
     ...    AND    Zed: go to tab:     Users
-    ...    AND    Zed: click Action Button in Merchant Users table for row that contains:    m_user+${random}@test.com    Delete
+    ...    AND    Zed: click Action Button in Merchant Users table for row that contains:    sonia+mu+${random}@spryker.com    Delete
     ...    AND    Zed: submit the form
 
 Create_and_Approve_New_Merchant_Product
@@ -1262,9 +1262,9 @@ Fulfill_Order_from_Merchant_Portal
     MP: click on a table row that contains:    ${lastPlacedOrder}--${merchant_office_king_reference}
     MP: order grand total should be:    €31.81
     MP: update order state using header button:    Ship
-    MP: order state on drawer should be:    Shipped   
+    MP: order states on drawer should contain:    Shipped   
     MP: update order state using header button:    deliver
-    MP: order state on drawer should be:    Delivered
+    MP: order states on drawer should contain:    Delivered
 
 Shopping_List_Contains_Offers
     [Documentation]    Checks that customer is able to add merchant products and offers to list and merchant relation won't be lost in list and afterwards in cart
@@ -1478,27 +1478,27 @@ Merchant_Portal_My_Account
     Zed: go to second navigation item level:    Marketplace    Merchants
     Zed: click Action Button in a table for row that contains:     Oryx Merchant     Edit
     Zed: create new Merchant User with the following data:
-    ...    || e-mail                       | first name     | last name      ||
-    ...    || edit_user+${random}@test.com | FName${random} | LName${random} ||
-    Zed: perform merchant user search by:     edit_user+${random}@test.com
+    ...    || e-mail                             | first name     | last name      ||
+    ...    || sonia+editmu+${random}@spryker.com | FName${random} | LName${random} ||
+    Zed: perform merchant user search by:     sonia+editmu+${random}@spryker.com
     Zed: table should contain non-searchable value:    Deactivated
-    Zed: click Action Button in Merchant Users table for row that contains:    edit_user+${random}@test.com    Activate
+    Zed: click Action Button in Merchant Users table for row that contains:    sonia+editmu+${random}@spryker.com    Activate
     Zed: table should contain non-searchable value:    Active
     Zed: update Zed user:
-    ...    || oldEmail                     | newEmail | password      | firstName | lastName ||
-    ...    || edit_user+${random}@test.com |          | Change123!321 |           |          ||
-    MP: login on MP with provided credentials:    edit_user+${random}@test.com    Change123!321
+    ...    || oldEmail                           | newEmail | password      | firstName | lastName ||
+    ...    || sonia+editmu+${random}@spryker.com |          | Change123!321 |           |          ||
+    MP: login on MP with provided credentials:    sonia+editmu+${random}@spryker.com    Change123!321
     MP: update merchant personal details with data:
-    ...    || firstName               | lastName                | email                            | currentPassword | newPassword          ||
-    ...    || MPUpdatedFName${random} | MPUpdatedLName${random} | new_edit_user+${random}@test.com | Change123!321   | UpdatedChange123!321 ||
+    ...    || firstName               | lastName                | email                                  | currentPassword | newPassword          ||
+    ...    || MPUpdatedFName${random} | MPUpdatedLName${random} | sonia+new+editmu+${random}@spryker.com | Change123!321   | UpdatedChange123!321 ||
     MP: click submit button
-    MP: login on MP with provided credentials:    new_edit_user+${random}@test.com    UpdatedChange123!321
+    MP: login on MP with provided credentials:    sonia+new+editmu+${random}@spryker.com    UpdatedChange123!321
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Users    Users
     Zed: table should contain:    MPUpdatedFName${random}
     Zed: table should contain:    MPUpdatedLName${random}
     [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    ...    AND    Zed: delete Zed user with the following email:    new_edit_user+${random}@test.com
+    ...    AND    Zed: delete Zed user with the following email:    sonia+new+editmu+${random}@spryker.com
     
 Merchant_Portal_Dashboard
     [Documentation]    Checks that merchant user is able to access the dashboard page. Bug: CC-23118
@@ -1506,18 +1506,18 @@ Merchant_Portal_Dashboard
     Zed: go to second navigation item level:    Marketplace    Merchants
     Zed: click Action Button in a table for row that contains:     Oryx Merchant     Edit
     Zed: create new Merchant User with the following data:
-    ...    || e-mail                            | first name     | last name      ||
-    ...    || dashboard_user+${random}@test.com | FName${random} | LName${random} ||
-    Zed: perform merchant user search by:     dashboard_user+${random}@test.com
+    ...    || e-mail                               | first name     | last name      ||
+    ...    || sonia+dahboard+${random}@spryker.com | FName${random} | LName${random} ||
+    Zed: perform merchant user search by:     sonia+dahboard+${random}@spryker.com
     Zed: table should contain non-searchable value:    Deactivated
-    Zed: click Action Button in Merchant Users table for row that contains:    dashboard_user+${random}@test.com    Activate
+    Zed: click Action Button in Merchant Users table for row that contains:    sonia+dahboard+${random}@spryker.com    Activate
     Zed: table should contain non-searchable value:    Active
     Zed: update Zed user:
-    ...    || oldEmail                          | newEmail | password      | firstName | lastName ||
-    ...    || dashboard_user+${random}@test.com |          | Change123!321 |           |          ||
-    MP: login on MP with provided credentials:    dashboard_user+${random}@test.com    Change123!321
+    ...    || oldEmail                             | newEmail | password      | firstName | lastName ||
+    ...    || sonia+dahboard+${random}@spryker.com |          | Change123!321 |           |          ||
+    MP: login on MP with provided credentials:    sonia+dahboard+${random}@spryker.com    Change123!321
     MP: click button on dashboard page and check url:    Manage Offers    /product-offers
     MP: click button on dashboard page and check url:    Add Offer    /product-list
     MP: click button on dashboard page and check url:    Manage Orders    /orders
     [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    ...    AND    Zed: delete Zed user with the following email:    dashboard_user+${random}@test.com
+    ...    AND    Zed: delete Zed user with the following email:    sonia+dahboard+${random}@spryker.com

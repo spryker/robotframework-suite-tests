@@ -1,6 +1,7 @@
 *** Variable ***
 &{pdp_main_container_locator}    b2b=xpath=//main[contains(@class,'page-layout-main--pdp')]    b2c=xpath=//*[@itemtype='https://schema.org/Product']//product-carousel[contains(@*, 'pdp')]    suite-nonsplit=xpath=//image-carousel[contains(@class,'js-image-carousel')]    mp_b2b=xpath=//main[contains(@class,'page-layout-main--pdp')]    mp_b2c=xpath=//*[@itemtype='https://schema.org/Product']//product-carousel[contains(@*, 'pdp')]
 ${pdp_price_element_locator}    xpath=//volume-price[@class='custom-element volume-price']//span[contains(@class,'volume-price__price')][not(ancestor::form[contains(@action,'cart/add')])]
+${pdp_original_price_element_locator}    xpath=//volume-price[@class='custom-element volume-price']//span[contains(@class,'volume-price')][contains(@class,'original')][not(ancestor::form[contains(@action,'cart/add')])]
 ${pdp_add_to_cart_button}    xpath=//button[contains(@class,'button') and @data-qa='add-to-cart-button']
 &{pdp_add_to_cart_disabled_button}    b2c=xpath=//button[@disabled and contains(text(),'Add to Cart')]    b2b=xpath=//button[@disabled and contains(@data-qa,'add-to-cart-button')]    mp_b2b=xpath=//button[@disabled and contains(@data-qa,'add-to-cart-button')]    mp_b2c=xpath=//button[@disabled and contains(text(),'Add to Cart')]    mp_b2c=xpath=//button[@disabled and contains(text(),'Add to Cart')]
 ${pdp_add_to_wishlist_button}    xpath=//button[@type='submit'][contains(.,'Wishlist')]

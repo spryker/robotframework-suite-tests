@@ -40,6 +40,7 @@ Guest_User_Access_Restrictions
     Yves: 'Company Users' page is displayed
 
 Share_Shopping_Lists
+#TODO Add step with add to cart
     [Documentation]    Checks that shopping list can be shared
     Yves: login on Yves with provided credentials:    ${yves_company_user_shared_permission_owner_email}
     Yves: go to 'Shopping Lists' page
@@ -870,3 +871,5 @@ Refunds
     Zed: grand total for the order equals:    ${lastPlacedOrder}    €0.00
     [Teardown]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: activate following discounts from Overview page:    20% off storage    10% off minimum order
+
+#TODO: Add availability tests + OMS

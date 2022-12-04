@@ -49,6 +49,7 @@ Yves: create a new customer address in profile:
     Type Text    ${customer_account_address_city_field}     ${city}
     Type Text    ${customer_account_address_phone_field}     ${phone}
     Click    ${customer_account_address_submit_button}
+    Wait Until Element Is Visible    ${customer_account_add_new_address_button}[${env}]
 
 Yves: check that user has address exists/doesn't exist:
     [Arguments]    ${exists}    ${firstName}    ${lastName}    ${street}    ${houseNumber}    ${postCode}    ${city}    ${country}    ${isDefaultShipping}=True     ${isDefaultBilling}=True       ${company}=NUll    ${phone}=NUll    ${additionalAddress}=NUll
@@ -61,13 +62,13 @@ Yves: check that user has address exists/doesn't exist:
     Wait Until Element Is Visible    ${customer_account_add_new_address_button}[${env}]
     IF    '${exists}'=='true'
         Run keywords
-            Element Should Be Visible    xpath=//ul[contains(@class,'display-address')]//*[contains(text(),'${firstName} ${lastName}')]    AND
-            Element Should Be Visible    xpath=//ul[contains(@class,'display-address')]//*[contains(text(),'${street} ${houseNumber}')]    AND
+            Element Should Be Visible    xpath=//ul[contains(@class,'display-address')]//*[contains(text(),'${firstName} ${lastName}')]
+            Element Should Be Visible    xpath=//ul[contains(@class,'display-address')]//*[contains(text(),'${street} ${houseNumber}')]
             Element Should Be Visible    xpath=//ul[contains(@class,'display-address')]//*[contains(text(),'${postCode} ${city}, ${country}')]
     ELSE
         Run keywords
-            Element Should Not Be Visible    xpath=//ul[contains(@class,'display-address')]//*[contains(text(),'${firstName} ${lastName}')]    AND
-            Element Should Not Be Visible    xpath=//ul[contains(@class,'display-address')]//*[contains(text(),'${street} ${houseNumber}')]    AND
+            Element Should Not Be Visible    xpath=//ul[contains(@class,'display-address')]//*[contains(text(),'${firstName} ${lastName}')]
+            Element Should Not Be Visible    xpath=//ul[contains(@class,'display-address')]//*[contains(text(),'${street} ${houseNumber}')]
             Element Should Not Be Visible    xpath=//ul[contains(@class,'display-address')]//*[contains(text(),'${postCode} ${city}, ${country}')]
     END
 

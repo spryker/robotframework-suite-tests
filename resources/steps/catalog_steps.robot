@@ -57,6 +57,8 @@ Yves: 1st product card in catalog (not)contains:
         Element Should Be Visible    xpath=//product-item[@data-qa='component product-item'][1]//span[contains(@class,'default-price') and contains(.,'${value}')]
     ELSE IF    '${elementName}'=='Price' and '${value}'=='false'
         Element Should Not Be Visible    xpath=//product-item[@data-qa='component product-item'][1]//span[contains(@class,'default-price') and contains(.,'${value}')]
+    ELSE IF    '${elementName}'=='Original Price' and '${value}'=='false'
+        Element Should Not Be Visible    xpath=//product-item[@data-qa='component product-item'][1]//span[contains(@class,'original-price') and contains(.,'${value}')]
     ELSE IF    '${elementName}'=='Name' and '${value}'=='true'
         Element Should Be Visible    xpath=//product-item[@data-qa='component product-item'][1]//*[contains(@class,'item__name') and contains(.,'${value}')]
     ELSE IF    '${elementName}'=='Name' and '${value}'=='false'

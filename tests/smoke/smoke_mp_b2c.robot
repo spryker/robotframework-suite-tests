@@ -94,6 +94,7 @@ User_Account
     Yves: 'Newsletter' page is displayed
     Yves: go to user menu item in the left bar:    Returns
     Yves: 'Returns' page is displayed
+    Yves: delete all user addresses
     Yves: create a new customer address in profile:     Mr    ${yves_second_user_first_name} ${random}    ${yves_second_user_last_name} ${random}    Kirncher Str. ${random}    7    10247    Berlin${random}    Germany
     Yves: go to user menu item in the left bar:    Addresses
     Yves: 'Addresses' page is displayed
@@ -412,6 +413,9 @@ Split_Delivery
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
+    Yves: get the last placed order ID by current customer
+    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: order has the following number of shipments:    ${lastPlacedOrder}    3
     [Teardown]    Run Keywords    Yves: check if cart is not empty and clear it
     ...    AND    Yves: delete all user addresses
 
@@ -437,6 +441,7 @@ Agent_Assist
 Return_Management
 ### TODO add return item sstep from the MP
 ### Check that main merchant can see merchant return in My Returns
+### DONE
     [Documentation]    Checks that returns work and oms process is checked. 
     Yves: login on Yves with provided credentials:    ${yves_user_email}
     Yves: check if cart is not empty and clear it
@@ -445,6 +450,8 @@ Return_Management
     Yves: go to PDP of the product with sku:    008
     Yves: add product to the shopping cart
     Yves: go to PDP of the product with sku:    010
+    Yves: add product to the shopping cart
+    Yves: go to PDP of the product with sku:    012
     Yves: add product to the shopping cart
     Yves: go to b2c shopping cart
     Yves: click on the 'Checkout' button in the shopping cart
@@ -472,11 +479,18 @@ Return_Management
     Yves: get the last placed order ID by current customer
     Yves: 'View Order/Reorder/Return' on the order history page:     Return    ${lastPlacedOrder}
     Yves: 'Create Return' page is displayed
-    Yves: create return for the following products:    010_30692994
+    Yves: create return for the following products:    010_30692994    007_30691822
     Yves: 'Return Details' page is displayed
-    Yves: check that 'Print Slip' contains the following products:    010_30692994
+    Yves: check that 'Print Slip' contains the following products:    010_30692994    007_30691822
+    MP: login on MP with provided credentials:    ${merchant_spryker_email}
+    MP: open navigation menu tab:    Orders    
+    MP: wait for order to appear:    ${lastPlacedOrder}--${merchant_spryker_reference}
+    MP: click on a table row that contains:    ${lastPlacedOrder}--${merchant_spryker_reference}
+    MP: update order state using header button:    Execute return
+    MP: order states on drawer should contain:    returned
+    MP: order states on drawer should contain:    Shipped   
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    Zed: create a return for the following order and product in it:    ${lastPlacedOrder}    007_30691822
+    Zed: create a return for the following order and product in it:    ${lastPlacedOrder}    012_25904598
     Zed: create new Zed user with the following data:    returnagent+${random}@spryker.com    change123${random}    Agent    Assist    Root group    This user is an agent    en_US
     Yves: go to the 'Home' page
     Yves: logout on Yves as a customer
@@ -495,6 +509,10 @@ Return_Management
     Zed: login on Zed with provided credentials:    ${zed_main_merchant_email}
     Zed: go to my order page:    ${lastPlacedOrder}
     Zed: trigger matching state of xxx merchant's shipment:    1    Execute return
+    Zed: go to second navigation item level:    Sales    My Returns
+    Zed: table should contain xxx N times:    ${lastPlacedOrder}    3
+    Zed: view the latest return from My Returns:    ${lastPlacedOrder}
+    Zed: return details page contains the following items:    008_30692992
     Yves: login on Yves with provided credentials:    ${yves_user_email}
     Yves: go to user menu item in header:    Orders History
     Yves: 'Order History' page is displayed
@@ -537,6 +555,7 @@ Product_Relations
 Guest_Checkout
     [Documentation]    Guest checkout with discounts and OMS
 #TODO check that billing in Zed = from Yves and the same for shipping address
+##DONE
     Yves: go to the 'Home' page
     Yves: logout on Yves as a customer
     Yves: go to PDP of the product with sku:    007
@@ -575,6 +594,10 @@ Guest_Checkout
     Zed: get the last placed order ID of the customer by email:    sonia+guest${random}@spryker.com
     Zed: trigger all matching states inside xxx order:    ${zedLastPlacedOrder}    Pay
     Zed: go to my order page:    ${zedLastPlacedOrder}
+    Zed: billing address for the order should be:    First Last, Billing Street 123, 10247 Berlin, Germany
+    Zed: shipping address inside xxx shipment should be:    1    Dr First, Last, First Street, 1, Additional street, Spryker, 10247, Berlin, Germany 
+    Zed: shipping address inside xxx shipment should be:    2    Dr First, Last, Second Street, 2, Additional street, Spryker, 10247, Berlin, Germany 
+    Zed: shipping address inside xxx shipment should be:    3    Dr First, Last, Third Street, 3, Additional street, Spryker, 10247, Berlin, Germany 
     Zed: trigger matching state of xxx merchant's shipment:    1    send to distribution
     Zed: trigger matching state of xxx merchant's shipment:    1    confirm at center
     Zed: trigger matching state of xxx merchant's shipment:    1    Ship   
@@ -673,6 +696,8 @@ Multiple_Merchants_Order
     Yves: get the last placed order ID by current customer
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: order has the following number of shipments:    ${lastPlacedOrder}    3
+    [Teardown]    Run Keywords    Yves: login on Yves with provided credentials:    ${yves_second_user_email}
+    ...    AND    Yves: delete user address:    Kirncher Str. 7
 
 Merchant_Profile_Update
     [Documentation]    Checks that merchant profile could be updated from merchant portal and that changes will be displayed on Yves
@@ -763,6 +788,7 @@ Merchant_Profile_Set_to_Inactive_from_Backoffice
 
 Manage_Merchants_from_Backoffice
 #TODO# remove store relation -> check that mechant profile returns 404
+# DONE
     [Documentation]    Checks that backoffice admin is able to create, approve, edit merchants
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: create new Merchant with the following data:
@@ -785,6 +811,13 @@ Manage_Merchants_from_Backoffice
     Yves: assert merchant profile fields:
     ...    || name                         | email| phone | delivery time | data privacy ||
     ...    || NewMerchantUpdated${random}  |      |       |               |              ||
+    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: go to second navigation item level:    Marketplace    Merchants
+    Zed: click Action Button in a table for row that contains:    NewMerchantUpdated${random}    Edit
+    Zed: update Merchant on edit page with the following data:
+    ...    || merchant name | merchant reference | e-mail  | uncheck store | en url | de url ||
+    ...    ||               |                    |         | DE            |        |        ||
+    Yves: go to URL and refresh until 404 occurs:    ${host}en/merchant/NewMerchantURL${random}
     [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: go to second navigation item level:    Marketplace    Merchants  
     ...    AND    Zed: click Action Button in a table for row that contains:     NewMerchantUpdated${random}     Deactivate
@@ -795,34 +828,34 @@ Manage_Merchant_Users
     Zed: go to second navigation item level:    Marketplace    Merchants
     Zed: click Action Button in a table for row that contains:     Video King     Edit
     Zed: create new Merchant User with the following data:
-    ...    || e-mail                    | first name     | last name      ||
-    ...    || m_user+${random}@test.com | FName${random} | LName${random} ||
-    Zed: perform merchant user search by:     m_user+${random}@test.com
+    ...    || e-mail                         | first name     | last name      ||
+    ...    || sonia+mu+${random}@spryker.com | FName${random} | LName${random} ||
+    Zed: perform merchant user search by:     sonia+mu+${random}@spryker.com
     Zed: table should contain non-searchable value:    Deactivated
-    Zed: click Action Button in Merchant Users table for row that contains:    m_user+${random}@test.com    Activate
+    Zed: click Action Button in Merchant Users table for row that contains:    sonia+mu+${random}@spryker.com    Activate
     Zed: table should contain non-searchable value:    Active
-    Zed: click Action Button in Merchant Users table for row that contains:    m_user+${random}@test.com    Edit
+    Zed: click Action Button in Merchant Users table for row that contains:    sonia+mu+${random}@spryker.com    Edit
     Zed: update Merchant User on edit page with the following data:
     ...    || e-mail | first name           | last name ||
     ...    ||        | UpdatedName${random} |           ||
-    Zed: perform merchant user search by:    m_user+${random}@test.com
+    Zed: perform merchant user search by:    sonia+mu+${random}@spryker.com
     Zed: table should contain non-searchable value:    UpdatedName${random}
     Zed: update Zed user:
-    ...    || oldEmail                  | newEmail | password      | firstName | lastName ||
-    ...    || m_user+${random}@test.com |          | Change123!321 |           |          ||
-    MP: login on MP with provided credentials:    m_user+${random}@test.com    Change123!321
+    ...    || oldEmail                       | newEmail | password      | firstName | lastName ||
+    ...    || sonia+mu+${random}@spryker.com |          | Change123!321 |           |          ||
+    MP: login on MP with provided credentials:    sonia+mu+${random}@spryker.com    Change123!321
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Marketplace    Merchants
     Zed: click Action Button in a table for row that contains:     Video King     Edit
     Zed: go to tab:     Users
-    Zed: click Action Button in Merchant Users table for row that contains:    m_user+${random}@test.com    Deactivate
+    Zed: click Action Button in Merchant Users table for row that contains:    sonia+mu+${random}@spryker.com    Deactivate
     Zed: table should contain non-searchable value:    Deactivated
-    MP: login on MP with provided credentials and expect error:    m_user+${random}@test.com    Change123!321
+    MP: login on MP with provided credentials and expect error:    sonia+mu+${random}@spryker.com    Change123!321
     [Teardown]    Run Keywords     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: go to second navigation item level:    Marketplace    Merchants
     ...    AND    Zed: click Action Button in a table for row that contains:     Video King     Edit
     ...    AND    Zed: go to tab:     Users
-    ...    AND    Zed: click Action Button in Merchant Users table for row that contains:    m_user+${random}@test.com    Delete
+    ...    AND    Zed: click Action Button in Merchant Users table for row that contains:    sonia+mu+${random}@spryker.com    Delete
     ...    AND    Zed: submit the form
 
 Create_and_Approve_New_Merchant_Product
@@ -951,6 +984,7 @@ Approve_Offer
 
 Fulfill_Order_from_Merchant_Portal
 ##TODO add spec to change state only for one of the order items and check that other remain in their previous states
+#DONE
     [Documentation]    Checks that merchant is able to process his order through OMS from merchant portal
     [Setup]    Run Keywords    
     ...    MP: login on MP with provided credentials:    ${merchant_video_king_email}
@@ -961,9 +995,14 @@ Fulfill_Order_from_Merchant_Portal
     ...    AND    MP: change offer stock:
     ...    || offer   | stock quantity | is never out of stock ||
     ...    || offer89 | 10             | true                  ||
+    ...    AND    MP: change offer stock:
+    ...    || offer    | stock quantity | is never out of stock ||
+    ...    || offer410 | 10             | true                  ||
     ...    AND    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: change product stock:    ${one_variant_product_of_main_merchant_abstract_sku}    ${one_variant_product_of_main_merchant_concrete_sku}    true    10    10
     ...    AND    Yves: login on Yves with provided credentials:    ${yves_user_email}
+    ...    AND    Yves: delete all user addresses
+    ...    AND    Yves: create a new customer address in profile:     Mr    ${yves_user_first_name}    ${yves_user_last_name}    Kirncher Str.    7    10247    Berlin    Germany
     ...    AND    Yves: check if cart is not empty and clear it
     Yves: go to PDP of the product with sku:    ${one_variant_product_of_main_merchant_abstract_sku}
     Yves: add product to the shopping cart
@@ -976,6 +1015,9 @@ Fulfill_Order_from_Merchant_Portal
     Yves: go to PDP of the product with sku:     ${second_product_with_multiple_offers_abstract_sku}
     Yves: select xxx merchant's offer:    Video King
     Yves: product price on the PDP should be:    ${second_product_with_multiple_offers_video_king_price}
+    Yves: add product to the shopping cart
+    Yves: go to PDP of the product with sku:    104
+    Yves: select xxx merchant's offer:    Budget Cameras
     Yves: add product to the shopping cart
     Yves: go to b2c shopping cart
     Yves: assert merchant of product in b2c cart:    ${one_variant_product_of_main_merchant_abstract_name}    Spryker
@@ -1001,11 +1043,21 @@ Fulfill_Order_from_Merchant_Portal
     MP: open navigation menu tab:    Orders    
     MP: wait for order to appear:    ${lastPlacedOrder}--${merchant_budget_cameras_reference}
     MP: click on a table row that contains:    ${lastPlacedOrder}--${merchant_budget_cameras_reference}
-    MP: order grand total should be:    €103.42
+    MP: order grand total should be:    €247.08
     MP: update order state using header button:    Ship
-    MP: order state on drawer should be:    Shipped   
+    MP: order states on drawer should contain:    Shipped 
+    MP: switch to the tab:    Items
+    MP: change order item state on:    041_25904691    deliver
+    MP: switch to the tab:    Items
+    MP: order item state should be:    104_30727010    shipped
+    MP: order item state should be:    041_25904691    delivered
+    [Teardown]    Run Keywords    Yves: login on Yves with provided credentials:    ${yves_user_email}
+    ...    AND    Yves: delete all user addresses
     MP: update order state using header button:    deliver
-    MP: order state on drawer should be:    Delivered
+    MP: order states on drawer should contain:    Delivered
+    MP: switch to the tab:    Items
+    MP: order item state should be:    104_30727010    delivered
+    MP: order item state should be:    041_25904691    delivered
 
 Wishlist_List_Supports_Offers
     [Documentation]    Checks that customer is able to add merchant products and offers to list and merchant relation won't be lost in list and afterwards in cart
@@ -1195,27 +1247,27 @@ Merchant_Portal_My_Account
     Zed: go to second navigation item level:    Marketplace    Merchants
     Zed: click Action Button in a table for row that contains:     Sony Experts     Edit
     Zed: create new Merchant User with the following data:
-    ...    || e-mail                       | first name     | last name      ||
-    ...    || edit_user+${random}@test.com | FName${random} | LName${random} ||
-    Zed: perform merchant user search by:     edit_user+${random}@test.com
+    ...    || e-mail                             | first name     | last name      ||
+    ...    || sonia+editmu+${random}@spryker.com | FName${random} | LName${random} ||
+    Zed: perform merchant user search by:     sonia+editmu+${random}@spryker.com
     Zed: table should contain non-searchable value:    Deactivated
-    Zed: click Action Button in Merchant Users table for row that contains:    edit_user+${random}@test.com    Activate
+    Zed: click Action Button in Merchant Users table for row that contains:    sonia+editmu+${random}@spryker.com    Activate
     Zed: table should contain non-searchable value:    Active
     Zed: update Zed user:
-    ...    || oldEmail                     | newEmail | password      | firstName | lastName ||
-    ...    || edit_user+${random}@test.com |          | Change123!321 |           |          ||
-    MP: login on MP with provided credentials:    edit_user+${random}@test.com    Change123!321
+    ...    || oldEmail                           | newEmail | password      | firstName | lastName ||
+    ...    || sonia+editmu+${random}@spryker.com |          | Change123!321 |           |          ||
+    MP: login on MP with provided credentials:    sonia+editmu+${random}@spryker.com    Change123!321
     MP: update merchant personal details with data:
-    ...    || firstName               | lastName                | email                            | currentPassword | newPassword          ||
-    ...    || MPUpdatedFName${random} | MPUpdatedLName${random} | new_edit_user+${random}@test.com | Change123!321   | UpdatedChange123!321 ||
+    ...    || firstName               | lastName                | email                                  | currentPassword | newPassword          ||
+    ...    || MPUpdatedFName${random} | MPUpdatedLName${random} | sonia+new+editmu+${random}@spryker.com | Change123!321   | UpdatedChange123!321 ||
     MP: click submit button
-    MP: login on MP with provided credentials:    new_edit_user+${random}@test.com    UpdatedChange123!321
+    MP: login on MP with provided credentials:    sonia+new+editmu+${random}@spryker.com    UpdatedChange123!321
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Users    Users
     Zed: table should contain:    MPUpdatedFName${random}
     Zed: table should contain:    MPUpdatedLName${random}
     [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    ...    AND    Zed: delete Zed user with the following email:    new_edit_user+${random}@test.com
+    ...    AND    Zed: delete Zed user with the following email:    sonia+new+editmu+${random}@spryker.com
     
 Merchant_Portal_Dashboard
     [Documentation]    Checks that merchant user is able to access the dashboard page. Bug: CC-23118
@@ -1223,33 +1275,393 @@ Merchant_Portal_Dashboard
     Zed: go to second navigation item level:    Marketplace    Merchants
     Zed: click Action Button in a table for row that contains:     Sony Experts     Edit
     Zed: create new Merchant User with the following data:
-    ...    || e-mail                            | first name     | last name      ||
-    ...    || dashboard_user+${random}@test.com | FName${random} | LName${random} ||
-    Zed: perform merchant user search by:     dashboard_user+${random}@test.com
+    ...    || e-mail                               | first name     | last name      ||
+    ...    || sonia+dahboard+${random}@spryker.com | FName${random} | LName${random} ||
+    Zed: perform merchant user search by:     sonia+dahboard+${random}@spryker.com
     Zed: table should contain non-searchable value:    Deactivated
-    Zed: click Action Button in Merchant Users table for row that contains:    dashboard_user+${random}@test.com    Activate
+    Zed: click Action Button in Merchant Users table for row that contains:    sonia+dahboard+${random}@spryker.com    Activate
     Zed: table should contain non-searchable value:    Active
     Zed: update Zed user:
-    ...    || oldEmail                          | newEmail | password      | firstName | lastName ||
-    ...    || dashboard_user+${random}@test.com |          | Change123!321 |           |          ||
-    MP: login on MP with provided credentials:    dashboard_user+${random}@test.com    Change123!321
+    ...    || oldEmail                             | newEmail | password      | firstName | lastName ||
+    ...    || sonia+dahboard+${random}@spryker.com |          | Change123!321 |           |          ||
+    MP: login on MP with provided credentials:    sonia+dahboard+${random}@spryker.com    Change123!321
     MP: click button on dashboard page and check url:    Manage Offers    /product-offers
     MP: click button on dashboard page and check url:    Add Offer    /product-list
     MP: click button on dashboard page and check url:    Manage Orders    /orders
     [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    ...    AND    Zed: delete Zed user with the following email:    dashboard_user+${random}@test.com
+    ...    AND    Zed: delete Zed user with the following email:    sonia+dahboard+${random}@spryker.com
+
+Merchant_Product_Offer_in_Backoffice
+# #TODO Add filter dropdown in BO + view offer
+DONE
+    [Documentation]    Check View action and filtration for Mproduct and Moffer in backoffice
+    MP: login on MP with provided credentials:    ${merchant_spryker_email}
+    MP: open navigation menu tab:    Products    
+    MP: click on create new entity button:    Create Product
+    MP: create multi sku product with following data:
+    ...    || product sku      | product name         | first attribute name | first attribute first value | first attribute second value | second attribute name | second attribute value ||
+    ...    || ViewSKU${random} | ViewProduct${random} | packaging_unit       | Item                        | Box                          | series                | Ace Plus               ||
+    MP: perform search by:    ViewProduct${random}
+    MP: click on a table row that contains:     ViewProduct${random}
+    MP: fill abstract product required fields:
+    ...    || product name DE      | store | tax set           ||
+    ...    || ViewProduct${random} | DE    | Smart Electronics ||
+    MP: fill product price values:
+    ...    || product type | row number | store | currency | gross default ||
+    ...    || abstract     | 1          | DE    | EUR      | 100           ||
+    MP: fill product price values:
+    ...    || product type | row number | store | currency | gross default | quantity ||
+    ...    || abstract     | 2          | DE    | EUR      | 10            | 2        ||
+    MP: save abstract product 
+    MP: click on a table row that contains:    ViewProduct${random}
+    MP: open concrete drawer by SKU:    ViewSKU${random}-2
+    MP: fill concrete product fields:
+    ...    || is active | stock quantity | use abstract name | searchability ||
+    ...    || true      | 100            | true              | en_US         ||
+    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: go to second navigation item level:    Catalog    Products 
+    Zed: click Action Button in a table for row that contains:     ViewProduct${random}     Approve
+    MP: login on MP with provided credentials:    ${merchant_video_king_email}
+    MP: open navigation menu tab:    Offers
+    MP: click on create new entity button:    Add Offer
+    MP: perform search by:    ViewSKU${random}-2
+    MP: click on a table row that contains:    ViewSKU${random}-2
+    MP: fill offer fields:
+    ...    || is active | merchant sku             | store | stock quantity ||
+    ...    || true      | viewMerchantSKU${random} | DE    | 100            ||
+    MP: add offer price:
+    ...    || row number | store | currency | gross default ||
+    ...    || 1          | DE    | CHF      | 100           ||
+    MP: add offer price:
+    ...    || row number | store | currency | gross default | quantity ||
+    ...    || 2          | DE    | EUR      | 200           | 1        ||
+    MP: add offer price:
+    ...    || row number | store | currency | gross default | quantity ||
+    ...    || 3          | DE    | EUR      | 10            | 2        ||
+    MP: save offer
+    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: go to second navigation item level:    Catalog    Products
+    Zed: filter by merchant:    Spryker
+    Zed: table should contain:    ViewSKU${random}
+    Zed: click Action Button in a table for row that contains:     ViewProduct${random}     View
+    Zed: view product page is displayed
+    Zed: view abstract product page contains:
+    ...    || merchant | status   | store | sku              | name                 ||
+    ...    || Spryker  | Approved | DE    | ViewSKU${random} | ViewProduct${random} ||
+    Zed: go to second navigation item level:    Marketplace    Offers
+    Zed: filter by merchant:    Video King
+    Zed: table should contain:    ViewSKU${random}-2
+    Zed: click Action Button in a table for row that contains:     ViewSKU${random}-2     View
+    Zed: view offer page is displayed
+    Zed: view offer product page contains:
+    ...    || approval status | status | store | sku                | name                 | merchant   | merchant sku             ||
+    ...    || Approved        | Active | DE    | ViewSKU${random}-2 | ViewProduct${random} | Video King | viewMerchantSKU${random} ||
+    [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    ...    AND    Zed: go to second navigation item level:    Catalog    Products 
+    ...    AND    Zed: click Action Button in a table for row that contains:     ViewProduct${random}     Deny
+
+Manage_Merchant_Product
+# #TODO: add new product from MP -> Set new from to (not available in MP) -> check label (P&S block) -> check price -> Add new concrete with another price -> switch concrete check price -> View new product in BO -> change product name and price ->see changes
+# DONE
+    [Documentation]    checks that MU and BO user can manage merchant abstract and concrete products
+    MP: login on MP with provided credentials:    ${merchant_budget_cameras_email}
+    MP: open navigation menu tab:    Products    
+    MP: click on create new entity button:    Create Product
+    MP: create multi sku product with following data:
+    ...    || product sku        | product name           | first attribute name | first attribute first value | first attribute second value | second attribute name | second attribute value ||
+    ...    || manageSKU${random} | manageProduct${random} | packaging_unit       | Item                        | Box                          | series                | Ace Plus               ||
+    MP: perform search by:    manageProduct${random}
+    MP: click on a table row that contains:     manageProduct${random}
+    MP: fill abstract product required fields:
+    ...    || product name DE        | store | tax set           ||
+    ...    || manageProduct${random} | DE    | Smart Electronics ||
+    MP: fill product price values:
+    ...    || product type | row number  | store | currency | gross default | gross original ||
+    ...    || abstract     | 1           | DE    | EUR      | 100           | 90             ||
+    MP: save abstract product 
+    MP: click on a table row that contains:    manageProduct${random}
+    MP: open concrete drawer by SKU:    manageSKU${random}-1
+    MP: fill concrete product fields:
+    ...    || is active | stock quantity | use abstract name | searchability ||
+    ...    || true      | 100            | true              | en_US         ||
+    MP: open concrete drawer by SKU:    manageSKU${random}-2
+    MP: fill concrete product fields:
+    ...    || is active | stock quantity | use abstract name | searchability ||
+    ...    || true      | 3              | true              | en_US         ||
+    MP: open concrete drawer by SKU:    manageSKU${random}-1
+    MP: fill product price values:
+    ...    || product type | row number | store | currency | gross default ||
+    ...    || concrete     | 1          | DE    | EUR      | 50            ||
+    MP: save concrete product
+    MP: open concrete drawer by SKU:    manageSKU${random}-2
+    MP: fill product price values:
+    ...    || product type | row number | store | currency | gross default ||
+    ...    || concrete     | 1          | DE    | EUR      | 20            ||
+    MP: fill product price values:
+    ...    || product type | row number | store | currency | gross default | quantity ||
+    ...    || concrete     | 2          | DE    | EUR      | 10            | 2        ||
+    MP: save concrete product
+    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: go to second navigation item level:    Catalog    Products 
+    Zed: click Action Button in a table for row that contains:     manageProduct${random}     Approve
+    Yves: login on Yves with provided credentials:    ${yves_user_email}   
+    Yves: go to URL:    en/search?q=manageSKU${random}
+    Try reloading page until element is/not appear:    ${catalog_product_card_locator}    true    15    5s
+    Yves: go to PDP of the product with sku:     manageSKU${random}
+    Yves: product price on the PDP should be:    €100.00
+    Yves: change variant of the product on PDP on:    Item
+    Yves: product price on the PDP should be:    €50.00
+    Yves: merchant's offer/product price should be:    Budget Cameras    €50.00
+    Yves: reset selected variant of the product on PDP
+    Yves: change variant of the product on PDP on:    Box
+    Reload
+    Yves: change quantity using '+' or '-' button № times:    +    5
+    Yves: product price on the PDP should be:    €10.00
+    Yves: merchant's offer/product price should be:    Budget Cameras     €10.00
+    Yves: try add product to the cart from PDP and expect error:    Item manageSKU${random}-2 only has availability of 3.
+    Yves: change quantity using '+' or '-' button № times:    +    2
+    Yves: product price on the PDP should be:    €10.00
+    Yves: merchant's offer/product price should be:    Budget Cameras     €10.00
+    Yves: add product to the shopping cart
+    Yves: go to b2c shopping cart
+    Yves: shopping cart contains product with unit price:    manageProduct${random}    manageProduct${random}    30.00
+    Yves: assert merchant of product in b2c cart:    manageProduct${random}    Budget Cameras
+    MP: login on MP with provided credentials:    ${merchant_budget_cameras_email}
+    MP: open navigation menu tab:    Products    
+    MP: perform search by:    manageProduct${random}
+    MP: click on a table row that contains:     manageProduct${random}
+    MP: add new concrete product:
+    ...    || first attribute | first attribute value | second attribute | second attribute value ||
+    ...    || packaging_unit  | Giftbox               | series           | Ace Plus               ||
+    MP: save abstract product
+    MP: perform search by:    manageProduct${random}
+    MP: click on a table row that contains:     manageProduct${random}
+    MP: open concrete drawer by SKU:    manageSKU${random}-3
+    MP: fill concrete product fields:
+    ...    || is active | stock quantity | use abstract name | searchability ||
+    ...    || true      | 3              | true              | en_US         ||
+    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: go to second navigation item level:    Catalog    Products 
+    Zed: click Action Button in a table for row that contains:     manageProduct${random}     View
+    Zed: view product page is displayed
+    Zed: view abstract product page contains:
+    ...    || merchant        | status   | store | sku                | name                   | variants count ||
+    ...    || Budget Cameras  | Approved | DE    | manageSKU${random} | manageProduct${random} | 3              ||
+    Zed: update abstract product price on:
+    ...    || productAbstract    | store | mode  | type    | currency | amount ||
+    ...    || manageSKU${random} | DE    | gross | default | €        | 110.00 ||
+    Zed: update abstract product data:
+    ...    || productAbstract    | store | name en                         | name de                         | new from   | new to     ||
+    ...    || manageSKU${random} | AT    | ENUpdatedmanageProduct${random} | DEUpdatedmanageProduct${random} | 01.01.2020 | 01.01.2030 ||
+    Zed: go to second navigation item level:    Catalog    Products
+    Zed: table should contain:    ENUpdatedmanageProduct${random}
+    Zed: change concrete product price on:
+    ...    || productAbstract    | productConcrete      | store | mode  | type   | currency | amount ||
+    ...    || manageSKU${random} | manageSKU${random}-3 | DE    | gross | default| €        | 15.00  ||
+    Yves: login on Yves with provided credentials:    ${yves_user_email}
+    Yves: go to PDP of the product with sku:     manageSKU${random}
+    Yves: product name on PDP should be:    ENUpdatedmanageProduct${random}
+    Yves: product price on the PDP should be:    €110.00
+    Yves: change variant of the product on PDP on:    Giftbox
+    Yves: product price on the PDP should be:    €15.00
+    [Teardown]    Run Keywords    Yves: check if cart is not empty and clear it
+    ...    AND    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    ...    AND    Zed: go to second navigation item level:    Catalog    Products 
+    ...    AND    Zed: click Action Button in a table for row that contains:     manageSKU${random}     Deny
+
+Merchant_Product_Original_Price
+#TODO: Original price in MP + New + Sale labels
+# DONE
+    [Documentation]    checks that Orignal price is displayed on the PDP and in Catalog
+    MP: login on MP with provided credentials:    ${merchant_budget_cameras_email}
+    MP: open navigation menu tab:    Products    
+    MP: click on create new entity button:    Create Product
+    MP: create multi sku product with following data:
+    ...    || product sku          | product name             | first attribute name | first attribute first value | first attribute second value | second attribute name | second attribute value ||
+    ...    || originalSKU${random} | originalProduct${random} | packaging_unit       | Item                        | Box                          | series                | Ace Plus               ||
+    MP: perform search by:    originalProduct${random}
+    MP: click on a table row that contains:     originalProduct${random}
+    MP: fill abstract product required fields:
+    ...    || product name DE          | store | tax set           ||
+    ...    || originalProduct${random} | DE    | Smart Electronics ||
+    MP: fill product price values:
+    ...    || product type | row number  | store | currency | gross default | gross original  ||
+    ...    || abstract     | 1           | DE    | EUR      | 100           | 150             ||
+    MP: save abstract product 
+    MP: click on a table row that contains:    originalProduct${random}
+    MP: open concrete drawer by SKU:    originalSKU${random}-1
+    MP: fill concrete product fields:
+    ...    || is active | stock quantity | use abstract name | searchability ||
+    ...    || true      | 100            | true              | en_US         ||
+    MP: open concrete drawer by SKU:    originalSKU${random}-2
+    MP: fill concrete product fields:
+    ...    || is active | stock quantity | use abstract name | searchability ||
+    ...    || true      | 3              | true              | en_US         ||
+    MP: open concrete drawer by SKU:    originalSKU${random}-1
+    MP: fill product price values:
+    ...    || product type | row number | store | currency | gross default ||
+    ...    || concrete     | 1          | DE    | EUR      | 50            ||
+    MP: save concrete product
+    MP: open concrete drawer by SKU:    originalSKU${random}-2
+    MP: fill product price values:
+    ...    || product type | row number | store | currency | gross default ||
+    ...    || concrete     | 1          | DE    | EUR      | 20            ||
+    MP: fill product price values:
+    ...    || product type | row number | store | currency | gross default | quantity ||
+    ...    || concrete     | 2          | DE    | EUR      | 10            | 2        ||
+    MP: save concrete product
+    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: go to second navigation item level:    Catalog    Products 
+    Zed: click Action Button in a table for row that contains:     originalProduct${random}     Approve
+    Yves: login on Yves with provided credentials:    ${yves_user_email}   
+    Yves: go to URL:    en/search?q=originalSKU${random}
+    Try reloading page until element is/not appear:    ${catalog_product_card_locator}    true    15    5s
+    Yves: 1st product card in catalog (not)contains:     Price    €100.00
+    Yves: 1st product card in catalog (not)contains:     Original Price    €150.00
+    Yves: go to PDP of the product with sku:     originalSKU${random}
+    Yves: product price on the PDP should be:    €100.00
+    Yves: product original price on the PDP should be:    €150.00
+    [Teardown]    Run Keywords    Yves: check if cart is not empty and clear it
+    ...    AND    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    ...    AND    Zed: go to second navigation item level:    Catalog    Products 
+    ...    AND    Zed: click Action Button in a table for row that contains:     originalSKU${random}     Deny
+
+Checkout_Address_Management
+# #TODO: on checkout retunr and change shipment method -> place an order and check in Zed applied shipment
+# DONE
+    [Documentation]    Bug:CC-24090. Checks that user can change address during the checkout and save new into the address book
+    [Setup]    Run Keywords    
+    ...    Yves: login on Yves with provided credentials:    ${yves_user_email}
+    ...    AND    Yves: delete all user addresses
+    ...    AND    Yves: check if cart is not empty and clear it
+    ...    AND    Yves: create a new customer address in profile:     Mr    ${yves_user_first_name}    ${yves_user_last_name}    Kirncher Str.    7    10247    Berlin    Germany
+    Yves: go to PDP of the product with sku:    007
+    Yves: add product to the shopping cart
+    Yves: go to b2c shopping cart
+    Yves: click on the 'Checkout' button in the shopping cart
+    Yves: billing address same as shipping address:    false
+    Yves: fill in the following new billing address:
+    ...    || salutation | firstName | lastName | street         | houseNumber | postCode | city   | country | company | phone     | additionalAddress ||
+    ...    || Mr.        | First     | Last     | Billing Street | 123         | 10247    | Berlin | Germany | Spryker | 987654321 | Additional street ||
+    Yves: save new billing address to address book:    false
+    Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${yves_user_address}
+    Yves: submit form on the checkout
+    Yves: select the following shipping method on the checkout and go next:    Express
+    Yves: select the following payment method on the checkout and go next:    Invoice
+    Yves: return to the previous checkout step:    Address
+    Yves: fill in the following new billing address:
+    ...    || salutation | firstName | lastName | street         | houseNumber | postCode | city   | country | company | phone     | additionalAddress ||
+    ...    || Mr.        | New       | Billing  | Changed Street | 098         | 09876    | Berlin | Germany | Spryker | 987654321 | Additional street ||
+    Yves: save new billing address to address book:    false
+    Yves: fill in the following new shipping address:
+    ...    || salutation | firstName | lastName | street          | houseNumber | postCode | city   | country | company | phone     | additionalAddress ||
+    ...    || Mr.        | First     | Last     | Shipping Street | 7           | 10247    | Vienna | Austria | Spryker | 123456789 | Additional street ||
+    Yves: save new deviery address to address book:    true
+    Yves: submit form on the checkout
+    Yves: select the following shipping method on the checkout and go next:    Express
+    Yves: select the following payment method on the checkout and go next:    Invoice
+    Yves: accept the terms and conditions:    true
+    Yves: 'submit the order' on the summary page
+    Yves: 'Thank you' page is displayed
+    Yves: get the last placed order ID by current customer
+    Yves: go to user menu item in header:    Overview
+    Yves: go to user menu item in the left bar:    Addresses
+    Yves: 'Addresses' page is displayed
+    Yves: check that user has address exists/doesn't exist:    true    First    Last    Shipping Street    7    10247    Vienna    Austria
+    Yves: check that user has address exists/doesn't exist:    false    New    Billing    Changed Street    098    09876    Berlin    Germany
+    Zed: login on Zed with provided credentials:    ${zed_main_merchant_email}
+    Zed: go to order page:    ${lastPlacedOrder}
+    Zed: billing address for the order should be:    New Billing, Changed Street 098, 09876 Berlin, Germany
+    Zed: shipping address inside xxx shipment should be:    1    Mr First, Last, Shipping Street, 7, Additional street, Spryker, 10247, Vienna, Austria 
+    [Teardown]    Run Keywords    Yves: login on Yves with provided credentials:    ${yves_user_email}
+    ...    AND    Yves: delete all user addresses
+
+Manage_Shipments
+# #TODO Create shipment in backoffice + Edit shipment in backoffice
+# DONE
+    [Documentation]    Checks create/edit shipment functions from backoffice
+    Yves: login on Yves with provided credentials:    ${yves_user_email}
+    Yves: delete all user addresses
+    Yves: check if cart is not empty and clear it
+    Yves: go to PDP of the product with sku:    007
+    Yves: add product to the shopping cart
+    Yves: go to PDP of the product with sku:    005
+    Yves: add product to the shopping cart
+    Yves: go to PDP of the product with sku:    012
+    Yves: add product to the shopping cart
+    Yves: go to b2c shopping cart
+    Yves: click on the 'Checkout' button in the shopping cart
+    Yves: select delivery to multiple addresses
+    Yves: fill in new delivery address for a product:
+    ...    || product        | salutation | firstName | lastName | street       | houseNumber | postCode | city   | country | company | phone     | additionalAddress ||
+    ...    || Canon IXUS 285 | Dr.        | First     | Last     | First Street | 1           | 10247    | Berlin | Germany | Spryker | 123456789 | Additional street ||
+   Yves: fill in new delivery address for a product:
+    ...    || product        | salutation | firstName | lastName | street       | houseNumber | postCode | city   | country | company | phone     | additionalAddress ||
+    ...    || Canon IXUS 175 | Dr.        | First     | Last     | First Street | 1           | 10247    | Berlin | Germany | Spryker | 123456789 | Additional street ||
+   Yves: fill in new delivery address for a product:
+    ...    || product        | salutation | firstName | lastName | street       | houseNumber | postCode | city   | country | company | phone     | additionalAddress ||
+    ...    || Canon IXUS 165 | Dr.        | First     | Last     | First Street | 1           | 10247    | Berlin | Germany | Spryker | 123456789 | Additional street ||
+    Yves: fill in the following new billing address:
+    ...    || salutation | firstName | lastName | street         | houseNumber | postCode | city   | country | company | phone     | additionalAddress ||
+    ...    || Mr.        | First     | Last     | Billing Street | 123         | 10247    | Berlin | Germany | Spryker | 987654321 | Additional street ||
+    Yves: submit form on the checkout
+    Yves: select the following shipping method for the shipment:    1    Hermes    Next Day
+    Yves: submit form on the checkout
+    Yves: select the following payment method on the checkout and go next:    Invoice
+    Yves: accept the terms and conditions:    true
+    Yves: 'submit the order' on the summary page
+    Yves: 'Thank you' page is displayed
+    Yves: get the last placed order ID by current customer
+    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: grand total for the order equals:    ${lastPlacedOrder}    €577.32
+    Zed: order has the following number of shipments:    ${lastPlacedOrder}    1
+    Zed: shipment data inside xxx shipment should be:
+    ...    || shipment n | delivery method | shipping method | shipping costs | requested delivery date ||
+    ...    || 1          | Hermes          | Next Day        | €15.00         | ASAP                    ||
+    Zed: create new shipment inside the order:
+    ...    || delivert address | salutation | first name | last name | email              | country | address 1     | address 2 | city   | zip code | shipment method | sku          ||
+    ...    || New address      | Mr         | Evil       | Tester    | ${yves_user_email} | Austria | Hartmanngasse | 1         | Vienna | 1050     | DHL - Standard  | 012_25904598 ||
+    Zed: billing address for the order should be:    First Last, Billing Street 123, 10247 Berlin, Germany
+    Zed: order has the following number of shipments:    ${lastPlacedOrder}    2
+    Zed: shipping address inside xxx shipment should be:    1    Dr First, Last, First Street, 1, Additional street, Spryker, 10247, Berlin, Germany
+    Zed: shipping address inside xxx shipment should be:    2    Mr Evil, Tester, Hartmanngasse, 1, 1050, Vienna, Austria
+    Zed: shipment data inside xxx shipment should be:
+    ...    || shipment n | delivery method | shipping method | shipping costs | requested delivery date ||
+    ...    || 2          | DHL             | Standard        | €0.00          | ASAP                    ||
+    Zed: edit xxx shipment inside the order:
+    ...    || shipmentN | delivert address | salutation | first name | last name | email              | country | address 1     | address 2 | city   | zip code | shipment method | requested delivery date | sku          ||
+    ...    || 2         | New address      | Mr         | Edit       | Shipment  | ${yves_user_email} | Germany | Hartmanngasse | 9         | Vienna | 0987     | DHL - Express   | 2025-01-25              | 005_30663301 ||
+    Zed: order has the following number of shipments:    ${lastPlacedOrder}    3
+    Zed: shipment data inside xxx shipment should be:
+    ...    || shipment n | delivery method | shipping method | shipping costs | requested delivery date ||
+    ...    || 2          | DHL             | Standard        |  €0.00         | ASAP                    ||
+    Zed: shipment data inside xxx shipment should be:
+    ...    || shipment n | delivery method | shipping method | shipping costs | requested delivery date ||
+    ...    || 3          | DHL             | Express         |  €0.00         | 2025-01-25              ||
+    Zed: xxx shipment should/not contain the following products:    1    true    007_30691822
+    Zed: xxx shipment should/not contain the following products:    1    false    012_25904598
+    Zed: xxx shipment should/not contain the following products:    2    true    012_25904598
+    Zed: xxx shipment should/not contain the following products:    3    true    005_30663301
+    Zed: grand total for the order equals:    ${lastPlacedOrder}    €577.32
+    [Teardown]    Run Keywords    Yves: login on Yves with provided credentials:    ${yves_user_email}
+    ...    AND    Yves: check if cart is not empty and clear it
+    ...    AND    Yves: delete all user addresses
+
+# Order_Cancelation
+# #TODO Order Cancelation
+# Not available in Marketplace
+
+# Minimum_Order_Value
+# # # #TODO: Minimum Order value:
+#     [Documentation]    checks that global minimum and maximun order thresholds can be applied
 
 
-#TODO Add filter dropdown in BO + view offer + view Volume price
-#TODO: add new product from MP -> Set new from to -> check label -> check price -> Add new concrete with another price -> switch concrete check price -> View new product in BO -> change product name and price ->see changes
-#TODO: on checkout retunr and change shipment method -> place an order and check in Zed applied shipment
-#TODO Create shipment in backoffice + Edit shipment in backoffice
-#TODO Order Cancelation
-# #TODO: Minimum Order value:
-# check hard global threshold (maximum)-> blocked on checkout
-# add global soft minimum - see fee in cart and on checkout -> change cart items to pass only hard -> place order -> check grand total (fee was added)
-#TODO Multistore: Different price on AT and DE + Discont + CMS page + availability + store relation for the product
-#TODO: MP product and MP offer availability
-# TODOD: Reorder
-# GLOSARY 
-# USER CONTROL
+
+
+# # check hard global threshold (maximum)-> blocked on checkout
+# # add global soft minimum - see fee in cart and on checkout -> change cart items to pass only hard -> place order -> check grand total (fee was added)
+# #TODO Multistore: Different price on AT and DE + Discont + CMS page + availability + store relation for the product and offer
+# #TODO: MP product and MP offer availability
+# # TODOD: Reorder
+# # GLOSARY 
+# # USER CONTROL

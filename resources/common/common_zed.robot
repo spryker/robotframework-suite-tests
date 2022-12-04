@@ -12,6 +12,7 @@ ${zed_table_locator}    xpath=//table[contains(@class,'dataTable')]/tbody
 ${zed_search_field_locator}     xpath=//input[@type='search']
 ${zed_variant_search_field_locator}     xpath=//*[@id='product-variant-table_filter']//input[@type='search']
 ${zed_processing_block_locator}     xpath=//div[contains(@id,'processing')][contains(@class,'dataTables_processing')]
+${zed_merchants_dropdown_locator}    xpath=//select[@name='id-merchant']
 
 
 *** Keywords ***
@@ -66,8 +67,8 @@ Zed: wait for button in Header to be visible:
 Zed: click Action Button in a table for row that contains:
     [Arguments]    ${row_content}    ${zed_table_action_button_locator}
     Zed: perform search by:    ${row_content}
-    wait until element is visible    xpath=//table[contains(@class,'dataTable')]/tbody//td[contains(text(),'${row_content}')]/../td[contains(@class,'column-Action') or contains(@class,'column-action')]/*[contains(.,'${zed_table_action_button_locator}')]
-    Click    xpath=//table[contains(@class,'dataTable')]/tbody//td[contains(text(),'${row_content}')]/../td[contains(@class,'column-Action') or contains(@class,'column-action')]/*[contains(.,'${zed_table_action_button_locator}')]
+    wait until element is visible    xpath=(//table[contains(@class,'dataTable')]/tbody//td[contains(text(),'${row_content}')]/../td[contains(@class,'column-Action') or contains(@class,'column-action')]/*[contains(.,'${zed_table_action_button_locator}')])[1]
+    Click    xpath=(//table[contains(@class,'dataTable')]/tbody//td[contains(text(),'${row_content}')]/../td[contains(@class,'column-Action') or contains(@class,'column-action')]/*[contains(.,'${zed_table_action_button_locator}')])[1]
 
 Zed: click Action Button in Variant table for row that contains:
     [Arguments]    ${row_content}    ${zed_table_action_button_locator}
@@ -131,7 +132,14 @@ Zed: table should contain:
 Zed: table should contain non-searchable value:
     [Arguments]    ${search_key}
     Wait Until Element Is Visible    ${zed_table_locator}
-    Table Should Contain    ${zed_table_locator}  ${search_key}    
+    Table Should Contain    ${zed_table_locator}  ${search_key}  
+
+Zed: table should contain xxx N times:
+    [Arguments]    ${search_key}    ${expected_count}
+    Wait Until Element Is Visible    ${zed_table_locator}
+    Zed: perform search by:    ${search_key}
+    ${actual_count}=    Get Element Count    xpath=//table[contains(@class,'dataTable')]/tbody//*[contains(text(),'${search_key}')]
+    Should Be Equal    '${actual_count}'    '${expected_count}'
 
 Zed: go to tab:
     [Arguments]    ${tabName}
@@ -151,3 +159,7 @@ Zed: click Action Button(without search) in a table for row that contains:
     wait until element is visible    xpath=//table[contains(@class,'dataTable')]/tbody//td[contains(text(),'${row_content}')]/../td[contains(@class,'column-Action') or contains(@class,'column-action')]/*[contains(.,'${zed_table_action_button_locator}')]
     Click    xpath=//table[contains(@class,'dataTable')]/tbody//td[contains(text(),'${row_content}')]/../td[contains(@class,'column-Action') or contains(@class,'column-action')]/*[contains(.,'${zed_table_action_button_locator}')]
 
+Zed: filter by merchant:
+    [Arguments]    ${merchant}
+    Wait Until Element Is Visible    ${zed_merchants_dropdown_locator}
+    Select From List By Label    ${zed_merchants_dropdown_locator}    ${merchant}

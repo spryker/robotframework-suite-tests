@@ -83,13 +83,30 @@ Yves: change variant of the product on PDP on:
     Set Browser Timeout    ${browser_timeout}
     Wait For Elements State    ${pdp_reset_selected_variant_locator}    attached
 
+Yves: reset selected variant of the product on PDP
+    Wait Until Page Contains Element    ${pdp_reset_selected_variant_locator}
+    Click    ${pdp_reset_selected_variant_locator}
+
 Yves: change amount on PDP:
     [Arguments]    ${amountToSet}
     Type Text    ${pdp_amount_input_filed}    ${amountToSet}
 
 Yves: product price on the PDP should be:
     [Arguments]    ${expectedProductPrice}
-    ${actualProductPrice}=    Get Text    ${pdp_price_element_locator}
+    TRY
+        ${actualProductPrice}=    Get Text    ${pdp_price_element_locator}
+        Should Be Equal    ${expectedProductPrice}    ${actualProductPrice}
+    EXCEPT    
+        Sleep    5s
+        Reload
+        ${actualProductPrice}=    Get Text    ${pdp_price_element_locator}
+        Should Be Equal    ${expectedProductPrice}    ${actualProductPrice}    
+    END
+
+
+Yves: product original price on the PDP should be:
+    [Arguments]    ${expectedProductPrice}
+    ${actualProductPrice}=    Get Text    ${pdp_original_price_element_locator}
     Should Be Equal    ${expectedProductPrice}    ${actualProductPrice}
 
 Yves: add product to the shopping list:
@@ -203,3 +220,12 @@ Yves: merchant is (not) displaying in Sold By section of PDP:
 Yves: select random varian if variant selector is available
     ${variants_present_status}=    Run Keyword And Return Status    Page should contain element    ${pdp_variant_selector}    ${EMPTY}    0:00:01
     IF    '${variants_present_status}'=='True'    Yves: change variant of the product on PDP on random value
+
+Yves: try add product to the cart from PDP and expect error:
+    [Arguments]    ${expectedError}
+    Click    ${pdp_add_to_cart_button}
+    Yves: flash message should be shown:    error    ${expectedError}
+
+Yves: product name on PDP should be:
+    [Arguments]    ${expected_product_name}
+    Yves: try reloading page if element is/not appear:    xpath=//h1[contains(@class,'title')][contains(.,'${expected_product_name}')]    True    15    3s
