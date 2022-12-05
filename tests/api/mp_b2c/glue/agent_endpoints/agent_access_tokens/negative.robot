@@ -65,7 +65,7 @@ Get_agent_access_token_by_invalid_email_and_valid_password
     And Response should return error message:    Failed to authenticate an agent.
 
 Get_agent_access_token_by_vaild_email_and_invalid_password
-    When I send a POST request:    /agent-access-tokens    {"data": {"type": "agent-access-tokens","attributes": {"username": "${agent.email}","password": "12345"}}}
+    When I send a POST request:    /agent-access-tokens    {"data": {"type": "agent-access-tokens","attributes": {"username": "${agent.email}","password": "4321"}}}
     Then Response status code should be:    401
     And Response reason should be:    Unauthorized
     And Response should return error code:    4101
