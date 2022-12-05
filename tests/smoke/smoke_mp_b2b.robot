@@ -1125,7 +1125,7 @@ Create_and_Approve_New_Merchant_Product
     Zed: click Action Button in a table for row that contains:     NewProduct${random}     Approve
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}   
     Yves: go to URL:    en/search?q=SKU${random}
-    Try reloading page until element is/not appear:    ${catalog_product_card_locator}    true    15    5s
+    Try reloading page until element is/not appear:    ${catalog_product_card_locator}    true    21    5s
     Yves: go to PDP of the product with sku:     SKU${random}
     Get Location
     Yves: merchant is (not) displaying in Sold By section of PDP:    Office King    true
@@ -1163,7 +1163,7 @@ Create_New_Offer
     Zed: click Action Button in a table for row that contains:     SprykerSKU${random}     Approve
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}   
     Yves: go to URL:    en/search?q=SprykerSKU${random}
-    Try reloading page until element is/not appear:    ${catalog_product_card_locator}    true    15    5s
+    Try reloading page until element is/not appear:    ${catalog_product_card_locator}    true    21    5s
     MP: login on MP with provided credentials:    ${merchant_office_king_email}
     MP: open navigation menu tab:    Offers
     MP: click on create new entity button:    Add Offer
@@ -1359,7 +1359,7 @@ Merchant_Portal_Product_Volume_Prices
     Yves: delete all shopping carts
     Yves: create new 'Shopping Cart' with name:    MPVolumePriceCart+${random}
     Yves: go to URL:    en/search?q=VPSKU${random}
-    Try reloading page until element is/not appear:    ${catalog_product_card_locator}    true    15    5s
+    Try reloading page until element is/not appear:    ${catalog_product_card_locator}    true    21    5s
     Yves: go to PDP of the product with sku:     VPSKU${random}
     Yves: merchant is (not) displaying in Sold By section of PDP:    Office King    true
     Yves: product price on the PDP should be:    €100.00
@@ -1418,7 +1418,7 @@ Merchant_Portal_Offer_Volume_Prices
     Yves: delete all shopping carts
     Yves: create new 'Shopping Cart' with name:    MPVolumePriceCart+${random}
     Yves: go to URL:    en/search?q=OfferSKU${random}
-    Try reloading page until element is/not appear:    ${catalog_product_card_locator}    true    15    5s
+    Try reloading page until element is/not appear:    ${catalog_product_card_locator}    true    21    5s
     Yves: go to PDP of the product with sku:     OfferSKU${random}
     Yves: merchant is (not) displaying in Sold By section of PDP:    Spryker    true
     MP: login on MP with provided credentials:    ${merchant_office_king_email}

@@ -895,7 +895,7 @@ Create_and_Approve_New_Merchant_Product
     Zed: click Action Button in a table for row that contains:     NewProduct${random}     Approve
     Yves: login on Yves with provided credentials:    ${yves_user_email}   
     Yves: go to URL:    en/search?q=SKU${random}
-    Try reloading page until element is/not appear:    ${catalog_product_card_locator}    true    15    5s
+    Try reloading page until element is/not appear:    ${catalog_product_card_locator}    true    21    5s
     Yves: go to PDP of the product with sku:     SKU${random}
     Get Location
     Yves: merchant is (not) displaying in Sold By section of PDP:    Budget Cameras    true
@@ -932,7 +932,7 @@ Create_New_Offer
     Zed: go to second navigation item level:    Catalog    Products 
     Zed: click Action Button in a table for row that contains:     SprykerSKU${random}     Approve  
     Yves: go to URL:    en/search?q=SprykerSKU${random}
-    Try reloading page until element is/not appear:    ${catalog_product_card_locator}    true    15    5s
+    Try reloading page until element is/not appear:    ${catalog_product_card_locator}    true    21    5s
     MP: login on MP with provided credentials:    ${merchant_budget_cameras_email}
     MP: open navigation menu tab:    Offers
     MP: click on create new entity button:    Add Offer
@@ -1139,7 +1139,7 @@ Merchant_Portal_Product_Volume_Prices
     Yves: login on Yves with provided credentials:    ${yves_user_email}
     Yves: check if cart is not empty and clear it
     Yves: go to URL:    en/search?q=VPSKU${random}
-    Try reloading page until element is/not appear:    ${catalog_product_card_locator}    true    15    5s
+    Try reloading page until element is/not appear:    ${catalog_product_card_locator}    true    21    5s
     Yves: go to PDP of the product with sku:     VPSKU${random}
     Yves: merchant is (not) displaying in Sold By section of PDP:    Video King    true
     Yves: product price on the PDP should be:    €100.00
@@ -1197,7 +1197,7 @@ Merchant_Portal_Offer_Volume_Prices
     Yves: login on Yves with provided credentials:    ${yves_second_user_email}  
     Yves: check if cart is not empty and clear it
     Yves: go to URL:    en/search?q=OfferSKU${random}
-    Try reloading page until element is/not appear:    ${catalog_product_card_locator}    true    15    5s
+    Try reloading page until element is/not appear:    ${catalog_product_card_locator}    true    21    5s
     Yves: go to PDP of the product with sku:     OfferSKU${random}
     Yves: merchant is (not) displaying in Sold By section of PDP:    Spryker    true
     MP: login on MP with provided credentials:    ${merchant_video_king_email}
@@ -1413,7 +1413,7 @@ Manage_Merchant_Product
     Zed: click Action Button in a table for row that contains:     manageProduct${random}     Approve
     Yves: login on Yves with provided credentials:    ${yves_user_email}   
     Yves: go to URL:    en/search?q=manageSKU${random}
-    Try reloading page until element is/not appear:    ${catalog_product_card_locator}    true    15    5s
+    Try reloading page until element is/not appear:    ${catalog_product_card_locator}    true    21    5s
     Yves: go to PDP of the product with sku:     manageSKU${random}
     Yves: product price on the PDP should be:    €100.00
     Yves: change variant of the product on PDP on:    Item
@@ -1520,7 +1520,7 @@ Merchant_Product_Original_Price
     Zed: click Action Button in a table for row that contains:     originalProduct${random}     Approve
     Yves: login on Yves with provided credentials:    ${yves_user_email}   
     Yves: go to URL:    en/search?q=originalSKU${random}
-    Try reloading page until element is/not appear:    ${catalog_product_card_locator}    true    15    5s
+    Try reloading page until element is/not appear:    ${catalog_product_card_locator}    true    21    5s
     Yves: 1st product card in catalog (not)contains:     Price    €100.00
     Yves: 1st product card in catalog (not)contains:     Original Price    €150.00
     Yves: go to PDP of the product with sku:     originalSKU${random}
@@ -1820,7 +1820,7 @@ Multistore_Product_Offer
     Yves: login on Yves with provided credentials:    ${yves_second_user_email}  
     Yves: check if cart is not empty and clear it
     Yves: go to URL:    en/search?q=multistoreSKU${random}
-    Try reloading page until element is/not appear:    ${catalog_product_card_locator}    true    15    5s
+    Try reloading page until element is/not appear:    ${catalog_product_card_locator}    true    21    5s
     Yves: go to PDP of the product with sku:     multistoreSKU${random}
     Yves: merchant is (not) displaying in Sold By section of PDP:    Budget Cameras    true
     Yves: product price on the PDP should be:    €50.00
@@ -1847,6 +1847,8 @@ Multistore_Product_Offer
     Yves: merchant is (not) displaying in Sold By section of PDP:    Video King    true
     Yves: merchant's offer/product price should be:    Video King    €200.00
     Yves: go to AT store 'Home' page
+    Yves: go to AT URL:    en/search?q=multistoreSKU${random}
+    Try reloading page until element is/not appear:    ${catalog_product_card_locator}    true    21    5s
     Yves: go to PDP of the product with sku:     multistoreSKU${random}
     Yves: merchant is (not) displaying in Sold By section of PDP:    Budget Cameras    true
     Yves: product price on the PDP should be:    €55.00
@@ -1861,7 +1863,10 @@ Multistore_Product_Offer
     ...    || true      | AT             ||         
     MP: save offer
     Yves: go to AT store 'Home' page
+    Yves: go to AT URL:    en/search?q=multistoreSKU${random}
+    Try reloading page until element is/not appear:    ${catalog_product_card_locator}    true    21    5s
     Yves: go to PDP of the product with sku:     multistoreSKU${random}
+    Pause Execution
     Yves: merchant is (not) displaying in Sold By section of PDP:    Video King    false
     Get Location
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
@@ -1929,7 +1934,7 @@ Product_Availability_Calculation
     Zed: click Action Button in a table for row that contains:     availabilityProduct${random}     Approve
     Yves: login on Yves with provided credentials:    ${yves_second_user_email}   
     Yves: go to URL:    en/search?q=availabilitySKU${random}
-    Try reloading page until element is/not appear:    ${catalog_product_card_locator}    true    15    5s
+    Try reloading page until element is/not appear:    ${catalog_product_card_locator}    true    21    5s
     Yves: go to PDP of the product with sku:     availabilitySKU${random}
     Yves: change quantity using '+' or '-' button № times:    +    5
     Yves: try add product to the cart from PDP and expect error:    Item availabilitySKU${random}-1 only has availability of 5.
@@ -2024,7 +2029,7 @@ Offer_Availability_Calculation
     Zed: click Action Button in a table for row that contains:     offAvProduct${random}     Approve
     Yves: login on Yves with provided credentials:    ${yves_second_user_email}   
     Yves: go to URL:    en/search?q=offAvKU${random}
-    Try reloading page until element is/not appear:    ${catalog_product_card_locator}    true    15    5s
+    Try reloading page until element is/not appear:    ${catalog_product_card_locator}    true    21    5s
     MP: login on MP with provided credentials:    ${merchant_spryker_email}
     MP: open navigation menu tab:    Offers
     MP: click on create new entity button:    Add Offer

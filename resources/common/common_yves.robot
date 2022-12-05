@@ -149,6 +149,11 @@ Yves: go to URL:
     ${url}=    Get URL Without Starting Slash    ${url}
     Go To    ${host}${url}
 
+Yves: go to AT URL:
+    [Arguments]    ${url}
+    ${url}=    Get URL Without Starting Slash    ${url}
+    Go To    ${host_at}${url}
+
 Yves: go to newly created page by URL:
     [Arguments]    ${url}    ${iterations}=26
     FOR    ${index}    IN RANGE    0    ${iterations}
