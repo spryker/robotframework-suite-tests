@@ -4,6 +4,7 @@ Resource    ../common/common_yves.robot
 Resource    ../steps/header_steps.robot
 Resource    ../steps/quick_order_steps.robot
 Resource    ../pages/yves/yves_customer_account_page.robot
+Resource    ../common/common_zed.robot
 
 *** Keywords ***
 Yves: go to 'Customer Account' page
@@ -15,15 +16,15 @@ Yves: go to user menu item in the left bar:
     [Arguments]    ${left_navigation_node}
     IF    '${env}' in ['b2b','mp_b2b']
         Run Keywords
-            Wait Until Element Is Visible    xpath=//ul[@class='navigation-sidebar__list']//*[contains(.,'${left_navigation_node}')]/a    AND
+            Wait Until Element Is Visible    xpath=//ul[@class='navigation-sidebar__list']//*[contains(.,'${left_navigation_node}')]/a
             Click    xpath=//ul[@class='navigation-sidebar__list']//*[contains(.,'${left_navigation_node}')]/a
     ELSE IF    '${env}'=='suite-nonsplit'
         Run Keywords
-            Wait Until Element Is Visible    xpath=//nav[contains(@class,'customer-navigation')]//a[contains(text(),'${left_navigation_node}')]    AND
+            Wait Until Element Is Visible    xpath=//nav[contains(@class,'customer-navigation')]//a[contains(text(),'${left_navigation_node}')]
             Click    xpath=//nav[contains(@class,'customer-navigation')]//a[contains(text(),'${left_navigation_node}')]
     ELSE
         Run Keywords
-            Wait Until Element Is Visible    xpath=//a[contains(@class,'menu__link menu__link--customer-navigation') and contains(text(),'${left_navigation_node}')]    AND
+            Wait Until Element Is Visible    xpath=//a[contains(@class,'menu__link menu__link--customer-navigation') and contains(text(),'${left_navigation_node}')]
             Click    xpath=//a[contains(@class,'menu__link menu__link--customer-navigation') and contains(text(),'${left_navigation_node}')]
     END
 
@@ -103,3 +104,78 @@ Yves: delete all user addresses
             END
         END   
     END
+
+Yves: assert customer profile data:
+    [Arguments]    @{args}
+    Wait Until Element Is Visible    ${customer_account_profile_first_name_field}
+    ${profileData}=    Set Up Keyword Arguments    @{args}
+    FOR    ${key}    ${value}    IN    &{profileData}
+        IF    '${key}'=='salutation' and '${value}' != '${EMPTY}'    Get Text    ${customer_account_profile_salutation_span}    contains    ${value}
+        IF    '${key}'=='first name' and '${value}' != '${EMPTY}'    Get Text    ${customer_account_profile_first_name_field}    contains    ${value}
+        IF    '${key}'=='last name' and '${value}' != '${EMPTY}'    Get Text    ${customer_account_profile_last_name_field}    contains    ${value}
+        IF    '${key}'=='email' and '${value}' != '${EMPTY}'    Get Text    ${customer_account_profile_email_field}    contains    ${value}
+    END
+
+Yves: update customer profile data:
+    [Arguments]    @{args}
+    Wait Until Element Is Visible    ${customer_account_profile_first_name_field}
+    ${profileData}=    Set Up Keyword Arguments    @{args}
+    FOR    ${key}    ${value}    IN    &{profileData}
+        IF    '${key}'=='salutation' and '${value}' != '${EMPTY}'    
+            Click    ${customer_account_profile_salutation_span}
+            Click    xpath=//li[contains(@id,'select2-profileForm_salutation-result')][contains(text(),'${value}')]
+        END
+        IF    '${key}'=='first name' and '${value}' != '${EMPTY}'    Type Text    ${customer_account_profile_first_name_field}    ${value}
+        IF    '${key}'=='last name' and '${value}' != '${EMPTY}'    Type Text    ${customer_account_profile_last_name_field}    ${value}
+        IF    '${key}'=='email' and '${value}' != '${EMPTY}'    Type Text    ${customer_account_profile_email_field}    ${value}
+    END
+    Click    ${customer_account_profile_submit_profile_button}
+
+Zed: assert customer profile data:
+    [Arguments]    @{args}
+    ${profileData}=    Set Up Keyword Arguments    @{args}
+    Zed: go to second navigation item level:    Customers    Customers
+    Zed: click Action Button in a table for row that contains:    ${email}    Edit
+    Wait Until Element Is Visible    ${zed_customer_edit_salutation_select}
+    FOR    ${key}    ${value}    IN    &{profileData}
+        IF    '${key}'=='salutation' and '${value}' != '${EMPTY}'    Get Text    xpath=//select[@id='customer_salutation']//option[@selected]    contains    ${value}
+        IF    '${key}'=='first name' and '${value}' != '${EMPTY}'    Get Text    ${zed_customer_edit_first_name_field}    contains    ${value}
+        IF    '${key}'=='last name' and '${value}' != '${EMPTY}'    Get Text    ${zed_customer_edit_last_name_field}    contains    ${value}
+    END
+    Zed: submit the form
+
+Zed: update customer profile data:
+    [Arguments]    @{args}
+    ${profileData}=    Set Up Keyword Arguments    @{args}
+    Zed: go to second navigation item level:    Customers    Customers
+    Zed: click Action Button in a table for row that contains:    ${email}    Edit
+    Wait Until Element Is Visible    ${zed_customer_edit_salutation_select}
+    FOR    ${key}    ${value}    IN    &{profileData}
+        IF    '${key}'=='salutation' and '${value}' != '${EMPTY}'    Select From List By Label    ${zed_customer_edit_salutation_select}    ${value}
+        IF    '${key}'=='first name' and '${value}' != '${EMPTY}'    Type Text    ${zed_customer_edit_first_name_field}    ${value}
+        IF    '${key}'=='last name' and '${value}' != '${EMPTY}'    Type Text    ${zed_customer_edit_last_name_field}    ${value}
+    END
+    Zed: submit the form
+
+Zed: create a new customer address in profile:
+    [Arguments]    @{args}
+    ${profileData}=    Set Up Keyword Arguments    @{args}
+    Zed: go to second navigation item level:    Customers    Customers
+    Zed: click Action Button in a table for row that contains:    ${email}    View
+    Zed: click button in Header:    Add new Address
+    Wait Until Element Is Visible    ${zed_customer_edit_address_salutation_select}
+    FOR    ${key}    ${value}    IN    &{profileData}
+        IF    '${key}'=='salutation' and '${value}' != '${EMPTY}'    Select From List By Label    ${zed_customer_edit_address_salutation_select}    ${value}
+        IF    '${key}'=='first name' and '${value}' != '${EMPTY}'    Type Text    ${zed_customer_edit_address_first_name_field}    ${value}
+        IF    '${key}'=='last name' and '${value}' != '${EMPTY}'    Type Text    ${zed_customer_edit_address_last_name_field}    ${value}
+        IF    '${key}'=='address 1' and '${value}' != '${EMPTY}'    Type Text    ${zed_customer_edit_address_address_1_field}    ${value}
+        IF    '${key}'=='address 2' and '${value}' != '${EMPTY}'    Type Text    ${zed_customer_edit_address_address_2_field}    ${value}
+        IF    '${key}'=='address 3' and '${value}' != '${EMPTY}'    Type Text    ${zed_customer_edit_address_address_3_field}    ${value}
+        IF    '${key}'=='city' and '${value}' != '${EMPTY}'    Type Text    ${zed_customer_edit_address_city_field}    ${value}
+        IF    '${key}'=='zip code' and '${value}' != '${EMPTY}'    Type Text    ${zed_customer_edit_address_zip_code_field}    ${value}
+        IF    '${key}'=='country' and '${value}' != '${EMPTY}'    Select From List By Label    ${zed_customer_edit_address_country_select}    ${value}
+        IF    '${key}'=='phone' and '${value}' != '${EMPTY}'    Type Text    ${zed_customer_edit_address_phone_field}    ${value}
+        IF    '${key}'=='company' and '${value}' != '${EMPTY}'    Type Text    ${zed_customer_edit_address_company_field}    ${value}
+    END
+    Click    ${zed_customer_edit_address_submit_button}
+    Wait Until Element Is Not Visible    ${zed_customer_edit_address_submit_button}

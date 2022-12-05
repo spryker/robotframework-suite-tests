@@ -259,9 +259,9 @@ Verify the src attribute of the image is accessible:
 
 Conver string to List by separator:
     [Arguments]    ${string}    ${separator}=,
-    ${covertedList}=    Split String    ${string}    ${separator}
-    ${covertedList}=    Set Test Variable    ${covertedList}
-    [Return]    ${covertedList}
+    ${convertedList}=    Split String    ${string}    ${separator}
+    ${convertedList}=    Set Test Variable    ${convertedList}
+    [Return]    ${convertedList}
 
 Try reloading page until element is/not appear:
     [Documentation]    will reload the page until an element is shown or disappears. The second argument is the expected condition (true[shown]/false[disappeared]) for the element.

@@ -250,3 +250,17 @@ Zed: xxx shipment should/not contain the following products:
             Table Should Not Contain    xpath=//table[@data-qa='order-item-list'][${shipment}]    ${sku_to_check}
         END
     END
+
+Yves: cancel the order:
+    [Arguments]    ${order_id}
+    Yves: 'View Order/Reorder/Return' on the order history page:    View Order    ${order_id}
+    Wait Until Element Is Visible    ${order_details_cancel_button_locator}
+    TRY
+        Click    ${order_details_cancel_button_locator}
+        Wait Until Element Is Not Visible    ${order_details_cancel_button_locator}    timeout=5s
+    EXCEPT    
+        Click    ${order_details_cancel_button_locator}
+        Wait Until Element Is Not Visible    ${order_details_cancel_button_locator}    timeout=5s
+    END    
+    Yves: go to 'Order History' page
+    Yves: 'Order History' page contains the following order with a status:    ${order_id}    Canceled

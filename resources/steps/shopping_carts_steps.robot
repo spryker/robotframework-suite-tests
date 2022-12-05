@@ -107,8 +107,12 @@ Yves: shopping cart with name xxx has the following status:
 
 Yves: delete product from the shopping cart with sku:
     [Arguments]    ${sku}
-    Click    xpath=//form[@name='removeFromCartForm_${sku}']//button
+    Click    xpath=//form[contains(@name,'removeFromCartForm_${sku}')]//button
+    Yves: remove flash messages
 
+Yves: delete product from the shopping cart with name:
+    [Arguments]    ${productName}
+    Click    //main[@class='page-layout-cart']//article[contains(@data-qa,'component product-card-item')]//a[contains(text(),'Canon IXUS 175')]/ancestor::article//form[contains(@name,'removeFromCartForm')]//button
     Yves: remove flash messages
 
 Yves: shopping cart doesn't contain the following products:
@@ -116,7 +120,7 @@ Yves: shopping cart doesn't contain the following products:
     ${sku_list_count}=   get length  ${sku_list}
     FOR    ${index}    IN RANGE    0    ${sku_list_count}
         ${sku_to_check}=    Get From List    ${sku_list}    ${index}
-        Page Should Not Contain Element    xpath=//form[@name='removeFromCartForm_${sku_to_check}']
+        Page Should Not Contain Element    xpath=//form[contains(@name,'removeFromCartForm_${sku_to_check}')]
     END
 
 Yves: get link for external cart sharing
@@ -168,7 +172,6 @@ Yves: delete all shopping carts
         Click    ${delete_shopping_cart_button}
     END
 
-
 Yves: delete 'Shopping Cart' with name:
     [Arguments]    ${shoppingCartName}
     ${currentURL}=    Get Location
@@ -176,7 +179,6 @@ Yves: delete 'Shopping Cart' with name:
     Delete shopping cart with name:    ${shoppingCartName}
     Wait Until Element Is Visible    ${delete_shopping_cart_button}
     Click    ${delete_shopping_cart_button}
-
 
 Yves: delete from b2c cart products with name:
     [Arguments]    @{productNameList}

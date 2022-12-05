@@ -8,11 +8,13 @@ Resource    ../pages/zed/zed_edit_product_page.robot
 ${zed_log_out_button}   xpath=//ul[@class='nav navbar-top-links navbar-right']//a[contains(@href,'logout')]
 ${zed_save_button}      xpath=//input[contains(@class,'safe-submit')]
 ${zed_success_flash_message}    xpath=//div[@class='flash-messages']/div[@class='alert alert-success']
+${zed_error_flash_message}    xpath=//div[@class='flash-messages']/div[@class='alert alert-danger']
 ${zed_table_locator}    xpath=//table[contains(@class,'dataTable')]/tbody
 ${zed_search_field_locator}     xpath=//input[@type='search']
 ${zed_variant_search_field_locator}     xpath=//*[@id='product-variant-table_filter']//input[@type='search']
 ${zed_processing_block_locator}     xpath=//div[contains(@id,'processing')][contains(@class,'dataTables_processing')]
 ${zed_merchants_dropdown_locator}    xpath=//select[@name='id-merchant']
+${zed_attribute_access_denied_header}    xpath=//div[@class='wrapper wrapper-content']//div[@class='flash-messages']//following-sibling::h1
 
 
 *** Keywords ***
@@ -26,6 +28,17 @@ Zed: login on Zed with provided credentials:
     Type Text    ${zed_password_field}    ${password}
     Click    ${zed_login_button}
     Wait Until Element Is Visible    ${zed_log_out_button}    Zed:Dashboard page is not displayed
+
+Zed: login with deactivated user/invalid data:
+   [Arguments]    ${email}    ${password}=${default_password}
+    go to    ${zed_url}
+    delete all cookies
+    Reload
+    Wait Until Element Is Visible    ${zed_user_name_field}
+    Type Text    ${zed_user_name_field}    ${email}
+    Type Text    ${zed_password_field}    ${password}
+    Click    ${zed_login_button}
+    Wait Until Page Contains Element    ${zed_error_flash_message}
 
 Zed: go to first navigation item level:
     [Documentation]     example: "Zed: Go to First Navigation Item Level  Customers"

@@ -9,14 +9,19 @@ Resource    ../pages/yves/yves_order_details_page.robot
 *** Keywords ***
 Yves: go to 'Order History' page
     Yves: go to 'Customer Account' page
-    Yves: go to user menu item in the left bar:    Order History
+    IF    '${env}' in ['b2b','mp_b2b']
+        Yves: go to user menu item in the left bar:    Order History
+    ELSE
+        Yves: go to user menu item in the left bar:    Orders History
+    END
+        
 
 Yves: 'View Order/Reorder/Return' on the order history page:
     [Arguments]    ${orderAction}    ${lastPlacedOrder}
     IF    '${orderAction}' == 'View Order'
         Click   xpath=//div[contains(@data-qa,'component order-table')]//td[text()='${lastPlacedOrder}']/..//a[contains(.,'${orderAction}')]
     ELSE IF    '${orderAction}' == 'Reorder'
-        Click    xpath=//div[contains(@data-qa,'component order-table')]//td[text()='${lastPlacedOrder}']/..//a[contains(.,'${orderAction}')]
+        Click    xpath=//div[contains(@data-qa,'component order-table')]//td[text()='${lastPlacedOrder}']/..//button[contains(.,'${orderAction}')]
     ELSE IF    '${orderAction}' == 'Return'
         Click    xpath=//div[contains(@data-qa,'component order-table')]//td[text()='${lastPlacedOrder}']/..//a[contains(.,'${orderAction}')]
     END
@@ -44,3 +49,11 @@ Yves: 'Order History' page contains the following order with a status:
     [Arguments]    ${orderID}    ${expectedStatus}
     ${actualOrderStatus}=    Get Text    xpath=//div[contains(@data-qa,'component order-table')]//td[text()='${orderID}']/..//span[@data-qa='component status']
     Should Be Equal    ${actualOrderStatus}    ${expectedStatus}    msg=None    values=True    ignore_case=True    formatter=str
+
+Yves: 'Order Details' page contains the cancel order button:
+    [Arguments]    ${condition}
+    IF    '${condition}' == 'true'    
+        Element Should Be Visible    ${order_details_cancel_button_locator}
+    ELSE
+        Element Should Not Be Visible    ${order_details_cancel_button_locator}
+    END  

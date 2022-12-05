@@ -108,6 +108,11 @@ MP: fill abstract product required fields:
         IF    '${key}'=='store' and '${value}' != '${EMPTY}'    Run Keywords
         ...    Click    ${product_store_selector}
         ...    AND    MP: select option in expanded dropdown:    ${value}
+        ...    AND    Click    ${product_store_selector}
+        IF    '${key}'=='store 2' and '${value}' != '${EMPTY}'    Run Keywords
+        ...    Click    ${product_store_selector}
+        ...    AND    MP: select option in expanded dropdown:    ${value}
+        ...    AND    Click    ${product_store_selector}
         IF    '${key}'=='tax set' and '${value}' != '${EMPTY}'    Run Keywords
         ...    Click    ${product_tax_selector}
         ...    AND    MP: select option in expanded dropdown:    ${value}

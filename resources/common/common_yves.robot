@@ -115,7 +115,15 @@ Yves: logout on Yves as a customer
     Reload
 
 Yves: go to the 'Home' page
-    Go To    ${host}
+    ${currentURL}=    Get Location
+    IF    '.at.' in '${currentURL}'
+        Go To    ${host_at}
+    ELSE
+        Go To    ${host}
+    END
+
+Yves: go to AT store 'Home' page
+    Go To    ${host_at}
 
 Yves: get the last placed order ID by current customer
     [Documentation]    Returns orderID of the last order from customer account
@@ -142,8 +150,8 @@ Yves: go to URL:
     Go To    ${host}${url}
 
 Yves: go to newly created page by URL:
-    [Arguments]    ${url}
-    FOR    ${index}    IN RANGE    0    26
+    [Arguments]    ${url}    ${iterations}=26
+    FOR    ${index}    IN RANGE    0    ${iterations}
         Go To    ${host}${url}
         ${page_not_published}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//main//*[contains(text(),'ERROR 404')]
         Log    ${page_not_published}
@@ -152,7 +160,29 @@ Yves: go to newly created page by URL:
         ELSE
             Exit For Loop
         END
+        IF    ${index} == ${iterations}-1
+            Take Screenshot
+            Fail    expected element state is not reached
+        END
     END
+
+Yves: go to newly created page by URL on AT store:
+    [Arguments]    ${url}    ${iterations}=26
+    FOR    ${index}    IN RANGE    0    ${iterations}
+        Go To    ${host_at}${url}
+        ${page_not_published}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//main//*[contains(text(),'ERROR 404')]
+        Log    ${page_not_published}
+        IF    '${page_not_published}'=='True'
+            Run Keyword    Sleep    3s
+        ELSE
+            Exit For Loop
+        END
+        IF    ${index} == ${iterations}-1
+            Take Screenshot
+            Fail    expected element state is not reached
+        END
+    END
+
 Yves: go to URL and refresh until 404 occurs:
     [Arguments]    ${url}
     FOR    ${index}    IN RANGE    0    26
@@ -315,3 +345,7 @@ Yves: page should contain script with attribute:
 Yves: page should contain script with id:
     [Arguments]    ${scriptId}
     Yves: page should contain script with attribute:    id    ${scriptId}
+
+Yves: validate the page title:
+    [Arguments]    ${title}
+    Yves: try reloading page if element is/not appear:    //h1[contains(@class,'title')][contains(text(),'${title}')]     True

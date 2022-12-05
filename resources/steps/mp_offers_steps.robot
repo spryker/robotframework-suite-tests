@@ -27,9 +27,20 @@ MP: fill offer fields:
         IF    '${key}'=='store' and '${value}' != '${EMPTY}'
             Click    ${stores_list_selector}
             MP: select option in expanded dropdown:    ${value}
+            Click    ${stores_list_selector}
+        END
+        IF    '${key}'=='store 2' and '${value}' != '${EMPTY}'
+            Click    ${stores_list_selector}
+            MP: select option in expanded dropdown:    ${value}
+            Click    ${stores_list_selector}
         END
         IF    '${key}'=='stock quantity' and '${value}' != '${EMPTY}'
             Type Text    ${offer_stock_input}    ${value}
+        END
+        IF    '${key}'=='unselect store' and '${value}' != '${EMPTY}'
+            Click    ${stores_list_selector}
+            MP: select option in expanded dropdown:    ${value}
+            Click    ${stores_list_selector}
         END
     END
             

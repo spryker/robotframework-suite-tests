@@ -136,12 +136,15 @@ Zed: update abstract product data:
         IF    '${key}'=='store' and '${value}' != '${EMPTY}'    
             Zed: Check checkbox by Label:    ${value}
         END
+        IF    '${key}'=='unselect store' and '${value}' != '${EMPTY}'    
+            Zed: Uncheck Checkbox by Label:    ${value}
+        END
         IF    '${key}'=='name en' and '${value}' != '${EMPTY}'  
             Wait Until Element Is Visible    ${zed_product_name_en_input}
             Type Text    ${zed_product_name_en_input}    ${value}
         END
         IF    '${key}'=='name de' and '${value}' != '${EMPTY}'  
-            ${de_section_expanded}=    Run Keyword And Return Status    Wait Until Element Is Visible    ${zed_product_name_de_input}
+            ${de_section_expanded}=    Run Keyword And Return Status    Wait Until Element Is Visible    ${zed_product_name_de_input}    timeout=3s
             IF    '${de_section_expanded}'=='False'
                 Scroll Element Into View    ${zed_product_general_deDE_collapsed_section}
                 Click    ${zed_product_general_deDE_collapsed_section}

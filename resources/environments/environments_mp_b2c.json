@@ -3,6 +3,7 @@
 
     "env": {
         "host": "http://yves.de.spryker.local/",
+        "host_at": "http://yves.at.spryker.local/",
         "zed_url": "http://backoffice.de.spryker.local/",
         "mp_url": "http://mp.de.spryker.local/security-merchant-portal-gui/login/"
     },
@@ -15,8 +16,8 @@
         "yves_user_address": "Mr George Freeman, Kirncher Str. 7, 10247 Berlin",
 
         "yves_second_user_email": "bill.martin@spryker.com",
-        "yves_second_user_first_name": "Martin",
-        "yves_second_user_last_name": "Bill",
+        "yves_second_user_first_name": "Bill",
+        "yves_second_user_last_name": "Martin",
         "yves_second_user_password": "change123",
 
         "zed_admin_email": "admin@spryker.com",
@@ -28,8 +29,23 @@
         "merchant_video_king_email": "martha@video-king.nl",
         "merchant_spryker_email": "harald@spryker.com",
         "merchant_spryker_reference": "MER000001"
-    },
         
+    },
+    "user_role": {
+        "bundle_access": "product-attribute-gui",
+        "controller_access": "attribute",
+        "action_access": "create",
+        "permission_allow": "allow",
+        "permission_deny": "deny",
+        "full_access": "*"
+    },
+
+    "glossary":{
+        "glossary_name":"customer.account.overview",
+        "original_EN_text":"Overview",
+        "original_DE_text":"Übersicht"
+    },
+      
     "products": {
         "one_variant_product_abstract_sku": "009",
         "one_variant_product_abstract_name": "EUROKRAFT trolley - with open shovel",
