@@ -123,7 +123,14 @@ Yves: add product to the shopping list:
 
 Yves: change variant of the product on PDP on random value
     Wait Until Element Is Visible    ${pdp_variant_selector}
-    Run Keyword And Ignore Error    Select Random Option From List    ${pdp_variant_selector}    xpath=//*[@data-qa='component variant']//select//option[@value]
+    TRY    
+        Set Browser Timeout    10s
+        Click    ${pdp_variant_custom_selector}    force=True
+        Wait Until Element Is Visible    ${pdp_variant_custom_selector_results}
+        Click    xpath=//ul[contains(@id,'select2-attribute')][contains(@id,'results')]/li[contains(@id,'select2-attribute')][1]
+    EXCEPT
+        Run Keyword And Ignore Error    Select From List By Value    ${pdp_variant_selector}    ${variantToChoose}
+    END
     Sleep    3s
 
 Yves: get sku of the concrete product on PDP

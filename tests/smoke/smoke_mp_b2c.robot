@@ -430,11 +430,12 @@ Split_Delivery
     Yves: get the last placed order ID by current customer
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: order has the following number of shipments:    ${lastPlacedOrder}    3
-    [Teardown]    Run Keywords    Yves: check if cart is not empty and clear it
+    [Teardown]    Run Keywords    Yves: login on Yves with provided credentials:    ${yves_user_email}
+    ...    AND    Yves: check if cart is not empty and clear it
     ...    AND    Yves: delete all user addresses
 
 Agent_Assist
-    [Documentation]    Checks that agent can be used
+    [Documentation]    Checks that agent can be used. Bug:CC-23550
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: create new Zed user with the following data:    agent+${random}@spryker.com    change${random}    Agent    Assist    Root group    This user is an agent    en_US
     Yves: go to the 'Home' page
@@ -453,10 +454,8 @@ Agent_Assist
     ...    AND    Zed: delete Zed user with the following email:    agent+${random}@spryker.com
 
 Return_Management
-### TODO add return item sstep from the MP
-### Check that main merchant can see merchant return in My Returns
-### DONE
-    [Documentation]    Checks that returns work and oms process is checked. 
+    [Tags]    skip-due-to-issue
+    [Documentation]    Checks that returns work and oms process is checked. Bug:CC-23550
     Yves: login on Yves with provided credentials:    ${yves_user_email}
     Yves: check if cart is not empty and clear it
     Yves: go to PDP of the product with sku:    007
@@ -568,8 +567,6 @@ Product_Relations
 
 Guest_Checkout
     [Documentation]    Guest checkout with discounts and OMS
-#TODO check that billing in Zed = from Yves and the same for shipping address
-##DONE
     Yves: go to the 'Home' page
     Yves: logout on Yves as a customer
     Yves: go to PDP of the product with sku:    007
@@ -618,6 +615,7 @@ Guest_Checkout
     [Teardown]    Run keywords    Yves: check if cart is not empty and clear it
 
 Refunds
+    [Tags]    skip-due-to-issue
     [Documentation]    Checks that refund can be created for one item and the whole order. Fails due to bug CC-17232
     [Setup]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: deactivate following discounts from Overview page:    Tu & Wed $5 off 5 or more    10% off $100+    20% off cameras    Tu & Wed €5 off 5 or more    10% off minimum order
@@ -711,7 +709,7 @@ Multiple_Merchants_Order
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: order has the following number of shipments:    ${lastPlacedOrder}    3
     [Teardown]    Run Keywords    Yves: login on Yves with provided credentials:    ${yves_second_user_email}
-    ...    AND    Yves: delete user address:    Kirncher Str. 7
+    ...    AND    Yves: delete all user addresses
 
 Merchant_Profile_Update
     [Documentation]    Checks that merchant profile could be updated from merchant portal and that changes will be displayed on Yves
@@ -801,8 +799,6 @@ Merchant_Profile_Set_to_Inactive_from_Backoffice
     ...    AND    Zed: click Action Button in a table for row that contains:     Video King     Activate
 
 Manage_Merchants_from_Backoffice
-#TODO# remove store relation -> check that mechant profile returns 404
-# DONE
     [Documentation]    Checks that backoffice admin is able to create, approve, edit merchants
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: create new Merchant with the following data:
@@ -997,8 +993,6 @@ Approve_Offer
     Yves: product price on the PDP should be:     ${second_product_with_multiple_offers_video_king_price}
 
 Fulfill_Order_from_Merchant_Portal
-##TODO add spec to change state only for one of the order items and check that other remain in their previous states
-#DONE
     [Documentation]    Checks that merchant is able to process his order through OMS from merchant portal
     [Setup]    Run Keywords    
     ...    MP: login on MP with provided credentials:    ${merchant_video_king_email}
@@ -1095,6 +1089,7 @@ Wishlist_List_Supports_Offers
     [Teardown]    Run keywords    Yves: delete all wishlists    AND    Yves: check if cart is not empty and clear it
 
 Search_for_Merchant_Offers_and_Products
+    [Tags]    skip-due-to-issue
     [Documentation]    Checks that through search customer is able to see the list of merchant's products and offers. Fails due to CC-17153
     Yves: go to the 'Home' page
     Yves: perform search by:    Video King
@@ -1113,7 +1108,8 @@ Search_for_Merchant_Offers_and_Products
     Yves: merchant is (not) displaying in Sold By section of PDP:    Budget Cameras    true
 
 Merchant_Portal_Product_Volume_Prices
-    [Documentation]    Checks that merchant is able to create new multi-SKU product with volume prices. Falback to default price after delete
+    [Tags]    skip-due-to-issue
+    [Documentation]    Checks that merchant is able to create new multi-SKU product with volume prices. Falback to default price after delete. Bug: CC-23356
     MP: login on MP with provided credentials:    ${merchant_video_king_email}
     MP: open navigation menu tab:    Products    
     MP: click on create new entity button:    Create Product
@@ -1174,7 +1170,7 @@ Merchant_Portal_Product_Volume_Prices
     ...    AND    Zed: click Action Button in a table for row that contains:     VPNewProduct${random}     Deny
 
 Merchant_Portal_Offer_Volume_Prices
-    [Documentation]    Checks that merchant is able to create new offer with volume prices and it will be displayed on Yves. Falback to default price after delete
+    [Documentation]    Checks that merchant is able to create new offer with volume prices and it will be displayed on Yves. Falback to default price after delete.
     MP: login on MP with provided credentials:    ${merchant_spryker_email}
     MP: open navigation menu tab:    Products    
     MP: click on create new entity button:    Create Product
@@ -1284,6 +1280,7 @@ Merchant_Portal_My_Account
     ...    AND    Zed: delete Zed user with the following email:    sonia+new+editmu+${random}@spryker.com
     
 Merchant_Portal_Dashboard
+    [Tags]    skip-due-to-issue
     [Documentation]    Checks that merchant user is able to access the dashboard page. Bug: CC-23118
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Marketplace    Merchants
@@ -1306,8 +1303,6 @@ Merchant_Portal_Dashboard
     ...    AND    Zed: delete Zed user with the following email:    sonia+dahboard+${random}@spryker.com
 
 Merchant_Product_Offer_in_Backoffice
-# #TODO Add filter dropdown in BO + view offer
-DONE
     [Documentation]    Check View action and filtration for Mproduct and Moffer in backoffice
     MP: login on MP with provided credentials:    ${merchant_spryker_email}
     MP: open navigation menu tab:    Products    
@@ -1375,8 +1370,6 @@ DONE
     ...    AND    Zed: click Action Button in a table for row that contains:     ViewProduct${random}     Deny
 
 Manage_Merchant_Product
-# #TODO: add new product from MP -> Set new from to (not available in MP) -> check label (P&S block) -> check price -> Add new concrete with another price -> switch concrete check price -> View new product in BO -> change product name and price ->see changes
-# DONE
     [Documentation]    checks that MU and BO user can manage merchant abstract and concrete products
     MP: login on MP with provided credentials:    ${merchant_budget_cameras_email}
     MP: open navigation menu tab:    Products    
@@ -1484,8 +1477,6 @@ Manage_Merchant_Product
     ...    AND    Zed: click Action Button in a table for row that contains:     manageSKU${random}     Deny
 
 Merchant_Product_Original_Price
-#TODO: Original price in MP + New + Sale labels
-# DONE
     [Documentation]    checks that Orignal price is displayed on the PDP and in Catalog
     MP: login on MP with provided credentials:    ${merchant_budget_cameras_email}
     MP: open navigation menu tab:    Products    
@@ -1541,9 +1532,8 @@ Merchant_Product_Original_Price
     ...    AND    Zed: click Action Button in a table for row that contains:     originalSKU${random}     Deny
 
 Checkout_Address_Management
-# #TODO: on checkout retunr and change shipment method -> place an order and check in Zed applied shipment
-# DONE
-    [Documentation]    Bug:CC-24090. Checks that user can change address during the checkout and save new into the address book
+    [Tags]    skip-due-to-issue
+    [Documentation]    Checks that user can change address during the checkout and save new into the address book. Bug:CC-24090
     [Setup]    Run Keywords    
     ...    Yves: login on Yves with provided credentials:    ${yves_user_email}
     ...    AND    Yves: delete all user addresses
@@ -1591,8 +1581,6 @@ Checkout_Address_Management
     ...    AND    Yves: delete all user addresses
 
 Manage_Shipments
-# #TODO Create shipment in backoffice + Edit shipment in backoffice
-# DONE
     [Documentation]    Checks create/edit shipment functions from backoffice
     Yves: login on Yves with provided credentials:    ${yves_user_email}
     Yves: delete all user addresses
@@ -1669,10 +1657,6 @@ Zed_navigation_ordering_and_naming
     Zed: verify second navigation root menus
 
 Minimum_Order_Value
-# # #TODO: Minimum Order value:
-# check hard global threshold (maximum)-> blocked on checkout
-# add global soft minimum - see fee in cart and on checkout -> change cart items to pass only hard -> place order -> check grand total (fee was added)
-# DONE
     [Documentation]    checks that global minimum and maximun order thresholds can be applied
     [Setup]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: deactivate following discounts from Overview page:    Free Acer Notebook    Tu & Wed $5 off 5 or more    10% off $100+    Free smartphone    20% off cameras    Free Acer M2610    Free standard delivery    10% off Intel Core    5% off white    Tu & Wed €5 off 5 or more    10% off minimum order
@@ -1723,9 +1707,8 @@ Minimum_Order_Value
     ...    || DE - Euro [EUR]  | ${SPACE}           | ${SPACE}                | ${SPACE}                | 10000.00           | The cart value cannot be higher than {{threshold}}. Please remove some items to proceed with the order    | Der Warenkorbwert darf nicht höher als {{threshold}} sein. Bitte entfernen Sie einige Artikel, um mit der Bestellung fortzufahren    | None           | ${EMPTY}             | ${EMPTY}                  | ${EMPTY}                  ||
 
 Order_Cancelation
-#TODO Order Cancelation
-# DONE
-    [Documentation]    Bug: CC-17072. Check that customer is able to cancel order
+    [Tags]    skip-due-to-issue
+    [Documentation]    Check that customer is able to cancel order. Bug: CC-17072
     Yves: login on Yves with provided credentials:    ${yves_second_user_email}
     Yves: check if cart is not empty and clear it
     Yves: delete all user addresses
@@ -1799,8 +1782,6 @@ Order_Cancelation
     # ...    AND    Yves: delete all user addresses
 
 Multistore_Product_Offer
-#TODO Multistore: Different price on AT and DE  + CMS page + store relation for the product and offer
-DONE
     [Documentation]    check product and offer multistore functionality
     MP: login on MP with provided credentials:    ${merchant_budget_cameras_email}
     MP: open navigation menu tab:    Products    
@@ -1893,9 +1874,7 @@ DONE
     ...    AND    Zed: click Action Button in a table for row that contains:     multistoreSKU${random}     Deny
 
 Multistore_CMS
-#TODO Multistore: Different price on AT and DE  + CMS page + store relation for the product and offer
-#DONE
-    [Documentation]    check product and offer multistore functionality
+    [Documentation]    check CMS multistore functionality
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Content    Pages
     Zed: create a cms page and publish it:    Multistore Page${random}    multistore-page${random}    Multistore Page    Page text
@@ -1912,8 +1891,8 @@ Multistore_CMS
     ...    AND    Zed: click Action Button in a table for row that contains:    Multistore Page${random}    Deactivate
 
 Product_Availability_Calculation
-#TODO: MP product and MP offer availability + multistore
-    [Documentation]    check product availability + multistore
+    [Tags]    skip-due-to-issue
+    [Documentation]    check product availability + multistore. Bug: CC-24108
     MP: login on MP with provided credentials:    ${merchant_spryker_email}
     MP: open navigation menu tab:    Products    
     MP: click on create new entity button:    Create Product
@@ -2008,8 +1987,6 @@ Product_Availability_Calculation
     ...    || Spryker ${merchant_spryker_reference} Warehouse 1 | AT    ||
 
 Offer_Availability_Calculation
-#TODO: MP product and MP offer availability
-# DONE
     [Documentation]    check offer availability
     MP: login on MP with provided credentials:    ${merchant_video_king_email}
     MP: open navigation menu tab:    Products    
@@ -2117,7 +2094,6 @@ Offer_Availability_Calculation
     ...    AND    Zed: click Action Button in a table for row that contains:      offAvProduct${random}     Deny
 
 User_Control
-#DONE
     [Documentation]    Create a user with limited access
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: create new role with name:    controlRole${random}
@@ -2137,7 +2113,6 @@ User_Control
     ...    AND    Zed: click Action Button in a table for row that contains:    controlRole${random}    Delete
 
 Glossary
-#DONE
     [Documentation]    Create + edit glossary translation in BO
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Administration    Glossary  
@@ -2159,7 +2134,6 @@ Glossary
     ...    AND    Zed: undo the changes in glossary translation:    ${glossary_name}     ${original_DE_text}    ${original_EN_text}
 
 Reorder
-##DONE
     [Documentation]    Checks that merchant relation is saved with reorder
     Yves: login on Yves with provided credentials:    ${yves_user_email}
     Yves: check if cart is not empty and clear it
@@ -2185,8 +2159,6 @@ Reorder
     ...    AND    Yves: delete all user addresses
 
 Update_Customer_Data
-#TODO
-## DONE
     [Documentation]    Checks customer data can be updated from Yves and Zed
     Yves: login on Yves with provided credentials:    ${yves_second_user_email}
     Yves: go to user menu item in header:    Overview
