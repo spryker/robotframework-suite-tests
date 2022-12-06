@@ -160,6 +160,7 @@ Get_a_cart_with_included_items_and_concrete_products
 
 
 Add_five_items_to_cart_with_included_cart_rules_and_promotional_items
+#If run test on Tuesday or Wendsday it fails because of Cart rule id=2 which applies on certain days of week
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     ...    AND    I send a POST request:    /carts    {"data":{"type":"carts","attributes":{"priceMode":"${mode.gross}","currency":"${currency.eur.code}","store":"${store.de}","name":"Cart-${random}"}}}
