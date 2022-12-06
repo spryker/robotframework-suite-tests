@@ -126,7 +126,8 @@ Zed: view abstract product page contains:
         IF    '${key}'=='name' and '${value}' != '${EMPTY}'    
             Element Should Contain    ${zed_view_abstract_product_name}[${env}]    ${value}
         END
-        IF    '${key}'=='variants count' and '${value}' != '${EMPTY}'    
+        IF    '${key}'=='variants count' and '${value}' != '${EMPTY}'
+            Clear Text    xpath=//div[@id='product-variant-table_filter']//input[@type='search']    
             ${actualVariantsCount}=    Get Element Count    xpath=//table[@id='product-variant-table']//tbody/tr
             Should Be Equal    '${actualVariantsCount}'    '${value}'
         END

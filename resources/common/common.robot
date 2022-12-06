@@ -67,6 +67,7 @@ SuiteTeardown
     Close Browser    ALL
 
 TestSetup
+    Delete All Cookies
     Go To    ${host}
 
 TestTeardown
