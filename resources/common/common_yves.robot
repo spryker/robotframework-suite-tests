@@ -33,22 +33,42 @@ Yves: login on Yves with provided credentials:
     ${currentURL}=    Get Url
     IF    '/login' not in '${currentURL}'
         IF    '${env}' in ['b2b','suite-nonsplit','mp_b2b']
-            Run Keywords
-                Go To    ${host}
-                delete all cookies
-                Reload
-                Wait Until Element Is Visible    ${header_login_button}[${env}]
-                Click    ${header_login_button}[${env}]
-                Wait Until Element Is Visible    ${email_field}
+            ${currentURL}=    Get Location
+                IF    '.at.' in '${currentURL}'
+                    Go To    ${host_at}
+                    delete all cookies
+                    Reload
+                    Wait Until Element Is Visible    ${header_login_button}[${env}]
+                    Click    ${header_login_button}[${env}]
+                    Wait Until Element Is Visible    ${email_field}
+                ELSE
+                    Go To    ${host}
+                    delete all cookies
+                    Reload
+                    Wait Until Element Is Visible    ${header_login_button}[${env}]
+                    Click    ${header_login_button}[${env}]
+                    Wait Until Element Is Visible    ${email_field}
+                END
         ELSE
-            Run Keywords
-                Go To    ${host}
-                delete all cookies
-                Reload
-                mouse over  ${user_navigation_icon_header_menu_item}[${env}]
-                Wait Until Element Is Visible    ${user_navigation_menu_login_button}
-                Click    ${user_navigation_menu_login_button}
-                Wait Until Element Is Visible    ${email_field}
+                ${currentURL}=    Get Location
+                    IF    '.at.' in '${currentURL}'
+                        Go To    ${host_at}
+                        delete all cookies
+                        Reload
+                        mouse over  ${user_navigation_icon_header_menu_item}[${env}]
+                        Wait Until Element Is Visible    ${user_navigation_menu_login_button}
+                        Click    ${user_navigation_menu_login_button}
+                        Wait Until Element Is Visible    ${email_field}
+                    ELSE
+                        Go To    ${host}
+                        delete all cookies
+                        Reload
+                        mouse over  ${user_navigation_icon_header_menu_item}[${env}]
+                        Wait Until Element Is Visible    ${user_navigation_menu_login_button}
+                        Click    ${user_navigation_menu_login_button}
+                        Wait Until Element Is Visible    ${email_field}
+                    END
+                    
         END
     END
     Type Text    ${email_field}    ${email}
@@ -161,7 +181,7 @@ Yves: go to newly created page by URL:
         ${page_not_published}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//main//*[contains(text(),'ERROR 404')]
         Log    ${page_not_published}
         IF    '${page_not_published}'=='True'
-            Run Keyword    Sleep    3s
+            Run Keyword    Sleep    5s
         ELSE
             Exit For Loop
         END
@@ -178,7 +198,7 @@ Yves: go to newly created page by URL on AT store:
         ${page_not_published}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//main//*[contains(text(),'ERROR 404')]
         Log    ${page_not_published}
         IF    '${page_not_published}'=='True'
-            Run Keyword    Sleep    3s
+            Run Keyword    Sleep    5s
         ELSE
             Exit For Loop
         END
@@ -189,15 +209,19 @@ Yves: go to newly created page by URL on AT store:
     END
 
 Yves: go to URL and refresh until 404 occurs:
-    [Arguments]    ${url}
-    FOR    ${index}    IN RANGE    0    26
+    [Arguments]    ${url}    ${iterations}=26
+    FOR    ${index}    IN RANGE    0    ${iterations}
         Go To    ${url}
         ${page_not_published}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//main//*[contains(text(),'ERROR 404')]
         Log    ${page_not_published}
         IF    '${page_not_published}'=='False'
-            Run Keyword    Sleep    3s
+            Run Keyword    Sleep    5s
         ELSE
             Exit For Loop
+        END
+        IF    ${index} == ${iterations}-1
+            Take Screenshot
+            Fail    expected element state is not reached
         END
     END
 
@@ -353,4 +377,9 @@ Yves: page should contain script with id:
 
 Yves: validate the page title:
     [Arguments]    ${title}
-    Yves: try reloading page if element is/not appear:    //h1[contains(@class,'title')][contains(text(),'${title}')]     True
+    IF    '${env}' in ['b2b','mp_b2b']
+        Yves: try reloading page if element is/not appear:    xpath=//h3[contains(text(),'${title}')]     True
+    ELSE
+        Yves: try reloading page if element is/not appear:    xpath=//h1[contains(@class,'title')][contains(text(),'${title}')]     True
+    END
+    

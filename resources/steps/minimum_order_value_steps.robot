@@ -54,20 +54,20 @@ Zed: change global threshold settings:
 
 Yves: soft threshold surcharge is added in the cart:
     [Arguments]    ${expectedSurchargeAmount}
-    Wait Until Element Is Visible    ${shopping_cart_surcharge_amount}
-    ${actualSurchargeAmount}=    Get Text    ${shopping_cart_surcharge_amount}
+    Wait Until Element Is Visible    ${shopping_cart_surcharge_amount}[${env}]
+    ${actualSurchargeAmount}=    Get Text    ${shopping_cart_surcharge_amount}[${env}]
     Should Be Equal    ${actualSurchargeAmount}    ${expectedSurchargeAmount}  
 
 Yves: soft threshold surcharge is added on summary page:
     [Arguments]    ${expectedSurchargeAmount}
-    Wait Until Element Is Visible    ${checkout_summary_surcharge_amount}
-    ${actualSurchargeAmount}=    Get Text    ${checkout_summary_surcharge_amount}
+    Wait Until Element Is Visible    ${checkout_summary_surcharge_amount}[${env}]
+    ${actualSurchargeAmount}=    Get Text    ${checkout_summary_surcharge_amount}[${env}]
     Should Be Equal    ${actualSurchargeAmount}    ${expectedSurchargeAmount}  
 
 Yves: hard threshold is applied with the following message:
     [Arguments]    ${expectedMessage}
-    Element Should Be Visible    ${checkout_summary_alert_message}
+    Element Should Be Visible    ${checkout_summary_alert_message}[${env}]
     Page Should Not Contain Element    ${checkout_summary_submit_order_button}
-    ${actualAlertMessage}=    Get Text    ${checkout_summary_alert_message}
+    ${actualAlertMessage}=    Get Text    ${checkout_summary_alert_message}[${env}]
     Should Be Equal    ${actualAlertMessage}    ${expectedMessage}
 

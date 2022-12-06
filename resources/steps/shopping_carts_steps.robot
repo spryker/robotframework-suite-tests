@@ -26,7 +26,13 @@ Yves: Go to 'Shopping Carts' page
 Yves: create new 'Shopping Cart' with name:
     [Arguments]    ${shoppingCartName}
     ${currentURL}=    Get Location
-    IF    '/multi-cart' not in '${currentURL}'    Go To    ${host}multi-cart
+    IF    '/multi-cart' not in '${currentURL}'    
+            IF    '.at.' in '${currentURL}'
+                Go To    ${host_at}multi-cart
+            ELSE
+                Go To    ${host}multi-cart
+            END    
+    END
     Click    ${create_shopping_cart_button}
     Type Text    ${shopping_cart_name_input_field}    ${shoppingCartName}
     Click    ${create_new_cart_submit_button}

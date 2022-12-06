@@ -14,7 +14,7 @@ Resource                  ../pages/yves/yves_login_page.robot
 
 *** Variables ***
 # *** SUITE VARIABLES ***
-${env}                 mp_b2c
+${env}                 b2b
 ${headless}            true
 ${browser}             chromium
 ${browser_timeout}     30 seconds
@@ -40,7 +40,7 @@ Set Up Keyword Arguments
     &{arguments}=    Fill Variables From Text String    @{args}
     FOR    ${key}    ${value}    IN    &{arguments}
         Log    Key is '${key}' and value is '${value}'.
-        ${var_value}=   Get Variable Value  ${${key}}   ${value}
+        ${var_value}=   Set Variable    ${value}
         Set Test Variable    ${${key}}    ${var_value}
     END
     [Return]    &{arguments}
@@ -67,8 +67,6 @@ SuiteTeardown
     Close Browser    ALL
 
 TestSetup
-    # ${random}=    Generate Random String    5    [NUMBERS]
-    # Set Global Variable    ${random}
     Go To    ${host}
 
 TestTeardown

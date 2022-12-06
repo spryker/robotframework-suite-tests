@@ -435,6 +435,7 @@ Split_Delivery
     ...    AND    Yves: delete all user addresses
 
 Agent_Assist
+    [Tags]    skip-due-to-issue
     [Documentation]    Checks that agent can be used. Bug:CC-23550
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: create new Zed user with the following data:    agent+${random}@spryker.com    change${random}    Agent    Assist    Root group    This user is an agent    en_US
@@ -1370,7 +1371,7 @@ Merchant_Product_Offer_in_Backoffice
     ...    AND    Zed: click Action Button in a table for row that contains:     ViewProduct${random}     Deny
 
 Manage_Merchant_Product
-    [Documentation]    checks that MU and BO user can manage merchant abstract and concrete products
+    [Documentation]    checks that MU and BO user can manage merchant abstract and concrete products + add new concrete product
     MP: login on MP with provided credentials:    ${merchant_budget_cameras_email}
     MP: open navigation menu tab:    Products    
     MP: click on create new entity button:    Create Product
@@ -1866,7 +1867,6 @@ Multistore_Product_Offer
     Yves: go to AT URL:    en/search?q=multistoreSKU${random}
     Try reloading page until element is/not appear:    ${catalog_product_card_locator}    true    21    5s
     Yves: go to PDP of the product with sku:     multistoreSKU${random}
-    Pause Execution
     Yves: merchant is (not) displaying in Sold By section of PDP:    Video King    false
     Get Location
     Zed: login on Zed with provided credentials:    ${zed_admin_email}

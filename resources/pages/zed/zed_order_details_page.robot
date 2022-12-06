@@ -13,3 +13,4 @@ ${create_shipment_city_field}    id=shipment_group_form_shipment_shippingAddress
 ${create_shipment_zip_code_field}    id=shipment_group_form_shipment_shippingAddress_zipCode
 ${create_shipment_shipment_method}    id=shipment_group_form_shipment_method_idShipmentMethod
 ${create_shipment_requested_delivery_date}    id=shipment_group_form_shipment_requestedDeliveryDate
+${zed_order_details_page_comments}    xpath=//p[@class="comment-title"]//following-sibling::p

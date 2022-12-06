@@ -38,6 +38,7 @@ Yves: add product to the shopping cart
     ${variants_present_status}=    Run Keyword And Return Status    Page should contain element    ${pdp_variant_selector}    ${EMPTY}    0:00:01
     IF    '${variants_present_status}'=='True'    Yves: change variant of the product on PDP on random value
     Click    ${pdp_add_to_cart_button}
+    Sleep    1s
     Yves: remove flash messages
 
 Yves: change quantity on PDP:
@@ -81,7 +82,19 @@ Yves: change variant of the product on PDP on:
         Run Keyword And Ignore Error    Select From List By Value    ${pdp_variant_selector}    ${variantToChoose}
     END
     Set Browser Timeout    ${browser_timeout}
-    Wait For Elements State    ${pdp_reset_selected_variant_locator}    attached
+    ${variant_selected}=    Run Keyword And Return Status    Wait For Elements State    ${pdp_reset_selected_variant_locator}    attached    timeout=5s
+    IF    '${variant_selected}'=='False'
+        TRY    
+            Set Browser Timeout    10s
+            Click    ${pdp_variant_custom_selector}    force=True
+            Wait Until Element Is Visible    ${pdp_variant_custom_selector_results}
+            Click    xpath=//ul[contains(@id,'select2-attribute')][contains(@id,'results')]/li[contains(@id,'select2-attribute')][contains(.,'${variantToChoose}')]
+        EXCEPT
+            Run Keyword And Ignore Error    Select From List By Value    ${pdp_variant_selector}    ${variantToChoose}
+        END
+    END
+
+    
 
 Yves: reset selected variant of the product on PDP
     Wait Until Page Contains Element    ${pdp_reset_selected_variant_locator}
@@ -97,8 +110,9 @@ Yves: product price on the PDP should be:
         ${actualProductPrice}=    Get Text    ${pdp_price_element_locator}
         Should Be Equal    ${expectedProductPrice}    ${actualProductPrice}
     EXCEPT    
-        Sleep    5s
+        Sleep    ${browser_timeout}
         Reload
+        Take Screenshot
         ${actualProductPrice}=    Get Text    ${pdp_price_element_locator}
         Should Be Equal    ${expectedProductPrice}    ${actualProductPrice}    
     END
@@ -115,10 +129,19 @@ Yves: add product to the shopping list:
     ${variants_present_status}=    Run Keyword And Ignore Error    Page should contain element    ${pdp_variant_selector}
     ${shopping_list_dropdown_status}=    Run Keyword And Ignore Error    Page should contain element    ${pdp_shopping_list_selector}
     IF    'PASS' in ${variants_present_status}    Yves: change variant of the product on PDP on random value
-    IF    ('${shoppingListName}' != '${EMPTY}' and 'PASS' in ${shopping_list_dropdown_status})    Select From List By Label    ${pdp_shopping_list_selector}    ${shoppingListName}
-    Wait Until Element Is Visible    ${pdp_add_to_shopping_list_button}
-    Click    ${pdp_add_to_shopping_list_button}
-
+    IF    ('${shoppingListName}' != '${EMPTY}' and 'PASS' in ${shopping_list_dropdown_status})
+        TRY
+            Select From List By Label    ${pdp_shopping_list_selector}    ${shoppingListName}
+            Wait Until Element Is Visible    ${pdp_add_to_shopping_list_button}
+            Click    ${pdp_add_to_shopping_list_button}
+        EXCEPT    
+            Click    xpath=//span[@class='select2-selection select2-selection--single']//span[contains(@id,'select2-idShoppingList')]
+            Wait Until Element Is Visible    xpat=//li[contains(@id,'select2-idShoppingList')][contains(@id,'result')][contains(.,'${shoppingListName}')]
+            Click    xpat=//li[contains(@id,'select2-idShoppingList')][contains(@id,'result')][contains(.,'${shoppingListName}')]
+            Wait Until Element Is Visible    ${pdp_add_to_shopping_list_button}
+            Click    ${pdp_add_to_shopping_list_button}
+        END
+    END
     Yves: remove flash messages
 
 Yves: change variant of the product on PDP on random value

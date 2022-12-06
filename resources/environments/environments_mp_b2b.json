@@ -60,6 +60,20 @@
             "merchant_computer_experts_email": "michele@computer-experts.com",
             "merchant_spryker_email": "harald@spryker.com"
         },
+        "user_role": {
+            "bundle_access": "product-attribute-gui",
+            "controller_access": "attribute",
+            "action_access": "create",
+            "permission_allow": "allow",
+            "permission_deny": "deny",
+            "full_access": "*"
+        },
+        
+        "glossary":{
+            "glossary_name":"customer.account.overview",
+            "original_EN_text":"Overview",
+            "original_DE_text":"Übersicht"
+        },
         
         "products": {
             "one_variant_product_abstract_sku": "M70208",

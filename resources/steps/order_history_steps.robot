@@ -15,7 +15,6 @@ Yves: go to 'Order History' page
         Yves: go to user menu item in the left bar:    Orders History
     END
         
-
 Yves: 'View Order/Reorder/Return' on the order history page:
     [Arguments]    ${orderAction}    ${lastPlacedOrder}
     IF    '${orderAction}' == 'View Order'
@@ -57,3 +56,14 @@ Yves: 'Order Details' page contains the cancel order button:
     ELSE
         Element Should Not Be Visible    ${order_details_cancel_button_locator}
     END  
+
+Yves: filter order history by business unit:
+    [Arguments]    ${business_unit}
+    Wait Until Element Is Visible    ${order_history_search_filter_button}
+    Click    ${order_history_search_filter_button}
+    Wait Until Element Is Visible    ${order_history_apply_filter_button}
+    Click    ${order_history_search_filter_business_unit_dropdown}
+    Wait Until Element Is Visible    xpath=//li[contains(@id,'select2-orderSearchForm_filters_companyBusinessUnit-result')][contains(.,'${business_unit}')]
+    Click    xpath=//li[contains(@id,'select2-orderSearchForm_filters_companyBusinessUnit-result')][contains(.,'${business_unit}')]
+    Wait Until Element Is Not Visible    xpath=//li[contains(@id,'select2-orderSearchForm_filters_companyBusinessUnit-result')][contains(.,'${business_unit}')]
+    Click    ${order_history_apply_filter_button}

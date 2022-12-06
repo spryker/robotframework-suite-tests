@@ -3,6 +3,7 @@
 
     "env": {
             "host": "http://yves.de.spryker.local/",
+            "host_at": "http://yves.at.spryker.local/",
             "zed_url": "http://backoffice.de.spryker.local/"},
 
     "users": {    
@@ -50,7 +51,20 @@
             
             "zed_admin_email": "admin@spryker.com",
             "zed_admin_password": "change123"},
-        
+            
+        "user_role": {
+                "bundle_access": "product-attribute-gui",
+                "controller_access": "attribute",
+                "action_access": "create",
+                "permission_allow": "allow",
+                "permission_deny": "deny",
+                "full_access": "*"
+            },
+        "glossary":{
+                "glossary_name":"customer.account.overview",
+                "original_EN_text":"Overview",
+                "original_DE_text":"Übersicht"
+            },
         "products": {
             "one_variant_product_abstract_sku": "M70208",
             "one_variant_product_abstract_name": "EUROKRAFT trolley - with open shovel",
