@@ -4,6 +4,7 @@ Resource    ../common/common_zed.robot
 Resource    ../../resources/pages/zed/zed_edit_global_threshold_page.robot
 Resource    ../../resources/pages/yves/yves_shopping_cart_page.robot
 Resource    ../../resources/pages/yves/yves_checkout_summary_page.robot
+Resource    ../common/common_yves.robot
 
 
 *** Keywords ***
@@ -68,8 +69,14 @@ Yves: soft threshold surcharge is added on summary page:
 
 Yves: hard threshold is applied with the following message:
     [Arguments]    ${expectedMessage}
-    Element Should Be Visible    ${checkout_summary_alert_message}[${env}]
-    Page Should Not Contain Element    ${checkout_summary_submit_order_button}
-    ${actualAlertMessage}=    Get Text    ${checkout_summary_alert_message}[${env}]
-    Should Be Equal    ${actualAlertMessage}    ${expectedMessage}
+    TRY
+        Element Should Be Visible    ${checkout_summary_alert_message}[${env}]
+        Page Should Not Contain Element    ${checkout_summary_submit_order_button}
+        ${actualAlertMessage}=    Get Text    ${checkout_summary_alert_message}[${env}]
+        Should Be Equal    ${actualAlertMessage}    ${expectedMessage}
+    EXCEPT    
+        Click    ${checkout_summary_submit_order_button}
+        Yves: flash message should be shown:    error    ${expectedMessage}
+    END
+
 
