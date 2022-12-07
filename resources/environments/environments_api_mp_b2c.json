@@ -302,7 +302,7 @@
             "meta_description": "Enjoy greater flexibility  ...than ever before with the Galaxy Tab S2. Remarkably slim and ultra-lightweight, use this device to take your e-books, photos,",
             "with_label": "204_29851280",
             "with_stock": "001_25904006",
-            "with_offer": "092_24495842",
+            "with_offer": "077_24584210",
             "without_stock": ""
         },
         "abstract_available_product_with_stock": {
@@ -359,7 +359,8 @@
             },
             "product_with_reviews": {
                 "sku": "035",
-                "name": "Canon PowerShot N"
+                "name": "Canon PowerShot N",
+                "price_chf": "34209"
             },
             "product_with_options": {
                 "sku": "012",

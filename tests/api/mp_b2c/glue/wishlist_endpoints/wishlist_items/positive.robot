@@ -8,9 +8,9 @@ Default Tags    glue
 ENABLER
     TestSetup
 
-#Post
-#CC-16555 API: JSON response is missing product availability and price
 Adding_item_in_wishlist 
+   [Documentation]   #CC-16555 API: JSON response is missing product availability and price
+   [Tags]    skip-due-to-issue  
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}
     ...    AND    I send a POST request:    /wishlists    {"data": { "type": "wishlists","attributes": { "name": "${wishlist_name}" } }}
@@ -42,7 +42,7 @@ Adding_item_in_wishlist_with_offer
     ...    AND    Response status code should be:    201 
     ...    AND    Response reason should be:    Created
     ...    AND    Save value to a variable:    [data][id]        wishlist_id
-    When I send a POST request:    /wishlists/${wishlist_id}/wishlist-items    {"data": {"type": "wishlist-items","attributes": {"sku": "${concrete_available_product.with_offer}", "productOfferReference": "offer5"}}}
+    When I send a POST request:    /wishlists/${wishlist_id}/wishlist-items    {"data": {"type": "wishlist-items","attributes": {"sku": "${concrete_available_product.with_offer}", "productOfferReference": "offer170"}}}
     Then Response status code should be:    201 
     And Response reason should be:    Created
     And Save value to a variable:    [data][id]    wishlist_items_id
