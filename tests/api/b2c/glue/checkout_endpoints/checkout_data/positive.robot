@@ -9,8 +9,9 @@ ENABLER
     TestSetup
 
 #POST requests
-# Created a new bug https://spryker.atlassian.net/browse/CC-23077
 Provide_checkout_data
+    [Documentation]   # Created a new bug https://spryker.atlassian.net/browse/CC-23077
+    [Tags]    skip-due-to-issue  
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
     ...  AND    Find or create customer cart
@@ -52,8 +53,9 @@ Provide_checkout_with_only_cart_id
     And Response should contain the array of a certain size:    [data][attributes][selectedPaymentMethods]    0
     And Response body has correct self link internal
 
-# Created a new bug https://spryker.atlassian.net/browse/CC-23077
 Provide_checkout_data_with_invalid_billing_address_data
+    [Documentation]   # Created a new bug https://spryker.atlassian.net/browse/CC-23077
+    [Tags]    skip-due-to-issue
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
     ...  AND    Find or create customer cart
@@ -77,8 +79,9 @@ Provide_checkout_data_with_invalid_billing_address_data
     And Response should contain the array of a certain size:    [data][attributes][selectedPaymentMethods]    0
     And Response body has correct self link internal
 
-# Created a new bug https://spryker.atlassian.net/browse/CC-23077
 Provide_checkout_data_with_invalid_shipping_address_data
+    [Documentation]   # Created a new bug https://spryker.atlassian.net/browse/CC-23077
+    [Tags]    skip-due-to-issue
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
     ...  AND    Find or create customer cart
@@ -102,8 +105,9 @@ Provide_checkout_data_with_invalid_shipping_address_data
     And Response should contain the array of a certain size:    [data][attributes][selectedPaymentMethods]    0
     And Response body has correct self link internal
 
-# Created a new bug https://spryker.atlassian.net/browse/CC-23077
 Provide_checkout_data_with_invalid_payments
+    [Documentation]   # Created a new bug https://spryker.atlassian.net/browse/CC-23077
+    [Tags]    skip-due-to-issue
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
     ...  AND    Find or create customer cart
@@ -162,8 +166,9 @@ Provide_checkout_data_with_empty_cart
     And Response should contain the array of a certain size:    [data][attributes][selectedPaymentMethods]    0
     And Response body has correct self link internal
 
-# Created a new bug https://spryker.atlassian.net/browse/CC-23077
 Provide_checkout_data_with_bundle_product
+    [Documentation]   # Created a new bug https://spryker.atlassian.net/browse/CC-23077
+    [Tags]    skip-due-to-issue
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
     ...  AND    Find or create customer cart
