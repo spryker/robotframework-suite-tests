@@ -55,12 +55,14 @@ Zed: change global threshold settings:
 Yves: soft threshold surcharge is added in the cart:
     [Arguments]    ${expectedSurchargeAmount}
     Wait Until Element Is Visible    ${shopping_cart_surcharge_amount}[${env}]
+    Scroll Element Into View    ${shopping_cart_surcharge_amount}[${env}]
     ${actualSurchargeAmount}=    Get Text    ${shopping_cart_surcharge_amount}[${env}]
     Should Be Equal    ${actualSurchargeAmount}    ${expectedSurchargeAmount}  
 
 Yves: soft threshold surcharge is added on summary page:
     [Arguments]    ${expectedSurchargeAmount}
     Wait Until Element Is Visible    ${checkout_summary_surcharge_amount}[${env}]
+    Scroll Element Into View    ${checkout_summary_surcharge_amount}[${env}]
     ${actualSurchargeAmount}=    Get Text    ${checkout_summary_surcharge_amount}[${env}]
     Should Be Equal    ${actualSurchargeAmount}    ${expectedSurchargeAmount}  
 

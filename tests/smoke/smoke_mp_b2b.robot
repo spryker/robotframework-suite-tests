@@ -1399,7 +1399,7 @@ Merchant_Portal_Product_Volume_Prices
     MP: perform search by:    VPNewProduct${random}
     MP: click on a table row that contains:     VPNewProduct${random}
     MP: fill abstract product required fields:
-    ...    || product name DE     | store | tax set        ||
+    ...    || product name DE     | store | tax set          ||
     ...    || VPNewProduct${random} | DE    | Standard Taxes ||
     MP: fill product price values:
     ...    || product type | row number | customer | store | currency | gross default ||
@@ -1595,8 +1595,8 @@ Merchant_Product_Offer_in_Backoffice
     MP: perform search by:    ViewProduct${random}
     MP: click on a table row that contains:     ViewProduct${random}
     MP: fill abstract product required fields:
-    ...    || product name DE      | store | tax set           ||
-    ...    || ViewProduct${random} | DE    | Smart Electronics ||
+    ...    || product name DE      | store | tax set        ||
+    ...    || ViewProduct${random} | DE    | Standard Taxes ||
     MP: fill product price values:
     ...    || product type | row number | store | currency | gross default ||
     ...    || abstract     | 1          | DE    | EUR      | 100           ||
@@ -1662,8 +1662,8 @@ Manage_Merchant_Product
     MP: perform search by:    manageProduct${random}
     MP: click on a table row that contains:     manageProduct${random}
     MP: fill abstract product required fields:
-    ...    || product name DE        | store | tax set           ||
-    ...    || manageProduct${random} | DE    | Smart Electronics ||
+    ...    || product name DE        | store | tax set        ||
+    ...    || manageProduct${random} | DE    | Standard Taxes ||
     MP: fill product price values:
     ...    || product type | row number  | store | currency | gross default | gross original ||
     ...    || abstract     | 1           | DE    | EUR      | 100           | 90             ||
@@ -1769,8 +1769,8 @@ Merchant_Product_Original_Price
     MP: perform search by:    originalProduct${random}
     MP: click on a table row that contains:     originalProduct${random}
     MP: fill abstract product required fields:
-    ...    || product name DE          | store | tax set           ||
-    ...    || originalProduct${random} | DE    | Smart Electronics ||
+    ...    || product name DE          | store | tax set        ||
+    ...    || originalProduct${random} | DE    | Standard Taxes ||
     MP: fill product price values:
     ...    || product type | row number  | store | currency | gross default | gross original  ||
     ...    || abstract     | 1           | DE    | EUR      | 100           | 150             ||
@@ -2097,8 +2097,8 @@ Multistore_Product_Offer
     MP: perform search by:    multistoreProduct${random}
     MP: click on a table row that contains:     multistoreProduct${random}
     MP: fill abstract product required fields:
-    ...    || product name DE            | store | store 2 |  tax set           ||
-    ...    || multistoreProduct${random} | DE    | AT      | Smart Electronics ||
+    ...    || product name DE            | store | store 2 |  tax set       ||
+    ...    || multistoreProduct${random} | DE    | AT      | Standard Taxes ||
     MP: fill product price values:
     ...    || product type | row number  | store | currency | gross default | gross original ||
     ...    || abstract     | 1           | DE    | EUR      | 100           | 90             ||
@@ -2212,8 +2212,8 @@ Product_Availability_Calculation
     MP: perform search by:    availabilityProduct${random}
     MP: click on a table row that contains:     availabilityProduct${random}
     MP: fill abstract product required fields:
-    ...    || product name DE              | store | store 2 | tax set           ||
-    ...    || availabilityProduct${random} | DE    | AT      | Smart Electronics ||
+    ...    || product name DE              | store | store 2 | tax set        ||
+    ...    || availabilityProduct${random} | DE    | AT      | Standard Taxes ||
     MP: fill product price values:
     ...    || product type | row number  | store | currency | gross default | gross original ||
     ...    || abstract     | 1           | DE    | EUR      | 100           | 90             ||
@@ -2307,8 +2307,8 @@ Offer_Availability_Calculation
     MP: perform search by:    offAvProduct${random}
     MP: click on a table row that contains:     offAvProduct${random}
     MP: fill abstract product required fields:
-    ...    || product name DE       | store | store 2 | tax set           ||
-    ...    || offAvProduct${random} | DE    | AT      | Smart Electronics ||
+    ...    || product name DE       | store | store 2 | tax set        ||
+    ...    || offAvProduct${random} | DE    | AT      | Standard Taxes ||
     MP: fill product price values:
     ...    || product type | row number  | store | currency | gross default | gross original ||
     ...    || abstract     | 1           | DE    | EUR      | 100           | 90             ||

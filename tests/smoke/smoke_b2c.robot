@@ -688,8 +688,8 @@ Manage_Product
     ...    || attribute 1 | attribute value 1 | attribute 2 | attribute value 2 ||
     ...    || color       | grey              | color       | blue              ||
     Zed: update abstract product price on:
-    ...    || store | mode  | type    | currency | amount | tax set        ||
-    ...    || DE    | gross | default | €        | 100.00 | Standard Taxes ||
+    ...    || store | mode  | type    | currency | amount | tax set           ||
+    ...    || DE    | gross | default | €        | 100.00 | Smart Electronics ||
     Zed: change concrete product data:
     ...    || productAbstract    | productConcrete               | active | searchable en | searchable de ||
     ...    || manageSKU${random} | manageSKU${random}-color-grey | true   | true          | true          ||
@@ -732,12 +732,13 @@ Manage_Product
     ...    || productAbstract    | productConcrete                | warehouse n1 | warehouse n1 qty | warehouse n1 never out of stock ||
     ...    || manageSKU${random} | manageSKU${random}-color-black | Warehouse1   | 5                | false                           ||
     Zed: update abstract product price on:
-    ...    || productAbstract    | store | mode  | type    | currency | amount | tax set        ||
-    ...    || manageSKU${random} | DE    | gross | default | €        | 150.00 | Standard Taxes ||
+    ...    || productAbstract    | store | mode  | type    | currency | amount | tax set           ||
+    ...    || manageSKU${random} | DE    | gross | default | €        | 150.00 | Smart Electronics ||
     Zed: update abstract product data:
     ...    || productAbstract    | name en                         | name de                         ||
     ...    || manageSKU${random} | ENUpdatedmanageProduct${random} | DEUpdatedmanageProduct${random} ||
     Yves: login on Yves with provided credentials:    ${yves_user_email}
+    Yves: check if cart is not empty and clear it
     Yves: go to URL:    en/search?q=manageSKU${random}
     Try reloading page until element is/not appear:    ${catalog_product_card_locator}    true    21    5s
     Yves: go to PDP of the product with sku:    manageSKU${random}
@@ -758,7 +759,7 @@ Manage_Product
     Yves: change quantity using '+' or '-' button № times:    +    2
     Yves: add product to the shopping cart
     Yves: go to b2c shopping cart
-    Yves: shopping cart contains product with unit price:    manageSKU${random}-color-black    ENaddedConcrete${random}    25.00
+    Yves: shopping cart contains product with unit price:    manageSKU${random}-color-black    ENaddedConcrete${random}    75.00
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Catalog    Products 
     Zed: click Action Button in a table for row that contains:     manageProduct${random}     View
@@ -767,7 +768,7 @@ Manage_Product
     ...    || store | sku                | name                            | variants count ||
     ...    || DE AT | manageSKU${random} | ENUpdatedmanageProduct${random} | 3              ||
     [Teardown]    Run Keywords    Yves: login on Yves with provided credentials:    ${yves_user_email}
-    ...    AND    Yves: delete all shopping carts
+    ...    AND    Yves: check if cart is not empty and clear it
 
 Product_Original_Price
     [Documentation]    checks that Orignal price is displayed on the PDP and in Catalog
@@ -779,11 +780,11 @@ Product_Original_Price
     ...    || attribute 1 | attribute value 1 | attribute 2 | attribute value 2 ||
     ...    || color       | grey              | color       | blue              ||
     Zed: update abstract product price on:
-    ...    || store | mode  | type    | currency | amount | tax set        ||
-    ...    || DE    | gross | default | €        | 100.00 | Standard Taxes ||
+    ...    || store | mode  | type    | currency | amount | tax set           ||
+    ...    || DE    | gross | default | €        | 100.00 | Smart Electronics ||
     Zed: update abstract product price on:
-    ...    || store | mode  | type     | currency | amount | tax set        ||
-    ...    || DE    | gross | original | €        | 200.00 | Standard Taxes ||
+    ...    || store | mode  | type     | currency | amount | tax set           ||
+    ...    || DE    | gross | original | €        | 200.00 | Smart Electronics ||
     Zed: change concrete product data:
     ...    || productAbstract      | productConcrete                 | active | searchable en | searchable de ||
     ...    || originalSKU${random} | originalSKU${random}-color-grey | true   | true          | true          ||
@@ -1075,11 +1076,11 @@ Multistore_Product
     ...    || attribute 1 | attribute value 1 ||
     ...    || color       | grey              ||
     Zed: update abstract product price on:
-    ...    || store | mode  | type    | currency | amount | tax set        ||
-    ...    || DE    | gross | default | €        | 100.00 | Standard Taxes ||
+    ...    || store | mode  | type    | currency | amount | tax set           ||
+    ...    || DE    | gross | default | €        | 100.00 | Smart Electronics ||
     Zed: update abstract product price on:
-    ...    || store | mode  | type    | currency | amount | tax set        ||
-    ...    || AT    | gross | default | €        | 200.00 | Standard Taxes ||
+    ...    || store | mode  | type    | currency | amount | tax set           ||
+    ...    || AT    | gross | default | €        | 200.00 | Smart Electronics ||
     Zed: change concrete product data:
     ...    || productAbstract   | productConcrete              | active | searchable en | searchable de ||
     ...    || multiSKU${random} | multiSKU${random}-color-grey | true   | true          | true          ||
@@ -1153,11 +1154,11 @@ Product_Availability_Calculation
     ...    || attribute 1 | attribute value 1 ||
     ...    || color       | grey              ||
     Zed: update abstract product price on:
-    ...    || store | mode  | type    | currency | amount | tax set        ||
-    ...    || DE    | gross | default | €        | 100.00 | Standard Taxes ||
+    ...    || store | mode  | type    | currency | amount | tax set           ||
+    ...    || DE    | gross | default | €        | 100.00 | Smart Electronics ||
     Zed: update abstract product price on:
-    ...    || store | mode  | type    | currency | amount | tax set        ||
-    ...    || AT    | gross | default | €        | 200.00 | Standard Taxes ||
+    ...    || store | mode  | type    | currency | amount | tax set           ||
+    ...    || AT    | gross | default | €        | 200.00 | Smart Electronics ||
     Zed: change concrete product data:
     ...    || productAbstract          | productConcrete                     | active | searchable en | searchable de ||
     ...    || availabilitySKU${random} | availabilitySKU${random}-color-grey | true   | true          | true          ||
@@ -1352,7 +1353,7 @@ CRUD_Product_Set
     Yves: shopping cart contains the following products:    Canon IXUS 175
     Yves: shopping cart contains the following products:    Canon IXUS 285
     Yves: shopping cart contains the following products:    Canon IXUS 180
-    Yves: delete all shopping carts
+    Yves: check if cart is not empty and clear it
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: delete product set:    test set ${random}
     Yves: go to URL and refresh until 404 occurs:    ${host}en/test-set-${random}
