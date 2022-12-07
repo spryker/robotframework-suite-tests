@@ -898,14 +898,14 @@ Create_and_Approve_New_Merchant_Product
     Yves: go to URL:    en/search?q=SKU${random}
     Try reloading page until element is/not appear:    ${catalog_product_card_locator}    true    21    5s
     Yves: go to PDP of the product with sku:     SKU${random}
-    Get Location
+    Save current URL
     Yves: merchant is (not) displaying in Sold By section of PDP:    Budget Cameras    true
     Yves: product price on the PDP should be:    €100.00
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Catalog    Products 
     Zed: click Action Button in a table for row that contains:     NewProduct${random}     Deny
     Yves: go to the 'Home' page
-    Yves: go to URL and refresh until 404 occurs:    ${location}
+    Yves: go to URL and refresh until 404 occurs:    ${url}
 
 Create_New_Offer
     [Documentation]    Checks that merchant is able to create new offer and it will be displayed on Yves
@@ -1868,12 +1868,12 @@ Multistore_Product_Offer
     Try reloading page until element is/not appear:    ${catalog_product_card_locator}    true    21    5s
     Yves: go to PDP of the product with sku:     multistoreSKU${random}
     Yves: merchant is (not) displaying in Sold By section of PDP:    Video King    false
-    Get Location
+    Save current URL
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: update abstract product data:
     ...    || productAbstract        | unselect store ||
     ...    || multistoreSKU${random} | AT             ||
-    Yves: go to URL and refresh until 404 occurs:    ${location}
+    Yves: go to URL and refresh until 404 occurs:    ${url}
     [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: go to second navigation item level:    Catalog    Products 
     ...    AND    Zed: click Action Button in a table for row that contains:     multistoreSKU${random}     Deny
@@ -1884,13 +1884,13 @@ Multistore_CMS
     Zed: go to second navigation item level:    Content    Pages
     Zed: create a cms page and publish it:    Multistore Page${random}    multistore-page${random}    Multistore Page    Page text
     Yves: go to newly created page by URL on AT store:    en/multistore-page${random}
-    Get Location
+    Save current URL
     Yves: page contains CMS element:    CMS Page Title    Multistore Page
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: update cms page and publish it:
     ...    || cmsPage                  | unselect store ||
     ...    || Multistore Page${random} | AT             ||
-    Yves: go to URL and refresh until 404 occurs:    ${location}
+    Yves: go to URL and refresh until 404 occurs:    ${url}
     [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: go to second navigation item level:    Content    Pages
     ...    AND    Zed: click Action Button in a table for row that contains:    Multistore Page${random}    Deactivate

@@ -17,7 +17,7 @@ Resource                  ../pages/yves/yves_login_page.robot
 ${env}                 b2b
 ${headless}            true
 ${browser}             chromium
-${browser_timeout}     30 seconds
+${browser_timeout}     40 seconds
 ${email_domain}        @spryker.com
 ${default_password}    change123
 ${admin_email}         admin@spryker.com
@@ -156,6 +156,12 @@ Get Location
     ${location}=    Set Variable    ${current_location}
     Set Test Variable    ${location}    ${location}
     [Return]    ${location}
+
+Save current URL
+    ${current_url}=    Get URL
+    ${url}=    Set Variable    ${current_url}
+    Set Test Variable    ${url}    ${url}
+    [Return]    ${url}
 
 Wait Until Element Is Not Visible
     [Arguments]    ${locator}    ${message}=${EMPTY}    ${timeout}=${browser_timeout}

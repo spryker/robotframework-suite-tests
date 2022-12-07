@@ -77,7 +77,13 @@ Yves: change variant of the product on PDP on:
         Set Browser Timeout    10s
         Click    ${pdp_variant_custom_selector}    force=True
         Wait Until Element Is Visible    ${pdp_variant_custom_selector_results}
-        Click    xpath=//ul[contains(@id,'select2-attribute')][contains(@id,'results')]/li[contains(@id,'select2-attribute')][contains(.,'${variantToChoose}')]
+        TRY
+            Click    xpath=//ul[contains(@id,'select2-attribute')][contains(@id,'results')]/li[contains(@id,'select2-attribute')][contains(.,'${variantToChoose}')]
+        EXCEPT    
+            Sleep    10s
+            Reload
+            Click    xpath=//ul[contains(@id,'select2-attribute')][contains(@id,'results')]/li[contains(@id,'select2-attribute')][contains(.,'${variantToChoose}')]
+        END
     EXCEPT
         Run Keyword And Ignore Error    Select From List By Value    ${pdp_variant_selector}    ${variantToChoose}
     END
@@ -88,7 +94,13 @@ Yves: change variant of the product on PDP on:
             Set Browser Timeout    10s
             Click    ${pdp_variant_custom_selector}    force=True
             Wait Until Element Is Visible    ${pdp_variant_custom_selector_results}
-            Click    xpath=//ul[contains(@id,'select2-attribute')][contains(@id,'results')]/li[contains(@id,'select2-attribute')][contains(.,'${variantToChoose}')]
+            TRY
+                Click    xpath=//ul[contains(@id,'select2-attribute')][contains(@id,'results')]/li[contains(@id,'select2-attribute')][contains(.,'${variantToChoose}')]
+            EXCEPT    
+                Sleep    10s
+                Reload
+                Click    xpath=//ul[contains(@id,'select2-attribute')][contains(@id,'results')]/li[contains(@id,'select2-attribute')][contains(.,'${variantToChoose}')]
+            END
         EXCEPT
             Run Keyword And Ignore Error    Select From List By Value    ${pdp_variant_selector}    ${variantToChoose}
         END

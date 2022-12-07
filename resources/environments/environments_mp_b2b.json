@@ -59,7 +59,8 @@
             "merchant_office_king_email": "martha@office-king.nl",
             "merchant_office_king_reference": "MER000009",
             "merchant_computer_experts_email": "michele@computer-experts.com",
-            "merchant_spryker_email": "harald@spryker.com"
+            "merchant_spryker_email": "harald@spryker.com",
+            "merchant_spryker_reference": "MER000008"
         },
         "user_role": {
             "bundle_access": "product-attribute-gui",
