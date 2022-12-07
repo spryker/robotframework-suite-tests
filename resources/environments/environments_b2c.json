@@ -13,8 +13,8 @@
         "yves_user_password": "change123",
 
         "yves_second_user_email": "bill.martin@spryker.com",
-        "yves_second_user_first_name": "Martin",
-        "yves_second_user_last_name": "Bill",
+        "yves_second_user_first_name": "Bill",
+        "yves_second_user_last_name": "Martin",
         "yves_second_user_password": "change123",
 
         "zed_admin_email": "admin@spryker.com",
