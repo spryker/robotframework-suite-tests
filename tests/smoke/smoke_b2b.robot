@@ -660,7 +660,7 @@ User_Account
     Yves: check that user has address exists/doesn't exist:    false    ${yves_user_first_name} ${random}    ${yves_user_last_name} ${random}    Kirncher Str. ${random}    7    ${random}    Berlin    Germany
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: create a new customer address in profile:
-    ...    || email                   | salutation | first name                  | last name                       | address 1          | address 2           | address 3           | city            | zip code  | country | phone     | company          ||
+    ...    || email              | salutation | first name                       | last name                       | address 1          | address 2           | address 3           | city            | zip code  | country | phone     | company          ||
     ...    || ${yves_user_email} | Ms         | ${yves_user_first_name}${random} | ${yves_user_last_name}${random} | address 1${random} | address 2 ${random} | address 3 ${random} | Berlin${random} | ${random} | Austria | 123456789 | Spryker${random} ||
     Yves: login on Yves with provided credentials:    ${yves_user_email}
     Yves: go to user menu item in header:    Overview

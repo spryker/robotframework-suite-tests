@@ -3,6 +3,7 @@
 
     "env": {
         "host": "http://yves.de.spryker.local/",
+        "host_at": "http://yves.at.spryker.local/",
         "zed_url": "http://backoffice.de.spryker.local/"
     },
 
@@ -11,6 +12,7 @@
         "yves_user_first_name": "George",
         "yves_user_last_name": "Freeman",
         "yves_user_password": "change123",
+        "yves_user_address": "Mr George Freeman, Kirncher Str. 7, 10247 Berlin",
 
         "yves_second_user_email": "bill.martin@spryker.com",
         "yves_second_user_first_name": "Bill",
