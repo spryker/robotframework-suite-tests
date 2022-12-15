@@ -38,6 +38,7 @@ Yves: add product to the shopping cart
     ${variants_present_status}=    Run Keyword And Return Status    Page should contain element    ${pdp_variant_selector}    ${EMPTY}    0:00:01
     IF    '${variants_present_status}'=='True'    Yves: change variant of the product on PDP on random value
     Click    ${pdp_add_to_cart_button}
+    Sleep    1s
     Yves: remove flash messages
 
 Yves: change quantity on PDP:
@@ -76,12 +77,40 @@ Yves: change variant of the product on PDP on:
         Set Browser Timeout    10s
         Click    ${pdp_variant_custom_selector}    force=True
         Wait Until Element Is Visible    ${pdp_variant_custom_selector_results}
-        Click    xpath=//ul[contains(@id,'select2-attribute')][contains(@id,'results')]/li[contains(@id,'select2-attribute')][contains(.,'${variantToChoose}')]
+        TRY
+            Click    xpath=//ul[contains(@id,'select2-attribute')][contains(@id,'results')]/li[contains(@id,'select2-attribute')][contains(.,'${variantToChoose}')]
+        EXCEPT    
+            Sleep    10s
+            Reload
+            Click    xpath=//ul[contains(@id,'select2-attribute')][contains(@id,'results')]/li[contains(@id,'select2-attribute')][contains(.,'${variantToChoose}')]
+        END
     EXCEPT
         Run Keyword And Ignore Error    Select From List By Value    ${pdp_variant_selector}    ${variantToChoose}
     END
     Set Browser Timeout    ${browser_timeout}
-    Wait For Elements State    ${pdp_reset_selected_variant_locator}    attached
+    ${variant_selected}=    Run Keyword And Return Status    Wait For Elements State    ${pdp_reset_selected_variant_locator}    attached    timeout=5s
+    IF    '${variant_selected}'=='False'
+        TRY    
+            Set Browser Timeout    10s
+            Click    ${pdp_variant_custom_selector}    force=True
+            Wait Until Element Is Visible    ${pdp_variant_custom_selector_results}
+            TRY
+                Click    xpath=//ul[contains(@id,'select2-attribute')][contains(@id,'results')]/li[contains(@id,'select2-attribute')][contains(.,'${variantToChoose}')]
+            EXCEPT    
+                Sleep    10s
+                Reload
+                Click    xpath=//ul[contains(@id,'select2-attribute')][contains(@id,'results')]/li[contains(@id,'select2-attribute')][contains(.,'${variantToChoose}')]
+            END
+        EXCEPT
+            Run Keyword And Ignore Error    Select From List By Value    ${pdp_variant_selector}    ${variantToChoose}
+        END
+    END
+
+    
+
+Yves: reset selected variant of the product on PDP
+    Wait Until Page Contains Element    ${pdp_reset_selected_variant_locator}
+    Click    ${pdp_reset_selected_variant_locator}
 
 Yves: change amount on PDP:
     [Arguments]    ${amountToSet}
@@ -89,7 +118,21 @@ Yves: change amount on PDP:
 
 Yves: product price on the PDP should be:
     [Arguments]    ${expectedProductPrice}
-    ${actualProductPrice}=    Get Text    ${pdp_price_element_locator}
+    TRY
+        ${actualProductPrice}=    Get Text    ${pdp_price_element_locator}
+        Should Be Equal    ${expectedProductPrice}    ${actualProductPrice}
+    EXCEPT    
+        Sleep    ${browser_timeout}
+        Reload
+        Take Screenshot
+        ${actualProductPrice}=    Get Text    ${pdp_price_element_locator}
+        Should Be Equal    ${expectedProductPrice}    ${actualProductPrice}    
+    END
+
+
+Yves: product original price on the PDP should be:
+    [Arguments]    ${expectedProductPrice}
+    ${actualProductPrice}=    Get Text    ${pdp_original_price_element_locator}
     Should Be Equal    ${expectedProductPrice}    ${actualProductPrice}
 
 Yves: add product to the shopping list:
@@ -98,15 +141,31 @@ Yves: add product to the shopping list:
     ${variants_present_status}=    Run Keyword And Ignore Error    Page should contain element    ${pdp_variant_selector}
     ${shopping_list_dropdown_status}=    Run Keyword And Ignore Error    Page should contain element    ${pdp_shopping_list_selector}
     IF    'PASS' in ${variants_present_status}    Yves: change variant of the product on PDP on random value
-    IF    ('${shoppingListName}' != '${EMPTY}' and 'PASS' in ${shopping_list_dropdown_status})    Select From List By Label    ${pdp_shopping_list_selector}    ${shoppingListName}
-    Wait Until Element Is Visible    ${pdp_add_to_shopping_list_button}
-    Click    ${pdp_add_to_shopping_list_button}
-
+    IF    ('${shoppingListName}' != '${EMPTY}' and 'PASS' in ${shopping_list_dropdown_status})
+        TRY
+            Select From List By Label    ${pdp_shopping_list_selector}    ${shoppingListName}
+            Wait Until Element Is Visible    ${pdp_add_to_shopping_list_button}
+            Click    ${pdp_add_to_shopping_list_button}
+        EXCEPT    
+            Click    xpath=//span[@class='select2-selection select2-selection--single']//span[contains(@id,'select2-idShoppingList')]
+            Wait Until Element Is Visible    xpat=//li[contains(@id,'select2-idShoppingList')][contains(@id,'result')][contains(.,'${shoppingListName}')]
+            Click    xpat=//li[contains(@id,'select2-idShoppingList')][contains(@id,'result')][contains(.,'${shoppingListName}')]
+            Wait Until Element Is Visible    ${pdp_add_to_shopping_list_button}
+            Click    ${pdp_add_to_shopping_list_button}
+        END
+    END
     Yves: remove flash messages
 
 Yves: change variant of the product on PDP on random value
     Wait Until Element Is Visible    ${pdp_variant_selector}
-    Run Keyword And Ignore Error    Select Random Option From List    ${pdp_variant_selector}    xpath=//*[@data-qa='component variant']//select//option[@value]
+    TRY    
+        Set Browser Timeout    10s
+        Click    ${pdp_variant_custom_selector}    force=True
+        Wait Until Element Is Visible    ${pdp_variant_custom_selector_results}
+        Click    xpath=//ul[contains(@id,'select2-attribute')][contains(@id,'results')]/li[contains(@id,'select2-attribute')][1]
+    EXCEPT
+        Run Keyword And Ignore Error    Select From List By Value    ${pdp_variant_selector}    ${variantToChoose}
+    END
     Sleep    3s
 
 Yves: get sku of the concrete product on PDP
@@ -151,8 +210,12 @@ Yves: add product to wishlist:
             Select From List By Value    xpath=//select[contains(@name,'wishlist-name')]    ${wishlistName}
     END
     Click    ${pdp_add_to_wishlist_button}
-    Yves: flash message should be shown:    success    Items added successfully
-    Yves: remove flash messages
+    TRY
+        Yves: flash message should be shown:    success    Items added successfully
+        Yves: remove flash messages 
+    EXCEPT    
+        Log    flash message was not shown
+    END
 
 Yves: check if product is available on PDP:
     [Arguments]    ${abstractSku}    ${isAvailable}
@@ -193,13 +256,22 @@ Yves: select xxx merchant's offer:
 Yves: merchant's offer/product price should be:
     [Arguments]    ${merchantName}    ${expectedProductPrice}
     Wait Until Element Is Visible    ${pdpPriceLocator}  
-    Try reloading page until element does/not contain text:    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]/ancestor::div[contains(@class,'item')]//span[@itemprop='price']    ${expectedProductPrice}    true    20    3s
+    Try reloading page until element does/not contain text:    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]/ancestor::div[contains(@class,'item')]//span[@itemprop='price']    ${expectedProductPrice}    true    26    5s
 
 Yves: merchant is (not) displaying in Sold By section of PDP:
     [Arguments]    ${merchantName}    ${condition}
     Wait Until Element Is Visible    ${pdp_product_sku}[${env}]
-    Try reloading page until element is/not appear:    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]     ${condition}    26    3s  
+    Try reloading page until element is/not appear:    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]     ${condition}    26    5s  
    
 Yves: select random varian if variant selector is available
     ${variants_present_status}=    Run Keyword And Return Status    Page should contain element    ${pdp_variant_selector}    ${EMPTY}    0:00:01
     IF    '${variants_present_status}'=='True'    Yves: change variant of the product on PDP on random value
+
+Yves: try add product to the cart from PDP and expect error:
+    [Arguments]    ${expectedError}
+    Click    ${pdp_add_to_cart_button}
+    Yves: flash message should be shown:    error    ${expectedError}
+
+Yves: product name on PDP should be:
+    [Arguments]    ${expected_product_name}
+    Yves: try reloading page if element is/not appear:    xpath=//h1[contains(@class,'title')][contains(.,'${expected_product_name}')]    True    15    3s

@@ -1,6 +1,7 @@
 *** Variable ***
 &{pdp_main_container_locator}    b2b=xpath=//main[contains(@class,'page-layout-main--pdp')]    b2c=xpath=//*[@itemtype='https://schema.org/Product']//product-carousel[contains(@*, 'pdp')]    suite-nonsplit=xpath=//image-carousel[contains(@class,'js-image-carousel')]    mp_b2b=xpath=//main[contains(@class,'page-layout-main--pdp')]    mp_b2c=xpath=//*[@itemtype='https://schema.org/Product']//product-carousel[contains(@*, 'pdp')]
 ${pdp_price_element_locator}    xpath=//volume-price[@class='custom-element volume-price']//span[contains(@class,'volume-price__price')][not(ancestor::form[contains(@action,'cart/add')])]
+${pdp_original_price_element_locator}    xpath=//volume-price[@class='custom-element volume-price']//span[contains(@class,'volume-price')][contains(@class,'original')][not(ancestor::form[contains(@action,'cart/add')])]
 ${pdp_add_to_cart_button}    xpath=//button[contains(@class,'button') and @data-qa='add-to-cart-button']
 &{pdp_add_to_cart_disabled_button}    b2c=xpath=//button[@disabled and contains(text(),'Add to Cart')]    b2b=xpath=//button[@disabled and contains(@data-qa,'add-to-cart-button')]    mp_b2b=xpath=//button[@disabled and contains(@data-qa,'add-to-cart-button')]    mp_b2c=xpath=//button[@disabled and contains(text(),'Add to Cart')]    mp_b2c=xpath=//button[@disabled and contains(text(),'Add to Cart')]
 ${pdp_add_to_wishlist_button}    xpath=//button[@type='submit'][contains(.,'Wishlist')]
@@ -32,7 +33,7 @@ ${pdp_product_reviews_list}    xpath=//*[contains(text(),'Product Reviews')]/fol
 ${pdp_product_not_available_text}    xpath=//form[@class='js-product-configurator__form-add-to-cart']//*[contains(@class,'text')][contains(text(),'This product is currently not available.')]
 ${pdp_availability_notification_email_field}    xpath=//input[@id='availabilityNotificationSubscriptionForm_email']
 ${pdp_wishlist_dropdown}    xpath=//select[contains(@name,'wishlist-name')]
-${pdp_reset_selected_variant_locator}    xpath=//div[@class='variant']//button | //div[@class='variant']//a
+${pdp_reset_selected_variant_locator}    xpath=(//div[@class='variant']//button | //div[@class='variant']//a)[1]
 ${pdp_back_in_stock_subscribe_button}    xpath=//form[@id='availability_notification_subscription']//button[@data-qa='submit-button']
 ${pdp_back_in_stock_unsubscribe_button}    xpath=//form[@id='availability_unsubscribe']//button[@type='submit']
 ${pdp_bazaarvoice_write_review_button}    xpath=//button[contains(@class,'bv-write-review')]

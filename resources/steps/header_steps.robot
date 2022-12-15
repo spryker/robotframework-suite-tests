@@ -7,6 +7,7 @@ Resource    ../steps/shopping_carts_steps.robot
 Resource    ../steps/shopping_lists_steps.robot
 Resource    ../steps/quick_order_steps.robot
 Resource    ../steps/request_for_quote_steps.robot
+Resource    ../steps/wishlist_steps.robot
 
 *** Variable ***
 ${priceModeSwitcher}    ${price_mode_switcher_header_menu_item}

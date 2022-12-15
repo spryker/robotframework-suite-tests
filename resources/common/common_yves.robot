@@ -41,22 +41,42 @@ Yves: login on Yves with provided credentials:
     ${currentURL}=    Get Url
     IF    '/login' not in '${currentURL}'
         IF    '${env}' in ['b2b','suite-nonsplit','mp_b2b']
-            Run Keywords
-                Go To    ${host}
-                delete all cookies
-                Reload
-                Wait Until Element Is Visible    ${header_login_button}[${env}]
-                Click    ${header_login_button}[${env}]
-                Wait Until Element Is Visible    ${email_field}
+            ${currentURL}=    Get Location
+                IF    '.at.' in '${currentURL}'
+                    Go To    ${host_at}
+                    delete all cookies
+                    Reload
+                    Wait Until Element Is Visible    ${header_login_button}[${env}]
+                    Click    ${header_login_button}[${env}]
+                    Wait Until Element Is Visible    ${email_field}
+                ELSE
+                    Go To    ${host}
+                    delete all cookies
+                    Reload
+                    Wait Until Element Is Visible    ${header_login_button}[${env}]
+                    Click    ${header_login_button}[${env}]
+                    Wait Until Element Is Visible    ${email_field}
+                END
         ELSE
-            Run Keywords
-                Go To    ${host}
-                delete all cookies
-                Reload
-                mouse over  ${user_navigation_icon_header_menu_item}[${env}]
-                Wait Until Element Is Visible    ${user_navigation_menu_login_button}
-                Click    ${user_navigation_menu_login_button}
-                Wait Until Element Is Visible    ${email_field}
+                ${currentURL}=    Get Location
+                    IF    '.at.' in '${currentURL}'
+                        Go To    ${host_at}
+                        delete all cookies
+                        Reload
+                        mouse over  ${user_navigation_icon_header_menu_item}[${env}]
+                        Wait Until Element Is Visible    ${user_navigation_menu_login_button}
+                        Click    ${user_navigation_menu_login_button}
+                        Wait Until Element Is Visible    ${email_field}
+                    ELSE
+                        Go To    ${host}
+                        delete all cookies
+                        Reload
+                        mouse over  ${user_navigation_icon_header_menu_item}[${env}]
+                        Wait Until Element Is Visible    ${user_navigation_menu_login_button}
+                        Click    ${user_navigation_menu_login_button}
+                        Wait Until Element Is Visible    ${email_field}
+                    END
+                    
         END
     END
     Type Text    ${email_field}    ${email}
@@ -123,7 +143,15 @@ Yves: logout on Yves as a customer
     Reload
 
 Yves: go to the 'Home' page
-    Go To    ${host}
+    ${currentURL}=    Get Location
+    IF    '.at.' in '${currentURL}'
+        Go To    ${host_at}
+    ELSE
+        Go To    ${host}
+    END
+
+Yves: go to AT store 'Home' page
+    Go To    ${host_at}
 
 Yves: get the last placed order ID by current customer
     [Documentation]    Returns orderID of the last order from customer account
@@ -149,28 +177,59 @@ Yves: go to URL:
     ${url}=    Get URL Without Starting Slash    ${url}
     Go To    ${host}${url}
 
-Yves: go to newly created page by URL:
+Yves: go to AT URL:
     [Arguments]    ${url}
-    FOR    ${index}    IN RANGE    0    26
+    ${url}=    Get URL Without Starting Slash    ${url}
+    Go To    ${host_at}${url}
+
+Yves: go to newly created page by URL:
+    [Arguments]    ${url}    ${iterations}=26
+    FOR    ${index}    IN RANGE    0    ${iterations}
         Go To    ${host}${url}
         ${page_not_published}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//main//*[contains(text(),'ERROR 404')]
         Log    ${page_not_published}
         IF    '${page_not_published}'=='True'
-            Run Keyword    Sleep    3s
+            Run Keyword    Sleep    5s
         ELSE
             Exit For Loop
         END
+        IF    ${index} == ${iterations}-1
+            Take Screenshot
+            Fail    expected element state is not reached
+        END
     END
+
+Yves: go to newly created page by URL on AT store:
+    [Arguments]    ${url}    ${iterations}=26
+    FOR    ${index}    IN RANGE    0    ${iterations}
+        Go To    ${host_at}${url}
+        ${page_not_published}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//main//*[contains(text(),'ERROR 404')]
+        Log    ${page_not_published}
+        IF    '${page_not_published}'=='True'
+            Run Keyword    Sleep    5s
+        ELSE
+            Exit For Loop
+        END
+        IF    ${index} == ${iterations}-1
+            Take Screenshot
+            Fail    expected element state is not reached
+        END
+    END
+
 Yves: go to URL and refresh until 404 occurs:
-    [Arguments]    ${url}
-    FOR    ${index}    IN RANGE    0    26
+    [Arguments]    ${url}    ${iterations}=26
+    FOR    ${index}    IN RANGE    0    ${iterations}
         Go To    ${url}
         ${page_not_published}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//main//*[contains(text(),'ERROR 404')]
         Log    ${page_not_published}
         IF    '${page_not_published}'=='False'
-            Run Keyword    Sleep    3s
+            Run Keyword    Sleep    5s
         ELSE
             Exit For Loop
+        END
+        IF    ${index} == ${iterations}-1
+            Take Screenshot
+            Fail    expected element state is not reached
         END
     END
 
@@ -295,15 +354,19 @@ Helper: delete all items in cart
     END
 
 Yves: try reloading page if element is/not appear:
-    [Arguments]    ${element}    ${isDisplayed}
-    FOR    ${index}    IN RANGE    0    26
+    [Arguments]    ${element}    ${isDisplayed}    ${iterations}=26    ${sleep}=3s
+    FOR    ${index}    IN RANGE    0    ${iterations}
         ${elementAppears}=    Run Keyword And Return Status    Element Should Be Visible    ${element}
         IF    '${isDisplayed}'=='True' and '${elementAppears}'=='False'
-            Run Keywords    Sleep    3s    AND    Reload
+            Run Keywords    Sleep    ${sleep}    AND    Reload
         ELSE IF    '${isDisplayed}'=='False' and '${elementAppears}'=='True'
-            Run Keywords    Sleep    3s    AND    Reload
+            Run Keywords    Sleep    ${sleep}    AND    Reload
         ELSE
             Exit For Loop
+        END
+        IF    ${index} == ${iterations}-1
+            Take Screenshot
+            Fail    expected element state is not reached
         END
     END
 
@@ -319,11 +382,21 @@ Yves: page should contain script with attribute:
 Yves: page should contain script with id:
     [Arguments]    ${scriptId}
     Yves: page should contain script with attribute:    id    ${scriptId}
+
+Yves: validate the page title:
+    [Arguments]    ${title}
+    IF    '${env}' in ['b2b','mp_b2b']
+        Yves: try reloading page if element is/not appear:    xpath=//h3[contains(text(),'${title}')]     True
+    ELSE
+        Yves: try reloading page if element is/not appear:    xpath=//h1[contains(@class,'title')][contains(text(),'${title}')]     True
+    END
+    
 Yves: login after signup during checkout:
     [Arguments]    ${email}    ${password}
     Type Text    ${email_field}     ${email}
     Type Text    ${password_field}     ${password}
     Click    ${form_login_button}
+
 Save the result of a SELECT DB query to a variable:
     [Documentation]    This keyword saves any value which you receive from DB using SQL query ``${sql_query}`` to a test variable called ``${variable_name}``.
     ...
@@ -346,6 +419,7 @@ Save the result of a SELECT DB query to a variable:
     ${var_value}=    Replace String    ${var_value}    )   ${EMPTY}
     Set Test Variable    ${${variable_name}}    ${var_value}
     [Return]    ${variable_name}
+
 I send a POST request:
     [Documentation]    This keyword is used to make POST requests. It accepts the endpoint *without the domain* and the body in JOSN.
     ...    Variables can and should be used in the endpoint url and in the body JSON.

@@ -18,12 +18,14 @@ ${selected address}
 *** Keywords ***
 Yves: billing address same as shipping address:
     [Arguments]    ${state}
+    Wait Until Page Contains Element    xpath=//form[@name='addressesForm']
     IF    '${env}' in ['b2b','mp_b2b']    Wait Until Page Contains Element    ${manage_your_addresses_link}
     ${checkboxState}=    Set Variable    ${EMPTY}
     ${checkboxState}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//input[@id='addressesForm_billingSameAsShipping'][@checked]
     IF    '${checkboxState}'=='False' and '${state}' == 'true'    Click Element by xpath with JavaScript    //input[@id='addressesForm_billingSameAsShipping']
     IF    '${checkboxState}'=='True' and '${state}' == 'false'    Click Element by xpath with JavaScript    //input[@id='addressesForm_billingSameAsShipping']
-    Wait Until Element Is Not Visible    ${billing_address_section}[${env}]
+    IF    '${state}' == 'true'    Wait Until Element Is Not Visible    ${billing_address_section}[${env}]
+    IF    '${state}' == 'false'    Wait Until Element Is Visible    ${billing_address_section}[${env}]
 
 Yves: accept the terms and conditions:
     [Documentation]    ${state} can be true or false
@@ -83,6 +85,7 @@ Yves: fill in the following new billing address:
     [Documentation]    Possible argument names: salutation, firstName, lastName, street, houseNumber, postCode, city, country, company, phone, additionalAddress
     [Arguments]    @{args}
     ${newAddressData}=    Set Up Keyword Arguments    @{args}
+    Wait Until Element Is Enabled    ${checkout_address_billing_selector}[${env}]
     Select From List By Label    ${checkout_address_billing_selector}[${env}]    Define new address
     Wait Until Element Is Visible    ${checkout_new_billing_address_form}
     FOR    ${key}    ${value}    IN    &{newAddressData}
@@ -229,6 +232,27 @@ Yves: assert merchant of product in cart or list:
     [Arguments]    ${sku}    ${merchant_name_expected}
     Page Should Contain Element    xpath=//span[@itemprop='sku'][text()='${sku}']/../../following-sibling::p/a[text()='${merchant_name_expected}']
 
+Yves: save new deviery address to address book:
+    [Arguments]    ${state}
+    IF    '${env}' in ['b2b','mp_b2b']    Wait Until Page Contains Element    ${manage_your_addresses_link}
+    ${checkboxState}=    Set Variable    ${EMPTY}
+    ${checkboxState}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//input[@id='addressesForm_shippingAddress_isAddressSavingSkipped'][@checked]
+    IF    '${checkboxState}'=='False' and '${state}' == 'true'    Click Element by xpath with JavaScript    //input[@id='addressesForm_shippingAddress_isAddressSavingSkipped']
+    IF    '${checkboxState}'=='True' and '${state}' == 'false'    Click Element by xpath with JavaScript    //input[@id='addressesForm_shippingAddress_isAddressSavingSkipped']
+    
+Yves: save new billing address to address book:
+    [Arguments]    ${state}
+    IF    '${env}' in ['b2b','mp_b2b']    Wait Until Page Contains Element    ${manage_your_addresses_link}
+    ${checkboxState}=    Set Variable    ${EMPTY}
+    ${checkboxState}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//input[@id='addressesForm_billingAddress_isAddressSavingSkipped'][@checked]
+    IF    '${checkboxState}'=='False' and '${state}' == 'true'    Click Element by xpath with JavaScript    //input[@id='addressesForm_billingAddress_isAddressSavingSkipped']
+    IF    '${checkboxState}'=='True' and '${state}' == 'false'    Click Element by xpath with JavaScript    //input[@id='addressesForm_billingAddress_isAddressSavingSkipped']
+    
+Yves: return to the previous checkout step:
+    [Arguments]    ${checkoutStep}
+    ${checkoutStep}=    Convert To Lower Case    ${checkoutStep}
+    Click    //ul[@data-qa='component breadcrumb']//a[contains(@href,'${checkoutStep}')]
+    
 Yves: check that the payment method is/not present in the checkout process:
     [Arguments]    ${payment_method_locator}    ${condition}
     IF    '${condition}' == 'true'
