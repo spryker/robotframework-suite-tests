@@ -10,7 +10,8 @@ ENABLER
 
 #POST requests
 Create_order_with_invalid_access_token
-# Created the bug-ticket https://spryker.atlassian.net/browse/CC-16699, bug is fixed, fix isn`t merged to b2c demoshop
+    [Documentation]   # Created the bug-ticket https://spryker.atlassian.net/browse/CC-16699, bug is fixed, fix isn`t merged to b2c demoshop
+    [Tags]    skip-due-to-issue  
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
     ...  AND    Find or create customer cart
@@ -248,7 +249,8 @@ Create_order_without_shipping_address_data
     And Array in response should contain property with value:    [errors]    detail    shippingAddress.iso2Code => This field is missing.
 
 Create_order_with_invalid_payments
-# Created the bug-ticket https://spryker.atlassian.net/browse/CC-16700
+    [Documentation]   # Created the bug-ticket https://spryker.atlassian.net/browse/CC-16700
+    [Tags]    skip-due-to-issue  
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
     ...  AND    Find or create customer cart

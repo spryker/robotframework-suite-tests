@@ -325,7 +325,7 @@ Filter_by_price_only_max
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response body parameter should be:    [data][0][type]    catalog-search
-    And Response body parameter should be:    [data][0][attributes][pagination][numFound]    211
+    And Response body parameter should be:    [data][0][attributes][pagination][numFound]    213
     And Response body parameter should be:    [data][0][attributes][pagination][currentPage]    1
     And Response body parameter should be:    [data][0][attributes][pagination][maxPage]    18
     And Response should contain the array of a certain size:    [data][0][attributes][abstractProducts]    12
@@ -405,10 +405,10 @@ Filter_by_label_one_label
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response body parameter should be:    [data][0][type]    catalog-search
-    And Response body parameter should be:    [data][0][attributes][pagination][numFound]    6
+    And Response body parameter should be:    [data][0][attributes][pagination][numFound]    7
     And Response body parameter should be:    [data][0][attributes][pagination][currentPage]    1
     And Response body parameter should be:    [data][0][attributes][pagination][maxPage]    1
-    And Response should contain the array of a certain size:    [data][0][attributes][abstractProducts]    6
+    And Response should contain the array of a certain size:    [data][0][attributes][abstractProducts]    7
     And Response body parameter should be:    [data][0][attributes][valueFacets][1][activeValue]    ${label.new}
     And Response body has correct self link
 
@@ -418,7 +418,7 @@ Filter_by_label_two_labels
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response body parameter should be:    [data][0][type]    catalog-search
-    And Response body parameter should be:    [data][0][attributes][pagination][numFound]    65
+    And Response body parameter should be:    [data][0][attributes][pagination][numFound]    67
     And Response body parameter should be:    [data][0][attributes][pagination][currentPage]    1
     And Response body parameter should be greater than:    [data][0][attributes][pagination][maxPage]    1
     And Response should contain the array of a certain size:    [data][0][attributes][abstractProducts]    ${ipp.default}

@@ -9,8 +9,9 @@ Resource    ../../../../../../resources/common/common_api.robot
 ENABLER
         TestSetup
 
-#CC-16595 API: ID is missing from url resolver.
 Get_url_collections_by_url_paramater_of_category_nodes
+    [Documentation]   #CC-16595 API: ID is missing from url resolver.
+    [Tags]    skip-due-to-issue 
     When I send a GET request:    /url-resolver?url=${url_resolver_category_nodes}
     Then Response status code should be:    200
     And Response reason should be:    OK
@@ -22,8 +23,9 @@ Get_url_collections_by_url_paramater_of_category_nodes
     And Each array element of array in response should contain nested property:    [data]     links    self
     And Response body has correct self link
 
-#CC-16595 API: ID is missing from url resolver.
 Get_url_collections_by_url_paramater_of_product
+    [Documentation]   #CC-16595 API: ID is missing from url resolver.
+    [Tags]    skip-due-to-issue
     When I send a GET request:    /url-resolver?url=${url_resolver_abstract_product}
     Then Response status code should be:    200
     And Response reason should be:    OK
@@ -35,8 +37,9 @@ Get_url_collections_by_url_paramater_of_product
     And Each array element of array in response should contain nested property:    [data]     links    self
     And Response body has correct self link
 
-#CC-16595 API: ID is missing from url resolver.
 Get_url_collections_by_url_paramater_of_cms_page
+    [Documentation]   #CC-16595 API: ID is missing from url resolver.
+    [Tags]    skip-due-to-issue
     When I send a GET request:    /url-resolver?url=${url_resolver_cms}
     Then Response status code should be:    200
     And Response reason should be:    OK
