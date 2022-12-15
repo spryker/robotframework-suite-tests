@@ -83,8 +83,9 @@ Get_configurable_bundle_templates_by_configurable_bundle.template_id
     And Each array element of array in response should contain property:    [included][4][attributes][images]    externalUrlLarge
     And Each array element of array in response should contain property:    [included][4][attributes][images]    externalUrlSmall
 
-# BUG CC-16634
 Get_configurable_bundle_templates_including_concrete_products_concrete_product_prices_concrete_product_image_sets
+    [Documentation]   # BUG CC-16634
+    [Tags]    skip-due-to-issue 
     When I send a GET request:    /configurable-bundle-templates/${configurable_bundle.template_id}?include=configurable-bundle-template-slots,concrete-products,concrete-product-prices,concrete-product-image-sets
     Then Response status code should be:    200
     And Response reason should be:    OK

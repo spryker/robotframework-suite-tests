@@ -31,6 +31,8 @@ Resource    ../../resources/steps/zed_root_menus_steps.robot
 Resource    ../../resources/steps/minimum_order_value_steps.robot
 Resource    ../../resources/steps/availability_steps.robot
 Resource    ../../resources/steps/glossary_steps.robot
+Resource    ../../resources/steps/zed_payment_methods_steps.robot
+Resource    ../../resources/steps/zed_dashboard_steps.robot
 
 *** Test Cases ***
 New_Customer_Registration
@@ -383,7 +385,7 @@ Discounts
     ...    AND    Zed: activate following discounts from Overview page:    Free Acer Notebook    Tu & Wed $5 off 5 or more    10% off $100+    Free smartphone    20% off cameras    Free Acer M2610    Free standard delivery    10% off Intel Core    5% off white    Tu & Wed €5 off 5 or more    10% off minimum order
 
 Split_Delivery
-    [Documentation]    Checks split delivery in checkout
+    [Documentation]    Checks split delivery in checkout and check dashboard graph created in zed.
     Yves: login on Yves with provided credentials:    ${yves_user_email}
     Yves: check if cart is not empty and clear it
     Yves: go to PDP of the product with sku:    007
@@ -398,10 +400,10 @@ Split_Delivery
     Yves: fill in new delivery address for a product:
     ...    || product        | salutation | firstName | lastName | street       | houseNumber | postCode | city   | country | company | phone     | additionalAddress ||
     ...    || Canon IXUS 285 | Dr.        | First     | Last     | First Street | 1           | 10247    | Berlin | Germany | Spryker | 123456789 | Additional street ||
-   Yves: fill in new delivery address for a product:
+    Yves: fill in new delivery address for a product:
     ...    || product        | salutation | firstName | lastName | street        | houseNumber | postCode | city   | country | company | phone     | additionalAddress ||
     ...    || Canon IXUS 175 | Dr.        | First     | Last     | Second Street | 2           | 10247    | Berlin | Germany | Spryker | 123456789 | Additional street ||
-   Yves: fill in new delivery address for a product:
+    Yves: fill in new delivery address for a product:
     ...    || product        | salutation | firstName | lastName | street       | houseNumber | postCode | city   | country | company | phone     | additionalAddress ||
     ...    || Canon IXUS 165 | Dr.        | First     | Last     | Third Street | 3           | 10247    | Berlin | Germany | Spryker | 123456789 | Additional street ||
     Yves: fill in the following new billing address:
@@ -432,13 +434,38 @@ Agent_Assist
     Yves: go to URL:    agent/login
     Yves: login on Yves with provided credentials:    agent+${random}@spryker.com    change${random}
     Yves: header contains/doesn't contain:    true    ${customerSearchWidget}
-    Yves: perform search by customer:    ${yves_user_first_name}
-    Yves: agent widget contains:    ${yves_user_email}
-    Yves: As an Agent login under the customer:    ${yves_user_email}
-    Yves: perform search by:    031
-    Yves: product with name in the catalog should have price:    Canon PowerShot G9 X    €400.24
-    Yves: go to PDP of the product with sku:    031
-    Yves: product price on the PDP should be:    €400.24
+    Yves: perform search by customer:    ${yves_second_user_first_name}
+    Yves: agent widget contains:    ${yves_second_user_email}
+    Yves: as an agent login under the customer:    ${yves_second_user_email}
+    Yves: end customer assistance
+    Yves: perform search by customer:    ${yves_second_user_last_name}
+    Yves: agent widget contains:    ${yves_second_user_email}
+    Yves: as an agent login under the customer:    ${yves_second_user_email}
+    Yves: end customer assistance
+    Yves: perform search by customer:    ${yves_second_user_email}
+    Yves: agent widget contains:    ${yves_second_user_email}
+    Yves: as an agent login under the customer:    ${yves_second_user_email}
+    Yves: perform search by:    020
+    Yves: product with name in the catalog should have price:    Sony Cyber-shot DSC-W830    €105.80
+    Yves: go to PDP of the product with sku:    020
+    Yves: product price on the PDP should be:    €105.80
+    Yves: add product to the shopping cart
+    Yves: go to b2c shopping cart    
+    Yves: click on the 'Checkout' button in the shopping cart
+    Yves: fill in the following new shipping address:
+    ...    || firstName                         |     lastName                          |    street          |    houseNumber      |    city                |    postCode     |    phone         ||
+    ...    || ${yves_second_user_first_name}    |     ${yves_second_user_last_name}     |    ${random}       |    ${random}        |    Berlin${random}     |   ${random}     |    ${random}     ||
+    Yves: submit form on the checkout
+    Yves: select the following shipping method on the checkout and go next:     Standard: €4.90
+    Yves: select the following payment method on the checkout and go next:    Invoice
+    Yves: accept the terms and conditions:    true
+    Yves: 'submit the order' on the summary page
+    Yves: get the last placed order ID by current customer
+    Yves: end customer assistance
+    Yves: logout as an agent
+    Yves: login on Yves with provided credentials:    ${yves_second_user_email}
+    Yves: go to 'Order History' page
+    Yves: 'Order History' page contains the following order with a status:    ${lastPlacedOrder}    ${order_state}
     [Teardown]    Run Keywords    Yves: check if cart is not empty and clear it
     ...    AND    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: delete Zed user with the following email:    agent+${random}@spryker.com
@@ -490,7 +517,7 @@ Return_Management
     Yves: header contains/doesn't contain:    true    ${customerSearchWidget}
     Yves: perform search by customer:    ${yves_user_email}
     Yves: agent widget contains:    ${yves_user_email}
-    Yves: As an Agent login under the customer:    ${yves_user_email}
+    Yves: as an agent login under the customer:    ${yves_user_email}
     Yves: go to user menu item in header:    Orders History
     Yves: 'View Order/Reorder/Return' on the order history page:     Return    ${lastPlacedOrder}
     Yves: 'Create Return' page is displayed
@@ -1357,3 +1384,79 @@ CRUD_Product_Set
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: delete product set:    test set ${random}
     Yves: go to URL and refresh until 404 occurs:    ${host}en/test-set-${random}
+
+Payment_method_update
+     [Documentation]    Deactivate payment method, unset payment method for stores in zed and check its impact on yves.
+    Yves: login on Yves with provided credentials:    ${yves_second_user_email}
+    Yves: go to PDP of the product with sku:    020
+    Yves: add product to the shopping cart
+    Yves: go to b2c shopping cart    
+    Yves: click on the 'Checkout' button in the shopping cart
+    Yves: fill in the following new shipping address:
+    ...    ||      firstName                    |           lastName                  |    street           |    houseNumber     |    city      |    postCode    |    phone        ||
+    ...    || ${yves_second_user_first_name}    |     ${yves_second_user_last_name}   |    ${random}        |    ${random}       |    Berlin    |   ${random}    |    ${random}    ||
+    Yves: submit form on the checkout
+    Yves: select the following shipping method on the checkout and go next:     Standard: €4.90
+    Yves: check that the payment method is/not present in the checkout process:    ${checkout_payment_invoice_locator}    true
+    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: go to second navigation item level:    Administration    Payment Methods
+    Zed: activate/deactivate payment method:    Dummy Payment    Invoice    False
+    Yves: login on Yves with provided credentials:    ${yves_second_user_email}
+    Yves: go to b2c shopping cart    
+    Yves: click on the 'Checkout' button in the shopping cart
+    Yves: fill in the following new shipping address:
+    ...    ||      firstName                    |           lastName                  |    street           |    houseNumber     |    city     |    postCode    |    phone        ||
+    ...    || ${yves_second_user_first_name}    |     ${yves_second_user_last_name}   |    ${random}        |    ${random}       |    Berlin   |   ${random}    |    ${random}    ||
+    Yves: submit form on the checkout
+    Yves: select the following shipping method on the checkout and go next:     Standard: €4.90
+    Yves: check that the payment method is/not present in the checkout process:     ${checkout_payment_invoice_locator}    false
+    [Teardown]    Run keywords    Yves: check if cart is not empty and clear it
+    ...    AND    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    ...    AND    Zed: go to second navigation item level:    Administration    Payment Methods
+    ...    AND    Zed: activate/deactivate payment method:    Dummy Payment    Invoice    True
+
+Add_to_cart_products_as_a_guest_user_and_login_during_checkout
+    Yves: go to the 'Home' page
+    Yves: go to PDP of the product with sku:    ${bundled_product_3_concrete_sku}
+    Yves: add product to the shopping cart
+    Yves: go to b2c shopping cart  
+    Yves: click on the 'Checkout' button in the shopping cart
+     Yves: proceed as a guest user and login during checkout:   ${yves_second_user_email}
+     Yves: fill in the following new shipping address:
+     ...    || salutation     | firstName                    | lastName                    | street        | houseNumber       | postCode     | city       | country     | company    | phone           | additionalAddress     ||
+    ...    || ${Salutation}  | ${Guest_user_first_name}     | ${Guest_user_last_name}     | ${random}     | ${random}         | ${random}    | ${city}    | ${country}  | ${company} | ${random} | ${additional_address} ||
+    Yves: submit form on the checkout
+    Yves: select the following shipping method on the checkout and go next:    Express
+    Yves: select the following payment method on the checkout and go next:    Invoice
+    Yves: accept the terms and conditions:    true
+    Yves: 'submit the order' on the summary page
+    Yves: 'Thank you' page is displayed
+
+Add_to_cart_products_as_a_guest_user_and_register_during_checkout
+    Yves: go to the 'Home' page
+    Yves: go to PDP of the product with sku:    ${bundled_product_3_concrete_sku}
+    Yves: add product to the shopping cart
+    Page Should Not Contain Element    ${pdp_add_to_wishlist_button}
+    Yves: go to b2c shopping cart  
+    Yves: click on the 'Checkout' button in the shopping cart
+    Yves: signup guest user during checkout:    ${Guest_user_first_name}    ${Guest_user_last_name}    abc${random}@gmail.com    Abc#${random}    Abc#${random}
+    Save the result of a SELECT DB query to a variable:    select registration_key from spy_customer where email = 'abc${random}@gmail.com'    confirmation_key
+    I send a POST request:     /customer-confirmation   {"data":{"type":"customer-confirmation","attributes":{"registrationKey":"${confirmation_key}"}}}
+    Yves: login after signup during checkout:    abc${random}@gmail.com    Abc#${random}
+    Yves: fill in the following new shipping address:
+    ...    || salutation     | firstName                    | lastName                    | street        | houseNumber       | postCode     | city       | country     | company    | phone           | additionalAddress     ||
+    ...    || ${Salutation}  | ${Guest_user_first_name}     | ${Guest_user_last_name}     | ${random}     | ${random}         | ${random}    | ${city}    | ${country}  | ${company} | ${random} | ${additional_address} ||
+    Yves: submit form on the checkout
+    Yves: select the following shipping method on the checkout and go next:    Express
+    Yves: select the following payment method on the checkout and go next:    Invoice
+    Yves: accept the terms and conditions:    true
+    Yves: 'submit the order' on the summary page
+    Yves: 'Thank you' page is displayed
+    Yves: go to the 'Home' page
+    Yves: login on Yves with provided credentials:    ${yves_second_user_email}
+    Yves: go to PDP of the product with sku:    ${bundled_product_3_concrete_sku}
+    Delete All Cookies
+    Yves: Add product to wishlist as guest user
+     [Teardown]    Zed: delete customer:
+    ...    || email                          ||
+    ...    || abc${random}@gmail.com ||

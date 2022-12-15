@@ -1,6 +1,7 @@
 *** Settings ***
 Library    String
 Library    Browser
+Library    DatabaseLibrary
 Library    ../../resources/libraries/common.py
 Resource    common.robot
 Resource    ../pages/yves/yves_catalog_page.robot
@@ -25,8 +26,15 @@ Resource    ../steps/header_steps.robot
 
 *** Variable ***
 ${notification_area}    xpath=//section[@data-qa='component notification-area']
-
-
+${default_db_host}         127.0.0.1
+${default_db_name}         eu-docker
+${default_db_password}     secret
+${default_db_port}         3306
+${default_db_user}         spryker
+${api_timeout}             60
+${default_allow_redirects}     true
+${default_auth}                ${NONE}
+${current_url}        http://glue.de.spryker.local
 *** Keywords ***
 Yves: login on Yves with provided credentials:
     [Arguments]    ${email}    ${password}=${default_password}
@@ -383,3 +391,55 @@ Yves: validate the page title:
         Yves: try reloading page if element is/not appear:    xpath=//h1[contains(@class,'title')][contains(text(),'${title}')]     True
     END
     
+Yves: login after signup during checkout:
+    [Arguments]    ${email}    ${password}
+    Type Text    ${email_field}     ${email}
+    Type Text    ${password_field}     ${password}
+    Click    ${form_login_button}
+
+Save the result of a SELECT DB query to a variable:
+    [Documentation]    This keyword saves any value which you receive from DB using SQL query ``${sql_query}`` to a test variable called ``${variable_name}``.
+    ...
+    ...    It can be used to save a value returned by any query into a custom test variable.
+    ...    This variable, once created, can be used during the specific test where this keyword is used and can be re-used by the keywords that follow this keyword in the test.
+    ...    It will not be visible to other tests.
+    ...    NOTE: Make sure that you expect only 1 value from DB, you can also check your query via external SQL tool.
+    ...
+    ...    *Examples:*
+    ...
+    ...    ``Save the result of a SELECT DB query to a variable:    select registration_key from spy_customer where customer_reference = '${user_reference_id}'    confirmation_key``
+    [Arguments]    ${sql_query}    ${variable_name}
+    Connect To Database    pymysql    ${default_db_name}    ${default_db_user}    ${default_db_password}    ${default_db_host}    ${default_db_port}
+    ${var_value} =    Query    ${sql_query}
+    Disconnect From Database
+    ${var_value}=    Convert To String    ${var_value}
+    ${var_value}=    Replace String    ${var_value}    '   ${EMPTY}
+    ${var_value}=    Replace String    ${var_value}    ,   ${EMPTY}
+    ${var_value}=    Replace String    ${var_value}    (   ${EMPTY}
+    ${var_value}=    Replace String    ${var_value}    )   ${EMPTY}
+    Set Test Variable    ${${variable_name}}    ${var_value}
+    [Return]    ${variable_name}
+
+I send a POST request:
+    [Documentation]    This keyword is used to make POST requests. It accepts the endpoint *without the domain* and the body in JOSN.
+    ...    Variables can and should be used in the endpoint url and in the body JSON.
+    ...
+    ...    If the endpoint needs to have any headers (e.g. token for authorisation), ``I set Headers`` keyword should be called before this keyword to set the headers beforehand.
+    ...
+    ...    After this keyword is called, response body, selflink, response status and headers are recorded into the test variables which have the scope of the current test and can then be used by other keywords to get and compare data.
+    ...
+    ...    *Example:*
+    ...
+    ...    ``I send a POST request:    /agent-access-tokens    {"data": {"type": "agent-access-tokens","attributes": {"username": "${agent.email}","password": "${agent.password}"}}}``
+    [Arguments]   ${path}    ${json}    ${timeout}=${api_timeout}    ${allow_redirects}=${default_allow_redirects}    ${auth}=${default_auth}    ${expected_status}=ANY
+    ${data}=    Evaluate    ${json}
+    ${hasValue}    Run Keyword and return status     Should not be empty    ${headers}
+    ${response}=    IF    ${hasValue}   run keyword    POST    ${current_url}${path}    json=${data}    headers=${headers}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}
+    ...    ELSE    POST    ${current_url}${path}    json=${data}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=ANY
+    ${response_body}=    IF    ${response.status_code} != 204    Set Variable    ${response.json()}
+    ${response_headers}=    Set Variable    ${response.headers}
+    Set Test Variable    ${response_headers}    ${response_headers}
+    Set Test Variable    ${response_body}    ${response_body}
+    Set Test Variable    ${response}    ${response}
+    Set Test Variable    ${expected_self_link}    ${current_url}${path}
+    [Return]    ${response_body}

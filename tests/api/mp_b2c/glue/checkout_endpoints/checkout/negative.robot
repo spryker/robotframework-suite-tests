@@ -371,8 +371,10 @@ Create_order_with_split_shipments_&_without_shipping_address
     And Response should return error code:    901
     And Response should return error message:    shipments.1.shippingAddress => This value should not be blank.
     
-# bug CC-16705
+
 Create_order_with_invalid_checkout_data
+    [Documentation]   # bug CC-16705
+    [Tags]    skip-due-to-issue  
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}
     ...    AND    Find or create customer cart
@@ -384,8 +386,9 @@ Create_order_with_invalid_checkout_data
     And Response should return error code:    1101
     And Response should return error message:    Checkout data is invalid.
     
-# bug CC-16705
 Create_order_with_invalid_payment_method
+    [Documentation]   # bug CC-16705
+    [Tags]    skip-due-to-issue  
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}
     ...    AND    Find or create customer cart

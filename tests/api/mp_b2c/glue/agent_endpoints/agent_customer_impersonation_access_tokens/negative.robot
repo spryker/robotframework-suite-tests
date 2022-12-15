@@ -29,10 +29,10 @@ Agent_cannot_impersonate_customer_with_invalid_token
     When I send a POST request:    /agent-customer-impersonation-access-tokens    {"data": {"type": "agent-customer-impersonation-access-tokens","attributes":{"customerReference": "${yves_user.reference}"}}}
     Then Response status code should be:    401
     And Response reason should be:    Unauthorized
-    And Response should return error code:    4103
-    And Response should return error message:    Action is available to agent user only.
+    And Response should return error code:    001
+    And Response should return error message:    Invalid access token.
     
-#bug:https://spryker.atlassian.net/browse/CC-17010
+
 Agent_cannot_impersonate_customer_with_wrong_type
     [Setup]    Run Keywords    I send a POST request:    /agent-access-tokens    {"data": {"type": "agent-access-tokens","attributes": {"username": "${agent.email}","password": "${agent.password}"}}}
     ...    AND    Response status code should be:    201
@@ -42,7 +42,7 @@ Agent_cannot_impersonate_customer_with_wrong_type
     Then Response status code should be:    400
     And Response reason should be:    Bad Request
     And Response should return error message:    Invalid type.
-#bug:https://spryker.atlassian.net/browse/CC-17010
+
 Agent_cannot_impersonate_customer_with_invalid_customer_reference
     [Setup]    Run Keywords    I send a POST request:    /agent-access-tokens    {"data": {"type": "agent-access-tokens","attributes": {"username": "${agent.email}","password": "${agent.password}"}}}
     ...    AND    Response status code should be:    201
@@ -53,7 +53,7 @@ Agent_cannot_impersonate_customer_with_invalid_customer_reference
     And Response reason should be:    Unauthorized
     And Response should return error code:    4104
     And Response should return error message:    Failed to impersonate a customer.
-#bug:https://spryker.atlassian.net/browse/CC-17010
+
 Agent_cannot_impersonate_customer_with_empty_customer_reference
     [Setup]    Run Keywords    I send a POST request:    /agent-access-tokens    {"data": {"type": "agent-access-tokens","attributes": {"username": "${agent.email}","password": "${agent.password}"}}}
     ...    AND    Response status code should be:    201
@@ -64,7 +64,7 @@ Agent_cannot_impersonate_customer_with_empty_customer_reference
     And Response reason should be:    Unauthorized
     And Response should return error code:    4104
     And Response should return error message:    Failed to impersonate a customer.
-#bug:https://spryker.atlassian.net/browse/CC-17010
+
 Agent_cannot_impersonate_customer_with_missing_customer_reference
     [Setup]    Run Keywords    I send a POST request:    /agent-access-tokens    {"data": {"type": "agent-access-tokens","attributes": {"username": "${agent.email}","password": "${agent.password}"}}}
     ...    AND    Response status code should be:    201

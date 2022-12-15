@@ -7,6 +7,8 @@ Resource    ../common/common_yves.robot
 Resource    ../common/common.robot
 
 
+
+
 *** Variables ***
 ${cancelRequestButton}    ${checkout_summary_cancel_request_button}
 ${alertWarning}    ${checkout_summary_alert_warning}
@@ -250,3 +252,36 @@ Yves: return to the previous checkout step:
     [Arguments]    ${checkoutStep}
     ${checkoutStep}=    Convert To Lower Case    ${checkoutStep}
     Click    //ul[@data-qa='component breadcrumb']//a[contains(@href,'${checkoutStep}')]
+    
+Yves: check that the payment method is/not present in the checkout process:
+    [Arguments]    ${payment_method_locator}    ${condition}
+    IF    '${condition}' == 'true'
+        Page Should Contain Element    ${payment_method_locator}
+    ELSE IF    '${condition}' == 'false'
+        Page Should not Contain Element    ${payment_method_locator}   
+    END
+
+ Yves: proceed as a guest user and login during checkout:
+    [Arguments]    ${email}    ${password}=${default_password}   
+    Wait Until Page Contains Element    ${yves_checkout_login_tab} 
+    Click    ${yves_checkout_login_tab} 
+    Type Text    ${email_field}    ${email}
+    Type Text    ${password_field}    ${password}
+    Click    ${form_login_button}
+
+Yves: signup guest user during checkout:
+      [Arguments]      ${firstName}    ${lastName}    ${email}     ${password}      ${confirmpassword} 
+    Wait Until Page Contains Element    ${yves_checkout_signup_button} 
+    Click    ${yves_checkout_signup_button}
+    Type Text    ${yves_checkout_signup_first_name}    ${firstname}
+    Type Text    ${yves_checkout_signup_last_name}    ${lastname}
+    Type Text    ${yves_checkout_signup_email}    ${email}
+    Type Text    ${yves_checkout_signup_password}    ${password}
+    Type Text    ${yves_checkout_signup_confirm_password}    ${confirmpassword}
+    Wait Until Element Is Visible   ${yves_checkout_signup_accept_terms}
+    Check Checkbox  ${yves_checkout_signup_accept_terms}
+    Click    ${yves_checkout_signup_tab}   
+    
+Yves: Add product to wishlist as guest user
+    Click    ${pdp_add_to_wishlist_button}
+    Wait Until Element Is Visible    ${email_field}
