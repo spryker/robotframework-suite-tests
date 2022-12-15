@@ -50,7 +50,8 @@
             "yves_company_user_bob_email": "donald@spryker.com",
             
             "zed_admin_email": "admin@spryker.com",
-            "zed_admin_password": "change123"},
+            "zed_admin_password": "change123"
+        },
             
         "user_role": {
                 "bundle_access": "product-attribute-gui",
