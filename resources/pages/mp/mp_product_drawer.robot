@@ -8,6 +8,7 @@ ${new_product_super_attribute_second_row_name_selector}    xpath=//div[@class='m
 ${new_product_super_attribute_second_row_values_selector}    xpath=//div[@class='mp-product-attributes-selector__content']/div[2]/div[2]//spy-select
 ${new_product_add_super_attribute_button}    xpath=//div[contains(@class,'mp-product-attributes-selector__button')]//span[contains(text(),'Add')]
 ${new_product_created_popup}    xpath=//span[contains(@class,'ant-alert')]//span[contains(text(),'Product successfully created')]
+${new_concrete_product_created_popup}    xpath=//span[contains(@class,'ant-alert')]//span[contains(text(),'Success! 1 Concrete Product is saved.')]
 ${new_product_concretes_preview_count}    xpath=//mp-concrete-products-preview//spy-chips
 ${new_product_submit_next_button}    xpath=//button[@type='submit'][contains(text(),'Next')]
 ${new_product_submit_create_button}    xpath=//button[@type='submit'][contains(text(),'Create')]
@@ -25,4 +26,6 @@ ${mp_add_price_button}    xpath=//web-spy-card[@spy-title='Price']//button[conta
 ${mp_add_concrete_price_button}    xpath=//web-mp-edit-concrete-product//web-spy-card[@spy-title='Price']//button[contains(text(),'Add')]
 ${product_delete_price_row_button}    xpath=//li[contains(@class,'ant-dropdown-menu-item')]
 ${product_price_deleted_popup}    xpath=//span[contains(@class,'ant-alert')]//span[contains(text(),'The Price is deleted')]
+${mp_use_abstract_price_checkbox}    xpath=//web-mp-content-toggle[@name='productConcreteEdit[useAbstractProductPrices]']//input[@type='checkbox'][contains(@class,'checkbox')]/parent::span
+${mp_add_concrete_products_button}    xpath=//web-mp-edit-abstract-product-variants//web-spy-button-action[@type='button']//button
 

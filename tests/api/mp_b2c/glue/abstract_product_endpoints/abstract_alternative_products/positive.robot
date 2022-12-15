@@ -9,6 +9,8 @@ ENABLER
     TestSetup
     
 Product_has_abstract_alternative
+    [Documentation]    CC-16998
+    [Tags]    skip-due-to-issue
     When I send a GET request:    /concrete-products/${concrete_product_with_abstract_product_alternative.sku}/abstract-alternative-products
     Then Response status code should be:    200
     And Response reason should be:    OK
@@ -20,8 +22,10 @@ Product_has_abstract_alternative
     And Response body parameter should be:    [data][0][attributes][sku]    ${abstract_product_with_alternative.sku}
     And Response body has correct self link
 
-#bug CC-16998
+
 Product_has_abstract_alternative_with_includes
+    [Documentation]    CC-16998
+    [Tags]    skip-due-to-issue
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}  
     When I send a GET request:    /concrete-products/${concrete_product_with_concrete_product_alternative.sku}/abstract-alternative-products?include=abstract-product-image-sets,abstract-product-availabilities,abstract-product-prices,category-nodes

@@ -25,7 +25,7 @@ Get_all_concrete_product_offer_info_with_product_offer_prices_and_product_offer_
     And Response body parameter should be:    [data][0][attributes][merchantReference]    ${merchant_sony_experts_id}
     And Response body parameter should not be EMPTY:    [data][0][links][self]
     And Response body parameter should contain:    [data][0][attributes]    merchantSku
-    And Response should contain the array of a certain size:    [included]    5
+    And Response should contain the array of a certain size:    [included]    6
     And Response should contain the array of a certain size:    [data][0][relationships]    3
     And Response include should contain certain entity type:    product-offer-prices
     And Response include should contain certain entity type:    product-offer-availabilities

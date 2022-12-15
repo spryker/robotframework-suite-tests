@@ -3,6 +3,7 @@
 
     "env": {
             "host": "http://yves.de.spryker.local/",
+            "host_at": "http://yves.at.spryker.local/",
             "zed_url": "http://backoffice.de.spryker.local/",
             "mp_url": "http://mp.de.spryker.local/security-merchant-portal-gui/login/"},
 
@@ -37,8 +38,8 @@
             "yves_company_user_buyer_with_limit_address": "Ms Sally Koval, Seeburger Str. 270, 10115 Berlin",
 
             "yves_company_user_buyer_email": "Richi@spryker.com",
-            "yves_company_user_buyer_firstname": "Richi",
-            "yves_company_user_buyer_lastname": "Armando",
+            "yves_company_user_buyer_firstname": "Armando",
+            "yves_company_user_buyer_lastname": "Richi",
             "yves_company_user_buyer_address": "Mr Armando Richi, Gurmont Str. 23, 8002 Barcelona",
 
             "yves_company_user_special_prices_customer_email": "Elizabet@spryker.com",
@@ -58,7 +59,22 @@
             "merchant_office_king_email": "martha@office-king.nl",
             "merchant_office_king_reference": "MER000009",
             "merchant_computer_experts_email": "michele@computer-experts.com",
-            "merchant_spryker_email": "harald@spryker.com"
+            "merchant_spryker_email": "harald@spryker.com",
+            "merchant_spryker_reference": "MER000008"
+        },
+        "user_role": {
+            "bundle_access": "product-attribute-gui",
+            "controller_access": "attribute",
+            "action_access": "create",
+            "permission_allow": "allow",
+            "permission_deny": "deny",
+            "full_access": "*"
+        },
+        
+        "glossary":{
+            "glossary_name":"customer.account.overview",
+            "original_EN_text":"Overview",
+            "original_DE_text":"Übersicht"
         },
         
         "products": {

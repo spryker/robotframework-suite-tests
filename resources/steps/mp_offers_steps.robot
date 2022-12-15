@@ -3,6 +3,7 @@ Resource    ../common/common.robot
 Resource    ../common/common_mp.robot
 Resource    ../pages/mp/mp_offer_drawer.robot
 Resource    ../pages/mp/mp_product_drawer.robot
+Resource    ../pages/zed/zed_view_offer_page.robot
 
 *** Keywords ***    
 MP: fill offer fields:
@@ -26,11 +27,20 @@ MP: fill offer fields:
         IF    '${key}'=='store' and '${value}' != '${EMPTY}'
             Click    ${stores_list_selector}
             MP: select option in expanded dropdown:    ${value}
-            # Keyboard Input    type    ${value}
-            # Keyboard Key    press    Enter
+            Click    ${stores_list_selector}
+        END
+        IF    '${key}'=='store 2' and '${value}' != '${EMPTY}'
+            Click    ${stores_list_selector}
+            MP: select option in expanded dropdown:    ${value}
+            Click    ${stores_list_selector}
         END
         IF    '${key}'=='stock quantity' and '${value}' != '${EMPTY}'
             Type Text    ${offer_stock_input}    ${value}
+        END
+        IF    '${key}'=='unselect store' and '${value}' != '${EMPTY}'
+            Click    ${stores_list_selector}
+            MP: select option in expanded dropdown:    ${value}
+            Click    ${stores_list_selector}
         END
     END
             
@@ -98,3 +108,33 @@ MP: delete offer price row that contains quantity:
     Click    ${product_delete_price_row_button}
     Wait Until Element Is Visible    ${product_price_deleted_popup}
     Wait Until Element Is Not Visible    ${product_price_deleted_popup}
+
+Zed: view offer page is displayed
+    Wait Until Element Is Visible    ${zed_view_offer_page_main_content_locator}
+
+Zed: view offer product page contains:
+    [Arguments]    @{args}
+    ${offertData}=    Set Up Keyword Arguments    @{args}
+    FOR    ${key}    ${value}    IN    &{offertData}
+        IF    '${key}'=='approval status' and '${value}' != '${EMPTY}'    
+            Element Should Contain    ${zed_view_offer_approval_status}    ${value}
+        END
+        IF    '${key}'=='status' and '${value}' != '${EMPTY}'    
+            Element Should Contain    ${zed_view_offer_status}    ${value}
+        END
+        IF    '${key}'=='store' and '${value}' != '${EMPTY}'    
+            Element Should Contain    ${zed_view_offer_store}    ${value}
+        END
+        IF    '${key}'=='sku' and '${value}' != '${EMPTY}'    
+            Element Should Contain    ${zed_view_offer_sku}    ${value}
+        END
+        IF    '${key}'=='name' and '${value}' != '${EMPTY}'    
+            Element Should Contain    ${zed_view_offer_name}    ${value}
+        END
+        IF    '${key}'=='merchant' and '${value}' != '${EMPTY}'    
+            Element Should Contain    ${zed_view_offer_merchant}    ${value}
+        END
+        IF    '${key}'=='merchant sku' and '${value}' != '${EMPTY}'    
+            Element Should Contain    ${zed_view_offer_merchant_sku}    ${value}
+        END
+    END
