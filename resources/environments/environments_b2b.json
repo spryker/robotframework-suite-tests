@@ -2,9 +2,9 @@
     "environment": "b2b", 
 
     "env": {
-            "host": "http://yves.de.spryker.local/",
-            "host_at": "http://yves.at.spryker.local/",
-            "zed_url": "http://backoffice.de.spryker.local/"},
+            "host": "https://www.de.b2b.internal-testing.demo-spryker.com/",
+            "host_at": "https://www.at.b2b.internal-testing.demo-spryker.com/",
+            "zed_url": "https://backoffice.de.b2b.internal-testing.demo-spryker.com/"},
 
     "users": {    
             "yves_user_email": "sonia@spryker.com",

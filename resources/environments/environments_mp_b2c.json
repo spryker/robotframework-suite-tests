@@ -2,10 +2,10 @@
     "environment": "mp_b2c", 
 
     "env": {
-        "host": "http://yves.de.spryker.local/",
-        "host_at": "http://yves.at.spryker.local/",
-        "zed_url": "http://backoffice.de.spryker.local/",
-        "mp_url": "http://mp.de.spryker.local/security-merchant-portal-gui/login/"
+        "host": "https://www.de.mp-b2c.internal-security.demo-spryker.com/",
+        "host_at": "https://www.at.mp-b2c.internal-security.demo-spryker.com/",
+        "zed_url": "https://backoffice.de.mp-b2c.internal-security.demo-spryker.com/",
+        "mp_url": "https://mp.de.mp-b2c.internal-security.demo-spryker.com/security-merchant-portal-gui/login/"
     },
 
     "users": {    
