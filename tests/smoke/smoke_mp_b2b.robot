@@ -676,9 +676,9 @@ Return_Management
     Yves: go to user menu item in header:    Order History
     Yves: 'View Order/Reorder/Return' on the order history page:     Return    ${lastPlacedOrder}
     Yves: 'Create Return' page is displayed
-    Yves: create return for the following products:    108278
+    Yves: create return for the following products:    421426
     Yves: 'Return Details' page is displayed
-    Yves: check that 'Print Slip' contains the following products:    108278
+    Yves: check that 'Print Slip' contains the following products:    421426
     Zed: login on Zed with provided credentials:    ${zed_main_merchant_email}
     Zed: go to my order page:    ${lastPlacedOrder}
     Zed: trigger matching state of xxx merchant's shipment:    1    Execute return 
