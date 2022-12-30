@@ -1,0 +1,7 @@
+*** Variables ***
+${zed_view_abstract_product_main_content_locator}    xpath=//a[@href='/product-management'][contains(@class,'btn-view')]
+${zed_view_abstract_product_merchant}    xpath=(//div[@class='ibox-content']/div[@class='row'])[1]/div[2]
+${zed_view_abstract_product_status}    xpath=(//div[@class='ibox-content']/div[@class='row'])[2]/div[2]/span
+&{zed_view_abstract_product_store}    mp_b2b=xpath=(//div[@class='ibox-content']/div[@class='row'])[3]/div[2]    mp_b2c=xpath=(//div[@class='ibox-content']/div[@class='row'])[3]/div[2]    b2b=xpath=(//div[@class='ibox-content']/div[@class='row'])[1]/div[2]    b2c=xpath=(//div[@class='ibox-content']/div[@class='row'])[1]/div[2]
+&{zed_view_abstract_product_sku}    mp_b2b=xpath=(//div[@class='ibox-content']/div[@class='row'])[4]/div[2]    mp_b2c=xpath=(//div[@class='ibox-content']/div[@class='row'])[4]/div[2]    b2c=xpath=(//div[@class='ibox-content']/div[@class='row'])[2]/div[2]    b2b=xpath=(//div[@class='ibox-content']/div[@class='row'])[2]/div[2]
+&{zed_view_abstract_product_name}    mp_b2b=xpath=(//div[@class='ibox-content']/div[@class='row'])[6]/div[2]    mp_b2c=xpath=(//div[@class='ibox-content']/div[@class='row'])[6]/div[2]    b2b=xpath=(//div[@class='ibox-content']/div[@class='row'])[4]/div[2]    b2c=xpath=(//div[@class='ibox-content']/div[@class='row'])[4]/div[2]

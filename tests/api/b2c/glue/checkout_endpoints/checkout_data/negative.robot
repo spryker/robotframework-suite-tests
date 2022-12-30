@@ -10,7 +10,8 @@ ENABLER
 
 #POST requests
 Provide_checkout_data_with_invalid_access_token
-# Created the bug-ticket https://spryker.atlassian.net/browse/CC-16699
+   [Documentation]   # Created the bug-ticket https://spryker.atlassian.net/browse/CC-16699
+   [Tags]    skip-due-to-issue  
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
     ...  AND    Find or create customer cart

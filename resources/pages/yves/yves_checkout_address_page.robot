@@ -5,7 +5,7 @@ ${checkout_address_billing_same_as_shipping_checkbox}    id=addressesForm_billin
 ${checkout_shipping_address_item_form}    xpath=//div[@data-qa='component address-item-form']
 ${checkout_new_billing_address_form}    xpath=//div[contains(@class,'address__billing')][@data-qa='component form']
 ${checkout_new_shipping_address_form}    xpath=//div[contains(@class,'address__shipping')][@data-qa='component form']
-&{checkout_shipping_address_first_name_field}    b2b=id=checkout_shipping_address_first_name_field    b2c=id=addressesForm_shippingAddress_first_name    suite-nonsplit=id=addressesForm_shippingAddress_first_name    mp_b2b=id=checkout_shipping_address_first_name_field    mp_b2c=id=addressesForm_shippingAddress_first_name
+&{checkout_shipping_address_first_name_field}    b2b=id=addressesForm_shippingAddress_first_name    b2c=id=addressesForm_shippingAddress_first_name    suite-nonsplit=id=addressesForm_shippingAddress_first_name    mp_b2b=id=addressesForm_shippingAddress_first_name    mp_b2c=id=addressesForm_shippingAddress_first_name
 ${checkout_shipping_address_last_name_field}    id=addressesForm_shippingAddress_last_name
 ${checkout_shipping_address_company_name_field}    id=addressesForm_shippingAddress_company
 ${checkout_shipping_address_street_field}    id=addressesForm_shippingAddress_address1

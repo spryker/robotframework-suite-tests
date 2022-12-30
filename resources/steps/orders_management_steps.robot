@@ -5,6 +5,7 @@ Resource    ../pages/yves/yves_return_slip_page.robot
 Resource    ../pages/zed/zed_create_return_page.robot
 Resource    ../pages/zed/zed_return_details_page.robot
 Resource    ../steps/order_history_steps.robot
+Resource    ../pages/zed/zed_order_details_page.robot
 
 *** Keywords ***
 Zed: go to order page:
@@ -58,25 +59,12 @@ Zed: trigger matching state of xxx merchant's shipment:
             Click    ${elementSelector}
     END
 
-# Zed: trigger matching state of order item inside merchant's shipment:
-#     [Documentation]    Marketplace specific method, suitable for My Orders of merchant. Triggers action for separate item
-#     [Arguments]    ${shipment_number}    ${sku}    ${event}
-#     ${elementSelector}=    Set Variable    xpath=//table[@data-qa='order-item-list'][${shipment_number}]/tbody//td//div[@class='sku'][contains(text(),'${sku}')]/ancestor::tr//td/form[@name='event_item_trigger_form']//button[contains(text(),'${event}')]
-#     Try reloading page until element is/not appear:    ${elementSelector}    true    20    10s
-#     Click    ${elementSelector}
-#     ${order_changed_status}=    Run Keyword And Ignore Error    Element Should Not Be Visible    ${elementSelector}
-#     IF    'FAIL' in ${order_changed_status}
-#         Run Keywords
-#             Reload
-#             Click    ${elementSelector}
-#     END
-
 Zed: trigger matching state of order item inside xxx shipment:
     [Arguments]    ${sku}    ${event}    ${shipment}=1
     IF    '${env}' in ['mp_b2b','mp_b2c']
         ${elementSelector}=    Set Variable    xpath=//table[@data-qa='order-item-list'][${shipment}]/tbody//td//div[@class='sku'][contains(text(),'${sku}')]/ancestor::tr//td/form[@name='event_item_trigger_form']//button[contains(text(),'${event}')]
     ELSE
-       ${elementSelector}=    Set Variable    xpath=//table[@data-qa='order-item-list'][${shipment}]/tbody//td/div[@class='sku'][contains(text(),'${sku}')]/ancestor::tr/td/form[@class='oms-trigger-form']//button[contains(text(),'${event}')] 
+        ${elementSelector}=    Set Variable    xpath=//table[@data-qa='order-item-list'][${shipment}]/tbody//td/div[@class='sku'][contains(text(),'${sku}')]/ancestor::tr/td/form[@class='oms-trigger-form']//button[contains(text(),'${event}')] 
     END   
     Try reloading page until element is/not appear:    ${elementSelector}    true    20    10s
     Click    ${elementSelector}
@@ -151,3 +139,128 @@ Zed: order has the following number of shipments:
     Wait Until Element Is Visible    xpath=//table[@data-qa='order-item-list'][1]
     ${actualShipments}=    Get Element Count    xpath=//table[@data-qa='order-item-list']
     Should Be Equal    '${expectedShipments}'    '${actualShipments}'
+
+Zed: return details page contains the following items:
+    [Arguments]    @{sku_list}    ${element1}=${EMPTY}     ${element2}=${EMPTY}     ${element3}=${EMPTY}     ${element4}=${EMPTY}     ${element5}=${EMPTY}     ${element6}=${EMPTY}     ${element7}=${EMPTY}     ${element8}=${EMPTY}     ${element9}=${EMPTY}     ${element10}=${EMPTY}     ${element11}=${EMPTY}     ${element12}=${EMPTY}     ${element13}=${EMPTY}     ${element14}=${EMPTY}     ${element15}=${EMPTY}
+    Wait Until Page Contains Element    ${zed_return_details_main_content_locator}
+    ${sku_list_count}=   get length  ${sku_list}
+    FOR    ${index}    IN RANGE    0    ${sku_list_count}
+        ${sku_to_check}=    Get From List    ${sku_list}    ${index}
+        Page Should Contain Element    xpath=//table[@data-qa='return-items-table']//td//a[contains(@href,'view/variant')]/../div[@class='sku'][contains(text(),'SKU: ${sku_to_check}')]
+    END
+
+Zed: view the latest return from My Returns:
+    [Arguments]    ${return_id}
+    Zed: click Action Button in a table for row that contains:    ${return_id}    View
+    Wait Until Page Contains Element    ${zed_return_details_main_content_locator}
+
+Zed: billing address for the order should be:
+    [Arguments]    ${expected_billing_address}
+    Wait Until Page Contains Element    ${order_details_billng_address}
+    Element Should Contain    ${order_details_billng_address}    ${expected_billing_address}
+
+Zed: shipping address inside xxx shipment should be:
+    [Arguments]    ${shipment}    ${expected_address}
+    Element Should Contain    xpath=//table[@data-qa='order-item-list'][${shipment}]/preceding-sibling::div[2]//p[1]    ${expected_address}
+
+Zed: create new shipment inside the order:
+    [Arguments]    @{args}
+    ${newShipmentData}=    Set Up Keyword Arguments    @{args}
+    Wait Until Element Is Visible    ${create_shipment_button}
+    Click    ${create_shipment_button}
+    Wait Until Element Is Visible    ${create_shipment_delivery_address_dropdown}
+    FOR    ${key}    ${value}    IN    &{newShipmentData}
+        Log    Key is '${key}' and value is '${value}'.
+        IF    '${key}'=='delivert address' and '${value}' != '${EMPTY}'    Select From List By Label    ${create_shipment_delivery_address_dropdown}    ${value}
+        IF    '${key}'=='salutation' and '${value}' != '${EMPTY}'    Select From List By Label    ${create_shipment_salutation_dropdown}    ${value}
+        IF    '${key}'=='first name' and '${value}' != '${EMPTY}'    Type Text    ${create_shipment_first_name_field}    ${value}
+        IF    '${key}'=='last name' and '${value}' != '${EMPTY}'    Type Text    ${create_shipment_last_name_field}    ${value}
+        IF    '${key}'=='email' and '${value}' != '${EMPTY}'    Type Text    ${create_shipment_email_field}    ${value}
+        IF    '${key}'=='country' and '${value}' != '${EMPTY}'    Select From List By Label    ${create_shipment_country_dropdown}    ${value}
+        IF    '${key}'=='address 1' and '${value}' != '${EMPTY}'    Type Text    ${create_shipment_address_1_field}    ${value}
+        IF    '${key}'=='address 2' and '${value}' != '${EMPTY}'    Type Text    ${create_shipment_address_2_field}    ${value}
+        IF    '${key}'=='city' and '${value}' != '${EMPTY}'    Type Text    ${create_shipment_city_field}    ${value}
+        IF    '${key}'=='zip code' and '${value}' != '${EMPTY}'    Type Text    ${create_shipment_zip_code_field}    ${value}
+        IF    '${key}'=='shipment method' and '${value}' != '${EMPTY}'    Select From List By Label    ${create_shipment_shipment_method}    ${value}
+        IF    '${key}'=='requested delivery date' and '${value}' != '${EMPTY}'    Type Text    ${create_shipment_requested_delivery_date}    ${value}
+        IF    '${key}'=='sku' and '${value}' != '${EMPTY}'    Check Checkbox    xpath=//table[@data-qa='order-item-list']/tbody//td//div[@class='sku'][contains(.,'${value}')]/ancestor::tr/td[@class='item-checker']//input
+        IF    '${key}'=='sku 2' and '${value}' != '${EMPTY}'    Check Checkbox    xpath=//table[@data-qa='order-item-list']/tbody//td//div[@class='sku'][contains(.,'${value}')]/ancestor::tr/td[@class='item-checker']//input
+        IF    '${key}'=='sku 3' and '${value}' != '${EMPTY}'    Check Checkbox    xpath=//table[@data-qa='order-item-list']/tbody//td//div[@class='sku'][contains(.,'${value}')]/ancestor::tr/td[@class='item-checker']//input
+        IF    '${key}'=='sku 4' and '${value}' != '${EMPTY}'    Check Checkbox    xpath=//table[@data-qa='order-item-list']/tbody//td//div[@class='sku'][contains(.,'${value}')]/ancestor::tr/td[@class='item-checker']//input
+        IF    '${key}'=='sku 5' and '${value}' != '${EMPTY}'    Check Checkbox    xpath=//table[@data-qa='order-item-list']/tbody//td//div[@class='sku'][contains(.,'${value}')]/ancestor::tr/td[@class='item-checker']//input
+    END
+    Zed: submit the form
+    Wait Until Element Is Visible    ${order_details_billng_address}
+
+Zed: edit xxx shipment inside the order:
+    [Arguments]    @{args}
+    ${newShipmentData}=    Set Up Keyword Arguments    @{args}
+    Wait Until Element Is Visible    xpath=(//div[@class='ibox-content']//a[contains(@href,'shipment-gui/edit')])[${shipmentN}]
+    Click    ${create_shipment_button}
+    Wait Until Element Is Visible    ${create_shipment_delivery_address_dropdown}
+    FOR    ${key}    ${value}    IN    &{newShipmentData}
+        Log    Key is '${key}' and value is '${value}'.
+        IF    '${key}'=='delivert address' and '${value}' != '${EMPTY}'    Select From List By Label    ${create_shipment_delivery_address_dropdown}    ${value}
+        IF    '${key}'=='salutation' and '${value}' != '${EMPTY}'    Select From List By Label    ${create_shipment_salutation_dropdown}    ${value}
+        IF    '${key}'=='first name' and '${value}' != '${EMPTY}'    Type Text    ${create_shipment_first_name_field}    ${value}
+        IF    '${key}'=='last name' and '${value}' != '${EMPTY}'    Type Text    ${create_shipment_last_name_field}    ${value}
+        IF    '${key}'=='email' and '${value}' != '${EMPTY}'    Type Text    ${create_shipment_email_field}    ${value}
+        IF    '${key}'=='country' and '${value}' != '${EMPTY}'    Select From List By Label    ${create_shipment_country_dropdown}    ${value}
+        IF    '${key}'=='address 1' and '${value}' != '${EMPTY}'    Type Text    ${create_shipment_address_1_field}    ${value}
+        IF    '${key}'=='address 2' and '${value}' != '${EMPTY}'    Type Text    ${create_shipment_address_2_field}    ${value}
+        IF    '${key}'=='city' and '${value}' != '${EMPTY}'    Type Text    ${create_shipment_city_field}    ${value}
+        IF    '${key}'=='zip code' and '${value}' != '${EMPTY}'    Type Text    ${create_shipment_zip_code_field}    ${value}
+        IF    '${key}'=='shipment method' and '${value}' != '${EMPTY}'    Select From List By Label    ${create_shipment_shipment_method}    ${value}
+        IF    '${key}'=='requested delivery date' and '${value}' != '${EMPTY}'    Type Text    ${create_shipment_requested_delivery_date}    ${value}
+        IF    '${key}'=='sku' and '${value}' != '${EMPTY}'    Check Checkbox    xpath=//table[@data-qa='order-item-list']/tbody//td//div[@class='sku'][contains(.,'${value}')]/ancestor::tr/td[@class='item-checker']//input
+        IF    '${key}'=='sku 2' and '${value}' != '${EMPTY}'    Check Checkbox    xpath=//table[@data-qa='order-item-list']/tbody//td//div[@class='sku'][contains(.,'${value}')]/ancestor::tr/td[@class='item-checker']//input
+        IF    '${key}'=='sku 3' and '${value}' != '${EMPTY}'    Check Checkbox    xpath=//table[@data-qa='order-item-list']/tbody//td//div[@class='sku'][contains(.,'${value}')]/ancestor::tr/td[@class='item-checker']//input
+        IF    '${key}'=='sku 4' and '${value}' != '${EMPTY}'    Check Checkbox    xpath=//table[@data-qa='order-item-list']/tbody//td//div[@class='sku'][contains(.,'${value}')]/ancestor::tr/td[@class='item-checker']//input
+        IF    '${key}'=='sku 5' and '${value}' != '${EMPTY}'    Check Checkbox    xpath=//table[@data-qa='order-item-list']/tbody//td//div[@class='sku'][contains(.,'${value}')]/ancestor::tr/td[@class='item-checker']//input
+    END
+    Zed: submit the form
+    Wait Until Element Is Visible    ${order_details_billng_address}
+
+Zed: shipment data inside xxx shipment should be:
+    [Arguments]    @{args}
+    ${shipmentData}=    Set Up Keyword Arguments    @{args}
+    FOR    ${key}    ${value}    IN    &{shipmentData}
+        Log    Key is '${key}' and value is '${value}'.
+        IF    '${key}'=='shipment n' and '${value}' != '${EMPTY}'    
+        ${shipment}=    Set Variable    ${value}
+        END
+        IF    '${key}'=='shipment n' and '${value}' == '${EMPTY}'    
+        ${shipment}=    Set Variable    1
+        END
+        IF    '${key}'=='delivery method' and '${value}' != '${EMPTY}'    Element Should Contain    xpath=//table[@data-qa='order-item-list'][${shipment}]/preceding-sibling::div[2]//p[2]    ${value}
+        IF    '${key}'=='shipping method' and '${value}' != '${EMPTY}'    Element Should Contain    xpath=//table[@data-qa='order-item-list'][${shipment}]/preceding-sibling::div[2]//p[3]    ${value}
+        IF    '${key}'=='shipping costs' and '${value}' != '${EMPTY}'    Element Should Contain    xpath=//table[@data-qa='order-item-list'][${shipment}]/preceding-sibling::div[2]//p[4]    ${value}
+        IF    '${key}'=='requested delivery date' and '${value}' != '${EMPTY}'    Element Should Contain    xpath=//table[@data-qa='order-item-list'][${shipment}]/preceding-sibling::div[2]//p[5]    ${value}
+    END
+
+Zed: xxx shipment should/not contain the following products:
+    [Arguments]    ${shipment}    ${condition}    @{sku_list}    ${element1}=${EMPTY}     ${element2}=${EMPTY}     ${element3}=${EMPTY}     ${element4}=${EMPTY}     ${element5}=${EMPTY}     ${element6}=${EMPTY}     ${element7}=${EMPTY}     ${element8}=${EMPTY}     ${element9}=${EMPTY}     ${element10}=${EMPTY}     ${element11}=${EMPTY}     ${element12}=${EMPTY}     ${element13}=${EMPTY}     ${element14}=${EMPTY}     ${element15}=${EMPTY}
+    ${sku_list_count}=   get length  ${sku_list}
+    FOR    ${index}    IN RANGE    0    ${sku_list_count}
+        ${sku_to_check}=    Get From List    ${sku_list}    ${index}
+        IF    '${condition}' == 'true'
+            Table Should Contain    xpath=//table[@data-qa='order-item-list'][${shipment}]    ${sku_to_check}
+        END
+        IF    '${condition}' == 'false'
+            Table Should Not Contain    xpath=//table[@data-qa='order-item-list'][${shipment}]    ${sku_to_check}
+        END
+    END
+
+Yves: cancel the order:
+    [Arguments]    ${order_id}
+    Yves: 'View Order/Reorder/Return' on the order history page:    View Order    ${order_id}
+    Wait Until Element Is Visible    ${order_details_cancel_button_locator}
+    TRY
+        Click    ${order_details_cancel_button_locator}
+        Wait Until Element Is Not Visible    ${order_details_cancel_button_locator}    timeout=5s
+    EXCEPT    
+        Click    ${order_details_cancel_button_locator}
+        Wait Until Element Is Not Visible    ${order_details_cancel_button_locator}    timeout=5s
+    END    
+    Yves: go to 'Order History' page
+    Yves: 'Order History' page contains the following order with a status:    ${order_id}    Canceled

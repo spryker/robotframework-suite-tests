@@ -9,9 +9,15 @@ MP: fill product price values:
     ${priceData}=    Set Up Keyword Arguments    @{args}
     FOR    ${key}    ${value}    IN    &{priceData}
         Log    Key is '${key}' and value is '${value}'.
-        IF    '${key}'=='product type' and '${value}' == 'concrete'    Run Keywords
-        ...    Wait Until Element Is Visible    ${mp_add_concrete_price_button}
-        ...    AND    Click    ${mp_add_concrete_price_button}
+        IF    '${key}'=='product type' and '${value}' == 'concrete'
+            ${checkbox_state}=    Get Element Attribute    ${mp_use_abstract_price_checkbox}    class
+            Log    ${checkbox_state}
+            IF    'checked' in '${checkbox_state}'
+                Click    ${mp_use_abstract_price_checkbox}
+            END
+            Wait Until Element Is Visible    ${mp_add_concrete_price_button}
+            Click    ${mp_add_concrete_price_button}
+        END
         IF    '${key}'=='product type' and '${value}' == 'abstract'    Run Keywords
         ...    Wait Until Element Is Visible    ${mp_add_price_button}
         ...    AND    Click    ${mp_add_price_button}
@@ -31,6 +37,7 @@ MP: fill product price values:
             ...    Click    xpath=//web-spy-card[@spy-title='Price']//tbody/tr[${rowNumber}]/td[3]//spy-select
             ...    AND    MP: select option in expanded dropdown:    ${value}
             IF    '${key}'=='gross default' and '${value}' != '${EMPTY}'    Type Text    xpath=//web-spy-card[@spy-title='Price']//tbody/tr[${rowNumber}]/td[5]//input    ${value}
+            IF    '${key}'=='gross original' and '${value}' != '${EMPTY}'    Type Text    xpath=//web-spy-card[@spy-title='Price']//tbody/tr[${rowNumber}]/td[7]//input    ${value}
             IF    '${key}'=='quantity' and '${value}' != '${EMPTY}'    Type Text    xpath=//web-spy-card[@spy-title='Price']//tbody/tr[${rowNumber}]/td[8]//input    ${value}
         END
         IF    '${env}' in ['mp_b2c']
@@ -41,6 +48,7 @@ MP: fill product price values:
             ...    Click    xpath=//web-spy-card[@spy-title='Price']//tbody/tr[${rowNumber}]/td[2]//spy-select
             ...    AND    MP: select option in expanded dropdown:    ${value}
             IF    '${key}'=='gross default' and '${value}' != '${EMPTY}'    Type Text    xpath=//web-spy-card[@spy-title='Price']//tbody/tr[${rowNumber}]/td[4]//input    ${value}
+            IF    '${key}'=='gross original' and '${value}' != '${EMPTY}'    Type Text    xpath=//web-spy-card[@spy-title='Price']//tbody/tr[${rowNumber}]/td[6]//input    ${value}
             IF    '${key}'=='quantity' and '${value}' != '${EMPTY}'    Type Text    xpath=//web-spy-card[@spy-title='Price']//tbody/tr[${rowNumber}]/td[7]//input    ${value}
         END
     END  
@@ -100,6 +108,11 @@ MP: fill abstract product required fields:
         IF    '${key}'=='store' and '${value}' != '${EMPTY}'    Run Keywords
         ...    Click    ${product_store_selector}
         ...    AND    MP: select option in expanded dropdown:    ${value}
+        ...    AND    Click    ${product_store_selector}
+        IF    '${key}'=='store 2' and '${value}' != '${EMPTY}'    Run Keywords
+        ...    Click    ${product_store_selector}
+        ...    AND    MP: select option in expanded dropdown:    ${value}
+        ...    AND    Click    ${product_store_selector}
         IF    '${key}'=='tax set' and '${value}' != '${EMPTY}'    Run Keywords
         ...    Click    ${product_tax_selector}
         ...    AND    MP: select option in expanded dropdown:    ${value}
@@ -179,3 +192,31 @@ MP: delete product price row that contains quantity:
         Wait Until Element Is Visible    ${product_price_deleted_popup}
         Wait Until Element Is Not Visible    ${product_price_deleted_popup}
     END
+
+MP: add new concrete product:
+    [Arguments]    @{args}
+    Click    ${product_drawer_concretes_tab}
+    Click    ${mp_add_concrete_products_button}
+    ${productData}=    Set Up Keyword Arguments    @{args}
+    FOR    ${key}    ${value}    IN    &{productData}
+        Log    Key is '${key}' and value is '${value}'.
+        IF    '${key}'=='first attribute' and '${value}' != '${EMPTY}'    
+            Set Test Variable    ${firstAttributeName}    ${value}
+        END
+        IF    '${key}'=='first attribute value' and '${value}' != '${EMPTY}'
+            Click    xpath=//mp-concrete-product-attributes-selector[@class='mp-concrete-product-attributes-selector']//spy-form-item//label[contains(text(),'${firstAttributeName}')]/../..//spy-select
+            MP: select option in expanded dropdown:    ${value}
+            Click    xpath=//mp-concrete-product-attributes-selector[@class='mp-concrete-product-attributes-selector']//spy-form-item//label[contains(text(),'${firstAttributeName}')]/../..//spy-select
+        END
+        IF    '${key}'=='second attribute' and '${value}' != '${EMPTY}'    
+            Set Test Variable    ${firstAttributeName}    ${value}
+        END
+        IF    '${key}'=='second attribute value' and '${value}' != '${EMPTY}'
+            Click    xpath=//mp-concrete-product-attributes-selector[@class='mp-concrete-product-attributes-selector']//spy-form-item//label[contains(text(),'${firstAttributeName}')]/../..//spy-select
+            MP: select option in expanded dropdown:    ${value}
+            Click    xpath=//mp-concrete-product-attributes-selector[@class='mp-concrete-product-attributes-selector']//spy-form-item//label[contains(text(),'${firstAttributeName}')]/../..//spy-select
+        END
+    END
+    Click    ${new_product_submit_create_button}
+    Wait Until Element Is Visible    ${new_concrete_product_created_popup}
+    Wait Until Element Is Not Visible    ${new_concrete_product_created_popup}

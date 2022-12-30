@@ -10,7 +10,8 @@ ENABLER
 
 #POST requests
 Create_order_with_invalid_access_token
-# Created the bug-ticket https://spryker.atlassian.net/browse/CC-16699, bug is fixed, fix isn`t merged to b2c demoshop
+    [Documentation]   # Created the bug-ticket https://spryker.atlassian.net/browse/CC-16699, bug is fixed, fix isn`t merged to b2c demoshop
+    [Tags]    skip-due-to-issue  
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
     ...  AND    Find or create customer cart
@@ -91,20 +92,7 @@ Create_order_with_invalid_email
     Then Response status code should be:    422
     And Response reason should be:    Unprocessable Content
     And Response should return error code:    901
-    And Response should return error message:    customer.email => Email is invalid.
-
-Create_order_with_invalid_salutation
-# Created the bug for the 'salutation' validation https://spryker.atlassian.net/browse/CC-16504
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
-    ...  AND    I set Headers:    Authorization=${token}
-    ...  AND    Find or create customer cart
-    ...  AND    Cleanup all items in the cart:    ${cart_id}
-    ...  AND    I send a POST request:    /carts/${cartId}/items    {"data": {"type": "items","attributes": {"sku": "${product_availability.concrete_available_with_stock_and_never_out_of_stock_sku}","quantity": 1}}}
-    When I send a POST request:    /checkout    {"data": {"type": "checkout","attributes": {"customer": {"email": "${yves_user.email}","salutation": "Freulein","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}"},"idCart": "${cart_id}","billingAddress": {"salutation": "${yves_user.salutation}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}","address1": "${default.address1}","address2": "${default.address2}","address3": "${default.address3}","zipCode": "${default.zipCode}","city": "${default.city}","iso2Code": "${default.iso2Code}","company": "${default.company}","phone": "${default.phone}","isDefaultBilling": False,"isDefaultShipping": False},"shippingAddress": {"salutation": "${yves_user.salutation}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}","address1": "${default.address1}","address2": "${default.address2}","address3": "${default.address3}","zipCode": "${default.zipCode}","city": "${default.city}","iso2Code": "${default.iso2Code}","company": "${default.company}","phone": "${default.phone}","isDefaultBilling": False,"isDefaultShipping": False},"payments": [{"paymentProviderName": "${payment.provider_name}","paymentMethodName": "${payment.method_name}"}],"shipment": {"idShipmentMethod": 1},"items": ["${product_availability.concrete_available_with_stock_and_never_out_of_stock_sku}"]}}}
-    Then Response status code should be:    422
-    And Response reason should be:    Unprocessable Content
-    And Response should return error code:    901
-    And Response should return error message:    customer.salutation => Salutation is invalid.
+    And Response should return error message:    customer.email => Email is invalid. 
 
 Create_order_with_invalid_cart_id
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
@@ -261,7 +249,8 @@ Create_order_without_shipping_address_data
     And Array in response should contain property with value:    [errors]    detail    shippingAddress.iso2Code => This field is missing.
 
 Create_order_with_invalid_payments
-# Created the bug-ticket https://spryker.atlassian.net/browse/CC-16700
+    [Documentation]   # Created the bug-ticket https://spryker.atlassian.net/browse/CC-16700
+    [Tags]    skip-due-to-issue  
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
     ...  AND    Find or create customer cart

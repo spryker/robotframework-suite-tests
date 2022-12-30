@@ -22,9 +22,3 @@ Yves: assert merchant profile fields:
         IF    '${key}'=='delivery time' and '${value}' != '${EMPTY}'    Element Text Should Be    ${merchant_profile_delivery_time_locator}    ${value}
         IF    '${key}'=='data privacy' and '${value}' != '${EMPTY}'     Element Text Should Be    ${merchant_profile_data_privacy_locator}    ${value}
     END  
-
-    
-    
-    
-
-

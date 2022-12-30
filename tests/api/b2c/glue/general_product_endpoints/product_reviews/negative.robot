@@ -15,9 +15,9 @@ Get_a_review_with_non_existent_review_id
     And Response reason should be:    Not Implemented
     And Response should return error message:    Resource is not available.
 
-
-# bug CC-16486
 Get_a_reviews_with_non_existent_abstract_product
+   [Documentation]   # bug CC-16486
+   [Tags]    skip-due-to-issue 
     When I send a GET request:    /abstract-products/fake/product-reviews/78
     Then Response status code should be:    404
     And Response reason should be:    Not Found

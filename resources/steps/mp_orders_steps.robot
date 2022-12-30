@@ -15,10 +15,10 @@ MP: order grand total should be:
     Wait Until Element Is Visible    ${order_grand_total}
     Element Text Should Be    ${order_grand_total}    ${expectedTotal}
 
-MP: order state on drawer should be:
+MP: order states on drawer should contain:
     [Arguments]    ${expectedState}
     Wait Until Element Is Visible    ${order_state_label_on_drawer}
-    Element Text Should Be    ${order_state_label_on_drawer}    ${expectedState}
+    Element Should Contain    ${order_state_label_on_drawer}    ${expectedState}
 
 MP: update order state using header button:
     [Arguments]    ${buttonName}
@@ -27,3 +27,15 @@ MP: update order state using header button:
     Wait Until Element Is Visible    xpath=//span[text()='The state is updated successfully.']
     Wait Until Element Is Not Visible    xpath=//span[text()='The state is updated successfully.']
 
+MP: change order item state on:
+    [Arguments]    ${sku}    ${state}
+    Wait Until Element Is Visible    xpath=//web-mp-order-items-table[@table-id='web-mp-order-items-table']//spy-table[@class='spy-table']//tbody
+    Click    xpath=//web-mp-order-items-table[@table-id='web-mp-order-items-table']//spy-table[@class='spy-table']//tbody//orc-render-item//*[contains(text(),'${sku}')]/ancestor::tr/td//spy-checkbox
+    Click    xpath=//*[contains(@class,'table-features')]//*[contains(@class,'batch-actions')]//button[contains(text(),'${state}')]
+    Wait Until Element Is Visible    xpath=//span[text()='The state is updated successfully.']
+    Wait Until Element Is Not Visible    xpath=//span[text()='The state is updated successfully.']
+
+MP: order item state should be:
+    [Arguments]    ${sku}    ${state}
+    Wait Until Element Is Visible    xpath=//web-mp-order-items-table[@table-id='web-mp-order-items-table']//spy-table[@class='spy-table']//tbody
+    Page Should Contain Element    xpath=//web-mp-order-items-table[@table-id='web-mp-order-items-table']//spy-table[@class='spy-table']//tbody//orc-render-item//*[contains(text(),'${sku}')]/ancestor::tr/td//spy-chips[contains(text(),'${state}')]

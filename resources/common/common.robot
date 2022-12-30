@@ -17,7 +17,7 @@ Resource                  ../pages/yves/yves_login_page.robot
 ${env}                 b2b
 ${headless}            true
 ${browser}             chromium
-${browser_timeout}     30 seconds
+${browser_timeout}     60 seconds
 ${email_domain}        @spryker.com
 ${default_password}    change123
 ${admin_email}         admin@spryker.com
@@ -40,7 +40,7 @@ Set Up Keyword Arguments
     &{arguments}=    Fill Variables From Text String    @{args}
     FOR    ${key}    ${value}    IN    &{arguments}
         Log    Key is '${key}' and value is '${value}'.
-        ${var_value}=   Get Variable Value  ${${key}}   ${value}
+        ${var_value}=   Set Variable    ${value}
         Set Test Variable    ${${key}}    ${var_value}
     END
     [Return]    &{arguments}
@@ -67,8 +67,7 @@ SuiteTeardown
     Close Browser    ALL
 
 TestSetup
-    # ${random}=    Generate Random String    5    [NUMBERS]
-    # Set Global Variable    ${random}
+    Delete All Cookies
     Go To    ${host}
 
 TestTeardown
@@ -158,6 +157,12 @@ Get Location
     Set Test Variable    ${location}    ${location}
     [Return]    ${location}
 
+Save current URL
+    ${current_url}=    Get URL
+    ${url}=    Set Variable    ${current_url}
+    Set Test Variable    ${url}    ${url}
+    [Return]    ${url}
+
 Wait Until Element Is Not Visible
     [Arguments]    ${locator}    ${message}=${EMPTY}    ${timeout}=${browser_timeout}
     Wait For Elements State    ${locator}    hidden    ${timeout}    ${message}
@@ -178,6 +183,10 @@ Input Text
 Table Should Contain
     [Arguments]    ${locator}    ${expected}    ${message}=${EMPTY}    ${ignore_case}=${EMPTY}
     Get Text    ${locator}    contains    ${expected}    ${message}
+
+Table Should Not Contain
+    [Arguments]    ${locator}    ${expected}    ${message}=${EMPTY}    ${ignore_case}=${EMPTY}
+    Get Text    ${locator}    not contains    ${expected}    ${message}
 
 Element Should Contain
     [Arguments]    ${locator}    ${expected}    ${message}=${EMPTY}    ${ignore_case}=${EMPTY}
@@ -255,9 +264,9 @@ Verify the src attribute of the image is accessible:
 
 Conver string to List by separator:
     [Arguments]    ${string}    ${separator}=,
-    ${covertedList}=    Split String    ${string}    ${separator}
-    ${covertedList}=    Set Test Variable    ${covertedList}
-    [Return]    ${covertedList}
+    ${convertedList}=    Split String    ${string}    ${separator}
+    ${convertedList}=    Set Test Variable    ${convertedList}
+    [Return]    ${convertedList}
 
 Try reloading page until element is/not appear:
     [Documentation]    will reload the page until an element is shown or disappears. The second argument is the expected condition (true[shown]/false[disappeared]) for the element.
