@@ -153,22 +153,7 @@ Yves: go to the 'Home' page
 Yves: go to AT store 'Home' page
     Go To    ${host_at}
 
-Yves: get the last placed order ID by current customer
-    [Documentation]    Returns orderID of the last order from customer account
-    IF    '${env}'=='suite-nonsplit'    Yves: go to URL:    /customer/order
-    ${currentURL}=    Get Location
-    IF    '${env}' in ['b2b','mp_b2b']
-        Set Test Variable    ${menuItem}    Order History
-    ELSE
-        Set Test Variable    ${menuItem}    Orders History
-    END
-    IF    '/customer/order' not in '${currentURL}'
-        Run Keywords
-        Pause Execution
-            Yves: go to the 'Home' page
-            Yves: go to user menu item in header:    ${menuItem}
-            Yves: 'Order History' page is displayed
-    END
+
     ${lastPlacedOrder}=    Get Text    xpath=//div[contains(@data-qa,'component order-table')]//tr[1]//td[1]
     Set Suite Variable    ${lastPlacedOrder}    ${lastPlacedOrder}
     [Return]    ${lastPlacedOrder}
