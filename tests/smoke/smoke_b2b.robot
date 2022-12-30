@@ -58,7 +58,7 @@ Share_Shopping_Lists
     Create New Context
     Yves: login on Yves with provided credentials:    ${yves_company_user_shared_permission_receiver_email}
     Yves: 'Shopping List' widget contains:    shoppingListName+${random}    Full access
-    Yves: go to 'Shopping Lists' page
+    
     Yves: 'Shopping Lists' page is displayed
     Yves: the following shopping list is shown:    shoppingListName+${random}    ${yves_company_user_shared_permission_owner_firstname} ${yves_company_user_shared_permission_owner_lastname}    Full access
     Yves: view shopping list with name:    shoppingListName+${random}
@@ -111,7 +111,7 @@ Share_Shopping_Carts
     Yves: create new 'Shopping Cart' with name:    shoppingCartName+${random}
     Yves: 'Shopping Carts' widget contains:    shoppingCartName+${random}    Owner access
     Yves: go to 'Shopping Carts' page through the header
-    Yves: 'Shopping Carts' page is displayed
+    
     Yves: the following shopping cart is shown:    shoppingCartName+${random}    Owner access
     Yves: share shopping cart with user:    shoppingCartName+${random}    ${yves_company_user_shared_permission_receiver_lastname} ${yves_company_user_shared_permission_receiver_firstname}    Read-only
     Yves: go to PDP of the product with sku:    ${concrete_avaiable_product_sku}

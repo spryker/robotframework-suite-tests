@@ -164,6 +164,7 @@ Yves: get the last placed order ID by current customer
     END
     IF    '/customer/order' not in '${currentURL}'
         Run Keywords
+        Pause Execution
             Yves: go to the 'Home' page
             Yves: go to user menu item in header:    ${menuItem}
             Yves: 'Order History' page is displayed
