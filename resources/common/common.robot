@@ -151,3 +151,23 @@ Remove leading and trailing whitespace from a string:
     ${string}=    Replace String Using Regexp    ${string}    (^[ ]+|[ ]+$)    ${EMPTY}
     Set Global Variable    ${string}
     [Return]    ${string}
+
+
+Load Variables
+    [Arguments]    ${env}
+    &{vars}=   Define Environment Variables From Json File    ${env}
+    FOR    ${key}    ${value}    IN    &{vars}
+        Log    Key is '${key}' and value is '${value}'.
+        ${var_value}=   Get Variable Value  ${${key}}   ${value}
+        Set Global Variable    ${${key}}    ${var_value}
+    END
+
+Set Up Keyword Arguments
+    [Arguments]    @{args}
+    &{arguments}=    Fill Variables From Text String    @{args}
+    FOR    ${key}    ${value}    IN    &{arguments}
+        Log    Key is '${key}' and value is '${value}'.
+        ${var_value}=   Set Variable    ${value}
+        Set Test Variable    ${${key}}    ${var_value}
+    END
+    [Return]    &{arguments}
