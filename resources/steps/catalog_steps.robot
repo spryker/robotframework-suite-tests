@@ -98,23 +98,15 @@ Yves: catalog page contains filter:
 
 Yves: select filter value:
     [Arguments]    ${filter}    ${filterValue}
-    Wait Until Element Is Visible    xpath=//section[contains(@data-qa,'component filter-section')]//*[contains(@class,'filter-section')][contains(text(),'${filter}')]
-    Click    xpath=//section[contains(@data-qa,'component filter-section')]//*[contains(@class,'filter-section')][contains(text(),'${filter}')]
-    Wait Until Element Is Visible    xpath=//section[contains(@data-qa,'component filter-section')]//*[contains(@class,'filter-section')][contains(text(),'${filter}')]/following-sibling::*//span[contains(@data-qa,'checkbox')][contains(.,'${filterValue}')]
-    Click    xpath=//section[contains(@data-qa,'component filter-section')]//*[contains(@class,'filter-section')][contains(text(),'${filter}')]/following-sibling::*//span[contains(@data-qa,'checkbox')][contains(.,'${filterValue}')]
-    Click    ${catalog_filter_apply_button}
+    Click    xpath=//section[contains(@data-qa,'component filter-section')]//*[contains(text(),'${filter}')]
+    Wait Until Element Is Visible    xpath=//section[contains(@data-qa,'component filter-section')]//*[contains(text(),'${filter}')]/following-sibling::*//span[contains(@value,'${filterValue}')]
+    Click    xpath=//section[contains(@data-qa,'component filter-section')]//*[contains(text(),'${filter}')]/following-sibling::*//span[contains(@value,'${filterValue}')]
+    Click    ${catalog_filter_apply_button}[${env}]
+        
 
 Yves: quick add to cart for first item in catalog
-    IF    '${env}' in ['b2b','mp_b2b']
-        Click    xpath=//product-item[@data-qa='component product-item'][1]//*[@class='product-item__actions']//ajax-add-to-cart//button
-    ELSE IF    '${env}' in ['b2c','mp_b2c']
-        Scroll Element Into View    xpath=//product-item[@data-qa='component product-item'][1]//div[contains(@class,'image-wrap')]
-        Mouse Over    xpath=//product-item[@data-qa='component product-item'][1]//div[contains(@class,'image-wrap')]
-        Wait Until Element Is Visible    xpath=//product-item[@data-qa='component product-item'][1]//ajax-add-to-cart//button
-        Click    xpath=//product-item[@data-qa='component product-item'][1]//ajax-add-to-cart//button
-    END
-    ${response}=    Wait for response    matcher=cart\/add\-ajax    timeout=${browser_timeout}
-    Should be true    ${response}[ok]
+    #${initialCartCounter}=    Yves: get current cart item counter value
+    Click    xpath=(//button[contains(@title,'Add to Cart')])[1]
 
 Yves: get current cart item counter value
     [Documentation]    returns the cart item count number as an integer
