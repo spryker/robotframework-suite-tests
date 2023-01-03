@@ -269,12 +269,28 @@ Add_a_configurable_product_to_the_shopping_list
     ...    AND    I send a POST request:    /shopping-lists    {"data":{"type":"shopping-lists","attributes":{"name":"${shopping_list_name}${random}"}}}
     ...    AND    Response status code should be:    201
     ...    AND    Save value to a variable:    [data][id]    shoppingListId
-    I send a POST request:    /shopping-lists/${shoppingListId}/shopping-list-items    {"data":{"type":"shopping-list-items","attributes":{"sku":"${configurable_product.sku}","quantity":3,"productConfigurationInstance":{"displayData":'{"Preferred time of the day":"Afternoon","Date":"9.09.2050"}',"configuration":'{"time_of_day":"4"}',"configuratorKey":"DATE_TIME_CONFIGURATOR","isComplete":True,"quantity":3,"availableQuantity":4,"prices":[{"priceTypeName":"DEFAULT","netAmount":23434,"grossAmount":42502,"currency":{"code":"EUR","name":"Euro","symbol":"€"},"volumePrices":[{"netAmount":150,"grossAmount":165,"quantity":5},{"netAmount":145,"grossAmount":158,"quantity":10},{"netAmount":140,"grossAmount":152,"quantity":20}]}]}}}}
+    I send a POST request:    /shopping-lists/${shoppingListId}/shopping-list-items    {"data":{"type":"shopping-list-items","attributes":{"sku":"${configurable_product.sku}","quantity":3,"productConfigurationInstance":{"displayData":'{"Preferred time of the day":"Afternoon","Date":"09.09.2050"}',"configuration":'{"time_of_day":"4"}',"configuratorKey":"DATE_TIME_CONFIGURATOR","isComplete":True,"quantity":3,"availableQuantity":4,"prices":[{"priceTypeName":"DEFAULT","netAmount":23434,"grossAmount":42502,"currency":{"code":"EUR","name":"Euro","symbol":"€"},"volumePrices":[{"netAmount":150,"grossAmount":165,"quantity":5},{"netAmount":145,"grossAmount":158,"quantity":10},{"netAmount":140,"grossAmount":152,"quantity":20}]}]}}}}
     And Response status code should be:    201
+    And Save value to a variable:    [data][id]    shoppingListItemId
     And Response body parameter should be:    [data][attributes][quantity]    3
     And Response body parameter should be:    [data][attributes][sku]    ${configurable_product.sku}
-    And Response body parameter should be:    [data][attributes][productConfigurationInstance][displayData]  {"Preferred time of the day":"Afternoon","Date":"9.09.2050"} 
+    And Response body parameter should be:    [data][attributes][productConfigurationInstance][displayData]  {"Preferred time of the day":"Afternoon","Date":"09.09.2050"} 
     And Response body parameter should be:    [data][attributes][productConfigurationInstance][isComplete]  True  
+    And I send a GET request:    /shopping-lists/${shoppingListId}?include=shopping-list-items,concrete-products
+    And Response status code should be:    200
+    And Response body parameter should be:  [data][type]    shopping-lists
+    And Response body parameter should be:  [data][id]    ${shoppingListId}
+    And Response body parameter should be:    [data][attributes][numberOfItems]    3
+    And Response should contain the array of a certain size:    [data][relationships]    1
+    And Response body parameter should be:    [data][relationships][shopping-list-items][data][0][type]   shopping-list-items
+    And Response body parameter should be:    [data][relationships][shopping-list-items][data][0][id]   ${shoppingListItemId}
+    And Response should contain the array of a certain size:    [included]    2
+    And Response include should contain certain entity type:    concrete-products
+    And Response include should contain certain entity type:    shopping-list-items
+    And Response body parameter should be:    [included][0][id]    ${configurable_product.sku}
+    And Response body parameter should be:    [included][1][id]    ${shoppingListItemId}
+    And Response body parameter should be:    [included][1][attributes][productConfigurationInstance][isComplete]  True 
+    And Response body parameter should be:    [included][1][attributes][productConfigurationInstance][displayData]  {\"Preferred time of the day\":\"Afternoon\",\"Date\":\"09.09.2050\"}
    [Teardown]    Run Keywords    I send a DELETE request:    /shopping-lists/${shoppingListId}
    ...    AND    Response status code should be:    204
    ...    AND    Response reason should be:    No Content
@@ -400,6 +416,39 @@ Add_2_Configurable_products_but_with_different_configurations
    And Response body parameter should be:   [included][1][attributes][sku]    ${configurable_product.sku}
    And Response body parameter should be:    [included][1][attributes][productConfigurationInstance][displayData]    {\"Preferred time of the day\":\"Afternoon\",\"Date\":\"11.11.2040\"}
    And Response body parameter should be:    [included][1][attributes][productConfigurationInstance][isComplete]    False
+   And Response include element has self link:   shopping-list-items
+   [Teardown]    Run Keywords    I send a DELETE request:    /shopping-lists/${ShoppingListId}
+    ...    AND    Response status code should be:    204
+    ...    AND    Response reason should be:    No Content 
+
+Add_Configurable_products_and_regular_product
+   [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
+    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
+    ...    AND    I send a POST request:    /shopping-lists    {"data":{"type":"shopping-lists","attributes":{"name":"${shopping_list_name}${random}"}}}
+    ...    AND    Response status code should be:    201
+    ...    AND    Save value to a variable:    [data][id]    shoppingListId
+   I send a POST request:    /shopping-lists/${shoppingListId}/shopping-list-items    {"data":{"type":"shopping-list-items","attributes":{"sku":"${configurable_product.sku}","quantity":2,"productConfigurationInstance":{"displayData":'{"Preferred time of the day":"Morning","Date":"10.10.2040"}',"configuration":'{"time_of_day":"4"}',"configuratorKey":"${productConfigurationInstance.configuratorKey}","isComplete":True,"quantity":2,"availableQuantity":4,"prices":[{"priceTypeName":"DEFAULT","netAmount":23434,"grossAmount":42502,"currency":{"code":"EUR","name":"Euro","symbol":"€"},"volumePrices":[{"netAmount":150,"grossAmount":165,"quantity":5},{"netAmount":145,"grossAmount":158,"quantity":10},{"netAmount":140,"grossAmount":152,"quantity":20}]}]}}}}
+   And Response status code should be:    201
+   And Save value to a variable:    [data][id]    shoppingListItemId1
+   And Response body parameter should be:    [data][attributes][quantity]    2
+   I send a POST request:    /shopping-lists/${shoppingListId}/shopping-list-items    {"data":{"type":"shopping-list-items","attributes":{"sku":"${concrete_available_product.sku}","quantity":1}}}
+   And Response status code should be:    201
+   And Save value to a variable:    [data][id]    shoppingListItemId2
+   And Response body parameter should be:    [data][attributes][quantity]    1
+   And Response body parameter should be:    [data][attributes][sku]    ${concrete_available_product.sku}
+   And I send a GET request:    /shopping-lists/${shoppingListId}?include=shopping-list-items
+   And Response status code should be:    200
+   And Response body parameter should be:    [data][attributes][numberOfItems]    3
+   And Response should contain the array of a certain size:    [included]    2
+   And Response body parameter should be:   [included][0][id]    ${shoppingListItemId1}
+   And Response body parameter should be:   [included][0][attributes][quantity]    2
+   And Response body parameter should be:   [included][0][attributes][sku]    ${configurable_product.sku}
+   And Response body parameter should be:    [included][0][attributes][productConfigurationInstance][displayData]    {\"Preferred time of the day\":\"Morning\",\"Date\":\"10.10.2040\"}
+   And Response body parameter should be:    [included][0][attributes][productConfigurationInstance][isComplete]    True
+   And Response body parameter should be:   [included][1][id]    ${shoppingListItemId2}
+   And Response body parameter should be:   [included][1][attributes][quantity]    1
+   And Response body parameter should be:   [included][1][attributes][sku]    ${concrete_available_product.sku}
+   And Response body parameter should be:    [included][1][attributes][productConfigurationInstance]    None
    And Response include element has self link:   shopping-list-items
    [Teardown]    Run Keywords    I send a DELETE request:    /shopping-lists/${ShoppingListId}
     ...    AND    Response status code should be:    204
