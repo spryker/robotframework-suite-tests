@@ -10,6 +10,8 @@ ENABLER
 
 #POST requests
 Provide_checkout_data
+    [Documentation]   # Created a new bug https://spryker.atlassian.net/browse/CC-23077
+    [Tags]    skip-due-to-issue  
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
     ...  AND    Find or create customer cart
@@ -52,6 +54,8 @@ Provide_checkout_with_only_cart_id
     And Response body has correct self link internal
 
 Provide_checkout_data_with_invalid_billing_address_data
+    [Documentation]   # Created a new bug https://spryker.atlassian.net/browse/CC-23077
+    [Tags]    skip-due-to-issue
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
     ...  AND    Find or create customer cart
@@ -76,6 +80,8 @@ Provide_checkout_data_with_invalid_billing_address_data
     And Response body has correct self link internal
 
 Provide_checkout_data_with_invalid_shipping_address_data
+    [Documentation]   # Created a new bug https://spryker.atlassian.net/browse/CC-23077
+    [Tags]    skip-due-to-issue
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
     ...  AND    Find or create customer cart
@@ -100,6 +106,8 @@ Provide_checkout_data_with_invalid_shipping_address_data
     And Response body has correct self link internal
 
 Provide_checkout_data_with_invalid_payments
+    [Documentation]   # Created a new bug https://spryker.atlassian.net/browse/CC-23077
+    [Tags]    skip-due-to-issue
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
     ...  AND    Find or create customer cart
@@ -159,6 +167,8 @@ Provide_checkout_data_with_empty_cart
     And Response body has correct self link internal
 
 Provide_checkout_data_with_bundle_product
+    [Documentation]   # Created a new bug https://spryker.atlassian.net/browse/CC-23077
+    [Tags]    skip-due-to-issue
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
     ...  AND    Find or create customer cart

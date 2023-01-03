@@ -26,7 +26,13 @@ Yves: Go to 'Shopping Carts' page
 Yves: create new 'Shopping Cart' with name:
     [Arguments]    ${shoppingCartName}
     ${currentURL}=    Get Location
-    IF    '/multi-cart' not in '${currentURL}'    Go To    ${host}multi-cart
+    IF    '/multi-cart' not in '${currentURL}'    
+            IF    '.at.' in '${currentURL}'
+                Go To    ${host_at}multi-cart
+            ELSE
+                Go To    ${host}multi-cart
+            END    
+    END
     Click    ${create_shopping_cart_button}
     Type Text    ${shopping_cart_name_input_field}    ${shoppingCartName}
     Click    ${create_new_cart_submit_button}
@@ -107,8 +113,12 @@ Yves: shopping cart with name xxx has the following status:
 
 Yves: delete product from the shopping cart with sku:
     [Arguments]    ${sku}
-    Click    xpath=//form[@name='removeFromCartForm_${sku}']//button
+    Click    xpath=//form[contains(@name,'removeFromCartForm_${sku}')]//button
+    Yves: remove flash messages
 
+Yves: delete product from the shopping cart with name:
+    [Arguments]    ${productName}
+    Click    //main[@class='page-layout-cart']//article[contains(@data-qa,'component product-card-item')]//a[contains(text(),'Canon IXUS 175')]/ancestor::article//form[contains(@name,'removeFromCartForm')]//button
     Yves: remove flash messages
 
 Yves: shopping cart doesn't contain the following products:
@@ -116,7 +126,7 @@ Yves: shopping cart doesn't contain the following products:
     ${sku_list_count}=   get length  ${sku_list}
     FOR    ${index}    IN RANGE    0    ${sku_list_count}
         ${sku_to_check}=    Get From List    ${sku_list}    ${index}
-        Page Should Not Contain Element    xpath=//form[@name='removeFromCartForm_${sku_to_check}']
+        Page Should Not Contain Element    xpath=//form[contains(@name,'removeFromCartForm_${sku_to_check}')]
     END
 
 Yves: get link for external cart sharing
@@ -149,8 +159,8 @@ Yves: Shopping Cart title should be equal:
 Yves: change quantity of the configurable bundle in the shopping cart on:
     [Documentation]    In case of multiple matches, changes quantity for the first product in the shopping cart
     [Arguments]    ${confBundleTitle}    ${quantity}
-    Type Text    xpath=//main//article[contains(@data-qa,'configured-bundle')][1]//*[contains(@class,'configured-bundle') and text()='${confBundleTitle}']/ancestor::article//input[@data-qa='quantity-input']    ${quantity}
-    Click    xpath=//main//article[contains(@data-qa,'configured-bundle')][1]//*[contains(@class,'configured-bundle') and text()='${confBundleTitle}']
+    Type Text    xpath=//main//article[contains(@data-qa,'configured-bundle')][1]//a[text()='${confBundleTitle}']/ancestor::article//input[@data-qa='quantity-input']    ${quantity}
+    Click    xpath=//main//article[contains(@data-qa,'configured-bundle')][1]//a[text()='${confBundleTitle}']/ancestor::article
     Sleep    1s
     Yves: remove flash messages
 
@@ -168,7 +178,6 @@ Yves: delete all shopping carts
         Click    ${delete_shopping_cart_button}
     END
 
-
 Yves: delete 'Shopping Cart' with name:
     [Arguments]    ${shoppingCartName}
     ${currentURL}=    Get Location
@@ -176,7 +185,6 @@ Yves: delete 'Shopping Cart' with name:
     Delete shopping cart with name:    ${shoppingCartName}
     Wait Until Element Is Visible    ${delete_shopping_cart_button}
     Click    ${delete_shopping_cart_button}
-
 
 Yves: delete from b2c cart products with name:
     [Arguments]    @{productNameList}
@@ -194,8 +202,8 @@ Yves: delete from b2c cart products with name:
 Yves: apply discount voucher to cart:
     [Arguments]    ${voucherCode}
     ${expanded}=    Set Variable    ${EMPTY}
-    ${expanded}=    IF    '${env}'=='b2c'    Run Keyword And Return Status    Get Element States    ${shopping_cart_voucher_code_field}    ==    hidden    return_names=False
-    IF    '${env}'=='b2c' and '${expanded}'=='False'    Click    ${shopping_cart_voucher_code_section_toggler}
+    ${expanded}=    IF    '${env}' in ['b2c','mp_b2c']    Run Keyword And Return Status    Get Element States    ${shopping_cart_voucher_code_field}    ==    hidden    return_names=False
+    IF    '${env}' in ['b2c','mp_b2c'] and '${expanded}'=='False'    Click    ${shopping_cart_voucher_code_section_toggler}
     Type Text    ${shopping_cart_voucher_code_field}    ${voucherCode}
     Click    ${shopping_cart_voucher_code_redeem_button}
     Yves: flash message should be shown:    success    Your voucher code has been applied
@@ -205,9 +213,9 @@ Yves: apply discount voucher to cart:
 Yves: discount is applied:
 #TODO: make from this method somth real, because Sum is not used
     [Arguments]    ${discountType}    ${discountName}    ${expectedDiscountSum}
-    IF    '${env}'=='b2c' and '${discountType}'=='voucher'
+    IF    '${env}' in ['b2c','mp_b2c'] and '${discountType}'=='voucher'
         Element should be visible    xpath=//span[contains(text(),'${expectedDiscountSum}')]/preceding-sibling::span[contains(text(),'${discountName}')]/ancestor::*[contains(@data-qa,'cart-discount-summary')]/*[contains(.,'Vouchers')]
-    ELSE IF    '${env}'=='b2c' and '${discountType}'=='cart rule'
+    ELSE IF    '${env}' in ['b2c','mp_b2c'] and '${discountType}'=='cart rule'
         Element should be visible    xpath=//span[contains(text(),'${expectedDiscountSum}')]/preceding-sibling::span[contains(text(),'${discountName}')]/ancestor::*[contains(@data-qa,'cart-discount-summary')]/*[contains(.,'Discounts')]
     ELSE IF     '${env}' in ['b2b','mp_b2b'] and '${discountType}'=='voucher'
         Element should be visible    xpath=//span[contains(text(),'${expectedDiscountSum}')]/preceding-sibling::span[contains(text(),'${discountName}')]/ancestor::*[contains(@data-qa,'cart-code-summary')]/*[contains(.,'Vouchers')]
@@ -218,10 +226,13 @@ Yves: discount is applied:
 Yves: promotional product offer is/not shown in cart:
     [Arguments]    ${isShown}
     IF    '${isShown}'=='true'
+        Try reloading page until element is/not appear:    ${shopping_cart_promotional_product_section}    true    5
         Element Should Be Visible    ${shopping_cart_promotional_product_section}    message=Promotional products are not displayed but should be    timeout=${browser_timeout}
     ELSE IF    '${isShown}'=='false'
+        Try reloading page until element is/not appear:    ${shopping_cart_promotional_product_section}    false    5
         Element Should Not Be Visible    ${shopping_cart_promotional_product_section}    message=Promotional products are displayed but should not    timeout=${browser_timeout}
     END
+    
 
 Yves: change quantity of promotional product and add to cart:
     [Documentation]    set ${action} to + or - to change quantity. ${clickCount} indicates how many times to click
@@ -236,3 +247,9 @@ Yves: change quantity of promotional product and add to cart:
     Click    ${shopping_cart_promotional_product_add_to_cart_button}
     Yves: flash message should be shown:    success    Items added successfully
     Yves: remove flash messages
+
+Yves: assert merchant of product in b2c cart:
+    [Documentation]    Method for MP which asserts value in 'Sold by' label of item in cart or list. Requires concrete SKU
+    [Arguments]    ${product_name}    ${merchant_name_expected}
+    Page Should Contain Element    xpath=//main[contains(@class,'cart')]//article[contains(@data-qa,'component product-card-item')]//*[contains(.,'${product_name}')]/ancestor::article//*[@data-qa='component sold-by-merchant']/a[text()='${merchant_name_expected}']
+

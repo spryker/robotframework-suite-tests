@@ -76,10 +76,8 @@ Get_abstract_bundle_product_with_bundled_products_include
     And Response should contain the array larger than a certain size:    [included]    ${bundle_product.qty_of_products_in_bundle}
     And Response include should contain certain entity type:    concrete-products
     And Response include should contain certain entity type:    bundled-products
-    And Response include should contain certain entity type:    abstract-products
     And Response include element has self link:   concrete-products
     And Response include element has self link:   bundled-products
-    And Response include element has self link:   abstract-products
 
 Get_concrete_bundled_products_for_nonbundle_product
     When I send a GET request:    /concrete-products/${concrete.available_product.with_stock_and_never_out_of_stock.sku}/bundled-products

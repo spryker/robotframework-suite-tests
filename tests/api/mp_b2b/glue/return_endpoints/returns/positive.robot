@@ -10,7 +10,7 @@ ENABLER
     
 ####POST####
 Create_a_return
-# bug CC-18935
+# task https://spryker.atlassian.net/browse/CC-23304
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
     ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
@@ -21,7 +21,9 @@ Create_a_return
     ...  AND    Save value to a variable:    [data][attributes][orderReference]    order_reference
     ...  AND    Save value to a variable:    [included][0][attributes][items][0][uuid]    Uuid
     ...  AND    Save value to a variable:    [included][0][attributes][items][0][refundableAmount]    refundable_amount
-    ...  AND    Update order status in Database:    shipped
+    ...  AND    Update order status in Database:    paid
+    ...  AND    Pause Execution
+    ...  AND    Update order status in Database:    shipped by merchant
     When I send a POST request:     /returns     {"data":{"type":"returns","attributes":{"store":"${store.de}","returnItems":[{"salesOrderItemUuid":"${Uuid}","reason":"${return_reason_damaged}"}]}}}
     And Save value to a variable:    [data][id]    returnId
     Then Response status code should be:     201
@@ -34,7 +36,7 @@ Create_a_return
     And Response body has correct self link for created entity:    ${returnId}
 
 Create_a_return_with_return_items
-# bug CC-18935
+# task https://spryker.atlassian.net/browse/CC-23304
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
     ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
@@ -73,7 +75,7 @@ Create_a_return_with_return_items
 
 ####GET####
 Retrieves_list_of_returns
-# bug CC-18935
+# task https://spryker.atlassian.net/browse/CC-23304
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
     ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
@@ -102,7 +104,7 @@ Retrieves_list_of_returns
     And Response body has correct self link
     
 Retrieves_list_of_returns_included_return_items
-# bug CC-18935
+# task https://spryker.atlassian.net/browse/CC-23304
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
     ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
@@ -141,7 +143,7 @@ Retrieves_list_of_returns_included_return_items
     And Response body has correct self link
 
 Retrieves_list_of_returns_included_merchants
-# bug CC-18935
+# task https://spryker.atlassian.net/browse/CC-23304
   [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
     ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
@@ -178,7 +180,7 @@ Retrieves_list_of_returns_included_merchants
     And Response body has correct self link
 
 Retrieves_return_by_id_with_returns_items_included
-# bug CC-18935
+# task https://spryker.atlassian.net/browse/CC-23304
   [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
     ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
@@ -219,7 +221,7 @@ Retrieves_return_by_id_with_returns_items_included
     And Response body has correct self link
 
 Retrieves_return_by_id_for_sales_order
-# bug CC-18935
+# task https://spryker.atlassian.net/browse/CC-23304
   [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
     ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
@@ -244,7 +246,7 @@ Retrieves_return_by_id_for_sales_order
     And Response body parameter should be:    [data][attributes][returnTotals][remunerationTotal]    ${refundable_amount}
 
 Retrieves_return_by_id_with_merchants_included
-# bug CC-18935
+# task https://spryker.atlassian.net/browse/CC-23304
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
     ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}

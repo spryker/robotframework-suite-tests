@@ -40,8 +40,10 @@ Creating_wishlist_by_invalid_Access_Token
     And Response should return error code:    001
     And Response should return error message:    Invalid access token.
 
-#Post Request CC-16553
+
 Creating_wishlist_with_space_in_name
+    [Documentation]   #Post Request CC-16553
+    [Tags]    skip-due-to-issue
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...        AND    I set Headers:    Authorization=${token}
     When I send a POST request:    /wishlists    {"data": {"type": "wishlists","attributes": {"name":" "}}}

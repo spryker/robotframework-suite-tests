@@ -2,6 +2,8 @@
 Resource    ../common/common.robot
 Resource    ../pages/yves/yves_product_sets_page.robot
 Resource    ../common/common_yves.robot
+Resource    ../common/common_zed.robot
+Resource    ../pages/zed/zed_product_set_page.robot
 
 *** Keywords ***
 Yves: 'Product Sets' page contains the following sets:
@@ -35,14 +37,68 @@ Yves: 'Product Set' page contains the following products:
 Yves: change variant of the product on CMS page on:
     [Arguments]    ${productName}    ${variantToSet}
     Mouse Over    xpath=//*[contains(@class,'product-item__container') and descendant::a[contains(.,'${productName}')]]
-    IF    '${env}' in ['b2b','mp_b2b']
-        Select From List By Label   //*[contains(@class,'custom-element product-set-details')]//div[@class='product-item__variant']/descendant::select    ${variantToSet}
-    ELSE
-        Select From List By Label    //*[contains(@class,'custom-element custom-select custom-select--expand')]//descendant::select    ${variantToSet}
-    END
-
+    Click    xpath=//*[contains(@class,'product-item__container') and descendant::a[contains(.,'${productName}')]]/ancestor::product-item//span[contains(@class,'selection--single')]
+    Wait Until Element Is Visible    xpath=//span[contains(@class,'select2-results')]//li[contains(text(),'${variantToSet}')]
+    Click    xpath=//span[contains(@class,'select2-results')]//li[contains(text(),'${variantToSet}')]
 
 Yves: add all products to the shopping cart from Product Set
     Wait Until Element Is Enabled    ${add_all_product_to_the_shopping_cart}
     Click    ${add_all_product_to_the_shopping_cart}
     Yves: remove flash messages
+
+Zed: create new product set:
+    [Arguments]    @{args}
+    Zed: go to second navigation item level:    Merchandising    Product Sets
+    Zed: click button in Header:    Create Product Set
+    Wait Until Element Is Visible    ${zed_product_set_name_en_field}
+    ${seteData}=    Set Up Keyword Arguments    @{args}
+    FOR    ${key}    ${value}    IN    &{seteData}
+        IF    '${key}'=='name en' and '${value}' != '${EMPTY}'    
+            Type Text    ${zed_product_set_name_en_field}    ${value}
+            Click    ${zed_product_set_copy_en_name_button}
+        END
+        IF    '${key}'=='name de' and '${value}' != '${EMPTY}'    Type Text    ${zed_product_set_name_de_field}    ${value}
+        IF    '${key}'=='url en' and '${value}' != '${EMPTY}'    Type Text    ${zed_product_set_url_en_field}    ${value}
+        IF    '${key}'=='url de' and '${value}' != '${EMPTY}'    Type Text    ${zed_product_set_url_de_field}    ${value}
+        IF    '${key}'=='set key' and '${value}' != '${EMPTY}'    Type Text    ${zed_product_set_key_field}    ${value}
+        IF    '${key}'=='active' and '${value}' != '${EMPTY}'
+            IF    '${value}'=='true'
+                Check Checkbox    ${zed_product_set_is_active_checkbox}
+            END
+            IF    '${value}'=='false'
+                Uncheck Checkbox    ${zed_product_set_is_active_checkbox}
+            END
+        END
+        IF    '${key}'=='product' and '${value}' != '${EMPTY}'
+            Zed: switch to tab in product set:    Products
+            Wait Until Element Is Visible    ${zed_product_set_search_product_table_field}
+            Input Text    ${zed_product_set_search_product_table_field}    ${value}
+            Sleep    3s
+            Check Checkbox    ${zed_product_set_search_product_table_select_first_checkbox}
+            Sleep    1s
+        END
+        IF    '${key}'=='product 2' and '${value}' != '${EMPTY}'
+            Wait Until Element Is Visible    ${zed_product_set_search_product_table_field}
+            Input Text    ${zed_product_set_search_product_table_field}    ${value}
+            Sleep    3s
+            Check Checkbox    ${zed_product_set_search_product_table_select_first_checkbox}
+            Sleep    1s
+        END
+        IF    '${key}'=='product 3' and '${value}' != '${EMPTY}'
+            Wait Until Element Is Visible    ${zed_product_set_search_product_table_field}
+            Input Text    ${zed_product_set_search_product_table_field}    ${value}
+            Sleep    3s
+            Check Checkbox    ${zed_product_set_search_product_table_select_first_checkbox}
+            Sleep    1s
+        END
+    END
+    Zed: submit the form
+
+Zed: switch to tab in product set:
+    [Arguments]    ${tab_name}
+    Click    xpath=//form[@name='product_set_form']//div[@class='tabs-container']/ul[contains(@class,'nav-tabs')]//li[@data-tab-content-id]//a[contains(.,'${tab_name}')]
+
+Zed: delete product set:
+    [Arguments]    ${set_name}
+    Zed: go to second navigation item level:    Merchandising    Product Sets
+    Zed: click Action Button in a table for row that contains:    ${set_name}    Delete

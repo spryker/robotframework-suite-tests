@@ -40,6 +40,7 @@ Zed: update Merchant on edit page with the following data:
         IF    '${key}'=='merchant reference' and '${value}' != '${EMPTY}'    Type Text    ${zed_create_merchant_reference_field}    ${value}
         IF    '${key}'=='e-mail' and '${value}' != '${EMPTY}'    Type Text    ${zed_create_merchant_email_field}    ${value}
         IF    '${key}'=='store' and '${value}' != '${EMPTY}'    Zed: Check checkbox by Label:    ${value}
+        IF    '${key}'=='uncheck store' and '${value}' != '${EMPTY}'    Zed: Uncheck Checkbox by Label:    ${value}
         IF    '${key}'=='en url' and '${value}' != '${EMPTY}'    Type Text    ${zed_create_merchant_url_en_locale_field}    ${value}
         IF    '${key}'=='de url' and '${value}' != '${EMPTY}'    Type Text    ${zed_create_merchant_url_de_locale_field}    ${value}
     END  
@@ -84,9 +85,18 @@ Zed: update Merchant User on edit page with the following data:
 
 Zed: perform Merchant User search by:
     [Arguments]    ${search_key}
+    Wait Until Page Contains Element    ${zed_table_locator}
     Type Text    ${zed_merchant_user_search_field_locator}    ${search_key}
-    Wait Until Element Is Visible    ${zed_processing_block_locator}
-    Wait Until Element Is Not Visible    ${zed_processing_block_locator}
+    TRY
+        Wait Until Element Is Visible    ${zed_processing_block_locator}
+    EXCEPT    
+        Log    processing locator is now shown
+    END
+    TRY
+        Wait Until Element Is Not Visible    ${zed_processing_block_locator}
+    EXCEPT    
+        Log    processing locator is now shown
+    END
     Sleep    3s
 
 Zed: click Action Button in Merchant Users table for row that contains:

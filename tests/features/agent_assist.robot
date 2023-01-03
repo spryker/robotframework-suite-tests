@@ -34,7 +34,7 @@ Agent_Assist_Impersonate_As_Customer
     Yves: header contains/doesn't contain:    true    ${customerSearchWidget}
     Yves: perform search by customer:    ${yves_user_first_name}
     Yves: agent widget contains:    ${yves_user_email}
-    Yves: As an Agent login under the customer:    ${yves_user_email}
+    Yves: as an agent login under the customer:    ${yves_user_email}
     Yves: header contains/doesn't contain:    false    ${customerSearchWidget}
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: delete Zed user with the following email:    agent+${random}@spryker.com
@@ -50,7 +50,7 @@ Agent_Assist_Impersonate_As_Customer
 #     Yves: header contains/doesn't contain:    true    ${customerSearchWidget}
 #     Yves: perform search by customer:    ${yvesUserFirstName}
 #     Yves: agent widget contains:    ${yvesUserEmail}
-#     Yves: As an Agent login under the customer:    ${yvesUserEmail}
+#     Yves: as an agent login under the customer:    ${yvesUserEmail}
 #     Yves: perform search by:    EUROKRAFT trolley - with open shovel
 #     Yves: product with name in the catalog should have price:    EUROKRAFT trolley - with open shovel    €188.34
 #     Yves: go to PDP of the product with sku:    M70208
@@ -101,7 +101,7 @@ Agent_Assist_Impersonate_As_Customer
 #     Yves: header contains/doesn't contain:    true    ${customerSearchWidget}
 #     Yves: perform search by customer:    Karl
 #     Yves: agent widget contains:    karl@spryker.com
-#     Yves: As an Agent login under the customer:    karl@spryker.com
+#     Yves: as an agent login under the customer:    karl@spryker.com
 #     Yves: perform search by:    EUROKRAFT trolley - with open shovel
 #     Yves: product with name in the catalog should have price:    EUROKRAFT trolley - with open shovel    €188.34
 #     Yves: go to PDP of the product with sku:    M70208

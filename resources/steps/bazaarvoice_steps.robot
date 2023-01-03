@@ -18,13 +18,13 @@ Zed: configure bazaarvoice pbc:
         IF    '${key}'=='environment' and '${value}' != '${EMPTY}'    Click    //spy-radio-group[@id='settings_environment']//label//span[contains(text(),'${value}')]/ancestor::label
         IF    '${key}'=='services' and '${value}' != '${EMPTY}'
             Run Keywords
-                Convert string to List by separator:    ${value}
+                Conver string to List by separator:    ${value}
                 Log    ${covertedList}
                 Check bazaarvoice configuration checkbox:    ${covertedList}
         END
         IF    '${key}'=='stores' and '${value}' != '${EMPTY}'
             Run Keywords
-                Convert string to List by separator:    ${value}
+                Conver string to List by separator:    ${value}
                 Log    ${covertedList}
                 Check bazaarvoice configuration checkbox:    ${covertedList}
         END
