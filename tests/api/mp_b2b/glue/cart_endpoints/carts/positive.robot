@@ -71,9 +71,12 @@ Get_cart_by_cart_id_with_included_items
     ...  AND    I set Headers:    Authorization=${token}
     ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
     ...  AND    Save value to a variable:    [data][id]    cart_id
-    ...  AND    I send a POST request:    /carts/${cartId}/items    {"data": {"type": "items","attributes": {"sku": "${abstract_available_product_with_stock.concrete_available_product.sku}","quantity": 1}}}
-    ...  AND    I send a POST request:    /carts/${cartId}/items    {"data": {"type": "items","attributes": {"sku": "${abstract_product.product_with_options.concrete_sku}","quantity": 1}}}
-    ...  AND    I send a POST request:    /carts/${cartId}/items    {"data": {"type": "items","attributes": {"sku": "${abstract_product.product_with_original_prices.concrete_sku}","quantity": 1}}}
+    ...  AND    I send a POST request:    /carts/${cartId}/items?include=items    {"data": {"type": "items","attributes": {"sku": "${abstract_available_product_with_stock.concrete_available_product.sku}","quantity": 1}}}
+    ...  AND    Save value to a variable:    [included][0][id]    sku_1_id
+    ...  AND    I send a POST request:    /carts/${cartId}/items?include=items    {"data": {"type": "items","attributes": {"sku": "${abstract_product.product_with_options.concrete_sku}","quantity": 1}}}
+    ...  AND    Save value to a variable:    [included][1][id]    sku_2_id
+    ...  AND    I send a POST request:    /carts/${cartId}/items?include=items    {"data": {"type": "items","attributes": {"sku": "${abstract_product.product_with_original_prices.concrete_sku}","quantity": 1}}}
+    ...  AND    Save value to a variable:    [included][2][id]    sku_3_id
     When I send a GET request:    /carts/${cart_id}?include=items
     Then Response status code should be:    200
     And Response reason should be:    OK
@@ -94,14 +97,14 @@ Get_cart_by_cart_id_with_included_items
     And Response body has correct self link internal
     And Response should contain the array of a certain size:    [data][relationships][items][data]    3
     And Each array element of array in response should contain property with value:    [data][relationships][items][data]    type    items
-    And Response body parameter should be:    [data][relationships][items][data][0][id]    ${abstract_available_product_with_stock.concrete_available_product.sku}
-    And Response body parameter should be:    [data][relationships][items][data][1][id]    ${abstract_product.product_with_options.concrete_sku}
-    And Response body parameter should be:    [data][relationships][items][data][2][id]    ${abstract_product.product_with_original_prices.concrete_sku}
+    And Response body parameter should be:    [data][relationships][items][data][0][id]    ${sku_1_id}
+    And Response body parameter should be:    [data][relationships][items][data][1][id]    ${sku_2_id}
+    And Response body parameter should be:    [data][relationships][items][data][2][id]    ${sku_3_id}
     And Response should contain the array of a certain size:    [included]    3
     And Each array element of array in response should contain property with value:    [included]    type    items
-    And Response body parameter should be:    [included][0][id]    ${abstract_available_product_with_stock.concrete_available_product.sku}
-    And Response body parameter should be:    [included][1][id]    ${abstract_product.product_with_options.concrete_sku}
-    And Response body parameter should be:    [included][2][id]    ${abstract_product.product_with_original_prices.concrete_sku}
+    And Response body parameter should be:    [included][0][id]    ${sku_1_id}
+    And Response body parameter should be:    [included][1][id]    ${sku_2_id}
+    And Response body parameter should be:    [included][2][id]    ${sku_3_id}
     And Each array element of array in response should contain property:    [included]    attributes
     And Each array element of array in response should contain property:    [included]    links
     And Response body parameter should be:    [included][0][attributes][sku]    ${abstract_available_product_with_stock.concrete_available_product.sku}
@@ -143,9 +146,12 @@ Get_cart_by_cart_id_with_2_product_discounts
     ...  AND    I set Headers:    Authorization=${token}
     ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
     ...  AND    Save value to a variable:    [data][id]    cart_id
-    ...  AND    I send a POST request:    /carts/${cartId}/items    {"data": {"type": "items","attributes": {"sku": "${discount_concrete_product.product_1.sku}","quantity": 1}}}
-    ...  AND    I send a POST request:    /carts/${cartId}/items    {"data": {"type": "items","attributes": {"sku": "${discount_concrete_product.product_2.sku}","quantity": 1}}}
-    ...  AND    I send a POST request:    /carts/${cartId}/items    {"data": {"type": "items","attributes": {"sku": "${discount_concrete_product.product_3.sku}","quantity": 1}}}
+    ...  AND    I send a POST request:    /carts/${cartId}/items?include=items    {"data": {"type": "items","attributes": {"sku": "${discount_concrete_product.product_1.sku}","quantity": 1}}}
+    ...  AND    Save value to a variable:    [included][0][id]    sku_1_id
+    ...  AND    I send a POST request:    /carts/${cartId}/items?include=items    {"data": {"type": "items","attributes": {"sku": "${discount_concrete_product.product_2.sku}","quantity": 1}}}
+    ...  AND    Save value to a variable:    [included][1][id]    sku_2_id
+    ...  AND    I send a POST request:    /carts/${cartId}/items?include=items    {"data": {"type": "items","attributes": {"sku": "${discount_concrete_product.product_3.sku}","quantity": 1}}}
+    ...  AND    Save value to a variable:    [included][2][id]    sku_3_id
     When I send a GET request:    /carts/${cart_id}?include=items
     Then Response status code should be:    200
     And Response reason should be:    OK
@@ -174,14 +180,14 @@ Get_cart_by_cart_id_with_2_product_discounts
     #items
     And Response should contain the array of a certain size:    [data][relationships][items][data]    3
     And Each array element of array in response should contain property with value:    [data][relationships][items][data]    type    items
-    And Response body parameter should be:    [data][relationships][items][data][0][id]    ${discount_concrete_product.product_1.sku}
-    And Response body parameter should be:    [data][relationships][items][data][1][id]    ${discount_concrete_product.product_2.sku}
-    And Response body parameter should be:    [data][relationships][items][data][2][id]    ${discount_concrete_product.product_3.sku}
+    And Response body parameter should be:    [data][relationships][items][data][0][id]    ${sku_1_id}
+    And Response body parameter should be:    [data][relationships][items][data][1][id]    ${sku_2_id}
+    And Response body parameter should be:    [data][relationships][items][data][2][id]    ${sku_3_id}
     #included
     And Response should contain the array of a certain size:    [included]    3
     And Each array element of array in response should contain property with value:    [included]    type    items
     #item 1
-    And Response body parameter should be:    [included][0][id]    ${discount_concrete_product.product_1.sku}
+    And Response body parameter should be:    [included][0][id]    ${sku_1_id}
     And Response body parameter should be:    [included][0][attributes][sku]    ${discount_concrete_product.product_1.sku}
     And Response body parameter should be:    [included][0][attributes][quantity]    1
     And Response body parameter should be:    [included][0][attributes][calculations][unitDiscountAmountAggregation]    ${discount_concrete_product.product_1.discount_amount_total_sum_of_discounts}
@@ -189,7 +195,7 @@ Get_cart_by_cart_id_with_2_product_discounts
     And Response body parameter should be:    [included][0][attributes][calculations][unitDiscountAmountFullAggregation]    ${discount_concrete_product.product_1.discount_amount_total_sum_of_discounts}
     And Response body parameter should be:    [included][0][attributes][calculations][sumDiscountAmountFullAggregation]    ${discount_concrete_product.product_1.discount_amount_total_sum_of_discounts}
     #item 2
-    And Response body parameter should be:    [included][1][id]    ${discount_concrete_product.product_2.sku}
+    And Response body parameter should be:    [included][1][id]    ${sku_2_id}
     And Response body parameter should be:    [included][1][attributes][sku]    ${discount_concrete_product.product_2.sku}
     And Response body parameter should be:    [included][1][attributes][quantity]    1
     And Response body parameter should be:    [included][1][attributes][calculations][unitDiscountAmountAggregation]    ${discount_concrete_product.product_2.discount_amount_total_sum_of_discounts}
@@ -197,7 +203,7 @@ Get_cart_by_cart_id_with_2_product_discounts
     And Response body parameter should be:    [included][1][attributes][calculations][unitDiscountAmountFullAggregation]    ${discount_concrete_product.product_2.discount_amount_total_sum_of_discounts}
     And Response body parameter should be:    [included][1][attributes][calculations][sumDiscountAmountFullAggregation]    ${discount_concrete_product.product_2.discount_amount_total_sum_of_discounts}
     #item 3
-    And Response body parameter should be:    [included][2][id]    ${discount_concrete_product.product_3.sku}
+    And Response body parameter should be:    [included][2][id]    ${sku_3_id}
     And Response body parameter should be:    [included][2][attributes][sku]    ${discount_concrete_product.product_3.sku}
     And Response body parameter should be:    [included][2][attributes][quantity]    1
     And Response body parameter should be:    [included][2][attributes][calculations][unitDiscountAmountAggregation]    ${discount_concrete_product.product_3.discount_amount_with_10_percentage_off_minimum_order}

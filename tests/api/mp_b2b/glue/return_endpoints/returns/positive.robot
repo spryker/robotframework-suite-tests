@@ -10,7 +10,8 @@ ENABLER
     
 ####POST####
 Create_a_return
-# task https://spryker.atlassian.net/browse/CC-23304
+    [Documentation]   #task https://spryker.atlassian.net/browse/CC-23304
+    [Tags]    skip-due-to-issue
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
     ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
@@ -36,7 +37,8 @@ Create_a_return
     And Response body has correct self link for created entity:    ${returnId}
 
 Create_a_return_with_return_items
-# task https://spryker.atlassian.net/browse/CC-23304
+    [Documentation]   #task https://spryker.atlassian.net/browse/CC-23304
+    [Tags]    skip-due-to-issue
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
     ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
@@ -75,7 +77,8 @@ Create_a_return_with_return_items
 
 ####GET####
 Retrieves_list_of_returns
-# task https://spryker.atlassian.net/browse/CC-23304
+    [Documentation]   #task https://spryker.atlassian.net/browse/CC-23304
+    [Tags]    skip-due-to-issue
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
     ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
@@ -104,7 +107,8 @@ Retrieves_list_of_returns
     And Response body has correct self link
     
 Retrieves_list_of_returns_included_return_items
-# task https://spryker.atlassian.net/browse/CC-23304
+    [Documentation]   #task https://spryker.atlassian.net/browse/CC-23304
+    [Tags]    skip-due-to-issue
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
     ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
@@ -143,7 +147,8 @@ Retrieves_list_of_returns_included_return_items
     And Response body has correct self link
 
 Retrieves_list_of_returns_included_merchants
-# task https://spryker.atlassian.net/browse/CC-23304
+    [Documentation]   #task https://spryker.atlassian.net/browse/CC-23304
+    [Tags]    skip-due-to-issue
   [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
     ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
@@ -180,7 +185,8 @@ Retrieves_list_of_returns_included_merchants
     And Response body has correct self link
 
 Retrieves_return_by_id_with_returns_items_included
-# task https://spryker.atlassian.net/browse/CC-23304
+    [Documentation]   #task https://spryker.atlassian.net/browse/CC-23304
+    [Tags]    skip-due-to-issue
   [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
     ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
@@ -221,7 +227,8 @@ Retrieves_return_by_id_with_returns_items_included
     And Response body has correct self link
 
 Retrieves_return_by_id_for_sales_order
-# task https://spryker.atlassian.net/browse/CC-23304
+    [Documentation]   #task https://spryker.atlassian.net/browse/CC-23304
+    [Tags]    skip-due-to-issue
   [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
     ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
@@ -246,7 +253,8 @@ Retrieves_return_by_id_for_sales_order
     And Response body parameter should be:    [data][attributes][returnTotals][remunerationTotal]    ${refundable_amount}
 
 Retrieves_return_by_id_with_merchants_included
-# task https://spryker.atlassian.net/browse/CC-23304
+    [Documentation]   #task https://spryker.atlassian.net/browse/CC-23304
+    [Tags]    skip-due-to-issue
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
     ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}

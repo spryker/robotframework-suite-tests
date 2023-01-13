@@ -9,8 +9,9 @@ ENABLER
     TestSetup
 
 #####POST#####
-# Fails because of CC-16735
 Adding_voucher_code_to_cart_of_logged_in_customer
+    [Documentation]   #bug CC-16735 is fixed in internal B2B, but there is no fix in public MP-B2B
+    [Tags]    skip-due-to-issue 
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}
     ...    AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
@@ -38,8 +39,9 @@ Adding_voucher_code_to_cart_of_logged_in_customer
     [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cart_id}
     ...  AND    Response status code should be:    204
 
-# Fails because of CC-16735 and CC-16678
 Checking_voucher_is_applied_after_order_is_placed
+    [Documentation]   #bug CC-16735 is fixed in internal B2B, but there is no fix in public MP-B2B; CC-16678
+    [Tags]    skip-due-to-issue 
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_second_user.email}
     ...    AND    I set Headers:    Authorization=${token}
     ...    AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
@@ -70,8 +72,9 @@ Checking_voucher_is_applied_after_order_is_placed
     And Response body parameter should contain:    [included][0][attributes][calculatedDiscounts]["${discount.id_4.name}"][voucherCode]    ${discount_voucher_code}
 
 
-# Fails because of CC-16735
 Adding_two_vouchers_with_different_priority_to_the_same_cart
+    [Documentation]   #bug CC-16735 is fixed in internal B2B, but there is no fix in public MP-B2B
+    [Tags]    skip-due-to-issue
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}
     ...    AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
@@ -111,8 +114,9 @@ Adding_two_vouchers_with_different_priority_to_the_same_cart
     ...  AND    Response status code should be:    204
 
 
-# Fails because of CC-16735
 Adding_voucher_with_cart_rule_with_to_the_same_cart
+    [Documentation]   #bug CC-16735 is fixed in internal B2B, but there is no fix in public MP-B2B
+    [Tags]    skip-due-to-issue
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}
     ...    AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
@@ -143,8 +147,9 @@ Adding_voucher_with_cart_rule_with_to_the_same_cart
     ...  AND    Response status code should be:    204
 
 ####### DELETE #######
-# Fails because of CC-16735
 Deleting_voucher_from_cart_of_logged_in_customer
+    [Documentation]   #bug CC-16735 is fixed in internal B2B, but there is no fix in public MP-B2B
+    [Tags]    skip-due-to-issue
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}
     ...    AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}

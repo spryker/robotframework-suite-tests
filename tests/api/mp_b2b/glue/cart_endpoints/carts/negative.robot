@@ -152,7 +152,7 @@ Create_cart_with_invalid_priceMod_and_currency
     When I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "GROSS","currency": "EU","store": "${store.de}","name": "${test_cart_name}"}}}
     Then Response status code should be:    422
     And Response reason should be:    Unprocessable Content
-    And Each array element of array in response should contain property with value:    [errors]    status    422
+    And Each array element of array in response should contain property with value:    [errors]    status    ${422}
     And Response body parameter should be:    [errors][0][code]    117
     And Response body parameter should be:    [errors][0][detail]    Currency is incorrect.
     And Response body parameter should be:    [errors][1][code]    119
@@ -167,7 +167,7 @@ Create_cart_with_empty_attributes
     Then Response status code should be:    422
     And Response reason should be:    Unprocessable Content
     And Each array element of array in response should contain property with value:    [errors]    code    901
-    And Each array element of array in response should contain property with value:    [errors]    status    422
+    And Each array element of array in response should contain property with value:    [errors]    status    ${422}
     And Array in response should contain property with value:    [errors]    detail    priceMode => This value should not be blank.
     And Array in response should contain property with value:    [errors]    detail    currency => This value should not be blank.
     And Array in response should contain property with value:    [errors]    detail    store => This value should not be blank.
@@ -180,7 +180,7 @@ Create_cart_without_attributes
     Then Response status code should be:    422
     And Response reason should be:    Unprocessable Content
     And Each array element of array in response should contain property with value:    [errors]    code    901
-    And Each array element of array in response should contain property with value:    [errors]    status    422
+    And Each array element of array in response should contain property with value:    [errors]    status    ${422}
     And Array in response should contain property with value:    [errors]    detail    priceMode => This field is missing.
     And Array in response should contain property with value:    [errors]    detail    currency => This field is missing.
     And Array in response should contain property with value:    [errors]    detail    store => This field is missing.
@@ -342,7 +342,7 @@ Update_cart_with_invalid_priceMod_currency_store
     When I send a PATCH request:    /carts/${cart_id}    {"data": {"type": "carts","attributes": {"priceMode": "GROSS","currency": "EU","store": "DEK"}}}
     Then Response status code should be:    422
     And Response reason should be:    Unprocessable Content
-    And Each array element of array in response should contain property with value:    [errors]    status    422
+    And Each array element of array in response should contain property with value:    [errors]    status    ${422}
     And Response body parameter should be:    [errors][0][code]    117
     And Response body parameter should be:    [errors][0][detail]    Currency is incorrect.
     And Response body parameter should be:    [errors][1][code]    119
