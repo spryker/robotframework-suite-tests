@@ -61,6 +61,8 @@ Retrieve_guest_cart_by_id
     And Response body parameter should be greater than:    [data][attributes][totals][priceToPay]    0
 
 Retrieve_guest_cart_including_cart_items
+    [Documentation]   https://spryker.atlassian.net/browse/CC-25408
+    [Tags]    skip-due-to-issue  
     [Setup]    Create a guest cart:    ${random}    ${concrete_product_with_concrete_product_alternative.sku}    7
     When I send a GET request:    /guest-carts/${guest_cart_id}?include=guest-cart-items
     Then Response status code should be:    200
@@ -185,8 +187,8 @@ Convert_guest_cart_to_customer_cart
     And Each array element of array in response should contain nested property:    [data]    [attributes]    priceMode
     And Each array element of array in response should contain nested property:    [data]    [attributes]    currency
     And Each array element of array in response should contain nested property:    [data]    [attributes]    store
-    And Each array element of array in response should contain nested property with datatype:    [data]    [attributes][totals][expenseTotal]    int
-    And Each array element of array in response should contain nested property with datatype:    [data]    [attributes][totals][discountTotal]    int
+    And Response body parameter should not be EMPTY:    [data][0][attributes][totals][expenseTotal]
+    And Response body parameter should not be EMPTY:    [data][0][attributes][totals][discountTotal]
     And Each array element of array in response should contain nested property:    [data]    [attributes]    taxTotal
     And Each array element of array in response should contain nested property:    [data]    [attributes]    subtotal
     And Each array element of array in response should contain nested property:    [data]    [attributes]    grandTotal

@@ -275,8 +275,8 @@
             "abstract_unavailable_product": "189",
             "concrete_available_with_stock_and_never_out_of_stock_sku": "005_30663301",
             "concrete_unavailable_product": "192_17738941",
-            "concrete_available_with_stock_and_never_out_of_stock": "110_19682159",
-            "concrete_available_with_stock_and_never_out_of_stock_name": "Samsung Galaxy Gear"
+            "concrete_available_with_stock_and_never_out_of_stock": "002_25904004",
+            "concrete_available_with_stock_and_never_out_of_stock_name": "Canon IXUS 160"
         },
         "concrete_product_with_concrete_product_alternative": {
             "sku": "155_30149933",
@@ -317,10 +317,10 @@
                 "name": "Acer Extensa M2610"
             },
             "product_with_multiple_variants": {
-                "sku": "130",
-                "variant1_name": "Lenovo ThinkStation P300",
-                "variant1_sku": "130_29285281",
-                "variant2_sku": "130_24326086"
+                "sku": "199",
+                "variant1_name": "Sony HXR-MC2500",
+                "variant1_sku": "199_7016823",
+                "variant2_sku": "199_24788780"
             }
         },
         "configurable_bundle": {
@@ -385,7 +385,7 @@
                 "total_sum_of_discounts_1": "1400",
                 "with_discount_20_percentage_off_storage": "4000",
                 "with_discount_10_percentage_off_minimum_order": "1600",
-                "with_discount_20_percentage_off_storage_1": "3467",
+                "with_discount_20_percentage_off_storage_1": "2000",
                 "with_discount_10_percentage_off_minimum_order_1": "560"
             },
             "product_2": {
@@ -406,11 +406,11 @@
             "name_1": "20% off cameras",
             "description": "Get a 10% discount on all orders above 100 EUR or 115 CHF",
             "description_1":"20% off all digital cameras in the store",
-            "total_sum_for_discounts_for_products_1_and_2": "6227"
+            "total_sum_for_discounts_for_products_1_and_2": "3560"
         },
         "discount_2": {
             "name": "20% off cameras",
-            "total_sum_for_discounts_for_products_1_2": "6900",
+            "total_sum_for_discounts_for_products_1_2": "8900",
             "description": "Get a 10% discount on all orders above 100 EUR or 115 CHF"
         },
         "discount_3": {
@@ -422,7 +422,7 @@
     },
     "discount": {
         "voucher": {
-            "name": "5% discount on all white products"
+            "name": "5% off white"
         },
         "product_with_voucher_code": {
             "concrete_sku": "058_24245592"

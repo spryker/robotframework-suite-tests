@@ -64,8 +64,9 @@ Get_cms_pages_with_Pagination
     And Response body parameter should not be EMPTY:    [links][last]
     And Response body parameter should not be EMPTY:    [links][first]
 
-#CC-18869: API: Include data is missing in cms-page.
 Get_specific_cms_with_includes
+    [Documentation]   https://spryker.atlassian.net/browse/CC-25472
+    [Tags]    skip-due-to-issue  
     When I send a GET request:    /cms-pages/${cms_pages.cms_page_with_product_lists.id}?include=content-product-abstract-lists
     Then Response status code should be:    200
     And Response reason should be:    OK

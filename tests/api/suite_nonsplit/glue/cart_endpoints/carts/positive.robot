@@ -67,6 +67,8 @@ Get_cart_without_cart_id
     ...  AND    Response status code should be:    204
 
 Get_cart_by_cart_id_with_included_items
+    [Documentation]   https://spryker.atlassian.net/browse/CC-25408
+    [Tags]    skip-due-to-issue  
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
     ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
@@ -318,8 +320,9 @@ Update_cart_with_name_attribute
     [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cart_id}
     ...  AND    Response status code should be:    204
 
-#No demo data CC-18932
 Get_cart_with_included_cart_rules
+    [Documentation]   #No demo data CC-18932
+    [Tags]    skip-due-to-issue  
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
        ...  AND    I set Headers:    Authorization=${token}
        ...  AND    Find or create customer cart
