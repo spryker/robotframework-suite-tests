@@ -30,6 +30,7 @@ Add_a_concrete_product_to_the_shopping_list_with_wrong_access_token
     ...    AND    I send a DELETE request:    /shopping-lists/${shoppingListId}
     ...    AND    Response status code should be:    204
     ...    AND    Response reason should be:    No Content
+
 Add_a_product_to_the_non_existing_shopping_list
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}  
@@ -460,7 +461,7 @@ Remove_a_concrete_product_from_the_shared_shopping_list_without_write_access_per
     ...    AND    Response status code should be:    204
     ...    AND    Response reason should be:    No Content
 
-Add_a_regular_product_to_the_shopping_list_with_configuration
+Add_a_non-configurable_product_to_the_shopping_list_with_configuration
     [Documentation]   https://spryker.atlassian.net/browse/CC-23115
     [Tags]    skip-due-to-issue  
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
@@ -477,17 +478,31 @@ Add_a_regular_product_to_the_shopping_list_with_configuration
    ...    AND    Response status code should be:    204
    ...    AND    Response reason should be:    No Content
 
-Add_a_configurable_product_missed_data_for_quantity_to_the_shopping_list    
+Add_a_non-configurable_product_to_the_shopping_list_with_configuration_and_configurable_product
+    [Documentation]   https://spryker.atlassian.net/browse/CC-23115
+    [Tags]    skip-due-to-issue  
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     ...    AND    I send a POST request:    /shopping-lists    {"data":{"type":"shopping-lists","attributes":{"name":"${shopping_list_name}${random}"}}}
     ...    AND    Response status code should be:    201
     ...    AND    Save value to a variable:    [data][id]    shoppingListId
-    I send a POST request:    /shopping-lists/${shoppingListId}/shopping-list-items    {"data":{"type":"shopping-list-items","attributes":{"sku":"${configurable_product.sku}","productConfigurationInstance":{"displayData":'{"Preferred time of the day":"Morning","Date":"01.01.01"}',"configuration":'{"time_of_day":"4"}',"configuratorKey":"DATE_TIME_CONFIGURATOR","isComplete":True,"quantity":3,"availableQuantity":4,"prices":[{"priceTypeName":"DEFAULT","netAmount":23434,"grossAmount":42502,"currency":{"code":"EUR","name":"Euro","symbol":"€"},"volumePrices":[{"netAmount":150,"grossAmount":165,"quantity":5},{"netAmount":145,"grossAmount":158,"quantity":10},{"netAmount":140,"grossAmount":152,"quantity":20}]}]}}}}
-    And Response status code should be:    422
+    I send a POST request:    /shopping-lists/${shoppingListId}/shopping-list-items    {"data":{"type":"shopping-list-items","attributes":{"sku":"${concrete_available_product.sku}","quantity":3,"productConfigurationInstance":{"displayData":'{"Preferred time of the day":"Morning","Date":"01.01.01"}',"configuration":'{"time_of_day":"4"}',"configuratorKey":"DATE_TIME_CONFIGURATOR","isComplete":True,"quantity":3,"availableQuantity":4,"prices":[{"priceTypeName":"DEFAULT","netAmount":23434,"grossAmount":42502,"currency":{"code":"EUR","name":"Euro","symbol":"€"},"volumePrices":[{"netAmount":150,"grossAmount":165,"quantity":5},{"netAmount":145,"grossAmount":158,"quantity":10},{"netAmount":140,"grossAmount":152,"quantity":20}]}]}}}}
+    And Response header parameter should be:    Content-Type    ${default_header_content_type}
+    And Response status code should be:    201
     And Response should return error code:    901
     And Response reason should be:    Unprocessable Content
-    And Array in response should contain property with value:    [errors]    detail    quantity => This value should be greater than 0.
+    I send a POST request:    /shopping-lists/${shoppingListId}/shopping-list-items    {"data":{"type":"shopping-list-items","attributes":{"sku":"${configurable_product.sku}","quantity":1,"productConfigurationInstance":{"displayData":'{"Preferred time of the day":"Afternoon","Date":"11.11.2040"}',"configuration":'{"time_of_day":"4"}',"configuratorKey":"${productConfigurationInstance.configuratorKey}","isComplete":False,"quantity":2,"availableQuantity":4,"prices":[{"priceTypeName":"DEFAULT","netAmount":23434,"grossAmount":42502,"currency":{"code":"EUR","name":"Euro","symbol":"€"},"volumePrices":[{"netAmount":150,"grossAmount":165,"quantity":5},{"netAmount":145,"grossAmount":158,"quantity":10},{"netAmount":140,"grossAmount":152,"quantity":20}]}]}}}}
+    And Response status code should be:    201
+    And Save value to a variable:    [data][id]    shoppingListItemId2
+    And Response body parameter should be:    [data][attributes][quantity]    1
+    And I send a GET request:    /shopping-lists/${shoppingListId}?include=shopping-list-items,concrete-products
+    And Response status code should be:    200
+    And Response body parameter should be:   [included][1][id]    ${shoppingListItemId2}
+    And Response body parameter should be:   [included][1][attributes][quantity]    1
+    And Response body parameter should be:   [included][1][attributes][sku]    ${configurable_product.sku}
+    And Response body parameter should be:    [included][1][attributes][productConfigurationInstance][displayData]    {\"Preferred time of the day\":\"Afternoon\",\"Date\":\"11.11.2040\"}
+    And Response body parameter should be:    [included][1][attributes][productConfigurationInstance][isComplete]    False
+    And Response include element has self link:   shopping-list-items
     [Teardown]    Run Keywords    I send a DELETE request:    /shopping-lists/${shoppingListId}
     ...    AND    Response status code should be:    204
     ...    AND    Response reason should be:    No Content
@@ -552,7 +567,7 @@ Add_a_configurable_product_with_missing_quantity_to_the_shopping_list
     ...    AND    Response status code should be:    204
     ...    AND    Response reason should be:    No Content
 
-Add_aconfigurable_product_with_empty_quantity_value_of_to_the_shopping_list  
+Add_a_configurable_product_with_empty_quantity_value_of_to_the_shopping_list  
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}  
     ...    AND    I send a POST request:    /shopping-lists    {"data":{"type":"shopping-lists","attributes":{"name":"${shopping_list_name}${random}"}}}
@@ -563,6 +578,11 @@ Add_aconfigurable_product_with_empty_quantity_value_of_to_the_shopping_list
     And Response should return error code:    901
     And Response reason should be:    Unprocessable Content
     And Response should return error message:    quantity => This value should not be blank.
+    And I send a GET request:    /shopping-lists/${shoppingListId}?include=shopping-list-items,concrete-products
+    And Response status code should be:    200
+    And Response body parameter should be:  [data][type]    shopping-lists
+    And Response body parameter should be:  [data][id]    ${shoppingListId}
+    And Response body parameter should be:    [data][attributes][numberOfItems]    0
     [Teardown]    Run Keywords    I send a DELETE request:    /shopping-lists/${shoppingListId}
     ...    AND    Response status code should be:    204
     ...    AND    Response reason should be:    No Content    
