@@ -14,7 +14,6 @@ Get_concrete_product_without_offers
     And Response reason should be:    OK
     And Response should contain the array of a certain size:    [data]    0
 
-# Due to the https://spryker.atlassian.net/browse/CC-17140 there is no product-offer-availabilities include displayed
 Get_all_concrete_product_offer_info_with_product_offer_prices_and_product_offer_availabilities_and_merchants_included
     When I send a GET request:    /concrete-products/${abstract_product.product_with_volume_prices.concrete_sku}/product-offers?include=product-offer-prices,product-offer-availabilities,merchants
     Then Response status code should be:    200
@@ -26,8 +25,8 @@ Get_all_concrete_product_offer_info_with_product_offer_prices_and_product_offer_
     And Response body parameter should be:    [data][0][attributes][merchantReference]    ${merchants.merchant_office_king_id}
     And Response body parameter should not be EMPTY:    [data][0][links][self]
     And Response body parameter should contain:    [data][0][attributes]    merchantSku
-    And Response should contain the array of a certain size:    [included]    4
-    And Response should contain the array of a certain size:    [data][0][relationships]    2
+    And Response should contain the array of a certain size:    [included]    6
+    And Response should contain the array of a certain size:    [data][0][relationships]    3
     And Response include should contain certain entity type:    product-offer-prices
     And Response include should contain certain entity type:    product-offer-availabilities
     And Response include should contain certain entity type:    merchants
@@ -36,7 +35,6 @@ Get_all_concrete_product_offer_info_with_product_offer_prices_and_product_offer_
     And Response include element has self link:    merchants
     And Response body has correct self link
 
-# Due to the https://spryker.atlassian.net/browse/CC-17140 there is no product-offer-availabilities include displayed
 Get_all_product_offer_info_with_product_offer_prices_and_product_offer_availabilities_and_merchants_included
     When I send a GET request:    /product-offers/${active_offer}?include=product-offer-prices,product-offer-availabilities,merchants
     Then Response status code should be:    200
@@ -48,8 +46,8 @@ Get_all_product_offer_info_with_product_offer_prices_and_product_offer_availabil
     And Response body parameter should be:    [data][attributes][merchantReference]    ${merchants.merchant_budget_stationery_id}
     And Response body parameter should not be EMPTY:    [data][links][self]
     And Response body parameter should be greater than:    [data][attributes][merchantSku]    1
-    And Response should contain the array of a certain size:    [included]    2
-    And Response should contain the array of a certain size:    [data][relationships]    2
+    And Response should contain the array of a certain size:    [included]    3
+    And Response should contain the array of a certain size:    [data][relationships]    3
     And Response include should contain certain entity type:    product-offer-prices
     And Response include should contain certain entity type:    product-offer-availabilities
     And Response include should contain certain entity type:    merchants

@@ -128,7 +128,7 @@ Create_order_with_empty_customer_attributes_and_cart_id
     Then Response status code should be:    422
     And Response reason should be:    Unprocessable Content
     And Each array element of array in response should contain property with value:    [errors]    code    901
-    And Each array element of array in response should contain property with value:    [errors]    status    422
+    And Each array element of array in response should contain property with value:    [errors]    status    ${422}
     And Array in response should contain property with value:    [errors]    detail    idCart => This value should not be blank.
     And Array in response should contain property with value:    [errors]    detail    customer.salutation => This value should not be blank.
     And Array in response should contain property with value:    [errors]    detail    customer.email => Email is invalid.
@@ -140,7 +140,7 @@ Create_order_without_customer_attributes_and_cart_id
     Then Response status code should be:    422
     And Response reason should be:    Unprocessable Content
     And Each array element of array in response should contain property with value:    [errors]    code    901
-    And Each array element of array in response should contain property with value:    [errors]    status    422
+    And Each array element of array in response should contain property with value:    [errors]    status    ${422}
     And Array in response should contain property with value:    [errors]    detail    idCart => This field is missing.
     And Array in response should contain property with value:    [errors]    detail    customer.salutation => This field is missing.
     And Array in response should contain property with value:    [errors]    detail    customer.email => This field is missing.
@@ -169,7 +169,7 @@ Create_order_with_empty_billing_address_data
     Then Response status code should be:    422
     And Response reason should be:    Unprocessable Content
     And Each array element of array in response should contain property with value:    [errors]    code    901
-    And Each array element of array in response should contain property with value:    [errors]    status    422
+    And Each array element of array in response should contain property with value:    [errors]    status    ${422}
     And Array in response should contain property with value:    [errors]    detail    billingAddress.salutation => This value should not be blank.
     And Array in response should contain property with value:    [errors]    detail    billingAddress.firstName => This value should not be blank.
     And Array in response should contain property with value:    [errors]    detail    billingAddress.lastName => This value should not be blank.
@@ -192,7 +192,7 @@ Create_order_without_billing_address_data
     Then Response status code should be:    422
     And Response reason should be:    Unprocessable Content
     And Each array element of array in response should contain property with value:    [errors]    code    901
-    And Each array element of array in response should contain property with value:    [errors]    status    422
+    And Each array element of array in response should contain property with value:    [errors]    status    ${422}
     And Array in response should contain property with value:    [errors]    detail    billingAddress.salutation => This field is missing.
     And Array in response should contain property with value:    [errors]    detail    billingAddress.firstName => This field is missing.
     And Array in response should contain property with value:    [errors]    detail    billingAddress.lastName => This field is missing.
@@ -228,7 +228,7 @@ Create_order_with_empty_shipping_address_data
     Then Response status code should be:    422
     And Response reason should be:    Unprocessable Content
     And Each array element of array in response should contain property with value:    [errors]    code    901
-    And Each array element of array in response should contain property with value:    [errors]    status    422
+    And Each array element of array in response should contain property with value:    [errors]    status    ${422}
     And Array in response should contain property with value:    [errors]    detail    shippingAddress.salutation => This value should not be blank.
     And Array in response should contain property with value:    [errors]    detail    shippingAddress.firstName => This value should not be blank.
     And Array in response should contain property with value:    [errors]    detail    shippingAddress.lastName => This value should not be blank.
@@ -251,7 +251,7 @@ Create_order_without_shipping_address_data
     Then Response status code should be:    422
     And Response reason should be:    Unprocessable Content
     And Each array element of array in response should contain property with value:    [errors]    code    901
-    And Each array element of array in response should contain property with value:    [errors]    status    422
+    And Each array element of array in response should contain property with value:    [errors]    status    ${422}
     And Array in response should contain property with value:    [errors]    detail    shippingAddress.salutation => This field is missing.
     And Array in response should contain property with value:    [errors]    detail    shippingAddress.firstName => This field is missing.
     And Array in response should contain property with value:    [errors]    detail    shippingAddress.lastName => This field is missing.
@@ -303,7 +303,7 @@ Create_order_without_payments
     Then Response status code should be:    422
     And Response reason should be:    Unprocessable Content
     And Each array element of array in response should contain property with value:    [errors]    code    901
-    And Each array element of array in response should contain property with value:    [errors]    status    422
+    And Each array element of array in response should contain property with value:    [errors]    status    ${422}
     And Array in response should contain property with value:    [errors]    detail    payments.0.paymentMethodName => This field is missing.
     And Array in response should contain property with value:    [errors]    detail    payments.0.paymentProviderName => This field is missing.
     [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cart_id}
@@ -387,7 +387,7 @@ Create_order_with_split_shipments_&_invalid_delivery_date
     Then Response status code should be:    422
     And Response reason should be:    Unprocessable Content
     And Each array element of array in response should contain property with value:    [errors]    code    901
-    And Each array element of array in response should contain property with value:    [errors]    status    422
+    And Each array element of array in response should contain property with value:    [errors]    status    ${422}
     And Array in response should contain property with value:    [errors]    detail    shipments.0.requestedDeliveryDate => This value is not a valid date.
     And Array in response should contain property with value:    [errors]    detail    shipments.1.requestedDeliveryDate => This value is not a valid date.
     [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cart_id}

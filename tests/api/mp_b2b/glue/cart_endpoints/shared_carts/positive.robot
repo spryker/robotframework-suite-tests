@@ -121,11 +121,12 @@ Add_an_item_to_the_shared_shopping_cart_by_user_with_access
     ...    AND    Response status code should be:    201
     ...    AND    I get access token for the customer:    ${yves_shared_shopping_cart_user.email}
     ...    AND    I set Headers:    Authorization=${token}
-    When I send a POST request:    /carts/${cartId}/items?include=items    {"data":{"type":"items","attributes":{"sku":"${abstract_available_product_with_stock.concrete_available_product.sku}","quantity":1}}}
+    ...    AND    I send a POST request:    /carts/${cartId}/items?include=items    {"data":{"type":"items","attributes":{"sku":"${abstract_available_product_with_stock.concrete_available_product.sku}","quantity":1}}}
+    ...    AND    Save value to a variable:    [included][0][id]    sku_id
     Then Response status code should be:    201
     And Response body parameter should be:    [data][id]    ${cartId}
     And Response body parameter should be:    [data][type]    carts
-    And Response body parameter should be:    [included][0][id]    ${abstract_available_product_with_stock.concrete_available_product.sku}
+    And Response body parameter should be:    [included][0][id]    ${sku_id}
     And Response body parameter should be:    [included][0][attributes][quantity]    1
     And Response body parameter should be greater than:    [included][0][attributes][calculations][sumPriceToPayAggregation]    0
     [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cartId}

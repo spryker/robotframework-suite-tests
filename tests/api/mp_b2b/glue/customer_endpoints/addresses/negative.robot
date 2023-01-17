@@ -16,7 +16,7 @@ Create_customer_address_with_missing_required_fields
     Then Response status code should be:    422
     And Response reason should be:    Unprocessable Content
     And Each array element of array in response should contain property with value:    [errors]    code    901
-    And Each array element of array in response should contain property with value:    [errors]    status    422
+    And Each array element of array in response should contain property with value:    [errors]    status    ${422}
     And Array in response should contain property with value:    [errors]    detail    salutation => This field is missing.
     And Array in response should contain property with value:    [errors]    detail    firstName => This field is missing.
     And Array in response should contain property with value:    [errors]    detail    lastName => This field is missing.
@@ -35,7 +35,7 @@ Create_customer_address_with_empty_fields
     Then Response status code should be:    422
     And Response reason should be:    Unprocessable Content
     And Each array element of array in response should contain property with value:    [errors]    code    901
-    And Each array element of array in response should contain property with value:    [errors]    status    422
+    And Each array element of array in response should contain property with value:    [errors]    status    ${422}
     And Array in response should contain property with value:    [errors]    detail    salutation => This value should not be blank.
     And Array in response should contain property with value:    [errors]    detail    firstName => This value should not be blank.
     And Array in response should contain property with value:    [errors]    detail    lastName => This value should not be blank.
@@ -249,7 +249,7 @@ Patch_customer_address_with_empty_required_fields
     Then Response status code should be:    422
     And Response reason should be:    Unprocessable Content
     And Each array element of array in response should contain property with value:    [errors]    code    901
-    And Each array element of array in response should contain property with value:    [errors]    status    422
+    And Each array element of array in response should contain property with value:    [errors]    status    ${422}
     And Array in response should contain property with value:    [errors]    detail    salutation => This value should not be blank.
     And Array in response should contain property with value:    [errors]    detail    firstName => This value should not be blank.
     And Array in response should contain property with value:    [errors]    detail    lastName => This value should not be blank.

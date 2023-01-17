@@ -8,8 +8,9 @@ Default Tags    glue
 ENABLER
     TestSetup
 
-# not implemented feature - https://spryker.aha.io/features/REVIEW-2
 Get_a_review_with_non_existent_review_id
+    [Documentation]   # not implemented feature - https://spryker.aha.io/features/REVIEW-2
+    [Tags]    skip-due-to-issue
     When I send a GET request:    /abstract-products/${abstract_product.product_with_reviews.sku}/product-reviews/fake
     Then Response status code should be:    404
     And Response reason should be:    Not Found
@@ -30,16 +31,18 @@ Get_reviews_with_missing_abstract_product
     And Response should return error code:    311
     And Response should return error message:    Abstract product sku is not specified.
 
-# not implemented feature - https://spryker.aha.io/features/REVIEW-2
 Get_review_by_id_with_missing_abstract_product
+    [Documentation]   # not implemented feature - https://spryker.aha.io/features/REVIEW-2
+    [Tags]    skip-due-to-issue
     When I send a GET request:    /abstract-products//product-reviews/78
     Then Response status code should be:    400
     And Response reason should be:    Bad Request
     And Response should return error code:    311
     And Response should return error message:    Abstract product sku is not specified.
 
-# not implemented feature - https://spryker.aha.io/features/REVIEW-2
 Get_a_reviews_with_non_existent_abstract_product
+    [Documentation]   # not implemented feature - https://spryker.aha.io/features/REVIEW-2
+    [Tags]    skip-due-to-issue
     When I send a GET request:    /abstract-products/fake/product-reviews/78
     Then Response status code should be:    404
     And Response reason should be:    Not Found
@@ -84,7 +87,7 @@ Create_a_product_review_with_empty_fields
     Then Response status code should be:    422
     And Response reason should be:    Unprocessable Content
     And Each array element of array in response should contain property with value:    [errors]    code    901
-    And Each array element of array in response should contain property with value:    [errors]    status    422
+    And Each array element of array in response should contain property with value:    [errors]    status    ${422}
     And Array in response should contain property with value:    [errors]    detail    rating => This value should be of type numeric.
     And Array in response should contain property with value:    [errors]    detail    rating => This value should be greater than or equal to 1.
     And Array in response should contain property with value:    [errors]    detail    summary => This value should not be blank.
@@ -97,7 +100,7 @@ Create_a_product_review_with_missing_fields
     Then Response status code should be:    422
     And Response reason should be:    Unprocessable Content
     And Each array element of array in response should contain property with value:    [errors]    code    901
-    And Each array element of array in response should contain property with value:    [errors]    status    422
+    And Each array element of array in response should contain property with value:    [errors]    status    ${422}
     And Array in response should contain property with value:    [errors]    detail    rating => This field is missing.
     And Array in response should contain property with value:    [errors]    detail    summary => This field is missing.
     And Array in response should contain property with value:    [errors]    detail    nickname => This field is missing.
