@@ -46,16 +46,16 @@ Get_abstract_product_with_category_nodes_included
     And Each array element of array in response should contain property with value:    [data][relationships][category-nodes][data]    type    category-nodes
     And Each array element of array in response should contain property:    [data][relationships][category-nodes][data]    id
     And Response body parameter should be:    [data][relationships][category-nodes][data][0][id]    ${abstract_available_product_with_stock.category_nodes.category_node_14.id}
-    And Response body parameter should be:    [data][relationships][category-nodes][data][1][id]    ${abstract_available_product_with_stock.category_nodes.category_node_11.id}
-    And Response body parameter should be:    [data][relationships][category-nodes][data][2][id]    ${abstract_available_product_with_stock.category_nodes.category_node_12.id}
+    And Response body parameter should be:    [data][relationships][category-nodes][data][1][id]    ${abstract_available_product_with_stock.category_nodes.category_node_12.id}
+    And Response body parameter should be:    [data][relationships][category-nodes][data][2][id]    ${abstract_available_product_with_stock.category_nodes.category_node_11.id}
     And Each array element of array in response should contain property:    [included]    id
     And Each array element of array in response should contain property:    [included]    attributes
     And Each array element of array in response should contain property:    [included]    links
     And Each array element of array in response should contain nested property:    [included]    [links]    self
     And Each array element of array in response should contain property with value:    [included]    type    category-nodes
     And Response body parameter should be:    [included][0][attributes][name]    ${abstract_available_product_with_stock.category_nodes.category_node_14.name}
-    And Response body parameter should be:    [included][1][attributes][name]    ${abstract_available_product_with_stock.category_nodes.category_node_11.name}
-    And Response body parameter should be:    [included][2][attributes][name]    ${abstract_available_product_with_stock.category_nodes.category_node_12.name}
+    And Response body parameter should be:    [included][1][attributes][name]    ${abstract_available_product_with_stock.category_nodes.category_node_12.name}
+    And Response body parameter should be:    [included][2][attributes][name]    ${abstract_available_product_with_stock.category_nodes.category_node_11.name}
     And Each array element of array in response should contain nested property:    [included]    attributes    nodeId
     And Each array element of array in response should contain nested property:    [included]    attributes    name
     And Each array element of array in response should contain nested property:    [included]    attributes    metaTitle
@@ -67,17 +67,18 @@ Get_abstract_product_with_category_nodes_included
     And Each array element of array in response should contain nested property:    [included]    attributes    children
     And Each array element of array in response should contain nested property:    [included]    attributes    parents
 
+# Verifications regarding abstract-products within included are removed as abstract-products should not be in the response body -> CC-12041
 Get_abstract_product_with_concrete_products_included
     When I send a GET request:    /abstract-products/${abstract_available_product_with_stock.sku}?include=concrete-products
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response body parameter should be:    [data][type]    abstract-products
     And Response body parameter should be:    [data][id]    ${abstract_available_product_with_stock.sku}
-    And Response should contain the array of a certain size:    [included]    2
+    And Response should contain the array of a certain size:    [included]    1
     And Response should contain the array of a certain size:    [data][relationships]    1
     And Response should contain the array of a certain size:    [data][attributes][attributeMap]    4
-    And Response should contain the array of a certain size:    [included][1][attributes]    15
-    And Response should contain the array of a certain size:    [included][1][attributes][attributes]    7
+    And Response should contain the array of a certain size:    [included][0][attributes]    15
+    And Response should contain the array of a certain size:    [included][0][attributes][attributes]    8
     And Response body parameter should not be EMPTY:    [data][relationships]
     And Response body parameter should not be EMPTY:    [data][relationships][concrete-products][data][0][type]
     And Response body parameter should not be EMPTY:    [data][relationships][concrete-products][data][0][id]
@@ -107,19 +108,6 @@ Get_abstract_product_with_concrete_products_included
     And Response body parameter should not be EMPTY:    [included][0][attributes][attributes]
     And Response body parameter should not be EMPTY:    [included][0][attributes][superAttributesDefinition]
     And Response body parameter should not be EMPTY:    [included][0][attributes][attributeNames]
-    And Response body parameter should not be EMPTY:    [included][1][attributes][attributes]
-    And Response should contain the Array of a certain size:     [included][1][attributes][superAttributesDefinition]    0
-    And Response body parameter should not be EMPTY:    [included][1][attributes][attributeNames]    
-    And Response body parameter should be:   [included][1][type]    abstract-products
-    And Response body parameter should be:   [included][1][id]    ${abstract_available_product_with_stock.sku}
-    And Each array element of array in response should contain nested property:    [included]    [links]    self
-    And Response body parameter should be:    [included][1][attributes][sku]    ${abstract_available_product_with_stock.sku}
-    And Response body parameter should be:    [included][1][attributes][name]    ${abstract_available_product_with_stock.name}
-    And Response body parameter should be:    [included][1][attributes][description]    ${abstract_available_product_with_stock.description}
-    And Response body parameter should be:    [included][1][attributes][metaTitle]    ${abstract_available_product_with_stock.meta_title}
-    And Response body parameter should be:    [included][1][attributes][metaKeywords]    ${abstract_available_product_with_stock.meta_keywords}
-    And Response body parameter should be:    [included][1][attributes][metaDescription]    ${abstract_available_product_with_stock.meta_description}
-    And Response body parameter should contain:    [data][attributes][superAttributes]    ${abstract_available_product_with_stock.superattribute}
 
 Get_abstract_product_with_product_options_included
     When I send a GET request:    /abstract-products/${abstract_available_product_with_stock.sku}?include=product-options

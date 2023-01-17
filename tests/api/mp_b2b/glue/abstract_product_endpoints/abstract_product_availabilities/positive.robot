@@ -41,7 +41,6 @@ Product_is_available_never_out_of_stock
     And Response body parameter should be:    [data][0][attributes][quantity]    ${stock_is_20}
     And Response body has correct self link   
 
-#fails - no demo data CC-17000
 Product_is_unavailable
     When I send a GET request:    /abstract-products/${abstract_product.product_availability.abstract_unavailable_product}/abstract-product-availabilities
     Then Response status code should be:    200

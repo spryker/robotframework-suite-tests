@@ -84,8 +84,9 @@ Adding_voucher_with_invalid_access_token
     ...    AND    Response status code should be:    204
 
 ####### DELETE #######
-Deleting_voucher_without_access_token   
-# bug CC-16735
+Deleting_voucher_without_access_token 
+    [Documentation]   #bug CC-16735 is fixed in internal B2B, but there is no fix in public MP-B2B
+    [Tags]    skip-due-to-issue  
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}
     ...    AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
@@ -108,7 +109,8 @@ Deleting_voucher_without_access_token
 
 
 Deleting_voucher_with_invalid_access_token
-# bug CC-16735
+    [Documentation]   #bug CC-16735 is fixed in internal B2B, but there is no fix in public MP-B2B
+    [Tags]    skip-due-to-issue 
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}
     ...    AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
