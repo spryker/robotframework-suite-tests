@@ -9,7 +9,6 @@ ENABLER
     TestSetup
 
 #Logged in customer's cart
-# bug: https://spryker.atlassian.net/browse/CC-17012
 Get_upselling_products
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
@@ -46,8 +45,6 @@ Get_upselling_products
     And Response body has correct self link
     [Teardown]    Run Keyword    Cleanup all items in the cart:    ${cart_id}
 
-
-#bug CC-19043
 Get_upselling_products_plus_includes
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
@@ -76,7 +73,6 @@ Get_upselling_products_plus_includes
     And Response include should contain certain entity type:    product-labels
     And Response include should contain certain entity type:    product-tax-sets
     And Response include should contain certain entity type:    product-options
-    And Response include should contain certain entity type:    product-reviews
     And Response include should contain certain entity type:    category-nodes
     And Response include element has self link:    abstract-product-prices
     And Response include element has self link:    abstract-product-image-sets
@@ -85,10 +81,8 @@ Get_upselling_products_plus_includes
     And Response include element has self link:    product-labels
     And Response include element has self link:    product-tax-sets
     And Response include element has self link:    product-options
-    And Response include element has self link:    product-reviews
     And Response include element has self link:    category-nodes
     [Teardown]    Run Keyword    Cleanup all items in the cart:    ${cart_id}
-
 
 Get_upselling_products_for_cart_containing_multiple_products
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
@@ -198,7 +192,6 @@ Get_upselling_products_for_guest_cart
     And Response body has correct self link
     [Teardown]    Run Keyword    Cleanup all items in the guest cart:    ${guest_cart_id}
 
-#bug CC-19043
 Get_upselling_products_for_guest_cart_plus_includes
     [Setup]    Run Keywords    I set Headers:    Content-Type=${default_header_content_type}    X-Anonymous-Customer-Unique-Id=${random}
     ...    AND    Create a guest cart:    ${random}    ${product_with_relations.has_upselling_products.concrete_sku}    1
@@ -225,7 +218,6 @@ Get_upselling_products_for_guest_cart_plus_includes
     And Response include should contain certain entity type:    product-labels
     And Response include should contain certain entity type:    product-tax-sets
     And Response include should contain certain entity type:    product-options
-    And Response include should contain certain entity type:    product-reviews
     And Response include should contain certain entity type:    category-nodes
     And Response include element has self link:    abstract-product-prices
     And Response include element has self link:    abstract-product-image-sets
@@ -234,10 +226,8 @@ Get_upselling_products_for_guest_cart_plus_includes
     And Response include element has self link:    product-labels
     And Response include element has self link:    product-tax-sets
     And Response include element has self link:    product-options
-    And Response include element has self link:    product-reviews
     And Response include element has self link:    category-nodes
     [Teardown]    Run Keyword    Cleanup all items in the guest cart:    ${guest_cart_id}
-
 
 Get_upselling_products_for_guest_cart_containing_multiple_products
     [Setup]    Run Keywords    I set Headers:    Content-Type=${default_header_content_type}    X-Anonymous-Customer-Unique-Id=${random}
@@ -280,7 +270,6 @@ Get_upselling_products_for_guest_cart_containing_multiple_products
     And Response body has correct self link
     [Teardown]    Run Keyword    Cleanup all items in the guest cart:    ${guest_cart_id}
  
-
 Get_upselling_products_for_guest_cart_without_upselling_relations
     [Setup]    Run Keywords    I set Headers:    Content-Type=${default_header_content_type}    X-Anonymous-Customer-Unique-Id=${random}
     ...    AND    Create a guest cart:    ${random}    ${concrete_product.product_without_relations}    1
