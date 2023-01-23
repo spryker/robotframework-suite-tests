@@ -66,8 +66,13 @@ TestSetup
     ...    ``Default Tags    bapi``
     FOR  ${tag}  IN  @{Test Tags}
     Log   ${tag}
-    IF    '${tag}'=='bapi'    Set Suite Variable    ${current_url}    ${bapi_url}
-    IF    '${tag}'=='glue'    Set Suite Variable    ${current_url}    ${glue_url}
+    IF    '${tag}'=='bapi'    
+        Set Suite Variable    ${current_url}    ${bapi_url}
+        Set Suite Variable    ${tag}    bapi
+        ELSE IF    '${tag}'=='glue'    
+        Set Suite Variable    ${current_url}    ${glue_url}
+        Set Suite Variable    ${tag}    glue
+    END
     END
     Log    ${current_url}
 
@@ -1140,7 +1145,11 @@ Response should return error message:
     ...
     ...    ``Response should return error message:    Can`t find abstract product image sets.``
     [Arguments]    ${error_message}
-    ${data}=    Get Value From Json    ${response_body}    [errors][0][detail]
+    IF    '${tag}'=='bapi'   
+        ${data}=    Get Value From Json    ${response_body}    [errors][0][message]
+    ELSE
+        ${data}=    Get Value From Json    ${response_body}    [errors][0][detail]
+    END
     ${data}=    Convert To String    ${data}
     ${data}=    Replace String    ${data}    '   ${EMPTY}
     ${data}=    Replace String    ${data}    [   ${EMPTY}
