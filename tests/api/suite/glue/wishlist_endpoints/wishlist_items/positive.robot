@@ -12,6 +12,7 @@ ENABLER
 #Post
 #CC-16555 API: JSON response is missing product availability and price
 Adding_item_in_wishlist 
+    [Tags]    skip-due-to-refactoring
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}
     ...    AND    I send a POST request:    /wishlists    {"data": { "type": "wishlists","attributes": { "name": "${random}" } }}

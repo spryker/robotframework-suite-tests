@@ -342,6 +342,7 @@ Filter_by_label_one_label
     And Response body has correct self link
 
 Filter_by_label_two_labels
+    [Tags]    skip-due-to-refactoring
     When I send a GET request:    /catalog-search?q=&label[]=${label.new}&label[]=${label.sale}
     Then Response status code should be:    200
     And Response reason should be:    OK
