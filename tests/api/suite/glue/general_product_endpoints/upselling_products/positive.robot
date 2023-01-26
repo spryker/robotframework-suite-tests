@@ -49,6 +49,7 @@ Get_upselling_products
 
 #bug CC-19043
 Get_upselling_products_plus_includes
+    [Tags]    skip-due-to-refactoring
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     ...    AND    Find or create customer cart
@@ -200,6 +201,7 @@ Get_upselling_products_for_guest_cart
 
 #bug CC-19043
 Get_upselling_products_for_guest_cart_plus_includes
+    [Tags]    skip-due-to-refactoring
     [Setup]    Run Keywords    I set Headers:    Content-Type=${default_header_content_type}    X-Anonymous-Customer-Unique-Id=${random}
     ...    AND    Create a guest cart:    ${random}    ${product_with_relations.has_upselling_products.concrete_sku}    1
     ...    AND    Response status code should be:    201

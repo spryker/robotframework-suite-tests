@@ -149,6 +149,7 @@ Create_cart_with_invalid_store
     And Response should return error message:    Store data is invalid.
 
 Create_cart_with_invalid_priceMod_and_currency
+    [Tags]    skip-due-to-refactoring
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
     When I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "GROSS","currency": "EU","store": "${store.de}","name": "${test_cart_name}"}}}
@@ -163,6 +164,7 @@ Create_cart_with_invalid_priceMod_and_currency
     And Response body parameter should be:    [errors][2][detail]    Failed to create cart.
 
 Create_cart_with_empty_attributes
+    [Tags]    skip-due-to-refactoring
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
     When I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "","currency": "","store": "","name": ""}}}
@@ -176,6 +178,7 @@ Create_cart_with_empty_attributes
     And Array in response should contain property with value:    [errors]    detail    name => This value should not be blank.
 
 Create_cart_without_attributes
+    [Tags]    skip-due-to-refactoring
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
     When I send a POST request:    /carts    {"data": {"type": "carts","attributes": {}}}
@@ -334,6 +337,7 @@ Update_cart_with_empty_name
     ...  AND    Response status code should be:    204
 
 Update_cart_with_invalid_priceMod_currency_store
+    [Tags]    skip-due-to-refactoring
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
     ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}

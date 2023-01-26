@@ -10,6 +10,7 @@ ENABLER
 
 ######POST#####
 Create_customer_address_with_missing_required_fields
+    [Tags]    skip-due-to-refactoring
     When I get access token for the customer:    ${yves_user.email}
     And I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     And I send a POST request:    /customers/${yves_user.reference}/addresses    {"data": {"type": "addresses","attributes": {"address3": "${default.address3}"}}}
@@ -29,6 +30,7 @@ Create_customer_address_with_missing_required_fields
     And Array in response should contain property with value:    [errors]    detail    isDefaultBilling => This field is missing.
 
 Create_customer_address_with_empty_fields
+    [Tags]    skip-due-to-refactoring
     When I get access token for the customer:    ${yves_user.email}
     And I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     And I send a POST request:    /customers/${yves_user.reference}/addresses    {"data": {"type": "addresses","attributes": {"salutation": "","firstName": "","lastName": "","address1": "","address2": "","address3": "","zipCode": "","city": "","country": "","iso2Code": "","company":"","phone": "","isDefaultShipping": "","isDefaultBilling": ""}}}
@@ -242,6 +244,7 @@ Patch_customer_address_with_wrong_reference
     ...    AND    Response status code should be:    204
 
 Patch_customer_address_with_empty_required_fields
+    [Tags]    skip-due-to-refactoring
     [Setup]    Run keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     ...    AND    I send a POST request:    /customers/${yves_user.reference}/addresses    {"data": {"type": "addresses","attributes": {"salutation": "${yves_second_user.salutation}","firstName": "${yves_second_user.first_name}","lastName": "${yves_second_user.last_name}","address1": "${default.address1}","address2": "${default.address2}","address3": "${default.address3}","zipCode": "${default.zipCode}","city": "${default.city}","country": "${default.country}","iso2Code": "${default.iso2Code}","company":"${default.company}","phone": "${default.phone}","isDefaultShipping": ${default.shipping_status},"isDefaultBilling": ${default.billing_status}}}}

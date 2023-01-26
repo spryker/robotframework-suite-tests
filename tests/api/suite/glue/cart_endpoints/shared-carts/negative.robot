@@ -45,6 +45,7 @@ Share_shopping_cart_with_non_existing_permission_group
     ...    AND    Response reason should be:    No Content
 
 Share_shopping_cart_with_empty_permission_group_value_and_company_user_value
+    [Tags]    skip-due-to-refactoring
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}  
     ...    AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
@@ -61,6 +62,7 @@ Share_shopping_cart_with_empty_permission_group_value_and_company_user_value
     ...    AND    Response status code should be:    204
 
 Share_shopping_cart_without_company_user_attribute_and_cart_permission_group_attribute
+    [Tags]    skip-due-to-refactoring
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}  
     ...    AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}

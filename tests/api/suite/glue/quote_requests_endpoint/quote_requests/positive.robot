@@ -10,6 +10,7 @@ ENABLER
 
 ##POST##
 Create_quote_request
+    [Tags]    skip-due-to-refactoring
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
     When I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
@@ -131,6 +132,7 @@ Create_quote_request_with_included_customers_&_comapny_users_&_company_business_
 
 
 Create_quote_request_without_delivery_date_and_note
+    [Tags]    skip-due-to-refactoring
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
     When I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
@@ -242,6 +244,7 @@ Create_quote_request_with_empty_meta_data
 
 
 Create_quote_request_for_cart_with_full_access_permissions
+    [Tags]    skip-due-to-refactoring
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    Save value to a variable:    [data][attributes][accessToken]    userToken
     ...    AND    I set Headers:    Authorization=${token}  

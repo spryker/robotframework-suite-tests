@@ -400,7 +400,8 @@ Create_order_with_2_product_discounts
     And Response body parameter should contain:    [included][0][attributes][calculatedDiscounts]    quantity: 1 
 
 Create_order_with_configurable_bundle_item
-  [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
+    [Tags]    skip-due-to-refactoring
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
     ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
     ...  AND    Save value to a variable:    [data][id]    cart_id

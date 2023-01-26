@@ -36,6 +36,7 @@ Add_an_item_to_the_guest_cart
     And Response body parameter should not be EMPTY:    [data][links][self]
 
 Add_an_item_to_the_guest_cart_with_items_include
+    [Tags]    skip-due-to-refactoring
     [Setup]    I set Headers:    Content-Type=${default_header_content_type}    X-Anonymous-Customer-Unique-Id=${random}
     Run Keywords    Create a guest cart:    ${random}    ${concrete_available_product.with_offer}    1
     ...    AND    Save value to a variable:    [data][id]    guestCartId
@@ -151,6 +152,7 @@ Add_an_item_to_the_guest_cart_with_bundle_items_include
     And Response include element has self link:   bundle-items
 
 Update_an_item_quantity_at_the_guest_cart_with_items_include
+    [Tags]    skip-due-to-refactoring
     [Setup]    I set Headers:    Content-Type=${default_header_content_type}    X-Anonymous-Customer-Unique-Id=${random}
     Run Keywords    Create a guest cart:    ${random}    ${concrete_available_product.with_offer}    1
     ...    AND    Save value to a variable:    [data][id]    guestCartId

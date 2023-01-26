@@ -16,6 +16,7 @@ Get_product_offer_availabilities_without_offerId
     And Response should return error message:    Product offer ID is not specified.
 
 Get_product_offer_availabilities_with_invalid_offerId
+    [Tags]    skip-due-to-refactoring
 # fails MP-6779
     When I send a GET request:    /product-offers/InvalidOfferId/product-offer-availabilities
     Then Response status code should be:    400

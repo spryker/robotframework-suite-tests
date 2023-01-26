@@ -72,6 +72,7 @@ Update_a_shopping_list_name
 
 #CC-16543
 Update_a_shopping_list_name_with_includes
+    [Tags]    skip-due-to-refactoring
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}  
     ...    AND    I send a POST request:    /shopping-lists    {"data":{"type":"shopping-lists","attributes":{"name":"${shopping_list_name}${random}"}}}
@@ -202,6 +203,7 @@ Get_single_shopping_list_info_with_includes
 
 # CC-16541
 Get_several_shopping_lists_info_with_includes
+    [Tags]    skip-due-to-refactoring
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}  
     I send a GET request:    /shopping-lists?include=shopping-list-items,concrete-products

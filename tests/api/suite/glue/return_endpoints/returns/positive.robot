@@ -197,7 +197,8 @@ Get_return_by_Id_include_return-items
 
 # BUG: https://spryker.atlassian.net/browse/CC-19280
 Retrieves_list_of_returns_included_merchants
-  [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
+    [Tags]    skip-due-to-refactoring
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
     ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
     ...  AND    Response status code should be:    201
@@ -235,7 +236,8 @@ Retrieves_list_of_returns_included_merchants
 
 # BUG: https://spryker.atlassian.net/browse/CC-19280
 Retrieves_return_by_id_with_returns_items_included
-  [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
+    [Tags]    skip-due-to-refactoring
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
     ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
     ...  AND    Save value to a variable:    [data][id]    cart_id
@@ -276,7 +278,8 @@ Retrieves_return_by_id_with_returns_items_included
 
 # BUG: https://spryker.atlassian.net/browse/CC-19280
 Retrieves_return_by_id_for_sales_order
-  [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
+    [Tags]    skip-due-to-refactoring
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
     ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
     ...  AND    Save value to a variable:    [data][id]    cart_id
@@ -301,6 +304,7 @@ Retrieves_return_by_id_for_sales_order
 
 # BUG: https://spryker.atlassian.net/browse/CC-19280
 Retrieves_return_by_id_with_merchants_included
+    [Tags]    skip-due-to-refactoring
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
     ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}

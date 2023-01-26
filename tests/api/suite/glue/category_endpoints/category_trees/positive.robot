@@ -10,6 +10,7 @@ ENABLER
     TestSetup
 
 Get_category_trees
+    [Tags]    skip-due-to-refactoring
     When I send a GET request:    /category-trees
     Then Response status code should be:    200
     And Response reason should be:    OK

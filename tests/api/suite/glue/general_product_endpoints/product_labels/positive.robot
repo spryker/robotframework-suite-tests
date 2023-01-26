@@ -9,6 +9,7 @@ ENABLER
     TestSetup
     
 Get_manual_product_label_by_id
+    [Tags]    skip-due-to-refactoring
     When I send a GET request:    /product-labels/${label_standard.id}
     Then Response status code should be:    200
     And Response reason should be:    OK

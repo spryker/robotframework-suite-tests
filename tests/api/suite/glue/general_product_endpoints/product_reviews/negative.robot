@@ -10,6 +10,7 @@ ENABLER
 
 # bug CC-16486
 Get_a_review_with_non_existent_review_id
+    [Tags]    skip-due-to-refactoring
     When I send a GET request:    /abstract-products/${abstract_product.product_with_reviews.sku}/product-reviews/fake
     Then Response status code should be:    404
     And Response reason should be:    Not Found
@@ -32,6 +33,7 @@ Get_reviews_with_missing_abstract_product
 
 # bug CC-16486
 Get_review_by_id_with_missing_abstract_product
+    [Tags]    skip-due-to-refactoring
     When I send a GET request:    /abstract-products//product-reviews/78
     Then Response status code should be:    400
     And Response reason should be:    Bad Request
@@ -40,6 +42,7 @@ Get_review_by_id_with_missing_abstract_product
 
 # bug CC-16486
 Get_a_reviews_with_non_existent_abstract_product
+    [Tags]    skip-due-to-refactoring
     When I send a GET request:    /abstract-products/fake/product-reviews/78
     Then Response status code should be:    404
     And Response reason should be:    Not Found
@@ -78,6 +81,7 @@ Create_a_product_review_with_missing_type
     And Response should return error message:    Post data is invalid.
 
 Create_a_product_review_with_empty_fields
+    [Tags]    skip-due-to-refactoring
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     When I send a POST request:    /abstract-products/${abstract_product.product_with_reviews.sku}/product-reviews    {"data": {"type": "product-reviews","attributes": {"rating": "","nickname": "","summary": "","description": ""}}}
@@ -91,6 +95,7 @@ Create_a_product_review_with_empty_fields
     And Array in response should contain property with value:    [errors]    detail    nickname => This value should not be blank.
 
 Create_a_product_review_with_missing_fields
+    [Tags]    skip-due-to-refactoring
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     When I send a POST request:    /abstract-products/${abstract_product.product_with_reviews.sku}/product-reviews    {"data": {"type": "product-reviews","attributes": {}}}

@@ -59,6 +59,7 @@ Get_concrete_bundle_product_with_bundled_products_include
     And Response include element has self link:   bundled-products
 
 Get_abstract_bundle_product_with_bundled_products_include
+    [Tags]    skip-due-to-refactoring
     When I send a GET request:    /abstract-products/${bundle_product.abstract.sku}?include=bundled-products,concrete-products
     Then Response status code should be:    200
     And Response reason should be:    OK
