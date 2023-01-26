@@ -277,4 +277,3 @@ Get_upselling_products_for_guest_cart_without_upselling_relations
     And Response should contain the array of a certain size:    [data]    0
     And Response body has correct self link
     [Teardown]    Run Keyword    Cleanup all items in the guest cart:    ${guest_cart_id}
-

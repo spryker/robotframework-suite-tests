@@ -66,8 +66,13 @@ TestSetup
     ...    ``Default Tags    bapi``
     FOR  ${tag}  IN  @{Test Tags}
     Log   ${tag}
-    IF    '${tag}'=='bapi'    Set Suite Variable    ${current_url}    ${bapi_url}
-    IF    '${tag}'=='glue'    Set Suite Variable    ${current_url}    ${glue_url}
+    IF    '${tag}'=='bapi'    
+        Set Suite Variable    ${current_url}    ${bapi_url}
+        Set Suite Variable    ${tag}    bapi
+        ELSE IF    '${tag}'=='glue'    
+        Set Suite Variable    ${current_url}    ${glue_url}
+        Set Suite Variable    ${tag}    glue
+    END
     END
     Log    ${current_url}
 
@@ -1140,7 +1145,11 @@ Response should return error message:
     ...
     ...    ``Response should return error message:    Can`t find abstract product image sets.``
     [Arguments]    ${error_message}
-    ${data}=    Get Value From Json    ${response_body}    [errors][0][detail]
+    IF    '${tag}'=='bapi'   
+        ${data}=    Get Value From Json    ${response_body}    [errors][0][message]
+    ELSE
+        ${data}=    Get Value From Json    ${response_body}    [errors][0][detail]
+    END
     ${data}=    Convert To String    ${data}
     ${data}=    Replace String    ${data}    '   ${EMPTY}
     ${data}=    Replace String    ${data}    [   ${EMPTY}
@@ -1263,7 +1272,7 @@ Save the result of a SELECT DB query to a variable:
     ...
     ...    ``Save the result of a SELECT DB query to a variable:    select registration_key from spy_customer where customer_reference = '${user_reference_id}'    confirmation_key``
     [Arguments]    ${sql_query}    ${variable_name}
-    Connect To Database    pymysql    ${default_db_name}    ${default_db_user}    ${default_db_password}    ${default_db_host}    ${default_db_port}
+    Connect To Database    pymysql    ${db_name}    ${db_user}    ${db_password}    ${db_host}    ${db_port}
     ${var_value} =    Query    ${sql_query}
     Disconnect From Database
     ${var_value}=    Convert To String    ${var_value}
@@ -1424,7 +1433,7 @@ Create giftcode in Database:
      [Arguments]    ${spy_gift_card_code}    ${spy_gift_card_value}
     ${amount}=   Evaluate    ${spy_gift_card_value} / 100
     ${amount}=    Evaluate    "%.f" % ${amount}
-    Connect To Database    pymysql    ${default_db_name}    ${default_db_user}    ${default_db_password}    ${default_db_host}    ${default_db_port}
+    Connect To Database    pymysql    ${db_name}    ${db_user}    ${db_password}    ${db_host}    ${db_port}
     Execute Sql String    insert ignore into spy_gift_card (code,name,currency_iso_code,value) value ('${spy_gift_card_code}','Gift_card_${amount}','EUR','${spy_gift_card_value}')
     Disconnect From Database
 
@@ -1528,21 +1537,12 @@ Update order status in Database:
     ...    ``Update order status in Database:    7    shipped``
     
     [Arguments]    ${order_item_status_name}
-    Connect To Database    pymysql    ${default_db_name}    ${default_db_user}    ${default_db_password}    ${default_db_host}    ${default_db_port}
+    Connect To Database    pymysql    ${db_name}    ${db_user}    ${db_password}    ${db_host}    ${db_port}
     Execute Sql String    insert ignore into spy_oms_order_item_state (name) values ('${order_item_status_name}')
     Disconnect From Database
     Save the result of a SELECT DB query to a variable:    select id_oms_order_item_state from spy_oms_order_item_state where name like '${order_item_status_name}'    state_id
-    Connect To Database    pymysql    ${default_db_name}    ${default_db_user}    ${default_db_password}    ${default_db_host}    ${default_db_port}
+    Connect To Database    pymysql    ${db_name}    ${db_user}    ${db_password}    ${db_host}    ${db_port}
     Execute Sql String    update spy_sales_order_item set fk_oms_order_item_state = '${state_id}' where uuid = '${Uuid}'
-    Disconnect From Database
-
-Create giftcode in Database:
-    [Documentation]    This keyword creates a new entry in the table spy_gift_card with the name, value and gift-card code.
-     [Arguments]    ${spy_gift_card_code}    ${spy_gift_card_value}
-    ${amount}=   Evaluate    ${spy_gift_card_value} / 100
-    ${amount}=    Evaluate    "%.f" % ${amount}
-    Connect To Database    pymysql    ${default_db_name}    ${default_db_user}    ${default_db_password}    ${default_db_host}    ${default_db_port}
-    Execute Sql String    insert ignore into spy_gift_card (code,name,currency_iso_code,value) value ('${spy_gift_card_code}','Gift_card_${amount}','EUR','${spy_gift_card_value}')
     Disconnect From Database
 
 Get voucher code by discountId from Database:
@@ -1555,11 +1555,3 @@ Get voucher code by discountId from Database:
     [Arguments]    ${discount_id}
     Save the result of a SELECT DB query to a variable:    select fk_discount_voucher_pool from spy_discount where id_discount = ${discount_id}    discount_voucher_pool_id
     Save the result of a SELECT DB query to a variable:    select code from spy_discount_voucher where fk_discount_voucher_pool = ${discount_voucher_pool_id} and is_active = 1 limit 1    discount_voucher_code
-Create giftcode in Database:
-    [Documentation]    This keyword creates a new entry in the table spy_gift_card with the name, value and gift-card code.
-     [Arguments]    ${spy_gift_card_code}    ${spy_gift_card_value}
-    ${amount}=   Evaluate    ${spy_gift_card_value} / 100
-    ${amount}=    Evaluate    "%.f" % ${amount}
-    Connect To Database    pymysql    ${default_db_name}    ${default_db_user}    ${default_db_password}    ${default_db_host}    ${default_db_port}
-    Execute Sql String    insert ignore into spy_gift_card (code,name,currency_iso_code,value) value ('${spy_gift_card_code}','Gift_card_${amount}','EUR','${spy_gift_card_value}')
-    Disconnect From Database

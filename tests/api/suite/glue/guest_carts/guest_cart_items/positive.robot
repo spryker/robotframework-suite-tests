@@ -59,6 +59,7 @@ Add_an_item_to_the_guest_cart_with_items_include
     And Response should contain the array of a certain size:    [data][attributes][thresholds]    1
     And Response should contain the array of a certain size:    [included]    1
     And Response body parameter should be:    [included][0][type]    guest-cart-items
+    And Response body parameter should be:    [included][0][id]    ${concrete_product_with_concrete_product_alternative.sku}
     And Response body parameter should be:    [included][0][attributes][sku]    ${concrete_product_with_concrete_product_alternative.sku}
     And Response body parameter should be:    [included][0][attributes][quantity]    1
     And Response body parameter should be:    [included][0][attributes][groupKey]    ${concrete_product_with_concrete_product_alternative.sku}
