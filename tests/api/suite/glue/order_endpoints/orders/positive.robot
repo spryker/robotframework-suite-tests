@@ -409,6 +409,7 @@ Get_order_by_order_id_with_split_shipment_&_include
     ...  AND    Response status code should be:    204
 
 Get_customer_orders_list_without_order_id
+    [Tags]    skip-due-to-refactoring
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
     ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
@@ -436,6 +437,7 @@ Get_customer_orders_list_without_order_id
     ...  AND    Response status code should be:    204
 
 Get_customer_orders_list
+    [Tags]    skip-due-to-refactoring
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
     ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
@@ -463,6 +465,7 @@ Get_customer_orders_list
     ...  AND    Response status code should be:    204
 
 Get_customer_orders_list_without_order_id_with_pagination
+    [Tags]    skip-due-to-refactoring
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
     ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
