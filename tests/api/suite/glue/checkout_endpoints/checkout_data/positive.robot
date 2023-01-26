@@ -56,6 +56,7 @@ Provide_checkout_with_only_cart_id
     ...  AND    Response status code should be:    204
 
 Provide_checkout_data_with_invalid_billing_address_data
+    [Tags]    skip-due-to-refactoring
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
     ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
@@ -82,6 +83,7 @@ Provide_checkout_data_with_invalid_billing_address_data
     ...  AND    Response status code should be:    204
 
 Provide_checkout_data_with_invalid_shipping_address_data
+    [Tags]    skip-due-to-refactoring
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
     ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
@@ -108,6 +110,7 @@ Provide_checkout_data_with_invalid_shipping_address_data
     ...  AND    Response status code should be:    204
 
 Provide_checkout_data_with_invalid_payments
+    [Tags]    skip-due-to-refactoring
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
     ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}

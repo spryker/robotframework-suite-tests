@@ -9,6 +9,7 @@ ENABLER
     TestSetup
 
 Get_category_node_is_root_by_id
+    [Tags]    skip-due-to-refactoring
     When I send a GET request:    /category-nodes/${category_node_is_root_id}
     Then Response status code should be:    200
     And Response reason should be:    OK

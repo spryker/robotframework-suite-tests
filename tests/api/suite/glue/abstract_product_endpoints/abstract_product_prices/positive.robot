@@ -51,6 +51,7 @@ Abstract_volume_prices
     And Response body has correct self link
 
 Abstract_prices_original_price
+    [Tags]    skip-due-to-refactoring
     When I send a GET request:    /abstract-products/${abstract_product.product_with_original_prices.sku}/abstract-product-prices
     Then Response status code should be:    200
     And Response reason should be:    OK

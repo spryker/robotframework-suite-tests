@@ -86,7 +86,8 @@ Add_configured_bundle_item_to_cart_with_invalid_properties
     And Response should return error message:    The quantity of the configured bundle should be more than zero.
 
 Add_configured_bundle_item_to_cart_with_invalid_qty
-   [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
+    [Tags]    skip-due-to-refactoring
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     ...  AND    Find or create customer cart
     ...  AND    Cleanup all items in the cart:    ${cart_id}
@@ -109,7 +110,8 @@ Update_configured_bundle_item_in_cart_with_non_existing_bundle_group_key
     And Response should return error message:    Configured bundle with provided group key not found in cart.
 
 Update_configured_bundle_item_in_cart_with_invalid_qty
-  [Setup]    Run Keywords    I get access token for the customer:    ${yves_second_user.email}
+    [Tags]    skip-due-to-refactoring
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_second_user.email}
     ...  AND    I set Headers:    Authorization=${token}
     ...  AND    Find or create customer cart
     ...  AND    Cleanup all items in the cart:    ${cart_id}

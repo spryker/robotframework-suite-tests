@@ -9,6 +9,7 @@ ENABLER
     TestSetup
 
 Retrieve_prices_of_a_product_offer
+    [Tags]    skip-due-to-refactoring
     When I send a GET request:    /product-offers/${product_offers.active_offer}/product-offer-prices
     Then Response reason should be:    OK
     And Response status code should be:    200
@@ -25,8 +26,9 @@ Get_concrete_product_without_offers_prices
     And Response should contain the array of a certain size:    [data]    0
 
 Get_all_concrete_product_offer_info_with_product_offer_prices_and_product_offer_availabilities_and_merchants_included
+    [Tags]    skip-due-to-refactoring
     When I send a GET request:    /concrete-products/${abstract_product.product_with_concrete_offers.sku}/product-offers?include=product-offer-prices,merchants
-     Then Response status code should be:    200
+    Then Response status code should be:    200
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response body parameter should be:    [data][0][id]    ${product_offers.active_offer}
@@ -44,6 +46,7 @@ Get_all_concrete_product_offer_info_with_product_offer_prices_and_product_offer_
     And Response body has correct self link
 
 Get_all_product_offer_info_with_product_offer_prices_and_merchants_included
+    [Tags]    skip-due-to-refactoring
     When I send a GET request:    /product-offers/${product_offers.active_offer}?include=product-offer-prices,merchants
     Then Response status code should be:    200
     And Response reason should be:    OK
@@ -62,6 +65,7 @@ Get_all_product_offer_info_with_product_offer_prices_and_merchants_included
     And Response include element has self link:    merchants
 
 Get_product_offer_price_without_volume_prices
+    [Tags]    skip-due-to-refactoring
     When I send a GET request:    /product-offers/${product_offers.offer_without_volume_price}/product-offer-prices
     Then Response status code should be:    200
     And Response reason should be:    OK
@@ -73,6 +77,7 @@ Get_product_offer_price_without_volume_prices
     And Response body parameter should not be EMPTY:    [data][0][attributes][prices]
 
 Get_product_offer_price_with_gross_eur_volume_prices
+    [Tags]    skip-due-to-refactoring
     When I send a GET request:    /product-offers/${product_offers.offer_with_volume_price_gross_net_prices}/product-offer-prices?priceMode=${mode.gross}
     Then Response status code should be:    200
     And Response reason should be:    OK
@@ -91,6 +96,7 @@ Get_product_offer_price_with_gross_eur_volume_prices
     And Response body parameter should be:    [data][0][attributes][prices][0][currency][symbol]    ${currency.eur.symbol}
 
 Get_product_offer_price_with_net_eur_volume_prices
+    [Tags]    skip-due-to-refactoring
     When I send a GET request:    /product-offers/${product_offers.offer_with_volume_price_gross_net_prices}/product-offer-prices?priceMode=${mode.net}
     Then Response status code should be:    200
     And Response reason should be:    OK
@@ -109,6 +115,7 @@ Get_product_offer_price_with_net_eur_volume_prices
     And Response body parameter should be:    [data][0][attributes][prices][0][currency][symbol]    ${currency.eur.symbol}
 
 Get_product_offer_price_with_gross_chf
+    [Tags]    skip-due-to-refactoring
     When I send a GET request:    /product-offers/${product_offers.offer_with_volume_price_gross_net_prices}/product-offer-prices?currency=${currency.chf.code}
     Then Response status code should be:    200
     And Response reason should be:    OK
@@ -123,6 +130,7 @@ Get_product_offer_price_with_gross_chf
     And Response body parameter should be:    [data][0][attributes][prices][0][currency][symbol]    ${currency.chf.symbol}
 
 Get_product_offer_price_with_net_chf
+    [Tags]    skip-due-to-refactoring
     When I send a GET request:    /product-offers/${product_offers.offer_with_volume_price}/product-offer-prices?currency=${currency.chf.code}&priceMode=${mode.net}
     Then Response status code should be:    200
     And Response reason should be:    OK

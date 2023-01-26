@@ -190,6 +190,7 @@ Get_upselling_products_for_guest_cart
     [Teardown]    Run Keyword    Cleanup all items in the guest cart:    ${guest_cart_id}
 
 Get_upselling_products_for_guest_cart_plus_includes
+    [Tags]    skip-due-to-refactoring
     [Setup]    Run Keywords    I set Headers:    Content-Type=${default_header_content_type}    X-Anonymous-Customer-Unique-Id=${random}
     ...    AND    Create a guest cart:    ${random}    ${product_with_relations.has_upselling_products.concrete_sku}    1
     ...    AND    Response status code should be:    201

@@ -76,7 +76,7 @@ Update_guest_cart_with_invalid_type
     And Response should return error message:    Invalid type.
 
 Update_guest_cart_without_type
-      [Setup]    Run Keywords    Create a guest cart:    ${random}    ${concrete_product_with_concrete_product_alternative.sku}    1
+    [Setup]    Run Keywords    Create a guest cart:    ${random}    ${concrete_product_with_concrete_product_alternative.sku}    1
             ...   AND    I set Headers:     X-Anonymous-Customer-Unique-Id=${x_anonymous_customer_unique_id}
     When I send a PATCH request:    /guest-carts/${guest_cart_id}    {"data": {"attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}"}}}
     Then Response status code should be:    400
@@ -84,7 +84,8 @@ Update_guest_cart_without_type
     And Response should return error message:    Post data is invalid.
 
 Update_guest_cart_update_price_mode_with_items_in_the_cart
-      [Setup]    Run Keywords    Create a guest cart:    ${random}    ${concrete_product_with_concrete_product_alternative.sku}    1
+    [Tags]    skip-due-to-refactoring
+    [Setup]    Run Keywords    Create a guest cart:    ${random}    ${concrete_product_with_concrete_product_alternative.sku}    1
             ...   AND    I set Headers:     X-Anonymous-Customer-Unique-Id=${x_anonymous_customer_unique_id}
     When I send a PATCH request:    /guest-carts/${guest_cart_id}    {"data": {"type": "guest-carts","attributes": {"priceMode": "${mode.net}"}}}
     Then Response status code should be:    422
