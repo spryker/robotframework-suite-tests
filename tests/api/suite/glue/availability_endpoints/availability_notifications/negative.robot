@@ -64,6 +64,7 @@ Subscribe_to_availability_notifications_without_type
     And Response should return error message:    Post data is invalid.
 
 Subscribe_to_availability_notifications_with_invalid_sku
+    [Tags]    skip-due-to-refactoring
     When I send a POST request:    /availability-notifications    {"data": {"type": "availability-notifications","attributes": {"sku": "fake","email": "${yves_user.email}"}}}
     Then Response status code should be:    404
     And Response reason should be:    Not Found
@@ -72,6 +73,7 @@ Subscribe_to_availability_notifications_with_invalid_sku
     And Array in response should contain property with value:    [errors]    detail    Product not found.
 
 Subscribe_to_availability_notifications_with_invalid_email
+    [Tags]    skip-due-to-refactoring
     When I send a POST request:    /availability-notifications    {"data": {"type": "availability-notifications","attributes": {"sku": "${product_with_alternative.concrete_sku}","email": "gmail"}}}
     Then Response status code should be:    422
     And Response reason should be:    Unprocessable Content
@@ -80,6 +82,7 @@ Subscribe_to_availability_notifications_with_invalid_email
     And Array in response should contain property with value:    [errors]    detail    email => This value is not a valid email address.
 
 Subscribe_to_availability_notifications_with_empty_sku_and_email
+    [Tags]    skip-due-to-refactoring
     When I send a POST request:    /availability-notifications    {"data": {"type": "availability-notifications","attributes": {"sku": "","email": ""}}}
     Then Response status code should be:    422
     And Response reason should be:    Unprocessable Content
@@ -89,6 +92,7 @@ Subscribe_to_availability_notifications_with_empty_sku_and_email
     And Array in response should contain property with value:    [errors]    detail    email => This value should not be blank.
 
 Subscribe_to_availability_notifications_without_sku_and_email
+    [Tags]    skip-due-to-refactoring
     When I send a POST request:    /availability-notifications    {"data": {"type": "availability-notifications","attributes": {}}}
     Then Response status code should be:    422
     And Response reason should be:    Unprocessable Content

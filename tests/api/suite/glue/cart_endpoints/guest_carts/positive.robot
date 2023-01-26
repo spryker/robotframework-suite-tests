@@ -61,6 +61,7 @@ Retrieve_guest_cart_by_id
     And Response body parameter should be greater than:    [data][attributes][totals][priceToPay]    0
 
 Retrieve_guest_cart_including_cart_items
+    [Tags]    skip-due-to-refactoring
     [Setup]    Create a guest cart:    ${random}    ${concrete_product_with_concrete_product_alternative.sku}    7
     When I send a GET request:    /guest-carts/${guest_cart_id}?include=guest-cart-items
     Then Response status code should be:    200

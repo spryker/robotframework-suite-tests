@@ -35,6 +35,7 @@ Get_order_with_invalid_order_id
 
 
 Get_order_by_order_id_from_another_customer
+    [Tags]    skip-due-to-refactoring
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
     ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}

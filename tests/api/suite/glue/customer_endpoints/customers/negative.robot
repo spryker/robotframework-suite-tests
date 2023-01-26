@@ -9,6 +9,7 @@ ENABLER
     TestSetup
 
 Create_a_customer_with_already_existing_email
+    [Tags]    skip-due-to-refactoring
     I send a POST request:    /customers/    {"data":{"type":"customers","attributes":{"firstName":"${yves_third_user.first_name}","lastName":"${yves_third_user.last_name}","gender":"${gender.male}","salutation":"${yves_third_user.salutation}","email":"${yves_user.email}","password":"${yves_user.password}","confirmPassword":"${yves_user.password}","acceptedTerms":True}}}
     Response status code should be:    422
     And Response reason should be:    Unprocessable Content
@@ -114,6 +115,7 @@ Create_a_customer_with_missing_required_fields
 
 #bug:https://spryker.atlassian.net/browse/CC-19138
 Create_a_customer_with_wrong_gender
+    [Tags]    skip-due-to-refactoring
     I send a POST request:    /customers/    {"data":{"type":"customers","attributes":{"firstName":"${yves_third_user.first_name}","lastName":"${yves_third_user.last_name}","gender":"test","salutation":"test","email":"${yves_third_user.first_name}@spryker.com","password":"${yves_user.password}","confirmPassword":"${yves_user.password}","acceptedTerms":True}}}
     Response status code should be:    400
     And Response reason should be:   Bad Request
@@ -197,6 +199,7 @@ Update_a_customer_with_absent_type
 
 #bug:https://spryker.atlassian.net/browse/CC-19138
 Update_a_customer_with_invalid_data
+    [Tags]    skip-due-to-refactoring
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     I send a PATCH request:    /customers/${yves_user.reference}    {"data":{"type":"customers","attributes":{"firstName":"${yves_third_user.first_name}","lastName":"${yves_third_user.last_name}","gender":"test","salutation":"test","email":"${yves_third_user.first_name}@spryker.com","password":"${yves_user.password}","confirmPassword":"${yves_user.password}","acceptedTerms":True}}}

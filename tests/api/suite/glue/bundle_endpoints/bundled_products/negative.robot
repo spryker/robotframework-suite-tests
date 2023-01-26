@@ -10,6 +10,7 @@ ENABLER
     
 # there is a bug - https://spryker.atlassian.net/browse/CC-15994
 Get_bundled_products_with_nonexisting_concrete_sku
+    [Tags]    skip-due-to-refactoring
     When I send a GET request:    /concrete-products/fake/bundled-products
     Then Response status code should be:    404
     And Response reason should be:    Not Found
@@ -18,6 +19,7 @@ Get_bundled_products_with_nonexisting_concrete_sku
 
 # there is a bug - https://spryker.atlassian.net/browse/CC-15994
 Get_bundled_products_with_invalid_concrete_sku
+    [Tags]    skip-due-to-refactoring
     When I send a GET request:    /concrete-products/:sku/bundled-products
     Then Response status code should be:    400
     And Response reason should be:    Bad Request

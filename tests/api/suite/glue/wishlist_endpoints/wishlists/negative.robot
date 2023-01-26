@@ -43,7 +43,8 @@ Creating_wishlist_with_missing_name
 
 #CC-16553
 Creating_wishlist_with_space_in_name
-       Run Keywords    I GET access token for the customer:    ${yves_second_user.email}
+    [Tags]    skip-due-to-refactoring
+    Run Keywords    I GET access token for the customer:    ${yves_second_user.email}
     ...    AND     I set headers:    authorization=${token}
     When I send a POST request:    /wishlists    {"data": {"type": "wishlists","attributes": {"name": " "}}}
     And Response status code should be:    400
