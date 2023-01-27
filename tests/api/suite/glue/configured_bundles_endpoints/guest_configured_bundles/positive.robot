@@ -299,7 +299,7 @@ Update_configured_bundle_product_quantity
 ### DELETE ###
 Delete_configured_bundle_from_cart 
     [Setup]    Run Keywords    I set Headers:    Content-Type=${default_header_content_type}    X-Anonymous-Customer-Unique-Id=${random}
-     ...    AND    Create a guest cart:    ${random}    ${abstract_available_product_with_stock.concrete_sku}    1
+    ...    AND    Create a guest cart:    ${random}    ${abstract_available_product_with_stock.concrete_sku}    1
     ...    AND    Cleanup all items in the guest cart:    ${guest_cart_id}
     ...    AND    I send a POST request:    /guest-carts/${guest_cart_id}/guest-configured-bundles?include=guest-cart-items    {"data": {"type": "guest-configured-bundles","attributes": {"quantity": 1,"templateUuid": "${configurable_bundle_template_2_uuid}","items": [{"sku": "${configurable_bundle.slot_5.product_1}","quantity": 1,"slotUuid": "${configurable_bundle_slot_5_uuid}"}]}}}
     ...    AND    Save value to a variable:    [included][0][attributes][configuredBundle][groupKey]    bundle_id
