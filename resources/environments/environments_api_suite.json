@@ -724,5 +724,10 @@
         "configuratorKey": "DATE_TIME_CONFIGURATOR",
         "isComplete": true
     }
-}
+    },
+     "dataType": {
+         "arrow": []
+     }
+  
+
 }

@@ -59,6 +59,7 @@ Add_gift_card_code_to_cart
     
 Delete_gift_card_from_cart
      [Setup]    Run Keywords    I get access token for the customer:    ${yves_second_user.email}
+    ...  AND    I set Headers:    Authorization=${token}
     ...  AND     Create giftcode in Database:    ${random}    ${gift_card.amount}
     ...  AND     Create giftcode in Database:    ${random}    ${gift_card.amount}
     ...  AND    Create giftcode in Database:    ${random}    ${gift_card.amount}
