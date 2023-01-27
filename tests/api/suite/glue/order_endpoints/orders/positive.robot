@@ -10,7 +10,6 @@ ENABLER
 #GET requests
 
 Get_order_by_order_id
-    [Tags]    skip-due-to-refactoring
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
     ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
@@ -156,11 +155,8 @@ Get_order_by_order_id
     And Response body parameter should contain:    [data][attributes][calculatedDiscounts]    voucherCode
     And Response body parameter should contain:    [data][attributes][calculatedDiscounts]    quantity
     And Response body has correct self link internal
-    [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cart_id}
-    ...  AND    Response status code should be:    204
     
 Get_order_by_order_id_with_bundle_product
-    [Tags]    skip-due-to-refactoring
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
     ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
@@ -228,11 +224,8 @@ Get_order_by_order_id_with_bundle_product
     And Response should contain the array of a certain size:    [data][attributes][bundleItems][0][productOptions]    0
     And Response body parameter should be:    [data][attributes][bundleItems][0][amount]    None
     And Response body has correct self link internal
-    [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cart_id}
-    ...  AND    Response status code should be:    204
 
 Get_order_by_order_id_with_sales_unit
-    [Tags]    skip-due-to-refactoring
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
     ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
@@ -260,11 +253,10 @@ Get_order_by_order_id_with_sales_unit
     And Response body parameter should be:    [data][attributes][items][0][salesUnit][productMeasurementUnit][name]    ${packaging_unit.m_name}
     And Response body parameter should be:    [data][attributes][items][0][salesUnit][productMeasurementUnit][code]    ${packaging_unit.m}
     And Response body parameter should be:    [data][attributes][items][0][amount]    ${concrete_product.random_weight.amount}
-    [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cart_id}
-    ...  AND    Response status code should be:    204
 
 Get_order_by_order_id_with_different_items_and_quantity
-    [Tags]    skip-due-to-refactoring
+    [Documentation]   https://spryker.atlassian.net/browse/CC-25733
+    [Tags]    skip-due-to-issue 
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
     ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
@@ -292,11 +284,8 @@ Get_order_by_order_id_with_different_items_and_quantity
     And Response body parameter should be:    [data][attributes][items][2][name]    ${concrete_product_with_alternative.name}
     And Response body parameter should be:    [data][attributes][items][2][sku]    ${concrete_product_with_alternative.sku}
     And Response body parameter should be:    [data][attributes][items][2][quantity]    1
-    [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cart_id}
-    ...  AND    Response status code should be:    204
 
 Get_order_by_order_id_with_nonsplit_item
-    [Tags]    skip-due-to-refactoring
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
     ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
@@ -317,11 +306,10 @@ Get_order_by_order_id_with_nonsplit_item
     And Response body parameter should be:    [data][attributes][items][0][name]    ${product_availability.concrete_available_with_stock_and_never_out_of_stock_name}
     And Response body parameter should be:    [data][attributes][items][0][sku]    ${product_availability.concrete_available_with_stock_and_never_out_of_stock}
     And Response body parameter should be:    [data][attributes][items][0][quantity]    1
-    [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cart_id}
-    ...  AND    Response status code should be:    204
 
 Get_order_by_order_id_with_split_shipment_&_include
-    [Tags]    skip-due-to-refactoring
+    [Documentation]   https://spryker.atlassian.net/browse/CC-25733
+    [Tags]    skip-due-to-issue 
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
     ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
@@ -405,11 +393,8 @@ Get_order_by_order_id_with_split_shipment_&_include
     And Response body parameter should be:    [included][1][attributes][shippingAddress][country]    ${default.country}
     And Response body parameter should be:    [included][1][attributes][shippingAddress][iso2Code]    ${default.iso2Code}
     And Response body parameter should not be EMPTY:    [included][1][links]
-    [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cart_id}
-    ...  AND    Response status code should be:    204
 
 Get_customer_orders_list_without_order_id
-    [Tags]    skip-due-to-refactoring
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
     ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
@@ -433,11 +418,8 @@ Get_customer_orders_list_without_order_id
     And Each array element of array in response should contain nested property:    [data]    [attributes][totals]    remunerationTotal
     And Each array element of array in response should contain property:    [data]    links
     And Response body has correct self link
-    [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cart_id}
-    ...  AND    Response status code should be:    204
 
 Get_customer_orders_list
-    [Tags]    skip-due-to-refactoring
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
     ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
@@ -461,11 +443,8 @@ Get_customer_orders_list
     And Each array element of array in response should contain nested property:    [data]    [attributes][totals]    remunerationTotal
     And Each array element of array in response should contain property:    [data]    links
     And Response body has correct self link
-    [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cart_id}
-    ...  AND    Response status code should be:    204
 
 Get_customer_orders_list_without_order_id_with_pagination
-    [Tags]    skip-due-to-refactoring
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
     ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
@@ -496,11 +475,8 @@ Get_customer_orders_list_without_order_id_with_pagination
     And Response body parameter should not be EMPTY:    [links][first]
     And Response body parameter should not be EMPTY:    [links][prev]
     And Response body parameter should not be EMPTY:    [links][next]
-    [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cart_id}
-    ...  AND    Response status code should be:    204
 
 Get_order_with_configurable_bundle
-    [Tags]    skip-due-to-refactoring
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
     ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
@@ -654,11 +630,10 @@ Get_order_with_configurable_bundle
     And Response body parameter should contain:    [data][attributes][calculatedDiscounts]    voucherCode
     And Response body parameter should contain:    [data][attributes][calculatedDiscounts]    quantity
     And Response body has correct self link internal
-    [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cart_id}
-    ...  AND    Response status code should be:    204
 
 Get_order_with_gift_card
-    [Tags]    skip-due-to-refactoring
+    [Documentation]   https://spryker.atlassian.net/browse/CC-25733
+    [Tags]    skip-due-to-issue  
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_second_user.email}
     ...  AND    I set Headers:    Authorization=${token}
     ...  AND    I send a POST request:    /carts    {"data":{"type":"carts","attributes":{"priceMode":"${mode.gross}","currency":"${currency.eur.code}","store":"${store.de}","name": "${test_cart_name}-${random}"}}}
@@ -810,5 +785,3 @@ Get_order_with_gift_card
     And Response body parameter should contain:    [data][attributes][calculatedDiscounts]    voucherCode
     And Response body parameter should contain:    [data][attributes][calculatedDiscounts]    quantity
     And Response body has correct self link internal
-    [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cart_id}
-    ...  AND    Response status code should be:    204
