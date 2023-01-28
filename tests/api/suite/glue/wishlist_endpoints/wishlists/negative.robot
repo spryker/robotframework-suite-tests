@@ -41,8 +41,8 @@ Creating_wishlist_with_missing_name
     And Response should return error code:    901
     And Response reason should be:    Unprocessable Content
 
-#Scip due to issue https://spryker.atlassian.net/browse/CC-16553
 Creating_wishlist_with_space_in_name
+    [Documentation]    Skip due to issue https://spryker.atlassian.net/browse/CC-16553
     [Tags]    skip-due-to-issue
     Run Keywords    I GET access token for the customer:    ${yves_second_user.email}
     ...    AND     I set headers:    authorization=${token}
