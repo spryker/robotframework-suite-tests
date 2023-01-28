@@ -10,14 +10,13 @@ ENABLER
 
 ######POST#####
 Create_customer_address_with_missing_required_fields
-    [Tags]    skip-due-to-refactoring
     When I get access token for the customer:    ${yves_user.email}
     And I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     And I send a POST request:    /customers/${yves_user.reference}/addresses    {"data": {"type": "addresses","attributes": {"address3": "${default.address3}"}}}
     Then Response status code should be:    422
     And Response reason should be:    Unprocessable Content
     And Each array element of array in response should contain property with value:    [errors]    code    901
-    And Each array element of array in response should contain property with value:    [errors]    status    422
+    And Each array element of array in response should contain property with value:    [errors]    status    ${422}
     And Array in response should contain property with value:    [errors]    detail    salutation => This field is missing.
     And Array in response should contain property with value:    [errors]    detail    firstName => This field is missing.
     And Array in response should contain property with value:    [errors]    detail    lastName => This field is missing.
@@ -30,14 +29,13 @@ Create_customer_address_with_missing_required_fields
     And Array in response should contain property with value:    [errors]    detail    isDefaultBilling => This field is missing.
 
 Create_customer_address_with_empty_fields
-    [Tags]    skip-due-to-refactoring
     When I get access token for the customer:    ${yves_user.email}
     And I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     And I send a POST request:    /customers/${yves_user.reference}/addresses    {"data": {"type": "addresses","attributes": {"salutation": "","firstName": "","lastName": "","address1": "","address2": "","address3": "","zipCode": "","city": "","country": "","iso2Code": "","company":"","phone": "","isDefaultShipping": "","isDefaultBilling": ""}}}
     Then Response status code should be:    422
     And Response reason should be:    Unprocessable Content
     And Each array element of array in response should contain property with value:    [errors]    code    901
-    And Each array element of array in response should contain property with value:    [errors]    status    422
+    And Each array element of array in response should contain property with value:    [errors]    status    ${422}
     And Array in response should contain property with value:    [errors]    detail    salutation => This value should not be blank.
     And Array in response should contain property with value:    [errors]    detail    salutation => The value you selected is not a valid choice.
     And Array in response should contain property with value:    [errors]    detail    firstName => This value should not be blank.
@@ -244,17 +242,16 @@ Patch_customer_address_with_wrong_reference
     ...    AND    Response status code should be:    204
 
 Patch_customer_address_with_empty_required_fields
-    [Tags]    skip-due-to-refactoring
     [Setup]    Run keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     ...    AND    I send a POST request:    /customers/${yves_user.reference}/addresses    {"data": {"type": "addresses","attributes": {"salutation": "${yves_second_user.salutation}","firstName": "${yves_second_user.first_name}","lastName": "${yves_second_user.last_name}","address1": "${default.address1}","address2": "${default.address2}","address3": "${default.address3}","zipCode": "${default.zipCode}","city": "${default.city}","country": "${default.country}","iso2Code": "${default.iso2Code}","company":"${default.company}","phone": "${default.phone}","isDefaultShipping": ${default.shipping_status},"isDefaultBilling": ${default.billing_status}}}}
     ...    AND    Response status code should be:    201
     ...    AND    Save value to a variable:    [data][id]    address_uid
     When I send a PATCH request:    /customers/${yves_user.reference}/addresses/${address_uid}    {"data": {"salutation": "${yves_second_user.salutation}","type": "addresses","attributes": {"salutation": None,"firstName": None,"lastName": None, "address1": None,"address2": None,"zipCode": None,"city": None,"iso2Code": None}}}
-    Then Response status code should be:    422
+    Then Response status code should be:    ${422}
     And Response reason should be:    Unprocessable Content
     And Each array element of array in response should contain property with value:    [errors]    code    901
-    And Each array element of array in response should contain property with value:    [errors]    status    422
+    And Each array element of array in response should contain property with value:    [errors]    status    ${422}
     And Array in response should contain property with value:    [errors]    detail    salutation => This value should not be blank.
     And Array in response should contain property with value:    [errors]    detail    firstName => This value should not be blank.
     And Array in response should contain property with value:    [errors]    detail    lastName => This value should not be blank.
