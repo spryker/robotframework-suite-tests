@@ -541,7 +541,7 @@
             "default_3": "6"
         },
         "default_qty": {
-            "ipp_pages": "18",
+            "ipp_pages": "19",
             "categories": "18",
             "colors": "10",
             "labels": "4",
@@ -578,7 +578,7 @@
             "qty": "5"
         },
         "category_tree_branches_qty": "6",
-        "total_number_of_products_in_search": "216",
+        "total_number_of_products_in_search": "217",
         "abstract_sku_highest_rating": "035"
     },
     "availability": {

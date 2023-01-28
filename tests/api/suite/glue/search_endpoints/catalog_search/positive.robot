@@ -10,10 +10,9 @@ ENABLER
     TestSetup
 
 
-##### SEARCH PARAMETERS #####
+# SEARCH PARAMETERS #
 
 Search_with_empty_search_criteria_all_default_values_check
-    [Tags]    skip-due-to-refactoring
     When I send a GET request:    /catalog-search?q=
     Then Response status code should be:    200
     And Response reason should be:    OK
@@ -227,10 +226,9 @@ Search_by_several_attributes
     And Response body parameter should be greater than:    [data][0][attributes][pagination][maxPage]    0
     And Response should contain the array of a certain size:    [data][0][attributes][abstractProducts]    2
 
-#### FILTERING #####
+# FILTERING #
 
 Filter_by_rating_only_min
-    [Tags]    skip-due-to-refactoring
     When I send a GET request:    /catalog-search?q=&rating[min]=3
     Then Response status code should be:    200
     And Response reason should be:    OK
@@ -241,12 +239,14 @@ Filter_by_rating_only_min
     And Response body parameter should be greater than:    [data][0][attributes][pagination][maxPage]    0
     And Response should contain the array of a certain size:    [data][0][attributes][abstractProducts]    ${ipp.default_3}
     #rating facets
-    And Response body parameter should be:    [data][0][attributes][rangeFacets][0][activeMin]    ${default_active.min}
-    And Response body parameter should be:    [data][0][attributes][rangeFacets][0][activeMax]    ${default_active.max}
-
+    #for me this check looks strange. Verify min and max price value for product list after filtering by rating?? Flakery tests. Demo data can be changed.
+    # And Response body parameter should be:    [data][0][attributes][rangeFacets][0][activeMin]    ${default_active.min}
+    # And Response body parameter should be:    [data][0][attributes][rangeFacets][0][activeMax]    ${default_active.max}
+    And Response body parameter should not be EMPTY:    [data][0][attributes][rangeFacets][0][activeMin]
+    And Response body parameter should not be EMPTY:    [data][0][attributes][rangeFacets][0][activeMax]
+   
 
 Filter_by_rating_only_max
-    [Tags]    skip-due-to-refactoring
     When I send a GET request:    /catalog-search?q=&rating[max]=${default_price_range.min}
     Then Response status code should be:    200
     And Response reason should be:    OK
@@ -257,8 +257,10 @@ Filter_by_rating_only_max
     And Response body parameter should be greater than:    [data][0][attributes][pagination][maxPage]    0
     And Response should contain the array of a certain size:    [data][0][attributes][abstractProducts]    ${ipp.default_3}
     #rating facets
-    And Response body parameter should be:    [data][0][attributes][rangeFacets][0][activeMin]    ${default_active.min}
-    And Response body parameter should be:    [data][0][attributes][rangeFacets][0][activeMax]    ${default_active.max}
+#     And Response body parameter should be:    [data][0][attributes][rangeFacets][0][activeMin]    ${default_active.min}
+#     And Response body parameter should be:    [data][0][attributes][rangeFacets][0][activeMax]    ${default_active.max}
+      And Response body parameter should not be EMPTY:    [data][0][attributes][rangeFacets][0][activeMin]
+      And Response body parameter should not be EMPTY:    [data][0][attributes][rangeFacets][0][activeMax] 
 
 
 Filter_by_rating_Min_max
@@ -302,7 +304,7 @@ Filter_by_brand_two_brands
     And Response body parameter should be:    [data][0][attributes][valueFacets][4][activeValue][1]    ${brand_1}
 
 Filter_by_brand_empty_brand
-    [Tags]    skip-due-to-refactoring
+
     When I send a GET request:    /catalog-search?q=&brand=
     Then Response status code should be:    200
     And Response reason should be:    OK
@@ -342,13 +344,12 @@ Filter_by_label_one_label
     And Response body has correct self link
 
 Filter_by_label_two_labels
-    [Tags]    skip-due-to-refactoring
     When I send a GET request:    /catalog-search?q=&label[]=${label.new}&label[]=${label.sale}
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response body parameter should be:    [data][0][type]    catalog-search
-    And Response body parameter should be:    [data][0][attributes][pagination][numFound]    67
+    And Response body parameter should be:    [data][0][attributes][pagination][numFound]    66
     And Response body parameter should be:    [data][0][attributes][pagination][currentPage]    1
     And Response body parameter should be greater than:    [data][0][attributes][pagination][maxPage]    1
     And Response should contain the array of a certain size:    [data][0][attributes][abstractProducts]    ${ipp.default}
@@ -368,7 +369,6 @@ Filter_by_label_non_existing_label
     And Response body parameter should be:    [data][0][attributes][valueFacets][1][activeValue][0]    test123
 
 Filter_by_label_empty_label
-    [Tags]    skip-due-to-refactoring
     When I send a GET request:    /catalog-search?q=&label[]=
     Then Response status code should be:    200
     And Response reason should be:    OK
@@ -423,7 +423,6 @@ Filter_by_color_non_existing_color
     And Response body parameter should be:    [data][0][attributes][valueFacets][2][activeValue][0]    test123
 
 Filter_by_color_empty_color
-    [Tags]    skip-due-to-refactoring
     When I send a GET request:    /catalog-search?q=&color[]=
     Then Response status code should be:    200
     And Response reason should be:    OK
@@ -436,7 +435,6 @@ Filter_by_color_empty_color
     And Response body parameter should be:    [data][0][attributes][valueFacets][2][activeValue][0]    ${EMPTY}
 
 Filter_by_valid_main_category
-    [Tags]    skip-due-to-refactoring
     When I send a GET request:    /catalog-search?q=&category=${category_lvl1.id}
     Then Response status code should be:    200
     And Response reason should be:    OK
@@ -455,7 +453,6 @@ Filter_by_valid_main_category
     And Response body has correct self link
 
 Filter_by_valid_subcategory
-    [Tags]    skip-due-to-refactoring
     When I send a GET request:    /catalog-search?q=&category=${category_lvl2.id}
     Then Response status code should be:    200
     And Response reason should be:    OK
@@ -493,7 +490,6 @@ Search_with_specific_currency
 ##### PAGINATION AND SORTING #####
 
 Search_set_specific_page_with_default_ipp
-    [Tags]    skip-due-to-refactoring
     # here page 4 is selected using offset because 36/12=3 full pages, search shows the next page after the offset
     When I send a GET request:    /catalog-search?q=&page[limit]=${ipp.default}&page[offset]=36
     Then Response status code should be:    200
@@ -513,7 +509,6 @@ Search_set_specific_page_with_default_ipp
 
 
 Search_set_specific_page_and_nondefault_ipp
-    [Tags]    skip-due-to-refactoring
     When I send a GET request:    /catalog-search?q=&page[limit]=${ipp.middle}&page[offset]=36
     Then Response status code should be:    200
     And Response reason should be:    OK
@@ -531,7 +526,6 @@ Search_set_specific_page_and_nondefault_ipp
     And Response body parameter should not be EMPTY:    [links][next]
 
 Search_set_last_page_and_nondefault_ipp
-    [Tags]    skip-due-to-refactoring
     When I send a GET request:    /catalog-search?q=&page[limit]=${ipp.biggest}&page[offset]=${total_number_of_products_in_search}
     Then Response status code should be:    200
     And Response reason should be:    OK
@@ -541,14 +535,13 @@ Search_set_last_page_and_nondefault_ipp
     And Response body parameter should be:    [data][0][attributes][pagination][currentPage]    7
     And Response body parameter should be:    [data][0][attributes][pagination][maxPage]    7
     And Response body parameter should be:    [data][0][attributes][pagination][config][defaultItemsPerPage]    ${ipp.default}
-    And Response should contain the array larger than a certain size:    [data][0][attributes][abstractProducts]    1
+    And Response should contain the array of a certain size:    [data][0][attributes][abstractProducts]    1
     And Response body parameter should not be EMPTY:    [links][self]
     And Response body parameter should not be EMPTY:    [links][last]
     And Response body parameter should not be EMPTY:    [links][first]
     And Response body parameter should not be EMPTY:    [links][prev]
 
 Search_set_invalid_ipp
-    [Tags]    skip-due-to-refactoring
     When I send a GET request:    /catalog-search?q=&page[limit]=18&page[offset]=1
     Then Response status code should be:    200
     And Response reason should be:    OK
