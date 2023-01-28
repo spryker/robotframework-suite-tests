@@ -126,7 +126,7 @@ Add_an_item_to_the_shared_shopping_cart_by_user_with_access
     Then Response status code should be:    201
     And Response body parameter should be:    [data][id]    ${cartId}
     And Response body parameter should be:    [data][type]    carts
-    And Response body parameter should be:    [included][0][id]    ${concrete_available_product.sku}
+    And Response body parameter should be:    [included][0][attributes][sku]    ${concrete_available_product.sku}
     And Response body parameter should be:    [included][0][attributes][quantity]    1
     And Response body parameter should be greater than:    [included][0][attributes][calculations][sumPriceToPayAggregation]    0
     [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cartId}
