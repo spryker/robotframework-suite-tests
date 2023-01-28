@@ -51,7 +51,7 @@ Add_an_non_existing_item_to_the_guest_cart
     When I send a POST request:    /guest-carts/${guestCartId}/guest-cart-items    {"data":{"type":"guest-cart-items","attributes":{"sku":"non_existing_item","quantity":"1"}}}
     Then Array in response should contain property with value:    [errors]    code    102
     And Array in response should contain property with value:    [errors]    code    113
-    And Each array element of array in response should contain property with value:    [errors]    status    422
+    And Each array element of array in response should contain property with value:    [errors]    status    ${422}
     And Response reason should be:    Unprocessable Content
     And Array in response should contain property with value:    [errors]    detail    Product "non_existing_item" not found
     And Array in response should contain property with value:    [errors]    detail    Cart item could not be added.
@@ -64,7 +64,7 @@ Add_an_item_to_the_guest_cart_without_sku_attribute_and_quantity_attribute
     ...    AND    Cleanup All Items In The Guest Cart:    ${guest_cart_id}
     When I send a POST request:    /guest-carts/${guestCartId}/guest-cart-items    {"data":{"type":"guest-cart-items","attributes":{}}}
     Then Each array element of array in response should contain property with value:    [errors]    code    901
-    And Each array element of array in response should contain property with value:    [errors]    status    422
+    And Each array element of array in response should contain property with value:    [errors]    status    ${422}
     And Response reason should be:    Unprocessable Content
     And Array in response should contain property with value:    [errors]    detail    sku => This field is missing.
     And Array in response should contain property with value:    [errors]    detail    quantity => This field is missing.
@@ -77,7 +77,7 @@ Add_an_item_to_the_guest_cart_without_sku_and_quantity_values
     ...    AND    Cleanup All Items In The Guest Cart:    ${guest_cart_id}
     When I send a POST request:    /guest-carts/${guestCartId}/guest-cart-items    {"data":{"type":"guest-cart-items","attributes":{"sku":"","quantity":""}}}
     Then Each array element of array in response should contain property with value:    [errors]    code    901
-    And Each array element of array in response should contain property with value:    [errors]    status    422
+    And Each array element of array in response should contain property with value:    [errors]    status    ${422}
     And Response reason should be:    Unprocessable Content
     And Array in response should contain property with value:    [errors]    detail    sku => This value should not be blank.
     And Array in response should contain property with value:    [errors]    detail    quantity => This value should not be blank.

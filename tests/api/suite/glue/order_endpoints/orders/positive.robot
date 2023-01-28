@@ -174,7 +174,7 @@ Get_order_by_order_id_with_bundle_product
     And Response body parameter should be:    [data][attributes][priceMode]    ${mode.gross}
     #items
     And Response should contain the array of a certain size:    [data][attributes][items]    3
-    And Each array element of array in response should contain property with value:    [data][attributes][items]    bundleItemIdentifier    None
+    And Each array element of array in response should contain property with value:    [data][attributes][items]    bundleItemIdentifier    ${None}
     And Each array element of array in response should contain property:    [data][attributes][items]    relatedBundleItemIdentifier
     And Response body parameter should be:    [data][attributes][items][0][name]    ${bundled_product.concrete.product_2_name}
     And Response body parameter should be:    [data][attributes][items][0][sku]    ${bundled_product.concrete.product_2_sku}
