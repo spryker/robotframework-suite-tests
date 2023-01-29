@@ -60,7 +60,6 @@ Get_concrete_bundle_product_with_bundled_products_include
 
 Get_abstract_bundle_product_with_bundled_products_include
     [Documentation]    There are several checks are commented because of changes done in CC-12041: GLUE. Details you can check here: CC-23710
-    [Tags]    skip-due-to-refactoring
     When I send a GET request:    /abstract-products/${bundle_product.abstract.sku}?include=bundled-products,concrete-products
     Then Response status code should be:    200
     And Response reason should be:    OK

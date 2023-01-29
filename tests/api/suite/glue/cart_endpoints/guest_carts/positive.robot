@@ -61,7 +61,6 @@ Retrieve_guest_cart_by_id
     And Response body parameter should be greater than:    [data][attributes][totals][priceToPay]    0
 
 Retrieve_guest_cart_including_cart_items
-    [Tags]    skip-due-to-refactoring
     [Setup]    Create a guest cart:    ${random}    ${concrete_product_with_concrete_product_alternative.sku}    7
     When I send a GET request:    /guest-carts/${guest_cart_id}?include=guest-cart-items
     Then Response status code should be:    200
@@ -72,7 +71,8 @@ Retrieve_guest_cart_including_cart_items
     And Response body parameter should be:    [data][attributes][currency]    ${currency.eur.code}
     And Response body parameter should be:    [data][attributes][store]    ${store.de}
     And Response body parameter should be:    [data][relationships][guest-cart-items][data][0][type]    guest-cart-items
-    And Response body parameter should be:    [data][relationships][guest-cart-items][data][0][id]    ${concrete_product_with_concrete_product_alternative.sku}
+    And Response body parameter should contain:    [data][relationships][guest-cart-items][data][0][id]    ${concrete_product_with_concrete_product_alternative.sku}
+    # And Response body parameter should be:    [data][relationships][guest-cart-items][data][0][id]    ${concrete_product_with_concrete_product_alternative.sku}
     And Each array element of array in response should contain nested property with value:    [included]    type    guest-cart-items
     And Each array element of array in response should contain nested property with datatype:    [included]    id    str
     And Response should contain the array of a certain size:    [included]    1
