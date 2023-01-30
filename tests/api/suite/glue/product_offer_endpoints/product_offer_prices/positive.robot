@@ -23,7 +23,7 @@ Get_concrete_product_without_offers_prices
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response should contain the array of a certain size:    [data]    0
-
+# 
 Get_all_concrete_product_offer_info_with_product_offer_prices_and_product_offer_availabilities_and_merchants_included
     When I send a GET request:    /concrete-products/${abstract_product.product_with_concrete_offers.sku}/product-offers?include=product-offer-prices,merchants
     Then Response status code should be:    200
@@ -32,7 +32,7 @@ Get_all_concrete_product_offer_info_with_product_offer_prices_and_product_offer_
     And Response body parameter should be:    [data][0][id]    ${active_offer}
     And Response body parameter should be:    [data][0][type]    product-offers
     And Response body parameter should be in:    [data][0][attributes][isDefault]    True    False
-    And Response body parameter should be:    [data][0][attributes][merchantReference]    ${merchant_sony_experts_id}
+    And Response body parameter should be:    [data][0][attributes][merchantReference]    ${merchant_video_king_id}
     And Response body parameter should not be EMPTY:    [data][0][links][self]
     And Response body parameter should contain:    [data][0][attributes]    merchantSku
     And Response should contain the array of a certain size:    [included]    4
@@ -51,7 +51,7 @@ Get_all_product_offer_info_with_product_offer_prices_and_merchants_included
     And Response body parameter should be:    [data][id]    ${active_offer}
     And Response body parameter should be:    [data][type]    product-offers
     And Response body parameter should be in:    [data][attributes][isDefault]    True    False
-    And Response body parameter should be:    [data][attributes][merchantReference]    ${merchant_sony_experts_id}
+    And Response body parameter should be:    [data][attributes][merchantReference]    ${merchant_video_king_id}
     And Response body parameter should not be EMPTY:    [data][links][self]
     And Response body parameter should be greater than:    [data][attributes][merchantSku]    1
     And Response should contain the array of a certain size:    [included]    2
