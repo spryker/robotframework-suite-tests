@@ -349,7 +349,7 @@ Filter_by_label_two_labels
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response body parameter should be:    [data][0][type]    catalog-search
-    And Response body parameter should be:    [data][0][attributes][pagination][numFound]    66
+    And Response body parameter should be:    [data][0][attributes][pagination][numFound]    67
     And Response body parameter should be:    [data][0][attributes][pagination][currentPage]    1
     And Response body parameter should be greater than:    [data][0][attributes][pagination][maxPage]    1
     And Response should contain the array of a certain size:    [data][0][attributes][abstractProducts]    ${ipp.default}
