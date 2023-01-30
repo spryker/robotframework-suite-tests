@@ -260,7 +260,7 @@
         "alternative_abstract_product": {
             "sku": "155",
             "price_chf": "42090",
-            "price_chf_1": "39675"
+            "price_chf_1": "51778"
         },
         "abstract_available_product_with_stock": {
             "sku": "183",
@@ -319,9 +319,9 @@
                 "name": "Sony SmartWatch 3"
             },
             "product_with_concrete_offers": {
-                "sku": "112",
-                "concrete_sku": "112_312526171",
-                "name": "Acer Extensa M2610"
+                "sku": "006",
+                "concrete_sku": "006_30692993",
+                "name": "Canon IXUS 175"
             },
             "product_with_multiple_variants": {
                 "sku": "199",
@@ -449,6 +449,7 @@
         "inactive_offer_with_volume_price": "offer5",
         "waiting_for_approval_offer_with_volume_price": "offer10",
         "denied_offer_with_volume_price": "offer404",
+        "active_offer_2": "offer54",
         "active_offer": "offer13",
         "offer_without_volume_price": "offer359",
         "offer_without_original_price": "offer6",

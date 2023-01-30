@@ -547,6 +547,7 @@ Create_order_with_configurable_bundle_item
     And Response body parameter should contain:    [included][0][attributes][calculatedDiscounts]    voucherCode
     And Response body parameter should contain:    [included][0][attributes][calculatedDiscounts]    quantity
 
+Create_checkout_with_gift_card
     [Tags]    skip-due-to-issue
     [Documentation]    bug https://spryker.atlassian.net/browse/CC-21301
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_second_user.email}
