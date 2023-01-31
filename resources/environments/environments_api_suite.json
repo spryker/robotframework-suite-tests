@@ -281,6 +281,7 @@
             "abstract_available_product_with_no_stock_and_never_out_of_stock": "666",
             "abstract_unavailable_product": "189",
             "concrete_available_with_stock_and_never_out_of_stock_sku": "005_30663301",
+            "concrete_available_with_stock_and_never_out_of_stock_sku_name": "Canon IXUS 175",
             "concrete_unavailable_product": "192_17738941",
             "concrete_available_with_stock_and_never_out_of_stock": "002_25904004",
             "concrete_available_with_stock_and_never_out_of_stock_name": "Canon IXUS 160"
