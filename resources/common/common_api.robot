@@ -1433,12 +1433,24 @@ Get ETag header value from cart
 
 Create giftcode in Database:
     [Documentation]    This keyword creates a new entry in the table spy_gift_card with the name, value and gift-card code.
-     [Arguments]    ${spy_gift_card_code}    ${spy_gift_card_value}
+    [Arguments]    ${spy_gift_card_code}    ${spy_gift_card_value}
     ${amount}=   Evaluate    ${spy_gift_card_value} / 100
     ${amount}=    Evaluate    "%.f" % ${amount}
     Connect to Spryker DB
-    # Execute Sql String    insert ignore into spy_gift_card (code,name,currency_iso_code,value) value ('${spy_gift_card_code}','Gift_card_${amount}','EUR','${spy_gift_card_value}')
-    Execute Sql String    INSERT INTO spy_gift_card (code, name, currency_iso_code, value) VALUES ('${spy_gift_card_code}', 'Gift_card_${amount}', 'EUR', '${spy_gift_card_value}');
+    ${last_id}=    Query    SELECT id_gift_card FROM spy_gift_card ORDER BY id_gift_card DESC LIMIT 1;
+    ${new_id}=    Set Variable    ${EMPTY}
+    ${last_id_length}=    Get Length    ${last_id}
+    IF    ${last_id_length} > 0    
+        ${new_id}=    Evaluate    ${last_id[0][0]} + 1
+    ELSE
+        ${new_id}=    Evaluate    1
+    END
+    Log    ${new_id}
+    IF    '${db_engine}' == 'pymysql'
+        Execute Sql String    insert ignore into spy_gift_card (code,name,currency_iso_code,value) value ('${spy_gift_card_code}','Gift_card_${amount}','EUR','${spy_gift_card_value}')
+    ELSE
+        Execute Sql String    INSERT INTO spy_gift_card (id_gift_card, code, name, currency_iso_code, value) VALUES (${new_id}, '${spy_gift_card_code}', 'Gift_card_${amount}', 'EUR', '${spy_gift_card_value}');
+    END
     Disconnect From Database
 
 
