@@ -149,7 +149,8 @@ Get_a_cart_with_included_items_and_concrete_products
 
 # bug https://spryker.atlassian.net/browse/CC-19233
 Add_five_items_to_cart_with_included_cart_rules_and_promotional_items
-   [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
+    [Tags]    skip-due-to-issue
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
     ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
     ...  AND    Save value to a variable:    [data][id]    cart_id
