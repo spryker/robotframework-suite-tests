@@ -22,6 +22,9 @@ ${default_db_name}         eu-docker
 ${default_db_password}     secret
 ${default_db_port}         3306
 ${default_db_user}         spryker
+${default_db_engine}       pymysql
+${db_engine}
+# ${default_db_engine}       psycopg2
 
 *** Keywords ***
 SuiteSetup
@@ -1272,7 +1275,7 @@ Save the result of a SELECT DB query to a variable:
     ...
     ...    ``Save the result of a SELECT DB query to a variable:    select registration_key from spy_customer where customer_reference = '${user_reference_id}'    confirmation_key``
     [Arguments]    ${sql_query}    ${variable_name}
-    Connect To Database    pymysql    ${db_name}    ${db_user}    ${db_password}    ${db_host}    ${db_port}
+    Connect to Spryker DB
     ${var_value} =    Query    ${sql_query}
     Disconnect From Database
     ${var_value}=    Convert To String    ${var_value}
@@ -1433,8 +1436,9 @@ Create giftcode in Database:
      [Arguments]    ${spy_gift_card_code}    ${spy_gift_card_value}
     ${amount}=   Evaluate    ${spy_gift_card_value} / 100
     ${amount}=    Evaluate    "%.f" % ${amount}
-    Connect To Database    pymysql    ${db_name}    ${db_user}    ${db_password}    ${db_host}    ${db_port}
-    Execute Sql String    insert ignore into spy_gift_card (code,name,currency_iso_code,value) value ('${spy_gift_card_code}','Gift_card_${amount}','EUR','${spy_gift_card_value}')
+    Connect to Spryker DB
+    # Execute Sql String    insert ignore into spy_gift_card (code,name,currency_iso_code,value) value ('${spy_gift_card_code}','Gift_card_${amount}','EUR','${spy_gift_card_value}')
+    Execute Sql String    INSERT INTO spy_gift_card (code, name, currency_iso_code, value) VALUES ('${spy_gift_card_code}', 'Gift_card_${amount}', 'EUR', '${spy_gift_card_value}');
     Disconnect From Database
 
 
@@ -1537,11 +1541,11 @@ Update order status in Database:
     ...    ``Update order status in Database:    7    shipped``
     
     [Arguments]    ${order_item_status_name}
-    Connect To Database    pymysql    ${db_name}    ${db_user}    ${db_password}    ${db_host}    ${db_port}
+    Connect to Spryker DB
     Execute Sql String    insert ignore into spy_oms_order_item_state (name) values ('${order_item_status_name}')
     Disconnect From Database
     Save the result of a SELECT DB query to a variable:    select id_oms_order_item_state from spy_oms_order_item_state where name like '${order_item_status_name}'    state_id
-    Connect To Database    pymysql    ${db_name}    ${db_user}    ${db_password}    ${db_host}    ${db_port}
+    Connect to Spryker DB
     Execute Sql String    update spy_sales_order_item set fk_oms_order_item_state = '${state_id}' where uuid = '${Uuid}'
     Disconnect From Database
 
@@ -1555,3 +1559,12 @@ Get voucher code by discountId from Database:
     [Arguments]    ${discount_id}
     Save the result of a SELECT DB query to a variable:    select fk_discount_voucher_pool from spy_discount where id_discount = ${discount_id}    discount_voucher_pool_id
     Save the result of a SELECT DB query to a variable:    select code from spy_discount_voucher where fk_discount_voucher_pool = ${discount_voucher_pool_id} and is_active = 1 limit 1    discount_voucher_code
+
+Connect to Spryker DB
+    ${db_name}=    Set Variable If    '${db_name}' == '${EMPTY}'    ${default_db_name}    ${db_name}
+    ${db_user}=    Set Variable If    '${db_name}' == '${EMPTY}'    ${default_db_user}    ${db_user}
+    ${db_password}=    Set Variable If    '${db_name}' == '${EMPTY}'    ${default_db_password}    ${db_password}
+    ${db_host}=    Set Variable If    '${db_name}' == '${EMPTY}'    ${default_db_host}    ${db_host}
+    ${db_port}=    Set Variable If    '${db_name}' == '${EMPTY}'    ${default_db_port}    ${db_port}
+    ${db_engine}=    Set Variable If    '${db_engine}' == '${EMPTY}'    ${default_db_engine}    ${db_engine}
+    Connect To Database    ${db_engine}    ${db_name}    ${db_user}    ${db_password}    ${db_host}    ${db_port}

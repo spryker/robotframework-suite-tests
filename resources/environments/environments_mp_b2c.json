@@ -8,6 +8,14 @@
         "mp_url": "http://mp.de.spryker.local/security-merchant-portal-gui/login/"
     },
 
+    "database": {
+        "db_host": "127.0.0.1",
+        "db_port": "3306",
+        "db_user": "spryker",
+        "db_password": "secret",
+        "db_name": "eu-docker"
+        },
+        
     "users": {    
         "yves_user_email": "george.freeman@spryker.com",
         "yves_user_first_name": "George",
