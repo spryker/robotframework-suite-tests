@@ -574,6 +574,9 @@
                 "discount_amount_with_20_percentage_off_storage": "16383",
                 "discount_amount_with_10_percentage_off_minimum_order": "1882"
                 }
+            },
+            "configurable_product": {
+                "sku": "093_24495843"
             }
     },    
   
@@ -831,6 +834,14 @@
         "return_reason_wrong_item": "Wrong Item",
         "return_reason_no_longer_needed": "No longer needed",
         "return_reasons_qty": "3"
+        },
+        "productConfigurationInstance": {
+            "productConfigurationInstance":{
+            "displayData": "{\"Preferred time of the day\": \"Afternoon\", \"Date\": \"9.09.2050\"}",
+            "configuration": "{\"time_of_day\": \"3\"}",
+            "configuratorKey": "DATE_TIME_CONFIGURATOR",
+            "isComplete": true
         }
+    }
 
 }
