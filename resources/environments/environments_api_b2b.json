@@ -432,6 +432,9 @@
             "first_slot_item_sku": "575056",
             "first_slot_uuid": "332b40ac-a789-57ce-bec0-23d8dddd71eb",
             "quantity": 2
+        },
+        "configurable_product": {
+            "sku": "574601"
         }
     },
     "product_attributes":{
@@ -604,6 +607,13 @@
             "no_longer_needed": "No longer needed",
             "qty": "3"
         }
+    },
+    "productConfigurationInstance": {
+        "productConfigurationInstance":{
+        "displayData": "{\"Preferred time of the day\": \"Afternoon\", \"Date\": \"9.09.2050\"}",
+        "configuration": "{\"time_of_day\": \"3\"}",
+        "configuratorKey": "DATE_TIME_CONFIGURATOR",
+        "isComplete": true
     }
-
+    }
 }
