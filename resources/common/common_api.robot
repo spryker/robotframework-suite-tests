@@ -1558,14 +1558,14 @@ Update order status in Database:
     ${new_id}=    Set Variable    ${EMPTY}
     ${state_id}=    Set Variable    ${EMPTY}
     ${last_id}=    Query    SELECT id_oms_order_item_state FROM spy_oms_order_item_state ORDER BY id_oms_order_item_state DESC LIMIT 1;
-    ${shipped_id}=    Query    SELECT id_oms_order_item_state FROM spy_oms_order_item_state WHERE name='shipped';
+    ${shipped_id}=    Query    SELECT id_oms_order_item_state FROM spy_oms_order_item_state WHERE name='${order_item_status_name}';
     ${last_id_length}=    Get Length    ${last_id}
     ${shipped_id_length}=    Get Length    ${shipped_id}
     IF    ${shipped_id_length} > 0 
         ${state_id}=    Set Variable    ${shipped_id[0][0]}
     ELSE
         ${new_id}=    Evaluate    ${last_id[0][0]} + 1
-        Execute Sql String    INSERT INTO spy_oms_order_item_state (id_oms_order_item_state, name) VALUES (${new_id}, 'shipped');
+        Execute Sql String    INSERT INTO spy_oms_order_item_state (id_oms_order_item_state, name) VALUES (${new_id}, '${order_item_status_name}');
         ${state_id}=    Set Variable    ${new_id}
     END
     Execute Sql String    update spy_sales_order_item set fk_oms_order_item_state = '${state_id}' where uuid = '${Uuid}'
