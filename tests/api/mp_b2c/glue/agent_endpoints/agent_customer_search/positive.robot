@@ -160,7 +160,6 @@ Agent_can_get_search_for_customers_from_last_page
     When I send a GET request:    /agent-customer-search?page[offset]=30&page[limit]=10
     Then Response status code should be:    200
     And Response reason should be:    OK
-    Log    ${response_body}
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response body parameter should be:    [data][0][id]    None
     And Response body parameter should be:    [data][0][type]    agent-customer-search
