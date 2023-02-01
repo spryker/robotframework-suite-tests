@@ -361,5 +361,7 @@ Save the result of a SELECT DB query to a variable:
     ${var_value}=    Replace String    ${var_value}    ,   ${EMPTY}
     ${var_value}=    Replace String    ${var_value}    (   ${EMPTY}
     ${var_value}=    Replace String    ${var_value}    )   ${EMPTY}
+    ${var_value}=    Replace String    ${var_value}    [   ${EMPTY}
+    ${var_value}=    Replace String    ${var_value}    ]   ${EMPTY}
     Set Test Variable    ${${variable_name}}    ${var_value}
     [Return]    ${variable_name}

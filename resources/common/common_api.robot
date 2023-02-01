@@ -1283,6 +1283,8 @@ Save the result of a SELECT DB query to a variable:
     ${var_value}=    Replace String    ${var_value}    ,   ${EMPTY}
     ${var_value}=    Replace String    ${var_value}    (   ${EMPTY}
     ${var_value}=    Replace String    ${var_value}    )   ${EMPTY}
+    ${var_value}=    Replace String    ${var_value}    [   ${EMPTY}
+    ${var_value}=    Replace String    ${var_value}    ]   ${EMPTY}
     Set Test Variable    ${${variable_name}}    ${var_value}
     [Return]    ${variable_name}
 
@@ -1551,13 +1553,21 @@ Update order status in Database:
     ...    *Example:*
     ...    
     ...    ``Update order status in Database:    7    shipped``
-    
     [Arguments]    ${order_item_status_name}
     Connect to Spryker DB
-    Execute Sql String    insert ignore into spy_oms_order_item_state (name) values ('${order_item_status_name}')
-    Disconnect From Database
-    Save the result of a SELECT DB query to a variable:    select id_oms_order_item_state from spy_oms_order_item_state where name like '${order_item_status_name}'    state_id
-    Connect to Spryker DB
+    ${new_id}=    Set Variable    ${EMPTY}
+    ${state_id}=    Set Variable    ${EMPTY}
+    ${last_id}=    Query    SELECT id_oms_order_item_state FROM spy_oms_order_item_state ORDER BY id_oms_order_item_state DESC LIMIT 1;
+    ${shipped_id}=    Query    SELECT id_oms_order_item_state FROM spy_oms_order_item_state WHERE name='shipped';
+    ${last_id_length}=    Get Length    ${last_id}
+    ${shipped_id_length}=    Get Length    ${shipped_id}
+    IF    ${shipped_id_length} > 0 
+        ${state_id}=    Set Variable    ${shipped_id[0][0]}
+    ELSE
+        ${new_id}=    Evaluate    ${last_id[0][0]} + 1
+        Execute Sql String    INSERT INTO spy_oms_order_item_state (id_oms_order_item_state, name) VALUES (${new_id}, 'shipped');
+        ${state_id}=    Set Variable    ${new_id}
+    END
     Execute Sql String    update spy_sales_order_item set fk_oms_order_item_state = '${state_id}' where uuid = '${Uuid}'
     Disconnect From Database
 
@@ -1567,12 +1577,20 @@ Get voucher code by discountId from Database:
     ...
     ...    *Example:*
     ...    ``Get voucher code by discountId from Database:    3``
-
     [Arguments]    ${discount_id}
     Save the result of a SELECT DB query to a variable:    select fk_discount_voucher_pool from spy_discount where id_discount = ${discount_id}    discount_voucher_pool_id
     Save the result of a SELECT DB query to a variable:    select code from spy_discount_voucher where fk_discount_voucher_pool = ${discount_voucher_pool_id} and is_active = 1 limit 1    discount_voucher_code
 
 Connect to Spryker DB
+    [Documentation]    This keyword allows to connect to Spryker DB. 
+    ...        Supports both MariaDB and PostgeSQL.
+    ...    
+    ...        To specify the expected DB engine, use ``db_engine`` variabl. Default one -> *MariaDB*
+    ...    
+    ...    *Example:*
+    ...    ``robot -v env:api_suite -v db_engine:psycopg2``
+    ...    
+    ...    with the example above you'll use PostgreSQL DB engine
     ${db_name}=    Set Variable If    '${db_name}' == '${EMPTY}'    ${default_db_name}    ${db_name}
     ${db_user}=    Set Variable If    '${db_name}' == '${EMPTY}'    ${default_db_user}    ${db_user}
     ${db_password}=    Set Variable If    '${db_name}' == '${EMPTY}'    ${default_db_password}    ${db_password}
