@@ -22,6 +22,9 @@ ${default_db_name}         eu-docker
 ${default_db_password}     secret
 ${default_db_port}         3306
 ${default_db_user}         spryker
+${default_db_engine}       pymysql
+${db_engine}
+# ${default_db_engine}       psycopg2
 
 *** Keywords ***
 SuiteSetup
@@ -1272,7 +1275,7 @@ Save the result of a SELECT DB query to a variable:
     ...
     ...    ``Save the result of a SELECT DB query to a variable:    select registration_key from spy_customer where customer_reference = '${user_reference_id}'    confirmation_key``
     [Arguments]    ${sql_query}    ${variable_name}
-    Connect To Database    pymysql    ${db_name}    ${db_user}    ${db_password}    ${db_host}    ${db_port}
+    Connect to Spryker DB
     ${var_value} =    Query    ${sql_query}
     Disconnect From Database
     ${var_value}=    Convert To String    ${var_value}
@@ -1280,6 +1283,8 @@ Save the result of a SELECT DB query to a variable:
     ${var_value}=    Replace String    ${var_value}    ,   ${EMPTY}
     ${var_value}=    Replace String    ${var_value}    (   ${EMPTY}
     ${var_value}=    Replace String    ${var_value}    )   ${EMPTY}
+    ${var_value}=    Replace String    ${var_value}    [   ${EMPTY}
+    ${var_value}=    Replace String    ${var_value}    ]   ${EMPTY}
     Set Test Variable    ${${variable_name}}    ${var_value}
     [Return]    ${variable_name}
 
@@ -1430,11 +1435,24 @@ Get ETag header value from cart
 
 Create giftcode in Database:
     [Documentation]    This keyword creates a new entry in the table spy_gift_card with the name, value and gift-card code.
-     [Arguments]    ${spy_gift_card_code}    ${spy_gift_card_value}
+    [Arguments]    ${spy_gift_card_code}    ${spy_gift_card_value}
     ${amount}=   Evaluate    ${spy_gift_card_value} / 100
     ${amount}=    Evaluate    "%.f" % ${amount}
-    Connect To Database    pymysql    ${db_name}    ${db_user}    ${db_password}    ${db_host}    ${db_port}
-    Execute Sql String    insert ignore into spy_gift_card (code,name,currency_iso_code,value) value ('${spy_gift_card_code}','Gift_card_${amount}','EUR','${spy_gift_card_value}')
+    Connect to Spryker DB
+    ${last_id}=    Query    SELECT id_gift_card FROM spy_gift_card ORDER BY id_gift_card DESC LIMIT 1;
+    ${new_id}=    Set Variable    ${EMPTY}
+    ${last_id_length}=    Get Length    ${last_id}
+    IF    ${last_id_length} > 0    
+        ${new_id}=    Evaluate    ${last_id[0][0]} + 1
+    ELSE
+        ${new_id}=    Evaluate    1
+    END
+    Log    ${new_id}
+    IF    '${db_engine}' == 'pymysql'
+        Execute Sql String    insert ignore into spy_gift_card (code,name,currency_iso_code,value) value ('${spy_gift_card_code}','Gift_card_${amount}','EUR','${spy_gift_card_value}')
+    ELSE
+        Execute Sql String    INSERT INTO spy_gift_card (id_gift_card, code, name, currency_iso_code, value) VALUES (${new_id}, '${spy_gift_card_code}', 'Gift_card_${amount}', 'EUR', '${spy_gift_card_value}');
+    END
     Disconnect From Database
 
 
@@ -1535,23 +1553,48 @@ Update order status in Database:
     ...    *Example:*
     ...    
     ...    ``Update order status in Database:    7    shipped``
-    
-    [Arguments]    ${order_item_status_name}
-    Connect To Database    pymysql    ${db_name}    ${db_user}    ${db_password}    ${db_host}    ${db_port}
-    Execute Sql String    insert ignore into spy_oms_order_item_state (name) values ('${order_item_status_name}')
+    [Arguments]    ${order_item_status_name}    ${uuid_to_use}
+    Connect to Spryker DB
+    ${new_id}=    Set Variable    ${EMPTY}
+    ${state_id}=    Set Variable    ${EMPTY}
+    ${last_id}=    Query    SELECT id_oms_order_item_state FROM spy_oms_order_item_state ORDER BY id_oms_order_item_state DESC LIMIT 1;
+    ${shipped_id}=    Query    SELECT id_oms_order_item_state FROM spy_oms_order_item_state WHERE name='${order_item_status_name}';
+    ${last_id_length}=    Get Length    ${last_id}
+    ${shipped_id_length}=    Get Length    ${shipped_id}
+    IF    ${shipped_id_length} > 0 
+        ${state_id}=    Set Variable    ${shipped_id[0][0]}
+    ELSE
+        ${new_id}=    Evaluate    ${last_id[0][0]} + 1
+        Execute Sql String    INSERT INTO spy_oms_order_item_state (id_oms_order_item_state, name) VALUES (${new_id}, '${order_item_status_name}');
+        ${state_id}=    Set Variable    ${new_id}
+    END
+    Execute Sql String    update spy_sales_order_item set fk_oms_order_item_state = '${state_id}' where fk_sales_order = '${uuid_to_use}'
     Disconnect From Database
-    Save the result of a SELECT DB query to a variable:    select id_oms_order_item_state from spy_oms_order_item_state where name like '${order_item_status_name}'    state_id
-    Connect To Database    pymysql    ${db_name}    ${db_user}    ${db_password}    ${db_host}    ${db_port}
-    Execute Sql String    update spy_sales_order_item set fk_oms_order_item_state = '${state_id}' where uuid = '${Uuid}'
-    Disconnect From Database
-
+ 
 Get voucher code by discountId from Database:
     [Documentation]    This keyword allows to get voucher code according to the discount ID. Discount_id can be found in Backoffice > Merchandising > Discount page
     ...        and set this id as an argument of a keyword.
     ...
     ...    *Example:*
     ...    ``Get voucher code by discountId from Database:    3``
-
     [Arguments]    ${discount_id}
     Save the result of a SELECT DB query to a variable:    select fk_discount_voucher_pool from spy_discount where id_discount = ${discount_id}    discount_voucher_pool_id
     Save the result of a SELECT DB query to a variable:    select code from spy_discount_voucher where fk_discount_voucher_pool = ${discount_voucher_pool_id} and is_active = 1 limit 1    discount_voucher_code
+
+Connect to Spryker DB
+    [Documentation]    This keyword allows to connect to Spryker DB. 
+    ...        Supports both MariaDB and PostgeSQL.
+    ...    
+    ...        To specify the expected DB engine, use ``db_engine`` variabl. Default one -> *MariaDB*
+    ...    
+    ...    *Example:*
+    ...    ``robot -v env:api_suite -v db_engine:psycopg2``
+    ...    
+    ...    with the example above you'll use PostgreSQL DB engine
+    ${db_name}=    Set Variable If    '${db_name}' == '${EMPTY}'    ${default_db_name}    ${db_name}
+    ${db_user}=    Set Variable If    '${db_name}' == '${EMPTY}'    ${default_db_user}    ${db_user}
+    ${db_password}=    Set Variable If    '${db_name}' == '${EMPTY}'    ${default_db_password}    ${db_password}
+    ${db_host}=    Set Variable If    '${db_name}' == '${EMPTY}'    ${default_db_host}    ${db_host}
+    ${db_port}=    Set Variable If    '${db_name}' == '${EMPTY}'    ${default_db_port}    ${db_port}
+    ${db_engine}=    Set Variable If    '${db_engine}' == '${EMPTY}'    ${default_db_engine}    ${db_engine}
+    Connect To Database    ${db_engine}    ${db_name}    ${db_user}    ${db_password}    ${db_host}    ${db_port}

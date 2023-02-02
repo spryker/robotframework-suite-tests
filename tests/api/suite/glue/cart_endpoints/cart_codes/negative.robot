@@ -56,18 +56,18 @@ Adding_invalid_cart_code
 Gift_card_fully_used
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_second_user.email}
     ...  AND    I set Headers:    Authorization=${token}
-    ...  AND    Create giftcode in Database:    ${random}    ${gift_card.amount}
+    ...  AND    Create giftcode in Database:    used_${random}    ${gift_card.amount}
     ...  AND    I send a POST request:    /carts    {"data":{"type":"carts","attributes":{"priceMode":"${mode.gross}","currency":"${currency.eur.code}","store":"${store.de}","name": "${test_cart_name}-${random}"}}}
     ...  AND    Response status code should be:    201
     ...  AND    Save value to a variable:    [data][id]    cart_id
     ...  AND    I send a POST request:    /carts/${cart_id}/items   {"data": {"type": "items","attributes": {"sku": "${concrete_available_product.with_label}","quantity": 3}}}
-    ...  AND    I send a POST request:    /carts/${cart_id}/cart-codes?include=gift-cards    {"data": {"type": "cart-codes","attributes": {"code": "${random}"}}}
+    ...  AND    I send a POST request:    /carts/${cart_id}/cart-codes?include=gift-cards    {"data": {"type": "cart-codes","attributes": {"code": "used_${random}"}}}
     ...  AND    I send a POST request:    /checkout   {"data": {"type": "checkout","attributes": {"customer": {"email": "${yves_second_user.email}","salutation": "${yves_second_user.salutation}","firstName": "${yves_second_user.first_name}","lastName": "${yves_second_user.last_name}"},"idCart": "${cart_id}","billingAddress": {"salutation": "${yves_second_user.salutation}","firstName": "${yves_second_user.first_name}","lastName": "${yves_second_user.last_name}","address1": "${default.address1}","address2": "${default.address2}","address3": "${default.address3}","zipCode": "${default.zipCode}","city": "${default.city}","iso2Code": "${default.iso2Code}","company": "${default.company}","phone": "${default.phone}","isDefaultBilling": False,"isDefaultShipping": False},"shippingAddress": {"salutation": "${yves_second_user.salutation}","firstName": "${yves_second_user.first_name}","lastName": "${yves_second_user.last_name}","address1": "${default.address1}","address2": "${default.address2}","address3": "${default.address3}","zipCode": "${default.zipCode}","city": "${default.city}","iso2Code": "${default.iso2Code}","company": "${default.company}","phone": "${default.phone}","isDefaultBilling": False,"isDefaultShipping": False},"payments": [{"paymentProviderName": "${payment.provider_name_1}","paymentMethodName": "${payment.method_name}"}],"shipment": {"idShipmentMethod": 1},"items": ["${concrete_available_product.with_label}"]}}}
     ...  AND    I send a POST request:    /carts    {"data":{"type":"carts","attributes":{"priceMode":"${mode.gross}","currency":"${currency.eur.code}","store":"${store.de}","name": "${test_cart_name}-${random}"}}}
     ...  AND    Response status code should be:    201
     ...  AND    Save value to a variable:    [data][id]    cart_id
     ...  AND    I send a POST request:    /carts/${cart_id}/items   {"data": {"type": "items","attributes": {"sku": "${concrete_available_product.with_label}","quantity": 1}}}
-    When I send a POST request:    /carts/${cart_id}/cart-codes?include=gift-cards    {"data": {"type": "cart-codes","attributes": {"code": "${random}"}}}
+    When I send a POST request:    /carts/${cart_id}/cart-codes?include=gift-cards    {"data": {"type": "cart-codes","attributes": {"code": "used_${random}"}}}
     And Response status code should be:    422
     And Response should return error code:    3302
     And Response should return error message:    "Cart code cant be added."
