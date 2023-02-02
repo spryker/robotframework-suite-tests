@@ -428,7 +428,7 @@ Response body parameter should be in:
     ...    *Example:*
     ...
     ...    ``Response body parameter should be in:    [data][attributes][allowInput]    true    false``
-    [Arguments]    ${json_path}    ${expected_value1}    ${expected_value2}    ${expected_value3}=robotframework-dummy-value    ${expected_value4}=robotframework-dummy-value
+    [Arguments]    ${json_path}    ${expected_value1}    ${expected_value2}    ${expected_value3}=robotframework-dummy-value    ${expected_value4}=robotframework-dummy-value    ${expected_value5}=robotframework-dummy-value    ${expected_value6}=robotframework-dummy-value    ${expected_value7}=robotframework-dummy-value
     ${data}=    Get Value From Json    ${response_body}    ${json_path}
     ${data}=    Convert To String    ${data}
     ${data}=    Replace String    ${data}    '   ${EMPTY}
@@ -1484,16 +1484,45 @@ Cleanup all items in the cart:
         ${response}=    GET    ${current_url}/carts/${cart_id}    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}  params=include=items,bundle-items     expected_status=200
         ${response_body}=    Set Variable    ${response.json()}
         @{included}=    Get Value From Json    ${response_body}    [included]
-        ${list_length}=    Evaluate    len(@{included})
-        Log    list_length: ${list_length}
-        FOR    ${index}    IN RANGE    0    ${list_length}
-                ${list_element}=    Get From List    @{included}    ${index}
-                ${cart_item_uid}=    Get Value From Json    ${list_element}    [id]
-                ${cart_item_uid}=    Convert To String    ${cart_item_uid}
-                ${cart_item_uid}=    Replace String    ${cart_item_uid}    '   ${EMPTY}
-                ${cart_item_uid}=    Replace String    ${cart_item_uid}    [   ${EMPTY}
-                ${cart_item_uid}=    Replace String    ${cart_item_uid}    ]   ${EMPTY}
-                ${response_delete}=    DELETE    ${current_url}/carts/${cart_id}/items/${cart_item_uid}    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}    expected_status=204
+        ${list_not_empty}=    Get length    ${included}
+        IF    ${list_not_empty} > 0
+            ${list_length}=    Get length    @{included}
+            Log    list_length: ${list_length}
+            FOR    ${index}    IN RANGE    0    ${list_length}
+                    ${list_element}=    Get From List    @{included}    ${index}
+                    ${cart_item_uid}=    Get Value From Json    ${list_element}    [id]
+                    ${cart_item_uid}=    Convert To String    ${cart_item_uid}
+                    ${cart_item_uid}=    Replace String    ${cart_item_uid}    '   ${EMPTY}
+                    ${cart_item_uid}=    Replace String    ${cart_item_uid}    [   ${EMPTY}
+                    ${cart_item_uid}=    Replace String    ${cart_item_uid}    ]   ${EMPTY}
+                    ${response_delete}=    DELETE    ${current_url}/carts/${cart_id}/items/${cart_item_uid}    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}    expected_status=204
+            END
+        END
+
+Cleanup all customer carts
+    [Documentation]    This keyword deletes all customer carts
+        ...
+        ...    Before using this method you should get customer token and set it into the headers with the help of ``I get access token for the customer:`` and ``I set Headers:``
+        ...
+        ...    *Example:*
+        ...
+        ...    ``Cleanup all customer carts``
+        ${response}=    GET    ${current_url}/carts    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}  params=include=items,bundle-items     expected_status=200
+        ${response_body}=    Set Variable    ${response.json()}
+        @{data}=    Get Value From Json    ${response_body}    [data]
+        ${list_not_empty}=    Get length    ${data}
+        IF    ${list_not_empty} > 0
+            ${list_length}=    Get Length    @{data}
+            Log    list_length: ${list_length}
+            FOR    ${index}    IN RANGE    0    ${list_length}-1
+                    ${list_element}=    Get From List    @{data}    ${index}
+                    ${cart_uuid}=    Get Value From Json    ${list_element}    [id]
+                    ${cart_uuid}=    Convert To String    ${cart_uuid}
+                    ${cart_uuid}=    Replace String    ${cart_uuid}    '   ${EMPTY}
+                    ${cart_uuid}=    Replace String    ${cart_uuid}    [   ${EMPTY}
+                    ${cart_uuid}=    Replace String    ${cart_uuid}    ]   ${EMPTY}
+                    ${response_delete}=    DELETE    ${current_url}/carts/${cart_uuid}    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}    expected_status=204
+            END
         END
 
 Cleanup all items in the guest cart:
@@ -1508,18 +1537,20 @@ Cleanup all items in the guest cart:
         ${response}=    GET    ${current_url}/guest-carts/${cart_id}    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}  params=include=guest-cart-items,bundle-items    expected_status=200
         ${response_body}=    Set Variable    ${response.json()}
         @{included}=    Get Value From Json    ${response_body}    [included]
-        ${list_length}=    Get length    @{included}
-        Log    list_length: ${list_length}
-        FOR    ${index}    IN RANGE    0    ${list_length}
-                ${list_element}=    Get From List    @{included}    ${index}
-                ${cart_item_uid}=    Get Value From Json    ${list_element}    [id]
-                ${cart_item_uid}=    Convert To String    ${cart_item_uid}
-                ${cart_item_uid}=    Replace String    ${cart_item_uid}    '   ${EMPTY}
-                ${cart_item_uid}=    Replace String    ${cart_item_uid}    [   ${EMPTY}
-                ${cart_item_uid}=    Replace String    ${cart_item_uid}    ]   ${EMPTY}
-                ${response_delete}=    DELETE    ${current_url}/guest-carts/${cart_id}/guest-cart-items/${cart_item_uid}    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}    expected_status=204
+        ${list_not_empty}=    Get length    ${included}
+        IF    ${list_not_empty} > 0
+            ${list_length}=    Get length    @{included}
+            Log    list_length: ${list_length}
+            FOR    ${index}    IN RANGE    0    ${list_length}
+                    ${list_element}=    Get From List    @{included}    ${index}
+                    ${cart_item_uid}=    Get Value From Json    ${list_element}    [id]
+                    ${cart_item_uid}=    Convert To String    ${cart_item_uid}
+                    ${cart_item_uid}=    Replace String    ${cart_item_uid}    '   ${EMPTY}
+                    ${cart_item_uid}=    Replace String    ${cart_item_uid}    [   ${EMPTY}
+                    ${cart_item_uid}=    Replace String    ${cart_item_uid}    ]   ${EMPTY}
+                    ${response_delete}=    DELETE    ${current_url}/guest-carts/${cart_id}/guest-cart-items/${cart_item_uid}    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}    expected_status=204
+            END
         END
-
 Cleanup all availability notifications:
     [Documentation]    This keyword deletes any and all availability notifications related to the given customer reference.
         ...
@@ -1532,19 +1563,22 @@ Cleanup all availability notifications:
         ${response}=    GET    ${current_url}/customers/${yves_user.reference}/availability-notifications    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}   expected_status=200
         ${response_body}=    Set Variable    ${response.json()}
         @{data}=    Get Value From Json    ${response_body}    [data]
-        ${list_length}=    Get Length    @{data}
-        ${list_length}=    Convert To Integer    ${list_length}
-        ${log_list}=    Log List    @{data}
-        Log    list_length: ${list_length}
-        FOR    ${index}    IN RANGE    0    ${list_length}
-                ${list_element}=    Get From List    @{data}    ${index}
-                ${availability_notification_id}=    Get Value From Json    ${list_element}    [id]
-                ${availability_notification_id}=    Convert To String    ${availability_notification_id}
-                ${availability_notification_id}=    Replace String    ${availability_notification_id}    '   ${EMPTY}
-                ${availability_notification_id}=    Replace String    ${availability_notification_id}    [   ${EMPTY}
-                ${availability_notification_id}=    Replace String    ${availability_notification_id}    ]   ${EMPTY}
-                Log    availability_notification_id: ${availability_notification_id}
-                ${response_delete}=    DELETE    ${current_url}/availability-notifications/${availability_notification_id}    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}    expected_status=204
+        ${list_not_empty}=    Get length    ${data}
+        IF    ${list_not_empty} > 0
+            ${list_length}=    Get Length    @{data}
+            ${list_length}=    Convert To Integer    ${list_length}
+            ${log_list}=    Log List    @{data}
+            Log    list_length: ${list_length}
+            FOR    ${index}    IN RANGE    0    ${list_length}
+                    ${list_element}=    Get From List    @{data}    ${index}
+                    ${availability_notification_id}=    Get Value From Json    ${list_element}    [id]
+                    ${availability_notification_id}=    Convert To String    ${availability_notification_id}
+                    ${availability_notification_id}=    Replace String    ${availability_notification_id}    '   ${EMPTY}
+                    ${availability_notification_id}=    Replace String    ${availability_notification_id}    [   ${EMPTY}
+                    ${availability_notification_id}=    Replace String    ${availability_notification_id}    ]   ${EMPTY}
+                    Log    availability_notification_id: ${availability_notification_id}
+                    ${response_delete}=    DELETE    ${current_url}/availability-notifications/${availability_notification_id}    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}    expected_status=204
+            END
         END
 Update order status in Database:
     [Documentation]    This keyword updates order status in database to any required status. This allows to skip going through the order workflow manually 

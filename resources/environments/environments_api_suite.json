@@ -322,7 +322,8 @@
             "product_with_concrete_offers": {
                 "sku": "006",
                 "concrete_sku": "006_30692993",
-                "name": "Canon IXUS 175"
+                "name": "Canon IXUS 175",
+                "concretes_count":  "1"
             },
             "product_with_multiple_variants": {
                 "sku": "199",

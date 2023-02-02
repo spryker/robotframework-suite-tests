@@ -18,9 +18,7 @@ Get_concrete_bundled_products_inside_concrete_bundle
     And Each array element of array in response should contain property:    [data]    id
     And Each array element of array in response should contain property:    [data]    attributes
     And Each array element of array in response should contain property:    [data]    links
-    And Response body parameter should be:    [data][0][attributes][sku]    ${bundle_product.concrete.product_3_sku}
-    And Response body parameter should be:    [data][1][attributes][sku]    ${bundle_product.concrete.product_2_sku}
-    And Response body parameter should be:    [data][2][attributes][sku]    ${bundle_product.concrete.product_1_sku}
+    And Response body parameter should be in:    [data][0][attributes][sku]    ${bundle_product.concrete.product_3_sku}    ${bundle_product.concrete.product_2_sku}    ${bundle_product.concrete.product_1_sku}
     And Each array element of array in response should contain nested property with value:    [data]    [attributes][quantity]    ${bundle_product.qty_of_each_product_inside_bundle}
     And Response body has correct self link
 
@@ -88,9 +86,7 @@ Get_bundled_product_with_concrete_products_abstract_products_include
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response should contain the array of a certain size:    [data]      ${bundle_product.qty_of_products_in_bundle}
-    And Response body parameter should be:    [data][0][attributes][sku]    ${bundle_product.concrete.product_3_sku}
-    And Response body parameter should be:    [data][1][attributes][sku]    ${bundle_product.concrete.product_2_sku}
-    And Response body parameter should be:    [data][2][attributes][sku]    ${bundle_product.concrete.product_1_sku}
+    And Response body parameter should be in:    [data][0][attributes][sku]    ${bundle_product.concrete.product_3_sku}    ${bundle_product.concrete.product_2_sku}    ${bundle_product.concrete.product_1_sku}
     And Response body has correct self link
     And Response should contain the array larger than a certain size:    [included]    ${bundle_product.qty_of_products_in_bundle}
     And Response include should contain certain entity type:    concrete-products
