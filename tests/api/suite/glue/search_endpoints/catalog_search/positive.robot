@@ -239,9 +239,8 @@ Filter_by_rating_only_min
     And Response body parameter should be greater than:    [data][0][attributes][pagination][maxPage]    0
     And Response should contain the array of a certain size:    [data][0][attributes][abstractProducts]    ${ipp.default_3}
     #rating facets
-    #for me this check looks strange. Verify min and max price value for product list after filtering by rating?? Flakery tests. Demo data can be changed.
-    # And Response body parameter should be:    [data][0][attributes][rangeFacets][0][activeMin]    ${default_active.min}
-    # And Response body parameter should be:    [data][0][attributes][rangeFacets][0][activeMax]    ${default_active.max}
+    And Response body parameter should be:    [data][0][attributes][rangeFacets][0][activeMin]    ${default_active.min}
+    And Response body parameter should be:    [data][0][attributes][rangeFacets][0][activeMax]    ${default_active.max}
     And Response body parameter should not be EMPTY:    [data][0][attributes][rangeFacets][0][activeMin]
     And Response body parameter should not be EMPTY:    [data][0][attributes][rangeFacets][0][activeMax]
    
@@ -257,10 +256,10 @@ Filter_by_rating_only_max
     And Response body parameter should be greater than:    [data][0][attributes][pagination][maxPage]    0
     And Response should contain the array of a certain size:    [data][0][attributes][abstractProducts]    ${ipp.default_3}
     #rating facets
-#     And Response body parameter should be:    [data][0][attributes][rangeFacets][0][activeMin]    ${default_active.min}
-#     And Response body parameter should be:    [data][0][attributes][rangeFacets][0][activeMax]    ${default_active.max}
-      And Response body parameter should not be EMPTY:    [data][0][attributes][rangeFacets][0][activeMin]
-      And Response body parameter should not be EMPTY:    [data][0][attributes][rangeFacets][0][activeMax] 
+    And Response body parameter should be:    [data][0][attributes][rangeFacets][0][activeMin]    ${default_active.min}
+    And Response body parameter should be:    [data][0][attributes][rangeFacets][0][activeMax]    ${default_active.max}
+    And Response body parameter should not be EMPTY:    [data][0][attributes][rangeFacets][0][activeMin]
+    And Response body parameter should not be EMPTY:    [data][0][attributes][rangeFacets][0][activeMax] 
 
 
 Filter_by_rating_Min_max
@@ -448,8 +447,8 @@ Filter_by_valid_main_category
     # check that category tree is correctly updated
     And Response should contain the array of a certain size:    [data][0][attributes][categoryTreeFilter]    ${category_tree_branches_qty}
     And Response body parameter should be:    [data][0][attributes][categoryTreeFilter][0][docCount]    0
-    And Response body parameter should be:    [data][0][attributes][categoryTreeFilter][2][docCount]    ${category_lvl1.qty}  
-    And Response body parameter should be greater than:    [data][0][attributes][categoryTreeFilter][2][children][0][docCount]    0   
+    And Response body parameter should be:    [data][0][attributes][categoryTreeFilter][4][docCount]    ${category_lvl1.qty}  
+    And Response body parameter should be greater than:    [data][0][attributes][categoryTreeFilter][4][children][0][docCount]    0   
     And Response body has correct self link
 
 Filter_by_valid_subcategory
@@ -466,8 +465,8 @@ Filter_by_valid_subcategory
     # check that category tree is correctly updated
     And Response should contain the array of a certain size:    [data][0][attributes][categoryTreeFilter]    ${category_tree_branches_qty}
     And Response body parameter should be:    [data][0][attributes][categoryTreeFilter][0][docCount]    0
-    And Response body parameter should be:    [data][0][attributes][categoryTreeFilter][2][docCount]    ${category_lvl2.qty}  
-    And Response body parameter should be:    [data][0][attributes][categoryTreeFilter][2][children][0][docCount]    ${category_lvl2.qty}
+    And Response body parameter should be:    [data][0][attributes][categoryTreeFilter][4][docCount]    ${category_lvl2.qty}  
+    And Response body parameter should be:    [data][0][attributes][categoryTreeFilter][4][children][0][docCount]    ${category_lvl2.qty}
     And Response body parameter should be less than:    [data][0][attributes][categoryTreeFilter][3][children][0][children][0][docCount]    ${category_lvl2.qty} 
     And Response body has correct self link
 
@@ -487,7 +486,7 @@ Search_with_specific_currency
     And Response body parameter should be greater than:    [data][0][attributes][abstractProducts][0][prices][0][DEFAULT]    1   
     And Response body has correct self link
 
-##### PAGINATION AND SORTING #####
+# PAGINATION AND SORTING #
 
 Search_set_specific_page_with_default_ipp
     # here page 4 is selected using offset because 36/12=3 full pages, search shows the next page after the offset

@@ -8,7 +8,7 @@ Default Tags    glue
 ENABLER
     TestSetup
 
-##POST##
+#POST#
 Create_quote_request_without_access_token
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}
@@ -128,7 +128,7 @@ Create_quote_request_for_cart_with_read_only_access
 
 
 
-##GET##
+#GET#
 Retrieve_quote_requests_with_incorrect_url
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
@@ -171,7 +171,7 @@ Retrieve_quote_request_by_id_with_incorrect_url
     And Response should return error message:    Not Found
 
 
-##PATCH##
+#PATCH#
 Update_quote_request_without_token
   [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}

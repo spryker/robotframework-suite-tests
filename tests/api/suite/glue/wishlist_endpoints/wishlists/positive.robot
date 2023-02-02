@@ -17,7 +17,7 @@ Create_a_wishlist
     And Response body parameter should be:    [data][type]    wishlists
     And Save value to a variable:    [data][id]    wishlistId
     And Response body parameter should be:    [data][id]    ${wishlistId}
-     And Response body parameter should be:    [data][attributes][name]    ${random}
+    And Response body parameter should be:    [data][attributes][name]    ${random}
     And Response body parameter should be:    [data][attributes][numberOfItems]    0
     And Save value to a variable:    [data][attributes][createdAt]    createdAt
     And Save value to a variable:    [data][attributes][updatedAt]    updatedAt
@@ -32,12 +32,12 @@ Create_a_wishlist
 Retrieves_wishlists
     [Setup]     Run Keywords    I GET access token for the customer:    ${yves_user.email}
     ...    AND     I set headers:    authorization=${token}
-     ...    AND    I send a POST request:    /wishlists        {"data":{"type":"wishlists","attributes":{"name":"${random}"}}}
+    ...    AND    I send a POST request:    /wishlists        {"data":{"type":"wishlists","attributes":{"name":"${random}"}}}
     ...    AND     Response status code should be:    201
     ...    AND     Save value to a variable:     [data][id]    wishlist_id
     When I send a GET request:    /wishlists
-     Then Response status code should be:    200
-     AND Response reason should be:    OK
+    Then Response status code should be:    200
+    AND Response reason should be:    OK
     AND Response body parameter should not be EMPTY:    [links][self]
     And Each array element of array in response should contain property with value:    [data]    type    wishlists
     And Each array element of array in response should contain nested property:    [data]    [attributes]    name 
@@ -46,15 +46,15 @@ Retrieves_wishlists
     And Each array element of array in response should contain property with value NOT in:    [data]    [id]    None
     
     [Teardown]    Run Keywords    I send a DELETE request:    /wishlists/${wishlistId}
-...    AND    Response status code should be:    204
+    ...    AND    Response status code should be:    204
     ...    AND    Response reason should be:    No Content
 
 Getting_wishlists_for_customer_with_no_wishlists
    [Setup]     Run Keywords    I GET access token for the customer:    ${yves_user.email}
     ...    AND     I set headers:    authorization=${token}
     When I send a GET request:    /wishlists
-     Then Response status code should be:    200
-     AND Response reason should be:    OK
+    Then Response status code should be:    200
+    AND Response reason should be:    OK
     AND Response should contain the array of a certain size:    [data]    0
     AND Response body has correct self link
 
@@ -74,11 +74,11 @@ Retrieves_wishlist_data_by_id
      AND Response body parameter should not be EMPTY:    [data][attributes][createdAt]
      AND Response body parameter should not be EMPTY:    [data][attributes][updatedAt]
      AND Response body parameter should not be EMPTY:    [data][links][self]
-     [Teardown]    Run Keywords    I send a DELETE request:    /wishlists/${wishlist_id}
+    [Teardown]    Run Keywords    I send a DELETE request:    /wishlists/${wishlist_id}
     ...  AND    Response status code should be:    204
 
 Retrieves_wishlist_with_items
-      [Setup]    Run Keywords    I GET access token for the customer:    ${yves_user.email}
+    [Setup]    Run Keywords    I GET access token for the customer:    ${yves_user.email}
     ...    AND    I set headers:    authorization=${token}
     ...    AND    I send a Post request:    /wishlists    {"data": {"type": "wishlists","attributes": {"name": "${random}"}}}
     ...    AND    Save value to a variable:    [data][id]    wishlist_id
@@ -97,8 +97,8 @@ Retrieves_wishlist_with_items
      And Response body parameter should be:    [data][id]    ${wishlist_id} 
      And Response body parameter should not be EMPTY:    [data][relationships]
      And Response body parameter should not be EMPTY:    [data][relationships][wishlist-items][data]
-   And Response body parameter should not be EMPTY:    [data][relationships][wishlist-items][data][0][id]
-       [Teardown]    Run Keywords    I send a DELETE request:    /wishlists/${wishlist_id}
+    And Response body parameter should not be EMPTY:    [data][relationships][wishlist-items][data][0][id]
+    [Teardown]    Run Keywords    I send a DELETE request:    /wishlists/${wishlist_id}
     ...  AND    Response status code should be:    204
 
 
@@ -153,11 +153,11 @@ Wishlist_Product_Labels
      And Response include element has self link:    wishlist-items
      And Response include element has self link:    concrete-products
      And Response include element has self link:    product-labels
-     [Teardown]    Run Keywords    I send a DELETE request:    /wishlists/${wishlist_id}
+    [Teardown]    Run Keywords    I send a DELETE request:    /wishlists/${wishlist_id}
     ...  AND    Response status code should be:    204
 
 Retrieves_wishlist_with_items_including_concrete_products
-     [Setup]    Run Keywords    I GET access token for the customer:    ${yves_user.email}
+    [Setup]    Run Keywords    I GET access token for the customer:    ${yves_user.email}
     ...    AND    I set headers:    authorization=${token}
     ...    AND    I send a Post request:    /wishlists    {"data": {"type": "wishlists","attributes": {"name": "${random}"}}}
     ...    AND    Save value to a variable:    [data][id]    wishlist_id

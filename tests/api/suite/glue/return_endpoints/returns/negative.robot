@@ -8,9 +8,9 @@ Resource    ../../../../../../resources/common/common_api.robot
 ENABLER
     TestSetup
 
- ####POST####
+ #POST#
 Create_a_return_with_Invalid_access_token
-     [Setup]    I set Headers:    Authorization=3485h7
+    [Setup]    I set Headers:    Authorization=3485h7
     When I send a POST request:     /returns     {"data":{"type":"returns","attributes":{"store":"${store.de}","returnItems":[{"salesOrderItemUuid":"${random}","reason":"${return_reason_damaged}"}]}}}
     Then Response status code should be:     401
     And Response reason should be:     Unauthorized
@@ -18,7 +18,7 @@ Create_a_return_with_Invalid_access_token
     And Response should return error code:    001
 
 Create_a_return_with_without_access_token
-     [Setup]    I set Headers:    Authorization=
+    [Setup]    I set Headers:    Authorization=
     When I send a POST request:     /returns     {"data":{"type":"returns","attributes":{"store":"${store.de}","returnItems":[{"salesOrderItemUuid":"${random}","reason":"${return_reason_damaged}"}]}}}
     Then Response status code should be:     403
     And Response reason should be:     Forbidden
@@ -26,7 +26,7 @@ Create_a_return_with_without_access_token
     And Response should return error code:    002
 
 Create_return_for_order_item_that_cannot_be_returned
-     [Setup]    Run Keywords    I get access token for the customer:    ${yves_second_user.email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_second_user.email}
     ...  AND    I set Headers:    Authorization=${token}
     ...  AND    I send a POST request:    /carts    {"data":{"type":"carts","attributes":{"priceMode":"${mode.gross}","currency":"${currency.eur.code}","store":"${store.de}","name": "${test_cart_name}-${random}"}}}
     ...  AND    Response status code should be:    201
@@ -55,7 +55,7 @@ Create_a_return_with_order_is_not_returnable_for_merchant
     And Response should return error code:    3601
 
 Create_return_with_invalid_returnItems_uuid
-     [Setup]    Run Keywords    I get access token for the customer:    ${yves_second_user.email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_second_user.email}
     ...    AND    I set Headers:    Authorization=${token}
     When I send a POST request:     /returns     {"data":{"type":"returns","attributes":{"store":"${store.de}","returnItems":[{"salesOrderItemUuid":"${random}","reason":"${return_reason_damaged}"}]}}}
     Then Response status code should be:     422
@@ -64,7 +64,7 @@ Create_return_with_invalid_returnItems_uuid
     And Response should return error code:    3601
 
 Create_return_without_returnItems_uuid
-     [Setup]    Run Keywords    I get access token for the customer:    ${yves_second_user.email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_second_user.email}
     ...    AND    I set Headers:    Authorization=${token}
     When I send a POST request:     /returns     {"data":{"type":"returns","attributes":{"store":"${store.de}","returnItems":[{"salesOrderItemUuid":"","reason":"${return_reason_damaged}"}]}}}
     Then Response status code should be:     422
@@ -73,7 +73,7 @@ Create_return_without_returnItems_uuid
     And Response should return error code:    3601
 
 Create_return_without_returnItems_reason
-     [Setup]    Run Keywords    I get access token for the customer:    ${yves_second_user.email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_second_user.email}
     ...    AND    I set Headers:    Authorization=${token}
     When I send a POST request:     /returns     {"data":{"type":"returns","attributes":{"store":"${store.de}","returnItems":[{"salesOrderItemUuid":"920fc22f-3fb6-53ec-bc5e-c4d321115462","reason":""}]}}}
     Then Response status code should be:     422
@@ -82,9 +82,9 @@ Create_return_without_returnItems_reason
     And Response should return error code:    3601
 
 
-####GET####
+#GET#
 Get_lists_of_returns_with_Invalid_access_token
-     [Setup]    I set Headers:    Authorization=3485h7
+    [Setup]    I set Headers:    Authorization=3485h7
     When I send a GET request:     /returns
     Then Response status code should be:     401
     And Response reason should be:     Unauthorized
@@ -92,7 +92,7 @@ Get_lists_of_returns_with_Invalid_access_token
     And Response should return error code:    001
 
 Get_lists_of_returns_without_access_token
-     [Setup]    I set Headers:    Authorization=
+    [Setup]    I set Headers:    Authorization=
     When I send a GET request:     /returns
     Then Response status code should be:     403
     And Response reason should be:     Forbidden
@@ -100,7 +100,7 @@ Get_lists_of_returns_without_access_token
     And Response should return error code:    002
 
 Get_return_by_Id_with_Invalid_return_reference
-     [Setup]    Run Keywords    I get access token for the customer:    ${yves_second_user.email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_second_user.email}
     ...    AND    I set Headers:    Authorization=${token}
     When I send a GET request:     /returns/${random}
     Then Response status code should be:     404

@@ -45,8 +45,6 @@ Create_quote_request
     And Response body parameter should contain:    [data][attributes][shownVersion][cart]    billingAddress
     And Response body parameter should contain:    [data][attributes][shownVersion][cart][items][0][groupKey]    ${concrete.available_product.with_stock_and_never_out_of_stock.sku_1}
     And Response body parameter should contain:    [data][attributes][shownVersion][cart][items][1][groupKey]    ${concrete.available_product.with_stock_and_never_out_of_stock.sku_2}
-    # And Response body parameter should be:    [data][attributes][shownVersion][cart][items][0][groupKey]   ${concrete.available_product.with_stock_and_never_out_of_stock.group_key1}
-    # And Response body parameter should be:    [data][attributes][shownVersion][cart][items][1][groupKey]  ${concrete.available_product.with_stock_and_never_out_of_stock.group_key2}
     And Each array element of array in response should contain property:    [data][attributes][shownVersion][cart][items]    productOfferReference
     And Each array element of array in response should contain property:    [data][attributes][shownVersion][cart][items]    merchantReference
     And Response body parameter should be:    [data][attributes][shownVersion][cart][items][0][sku]    ${concrete.available_product.with_stock_and_never_out_of_stock.sku_1}
@@ -166,8 +164,6 @@ Create_quote_request_without_delivery_date_and_note
     And Response body parameter should be greater than:    [data][attributes][shownVersion][cart][totals][grandTotal]    1
     And Response body parameter should be greater than:    [data][attributes][shownVersion][cart][totals][priceToPay]    1
     And Response body parameter should contain:    [data][attributes][shownVersion][cart]    billingAddress
-    # And Response body parameter should be:    [data][attributes][shownVersion][cart][items][0][groupKey]    ${concrete.available_product.with_stock_and_never_out_of_stock.sku_1}
-    # And Response body parameter should be:    [data][attributes][shownVersion][cart][items][1][groupKey]    ${concrete.available_product.with_stock_and_never_out_of_stock.sku_2}
     And Response body parameter should contain:    [data][attributes][shownVersion][cart][items][0][groupKey]    ${concrete.available_product.with_stock_and_never_out_of_stock.sku_1}
     And Response body parameter should contain:    [data][attributes][shownVersion][cart][items][1][groupKey]    ${concrete.available_product.with_stock_and_never_out_of_stock.sku_2}
     And Each array element of array in response should contain property:    [data][attributes][shownVersion][cart][items]    productOfferReference
@@ -430,7 +426,7 @@ Retrieves_quote_request_by_requestId
     ...    AND    Response status code should be:    204
 
 Retrieve_quote_request_version
-     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}
     ...    AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
     ...    AND    Save value to a variable:    [data][id]    cart_id
@@ -484,9 +480,9 @@ Retrieve_quote_request_version
     ...    AND    Response status code should be:    204
 
 
-##PATCH##
+#PATCH#
 Update_quote_request
-     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}
     ...    AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
     ...    AND    Save value to a variable:    [data][id]    cart_id

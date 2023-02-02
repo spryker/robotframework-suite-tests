@@ -8,12 +8,12 @@ Default Tags    glue
 *** Test Cases ***
 ENABLER
     TestSetup
-# GET requests
+GET requests
 
-### Precondition: To run commented tests need to enable service endpoints and uncomment tests
-### To enable the endpoints, add the following to /config/Shared/config_default.php:
-### Spryker\Shared\HealthCheck\HealthCheckConstants;$config[HealthCheckConstants::HEALTH_CHECK_ENABLED] = true;
-### Doc: https://docs.spryker.com/docs/scos/dev/technical-enhancement-integration-guides/integrating-health-checks.html#general-information
+# Precondition: To run commented tests need to enable service endpoints and uncomment tests
+# To enable the endpoints, add the following to /config/Shared/config_default.php:
+# Spryker\Shared\HealthCheck\HealthCheckConstants;$config[HealthCheckConstants::HEALTH_CHECK_ENABLED] = true;
+# Doc: https://docs.spryker.com/docs/scos/dev/technical-enhancement-integration-guides/integrating-health-checks.html#general-information
 
 # Get_health_check_with_all_enabled_services
 #    When I send a GET request:    /health-check
