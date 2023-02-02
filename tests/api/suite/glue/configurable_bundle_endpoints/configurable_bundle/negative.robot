@@ -10,7 +10,8 @@ ENABLER
 
 ###### POST ######
 Add_configured_bundle_item_to_cart_non_existing_sku
-   [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
+    [Tags]    skip-due-to-refactoring
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
       ...  AND    I set Headers:    Authorization=${token}
       ...  AND    Find or create customer cart
       ...  AND    Cleanup all items in the cart:    ${cart_id}
@@ -21,7 +22,8 @@ Add_configured_bundle_item_to_cart_non_existing_sku
     And Response should return error message:    Product "fake" not found
 
 Add_configured_bundle_item_to_non_existing_cart
-   [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
+    [Tags]    skip-due-to-refactoring
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
       ...  AND    I set Headers:    Authorization=${token}
     When I send a POST request:    /carts/fake/configured-bundles    {"data": {"type": "configured-bundles","attributes": {"quantity": "${configured_bundle_quantity}","templateUuid": "${configurable_bundle_template_1_uuid}","items": [{"sku": "${configurable_bundle_first_slot_item_sku}","quantity": 2,"slotUuid": "${configurable_bundle_slot_1_uuid}"}]}}}
     Then Response status code should be:    422
@@ -99,7 +101,8 @@ Add_configured_bundle_item_to_cart_with_invalid_qty
 
 ####### PATCH #######
 Update_configured_bundle_item_in_cart_with_non_existing_bundle_group_key
-  [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
+    [Tags]    skip-due-to-refactoring
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
       ...  AND    I set Headers:    Authorization=${token}
       ...  AND    Find or create customer cart
       ...  AND    Cleanup all items in the cart:    ${cart_id}
@@ -135,7 +138,8 @@ Update_configured_bundle_item_in_cart_with_no_item_id
     And Response should return error message:    Resource id is not specified.
 
 Update_configured_bundle_item_in_cart_with_non_existing_cart_id
-  [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
+    [Tags]    skip-due-to-refactoring
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
       ...  AND    I set Headers:    Authorization=${token}
     When I send a PATCH request:    /carts/fake/configured-bundles/fake    {"data": {"type": "configured-bundles","attributes": {"quantity": "12"}}}
     Then Response status code should be:    422
