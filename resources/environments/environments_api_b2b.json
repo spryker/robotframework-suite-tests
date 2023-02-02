@@ -432,6 +432,9 @@
             "first_slot_item_sku": "575056",
             "first_slot_uuid": "332b40ac-a789-57ce-bec0-23d8dddd71eb",
             "quantity": 2
+        },
+        "configurable_product": {
+            "sku": "574601"
         }
     },
     "product_attributes":{
