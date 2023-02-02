@@ -57,7 +57,7 @@ Update_configured_bundle_quantity_in_the cart_to_the_cart
     ...  AND    I send a POST request:    /carts/${cart_id}/configured-bundles?include=items    {"data": {"type": "configured-bundles","attributes": {"quantity": "${configured_bundle_quantity}","templateUuid": "${configurable_bundle_template_1_uuid}","items": [{"sku": "${configurable_bundle_first_slot_item_sku}","quantity": 2,"slotUuid": "${configurable_bundle_slot_1_uuid}"}]}}}
     ...  AND    Save value to a variable:    [included][0][attributes][configuredBundle][groupKey]    bundle_group_key
     ...  AND    Response status code should be:    201
-    When I send a PATCH request:    /carts/${cart_id}/configured-bundles/${bundle_group_key}?include=items    {"data": {"type": "configured-bundles","attributes": {"quantity": "8"}}}
+    When I send a PATCH request:    /carts/${cart_id}/configured-bundles/${bundle_group_key}?include=items    {"data": {"type": "configured-bundles","attributes": {"quantity": "4"}}}
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
@@ -68,8 +68,8 @@ Update_configured_bundle_quantity_in_the cart_to_the_cart
     And Response body parameter should be:    [data][attributes][store]    ${store.de}
     And Response body parameter should be:    [included][0][type]    items
     And Response body parameter should be:    [included][0][attributes][sku]    ${configurable_bundle_first_slot_item_sku}
-    And Response body parameter should be:    [included][0][attributes][configuredBundle][quantity]   8
-    And Response body parameter should be greater than:    [data][attributes][totals][priceToPay]    4
+    And Response body parameter should be:    [included][0][attributes][configuredBundle][quantity]   4
+    And Response body parameter should be greater than:    [data][attributes][totals][priceToPay]    2
     And Response body parameter should be greater than:    [data][attributes][totals][grandTotal]    1
 
 Delete_configured_bundle_item_from_the_cart

@@ -8,7 +8,7 @@ Resource    ../../../../../../resources/common/common_api.robot
 ENABLER
     TestSetup
 
-###POST####
+#POST#
 Create_a_return
      [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
@@ -67,7 +67,7 @@ Create_a_return_include_return_items
     And Response body parameter should contain:    [included][0][attributes]    orderItemUuid
 
 
-#GET####
+#GET#
 Get_lists_of_returns
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
@@ -129,7 +129,7 @@ Get_lists_of_returns_include_return-items
     And Response include should contain certain entity type:    return-items
     And Response body has correct self link 
 
-###GET####
+#GET#
 Get_return_by_Id
      [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
@@ -197,7 +197,8 @@ Get_return_by_Id_include_return-items
 
 # BUG: https://spryker.atlassian.net/browse/CC-19280
 Retrieves_list_of_returns_included_merchants
-    [Tags]    skip-due-to-refactoring
+    [Documentation]    Skip due to bug https://spryker.atlassian.net/browse/CC-23304
+    [Tags]    skip-due-to-issue
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
     ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
@@ -236,7 +237,8 @@ Retrieves_list_of_returns_included_merchants
 
 # BUG: https://spryker.atlassian.net/browse/CC-19280
 Retrieves_return_by_id_with_returns_items_included
-    [Tags]    skip-due-to-refactoring
+    [Documentation]    Skip due to bug https://spryker.atlassian.net/browse/CC-23304
+    [Tags]    skip-due-to-issue
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
     ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
@@ -278,7 +280,8 @@ Retrieves_return_by_id_with_returns_items_included
 
 # BUG: https://spryker.atlassian.net/browse/CC-19280
 Retrieves_return_by_id_for_sales_order
-    [Tags]    skip-due-to-refactoring
+    [Documentation]    Skip due to bug https://spryker.atlassian.net/browse/CC-23304
+    [Tags]    skip-due-to-issue
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
     ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
@@ -304,7 +307,8 @@ Retrieves_return_by_id_for_sales_order
 
 # BUG: https://spryker.atlassian.net/browse/CC-19280
 Retrieves_return_by_id_with_merchants_included
-    [Tags]    skip-due-to-refactoring
+    [Documentation]    Skip due to bug https://spryker.atlassian.net/browse/CC-23304
+    [Tags]    skip-due-to-issue
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
     ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}

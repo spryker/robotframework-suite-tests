@@ -57,10 +57,10 @@ Get_product_reviews_for_product_with_no_reviews
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response should contain the array of a certain size:    [data]    0
     And Response body has correct self link
-
-# bug CC-16486     
+   
 Get_product_review_by_id
-    [Tags]    skip-due-to-refactoring
+    [Documentation]   https://spryker.atlassian.net/browse/CC-16486
+    [Tags]    skip-due-to-issue
     [Setup]    Run Keywords    I send a GET request:    /abstract-products/${abstract_product.product_with_reviews.sku}/product-reviews
     ...    AND    Save value to a variable:    [data][0][id]    review_id
     When I send a GET request:    /abstract-products/${abstract_product.product_with_reviews.sku}/product-reviews/${review_id}
@@ -77,9 +77,9 @@ Get_product_review_by_id
     And Response body parameter should not be EMPTY:    [data][attributes][description]
     And Response body parameter should not be EMPTY:    [data][links][self]
 
-# bug CC-16486 - additional issue with self link
 Create_a_product_review
-    [Tags]    skip-due-to-refactoring
+    [Documentation]   https://spryker.atlassian.net/browse/CC-16486
+    [Tags]    skip-due-to-issue
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     When I send a POST request:    /abstract-products/${abstract_available_product_with_stock.sku}/product-reviews    {"data": {"type": "product-reviews","attributes": {"rating": ${review.default_rating},"nickname": "${yves_user.first_name}","summary": "${review.title}","description": "${review.text}"}}}

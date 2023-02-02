@@ -72,13 +72,13 @@ Delete_gift_card_from_cart
     Then Response status code should be:    204
     And Response reason should be:    No Content
     [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cart_id}
-    ...    AND    Response status code should be:    204
+    ...   AND    Response status code should be:    204
 
 Add_gift_card_code_to_the_guest_cart
     [Setup]    I set Headers:    Content-Type=${default_header_content_type}    X-Anonymous-Customer-Unique-Id=${random}
     Run Keywords    Create a guest cart:    ${random}   ${concrete_available_product.with_label}    1
     ...    AND    Save value to a variable:    [data][id]    guestcart_id
-    ...    AND     Create giftcode in Database:    guest_${random}    ${gift_card.amount}
+    ...    AND    Create giftcode in Database:    guest_${random}    ${gift_card.amount}
     When I send a POST request:    /guest-carts/${guestcart_id}/cart-codes?include=gift-cards     {"data": {"type": "cart-codes","attributes": {"code": "guest_${random}"}}}
     Then Response status code should be:    201
     And Response body parameter should be:    [data][type]    guest-carts
@@ -111,7 +111,7 @@ Add_gift_card_code_to_the_guest_cart
     And Response include element has self link:   gift-cards
 
 Delete_gift_card_code_from_the_guest_cart
-     [Setup]    I set Headers:    Content-Type=${default_header_content_type}    X-Anonymous-Customer-Unique-Id=${random}
+    [Setup]    I set Headers:    Content-Type=${default_header_content_type}    X-Anonymous-Customer-Unique-Id=${random}
     Run Keywords    Create a guest cart:    ${random}   ${concrete_available_product.with_label}    1
     ...    AND    Save value to a variable:    [data][id]    guestcart_id
     ...    AND    Create giftcode in Database:    delete_guest_${random}    ${gift_card.amount}

@@ -17,7 +17,8 @@ Retrieve_list_of_company_users_without_access_token
 
 # CC-16616
 Retrieve_list_of_company_users_by_user_without_admin_role
-    [Tags]    skip-due-to-refactoring
+    [Documentation]    skip due to issue  https://spryker.atlassian.net/browse/CC-16616
+    [Tags]    skip-due-to-issue
     When I get access token for the customer:    ${yves_shared_shopping_list_user.email}
     And I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     And I send a GET request:    /company-users

@@ -27,34 +27,38 @@ Get_not_existing_concrete_product_offers_price
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response should contain the array of a certain size:    [data]    0
-#bug MP-6779
+
 Get_product_offer_with_volume_prices_included_for_inactive_product_offer
-    [Tags]    skip-due-to-refactoring
-    When I send a GET request:    /product-offers/${product_offers.inactive_offer_with_volume_price}/product-offer-prices
+    [Documentation]    Skip due to issue https://spryker.atlassian.net/browse/CC-25738
+    [Tags]    skip-due-to-issue
+    When I send a GET request:    /product-offers/${inactive_offer_with_volume_price}/product-offer-prices
     Then Response status code should be:    404
     And Response should return error code:    3701
     And Response reason should be:    Not Found
     And Response should return error message:    Product offer not found.
-#bug MP-6779
+
 Get_product_offer_with_volume_prices_included_for_waiting_for_approval_product_offer
-    [Tags]    skip-due-to-refactoring
-    When I send a GET request:    /product-offers/${product_offers.waiting_for_approval_offer_with_volume_price}/product-offer-prices
+    [Documentation]    Skip due to issue https://spryker.atlassian.net/browse/CC-25738
+    [Tags]    skip-due-to-issue
+    When I send a GET request:    /product-offers/${waiting_for_approval_offer_with_volume_price}/product-offer-prices
     Then Response status code should be:    404
     And Response should return error code:    3701
     And Response reason should be:    Not Found
     And Response should return error message:    Product offer not found.
-#bug MP-6779
+
 Get_product_offer_with_volume_prices_included_for_denied_product_offer
-    [Tags]    skip-due-to-refactoring
-    When I send a GET request:    /product-offers/${product_offers.denied_offer_with_volume_price}/product-offer-prices
+    [Documentation]    Skip due to issue https://spryker.atlassian.net/browse/CC-25738
+    [Tags]    skip-due-to-issue    
+    When I send a GET request:    /product-offers/${denied_offer_with_volume_price}/product-offer-prices
     Then Response status code should be:    404
     And Response should return error code:    3701
     And Response reason should be:    Not Found
     And Response should return error message:    Product offer not found. 
 
-#bug MP-6779
+
 Get_product_offer_prices_with_invaild_offer_id
-    [Tags]    skip-due-to-refactoring
+    [Documentation]    Skip due to issue https://spryker.atlassian.net/browse/CC-25738
+    [Tags]    skip-due-to-issue
     When I send a GET request:    /product-offers/test/product-offer-prices
     Then Response status code should be:    404
     And Response reason should be:    Not Found

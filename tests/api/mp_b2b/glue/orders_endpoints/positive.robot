@@ -155,6 +155,7 @@ Get_order_by_order_id
     And Response body parameter should contain:    [data][attributes][calculatedDiscounts]    voucherCode
     And Response body parameter should contain:    [data][attributes][calculatedDiscounts]    quantity
     And Response body has correct self link internal
+    
 Get_order_by_order_id_with_different_items_and_quantity
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}

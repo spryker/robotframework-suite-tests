@@ -19,13 +19,13 @@ Get_all_concrete_product_offer_info_with_product_offer_prices_and_product_offer_
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
-    And Response body parameter should be:    [data][0][id]    ${second_offer_with_volume_price}
+    And Response body parameter should be:    [data][0][id]    ${active_offer_2}
     And Response body parameter should be:    [data][0][type]    product-offers
     And Response body parameter should be in:    [data][0][attributes][isDefault]    True    False
     And Response body parameter should be:    [data][0][attributes][merchantReference]    ${merchant_sony_experts_id}
     And Response body parameter should not be EMPTY:    [data][0][links][self]
     And Response body parameter should contain:    [data][0][attributes]    merchantSku
-    And Response should contain the array of a certain size:    [included]    3
+    And Response should contain the array of a certain size:    [included]    6
     And Response should contain the array of a certain size:    [data][0][relationships]    3
     And Response include should contain certain entity type:    product-offer-prices
     And Response include should contain certain entity type:    product-offer-availabilities
