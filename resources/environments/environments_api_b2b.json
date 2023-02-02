@@ -607,6 +607,14 @@
             "no_longer_needed": "No longer needed",
             "qty": "3"
         }
+    },
+    "productConfigurationInstance": {
+        "productConfigurationInstance":{
+        "displayData": "{\"Preferred time of the day\": \"Afternoon\", \"Date\": \"9.09.2050\"}",
+        "configuration": "{\"time_of_day\": \"3\"}",
+        "configuratorKey": "DATE_TIME_CONFIGURATOR",
+        "isComplete": true
+    }
     }
 
 }
