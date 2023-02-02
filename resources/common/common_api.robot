@@ -1553,7 +1553,7 @@ Update order status in Database:
     ...    *Example:*
     ...    
     ...    ``Update order status in Database:    7    shipped``
-    [Arguments]    ${order_item_status_name}
+    [Arguments]    ${order_item_status_name}    ${uuid_to_use}
     Connect to Spryker DB
     ${new_id}=    Set Variable    ${EMPTY}
     ${state_id}=    Set Variable    ${EMPTY}
@@ -1568,9 +1568,9 @@ Update order status in Database:
         Execute Sql String    INSERT INTO spy_oms_order_item_state (id_oms_order_item_state, name) VALUES (${new_id}, '${order_item_status_name}');
         ${state_id}=    Set Variable    ${new_id}
     END
-    Execute Sql String    update spy_sales_order_item set fk_oms_order_item_state = '${state_id}' where uuid = '${Uuid}'
+    Execute Sql String    update spy_sales_order_item set fk_oms_order_item_state = '${state_id}' where fk_sales_order = '${uuid_to_use}'
     Disconnect From Database
-
+ 
 Get voucher code by discountId from Database:
     [Documentation]    This keyword allows to get voucher code according to the discount ID. Discount_id can be found in Backoffice > Merchandising > Discount page
     ...        and set this id as an argument of a keyword.
