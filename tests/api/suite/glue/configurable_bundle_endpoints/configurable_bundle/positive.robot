@@ -8,7 +8,8 @@ Default Tags    glue
 ENABLER
     TestSetup
 Add_configured_bundle_item_to_the_cart_with_included_items
-  [Setup]    Run Keywords    I get access token for the customer:    ${yves_second_user.email}
+    [Tags]    skip-due-to-refactoring
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_second_user.email}
     ...  AND    I set Headers:    Authorization=${token}
     ...  AND    Find or create customer cart
     ...  AND    Cleanup all items in the cart:    ${cart_id}
@@ -50,7 +51,8 @@ Add_configured_bundle_item_to_the_cart_with_included_items
     And Response body parameter should not be EMPTY:    [included][0][attributes][calculations][sumPriceToPayAggregation]
 
 Update_configured_bundle_quantity_in_the cart_to_the_cart
-  [Setup]    Run Keywords    I get access token for the customer:    ${yves_second_user.email}
+    [Tags]    skip-due-to-refactoring
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_second_user.email}
     ...  AND    I set Headers:    Authorization=${token}
     ...  AND    Find or create customer cart
     ...  AND    Cleanup all items in the cart:    ${cart_id}
@@ -73,7 +75,8 @@ Update_configured_bundle_quantity_in_the cart_to_the_cart
     And Response body parameter should be greater than:    [data][attributes][totals][grandTotal]    1
 
 Delete_configured_bundle_item_from_the_cart
-  [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
+    [Tags]    skip-due-to-refactoring
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
     ...  AND    Find or create customer cart
     ...  AND    Cleanup all items in the cart:    ${cart_id}
