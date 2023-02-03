@@ -1620,7 +1620,7 @@ Update order status in Database:
         Execute Sql String    INSERT INTO spy_oms_order_item_state (id_oms_order_item_state, name) VALUES (${new_id}, '${order_item_status_name}');
         ${state_id}=    Set Variable    ${new_id}
     END
-    Execute Sql String    update spy_sales_order_item set fk_oms_order_item_state = '${state_id}' where fk_sales_order = '${uuid_to_use}'
+    Execute Sql String    update spy_sales_order_item set fk_oms_order_item_state = '${state_id}' where uuid= '${uuid_to_use}'
     Disconnect From Database
  
 Get voucher code by discountId from Database:
