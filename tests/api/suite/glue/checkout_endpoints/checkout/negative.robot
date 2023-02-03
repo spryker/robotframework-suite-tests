@@ -12,6 +12,7 @@ ENABLER
 Create_order_with_invalid_access_token
       [Setup]    Run Keywords    I get access token for the customer:    ${yves_second_user.email}
     ...  AND    I set Headers:    Authorization=${token}
+    ...  AND    Cleanup all customer carts
     ...  AND    Find or create customer cart
     ...  AND    Cleanup all items in the cart:    ${cart_id}
     ...  AND    I send a POST request:    /carts/${cart_id}/items    {"data": {"type": "items","attributes": {"sku": "${product_availability.concrete_available_with_stock_and_never_out_of_stock_sku}","quantity": 1}}}
@@ -369,9 +370,8 @@ Create_order_with_split_shipments_&_without_shipping_address
     And Response should return error code:    901
     And Response should return error message:    shipments.1.shippingAddress => This value should not be blank.
        
-#bug https://spryker.atlassian.net/browse/CC-19269
 Create_order_with_invalid_payment_method
-    [Documentation]    #bug https://spryker.atlassian.net/browse/CC-19269
+    [Documentation]    bug https://spryker.atlassian.net/browse/CC-19269
     [Tags]    skip-due-to-issue
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_second_user.email}
     ...  AND    I set Headers:    Authorization=${token}
