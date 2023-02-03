@@ -8,7 +8,6 @@ Default Tags    glue
 ENABLER
     TestSetup
 
-
 Create_guest_cart
     [Setup]    I set Headers:    Content-Type=${default_header_content_type}    X-Anonymous-Customer-Unique-Id=${random}
     When I send a POST request:    /guest-cart-items    {"data": {"type": "guest-cart-items","attributes": {"sku": "${concrete_product_with_concrete_product_alternative.sku}","quantity": 1}}}
@@ -72,7 +71,6 @@ Retrieve_guest_cart_including_cart_items
     And Response body parameter should be:    [data][attributes][store]    ${store.de}
     And Response body parameter should be:    [data][relationships][guest-cart-items][data][0][type]    guest-cart-items
     And Response body parameter should contain:    [data][relationships][guest-cart-items][data][0][id]    ${concrete_product_with_concrete_product_alternative.sku}
-    # And Response body parameter should be:    [data][relationships][guest-cart-items][data][0][id]    ${concrete_product_with_concrete_product_alternative.sku}
     And Each array element of array in response should contain nested property with value:    [included]    type    guest-cart-items
     And Each array element of array in response should contain nested property with datatype:    [included]    id    str
     And Response should contain the array of a certain size:    [included]    1
@@ -171,13 +169,14 @@ Update_guest_cart_with_empty_priceMod_currency_store
 
 Convert_guest_cart_to_customer_cart
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
-        ...   AND    I set Headers:    Authorization=${token}
-        ...   AND    Find or create customer cart
-        ...   AND    Cleanup all items in the cart:    ${cart_id}
-        ...   AND    Create a guest cart:    ${random}-convert-guest-cart    ${concrete_product_with_concrete_product_alternative.sku}    1
-        ...   AND    I set Headers:     X-Anonymous-Customer-Unique-Id=${x_anonymous_customer_unique_id}
-        ...   AND    I get access token for the customer:    ${yves_user.email}
-        ...   AND    I set Headers:    Authorization=${token}
+        ...    AND    I set Headers:    Authorization=${token}
+        ...    AND    Cleanup all customer carts
+        ...    AND    Find or create customer cart
+        ...    AND    Cleanup all items in the cart:    ${cart_id}
+        ...    AND    Create a guest cart:    ${random}-convert-guest-cart    ${concrete_product_with_concrete_product_alternative.sku}    1
+        ...    AND    I set Headers:     X-Anonymous-Customer-Unique-Id=${x_anonymous_customer_unique_id}
+        ...    AND    I get access token for the customer:    ${yves_user.email}
+        ...    AND    I set Headers:    Authorization=${token}
     When I send a GET request:    /carts?include=items
     Then Response status code should be:    200
     And Response reason should be:    OK

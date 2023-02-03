@@ -1169,6 +1169,7 @@ Response should return error code:
     ...
     ...    ``Response should return error code:    204``
     [Arguments]    ${error_code}
+    ${error_code}=    Convert To String    ${error_code}
     ${data}=    Get Value From Json    ${response_body}    [errors][0][code]
     ${data}=    Convert To String    ${data}
     ${data}=    Replace String    ${data}    '   ${EMPTY}
@@ -1411,6 +1412,19 @@ Find or create customer cart
         IF    not ${hasCart}    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}"}}}
         IF    not ${hasCart}    Save value to a variable:    [data][id]    cart_id
 
+Create empty customer cart:
+    [Documentation]    This keyword creates cart for the current customer token. This keyword sets ``${cart_id} `` variable
+        ...                and it can be re-used by the keywords that follow this keyword in the test. 
+        ...    
+        ...    Note: work only for registered customers. For guest users use ``Create a guest cart:``
+        ...
+        ...    *Example:*
+        ...
+        ...    ``Create empty customer cart:    ${mode.gross}    ${currency.eur.code}    ${store.de}    cart_rules``
+        ...    
+        [Arguments]    ${price_mode}    ${currency_code}    ${store_code}    ${cart_name}
+        I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${price_mode}","currency": "${currency_code}","store": "${store_code}","name": "${cart_name}-${random}"}}}
+        Save value to a variable:    [data][id]    cart_id
 
 Get ETag header value from cart
     [Documentation]    This keyword first retrieves cart for the current customer token.
@@ -1418,8 +1432,7 @@ Get ETag header value from cart
         ...
         ...    and it can be re-used by the keywords that follow this keyword in the test
         ...    This keyword does not accept any arguments. This keyword is used for removing unused/unwanted (ex. W/"") characters from ETag header value.
-
-
+        ...
         ${response}=    I send a GET request:    /carts
         ${Etag}=    Get Value From Json   ${response_headers}    [ETag]
         ${Etag}=    Convert To String    ${Etag}
@@ -1434,7 +1447,11 @@ Get ETag header value from cart
         [Return]    ${Etag}
 
 Create giftcode in Database:
-    [Documentation]    This keyword creates a new entry in the table spy_gift_card with the name, value and gift-card code.
+    [Documentation]    This keyword creates a new entry in the DB table spy_gift_card with the name, value and gift-card code.
+        ...    *Example:*
+        ...
+        ...    ``Create giftcode in Database:    checkout_${random}    ${gift_card.amount}``
+        ... 
     [Arguments]    ${spy_gift_card_code}    ${spy_gift_card_value}
     ${amount}=   Evaluate    ${spy_gift_card_value} / 100
     ${amount}=    Evaluate    "%.f" % ${amount}
@@ -1503,7 +1520,8 @@ Cleanup all customer carts
     [Documentation]    This keyword deletes all customer carts
         ...
         ...    Before using this method you should get customer token and set it into the headers with the help of ``I get access token for the customer:`` and ``I set Headers:``
-        ...
+        ...    This keyword does not accept any arguments.
+        ...    
         ...    *Example:*
         ...
         ...    ``Cleanup all customer carts``

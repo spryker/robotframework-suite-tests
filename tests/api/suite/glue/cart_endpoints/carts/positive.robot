@@ -318,8 +318,8 @@ Update_cart_with_name_attribute
 Get_cart_with_included_cart_rules
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
        ...  AND    I set Headers:    Authorization=${token}
-       ...  AND    Find or create customer cart
-       ...  AND    Cleanup all items in the cart:    ${cart_id}
+       ...  AND    Cleanup all customer carts
+       ...  AND    Create empty customer cart:    ${mode.gross}    ${currency.eur.code}    ${store.de}    cart_rules
        ...  AND    I send a POST request:    /carts/${cart_id}/items    {"data": {"type": "items","attributes": {"sku": "${concrete_product_with_concrete_product_alternative.sku}", "quantity": "4"}}}
        ...  AND    Response status code should be:    201
     When I send a GET request:    /carts/${cart_id}?include=cart-rules
@@ -364,8 +364,8 @@ Get_cart_with_included_cart_rules
 Get_cart_with_included_promotional_items
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
        ...  AND    I set Headers:    Authorization=${token}
-       ...  AND    Find or create customer cart
-       ...  AND    Cleanup all items in the cart:    ${cart_id}
+       ...  AND    Cleanup all customer carts
+       ...  AND    Create empty customer cart:    ${mode.gross}    ${currency.eur.code}    ${store.de}    promotional
        ...  AND    I send a POST request:    /carts/${cart_id}/items    {"data": {"type": "items","attributes": {"sku": "${concrete_product_with_concrete_product_alternative.sku}", "quantity": "8"}}}
        ...  AND    Response status code should be:    201
     When I send a GET request:    /carts/${cart_id}?include=promotional-items
