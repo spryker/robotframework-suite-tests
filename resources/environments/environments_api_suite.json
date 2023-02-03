@@ -179,6 +179,14 @@
                 "product_4_name": "HP 200 280 G1"
             }
         },
+        "bundled_product_never_out_of_stock": {
+            "concrete": {
+                "product_1_sku": "213_123",
+                "product_1_name": "Lenovo Bundle",
+                "product_2_sku": "130_24725761",
+                "product_2_name": "Lenovo ThinkStation P300"
+            }
+        },
         "special_product_abstract_sku": {
             "with_multivariant": "051",
             "with_measurement_unit": "215",
@@ -627,7 +635,7 @@
         "qty_of_subcategories_in_category_trees": "2"
         ,
         "gift_card":{
-            "amount":"10000",
+            "amount":"1000",
             "paymentProvider": "GiftCard",
             "paymentMethod":"GiftCard"
         },
