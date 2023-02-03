@@ -1650,3 +1650,16 @@ Connect to Spryker DB
     ${db_port}=    Set Variable If    '${db_name}' == '${EMPTY}'    ${default_db_port}    ${db_port}
     ${db_engine}=    Set Variable If    '${db_engine}' == '${EMPTY}'    ${default_db_engine}    ${db_engine}
     Connect To Database    ${db_engine}    ${db_name}    ${db_user}    ${db_password}    ${db_host}    ${db_port}
+
+I get the first company user id and its' customer email
+    [Documentation]    This keyword sends the GET reguest to the ``/company-users?include=customers`` endpoint and returns first available company user id and its' customer email in
+    ...    ``${companyUserId}``  and  ``${companyUserEmail}`` variables. 
+    ...    If the fist company user is anne.boleyn@spryker.com - the next one will be taken and Anna is a 'BoB' user
+    ...    
+    I send a GET request:    /company-users?include=customers
+    Save value to a variable:    [data][0][id]    companyUserId
+    Save value to a variable:    [included][0][attributes][email]    companyUserEmail
+    IF    '${companyUserEmail}' == 'anne.boleyn@spryker.com'
+        Save value to a variable:    [included][1][attributes][email]    companyUserEmail
+        Save value to a variable:    [data][1][id]    companyUserId
+    END
