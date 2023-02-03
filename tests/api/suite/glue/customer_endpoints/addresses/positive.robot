@@ -7,7 +7,7 @@ Default Tags    glue
 *** Test Cases ***
 ENABLER
     TestSetup
-#####POST#####
+#POST#
 Create_customer_address_with_all_fields
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
