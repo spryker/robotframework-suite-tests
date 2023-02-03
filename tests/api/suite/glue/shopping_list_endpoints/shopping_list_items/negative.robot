@@ -40,10 +40,7 @@ Add_a_product_to_the_non_existing_shopping_list
     And Response reason should be:    Not Found
     And Response should return error message:    Shopping list not found.
 
-
 Add_a_product_with_non_existing_sku_to_the_shopping_list  
-    [Documentation]  skip due to https://spryker.atlassian.net/browse/CC-19379
-    [Tags]    skip-due-to-issue 
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}  
     ...    AND    I send a POST request:    /shopping-lists    {"data":{"type":"shopping-lists","attributes":{"name":"${shopping_list_name}${random}"}}}
@@ -120,7 +117,6 @@ Add_too_big_amount_of_concrete_product_to_the_shopping_list
     ...    AND    Response reason should be:    No Content
 
 Add_an_abstract_product_to_the_shopping_list  
-    [Tags]    skip-due-to-refactoring  
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}  
     ...    AND    I send a POST request:    /shopping-lists    {"data":{"type":"shopping-lists","attributes":{"name":"${shopping_list_name}${random}"}}}
@@ -313,7 +309,6 @@ Update_quantity_of_the_product_at_the_shopping_list_to_zero
     And Response should return error message:    quantity => This value should be greater than 0.
 
 Update_product_quntity_at_the_shopping_list_to_non_digit_value
-    [Tags]    skip-due-to-refactoring
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}  
     I send a PATCH request:    /shopping-lists/shoppingListId/shopping-list-items/shoppingListItemId    {"data":{"type":"shopping-list-items","attributes":{"quantity":"-2"}}}

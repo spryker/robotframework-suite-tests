@@ -269,6 +269,13 @@
             "description": "Enjoy greater flexibility  ...than ever before with the Galaxy Tab S2. Remarkably slim and ultra-lightweight, use this device to take your e-books, photos, videos and work-related files with you wherever you need to go. The Galaxy Tab S2’s 4:3 ratio display is optimised for magazine reading and web use. Switch to Reading Mode to adjust screen brightness and change wallpaper - create an ideal eBook reading environment designed to reduce the strain on your eyes. Get greater security with convenient and accurate fingerprint functionality. Activate fingerprint lock by pressing the home button. Use fingerprint verification to restrict / allow access to your web browser, screen lock mode and your Samsung account.     ",
             "superattribute": "color"
         },
+        "abstract_product_with_merchant": {
+            "sku": "017",
+            "concrete_sku": "017_21748906",
+            "name": "Sony Cyber-shot DSC-W800",
+            "description": "Styled for your pocket Precision photography meets the portability of a smartphone. The W800 is small enough to take great photos, look good while doing it, and slip in your pocket. Shooting great photos and videos is easy with the W800. Buttons are positioned for ease of use, while a dedicated movie button makes shooting movies simple. The vivid 2.7-type Clear Photo LCD display screen lets you view your stills and play back movies with minimal effort. Whip out the W800 to capture crisp, smooth footage in an instant. At the press of a button, you can record blur-free 720 HD images with digital sound. Breathe new life into a picture by using built-in Picture Effect technology. There’s a range of modes to choose from – you don’t even have to download image-editing software.",
+            "merchant_refference": "MER000001"
+        },
         "concrete_available_product": {
             "with_offer": "030_30021698",
             "with_label": "006_30692993",
@@ -559,7 +566,7 @@
         },
         "default_active": {
             "min": "3454",
-            "max": "31482"
+            "max": "39353"
         },
         "label": {
             "new": "New",

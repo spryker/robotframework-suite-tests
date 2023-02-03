@@ -36,8 +36,8 @@ Get_all_concrete_product_offer_info_with_product_offer_prices_and_product_offer_
     And Response body has correct self link
 
 Get_all_product_offer_info_with_product_offer_prices_and_product_offer_availabilities_and_merchants_included
-     When I send a GET request:    /product-offers/${active_offer}?include=product-offer-prices,product-offer-availabilities,merchants
-     Then Response status code should be:    200
+    When I send a GET request:    /product-offers/${active_offer}?include=product-offer-prices,product-offer-availabilities,merchants
+    Then Response status code should be:    200
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response body parameter should be:    [data][id]    ${active_offer}

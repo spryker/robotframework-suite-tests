@@ -201,7 +201,6 @@ Get_search_suggestions_with_brand_and_color
     And Response body has correct self link
 
 Get_search_suggestions_with_brand_and_currency
-    [Tags]    skip-due-to-refactoring
     When I send a GET request:    /catalog-search-suggestions?q=${brand_name}&currency=${currency.chf.code}
     Then Response status code should be:    200
     And Response reason should be:    OK
