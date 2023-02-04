@@ -95,7 +95,6 @@ Create_a_product_review_with_empty_fields
     And Array in response should contain property with value:    [errors]    detail    nickname => This value should not be blank.
 
 Create_a_product_review_with_missing_fields
-    [Tags]    skip-due-to-refactoring
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     When I send a POST request:    /abstract-products/${abstract_product.product_with_reviews.sku}/product-reviews    {"data": {"type": "product-reviews","attributes": {}}}

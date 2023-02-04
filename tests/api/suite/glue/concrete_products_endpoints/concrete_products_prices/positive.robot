@@ -26,7 +26,6 @@ Get_concrete_product_with_only_default_price
     And Response body has correct self link
 
 Get_concrete_product_with_default_and_original_prices
-    [Tags]    skip-due-to-refactoring
     When I send a GET request:    /concrete-products/${concrete_product.product_with_original_prices.concrete_sku}/concrete-product-prices
     Then Response status code should be:    200
     And Response reason should be:    OK
