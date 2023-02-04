@@ -17,7 +17,7 @@ Create_a_shared_shopping_cart_with_read_only_permissions_with_includes
     ...    AND    Save value to a variable:    [data][id]    cartId
     ...    AND    I send a POST request:    /carts/${cartId}/items    {"data":{"type":"items","attributes":{"sku":"${concrete_available_product.sku}","quantity":1}}}
     ...    AND    Response status code should be:    201
-    ...    AND    I get the first company user id and its' customer email
+    ...    AND    Get the first company user id and its' customer email
     When I send a POST request:    /carts/${cartId}/shared-carts    {"data":{"type":"shared-carts","attributes":{"idCompanyUser":"${companyUserId}","idCartPermissionGroup":1}}}
     Then Response status code should be:    201
     And Save value to a variable:    [data][id]    sharedCartId
@@ -58,7 +58,7 @@ Create_a_shared_shopping_cart_with_full_access_permissions
     ...    AND    Save value to a variable:    [data][id]    cartId
     ...    AND    I send a POST request:    /carts/${cartId}/items    {"data":{"type":"items","attributes":{"sku":"${concrete_available_product.sku}","quantity":1}}}
     ...    AND    Response status code should be:    201
-    ...    AND    I get the first company user id and its' customer email
+    ...    AND    Get the first company user id and its' customer email
     When I send a POST request:    /carts/${cartId}/shared-carts    {"data":{"type":"shared-carts","attributes":{"idCompanyUser":"${companyUserId}","idCartPermissionGroup":2}}}
     Then Response status code should be:    201
     And Save value to a variable:    [data][id]    sharedCartId
@@ -84,7 +84,7 @@ Update_permissions_of_shared_shopping_cart_by_Cart_owner
     ...    AND    Save value to a variable:    [data][id]    cartId
     ...    AND    I send a POST request:    /carts/${cartId}/items    {"data":{"type":"items","attributes":{"sku":"${concrete_available_product.sku}","quantity":1}}}
     ...    AND    Response status code should be:    201
-    ...    AND    I get the first company user id and its' customer email
+    ...    AND    Get the first company user id and its' customer email
     ...    AND    I send a POST request:    /carts/${cartId}/shared-carts    {"data":{"type":"shared-carts","attributes":{"idCompanyUser":"${companyUserId}","idCartPermissionGroup":2}}}
     ...    AND    Save value to a variable:    [data][id]    sharedCartId
     When I send a PATCH request:    /shared-carts/${sharedCartId}    {"data":{"type":"shared-carts","attributes":{"idCartPermissionGroup":1}}}
@@ -114,7 +114,7 @@ Add_an_item_to_the_shared_shopping_cart_by_user_with_access
     ...    AND    I set Headers:    Authorization=${token}  
     ...    AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
     ...    AND    Save value to a variable:    [data][id]    cartId
-    ...    AND    I get the first company user id and its' customer email
+    ...    AND    Get the first company user id and its' customer email
     ...    AND    I send a POST request:    /carts/${cartId}/shared-carts    {"data":{"type":"shared-carts","attributes":{"idCompanyUser":"${companyUserId}","idCartPermissionGroup":2}}}
     ...    AND    Response status code should be:    201
     ...    AND    I get access token for the customer:    ${companyUserEmail}
@@ -138,7 +138,7 @@ Update_an_item_quantity_at_the_shared_shopping_cart_with_full_access_permissions
     ...    AND    I send a POST request:    /carts/${cartId}/items?include=items    {"data":{"type":"items","attributes":{"sku":"${concrete_available_product.sku}","quantity":1}}}
     ...    AND    Save value to a variable:    [included][0][id]    itemId
     ...    AND    Save value to a variable:    [included][0][attributes][calculations][sumPriceToPayAggregation]    itemTotalPrice
-    ...    AND    I get the first company user id and its' customer email
+    ...    AND    Get the first company user id and its' customer email
     ...    AND    I send a POST request:    /carts/${cartId}/shared-carts    {"data":{"type":"shared-carts","attributes":{"idCompanyUser":"${companyUserId}","idCartPermissionGroup":2}}}
     ...    AND    Response status code should be:    201
     ...    AND    I get access token for the customer:    ${companyUserEmail}
@@ -163,7 +163,7 @@ Delete_an_item_from_the_shared_shopping_cart_with_full_access_permissions_by_use
     ...    AND    Save value to a variable:    [data][id]    cartId
     ...    AND    I send a POST request:    /carts/${cartId}/items    {"data":{"type":"items","attributes":{"sku":"${concrete_available_product.sku}","quantity":1}}}
     ...    AND    Response status code should be:    201
-    ...    AND    I get the first company user id and its' customer email
+    ...    AND    Get the first company user id and its' customer email
     ...    AND    I send a POST request:    /carts/${cartId}/shared-carts    {"data":{"type":"shared-carts","attributes":{"idCompanyUser":"${companyUserId}","idCartPermissionGroup":2}}}
     ...    AND    Response status code should be:    201
     ...    AND    I get access token for the customer:    ${companyUserEmail}
@@ -186,7 +186,7 @@ Delete_a_shared_shopping_cart_with_full_access_permissions_by_user_with_access
     ...    AND    Save value to a variable:    [data][id]    cartId
     ...    AND    I send a POST request:    /carts/${cartId}/items    {"data":{"type":"items","attributes":{"sku":"${concrete_available_product.sku}","quantity":2}}}
     ...    AND    Response status code should be:    201
-    ...    AND    I get the first company user id and its' customer email
+    ...    AND    Get the first company user id and its' customer email
     ...    AND    I send a POST request:    /carts/${cartId}/shared-carts    {"data":{"type":"shared-carts","attributes":{"idCompanyUser":"${companyUserId}","idCartPermissionGroup":2}}}
     ...    AND    Response status code should be:    201
     ...    AND    I get access token for the customer:    ${companyUserEmail}
