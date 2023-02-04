@@ -20,8 +20,8 @@ Request_company_role_by_id
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response body parameter should be:    [data][type]    company-roles
-    And Response body parameter should be:    [data][attributes][name]    Buyer
-    And Response body parameter should be:    [data][attributes][isDefault]    True
+    And Response body parameter should be in:    [data][attributes][name]    Buyer    Admin
+    And Response body parameter should be in:    [data][attributes][isDefault]    True    False
 
 Request_company_role_by_mine
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
@@ -32,10 +32,10 @@ Request_company_role_by_mine
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response should contain the array of a certain size:    [data]    2
     And Each array element of array in response should contain property with value:    [data]    type    company-roles
-    And Response body parameter should be:    [data][0][attributes][name]    Buyer
-    And Response body parameter should be:    [data][1][attributes][name]    Admin
-    And Response body parameter should be:    [data][0][attributes][isDefault]    True
-    And Response body parameter should be:    [data][1][attributes][isDefault]    False
+    And Response body parameter should be in:    [data][0][attributes][name]    Buyer    Admin
+    And Response body parameter should be in:    [data][1][attributes][name]    Admin    Buyer
+    And Response body parameter should be in:    [data][0][attributes][isDefault]    True    False
+    And Response body parameter should be in:    [data][1][attributes][isDefault]    False    True
 
 Request_company_role_by_mine_with_include_companies
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
