@@ -43,7 +43,6 @@ Add_an_item_to_the_non_existing_guest_cart
     And Response should return error message:    Cart with given uuid not found.
 
 Add_an_non_existing_item_to_the_guest_cart
-    [Tags]    skip-due-to-refactoring
     [Setup]    I set Headers:    Content-Type=${default_header_content_type}    X-Anonymous-Customer-Unique-Id=${random}
     Run Keywords    Create a guest cart:    ${random}    ${concrete_available_product.with_offer}    1
     ...    AND    Save value to a variable:    [data][id]    guestCartId
@@ -57,7 +56,6 @@ Add_an_non_existing_item_to_the_guest_cart
     And Array in response should contain property with value:    [errors]    detail    Cart item could not be added.
 
 Add_an_item_to_the_guest_cart_without_sku_attribute_and_quantity_attribute
-    [Tags]    skip-due-to-refactoring
     [Setup]    I set Headers:    Content-Type=${default_header_content_type}    X-Anonymous-Customer-Unique-Id=${random}
     Run Keywords    Create a guest cart:    ${random}    ${concrete_available_product.with_offer}    1
     ...    AND    Save value to a variable:    [data][id]    guestCartId
@@ -70,7 +68,6 @@ Add_an_item_to_the_guest_cart_without_sku_attribute_and_quantity_attribute
     And Array in response should contain property with value:    [errors]    detail    quantity => This field is missing.
 
 Add_an_item_to_the_guest_cart_without_sku_and_quantity_values
-    [Tags]    skip-due-to-refactoring
     [Setup]    I set Headers:    Content-Type=${default_header_content_type}    X-Anonymous-Customer-Unique-Id=${random}
     Run Keywords    Create a guest cart:    ${random}    ${concrete_available_product.with_offer}    1
     ...    AND    Save value to a variable:    [data][id]    guestCartId

@@ -527,7 +527,6 @@ Evaluate datatype of a variable:
     ${data_type}=    Evaluate     type($variable).__name__
     [Return]    ${data_type}
 
-
 Response header parameter should be:
     [Documentation]    This keyword checks that the response header saved previiously in ``${response_headers}`` test variable has the expected header with name ``${header_parameter}`` and this header has value ``${header_value}``
     ...
@@ -630,6 +629,8 @@ Response body parameter should be greater than:
     ${data}=    Replace String    ${data}    '   ${EMPTY}
     ${data}=    Replace String    ${data}    [   ${EMPTY}
     ${data}=    Replace String    ${data}    ]   ${EMPTY}
+    Log    ${data}
+    Log    ${expected_value}
     ${result}=    Evaluate    '${data}' > '${expected_value}'
     ${result}=    Convert To String    ${result}
     Should Be Equal    ${result}    True    Actual ${data} is not greater than expected ${expected_value}
@@ -970,6 +971,7 @@ Each array element of array in response should contain nested property in range:
         IF    ${list_element} < ${lower_value}    Fail    Value ${list_element} is less than lower value ${lower_value}.
         IF    ${list_element} > ${higher_value}    Fail    Value ${list_element} is greater than higher value ${higher_value}.
     END
+
 Each array element of array in response should be greater than:
     [Documentation]    This keyword checks that each element in the array specified as ``${json_path}`` contains the specified property ``${expected_nested_property}`` that's greater than ``${expected_value}``
     ...
@@ -1180,7 +1182,7 @@ Response should return error code:
     Should Be Equal    ${data}    ${error_code}    Actual ${data} doens't equal expected ${error_code}
 
 Response should contain certain number of values:
-    [Documentation]    This keyword checks if a certain response paratemeter ``${json_path} `` in the ``${response_body}`` test variable has the specified number ``${expected_count}`` of the specified values ``${expected_value}`` in it.
+    [Documentation]    This keyword checks if a certain response parameter ``${json_path} `` in the ``${response_body}`` test variable has the specified number ``${expected_count}`` of the specified values ``${expected_value}`` in it.
     ...
     ...    It can check that response contains 5 categories or 4 cms pages.
     ...
@@ -1632,7 +1634,11 @@ Get voucher code by discountId from Database:
     ...    ``Get voucher code by discountId from Database:    3``
     [Arguments]    ${discount_id}
     Save the result of a SELECT DB query to a variable:    select fk_discount_voucher_pool from spy_discount where id_discount = ${discount_id}    discount_voucher_pool_id
-    Save the result of a SELECT DB query to a variable:    select code from spy_discount_voucher where fk_discount_voucher_pool = ${discount_voucher_pool_id} and is_active = 1 limit 1    discount_voucher_code
+    IF    '${db_engine}' == 'pymysql'
+        Save the result of a SELECT DB query to a variable:    select code from spy_discount_voucher where fk_discount_voucher_pool = ${discount_voucher_pool_id} and is_active = 1 limit 1    discount_voucher_code
+    ELSE
+        Save the result of a SELECT DB query to a variable:    select code from spy_discount_voucher where fk_discount_voucher_pool = ${discount_voucher_pool_id} and is_active = true limit 1    discount_voucher_code
+    END
 
 Connect to Spryker DB
     [Documentation]    This keyword allows to connect to Spryker DB. 
@@ -1652,7 +1658,7 @@ Connect to Spryker DB
     ${db_engine}=    Set Variable If    '${db_engine}' == '${EMPTY}'    ${default_db_engine}    ${db_engine}
     Connect To Database    ${db_engine}    ${db_name}    ${db_user}    ${db_password}    ${db_host}    ${db_port}
 
-I get the first company user id and its' customer email
+Get the first company user id and its' customer email
     [Documentation]    This keyword sends the GET reguest to the ``/company-users?include=customers`` endpoint and returns first available company user id and its' customer email in
     ...    ``${companyUserId}``  and  ``${companyUserEmail}`` variables. 
     ...    If the fist company user is anne.boleyn@spryker.com - the next one will be taken and Anna is a 'BoB' user
@@ -1663,4 +1669,29 @@ I get the first company user id and its' customer email
     IF    '${companyUserEmail}' == 'anne.boleyn@spryker.com'
         Save value to a variable:    [included][1][attributes][email]    companyUserEmail
         Save value to a variable:    [data][1][id]    companyUserId
+    END
+
+Array element should contain nested array at least once:
+    [Documentation]    This keyword checks whether the array ``${paret_array}`` that is present in the ``${response_body}`` test variable contsains an array ``${expected_nested_array}`` at least once.
+    ...
+    ...    *Example:*
+    ...
+    ...   ``Array element should contain nested array at least once:    [data]    [relationships]``
+    ...    
+    [Arguments]    ${parent_array}    ${expected_nested_array}
+    @{data}=    Get Value From Json    ${response_body}    ${parent_array}
+    ${list_length}=    Get Length    @{data}
+    ${log_list}=    Log List    @{data}
+    ${expected_nested_array}=    Replace String    ${expected_nested_array}    [   ${EMPTY}
+    ${expected_nested_array}=    Replace String    ${expected_nested_array}    ]   ${EMPTY}
+    ${expected_nested_array}=    Replace String    ${expected_nested_array}    '   ${EMPTY}
+    ${expected_nested_array}=    Create List    ${expected_nested_array}
+    FOR    ${index}    IN RANGE    0    ${list_length}
+        @{list_element}=    Get From List    @{data}    ${index}
+        ${result}=    Run Keyword And Ignore Error    List Should Contain Sub List    ${list_element}    ${expected_nested_array}
+        IF    'PASS' in ${result}    Exit For Loop
+        IF    ${index} == ${list_length}-1
+            Fail    expected '${expected_nested_array}' array is not present in '@{data}'
+        END
+        IF    'FAIL' in ${result}    Continue For Loop
     END
