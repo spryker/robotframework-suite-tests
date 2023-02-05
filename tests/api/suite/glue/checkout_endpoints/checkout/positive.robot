@@ -7,7 +7,7 @@ Default Tags    glue
 *** Test Cases ***
 ENABLER
     TestSetup
-### Important CHECKOUT and CHECKOUT-DATA endpoints require Item ID and NOT intem sku. To get item id and include to the cart endpoint.
+### Important CHECKOUT and CHECKOUT-DATA endpoints require Item ID and NOT intem sku. To get item id add include to the cart endpoint.
 ### Example:  
 ###I send a POST request:    /carts/${cartId}/items?include=items   {"data": {"type": "items","attributes": {"sku": "${concrete_product.random_weight.sku}","quantity": 1,"salesUnit": {"id": "${sales_unit_id}","amount": 5}}}}
 ### Save value to a variable:    [included][0][id]    test
@@ -409,10 +409,11 @@ Create_order_with_2_product_discounts
 Create_order_with_configurable_bundle_item
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
+    ...  AND    Cleanup all customer carts
     ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
     ...  AND    Save value to a variable:    [data][id]    cart_id
     ...  AND    Response status code should be:    201
-    ...  AND    I send a POST request:    /carts/${cart_id}/configured-bundles?include=items    {"data": {"type": "configured-bundles","attributes": {"quantity": "${configured_bundle_quantity}","templateUuid": "${configurable_bundle_template_1_uuid}","items": [{"sku": "${configurable_bundle_first_slot_item_sku}","quantity": 2,"slotUuid": "${configurable_bundle_slot_1_uuid}"}]}}}
+    ...  AND    I send a POST request:    /carts/${cart_id}/configured-bundles?include=items    {"data": {"type": "configured-bundles","attributes": {"quantity": ${configured_bundle_quantity},"templateUuid": "${configurable_bundle_template_1_uuid}","items": [{"sku": "${configurable_bundle_first_slot_item_sku}","quantity": 2,"slotUuid": "${configurable_bundle_slot_1_uuid}"}]}}}
     When I send a POST request:    /checkout?include=orders    {"data": {"type": "checkout","attributes": {"customer": {"email": "${yves_second_user.email}","salutation": "${yves_second_user.salutation}","firstName": "${yves_second_user.first_name}","lastName": "${yves_second_user.last_name}"},"idCart": "${cart_id}","billingAddress": {"salutation": "${yves_second_user.salutation}","firstName": "${yves_second_user.first_name}","lastName": "${yves_second_user.last_name}","address1": "${default.address1}","address2": "${default.address2}","address3": "${default.address3}","zipCode": "${default.zipCode}","city": "${default.city}","iso2Code": "${default.iso2Code}","company": "${default.company}","phone": "${default.phone}","isDefaultBilling": False,"isDefaultShipping": False},"shippingAddress": {"salutation": "${yves_second_user.salutation}","firstName": "${yves_second_user.first_name}","lastName": "${yves_second_user.last_name}","address1": "${default.address1}","address2": "${default.address2}","address3": "${default.address3}","zipCode": "${default.zipCode}","city": "${default.city}","iso2Code": "${default.iso2Code}","company": "${default.company}","phone": "${default.phone}","isDefaultBilling": False,"isDefaultShipping": False},"payments": [{"paymentProviderName": "${payment.provider_name_1}","paymentMethodName": "${payment.method_name}","paymentSelection": "${payment.selection_name}"}],"shipment": {"idShipmentMethod": 1},"items": ["${configurable_bundle_first_slot_item_sku}"]}}}
     Then Response status code should be:    201
     And Response reason should be:    Created

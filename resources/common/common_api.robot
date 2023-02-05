@@ -1633,7 +1633,11 @@ Get voucher code by discountId from Database:
     ...    ``Get voucher code by discountId from Database:    3``
     [Arguments]    ${discount_id}
     Save the result of a SELECT DB query to a variable:    select fk_discount_voucher_pool from spy_discount where id_discount = ${discount_id}    discount_voucher_pool_id
-    Save the result of a SELECT DB query to a variable:    select code from spy_discount_voucher where fk_discount_voucher_pool = ${discount_voucher_pool_id} and is_active = 1 limit 1    discount_voucher_code
+    IF    '${db_engine}' == 'pymysql'
+        Save the result of a SELECT DB query to a variable:    select code from spy_discount_voucher where fk_discount_voucher_pool = ${discount_voucher_pool_id} and is_active = 1 limit 1    discount_voucher_code
+    ELSE
+        Save the result of a SELECT DB query to a variable:    select code from spy_discount_voucher where fk_discount_voucher_pool = ${discount_voucher_pool_id} and is_active = true limit 1    discount_voucher_code
+    END
 
 Connect to Spryker DB
     [Documentation]    This keyword allows to connect to Spryker DB. 

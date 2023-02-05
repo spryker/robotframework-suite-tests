@@ -617,7 +617,7 @@
        "default_header_content_type":"application/vnd.api+json",
        "urlencoded_header_content_type":"application/x-www-form-urlencoded",
        "qty_of_categories_in_category_trees":"6",
-       "discountId":"3",
+       "discount_voucher_type_id":"3",
        "color_name":"Black",
        "x_anonymous_prefix":"anonymous",
        "qty_of_subcategories_in_category_trees":"2",

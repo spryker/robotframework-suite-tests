@@ -12,6 +12,7 @@ ENABLER
 Add_voucher_code_to_cart_with_invalid_access_token
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}
+    ...    AND    Cleanup all customer carts
     ...    AND    Find or create customer cart
     ...    AND    I set Headers:    Authorization=fake_token
     When I send a POST request:    /carts/${cart_id}/vouchers    {"data": {"type": "vouchers","attributes": {"code": "discount_voucher_code"}}}
