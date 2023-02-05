@@ -651,7 +651,7 @@ Add_a_configurable_product_with_empty_availableQuantity_value_of_to_the_shopping
     ...    AND    Response status code should be:    204
     ...    AND    Response reason should be:    No Content
 
-Add_aconfigurable_product_with_missing_availableQuantity_value_of_to_the_shopping_list
+Add_a_configurable_product_with_missing_availableQuantity_value_of_to_the_shopping_list
     [Documentation]   https://spryker.atlassian.net/browse/CC-25381
     [Tags]    skip-due-to-issue    
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}

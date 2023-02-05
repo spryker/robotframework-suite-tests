@@ -1695,3 +1695,60 @@ Array element should contain nested array at least once:
         END
         IF    'FAIL' in ${result}    Continue For Loop
     END
+
+Array elelemt should contain property with value at least once:
+    [Documentation]    This keyword checks that element in the array specified as ``${json_path}`` contains the specified property ``${expected_property}`` with the specified value ``${expected_value}`` at least once.
+    ...
+    ...    *Example:*
+    ...
+    ...    ``And Array elelemt should contain property with value at least once:    [data][0][attributes][categoryTreeFilter]    docCount    ${${category_lvl2.qty}}``
+    ...
+    [Arguments]    ${json_path}    ${expected_property}    ${expected_value}
+    @{data}=    Get Value From Json    ${response_body}    ${json_path}
+    ${list_length}=    Get Length    @{data}
+    ${log_list}=    Log List    @{data}
+    FOR    ${index}    IN RANGE    0    ${list_length}
+        ${list_element}=    Get From List    @{data}    ${index}
+        ${result}=    Run Keyword And Ignore Error    Dictionary Should Contain Item    ${list_element}    ${expected_property}    ${expected_value}
+        IF    'PASS' in ${result}    Exit For Loop
+        IF    ${index} == ${list_length}-1
+            Fail    expected '${expected_property}' with value '${expected_value}' is not present in '@{data}' but should
+        END
+        IF    'FAIL' in ${result}    Continue For Loop
+    END
+
+Array elelemt should contain nested array with property and value at least once:
+    [Documentation]    This keyword checks whether the array ``${nested_array}`` that is present in the parrent array ``${json_path}``  contsains propery ``${expected_property}`` with value ``${expected_value}`` at least once.
+    ...
+    ...    *Example:*
+    ...
+    ...   ``And Array elelemt should contain nested array with property and value at least once:    [data][0][attributes][categoryTreeFilter]    [children]    docCount    ${category_lvl2.qty}``
+    ...    
+    [Arguments]    ${json_path}    ${nested_array}    ${expected_property}    ${expected_value}
+    @{data}=    Get Value From Json    ${response_body}    ${json_path}
+    ${list_length1}=    Get Length    @{data}
+    ${log_list}=    Log List    @{data}
+    ${result}=    Set Variable    'FALSE'
+    FOR    ${index1}    IN RANGE    0    ${list_length1}
+        IF    'PASS' in ${result}    BREAK
+        ${list_element}=    Get From List    @{data}    ${index1}
+        Log    ${list_element}
+        @{list_element2}=    Get Value From Json    ${list_element}    ${nested_array}
+        Log    @{list_element2}
+        ${list_length2}=    Get Length    @{list_element2}
+        FOR    ${index2}    IN RANGE    0    ${list_length2}
+            ${list_element}=    Get From List    @{list_element2}    ${index2}
+            Log    ${list_element}
+            ${list_element}=    Get Value From Json    ${list_element}    ${expected_property}
+            ${list_element}=    Convert To String    ${list_element}
+            ${list_element}=    Replace String    ${list_element}    '   ${EMPTY}
+            ${list_element}=    Replace String    ${list_element}    [   ${EMPTY}
+            ${list_element}=    Replace String    ${list_element}    ]   ${EMPTY}
+            ${result}=    Run Keyword And Ignore Error    Should Contain   ${list_element}    ${expected_value}    ignore_case=True
+            IF    'PASS' in ${result}    BREAK
+            IF    ${index1} == ${list_length1}-1 and ${index2} == ${list_length2}-1
+                Fail    expected '${expected_property}' with value '${expected_value}' is not present in '${nested_array}' but should
+            END
+            IF    'FAIL' in ${result}    Continue For Loop
+        END
+    END
