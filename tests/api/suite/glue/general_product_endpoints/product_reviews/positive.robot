@@ -78,7 +78,7 @@ Get_product_review_by_id
     And Response body parameter should not be EMPTY:    [data][links][self]
 
 Create_a_product_review
-    [Documentation]   https://spryker.atlassian.net/browse/CC-16486
+    [Documentation]   https://spryker.atlassian.net/browse/CC-16486 (501 error and also incorrect self link on review creation)
     [Tags]    skip-due-to-issue
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}

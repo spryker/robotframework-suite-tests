@@ -1,6 +1,5 @@
 *** Settings ***
 Resource        ../../../../../../resources/common/common_api.robot
-
 Suite Setup     SuiteSetup
 Test Setup      TestSetup
 Default Tags    glue
@@ -8,7 +7,9 @@ Default Tags    glue
 *** Test Cases ***
 ENABLER
     TestSetup
-GET requests
+    
+
+# GET requests
 
 # Precondition: To run commented tests need to enable service endpoints and uncomment tests
 # To enable the endpoints, add the following to /config/Shared/config_default.php:
