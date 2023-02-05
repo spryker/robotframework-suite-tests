@@ -102,7 +102,7 @@ Update_configured_bundle_item_in_cart_with_non_existing_bundle_group_key
       ...  AND    I set Headers:    Authorization=${token}
       ...  AND    Find or create customer cart
       ...  AND    Cleanup all items in the cart:    ${cart_id}
-    When I send a PATCH request:    /carts/${cart_id}/configured-bundles/fake    {"data": {"type": "configured-bundles","attributes": {"quantity": "12"}}}
+    When I send a PATCH request:    /carts/${cart_id}/configured-bundles/fake    {"data": {"type": "configured-bundles","attributes": {"quantity": 12}}}
     Then Response status code should be:    400
     And Response reason should be:    Bad Request
     And Response should return error code:    4004
@@ -127,7 +127,7 @@ Update_configured_bundle_item_in_cart_with_no_item_id
       ...  AND    I set Headers:    Authorization=${token}
       ...  AND    Find or create customer cart
       ...  AND    Cleanup all items in the cart:    ${cart_id}
-    When I send a PATCH request:    /carts/${cart_id}/configured-bundles/    {"data": {"type": "configured-bundles","attributes": {"quantity": "12"}}}
+    When I send a PATCH request:    /carts/${cart_id}/configured-bundles/    {"data": {"type": "configured-bundles","attributes": {"quantity": 12}}}
     Then Response status code should be:    400
     And Response reason should be:    Bad Request
     And Response should return error message:    Resource id is not specified.
@@ -135,7 +135,7 @@ Update_configured_bundle_item_in_cart_with_no_item_id
 Update_configured_bundle_item_in_cart_with_non_existing_cart_id
   [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
       ...  AND    I set Headers:    Authorization=${token}
-    When I send a PATCH request:    /carts/fake/configured-bundles/fake    {"data": {"type": "configured-bundles","attributes": {"quantity": "12"}}}
+    When I send a PATCH request:    /carts/fake/configured-bundles/fake    {"data": {"type": "configured-bundles","attributes": {"quantity": 12}}}
     Then Response status code should be:    422
     And Response reason should be:    Unprocessable Content
     And Response should return error code:    4001
@@ -144,7 +144,7 @@ Update_configured_bundle_item_in_cart_with_non_existing_cart_id
 Update_configured_bundle_item_in_cart_without_cart_id
   [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
       ...  AND    I set Headers:    Authorization=${token}
-    When I send a PATCH request:    /carts//configured-bundles/fake    {"data": {"type": "configured-bundles","attributes": {"quantity": "12"}}}
+    When I send a PATCH request:    /carts//configured-bundles/fake    {"data": {"type": "configured-bundles","attributes": {"quantity": 12}}}
     Then Response status code should be:    400
     And Response reason should be:    Bad Request
     And Response should return error message:    Resource id is not specified.
