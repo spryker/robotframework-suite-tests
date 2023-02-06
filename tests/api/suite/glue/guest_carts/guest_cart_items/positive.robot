@@ -7,6 +7,12 @@ Default Tags    glue
 *** Test Cases ***
 ENABLER
     TestSetup
+### Important CHECKOUT and CHECKOUT-DATA endpoints require Item ID and NOT intem sku. To get item id and include to the cart endpoint.
+### Example:  
+### I send a GET request:    /guest-carts/${guestCartId}?include=guest-cart-items
+### Save value to a variable:    [included][0][id]    test
+### I send a POST request:    /checkout    {"data": {"type": "checkout","attributes": {"customer": {"email": "${yves_user.email}","salutation": "${yves_user.salutation}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}"},"idCart": "${cart_id}","billingAddress": {"salutation": "${yves_user.salutation}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}","address1": "${default.address1}","address2": "${default.address2}","address3": "${default.address3}","zipCode": "${default.zipCode}","city": "${default.city}","iso2Code": "${default.iso2Code}","company": "${default.company}","phone": "${default.phone}","isDefaultBilling": False,"isDefaultShipping": False},"shippingAddress": {"salutation": "${yves_user.salutation}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}","address1": "${default.address1}","address2": "${default.address2}","address3": "${default.address3}","zipCode": "${default.zipCode}","city": "${default.city}","iso2Code": "${default.iso2Code}","company": "${default.company}","phone": "${default.phone}","isDefaultBilling": False,"isDefaultShipping": False},"payments": [{"paymentProviderName": "${payment.provider_name_1}","paymentMethodName": "${payment.method_name}"}],"shipment": {"idShipmentMethod": 1},"items": ["${test}"]}}}
+
 
 Add_an_item_to_the_guest_cart
     [Setup]    I set Headers:    Content-Type=${default_header_content_type}    X-Anonymous-Customer-Unique-Id=${random}
@@ -153,12 +159,12 @@ Add_an_item_to_the_guest_cart_with_bundle_items_include
     And Response include element has self link:   bundle-items
 
 Update_an_item_quantity_at_the_guest_cart_with_items_include
-    [Documentation]   https://spryker.atlassian.net/browse/CC-25726
-    [Tags]    skip-due-to-issue  
     [Setup]    I set Headers:    Content-Type=${default_header_content_type}    X-Anonymous-Customer-Unique-Id=${random}
     Run Keywords    Create a guest cart:    ${random}    ${concrete_available_product.with_offer}    1
     ...    AND    Save value to a variable:    [data][id]    guestCartId
-    When I send a PATCH request:    /guest-carts/${guestCartId}/guest-cart-items/${concrete_available_product.with_offer}?include=items    {"data":{"type":"guest-cart-items","attributes":{"quantity":"2"}}}
+    ...    AND    I send a GET request:    /guest-carts/${guestCartId}?include=guest-cart-items
+    ...    AND    Save value to a variable:    [included][0][id]    item_id_guest
+    When I send a PATCH request:    /guest-carts/${guestCartId}/guest-cart-items/${item_id_guest}?include=items    {"data":{"type":"guest-cart-items","attributes":{"quantity":"2"}}}
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
@@ -180,7 +186,7 @@ Update_an_item_quantity_at_the_guest_cart_with_items_include
     And Response body parameter should contain:    [data][attributes]    thresholds
     And Response body parameter should not be EMPTY:    [data][links][self]
     And Response body parameter should be:    [included][0][type]    guest-cart-items
-    And Response body parameter should be:    [included][0][id]    ${concrete_available_product.with_offer}
+    And Response body parameter should contain:    [included][0][id]    ${concrete_available_product.with_offer}
     And Response should contain the array of a certain size:    [included]    1
     And Response body parameter should be:    [included][0][attributes][quantity]    2
     And Response body parameter should not be EMPTY:    [data][links][self]
@@ -189,6 +195,8 @@ Remove_an_item_from_the_guest_cart
     [Setup]    I set Headers:    Content-Type=${default_header_content_type}    X-Anonymous-Customer-Unique-Id=${random}
     Run Keywords    Create a guest cart:    ${random}    ${concrete_available_product.with_offer}    1
     ...    AND    Save value to a variable:    [data][id]    guestCartId
-    When I send a DELETE request:    /guest-carts/${guestCartId}/guest-cart-items/${concrete_available_product.with_offer}
+    ...    AND    I send a GET request:    /guest-carts/${guestCartId}?include=guest-cart-items
+    ...    AND    Save value to a variable:    [included][0][id]    item_id_guest1
+    When I send a DELETE request:    /guest-carts/${guestCartId}/guest-cart-items/${item_id_guest1}
     Then Response status code should be:    204
     And Response reason should be:    No Content
