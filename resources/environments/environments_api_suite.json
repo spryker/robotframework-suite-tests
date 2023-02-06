@@ -41,12 +41,13 @@
           "first_name":"Lilu",
           "last_name":"Dallas",
           "password":"change123",
-          "reference":"DE-30",
+          "reference":"DE--22",
           "salutation":"Ms"
        },
        "yves_fifth_user":{
           "email":"Trever.m@spryker.com",
-          "password":"change123"
+          "password":"change123",
+          "reference":"DE--20"
        },
        "yves_sixth_user":{
           "email":"kevin@spryker.com",

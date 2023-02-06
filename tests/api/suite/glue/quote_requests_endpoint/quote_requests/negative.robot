@@ -33,7 +33,6 @@ Create_quote_request_with_invalid_access_token
     And Response reason should be:    Unauthorized
     And Response should return error message:    Invalid access token.
 
-
 Create_quote_request_with_invalid_type
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}
@@ -46,7 +45,6 @@ Create_quote_request_with_invalid_type
     And Response should return error message:    Invalid type.
     [Teardown]    Run Keywords    I send a DELETE request:     /carts/${cart_id}
     ...    AND    Response status code should be:    204
-
 
 Create_quote_request_with_empty_type
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
@@ -70,7 +68,6 @@ Create_quote_request_with_invalid_cartId
     And Response reason should be:    Not Found
     And Response should return error message:    Cart with given uuid not found.
 
-
 Create_quote_request_with_empty_cart_id
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
@@ -79,7 +76,6 @@ Create_quote_request_with_empty_cart_id
     And Response should return error code:    101
     And Response reason should be:    Not Found
     And Response should return error message:    Cart with given uuid not found.
-
 
 Create_quote_request_from_another_customer
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
@@ -99,7 +95,6 @@ Create_quote_request_from_another_customer
     ...    AND    I send a DELETE request:    /carts/${cartId}
     ...    AND    Response status code should be:    204
 
-
 Create_quote_request_for_cart_with_read_only_access
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    Save value to a variable:    [data][attributes][accessToken]    userToken
@@ -108,8 +103,7 @@ Create_quote_request_for_cart_with_read_only_access
     ...    AND    Save value to a variable:    [data][id]    cartId
     ...    AND    I send a POST request:    /carts/${cartId}/items    {"data":{"type":"items","attributes":{"sku":"${concrete.available_product.with_stock_and_never_out_of_stock.sku_1}","quantity":1}}}
     ...    AND    Response status code should be:    201
-    ...    AND    I send a GET request:    /company-users
-    ...    AND    Save value to a variable:    [data][6][id]    companyUserId
+    ...    AND    Get company user id by customer reference:    ${yves_fifth_user.reference}
     ...    AND    I send a POST request:    /carts/${cartId}/shared-carts    {"data":{"type":"shared-carts","attributes":{"idCompanyUser":"${companyUserId}","idCartPermissionGroup":2}}}
     ...    AND    Save value to a variable:    [data][id]    shared_cart_id
     ...    AND    I send a PATCH request:    /shared-carts/${shared_cart_id}    {"data":{"type":"shared-carts","attributes":{"idCompanyUser":"${companyUserId}","idCartPermissionGroup":1}}}
@@ -126,9 +120,7 @@ Create_quote_request_for_cart_with_read_only_access
     ...    AND    Response status code should be:    204
     ...    AND    Response reason should be:    No Content
 
-
-
-#GET#
+# #GET#
 Retrieve_quote_requests_with_incorrect_url
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
@@ -170,7 +162,6 @@ Retrieve_quote_request_by_id_with_incorrect_url
     And Response reason should be:    Not Found
     And Response should return error message:    Not Found
 
-
 #PATCH#
 Update_quote_request_without_token
   [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
@@ -191,7 +182,6 @@ Update_quote_request_without_token
     ...    AND    I send a DELETE request:    /carts/${cartId}
     ...    AND    Response status code should be:    204
 
-
 Update_quote_request_with_empty_id
   [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}
@@ -203,7 +193,6 @@ Update_quote_request_with_empty_id
     And Response should return error message:    Resource id is not specified.
     [Teardown]    Run Keywords    I send a DELETE request:     /carts/${cart_id}
     ...    AND    Response status code should be:    204
-
 
 Update_quote_request_with_incorrect_id
   [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
@@ -253,7 +242,6 @@ Update_quote_request_with_invalid_cart_id
     [Teardown]    Run Keywords    I send a DELETE request:     /carts/${cart_id}
     ...    AND    Response status code should be:    204
 
-
 Update_quote_request_with_invalid_type
   [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}
@@ -285,7 +273,6 @@ Update_quote_request_with_empty_type
     And Response should return error message:    Invalid type.
     [Teardown]    Run Keywords    I send a DELETE request:     /carts/${cart_id}
     ...    AND    Response status code should be:    204
-
 
 Update_quote_request_with_another_user_token
   [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}

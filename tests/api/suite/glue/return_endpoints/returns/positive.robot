@@ -204,7 +204,7 @@ Get_return_by_Id_include_return-items
     And Response body parameter should be:    [included][0][attributes][orderItemUuid]    ${orderItemUuid}
 
 Retrieves_list_of_returns_included_merchants
-    [Documentation]    Skip due to bug https://spryker.atlassian.net/browse/CC-19280
+    [Documentation]    
     [Tags]    skip-due-to-issue
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}
@@ -245,7 +245,7 @@ Retrieves_list_of_returns_included_merchants
     And Response body has correct self link
 
 Retrieves_return_by_id_with_returns_items_included
-    [Documentation]    Skip due to bug https://spryker.atlassian.net/browse/CC-19280
+    [Documentation]    
     [Tags]    skip-due-to-issue
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}
@@ -288,7 +288,7 @@ Retrieves_return_by_id_with_returns_items_included
     And Response body has correct self link
 
 Retrieves_return_by_id_for_sales_order
-    [Documentation]    Skip due to bug https://spryker.atlassian.net/browse/CC-19280
+    [Documentation]    
     [Tags]    skip-due-to-issue
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}
@@ -315,7 +315,7 @@ Retrieves_return_by_id_for_sales_order
     And Response body parameter should be:    [data][attributes][returnTotals][remunerationTotal]    ${refundable_amount}
 
 Retrieves_return_by_id_with_merchants_included
-    [Documentation]    Skip due to bug https://spryker.atlassian.net/browse/CC-19280
+    [Documentation]    
     [Tags]    skip-due-to-issue
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}

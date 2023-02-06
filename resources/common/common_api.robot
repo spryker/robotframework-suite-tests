@@ -1753,6 +1753,39 @@ Array elelemt should contain nested array with property and value at least once:
         END
     END
 
+Get company user id by customer reference:
+    [Documentation]    This keyword sends the GET reguest to the ``/company-users?include=customers`` endpoint and returns company user id by customer reference. Sets variable : ``${companyUserId}``
+    ...    
+    ...    *Example:*
+    ...    ``Get company user id by email:    ${yves_fifth_user.email}``
+    ...    
+    [Arguments]    ${customer_reference}
+    I send a GET request:    /company-users?include=customers
+    @{data}=    Get Value From Json    ${response_body}    [data]
+    ${list_length}=    Get Length    @{data}
+    ${log_list}=    Log List    @{data}
+    FOR    ${index}    IN RANGE    0    ${list_length}
+        ${list_element}=    Get From List    @{data}    ${index}
+        Log    ${list_element}
+        ${company_user_id}=    Get Value From Json    ${list_element}    id
+        ${company_user_id}=    Convert To String    ${company_user_id}
+        ${company_user_id}=    Replace String    ${company_user_id}    '   ${EMPTY}
+        ${company_user_id}=    Replace String    ${company_user_id}    [   ${EMPTY}
+        ${company_user_id}=    Replace String    ${company_user_id}    ]   ${EMPTY}
+        Set Test Variable    ${companyUserId}    ${company_user_id}
+        @{list_element2}=    Get Value From Json    ${list_element}    relationships
+        Log    @{list_element2}
+        ${company_user_customer_id}=    Get Value From Json    @{list_element2}    customers.data[0].id
+        ${company_user_customer_id}=    Convert To String    ${company_user_customer_id}
+        ${company_user_customer_id}=    Replace String    ${company_user_customer_id}    '   ${EMPTY}
+        ${company_user_customer_id}=    Replace String    ${company_user_customer_id}    [   ${EMPTY}
+        ${company_user_customer_id}=    Replace String    ${company_user_customer_id}    ]   ${EMPTY}
+        IF    '${company_user_customer_id}' == '${customer_reference}'    BREAK
+        IF    ${index} == ${list_length}-1
+            Fail    expected customer reference '${customer_reference}' is not present in '@{data}' but should
+        END        
+    END
+
 Cleanup all existing shopping lists
     [Documentation]    This keyword deletes all customer shopping lists
         ...
