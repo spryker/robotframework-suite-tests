@@ -1752,3 +1752,30 @@ Array elelemt should contain nested array with property and value at least once:
             IF    'FAIL' in ${result}    Continue For Loop
         END
     END
+
+Cleanup all existing shopping lists
+    [Documentation]    This keyword deletes all customer shopping lists
+        ...
+        ...    Before using this method you should get customer token and set it into the headers with the help of ``I get access token for the customer:`` and ``I set Headers:``
+        ...    This keyword does not accept any arguments.
+        ...    
+        ...    *Example:*
+        ...
+        ...    ``Cleanup all existing shopping lists``
+        ${response}=    GET    ${current_url}/shopping-lists    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}  params=include=items,bundle-items     expected_status=200
+        ${response_body}=    Set Variable    ${response.json()}
+        @{data}=    Get Value From Json    ${response_body}    [data]
+        ${list_not_empty}=    Get length    ${data}
+        IF    ${list_not_empty} > 0
+            ${list_length}=    Get Length    @{data}
+            Log    list_length: ${list_length}
+            FOR    ${index}    IN RANGE    0    ${list_length}
+                    ${list_element}=    Get From List    @{data}    ${index}
+                    ${shopping_list_uuid}=    Get Value From Json    ${list_element}    [id]
+                    ${shopping_list_uuid}=    Convert To String    ${shopping_list_uuid}
+                    ${shopping_list_uuid}=    Replace String    ${shopping_list_uuid}    '   ${EMPTY}
+                    ${shopping_list_uuid}=    Replace String    ${shopping_list_uuid}    [   ${EMPTY}
+                    ${shopping_list_uuid}=    Replace String    ${shopping_list_uuid}    ]   ${EMPTY}
+                    ${response_delete}=    DELETE    ${current_url}/shopping-lists/${shopping_list_uuid}    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}    expected_status=204
+            END
+        END
