@@ -218,7 +218,7 @@ Retrieves_list_of_returns_included_merchants
     ...    AND    Save value to a variable:    [data][attributes][orderReference]    order_reference
     ...    AND    Save value to a variable:    [included][0][attributes][items][0][refundableAmount]    refundable_amount
     ...    AND    Update order status in Database:    shipped by merchant    ${uuid}  
-    ...    AND    I send a POST request:     /returns?include=return-items,merchants    {"data":{"type":"returns","attributes":{"store":"${store.de}","returnItems":[{"salesOrderItemUuid":"${uuid}","reason":"${return_reason_damaged}"}]}}}
+    ...    AND    I send a POST request:     /returns?include=merchants    {"data":{"type":"returns","attributes":{"store":"${store.de}","returnItems":[{"salesOrderItemUuid":"${uuid}","reason":"${return_reason_damaged}"}]}}}
     When I send a GET request:     /returns?include=merchants
     Then Response status code should be:     200
     And Response reason should be:     OK
@@ -234,12 +234,9 @@ Retrieves_list_of_returns_included_merchants
     And Each array element of array in response should contain nested property:    [data]    [attributes][returnTotals]    refundTotal
     And Each array element of array in response should contain nested property:    [data]    [attributes][returnTotals]    remunerationTotal
     And Each array element of array in response should contain nested property:    [data]    [links]    self
-    And Response body parameter should not be EMPTY:    [data][relationships]
-    And Response body parameter should not be EMPTY:    [data][relationships][return-items]
-    And Each array element of array in response should contain nested property:    [data]    [relationships]    merchants
-    And Each array element of array in response should contain nested property:    [data]    [relationships][merchants][data][0]    type
-    And Each array element of array in response should contain nested property:    [data]    [relationships][merchants][data][0]    id
-    And Each array element of array in response should contain nested property with value:    [data]    [relationships][merchants][data][0][type]    merchants
+    And Array element should contain nested array at least once:    [data]    [relationships]
+    And Response body parameter should be:    [data][0][relationships][merchants][data][0][type]    merchants
+    And Response body parameter should be:    [data][0][relationships][merchants][data][0][id]    MER000006
     And Response include element has self link:    merchants
     And Response include should contain certain entity type:    merchants
     And Response body has correct self link
