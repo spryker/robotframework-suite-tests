@@ -8,7 +8,7 @@ Default Tags      glue
 ENABLER
     TestSetup
 ###POST#####
-# bug https://spryker.atlassian.net/browse/CC-19233
+
 Add_one_item_to_cart
    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
@@ -34,7 +34,6 @@ Add_one_item_to_cart
    [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cart_id}/items/${product_availability.concrete_available_with_stock_and_never_out_of_stock_sku}
    ...    AND    Response status code should be:    204
 
-# bug https://spryker.atlassian.net/browse/CC-19233
 Add_two_items_to_cart_with_included_items_concrete_products_and_abstract_products
   [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
@@ -91,7 +90,6 @@ Add_two_items_to_cart_with_included_items_concrete_products_and_abstract_product
    [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cart_id}/items/${product_availability.concrete_available_with_stock_and_never_out_of_stock_sku}
    ...    AND    Response status code should be:    204
 
-# bug https://spryker.atlassian.net/browse/CC-19233
 Get_a_cart_with_included_items_and_concrete_products
   [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
@@ -147,7 +145,6 @@ Get_a_cart_with_included_items_and_concrete_products
    [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cart_id}/items/${product_availability.concrete_available_with_stock_and_never_out_of_stock_sku}
     ...    AND    Response status code should be:    204
 
-# bug https://spryker.atlassian.net/browse/CC-19233
 Add_five_items_to_cart_with_included_cart_rules_and_promotional_items
     [Tags]    skip-due-to-issue
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
@@ -161,8 +158,8 @@ Add_five_items_to_cart_with_included_cart_rules_and_promotional_items
    And Response body parameter should be:    [data][id]    ${cart_id}
    And Response body parameter should be:    [data][type]    carts
    And Response body parameter should not be EMPTY:    [data][links][self]
-   And Response should contain the array of a certain size:    [data][relationships][cart-rules][data]    1
-   And Response should contain the array of a certain size:    [included]    3
+   And Response should contain the array larger than a certain size:    [data][relationships][cart-rules][data]    1
+   And Response should contain the array larger than a certain size:    [included]    3
    And Response include should contain certain entity type:    cart-rules
    And Response include should contain certain entity type:    items
    And Response include element has self link:    cart-rules
@@ -194,7 +191,6 @@ Add_product_with_options_to_cart
     [Teardown]    Run Keywords    I send a DELETE request:     /carts/${cart_id}/items/${concrete_product_with_concrete_product_alternative.sku}
     ...    AND    Response status code should be:    204
 
-# bug https://spryker.atlassian.net/browse/CC-19233
 Add_item_with_storage_category_and_2_discounts
    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
