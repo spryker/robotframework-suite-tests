@@ -34,6 +34,7 @@ Delete_a_shopping_list
     ...    AND    I send a POST request:    /shopping-lists    {"data":{"type":"shopping-lists","attributes":{"name":"${shopping_list_name}${random}"}}}
     ...    AND    Response status code should be:    201
     ...    AND    Save value to a variable:    [data][id]    shoppingListId
+    Log    message
     [Teardown]    Run Keywords     I send a DELETE request:    /shopping-lists/${shoppingListId}
     ...    AND    Response status code should be:    204
     ...    AND    Response reason should be:    No Content
