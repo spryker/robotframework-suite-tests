@@ -681,7 +681,7 @@
     "merchants":{
        "merchants":{
           "sony_experts":{
-             "merchant_id":"MER000006",
+             "merchant_reference":"MER000006",
              "merchant_name":"Sony Experts",
              "merchant_url":"/en/merchant/sony-experts",
              "contact_person_role":"Brand Manager",
@@ -700,7 +700,7 @@
              }
           },
           "spryker":{
-             "merchant_id":"MER000001"
+             "merchant_reference":"MER000001"
           }
        }
     },

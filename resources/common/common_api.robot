@@ -1613,11 +1613,11 @@ Update order status in Database:
     ${new_id}=    Set Variable    ${EMPTY}
     ${state_id}=    Set Variable    ${EMPTY}
     ${last_id}=    Query    SELECT id_oms_order_item_state FROM spy_oms_order_item_state ORDER BY id_oms_order_item_state DESC LIMIT 1;
-    ${shipped_id}=    Query    SELECT id_oms_order_item_state FROM spy_oms_order_item_state WHERE name='${order_item_status_name}';
+    ${expected_state_id}=    Query    SELECT id_oms_order_item_state FROM spy_oms_order_item_state WHERE name='${order_item_status_name}';
     ${last_id_length}=    Get Length    ${last_id}
-    ${shipped_id_length}=    Get Length    ${shipped_id}
-    IF    ${shipped_id_length} > 0 
-        ${state_id}=    Set Variable    ${shipped_id[0][0]}
+    ${expected_state_id_length}=    Get Length    ${expected_state_id}
+    IF    ${expected_state_id_length} > 0 
+        ${state_id}=    Set Variable    ${expected_state_id[0][0]}
     ELSE
         ${new_id}=    Evaluate    ${last_id[0][0]} + 1
         Execute Sql String    INSERT INTO spy_oms_order_item_state (id_oms_order_item_state, name) VALUES (${new_id}, '${order_item_status_name}');
@@ -1812,3 +1812,55 @@ Cleanup all existing shopping lists
                     ${response_delete}=    DELETE    ${current_url}/shopping-lists/${shopping_list_uuid}    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}    expected_status=204
             END
         END
+
+Create merchant order for the item in DB and change status:
+    [Documentation]    This keyword creates new merchant order in the DB and sets the desired status . This allows to skip going through the order workflow manually 
+    ...    but just switch to the status you need to create a test. 
+    ...    There is no separate endpoint to update order status and this keyword allows to do this via database value update.
+    ...    *Example:*
+    ...    
+    ...    ``Create merchant order for the item in DB and change status:    shipped    ${uuid}    ${merchants.sony_experts.merchant_reference}``
+    [Arguments]    ${order_item_status_name}    ${uuid_to_use}    ${merchant_reference}
+    Connect to Spryker DB
+    ${new_id}=    Set Variable    ${EMPTY}
+    ${state_id}=    Set Variable    ${EMPTY}
+    ${last_id}=    Query    SELECT id_state_machine_item_state FROM spy_state_machine_item_state ORDER BY id_state_machine_item_state DESC LIMIT 1;
+    ${expected_state_id}=    Query    SELECT id_state_machine_item_state FROM spy_state_machine_item_state WHERE name='${order_item_status_name}';
+    ${last_id_length}=    Get Length    ${last_id}
+    ${expected_state_id_length}=    Get Length    ${expected_state_id}
+    IF    ${expected_state_id_length} > 0 
+        ${state_id}=    Set Variable    ${expected_state_id[0][0]}
+    ELSE
+        ${new_id}=    Evaluate    ${last_id[0][0]} + 1
+        Execute Sql String    INSERT INTO spy_state_machine_item_state (id_state_machine_item_state, fk_state_machine_process, name) VALUES (${new_id}, 2, '${order_item_status_name}');
+        ${state_id}=    Set Variable    ${new_id}
+    END
+    ${last_order_item_id}=    Query    SELECT id_merchant_sales_order_item from spy_merchant_sales_order_item order by id_merchant_sales_order_item desc limit 1;
+    ${last_order_item_id_length}=    Get Length    ${last_order_item_id}
+    IF    ${last_order_item_id_length} > 0
+        ${new_order_item_id}=    Set Variable    ${last_order_item_id[0][0]}
+    ELSE
+        ${new_order_item_id}=    Evaluate    ${last_order_item_id[0][0]} +1
+    END
+    ${last_merchant_order_id}=    Query    SELECT id_merchant_sales_order from spy_merchant_sales_order order by id_merchant_sales_order desc limit 1;
+    ${last_merchant_order_id_length}=    Get Length    ${last_merchant_order_id}
+    IF    ${last_merchant_order_id_length} > 0
+        ${new_merchant_order_id}=    Evaluate    ${last_merchant_order_id[0][0]} +1
+    ELSE
+        ${new_merchant_order_id}=    Evaluate    1
+    END
+    ${sales_order_id}=    Query    SELECT fk_sales_order from spy_sales_order_item where uuid='${uuid_to_use}';
+    ${sales_order_id}=    Set Variable    ${sales_order_id[0][0]}
+    Execute Sql String    INSERT INTO spy_merchant_sales_order (id_merchant_sales_order, fk_sales_order, merchant_reference, merchant_sales_order_reference) VALUES (${new_merchant_order_id}, ${sales_order_id}, '${merchant_reference}', 'DE--${sales_order_id}--${merchant_reference}');
+    ${last_merchant_order_item_id}=    Query    SELECT id_merchant_sales_order from spy_merchant_sales_order order by id_merchant_sales_order desc limit 1;
+    ${last_merchant_order_item_id_length}=    Get Length    ${last_merchant_order_item_id}
+    IF    ${last_merchant_order_item_id_length} > 0
+        ${new_merchant_order_item_id}=    Evaluate    ${last_merchant_order_item_id[0][0]} +1
+    ELSE
+        ${new_merchant_order_item_id}=    Evaluate    1
+    END
+    ${sales_order_item_id}=    Query    SELECT id_sales_order_item from spy_sales_order_item where uuid='${uuid_to_use}';
+    ${sales_order_item_id}=    Set Variable    ${sales_order_item_id[0][0]}
+    ${random_merchant_order_item_reference}=    Generate Random String    10    [NUMBERS]
+    Execute Sql String    INSERT INTO spy_merchant_sales_order_item (id_merchant_sales_order_item, fk_merchant_sales_order, fk_sales_order_item, fk_state_machine_item_state, merchant_order_item_reference) VALUES (${new_merchant_order_item_id}, ${new_merchant_order_id}, ${sales_order_item_id}, ${state_id}, '${random_merchant_order_item_reference}');
+    Disconnect From Database

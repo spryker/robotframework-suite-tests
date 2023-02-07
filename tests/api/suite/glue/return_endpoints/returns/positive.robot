@@ -204,14 +204,12 @@ Get_return_by_Id_include_return-items
     And Response body parameter should be:    [included][0][attributes][orderItemUuid]    ${orderItemUuid}
 
 Retrieves_list_of_returns_included_merchants
-    [Documentation]    
-    [Tags]    skip-due-to-issue
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}
     ...    AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
     ...    AND    Response status code should be:    201
     ...    AND    Save value to a variable:    [data][id]    cart_id
-    ...    AND    I send a POST request:    /carts/${cart_id}/items?include=items    {"data": {"type": "items","attributes": {"sku": "${merchants.sony_experts.concrete_product_with_offer_sku}","quantity": 4, "merchantReference" : "${merchants.sony_experts.merchant_id}", "productOfferReference" : "${merchants.sony_experts.merchant_offer_id}"}}}
+    ...    AND    I send a POST request:    /carts/${cart_id}/items?include=items    {"data": {"type": "items","attributes": {"sku": "${merchants.sony_experts.concrete_product_with_offer_sku}","quantity": 4, "merchantReference" : "${merchants.sony_experts.merchant_reference}", "productOfferReference" : "${merchants.sony_experts.merchant_offer_id}"}}}
     ...    AND    Save value to a variable:    [included][0][id]    item_id_id_item_merch        
     ...    AND    I send a POST request:    /checkout?include=orders    {"data": {"type": "checkout","attributes": {"customer": {"email": "${yves_user.email}","salutation": "${yves_user.salutation}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}"},"idCart": "${cart_id}","billingAddress": {"salutation": "${yves_user.salutation}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}","address1": "${default.address1}","address2": "${default.address2}","address3": "${default.address3}","zipCode": "${default.zipCode}","city": "${default.city}","iso2Code": "${default.iso2Code}","company": "${default.company}","phone": "${default.phone}","isDefaultBilling": False,"isDefaultShipping": False},"shippingAddress": {"salutation": "${yves_user.salutation}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}","address1": "${default.address1}","address2": "${default.address2}","address3": "${default.address3}","zipCode": "${default.zipCode}","city": "${default.city}","iso2Code": "${default.iso2Code}","company": "${default.company}","phone": "${default.phone}","isDefaultBilling": False,"isDefaultShipping": False},"payments": [{"paymentProviderName": "${payment.provider_name}","paymentMethodName": "${payment.method_name}","paymentSelection": "${payment.selection_name}"}],"shipment": {"idShipmentMethod": 1},"items": ["${item_id_id_item_merch}"]}}}
     ...    AND    Save value to a variable:    [included][0][attributes][items][0][uuid]    uuid
@@ -248,12 +246,13 @@ Retrieves_return_by_id_with_returns_items_included
     ...    AND    I set Headers:    Authorization=${token}
     ...    AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
     ...    AND    Save value to a variable:    [data][id]    cart_id
-    ...    AND    I send a POST request:    /carts/${cartId}/items?include=items    {"data": {"type": "items","attributes": {"sku": "${merchants.sony_experts.concrete_product_with_offer_sku}","quantity": 4, "merchantReference" : "${merchants.sony_experts.merchant_id}", "productOfferReference" : "${merchants.sony_experts.merchant_offer_id}"}}}
+    ...    AND    I send a POST request:    /carts/${cartId}/items?include=items    {"data": {"type": "items","attributes": {"sku": "${merchants.sony_experts.concrete_product_with_offer_sku}","quantity": 4, "merchantReference" : "${merchants.sony_experts.merchant_reference}", "productOfferReference" : "${merchants.sony_experts.merchant_offer_id}"}}}
     ...    AND    Save value to a variable:    [included][0][id]    item_id_id_item_included   
     ...    AND    I send a POST request:    /checkout?include=orders    {"data": {"type": "checkout","attributes": {"customer": {"email": "${yves_user.email}","salutation": "${yves_user.salutation}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}"},"idCart": "${cart_id}","billingAddress": {"salutation": "${yves_user.salutation}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}","address1": "${default.address1}","address2": "${default.address2}","address3": "${default.address3}","zipCode": "${default.zipCode}","city": "${default.city}","iso2Code": "${default.iso2Code}","company": "${default.company}","phone": "${default.phone}","isDefaultBilling": False,"isDefaultShipping": False},"shippingAddress": {"salutation": "${yves_user.salutation}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}","address1": "${default.address1}","address2": "${default.address2}","address3": "${default.address3}","zipCode": "${default.zipCode}","city": "${default.city}","iso2Code": "${default.iso2Code}","company": "${default.company}","phone": "${default.phone}","isDefaultBilling": False,"isDefaultShipping": False},"payments": [{"paymentProviderName": "${payment.provider_name}","paymentMethodName": "${payment.method_name}","paymentSelection": "${payment.selection_name}"}],"shipment": {"idShipmentMethod": 1},"items": ["${item_id_id_item_included}"]}}}
     ...    AND    Save value to a variable:    [included][0][attributes][items][0][uuid]    uuid
     ...    AND    Save value to a variable:    [included][0][attributes][items][0][refundableAmount]    refundable_amount
-    ...    AND    Update order status in Database:    shipped by merchant    ${uuid}  
+    ...    AND    Update order status in Database:    shipped by merchant    ${uuid}
+    ...    AND    Create merchant order for the item in DB and change status:    shipped    ${uuid}    ${merchants.sony_experts.merchant_reference}
     ...    AND    I send a POST request:     /returns     {"data":{"type":"returns","attributes":{"store":"${store.de}","returnItems":[{"salesOrderItemUuid":"${uuid}","reason":"${return_reason_damaged}"}]}}}
     ...    AND    Save value to a variable:    [data][id]    returnId
     When I send a GET request:    /returns/${returnId}?include=return-items
@@ -261,7 +260,7 @@ Retrieves_return_by_id_with_returns_items_included
     And Response reason should be:     OK
     And Response body parameter should be:    [data][type]    returns
     And Response body parameter should be:    [data][id]    ${returnId}
-    And Response body parameter should be:    [data][attributes][merchantReference]    ${merchants.sony_experts.merchant_id}
+    And Response body parameter should be:    [data][attributes][merchantReference]    ${merchants.sony_experts.merchant_reference}
     And Response body parameter should be:    [data][attributes][returnReference]    ${returnId}
     And Response body parameter should be:    [data][attributes][store]    ${store.de}
     And Response body parameter should be:    [data][attributes][customerReference]    ${yves_user.reference}
@@ -282,7 +281,7 @@ Retrieves_return_by_id_with_returns_items_included
     And Each array element of array in response should contain property with value:    [included]    type    return-items
     And Each array element of array in response should contain property with value in:    [included]    [attributes][orderItemUuid]    ${Uuid}    ${Uuid}
     And Each array element of array in response should contain property with value in:    [included]    [attributes][reason]    ${return_reason_damaged}    ${return_reason_damaged}  
-    And Response body has correct self link
+    And Response body has correct self link internal
 
 Retrieves_return_by_id_for_sales_order
     [Documentation]    
@@ -291,12 +290,13 @@ Retrieves_return_by_id_for_sales_order
     ...    AND    I set Headers:    Authorization=${token}
     ...    AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
     ...    AND    Save value to a variable:    [data][id]    cart_id
-    ...    AND    I send a POST request:    /carts/${cartId}/items?include=items    {"data": {"type": "items","attributes": {"sku": "${merchants.sony_experts.concrete_product_with_offer_sku}","quantity": 4, "merchantReference" : "${merchants.sony_experts.merchant_id}", "productOfferReference" : "${merchants.sony_experts.merchant_offer_id}"}}}
+    ...    AND    I send a POST request:    /carts/${cartId}/items?include=items    {"data": {"type": "items","attributes": {"sku": "${merchants.sony_experts.concrete_product_with_offer_sku}","quantity": 4, "merchantReference" : "${merchants.sony_experts.merchant_reference}", "productOfferReference" : "${merchants.sony_experts.merchant_offer_id}"}}}
     ...    AND    Save value to a variable:    [included][0][id]    item_id_id_item_sales      
     ...    AND    I send a POST request:    /checkout?include=orders    {"data": {"type": "checkout","attributes": {"customer": {"email": "${yves_user.email}","salutation": "${yves_user.salutation}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}"},"idCart": "${cart_id}","billingAddress": {"salutation": "${yves_user.salutation}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}","address1": "${default.address1}","address2": "${default.address2}","address3": "${default.address3}","zipCode": "${default.zipCode}","city": "${default.city}","iso2Code": "${default.iso2Code}","company": "${default.company}","phone": "${default.phone}","isDefaultBilling": False,"isDefaultShipping": False},"shippingAddress": {"salutation": "${yves_user.salutation}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}","address1": "${default.address1}","address2": "${default.address2}","address3": "${default.address3}","zipCode": "${default.zipCode}","city": "${default.city}","iso2Code": "${default.iso2Code}","company": "${default.company}","phone": "${default.phone}","isDefaultBilling": False,"isDefaultShipping": False},"payments": [{"paymentProviderName": "${payment.provider_name}","paymentMethodName": "${payment.method_name}","paymentSelection": "${payment.selection_name}"}],"shipment": {"idShipmentMethod": 1},"items": ["${item_id_id_item_sales}"]}}}
     ...    AND    Save value to a variable:    [included][0][attributes][items][0][uuid]    uuid
     ...    AND    Save value to a variable:    [included][0][attributes][items][0][refundableAmount]    refundable_amount
     ...    AND    Update order status in Database:    shipped by merchant    ${uuid}  
+    ...    AND    Create merchant order for the item in DB and change status:    shipped    ${uuid}    ${merchants.sony_experts.merchant_reference}
     ...    AND    I send a POST request:     /returns     {"data":{"type":"returns","attributes":{"store":"${store.de}","returnItems":[{"salesOrderItemUuid":"${uuid}","reason":"${return_reason_damaged}"}]}}}
     ...    AND    Save value to a variable:    [data][id]    returnId
     When I send a GET request:    /returns/${returnId}?include=return-items
@@ -318,12 +318,13 @@ Retrieves_return_by_id_with_merchants_included
     ...    AND    I set Headers:    Authorization=${token}
     ...    AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
     ...    AND    Save value to a variable:    [data][id]    cart_id
-    ...    AND    I send a POST request:    /carts/${cartId}/items?include=items    {"data": {"type": "items","attributes": {"sku": "${merchants.sony_experts.concrete_product_with_offer_sku}","quantity": 4, "merchantReference" : "${merchants.sony_experts.merchant_id}", "productOfferReference" : "${merchants.sony_experts.merchant_offer_id}"}}}
+    ...    AND    I send a POST request:    /carts/${cartId}/items?include=items    {"data": {"type": "items","attributes": {"sku": "${merchants.sony_experts.concrete_product_with_offer_sku}","quantity": 4, "merchantReference" : "${merchants.sony_experts.merchant_reference}", "productOfferReference" : "${merchants.sony_experts.merchant_offer_id}"}}}
     ...    AND    Save value to a variable:    [included][0][id]    item_id_id_item_included_m         
     ...    AND    I send a POST request:    /checkout?include=orders    {"data": {"type": "checkout","attributes": {"customer": {"email": "${yves_user.email}","salutation": "${yves_user.salutation}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}"},"idCart": "${cart_id}","billingAddress": {"salutation": "${yves_user.salutation}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}","address1": "${default.address1}","address2": "${default.address2}","address3": "${default.address3}","zipCode": "${default.zipCode}","city": "${default.city}","iso2Code": "${default.iso2Code}","company": "${default.company}","phone": "${default.phone}","isDefaultBilling": False,"isDefaultShipping": False},"shippingAddress": {"salutation": "${yves_user.salutation}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}","address1": "${default.address1}","address2": "${default.address2}","address3": "${default.address3}","zipCode": "${default.zipCode}","city": "${default.city}","iso2Code": "${default.iso2Code}","company": "${default.company}","phone": "${default.phone}","isDefaultBilling": False,"isDefaultShipping": False},"payments": [{"paymentProviderName": "${payment.provider_name}","paymentMethodName": "${payment.method_name}","paymentSelection": "${payment.selection_name}"}],"shipment": {"idShipmentMethod": 1},"items": ["${item_id_id_item_included_m}"]}}}
     ...    AND    Save value to a variable:    [included][0][attributes][items][0][uuid]    uuid
     ...    AND    Save value to a variable:    [included][0][attributes][items][0][refundableAmount]    refundable_amount
     ...    AND    Update order status in Database:    shipped by merchant    ${uuid}  
+    ...    AND    Create merchant order for the item in DB and change status:    shipped    ${uuid}    ${merchants.sony_experts.merchant_reference}
     ...    AND    I send a POST request:     /returns     {"data":{"type":"returns","attributes":{"store":"${store.de}","returnItems":[{"salesOrderItemUuid":"${uuid}","reason":"${return_reason_damaged}"}]}}}
     ...    AND    Save value to a variable:    [data][id]    returnId
     When I send a GET request:    /returns/${returnId}?include=merchants
@@ -332,7 +333,7 @@ Retrieves_return_by_id_with_merchants_included
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response body parameter should be:    [data][type]    returns
     And Response body parameter should be:    [data][id]    ${returnId}
-    And Response body parameter should be:    [data][attributes][merchantReference]    ${merchants.sony_experts.merchant_id}
+    And Response body parameter should be:    [data][attributes][merchantReference]    ${merchants.sony_experts.merchant_reference}
     And Response body parameter should be:    [data][attributes][returnReference]    ${returnId}
     And Response body parameter should be:    [data][attributes][store]    ${store.de}
     And Response body parameter should be:    [data][attributes][customerReference]    ${yves_user.reference}

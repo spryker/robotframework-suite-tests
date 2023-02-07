@@ -9,10 +9,10 @@ ENABLER
     TestSetup
 
 Retrieves_merchant_addresses
-    When I send a GET request:  /merchants/${merchants.sony_experts.merchant_id}/merchant-addresses
+    When I send a GET request:  /merchants/${merchants.sony_experts.merchant_reference}/merchant-addresses
     Then Response status code should be:    200
     And Response reason should be:    OK
-    And Response body parameter should be:    [data][0][id]    ${merchants.sony_experts.merchant_id}
+    And Response body parameter should be:    [data][0][id]    ${merchants.sony_experts.merchant_reference}
     And Response body parameter should be:    [data][0][type]    merchant-addresses
     And Response body parameter should be:    [data][0][attributes][addresses][0][countryName]    ${default.country}
     And Response body parameter should be:    [data][0][attributes][addresses][0][city]    ${merchants.sony_experts.addresses.city_munchen}
@@ -33,11 +33,11 @@ Retrieves_merchant_addresses
 
 
 Retrieves_merchant_with_include_merchant_addresses
-    When I send a GET request:    /merchants/${merchants.sony_experts.merchant_id}?include=merchant-addresses
+    When I send a GET request:    /merchants/${merchants.sony_experts.merchant_reference}?include=merchant-addresses
     Then Response status code should be:    200
     And Response reason should be:    OK    
     And Response body parameter should be:    [data][type]    merchants
-    And Response body parameter should be:    [data][id]    ${merchants.sony_experts.merchant_id}
+    And Response body parameter should be:    [data][id]    ${merchants.sony_experts.merchant_reference}
     And Response should contain the array of a certain size:    [included]    1
     And Response body parameter should have datatype:    [data][relationships]    dict
     And Response body parameter should not be EMPTY:    [data][relationships]
