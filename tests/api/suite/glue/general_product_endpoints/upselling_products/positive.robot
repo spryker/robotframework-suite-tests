@@ -46,7 +46,7 @@ Get_upselling_products
 
 
 Get_upselling_products_plus_includes
-    [Documentation]   https://spryker.atlassian.net/browse/CC-25720 (i see option in response, this need to be rechecked), https://spryker.atlassian.net/browse/CC-25880 (product reviews)
+    [Documentation]    https://spryker.atlassian.net/browse/CC-25880 (product reviews)
     [Tags]    skip-due-to-issue 
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
@@ -76,7 +76,7 @@ Get_upselling_products_plus_includes
     And Response include should contain certain entity type:    product-labels
     And Response include should contain certain entity type:    product-tax-sets
     And Response include should contain certain entity type:    product-reviews
-    And Response include should contain certain entity type:    product-option
+    And Response include should contain certain entity type:    product-options
     And Response include should contain certain entity type:    category-nodes
     And Response include element has self link:    abstract-product-prices
     And Response include element has self link:    abstract-product-image-sets

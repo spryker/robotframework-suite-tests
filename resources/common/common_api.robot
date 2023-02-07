@@ -631,7 +631,7 @@ Response body parameter should be greater than:
     ${data}=    Replace String    ${data}    ]   ${EMPTY}
     Log    ${data}
     Log    ${expected_value}
-    ${result}=    Evaluate    '${data}' > '${expected_value}'
+    ${result}=    Evaluate    float('${data}') > float('${expected_value}')
     ${result}=    Convert To String    ${result}
     Should Be Equal    ${result}    True    Actual ${data} is not greater than expected ${expected_value}
 

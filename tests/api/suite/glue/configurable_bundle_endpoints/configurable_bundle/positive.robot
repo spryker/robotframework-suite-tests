@@ -7,6 +7,7 @@ Default Tags    glue
 *** Test Cases ***
 ENABLER
     TestSetup
+
 Add_configured_bundle_item_to_the_cart_with_included_items
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_second_user.email}
     ...  AND    I set Headers:    Authorization=${token}
