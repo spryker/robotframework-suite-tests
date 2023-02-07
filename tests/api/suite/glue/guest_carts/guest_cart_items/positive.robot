@@ -136,7 +136,6 @@ Add_an_item_to_the_guest_cart_with_cart_rules_includes
     And Response include element has self link:   guest-cart-items
 
 Add_an_item_to_the_guest_cart_with_bundle_items_include
-    [Documentation]    flakery test because of bundle product availability, no demo data.
     [Setup]    I set Headers:    Content-Type=${default_header_content_type}    X-Anonymous-Customer-Unique-Id=${random}
     Run Keywords    Create a guest cart:    ${random}    ${concrete_product_with_concrete_product_alternative.sku}    1
     ...    AND    Save value to a variable:    [data][id]    guestCartId
