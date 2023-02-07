@@ -1757,7 +1757,7 @@ Get company user id by customer reference:
     [Documentation]    This keyword sends the GET reguest to the ``/company-users?include=customers`` endpoint and returns company user id by customer reference. Sets variable : ``${companyUserId}``
     ...    
     ...    *Example:*
-    ...    ``Get company user id by email:    ${yves_fifth_user.email}``
+    ...    ``Get company user id by customer reference:    ${yves_fifth_user.reference}``
     ...    
     [Arguments]    ${customer_reference}
     I send a GET request:    /company-users?include=customers
@@ -1827,27 +1827,38 @@ Create merchant order for the item in DB and change status:
     ${last_id}=    Query    SELECT id_state_machine_item_state FROM spy_state_machine_item_state ORDER BY id_state_machine_item_state DESC LIMIT 1;
     ${expected_state_id}=    Query    SELECT id_state_machine_item_state FROM spy_state_machine_item_state WHERE name='${order_item_status_name}';
     ${last_id_length}=    Get Length    ${last_id}
+    IF    ${last_id_length} == 0
+        ${state_id}=    Set Variable    1
+        ${state_id}=    Convert To String    ${new_id}
+    END
     ${expected_state_id_length}=    Get Length    ${expected_state_id}
     IF    ${expected_state_id_length} > 0 
         ${state_id}=    Set Variable    ${expected_state_id[0][0]}
     ELSE
-        ${new_id}=    Evaluate    ${last_id[0][0]} + 1
+        ${state_id}=    Set Variable    ${state_id}
         Execute Sql String    INSERT INTO spy_state_machine_item_state (id_state_machine_item_state, fk_state_machine_process, name) VALUES (${new_id}, 2, '${order_item_status_name}');
-        ${state_id}=    Set Variable    ${new_id}
     END
     ${last_order_item_id}=    Query    SELECT id_merchant_sales_order_item from spy_merchant_sales_order_item order by id_merchant_sales_order_item desc limit 1;
     ${last_order_item_id_length}=    Get Length    ${last_order_item_id}
+    IF    ${last_order_item_id_length} == 0
+        ${new_order_item_id}=    Set variable    1
+        ${new_order_item_id}=    Convert To String    ${new_order_item_id}
+    END
     IF    ${last_order_item_id_length} > 0
-        ${new_order_item_id}=    Set Variable    ${last_order_item_id[0][0]}
-    ELSE
         ${new_order_item_id}=    Evaluate    ${last_order_item_id[0][0]} +1
+    ELSE
+        ${new_order_item_id}=    Set Variable    ${new_order_item_id}
     END
     ${last_merchant_order_id}=    Query    SELECT id_merchant_sales_order from spy_merchant_sales_order order by id_merchant_sales_order desc limit 1;
     ${last_merchant_order_id_length}=    Get Length    ${last_merchant_order_id}
+    IF    ${last_merchant_order_id_length} == 0
+        ${new_merchant_order_id}=    Set Variable    1
+        ${new_merchant_order_id}=    Convert To String    ${new_merchant_order_id}
+    END
     IF    ${last_merchant_order_id_length} > 0
         ${new_merchant_order_id}=    Evaluate    ${last_merchant_order_id[0][0]} +1
     ELSE
-        ${new_merchant_order_id}=    Evaluate    1
+        ${new_merchant_order_id}=    Set Variable    ${new_merchant_order_id}
     END
     ${sales_order_id}=    Query    SELECT fk_sales_order from spy_sales_order_item where uuid='${uuid_to_use}';
     ${sales_order_id}=    Set Variable    ${sales_order_id[0][0]}
@@ -1856,8 +1867,6 @@ Create merchant order for the item in DB and change status:
     ${last_merchant_order_item_id_length}=    Get Length    ${last_merchant_order_item_id}
     IF    ${last_merchant_order_item_id_length} > 0
         ${new_merchant_order_item_id}=    Evaluate    ${last_merchant_order_item_id[0][0]} +1
-    ELSE
-        ${new_merchant_order_item_id}=    Evaluate    1
     END
     ${sales_order_item_id}=    Query    SELECT id_sales_order_item from spy_sales_order_item where uuid='${uuid_to_use}';
     ${sales_order_item_id}=    Set Variable    ${sales_order_item_id[0][0]}

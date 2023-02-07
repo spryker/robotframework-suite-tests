@@ -459,6 +459,7 @@
        "denied_offer_with_volume_price":"offer404",
        "active_offer_2":"offer54",
        "active_offer":"offer13",
+       "offer_with_merchant_sku":"offer1",
        "offer_without_volume_price":"offer359",
        "offer_without_original_price":"offer6",
        "second_offer_with_volume_price":"offer415",

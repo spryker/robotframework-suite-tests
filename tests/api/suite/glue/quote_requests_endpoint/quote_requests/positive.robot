@@ -64,7 +64,6 @@ Create_quote_request
     [Teardown]    Run Keywords    I send a DELETE request:     /carts/${cart_id}
     ...    AND    Response status code should be:    204
 
-
 Create_quote_request_with_included_customers_&_comapny_users_&_company_business_units_and_concrete_products
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
@@ -128,8 +127,6 @@ Create_quote_request_with_included_customers_&_comapny_users_&_company_business_
     [Teardown]    Run Keywords    I send a DELETE request:     /carts/${cart_id}
     ...    AND    Response status code should be:    204
 
-
-
 Create_quote_request_without_delivery_date_and_note
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
@@ -185,9 +182,6 @@ Create_quote_request_without_delivery_date_and_note
     [Teardown]    Run Keywords    I send a DELETE request:     /carts/${cart_id}
     ...    AND    Response status code should be:    204
 
-
-
-
 Create_quote_request_with_empty_meta_data
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
@@ -240,7 +234,6 @@ Create_quote_request_with_empty_meta_data
     [Teardown]    Run Keywords    I send a DELETE request:     /carts/${cart_id}
     ...    AND    Response status code should be:    204
 
-
 Create_quote_request_for_cart_with_full_access_permissions
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    Save value to a variable:    [data][attributes][accessToken]    userToken
@@ -250,7 +243,7 @@ Create_quote_request_for_cart_with_full_access_permissions
     ...    AND    I send a POST request:    /carts/${cartId}/items    {"data":{"type":"items","attributes":{"sku":"${concrete.available_product.with_stock_and_never_out_of_stock.sku_1}","quantity":1}}}
     ...    AND    Response status code should be:    201
     ...    AND    I send a GET request:    /company-users
-    ...    AND    Save value to a variable:    [data][6][id]    companyUserId
+    ...    AND    Get company user id by customer reference:    ${yves_fifth_user.reference}
     ## Giving_full_cart_access_to_the_User_by_using_quote_request.cart_permission_id ##
     ...    AND    I send a POST request:    /carts/${cartId}/shared-carts    {"data":{"type":"shared-carts","attributes":{"idCompanyUser":"${companyUserId}","idCartPermissionGroup":${quote_request.cart_permission_id}}}}
     ...    AND    Save value to a variable:    [data][id]    shared_cart_id
@@ -302,9 +295,7 @@ Create_quote_request_for_cart_with_full_access_permissions
     ...    AND    Response status code should be:    204
     ...    AND    Response reason should be:    No Content
 
-
-
-#GET#
+# #GET#
 Retrieves_quote_request_list_when_no_RFQ
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_sixth_user.email}
     ...  AND    I set Headers:    Authorization=${token}
