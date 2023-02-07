@@ -1829,14 +1829,14 @@ Create merchant order for the item in DB and change status:
     ${last_id_length}=    Get Length    ${last_id}
     IF    ${last_id_length} == 0
         ${state_id}=    Set Variable    1
-        ${state_id}=    Convert To String    ${new_id}
+        ${state_id}=    Convert To String    ${state_id}
     END
     ${expected_state_id_length}=    Get Length    ${expected_state_id}
     IF    ${expected_state_id_length} > 0 
         ${state_id}=    Set Variable    ${expected_state_id[0][0]}
     ELSE
         ${state_id}=    Set Variable    ${state_id}
-        Execute Sql String    INSERT INTO spy_state_machine_item_state (id_state_machine_item_state, fk_state_machine_process, name) VALUES (${new_id}, 2, '${order_item_status_name}');
+        Execute Sql String    INSERT INTO spy_state_machine_item_state (id_state_machine_item_state, fk_state_machine_process, name) VALUES (${state_id}, 2, '${order_item_status_name}');
     END
     ${last_order_item_id}=    Query    SELECT id_merchant_sales_order_item from spy_merchant_sales_order_item order by id_merchant_sales_order_item desc limit 1;
     ${last_order_item_id_length}=    Get Length    ${last_order_item_id}
