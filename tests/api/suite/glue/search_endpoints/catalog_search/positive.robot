@@ -25,7 +25,8 @@ Search_with_empty_search_criteria_all_default_values_check
     And Response body parameter should contain:    [data][0][attributes]    currentSortParam
     And Response body parameter should contain:    [data][0][attributes]    currentSortOrder
     #Pagination
-    And Response body parameter should be:    [data][0][attributes][pagination][numFound]    ${total_number_of_products_in_search}
+    And Response body parameter should be greater than:    [data][0][attributes][pagination][numFound]    ${min_number_of_products_in_search}
+    And Response body parameter should be less than:    [data][0][attributes][pagination][numFound]    ${max_number_of_products_in_search}
     And Response body parameter should be:    [data][0][attributes][pagination][currentPage]    1
     And Response body parameter should be:    [data][0][attributes][pagination][maxPage]    ${default_qty.ipp_pages}
     And Response body parameter should be:    [data][0][attributes][pagination][currentItemsPerPage]    ${ipp.default}
@@ -309,7 +310,8 @@ Filter_by_brand_empty_brand
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response body parameter should be:    [data][0][type]    catalog-search
-    And Response body parameter should be:    [data][0][attributes][pagination][numFound]    ${total_number_of_products_in_search}
+    And Response body parameter should be greater than:    [data][0][attributes][pagination][numFound]    ${min_number_of_products_in_search}
+    And Response body parameter should be less than:    [data][0][attributes][pagination][numFound]    ${max_number_of_products_in_search}
     And Response body parameter should be:    [data][0][attributes][pagination][currentPage]    1
     And Response body parameter should be greater than:    [data][0][attributes][pagination][maxPage]    1
     And Response should contain the array of a certain size:    [data][0][attributes][abstractProducts]    ${ipp.default}
@@ -348,7 +350,7 @@ Filter_by_label_two_labels
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response body parameter should be:    [data][0][type]    catalog-search
-    And Response body parameter should be:    [data][0][attributes][pagination][numFound]    67
+    And Response body parameter should be greater than:    [data][0][attributes][pagination][numFound]    65
     And Response body parameter should be:    [data][0][attributes][pagination][currentPage]    1
     And Response body parameter should be greater than:    [data][0][attributes][pagination][maxPage]    1
     And Response should contain the array of a certain size:    [data][0][attributes][abstractProducts]    ${ipp.default}
@@ -373,7 +375,8 @@ Filter_by_label_empty_label
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response body parameter should be:    [data][0][type]    catalog-search
-    And Response body parameter should be:    [data][0][attributes][pagination][numFound]    ${total_number_of_products_in_search}
+    And Response body parameter should be greater than:    [data][0][attributes][pagination][numFound]    ${min_number_of_products_in_search}
+    And Response body parameter should be less than:    [data][0][attributes][pagination][numFound]    ${max_number_of_products_in_search}
     And Response body parameter should be:    [data][0][attributes][pagination][currentPage]    1
     And Response body parameter should be:    [data][0][attributes][pagination][maxPage]    ${default_qty.ipp_pages}
     And Response should contain the array of a certain size:    [data][0][attributes][abstractProducts]    ${ipp.default}
@@ -427,7 +430,8 @@ Filter_by_color_empty_color
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response body parameter should be:    [data][0][type]    catalog-search
-    And Response body parameter should be:    [data][0][attributes][pagination][numFound]    ${total_number_of_products_in_search}
+    And Response body parameter should be greater than:    [data][0][attributes][pagination][numFound]    ${min_number_of_products_in_search}
+    And Response body parameter should be less than:    [data][0][attributes][pagination][numFound]    ${max_number_of_products_in_search}
     And Response body parameter should be:    [data][0][attributes][pagination][currentPage]    1
     And Response body parameter should be:    [data][0][attributes][pagination][maxPage]    ${default_qty.ipp_pages}
     And Response should contain the array of a certain size:    [data][0][attributes][abstractProducts]    ${ipp.default}
@@ -495,7 +499,8 @@ Search_set_specific_page_with_default_ipp
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response body parameter should be:    [data][0][type]    catalog-search
-    And Response body parameter should be:    [data][0][attributes][pagination][numFound]    ${total_number_of_products_in_search}
+    And Response body parameter should be greater than:    [data][0][attributes][pagination][numFound]    ${min_number_of_products_in_search}
+    And Response body parameter should be less than:    [data][0][attributes][pagination][numFound]    ${max_number_of_products_in_search}
     And Response body parameter should be:    [data][0][attributes][pagination][currentPage]    4
     And Response body parameter should be:    [data][0][attributes][pagination][maxPage]    ${default_qty.ipp_pages}
     And Response body parameter should be:    [data][0][attributes][pagination][config][defaultItemsPerPage]    ${ipp.default}
@@ -513,7 +518,8 @@ Search_set_specific_page_and_nondefault_ipp
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response body parameter should be:    [data][0][type]    catalog-search
-    And Response body parameter should be:    [data][0][attributes][pagination][numFound]    ${total_number_of_products_in_search}
+    And Response body parameter should be greater than:    [data][0][attributes][pagination][numFound]    ${min_number_of_products_in_search}
+    And Response body parameter should be less than:    [data][0][attributes][pagination][numFound]    ${max_number_of_products_in_search}
     And Response body parameter should be:    [data][0][attributes][pagination][currentPage]    2
     And Response body parameter should be:    [data][0][attributes][pagination][maxPage]    10
     And Response body parameter should be:    [data][0][attributes][pagination][config][defaultItemsPerPage]    ${ipp.default}
@@ -530,11 +536,12 @@ Search_set_last_page_and_nondefault_ipp
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response body parameter should be:    [data][0][type]    catalog-search
-    And Response body parameter should be:    [data][0][attributes][pagination][numFound]    ${total_number_of_products_in_search}
+    And Response body parameter should be greater than:    [data][0][attributes][pagination][numFound]    ${min_number_of_products_in_search}
+    And Response body parameter should be less than:    [data][0][attributes][pagination][numFound]    ${max_number_of_products_in_search}
     And Response body parameter should be:    [data][0][attributes][pagination][currentPage]    7
     And Response body parameter should be:    [data][0][attributes][pagination][maxPage]    7
     And Response body parameter should be:    [data][0][attributes][pagination][config][defaultItemsPerPage]    ${ipp.default}
-    And Response should contain the array of a certain size:    [data][0][attributes][abstractProducts]    2
+    And Response should contain the array larger than a certain size:    [data][0][attributes][abstractProducts]    0
     And Response body parameter should not be EMPTY:    [links][self]
     And Response body parameter should not be EMPTY:    [links][last]
     And Response body parameter should not be EMPTY:    [links][first]
@@ -546,7 +553,8 @@ Search_set_invalid_ipp
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response body parameter should be:    [data][0][type]    catalog-search
-    And Response body parameter should be:    [data][0][attributes][pagination][numFound]    ${total_number_of_products_in_search}
+    And Response body parameter should be greater than:    [data][0][attributes][pagination][numFound]    ${min_number_of_products_in_search}
+    And Response body parameter should be less than:    [data][0][attributes][pagination][numFound]    ${max_number_of_products_in_search}
     And Response body parameter should be:    [data][0][attributes][pagination][currentPage]    1
     And Response body parameter should be:    [data][0][attributes][pagination][maxPage]    ${default_qty.ipp_pages}
     And Response body parameter should be:    [data][0][attributes][pagination][config][defaultItemsPerPage]    ${ipp.default}

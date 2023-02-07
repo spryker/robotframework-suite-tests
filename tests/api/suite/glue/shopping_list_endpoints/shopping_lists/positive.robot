@@ -34,9 +34,9 @@ Delete_a_shopping_list
     ...    AND    I send a POST request:    /shopping-lists    {"data":{"type":"shopping-lists","attributes":{"name":"${shopping_list_name}${random}"}}}
     ...    AND    Response status code should be:    201
     ...    AND    Save value to a variable:    [data][id]    shoppingListId
-    I send a DELETE request:    /shopping-lists/${shoppingListId}
-    And Response status code should be:    204
-    And Response reason should be:    No Content
+    [Teardown]    Run Keywords     I send a DELETE request:    /shopping-lists/${shoppingListId}
+    ...    AND    Response status code should be:    204
+    ...    AND    Response reason should be:    No Content
 
 Update_a_shopping_list
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
@@ -70,15 +70,14 @@ Update_a_shopping_list_name
     ...    AND    Response status code should be:    204
     ...    AND    Response reason should be:    No Content
 
-
 Update_a_shopping_list_name_with_includes
-    [Documentation]    Skip due to issue CC-16543
-    [Tags]    skip-due-to-issue
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}  
     ...    AND    I send a POST request:    /shopping-lists    {"data":{"type":"shopping-lists","attributes":{"name":"${shopping_list_name}${random}"}}}
     ...    AND    Response status code should be:    201
     ...    AND    Save value to a variable:    [data][id]    shoppingListId
+    ...    AND    I send a POST request:    /shopping-lists/${shoppingListId}/shopping-list-items    {"data":{"type":"shopping-list-items","attributes":{"sku":"${concrete_available_product.sku}","quantity":1}}}
+    ...    AND    I send a POST request:    /shopping-lists/${shoppingListId}/shopping-list-items    {"data":{"type":"shopping-list-items","attributes":{"sku":"${bundle_product.concrete.product_1_sku}","quantity":1}}}
     I send a PATCH request:    /shopping-lists/${shoppingListId}?include=shopping-list-items,concrete-products    {"data":{"type":"shopping-lists","attributes":{"name":"${shopping_list_name}${random}!@#$%^&*()-_"}}}
     And Response status code should be:    200
     And Save value to a variable:    [data][attributes][numberOfItems]    numberOfItems
@@ -93,7 +92,7 @@ Update_a_shopping_list_name_with_includes
     And Each array element of array in response should contain nested property with datatype:    [included]    [type]    str
     And Each array element of array in response should contain nested property with datatype:    [included]    [id]    str
     And Response body parameter should be:    [data][type]    shopping-lists
-    And Response should contain the array of a certain size:    [included]    2
+    And Response should contain the array of a certain size:    [included]    4
     And Response should contain the array larger than a certain size:    [data][relationships]    0
     And Response should contain the array smaller than a certain size:    [data][relationships]    ${numberOfItems}+1
     And Response include should contain certain entity type:    concrete-products
@@ -201,7 +200,6 @@ Get_single_shopping_list_info_with_includes
     [Teardown]    Run Keywords    I send a DELETE request:    /shopping-lists/${shoppingListId}
     ...    AND    Response status code should be:    204
     ...    AND    Response reason should be:    No Content
-
 
 Get_several_shopping_lists_info_with_includes
     [Documentation]    Skip due to issue CC-16541

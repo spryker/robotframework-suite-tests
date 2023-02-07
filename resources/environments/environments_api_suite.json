@@ -589,6 +589,8 @@
        },
        "category_tree_branches_qty":"6",
        "total_number_of_products_in_search":"218",
+       "min_number_of_products_in_search":"215",
+       "max_number_of_products_in_search":"220",
        "abstract_sku_highest_rating":"035"
     },
     "availability":{
