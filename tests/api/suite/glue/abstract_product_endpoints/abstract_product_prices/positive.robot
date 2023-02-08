@@ -51,7 +51,7 @@ Abstract_volume_prices
     And Response body has correct self link
 
 Abstract_prices_original_price
-    [Tags]    skip-due-to-refactoring
+    [Tags]    
     When I send a GET request:    /abstract-products/${abstract_product.product_with_original_prices.sku}/abstract-product-prices
     Then Response status code should be:    200
     And Response reason should be:    OK
@@ -64,9 +64,9 @@ Abstract_prices_original_price
     And Response body parameter should be:    [data][0][attributes][prices][0][grossAmount]    ${default_price}
     And Response body parameter should be:    [data][0][attributes][prices][1][priceTypeName]    ORIGINAL
     And Response body parameter should be greater than:    [data][0][attributes][prices][1][grossAmount]   ${default_price}
-    And Each array element of array in response should contain property with value:    [data][0][attributes][prices]    netAmount    None
+    And Each array element of array in response should contain property with value:    [data][0][attributes][prices]    netAmount    ${None}
     And Each array element of array in response should contain value:    [data][0][attributes][prices]    ${currency.eur.code}
     And Each array element of array in response should contain value:    [data][0][attributes][prices]    ${currency.eur.name}
     And Each array element of array in response should contain value:    [data][0][attributes][prices]    ${currency.eur.symbol}
-    And Each array element of array in response should contain property with value:    [data][0][attributes][prices]    volumePrices    []
+    And Each array element of array in response should contain property with value:    [data][0][attributes][prices]    volumePrices   ${arrow}
     And Response body has correct self link

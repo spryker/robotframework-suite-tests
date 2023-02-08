@@ -12,6 +12,7 @@ ENABLER
 Add_voucher_code_to_cart_with_invalid_access_token
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}
+    ...    AND    Cleanup all customer carts
     ...    AND    Find or create customer cart
     ...    AND    I set Headers:    Authorization=fake_token
     When I send a POST request:    /carts/${cart_id}/vouchers    {"data": {"type": "vouchers","attributes": {"code": "discount_voucher_code"}}}
@@ -43,7 +44,6 @@ Add_voucher_code_to_guest_cart_with_invalid_anonymous_customer_id
     ...    AND    Cleanup all items in the guest cart:    ${guest_cart_id}
 
 Add_voucher_code_to_guest_cart_without_anonymous_customer_id
-    [Tags]    skip-due-to-refactoring
     [Setup]    Run Keywords    Create a guest cart:    ${x_anonymous_prefix}${random}    ${product_with_voucher_code.concrete_sku}    1
     ...   AND    I set Headers:    X-Anonymous-Customer-Unique-Id=
     When I send a POST request:    /guest-carts/${guest_cart_id}/vouchers    {"data": {"type": "vouchers","attributes": {"code": "discount_voucher_code"}}}

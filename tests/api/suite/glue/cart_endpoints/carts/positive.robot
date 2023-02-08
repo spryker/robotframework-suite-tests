@@ -8,10 +8,11 @@ Default Tags    glue
 ENABLER
     TestSetup
 
-# GET requests
+### GET requests
 Get_cart_by_cart_id
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
+    ...  AND    Cleanup all customer carts
     ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
     ...  AND    Save value to a variable:    [data][id]    cart_id
     ...  AND    Response status code should be:    201
@@ -67,7 +68,6 @@ Get_cart_without_cart_id
     ...  AND    Response status code should be:    204
 
 Get_cart_by_cart_id_with_included_items
-    [Tags]    skip-due-to-refactoring
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
     ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
@@ -95,14 +95,14 @@ Get_cart_by_cart_id_with_included_items
     And Response body has correct self link internal
     And Response should contain the array of a certain size:    [data][relationships][items][data]    3
     And Each array element of array in response should contain property with value:    [data][relationships][items][data]    type    items
-    And Response body parameter should be:    [data][relationships][items][data][0][id]    ${concrete_products.sku_1}
-    And Response body parameter should be:    [data][relationships][items][data][1][id]    ${concrete_products.sku_2}
-    And Response body parameter should be:    [data][relationships][items][data][2][id]    ${concrete_products.sku_3}
+    And Response body parameter should contain:    [data][relationships][items][data][0][id]    ${concrete_products.sku_1}   
+    And Response body parameter should contain:    [data][relationships][items][data][1][id]    ${concrete_products.sku_2}
+    And Response body parameter should contain:    [data][relationships][items][data][2][id]    ${concrete_products.sku_3}
     And Response should contain the array of a certain size:    [included]    3
     And Each array element of array in response should contain property with value:    [included]    type    items
-    And Response body parameter should be:    [included][0][id]    ${concrete_products.sku_1}
-    And Response body parameter should be:    [included][1][id]    ${concrete_products.sku_2}
-    And Response body parameter should be:    [included][2][id]    ${concrete_products.sku_3}
+    And Response body parameter should contain:    [included][0][id]    ${concrete_products.sku_1}
+    And Response body parameter should contain:    [included][1][id]    ${concrete_products.sku_2}
+    And Response body parameter should contain:    [included][2][id]    ${concrete_products.sku_3}
     And Each array element of array in response should contain property:    [included]    attributes
     And Each array element of array in response should contain property:    [included]    links
     And Response body parameter should be:    [included][0][attributes][sku]    ${concrete_products.sku_1}
@@ -170,9 +170,7 @@ Get_cart_by_customer_id
     [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cart_id}
     ...  AND    Response status code should be:    204
 
-
-
-#POST requests
+###POST requests
 Create_cart
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
@@ -228,9 +226,7 @@ Create_cart_with_existing_name
     ...  AND    I send a DELETE request:    /carts/${cart_id_2}
     ...  AND    Response status code should be:    204
 
-
-
-#PATCH requests
+###PATCH requests
 Update_cart_by_cart_id_with_all_attributes
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
@@ -319,35 +315,39 @@ Update_cart_with_name_attribute
     [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cart_id}
     ...  AND    Response status code should be:    204
 
-#No demo data CC-18932
 Get_cart_with_included_cart_rules
-    [Tags]    skip-due-to-refactoring
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
        ...  AND    I set Headers:    Authorization=${token}
-       ...  AND    Find or create customer cart
-       ...  AND    Cleanup all items in the cart:    ${cart_id}
+       ...  AND    Cleanup all customer carts
+       ...  AND    Create empty customer cart:    ${mode.gross}    ${currency.eur.code}    ${store.de}    cart_rules
        ...  AND    I send a POST request:    /carts/${cart_id}/items    {"data": {"type": "items","attributes": {"sku": "${concrete_product_with_concrete_product_alternative.sku}", "quantity": "4"}}}
        ...  AND    Response status code should be:    201
-    When I send a GET request:    /carts?include=cart-rules
+    When I send a GET request:    /carts/${cart_id}?include=cart-rules
     Then Response status code should be:    200
     And Response reason should be:    OK
-    And Response body parameter should be:    [data][0][type]    carts
-    And Response body parameter should be:    [data][0][id]   ${cart_id}
-    And Response body parameter should be:    [data][0][attributes][priceMode]    ${mode.gross}
-    And Response body parameter should be:    [data][0][attributes][currency]    ${currency.eur.code}
-    And Response body parameter should be:    [data][0][attributes][store]    ${store.de}
-    And Response body parameter should not be EMPTY:    [data][0][attributes][totals][expenseTotal]
-    And Response body parameter should not be EMPTY:    [data][0][attributes][totals][discountTotal]
-    And Response body parameter should not be EMPTY:    [data][0][attributes][totals][taxTotal]
-    And Response body parameter should not be EMPTY:    [data][0][attributes][totals][subtotal]
-    And Response body parameter should not be EMPTY:    [data][0][attributes][totals][grandTotal]
-    And Response body parameter should not be EMPTY:    [data][0][attributes][totals][priceToPay]
+    And Response body parameter should be:    [data][type]    carts
+    And Response body parameter should be:    [data][id]   ${cart_id}
+    And Response body parameter should be:    [data][attributes][priceMode]    ${mode.gross}
+    And Response body parameter should be:    [data][attributes][currency]    ${currency.eur.code}
+    And Response body parameter should be:    [data][attributes][store]    ${store.de}
+    And Response body parameter should not be EMPTY:    [data][attributes][totals][expenseTotal]
+    And Response body parameter should not be EMPTY:    [data][attributes][totals][discountTotal]
+    And Response body parameter should not be EMPTY:    [data][attributes][totals][taxTotal]
+    And Response body parameter should not be EMPTY:    [data][attributes][totals][subtotal]
+    And Response body parameter should not be EMPTY:    [data][attributes][totals][grandTotal]
+    And Response body parameter should not be EMPTY:    [data][attributes][totals][priceToPay]
     And Response body should contain:    discounts
-    And Response body parameter should be:    [data][0][attributes][discounts][0][displayName]    10% off minimum order
-    And Response body parameter should be:    [data][0][attributes][discounts][0][amount]    3202
-    And Each array element of array in response should contain property with value:    [data][0][relationships][cart-rules][data]    type    cart-rules
-    And Each array element of array in response should contain property:    [data][0][relationships][cart-rules][data]    id
+    And Response body parameter should be:    [data][attributes][discounts][0][displayName]    10% off minimum order
+    ### check discount amount ###
+    And Response body parameter should be:    [data][attributes][discounts][0][amount]    3202
+    And Response body parameter should be:    [data][attributes][totals][discountTotal]    3202
+    ### check grand total with discount ###
+    And Response body parameter should be:    [data][attributes][totals][grandTotal]    28818
+    And Response body parameter should not be EMPTY:    [data][attributes][discounts][0][amount]
+    And Each array element of array in response should contain property with value:    [data][relationships][cart-rules][data]    type    cart-rules
+    And Each array element of array in response should contain property:    [data][relationships][cart-rules][data]    id
     And Response body parameter should be:     [included][0][attributes][amount]    3202
+    And Response body parameter should not be EMPTY:    [included][0][attributes][amount]    
     And Each array element of array in response should contain property with value:    [included]    type    cart-rules
     And Each array element of array in response should contain property:    [included]    id
     And Each array element of array in response should contain property:    [included]    attributes
@@ -361,38 +361,39 @@ Get_cart_with_included_cart_rules
     And Each array element of array in response should contain value:    [included]    discountPromotionAbstractSku
     And Each array element of array in response should contain value:    [included]    discountPromotionQuantity
 
-#No demo data CC-18932
 Get_cart_with_included_promotional_items
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
        ...  AND    I set Headers:    Authorization=${token}
-       ...  AND    Find or create customer cart
-       ...  AND    Cleanup all items in the cart:    ${cart_id}
+       ...  AND    Cleanup all customer carts
+       ...  AND    Create empty customer cart:    ${mode.gross}    ${currency.eur.code}    ${store.de}    promotional
        ...  AND    I send a POST request:    /carts/${cart_id}/items    {"data": {"type": "items","attributes": {"sku": "${concrete_product_with_concrete_product_alternative.sku}", "quantity": "8"}}}
        ...  AND    Response status code should be:    201
-    When I send a GET request:    /carts?include=promotional-items
+    When I send a GET request:    /carts/${cart_id}?include=promotional-items
     Then Response status code should be:    200
     And Response reason should be:    OK
-    And Response body parameter should be:    [data][0][type]    carts
-    And Response body parameter should be:    [data][0][id]   ${cart_id}
-    And Response body parameter should be:    [data][0][attributes][priceMode]    ${mode.gross}
-    And Response body parameter should be:    [data][0][attributes][currency]    ${currency.eur.code}
-    And Response body parameter should be:    [data][0][attributes][store]    ${store.de}
-    And Response body parameter should not be EMPTY:    [data][0][attributes][totals][expenseTotal]
-    And Response body parameter should not be EMPTY:    [data][0][attributes][totals][discountTotal]
-    And Response body parameter should not be EMPTY:    [data][0][attributes][totals][taxTotal]
-    And Response body parameter should not be EMPTY:    [data][0][attributes][totals][subtotal]
-    And Response body parameter should not be EMPTY:    [data][0][attributes][totals][grandTotal]
-    And Response body parameter should not be EMPTY:    [data][0][attributes][totals][priceToPay]
+    And Response body parameter should be:    [data][type]    carts
+    And Response body parameter should be:    [data][id]   ${cart_id}
+    And Response body parameter should be:    [data][attributes][priceMode]    ${mode.gross}
+    And Response body parameter should be:    [data][attributes][currency]    ${currency.eur.code}
+    And Response body parameter should be:    [data][attributes][store]    ${store.de}
+    And Response body parameter should not be EMPTY:    [data][attributes][totals][expenseTotal]
+    And Response body parameter should not be EMPTY:    [data][attributes][totals][discountTotal]
+    And Response body parameter should not be EMPTY:    [data][attributes][totals][taxTotal]
+    And Response body parameter should not be EMPTY:    [data][attributes][totals][subtotal]
+    And Response body parameter should not be EMPTY:    [data][attributes][totals][grandTotal]
+    And Response body parameter should not be EMPTY:    [data][attributes][totals][priceToPay]
     And Response body should contain:    discounts
-    And Response body parameter should be:    [data][0][attributes][discounts][0][displayName]    10% off minimum order
-    And Response body parameter should be:    [data][0][attributes][discounts][0][amount]    6404
-    And Each array element of array in response should contain property with value:    [data][0][relationships][promotional-items][data]    type    promotional-items
-    And Each array element of array in response should contain property:    [data][0][relationships][promotional-items][data]    id
+    And Response body parameter should be:    [data][attributes][discounts][0][displayName]    10% off minimum order
+    And Response body parameter should be:    [data][attributes][discounts][0][amount]    6404
+    And Each array element of array in response should contain property with value:    [data][relationships][promotional-items][data]    type    promotional-items
+    And Each array element of array in response should contain property:    [data][relationships][promotional-items][data]    id
     And Each array element of array in response should contain property with value:    [included]    type    promotional-items
     And Each array element of array in response should contain property:    [included]    id
     And Each array element of array in response should contain property:    [included]    attributes
-    And Response body parameter should be:    [included][0][attributes][sku]    112
+    And Response body parameter should be in:    [included][0][attributes][sku]    068    112
+    And Response body parameter should be in:    [included][1][attributes][sku]    068    112
     And Response body parameter should be:    [included][0][attributes][quantity]    1
+    And Response body parameter should be:    [included][1][attributes][quantity]    1
 
 
 Update_cart_with_existing_name
@@ -425,9 +426,7 @@ Update_cart_with_existing_name
     [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cart_id}
     ...  AND    Response status code should be:    204
 
-
-
-#DELETE requests
+###DELETE requests
 Delete_cart_by_cart_id
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
