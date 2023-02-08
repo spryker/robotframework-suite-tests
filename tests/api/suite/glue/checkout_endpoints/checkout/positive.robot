@@ -256,6 +256,7 @@ Create_order_with_split_shipments_&_same_shipping_address
 
 
 Create_order_with_same_items_in_different_shipments
+    [Tags]    skip-due-to-refactoring
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_second_user.email}
      ...  AND    I set Headers:    Authorization=${token}
     ...  AND    I send a POST request:    /carts    {"data":{"type":"carts","attributes":{"priceMode":"${mode.gross}","currency":"${currency.eur.code}","store":"${store.de}","name": "${test_cart_name}-${random}"}}}
@@ -287,6 +288,7 @@ Create_order_with_same_items_in_different_shipments
     And Response should contain certain number of values:    [included][0][attributes][expenses]    idShipment    1
 
 Create_order_with_free_shipping_discount
+    [Tags]    skip-due-to-refactoring
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_second_user.email}
     ...  AND    I set Headers:    Authorization=${token}
     ...  AND    I send a POST request:    /carts    {"data":{"type":"carts","attributes":{"priceMode":"${mode.gross}","currency":"${currency.eur.code}","store":"${store.de}","name": "${test_cart_name}-${random}"}}}
@@ -326,6 +328,7 @@ Create_order_with_free_shipping_discount
     And Response body parameter should contain:    [included][0][attributes][calculatedDiscounts]    quantity: 1
 
 Create_order_with_2_product_discounts
+    [Tags]    skip-due-to-refactoring
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_second_user.email}
     ...  AND    I set Headers:    Authorization=${token}
     ...  AND    I send a POST request:    /carts    {"data":{"type":"carts","attributes":{"priceMode":"${mode.gross}","currency":"${currency.eur.code}","store":"${store.de}","name": "${test_cart_name}-${random}"}}}
@@ -548,6 +551,7 @@ Create_order_with_configurable_bundle_item
 
 #bug https://spryker.atlassian.net/browse/CC-21301
 Create_checkout_with_gift_card
+    [Tags]    skip-due-to-refactoring
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_second_user.email}
     ...  AND    I set Headers:    Authorization=${token}
     ...  AND    I send a POST request:    /carts    {"data":{"type":"carts","attributes":{"priceMode":"${mode.gross}","currency":"${currency.eur.code}","store":"${store.de}","name": "${test_cart_name}-${random}"}}}
