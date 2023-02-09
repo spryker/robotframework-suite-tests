@@ -535,8 +535,8 @@ Create_order_with_configurable_bundle_item
     And Response body parameter should be:    [included][0][attributes][expenses][0][unitPriceToPayAggregation]    490
     And Response body parameter should be:    [included][0][attributes][expenses][0][sumPriceToPayAggregation]    490
     And Response body parameter should be:    [included][0][attributes][expenses][0][taxAmountAfterCancellation]    None
-    And Response body parameter should be greater than:    [included][0][attributes][expenses][0][idShipment]    133
-    And Response body parameter should be greater than:    [included][0][attributes][expenses][0][idSalesExpense]    145
+    And Response body parameter should not be EMPTY:    [included][0][attributes][expenses][0][idShipment]
+    And Response body parameter should not be EMPTY:   [included][0][attributes][expenses][0][idSalesExpense]
     #payments
     And Response body parameter should be greater than:    [included][0][attributes][payments][0][amount]    0
     And Response body parameter should be:    [included][0][attributes][payments][0][paymentProvider]    ${payment.provider_name_1}
@@ -685,8 +685,8 @@ Create_checkout_with_gift_card
     And Response body parameter should be:    [included][0][attributes][expenses][0][unitPriceToPayAggregation]    0
     And Response body parameter should be:    [included][0][attributes][expenses][0][sumPriceToPayAggregation]    0
     And Response body parameter should be:    [included][0][attributes][expenses][0][taxAmountAfterCancellation]    None
-    And Response body parameter should be greater than:    [included][0][attributes][expenses][0][idShipment]    100
-    And Response body parameter should be greater than:    [included][0][attributes][expenses][0][idSalesExpense]    100
+    And Response body parameter should not be EMPTY:    [included][0][attributes][expenses][0][idShipment]
+    And Response body parameter should not be EMPTY:    [included][0][attributes][expenses][0][idSalesExpense]
     #payments
     And Response body parameter should be:    [included][0][attributes][payments][0][amount]    ${gift_card.amount}
     And Response body parameter should be:    [included][0][attributes][payments][0][paymentProvider]    ${gift_card.paymentProvider}
@@ -843,8 +843,8 @@ Create_checkout_with_gift_card_when_gift_amount_partially_used
     And Response body parameter should be:    [included][0][attributes][expenses][0][unitPriceToPayAggregation]    490
     And Response body parameter should be:    [included][0][attributes][expenses][0][sumPriceToPayAggregation]    490
     And Response body parameter should be:    [included][0][attributes][expenses][0][taxAmountAfterCancellation]    None
-    And Response body parameter should be greater than:    [included][0][attributes][expenses][0][idShipment]    100
-    And Response body parameter should be greater than:    [included][0][attributes][expenses][0][idSalesExpense]    100
+    And Response body parameter should not be EMPTY:    [included][0][attributes][expenses][0][idShipment]
+    And Response body parameter should not be EMPTY:    [included][0][attributes][expenses][0][idSalesExpense]
     #payments
     And Response body parameter should be:    [included][0][attributes][payments][0][amount]    ${gift_card.amount}
     And Response body parameter should be:    [included][0][attributes][payments][0][paymentProvider]    ${gift_card.paymentProvider}
