@@ -12,6 +12,7 @@ ENABLER
     TestSetup
 
 Get_category_node_is_root_by_id
+    [Documentation]    Step skip due to isse https://spryker.atlassian.net/browse/CC-25961, in response list of categories: https://spryker.atlassian.net/browse/CC-25962
     When I send a GET request:    /category-nodes/${category_node_is_root_id}
     Then Response status code should be:    200
     And Response reason should be:    OK
