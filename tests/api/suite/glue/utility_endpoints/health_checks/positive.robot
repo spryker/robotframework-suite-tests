@@ -1,13 +1,15 @@
 *** Settings ***
 Resource        ../../../../../../resources/common/common_api.robot
+
 Suite Setup     SuiteSetup
 Test Setup      TestSetup
+
 Default Tags    glue
+
 
 *** Test Cases ***
 ENABLER
     TestSetup
-    
 
 # GET requests
 

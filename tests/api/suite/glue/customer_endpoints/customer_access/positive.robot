@@ -1,12 +1,16 @@
 *** Settings ***
-Suite Setup    SuiteSetup
-Test Setup    TestSetup
+Resource        ../../../../../../resources/common/common_api.robot
+
+Suite Setup     SuiteSetup
+Test Setup      TestSetup
+
 Default Tags    glue
-Resource    ../../../../../../resources/common/common_api.robot
+
 
 *** Test Cases ***
 ENABLER
     TestSetup
+
 Resources_list_which_customer_can_access
     I send a GET request:    /customer-access
     Response status code should be:    200
@@ -18,7 +22,7 @@ Resources_list_which_customer_can_access
     And Response body parameter should be:    [data][0][attributes][resourceTypes][1]    wishlist-items
     And Response body has correct self link
 
-Access_restricted_resource_as_authorized_customer   
+Access_restricted_resource_as_authorized_customer
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     ...    AND    I send a POST request:    /wishlists    {"data": {"type": "wishlists","attributes": {"name": "${random}"}}}
@@ -35,4 +39,4 @@ Access_restricted_resource_as_authorized_customer
     And Response body parameter should be:    [data][0][attributes][name]    ${random}
     And Response body has correct self link
     [Teardown]    Run Keywords    I send a DELETE request:    /wishlists/${wishlist_id}
-    ...  AND    Response status code should be:    204
+    ...    AND    Response status code should be:    204

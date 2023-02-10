@@ -1,8 +1,11 @@
 *** Settings ***
-Suite Setup    SuiteSetup
-Test Setup    TestSetup
-Resource    ../../../../../../resources/common/common_api.robot
+Resource        ../../../../../../resources/common/common_api.robot
+
+Suite Setup     SuiteSetup
+Test Setup      TestSetup
+
 Default Tags    glue
+
 
 *** Test Cases ***
 ENABLER
@@ -10,7 +13,9 @@ ENABLER
 
 Create_guest_cart
     [Setup]    I set Headers:    Content-Type=${default_header_content_type}    X-Anonymous-Customer-Unique-Id=${random}
-    When I send a POST request:    /guest-cart-items    {"data": {"type": "guest-cart-items","attributes": {"sku": "${concrete_product_with_concrete_product_alternative.sku}","quantity": 1}}}
+    When I send a POST request:
+    ...    /guest-cart-items
+    ...    {"data": {"type": "guest-cart-items","attributes": {"sku": "${concrete_product_with_concrete_product_alternative.sku}","quantity": 1}}}
     Then Response status code should be:    201
     And Response reason should be:    Created
     And Response body parameter should be:    [data][type]    guest-carts
@@ -32,15 +37,42 @@ Retrieve_guest_cart
     And Response reason should be:    OK
     And Each array element of array in response should contain value:    [data]    guest-carts
     And Each array element of array in response should contain nested property with datatype:    [data]    id    str
-    And Each array element of array in response should contain nested property with value:    [data]    [attributes][priceMode]    ${mode.gross}
-    And Each array element of array in response should contain nested property with value:    [data]    [attributes][currency]    ${currency.eur.code}
-    And Each array element of array in response should contain nested property with value:    [data]    [attributes][store]    ${store.de}
-    And Each array element of array in response should contain nested property with datatype:    [data]    [attributes][totals][expenseTotal]    int
-    And Each array element of array in response should contain nested property with datatype:    [data]    [attributes][totals][discountTotal]    int
-    And Each array element of array in response should be greater than:    [data]    [attributes][totals][taxTotal]    0    
-    And Each array element of array in response should be greater than:    [data]    [attributes][totals][subtotal]    0    
-    And Each array element of array in response should be greater than:    [data]    [attributes][totals][grandTotal]    0    
-    And Each array element of array in response should be greater than:    [data]    [attributes][totals][priceToPay]    0      
+    And Each array element of array in response should contain nested property with value:
+    ...    [data]
+    ...    [attributes][priceMode]
+    ...    ${mode.gross}
+    And Each array element of array in response should contain nested property with value:
+    ...    [data]
+    ...    [attributes][currency]
+    ...    ${currency.eur.code}
+    And Each array element of array in response should contain nested property with value:
+    ...    [data]
+    ...    [attributes][store]
+    ...    ${store.de}
+    And Each array element of array in response should contain nested property with datatype:
+    ...    [data]
+    ...    [attributes][totals][expenseTotal]
+    ...    int
+    And Each array element of array in response should contain nested property with datatype:
+    ...    [data]
+    ...    [attributes][totals][discountTotal]
+    ...    int
+    And Each array element of array in response should be greater than:
+    ...    [data]
+    ...    [attributes][totals][taxTotal]
+    ...    0
+    And Each array element of array in response should be greater than:
+    ...    [data]
+    ...    [attributes][totals][subtotal]
+    ...    0
+    And Each array element of array in response should be greater than:
+    ...    [data]
+    ...    [attributes][totals][grandTotal]
+    ...    0
+    And Each array element of array in response should be greater than:
+    ...    [data]
+    ...    [attributes][totals][priceToPay]
+    ...    0
 
 Retrieve_guest_cart_by_id
     [Setup]    Create a guest cart:    ${random}    ${concrete_product_with_concrete_product_alternative.sku}    7
@@ -69,10 +101,20 @@ Retrieve_guest_cart_including_cart_items
     And Response body parameter should be:    [data][attributes][priceMode]    ${mode.gross}
     And Response body parameter should be:    [data][attributes][currency]    ${currency.eur.code}
     And Response body parameter should be:    [data][attributes][store]    ${store.de}
-    And Response body parameter should be:    [data][relationships][guest-cart-items][data][0][type]    guest-cart-items
-    And Response body parameter should contain:    [data][relationships][guest-cart-items][data][0][id]    ${concrete_product_with_concrete_product_alternative.sku}
-    And Each array element of array in response should contain nested property with value:    [included]    type    guest-cart-items
-    And Each array element of array in response should contain nested property with datatype:    [included]    id    str
+    And Response body parameter should be:
+    ...    [data][relationships][guest-cart-items][data][0][type]
+    ...    guest-cart-items
+    And Response body parameter should contain:
+    ...    [data][relationships][guest-cart-items][data][0][id]
+    ...    ${concrete_product_with_concrete_product_alternative.sku}
+    And Each array element of array in response should contain nested property with value:
+    ...    [included]
+    ...    type
+    ...    guest-cart-items
+    And Each array element of array in response should contain nested property with datatype:
+    ...    [included]
+    ...    id
+    ...    str
     And Response should contain the array of a certain size:    [included]    1
     And Each array element of array in response should contain property:    [included]    id
     And Each array element of array in response should contain property:    [included]    attributes
@@ -94,11 +136,15 @@ Retrieve_guest_cart_including_cart_items
     And Each array element of array in response should contain value:    [included]    sumTaxAmountFullAggregation
     And Each array element of array in response should contain value:    [included]    sumSubtotalAggregation
     And Each array element of array in response should contain value:    [included]    unitSubtotalAggregation
-    And Each array element of array in response should contain value:    [included]    unitProductOptionPriceAggregation
+    And Each array element of array in response should contain value:
+    ...    [included]
+    ...    unitProductOptionPriceAggregation
     And Each array element of array in response should contain value:    [included]    sumProductOptionPriceAggregation
     And Each array element of array in response should contain value:    [included]    unitDiscountAmountAggregation
     And Each array element of array in response should contain value:    [included]    sumDiscountAmountAggregation
-    And Each array element of array in response should contain value:    [included]    unitDiscountAmountFullAggregation
+    And Each array element of array in response should contain value:
+    ...    [included]
+    ...    unitDiscountAmountFullAggregation
     And Each array element of array in response should contain value:    [included]    sumDiscountAmountFullAggregation
     And Each array element of array in response should contain value:    [included]    unitPriceToPayAggregation
     And Each array element of array in response should contain value:    [included]    sumPriceToPayAggregation
@@ -114,8 +160,13 @@ Retrieve_guest_cart_including_cart_rules
     And Response body parameter should be:    [data][attributes][priceMode]    ${mode.gross}
     And Response body parameter should be:    [data][attributes][currency]    ${currency.eur.code}
     And Response body parameter should be:    [data][attributes][store]    ${store.de}
-    And Each array element of array in response should contain property with value:    [data][relationships][cart-rules][data]    type    cart-rules
-    And Each array element of array in response should contain property:    [data][relationships][cart-rules][data]    id
+    And Each array element of array in response should contain property with value:
+    ...    [data][relationships][cart-rules][data]
+    ...    type
+    ...    cart-rules
+    And Each array element of array in response should contain property:
+    ...    [data][relationships][cart-rules][data]
+    ...    id
     And Each array element of array in response should contain property with value:    [included]    type    cart-rules
     And Each array element of array in response should contain property:    [included]    id
     And Each array element of array in response should contain property:    [included]    attributes
@@ -130,9 +181,11 @@ Retrieve_guest_cart_including_cart_rules
     And Each array element of array in response should contain value:    [included]    discountPromotionQuantity
 
 Update_guest_cart_with_all_attributes
-      [Setup]    Run Keywords    Create a guest cart:    ${random}    ${concrete_product_with_concrete_product_alternative.sku}    1
-            ...   AND    I set Headers:     X-Anonymous-Customer-Unique-Id=${x_anonymous_customer_unique_id}
-    When I send a PATCH request:    /guest-carts/${guest_cart_id}    {"data": {"type": "guest-carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}"}}}
+    [Setup]    Run Keywords    Create a guest cart:    ${random}    ${concrete_product_with_concrete_product_alternative.sku}    1
+    ...    AND    I set Headers:    X-Anonymous-Customer-Unique-Id=${x_anonymous_customer_unique_id}
+    When I send a PATCH request:
+    ...    /guest-carts/${guest_cart_id}
+    ...    {"data": {"type": "guest-carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}"}}}
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response body parameter should be:    [data][type]    guest-carts
@@ -149,9 +202,11 @@ Update_guest_cart_with_all_attributes
     And Response body has correct self link internal
 
 Update_guest_cart_with_empty_priceMod_currency_store
-      [Setup]    Run Keywords    Create a guest cart:    ${random}    ${concrete_product_with_concrete_product_alternative.sku}    1
-            ...   AND    I set Headers:     X-Anonymous-Customer-Unique-Id=${x_anonymous_customer_unique_id}
-    When I send a PATCH request:    /guest-carts/${guest_cart_id}    {"data": {"type": "guest-carts","attributes": {"priceMode": "","currency": "","store": ""}}}
+    [Setup]    Run Keywords    Create a guest cart:    ${random}    ${concrete_product_with_concrete_product_alternative.sku}    1
+    ...    AND    I set Headers:    X-Anonymous-Customer-Unique-Id=${x_anonymous_customer_unique_id}
+    When I send a PATCH request:
+    ...    /guest-carts/${guest_cart_id}
+    ...    {"data": {"type": "guest-carts","attributes": {"priceMode": "","currency": "","store": ""}}}
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response body parameter should be:    [data][type]    guest-carts
@@ -169,14 +224,14 @@ Update_guest_cart_with_empty_priceMod_currency_store
 
 Convert_guest_cart_to_customer_cart
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
-        ...    AND    I set Headers:    Authorization=${token}
-        ...    AND    Cleanup all customer carts
-        ...    AND    Find or create customer cart
-        ...    AND    Cleanup all items in the cart:    ${cart_id}
-        ...    AND    Create a guest cart:    ${random}-convert-guest-cart    ${concrete_product_with_concrete_product_alternative.sku}    1
-        ...    AND    I set Headers:     X-Anonymous-Customer-Unique-Id=${x_anonymous_customer_unique_id}
-        ...    AND    I get access token for the customer:    ${yves_user.email}
-        ...    AND    I set Headers:    Authorization=${token}
+    ...    AND    I set Headers:    Authorization=${token}
+    ...    AND    Cleanup all customer carts
+    ...    AND    Find or create customer cart
+    ...    AND    Cleanup all items in the cart:    ${cart_id}
+    ...    AND    Create a guest cart:    ${random}-convert-guest-cart    ${concrete_product_with_concrete_product_alternative.sku}    1
+    ...    AND    I set Headers:    X-Anonymous-Customer-Unique-Id=${x_anonymous_customer_unique_id}
+    ...    AND    I get access token for the customer:    ${yves_user.email}
+    ...    AND    I set Headers:    Authorization=${token}
     When I send a GET request:    /carts?include=items
     Then Response status code should be:    200
     And Response reason should be:    OK
@@ -185,12 +240,24 @@ Convert_guest_cart_to_customer_cart
     And Each array element of array in response should contain nested property:    [data]    [attributes]    priceMode
     And Each array element of array in response should contain nested property:    [data]    [attributes]    currency
     And Each array element of array in response should contain nested property:    [data]    [attributes]    store
-    And Each array element of array in response should contain nested property with datatype:    [data]    [attributes][totals][expenseTotal]    int
-    And Each array element of array in response should contain nested property with datatype:    [data]    [attributes][totals][discountTotal]    int
+    And Each array element of array in response should contain nested property with datatype:
+    ...    [data]
+    ...    [attributes][totals][expenseTotal]
+    ...    int
+    And Each array element of array in response should contain nested property with datatype:
+    ...    [data]
+    ...    [attributes][totals][discountTotal]
+    ...    int
     And Each array element of array in response should contain nested property:    [data]    [attributes]    taxTotal
     And Each array element of array in response should contain nested property:    [data]    [attributes]    subtotal
     And Each array element of array in response should contain nested property:    [data]    [attributes]    grandTotal
     And Each array element of array in response should contain nested property:    [data]    [attributes]    priceToPay
-    And Each array element of array in response should contain nested property with value:    [included]    type    items
+    And Each array element of array in response should contain nested property with value:
+    ...    [included]
+    ...    type
+    ...    items
     And Each array element of array in response should contain nested property:    [included]    [attributes]    sku
-    And Each array element of array in response should contain nested property:    [included]    [attributes]    quantity
+    And Each array element of array in response should contain nested property:
+    ...    [included]
+    ...    [attributes]
+    ...    quantity

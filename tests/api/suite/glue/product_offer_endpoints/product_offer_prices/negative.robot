@@ -1,8 +1,11 @@
 *** Settings ***
-Resource    ../../../../../../resources/common/common_api.robot
-Suite Setup    SuiteSetup
-Test Setup    TestSetup
+Resource        ../../../../../../resources/common/common_api.robot
+
+Suite Setup     SuiteSetup
+Test Setup      TestSetup
+
 Default Tags    glue
+
 
 *** Test Cases ***
 ENABLER
@@ -22,7 +25,7 @@ Get_product_offers_price_without_complete_url
     And Response reason should be:    Bad Request
     And Response should return error message:    Product offer ID is not specified.
 
-Get_not_existing_concrete_product_offers_price   
+Get_not_existing_concrete_product_offers_price
     When I send a GET request:    /concrete-products/123456789/product-offers?include=product-offer-prices
     Then Response status code should be:    200
     And Response reason should be:    OK
@@ -48,13 +51,12 @@ Get_product_offer_with_volume_prices_included_for_waiting_for_approval_product_o
 
 Get_product_offer_with_volume_prices_included_for_denied_product_offer
     [Documentation]    Skip due to issue https://spryker.atlassian.net/browse/CC-25738
-    [Tags]    skip-due-to-issue    
+    [Tags]    skip-due-to-issue
     When I send a GET request:    /product-offers/${denied_offer_with_volume_price}/product-offer-prices
     Then Response status code should be:    404
     And Response should return error code:    3701
     And Response reason should be:    Not Found
-    And Response should return error message:    Product offer not found. 
-
+    And Response should return error message:    Product offer not found.
 
 Get_product_offer_prices_with_invaild_offer_id
     [Documentation]    Skip due to issue https://spryker.atlassian.net/browse/CC-25738

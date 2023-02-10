@@ -1,8 +1,11 @@
 *** Settings ***
-Suite Setup       SuiteSetup
-Test Setup    TestSetup
-Resource    ../../../../../../resources/common/common_api.robot
+Resource        ../../../../../../resources/common/common_api.robot
+
+Suite Setup     SuiteSetup
+Test Setup      TestSetup
+
 Default Tags    glue
+
 
 *** Test Cases ***
 ENABLER
@@ -12,7 +15,9 @@ Refresh_access_token_for_customer
     [Setup]    Run Keywords    I send a POST request:    /access-tokens    {"data":{"type":"access-tokens","attributes":{"username":"${yves_user.email}","password":"${yves_user.password}"}}}
     ...    AND    Response status code should be:    201
     ...    AND    Save value to a variable:    [data][attributes][refreshToken]    refresh_token
-    When I send a POST request:    /refresh-tokens    {"data": {"type": "refresh-tokens","attributes": {"refreshToken": "${refresh_token}"}}}
+    When I send a POST request:
+    ...    /refresh-tokens
+    ...    {"data": {"type": "refresh-tokens","attributes": {"refreshToken": "${refresh_token}"}}}
     Then Response status code should be:    201
     And Response reason should be:    Created
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
@@ -35,4 +40,3 @@ Delete_refresh_token_for_customer
     And I send a DELETE request:    /refresh-tokens/${refresh_token}
     Then Response status code should be:    204
     And Response reason should be:    No Content
-

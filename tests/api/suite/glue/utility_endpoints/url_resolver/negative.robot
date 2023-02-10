@@ -1,13 +1,16 @@
 *** Settings ***
-Suite Setup       SuiteSetup
-Resource    ../../../../../../resources/common/common_api.robot
-Test Setup        TestSetup
+Resource        ../../../../../../resources/common/common_api.robot
+
+Suite Setup     SuiteSetup
+Test Setup      TestSetup
+
 Default Tags    glue
+
 
 *** Test Cases ***
 ENABLER
     TestSetup
-        
+
 Get_url_collection_by_empty_url
     When I send a GET request:    /url-resolver
     Then Response status code should be:    422

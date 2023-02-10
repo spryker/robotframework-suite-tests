@@ -1,13 +1,16 @@
 *** Settings ***
-Suite Setup       SuiteSetup
-Test Setup        TestSetup
-Resource    ../../../../../../resources/common/common_api.robot
+Resource        ../../../../../../resources/common/common_api.robot
+
+Suite Setup     SuiteSetup
+Test Setup      TestSetup
+
 Default Tags    glue
+
 
 *** Test Cases ***
 ENABLER
     TestSetup
-    
+
 Get_bundled_products_with_nonexisting_concrete_sku
     [Documentation]    bug: https://spryker.atlassian.net/browse/CC-15994
     [Tags]    skip-due-to-issue

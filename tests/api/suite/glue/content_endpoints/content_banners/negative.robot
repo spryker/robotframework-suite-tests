@@ -1,12 +1,16 @@
 *** Settings ***
-Suite Setup    SuiteSetup
-Test Setup     TestSetup
-Resource    ../../../../../../resources/common/common_api.robot
+Resource        ../../../../../../resources/common/common_api.robot
+
+Suite Setup     SuiteSetup
+Test Setup      TestSetup
+
 Default Tags    glue
+
 
 *** Test Cases ***
 ENABLER
     TestSetup
+
 Get_banner_without_id
     When I send a GET request:    /content-banners
     Then Response status code should be:    400

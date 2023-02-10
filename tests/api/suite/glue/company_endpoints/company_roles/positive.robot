@@ -10,6 +10,7 @@ Default Tags    glue
 *** Test Cases ***
 ENABLER
     TestSetup
+
 Request_company_role_by_id
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}

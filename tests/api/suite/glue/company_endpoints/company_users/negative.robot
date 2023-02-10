@@ -1,8 +1,11 @@
 *** Settings ***
-Resource    ../../../../../../resources/common/common_api.robot
-Suite Setup    SuiteSetup
-Test Setup    TestSetup
+Resource        ../../../../../../resources/common/common_api.robot
+
+Suite Setup     SuiteSetup
+Test Setup      TestSetup
+
 Default Tags    glue
+
 
 *** Test Cases ***
 ENABLER
@@ -15,9 +18,8 @@ Retrieve_list_of_company_users_without_access_token
     And Response should return error code:    002
     And Response should return error message:    Missing access token.
 
-
 Retrieve_list_of_company_users_by_user_without_admin_role
-    [Documentation]    bug  https://spryker.atlassian.net/browse/CC-16616
+    [Documentation]    bug    https://spryker.atlassian.net/browse/CC-16616
     [Tags]    skip-due-to-issue
     When I get access token for the customer:    ${yves_shared_shopping_list_user.email}
     And I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
@@ -50,4 +52,5 @@ Retrieve_user_who_doesn't_belong_to_company
     Then Response status code should be:    403
     And Response reason should be:    Forbidden
     And Response should return error code:    1403
-    And Response should return error message:    Current company user is not set. You need to select the current company user with \/company-user-access-tokens in order to access the resource collection.
+    And Response should return error message:
+    ...    Current company user is not set. You need to select the current company user with \/company-user-access-tokens in order to access the resource collection.

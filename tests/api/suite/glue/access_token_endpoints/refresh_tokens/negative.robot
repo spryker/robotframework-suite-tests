@@ -1,30 +1,40 @@
 *** Settings ***
-Suite Setup       SuiteSetup
-Test Setup    TestSetup
-Resource    ../../../../../../resources/common/common_api.robot
+Resource        ../../../../../../resources/common/common_api.robot
+
+Suite Setup     SuiteSetup
+Test Setup      TestSetup
+
 Default Tags    glue
+
 
 *** Test Cases ***
 ENABLER
     TestSetup
 #######POST#######
+
 Refresh_token_with_access_token
     [Setup]    I get access token for the customer:    ${yves_user.email}
-    When I send a POST request:    /refresh-tokens    {"data": {"type": "refresh-tokens","attributes": {"refreshToken": "${token}"}}}
+    When I send a POST request:
+    ...    /refresh-tokens
+    ...    {"data": {"type": "refresh-tokens","attributes": {"refreshToken": "${token}"}}}
     And Response status code should be:    401
     And Response reason should be:    Unauthorized
     And Response should return error code:    004
     And Response should return error message:    Failed to refresh token.
 
 Refresh_token_with_invalid_refresh_token
-    When I send a POST request:    /refresh-tokens    {"data": {"type": "refresh-tokens","attributes": {"refreshToken": "faketoken"}}}
+    When I send a POST request:
+    ...    /refresh-tokens
+    ...    {"data": {"type": "refresh-tokens","attributes": {"refreshToken": "faketoken"}}}
     And Response status code should be:    401
     And Response reason should be:    Unauthorized
     And Response should return error code:    004
     And Response should return error message:    Failed to refresh token.
 
 Refresh_token_with_empty_refresh_token
-    When I send a POST request:    /refresh-tokens    {"data": {"type": "refresh-tokens","attributes": {"refreshToken": ""}}}
+    When I send a POST request:
+    ...    /refresh-tokens
+    ...    {"data": {"type": "refresh-tokens","attributes": {"refreshToken": ""}}}
     And Response status code should be:    422
     And Response reason should be:    Unprocessable Content
     And Response should return error code:    901
@@ -34,7 +44,9 @@ Refresh_token_with_invalid_type
     [Setup]    Run Keywords    I send a POST request:    /access-tokens    {"data":{"type":"access-tokens","attributes":{"username":"${yves_user.email}","password":"${yves_user.password}"}}}
     ...    AND    Response status code should be:    201
     ...    AND    Save value to a variable:    [data][attributes][refreshToken]    refresh_token
-    When I send a POST request:    /refresh-tokens    {"data": {"type": "access-tokens","attributes": {"refreshToken": "${refresh_token}"}}}
+    When I send a POST request:
+    ...    /refresh-tokens
+    ...    {"data": {"type": "access-tokens","attributes": {"refreshToken": "${refresh_token}"}}}
     And Response status code should be:    400
     And Response reason should be:    Bad Request
     And Response should return error message:    Invalid type.
@@ -47,13 +59,16 @@ Refresh_token_with_deleted_refresh_token
     ...    AND    I set Headers:    Authorization=Bearer ${access_token}
     ...    AND    I send a DELETE request:    /refresh-tokens/${refresh_token}
     ...    AND    Response status code should be:    204
-    And I send a POST request:    /refresh-tokens    {"data": {"type": "refresh-tokens","attributes": {"refreshToken": "${refresh_token}"}}}
+    And I send a POST request:
+    ...    /refresh-tokens
+    ...    {"data": {"type": "refresh-tokens","attributes": {"refreshToken": "${refresh_token}"}}}
     And Response status code should be:    401
     And Response reason should be:    Unauthorized
     And Response should return error message:    Failed to refresh token.
 
 #######DELETE#######
-# Spryker is designed so removing non-existent refresh token will return 204 for security reasons   
+# Spryker is designed so removing non-existent refresh token will return 204 for security reasons
+
 Delete_refresh_token_with_invalid_refresh_token
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}
@@ -80,6 +95,7 @@ Delete_refresh_token_with_no_access_token
     And Response should return error message:    Missing access token.
 
 # Spryker is designed so that deleting will return 204, but the token will not be removed and can be used (done for security reasons)
+
 Delete_refresh_token_for_another_user
     [Setup]    Run Keywords    I send a POST request:    /access-tokens    {"data":{"type":"access-tokens","attributes":{"username":"${yves_user.email}","password":"${yves_user.password}"}}}
     ...    AND    Response status code should be:    201
@@ -91,7 +107,8 @@ Delete_refresh_token_for_another_user
     Then Response status code should be:    204
     And Response reason should be:    No Content
     And I set Headers:    Authorization=Bearer ${access_token}
-    And I send a POST request:    /refresh-tokens    {"data": {"type": "refresh-tokens","attributes": {"refreshToken": "${refresh_token}"}}}
+    And I send a POST request:
+    ...    /refresh-tokens
+    ...    {"data": {"type": "refresh-tokens","attributes": {"refreshToken": "${refresh_token}"}}}
     And Response status code should be:    201
     And Response reason should be:    Created
-

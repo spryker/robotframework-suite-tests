@@ -1,13 +1,16 @@
 *** Settings ***
-Suite Setup       SuiteSetup
-Test Setup        TestSetup
-Resource    ../../../../../../resources/common/common_api.robot
+Resource        ../../../../../../resources/common/common_api.robot
+
+Suite Setup     SuiteSetup
+Test Setup      TestSetup
+
 Default Tags    glue
+
 
 *** Test Cases ***
 ENABLER
     TestSetup
-    
+
 Get_product_label_with_invalid_label_id
     When I send a GET request:    /product-labels/fake
     Then Response status code should be:    404

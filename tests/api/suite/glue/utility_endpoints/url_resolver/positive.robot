@@ -1,8 +1,11 @@
 *** Settings ***
-Suite Setup       SuiteSetup
-Resource    ../../../../../../resources/common/common_api.robot
-Test Setup        TestSetup
+Resource        ../../../../../../resources/common/common_api.robot
+
+Suite Setup     SuiteSetup
+Test Setup      TestSetup
+
 Default Tags    glue
+
 
 *** Test Cases ***
 ENABLER
@@ -15,9 +18,11 @@ Get_url_collections_by_url_paramater_of_category_nodes
     And Array in response should contain property with value:    [data]    type    url-resolver
     And Response body parameter should be:    [data][0][id]    None
     And Each array element of array in response should contain property:    [data]    attributes
-    And Response body parameter should be:    [data][0][attributes][entityType]    ${url_resolver_category_nodes_entity}
+    And Response body parameter should be:
+    ...    [data][0][attributes][entityType]
+    ...    ${url_resolver_category_nodes_entity}
     And Response body parameter should be:    [data][0][attributes][entityId]    ${url_resolver_category_nodes_id}
-    And Each array element of array in response should contain nested property:    [data]     links    self
+    And Each array element of array in response should contain nested property:    [data]    links    self
     And Response body has correct self link
 
 Get_url_collections_by_url_paramater_of_product
@@ -29,7 +34,7 @@ Get_url_collections_by_url_paramater_of_product
     And Each array element of array in response should contain property:    [data]    attributes
     And Response body parameter should be:    [data][0][attributes][entityType]    ${url_resolver_product_entity}
     And Response body parameter should be:    [data][0][attributes][entityId]    ${url_resolver_product_id}
-    And Each array element of array in response should contain nested property:    [data]     links    self
+    And Each array element of array in response should contain nested property:    [data]    links    self
     And Response body has correct self link
 
 Get_url_collections_by_url_paramater_of_cms_page
@@ -41,7 +46,7 @@ Get_url_collections_by_url_paramater_of_cms_page
     And Each array element of array in response should contain property:    [data]    attributes
     And Response body parameter should be:    [data][0][attributes][entityType]    ${url_resolver_cms_entity}
     And Response body parameter should be:    [data][0][attributes][entityId]    ${url_resolver_cms_id}
-    And Each array element of array in response should contain nested property:    [data]     links    self
+    And Each array element of array in response should contain nested property:    [data]    links    self
     And Response body has correct self link
 
 Get_url_collections_by_url_paramater_of_merchant_page
@@ -53,5 +58,5 @@ Get_url_collections_by_url_paramater_of_merchant_page
     And Each array element of array in response should contain property:    [data]    attributes
     And Response body parameter should be:    [data][0][attributes][entityType]    ${url_resolver_merchant_entity}
     And Response body parameter should be:    [data][0][attributes][entityId]    ${url_resolver_merchant_id}
-    And Each array element of array in response should contain nested property:    [data]     links    self
+    And Each array element of array in response should contain nested property:    [data]    links    self
     And Response body has correct self link

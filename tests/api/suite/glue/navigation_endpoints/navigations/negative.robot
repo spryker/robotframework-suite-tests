@@ -1,12 +1,16 @@
 *** Settings ***
-Suite Setup    SuiteSetup
-Test Setup    TestSetup
+Resource        ../../../../../../resources/common/common_api.robot
+
+Suite Setup     SuiteSetup
+Test Setup      TestSetup
+
 Default Tags    glue
-Resource    ../../../../../../resources/common/common_api.robot
+
 
 *** Test Cases ***
 ENABLER
     TestSetup
+
 Get_navigations_by_non_exist_id
     When I send a GET request:    /navigations/testNonExistNavigations
     Then Response status code should be:    404

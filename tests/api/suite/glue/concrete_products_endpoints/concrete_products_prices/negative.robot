@@ -1,12 +1,16 @@
 *** Settings ***
-Suite Setup       SuiteSetup
-Default Tags      glue
-Test Setup        TestSetup
-Resource    ../../../../../../resources/common/common_api.robot
+Resource        ../../../../../../resources/common/common_api.robot
+
+Suite Setup     SuiteSetup
+Test Setup      TestSetup
+
+Default Tags    glue
+
 
 *** Test Cases ***
 ENABLER
     TestSetup
+
 Get_product_prices_with_abstract_sku
     When I send a GET request:    /concrete-products/${bundle_product.abstract.product_2_sku}/concrete-product-prices
     Then Response status code should be:    404
@@ -15,7 +19,6 @@ Get_product_prices_with_abstract_sku
     And Response should return error message:    Can`t find concrete product prices.
 
 Get_product_prices_with_empty_SKU
-
     When I send a GET request:    /concrete-products//concrete-product-prices
     Then Response status code should be:    400
     And Response reason should be:    Bad Request
@@ -27,18 +30,17 @@ Get_product_prices_with_special_characters
     Then Response status code should be:    404
     And Response reason should be:    Not Found
     And Response should return error code:    302
-    And Response should return error message:     Concrete product is not found.
+    And Response should return error message:    Concrete product is not found.
 
 Get_product_prices_by_concrete_sku_product_doesn't_exist
     When I send a GET request:    /concrete-products/4567890/concrete-product-prices
     Then Response status code should be:    404
     And Response reason should be:    Not Found
     And Response should return error code:    308
-    And Response should return error message:     Can`t find concrete product prices.
-
-
+    And Response should return error message:    Can`t find concrete product prices.
 
 Request_URL_type_is_wrong
-    When I send a GET request:    /concrete-product/${concrete_product.product_with_original_prices.concrete_sku}/concrete-product-prices
+    When I send a GET request:
+    ...    /concrete-product/${concrete_product.product_with_original_prices.concrete_sku}/concrete-product-prices
     Then Response status code should be:    404
-    And Response should return error message:     Not Found
+    And Response should return error message:    Not Found

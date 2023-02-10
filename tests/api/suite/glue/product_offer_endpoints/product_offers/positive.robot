@@ -1,8 +1,11 @@
 *** Settings ***
-Resource    ../../../../../../resources/common/common_api.robot
-Suite Setup    SuiteSetup
-Test Setup    TestSetup
+Resource        ../../../../../../resources/common/common_api.robot
+
+Suite Setup     SuiteSetup
+Test Setup      TestSetup
+
 Default Tags    glue
+
 
 *** Test Cases ***
 ENABLER
@@ -15,7 +18,8 @@ Get_concrete_product_without_offers
     And Response should contain the array of a certain size:    [data]    0
 
 Get_all_concrete_product_offer_info_with_product_offer_prices_and_product_offer_availabilities_and_merchants_included
-    When I send a GET request:    /concrete-products/${abstract_product.product_with_concrete_offers.concrete_sku}/product-offers?include=product-offer-prices,product-offer-availabilities,merchants
+    When I send a GET request:
+    ...    /concrete-products/${abstract_product.product_with_concrete_offers.concrete_sku}/product-offers?include=product-offer-prices,product-offer-availabilities,merchants
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
@@ -38,14 +42,17 @@ Get_all_concrete_product_offer_info_with_product_offer_prices_and_product_offer_
 Get_all_product_offer_info_with_product_offer_prices_and_product_offer_availabilities_and_merchants_included
     [Documentation]    bug: https://spryker.atlassian.net/browse/CC-25906
     [Tags]    skip-due-to-issue
-    When I send a GET request:    /product-offers/${offer_with_merchant_sku}?include=product-offer-prices,product-offer-availabilities,merchants
+    When I send a GET request:
+    ...    /product-offers/${offer_with_merchant_sku}?include=product-offer-prices,product-offer-availabilities,merchants
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response body parameter should be:    [data][id]    ${offer_with_merchant_sku}
     And Response body parameter should be:    [data][type]    product-offers
     And Response body parameter should be in:    [data][attributes][isDefault]    True    False
-    And Response body parameter should be:    [data][attributes][merchantReference]    ${merchants.spryker.merchant_reference}
+    And Response body parameter should be:
+    ...    [data][attributes][merchantReference]
+    ...    ${merchants.spryker.merchant_reference}
     And Response body parameter should not be EMPTY:    [data][links][self]
     And Response body parameter should be greater than:    [data][attributes][merchantSku]    1
     And Response should contain the array of a certain size:    [included]    3
@@ -72,9 +79,15 @@ Get_product_offer_with_gross_eur
     And Response body parameter should be:    [included][0][attributes][prices][0][netAmount]    None
     And Response body parameter should be greater than:    [included][0][attributes][prices][0][grossAmount]    0
     And Response should contain the array of a certain size:    [included][0][attributes][prices][0][currency]    3
-    And Response body parameter should be:    [included][0][attributes][prices][0][currency][code]    ${currency.eur.code}
-    And Response body parameter should be:    [included][0][attributes][prices][0][currency][name]    ${currency.eur.name}
-    And Response body parameter should be:    [included][0][attributes][prices][0][currency][symbol]    ${currency.eur.symbol}
+    And Response body parameter should be:
+    ...    [included][0][attributes][prices][0][currency][code]
+    ...    ${currency.eur.code}
+    And Response body parameter should be:
+    ...    [included][0][attributes][prices][0][currency][name]
+    ...    ${currency.eur.name}
+    And Response body parameter should be:
+    ...    [included][0][attributes][prices][0][currency][symbol]
+    ...    ${currency.eur.symbol}
 
 Get_product_offer_with_net_eur
     When I send a GET request:    /product-offers/${active_offer}?include=product-offer-prices&priceMode=${mode.net}
@@ -91,12 +104,19 @@ Get_product_offer_with_net_eur
     And Response body parameter should be:    [included][0][attributes][prices][0][grossAmount]    None
     And Response body parameter should be greater than:    [included][0][attributes][prices][0][netAmount]    1
     And Response should contain the array of a certain size:    [included][0][attributes][prices][0][currency]    3
-    And Response body parameter should be:    [included][0][attributes][prices][0][currency][code]    ${currency.eur.code}
-    And Response body parameter should be:    [included][0][attributes][prices][0][currency][name]    ${currency.eur.name}
-    And Response body parameter should be:    [included][0][attributes][prices][0][currency][symbol]    ${currency.eur.symbol}
+    And Response body parameter should be:
+    ...    [included][0][attributes][prices][0][currency][code]
+    ...    ${currency.eur.code}
+    And Response body parameter should be:
+    ...    [included][0][attributes][prices][0][currency][name]
+    ...    ${currency.eur.name}
+    And Response body parameter should be:
+    ...    [included][0][attributes][prices][0][currency][symbol]
+    ...    ${currency.eur.symbol}
 
 Get_product_offer_with_gross_chf
-    When I send a GET request:    /product-offers/${active_offer}?include=product-offer-prices&currency=${currency.chf.code}
+    When I send a GET request:
+    ...    /product-offers/${active_offer}?include=product-offer-prices&currency=${currency.chf.code}
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
@@ -110,12 +130,19 @@ Get_product_offer_with_gross_chf
     And Response body parameter should be:    [included][0][attributes][prices][0][netAmount]    None
     And Response body parameter should be greater than:    [included][0][attributes][prices][0][grossAmount]    1
     And Response should contain the array of a certain size:    [included][0][attributes][prices][0][currency]    3
-    And Response body parameter should be:    [included][0][attributes][prices][0][currency][code]    ${currency.chf.code}
-    And Response body parameter should be:    [included][0][attributes][prices][0][currency][name]    ${currency.chf.name}
-    And Response body parameter should be:    [included][0][attributes][prices][0][currency][symbol]    ${currency.chf.symbol}
+    And Response body parameter should be:
+    ...    [included][0][attributes][prices][0][currency][code]
+    ...    ${currency.chf.code}
+    And Response body parameter should be:
+    ...    [included][0][attributes][prices][0][currency][name]
+    ...    ${currency.chf.name}
+    And Response body parameter should be:
+    ...    [included][0][attributes][prices][0][currency][symbol]
+    ...    ${currency.chf.symbol}
 
 Get_product_offer_with_net_chf
-    When I send a GET request:    /product-offers/${active_offer}?include=product-offer-prices&priceMode=${mode.net}&currency=${currency.chf.code}
+    When I send a GET request:
+    ...    /product-offers/${active_offer}?include=product-offer-prices&priceMode=${mode.net}&currency=${currency.chf.code}
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
@@ -129,9 +156,15 @@ Get_product_offer_with_net_chf
     And Response body parameter should be:    [included][0][attributes][prices][0][grossAmount]    None
     And Response body parameter should be greater than:    [included][0][attributes][prices][0][netAmount]    1
     And Response should contain the array of a certain size:    [included][0][attributes][prices][0][currency]    3
-    And Response body parameter should be:    [included][0][attributes][prices][0][currency][code]    ${currency.chf.code}
-    And Response body parameter should be:    [included][0][attributes][prices][0][currency][name]    ${currency.chf.name}
-    And Response body parameter should be:    [included][0][attributes][prices][0][currency][symbol]    ${currency.chf.symbol}
+    And Response body parameter should be:
+    ...    [included][0][attributes][prices][0][currency][code]
+    ...    ${currency.chf.code}
+    And Response body parameter should be:
+    ...    [included][0][attributes][prices][0][currency][name]
+    ...    ${currency.chf.name}
+    And Response body parameter should be:
+    ...    [included][0][attributes][prices][0][currency][symbol]
+    ...    ${currency.chf.symbol}
 
 Retrieving_product_offer
     When I send a GET request:    /product-offers/${active_offer}
@@ -156,11 +189,20 @@ Retrieving_product_offer_including_product_offer_prices
     And Response body has correct self link internal
     And Response body parameter should not be EMPTY:    [data][relationships][product-offer-prices][data]
     And Response include element has self link:    product-offer-prices
-    And Each array element of array in response should contain nested property with value:        [included]    [attributes][price]    ${active_offer_price}
-    And Each array element of array in response should contain nested property with value:        [included]    id    ${active_offer}
-    And Each array element of array in response should contain nested property:     [included]    type       product-offer-prices
+    And Each array element of array in response should contain nested property with value:
+    ...    [included]
+    ...    [attributes][price]
+    ...    ${active_offer_price}
+    And Each array element of array in response should contain nested property with value:
+    ...    [included]
+    ...    id
+    ...    ${active_offer}
+    And Each array element of array in response should contain nested property:
+    ...    [included]
+    ...    type
+    ...    product-offer-prices
     And Response should contain the array larger than a certain size:    [included]    0
-  
+
 Retrieving_product_offer_including_product_offer_availabilities
     When I send a GET request:    /product-offers/${active_offer}?include=product-offer-availabilities
     Then Response status code should be:    200
@@ -173,9 +215,18 @@ Retrieving_product_offer_including_product_offer_availabilities
     And Response body has correct self link internal
     And Response body parameter should not be EMPTY:    [data][relationships][product-offer-availabilities][data]
     And Response include element has self link:    product-offer-availabilities
-    And Each array element of array in response should contain nested property with value:        [included]    id    ${active_offer}
-    And Each array element of array in response should contain nested property:     [included]    type       product-offer-availabilities
-    And Each array element of array in response should contain property with value NOT in:    [included]    attributes    None
+    And Each array element of array in response should contain nested property with value:
+    ...    [included]
+    ...    id
+    ...    ${active_offer}
+    And Each array element of array in response should contain nested property:
+    ...    [included]
+    ...    type
+    ...    product-offer-availabilities
+    And Each array element of array in response should contain property with value NOT in:
+    ...    [included]
+    ...    attributes
+    ...    None
 
 Retrieving_product_offer_including_merchants
     When I send a GET request:    /product-offers/${active_offer}?include=merchants
@@ -189,6 +240,12 @@ Retrieving_product_offer_including_merchants
     And Response body has correct self link internal
     And Response body parameter should not be EMPTY:    [data][relationships][merchants][data]
     And Response include element has self link:    merchants
-    And Each array element of array in response should contain nested property:     [included]    type       merchants
-    And Each array element of array in response should contain property with value NOT in:    [included]    type    None
-    And Each array element of array in response should contain property with value NOT in:    [included]    attributes    None
+    And Each array element of array in response should contain nested property:    [included]    type    merchants
+    And Each array element of array in response should contain property with value NOT in:
+    ...    [included]
+    ...    type
+    ...    None
+    And Each array element of array in response should contain property with value NOT in:
+    ...    [included]
+    ...    attributes
+    ...    None

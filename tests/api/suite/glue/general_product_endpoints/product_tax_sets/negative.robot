@@ -1,12 +1,16 @@
 *** Settings ***
-Suite Setup       SuiteSetup
-Resource    ../../../../../../resources/common/common_api.robot
-Test Setup        TestSetup
+Resource        ../../../../../../resources/common/common_api.robot
+
+Suite Setup     SuiteSetup
+Test Setup      TestSetup
+
 Default Tags    glue
+
 
 *** Test Cases ***
 ENABLER
     TestSetup
+
 Get_a_tax_set_with_invalid_concrete_sku
     When I send a GET request:    /abstract-products/test123/product-tax-sets
     Then Response status code should be:    404

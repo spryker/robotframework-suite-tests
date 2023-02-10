@@ -1,12 +1,16 @@
 *** Settings ***
-Suite Setup    SuiteSetup
-Test Setup     TestSetup
-Resource    ../../../../../../resources/common/common_api.robot
+Resource        ../../../../../../resources/common/common_api.robot
+
+Suite Setup     SuiteSetup
+Test Setup      TestSetup
+
 Default Tags    glue
+
 
 *** Test Cases ***
 ENABLER
     TestSetup
+
 Get_cms_pages_list
     When I send a GET request:    /cms-pages
     Then Response status code should be:    200
@@ -16,8 +20,11 @@ Get_cms_pages_list
     And Response body parameter should not be EMPTY:    [data][0][id]
     And Response body parameter should not be EMPTY:    [data][0][attributes][name]
     And Response body parameter should not be EMPTY:    [data][0][attributes][url]
-    And Each array element of array in response should contain property with value:    [data]    type    cms-pages  
-    And Each array element of array in response should contain nested property with value:    [data]    [attributes][isSearchable]    True
+    And Each array element of array in response should contain property with value:    [data]    type    cms-pages
+    And Each array element of array in response should contain nested property with value:
+    ...    [data]
+    ...    [attributes][isSearchable]
+    ...    True
     And Each array element of array in response should contain property:    [data]    id
     And Each array element of array in response should contain property:    [data]    links
     And Each array element of array in response should contain value:    [data]    pageKey
@@ -29,7 +36,7 @@ Get_cms_pages_list
 Get_specific_cms_page
     [Setup]    Run Keywords    I send a GET request:    /cms-pages
     ...    AND    Response status code should be:    200
-    ...    AND    Save value to a variable:    [data][0][id]    cms_page_id    
+    ...    AND    Save value to a variable:    [data][0][id]    cms_page_id
     When I send a GET request:    /cms-pages/${cms_page_id}
     Then Response status code should be:    200
     And Response reason should be:    OK
@@ -37,7 +44,7 @@ Get_specific_cms_page
     And Response body parameter should be:    [data][id]    ${cms_page_id}
     And Response body parameter should be:    [data][type]    cms-pages
     And Response body parameter should not be EMPTY:    [data][attributes][name]
-    And Response body parameter should not be EMPTY:    [data][attributes][url] 
+    And Response body parameter should not be EMPTY:    [data][attributes][url]
     And Response body parameter should not be EMPTY:    [data][attributes][isSearchable]
     And Response body should contain:    pageKey
     And Response body should contain:    validTo
@@ -52,8 +59,11 @@ Get_cms_pages_with_Pagination
     And Response body parameter should not be EMPTY:    [data][0][id]
     And Response body parameter should not be EMPTY:    [data][0][attributes][name]
     And Response body parameter should not be EMPTY:    [data][0][attributes][url]
-    And Each array element of array in response should contain property with value:    [data]    type    cms-pages  
-    And Each array element of array in response should contain nested property with value:    [data]    [attributes][isSearchable]    True
+    And Each array element of array in response should contain property with value:    [data]    type    cms-pages
+    And Each array element of array in response should contain nested property with value:
+    ...    [data]
+    ...    [attributes][isSearchable]
+    ...    True
     And Each array element of array in response should contain property:    [data]    id
     And Each array element of array in response should contain property:    [data]    links
     And Each array element of array in response should contain value:    [data]    pageKey
@@ -65,9 +75,10 @@ Get_cms_pages_with_Pagination
     And Response body parameter should not be EMPTY:    [links][first]
 
 Get_specific_cms_with_includes
-    [Documentation]   https://spryker.atlassian.net/browse/CC-25472
-    [Tags]    skip-due-to-issue  
-    When I send a GET request:    /cms-pages/${cms_pages.cms_page_with_product_lists.id}?include=content-product-abstract-lists
+    [Documentation]    https://spryker.atlassian.net/browse/CC-25472
+    [Tags]    skip-due-to-issue
+    When I send a GET request:
+    ...    /cms-pages/${cms_pages.cms_page_with_product_lists.id}?include=content-product-abstract-lists
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
@@ -75,7 +86,9 @@ Get_specific_cms_with_includes
     And Response body parameter should be:    [data][type]    cms-pages
     And Response body parameter should be:    [data][attributes][name]    ${cms_pages.cms_page_with_product_lists.name}
     And Response body has correct self link internal
-    And Response should contain the array of a certain size:    [data][relationships][content-product-abstract-lists][data]    6
+    And Response should contain the array of a certain size:
+    ...    [data][relationships][content-product-abstract-lists][data]
+    ...    6
     And Response should contain the array larger than a certain size:    [included]    1
     And Response include should contain certain entity type:    content-product-abstract-lists
-    And Response include element has self link:   content-product-abstract-lists
+    And Response include element has self link:    content-product-abstract-lists
