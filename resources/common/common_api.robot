@@ -22,6 +22,9 @@ ${default_db_name}         eu-docker
 ${default_db_password}     secret
 ${default_db_port}         3306
 ${default_db_user}         spryker
+${default_db_engine}       pymysql
+${db_engine}
+# ${default_db_engine}       psycopg2
 
 *** Keywords ***
 SuiteSetup
@@ -425,7 +428,7 @@ Response body parameter should be in:
     ...    *Example:*
     ...
     ...    ``Response body parameter should be in:    [data][attributes][allowInput]    true    false``
-    [Arguments]    ${json_path}    ${expected_value1}    ${expected_value2}    ${expected_value3}=robotframework-dummy-value    ${expected_value4}=robotframework-dummy-value
+    [Arguments]    ${json_path}    ${expected_value1}    ${expected_value2}    ${expected_value3}=robotframework-dummy-value    ${expected_value4}=robotframework-dummy-value    ${expected_value5}=robotframework-dummy-value    ${expected_value6}=robotframework-dummy-value    ${expected_value7}=robotframework-dummy-value
     ${data}=    Get Value From Json    ${response_body}    ${json_path}
     ${data}=    Convert To String    ${data}
     ${data}=    Replace String    ${data}    '   ${EMPTY}
@@ -522,7 +525,6 @@ Evaluate datatype of a variable:
     [Arguments]    ${variable}
     ${data_type}=    Evaluate     type($variable).__name__
     [Return]    ${data_type}
-
 
 Response header parameter should be:
     [Documentation]    This keyword checks that the response header saved previiously in ``${response_headers}`` test variable has the expected header with name ``${header_parameter}`` and this header has value ``${header_value}``
@@ -626,7 +628,7 @@ Response body parameter should be greater than:
     ${data}=    Replace String    ${data}    '   ${EMPTY}
     ${data}=    Replace String    ${data}    [   ${EMPTY}
     ${data}=    Replace String    ${data}    ]   ${EMPTY}
-    ${result}=    Evaluate    '${data}' > '${expected_value}'
+    ${result}=    Evaluate    float('${data}') > float('${expected_value}')
     ${result}=    Convert To String    ${result}
     Should Be Equal    ${result}    True    Actual ${data} is not greater than expected ${expected_value}
 
@@ -966,6 +968,7 @@ Each array element of array in response should contain nested property in range:
         IF    ${list_element} < ${lower_value}    Fail    Value ${list_element} is less than lower value ${lower_value}.
         IF    ${list_element} > ${higher_value}    Fail    Value ${list_element} is greater than higher value ${higher_value}.
     END
+
 Each array element of array in response should be greater than:
     [Documentation]    This keyword checks that each element in the array specified as ``${json_path}`` contains the specified property ``${expected_nested_property}`` that's greater than ``${expected_value}``
     ...
@@ -1166,6 +1169,7 @@ Response should return error code:
     ...
     ...    ``Response should return error code:    204``
     [Arguments]    ${error_code}
+    ${error_code}=    Convert To String    ${error_code}
     ${data}=    Get Value From Json    ${response_body}    [errors][0][code]
     ${data}=    Convert To String    ${data}
     ${data}=    Replace String    ${data}    '   ${EMPTY}
@@ -1175,7 +1179,7 @@ Response should return error code:
     Should Be Equal    ${data}    ${error_code}    Actual ${data} doens't equal expected ${error_code}
 
 Response should contain certain number of values:
-    [Documentation]    This keyword checks if a certain response paratemeter ``${json_path} `` in the ``${response_body}`` test variable has the specified number ``${expected_count}`` of the specified values ``${expected_value}`` in it.
+    [Documentation]    This keyword checks if a certain response parameter ``${json_path} `` in the ``${response_body}`` test variable has the specified number ``${expected_count}`` of the specified values ``${expected_value}`` in it.
     ...
     ...    It can check that response contains 5 categories or 4 cms pages.
     ...
@@ -1272,7 +1276,7 @@ Save the result of a SELECT DB query to a variable:
     ...
     ...    ``Save the result of a SELECT DB query to a variable:    select registration_key from spy_customer where customer_reference = '${user_reference_id}'    confirmation_key``
     [Arguments]    ${sql_query}    ${variable_name}
-    Connect To Database    pymysql    ${db_name}    ${db_user}    ${db_password}    ${db_host}    ${db_port}
+    Connect to Spryker DB
     ${var_value} =    Query    ${sql_query}
     Disconnect From Database
     ${var_value}=    Convert To String    ${var_value}
@@ -1280,6 +1284,8 @@ Save the result of a SELECT DB query to a variable:
     ${var_value}=    Replace String    ${var_value}    ,   ${EMPTY}
     ${var_value}=    Replace String    ${var_value}    (   ${EMPTY}
     ${var_value}=    Replace String    ${var_value}    )   ${EMPTY}
+    ${var_value}=    Replace String    ${var_value}    [   ${EMPTY}
+    ${var_value}=    Replace String    ${var_value}    ]   ${EMPTY}
     Set Test Variable    ${${variable_name}}    ${var_value}
     [Return]    ${variable_name}
 
@@ -1406,6 +1412,19 @@ Find or create customer cart
         IF    not ${hasCart}    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}"}}}
         IF    not ${hasCart}    Save value to a variable:    [data][id]    cart_id
 
+Create empty customer cart:
+    [Documentation]    This keyword creates cart for the current customer token. This keyword sets ``${cart_id} `` variable
+        ...                and it can be re-used by the keywords that follow this keyword in the test. 
+        ...    
+        ...    Note: work only for registered customers. For guest users use ``Create a guest cart:``
+        ...
+        ...    *Example:*
+        ...
+        ...    ``Create empty customer cart:    ${mode.gross}    ${currency.eur.code}    ${store.de}    cart_rules``
+        ...    
+        [Arguments]    ${price_mode}    ${currency_code}    ${store_code}    ${cart_name}
+        I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${price_mode}","currency": "${currency_code}","store": "${store_code}","name": "${cart_name}-${random}"}}}
+        Save value to a variable:    [data][id]    cart_id
 
 Get ETag header value from cart
     [Documentation]    This keyword first retrieves cart for the current customer token.
@@ -1413,8 +1432,7 @@ Get ETag header value from cart
         ...
         ...    and it can be re-used by the keywords that follow this keyword in the test
         ...    This keyword does not accept any arguments. This keyword is used for removing unused/unwanted (ex. W/"") characters from ETag header value.
-
-
+        ...
         ${response}=    I send a GET request:    /carts
         ${Etag}=    Get Value From Json   ${response_headers}    [ETag]
         ${Etag}=    Convert To String    ${Etag}
@@ -1429,12 +1447,29 @@ Get ETag header value from cart
         [Return]    ${Etag}
 
 Create giftcode in Database:
-    [Documentation]    This keyword creates a new entry in the table spy_gift_card with the name, value and gift-card code.
-     [Arguments]    ${spy_gift_card_code}    ${spy_gift_card_value}
+    [Documentation]    This keyword creates a new entry in the DB table spy_gift_card with the name, value and gift-card code.
+        ...    *Example:*
+        ...
+        ...    ``Create giftcode in Database:    checkout_${random}    ${gift_card.amount}``
+        ... 
+    [Arguments]    ${spy_gift_card_code}    ${spy_gift_card_value}
     ${amount}=   Evaluate    ${spy_gift_card_value} / 100
     ${amount}=    Evaluate    "%.f" % ${amount}
-    Connect To Database    pymysql    ${db_name}    ${db_user}    ${db_password}    ${db_host}    ${db_port}
-    Execute Sql String    insert ignore into spy_gift_card (code,name,currency_iso_code,value) value ('${spy_gift_card_code}','Gift_card_${amount}','EUR','${spy_gift_card_value}')
+    Connect to Spryker DB
+    ${last_id}=    Query    SELECT id_gift_card FROM spy_gift_card ORDER BY id_gift_card DESC LIMIT 1;
+    ${new_id}=    Set Variable    ${EMPTY}
+    ${last_id_length}=    Get Length    ${last_id}
+    IF    ${last_id_length} > 0    
+        ${new_id}=    Evaluate    ${last_id[0][0]} + 1
+    ELSE
+        ${new_id}=    Evaluate    1
+    END
+    Log    ${new_id}
+    IF    '${db_engine}' == 'pymysql'
+        Execute Sql String    insert ignore into spy_gift_card (code,name,currency_iso_code,value) value ('${spy_gift_card_code}','Gift_card_${amount}','EUR','${spy_gift_card_value}')
+    ELSE
+        Execute Sql String    INSERT INTO spy_gift_card (id_gift_card, code, name, currency_iso_code, value) VALUES (${new_id}, '${spy_gift_card_code}', 'Gift_card_${amount}', 'EUR', '${spy_gift_card_value}');
+    END
     Disconnect From Database
 
 
@@ -1466,16 +1501,46 @@ Cleanup all items in the cart:
         ${response}=    GET    ${current_url}/carts/${cart_id}    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}  params=include=items,bundle-items     expected_status=200
         ${response_body}=    Set Variable    ${response.json()}
         @{included}=    Get Value From Json    ${response_body}    [included]
-        ${list_length}=    Evaluate    len(@{included})
-        Log    list_length: ${list_length}
-        FOR    ${index}    IN RANGE    0    ${list_length}
-                ${list_element}=    Get From List    @{included}    ${index}
-                ${cart_item_uid}=    Get Value From Json    ${list_element}    [id]
-                ${cart_item_uid}=    Convert To String    ${cart_item_uid}
-                ${cart_item_uid}=    Replace String    ${cart_item_uid}    '   ${EMPTY}
-                ${cart_item_uid}=    Replace String    ${cart_item_uid}    [   ${EMPTY}
-                ${cart_item_uid}=    Replace String    ${cart_item_uid}    ]   ${EMPTY}
-                ${response_delete}=    DELETE    ${current_url}/carts/${cart_id}/items/${cart_item_uid}    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}    expected_status=204
+        ${list_not_empty}=    Get length    ${included}
+        IF    ${list_not_empty} > 0
+            ${list_length}=    Get length    @{included}
+            Log    list_length: ${list_length}
+            FOR    ${index}    IN RANGE    0    ${list_length}
+                    ${list_element}=    Get From List    @{included}    ${index}
+                    ${cart_item_uid}=    Get Value From Json    ${list_element}    [id]
+                    ${cart_item_uid}=    Convert To String    ${cart_item_uid}
+                    ${cart_item_uid}=    Replace String    ${cart_item_uid}    '   ${EMPTY}
+                    ${cart_item_uid}=    Replace String    ${cart_item_uid}    [   ${EMPTY}
+                    ${cart_item_uid}=    Replace String    ${cart_item_uid}    ]   ${EMPTY}
+                    ${response_delete}=    DELETE    ${current_url}/carts/${cart_id}/items/${cart_item_uid}    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}    expected_status=204
+            END
+        END
+
+Cleanup all customer carts
+    [Documentation]    This keyword deletes all customer carts
+        ...
+        ...    Before using this method you should get customer token and set it into the headers with the help of ``I get access token for the customer:`` and ``I set Headers:``
+        ...    This keyword does not accept any arguments.
+        ...    
+        ...    *Example:*
+        ...
+        ...    ``Cleanup all customer carts``
+        ${response}=    GET    ${current_url}/carts    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}  params=include=items,bundle-items     expected_status=200
+        ${response_body}=    Set Variable    ${response.json()}
+        @{data}=    Get Value From Json    ${response_body}    [data]
+        ${list_not_empty}=    Get length    ${data}
+        IF    ${list_not_empty} > 0
+            ${list_length}=    Get Length    @{data}
+            Log    list_length: ${list_length}
+            FOR    ${index}    IN RANGE    0    ${list_length}-1
+                    ${list_element}=    Get From List    @{data}    ${index}
+                    ${cart_uuid}=    Get Value From Json    ${list_element}    [id]
+                    ${cart_uuid}=    Convert To String    ${cart_uuid}
+                    ${cart_uuid}=    Replace String    ${cart_uuid}    '   ${EMPTY}
+                    ${cart_uuid}=    Replace String    ${cart_uuid}    [   ${EMPTY}
+                    ${cart_uuid}=    Replace String    ${cart_uuid}    ]   ${EMPTY}
+                    ${response_delete}=    DELETE    ${current_url}/carts/${cart_uuid}    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}    expected_status=204
+            END
         END
 
 Cleanup all items in the guest cart:
@@ -1490,18 +1555,20 @@ Cleanup all items in the guest cart:
         ${response}=    GET    ${current_url}/guest-carts/${cart_id}    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}  params=include=guest-cart-items,bundle-items    expected_status=200
         ${response_body}=    Set Variable    ${response.json()}
         @{included}=    Get Value From Json    ${response_body}    [included]
-        ${list_length}=    Get length    @{included}
-        Log    list_length: ${list_length}
-        FOR    ${index}    IN RANGE    0    ${list_length}
-                ${list_element}=    Get From List    @{included}    ${index}
-                ${cart_item_uid}=    Get Value From Json    ${list_element}    [id]
-                ${cart_item_uid}=    Convert To String    ${cart_item_uid}
-                ${cart_item_uid}=    Replace String    ${cart_item_uid}    '   ${EMPTY}
-                ${cart_item_uid}=    Replace String    ${cart_item_uid}    [   ${EMPTY}
-                ${cart_item_uid}=    Replace String    ${cart_item_uid}    ]   ${EMPTY}
-                ${response_delete}=    DELETE    ${current_url}/guest-carts/${cart_id}/guest-cart-items/${cart_item_uid}    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}    expected_status=204
+        ${list_not_empty}=    Get length    ${included}
+        IF    ${list_not_empty} > 0
+            ${list_length}=    Get length    @{included}
+            Log    list_length: ${list_length}
+            FOR    ${index}    IN RANGE    0    ${list_length}
+                    ${list_element}=    Get From List    @{included}    ${index}
+                    ${cart_item_uid}=    Get Value From Json    ${list_element}    [id]
+                    ${cart_item_uid}=    Convert To String    ${cart_item_uid}
+                    ${cart_item_uid}=    Replace String    ${cart_item_uid}    '   ${EMPTY}
+                    ${cart_item_uid}=    Replace String    ${cart_item_uid}    [   ${EMPTY}
+                    ${cart_item_uid}=    Replace String    ${cart_item_uid}    ]   ${EMPTY}
+                    ${response_delete}=    DELETE    ${current_url}/guest-carts/${cart_id}/guest-cart-items/${cart_item_uid}    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}    expected_status=204
+            END
         END
-
 Cleanup all availability notifications:
     [Documentation]    This keyword deletes any and all availability notifications related to the given customer reference.
         ...
@@ -1514,19 +1581,22 @@ Cleanup all availability notifications:
         ${response}=    GET    ${current_url}/customers/${yves_user.reference}/availability-notifications    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}   expected_status=200
         ${response_body}=    Set Variable    ${response.json()}
         @{data}=    Get Value From Json    ${response_body}    [data]
-        ${list_length}=    Get Length    @{data}
-        ${list_length}=    Convert To Integer    ${list_length}
-        ${log_list}=    Log List    @{data}
-        Log    list_length: ${list_length}
-        FOR    ${index}    IN RANGE    0    ${list_length}
-                ${list_element}=    Get From List    @{data}    ${index}
-                ${availability_notification_id}=    Get Value From Json    ${list_element}    [id]
-                ${availability_notification_id}=    Convert To String    ${availability_notification_id}
-                ${availability_notification_id}=    Replace String    ${availability_notification_id}    '   ${EMPTY}
-                ${availability_notification_id}=    Replace String    ${availability_notification_id}    [   ${EMPTY}
-                ${availability_notification_id}=    Replace String    ${availability_notification_id}    ]   ${EMPTY}
-                Log    availability_notification_id: ${availability_notification_id}
-                ${response_delete}=    DELETE    ${current_url}/availability-notifications/${availability_notification_id}    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}    expected_status=204
+        ${list_not_empty}=    Get length    ${data}
+        IF    ${list_not_empty} > 0
+            ${list_length}=    Get Length    @{data}
+            ${list_length}=    Convert To Integer    ${list_length}
+            ${log_list}=    Log List    @{data}
+            Log    list_length: ${list_length}
+            FOR    ${index}    IN RANGE    0    ${list_length}
+                    ${list_element}=    Get From List    @{data}    ${index}
+                    ${availability_notification_id}=    Get Value From Json    ${list_element}    [id]
+                    ${availability_notification_id}=    Convert To String    ${availability_notification_id}
+                    ${availability_notification_id}=    Replace String    ${availability_notification_id}    '   ${EMPTY}
+                    ${availability_notification_id}=    Replace String    ${availability_notification_id}    [   ${EMPTY}
+                    ${availability_notification_id}=    Replace String    ${availability_notification_id}    ]   ${EMPTY}
+                    Log    availability_notification_id: ${availability_notification_id}
+                    ${response_delete}=    DELETE    ${current_url}/availability-notifications/${availability_notification_id}    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}    expected_status=204
+            END
         END
 Update order status in Database:
     [Documentation]    This keyword updates order status in database to any required status. This allows to skip going through the order workflow manually 
@@ -1535,23 +1605,268 @@ Update order status in Database:
     ...    *Example:*
     ...    
     ...    ``Update order status in Database:    7    shipped``
-    
-    [Arguments]    ${order_item_status_name}
-    Connect To Database    pymysql    ${db_name}    ${db_user}    ${db_password}    ${db_host}    ${db_port}
-    Execute Sql String    insert ignore into spy_oms_order_item_state (name) values ('${order_item_status_name}')
+    [Arguments]    ${order_item_status_name}    ${uuid_to_use}
+    Connect to Spryker DB
+    ${new_id}=    Set Variable    ${EMPTY}
+    ${state_id}=    Set Variable    ${EMPTY}
+    ${last_id}=    Query    SELECT id_oms_order_item_state FROM spy_oms_order_item_state ORDER BY id_oms_order_item_state DESC LIMIT 1;
+    ${expected_state_id}=    Query    SELECT id_oms_order_item_state FROM spy_oms_order_item_state WHERE name='${order_item_status_name}';
+    ${last_id_length}=    Get Length    ${last_id}
+    ${expected_state_id_length}=    Get Length    ${expected_state_id}
+    IF    ${expected_state_id_length} > 0 
+        ${state_id}=    Set Variable    ${expected_state_id[0][0]}
+    ELSE
+        ${new_id}=    Evaluate    ${last_id[0][0]} + 1
+        Execute Sql String    INSERT INTO spy_oms_order_item_state (id_oms_order_item_state, name) VALUES (${new_id}, '${order_item_status_name}');
+        ${state_id}=    Set Variable    ${new_id}
+    END
+    Execute Sql String    update spy_sales_order_item set fk_oms_order_item_state = '${state_id}' where uuid= '${uuid_to_use}'
     Disconnect From Database
-    Save the result of a SELECT DB query to a variable:    select id_oms_order_item_state from spy_oms_order_item_state where name like '${order_item_status_name}'    state_id
-    Connect To Database    pymysql    ${db_name}    ${db_user}    ${db_password}    ${db_host}    ${db_port}
-    Execute Sql String    update spy_sales_order_item set fk_oms_order_item_state = '${state_id}' where uuid = '${Uuid}'
-    Disconnect From Database
-
+ 
 Get voucher code by discountId from Database:
     [Documentation]    This keyword allows to get voucher code according to the discount ID. Discount_id can be found in Backoffice > Merchandising > Discount page
     ...        and set this id as an argument of a keyword.
     ...
     ...    *Example:*
     ...    ``Get voucher code by discountId from Database:    3``
-
     [Arguments]    ${discount_id}
     Save the result of a SELECT DB query to a variable:    select fk_discount_voucher_pool from spy_discount where id_discount = ${discount_id}    discount_voucher_pool_id
-    Save the result of a SELECT DB query to a variable:    select code from spy_discount_voucher where fk_discount_voucher_pool = ${discount_voucher_pool_id} and is_active = 1 limit 1    discount_voucher_code
+    IF    '${db_engine}' == 'pymysql'
+        Save the result of a SELECT DB query to a variable:    select code from spy_discount_voucher where fk_discount_voucher_pool = ${discount_voucher_pool_id} and is_active = 1 limit 1    discount_voucher_code
+    ELSE
+        Save the result of a SELECT DB query to a variable:    select code from spy_discount_voucher where fk_discount_voucher_pool = ${discount_voucher_pool_id} and is_active = true limit 1    discount_voucher_code
+    END
+
+Connect to Spryker DB
+    [Documentation]    This keyword allows to connect to Spryker DB. 
+    ...        Supports both MariaDB and PostgeSQL.
+    ...    
+    ...        To specify the expected DB engine, use ``db_engine`` variabl. Default one -> *MariaDB*
+    ...    
+    ...    *Example:*
+    ...    ``robot -v env:api_suite -v db_engine:psycopg2``
+    ...    
+    ...    with the example above you'll use PostgreSQL DB engine
+    ${db_name}=    Set Variable If    '${db_name}' == '${EMPTY}'    ${default_db_name}    ${db_name}
+    ${db_user}=    Set Variable If    '${db_name}' == '${EMPTY}'    ${default_db_user}    ${db_user}
+    ${db_password}=    Set Variable If    '${db_name}' == '${EMPTY}'    ${default_db_password}    ${db_password}
+    ${db_host}=    Set Variable If    '${db_name}' == '${EMPTY}'    ${default_db_host}    ${db_host}
+    ${db_port}=    Set Variable If    '${db_name}' == '${EMPTY}'    ${default_db_port}    ${db_port}
+    ${db_engine}=    Set Variable If    '${db_engine}' == '${EMPTY}'    ${default_db_engine}    ${db_engine}
+    Connect To Database    ${db_engine}    ${db_name}    ${db_user}    ${db_password}    ${db_host}    ${db_port}
+
+Get the first company user id and its' customer email
+    [Documentation]    This keyword sends the GET reguest to the ``/company-users?include=customers`` endpoint and returns first available company user id and its' customer email in
+    ...    ``${companyUserId}``  and  ``${companyUserEmail}`` variables. 
+    ...    If the fist company user is anne.boleyn@spryker.com - the next one will be taken and Anna is a 'BoB' user
+    ...    
+    I send a GET request:    /company-users?include=customers
+    Save value to a variable:    [data][0][id]    companyUserId
+    Save value to a variable:    [included][0][attributes][email]    companyUserEmail
+    IF    '${companyUserEmail}' == 'anne.boleyn@spryker.com'
+        Save value to a variable:    [included][1][attributes][email]    companyUserEmail
+        Save value to a variable:    [data][1][id]    companyUserId
+    END
+
+Array element should contain nested array at least once:
+    [Documentation]    This keyword checks whether the array ``${paret_array}`` that is present in the ``${response_body}`` test variable contsains an array ``${expected_nested_array}`` at least once.
+    ...
+    ...    *Example:*
+    ...
+    ...   ``Array element should contain nested array at least once:    [data]    [relationships]``
+    ...    
+    [Arguments]    ${parent_array}    ${expected_nested_array}
+    @{data}=    Get Value From Json    ${response_body}    ${parent_array}
+    ${list_length}=    Get Length    @{data}
+    ${log_list}=    Log List    @{data}
+    ${expected_nested_array}=    Replace String    ${expected_nested_array}    [   ${EMPTY}
+    ${expected_nested_array}=    Replace String    ${expected_nested_array}    ]   ${EMPTY}
+    ${expected_nested_array}=    Replace String    ${expected_nested_array}    '   ${EMPTY}
+    ${expected_nested_array}=    Create List    ${expected_nested_array}
+    FOR    ${index}    IN RANGE    0    ${list_length}
+        @{list_element}=    Get From List    @{data}    ${index}
+        ${result}=    Run Keyword And Ignore Error    List Should Contain Sub List    ${list_element}    ${expected_nested_array}
+        IF    'PASS' in ${result}    Exit For Loop
+        IF    ${index} == ${list_length}-1
+            Fail    expected '${expected_nested_array}' array is not present in '@{data}'
+        END
+        IF    'FAIL' in ${result}    Continue For Loop
+    END
+
+Array elelemt should contain property with value at least once:
+    [Documentation]    This keyword checks that element in the array specified as ``${json_path}`` contains the specified property ``${expected_property}`` with the specified value ``${expected_value}`` at least once.
+    ...
+    ...    *Example:*
+    ...
+    ...    ``And Array elelemt should contain property with value at least once:    [data][0][attributes][categoryTreeFilter]    docCount    ${${category_lvl2.qty}}``
+    ...
+    [Arguments]    ${json_path}    ${expected_property}    ${expected_value}
+    @{data}=    Get Value From Json    ${response_body}    ${json_path}
+    ${list_length}=    Get Length    @{data}
+    ${log_list}=    Log List    @{data}
+    FOR    ${index}    IN RANGE    0    ${list_length}
+        ${list_element}=    Get From List    @{data}    ${index}
+        ${result}=    Run Keyword And Ignore Error    Dictionary Should Contain Item    ${list_element}    ${expected_property}    ${expected_value}
+        IF    'PASS' in ${result}    Exit For Loop
+        IF    ${index} == ${list_length}-1
+            Fail    expected '${expected_property}' with value '${expected_value}' is not present in '@{data}' but should
+        END
+        IF    'FAIL' in ${result}    Continue For Loop
+    END
+
+Array elelemt should contain nested array with property and value at least once:
+    [Documentation]    This keyword checks whether the array ``${nested_array}`` that is present in the parrent array ``${json_path}``  contsains propery ``${expected_property}`` with value ``${expected_value}`` at least once.
+    ...
+    ...    *Example:*
+    ...
+    ...   ``And Array elelemt should contain nested array with property and value at least once:    [data][0][attributes][categoryTreeFilter]    [children]    docCount    ${category_lvl2.qty}``
+    ...    
+    [Arguments]    ${json_path}    ${nested_array}    ${expected_property}    ${expected_value}
+    @{data}=    Get Value From Json    ${response_body}    ${json_path}
+    ${list_length1}=    Get Length    @{data}
+    ${log_list}=    Log List    @{data}
+    ${result}=    Set Variable    'FALSE'
+    FOR    ${index1}    IN RANGE    0    ${list_length1}
+        IF    'PASS' in ${result}    BREAK
+        ${list_element}=    Get From List    @{data}    ${index1}
+        Log    ${list_element}
+        @{list_element2}=    Get Value From Json    ${list_element}    ${nested_array}
+        Log    @{list_element2}
+        ${list_length2}=    Get Length    @{list_element2}
+        FOR    ${index2}    IN RANGE    0    ${list_length2}
+            ${list_element}=    Get From List    @{list_element2}    ${index2}
+            Log    ${list_element}
+            ${list_element}=    Get Value From Json    ${list_element}    ${expected_property}
+            ${list_element}=    Convert To String    ${list_element}
+            ${list_element}=    Replace String    ${list_element}    '   ${EMPTY}
+            ${list_element}=    Replace String    ${list_element}    [   ${EMPTY}
+            ${list_element}=    Replace String    ${list_element}    ]   ${EMPTY}
+            ${result}=    Run Keyword And Ignore Error    Should Contain   ${list_element}    ${expected_value}    ignore_case=True
+            IF    'PASS' in ${result}    BREAK
+            IF    ${index1} == ${list_length1}-1 and ${index2} == ${list_length2}-1
+                Fail    expected '${expected_property}' with value '${expected_value}' is not present in '${nested_array}' but should
+            END
+            IF    'FAIL' in ${result}    Continue For Loop
+        END
+    END
+
+Get company user id by customer reference:
+    [Documentation]    This keyword sends the GET reguest to the ``/company-users?include=customers`` endpoint and returns company user id by customer reference. Sets variable : ``${companyUserId}``
+    ...    
+    ...    *Example:*
+    ...    ``Get company user id by customer reference:    ${yves_fifth_user.reference}``
+    ...    
+    [Arguments]    ${customer_reference}
+    I send a GET request:    /company-users?include=customers
+    @{data}=    Get Value From Json    ${response_body}    [data]
+    ${list_length}=    Get Length    @{data}
+    ${log_list}=    Log List    @{data}
+    FOR    ${index}    IN RANGE    0    ${list_length}
+        ${list_element}=    Get From List    @{data}    ${index}
+        Log    ${list_element}
+        ${company_user_id}=    Get Value From Json    ${list_element}    id
+        ${company_user_id}=    Convert To String    ${company_user_id}
+        ${company_user_id}=    Replace String    ${company_user_id}    '   ${EMPTY}
+        ${company_user_id}=    Replace String    ${company_user_id}    [   ${EMPTY}
+        ${company_user_id}=    Replace String    ${company_user_id}    ]   ${EMPTY}
+        Set Test Variable    ${companyUserId}    ${company_user_id}
+        @{list_element2}=    Get Value From Json    ${list_element}    relationships
+        Log    @{list_element2}
+        ${company_user_customer_id}=    Get Value From Json    @{list_element2}    customers.data[0].id
+        ${company_user_customer_id}=    Convert To String    ${company_user_customer_id}
+        ${company_user_customer_id}=    Replace String    ${company_user_customer_id}    '   ${EMPTY}
+        ${company_user_customer_id}=    Replace String    ${company_user_customer_id}    [   ${EMPTY}
+        ${company_user_customer_id}=    Replace String    ${company_user_customer_id}    ]   ${EMPTY}
+        IF    '${company_user_customer_id}' == '${customer_reference}'    BREAK
+        IF    ${index} == ${list_length}-1
+            Fail    expected customer reference '${customer_reference}' is not present in '@{data}' but should
+        END        
+    END
+
+Cleanup all existing shopping lists
+    [Documentation]    This keyword deletes all customer shopping lists
+        ...
+        ...    Before using this method you should get customer token and set it into the headers with the help of ``I get access token for the customer:`` and ``I set Headers:``
+        ...    This keyword does not accept any arguments.
+        ...    
+        ...    *Example:*
+        ...
+        ...    ``Cleanup all existing shopping lists``
+        ${response}=    GET    ${current_url}/shopping-lists    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}  params=include=items,bundle-items     expected_status=200
+        ${response_body}=    Set Variable    ${response.json()}
+        @{data}=    Get Value From Json    ${response_body}    [data]
+        ${list_not_empty}=    Get length    ${data}
+        IF    ${list_not_empty} > 0
+            ${list_length}=    Get Length    @{data}
+            Log    list_length: ${list_length}
+            FOR    ${index}    IN RANGE    0    ${list_length}
+                    ${list_element}=    Get From List    @{data}    ${index}
+                    ${shopping_list_uuid}=    Get Value From Json    ${list_element}    [id]
+                    ${shopping_list_uuid}=    Convert To String    ${shopping_list_uuid}
+                    ${shopping_list_uuid}=    Replace String    ${shopping_list_uuid}    '   ${EMPTY}
+                    ${shopping_list_uuid}=    Replace String    ${shopping_list_uuid}    [   ${EMPTY}
+                    ${shopping_list_uuid}=    Replace String    ${shopping_list_uuid}    ]   ${EMPTY}
+                    ${response_delete}=    DELETE    ${current_url}/shopping-lists/${shopping_list_uuid}    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}    expected_status=204
+            END
+        END
+
+Create merchant order for the item in DB and change status:
+    [Documentation]    This keyword creates new merchant order in the DB and sets the desired status . This allows to skip going through the order workflow manually 
+    ...    but just switch to the status you need to create a test. 
+    ...    There is no separate endpoint to update order status and this keyword allows to do this via database value update.
+    ...    *Example:*
+    ...    
+    ...    ``Create merchant order for the item in DB and change status:    shipped    ${uuid}    ${merchants.sony_experts.merchant_reference}``
+    [Arguments]    ${order_item_status_name}    ${uuid_to_use}    ${merchant_reference}
+    Connect to Spryker DB
+    ${new_id}=    Set Variable    ${EMPTY}
+    ${state_id}=    Set Variable    ${EMPTY}
+    ${last_id}=    Query    SELECT id_state_machine_item_state FROM spy_state_machine_item_state ORDER BY id_state_machine_item_state DESC LIMIT 1;
+    ${expected_state_id}=    Query    SELECT id_state_machine_item_state FROM spy_state_machine_item_state WHERE name='${order_item_status_name}';
+    ${last_id_length}=    Get Length    ${last_id}
+    IF    ${last_id_length} == 0
+        ${state_id}=    Set Variable    1
+        ${state_id}=    Convert To String    ${state_id}
+    END
+    ${expected_state_id_length}=    Get Length    ${expected_state_id}
+    IF    ${expected_state_id_length} > 0 
+        ${state_id}=    Set Variable    ${expected_state_id[0][0]}
+    ELSE
+        ${state_id}=    Set Variable    ${state_id}
+        Execute Sql String    INSERT INTO spy_state_machine_item_state (id_state_machine_item_state, fk_state_machine_process, name) VALUES (${state_id}, 2, '${order_item_status_name}');
+    END
+    ${last_order_item_id}=    Query    SELECT id_merchant_sales_order_item from spy_merchant_sales_order_item order by id_merchant_sales_order_item desc limit 1;
+    ${last_order_item_id_length}=    Get Length    ${last_order_item_id}
+    IF    ${last_order_item_id_length} == 0
+        ${new_order_item_id}=    Set variable    1
+        ${new_order_item_id}=    Convert To String    ${new_order_item_id}
+    END
+    IF    ${last_order_item_id_length} > 0
+        ${new_order_item_id}=    Evaluate    ${last_order_item_id[0][0]} +1
+    ELSE
+        ${new_order_item_id}=    Set Variable    ${new_order_item_id}
+    END
+    ${last_merchant_order_id}=    Query    SELECT id_merchant_sales_order from spy_merchant_sales_order order by id_merchant_sales_order desc limit 1;
+    ${last_merchant_order_id_length}=    Get Length    ${last_merchant_order_id}
+    IF    ${last_merchant_order_id_length} == 0
+        ${new_merchant_order_id}=    Set Variable    1
+        ${new_merchant_order_id}=    Convert To String    ${new_merchant_order_id}
+    END
+    IF    ${last_merchant_order_id_length} > 0
+        ${new_merchant_order_id}=    Evaluate    ${last_merchant_order_id[0][0]} +1
+    ELSE
+        ${new_merchant_order_id}=    Set Variable    ${new_merchant_order_id}
+    END
+    ${sales_order_id}=    Query    SELECT fk_sales_order from spy_sales_order_item where uuid='${uuid_to_use}';
+    ${sales_order_id}=    Set Variable    ${sales_order_id[0][0]}
+    Execute Sql String    INSERT INTO spy_merchant_sales_order (id_merchant_sales_order, fk_sales_order, merchant_reference, merchant_sales_order_reference) VALUES (${new_merchant_order_id}, ${sales_order_id}, '${merchant_reference}', 'DE--${sales_order_id}--${merchant_reference}');
+    ${last_merchant_order_item_id}=    Query    SELECT id_merchant_sales_order from spy_merchant_sales_order order by id_merchant_sales_order desc limit 1;
+    ${last_merchant_order_item_id_length}=    Get Length    ${last_merchant_order_item_id}
+    IF    ${last_merchant_order_item_id_length} > 0
+        ${new_merchant_order_item_id}=    Evaluate    ${last_merchant_order_item_id[0][0]} +1
+    END
+    ${sales_order_item_id}=    Query    SELECT id_sales_order_item from spy_sales_order_item where uuid='${uuid_to_use}';
+    ${sales_order_item_id}=    Set Variable    ${sales_order_item_id[0][0]}
+    ${random_merchant_order_item_reference}=    Generate Random String    10    [NUMBERS]
+    Execute Sql String    INSERT INTO spy_merchant_sales_order_item (id_merchant_sales_order_item, fk_merchant_sales_order, fk_sales_order_item, fk_state_machine_item_state, merchant_order_item_reference) VALUES (${new_merchant_order_item_id}, ${new_merchant_order_id}, ${sales_order_item_id}, ${state_id}, '${random_merchant_order_item_reference}');
+    Disconnect From Database

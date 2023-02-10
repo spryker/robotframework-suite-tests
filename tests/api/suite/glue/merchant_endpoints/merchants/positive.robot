@@ -40,12 +40,12 @@ Retrieves_list_of_merchants
 
 
 Retrieves_a_merchant_by_id
-    When I send a GET request:  /merchants/${merchants.sony_experts.merchant_id}
+    When I send a GET request:  /merchants/${merchants.sony_experts.merchant_reference}
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response body parameter should not be EMPTY:    [data][type]
     And Response body parameter should not be EMPTY:    [data][id]    
-    And Response body parameter should be:    [data][id]    ${merchants.sony_experts.merchant_id}
+    And Response body parameter should be:    [data][id]    ${merchants.sony_experts.merchant_reference}
     And Response body parameter should be:    [data][type]    merchants
     And Response body parameter should be:    [data][attributes][merchantName]    ${merchants.sony_experts.merchant_name}
     And Response body parameter should be:    [data][attributes][merchantUrl]    ${merchants.sony_experts.merchant_url}

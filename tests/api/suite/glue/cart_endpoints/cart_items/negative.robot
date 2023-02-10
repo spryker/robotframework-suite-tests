@@ -8,7 +8,7 @@ Default Tags    glue
 ENABLER
     TestSetup
     
-###### POST #######
+# POST #
 Add_item_to_cart_non_existing_sku
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
@@ -89,7 +89,7 @@ Add_item_to_cart_with_invalid_properties
     And Array in response should contain property with value:    [errors]    detail    quantity => This value should be of type numeric.
     And Array in response should contain property with value:    [errors]    detail    quantity => This value should be greater than 0.
 
-###### PATCH #######
+# PATCH #
 Update_item_in_cart_with_non_existing_item_id
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
@@ -165,7 +165,7 @@ Update_item_with_invalid_parameters
     [Teardown]    Run Keywords    I send a DELETE request:     /carts/${cart_id}/items/${product_availability.concrete_available_with_stock_and_never_out_of_stock_sku}
     ...    AND    Response status code should be:    204
 
-###### DELETE #######
+# DELETE #
 Delete_cart_item_with_non_existing_item_id
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
