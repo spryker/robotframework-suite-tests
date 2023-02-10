@@ -16,7 +16,6 @@ ENABLER
      
 #POST requests
 
-# https://spryker.atlassian.net/browse/CC-19340
 Provide_checkout_data_with_invalid_access_token
     [Documentation]    error message changed in https://spryker.atlassian.net/browse/CC-19340
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}

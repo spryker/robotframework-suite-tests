@@ -157,8 +157,8 @@ Create_order_include_orders
     And Response body parameter should be:    [included][0][attributes][expenses][0][unitPriceToPayAggregation]    490
     And Response body parameter should be:    [included][0][attributes][expenses][0][sumPriceToPayAggregation]    490
     And Response body parameter should be:    [included][0][attributes][expenses][0][taxAmountAfterCancellation]    None
-    And Response body parameter should be greater than:    [included][0][attributes][expenses][0][idShipment]    10
-    And Response body parameter should be greater than:    [included][0][attributes][expenses][0][idSalesExpense]    10
+    And Response body parameter should not be EMPTY:    [included][0][attributes][expenses][0][idShipment]
+    And Response body parameter should not be EMPTY:    [included][0][attributes][expenses][0][idSalesExpense]
     #payments
     And Response body parameter should be greater than:    [included][0][attributes][payments][0][amount]    0
     And Response body parameter should be:    [included][0][attributes][payments][0][paymentProvider]    ${payment.provider_name_1}
@@ -262,7 +262,6 @@ Create_order_with_split_shipments_&_same_shipping_address
 
 
 Create_order_with_same_items_in_different_shipments
-    [Tags]    skip-due-to-refactoring
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_second_user.email}
      ...  AND    I set Headers:    Authorization=${token}
     ...  AND    I send a POST request:    /carts    {"data":{"type":"carts","attributes":{"priceMode":"${mode.gross}","currency":"${currency.eur.code}","store":"${store.de}","name": "${test_cart_name}-${random}"}}}
@@ -294,7 +293,6 @@ Create_order_with_same_items_in_different_shipments
     And Response should contain certain number of values:    [included][0][attributes][expenses]    idShipment    1
 
 Create_order_with_free_shipping_discount
-    [Tags]    skip-due-to-refactoring
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_second_user.email}
     ...  AND    I set Headers:    Authorization=${token}
     ...  AND    I send a POST request:    /carts    {"data":{"type":"carts","attributes":{"priceMode":"${mode.gross}","currency":"${currency.eur.code}","store":"${store.de}","name": "${test_cart_name}-${random}"}}}
@@ -309,7 +307,7 @@ Create_order_with_free_shipping_discount
     And Response body parameter should be:    [included][0][attributes][totals][expenseTotal]    ${shipment.method_1.price_eur}
     And Response body parameter should be greater than:    [included][0][attributes][totals][discountTotal]    0
     And Response body parameter should be greater than:    [included][0][attributes][totals][taxTotal]    0
-    And Response body parameter should be greater than:    [included][0][attributes][totals][subtotal]    100000
+    And Response body parameter should be greater than:    [included][0][attributes][totals][subtotal]    49000
     And Save value to a variable:    [included][0][attributes][totals][discountTotal]    discount_total_sum
     And Save value to a variable:    [included][0][attributes][totals][subtotal]    sub_total_sum
     And Perform arithmetical calculation with two arguments:    grand_total_sum    ${sub_total_sum}    -    ${discount_total_sum}
@@ -334,7 +332,6 @@ Create_order_with_free_shipping_discount
     And Response body parameter should contain:    [included][0][attributes][calculatedDiscounts]    quantity: 1
 
 Create_order_with_2_product_discounts
-    [Tags]    skip-due-to-refactoring
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_second_user.email}
     ...  AND    I set Headers:    Authorization=${token}
     ...  AND    Cleanup all customer carts

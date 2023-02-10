@@ -161,6 +161,7 @@ I send a POST request:
     Set Test Variable    ${response_body}    ${response_body}
     Set Test Variable    ${response}    ${response}
     Set Test Variable    ${expected_self_link}    ${current_url}${path}
+    Log    ${response_body}
     [Return]    ${response_body}
 
 I send a POST request with data:
