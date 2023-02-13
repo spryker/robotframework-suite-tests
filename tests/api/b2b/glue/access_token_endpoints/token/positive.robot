@@ -1,14 +1,18 @@
 *** Settings ***
-Suite Setup       SuiteSetup
-Test Setup    TestSetup
-Resource    ../../../../../../resources/common/common_api.robot
+Resource        ../../../../../../resources/common/common_api.robot
+
+Suite Setup     SuiteSetup
+Test Setup      TestSetup
+
 Default Tags    glue
 
-*** Test Cases ***
 
+*** Test Cases ***
 Get_token_for_customer
     I set Headers:    Content-Type=${urlencoded_header_content_type}
-    I send a POST request with data:    /token    {"grant_type": "${grant_type.password}","username": "${yves_user.email}","password": "${yves_user.password}"}
+    I send a POST request with data:
+    ...    /token
+    ...    {"grant_type": "${grant_type.password}","username": "${yves_user.email}","password": "${yves_user.password}"}
     Response status code should be:    200
     Response reason should be:    OK
     And Response body parameter should be:    [token_type]    Bearer
@@ -17,14 +21,15 @@ Get_token_for_customer
     And Response body parameter should not be EMPTY:    [access_token]
     And Response body parameter should not be EMPTY:    [refresh_token]
 
-
 Get_token_using_refresh_token_for_customer
     [Setup]    Run Keywords    I set Headers:    Content-Type=${urlencoded_header_content_type}
-    ...  AND    I send a POST request with data:    /token    {"grant_type": "${grant_type.password}","username": "${yves_user.email}","password": "${yves_user.password}"}
-    ...  AND    Response status code should be:    200
-    ...  AND    Save value to a variable:    [refresh_token]    refresh_token
+    ...    AND    I send a POST request with data:    /token    {"grant_type": "${grant_type.password}","username": "${yves_user.email}","password": "${yves_user.password}"}
+    ...    AND    Response status code should be:    200
+    ...    AND    Save value to a variable:    [refresh_token]    refresh_token
     When I set Headers:    Content-Type=${urlencoded_header_content_type}
-    And I send a POST request with data:    /token    {"grant_type": "${grant_type.refresh_token}","refresh_token": "${refresh_token}"}
+    And I send a POST request with data:
+    ...    /token
+    ...    {"grant_type": "${grant_type.refresh_token}","refresh_token": "${refresh_token}"}
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response body parameter should be:    [token_type]    Bearer
@@ -32,4 +37,3 @@ Get_token_using_refresh_token_for_customer
     And Response body parameter should be less than:    [expires_in]    30000
     And Response body parameter should not be EMPTY:    [access_token]
     And Response body parameter should not be EMPTY:    [refresh_token]
-

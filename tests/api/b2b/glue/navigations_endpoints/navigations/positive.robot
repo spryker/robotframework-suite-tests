@@ -1,12 +1,16 @@
 *** Settings ***
-Suite Setup    SuiteSetup
-Test Setup    TestSetup
-Resource    ../../../../../../resources/common/common_api.robot
+Resource        ../../../../../../resources/common/common_api.robot
+
+Suite Setup     SuiteSetup
+Test Setup      TestSetup
+
 Default Tags    glue
+
 
 *** Test Cases ***
 ENABLER
     TestSetup
+
 Get_navigation_tree_using_valid_navigation_key
     When I send a GET request:    /navigations/MAIN_NAVIGATION
     Then Response status code should be:    200
@@ -30,13 +34,27 @@ Get_navigation_tree_using_valid_navigation_key
     And Response Body parameter should have datatype:    [data][attributes][nodes][0][children]    list
     And Response body parameter should not be EMPTY:    [data][attributes][nodes][0][nodeType]
     And Response body parameter should not be EMPTY:    [data][attributes][nodes][0][title]
-    And Each Array Element Of Array In Response Should Contain Property:    [data][attributes][nodes][0][children]   nodeType
-    And Each Array Element Of Array In Response Should Contain Property:    [data][attributes][nodes][0][children]   cssClass
-    And Each Array Element Of Array In Response Should Contain Property:    [data][attributes][nodes][0][children]   title
-    And Each Array Element Of Array In Response Should Contain Property:    [data][attributes][nodes][0][children]   url
-    And Each Array Element Of Array In Response Should Contain Property:    [data][attributes][nodes][0][children]   validFrom
-    And Each Array Element Of Array In Response Should Contain Property:    [data][attributes][nodes][0][children]   validTo
-    And Each Array Element Of Array In Response Should Contain Property:    [data][attributes][nodes][0][children]   children
+    And Each Array Element Of Array In Response Should Contain Property:
+    ...    [data][attributes][nodes][0][children]
+    ...    nodeType
+    And Each Array Element Of Array In Response Should Contain Property:
+    ...    [data][attributes][nodes][0][children]
+    ...    cssClass
+    And Each Array Element Of Array In Response Should Contain Property:
+    ...    [data][attributes][nodes][0][children]
+    ...    title
+    And Each Array Element Of Array In Response Should Contain Property:
+    ...    [data][attributes][nodes][0][children]
+    ...    url
+    And Each Array Element Of Array In Response Should Contain Property:
+    ...    [data][attributes][nodes][0][children]
+    ...    validFrom
+    And Each Array Element Of Array In Response Should Contain Property:
+    ...    [data][attributes][nodes][0][children]
+    ...    validTo
+    And Each Array Element Of Array In Response Should Contain Property:
+    ...    [data][attributes][nodes][0][children]
+    ...    children
     And Response body has correct self link internal
 
 Get_navigation_tree_using_valid_navigation_key_with_category_nodes_included
@@ -50,20 +68,36 @@ Get_navigation_tree_using_valid_navigation_key_with_category_nodes_included
     And Response Should Contain The Array Larger Than a Certain Size:    [data][relationships]    0
     And Response body parameter should not be EMPTY:    [data][relationships]
     And Response body parameter should not be EMPTY:    [data][relationships][category-nodes]
-    And Each Array Element Of Array In Response Should Contain Property:    [data][relationships][category-nodes][data]    type
-    And Each Array Element Of Array In Response Should Contain Property:    [data][relationships][category-nodes][data]    id
+    And Each Array Element Of Array In Response Should Contain Property:
+    ...    [data][relationships][category-nodes][data]
+    ...    type
+    And Each Array Element Of Array In Response Should Contain Property:
+    ...    [data][relationships][category-nodes][data]
+    ...    id
     And Response body parameter should not be EMPTY:    [included]
     And Each Array Element Of Array In Response Should Contain Property:    [included]    type
     And Each Array Element Of Array In Response Should Contain Property:    [included]    id
     And Each Array Element Of Array In Response Should Contain Property:    [included]    attributes
     And Each Array Element Of Array In Response Should Contain Property:    [included]    links
     Each array element of array in response should contain nested property:    [included]    [links]    self
-    And Each Array Element Of Array In Response Should Contain Property With Value:    [included]    type    category-nodes
+    And Each Array Element Of Array In Response Should Contain Property With Value:
+    ...    [included]
+    ...    type
+    ...    category-nodes
     And Each Array Element Of Array In Response Should Contain Nested Property:    [included]    attributes    nodeId
     And Each Array Element Of Array In Response Should Contain Nested Property:    [included]    attributes    name
-    And Each Array Element Of Array In Response Should Contain Nested Property:    [included]    attributes    metaTitle
-    And Each Array Element Of Array In Response Should Contain Nested Property:    [included]    attributes    metaKeywords
-    And Each Array Element Of Array In Response Should Contain Nested Property:    [included]    attributes    metaDescription
+    And Each Array Element Of Array In Response Should Contain Nested Property:
+    ...    [included]
+    ...    attributes
+    ...    metaTitle
+    And Each Array Element Of Array In Response Should Contain Nested Property:
+    ...    [included]
+    ...    attributes
+    ...    metaKeywords
+    And Each Array Element Of Array In Response Should Contain Nested Property:
+    ...    [included]
+    ...    attributes
+    ...    metaDescription
     And Each Array Element Of Array In Response Should Contain Nested Property:    [included]    attributes    isActive
     And Each Array Element Of Array In Response Should Contain Nested Property:    [included]    attributes    order
     And Each Array Element Of Array In Response Should Contain Nested Property:    [included]    attributes    url

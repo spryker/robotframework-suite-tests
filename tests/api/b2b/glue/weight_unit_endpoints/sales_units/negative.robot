@@ -1,13 +1,16 @@
 *** Settings ***
-Suite Setup       SuiteSetup
-Test Setup        TestSetup
-Resource    ../../../../../../resources/common/common_api.robot
+Resource        ../../../../../../resources/common/common_api.robot
+
+Suite Setup     SuiteSetup
+Test Setup      TestSetup
+
 Default Tags    glue
+
 
 *** Test Cases ***
 ENABLER
     TestSetup
-    
+
 Get_a_measurement_unit_with_non_existent_sku
     When I send a GET request:    /concrete-products/fake/sales-units
     Then Response status code should be:    404
