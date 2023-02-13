@@ -18,10 +18,10 @@ Create_customer_address_with_missing_required_fields
     And I send a POST request:
     ...    /customers/${yves_user.reference}/addresses
     ...    {"data": {"type": "addresses","attributes": {"address3": "${default.address3}"}}}
-    Then Response status code should be:    422
+    Then Response status code should be:    ${422}
     And Response reason should be:    Unprocessable Content
     And Each array element of array in response should contain property with value:    [errors]    code    901
-    And Each array element of array in response should contain property with value:    [errors]    status    422
+    And Each array element of array in response should contain property with value:    [errors]    status    ${422}
     And Array in response should contain property with value:
     ...    [errors]
     ...    detail
@@ -66,10 +66,10 @@ Create_customer_address_with_empty_fields
     And I send a POST request:
     ...    /customers/${yves_user.reference}/addresses
     ...    {"data": {"type": "addresses","attributes": {"salutation": "","firstName": "","lastName": "","address1": "","address2": "","address3": "","zipCode": "","city": "","country": "","iso2Code": "","company":"","phone": "","isDefaultShipping": "","isDefaultBilling": ""}}}
-    Then Response status code should be:    422
+    Then Response status code should be:    ${422}
     And Response reason should be:    Unprocessable Content
     And Each array element of array in response should contain property with value:    [errors]    code    901
-    And Each array element of array in response should contain property with value:    [errors]    status    422
+    And Each array element of array in response should contain property with value:    [errors]    status    ${422}
     And Array in response should contain property with value:
     ...    [errors]
     ...    detail
@@ -105,7 +105,7 @@ Create_customer_address_with_invalid_salutation
     And I send a POST request:
     ...    /customers/${yves_user.reference}/addresses
     ...    {"data": {"type": "addresses","attributes": {"salutation": "Fake","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}","address1": "${default.address1}","address2": "${default.address2}","zipCode": "${default.zipCode}","city": "${default.city}","iso2Code": "${default.iso2Code}","isDefaultShipping": ${default.shipping_status},"isDefaultBilling": ${default.billing_status}}}}
-    Then Response status code should be:    422
+    Then Response status code should be:    ${422}
     And Response reason should be:    Unprocessable Content
     And Response should return error message:    salutation =\u003E The value you selected is not a valid choice.
 
@@ -326,10 +326,10 @@ Patch_customer_address_with_empty_required_fields
     When I send a PATCH request:
     ...    /customers/${yves_user.reference}/addresses/${address_uid}
     ...    {"data": {"type": "addresses","attributes": {"salutation": None,"firstName": None,"lastName": None, "address1": None,"address2": None,"zipCode": None,"city": None,"iso2Code": None}}}
-    Then Response status code should be:    422
+    Then Response status code should be:    ${422}
     And Response reason should be:    Unprocessable Content
     And Each array element of array in response should contain property with value:    [errors]    code    901
-    And Each array element of array in response should contain property with value:    [errors]    status    422
+    And Each array element of array in response should contain property with value:    [errors]    status    ${422}
     And Array in response should contain property with value:
     ...    [errors]
     ...    detail
@@ -374,7 +374,7 @@ Patch_customer_address_with_invalid_salutation
     When I send a PATCH request:
     ...    /customers/${yves_user.reference}/addresses/${address_uid}
     ...    {"data": {"type": "addresses","attributes": {"salutation": "Fake"}}}
-    Then Response status code should be:    422
+    Then Response status code should be:    ${422}
     And Response reason should be:    Unprocessable Content
     And Response should return error message:    salutation =\u003E The value you selected is not a valid choice.
     [Teardown]    Run Keywords    I send a DELETE request:    /customers/${yves_user.reference}/addresses/${address_uid}

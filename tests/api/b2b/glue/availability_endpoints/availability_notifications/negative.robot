@@ -79,7 +79,7 @@ Subscribe_to_availability_notifications_with_invalid_sku
     Then Response status code should be:    404
     And Response reason should be:    Not Found
     And Each array element of array in response should contain property with value:    [errors]    code    4601
-    And Each array element of array in response should contain property with value:    [errors]    status    404
+    And Each array element of array in response should contain property with value:    [errors]    status    ${404}
     And Array in response should contain property with value:    [errors]    detail    Product not found.
 
 Subscribe_to_availability_notifications_with_invalid_email

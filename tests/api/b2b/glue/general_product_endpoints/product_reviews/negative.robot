@@ -94,10 +94,10 @@ Create_a_product_review_with_empty_fields
     When I send a POST request:
     ...    /abstract-products/${abstract.with_review.sku}/product-reviews
     ...    {"data": {"type": "product-reviews","attributes": {"rating": "","nickname": "","summary": "","description": ""}}}
-    Then Response status code should be:    422
+    Then Response status code should be:    ${422}
     And Response reason should be:    Unprocessable Content
     And Each array element of array in response should contain property with value:    [errors]    code    901
-    And Each array element of array in response should contain property with value:    [errors]    status    422
+    And Each array element of array in response should contain property with value:    [errors]    status    ${422}
     And Array in response should contain property with value:
     ...    [errors]
     ...    detail
@@ -121,10 +121,10 @@ Create_a_product_review_with_missing_fields
     When I send a POST request:
     ...    /abstract-products/${abstract.with_review.sku}/product-reviews
     ...    {"data": {"type": "product-reviews","attributes": {}}}
-    Then Response status code should be:    422
+    Then Response status code should be:    ${422}
     And Response reason should be:    Unprocessable Content
     And Each array element of array in response should contain property with value:    [errors]    code    901
-    And Each array element of array in response should contain property with value:    [errors]    status    422
+    And Each array element of array in response should contain property with value:    [errors]    status    ${422}
     And Array in response should contain property with value:    [errors]    detail    rating => This field is missing.
     And Array in response should contain property with value:
     ...    [errors]

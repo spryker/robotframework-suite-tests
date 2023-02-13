@@ -17,7 +17,7 @@ Request_access_token_by_invalid_company_id
     When I send a POST request:
     ...    /company-user-access-tokens
     ...    {"data":{"type":"company-user-access-tokens","attributes":{"idCompanyUser":"35235"}}}
-    Then Response status code should be:    422
+    Then Response status code should be:    ${422}
     And Response reason should be:    Unprocessable Content
     And Response should return error code:    901
     And Response should return error message:    idCompanyUser => This is not a valid UUID.
@@ -28,7 +28,7 @@ Request_access_token_by_empty_company_id
     When I send a POST request:
     ...    /company-user-access-tokens
     ...    {"data":{"type":"company-user-access-tokens","attributes":{"idCompanyUser":""}}}
-    Then Response status code should be:    422
+    Then Response status code should be:    ${422}
     And Response reason should be:    Unprocessable Content
     And Response should return error code:    901
     And Response should return error message:    idCompanyUser => This value should not be blank.

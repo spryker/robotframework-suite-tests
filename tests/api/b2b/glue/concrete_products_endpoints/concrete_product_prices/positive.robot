@@ -51,7 +51,7 @@ Request_concrete_product_with_default_and_original_prices
     And Each array element of array in response should contain property with value:
     ...    [data][0][attributes][prices]
     ...    netAmount
-    ...    None
+    ...    ${None}
     And Each array element of array in response should contain property with value:
     ...    [data][0][attributes][prices]
     ...    volumePrices

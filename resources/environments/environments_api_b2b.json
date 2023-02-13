@@ -481,8 +481,11 @@
        },
        "subcategory_node":{
           "storage_name":"Vegetables",
-          "storage_url":"/en/foods/vegetables"
+          "storage_url":"/en/foods/vegetables",
+          "storage_name_2":"Fish",
+          "storage_url_2":"/en/foods/fish"
        },
+           
        "brand_name":"verbatim",
        "cart_permission_group_id":"1"
     },

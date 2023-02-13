@@ -18,7 +18,7 @@ Get_category_trees
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Each array element of array in response should contain property with value:    [data]    type    category-trees
-    And Each array element of array in response should contain property with value:    [data]    id    None
+    And Each array element of array in response should contain property with value:    [data]    id    ${None}
     And Response body parameter should be:    [data][0][type]    category-trees
     And Response body parameter should be:    [data][0][id]    None
     And Each array element of array in response should contain property:
@@ -46,12 +46,8 @@ Get_category_trees
     ...    [data][0][attributes][categoryNodesStorage][1][children][0][nodeId]
     And Response body parameter should not be EMPTY:
     ...    [data][0][attributes][categoryNodesStorage][1][children][0][order]
-    And Response body parameter should be:
-    ...    [data][0][attributes][categoryNodesStorage][1][children][1][name]
-    ...    ${subcategory_node.storage_name}
-    And Response body parameter should be:
-    ...    [data][0][attributes][categoryNodesStorage][1][children][1][url]
-    ...    ${subcategory_node.storage_url}
+    And Response body parameter should be in:    [data][0][attributes][categoryNodesStorage][1][children][1][name]   ${subcategory_node.storage_name}    ${subcategory_node.storage_name_2}  
+    And Response body parameter should be in:    [data][0][attributes][categoryNodesStorage][1][children][1][url]   ${subcategory_node.storage_url}    ${subcategory_node.storage_url_2}  
     And Response should contain the array of a certain size:
     ...    [data][0][attributes][categoryNodesStorage][1][children][0][children]
     ...    0
