@@ -4,6 +4,9 @@
        "glue_url":"http://glue.de.spryker.local",
        "bapi_url":"http://backend-api.de.spryker.local/api/rest"
     },
+	"dataType": {
+			"arrow": []
+		},
     "database":{
        "db_host":"127.0.0.1",
        "db_port":"3306",
@@ -585,5 +588,5 @@
           "no_longer_needed":"No longer needed",
           "qty":"3"
        }
-    }
- }
+
+ }}

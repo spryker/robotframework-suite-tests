@@ -94,7 +94,7 @@ Abstract_prices_original_price
     And Each array element of array in response should contain property with value:
     ...    [data][0][attributes][prices]
     ...    netAmount
-    ...    None
+    ...    ${None}
     And Each array element of array in response should contain value:
     ...    [data][0][attributes][prices]
     ...    ${currency.eur.code}
@@ -107,5 +107,5 @@ Abstract_prices_original_price
     And Each array element of array in response should contain property with value:
     ...    [data][0][attributes][prices]
     ...    volumePrices
-    ...    []
+    ...    ${arrow}
     And Response body has correct self link

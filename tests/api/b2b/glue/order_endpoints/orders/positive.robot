@@ -212,7 +212,7 @@ Get_order_by_order_id_with_bundle_product
     And Each array element of array in response should contain property with value:
     ...    [data][attributes][items]
     ...    bundleItemIdentifier
-    ...    None
+    ...    ${None}
     And Each array element of array in response should contain property:
     ...    [data][attributes][items]
     ...    relatedBundleItemIdentifier
