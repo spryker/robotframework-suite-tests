@@ -53,6 +53,10 @@
           "email":"kevin@spryker.com",
           "password":"change123"
        },
+       "yves_seventh_user":{
+         "email":"andrew@ottom.de",
+         "password":"change123"
+       },
        "zed_admin":{
           "email":"admin@spryker.com",
           "password":"change123"
