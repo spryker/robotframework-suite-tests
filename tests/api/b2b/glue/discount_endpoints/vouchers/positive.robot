@@ -14,6 +14,7 @@ ENABLER
 #####POST#####
 
 Adding_voucher_code_to_cart_of_logged_in_customer
+    [Documentation]    Fails because of CC-16735 ( CC-16719 is closed as duplicate)
     [Tags]    skip-due-to-issue
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}
@@ -59,6 +60,7 @@ Adding_voucher_code_to_cart_of_logged_in_customer
     ...    AND    Response status code should be:    204
 
 Checking_voucher_is_applied_after_order_is_placed
+    [Documentation]    Fails because of CC-16735 ( CC-16719 is closed as duplicate)
     [Tags]    skip-due-to-issue
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_second_user.email}
     ...    AND    I set Headers:    Authorization=${token}
@@ -111,6 +113,7 @@ Checking_voucher_is_applied_after_order_is_placed
     ...    ${discount_voucher_code}
 
 Adding_two_vouchers_with_different_priority_to_the_same_cart
+    [Documentation]    Fails because of CC-16735 ( CC-16719 is closed as duplicate)
     [Tags]    skip-due-to-issue
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}
@@ -171,6 +174,7 @@ Adding_two_vouchers_with_different_priority_to_the_same_cart
     ...    AND    Response status code should be:    204
 
 Adding_voucher_with_cart_rule_with_to_the_same_cart
+    [Documentation]    Fails because of CC-16735 ( CC-16719 is closed as duplicate)
     [Tags]    skip-due-to-issue
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}
@@ -222,6 +226,7 @@ Adding_voucher_with_cart_rule_with_to_the_same_cart
 ####### DELETE #######
 
 Deleting_voucher_from_cart_of_logged_in_customer
+    [Documentation]    Fails because of CC-16735 ( CC-16719 is closed as duplicate)
     [Tags]    skip-due-to-issue
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}
