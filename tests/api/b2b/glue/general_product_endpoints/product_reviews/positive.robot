@@ -65,6 +65,7 @@ Get_product_reviews_for_product_with_no_reviews
     And Response body has correct self link
 
 Get_product_review_by_id
+    [Documentation]    not impemented yet - will be covered as part of https://spryker.aha.io/features/REVIEW-2, bug CC-16486 - additional issue with self link
     [Tags]    skip-due-to-issue
     [Setup]    Run Keywords    I send a GET request:    /abstract-products/${abstract.with_review.sku}/product-reviews
     ...    AND    Save value to a variable:    [data][0][id]    review_id
@@ -83,6 +84,7 @@ Get_product_review_by_id
     And Response body parameter should not be EMPTY:    [data][links][self]
 
 Create_a_product_review
+    [Documentation]    not impemented yet - will be covered as part of https://spryker.aha.io/features/REVIEW-2, bug CC-16486 - additional issue with self link
     [Tags]    skip-due-to-issue
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}

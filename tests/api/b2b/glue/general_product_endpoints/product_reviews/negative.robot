@@ -12,6 +12,7 @@ ENABLER
     TestSetup
 
 Get_a_review_with_non_existent_review_id
+    [Documentation]    not impemented yet - will be covered as part of https://spryker.aha.io/features/REVIEW-2
     [Tags]    skip-due-to-issue
     When I send a GET request:    /abstract-products/${abstract.with_review.sku}/product-reviews/fake
     Then Response status code should be:    404
@@ -34,6 +35,7 @@ Get_reviews_with_missing_abstract_product
     And Response should return error message:    Abstract product sku is not specified.
 
 Get_review_by_id_with_missing_abstract_product
+    [Documentation]    not impemented yet - will be covered as part of https://spryker.aha.io/features/REVIEW-2
     [Tags]    skip-due-to-issue
     When I send a GET request:    /abstract-products//product-reviews/78
     Then Response status code should be:    400
@@ -42,6 +44,7 @@ Get_review_by_id_with_missing_abstract_product
     And Response should return error message:    Abstract product sku is not specified.
 
 Get_a_reviews_with_non_existent_abstract_product
+   [Documentation]    not impemented yet - will be covered as part of https://spryker.aha.io/features/REVIEW-2
     [Tags]    skip-due-to-issue
     When I send a GET request:    /abstract-products/fake/product-reviews/78
     Then Response status code should be:    404
