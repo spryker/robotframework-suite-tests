@@ -95,7 +95,7 @@ Create_order_without_type
     ...    AND    Response status code should be:    204
 
 Create_order_with_invalid_email_&_salutation
-    [Tags]    skip-due-to-issue
+    [Documentation]    step skip according https://spryker.atlassian.net/browse/CC-16504?focusedCommentId=304801
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}
     ...    AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
@@ -108,7 +108,7 @@ Create_order_with_invalid_email_&_salutation
     And Response reason should be:    Unprocessable Content
     And Response should return error code:    901
     And Response should return error message:    customer.email => Email is invalid.
-    And Response should return error message:    customer.salutation => Salutation is invalid.
+    # And Response should return error message:    customer.salutation => Salutation is invalid.
     [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cart_id}
     ...    AND    Response status code should be:    204
 

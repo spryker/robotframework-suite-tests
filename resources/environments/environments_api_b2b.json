@@ -349,6 +349,7 @@
                 "superattribute":"bezugsfarbe"
              },
              "with_stock_and_never_out_of_stock_sku":"M87",
+             "with_stock_and_never_out_of_stock_sku_2":"M719",
              "with_no_stock_and_never_out_of_stock_sku":"M90851",
              "with_3_concretes":{
                 "sku":"M29456",

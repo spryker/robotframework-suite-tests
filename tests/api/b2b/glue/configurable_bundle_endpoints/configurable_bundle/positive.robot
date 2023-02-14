@@ -133,7 +133,8 @@ Get_configurable_bundle_templates_by_configurable_bundle.template_id
     ...    externalUrlSmall
 
 Get_configurable_bundle_templates_including_concrete_products_concrete_product_prices_concrete_product_image_sets
-    [Tags]    skip-due-to-issue
+    [Documentation]    https://spryker.atlassian.net/browse/CC-16634
+    [Tags]    skip-due-to-issue    
     When I send a GET request:
     ...    /configurable-bundle-templates/${configurable_bundle.template_id}?include=configurable-bundle-template-slots,concrete-products,concrete-product-prices,concrete-product-image-sets
     Then Response status code should be:    200
