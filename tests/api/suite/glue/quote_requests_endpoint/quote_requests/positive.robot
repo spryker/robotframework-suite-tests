@@ -8,9 +8,8 @@ Default Tags    glue
 ENABLER
     TestSetup
 
-##POST##
+#POST#
 Create_quote_request
-    [Tags]    skip-due-to-refactoring
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
     When I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
@@ -44,12 +43,12 @@ Create_quote_request
     And Response body parameter should be greater than:    [data][attributes][shownVersion][cart][totals][grandTotal]    1
     And Response body parameter should be greater than:    [data][attributes][shownVersion][cart][totals][priceToPay]    1
     And Response body parameter should contain:    [data][attributes][shownVersion][cart]    billingAddress
-    And Response body parameter should be:    [data][attributes][shownVersion][cart][items][0][groupKey]    ${concrete.available_product.with_stock_and_never_out_of_stock.sku_1}
-    And Response body parameter should be:    [data][attributes][shownVersion][cart][items][1][groupKey]    ${concrete.available_product.with_stock_and_never_out_of_stock.sku_2}
+    And Response body parameter should contain:    [data][attributes][shownVersion][cart][items][0][groupKey]    ${concrete.available_product.with_stock_and_never_out_of_stock.sku_1}
+    And Response body parameter should contain:    [data][attributes][shownVersion][cart][items][1][groupKey]    ${concrete.available_product.with_stock_and_never_out_of_stock.sku_2}
     And Each array element of array in response should contain property:    [data][attributes][shownVersion][cart][items]    productOfferReference
     And Each array element of array in response should contain property:    [data][attributes][shownVersion][cart][items]    merchantReference
     And Response body parameter should be:    [data][attributes][shownVersion][cart][items][0][sku]    ${concrete.available_product.with_stock_and_never_out_of_stock.sku_1}
-    And Response body parameter should be:    [data][attributes][shownVersion][cart][items][0][sku]    ${concrete.available_product.with_stock_and_never_out_of_stock.sku_1}
+    And Response body parameter should be:    [data][attributes][shownVersion][cart][items][1][sku]    ${concrete.available_product.with_stock_and_never_out_of_stock.sku_2}
     And Each array element of array in response should contain nested property with value:    [data][attributes][shownVersion][cart][items]    quantity    1
     And Each array element of array in response should contain property:    [data][attributes][shownVersion][cart][items]    quantity
     And Each array element of array in response should contain property:    [data][attributes][shownVersion][cart][items]    abstractSku
@@ -64,7 +63,6 @@ Create_quote_request
     And Response body has correct self link for created entity:   ${quote_request_id}
     [Teardown]    Run Keywords    I send a DELETE request:     /carts/${cart_id}
     ...    AND    Response status code should be:    204
-
 
 Create_quote_request_with_included_customers_&_comapny_users_&_company_business_units_and_concrete_products
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
@@ -129,10 +127,7 @@ Create_quote_request_with_included_customers_&_comapny_users_&_company_business_
     [Teardown]    Run Keywords    I send a DELETE request:     /carts/${cart_id}
     ...    AND    Response status code should be:    204
 
-
-
 Create_quote_request_without_delivery_date_and_note
-    [Tags]    skip-due-to-refactoring
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
     When I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
@@ -166,12 +161,12 @@ Create_quote_request_without_delivery_date_and_note
     And Response body parameter should be greater than:    [data][attributes][shownVersion][cart][totals][grandTotal]    1
     And Response body parameter should be greater than:    [data][attributes][shownVersion][cart][totals][priceToPay]    1
     And Response body parameter should contain:    [data][attributes][shownVersion][cart]    billingAddress
-    And Response body parameter should be:    [data][attributes][shownVersion][cart][items][0][groupKey]    ${concrete.available_product.with_stock_and_never_out_of_stock.sku_1}
-    And Response body parameter should be:    [data][attributes][shownVersion][cart][items][1][groupKey]    ${concrete.available_product.with_stock_and_never_out_of_stock.sku_2}
+    And Response body parameter should contain:    [data][attributes][shownVersion][cart][items][0][groupKey]    ${concrete.available_product.with_stock_and_never_out_of_stock.sku_1}
+    And Response body parameter should contain:    [data][attributes][shownVersion][cart][items][1][groupKey]    ${concrete.available_product.with_stock_and_never_out_of_stock.sku_2}
     And Each array element of array in response should contain property:    [data][attributes][shownVersion][cart][items]    productOfferReference
     And Each array element of array in response should contain property:    [data][attributes][shownVersion][cart][items]    merchantReference
     And Response body parameter should be:    [data][attributes][shownVersion][cart][items][0][sku]    ${concrete.available_product.with_stock_and_never_out_of_stock.sku_1}
-    And Response body parameter should be:    [data][attributes][shownVersion][cart][items][0][sku]    ${concrete.available_product.with_stock_and_never_out_of_stock.sku_1}
+    And Response body parameter should be:    [data][attributes][shownVersion][cart][items][1][sku]    ${concrete.available_product.with_stock_and_never_out_of_stock.sku_2}
     And Each array element of array in response should contain nested property with value:    [data][attributes][shownVersion][cart][items]    quantity    1
     And Each array element of array in response should contain property:    [data][attributes][shownVersion][cart][items]    quantity
     And Each array element of array in response should contain property:    [data][attributes][shownVersion][cart][items]    abstractSku
@@ -186,9 +181,6 @@ Create_quote_request_without_delivery_date_and_note
     And Response body has correct self link for created entity:   ${quote_request_id}
     [Teardown]    Run Keywords    I send a DELETE request:     /carts/${cart_id}
     ...    AND    Response status code should be:    204
-
-
-
 
 Create_quote_request_with_empty_meta_data
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
@@ -242,9 +234,7 @@ Create_quote_request_with_empty_meta_data
     [Teardown]    Run Keywords    I send a DELETE request:     /carts/${cart_id}
     ...    AND    Response status code should be:    204
 
-
 Create_quote_request_for_cart_with_full_access_permissions
-    [Tags]    skip-due-to-refactoring
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    Save value to a variable:    [data][attributes][accessToken]    userToken
     ...    AND    I set Headers:    Authorization=${token}  
@@ -253,9 +243,9 @@ Create_quote_request_for_cart_with_full_access_permissions
     ...    AND    I send a POST request:    /carts/${cartId}/items    {"data":{"type":"items","attributes":{"sku":"${concrete.available_product.with_stock_and_never_out_of_stock.sku_1}","quantity":1}}}
     ...    AND    Response status code should be:    201
     ...    AND    I send a GET request:    /company-users
-    ...    AND    Save value to a variable:    [data][6][id]    companyUserId
+    ...    AND    Get company user id by customer reference:    ${yves_fifth_user.reference}
     ## Giving_full_cart_access_to_the_User_by_using_quote_request.cart_permission_id ##
-    ...    AND    I send a POST request:    /carts/${cartId}/shared-carts    {"data":{"type":"shared-carts","attributes":{"idCompanyUser":"${companyUserId}","idCartPermissionGroup":${quote_request.cart_permission_id}}}
+    ...    AND    I send a POST request:    /carts/${cartId}/shared-carts    {"data":{"type":"shared-carts","attributes":{"idCompanyUser":"${companyUserId}","idCartPermissionGroup":${quote_request.cart_permission_id}}}}
     ...    AND    Save value to a variable:    [data][id]    shared_cart_id
     ...    AND    I get access token for the customer:    ${yves_fifth_user.email}
     ...    AND    I set Headers:    Authorization=${token}
@@ -305,9 +295,7 @@ Create_quote_request_for_cart_with_full_access_permissions
     ...    AND    Response status code should be:    204
     ...    AND    Response reason should be:    No Content
 
-
-
-##GET##
+# #GET#
 Retrieves_quote_request_list_when_no_RFQ
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_sixth_user.email}
     ...  AND    I set Headers:    Authorization=${token}
@@ -429,7 +417,7 @@ Retrieves_quote_request_by_requestId
     ...    AND    Response status code should be:    204
 
 Retrieve_quote_request_version
-     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}
     ...    AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
     ...    AND    Save value to a variable:    [data][id]    cart_id
@@ -483,9 +471,9 @@ Retrieve_quote_request_version
     ...    AND    Response status code should be:    204
 
 
-##PATCH##
+#PATCH#
 Update_quote_request
-     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}
     ...    AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
     ...    AND    Save value to a variable:    [data][id]    cart_id

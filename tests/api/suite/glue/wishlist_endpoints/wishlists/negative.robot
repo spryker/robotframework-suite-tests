@@ -17,7 +17,7 @@ Getting_wishlist_by_invalid_Access_Token
     And Response should return error message:    Invalid access token.
     
 Getting_wishlist_without_Access_Token
-     [Setup]    I set Headers:    Authorization=
+    [Setup]    I set Headers:    Authorization=
     When I send a GET request:    /wishlists
     And Response should return error code:    002
     And Response status code should be:    403
@@ -25,7 +25,7 @@ Getting_wishlist_without_Access_Token
     And Response should return error message:    Missing access token.
 
 Getting_wishlist_with_invalid_id
-     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}
     When I send a GET request:    /wishlists/2345hasd
     Then Response status code should be:    404 
@@ -41,9 +41,9 @@ Creating_wishlist_with_missing_name
     And Response should return error code:    901
     And Response reason should be:    Unprocessable Content
 
-#CC-16553
 Creating_wishlist_with_space_in_name
-    [Tags]    skip-due-to-refactoring
+    [Documentation]    Skip due to issue https://spryker.atlassian.net/browse/CC-16553
+    [Tags]    skip-due-to-issue
     Run Keywords    I GET access token for the customer:    ${yves_second_user.email}
     ...    AND     I set headers:    authorization=${token}
     When I send a POST request:    /wishlists    {"data": {"type": "wishlists","attributes": {"name": " "}}}

@@ -11,13 +11,13 @@ ENABLER
 #POST requests
 
 Add_voucher_code_to_cart
-    [Tags]    skip-due-to-refactoring
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}
+    ...    AND    Cleanup all customer carts
     ...    AND    Find or create customer cart
     ...    AND    Cleanup all items in the cart:    ${cart_id}
     ...    AND    I send a POST request:    /carts/${cart_id}/items    {"data": {"type": "items","attributes": {"sku": "${product_with_voucher_code.concrete_sku}","quantity": 3}}}
-    ...    AND    Get voucher code by discountId from Database:    ${discountId}
+    ...    AND    Get voucher code by discountId from Database:    ${discount_voucher_type_id}
         When I send a POST request:    /carts/${cart_id}/vouchers    {"data": {"type": "vouchers","attributes": {"code": "${discount_voucher_code}"}}}
     Then Response status code should be:    201
     And Response reason should be:    Created
@@ -44,11 +44,10 @@ Add_voucher_code_to_cart
     And Response body parameter should not be EMPTY:    [data][links][self]
 
 Add_voucher_code_to_guest_user_cart
-    [Tags]    skip-due-to-refactoring
     [Setup]    Run Keywords    Create a guest cart:    ${x_anonymous_prefix}${random}    ${product_with_voucher_code.concrete_sku}    1
     ...    AND    Cleanup all items in the guest cart:    ${guest_cart_id}
     ...    AND    I send a POST request:    /guest-carts/${guest_cart_id}/guest-cart-items    {"data": {"type": "guest-cart-items","attributes": {"sku": "${product_with_voucher_code.concrete_sku}","quantity": 3}}}
-    ...    AND    Get voucher code by discountId from Database:    ${discountId}
+    ...    AND    Get voucher code by discountId from Database:    ${discount_voucher_type_id}
     When I send a POST request:    /guest-carts/${guest_cart_id}/vouchers    {"data": {"type": "vouchers","attributes": {"code": "${discount_voucher_code}"}}}
     Then Response status code should be:    201
     And Response reason should be:    Created
@@ -76,13 +75,12 @@ Add_voucher_code_to_guest_user_cart
     [Teardown]    Cleanup all items in the guest cart:    ${guest_cart_id}
 
 Add_voucher_code_to_cart_including_vouchers
-    [Tags]    skip-due-to-refactoring
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}
     ...    AND    Find or create customer cart
     ...    AND    Cleanup all items in the cart:    ${cart_id}
     ...    AND    I send a POST request:    /carts/${cart_id}/items    {"data": {"type": "items","attributes": {"sku": "${product_with_voucher_code.concrete_sku}","quantity": 3}}}
-    ...    AND    Get voucher code by discountId from Database:    ${discountId}
+    ...    AND    Get voucher code by discountId from Database:    ${discount_voucher_type_id}
     When I send a POST request:    /carts/${cart_id}/vouchers?include=vouchers    {"data": {"type": "vouchers","attributes": {"code": "${discount_voucher_code}"}}}
     Then Response status code should be:    201
     And Response reason should be:    Created
@@ -108,11 +106,10 @@ Add_voucher_code_to_cart_including_vouchers
     And Response body parameter should not be EMPTY:    [included][0][links][self]
 
 Add_voucher_code_to_guest_user_cart_including_vouchers
-    [Tags]    skip-due-to-refactoring
     [Setup]    Run Keywords    Create a guest cart:    ${x_anonymous_prefix}${random}    ${product_with_voucher_code.concrete_sku}    1
     ...    AND    Cleanup all items in the guest cart:    ${guest_cart_id}
     ...    AND    I send a POST request:    /guest-carts/${guest_cart_id}/guest-cart-items    {"data": {"type": "guest-cart-items","attributes": {"sku": "${product_with_voucher_code.concrete_sku}","quantity": 3}}}
-    ...    AND    Get voucher code by discountId from Database:    ${discountId}
+    ...    AND    Get voucher code by discountId from Database:    ${discount_voucher_type_id}
     When I send a POST request:    /guest-carts/${guest_cart_id}/vouchers?include=vouchers    {"data": {"type": "vouchers","attributes": {"code": "${discount_voucher_code}"}}}
     Then Response status code should be:    201
     And Response reason should be:    Created
@@ -147,7 +144,7 @@ Delete_voucher_code_from_cart
     ...    AND    Find or create customer cart
     ...    AND    Cleanup all items in the cart:    ${cart_id}
     ...    AND    I send a POST request:    /carts/${cart_id}/items    {"data": {"type": "items","attributes": {"sku": "${product_with_voucher_code.concrete_sku}","quantity": 3}}}
-    ...    AND    Get voucher code by discountId from Database:    ${discountId}
+    ...    AND    Get voucher code by discountId from Database:    ${discount_voucher_type_id}
     ...    AND    I send a POST request:    /carts/${cart_id}/vouchers    {"data": {"type": "vouchers","attributes": {"code": "${discount_voucher_code}"}}}
     When I send a DELETE request:    /carts/${cart_id}/vouchers/${discount_voucher_code}
     Then Response status code should be:    204
@@ -157,7 +154,7 @@ Delete_voucher_code_from_guest_user_cart
     [Setup]    Run Keywords    Create a guest cart:    ${x_anonymous_prefix}${random}    ${product_with_voucher_code.concrete_sku}    1
     ...    AND    Cleanup all items in the guest cart:    ${guest_cart_id}
     ...    AND    I send a POST request:    /guest-carts/${guest_cart_id}/guest-cart-items    {"data": {"type": "guest-cart-items","attributes": {"sku": "${product_with_voucher_code.concrete_sku}","quantity": 3}}}
-    ...    AND    Get voucher code by discountId from Database:    ${discountId}
+    ...    AND    Get voucher code by discountId from Database:    ${discount_voucher_type_id}
     ...   AND    I send a POST request:    /guest-carts/${guest_cart_id}/vouchers    {"data": {"type": "vouchers","attributes": {"code": "${discount_voucher_code}"}}}
     When I send a DELETE request:    /guest-carts/${guest_cart_id}/vouchers/${discount_voucher_code}
     Then Response status code should be:    204

@@ -84,12 +84,11 @@ Update_guest_cart_without_type
     And Response should return error message:    Post data is invalid.
 
 Update_guest_cart_update_price_mode_with_items_in_the_cart
-    [Tags]    skip-due-to-refactoring
     [Setup]    Run Keywords    Create a guest cart:    ${random}    ${concrete_product_with_concrete_product_alternative.sku}    1
             ...   AND    I set Headers:     X-Anonymous-Customer-Unique-Id=${x_anonymous_customer_unique_id}
     When I send a PATCH request:    /guest-carts/${guest_cart_id}    {"data": {"type": "guest-carts","attributes": {"priceMode": "${mode.net}"}}}
     Then Response status code should be:    422
     And Response reason should be:    Unprocessable Content
-    And Each array element of array in response should contain property with value:    [errors]    status    422
+    And Each array element of array in response should contain property with value:    [errors]    status    ${422}
     And Response body parameter should be:    [errors][0][code]    111
     And Response body parameter should be:    [errors][0][detail]    Can’t switch price mode when there are items in the cart.

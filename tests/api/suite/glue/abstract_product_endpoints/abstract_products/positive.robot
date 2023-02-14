@@ -99,8 +99,6 @@ Abstract_product_with_abstract_includes_for_labels
     And Response include should contain certain entity type:    product-labels
     And Response include element has self link:   product-labels
     
-
-# Bug CC-14879
 Abstract_product_with_abstract_includes_for_reviews
     When I send a GET request:    /abstract-products/${abstract_product.product_with_reviews.sku}?include=product-reviews
     Then Response status code should be:    200
@@ -158,8 +156,8 @@ Abstract_product_with_concrete_includes_nested_offers
     And Response body parameter should be:    [data][attributes][sku]    ${abstract_product.product_with_concrete_offers.sku}
     And Response body parameter should be:    [data][attributes][name]    ${abstract_product.product_with_concrete_offers.name}
     And Response body has correct self link internal
-    And Response should contain the array of a certain size:    [data][relationships][concrete-products][data]    8
-    And Response should contain the array larger than a certain size:    [included]    4
+    And Response should contain the array of a certain size:    [data][relationships][concrete-products][data]    ${abstract_product.product_with_concrete_offers.concretes_count}
+    And Response should contain the array larger than a certain size:    [included]    9
     And Response include should contain certain entity type:    concrete-products
     And Response include should contain certain entity type:    product-offer-prices
     And Response include should contain certain entity type:    product-offers

@@ -1,153 +1,129 @@
 {
-    "environment": "api_b2c",
-
-    "env": {
-
-        "glue_url": "http://glue.de.spryker.local",
-        "bapi_url": "http://backend-api.de.spryker.local/api/rest"
+    "environment":"api_b2c",
+    "env":{
+       "glue_url":"http://glue.de.spryker.local",
+       "bapi_url":"http://backend-api.de.spryker.local/api/rest"
     },
-    
-    "database": {
-        "db_host": "127.0.0.1",
-        "db_port": "3306",
-        "db_user": "spryker",
-        "db_password": "secret",
-        "db_name": "eu-docker"
+    "database":{
+       "db_host":"127.0.0.1",
+       "db_port":"3306",
+       "db_user":"spryker",
+       "db_password":"secret",
+       "db_name":"eu-docker"
     },
-    "users": {
-
-        "yves_user":{
-            "email": "sonia@spryker.com",
-            "first_name": "Sonia",
-            "last_name": "Wagner",
-            "password": "change123",
-            "password_new":"Change@123",
-            "reference": "DE--21",
-            "salutation": "Ms"
-        },
-
-        "yves_second_user":{
-            "email": "bill.martin@spryker.com",
-            "first_name": "Bill",
-            "last_name": "Martin",
-            "password": "change123",
-            "reference": "DE--4",
-            "salutation": "Mr"
-        },
-
-        "yves_third_user":{
-            "first_name": "Jackie",
-            "last_name": "Chan",
-            "password": "change123",
-            "gender_male": "Male",
-            "salutation": "Mr"
-        },
-
-        "gender": {
-            "female": "Female",
-            "male": "Male"
-        },
-        
-        "email": {
-            "name": "sonia",
-            "domain": "@spryker.com"
-        },
-
-        "zed_admin":{
-            "email": "admin@spryker.com",
-            "password": "change123"
-        },
-
-        "agent":{
-            "email": "admin@spryker.com",
-            "password": "change123"
-        },
-
-        "non_agent":{
-            "email": "admin_de@spryker.com",
-            "password": "change123"
-        },
-
-        "customer_reference":{
-            "de_1":  "DE--1",
-            "de_10": "DE--10",
-            "de_15": "DE--15",
-            "de_34": "DE--34"
-        },
-        
-        "grant_type":{
-            "password": "password",
-            "refresh_token": "refresh_token"
-        }
+    "users":{
+       "yves_user":{
+          "email":"sonia@spryker.com",
+          "first_name":"Sonia",
+          "last_name":"Wagner",
+          "password":"change123",
+          "password_new":"Change@123",
+          "reference":"DE--21",
+          "salutation":"Ms"
+       },
+       "yves_second_user":{
+          "email":"bill.martin@spryker.com",
+          "first_name":"Bill",
+          "last_name":"Martin",
+          "password":"change123",
+          "reference":"DE--4",
+          "salutation":"Mr"
+       },
+       "yves_third_user":{
+          "first_name":"Jackie",
+          "last_name":"Chan",
+          "password":"change123",
+          "gender_male":"Male",
+          "salutation":"Mr"
+       },
+       "gender":{
+          "female":"Female",
+          "male":"Male"
+       },
+       "email":{
+          "name":"sonia",
+          "domain":"@spryker.com"
+       },
+       "zed_admin":{
+          "email":"admin@spryker.com",
+          "password":"change123"
+       },
+       "agent":{
+          "email":"admin@spryker.com",
+          "password":"change123"
+       },
+       "non_agent":{
+          "email":"admin_de@spryker.com",
+          "password":"change123"
+       },
+       "customer_reference":{
+          "de_1":"DE--1",
+          "de_10":"DE--10",
+          "de_15":"DE--15",
+          "de_34":"DE--34"
+       },
+       "grant_type":{
+          "password":"password",
+          "refresh_token":"refresh_token"
+       }
     },
-
-    "address": {
-
-        "default":{
-            "address1": "Third, 33, 11",
-            "address2": "33-B",
-            "address3": "third. address. line",
-            "zipCode": "12312",
-            "city": "Berlin",
-            "country": "Germany",
-            "iso2Code": "DE",
-            "company": "Spryker",
-            "phone": "22111-3-4-5",
-            "shipping_status": "False",
-            "billing_status": "False"
-        },
-
-        "changed":{
-            "address1": "New Street 123",
-            "address2": "75d",
-            "address3": "third. address. line - changed",
-            "phone": "555-555-55"
-        }
+    "address":{
+       "default":{
+          "address1":"Third, 33, 11",
+          "address2":"33-B",
+          "address3":"third. address. line",
+          "zipCode":"12312",
+          "city":"Berlin",
+          "country":"Germany",
+          "iso2Code":"DE",
+          "company":"Spryker",
+          "phone":"22111-3-4-5",
+          "shipping_status":"False",
+          "billing_status":"False"
+       },
+       "changed":{
+          "address1":"New Street 123",
+          "address2":"75d",
+          "address3":"third. address. line - changed",
+          "phone":"555-555-55"
+       }
     },
-
-    "shop": {
-
-        "currency":{
-
-            "eur":{
-                "name": "Euro",
-                "code": "EUR",
-                "symbol": "€"
-            },
-            "chf":{
-                "name": "Swiss Franc",
-                "code": "CHF",
-                "symbol": "CHF"
-            },
-        
-            "dollar":{
-                "name": "US Dollar",
-                "code": "USD",
-                "symbol": "$"
-            }
-        },
-        "mode":{
-            "gross": "GROSS_MODE",
-            "net": "NET_MODE"
-        },
-        
-        "store":{
-                "us": "US",
-                "de": "DE"
-        },
-  
-        "locale":{
-
-            "DE":{
-                "name": "de_DE",
-                "code": "de"
-            },
-
-            "EN":{
-                "name": "en_US",
-                "code": "en"
-            }
-        }
+    "shop":{
+       "currency":{
+          "eur":{
+             "name":"Euro",
+             "code":"EUR",
+             "symbol":"€"
+          },
+          "chf":{
+             "name":"Swiss Franc",
+             "code":"CHF",
+             "symbol":"CHF"
+          },
+          "dollar":{
+             "name":"US Dollar",
+             "code":"USD",
+             "symbol":"$"
+          }
+       },
+       "mode":{
+          "gross":"GROSS_MODE",
+          "net":"NET_MODE"
+       },
+       "store":{
+          "us":"US",
+          "de":"DE"
+       },
+       "locale":{
+          "DE":{
+             "name":"de_DE",
+             "code":"de"
+          },
+          "EN":{
+             "name":"en_US",
+             "code":"en"
+          }
+       }
     },
 
     "search": {
@@ -477,208 +453,158 @@
             "title": "This is a review",
             "text": "This is review text",
             "default_rating": "5"
-        },
-        "configurable_product": {
-            "sku_1": "124_29866591",
-            "sku_2": "124_31623088"
         }
     },
-
-    "product_attributes": {
-
-        "brand_1": "Soennecken",
-        "brand_2": "edding",
-        "brand_3": "Mauser",
-        "brand_4": "Sony",
-        "brand_5": "Lenovo",
-        "brand_6": "Acer",
-
-        "material_1": "aluminum",
-        "material_2": "metal",
-        "material_3": "chipboard",
-        "material_4": "Steel sheets, stove-enameled",
-
-        "internal_memory": "3 GB",
-        "aspect_ratio": "16:10",
-        "storage_media": "flash",
-        "display_technology": "TFT",
-        "delivery_1": "assembled",
-        "price_unit_1": "piece",
-
-        "color_5": "white",
-        "color_4": "black",
-        "color_3": "purple",
-        "color_1": "yellow",
-        "color_2": "blue",
-        
-        "processor_frequency": "1.3 GHz",
-        "internal_storage_capacity": "16 GB",
-        "processor_cores": "4",
-
-        "product_management":{
-            "superattribute_id": "4g",
-            "attribute_free_input_id": "4g_standards",
-            "attribute_no_input_id": "bundled_product"
-        }
-
+    "product_attributes":{
+       "brand_1":"Soennecken",
+       "brand_2":"edding",
+       "brand_3":"Mauser",
+       "brand_4":"Sony",
+       "brand_5":"Lenovo",
+       "brand_6":"Acer",
+       "material_1":"aluminum",
+       "material_2":"metal",
+       "material_3":"chipboard",
+       "material_4":"Steel sheets, stove-enameled",
+       "internal_memory":"3 GB",
+       "aspect_ratio":"16:10",
+       "storage_media":"flash",
+       "display_technology":"TFT",
+       "delivery_1":"assembled",
+       "price_unit_1":"piece",
+       "color_5":"white",
+       "color_4":"black",
+       "color_3":"purple",
+       "color_1":"yellow",
+       "color_2":"blue",
+       "processor_frequency":"1.3 GHz",
+       "internal_storage_capacity":"16 GB",
+       "processor_cores":"4",
+       "product_management":{
+          "superattribute_id":"4g",
+          "attribute_free_input_id":"4g_standards",
+          "attribute_no_input_id":"bundled_product"
+       }
     },
-
-    "content": {
-
-        "abstract_list": {
-            "product_id": "apl-watches",
-            "product1_sku": "083",
-            "product1_name": "Samsung Gear 2 Classic",
-            "product2_sku": "087",
-            "product2_name": "Samsung Gear S2",
-            "size": "4"
-        },
-    
-        "banner_1": {
-            "id": "br-smartwatches",
-            "name": "The freedom of cellular"
-        },
-
-        "cms_pages":{
-
-            "qty": "5",
-
-            "first_cms_page": {
-                "name": "Imprint",
-                "name_in_lower_case": "imprint",
-                "url_en": "/en/imprint"
-            },
-
-            "cms_page_with_product_lists": {
-                "id": "10014bd9-4bba-5a54-b84f-31b4b7efd064",
-                "name": "Demo Landing Page"
-            }
-        },
-
-        "category_collection_name": "Digital Cameras",
-        "category_collection_url": "/en/cameras-&-camcorders/digital-cameras",
-    
-        "category_nodes_storage_name": "Cameras & Camcorders",
-        "category_nodes_storage_url": "/en/cameras-&-camcorders",
-        "subcategory_nodes_storage_name": "Digital Cameras",
-        "subcategory_nodes_storage_url": "/en/cameras-&-camcorders/digital-cameras",
-    
-        "cms_page_collection_name": "GTC",
-        "cms_page_collection_url": "/en/gtc",
-    
-        "brand_name": "canon"
-
+    "content":{
+       "abstract_list":{
+          "product_id":"apl-watches",
+          "product1_sku":"083",
+          "product1_name":"Samsung Gear 2 Classic",
+          "product2_sku":"087",
+          "product2_name":"Samsung Gear S2",
+          "size":"4"
+       },
+       "banner_1":{
+          "id":"br-smartwatches",
+          "name":"The freedom of cellular"
+       },
+       "cms_pages":{
+          "qty":"5",
+          "first_cms_page":{
+             "name":"Imprint",
+             "name_in_lower_case":"imprint",
+             "url_en":"/en/imprint"
+          },
+          "cms_page_with_product_lists":{
+             "id":"10014bd9-4bba-5a54-b84f-31b4b7efd064",
+             "name":"Demo Landing Page"
+          }
+       },
+       "category_collection_name":"Digital Cameras",
+       "category_collection_url":"/en/cameras-&-camcorders/digital-cameras",
+       "category_nodes_storage_name":"Cameras & Camcorders",
+       "category_nodes_storage_url":"/en/cameras-&-camcorders",
+       "subcategory_nodes_storage_name":"Digital Cameras",
+       "subcategory_nodes_storage_url":"/en/cameras-&-camcorders/digital-cameras",
+       "cms_page_collection_name":"GTC",
+       "cms_page_collection_url":"/en/gtc",
+       "brand_name":"canon"
     },
-
     "cart":{
-        "x_anonymous_prefix": "anonymous"
+       "x_anonymous_prefix":"anonymous"
     },
-    
     "availability":{
-        "stock_is_0": "0.0000000000",
-        "stock_is_20": "20.0000000000"
-
+       "stock_is_0":"0.0000000000",
+       "stock_is_20":"20.0000000000"
     },
-
-    "misc": {
-        "default_header_content_type": "application/vnd.api+json",
-        "urlencoded_header_content_type": "application/x-www-form-urlencoded",
-        "test_cart_name": "Test-cart",
-        "qty_of_categories_in_category_trees": "6",
-        "qty_of_subcategories_in_category_trees": "2",
-        "color_name": "black",
-        
-        "payment":{
-            "provider_name": "DummyPayment",
-            "method_name": "Invoice"
-        },
-
-        "shipment":{
-            "carrier_name": "DHL",
-            "method_name": "Standard",
-            "method_name_2": "Express",
-            "method_name_5": "Next Day",
-            "delivery_date": "2030-12-31"
-        },
-
-    "discount":{
-            
-            "discount_1":{
-                "name": "Free standard delivery",
-                "description": "Free standard delivery for all orders above certain value depending on the currency",
-                "total_sum": "490"
-            },
-
-            "discount_2":{
-                "name": "5% off white"
-            },
-
-        "concrete":{
-
-            "product_1":{
-                "sku": "108298",
-                "name": "Mauser hinged door cabinet - sideboard, 4 compartments, center separating wall - HxWxD 1225 x 1600 x 420 mm - light gray / ultramarine blue",
-                "total_sum_of_discounts": "14840"
-            },
-
-            "product_2":{
-                "sku": "213216",
-                "name": "office akktiv base cabinet - HxWxD 942 x 913 x 420 mm - light gray, RAL 7035",
-                "total_sum_of_discounts": "8096"
-            },
-
-            "product_3":{
-                "sku": "401768",
-                "name": "EUROKRAFT aluminum hand truck - Load capacity 200 kg, with skids - load capacity 200 kg"
-            },
-
-            "product_with_voucher_code":{
-                "sku": "058_24245592"
-            }
-        },
-        
-        
-        "amount":{
-
-            "product_2":{
-                "20%_off_storage": "5783",
-                "10%_off_minimum_order": "2313"
-            },
-
-            "product_3":{
-                "20%_off_storage": "16383",
-                "10%_discount": "1882"
-            },
-
-            "product_1":{
-                "20%_off_storage": "10600",
-                "10%_off_minimum_order": "4240"
-            }
-        }
-    }
+    "misc":{
+       "default_header_content_type":"application/vnd.api+json",
+       "urlencoded_header_content_type":"application/x-www-form-urlencoded",
+       "test_cart_name":"Test-cart",
+       "qty_of_categories_in_category_trees":"6",
+       "qty_of_subcategories_in_category_trees":"2",
+       "color_name":"black",
+       "payment":{
+          "provider_name":"DummyPayment",
+          "method_name":"Invoice"
+       },
+       "shipment":{
+          "carrier_name":"DHL",
+          "method_name":"Standard",
+          "method_name_2":"Express",
+          "method_name_5":"Next Day",
+          "delivery_date":"2030-12-31"
+       },
+       "discount":{
+          "discount_1":{
+             "name":"Free standard delivery",
+             "description":"Free standard delivery for all orders above certain value depending on the currency",
+             "total_sum":"490"
+          },
+          "discount_2":{
+             "name":"5% off white"
+          },
+          "concrete":{
+             "product_1":{
+                "sku":"108298",
+                "name":"Mauser hinged door cabinet - sideboard, 4 compartments, center separating wall - HxWxD 1225 x 1600 x 420 mm - light gray / ultramarine blue",
+                "total_sum_of_discounts":"14840"
+             },
+             "product_2":{
+                "sku":"213216",
+                "name":"office akktiv base cabinet - HxWxD 942 x 913 x 420 mm - light gray, RAL 7035",
+                "total_sum_of_discounts":"8096"
+             },
+             "product_3":{
+                "sku":"401768",
+                "name":"EUROKRAFT aluminum hand truck - Load capacity 200 kg, with skids - load capacity 200 kg"
+             },
+             "product_with_voucher_code":{
+                "sku":"058_24245592"
+             }
+          },
+          "amount":{
+             "product_2":{
+                "20%_off_storage":"5783",
+                "10%_off_minimum_order":"2313"
+             },
+             "product_3":{
+                "20%_off_storage":"16383",
+                "10%_discount":"1882"
+             },
+             "product_1":{
+                "20%_off_storage":"10600",
+                "10%_off_minimum_order":"4240"
+             }
+          }
+       }
     },
-        
     "url_resolver":{
-
-        "url_resolver_abstract_product": "/en/canon-ixus-160-1",
-        "url_resolver_product_entity": "abstract-products",
-        "url_resolver_product_id": "001",
-
-        "url_resolver_category_nodes": "/en/computers",
-        "url_resolver_category_nodes_entity": "category-nodes",
-        "url_resolver_category_nodes_id": "5",
-
-        "url_resolver_cms": "/en/privacy",
-        "url_resolver_cms_entity": "cms-pages",
-        "url_resolver_cms_id": "1e9fb640-9073-55f4-a2d2-535090c92025"
-
+       "url_resolver_abstract_product":"/en/canon-ixus-160-1",
+       "url_resolver_product_entity":"abstract-products",
+       "url_resolver_product_id":"001",
+       "url_resolver_category_nodes":"/en/computers",
+       "url_resolver_category_nodes_entity":"category-nodes",
+       "url_resolver_category_nodes_id":"5",
+       "url_resolver_cms":"/en/privacy",
+       "url_resolver_cms_entity":"cms-pages",
+       "url_resolver_cms_id":"1e9fb640-9073-55f4-a2d2-535090c92025"
     },
-
     "return_reason":{
-        "return_reasons_qty": "3",
-        "return_reason_damaged":  "Damaged"
+       "return_reasons_qty":"3",
+       "return_reason_damaged":"Damaged"
     },
-
     "wishlists":{
 
         "wishlist_name":"HS"
@@ -695,14 +621,6 @@
         "configurable_bundle_template_name_1": "All in",
         "configured_bundle_quantity": 2
 
-    },
-    "productConfigurationInstance": {
-        "productConfigurationInstance":{
-        "displayData": "{\"Preferred time of the day\": \"Afternoon\", \"Date\": \"9.09.2050\"}",
-        "configuration": "{\"time_of_day\": \"3\"}",
-        "configuratorKey": "DATE_TIME_CONFIGURATOR",
-        "isComplete": true
-    }
     }
 
  }
