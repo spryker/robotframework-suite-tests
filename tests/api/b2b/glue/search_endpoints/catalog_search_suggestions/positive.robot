@@ -14,7 +14,7 @@ ENABLER
 #GET requests
 
 Get_search_suggestions_without_query_parameter
-# There is a bug https://spryker.atlassian.net/browse/CC-15983
+    [Documentation]    There is a bug https://spryker.atlassian.net/browse/CC-15983
     When I send a GET request:    /catalog-search-suggestions
     Then Response status code should be:    200
     And Response reason should be:    OK
@@ -93,14 +93,14 @@ Get_search_suggestions_with_all_attributes_data
     And Each array element of array in response should contain property:    [data][0][attributes][categories]    url
     And Each array element of array in response should contain property:    [data][0][attributes][cmsPages]    name
     And Each array element of array in response should contain property:    [data][0][attributes][cmsPages]    url
-    And Response body parameter should be greater than:    [data][0][attributes][abstractProducts][0][abstractSku]    0
+    And Response body parameter should not be EMPTY:    [data][0][attributes][abstractProducts][0][abstractSku]
     And Response body parameter should be:
     ...    [data][0][attributes][abstractProducts][0][abstractName]
     ...    ${concrete.alternative_products.product_1.name}
     And Response body parameter should be:
     ...    [data][0][attributes][abstractProducts][0][abstractSku]
     ...    ${abstract.alternative_products.product_1.sku}
-    And Response body parameter should be greater than:    [data][0][attributes][abstractProducts][1][abstractSku]    0
+    And Response body parameter shouldnot be EMPTY:    [data][0][attributes][abstractProducts][1][abstractSku]
     And Response body parameter should be:
     ...    [data][0][attributes][abstractProducts][1][abstractSku]
     ...    ${abstract.alternative_products.product_3.sku}

@@ -346,12 +346,53 @@ Update_quantity_of_the_product_at_the_shopping_list_to_zero
     And Response should return error message:    quantity => This value should be greater than 0.
 
 Update_product_quntity_at_the_shopping_list_to_non_digit_value
+    [Documentation]    Created a new bug CC-22842 as current error message is: "quantity => This value should be less than 2147483647." and not This value should be greater than 0.
     [Tags]    skip-due-to-issue
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     I send a PATCH request:
     ...    /shopping-lists/shoppingListId/shopping-list-items/shoppingListItemId
     ...    {"data":{"type":"shopping-list-items","attributes":{"quantity":"test"}}}
+    And Response status code should be:    422
+    And Response should return error code:    901
+    And Response reason should be:    Unprocessable Content
+    And Array in response should contain property with value:
+    ...    [errors]
+    ...    detail
+    ...    quantity => This value should be of type integer.
+    # And Array in response should contain property with value:
+    # ...    [errors]
+    # ...    detail
+    # ...    quantity => This value should be greater than 0.
+
+
+Update_product_quntity_at_the_shopping_list_to_not_allowed_qty
+    [Documentation]    Created a new bug CC-22842 as current error message is: "quantity => This value should be less than 2147483647." and not This value should be greater than 0.
+    [Tags]    skip-due-to-issue
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
+    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
+    I send a PATCH request:
+    ...    /shopping-lists/shoppingListId/shopping-list-items/shoppingListItemId
+    ...    {"data":{"type":"shopping-list-items","attributes":{"quantity":"21474836471"}}}
+    And Response status code should be:    422
+    And Response should return error code:    901
+    And Response reason should be:    Unprocessable Content
+    And Array in response should contain property with value:
+    ...    [errors]
+    ...    detail
+    ...    quantity => This value should be of type integer.
+    And Array in response should contain property with value:
+    ...    [errors]
+    ...    detail
+    ...    quantity => This value should be less than 2147483647.  
+
+
+Update_product_quntity_at_the_shopping_list_to_a_negative_number
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
+    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
+    I send a PATCH request:
+    ...    /shopping-lists/shoppingListId/shopping-list-items/shoppingListItemId
+    ...    {"data":{"type":"shopping-list-items","attributes":{"quantity":"-2"}}}
     And Response status code should be:    422
     And Response should return error code:    901
     And Response reason should be:    Unprocessable Content
@@ -416,7 +457,6 @@ Update_product_at_the_shopping_list_without_type_in_request
     And Response reason should be:    Bad Request
     And Response should return error message:    Post data is invalid.
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
-#https://spryker.atlassian.net/browse/CC-16674
 
 Change_quantity_of_a_concrete_product_at_the_shared_shopping_list_without_write_access_permission
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
