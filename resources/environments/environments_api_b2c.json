@@ -455,7 +455,7 @@
             "default_rating": "5"
         },
         "configurable_product":{
-            "sku_1": " 124_29866591",
+            "sku_1": "124_29866591",
             "sku_2": "124_31623088"
     }
     },
@@ -625,6 +625,14 @@
         "configurable_bundle_template_name_1": "All in",
         "configured_bundle_quantity": 2
 
+    },
+    "productConfigurationInstance": {
+        "productConfigurationInstance":{
+        "displayData": "{\"Preferred time of the day\": \"Afternoon\", \"Date\": \"9.09.2050\"}",
+        "configuration": "{\"time_of_day\": \"3\"}",
+        "configuratorKey": "DATE_TIME_CONFIGURATOR",
+        "isComplete": true
+    }
     }
 
  }

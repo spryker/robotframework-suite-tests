@@ -8,12 +8,14 @@ Default Tags    glue
 ENABLER
         TestSetup
 
+#Post
+
 Adding_item_in_wishlist 
     [Documentation]   #CC-16555 API: JSON response is missing product availability and price
     [Tags]    skip-due-to-issue 
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}
-    ...    AND    I send a POST request:    /wishlists    {"data": { "type": "wishlists","attributes": { "name": "${wishlist_name}${random}" } }}
+    ...    AND    I send a POST request:    /wishlists    {"data": { "type": "wishlists","attributes": { "name": "${wishlist_name}" } }}
     ...    AND    Response status code should be:    201 
     ...    AND    Response reason should be:    Created
     ...    AND    Save value to a variable:    [data][id]        wishlist_id
@@ -35,7 +37,7 @@ Adding_item_in_wishlist
 Adding_multiple_variant_of_abstract_product_in_wishlist
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}
-    ...    AND    I send a POST request:    /wishlists    {"data": { "type": "wishlists","attributes": { "name": "${wishlist_name}${random}" } }}
+    ...    AND    I send a POST request:    /wishlists    {"data": { "type": "wishlists","attributes": { "name": "${wishlist_name}" } }}
     ...    AND    Response status code should be:    201 
     ...    AND    Response reason should be:    Created
     ...    AND    Save value to a variable:    [data][id]        wishlist_id
@@ -52,6 +54,7 @@ Adding_multiple_variant_of_abstract_product_in_wishlist
     And Response reason should be:    OK
     And Response body parameter should be:    [data][type]    wishlists
     And Response body parameter should be:    [data][id]    ${wishlist_id}
+    And Response body parameter should be:    [data][attributes][name]    ${wishlist_name}
     And Response body parameter should be:    [data][attributes][numberOfItems]    2
     And Response body parameter should not be EMPTY:    [data][relationships]
     And Response body parameter should not be EMPTY:    [data][relationships][wishlist-items][data][0]
@@ -60,10 +63,11 @@ Adding_multiple_variant_of_abstract_product_in_wishlist
     [Teardown]    Run Keywords    I send a DELETE request:    /wishlists/${wishlist_id}
     ...    AND    Response status code should be:    204
 
+#Delete
 Deleting_item_from_wishlist
      [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}
-    ...    AND    I send a POST request:    /wishlists    {"data": { "type": "wishlists","attributes": { "name": "${wishlist_name}${random}" } }}
+    ...    AND    I send a POST request:    /wishlists    {"data": { "type": "wishlists","attributes": { "name": "${wishlist_name}" } }}
     ...    AND    Response status code should be:    201 
     ...    AND    Response reason should be:    Created
     ...    AND    Save value to a variable:    [data][id]    wishlist_id
