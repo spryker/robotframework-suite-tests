@@ -333,12 +333,12 @@
                 "name":"Verbatim USB stick Store n Go V3 49173 32GB USB3.0 gray"
              },
              "product_2":{
-                "sku":"M90810",
-                "price_chf":"1130"
+                "sku":"M90810"
              },
              "product_3":{
                 "sku":"M21099",
-                "name":"Verbatim USB stick Store n Go V3 49172 16GB USB3.0, gray"
+                "name":"Verbatim USB stick Store n Go V3 49172 16GB USB3.0, gray",
+                "price_chf":"1130"
              }
           },
           "available_products":{
