@@ -306,10 +306,10 @@ Get_order_by_order_id_with_sales_unit
     ...    AND    I set Headers:    Authorization=${token}
     ...    AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
     ...    AND    Save value to a variable:    [data][id]    cart_id
-    ...    AND    I send a GET request:    /concrete-products/${concrete.random_weight.sku}?include=sales-units
+    ...    AND    I send a GET request:    /concrete-products/${concrete.random_weight.sku1}?include=sales-units
     ...    AND    Save value to a variable:    [included][0][id]    sales_unit_id
-    ...    AND    I send a POST request:    /carts/${cartId}/items    {"data": {"type": "items","attributes": {"sku": "${concrete.random_weight.sku}","quantity": 1,"salesUnit": {"id": "${sales_unit_id}","amount": 5}}}}
-    ...    AND    I send a POST request:    /checkout    {"data": {"type": "checkout","attributes": {"customer": {"email": "${yves_user.email}","salutation": "${yves_user.salutation}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}"},"idCart": "${cart_id}","billingAddress": {"salutation": "${yves_user.salutation}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}","address1": "${default.address1}","address2": "${default.address2}","address3": "${default.address3}","zipCode": "${default.zipCode}","city": "${default.city}","iso2Code": "${default.iso2Code}","company": "${default.company}","phone": "${default.phone}","isDefaultBilling": False,"isDefaultShipping": False},"shippingAddress": {"salutation": "${yves_user.salutation}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}","address1": "${default.address1}","address2": "${default.address2}","address3": "${default.address3}","zipCode": "${default.zipCode}","city": "${default.city}","iso2Code": "${default.iso2Code}","company": "${default.company}","phone": "${default.phone}","isDefaultBilling": False,"isDefaultShipping": False},"payments": [{"paymentProviderName": "${payment_provider_name}","paymentMethodName": "${payment_method_name}"}],"shipment": {"idShipmentMethod": 1},"items": ["${concrete.random_weight.sku}"]}}}
+    ...    AND    I send a POST request:    /carts/${cartId}/items    {"data": {"type": "items","attributes": {"sku": "${concrete.random_weight.sku1}","quantity": 6,"salesUnit": {"id": "${sales_unit_id}","amount": 9}}}}
+    ...    AND    I send a POST request:    /checkout    {"data": {"type": "checkout","attributes": {"customer": {"email": "${yves_user.email}","salutation": "${yves_user.salutation}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}"},"idCart": "${cart_id}","billingAddress": {"salutation": "${yves_user.salutation}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}","address1": "${default.address1}","address2": "${default.address2}","address3": "${default.address3}","zipCode": "${default.zipCode}","city": "${default.city}","iso2Code": "${default.iso2Code}","company": "${default.company}","phone": "${default.phone}","isDefaultBilling": False,"isDefaultShipping": False},"shippingAddress": {"salutation": "${yves_user.salutation}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}","address1": "${default.address1}","address2": "${default.address2}","address3": "${default.address3}","zipCode": "${default.zipCode}","city": "${default.city}","iso2Code": "${default.iso2Code}","company": "${default.company}","phone": "${default.phone}","isDefaultBilling": False,"isDefaultShipping": False},"payments": [{"paymentProviderName": "${payment_provider_name}","paymentMethodName": "${payment_method_name}"}],"shipment": {"idShipmentMethod": 1},"items": ["${concrete.random_weight.sku1}"]}}}
     ...    AND    Save value to a variable:    [data][attributes][orderReference]    order_id
     When I send a GET request:    /orders/${order_id}
     Then Response status code should be:    200
@@ -320,23 +320,23 @@ Get_order_by_order_id_with_sales_unit
     And Response body parameter should be:    [data][attributes][currencyIsoCode]    ${currency.eur.code}
     And Response body parameter should be:    [data][attributes][priceMode]    ${mode.gross}
     #items
-    And Response body parameter should be:    [data][attributes][items][0][name]    ${concrete.random_weight.name}
-    And Response body parameter should be:    [data][attributes][items][0][sku]    ${concrete.random_weight.sku}
+    And Response body parameter should be:    [data][attributes][items][0][name]    ${concrete.random_weight.name1}
+    And Response body parameter should be:    [data][attributes][items][0][sku]    ${concrete.random_weight.sku1}
     And Response body parameter should be:    [data][attributes][items][0][quantity]    1
-    And Response should contain the array of a certain size:    [data][attributes][items]    1
+    And Response should contain the array of a certain size:    [data][attributes][items]    6
     And Response body parameter should be:
     ...    [data][attributes][items][0][salesUnit][conversion]
-    ...    ${concrete.random_weight.conversion}
+    ...    ${concrete.random_weight.conversion1}
     And Response body parameter should be:
     ...    [data][attributes][items][0][salesUnit][precision]
-    ...    ${concrete.random_weight.precision}
+    ...    ${concrete.random_weight.precision1}
     And Response body parameter should be:
     ...    [data][attributes][items][0][salesUnit][productMeasurementUnit][name]
     ...    ${packaging_unit.m_name}
     And Response body parameter should be:
     ...    [data][attributes][items][0][salesUnit][productMeasurementUnit][code]
     ...    ${packaging_unit.m}
-    And Response body parameter should be:    [data][attributes][items][0][amount]    ${concrete.random_weight.amount}
+    And Response body parameter should be:    [data][attributes][items][0][amount]    ${concrete.random_weight.amount1}
 
 Get_order_by_order_id_with_different_items_and_quantity
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
@@ -711,91 +711,24 @@ Get_order_by_order_id_with_2_product_discounts
     And Response body parameter with rounding should be:
     ...    [data][attributes][totals][grandTotal]
     ...    ${grand_total_sum}
-    #item 1 - "20% off storage" discount
+    #item 1, 2, 3  - "20% off storage" discount, "10% off minimum order" discount
     And Response should contain the array of a certain size:    [data][attributes][items][0][calculatedDiscounts]    2
     And Response body parameter should be:    [data][attributes][items][0][name]    ${discount.product_1.name}
     And Response body parameter should be:    [data][attributes][items][0][sku]    ${discount.product_1.sku}
-    And Response body parameter should be:
+    And Response body parameter should be in:
     ...    [data][attributes][items][0][calculatedDiscounts][0][unitAmount]
-    ...    ${discount.product_1.with_discount_20_percent_off_storage}
-    And Response body parameter should be:
+    ...    ${discount.product_1.with_discount_20_percent_off_storage}    ${discount.product_1.with_discount_10_percent_off_minimum_order}    ${discount.product_3.with_10_percent_discount_amount}    ${discount.product_2.with_discount_20_percent_off_storage}    ${discount.product_2.with_discount_10_percent_off_minimum_order}    
+    And Response body parameter should be in:
     ...    [data][attributes][items][0][calculatedDiscounts][0][sumAmount]
-    ...    ${discount.product_1.with_discount_20_percent_off_storage}
-    And Response body parameter should be:
+    ...    ${discount.product_1.with_discount_20_percent_off_storage}    ${discount.product_1.with_discount_10_percent_off_minimum_order}    ${discount.product_3.with_10_percent_discount_amount}    ${discount.product_2.with_discount_20_percent_off_storage}    ${discount.product_2.with_discount_10_percent_off_minimum_order}    
+    And Response body parameter should be in:
     ...    [data][attributes][items][0][calculatedDiscounts][0][displayName]
-    ...    ${discounts.discount_1.name}
-    And Response body parameter should be:
+    ...    ${discounts.discount_1.name}    ${discounts.discount_2.name}    ${discounts.discount_3.name}
+    And Response body parameter should be in:
     ...    [data][attributes][items][0][calculatedDiscounts][0][description]
-    ...    ${discounts.discount_1.description}
+    ...    ${discounts.discount_1.description}    ${discounts.discount_2.description}    ${discounts.discount_3.description}
     And Response body parameter should be:    [data][attributes][items][0][calculatedDiscounts][0][voucherCode]    None
     And Response body parameter should be:    [data][attributes][items][0][calculatedDiscounts][0][quantity]    1
-    #item 1 - "10% off minimum order" discount
-    And Response body parameter should be:
-    ...    [data][attributes][items][0][calculatedDiscounts][1][unitAmount]
-    ...    ${discount.product_1.with_discount_10_percent_off_minimum_order}
-    And Response body parameter should be:
-    ...    [data][attributes][items][0][calculatedDiscounts][1][sumAmount]
-    ...    ${discount.product_1.with_discount_10_percent_off_minimum_order}
-    And Response body parameter should be:
-    ...    [data][attributes][items][0][calculatedDiscounts][1][displayName]
-    ...    ${discounts.discount_2.name}
-    And Response body parameter should be:
-    ...    [data][attributes][items][0][calculatedDiscounts][1][description]
-    ...    ${discounts.discount_2.description}
-    And Response body parameter should be:    [data][attributes][items][0][calculatedDiscounts][1][voucherCode]    None
-    And Response body parameter should be:    [data][attributes][items][0][calculatedDiscounts][1][quantity]    1
-    #item 2 - "20% off storage" discount
-    And Response should contain the array of a certain size:    [data][attributes][items][1][calculatedDiscounts]    2
-    And Response body parameter should be:    [data][attributes][items][1][name]    ${discount.product_2.name}
-    And Response body parameter should be:    [data][attributes][items][1][sku]    ${discount.product_2.sku}
-    And Response body parameter should be:
-    ...    [data][attributes][items][1][calculatedDiscounts][0][unitAmount]
-    ...    ${discount.product_2.with_discount_20_percent_off_storage}
-    And Response body parameter should be:
-    ...    [data][attributes][items][1][calculatedDiscounts][0][sumAmount]
-    ...    ${discount.product_2.with_discount_20_percent_off_storage}
-    And Response body parameter should be:
-    ...    [data][attributes][items][1][calculatedDiscounts][0][displayName]
-    ...    ${discounts.discount_1.name}
-    And Response body parameter should be:
-    ...    [data][attributes][items][1][calculatedDiscounts][0][description]
-    ...    ${discounts.discount_1.description}
-    And Response body parameter should be:    [data][attributes][items][1][calculatedDiscounts][0][voucherCode]    None
-    And Response body parameter should be:    [data][attributes][items][1][calculatedDiscounts][0][quantity]    1
-    #item 2 - "10% off minimum order" discount
-    And Response body parameter should be:
-    ...    [data][attributes][items][1][calculatedDiscounts][1][unitAmount]
-    ...    ${discount.product_2.with_discount_10_percent_off_minimum_order}
-    And Response body parameter should be:
-    ...    [data][attributes][items][1][calculatedDiscounts][1][sumAmount]
-    ...    ${discount.product_2.with_discount_10_percent_off_minimum_order}
-    And Response body parameter should be:
-    ...    [data][attributes][items][1][calculatedDiscounts][1][displayName]
-    ...    ${discounts.discount_2.name}
-    And Response body parameter should be:
-    ...    [data][attributes][items][1][calculatedDiscounts][1][description]
-    ...    ${discounts.discount_2.description}
-    And Response body parameter should be:    [data][attributes][items][1][calculatedDiscounts][1][voucherCode]    None
-    And Response body parameter should be:    [data][attributes][items][1][calculatedDiscounts][1][quantity]    1
-    #item 3 - "10% off minimum order" discount
-    And Response should contain the array of a certain size:    [data][attributes][items][2][calculatedDiscounts]    1
-    And Response body parameter should be:    [data][attributes][items][2][name]    ${discount.product_3.name}
-    And Response body parameter should be:    [data][attributes][items][2][sku]    ${discount.product_3.sku}
-    And Response body parameter should be:
-    ...    [data][attributes][items][2][calculatedDiscounts][0][unitAmount]
-    ...    ${discount.product_3.with_10_percent_discount_amount}
-    And Response body parameter should be:
-    ...    [data][attributes][items][2][calculatedDiscounts][0][sumAmount]
-    ...    ${discount.product_3.with_10_percent_discount_amount}
-    And Response body parameter should be:
-    ...    [data][attributes][items][2][calculatedDiscounts][0][displayName]
-    ...    ${discounts.discount_2.name}
-    And Response body parameter should be:
-    ...    [data][attributes][items][2][calculatedDiscounts][0][description]
-    ...    ${discounts.discount_2.description}
-    And Response body parameter should be:    [data][attributes][items][2][calculatedDiscounts][0][voucherCode]    None
-    And Response body parameter should be:    [data][attributes][items][2][calculatedDiscounts][0][quantity]    1
-    #calculatedDiscounts - "20% off storage" discount
     And Response body parameter should contain:    [data][attributes][calculatedDiscounts]    unitAmount: None
     And Response body parameter should contain:
     ...    [data][attributes][calculatedDiscounts]

@@ -290,12 +290,17 @@
              "sku":"cable-vga-1-2",
              "sku1":"cable-vga-1-1",
              "name":"VGA cable as long as you want",
+             "name1":"VGA cable (1.5m)",
              "measurement_unit":"19",
              "qty_of_units":"2",
              "amount":"5.0000000000",
+             "amount1":"1.5000000000",
              "conversion":"1",
+             "conversion1":"1",
              "precision":"100",
-             "packaging_unit":"19"
+             "precision1":"100",
+             "packaging_unit":"19",
+             "packaging_unit1":"18"
           },
           "with_brand_safescan":{
              "product_1":{
