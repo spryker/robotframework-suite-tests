@@ -28,9 +28,9 @@ Get_all_product_management_attributes
     And Response body parameter should not be EMPTY:    [data][0][attributes][values]
     And Response body parameter should not be EMPTY:    [data][0][attributes][values][0][value]
     And Response body parameter should not be EMPTY:    [data][0][attributes][values][0][localizedValues]
-    And Response body parameter should be:
+    And Response body parameter should be in:
     ...    [data][0][attributes][values][0][localizedValues][0][localeName]
-    ...    ${locale.DE.name}
+    ...    ${locale.DE.name}    ${locale.EN.name}
     And Response body parameter should not be EMPTY:
     ...    [data][0][attributes][values][0][localizedValues][0][translation]
     And Response body parameter should not be EMPTY:    [data][0][links][self]
