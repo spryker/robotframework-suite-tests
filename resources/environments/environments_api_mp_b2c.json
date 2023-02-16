@@ -382,7 +382,11 @@
           "title":"This is a review",
           "text":"This is review text",
           "default_rating":"5"
-       }
+       },
+       "configurable_product":{
+         "sku_1": "124_29866591",
+         "sku_2": "124_31623088"
+ }
     },
     "product_attributes":{
        "brand_1":"Soennecken",
@@ -556,5 +560,13 @@
     },
     "wishlists":{
        "wishlist_name":"HS"
-    }
+    },
+    "productConfigurationInstance": {
+      "productConfigurationInstance":{
+      "displayData": "{\"Preferred time of the day\": \"Afternoon\", \"Date\": \"9.09.2050\"}",
+      "configuration": "{\"time_of_day\": \"3\"}",
+      "configuratorKey": "DATE_TIME_CONFIGURATOR",
+      "isComplete": true
+  }
+  }
  }
