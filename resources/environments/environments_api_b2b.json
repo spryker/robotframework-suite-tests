@@ -383,7 +383,8 @@
        "packaging_unit":{
           "m":"METR",
           "cm":"CMET",
-          "m_name":"Meter"
+          "m_name":"Meter",
+          "m_name2":"Centimeter"
        },
        "measurement_unit":{
           "m":"METR"
