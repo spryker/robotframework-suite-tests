@@ -288,6 +288,7 @@
           },
           "random_weight":{
              "sku":"cable-vga-1-2",
+             "sku1":"cable-vga-1-1",
              "name":"VGA cable as long as you want",
              "measurement_unit":"19",
              "qty_of_units":"2",

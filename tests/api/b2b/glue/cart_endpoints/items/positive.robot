@@ -318,7 +318,7 @@ Add_random_weight_product_to_cart_with_included_sales_units_and_measurenet_units
     And Response include element has self link:    sales-units
     And Response include element has self link:    product-measurement-units
     And Response body parameter should be:    [included][0][type]    product-measurement-units
-    And Response body parameter should be:    [included][0][id]    ${packaging_unit.m}
+    And Response body parameter should be in:    [included][0][id]   ${packaging_unit.m}    ${packaging_unit.cm}
     And Response body parameter should be:    [included][1][type]    sales-units
     And Response body parameter should be:    [included][1][id]    ${sales_unit_id}
     And Response body parameter should be:    [included][2][attributes][salesUnit][id]    ${sales_unit_id}
@@ -477,14 +477,14 @@ Change_item_amount_in_cart
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     ...    AND    I send a POST request:    /carts    {"data":{"type":"carts","attributes":{"priceMode":"${mode.gross}","currency":"${currency.eur.code}","store":"${store.de}","name":"Cart-${random}"}}}
     ...    AND    Save value to a variable:    [data][id]    cart_uid
-    ...    AND    I send a GET request:    /concrete-products/${concrete.random_weight.sku}?include=sales-units
+    ...    AND    I send a GET request:    /concrete-products/${concrete.random_weight.sku1}?include=sales-units
     ...    AND    Save value to a variable:    [included][0][id]    sales_unit_id
-    ...    AND    I send a POST request:    /carts/${cart_uid}/items?include=items    {"data": {"type": "items","attributes": {"sku": "${concrete.random_weight.sku}","quantity": 1,"salesUnit": {"id": "${sales_unit_id}","amount": 2.5}}}}
+    ...    AND    I send a POST request:    /carts/${cart_uid}/items?include=items    {"data": {"type": "items","attributes": {"sku": "${concrete.random_weight.sku1}","quantity": 1,"salesUnit": {"id": "${sales_unit_id}","amount": 1.5}}}}
     ...    AND    Save value to a variable:    [included][0][id]    item_uid
     ...    AND    Save value to a variable:    [included][0][attributes][calculations][sumPriceToPayAggregation]    item_total_price
     When I send a PATCH request:
     ...    /carts/${cart_uid}/items/${item_uid}?include=items
-    ...    {"data":{"type": "items","attributes":{"quantity": 2,"salesUnit": {"id": "${sales_unit_id}","amount": 5}}}}
+    ...    {"data":{"type": "items","attributes":{"quantity": 2,"salesUnit": {"id": "${sales_unit_id}","amount": 3}}}}
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
@@ -492,7 +492,7 @@ Change_item_amount_in_cart
     And Response body parameter should be:    [data][type]    carts
     And Response body parameter should be:    [included][0][id]    ${item_uid}
     And Response body parameter should be:    [included][0][attributes][quantity]    2
-    And Response body parameter should be:    [included][0][attributes][amount]    5.0
+    And Response body parameter should be:    [included][0][attributes][amount]    3.0
     And Response body parameter should be greater than:
     ...    [included][0][attributes][calculations][sumPriceToPayAggregation]
     ...    ${item_total_price}
