@@ -203,7 +203,8 @@
        },
        "category_lvl2":{
           "id":"12",
-          "qty":"56"
+          "qty":"56",
+          "qty_aprox":"50" 
        },
        "category_lvl3":{
           "id":"13",

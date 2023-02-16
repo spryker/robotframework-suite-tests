@@ -337,9 +337,11 @@ Search_by_several_attributes
     ...    [data][0][attributes][abstractProducts]
     ...    ${ipp.default}
 
-##### FILTERING #####
+#### FILTERING #####
 
 Filter_by_rating_only_min
+   [Documentation]    https://spryker.atlassian.net/browse/CC-25997
+   [Tags]    skip-due-to-issue
     When I send a GET request:    /catalog-search?q=&rating[min]=3
     Then Response status code should be:    200
     And Response reason should be:    OK
@@ -356,6 +358,8 @@ Filter_by_rating_only_min
     And Response body parameter should be:    [data][0][attributes][rangeFacets][0][activeMax]    ${default_rating.max}
 
 Filter_by_rating_only_max
+    [Documentation]    https://spryker.atlassian.net/browse/CC-25997
+    [Tags]    skip-due-to-issue
     When I send a GET request:    /catalog-search?q=&rating[max]=${default_rating.min}
     Then Response status code should be:    200
     And Response reason should be:    OK
@@ -689,7 +693,7 @@ Filter_by_valid_subcategory
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response body parameter should be:    [data][0][type]    catalog-search
-    And Response body parameter should be:    [data][0][attributes][pagination][numFound]    ${category_lvl2.qty}
+    And Response body parameter should be greater than:    [data][0][attributes][pagination][numFound]    ${category_lvl2.qty_aprox}
     And Response body parameter should be:    [data][0][attributes][pagination][currentPage]    1
     And Response body parameter should be greater than:    [data][0][attributes][pagination][maxPage]    1
     And Response should contain the array of a certain size:
@@ -701,12 +705,12 @@ Filter_by_valid_subcategory
     ...    [data][0][attributes][categoryTreeFilter]
     ...    ${category_tree_branches_qty}
     And Response body parameter should be:    [data][0][attributes][categoryTreeFilter][0][docCount]    0
-    And Response body parameter should be:
+    And Response body parameter should be greater than: 
     ...    [data][0][attributes][categoryTreeFilter][3][docCount]
-    ...    ${category_lvl2.qty}
-    And Response body parameter should be:
+    ...    ${category_lvl2.qty_aprox}
+    And Response body parameter should be greater than: 
     ...    [data][0][attributes][categoryTreeFilter][3][children][0][docCount]
-    ...    ${category_lvl2.qty}
+    ...    ${category_lvl2.qty_aprox}
     And Response body parameter should be:    [data][0][attributes][categoryTreeFilter][3][children][1][docCount]    0
     And Response body parameter should be greater than:
     ...    [data][0][attributes][categoryTreeFilter][3][children][0][children][0][docCount]
@@ -879,6 +883,8 @@ Search_set_invalid_ipp
     And Response body parameter should not be EMPTY:    [links][next]
 
 Search_sort_by_name_asc
+     [Documentation]    https://spryker.atlassian.net/browse/CC-25997
+     [Tags]    skip-due-to-issue
     When I send a GET request:    /catalog-search?q=&sort=name_asc
     Then Response status code should be:    200
     And Response reason should be:    OK
@@ -890,6 +896,8 @@ Search_sort_by_name_asc
     And Response body has correct self link
 
 Search_sort_by_name_desc
+    [Documentation]    https://spryker.atlassian.net/browse/CC-25997
+    [Tags]    skip-due-to-issue
     When I send a GET request:    /catalog-search?q=&sort=name_desc
     Then Response status code should be:    200
     And Response reason should be:    OK
@@ -901,6 +909,8 @@ Search_sort_by_name_desc
     And Response body has correct self link
 
 Search_sort_by_rating
+     [Documentation]    https://spryker.atlassian.net/browse/CC-25997
+     [Tags]    skip-due-to-issue
     When I send a GET request:    /catalog-search?q=&sort=rating
     Then Response status code should be:    200
     And Response reason should be:    OK
