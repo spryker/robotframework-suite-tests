@@ -62,10 +62,11 @@ Request_company_users_include_customers_and_roles_and_business_units
     And Each array element of array in response should contain property:    [data]    id
     And Each array element of array in response should contain property:    [data]    attributes
     And Each array element of array in response should contain property:    [data]    relationships
-    And Response should contain the array of a certain size:    [data][0][relationships]    3
+    And Response should contain the array larger than a certain size:    [data][0][relationships]    1
+    And Response should contain the array smaller than a certain size:    [data][0][relationships]    4
     Response body parameter should contain:    [data][0][relationships]    company-business-units
     Response body parameter should contain:    [data][0][relationships]    customers
-    Response body parameter should contain:    [data][0][relationships]    company-role
+    Response body parameter should contain:    [data][4][relationships]    company-role
 
 Request_companies_users_if_user_has_4_companies
     [Setup]    Run Keywords    I get access token for the customer:    ${user_with_multiple_companies}
