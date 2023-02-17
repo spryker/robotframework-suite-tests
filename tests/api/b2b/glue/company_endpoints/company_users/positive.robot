@@ -67,7 +67,6 @@ Request_company_users_include_customers_and_roles_and_business_units
     And Response should contain the array smaller than a certain size:    [data][0][relationships]    4
     Response body parameter should contain:    [data][0][relationships]    company-business-units
     Response body parameter should contain:    [data][0][relationships]    customers
-    Array element should contain nested array at least once:    [data][relationships]   company-role
     Response body parameter should contain:    [data][2][relationships]    company-role  
 
 Request_companies_users_if_user_has_4_companies
