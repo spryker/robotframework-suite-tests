@@ -1714,6 +1714,36 @@ Array element should contain property with value at least once:
         IF    'FAIL' in ${result}    Continue For Loop
     END
 
+Nested array element should contain sub-array at least once:
+    [Documentation]    This keyword checks that nested array ``${parrent_array}`` in the array specified as ``${json_path}`` contains the specified sub-array ``${expected_nested_array}`` at least once.
+    ...
+    ...    *Example:*
+    ...
+    ...    ``And Nested array element should contain sub-array at least once:      [data]    [relationships]    company-role``
+    ...
+    [Arguments]    ${json_path}     ${parrent_array}    ${expected_nested_array}
+    @{data}=    Get Value From Json    ${response_body}    ${json_path}
+    ${result}=    Set Variable    'FALSE'
+    ${list_length}=    Get Length    @{data}
+    ${log_list}=    Log List    @{data}
+    ${expected_nested_array}=    Replace String    ${expected_nested_array}    [   ${EMPTY}
+    ${expected_nested_array}=    Replace String    ${expected_nested_array}    ]   ${EMPTY}
+    ${expected_nested_array}=    Replace String    ${expected_nested_array}    '   ${EMPTY}
+    ${expected_nested_array}=    Create List    ${expected_nested_array}
+    FOR    ${index}    IN RANGE    0    ${list_length}
+        IF    'PASS' in ${result}    BREAK
+        ${list_element}=    Get From List    @{data}    ${index}
+        Log    ${list_element}
+        @{list_element2}=    Get Value From Json    ${list_element}    ${parrent_array}
+        @{list_element}=    Get From List    ${list_element2}    0
+        ${result}=    Run Keyword And Ignore Error    List Should Contain Sub List   ${list_element}    ${expected_nested_array}    ignore_case=True
+        IF    'PASS' in ${result}    Exit For Loop
+        IF    ${index} == ${list_length}-1
+                Fail    expected '${expected_nested_array}' array is not present in '@{data}'
+        END
+        IF    'FAIL' in ${result}    Continue For Loop
+    END
+
 Array element should contain nested array with property and value at least once:
     [Documentation]    This keyword checks whether the array ``${nested_array}`` that is present in the parrent array ``${json_path}``  contsains propery ``${expected_property}`` with value ``${expected_value}`` at least once.
     ...
