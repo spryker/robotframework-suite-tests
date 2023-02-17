@@ -67,7 +67,7 @@ Request_company_users_include_customers_and_roles_and_business_units
     And Response should contain the array smaller than a certain size:    [data][0][relationships]    4
     And Response body parameter should contain:    [data][0][relationships]    company-business-units
     And Response body parameter should contain:    [data][0][relationships]    customers
-    And Nested array element should contain sub-array at least once:      [data]    [relationships]    company-role
+    And Nested array element should contain sub-array at least once:      [data]    [relationships]    company-roles
 
 Request_companies_users_if_user_has_4_companies
     [Setup]    Run Keywords    I get access token for the customer:    ${user_with_multiple_companies}
