@@ -34,9 +34,9 @@ Request_company_role_by_mine
     And Response should contain the array of a certain size:    [data]    2
     And Each array element of array in response should contain property with value:    [data]    type    company-roles
     And Response body parameter should be in:    [data][1][attributes][name]    Admin    Buyer
-    And Response body parameter should be in:    [data][1][attributes][name]    Admin    Buyer
+    And Response body parameter should be in:    [data][0][attributes][name]    Admin    Buyer
     And Response body parameter should be in:    [data][0][attributes][isDefault]    True    False
-    And Response body parameter should be in:    [data][0][attributes][isDefault]    True    False
+    And Response body parameter should be in:    [data][1][attributes][isDefault]    True    False
     
 Request_company_role_by_mine_with_include_companies
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}

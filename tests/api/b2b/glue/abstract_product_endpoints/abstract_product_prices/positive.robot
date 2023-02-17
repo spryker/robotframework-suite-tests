@@ -107,5 +107,5 @@ Abstract_prices_original_price
     And Each array element of array in response should contain property with value:
     ...    [data][0][attributes][prices]
     ...    volumePrices
-    ...    ${arrow}
+    ...    ${array}
     And Response body has correct self link

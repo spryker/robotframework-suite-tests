@@ -250,7 +250,7 @@ Get_search_suggestions_with_brand_and_currency
     And Response should contain the array of a certain size:    [data][0][attributes][abstractProducts]    10
     And Response body parameter should be:    
     ...    [data][0][attributes][abstractProducts][8][price]
-    ...    ${abstract.alternative_products.product_3.price_chf} 
+    ...    ${abstract.alternative_products.product_2.price_chf} 
     And Response body has correct self link
 
 Get_search_suggestions_with_color

@@ -55,7 +55,7 @@ Request_concrete_product_with_default_and_original_prices
     And Each array element of array in response should contain property with value:
     ...    [data][0][attributes][prices]
     ...    volumePrices
-    ...    ${arrow}
+    ...    ${array}
 
 Request_concrete_product_with_volume_product_prices
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}

@@ -693,7 +693,7 @@ Filter_by_valid_subcategory
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response body parameter should be:    [data][0][type]    catalog-search
-    And Response body parameter should be greater than:    [data][0][attributes][pagination][numFound]    ${category_lvl2.qty_aprox}
+    And Response body parameter should be greater than:    [data][0][attributes][pagination][numFound]    ${category_lvl2.qty_approx}
     And Response body parameter should be:    [data][0][attributes][pagination][currentPage]    1
     And Response body parameter should be greater than:    [data][0][attributes][pagination][maxPage]    1
     And Response should contain the array of a certain size:
@@ -707,10 +707,10 @@ Filter_by_valid_subcategory
     And Response body parameter should be:    [data][0][attributes][categoryTreeFilter][0][docCount]    0
     And Response body parameter should be greater than: 
     ...    [data][0][attributes][categoryTreeFilter][3][docCount]
-    ...    ${category_lvl2.qty_aprox}
+    ...    ${category_lvl2.qty_approx}
     And Response body parameter should be greater than: 
     ...    [data][0][attributes][categoryTreeFilter][3][children][0][docCount]
-    ...    ${category_lvl2.qty_aprox}
+    ...    ${category_lvl2.qty_approx}
     And Response body parameter should be:    [data][0][attributes][categoryTreeFilter][3][children][1][docCount]    0
     And Response body parameter should be greater than:
     ...    [data][0][attributes][categoryTreeFilter][3][children][0][children][0][docCount]
