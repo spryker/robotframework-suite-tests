@@ -1693,12 +1693,12 @@ Array element should contain nested array at least once:
         IF    'FAIL' in ${result}    Continue For Loop
     END
 
-Array elelemt should contain property with value at least once:
+Array element should contain property with value at least once:
     [Documentation]    This keyword checks that element in the array specified as ``${json_path}`` contains the specified property ``${expected_property}`` with the specified value ``${expected_value}`` at least once.
     ...
     ...    *Example:*
     ...
-    ...    ``And Array elelemt should contain property with value at least once:    [data][0][attributes][categoryTreeFilter]    docCount    ${${category_lvl2.qty}}``
+    ...    ``And Array element should contain property with value at least once:    [data][0][attributes][categoryTreeFilter]    docCount    ${${category_lvl2.qty}}``
     ...
     [Arguments]    ${json_path}    ${expected_property}    ${expected_value}
     @{data}=    Get Value From Json    ${response_body}    ${json_path}
@@ -1714,12 +1714,12 @@ Array elelemt should contain property with value at least once:
         IF    'FAIL' in ${result}    Continue For Loop
     END
 
-Array elelemt should contain nested array with property and value at least once:
+Array element should contain nested array with property and value at least once:
     [Documentation]    This keyword checks whether the array ``${nested_array}`` that is present in the parrent array ``${json_path}``  contsains propery ``${expected_property}`` with value ``${expected_value}`` at least once.
     ...
     ...    *Example:*
     ...
-    ...   ``And Array elelemt should contain nested array with property and value at least once:    [data][0][attributes][categoryTreeFilter]    [children]    docCount    ${category_lvl2.qty}``
+    ...   ``And Array element should contain nested array with property and value at least once:    [data][0][attributes][categoryTreeFilter]    [children]    docCount    ${category_lvl2.qty}``
     ...    
     [Arguments]    ${json_path}    ${nested_array}    ${expected_property}    ${expected_value}
     @{data}=    Get Value From Json    ${response_body}    ${json_path}
