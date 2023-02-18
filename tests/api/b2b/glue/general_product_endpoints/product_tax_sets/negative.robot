@@ -1,15 +1,20 @@
 *** Settings ***
-Suite Setup       SuiteSetup
-Resource    ../../../../../../resources/common/common_api.robot
-Test Setup    TestSetup
+Resource        ../../../../../../resources/common/common_api.robot
+
+Suite Setup     SuiteSetup
+Test Setup      TestSetup
+
 Default Tags    glue
+
 
 *** Test Cases ***
 ENABLER
     TestSetup
 # bug CC-16486
+
 Get_a_tax_set_with_concrete_sku
-    When I send a GET request:    /abstract-products/${concrete.available_product.with_stock.product_1.sku}/product-tax-sets
+    When I send a GET request:
+    ...    /abstract-products/${concrete.available_product.with_stock.product_1.sku}/product-tax-sets
     Then Response status code should be:    404
     And Response reason should be:    Not Found
     And Response should return error code:    310
@@ -28,4 +33,3 @@ Get_a_tax_set_with_non_existing_sku
     And Response reason should be:    Not Found
     And Response should return error code:    310
     And Response should return error message:    Product tax sets not found.
-
