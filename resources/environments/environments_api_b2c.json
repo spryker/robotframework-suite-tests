@@ -487,6 +487,9 @@
           "discount_2":{
              "name":"5% off white"
           },
+          "discount_3":{
+          "id":"3"
+          },
           "concrete":{
              "product_1":{
                 "sku":"108298",
