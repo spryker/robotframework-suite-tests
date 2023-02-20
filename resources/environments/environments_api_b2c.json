@@ -552,5 +552,9 @@
        "configurable_bundle_slot_6_uuid":"2a5e55b1-993a-5510-864c-a4a18558aa75",
        "configurable_bundle_template_name_1":"All in",
        "configured_bundle_quantity":2
-    }
+    },
+    "dataType":{
+       "array":[
+          
+       ]}
  }
