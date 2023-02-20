@@ -42,7 +42,7 @@ Creating_wishlist_by_invalid_Access_Token
 
 
 Creating_wishlist_with_space_in_name
-    [Documentation]   #Post Request CC-16553
+    [Documentation]   #Post Request https://spryker.atlassian.net/browse/CC-16553
     [Tags]    skip-due-to-issue
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...        AND    I set Headers:    Authorization=${token}
@@ -64,7 +64,7 @@ Creating_wishlist_with_missing_name
     ...    AND     I set headers:    authorization=${token}
     When I send a POST request:    /wishlists    {"data": {"type": "wishlists","attributes": {"name": ""}}}
     And Each array element of array in response should contain property with value:    [errors]    code    901
-    And Each array element of array in response should contain property with value:    [errors]    status    422
+    And Each array element of array in response should contain property with value:    [errors]    status    ${422}
     And Array in response should contain property with value:    [errors]    detail    name => This value should not be blank.
 
 Creating_wishlist_with_invalid_name
@@ -136,7 +136,7 @@ Updating_wishlist_with_missing_name
     ...    AND    Save value to a variable:    [data][id]    wishlist_id
     ...    AND    Response status code should be:    201
     When I send a Patch request:    /wishlists/${wishlist_id}    {"data": {"type": "wishlists","attributes": {"name": ""}}}
-    Then Response status code should be:    422
+    Then Response status code should be:    ${422}
     AND Response reason should be:    Unprocessable Content
     [Teardown]    Run Keywords    I send a DELETE request:    /wishlists/${wishlist_id}
     ...  AND    Response status code should be:    204
@@ -148,7 +148,7 @@ Updating_wishlist_with_invalid_name
     ...    AND    Save value to a variable:    [data][id]    wishlist_id
     ...    AND    Response status code should be:    201
     When I send a Patch request:    /wishlists/${wishlist_id}    {"data": {"type": "wishlists","attributes": {"name": "."}}}
-    Then Response status code should be:    422
+    Then Response status code should be:    ${422}
     And Response should return error message:   Please enter name using only letters, numbers, underscores, spaces or dashes.
     And Response should return error code:    210
     [Teardown]    Run Keywords    I send a DELETE request:    /wishlists/${wishlist_id}
