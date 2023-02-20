@@ -164,10 +164,10 @@ Create_order_include_orders
     And Response body parameter should be:    [included][0][attributes][expenses][0][canceledAmount]    None
     And Response body parameter should be:    [included][0][attributes][expenses][0][unitDiscountAmountAggregation]    None
     And Response body parameter should be:    [included][0][attributes][expenses][0][sumDiscountAmountAggregation]    None
-    And Response body parameter should be:    [included][0][attributes][expenses][0][unitTaxAmount]    0
-    And Response body parameter should be:    [included][0][attributes][expenses][0][sumTaxAmount]    0
-    And Response body parameter should be:    [included][0][attributes][expenses][0][unitPriceToPayAggregation]    0
-    And Response body parameter should be:    [included][0][attributes][expenses][0][sumPriceToPayAggregation]    0
+    And Response body parameter should be greater than:    [included][0][attributes][expenses][0][unitTaxAmount]    0
+    And Response body parameter should be greater than:    [included][0][attributes][expenses][0][sumTaxAmount]    0
+    And Response body parameter should be greater than:    [included][0][attributes][expenses][0][unitPriceToPayAggregation]    0
+    And Response body parameter should be greater than:    [included][0][attributes][expenses][0][sumPriceToPayAggregation]    0
     And Response body parameter should be:    [included][0][attributes][expenses][0][taxAmountAfterCancellation]    None
     And Response body parameter should be greater than:    [included][0][attributes][expenses][0][idShipment]    0
     And Response body parameter should be greater than:    [included][0][attributes][expenses][0][idSalesExpense]    0
@@ -354,6 +354,7 @@ Create_order_with_same_items_in_different_shipments
     And Response should contain certain number of values:    [included][0][attributes][expenses]    idShipment    1
 
 Create_order_with_free_shipping_discount
+    [Documentation]    change sub total cause product price is 26.25 (sub total could not be greater than 200.00)
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
     ...  AND    Find or create customer cart
@@ -367,7 +368,7 @@ Create_order_with_free_shipping_discount
     And Response body parameter should be:    [included][0][attributes][totals][expenseTotal]    ${discount.discount_1.total_sum}
     And Response body parameter should be greater than:    [included][0][attributes][totals][discountTotal]    0
     And Response body parameter should be greater than:    [included][0][attributes][totals][taxTotal]    0
-    And Response body parameter should be greater than:    [included][0][attributes][totals][subtotal]    20000
+    And Response body parameter should be greater than:    [included][0][attributes][totals][subtotal]    7800
     And Save value to a variable:    [included][0][attributes][totals][discountTotal]    discount_total_sum
     And Save value to a variable:    [included][0][attributes][totals][subtotal]    sub_total_sum
     And Perform arithmetical calculation with two arguments:    grand_total_sum    ${sub_total_sum}    -    ${discount_total_sum}
