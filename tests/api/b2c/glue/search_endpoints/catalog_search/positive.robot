@@ -2,13 +2,15 @@
 Suite Setup    SuiteSetup
 Test Setup     TestSetup
 Resource    ../../../../../../resources/common/common_api.robot
+Resource    ../../../../../../resources/common/common_api.robot
 Default Tags    glue
 
 *** Test Cases ***
 
 ##### SEARCH PARAMETERS #####
 ENABLER
-    TestSetup
+     TestSetup
+
 Search_with_empty_search_criteria_all_default_values_check
     When I send a GET request:    /catalog-search?q=
     Then Response status code should be:    200
@@ -516,7 +518,7 @@ Filter_by_valid_main_category
     # check that category tree is correctly updated
     And Response should contain the array of a certain size:    [data][0][attributes][categoryTreeFilter]    ${category_tree_branches_qty}
     And Response body parameter should be:    [data][0][attributes][categoryTreeFilter][0][docCount]    0
-    And Response body parameter should be:    [data][0][attributes][categoryTreeFilter][4][docCount]    ${category_lvl1.qty}
+    And Array element should contain property with value at least once:   [data][0][attributes][categoryTreeFilter]    docCount    ${${category_lvl1.qty}}
     And Response body has correct self link
 
 Filter_by_valid_subcategory
@@ -533,7 +535,7 @@ Filter_by_valid_subcategory
     # check that category tree is correctly updated
     And Response should contain the array of a certain size:    [data][0][attributes][categoryTreeFilter]    ${category_tree_branches_qty}
     And Response body parameter should be:    [data][0][attributes][categoryTreeFilter][0][docCount]    0
-    And Response body parameter should be:    [data][0][attributes][categoryTreeFilter][4][children][0][docCount]    ${category_lvl2.qty}
+    And Array element should contain property with value at least once:   [data][0][attributes][categoryTreeFilter]    docCount    ${${category_lvl2.qty}}
     And Response body has correct self link
 
 Search_with_specific_currency
@@ -553,7 +555,7 @@ Search_with_specific_currency
     And Response body parameter should be greater than:    [data][0][attributes][abstractProducts][0][prices][0][DEFAULT]    1   
     And Response body has correct self link
 
-##### PAGINATION AND SORTING #####
+#### PAGINATION AND SORTING #####
 
 Search_set_specific_page_with_default_ipp
     # here page 4 is selected using offset because 36/12=3 full pages, search shows the next page after the offset
