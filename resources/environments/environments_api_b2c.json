@@ -266,7 +266,8 @@
           "sku":"155_30149933",
           "name":"Lenovo IdeaPad Yoga 500",
           "name_in_lower_case":"lenovo ideapad yoga 500",
-          "promotional_items_sku":"112"
+          "promotional_items_sku":"112",
+          "promotional_items_sku1":"68"    
        },
        "abstract_product_with_alternative":{
           "sku":"155",
