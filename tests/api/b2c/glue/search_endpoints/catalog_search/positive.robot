@@ -2,7 +2,6 @@
 Suite Setup    SuiteSetup
 Test Setup     TestSetup
 Resource    ../../../../../../resources/common/common_api.robot
-Resource    ../../../../../../resources/common/common_api.robot
 Default Tags    glue
 
 *** Test Cases ***
