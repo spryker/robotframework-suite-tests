@@ -6,7 +6,7 @@ Resource    ../common/common_yves.robot
 Resource    ../common/common.robot
 
 *** Variables ***
-${upSellProducts}    ${shopping_cart_upp-sell_products_section}
+${upSellProducts}    ${shopping_cart_upp-sell_products_section}[${env}]
 ${lockedCart}    ${shopping_cart_locked_cart_form}
 
 *** Keywords ***
@@ -134,6 +134,7 @@ Yves: get link for external cart sharing
     Click    xpath=//input[@name='cart-share'][contains(@target-class-name,'external')]/ancestor::label
     Wait Until Element Is Visible    xpath=//input[@id='PREVIEW']
     ${externalURL}=    Get Element Attribute    xpath=//input[@id='PREVIEW']    value
+    ${externalURL}=    Replace String Using Regexp    ${externalURL}    ${EMPTY}.*.com/    ${EMPTY}
     Set Suite Variable    ${externalURL}
 
 Yves: Expand shopping cart accordion:
@@ -147,7 +148,7 @@ Yves: Expand shopping cart accordion:
      Log    ${accordionState}
      IF    'active' not in '${accordionState}'
          Run Keywords
-            Click    xpath=//div[@data-qa='component cart-sidebar']//*[contains(@class,'cart-sidebar-item__title')][contains(.,'${accordionTitle}')]
+            Click    xpath=//div[@data-qa='component cart-sidebar']//*[contains(@class,'cart-sidebar-item__title')][contains(.,'${accordionTitle}')]    delay=1s
             Wait Until Element Is Visible    xpath=//div[@data-qa='component cart-sidebar']//*[contains(@class,'cart-sidebar-item__title')][contains(.,'${accordionTitle}')]/../div[contains(@class,'cart-sidebar-item__content')]
      END
 
@@ -159,9 +160,12 @@ Yves: Shopping Cart title should be equal:
 Yves: change quantity of the configurable bundle in the shopping cart on:
     [Documentation]    In case of multiple matches, changes quantity for the first product in the shopping cart
     [Arguments]    ${confBundleTitle}    ${quantity}
-    Type Text    xpath=//main//article[contains(@data-qa,'configured-bundle')][1]//a[text()='${confBundleTitle}']/ancestor::article//input[@data-qa='quantity-input']    ${quantity}
-    Click    xpath=//main//article[contains(@data-qa,'configured-bundle')][1]//a[text()='${confBundleTitle}']/ancestor::article
-    Sleep    1s
+    IF    '${env}' in ['b2b','mp_b2b']
+        Type Text    xpath=//main//article[contains(@data-qa,'configured-bundle')][1]//a[text()='Presentation bundle']/ancestor::article//input[contains(@class, 'formatted-number-input__input')]    ${quantity}
+    ELSE
+        Type Text    xpath=//article[contains(@data-qa,'configured-bundle-secondary')][1]//ancestor::*[contains(@data-qa, 'component formatted-number-input')]//input[contains(@class,'formatted-number-input')][contains(@data-min-quantity,'1')]    ${quantity}
+    END
+    Click    xpath=//main//article[contains(@data-qa,'configured-bundle')][1]//a[text()='${confBundleTitle}']/ancestor::article    delay=1s
     Yves: remove flash messages
 
 Yves: delete all shopping carts

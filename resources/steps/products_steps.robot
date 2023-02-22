@@ -105,7 +105,7 @@ Zed: product is successfully discontinued
     Page Should Contain Element    ${zed_pdp_restore_button}
 
 Zed: view product page is displayed
-     Wait Until Element Is Visible    ${zed_view_abstract_product_main_content_locator}
+    Wait Until Element Is Visible    ${zed_view_abstract_product_main_content_locator}
 
 Zed: view abstract product page contains:
     [Arguments]    @{args}
@@ -127,7 +127,8 @@ Zed: view abstract product page contains:
             Element Should Contain    ${zed_view_abstract_product_name}[${env}]    ${value}
         END
         IF    '${key}'=='variants count' and '${value}' != '${EMPTY}'
-            Clear Text    xpath=//div[@id='product-variant-table_filter']//input[@type='search']    
+            Clear Text    xpath=//div[@id='product-variant-table_filter']//input[@type='search']
+            Sleep    1s
             ${actualVariantsCount}=    Get Element Count    xpath=//table[@id='product-variant-table']//tbody/tr
             Should Be Equal    '${actualVariantsCount}'    '${value}'
         END
@@ -475,3 +476,4 @@ Zed: add new concrete product to abstract:
         END
     END
     Click    ${zed_pdp_save_button}
+    Wait Until Element Is Visible    xpath=//div[@class='title-action']/a[contains(.,'Manage Attributes')]
