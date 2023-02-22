@@ -7,7 +7,6 @@
     "database":{
        "db_host":"127.0.0.1",
        "db_port":"3306",
-       "db_port_postgres": "5432",
        "db_user":"spryker",
        "db_password":"secret",
        "db_name":"eu-docker"
