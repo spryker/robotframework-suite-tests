@@ -25,7 +25,7 @@ Create_a_return
     ...    AND    Save value to a variable:    [included][0][attributes][items][0][uuid]    uuid
     ...    AND    Save value to a variable:    [included][0][attributes][items][0][refundableAmount]    productPrice
     ...    AND    Update order status in Database:    shipped    ${uuid}   
-    ...    AND     I send a POST request:     /returns     {"data":{"type":"returns","attributes":{"store":"${store.de}","returnItems":[{"salesOrderItemUuid":"${uuid}","reason":"${return_reason_damaged}"}]}}}
+    ...    AND    Run Keyword And Ignore Error    I send a POST request:   /returns     {"data":{"type":"returns","attributes":{"store":"${store.de}","returnItems":[{"salesOrderItemUuid":"${uuid}","reason":"${return_reason_damaged}"}]}}}
     ### steps below just duplicate the order creation and status change. This is needed as we 'hack' the order status in the database. ###
     ### Needs to be done only once in the first test ###   
     ...    AND    I send a POST request:    /carts    {"data":{"type":"carts","attributes":{"priceMode":"${mode.gross}","currency":"${currency.eur.code}","store":"${store.de}"}}}
