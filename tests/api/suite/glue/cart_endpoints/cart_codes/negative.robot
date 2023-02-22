@@ -56,7 +56,7 @@ Adding_invalid_cart_code
 Gift_card_fully_used
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_second_user.email}
     ...  AND    I set Headers:    Authorization=${token}
-    ...  AND    Create giftcode in Database:    used_${random}    ${gift_card.amount}
+    ...  AND    Create giftcode in Database:    used_${random}    100
     ...  AND    I send a POST request:    /carts    {"data":{"type":"carts","attributes":{"priceMode":"${mode.gross}","currency":"${currency.eur.code}","store":"${store.de}","name": "${test_cart_name}-${random}"}}}
     ...  AND    Response status code should be:    201
     ...  AND    Save value to a variable:    [data][id]    cart_id
