@@ -467,6 +467,7 @@
        "test_cart_name":"Test-cart",
        "qty_of_categories_in_category_trees":"6",
        "qty_of_subcategories_in_category_trees":"2",
+       "tax_rate":"19.00",
        "color_name":"black",
        "payment":{
           "provider_name":"DummyPayment",
@@ -555,7 +556,6 @@
        "configured_bundle_quantity":2
     },
     "dataType":{
-       "array":[
-          
-       ]}
+       "array":[]
+      }
  }
