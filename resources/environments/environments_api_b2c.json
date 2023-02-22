@@ -439,9 +439,20 @@
              "name_in_lower_case":"imprint",
              "url_en":"/en/imprint"
           },
+          "second_cms_page":{
+            "name":"Dolor sit amet",
+            "name_in_lower_case":"dolor sit amet",
+            "url_en":"/en/dolor"
+          },
+          "third_cms_page":{
+            "name":"Data Privacy",
+            "name_in_lower_case":"data privacy",
+            "url_en":"/en/privacy"
+          },
           "cms_page_with_product_lists":{
              "id":"10014bd9-4bba-5a54-b84f-31b4b7efd064",
-             "name":"Demo Landing Page"
+             "name":"Demo Landing Page",
+             "url":"/en/demo-landing-page"
           }
        },
        "category_collection_name":"Digital Cameras",

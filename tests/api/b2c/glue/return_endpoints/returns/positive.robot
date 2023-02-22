@@ -16,6 +16,7 @@ Create_a_return
     ### steps below just duplicate the order creation and status change. This is needed as we 'hack' the order status in the database. ###
     ### Needs to be done only once in the first test ###
     ...    AND    I send a POST request:    /carts    {"data":{"type":"carts","attributes":{"priceMode":"${mode.gross}","currency":"${currency.eur.code}","store":"${store.de}"}}}
+    ...    AND    Response status code should be:    201
     ...    AND    I send a GET request:    /customers/${yves_user.reference}/carts
     ...    AND    Save value to a variable:    [data][0][id]    CartId
     ...    AND    I send a POST request:    /carts/${CartId}/items?include=items     {"data":{"type":"items","attributes":{"sku":"${product_availability.concrete_available_with_stock_and_never_out_of_stock_sku}","quantity":"1"}}}
@@ -24,10 +25,11 @@ Create_a_return
     ...    AND    Save value to a variable:    [included][0][attributes][items][0][uuid]    uuid
     ...    AND    Save value to a variable:    [included][0][attributes][items][0][refundableAmount]    productPrice
     ...    AND    Update order status in Database:    shipped    ${uuid}   
-    ...    AND     I send a POST request:     /returns     {"data":{"type":"returns","attributes":{"store":"${store.de}","returnItems":[{"salesOrderItemUuid":"${Uuid}","reason":"${return_reason_damaged}"}]}}}
+    ...    AND     I send a POST request:     /returns     {"data":{"type":"returns","attributes":{"store":"${store.de}","returnItems":[{"salesOrderItemUuid":"${uuid}","reason":"${return_reason_damaged}"}]}}}
     ### steps below just duplicate the order creation and status change. This is needed as we 'hack' the order status in the database. ###
     ### Needs to be done only once in the first test ###   
     ...    AND    I send a POST request:    /carts    {"data":{"type":"carts","attributes":{"priceMode":"${mode.gross}","currency":"${currency.eur.code}","store":"${store.de}"}}}
+    ...    AND    Response status code should be:    201
     ...    AND    I send a GET request:    /customers/${yves_user.reference}/carts
     ...    AND    Save value to a variable:    [data][0][id]    CartId
     ...    AND    I send a POST request:    /carts/${CartId}/items?include=items     {"data":{"type":"items","attributes":{"sku":"${product_availability.concrete_available_with_stock_and_never_out_of_stock_sku}","quantity":"1"}}}
@@ -36,7 +38,7 @@ Create_a_return
     ...    AND    Save value to a variable:    [included][0][attributes][items][0][uuid]    uuid
     ...    AND    Save value to a variable:    [included][0][attributes][items][0][refundableAmount]    productPrice
     ...    AND    Update order status in Database:    shipped    ${uuid}   
-    When I send a POST request:     /returns     {"data":{"type":"returns","attributes":{"store":"${store.de}","returnItems":[{"salesOrderItemUuid":"${Uuid}","reason":"${return_reason_damaged}"}]}}}
+    When I send a POST request:     /returns     {"data":{"type":"returns","attributes":{"store":"${store.de}","returnItems":[{"salesOrderItemUuid":"${uuid}","reason":"${return_reason_damaged}"}]}}}
     Then Save value to a variable:    [data][id]    returnId
     And Response status code should be:     201
     And Response reason should be:     Created
