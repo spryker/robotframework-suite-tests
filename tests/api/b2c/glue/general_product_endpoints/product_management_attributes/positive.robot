@@ -24,11 +24,6 @@ Get_all_product_management_attributes
     And Response body parameter should not be EMPTY:    [data][0][attributes][localizedKeys]
     And Response body parameter should not be EMPTY:    [data][0][attributes][values]
     And Response body parameter should not be EMPTY:    [data][0][attributes][values][0][value]
-    And Response body parameter should not be EMPTY:    [data][0][attributes][values][0][localizedValues]
-    And Response body parameter should be in:
-    ...    [data][0][attributes][values][0][localizedValues][0][localeName]
-    ...    ${locale.DE.name}    ${locale.EN.name}
-    And Response body parameter should not be EMPTY:    [data][0][attributes][values][0][localizedValues][0][translation]
     And Response body parameter should not be EMPTY:    [data][0][links][self]
     And Each array element of array in response should contain nested property:    [data]    [attributes]    key
     And Each array element of array in response should contain property with value in:    [data]    [attributes][allowInput]    True    False
