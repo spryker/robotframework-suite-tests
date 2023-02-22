@@ -27,7 +27,7 @@ Yves: 'View Order/Reorder/Return' on the order history page:
 
 Yves: reorder all items from 'View Order' page
     Wait Until Element Is Visible    ${order_details_reorder_all_button}
-    Click    ${order_details_reorder_all_button}
+    Click    ${order_details_reorder_all_button}    delay=1s
     Yves: remove flash messages
 
 Yves: shipping address on the order details page is:

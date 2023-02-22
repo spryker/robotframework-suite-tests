@@ -1,5 +1,5 @@
 {
-    "environment": "mp_b2c", 
+    "environment": "ui_b2c", 
 
     "env": {
         "host": "http://yves.de.spryker.local/",
@@ -15,7 +15,15 @@
         "db_password": "secret",
         "db_name": "eu-docker"
         },
-        
+    
+    "database": {
+        "db_host": "127.0.0.1",
+        "db_port": "3306",
+        "db_user": "spryker",
+        "db_password": "secret",
+        "db_name": "eu-docker"
+        },
+
     "users": {    
         "yves_user_email": "george.freeman@spryker.com",
         "yves_user_first_name": "George",
@@ -29,15 +37,7 @@
         "yves_second_user_password": "change123",
 
         "zed_admin_email": "admin@spryker.com",
-        "zed_admin_password": "change123",
-        "zed_main_merchant_email": "richard@spryker.com",
-
-        "merchant_budget_cameras_email": "jason.weidmann@budgetcamerasonline.com",
-        "merchant_budget_cameras_reference": "MER000005",
-        "merchant_video_king_email": "martha@video-king.nl",
-        "merchant_spryker_email": "harald@spryker.com",
-        "merchant_spryker_reference": "MER000001"
-        
+        "zed_admin_password": "change123"
     },
     "user_role": {
         "bundle_access": "product-attribute-gui",
@@ -47,38 +47,16 @@
         "permission_deny": "deny",
         "full_access": "*"
     },
-
     "glossary":{
         "glossary_name":"customer.account.overview",
         "original_EN_text":"Overview",
         "original_DE_text":"Übersicht"
     },
-      
+        
     "products": {
         "one_variant_product_abstract_sku": "009",
         "one_variant_product_abstract_name": "EUROKRAFT trolley - with open shovel",
         "one_variant_product_default_price": "€99.99",
-
-        "one_variant_product_of_main_merchant_abstract_sku": "064",
-        "one_variant_product_of_main_merchant_abstract_name": "Samsung Galaxy S4 Mini",
-        "one_variant_product_of_main_merchant_abstract_price": "€54.48",
-        "one_variant_product_of_main_merchant_concrete_sku": "064_18404924",
-
-        "product_with_multiple_offers_abstract_sku": "041",
-        "product_with_multiple_offers_abstract_name": "Canon PowerShot SX610",
-        "product_with_multiple_offers_concrete_sku": "041_25904691",
-
-        "product_with_multiple_offers_budget_cameras_price": "€93.42",
-        "product_with_multiple_offers_video_king_price": "€98.61",
-
-        "second_product_with_multiple_offers_abstract_sku": "023",
-        "second_product_with_multiple_offers_abstract_name": "Sony Cyber-shot DSC-WX220",
-        "second_product_with_multiple_offers_concrete_sku": "023_21758366",
-
-        "second_product_with_multiple_offers_budget_cameras_price": "€240.51",
-        "second_product_with_multiple_offers_video_king_price": "€253.87",
-        "second_product_with_multiple_offers_sony_experts_price": "€227.15",
-        
         
         "bundle_product_abstract_sku": "211",
         "bundle_product_product_name": "HP Bundle",
@@ -98,5 +76,23 @@
         "product_with_relations_alternative_products_sku": "145",
         "product_with_relations_upselling_sku": "018"
             
+    },
+    "address":{
+            "street_name":"st",
+            "city":"Berlin",
+            "country":"Germany",
+            "additional_address":"additional street",
+            "company":"spryker"
+            } ,
+    "guest_user": {
+                "Salutation":"Mr.",
+                "Guest_user_first_name":"Guest",
+                "Guest_user_last_name":"martin"
+            },
+
+    "misc":
+    {
+        "order_state":"New"
     }
 }
+

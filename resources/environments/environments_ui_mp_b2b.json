@@ -1,19 +1,20 @@
 {
-    "environment": "mp_b2b", 
+    "environment": "ui_mp_b2b", 
 
     "env": {
-            "host": "http://yves.de.spryker.local/",
-            "host_at": "http://yves.at.spryker.local/",
-            "zed_url": "http://backoffice.de.spryker.local/",
-            "mp_url": "http://mp.de.spryker.local/security-merchant-portal-gui/login/"},
+        "host": "http://yves.de.spryker.local/",
+        "host_at": "http://yves.at.spryker.local/",
+        "zed_url": "http://backoffice.de.spryker.local/",
+        "mp_url": "http://mp.de.spryker.local/security-merchant-portal-gui/login/"
+    },
 
     "database": {
-            "db_host": "127.0.0.1",
-            "db_port": "3306",
-            "db_user": "spryker",
-            "db_password": "secret",
-            "db_name": "eu-docker"
-            },
+        "db_host": "127.0.0.1",
+        "db_port": "3306",
+        "db_user": "spryker",
+        "db_password": "secret",
+        "db_name": "eu-docker"
+        },
 
     "users": {    
             "yves_user_email": "sonia@spryker.com",

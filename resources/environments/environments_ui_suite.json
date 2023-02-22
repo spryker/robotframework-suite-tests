@@ -1,9 +1,11 @@
 {
-    "environment": "suite-nonsplit",
+    "environment": "ui_suite",
 
     "env": {
         "host": "http://yves.de.spryker.local/",
-        "zed_url": "http://backoffice.de.spryker.local/"
+        "host_at": "http://yves.at.spryker.local/",
+        "zed_url": "http://backoffice.de.spryker.local/",
+        "mp_url": "http://mp.de.spryker.local/security-merchant-portal-gui/login/"
     },
 
     "database": {
