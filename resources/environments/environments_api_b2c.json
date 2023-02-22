@@ -480,6 +480,7 @@
        "qty_of_categories_in_category_trees":"6",
        "qty_of_subcategories_in_category_trees":"2",
        "tax_rate":"19.00",
+       "tax_rate1":"19",
        "color_name":"black",
        "payment":{
           "provider_name":"DummyPayment",
