@@ -126,11 +126,10 @@ Share_Shopping_Carts
     Yves: 'Order History' page is displayed
     Yves: get the last placed order ID by current customer
     Yves: 'View Order/Reorder/Return' on the order history page:     View Order    ${lastPlacedOrder}
-    Yves: 'View Order' page is displayed
+    Yves: 'Order Details' page is displayed
 
 Quick_Order
-    [Tags]    skip-due-to-issue
-    [Documentation]    Checks Quick Order, checkout and Reorder. Bug: CC-24140
+    [Documentation]    Checks Quick Order, checkout and Reorder.
     [Setup]    Run keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     ...    AND    Yves: delete all shopping carts
     ...    AND    Yves: create new 'Shopping Cart' with name:    quickOrderCart+${random}
@@ -358,8 +357,7 @@ Customer_Specific_Prices
     [Teardown]    Yves: delete 'Shopping Cart' with name:    customerPrices+${random}
 
 Agent_Assist
-    [Tags]    skip-due-to-issue
-    [Documentation]    Checks Agent creation and that it can login under customer. Bug: CC-23550
+    [Documentation]    Checks Agent creation and that it can login under customer.
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: create new Zed user with the following data:    agent+${random}@spryker.com    change123${random}    Agent    Assist    Root group    This user is an agent    en_US
     Yves: go to the 'Home' page
@@ -617,8 +615,7 @@ Unique_URL
 #     Yves: 'Order Details' page contains the following product title N times:    Presentation bundle    3
 
 Return_Management
-    [Tags]    skip-due-to-issue
-    [Documentation]    Checks OMS and that Yves user and in Zed main merchant can create/execute returns. Bug: CC-23550
+    [Documentation]    Checks OMS and that Yves user and in Zed main merchant can create/execute returns.
     [Setup]    Run keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     ...    AND    Yves: create new 'Shopping Cart' with name:    returnCart+${random}
     Yves: go to PDP of the product with sku:    M90802
@@ -701,7 +698,7 @@ User_Account
     Yves: go to user menu item in header:    Order History
     Yves: 'Order History' page is displayed
     Yves: go to user menu item in header:    Profile
-    Yves: 'My Profile' page is displayed
+    Yves: 'Profile' page is displayed
     Yves: go to user menu item in the left bar:    Addresses
     Yves: 'Addresses' page is displayed
     Yves: go to user menu item in the left bar:    Newsletter
@@ -775,7 +772,7 @@ Catalog
 Discounts
     [Documentation]    Discounts, Promo Products, and Coupon Codes
     [Setup]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    ...    AND    Zed: deactivate following discounts from Overview page:    Free chair    Tu & Wed $5 off 5 or more    10% off $100+    Free marker    20% off storage    	Free office chair    Free standard delivery    	10% off Safescan    5% off white    Tu & Wed €5 off 5 or more    10% off minimum order
+    ...    AND    Zed: deactivate all discounts from Overview page
     ...    AND    Zed: change product stock:    M21777    421538    true    10
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Merchandising    Discount
@@ -807,7 +804,7 @@ Discounts
     Zed: grand total for the order equals:    ${lastPlacedOrder}    €18.11
     [Teardown]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: go to second navigation item level:    Merchandising    Discount
-    ...    AND    Zed: Deactivate Following Discounts From Overview Page:    Voucher Code 5% ${random}    Cart Rule 10% ${random}    Promotional Product 100% ${random}        
+    ...    AND    Zed: Deactivate Following Discounts From Overview Page:    Voucher Code 5% ${random}    Cart Rule 10% ${random}    Promotional Product 100% ${random}
 
 Back_in_Stock_Notification
     [Documentation]    Back in stock notification is sent and availability check
@@ -898,8 +895,7 @@ Content_Management
     ...    AND    Zed: click Action Button in a table for row that contains:    Test Page${random}    Deactivate
 
 Refunds
-    [Tags]    skip-due-to-issue
-    [Documentation]    Checks that refund can be created for an item and the whole order of merchant. Bug:CC-1720
+    [Documentation]    Checks that refund can be created for an item and the whole order of merchant.
     [Setup]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: deactivate following discounts from Overview page:    20% off storage    10% off minimum order
     ...    AND    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
@@ -1106,8 +1102,7 @@ Manage_Merchants_from_Backoffice
     ...    AND    Zed: click Action Button in a table for row that contains:     NewMerchantUpdated${random}     Deactivate
 
 Manage_Merchant_Users
-    [Tags]    skip-due-to-issue
-    [Documentation]    Checks that backoffice admin is able to create, activate, edit and delete merchant users. Bug: CC-23118
+    [Documentation]    Checks that backoffice admin is able to create, activate, edit and delete merchant users.
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Marketplace    Merchants
     Zed: click Action Button in a table for row that contains:     Office King     Edit
@@ -1389,8 +1384,7 @@ Search_for_Merchant_Offers_and_Products
     Yves: merchant is (not) displaying in Sold By section of PDP:    Budget Stationery    true
 
 Merchant_Portal_Product_Volume_Prices
-    [Tags]    skip-due-to-issue
-    [Documentation]    Checks that merchant is able to create new multi-SKU product with volume prices. Falback to default price after delete. Bug: CC-23356
+    [Documentation]    Checks that merchant is able to create new multi-SKU product with volume prices. Falback to default price after delete.
     MP: login on MP with provided credentials:    ${merchant_office_king_email}
     MP: open navigation menu tab:    Products    
     MP: click on create new entity button:    Create Product
@@ -1535,8 +1529,7 @@ Merchant_Portal_Offer_Volume_Prices
     ...    AND    Zed: click Action Button in a table for row that contains:     OfferNewProduct${random}     Deny
 
 Merchant_Portal_My_Account
-    [Tags]    skip-due-to-issue
-    [Documentation]    Checks that MU can edit personal data in MP. Bug: CC-23118
+    [Documentation]    Checks that MU can edit personal data in MP.
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Marketplace    Merchants
     Zed: click Action Button in a table for row that contains:     Oryx Merchant     Edit
@@ -1564,8 +1557,7 @@ Merchant_Portal_My_Account
     ...    AND    Zed: delete Zed user with the following email:    sonia+new+editmu+${random}@spryker.com
     
 Merchant_Portal_Dashboard
-    [Tags]    skip-due-to-issue
-    [Documentation]    Checks that merchant user is able to access the dashboard page. Bug: CC-23118
+    [Documentation]    Checks that merchant user is able to access the dashboard page.
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Marketplace    Merchants
     Zed: click Action Button in a table for row that contains:     Oryx Merchant     Edit
@@ -1995,8 +1987,7 @@ Minimum_Order_Value
     ...    || DE - Euro [EUR]  | ${SPACE}           | ${SPACE}                | ${SPACE}                | 10000.00           | The cart value cannot be higher than {{threshold}}. Please remove some items to proceed with the order    | Der Warenkorbwert darf nicht höher als {{threshold}} sein. Bitte entfernen Sie einige Artikel, um mit der Bestellung fortzufahren    | None           | ${EMPTY}             | ${EMPTY}                  | ${EMPTY}                  ||
 
 Order_Cancelation
-    [Tags]    skip-due-to-issue
-    [Documentation]    Check that customer is able to cancel order. Bug: CC-17072
+    [Documentation]    Check that customer is able to cancel order.
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     Yves: delete all shopping carts
     Yves: delete all user addresses
@@ -2470,7 +2461,7 @@ Update_Customer_Data
     Yves: go to user menu item in header:    Overview
     Yves: 'Overview' page is displayed
     Yves: go to user menu item in header:    Profile
-    Yves: 'My Profile' page is displayed
+    Yves: 'Profile' page is displayed
     Yves: assert customer profile data:
     ...    || salutation | first name                           | last name                           | email                            ||
     ...    || Mr.        | ${yves_company_user_buyer_firstname} | ${yves_company_user_buyer_lastname} | ${yves_company_user_buyer_email} ||
@@ -2491,7 +2482,7 @@ Update_Customer_Data
     Yves: go to user menu item in header:    Overview
     Yves: 'Overview' page is displayed
     Yves: go to user menu item in header:    Profile
-    Yves: 'My Profile' page is displayed
+    Yves: 'Profile' page is displayed
     Yves: assert customer profile data:
     ...    || salutation | first name                           | last name                           | email                            ||
     ...    || Mr.        | ${yves_company_user_buyer_firstname} | ${yves_company_user_buyer_lastname} | ${yves_company_user_buyer_email} ||
