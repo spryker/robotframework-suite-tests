@@ -365,3 +365,12 @@ Save the result of a SELECT DB query to a variable:
     ${var_value}=    Replace String    ${var_value}    ]   ${EMPTY}
     Set Test Variable    ${${variable_name}}    ${var_value}
     [Return]    ${variable_name}
+
+## Example of intercepting the network request
+##     [Arguments]    ${eventName}    ${timeout}=30s
+##     ${response}=    Wait for response    matcher=bazaarvoice\\.com\\/\\w+\\.gif\\?.*type=${eventName}    timeout=${timeout}
+##     Should be true    ${response}[ok]
+## OR
+##    [Arguments]    ${timeout}=30s
+##    ${response}=    Wait for response    matcher=usercentrics.*?graphql     timeout=${timeout}
+##    Should be true    ${response}[ok]
