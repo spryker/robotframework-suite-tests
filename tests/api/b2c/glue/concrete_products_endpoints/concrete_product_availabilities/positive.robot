@@ -29,7 +29,7 @@ Request_concrete_availability_by_concrete_SKU_with_stock_and_never_out_of_stock
     And Response body parameter should be:    [data][0][type]   concrete-product-availabilities
     And Response body parameter should be:    [data][0][attributes][availability]   True
     And Response body parameter should be:    [data][0][attributes][isNeverOutOfStock]   True
-    And Response body parameter should be greater than:    [data][0][attributes][quantity]    ${0}
+    And Response body parameter should be greater than:    [data][0][attributes][quantity]    0.0000000000
     And Response body has correct self link
     
 
