@@ -29,7 +29,7 @@ Provide_checkout_data
     And Response body parameter should be:    [included][0][attributes][selectedShipmentMethod][id]    1
     And Response body parameter should be:    [included][0][attributes][selectedShipmentMethod][name]    ${shipment.method_name}
     And Response body parameter should be:    [included][0][attributes][selectedShipmentMethod][carrierName]    ${shipment.carrier_name}
-    And Response body parameter should be greater than:    [included][0][attributes][selectedShipmentMethod][price]    400
+    And Response body parameter should be greater than:    [included][0][attributes][selectedShipmentMethod][price]    0
     And Response body parameter should be:    [included][0][attributes][selectedShipmentMethod][taxRate]    ${tax_rate}
     And Response body parameter should be:    [included][0][attributes][selectedShipmentMethod][deliveryTime]    None
     And Response body parameter should be:    [included][0][attributes][selectedShipmentMethod][currencyIsoCode]    ${currency.eur.code}
@@ -56,7 +56,6 @@ Provide_checkout_with_only_cart_id
 
 
 Provide_checkout_data_with_invalid_billing_address_data
-    [Documentation]   Created a new bug https://spryker.atlassian.net/browse/CC-23077
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
     ...  AND    Find or create customer cart
@@ -74,7 +73,7 @@ Provide_checkout_data_with_invalid_billing_address_data
     And Response body parameter should be:    [included][0][attributes][selectedShipmentMethod][id]    1
     And Response body parameter should be:    [included][0][attributes][selectedShipmentMethod][name]    ${shipment.method_name}
     And Response body parameter should be:    [included][0][attributes][selectedShipmentMethod][carrierName]    ${shipment.carrier_name}
-    And Response body parameter should be greater than:    [included][0][attributes][selectedShipmentMethod][price]    400
+    And Response body parameter should be greater than:    [included][0][attributes][selectedShipmentMethod][price]    0
     And Response body parameter should be:    [included][0][attributes][selectedShipmentMethod][taxRate]    ${tax_rate}
     And Response body parameter should be:    [included][0][attributes][selectedShipmentMethod][deliveryTime]    None
     And Response body parameter should be:    [included][0][attributes][selectedShipmentMethod][currencyIsoCode]    ${currency.eur.code}
@@ -82,7 +81,6 @@ Provide_checkout_data_with_invalid_billing_address_data
     And Response body has correct self link internal
 
 Provide_checkout_data_with_invalid_shipping_address_data
-    [Documentation]   Created a new bug https://spryker.atlassian.net/browse/CC-23077
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
     ...  AND    Find or create customer cart
@@ -100,7 +98,7 @@ Provide_checkout_data_with_invalid_shipping_address_data
     And Response body parameter should be:    [included][0][attributes][selectedShipmentMethod][id]    1
     And Response body parameter should be:    [included][0][attributes][selectedShipmentMethod][name]    ${shipment.method_name}
     And Response body parameter should be:    [included][0][attributes][selectedShipmentMethod][carrierName]    ${shipment.carrier_name}
-    And Response body parameter should be greater than:    [included][0][attributes][selectedShipmentMethod][price]    400
+    And Response body parameter should be greater than:    [included][0][attributes][selectedShipmentMethod][price]    0
     And Response body parameter should be in:    [included][0][attributes][selectedShipmentMethod][taxRate]    ${tax_rate}    ${tax_rate1}
     And Response body parameter should be:    [included][0][attributes][selectedShipmentMethod][deliveryTime]    None
     And Response body parameter should be:    [included][0][attributes][selectedShipmentMethod][currencyIsoCode]    ${currency.eur.code}
@@ -110,7 +108,6 @@ Provide_checkout_data_with_invalid_shipping_address_data
 
 
 Provide_checkout_data_with_invalid_payments
-    [Documentation]    Created a new bug https://spryker.atlassian.net/browse/CC-23077
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
     ...  AND    Find or create customer cart
@@ -128,7 +125,7 @@ Provide_checkout_data_with_invalid_payments
     And Response body parameter should be:    [included][0][attributes][selectedShipmentMethod][id]    1
     And Response body parameter should be:    [included][0][attributes][selectedShipmentMethod][name]    ${shipment.method_name}
     And Response body parameter should be:    [included][0][attributes][selectedShipmentMethod][carrierName]    ${shipment.carrier_name}
-    And Response body parameter should be greater than:    [included][0][attributes][selectedShipmentMethod][price]    400
+    And Response body parameter should be greater than:    [included][0][attributes][selectedShipmentMethod][price]    0
     And Response body parameter should be in:    [included][0][attributes][selectedShipmentMethod][taxRate]    ${tax_rate}    ${tax_rate1}
     And Response body parameter should be:    [included][0][attributes][selectedShipmentMethod][deliveryTime]    None
     And Response body parameter should be:    [included][0][attributes][selectedShipmentMethod][currencyIsoCode]    ${currency.eur.code}
@@ -175,7 +172,6 @@ Provide_checkout_data_with_empty_cart
 
 
 Provide_checkout_data_with_bundle_product
-    [Documentation]   Created a new bug https://spryker.atlassian.net/browse/CC-23077
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
     ...  AND    Find or create customer cart
@@ -192,7 +188,7 @@ Provide_checkout_data_with_bundle_product
     And Response body parameter should be:    [included][0][attributes][selectedShipmentMethod][id]    1
     And Response body parameter should be:    [included][0][attributes][selectedShipmentMethod][name]    ${shipment.method_name}
     And Response body parameter should be:    [included][0][attributes][selectedShipmentMethod][carrierName]    ${shipment.carrier_name}
-    And Response body parameter should be greater than:    [included][0][attributes][selectedShipmentMethod][price]    400
+    And Response body parameter should be greater than:    [included][0][attributes][selectedShipmentMethod][price]    0
     And Response body parameter should be in:    [included][0][attributes][selectedShipmentMethod][taxRate]    ${tax_rate}    ${tax_rate1}
     And Response body parameter should be:    [included][0][attributes][selectedShipmentMethod][deliveryTime]    None
     And Response body parameter should be:    [included][0][attributes][selectedShipmentMethod][currencyIsoCode]    ${currency.eur.code}

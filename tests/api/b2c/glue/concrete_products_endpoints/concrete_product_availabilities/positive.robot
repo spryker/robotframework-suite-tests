@@ -7,6 +7,7 @@ Default Tags    glue
 *** Test Cases ***
 ENABLER
     TestSetup
+
 Request_concrete_availability_by_concrete_SKU_with_stock
     When I send a GET request:    /concrete-products/${product_availability.concrete_available_product_with_stock}/concrete-product-availabilities
     Then Response status code should be:    200
@@ -28,7 +29,7 @@ Request_concrete_availability_by_concrete_SKU_with_stock_and_never_out_of_stock
     And Response body parameter should be:    [data][0][type]   concrete-product-availabilities
     And Response body parameter should be:    [data][0][attributes][availability]   True
     And Response body parameter should be:    [data][0][attributes][isNeverOutOfStock]   True
-    And Response body parameter should not be EMPTY:    [data][0][attributes][quantity]
+    And Response body parameter should be greater than:    [data][0][attributes][quantity]    ${0}
     And Response body has correct self link
     
 

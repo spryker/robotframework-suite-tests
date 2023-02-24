@@ -42,7 +42,7 @@ Creating_wishlist_by_invalid_Access_Token
 
 
 Creating_wishlist_with_space_in_name
-    [Documentation]   #Post Request https://spryker.atlassian.net/browse/CC-16553
+    [Documentation]   Post Request https://spryker.atlassian.net/browse/CC-16553
     [Tags]    skip-due-to-issue
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...        AND    I set Headers:    Authorization=${token}
