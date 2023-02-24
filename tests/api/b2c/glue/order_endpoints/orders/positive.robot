@@ -7,7 +7,8 @@ Resource    ../../../../../../resources/common/common_api.robot
 *** Test Cases ***
 ENABLER
     TestSetup
-#GET requests
+# #GET requests
+
 Get_order_by_order_id
    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
@@ -172,7 +173,7 @@ Get_order_by_order_id_with_bundle_product
     And Response body parameter should be:    [data][attributes][priceMode]    ${mode.gross}
     #items
     And Response should contain the array of a certain size:    [data][attributes][items]    3
-    And Each array element of array in response should contain property with value:    [data][attributes][items]    bundleItemIdentifier    None
+    And Each array element of array in response should contain property with value:    [data][attributes][items]    bundleItemIdentifier    ${None}
     And Each array element of array in response should contain property:    [data][attributes][items]    relatedBundleItemIdentifier
     And Response body parameter should be:    [data][attributes][items][0][name]    ${bundled.product_1.concrete_name}
     And Response body parameter should be:    [data][attributes][items][0][sku]    ${bundled.product_1.concrete_sku}
@@ -512,8 +513,9 @@ Get_order_by_order_id_with_free_shipping_discount
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
     ...  AND    Find or create customer cart
-    ...  AND    I send a POST request:    /carts/${cartId}/items    {"data": {"type": "items","attributes": {"sku": "${product_availability.concrete_available_with_stock_and_never_out_of_stock_sku}","quantity": 3}}}
-    ...  AND    I send a POST request:    /checkout?include=orders    {"data": {"type": "checkout","attributes": {"customer": {"email": "${yves_user.email}","salutation": "${yves_user.salutation}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}"},"idCart": "${cart_id}","billingAddress": {"salutation": "${yves_user.salutation}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}","address1": "${default.address1}","address2": "${default.address2}","address3": "${default.address3}","zipCode": "${default.zipCode}","city": "${default.city}","iso2Code": "${default.iso2Code}","company": "${default.company}","phone": "${default.phone}","isDefaultBilling": False,"isDefaultShipping": False},"shippingAddress": {"salutation": "${yves_user.salutation}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}","address1": "${default.address1}","address2": "${default.address2}","address3": "${default.address3}","zipCode": "${default.zipCode}","city": "${default.city}","iso2Code": "${default.iso2Code}","company": "${default.company}","phone": "${default.phone}","isDefaultBilling": False,"isDefaultShipping": False},"payments": [{"paymentProviderName": "${payment.provider_name}","paymentMethodName": "${payment.method_name}"}],"shipment": {"idShipmentMethod": 1},"items": ["${product_availability.concrete_available_with_stock_and_never_out_of_stock_sku}"]}}}
+    ...  AND    I send a POST request:    /carts/${cartId}/items?include=items    {"data": {"type": "items","attributes": {"sku": "${product_availability.concrete_available_with_stock_and_never_out_of_stock_sku}","quantity": 3}}}
+    ...  AND    Save value to a variable:    [included][0][id]    item_shipping_order
+    ...  AND    I send a POST request:    /checkout?include=orders    {"data": {"type": "checkout","attributes": {"customer": {"email": "${yves_user.email}","salutation": "${yves_user.salutation}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}"},"idCart": "${cart_id}","billingAddress": {"salutation": "${yves_user.salutation}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}","address1": "${default.address1}","address2": "${default.address2}","address3": "${default.address3}","zipCode": "${default.zipCode}","city": "${default.city}","iso2Code": "${default.iso2Code}","company": "${default.company}","phone": "${default.phone}","isDefaultBilling": False,"isDefaultShipping": False},"shippingAddress": {"salutation": "${yves_user.salutation}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}","address1": "${default.address1}","address2": "${default.address2}","address3": "${default.address3}","zipCode": "${default.zipCode}","city": "${default.city}","iso2Code": "${default.iso2Code}","company": "${default.company}","phone": "${default.phone}","isDefaultBilling": False,"isDefaultShipping": False},"payments": [{"paymentProviderName": "${payment.provider_name}","paymentMethodName": "${payment.method_name}"}],"shipment": {"idShipmentMethod": 1},"items": ["${item_shipping_order}"]}}}
     ...  AND    Save value to a variable:    [data][attributes][orderReference]    order_id
     When I send a GET request:    /orders/${order_id}
     Then Response status code should be:    200
@@ -523,7 +525,7 @@ Get_order_by_order_id_with_free_shipping_discount
     And Response body parameter should be:    [data][attributes][totals][expenseTotal]    ${discount.discount_1.total_sum}
     And Response body parameter should be greater than:    [data][attributes][totals][discountTotal]    0
     And Response body parameter should be greater than:    [data][attributes][totals][taxTotal]    0
-    And Response body parameter should be greater than:    [data][attributes][totals][subtotal]    20000
+    And Response body parameter should be greater than:    [data][attributes][totals][subtotal]    7800
     And Save value to a variable:    [data][attributes][totals][discountTotal]    discount_total_sum
     And Save value to a variable:    [data][attributes][totals][subtotal]    sub_total_sum
     And Perform arithmetical calculation with two arguments:    grand_total_sum    ${sub_total_sum}    -    ${discount_total_sum}

@@ -1,8 +1,11 @@
 *** Settings ***
-Suite Setup    SuiteSetup
-Test Setup    TestSetup
-Resource    ../../../../../../resources/common/common_api.robot
+Resource        ../../../../../../resources/common/common_api.robot
+
+Suite Setup     SuiteSetup
+Test Setup      TestSetup
+
 Default Tags    glue
+
 
 *** Test Cases ***
 ENABLER
@@ -23,7 +26,9 @@ Get_health_check_with_disabled_services
     And Response body parameter should be:    [data][0][id]    None
     And Response body parameter should be:    [data][0][attributes][status]    None
     And Response body parameter should be:    [data][0][attributes][statusCode]    403
-    And Response body parameter should be:    [data][0][attributes][message]    HealthCheck endpoints are disabled for all applications.
+    And Response body parameter should be:
+    ...    [data][0][attributes][message]
+    ...    HealthCheck endpoints are disabled for all applications.
     And Response should contain the array of a certain size:    [data][0][attributes][healthCheckServiceResponses]    0
     And Response body has correct self link
 
