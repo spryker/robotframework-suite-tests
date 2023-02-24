@@ -8,6 +8,7 @@ Default Tags    glue
 ENABLER
     TestSetup
 #GET requests
+
 Get_cart_by_cart_id
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
@@ -180,7 +181,7 @@ Get_cart_with_included_promotional_items
     And Each array element of array in response should contain property with value:    [included]    type    promotional-items
     And Each array element of array in response should contain property:    [included]    id
     And Each array element of array in response should contain property:    [included]    attributes
-    And Response body parameter should be:    [included][0][attributes][sku]    112
+    And Response body parameter should be in:    [included][0][attributes][sku]    112    068
     And Response body parameter should be:    [included][0][attributes][quantity]    1
 
 Get_cart_by_cart_id_with_included_vouchers

@@ -19,7 +19,7 @@ Retrieves_all_customer_wishlists
      And Each array element of array in response should contain nested property:    [data]    [attributes]    name
      And Each array element of array in response should contain nested property:    [data]    [attributes]    numberOfItems
      And Each array element of array in response should contain property with value NOT in:    [data]    [links][self]    None
-         
+    
 #GET Request
 Retrieves_wishlist_data_by_id
     [Setup]    Run Keywords    I GET access token for the customer:    ${yves_user.email}
