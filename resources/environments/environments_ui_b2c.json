@@ -1,96 +1,76 @@
 {
-    "environment": "b2c", 
-
-    "env": {
-        "host": "http://yves.de.spryker.local/",
-        "host_at": "http://yves.at.spryker.local/",
-        "zed_url": "http://backoffice.de.spryker.local/",
-        "mp_url": "http://mp.de.spryker.local/security-merchant-portal-gui/login/"
+    "environment":"ui_b2c",
+    "env":{
+       "host":"http://yves.de.spryker.local/",
+       "host_at":"http://yves.at.spryker.local/",
+       "zed_url":"http://backoffice.de.spryker.local/",
+       "mp_url":"http://mp.de.spryker.local/security-merchant-portal-gui/login/"
     },
-
-    "database": {
-        "db_host": "127.0.0.1",
-        "db_port": "3306",
-        "db_user": "spryker",
-        "db_password": "secret",
-        "db_name": "eu-docker"
-        },
-
-    "users": {    
-        "yves_user_email": "george.freeman@spryker.com",
-        "yves_user_first_name": "George",
-        "yves_user_last_name": "Freeman",
-        "yves_user_password": "change123",
-        "yves_user_address": "Mr George Freeman, Kirncher Str. 7, 10247 Berlin",
-
-        "yves_second_user_email": "bill.martin@spryker.com",
-        "yves_second_user_first_name": "Bill",
-        "yves_second_user_last_name": "Martin",
-        "yves_second_user_password": "change123",
-
-        "zed_admin_email": "admin@spryker.com",
-        "zed_admin_password": "change123"
+    "database":{
+       "db_host":"127.0.0.1",
+       "db_port":"3306",
+       "db_user":"spryker",
+       "db_password":"secret",
+       "db_name":"eu-docker"
     },
-    "user_role": {
-        "bundle_access": "product-attribute-gui",
-        "controller_access": "attribute",
-        "action_access": "create",
-        "permission_allow": "allow",
-        "permission_deny": "deny",
-        "full_access": "*"
+    "users":{
+       "yves_user_email":"george.freeman@spryker.com",
+       "yves_user_first_name":"George",
+       "yves_user_last_name":"Freeman",
+       "yves_user_password":"change123",
+       "yves_user_address":"Mr George Freeman, Kirncher Str. 7, 10247 Berlin",
+       "yves_second_user_email":"bill.martin@spryker.com",
+       "yves_second_user_first_name":"Bill",
+       "yves_second_user_last_name":"Martin",
+       "yves_second_user_password":"change123",
+       "zed_admin_email":"admin@spryker.com",
+       "zed_admin_password":"change123"
+    },
+    "user_role":{
+       "bundle_access":"product-attribute-gui",
+       "controller_access":"attribute",
+       "action_access":"create",
+       "permission_allow":"allow",
+       "permission_deny":"deny",
+       "full_access":"*"
     },
     "glossary":{
-        "glossary_name":"customer.account.overview",
-        "original_EN_text":"Overview",
-        "original_DE_text":"Übersicht"
+       "glossary_name":"customer.account.overview",
+       "original_EN_text":"Overview",
+       "original_DE_text":"Übersicht"
     },
-        
-    "products": {
-        "one_variant_product_abstract_sku": "009",
-        "one_variant_product_abstract_name": "EUROKRAFT trolley - with open shovel",
-        "one_variant_product_default_price": "€99.99",
-        
-        "bundle_product_abstract_sku": "211",
-        "bundle_product_product_name": "HP Bundle",
-        "bundled_product_1_abstract_sku": "121",
-        "bundled_product_2_abstract_sku": "127",
-        "bundled_product_3_abstract_sku": "150",
-        "bundled_product_1_concrete_sku": "121_29406823",
-        "bundled_product_2_concrete_sku": "127_22828284",
-        "bundled_product_3_concrete_sku": "150_29554292",
-
-        "multi_variant_product_abstract_sku": "051",
-
-        "measurement_unit_product_abstract_sku": "215",
-        "packaging_unit_product_abstract_sku": "218",
-
-        "product_with_relations_related_products_sku": "200",
-        "product_with_relations_alternative_products_sku": "145",
-        "product_with_relations_upselling_sku": "018",
-
-        "stock_product_abstract_sku": "063",
-        "stock_product_concrete_sku": "063_29231675",
-
-        "discontinued_product_abstract_sku": "016",
-        "discontinued_product_concrete_sku": "016_21748907"
-            
+    "products":{
+       "one_variant_product_abstract_sku":"009",
+       "one_variant_product_abstract_name":"EUROKRAFT trolley - with open shovel",
+       "one_variant_product_default_price":"€99.99",
+       "bundle_product_abstract_sku":"211",
+       "bundle_product_product_name":"HP Bundle",
+       "bundled_product_1_abstract_sku":"121",
+       "bundled_product_2_abstract_sku":"127",
+       "bundled_product_3_abstract_sku":"150",
+       "bundled_product_1_concrete_sku":"121_29406823",
+       "bundled_product_2_concrete_sku":"127_22828284",
+       "bundled_product_3_concrete_sku":"150_29554292",
+       "multi_variant_product_abstract_sku":"051",
+       "measurement_unit_product_abstract_sku":"215",
+       "packaging_unit_product_abstract_sku":"218",
+       "product_with_relations_related_products_sku":"200",
+       "product_with_relations_alternative_products_sku":"145",
+       "product_with_relations_upselling_sku":"018"
     },
     "address":{
-            "street_name":"st",
-            "city":"Berlin",
-            "country":"Germany",
-            "additional_address":"additional street",
-            "company":"spryker"
-            } ,
-    "guest_user": {
-                "Salutation":"Mr.",
-                "Guest_user_first_name":"Guest",
-                "Guest_user_last_name":"martin"
-            },
-
-    "misc":
-    {
-        "order_state":"New"
+       "street_name":"st",
+       "city":"Berlin",
+       "country":"Germany",
+       "additional_address":"additional street",
+       "company":"spryker"
+    },
+    "guest_user":{
+       "Salutation":"Mr.",
+       "Guest_user_first_name":"Guest",
+       "Guest_user_last_name":"martin"
+    },
+    "misc":{
+       "order_state":"New"
     }
-}
-
+ }

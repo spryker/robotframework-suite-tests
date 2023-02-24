@@ -84,7 +84,7 @@ Yves: click on the '${buttonName}' button in the shopping cart
 Yves: shopping cart contains product with unit price:
     [Documentation]    Already contains '€' sign inside
     [Arguments]    ${sku}    ${productName}    ${productPrice}
-    IF    '${env}' in ['b2b','mp_b2b']
+    IF    '${env}' in ['ui_b2b','ui_mp_b2b']
         Page Should Contain Element    xpath=//div[contains(@class,'product-card-item__col--description')]//div[contains(.,'SKU: ${sku}')]/ancestor::article//*[contains(@class,'product-card-item__col--description')]/div[1]//*[contains(@class,'money-price__amount')][contains(.,'€${productPrice}')]
     ELSE
         Page Should Contain Element    xpath=//main[@class='page-layout-cart']//article[contains(@data-qa,'component product-card-item')]//a[contains(text(),'${productName}')]/following-sibling::span/span[contains(@class,'money-price__amount') and contains(.,'${productPrice}')]
@@ -196,7 +196,7 @@ Yves: delete from b2c cart products with name:
         Click    xpath=//div[@class='page-layout-cart__items-wrap']//a[contains(text(),'${product}')]/ancestor::div/following-sibling::div//form[contains(@name,'removeFromCart')]//button[text()='Remove']
         Yves: flash message should be shown:    success    Products were removed successfully
         Yves: remove flash messages
-        IF    '${env}' in ['b2b','mp_b2b']
+        IF    '${env}' in ['ui_b2b','ui_mp_b2b']
             Page Should Not Contain Element    xpath=//div[contains(@class,'product-card-item__col--description')]//div[contains(.,'${namproducte}')]
         ELSE
             Page Should Not Contain Element    xpath=//main[@class='page-layout-cart']//article[contains(@data-qa,'component product-card-item')]//a[contains(text(),'${product}')]
@@ -206,8 +206,8 @@ Yves: delete from b2c cart products with name:
 Yves: apply discount voucher to cart:
     [Arguments]    ${voucherCode}
     ${expanded}=    Set Variable    ${EMPTY}
-    ${expanded}=    IF    '${env}' in ['b2c','mp_b2c']    Run Keyword And Return Status    Get Element States    ${shopping_cart_voucher_code_field}    ==    hidden    return_names=False
-    IF    '${env}' in ['b2c','mp_b2c'] and '${expanded}'=='False'    Click    ${shopping_cart_voucher_code_section_toggler}
+    ${expanded}=    IF    '${env}' in ['ui_b2c','ui_mp_b2c']    Run Keyword And Return Status    Get Element States    ${shopping_cart_voucher_code_field}    ==    hidden    return_names=False
+    IF    '${env}' in ['ui_b2c','ui_mp_b2c'] and '${expanded}'=='False'    Click    ${shopping_cart_voucher_code_section_toggler}
     Type Text    ${shopping_cart_voucher_code_field}    ${voucherCode}
     Click    ${shopping_cart_voucher_code_redeem_button}
     Yves: flash message should be shown:    success    Your voucher code has been applied
@@ -217,13 +217,13 @@ Yves: apply discount voucher to cart:
 Yves: discount is applied:
 #TODO: make from this method somth real, because Sum is not used
     [Arguments]    ${discountType}    ${discountName}    ${expectedDiscountSum}
-    IF    '${env}' in ['b2c','mp_b2c'] and '${discountType}'=='voucher'
+    IF    '${env}' in ['ui_b2c','ui_mp_b2c'] and '${discountType}'=='voucher'
         Element should be visible    xpath=//span[contains(text(),'${expectedDiscountSum}')]/preceding-sibling::span[contains(text(),'${discountName}')]/ancestor::*[contains(@data-qa,'cart-discount-summary')]/*[contains(.,'Vouchers')]
-    ELSE IF    '${env}' in ['b2c','mp_b2c'] and '${discountType}'=='cart rule'
+    ELSE IF    '${env}' in ['ui_b2c','ui_mp_b2c'] and '${discountType}'=='cart rule'
         Element should be visible    xpath=//span[contains(text(),'${expectedDiscountSum}')]/preceding-sibling::span[contains(text(),'${discountName}')]/ancestor::*[contains(@data-qa,'cart-discount-summary')]/*[contains(.,'Discounts')]
-    ELSE IF     '${env}' in ['b2b','mp_b2b'] and '${discountType}'=='voucher'
+    ELSE IF     '${env}' in ['ui_b2b','ui_mp_b2b'] and '${discountType}'=='voucher'
         Element should be visible    xpath=//span[contains(text(),'${expectedDiscountSum}')]/preceding-sibling::span[contains(text(),'${discountName}')]/ancestor::*[contains(@data-qa,'cart-code-summary')]/*[contains(.,'Vouchers')]
-    ELSE IF    '${env}' in ['b2b','mp_b2b'] and '${discountType}'=='cart rule'
+    ELSE IF    '${env}' in ['ui_b2b','ui_mp_b2b'] and '${discountType}'=='cart rule'
         Element should be visible    xpath=//span[contains(text(),'${expectedDiscountSum}')]/preceding-sibling::span[contains(text(),'${discountName}')]/ancestor::*[contains(@data-qa,'cart-code-summary')]/*[contains(.,'Discounts')]
     END
 
