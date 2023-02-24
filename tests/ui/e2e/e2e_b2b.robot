@@ -1061,7 +1061,7 @@ Product_Original_Price
 
 Checkout_Address_Management
     [Tags]    skip-due-to-issue
-    [Documentation]    Checks that user can change address during the checkout and save new into the address book. Bug:CC-24090
+    [Documentation]    Bug:CC-24090. Checks that user can change address during the checkout and save new into the address book. 
     [Setup]    Run Keywords    
     ...    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     ...    AND    Yves: delete all user addresses
@@ -1407,7 +1407,7 @@ Multistore_CMS
 
 Product_Availability_Calculation
     [Tags]    skip-due-to-issue
-    [Documentation]    check product availability + multistore. Bug: CC-24108
+    [Documentation]    Bug: CC-24108. check product availability + multistore. 
     [Setup]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: update warehouse:    
     ...    || warehouse  | store || 
@@ -1609,7 +1609,7 @@ Comment_Management_in_the_Cart
 
 Comment_Management_in_Order
     [Tags]    skip-due-to-issue
-    [Documentation]    Add comments in Yves and check in Zed. Bug:CC-23306
+    [Documentation]    Bug:CC-23306. Add comments in Yves and check in Zed. 
     Yves: login on Yves with provided credentials:    ${yves_company_user_shared_permission_owner_email}
     Yves: create new 'Shopping Cart' with name:    comments+${random}
     Yves: go to PDP of the product with sku:    ${bundled_product_3_abstract_sku}
