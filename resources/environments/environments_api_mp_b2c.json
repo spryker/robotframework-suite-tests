@@ -12,6 +12,9 @@
        "db_password":"secret",
        "db_name":"eu-docker"
     },
+	"dataType": {
+			"array": []
+		},
     "users":{
        "yves_user":{
           "email":"sonia@spryker.com",
