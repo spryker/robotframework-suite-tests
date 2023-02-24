@@ -43,7 +43,7 @@ Creating_wishlist_with_missing_name
 
 
 Creating_wishlist_with_space_in_name
-   [Documentation]   #CC-16553
+   [Documentation]   https://spryker.atlassian.net/browse/CC-16553
    [Tags]    skip-due-to-issue  
        Run Keywords    I GET access token for the customer:    ${yves_second_user.email}
     ...    AND     I set headers:    authorization=${token}

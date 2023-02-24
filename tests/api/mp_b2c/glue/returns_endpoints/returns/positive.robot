@@ -38,7 +38,7 @@ Create_a_return
     ...    AND    Save value to a variable:    [included][0][attributes][items][0][uuid]    uuid
     ...    AND    Save value to a variable:    [included][0][attributes][items][0][refundableAmount]    productPrice
     ...    AND    Update order status in Database:    shipped    ${uuid}   
-    When I send a POST request:    /returns    {"data":{"type":"returns","attributes":{"store":"${store.de}","returnItems":[{"salesOrderItemUuid":"${uuid}","reason":"${return_reason_damaged}"}]}}}    
+    When I send a POST request:    /returns    {"data":{"type":"returns","attributes":{"store":"${store.de}","returnItems":[{"salesOrderItemUuid":"${uuid}","reason":"${return_reason}"}]}}}    
     Then Save value to a variable:    [data][id]    returnId
     And Response status code should be:     201
     And Response reason should be:     Created
@@ -214,7 +214,7 @@ Get_return_by_Id
     ...    AND    Save value to a variable:    [included][0][attributes][items][0][uuid]    uuid
     ...    AND    Save value to a variable:    [included][0][attributes][items][0][refundableAmount]    productPrice
     ...    AND    Update order status in Database:    shipped    ${uuid}   
-    ...    AND    Run Keyword And Ignore Error    I send a POST request:     I send a POST request:    /returns    {"data":{"type":"returns","attributes":{"store":"DE","returnItems":[{"salesOrderItemUuid":"${uuid}","reason":"${return_reason}"}]}}}
+    ...    AND    Run Keyword And Ignore Error    I send a POST request:    /returns    {"data":{"type":"returns","attributes":{"store":"DE","returnItems":[{"salesOrderItemUuid":"${uuid}","reason":"${return_reason}"}]}}}
     ### steps below just duplicate the order creation and status change. This is needed as we 'hack' the order status in the database. ###
     ### Needs to be done only once in the first test ###  
     ...    AND    I send a POST request:    /carts    {"data":{"type":"carts","attributes":{"priceMode":"GROSS_MODE","currency":"EUR","store":"DE"}}}
@@ -227,7 +227,7 @@ Get_return_by_Id
     ...    AND    Save value to a variable:    [included][0][attributes][items][0][uuid]    uuid
     ...    AND    Save value to a variable:    [included][0][attributes][items][0][refundableAmount]    productPrice
     ...    AND    Update order status in Database:    shipped    ${uuid}
-    ...    AND    I send a POST request:     I send a POST request:    /returns    {"data":{"type":"returns","attributes":{"store":"DE","returnItems":[{"salesOrderItemUuid":"${uuid}","reason":"${return_reason}"}]}}}
+    ...    AND    I send a POST request:    /returns    {"data":{"type":"returns","attributes":{"store":"DE","returnItems":[{"salesOrderItemUuid":"${uuid}","reason":"${return_reason}"}]}}}
     ...    AND    Save value to a variable:    [data][attributes][returnReference]    returnReference
     ...    AND    Save value to a variable:    [data][id]    returnId
     When I send a GET request:     /returns/${returnReference}
