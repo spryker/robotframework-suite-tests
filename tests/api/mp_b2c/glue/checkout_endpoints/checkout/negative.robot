@@ -373,7 +373,7 @@ Create_order_with_split_shipments_&_without_shipping_address
     
 
 Create_order_with_invalid_checkout_data
-    [Documentation]   # bug CC-16705
+    [Documentation]   bug CC-16705 status code 201, but expected 422 with proper error
     [Tags]    skip-due-to-issue  
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}
@@ -387,7 +387,7 @@ Create_order_with_invalid_checkout_data
     And Response should return error message:    Checkout data is invalid.
     
 Create_order_with_invalid_payment_method
-    [Documentation]   # bug CC-16705
+    [Documentation]   bug CC-16705 incorrect code in response
     [Tags]    skip-due-to-issue  
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}

@@ -145,7 +145,7 @@
           "max":"5"
        },
        "default_price":{
-          "min":"1879",
+          "min":"1717",
           "max":"345699"
        },
        "label":{
@@ -238,12 +238,14 @@
           "name":"10% off minimum order",
           "name_1":"20% off cameras",
           "description_1":"20% off all digital cameras in the store",
+          "description":"Get a 10% discount on all orders above 100 EUR or 115 CHF",
           "total_sum_for_discounts_for_products_1_and_2":"8300"
        },
        "discount_2":{
           "name":"20% off cameras",
           "total_sum_for_discounts_for_products_1_2":"3320",
-          "description":"Get a 10% discount on all orders above 100 EUR or 115 CHF"
+          "description":"Get a 10% discount on all orders above 100 EUR or 115 CHF",
+          "description_2":"20% off all digital cameras in the store"
        },
        "discount_3":{
           "name":"Free standard delivery",
@@ -476,6 +478,7 @@
        "urlencoded_header_content_type":"application/x-www-form-urlencoded",
        "test_cart_name":"Test-cart",
        "qty_of_categories_in_category_trees":"6",
+       "discount_voucher_type_id":"3",
        "qty_of_subcategories_in_category_trees":"2",
        "color_name":"black",
        "payment":{

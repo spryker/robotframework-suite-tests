@@ -9,7 +9,7 @@ ENABLER
     TestSetup
 
 Adding_item_in_wishlist 
-    [Documentation]   #CC-16555 API: JSON response is missing product availability and price
+    [Documentation]   CC-16555 API: JSON response is missing product availability and price
     [Tags]    skip-due-to-issue  
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}

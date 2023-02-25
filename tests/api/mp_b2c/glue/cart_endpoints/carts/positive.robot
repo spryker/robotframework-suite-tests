@@ -10,6 +10,7 @@ ENABLER
     
 #GET requests
 Get_cart_by_cart_id
+    [Documentation]    One time reseive o another time None.
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
     ...  AND    Find or create customer cart
@@ -20,12 +21,12 @@ Get_cart_by_cart_id
     And Response body parameter should be:    [data][attributes][priceMode]    ${mode.gross}
     And Response body parameter should be:    [data][attributes][currency]    ${currency.eur.code}
     And Response body parameter should be:    [data][attributes][store]    ${store.de}
-    And Response body parameter should be:    [data][attributes][totals][expenseTotal]    None
-    And Response body parameter should be:    [data][attributes][totals][discountTotal]   None
-    And Response body parameter should be:    [data][attributes][totals][taxTotal]    None
-    And Response body parameter should be:    [data][attributes][totals][subtotal]    None
-    And Response body parameter should be:    [data][attributes][totals][grandTotal]    None
-    And Response body parameter should be:    [data][attributes][totals][priceToPay]    None
+    And Response body parameter should be:    [data][attributes][totals][expenseTotal]    0
+    And Response body parameter should be:    [data][attributes][totals][discountTotal]   0
+    And Response body parameter should be:    [data][attributes][totals][taxTotal]    0
+    And Response body parameter should be:    [data][attributes][totals][subtotal]    0
+    And Response body parameter should be:    [data][attributes][totals][grandTotal]    0
+    And Response body parameter should be:    [data][attributes][totals][priceToPay]    0
     And Response body has correct self link internal
 
 Get_cart_without_cart_id
@@ -180,7 +181,7 @@ Get_cart_with_included_promotional_items
     And Each array element of array in response should contain property with value:    [included]    type    promotional-items
     And Each array element of array in response should contain property:    [included]    id
     And Each array element of array in response should contain property:    [included]    attributes
-    And Response body parameter should be:    [included][0][attributes][sku]    112
+    And Response body parameter should be in:    [included][0][attributes][sku]    112    068
     And Response body parameter should be:    [included][0][attributes][quantity]    1
 
 #PATCH requests

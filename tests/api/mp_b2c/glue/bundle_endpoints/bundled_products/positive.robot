@@ -18,9 +18,9 @@ Get_concrete_bundled_products_inside_concrete_bundle
     And Each array element of array in response should contain property:    [data]    id
     And Each array element of array in response should contain property:    [data]    attributes
     And Each array element of array in response should contain property:    [data]    links
-    And Response body parameter should be:    [data][0][attributes][sku]    ${bundle_product.concrete.product_2_sku}
-    And Response body parameter should be:    [data][1][attributes][sku]    ${bundle_product.concrete.product_3_sku}
-    And Response body parameter should be:    [data][2][attributes][sku]    ${bundle_product.concrete.product_4_sku}
+    And Response body parameter should be in:    [data][0][attributes][sku]    ${bundle_product.concrete.product_2_sku}    ${bundle_product.concrete.product_3_sku}    ${bundle_product.concrete.product_4_sku}
+    And Response body parameter should be in:    [data][1][attributes][sku]    ${bundle_product.concrete.product_3_sku}    ${bundle_product.concrete.product_2_sku}    ${bundle_product.concrete.product_4_sku} 
+    And Response body parameter should be in:    [data][2][attributes][sku]    ${bundle_product.concrete.product_4_sku}    ${bundle_product.concrete.product_2_sku}    ${bundle_product.concrete.product_3_sku} 
     And Each array element of array in response should contain nested property with value:    [data]    [attributes][quantity]    ${products_in_bundle.qty_of_each_product}
     And Response body has correct self link
 

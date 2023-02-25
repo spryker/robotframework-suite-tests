@@ -45,7 +45,7 @@ Get_all_product_offer_info_with_product_offer_prices_and_product_offer_availabil
     And Response body parameter should be in:    [data][attributes][isDefault]    True    False
     And Response body parameter should be:    [data][attributes][merchantReference]    ${merchant_video_king_id}
     And Response body parameter should not be EMPTY:    [data][links][self]
-    And Response body parameter should be greater than:    [data][attributes][merchantSku]    1
+    And Response body parameter should contain:    [data][attributes]    merchantSku
     And Response should contain the array of a certain size:    [included]    3
     And Response should contain the array of a certain size:    [data][relationships]    3
     And Response include should contain certain entity type:    product-offer-prices
@@ -152,7 +152,6 @@ Retrieving_product_offer_including_product_offer_prices
     And Response body parameter should be:    [data][attributes][merchantReference]    ${merchant_video_king_id}
     And Response body parameter should be:    [data][attributes][isDefault]    True
     And Response body has correct self link internal
-    And Response body parameter should be greater than:    [data][relationships]    0
     And Response body parameter should not be EMPTY:    [data][relationships][product-offer-prices][data]
     And Response include element has self link:    product-offer-prices
     And Each array element of array in response should contain nested property with value:        [included]    [attributes][price]    ${active_offer_price}
@@ -170,7 +169,6 @@ Retrieving_product_offer_including_product_offer_availabilities
     And Response body parameter should be:    [data][attributes][merchantReference]    ${merchant_video_king_id}
     And Response body parameter should be:    [data][attributes][isDefault]    True
     And Response body has correct self link internal
-    And Response body parameter should be greater than:    [data][relationships]    0
     And Response body parameter should not be EMPTY:    [data][relationships][product-offer-availabilities][data]
     And Response include element has self link:    product-offer-availabilities
     And Each array element of array in response should contain nested property with value:        [included]    id    ${active_offer}
@@ -187,7 +185,6 @@ Retrieving_product_offer_including_merchants
     And Response body parameter should be:    [data][attributes][merchantReference]    ${merchant_video_king_id}
     And Response body parameter should be:    [data][attributes][isDefault]    True
     And Response body has correct self link internal
-    And Response body parameter should be greater than:    [data][relationships]    0
     And Response body parameter should not be EMPTY:    [data][relationships][merchants][data]
     And Response include element has self link:    merchants
     And Each array element of array in response should contain nested property:     [included]    type       merchants

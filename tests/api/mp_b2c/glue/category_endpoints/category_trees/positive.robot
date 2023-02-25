@@ -16,7 +16,7 @@ Get_category_trees
     And Each array element of array in response should contain property with value:    [data]    type    category-trees
     And Each array element of array in response should contain property with value:    [data]    id    ${None}
     And Response body parameter should be:    [data][0][type]    category-trees
-    And Response body parameter should be:    [data][0][id]    ${None}
+    And Response body parameter should be:    [data][0][id]    None
     And Each array element of array in response should contain property:    [data][0][attributes][categoryNodesStorage]    nodeId
     And Each array element of array in response should contain property:    [data][0][attributes][categoryNodesStorage]    order
     And Each array element of array in response should contain property:    [data][0][attributes][categoryNodesStorage]    name

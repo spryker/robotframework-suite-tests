@@ -32,7 +32,7 @@ Request_concrete_availability_by_concrete_SKU_with_stock_and_never_out_of_stock
     And Response body has correct self link
     
 Request_concrete_availability_by_concrete_SKU_without_stock
-    [Documentation]   #Bug CC-18820 - not demo data
+    [Documentation]   Bug CC-18820 - not demo data. Bug has ben closed but demo data were not added.
     [Tags]    skip-due-to-issue  
     When I send a GET request:    /concrete-products/${concrete_available_product.without_stock}/concrete-product-availabilities
     Then Response status code should be:    200

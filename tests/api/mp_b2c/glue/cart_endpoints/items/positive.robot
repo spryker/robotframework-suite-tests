@@ -7,6 +7,7 @@ Default Tags      glue
 *** Test Cases ***
 ENABLER
     TestSetup
+
 ####POST#####
 Add_one_item_to_cart
    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
@@ -241,7 +242,7 @@ Change_item_qty_in_cart
    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
    ...    AND    find or create customer cart
    ...    AND    Cleanup all items in the cart:    ${cart_id}
-   ...    AND    I send a POST request:    /carts/${cart_id}/items?include=items    {"data": {"type": "items","attributes": {"sku": "${product_availability.concrete_available_with_stock_and_never_out_of_stock_sku}","quantity": 1}}}
+   ...    AND    I send a POST request:    /carts/${cart_id}/items?include=items    {"data": {"type": "items","attributes": {"sku": "${product_availability.concrete_available_with_stock_and_never_out_of_stock_sku}","quantity": 3}}}
    ...    AND    Save value to a variable:    [included][0][id]    item_uid
    ...    AND    Save value to a variable:    [included][0][attributes][calculations][sumPriceToPayAggregation]    item_total_price
    When I send a PATCH request:    /carts/${cart_id}/items/${item_uid}?include=items    {"data":{"type": "items","attributes":{"quantity": 2}}}
@@ -261,7 +262,7 @@ Change_item_amount_in_cart
    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
    ...    AND    find or create customer cart
    ...    AND    Cleanup all items in the cart:    ${cart_id}
-   ...    AND    I send a POST request:    /carts/${cart_id}/items?include=items    {"data": {"type": "items","attributes": {"sku": "${product_availability.concrete_available_with_stock_and_never_out_of_stock_sku}","quantity": 1}}}
+   ...    AND    I send a POST request:    /carts/${cart_id}/items?include=items    {"data": {"type": "items","attributes": {"sku": "${product_availability.concrete_available_with_stock_and_never_out_of_stock_sku}","quantity": 3}}}
    ...    AND    Save value to a variable:    [included][0][id]    item_uid
    ...    AND    Save value to a variable:    [included][0][attributes][calculations][sumPriceToPayAggregation]    item_total_price
    When I send a PATCH request:    /carts/${cart_id}/items/${item_uid}?include=items    {"data":{"type": "items","attributes":{"quantity": 2}}}
