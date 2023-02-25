@@ -67,5 +67,5 @@ Get_abstract_product_original_prices
     And Each array element of array in response should contain value:    [data][0][attributes][prices]    ${currency.eur.code}
     And Each array element of array in response should contain value:    [data][0][attributes][prices]    ${currency.eur.name}
     And Each array element of array in response should contain value:    [data][0][attributes][prices]    ${currency.eur.symbol}
-    And Each array element of array in response should contain property with value:    [data][0][attributes][prices]    volumePrices    []
+    And Each array element of array in response should contain property with value:    [data][0][attributes][prices]    volumePrices    ${array}
     And Response body has correct self link
