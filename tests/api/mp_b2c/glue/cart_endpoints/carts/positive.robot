@@ -21,12 +21,12 @@ Get_cart_by_cart_id
     And Response body parameter should be:    [data][attributes][priceMode]    ${mode.gross}
     And Response body parameter should be:    [data][attributes][currency]    ${currency.eur.code}
     And Response body parameter should be:    [data][attributes][store]    ${store.de}
-    And Response body parameter should be:    [data][attributes][totals][expenseTotal]    0
-    And Response body parameter should be:    [data][attributes][totals][discountTotal]   0
-    And Response body parameter should be:    [data][attributes][totals][taxTotal]    0
-    And Response body parameter should be:    [data][attributes][totals][subtotal]    0
-    And Response body parameter should be:    [data][attributes][totals][grandTotal]    0
-    And Response body parameter should be:    [data][attributes][totals][priceToPay]    0
+    And Response body parameter should be in:    [data][attributes][totals][expenseTotal]    0    None
+    And Response body parameter should be in:    [data][attributes][totals][discountTotal]   0    None
+    And Response body parameter should be in:    [data][attributes][totals][taxTotal]    0    None
+    And Response body parameter should be in:    [data][attributes][totals][subtotal]    0    None
+    And Response body parameter should be in:    [data][attributes][totals][grandTotal]    0    None
+    And Response body parameter should be in:    [data][attributes][totals][priceToPay]    0    None
     And Response body has correct self link internal
 
 Get_cart_without_cart_id
