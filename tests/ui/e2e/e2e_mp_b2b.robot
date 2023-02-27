@@ -1529,7 +1529,8 @@ Merchant_Portal_Offer_Volume_Prices
     ...    AND    Zed: click Action Button in a table for row that contains:     OfferNewProduct${random}     Deny
 
 Merchant_Portal_My_Account
-    [Documentation]    Checks that MU can edit personal data in MP.
+    [Tags]    skip-due-to-issue
+    [Documentation]    Bug: CC-23118. Checks that MU can edit personal data in MP.
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Marketplace    Merchants
     Zed: click Action Button in a table for row that contains:     Oryx Merchant     Edit
@@ -1557,7 +1558,8 @@ Merchant_Portal_My_Account
     ...    AND    Zed: delete Zed user with the following email:    sonia+new+editmu+${random}@spryker.com
     
 Merchant_Portal_Dashboard
-    [Documentation]    Checks that merchant user is able to access the dashboard page.
+    [Tags]    skip-due-to-issue
+    [Documentation]    Bug: CC-23118. Checks that merchant user is able to access the dashboard page.
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Marketplace    Merchants
     Zed: click Action Button in a table for row that contains:     Oryx Merchant     Edit
@@ -1987,7 +1989,8 @@ Minimum_Order_Value
     ...    || DE - Euro [EUR]  | ${SPACE}           | ${SPACE}                | ${SPACE}                | 10000.00           | The cart value cannot be higher than {{threshold}}. Please remove some items to proceed with the order    | Der Warenkorbwert darf nicht höher als {{threshold}} sein. Bitte entfernen Sie einige Artikel, um mit der Bestellung fortzufahren    | None           | ${EMPTY}             | ${EMPTY}                  | ${EMPTY}                  ||
 
 Order_Cancelation
-    [Documentation]    Check that customer is able to cancel order.
+    [Tags]    skip-due-to-issue
+    [Documentation]    Bug: CC-17072. Check that customer is able to cancel order
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     Yves: delete all shopping carts
     Yves: delete all user addresses
