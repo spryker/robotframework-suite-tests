@@ -21,6 +21,7 @@ ${default_db_host}         127.0.0.1
 ${default_db_name}         eu-docker
 ${default_db_password}     secret
 ${default_db_port}         3306
+${default_db_port_postgres}    5432
 ${default_db_user}         spryker
 ${default_db_engine}       pymysql
 ${db_engine}
