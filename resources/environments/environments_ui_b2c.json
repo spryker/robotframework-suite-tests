@@ -56,7 +56,11 @@
        "packaging_unit_product_abstract_sku":"218",
        "product_with_relations_related_products_sku":"200",
        "product_with_relations_alternative_products_sku":"145",
-       "product_with_relations_upselling_sku":"018"
+       "product_with_relations_upselling_sku":"018",
+       "stock_product_abstract_sku": "063",
+       "stock_product_concrete_sku": "063_29231675",
+       "discontinued_product_abstract_sku": "016",
+       "discontinued_product_concrete_sku": "016_21748907"
     },
     "address":{
        "street_name":"st",
