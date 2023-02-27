@@ -34,9 +34,9 @@ Yves: page contains CMS element:
         Element Should Be Visible    xpath=//*[@class='footer']
     ELSE IF    '${type}'=='CMS Page Title'
         Element Should Be Visible    xpath=//*[contains(@class,'cms-page')][contains(@class,'title')]//*[contains(text(),'${text}')]
-    ELSE IF    '${type}'=='CMS Page Content' and '${env}' in ['b2c','mp_b2c']
+    ELSE IF    '${type}'=='CMS Page Content' and '${env}' in ['ui_b2c','ui_mp_b2c']
         Element Should Be Visible    xpath=//*[contains(@class,'cms-page__content')]//*[contains(text(),'${text}')]
-    ELSE IF    '${type}'=='CMS Page Content' and '${env}' in ['b2b','mp_b2b']
+    ELSE IF    '${type}'=='CMS Page Content' and '${env}' in ['ui_b2b','ui_mp_b2b']
         Element Should Be Visible    xpath=//main[contains(@class,'cms-page')]//*[contains(text(),'${text}')]
     ELSE IF    '${type}'=='CMS Block'
         Element Should Be Visible    xpath=//div[contains(@class,'catalog-cms-block')]//*[.="${text}"]
@@ -63,13 +63,13 @@ Yves: 1st product card in catalog (not)contains:
         Element Should Be Visible    xpath=//product-item[@data-qa='component product-item'][1]//*[contains(@class,'item__name') and contains(.,'${value}')]
     ELSE IF    '${elementName}'=='Name' and '${value}'=='false'
         Element Should Not Be Visible    xpath=//product-item[@data-qa='component product-item'][1]//*[contains(@class,'item__name') and contains(.,'${value}')]
-    ELSE IF    '${env}' in ['b2b','mp_b2b'] and '${elementName}'=='Add to Cart' and '${value}'=='true'
+    ELSE IF    '${env}' in ['ui_b2b','ui_mp_b2b'] and '${elementName}'=='Add to Cart' and '${value}'=='true'
         Element Should Not Be Visible    xpath=//product-item[@data-qa='component product-item'][1]//*[@class='product-item__actions']//ajax-add-to-cart//button[@disabled='']
-    ELSE IF    '${env}' in ['b2b','mp_b2b'] and '${elementName}'=='Add to Cart' and '${value}'=='false'
+    ELSE IF    '${env}' in ['ui_b2b','ui_mp_b2b'] and '${elementName}'=='Add to Cart' and '${value}'=='false'
         Element Should Be Visible    xpath=//product-item[@data-qa='component product-item'][1]//*[@class='product-item__actions']//ajax-add-to-cart//button[@disabled='']
-    ELSE IF    '${env}' in ['b2c','mp_b2c'] and '${elementName}'=='Add to Cart' and '${value}'=='true'
+    ELSE IF    '${env}' in ['ui_b2c','ui_mp_b2c'] and '${elementName}'=='Add to Cart' and '${value}'=='true'
         Element Should Be Visible    xpath=//product-item[@data-qa='component product-item'][1]//ajax-add-to-cart//button
-    ELSE IF    '${env}' in ['b2c','mp_b2c'] and '${elementName}'=='Add to Cart' and '${value}'=='false'
+    ELSE IF    '${env}' in ['ui_b2c','ui_mp_b2c'] and '${elementName}'=='Add to Cart' and '${value}'=='false'
         Element Should Not Be Visible    xpath=//product-item[@data-qa='component product-item'][1]//ajax-add-to-cart//button
     ELSE IF    '${elementName}'=='Color selector' and '${value}'=='true'
         Page Should Contain Element   xpath=//product-item[@data-qa='component product-item'][1]//product-item-color-selector
@@ -105,9 +105,9 @@ Yves: select filter value:
     Click    ${catalog_filter_apply_button}
 
 Yves: quick add to cart for first item in catalog
-    IF    '${env}' in ['b2b','mp_b2b']
+    IF    '${env}' in ['ui_b2b','ui_mp_b2b']
         Click    xpath=//product-item[@data-qa='component product-item'][1]//*[@class='product-item__actions']//ajax-add-to-cart//button
-    ELSE IF    '${env}' in ['b2c','mp_b2c']
+    ELSE IF    '${env}' in ['ui_b2c','ui_mp_b2c']
         Scroll Element Into View    xpath=//product-item[@data-qa='component product-item'][1]//div[contains(@class,'image-wrap')]
         Mouse Over    xpath=//product-item[@data-qa='component product-item'][1]//div[contains(@class,'image-wrap')]
         Wait Until Element Is Visible    xpath=//product-item[@data-qa='component product-item'][1]//ajax-add-to-cart//button

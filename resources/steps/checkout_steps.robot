@@ -19,7 +19,7 @@ ${selected address}
 Yves: billing address same as shipping address:
     [Arguments]    ${state}
     Wait Until Page Contains Element    xpath=//form[@name='addressesForm']
-    IF    '${env}' in ['b2b','mp_b2b']    Wait Until Page Contains Element    ${manage_your_addresses_link}
+    IF    '${env}' in ['ui_b2b','ui_mp_b2b']    Wait Until Page Contains Element    ${manage_your_addresses_link}
     ${checkboxState}=    Set Variable    ${EMPTY}
     ${checkboxState}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//input[@id='addressesForm_billingSameAsShipping'][@checked]
     IF    '${checkboxState}'=='False' and '${state}' == 'true'    Click Element by xpath with JavaScript    //input[@id='addressesForm_billingSameAsShipping']
@@ -45,20 +45,20 @@ Yves: select the following existing address on the checkout as 'shipping' addres
     Wait Until Element Is Visible    ${checkout_address_delivery_selector}[${env}] 
     WHILE  '${selected_address}' != '${addressToUse}'
         Run Keywords         
-                IF    '${env}' in ['b2c','mp_b2c']
+                IF    '${env}' in ['ui_b2c','ui_mp_b2c']
                     Select From List By Label    ${checkout_address_delivery_selector}[${env}]    ${addressToUse}
                     Sleep    1s
                     ${selected_address}=    Get Text    xpath=//select[contains(@name,'shippingAddress')][contains(@id,'addressesForm_shippingAddress_id')]/..//span[contains(@id,'shippingAddress_id')]
-                ELSE IF    '${env}' in ['b2b','mp_b2b']
+                ELSE IF    '${env}' in ['ui_b2b','ui_mp_b2b']
                     Click    xpath=//div[contains(@class,'shippingAddress')]//select[@name='checkout-full-addresses'][contains(@class,'address__form')]/..//span[contains(@id,'checkout-full-address')]
                     Wait Until Element Is Visible    xpath=//span[@class='select2-results']
                     Sleep    1s
-                    Click    xpath=//ul[contains(@id,'checkout-full-addresses')]//li[@role='option'][contains(.,'${addressToUse}')]
+                    Click    xpath=//ul[contains(@id,'checkout-full-addresses')]//li[@role='option'][contains(@id,'business_unit_address')][contains(.,'${addressToUse}')]
                     Sleep    3s
                     ${selected_address}=    Get Text    xpath=//div[contains(@class,'shippingAddress')]//select[@name='checkout-full-addresses'][contains(@class,'address__form')]/..//span[contains(@id,'checkout-full-address')]
                 END
     END
-    Click    ${submit_checkout_form_button}[${env}]
+    Click    ${submit_checkout_form_button}[${env}]    delay=1s
 
 Yves: fill in the following new shipping address:
     [Documentation]    Possible argument names: salutation, firstName, lastName, street, houseNumber, postCode, city, country, company, phone, additionalAddress
@@ -134,7 +134,7 @@ Yves: fill in new delivery address for a product:
 
 Yves: select the following shipping method on the checkout and go next:
     [Arguments]    ${shippingMethod}
-    IF    '${env}'=='suite-nonsplit'
+    IF    '${env}'=='ui_suite'
         Click    xpath=//input[contains(@id,'shipmentSelection')]/following-sibling::span[contains(@class,'label')][contains(text(),'${shippingMethod}')]/../span[contains(@class,'radio__box')]
     ELSE
         Click    xpath=//div[@data-qa='component shipment-sidebar']//*[contains(.,'Shipping Method')]/../ul//label[contains(.,'${shippingMethod}')]/span[contains(@class,'radio__box')]
@@ -150,21 +150,21 @@ Yves: select the following shipping method for the shipment:
 
 Yves: select the following payment method on the checkout and go next:
     [Arguments]    ${paymentMethod}    ${paymentProvider}=${EMPTY}
-    IF    '${env}'=='b2b' and '${paymentMethod}'=='Invoice'
+    IF    '${env}'=='ui_b2b' and '${paymentMethod}'=='Invoice'
         Run keywords
             Click    //form[@id='payment-form']//li[@class='checkout-list__item'][contains(.,'${paymentMethod}')]//span[contains(@class,'toggler-radio__box')]
             Type Text    ${checkout_payment_invoice_date_of_birth_field}    11.11.1111
             Click    ${submit_checkout_form_button}[${env}]
-    ELSE IF    '${env}' in ['mp_b2b'] and '${paymentMethod}'=='Invoice'
+    ELSE IF    '${env}' in ['ui_mp_b2b'] and '${paymentMethod}'=='Invoice'
         Run Keywords
             Click    //form[@id='payment-form']//li[@class='checkout-list__item'][contains(.,'${paymentMethod}')]//span[contains(@class,'toggler-radio__box')]
             Type Text    ${checkout_payment_marketplace_invoice_date_field}    11.11.1111
             Click    ${submit_checkout_form_button}[${env}]
-    ELSE IF    ('${env}'=='suite-nonsplit' and '${paymentProvider}'!='${EMPTY}')
+    ELSE IF    ('${env}'=='ui_suite' and '${paymentProvider}'!='${EMPTY}')
         Run Keywords
             Click    //form[@name='paymentForm']//h5[contains(text(), '${paymentProvider}')]/following-sibling::ul//label/span[contains(text(), '${paymentMethod}')]
             Click    ${submit_checkout_form_button}[${env}]
-    ELSE IF    '${env}'=='mp_b2c' and '${paymentMethod}'=='Credit Card'
+    ELSE IF    '${env}'=='ui_mp_b2c' and '${paymentMethod}'=='Credit Card'
         Click    //form[@name='paymentForm']//toggler-radio[contains(.,'${paymentMethod}')]//span[contains(@class,'toggler-radio__box')]
         Type Text    ${checkout_payment_card_number_field}    4111111111111111
         Type Text    ${checkout_payment_name_on_card_field}    First Last
@@ -172,7 +172,7 @@ Yves: select the following payment method on the checkout and go next:
         Select From List By Value    ${checkout_payment_card_expires_year_select}    2025
         Type Text    ${checkout_payment_card_security_code_field}    123
         Click    ${submit_checkout_form_button}[${env}]
-    ELSE IF    '${env}' in ['mp_b2c'] and '${paymentMethod}'=='Invoice'
+    ELSE IF    '${env}' in ['ui_mp_b2c'] and '${paymentMethod}'=='Invoice'
         Run Keywords
             Click    //form[@name='paymentForm']//toggler-radio[contains(.,'${paymentMethod}')]//span[contains(@class,'toggler-radio__box')]
             Type Text    ${checkout_payment_marketplace_invoice_date_field}    11.11.1111
@@ -234,7 +234,7 @@ Yves: assert merchant of product in cart or list:
 
 Yves: save new deviery address to address book:
     [Arguments]    ${state}
-    IF    '${env}' in ['b2b','mp_b2b']    Wait Until Page Contains Element    ${manage_your_addresses_link}
+    IF    '${env}' in ['ui_b2b','ui_mp_b2b']    Wait Until Page Contains Element    ${manage_your_addresses_link}
     ${checkboxState}=    Set Variable    ${EMPTY}
     ${checkboxState}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//input[@id='addressesForm_shippingAddress_isAddressSavingSkipped'][@checked]
     IF    '${checkboxState}'=='False' and '${state}' == 'true'    Click Element by xpath with JavaScript    //input[@id='addressesForm_shippingAddress_isAddressSavingSkipped']
@@ -242,7 +242,7 @@ Yves: save new deviery address to address book:
     
 Yves: save new billing address to address book:
     [Arguments]    ${state}
-    IF    '${env}' in ['b2b','mp_b2b']    Wait Until Page Contains Element    ${manage_your_addresses_link}
+    IF    '${env}' in ['ui_b2b','ui_mp_b2b']    Wait Until Page Contains Element    ${manage_your_addresses_link}
     ${checkboxState}=    Set Variable    ${EMPTY}
     ${checkboxState}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//input[@id='addressesForm_billingAddress_isAddressSavingSkipped'][@checked]
     IF    '${checkboxState}'=='False' and '${state}' == 'true'    Click Element by xpath with JavaScript    //input[@id='addressesForm_billingAddress_isAddressSavingSkipped']

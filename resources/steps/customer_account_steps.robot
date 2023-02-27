@@ -14,11 +14,11 @@ Yves: go to 'Customer Account' page
 Yves: go to user menu item in the left bar:
     [Documentation]    Case sensitive, accepts: Overview, Profile, Addresses, Order History, Newsletter, Shopping lists, Shopping carts, Quote Requests
     [Arguments]    ${left_navigation_node}
-    IF    '${env}' in ['b2b','mp_b2b']
+    IF    '${env}' in ['ui_b2b','ui_mp_b2b']
         Run Keywords
             Wait Until Element Is Visible    xpath=//ul[@class='navigation-sidebar__list']//*[contains(.,'${left_navigation_node}')]/a
             Click    xpath=//ul[@class='navigation-sidebar__list']//*[contains(.,'${left_navigation_node}')]/a
-    ELSE IF    '${env}'=='suite-nonsplit'
+    ELSE IF    '${env}'=='ui_suite'
         Run Keywords
             Wait Until Element Is Visible    xpath=//nav[contains(@class,'customer-navigation')]//a[contains(text(),'${left_navigation_node}')]
             Click    xpath=//nav[contains(@class,'customer-navigation')]//a[contains(text(),'${left_navigation_node}')]
@@ -31,9 +31,9 @@ Yves: go to user menu item in the left bar:
 Yves: create a new customer address in profile:
     [Documentation]
     [Arguments]    ${salutation}    ${firstName}    ${lastName}    ${street}    ${houseNumber}    ${postCode}    ${city}    ${country}    ${isDefaultShipping}=True     ${isDefaultBilling}=True       ${company}=    ${phone}=    ${additionalAddress}=
-    IF    '${env}' in ['b2c','mp_b2c']
+    IF    '${env}' in ['ui_b2c','ui_mp_b2c']
         Yves: go to user menu item in header:    My Profile
-    ELSE IF   '${env}' in ['b2b','mp_b2b']
+    ELSE IF   '${env}' in ['ui_b2b','ui_mp_b2b']
         Yves: go to user menu item in header:    Profile
     END
     Yves: go to user menu item in the left bar:    Addresses
@@ -54,9 +54,9 @@ Yves: create a new customer address in profile:
 
 Yves: check that user has address exists/doesn't exist:
     [Arguments]    ${exists}    ${firstName}    ${lastName}    ${street}    ${houseNumber}    ${postCode}    ${city}    ${country}    ${isDefaultShipping}=True     ${isDefaultBilling}=True       ${company}=NUll    ${phone}=NUll    ${additionalAddress}=NUll
-    IF    '${env}' in ['b2c','mp_b2c']
+    IF    '${env}' in ['ui_b2c','ui_mp_b2c']
         Yves: go to user menu item in header:    My Profile
-    ELSE IF     '${env}' in ['b2b','mp_b2b']
+    ELSE IF     '${env}' in ['ui_b2b','ui_mp_b2b']
         Yves: go to user menu item in header:    Profile
     END
     Yves: go to user menu item in the left bar:    Addresses
@@ -75,31 +75,31 @@ Yves: check that user has address exists/doesn't exist:
 
 Yves: delete user address:
     [Arguments]    ${street}
-    IF    '${env}' in ['b2c','mp_b2c']
+    IF    '${env}' in ['ui_b2c','ui_mp_b2c']
         Yves: go to user menu item in header:    My Profile
-    ELSE IF    '${env}' in ['b2b','mp_b2b']
+    ELSE IF    '${env}' in ['ui_b2b','ui_mp_b2b']
         Yves: go to user menu item in header:    Profile
     END
     Yves: go to user menu item in the left bar:    Addresses
-    IF    '${env}' in ['b2c','mp_b2c']
+    IF    '${env}' in ['ui_b2c','ui_mp_b2c']
         Click    xpath=//li[contains(text(),'${street}')]/ancestor::div/div[@data-qa='component title-box']//form[contains(@action,'address/delete')]//button
-    ELSE IF    '${env}' in ['b2b','mp_b2b']
+    ELSE IF    '${env}' in ['ui_b2b','ui_mp_b2b']
         Click    xpath=//li[contains(text(),'${street}')]/ancestor::div[@data-qa="component action-card"]//form[contains(@action,'address/delete')]//button
     END
 
 Yves: delete all user addresses
-    IF    '${env}' in ['b2c','mp_b2c']
+    IF    '${env}' in ['ui_b2c','ui_mp_b2c']
         Yves: go to user menu item in header:    My Profile
-    ELSE IF    '${env}' in ['b2b','mp_b2b']
+    ELSE IF    '${env}' in ['ui_b2b','ui_mp_b2b']
         Yves: go to user menu item in header:    Profile
     END
     Yves: go to user menu item in the left bar:    Addresses
     ${userAddresses}=    Get Element Count    xpath=//form[contains(@action,'address/delete')]//button
     IF    ${userAddresses} != 0
         FOR    ${index}    IN RANGE    0    ${userAddresses}
-            IF    '${env}' in ['b2c','mp_b2c']
+            IF    '${env}' in ['ui_b2c','ui_mp_b2c']
                 Click    xpath=//main//div[contains(@class,'col--md')]/div[contains(@class,'grid')]/div[1]//div[@data-qa='component title-box']//form[contains(@action,'address/delete')]//button
-            ELSE IF    '${env}' in ['b2b','mp_b2b']
+            ELSE IF    '${env}' in ['ui_b2b','ui_mp_b2b']
                 Click    xpath=//div[@data-qa='component action-card-grid']/div[1]/div[@data-qa="component action-card"]//form[contains(@action,'address/delete')]//button
             END
         END   
