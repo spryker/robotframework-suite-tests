@@ -486,4 +486,5 @@ Zed: add new concrete product to abstract:
             END
         END
     END
-    Click    ${zed_pdp_save_button}    delay=2s
+    Click    ${zed_pdp_save_button}
+    Wait Until Element Is Visible    xpath=//div[@class='title-action']/a[contains(.,'Manage Attributes')]

@@ -1,5 +1,6 @@
 *** Settings ***
 Resource    ../pages/zed/zed_discount_page.robot
+Resource    ../../resources/common/common_yves.robot
 Resource    ../common/common_zed.robot
 Resource    ../common/common.robot
 
@@ -47,6 +48,7 @@ Zed: create a discount and activate it:
         Type Text    ${zed_discount_plain_query_apply_when_field}     ${applyWhenQuery}
     END
     Click    ${zed_discount_save_button}
+    Wait Until Element Is Visible    ${zed_discount_activate_button}
     Click    ${zed_discount_activate_button}
     # Voucher codes
     IF    '${discountType}'=='voucher'    Zed: generate vouchers:    1    ${voucherCode}
@@ -73,6 +75,25 @@ Zed: deactivate following discounts from Overview page:
         ${isDiscountActive}=    Set Variable    ${EMPTY}
         ${isDiscountActive}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//td[contains(text(),'${name}')]/following-sibling::td[contains(@class,'Action')]//button[contains(.,'Deactivate')]
         IF    '${isDiscountActive}'=='True'    Click    xpath=//td[contains(text(),'${name}')]/following-sibling::td[contains(@class,'Action')]//button[contains(.,'Deactivate')]
+    END
+
+Zed: deactivate all discounts from Overview page
+    Zed: go to second navigation item level:    Merchandising    Discount
+    Wait Until Element Is Visible    xpath=/descendant::a[contains(.,'View')][1]
+    Save the result of a SELECT DB query to a variable:    select COUNT(id_discount) from spy_discount    DiscountPagesCount
+    ${DiscountPagesCount}=    Evaluate    ${DiscountPagesCount} / 10
+    ${DiscountPagesCount}=    Convert To Integer    ${DiscountPagesCount}
+    FOR    ${PagesCounter}    IN RANGE    0    ${DiscountPagesCount}+1
+        ${DiscountActiveCount}=    Get Element Count    xpath=//button[@type='submit'][contains(.,'Deactivate')]
+        IF    ${DiscountActiveCount} > 0
+            FOR    ${DiscountCounter}    IN RANGE    0    ${DiscountActiveCount}
+                Click    xpath=/descendant::button[@type='submit'][contains(.,'Deactivate')][1]
+                Wait Until Element Is Visible    xpath=/descendant::a[contains(.,'View')][1]
+            END
+        END
+        Exit For Loop If    ${PagesCounter} == ${DiscountPagesCount}
+        Click    xpath=//li[contains(@class,'paginate_button')][contains(.,'Next')]
+        Sleep    1s
     END
 
 Zed: activate following discounts from Overview page:

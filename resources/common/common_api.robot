@@ -1660,7 +1660,6 @@ Connect to Spryker DB
     END
     Connect To Database    ${db_engine}    ${db_name}    ${db_user}    ${db_password}    ${db_host}    ${db_port}
 
-
 Get the first company user id and its' customer email
     [Documentation]    This keyword sends the GET reguest to the ``/company-users?include=customers`` endpoint and returns first available company user id and its' customer email in
     ...    ``${companyUserId}``  and  ``${companyUserEmail}`` variables. 

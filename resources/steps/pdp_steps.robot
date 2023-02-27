@@ -62,12 +62,12 @@ Yves: select the following 'Sales Unit' on PDP:
 Yves: change quantity using '+' or '-' button № times:
     [Arguments]    ${action}    ${clicksCount}
     FOR    ${index}    IN RANGE    0    ${clicksCount}
+        Sleep    1s
         IF    '${action}' == '+'
             Click    ${pdp_increase_quantity_button}[${env}]
         ELSE IF    '${action}' == '-'
             Click    ${pdp_decrease_quantity_button}[${env}]
         END
-        Sleep    1s
     END
 
 Yves: change variant of the product on PDP on:

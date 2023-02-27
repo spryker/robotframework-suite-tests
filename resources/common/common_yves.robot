@@ -6,6 +6,8 @@ Library    ../../resources/libraries/common.py
 Resource    common.robot
 Resource    ../pages/yves/yves_overview_page.robot
 Resource    ../pages/yves/yves_profile_page.robot
+Resource    ../pages/yves/yves_overview_page.robot
+Resource    ../pages/yves/yves_profile_page.robot
 Resource    ../pages/yves/yves_catalog_page.robot
 Resource    ../pages/yves/yves_product_details_page.robot
 Resource    ../pages/yves/yves_company_users_page.robot
@@ -15,7 +17,10 @@ Resource    ../pages/yves/yves_shopping_cart_page.robot
 Resource    ../pages/yves/yves_shopping_list_page.robot
 Resource    ../pages/yves/yves_checkout_success_page.robot
 Resource    ../pages/yves/yves_address_page.robot
+Resource    ../pages/yves/yves_address_page.robot
 Resource    ../pages/yves/yves_order_history_page.robot
+Resource    ../pages/yves/yves_returns_page.robot
+Resource    ../pages/yves/yves_newsletter_page.robot
 Resource    ../pages/yves/yves_returns_page.robot
 Resource    ../pages/yves/yves_newsletter_page.robot
 Resource    ../pages/yves/yves_order_details_page.robot
@@ -96,18 +101,19 @@ Yves: go to PDP of the product with sku:
 
 Yves: '${pageName}' page is displayed
     IF    '${pageName}' == 'Company Users'    Page Should Contain Element    ${company_users_main_content_locator}    ${pageName} page is not displayed
-    ...    ELSE IF    '${pageName}' == 'Overview'    Page Should Contain Element    ${overview_main_content_locator}    ${pageName} page is not displayed
-    ...    ELSE IF    '${pageName}' == 'Profile'    Page Should Contain Element    ${profile_main_content_locator}    ${pageName} page is not displayed
+    ...    ELSE IF    '${pageName}' == 'Login'    Page Should Contain Element    ${login_main_content_locator}    ${pageName} page is not displayed
+    ...    ELSE IF    '${pageName}' == 'Overview'    Page Should Contain Element    ${overview_main_content_locator}[${env}]    ${pageName} page is not displayed
+    ...    ELSE IF    '${pageName}' == 'Profile'    Page Should Contain Element    ${profile_main_content_locator}[${env}]    ${pageName} page is not displayed
     ...    ELSE IF    '${pageName}' == 'Shopping Lists'    Page Should Contain Element    ${shopping_lists_page_form_locator}    ${pageName} page is not displayed
     ...    ELSE IF    '${pageName}' == 'Shopping List'    Page Should Contain Element    ${shopping_list_main_content_locator}    ${pageName} page is not displayed
     ...    ELSE IF    '${pageName}' == 'Shopping Cart'    Page Should Contain Element    ${shopping_cart_main_content_locator}[${env}]    ${pageName} page is not displayed
     ...    ELSE IF    '${pageName}' == 'Shopping Carts'    Page Should Contain Element    ${shopping_carts_main_content_locator}    ${pageName} page is not displayed
     ...    ELSE IF    '${pageName}' == 'Quick Order'    Page Should Contain Element    ${quick_order_main_content_locator}    ${pageName} page is not displayed
     ...    ELSE IF    '${pageName}' == 'Thank you'    Page Should Contain Element    ${success_page_main_container_locator}[${env}]    ${pageName} page is not displayed
-    ...    ELSE IF    '${pageName}' == 'Addresses'    Page Should Contain Element    ${address_main_content_locator}    ${pageName} page is not displayed
+    ...    ELSE IF    '${pageName}' == 'Addresses'    Page Should Contain Element    ${address_main_content_locator}[${env}]    ${pageName} page is not displayed
     ...    ELSE IF    '${pageName}' == 'Order History'    Page Should Contain Element    ${order_history_main_content_locator}    ${pageName} page is not displayed
-    ...    ELSE IF    '${pageName}' == 'Returns'    Page Should Contain Element    ${returns_main_content_locator}    ${pageName} page is not displayed
-    ...    ELSE IF    '${pageName}' == 'Newsletter'    Page Should Contain Element    ${newsletter_main_content_locator}    ${pageName} page is not displayed
+    ...    ELSE IF    '${pageName}' == 'Returns'    Page Should Contain Element    ${returns_main_content_locator}[${env}]    ${pageName} page is not displayed
+    ...    ELSE IF    '${pageName}' == 'Newsletter'    Page Should Contain Element    ${newsletter_main_content_locator}[${env}]    ${pageName} page is not displayed
     ...    ELSE IF    '${pageName}' == 'Order Details'    Page Should Contain Element    ${order_details_main_content_locator}    ${pageName} page is not displayed
     ...    ELSE IF    '${pageName}' == 'Select Business Unit'    Page Should Contain Element    ${customer_account_business_unit_selector}    ${pageName} page is not displayed
     ...    ELSE IF    '${pageName}' == 'Summary'    Page Should Contain Element    ${checkout_summary_main_content_locator}    ${pageName} page is not displayed
@@ -118,6 +124,7 @@ Yves: '${pageName}' page is displayed
     ...    ELSE IF    '${pageName}' == 'Return Details'    Page Should Contain Element    ${return_details_main_content_locator}    ${pageName} page is not displayed
     ...    ELSE IF    '${pageName}' == 'Payment cancellation'    Page Should Contain Element    ${cancel_payment_page_main_container_locator}    ${pageName} page is not displayed
     ...    ELSE IF    '${pageName}' == 'Merchant Profile'    Page Should Contain Element    ${merchant_profile_main_content_locator}    ${pageName} page is not displayed
+    ...    ELSE IF    '${pageName}' == 'Wishlist'    Page Should Contain Element    ${wishlist_main_content_locator}    ${pageName} page is not displayed
     ...    ELSE        Fail    '${pageName}' page is not displayed or the page name is incorrect
 
 Yves: remove flash messages
@@ -411,15 +418,15 @@ I send a POST request:
     ...    *Example:*
     ...
     ...    ``I send a POST request:    /agent-access-tokens    {"data": {"type": "agent-access-tokens","attributes": {"username": "${agent.email}","password": "${agent.password}"}}}``
-    [Arguments]   ${path}    ${json}    ${timeout}=${api_timeout}    ${allow_redirects}=${default_allow_redirects}    ${auth}=${default_auth}    ${expected_status}=ANY
+    [Arguments]   ${path}    ${json}    ${timeout}=60    ${allow_redirects}=true    ${auth}=${NONE}    ${expected_status}=ANY
     ${data}=    Evaluate    ${json}
     ${hasValue}    Run Keyword and return status     Should not be empty    ${headers}
-    ${response}=    IF    ${hasValue}   run keyword    POST    ${host}${path}    json=${data}    headers=${headers}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}
-    ...    ELSE    POST    ${host}${path}    json=${data}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=ANY
+    ${response}=    IF    ${hasValue}   run keyword    POST    ${glue_url}${path}    json=${data}    headers=${headers}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}
+    ...    ELSE    POST    ${glue_url}${path}    json=${data}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=ANY
     ${response_body}=    IF    ${response.status_code} != 204    Set Variable    ${response.json()}
     ${response_headers}=    Set Variable    ${response.headers}
     Set Test Variable    ${response_headers}    ${response_headers}
     Set Test Variable    ${response_body}    ${response_body}
     Set Test Variable    ${response}    ${response}
-    Set Test Variable    ${expected_self_link}    ${host}${path}
+    Set Test Variable    ${expected_self_link}    ${glue_url}${path}
     [Return]    ${response_body}
