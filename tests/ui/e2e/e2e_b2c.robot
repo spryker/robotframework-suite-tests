@@ -1437,7 +1437,7 @@ Register_during_checkout
     [Teardown]    Zed: delete customer:
     ...    || email                            ||
     ...    || sonia+guest${random}@spryker.com ||
-    ...    
+
 Glossary
     [Documentation]    Create + edit glossary translation in BO
     Zed: login on Zed with provided credentials:    ${zed_admin_email}

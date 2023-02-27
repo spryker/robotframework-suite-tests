@@ -117,7 +117,6 @@ Zed: product is successfully discontinued
 
 Zed: view product page is displayed
     Wait Until Element Is Visible    ${zed_view_abstract_product_main_content_locator}
-    Wait Until Element Is Visible    ${zed_view_abstract_product_main_content_locator}
 
 Zed: view abstract product page contains:
     [Arguments]    @{args}
