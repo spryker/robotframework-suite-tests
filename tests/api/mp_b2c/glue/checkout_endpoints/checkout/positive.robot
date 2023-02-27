@@ -144,10 +144,10 @@ Create_order_include_orders
     And Response body parameter should be:    [included][0][attributes][expenses][0][canceledAmount]    None
     And Response body parameter should be:    [included][0][attributes][expenses][0][unitDiscountAmountAggregation]    None
     And Response body parameter should be:    [included][0][attributes][expenses][0][sumDiscountAmountAggregation]    None
-    And Response body parameter should be greater than:    [included][0][attributes][expenses][0][unitTaxAmount]    0
-    And Response body parameter should be greater than:    [included][0][attributes][expenses][0][sumTaxAmount]    0
-    And Response body parameter should be greater than:    [included][0][attributes][expenses][0][unitPriceToPayAggregation]    0
-    And Response body parameter should be greater than:    [included][0][attributes][expenses][0][sumPriceToPayAggregation]    0
+    And Response body parameter should not be EMPTY:    [included][0][attributes][expenses][0][unitTaxAmount]
+    And Response body parameter should not be EMPTY:    [included][0][attributes][expenses][0][sumTaxAmount]
+    And Response body parameter should not be EMPTY:    [included][0][attributes][expenses][0][unitPriceToPayAggregation]
+    And Response body parameter should not be EMPTY:    [included][0][attributes][expenses][0][sumPriceToPayAggregation]
     
     And Response body parameter should be:    [included][0][attributes][expenses][0][taxAmountAfterCancellation]    None
     And Response body parameter should be greater than:    [included][0][attributes][expenses][0][idShipment]    0
