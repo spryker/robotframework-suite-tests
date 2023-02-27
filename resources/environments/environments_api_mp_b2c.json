@@ -213,8 +213,8 @@
              "total_sum_of_discounts_1":"1400",
              "with_discount_20_percentage_off_storage":"4000",
              "with_discount_10_percentage_off_minimum_order":"1600",
-             "with_discount_20_percentage_off_storage_1":"1400",
-             "with_discount_10_percentage_off_minimum_order_1":"560"
+             "with_discount_20_percentage_off_storage_1":"525",
+             "with_discount_10_percentage_off_minimum_order_1":"210"
           },
           "product_2":{
              "sku":"213216",
@@ -225,8 +225,8 @@
              "total_sum_of_discounts_1":"3320",
              "with_discount_20_percentage_off_storage":"5783",
              "with_discount_10_percentage_off_minimum_order":"2313",
-             "with_discount_20_percentage_off_storage_1":"6900",
-             "with_discount_10_percentage_off_minimum_order_1":"2760"
+             "with_discount_20_percentage_off_storage_1":"2588",
+             "with_discount_10_percentage_off_minimum_order_1":"1035"
           },
           "product_3":{
              "sku":"401768",
@@ -239,11 +239,11 @@
           "name_1":"20% off cameras",
           "description_1":"20% off all digital cameras in the store",
           "description":"Get a 10% discount on all orders above 100 EUR or 115 CHF",
-          "total_sum_for_discounts_for_products_1_and_2":"8300"
+          "total_sum_for_discounts_for_products_1_and_2":"1245"
        },
        "discount_2":{
           "name":"20% off cameras",
-          "total_sum_for_discounts_for_products_1_2":"3320",
+          "total_sum_for_discounts_for_products_1_2":"3113",
           "description":"Get a 10% discount on all orders above 100 EUR or 115 CHF",
           "description_2":"20% off all digital cameras in the store"
        },

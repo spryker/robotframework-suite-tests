@@ -333,63 +333,63 @@ Create_order_with_2_product_discounts
     #discountTotal
     And Perform arithmetical calculation with two arguments:    discount_total_sum    ${discount_1.total_sum_for_discounts_for_products_1_and_2}    +    ${discount_2.total_sum_for_discounts_for_products_1_2}
     And Perform arithmetical calculation with two arguments:    discount_total_sum    ${discount_total_sum}    +    ${discount_3.total_sum_for_discounts_for_products_1_2}
-    # And Response body parameter with rounding should be:    [included][0][attributes][totals][discountTotal]    ${discount_total_sum}
+    And Response body parameter with rounding should be:    [included][0][attributes][totals][discountTotal]    ${discount_total_sum}
     #grandTotal
     And Perform arithmetical calculation with two arguments:    grand_total_sum    ${sub_total_sum}    -    ${discount_total_sum}
     And Perform arithmetical calculation with two arguments:    grand_total_sum    ${grand_total_sum}    +    ${expense_total_sum}
-    # And Response body parameter with rounding should be:    [included][0][attributes][totals][grandTotal]    ${grand_total_sum}
-    # #item 1 - "	20% off cameras
+    And Response body parameter with rounding should be:    [included][0][attributes][totals][grandTotal]    ${grand_total_sum}
+    # #item 1 and item 2 - "	20% off cameras and "10% off minimum order" discount
     And Response should contain the array of a certain size:    [included][0][attributes][items][0][calculatedDiscounts]    2
     And Response body parameter should be in:    [included][0][attributes][items][0][name]    ${product_availability.concrete_available_with_stock_and_never_out_of_stock_name}    ${discount_concrete_product.product_2.name_1}
     And Response body parameter should be in:    [included][0][attributes][items][0][sku]    ${product_availability.concrete_available_with_stock_and_never_out_of_stock_sku}    ${discount_concrete_product.product_2.sku_1}    
-    # And Response body parameter should be:    [included][0][attributes][items][0][calculatedDiscounts][0][unitAmount]    ${discount_concrete_product.product_1.with_discount_20_percentage_off_storage_1}
-    # And Response body parameter should be:    [included][0][attributes][items][0][calculatedDiscounts][0][sumAmount]    ${discount_concrete_product.product_1.with_discount_20_percentage_off_storage_1}
+    And Response body parameter should be in:    [included][0][attributes][items][0][calculatedDiscounts][0][unitAmount]    ${discount_concrete_product.product_1.with_discount_20_percentage_off_storage_1}    ${discount_concrete_product.product_2.with_discount_20_percentage_off_storage_1}    ${discount_concrete_product.product_1.with_discount_10_percentage_off_minimum_order_1}    ${discount_concrete_product.product_2.with_discount_10_percentage_off_minimum_order_1}
+    And Response body parameter should be in:    [included][0][attributes][items][0][calculatedDiscounts][0][sumAmount]    ${discount_concrete_product.product_1.with_discount_20_percentage_off_storage_1}    ${discount_concrete_product.product_2.with_discount_20_percentage_off_storage_1}    ${discount_concrete_product.product_1.with_discount_10_percentage_off_minimum_order_1}    ${discount_concrete_product.product_2.with_discount_10_percentage_off_minimum_order_1}
     And Response body parameter should be in:    [included][0][attributes][items][0][calculatedDiscounts][0][displayName]    ${discount_1.name}  ${discount_2.name}    ${discount_3.name}   
     And Response body parameter should be in:    [included][0][attributes][items][0][calculatedDiscounts][0][description]    ${discount_1.description}    ${discount_2.description_2}    ${discount_3.description}     
     And Response body parameter should be:    [included][0][attributes][items][0][calculatedDiscounts][0][voucherCode]    None
     And Response body parameter should be in:    [included][0][attributes][items][0][calculatedDiscounts][0][quantity]    1    2
-    #item 1 - "10% off minimum order" discount
-    # And Response body parameter should be:    [included][0][attributes][items][0][calculatedDiscounts][1][unitAmount]    ${discount_concrete_product.product_1.with_discount_10_percentage_off_minimum_order_1}
-    # And Response body parameter should be:    [included][0][attributes][items][0][calculatedDiscounts][1][sumAmount]    ${discount_concrete_product.product_1.with_discount_10_percentage_off_minimum_order_1}
+    #item 1 and item 2 - "	20% off cameras and "10% off minimum order" discount
+    And Response body parameter should be in:    [included][0][attributes][items][0][calculatedDiscounts][1][unitAmount]    ${discount_concrete_product.product_1.with_discount_20_percentage_off_storage_1}    ${discount_concrete_product.product_2.with_discount_20_percentage_off_storage_1}    ${discount_concrete_product.product_1.with_discount_10_percentage_off_minimum_order_1}    ${discount_concrete_product.product_2.with_discount_10_percentage_off_minimum_order_1}
+    And Response body parameter should be in:    [included][0][attributes][items][0][calculatedDiscounts][1][sumAmount]    ${discount_concrete_product.product_1.with_discount_20_percentage_off_storage_1}    ${discount_concrete_product.product_2.with_discount_20_percentage_off_storage_1}    ${discount_concrete_product.product_1.with_discount_10_percentage_off_minimum_order_1}    ${discount_concrete_product.product_2.with_discount_10_percentage_off_minimum_order_1}
     And Response body parameter should be in:    [included][0][attributes][items][0][calculatedDiscounts][1][displayName]    ${discount_1.name}  ${discount_2.name}    ${discount_3.name} 
     And Response body parameter should be in:    [included][0][attributes][items][0][calculatedDiscounts][1][description]    ${discount_1.description}    ${discount_2.description_2}    ${discount_3.description} 
     And Response body parameter should be:    [included][0][attributes][items][0][calculatedDiscounts][1][voucherCode]    None
     And Response body parameter should be in:    [included][0][attributes][items][0][calculatedDiscounts][1][quantity]    1    2
-    # #item 2 - "20% off storage" discount
+    #item 1 and item 2 - "	20% off cameras and "10% off minimum order" discount
     And Response should contain the array of a certain size:    [included][0][attributes][items][1][calculatedDiscounts]    2
     And Response body parameter should be in:    [included][0][attributes][items][1][name]    ${discount_concrete_product.product_2.name_1}    ${product_availability.concrete_available_with_stock_and_never_out_of_stock_name}    
     And Response body parameter should be in:    [included][0][attributes][items][1][sku]    ${discount_concrete_product.product_2.sku_1}    ${product_availability.concrete_available_with_stock_and_never_out_of_stock_sku}    
-    # And Response body parameter should be:    [included][0][attributes][items][1][calculatedDiscounts][0][unitAmount]    ${discount_concrete_product.product_2.with_discount_20_percentage_off_storage_1}
-    # And Response body parameter should be:    [included][0][attributes][items][1][calculatedDiscounts][0][sumAmount]    ${discount_concrete_product.product_2.with_discount_20_percentage_off_storage_1}
+    And Response body parameter should be in:    [included][0][attributes][items][1][calculatedDiscounts][0][unitAmount]    ${discount_concrete_product.product_1.with_discount_20_percentage_off_storage_1}    ${discount_concrete_product.product_2.with_discount_20_percentage_off_storage_1}    ${discount_concrete_product.product_1.with_discount_10_percentage_off_minimum_order_1}    ${discount_concrete_product.product_2.with_discount_10_percentage_off_minimum_order_1}
+    And Response body parameter should be in:    [included][0][attributes][items][1][calculatedDiscounts][0][sumAmount]    ${discount_concrete_product.product_1.with_discount_20_percentage_off_storage_1}    ${discount_concrete_product.product_2.with_discount_20_percentage_off_storage_1}    ${discount_concrete_product.product_1.with_discount_10_percentage_off_minimum_order_1}    ${discount_concrete_product.product_2.with_discount_10_percentage_off_minimum_order_1}
     And Response body parameter should be in:    [included][0][attributes][items][1][calculatedDiscounts][0][displayName]    ${discount_1.name}  ${discount_2.name}    ${discount_3.name} 
     And Response body parameter should be in:    [included][0][attributes][items][1][calculatedDiscounts][0][description]    ${discount_1.description}    ${discount_2.description_2}    ${discount_3.description} 
     And Response body parameter should be:    [included][0][attributes][items][1][calculatedDiscounts][0][voucherCode]    None
     And Response body parameter should be in:    [included][0][attributes][items][1][calculatedDiscounts][0][quantity]    1    2
-    #item 2 - "10% off minimum order" discount
-    # And Response body parameter should be:    [included][0][attributes][items][1][calculatedDiscounts][1][unitAmount]    ${discount_concrete_product.product_2.with_discount_10_percentage_off_minimum_order_1}
-    # And Response body parameter should be:    [included][0][attributes][items][1][calculatedDiscounts][1][sumAmount]    ${discount_concrete_product.product_2.with_discount_10_percentage_off_minimum_order_1}
+    #item 1 and item 2 - "	20% off cameras and "10% off minimum order" discount
+    And Response body parameter should be in:    [included][0][attributes][items][1][calculatedDiscounts][1][unitAmount]    ${discount_concrete_product.product_1.with_discount_20_percentage_off_storage_1}    ${discount_concrete_product.product_2.with_discount_20_percentage_off_storage_1}    ${discount_concrete_product.product_1.with_discount_10_percentage_off_minimum_order_1}    ${discount_concrete_product.product_2.with_discount_10_percentage_off_minimum_order_1}
+    And Response body parameter should be in:    [included][0][attributes][items][1][calculatedDiscounts][1][sumAmount]    ${discount_concrete_product.product_1.with_discount_20_percentage_off_storage_1}    ${discount_concrete_product.product_2.with_discount_20_percentage_off_storage_1}    ${discount_concrete_product.product_1.with_discount_10_percentage_off_minimum_order_1}    ${discount_concrete_product.product_2.with_discount_10_percentage_off_minimum_order_1}
     And Response body parameter should be in:    [included][0][attributes][items][1][calculatedDiscounts][1][displayName]    ${discount_1.name}  ${discount_2.name}    ${discount_3.name}
     And Response body parameter should be in:    [included][0][attributes][items][1][calculatedDiscounts][1][description]    ${discount_1.description}    ${discount_2.description_2}    ${discount_3.description} 
     And Response body parameter should be:    [included][0][attributes][items][1][calculatedDiscounts][1][voucherCode]    None
     And Response body parameter should be in:    [included][0][attributes][items][1][calculatedDiscounts][1][quantity]    1    2
-    #calculatedDiscounts - "20% off storage" discount
+    # calculatedDiscounts - "10% off minimum order" discount
     And Response body parameter should contain:    [included][0][attributes][calculatedDiscounts]    unitAmount: None
-    # And Response body parameter should contain:    [included][0][attributes][calculatedDiscounts]    sumAmount: ${discount_1.total_sum_for_discounts_for_products_1_and_2}
-    And Response body parameter should contain:    [included][0][attributes][calculatedDiscounts]    displayName: ${discount_1.name}
-    And Response body parameter should contain:    [included][0][attributes][calculatedDiscounts]    description: ${discount_1.description}
+    And Response body parameter should be:   [included][0][attributes][calculatedDiscounts]["10% off minimum order"][sumAmount]    ${discount_1.total_sum_for_discounts_for_products_1_and_2}
+    And Response body parameter should be:    [included][0][attributes][calculatedDiscounts]["10% off minimum order"][displayName]    ${discount_1.name}
+    And Response body parameter should be:       [included][0][attributes][calculatedDiscounts]["10% off minimum order"][description]    ${discount_1.description}
     And Response body parameter should contain:    [included][0][attributes][calculatedDiscounts]    voucherCode: None
     And Response body parameter should contain:    [included][0][attributes][calculatedDiscounts]    quantity: 2
-    # #calculatedDiscounts - "10% off minimum order" discount
-    And Response body parameter should contain:    [included][0][attributes][calculatedDiscounts]    unitAmount: None
-    # And Response body parameter should contain:    [included][0][attributes][calculatedDiscounts]    sumAmount: ${discount_2.total_sum_for_discounts_for_products_1_2}
-    And Response body parameter should contain:    [included][0][attributes][calculatedDiscounts]    displayName: ${discount_2.name}
-    And Response body parameter should contain:    [included][0][attributes][calculatedDiscounts]    description: ${discount_2.description}
+    # calculatedDiscounts - "20% off storage" discount
+    And Response body parameter should be:    [included][0][attributes][calculatedDiscounts]["20% off cameras"][unitAmount]    None
+    And Response body parameter should be:    [included][0][attributes][calculatedDiscounts]["20% off cameras"][sumAmount]    ${discount_2.total_sum_for_discounts_for_products_1_2}
+    And Response body parameter should be:    [included][0][attributes][calculatedDiscounts]["20% off cameras"][displayName]    ${discount_2.name}
+    And Response body parameter should be:    [included][0][attributes][calculatedDiscounts]["20% off cameras"][description]    ${discount_2.description_2}
     And Response body parameter should contain:    [included][0][attributes][calculatedDiscounts]    voucherCode: None
     And Response body parameter should contain:    [included][0][attributes][calculatedDiscounts]    quantity: 2
-    #calculatedDiscounts - "Free standard delivery" discount
-    And Response body parameter should contain:    [included][0][attributes][calculatedDiscounts]    unitAmount: None
-    # And Response body parameter should contain:    [included][0][attributes][calculatedDiscounts]    sumAmount: ${discount_3.total_sum_for_discounts_for_products_1_2}
-    And Response body parameter should contain:    [included][0][attributes][calculatedDiscounts]    displayName: ${discount_3.name}
-    And Response body parameter should contain:    [included][0][attributes][calculatedDiscounts]    description: ${discount_3.description}
+    # calculatedDiscounts -  "Free standard delivery" discount
+    And Response body parameter should be:    [included][0][attributes][calculatedDiscounts]["Free standard delivery"][unitAmount]    None
+    And Response body parameter should be:    [included][0][attributes][calculatedDiscounts]["Free standard delivery"][sumAmount]    ${discount_3.total_sum_for_discounts_for_products_1_2}
+    And Response body parameter should be:    [included][0][attributes][calculatedDiscounts]["Free standard delivery"][displayName]    ${discount_3.name}
+    And Response body parameter should be:    [included][0][attributes][calculatedDiscounts]["Free standard delivery"][description]    ${discount_3.description}
     And Response body parameter should contain:    [included][0][attributes][calculatedDiscounts]    voucherCode: None
     And Response body parameter should contain:    [included][0][attributes][calculatedDiscounts]    quantity: 1
