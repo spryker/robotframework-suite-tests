@@ -257,6 +257,9 @@ Add_to_Wishlist
     Yves: wishlist contains product with sku:    003_26138343
     Yves: go to wishlist with name:    Second wishlist
     Yves: wishlist contains product with sku:    004_30663302
+    Yves: go to PDP of the product with sku:    ${bundled_product_3_concrete_sku}
+    Delete All Cookies
+    Yves: try to add product to wishlist as guest user
     [Teardown]    Run keywords    Yves: delete all wishlists    AND    Yves: check if cart is not empty and clear it
 
 Product_Sets
@@ -841,7 +844,7 @@ Product_Original_Price
 
 Checkout_Address_Management
     [Tags]    skip-due-to-issue
-    [Documentation]    Checks that user can change address during the checkout and save new into the address book. Bug:CC-24090
+    [Documentation]    Bug:CC-24090. Checks that user can change address during the checkout and save new into the address book.
     [Setup]    Run Keywords    
     ...    Yves: login on Yves with provided credentials:    ${yves_user_email}
     ...    AND    Yves: delete all user addresses
@@ -1163,7 +1166,7 @@ Multistore_CMS
 
 Product_Availability_Calculation
     [Tags]    skip-due-to-issue
-    [Documentation]    check product availability + multistore. Bug: CC-24108
+    [Documentation]    Bug: CC-24108. check product availability + multistore. 
     [Setup]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: update warehouse:    
     ...    || warehouse  | store || 
@@ -1272,31 +1275,6 @@ User_Control
     [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: go to second navigation item level:    Users    User Roles
     ...    AND    Zed: click Action Button in a table for row that contains:    controlRole${random}    Delete
-
-Glossary
-    [Documentation]    Create + edit glossary translation in BO
-    Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    Zed: go to second navigation item level:    Administration    Glossary  
-    Zed: click button in Header:    Create Translation
-    Zed: fill glossary form:
-    ...    || Name                     | EN_US                        | DE_DE                             ||
-    ...    || cart.price.test${random} | This is a sample translation | Dies ist eine Beispielübersetzung ||
-    Zed: submit the form
-    Zed: table should contain:    cart.price.test${random}
-    Zed: go to second navigation item level:    Administration    Glossary 
-    Zed: click Action Button in a table for row that contains:    ${glossary_name}    Edit
-    Zed: fill glossary form:
-    ...    || DE_DE                    | EN_US                              ||
-    ...    || ${original_DE_text}-Test | ${original_EN_text}-Test-${random} ||
-    Zed: submit the form
-    Yves: login on Yves with provided credentials:    ${yves_second_user_email}
-    Yves: validate the page title:    ${original_EN_text}-Test-${random}
-    Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    Zed: undo the changes in glossary translation:    ${glossary_name}     ${original_DE_text}    ${original_EN_text}
-    Yves: login on Yves with provided credentials:    ${yves_second_user_email}
-    Yves: validate the page title:    ${original_EN_text}
-    [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    ...    AND    Zed: undo the changes in glossary translation:    ${glossary_name}     ${original_DE_text}    ${original_EN_text}
 
 Reorder
     [Documentation]    Checks that merchant relation is saved with reorder
@@ -1410,15 +1388,15 @@ Payment_method_update
     ...    AND    Zed: go to second navigation item level:    Administration    Payment Methods
     ...    AND    Zed: activate/deactivate payment method:    Dummy Payment    Invoice    True
 
-Add_to_cart_products_as_a_guest_user_and_login_during_checkout
+Login_during_checkout
     Yves: go to the 'Home' page
     Yves: go to PDP of the product with sku:    ${bundled_product_3_concrete_sku}
     Yves: add product to the shopping cart
     Yves: go to b2c shopping cart  
     Yves: click on the 'Checkout' button in the shopping cart
-     Yves: proceed as a guest user and login during checkout:   ${yves_second_user_email}
-     Yves: fill in the following new shipping address:
-     ...    || salutation     | firstName                    | lastName                    | street        | houseNumber       | postCode     | city       | country     | company    | phone           | additionalAddress     ||
+    Yves: proceed as a guest user and login during checkout:   ${yves_second_user_email}
+    Yves: fill in the following new shipping address:
+    ...    || salutation     | firstName                    | lastName                    | street        | houseNumber       | postCode     | city       | country     | company    | phone           | additionalAddress     ||
     ...    || ${Salutation}  | ${Guest_user_first_name}     | ${Guest_user_last_name}     | ${random}     | ${random}         | ${random}    | ${city}    | ${country}  | ${company} | ${random} | ${additional_address} ||
     Yves: submit form on the checkout
     Yves: select the following shipping method on the checkout and go next:    Express
@@ -1426,8 +1404,9 @@ Add_to_cart_products_as_a_guest_user_and_login_during_checkout
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
+    Yves: get the last placed order ID by current customer
 
-Add_to_cart_products_as_a_guest_user_and_register_during_checkout
+Register_during_checkout
     [Documentation]    Guest user email should be whitelisted from the AWS side before running the test
     Yves: go to the 'Home' page
     Yves: go to PDP of the product with sku:    ${bundled_product_3_concrete_sku}
@@ -1435,24 +1414,51 @@ Add_to_cart_products_as_a_guest_user_and_register_during_checkout
     Page Should Not Contain Element    ${pdp_add_to_wishlist_button}
     Yves: go to b2c shopping cart  
     Yves: click on the 'Checkout' button in the shopping cart
-    Yves: signup guest user during checkout:    ${Guest_user_first_name}    ${Guest_user_last_name}    sonia+guest${random}@spryker.com    Abc#${random}    Abc#${random}
+    Yves: signup guest user during checkout:    ${guest_user_first_name}    ${guest_user_last_name}    sonia+guest${random}@spryker.com    Abc#${random}    Abc#${random}
     Save the result of a SELECT DB query to a variable:    select registration_key from spy_customer where email = 'sonia+guest${random}@spryker.com'    confirmation_key
     I send a POST request:     /customer-confirmation   {"data":{"type":"customer-confirmation","attributes":{"registrationKey":"${confirmation_key}"}}}
     Yves: login after signup during checkout:    sonia+guest${random}@spryker.com    Abc#${random}
     Yves: fill in the following new shipping address:
-    ...    || salutation     | firstName                    | lastName                    | street        | houseNumber       | postCode     | city       | country     | company    | phone     | additionalAddress         ||
-    ...    || ${Salutation}  | ${Guest_user_first_name}     | ${Guest_user_last_name}     | ${random}     | ${random}         | ${random}    | ${city}    | ${country}  | ${company} | ${random} | ${additional_address}     ||
+    ...    || salutation     | firstName                | lastName                | street    | houseNumber | postCode     | city       | country     | company    | phone     | additionalAddress         ||
+    ...    || ${salutation}  | ${guest_user_first_name} | ${guest_user_last_name} | ${random} | ${random}   | ${random}    | ${city}    | ${country}  | ${company} | ${random} | ${additional_address}     ||
     Yves: submit form on the checkout
     Yves: select the following shipping method on the checkout and go next:    Express
     Yves: select the following payment method on the checkout and go next:    Invoice
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
-    Yves: go to the 'Home' page
-    Yves: login on Yves with provided credentials:    ${yves_second_user_email}
-    Yves: go to PDP of the product with sku:    ${bundled_product_3_concrete_sku}
-    Delete All Cookies
-    Yves: Add product to wishlist as guest user
-     [Teardown]    Zed: delete customer:
+    Yves: go to user menu item in header:    Overview
+    Yves: 'Overview' page is displayed
+    Yves: go to user menu item in header:    My Profile
+    Yves: 'Profile' page is displayed
+    Yves: assert customer profile data:
+    ...    || salutation    | first name               | last name               | email                            ||
+    ...    || ${salutation} | ${guest_user_first_name} | ${guest_user_last_name} | sonia+guest${random}@spryker.com ||
+    [Teardown]    Zed: delete customer:
     ...    || email                            ||
     ...    || sonia+guest${random}@spryker.com ||
+    ...    
+Glossary
+    [Documentation]    Create + edit glossary translation in BO
+    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: go to second navigation item level:    Administration    Glossary  
+    Zed: click button in Header:    Create Translation
+    Zed: fill glossary form:
+    ...    || Name                     | EN_US                        | DE_DE                             ||
+    ...    || cart.price.test${random} | This is a sample translation | Dies ist eine Beispielübersetzung ||
+    Zed: submit the form
+    Zed: table should contain:    cart.price.test${random}
+    Zed: go to second navigation item level:    Administration    Glossary 
+    Zed: click Action Button in a table for row that contains:    ${glossary_name}    Edit
+    Zed: fill glossary form:
+    ...    || DE_DE                    | EN_US                              ||
+    ...    || ${original_DE_text}-Test | ${original_EN_text}-Test-${random} ||
+    Zed: submit the form
+    Yves: login on Yves with provided credentials:    ${yves_second_user_email}
+    Yves: validate the page title:    ${original_EN_text}-Test-${random}
+    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: undo the changes in glossary translation:    ${glossary_name}     ${original_DE_text}    ${original_EN_text}
+    Yves: login on Yves with provided credentials:    ${yves_second_user_email}
+    Yves: validate the page title:    ${original_EN_text}
+    [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    ...    AND    Zed: undo the changes in glossary translation:    ${glossary_name}     ${original_DE_text}    ${original_EN_text}
