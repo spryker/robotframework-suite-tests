@@ -9,7 +9,7 @@ Resource    ../pages/yves/yves_order_details_page.robot
 *** Keywords ***
 Yves: go to 'Order History' page
     Yves: go to 'Customer Account' page
-    IF    '${env}' in ['b2b','mp_b2b']
+    IF    '${env}' in ['ui_b2b','ui_mp_b2b']
         Yves: go to user menu item in the left bar:    Order History
     ELSE
         Yves: go to user menu item in the left bar:    Orders History

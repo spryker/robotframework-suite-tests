@@ -6,6 +6,8 @@ Library    ../../resources/libraries/common.py
 Resource    common.robot
 Resource    ../pages/yves/yves_overview_page.robot
 Resource    ../pages/yves/yves_profile_page.robot
+Resource    ../pages/yves/yves_overview_page.robot
+Resource    ../pages/yves/yves_profile_page.robot
 Resource    ../pages/yves/yves_catalog_page.robot
 Resource    ../pages/yves/yves_product_details_page.robot
 Resource    ../pages/yves/yves_company_users_page.robot
@@ -15,7 +17,10 @@ Resource    ../pages/yves/yves_shopping_cart_page.robot
 Resource    ../pages/yves/yves_shopping_list_page.robot
 Resource    ../pages/yves/yves_checkout_success_page.robot
 Resource    ../pages/yves/yves_address_page.robot
+Resource    ../pages/yves/yves_address_page.robot
 Resource    ../pages/yves/yves_order_history_page.robot
+Resource    ../pages/yves/yves_returns_page.robot
+Resource    ../pages/yves/yves_newsletter_page.robot
 Resource    ../pages/yves/yves_returns_page.robot
 Resource    ../pages/yves/yves_newsletter_page.robot
 Resource    ../pages/yves/yves_order_details_page.robot
@@ -37,7 +42,7 @@ Yves: login on Yves with provided credentials:
     [Arguments]    ${email}    ${password}=${default_password}
     ${currentURL}=    Get Url
     IF    '/login' not in '${currentURL}'
-        IF    '${env}' in ['b2b','suite-nonsplit','mp_b2b']
+        IF    '${env}' in ['ui_b2b','ui_suite','ui_mp_b2b']
             ${currentURL}=    Get Location
                 IF    '.at.' in '${currentURL}'
                     Go To    ${host_at}
@@ -99,6 +104,8 @@ Yves: '${pageName}' page is displayed
     ...    ELSE IF    '${pageName}' == 'Login'    Page Should Contain Element    ${login_main_content_locator}    ${pageName} page is not displayed
     ...    ELSE IF    '${pageName}' == 'Overview'    Page Should Contain Element    ${overview_main_content_locator}[${env}]    ${pageName} page is not displayed
     ...    ELSE IF    '${pageName}' == 'Profile'    Page Should Contain Element    ${profile_main_content_locator}[${env}]    ${pageName} page is not displayed
+    ...    ELSE IF    '${pageName}' == 'Overview'    Page Should Contain Element    ${overview_main_content_locator}    ${pageName} page is not displayed
+    ...    ELSE IF    '${pageName}' == 'Profile'    Page Should Contain Element    ${profile_main_content_locator}    ${pageName} page is not displayed
     ...    ELSE IF    '${pageName}' == 'Shopping Lists'    Page Should Contain Element    ${shopping_lists_page_form_locator}    ${pageName} page is not displayed
     ...    ELSE IF    '${pageName}' == 'Shopping List'    Page Should Contain Element    ${shopping_list_main_content_locator}    ${pageName} page is not displayed
     ...    ELSE IF    '${pageName}' == 'Shopping Cart'    Page Should Contain Element    ${shopping_cart_main_content_locator}[${env}]    ${pageName} page is not displayed
@@ -120,6 +127,7 @@ Yves: '${pageName}' page is displayed
     ...    ELSE IF    '${pageName}' == 'Payment cancellation'    Page Should Contain Element    ${cancel_payment_page_main_container_locator}    ${pageName} page is not displayed
     ...    ELSE IF    '${pageName}' == 'Merchant Profile'    Page Should Contain Element    ${merchant_profile_main_content_locator}    ${pageName} page is not displayed
     ...    ELSE IF    '${pageName}' == 'Wishlist'    Page Should Contain Element    ${wishlist_main_content_locator}    ${pageName} page is not displayed
+    ...    ELSE        Fail    '${pageName}' page is not displayed or the page name is incorrect
     ...    ELSE        Fail    '${pageName}' page is not displayed or the page name is incorrect
 
 Yves: remove flash messages
@@ -160,9 +168,9 @@ Yves: go to AT store 'Home' page
 
 Yves: get the last placed order ID by current customer
     [Documentation]    Returns orderID of the last order from customer account
-    IF    '${env}'=='suite-nonsplit'    Yves: go to URL:    /customer/order
+    IF    '${env}'=='ui_suite'    Yves: go to URL:    /customer/order
     ${currentURL}=    Get Location
-    IF    '${env}' in ['b2b','mp_b2b']
+    IF    '${env}' in ['ui_b2b','ui_mp_b2b']
         Set Test Variable    ${menuItem}    Order History
     ELSE
         Set Test Variable    ${menuItem}    Orders History
@@ -256,7 +264,7 @@ Yves: go to second navigation item level:
 
 Yves: go to first navigation item level:
     [Arguments]     ${navigation_item_level1}
-    IF    '${env}' in ['b2b','mp_b2b']
+    IF    '${env}' in ['ui_b2b','ui_mp_b2b']
         Run keywords
             Wait Until Element Is Visible    xpath=//div[@class='header__navigation']//navigation-multilevel[@data-qa='component navigation-multilevel']/ul[@class='menu menu--lvl-0']//li[contains(@class,'menu__item--lvl-0')]/span/*[contains(@class,'lvl-0')][1][text()='${navigation_item_level1}']    AND
             Click Element by xpath with JavaScript    //div[@class='header__navigation']//navigation-multilevel[@data-qa='component navigation-multilevel']/ul[@class='menu menu--lvl-0']//li[contains(@class,'menu__item--lvl-0')]/span/*[contains(@class,'lvl-0')][1][text()='${navigation_item_level1}']
@@ -285,22 +293,22 @@ Yves: get index of the first available product
     ${productsCount}=    Get Element Count    xpath=//product-item[@data-qa='component product-item']
     Log    ${productsCount}
     FOR    ${index}    IN RANGE    1    ${productsCount}+1
-        ${status}=    IF    '${env}'=='b2b'    Run Keyword And Ignore Error     Page should contain element    xpath=//product-item[@data-qa='component product-item'][${index}]//*[@class='product-item__actions']//ajax-add-to-cart//button[@disabled='']
-        ...    ELSE IF    '${env}' in ['b2c','mp_b2c']    Run Keyword And Ignore Error    Page should contain element    xpath=//product-item[@data-qa='component product-item'][${index}]//ajax-add-to-cart//button    Add to cart button is missing    ${browser_timeout}
+        ${status}=    IF    '${env}'=='ui_b2b'    Run Keyword And Ignore Error     Page should contain element    xpath=//product-item[@data-qa='component product-item'][${index}]//*[@class='product-item__actions']//ajax-add-to-cart//button[@disabled='']
+        ...    ELSE IF    '${env}' in ['ui_b2c','ui_mp_b2c']    Run Keyword And Ignore Error    Page should contain element    xpath=//product-item[@data-qa='component product-item'][${index}]//ajax-add-to-cart//button    Add to cart button is missing    ${browser_timeout}
         Log    ${index}
-        ${pdp_url}=    IF    '${env}'=='b2b'    Get Element Attribute    xpath=//product-item[@data-qa='component product-item'][${index}]//a[@itemprop='url']    href
-        IF    'PASS' in ${status} and '${env}'=='b2b'    Continue For Loop
-        IF    'bundle' in '${pdp_url}' and '${env}'=='b2b'    Continue For Loop
-        IF    'FAIL' in ${status} and '${env}'=='b2b'
+        ${pdp_url}=    IF    '${env}'=='ui_b2b'    Get Element Attribute    xpath=//product-item[@data-qa='component product-item'][${index}]//a[@itemprop='url']    href
+        IF    'PASS' in ${status} and '${env}'=='ui_b2b'    Continue For Loop
+        IF    'bundle' in '${pdp_url}' and '${env}'=='ui_b2b'    Continue For Loop
+        IF    'FAIL' in ${status} and '${env}'=='ui_b2b'
             Run Keywords
                 Return From Keyword  ${index}
                 Log ${index}
                 Exit For Loop
         END
-        ${pdp_url}=    IF    '${env}' in ['b2c','mp_b2c']    Get Element Attribute    xpath=//product-item[@data-qa='component product-item'][${index}]//div[contains(@class,'product-item__image')]//a[contains(@class,'link-detail-page')]    href
-        IF    'FAIL' in ${status} and '${env}' in ['b2c','mp_b2c']    Continue For Loop
-        IF    'bundle' in '${pdp_url}' and '${env}' in ['b2c','mp_b2c']    Continue For Loop
-        IF    'PASS' in ${status} and '${env}' in ['b2c','mp_b2c']
+        ${pdp_url}=    IF    '${env}' in ['ui_b2c','ui_mp_b2c']    Get Element Attribute    xpath=//product-item[@data-qa='component product-item'][${index}]//div[contains(@class,'product-item__image')]//a[contains(@class,'link-detail-page')]    href
+        IF    'FAIL' in ${status} and '${env}' in ['ui_b2c','ui_mp_b2c']    Continue For Loop
+        IF    'bundle' in '${pdp_url}' and '${env}' in ['ui_b2c','ui_mp_b2c']    Continue For Loop
+        IF    'PASS' in ${status} and '${env}' in ['ui_b2c','ui_mp_b2c']
             Run Keywords
                 Return From Keyword    ${index}
                 Log ${index}
@@ -332,7 +340,7 @@ Yves: get index of the first available product on marketplace
         Return From Keyword    ${productIndex}
 
 Yves: go to the PDP of the first available product
-    IF    '${env}' in ['mp_b2b','mp_b2c']    
+    IF    '${env}' in ['ui_mp_b2b','ui_mp_b2c']    
         ${index}=    Yves: get index of the first available product on marketplace
     ELSE    
         ${index}=    Yves: get index of the first available product
@@ -390,7 +398,7 @@ Yves: page should contain script with id:
 
 Yves: validate the page title:
     [Arguments]    ${title}
-    IF    '${env}' in ['b2b','mp_b2b']
+    IF    '${env}' in ['ui_b2b','ui_mp_b2b']
         Yves: try reloading page if element is/not appear:    xpath=//h3[contains(text(),'${title}')]     True
     ELSE
         Yves: try reloading page if element is/not appear:    xpath=//h1[contains(@class,'title')][contains(text(),'${title}')]     True

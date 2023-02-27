@@ -7,24 +7,6 @@ Resource  ../../resources/pages/zed/zed_order_shipment_page.robot
 Resource  ../../resources/pages/zed/zed_order_details_page.robot
 
 *** Keywords ***
-Zed: Edit order shipment  Hover    ${view_order_last_placed}
-    Zed: click Action Button(without search) in a table for row that contains:    ${lastPlacedOrder}    View 
-    Click    ${edit_shipment_button}
-    Zed: Enter shipment details for order:
-        ...    ||  fname                             |  lname                   |  email                        |  address1            |  address2            |  city    |  zipcode      |  salutation  |  country  |  shipmentmethod  ||
-        ...    ||  ${yves_user_first_name}${random}  |  ${yves_user_last_name}  |  ${yves_user_email}${random}  |  address1+${random}  |  address2+${random}  |  Munich  |  11${random}  |  Ms          |  DE       |  1               ||      
-    Wait Until Element Is Visible    ${save_button_shipment_page}
-    Click    ${save_button_shipment_page}
-
-Zed: Create a new shipment for order
-    Zed: click Action Button(without search) in a table for row that contains:    ${lastPlacedOrder}    View 
-    Click    ${create_shipment_button}
-    Zed: Enter shipment details for order:         
-        ...    ||  fname                             |  lname                   |  email                        |  address1            |  address2            |  city    |  zipcode      |  salutation  |  country  |  shipmentmethod  ||
-        ...    ||  ${yves_user_first_name}${random}  |  ${yves_user_last_name}  |  ${yves_user_email}${random}  |  address1+${random}  |  address2+${random}  |  Berlin  |  11${random}  |  Mr          |  DE       |  2               ||  
-    Wait Until Element Is Visible    ${save_button_shipment_page}
-    Click    ${save_button_shipment_page}
-
 Zed: Enter shipment details for order: 
     [Arguments]    @{args}          
     ${registrationData}=    Set Up Keyword Arguments    @{args}

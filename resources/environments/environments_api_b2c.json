@@ -266,7 +266,8 @@
           "sku":"155_30149933",
           "name":"Lenovo IdeaPad Yoga 500",
           "name_in_lower_case":"lenovo ideapad yoga 500",
-          "promotional_items_sku":"112"
+          "promotional_items_sku":"112",
+          "promotional_items_sku1":"68"    
        },
        "abstract_product_with_alternative":{
           "sku":"155",
@@ -301,6 +302,7 @@
        },
        "product_availability":{
           "concrete_available_with_stock_and_never_out_of_stock_sku":"005_30663301",
+          "concrete_available_with_stock_and_never_out_of_stock_sku1":"004_30663302",
           "concrete_available_with_stock_and_never_out_of_stock_name":"Canon IXUS 175",
           "abstract_available_product_with_no_stock_and_never_out_of_stock":"154",
           "abstract_available_with_stock_and_never_out_of_stock":"209",
@@ -438,9 +440,20 @@
              "name_in_lower_case":"imprint",
              "url_en":"/en/imprint"
           },
+          "second_cms_page":{
+            "name":"Dolor sit amet",
+            "name_in_lower_case":"dolor sit amet",
+            "url_en":"/en/dolor"
+          },
+          "third_cms_page":{
+            "name":"Data Privacy",
+            "name_in_lower_case":"data privacy",
+            "url_en":"/en/privacy"
+          },
           "cms_page_with_product_lists":{
              "id":"10014bd9-4bba-5a54-b84f-31b4b7efd064",
-             "name":"Demo Landing Page"
+             "name":"Demo Landing Page",
+             "url":"/en/demo-landing-page"
           }
        },
        "category_collection_name":"Digital Cameras",
@@ -466,6 +479,8 @@
        "test_cart_name":"Test-cart",
        "qty_of_categories_in_category_trees":"6",
        "qty_of_subcategories_in_category_trees":"2",
+       "tax_rate":"19.00",
+       "tax_rate1":"19",
        "color_name":"black",
        "payment":{
           "provider_name":"DummyPayment",
@@ -486,6 +501,9 @@
           },
           "discount_2":{
              "name":"5% off white"
+          },
+          "discount_3":{
+          "id":"3"
           },
           "concrete":{
              "product_1":{
@@ -549,5 +567,8 @@
        "configurable_bundle_slot_6_uuid":"2a5e55b1-993a-5510-864c-a4a18558aa75",
        "configurable_bundle_template_name_1":"All in",
        "configured_bundle_quantity":2
-    }
+    },
+    "dataType":{
+       "array":[]
+      }
  }

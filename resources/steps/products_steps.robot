@@ -91,6 +91,17 @@ Zed: add following alternative products to the concrete:
     END
     Zed: submit the form
 
+Zed: concrete product has the following alternative products:
+    [Arguments]    @{alternative_products_list}
+    ${currentURL}=    Get Location
+    IF    'content-alternatives' not in '${currentURL}'    Zed: switch to the tab on 'Edit product' page:    Product Alternatives
+    ${alternative_products_list_count}=   get length  ${alternative_products_list}
+    FOR    ${index}    IN RANGE    0    ${alternative_products_list_count}
+        ${alternative_product_to_check}=    Get From List    ${alternative_products_list}    ${index}
+        Wait Until Element Is Visible    xpath=//div[@id='tab-content-alternatives']//table/tbody
+        Table Should Contain    xpath=//div[@id='tab-content-alternatives']//table/tbody    ${alternative_product_to_check}
+    END
+
 Zed: switch to the tab on 'Edit product' page:
     [Arguments]    ${tabToUse}
     Click    xpath=//form[contains(@name,'form_edit')]/div[@class='tabs-container']/ul[contains(@class,'nav-tabs')]//a[@data-toggle='tab'][text()='${tabToUse}']
