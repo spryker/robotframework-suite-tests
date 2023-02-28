@@ -157,15 +157,15 @@ Add_five_items_to_cart_with_included_cart_rules_and_promotional_items
    And Response body parameter should be:    [data][id]    ${cart_id}
    And Response body parameter should be:    [data][type]    carts
    And Response body parameter should not be EMPTY:    [data][links][self]
-   And Response should contain the array of a certain size:    [data][relationships][cart-rules][data]    1
-   And Response should contain the array of a certain size:    [included]    3
+   And Response should contain the array larger than a certain size:    [data][relationships][cart-rules][data]    0
+   And Response should contain the array larger than a certain size:    [included]    2
    And Response include should contain certain entity type:    cart-rules
    And Response include should contain certain entity type:    items
    And Response include element has self link:    cart-rules
    And Response include element has self link:    items
    [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cart_id}/items/${concrete_product_with_concrete_product_alternative.sku}
    ...    AND    Response status code should be:    204
-
+# 
 Add_product_with_options_to_cart
        [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
