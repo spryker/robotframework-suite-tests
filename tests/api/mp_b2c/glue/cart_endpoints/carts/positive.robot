@@ -10,7 +10,8 @@ ENABLER
     
 #GET requests
 Get_cart_by_cart_id
-    [Documentation]    One time reseive o another time None.
+    [Documentation]    bug https://spryker.atlassian.net/browse/CC-26179
+    [Tags]    skip-due-to-issue 
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
     ...  AND    Find or create customer cart
@@ -21,12 +22,12 @@ Get_cart_by_cart_id
     And Response body parameter should be:    [data][attributes][priceMode]    ${mode.gross}
     And Response body parameter should be:    [data][attributes][currency]    ${currency.eur.code}
     And Response body parameter should be:    [data][attributes][store]    ${store.de}
-    And Response body parameter should be in:    [data][attributes][totals][expenseTotal]    0    None
-    And Response body parameter should be in:    [data][attributes][totals][discountTotal]   0    None
-    And Response body parameter should be in:    [data][attributes][totals][taxTotal]    0    None
-    And Response body parameter should be in:    [data][attributes][totals][subtotal]    0    None
-    And Response body parameter should be in:    [data][attributes][totals][grandTotal]    0    None
-    And Response body parameter should be in:    [data][attributes][totals][priceToPay]    0    None
+    And Response body parameter should be:    [data][attributes][totals][expenseTotal]    0
+    And Response body parameter should be:    [data][attributes][totals][discountTotal]   0
+    And Response body parameter should be:    [data][attributes][totals][taxTotal]    0 
+    And Response body parameter should be:    [data][attributes][totals][subtotal]    0 
+    And Response body parameter should be:    [data][attributes][totals][grandTotal]    0 
+    And Response body parameter should be:    [data][attributes][totals][priceToPay]    0
     And Response body has correct self link internal
 
 Get_cart_without_cart_id
