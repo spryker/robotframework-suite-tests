@@ -129,7 +129,8 @@ Share_Shopping_Carts
     Yves: 'Order Details' page is displayed
 
 Quick_Order
-    [Documentation]    Checks Quick Order, checkout and Reorder.
+    [Tags]    skip-due-to-issue
+    [Documentation]    Bug: CC-24140. Checks Quick Order, checkout and Reorder
     [Setup]    Run keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     ...    AND    Yves: delete all shopping carts
     ...    AND    Yves: create new 'Shopping Cart' with name:    quickOrderCart+${random}
@@ -563,7 +564,7 @@ Request_for_Quote
 
 Unique_URL
     [Tags]    skip-due-to-issue
-    [Documentation]    Fails due to Bug:CC-12380
+    [Documentation]    Bug: CC-12380.
     Yves: login on Yves with provided credentials:    ${yves_company_user_manager_and_buyer_email}
     Yves: create new 'Shopping Cart' with name:    externalCart+${random}
     Yves: go to PDP of the product with sku:    M90806
@@ -615,7 +616,8 @@ Unique_URL
 #     Yves: 'Order Details' page contains the following product title N times:    Presentation bundle    3
 
 Return_Management
-    [Documentation]    Checks OMS and that Yves user and in Zed main merchant can create/execute returns.
+    [Tags]    skip-due-to-issue
+    [Documentation]    Bug: CC-23550. Checks OMS and that Yves user and in Zed main merchant can create/execute returns.
     [Setup]    Run keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     ...    AND    Yves: create new 'Shopping Cart' with name:    returnCart+${random}
     Yves: go to PDP of the product with sku:    M90802
@@ -895,7 +897,8 @@ Content_Management
     ...    AND    Zed: click Action Button in a table for row that contains:    Test Page${random}    Deactivate
 
 Refunds
-    [Documentation]    Checks that refund can be created for an item and the whole order of merchant.
+    [Tags]    skip-due-to-issue
+    [Documentation]    Bug: CC-1720. Checks that refund can be created for an item and the whole order of merchant
     [Setup]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: deactivate following discounts from Overview page:    20% off storage    10% off minimum order
     ...    AND    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
@@ -1102,7 +1105,8 @@ Manage_Merchants_from_Backoffice
     ...    AND    Zed: click Action Button in a table for row that contains:     NewMerchantUpdated${random}     Deactivate
 
 Manage_Merchant_Users
-    [Documentation]    Checks that backoffice admin is able to create, activate, edit and delete merchant users.
+    [Tags]    skip-due-to-issue
+    [Documentation]    Bug: CC-23118. Checks that backoffice admin is able to create, activate, edit and delete merchant users
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Marketplace    Merchants
     Zed: click Action Button in a table for row that contains:     Office King     Edit
@@ -1366,7 +1370,7 @@ Merchant_Portal_Customer_Specific_Prices
 
 Search_for_Merchant_Offers_and_Products
     [Tags]    skip-due-to-issue
-    [Documentation]    Checks that through search customer is able to see the list of merchant's products and offers. Fails due to CC-17153
+    [Documentation]    Bug: CC-17153. Checks that through search customer is able to see the list of merchant's products and offers
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     Yves: perform search by:    Office King
     Yves: go to the PDP of the first available product on open catalog page
@@ -1530,7 +1534,7 @@ Merchant_Portal_Offer_Volume_Prices
 
 Merchant_Portal_My_Account
     [Tags]    skip-due-to-issue
-    [Documentation]    Bug: CC-23118. Checks that MU can edit personal data in MP.
+    [Documentation]    Bug: CC-23118. Checks that MU can edit personal data in MP
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Marketplace    Merchants
     Zed: click Action Button in a table for row that contains:     Oryx Merchant     Edit
@@ -1559,7 +1563,7 @@ Merchant_Portal_My_Account
     
 Merchant_Portal_Dashboard
     [Tags]    skip-due-to-issue
-    [Documentation]    Bug: CC-23118. Checks that merchant user is able to access the dashboard page.
+    [Documentation]    Bug: CC-23118. Checks that merchant user is able to access the dashboard page
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Marketplace    Merchants
     Zed: click Action Button in a table for row that contains:     Oryx Merchant     Edit
@@ -1648,7 +1652,7 @@ Merchant_Product_Offer_in_Backoffice
     ...    AND    Zed: click Action Button in a table for row that contains:     ViewProduct${random}     Deny
 
 Manage_Merchant_Product
-    [Documentation]    checks that MU and BO user can manage merchant abstract and concrete products + add new concrete product. Minor bug: CC-24408
+    [Documentation]    Checks that MU and BO user can manage merchant abstract and concrete products + add new concrete product
     MP: login on MP with provided credentials:    ${merchant_office_king_email}
     MP: open navigation menu tab:    Products    
     MP: click on create new entity button:    Create Product
@@ -1813,7 +1817,7 @@ Merchant_Product_Original_Price
 
 Checkout_Address_Management
     [Tags]    skip-due-to-issue
-    [Documentation]    Checks that user can change address during the checkout and save new into the address book. Bug:CC-24090
+    [Documentation]    Bug: CC-24090. Checks that user can change address during the checkout and save new into the address book
     [Setup]    Run Keywords    
     ...    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     ...    AND    Yves: delete all user addresses
@@ -2186,7 +2190,7 @@ Multistore_Product_Offer
     ...    AND    Zed: click Action Button in a table for row that contains:     multistoreSKU${random}     Deny
 
 Multistore_CMS
-    [Documentation]    check CMS multistore functionality
+    [Documentation]    Check CMS multistore functionality
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Content    Pages
     Zed: create a cms page and publish it:    Multistore Page${random}    multistore-page${random}    Multistore Page    Page text
@@ -2204,7 +2208,7 @@ Multistore_CMS
 
 Product_Availability_Calculation
     [Tags]    skip-due-to-issue
-    [Documentation]    check product availability + multistore. Bug: CC-24108
+    [Documentation]    Bug: CC-24108. Check product availability + multistore
     MP: login on MP with provided credentials:    ${merchant_spryker_email}
     MP: open navigation menu tab:    Products    
     MP: click on create new entity button:    Create Product
@@ -2533,7 +2537,7 @@ Comment_Management_in_the_Cart
 
 Comment_Management_in_Order
     [Tags]    skip-due-to-issue
-    [Documentation]    Add comments in Yves and check in Zed. Bug:CC-23306
+    [Documentation]    Bug: CC-23306. Add comments in Yves and check in Zed
     Yves: login on Yves with provided credentials:    ${yves_company_user_shared_permission_owner_email}
     Yves: create new 'Shopping Cart' with name:    comments+${random}
     Yves: go to PDP of the product with sku:    ${one_variant_product_abstract_sku}
