@@ -236,16 +236,13 @@
        },
        "discount_1":{
           "name":"10% off minimum order",
-          "name_1":"20% off cameras",
-          "description_1":"20% off all digital cameras in the store",
           "description":"Get a 10% discount on all orders above 100 EUR or 115 CHF",
           "total_sum_for_discounts_for_products_1_and_2":"3320"
        },
        "discount_2":{
           "name":"20% off cameras",
           "total_sum_for_discounts_for_products_1_2":"8300",
-          "description":"Get a 10% discount on all orders above 100 EUR or 115 CHF",
-          "description_2":"20% off all digital cameras in the store"
+          "description":"20% off all digital cameras in the store"
        },
        "discount_3":{
           "name":"Free standard delivery",
