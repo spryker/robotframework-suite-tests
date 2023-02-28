@@ -17,7 +17,7 @@ Get_banner_without_id
 
 Get_banner_with_wrong_content_id_type
     When I send a GET request:    /content-banners/${abstract_list.product_id}
-    Then Response status code should be:    422
+    Then Response status code should be:    ${422}
     And Response reason should be:    Unprocessable Content
     And Response should return error code:    2203
     And Response should return error message:    Content type is invalid.

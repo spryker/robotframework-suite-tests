@@ -237,7 +237,7 @@ Get_order_by_order_id_with_mode.net_&_chf_currency_&_express_shipment_method
     And Response body parameter should be:    [data][attributes][shipments][0][currencyIsoCode]    ${currency.chf.code}
 
 Get_order_by_order_id_with_split_shipment
-    [Documentation]   #bug https://spryker.atlassian.net/browse/CC-21273
+    [Documentation]   bug https://spryker.atlassian.net/browse/CC-21273
     [Tags]    skip-due-to-issue
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}

@@ -36,7 +36,7 @@ Share_shopping_cart_with_non_existing_permission_group
     ...    AND    I send a GET request:    /company-users
     ...    AND    Save value to a variable:    [data][0][id]    companyUserId
     When I send a POST request:    /carts/${cartId}/shared-carts    {"data":{"type":"shared-carts","attributes":{"idCompanyUser":"${companyUserId}","idCartPermissionGroup":3}}}
-    Then Response status code should be:    422
+    Then Response status code should be:    ${422}
     And Response should return error code:    2501
     And Response reason should be:    Unprocessable Content
     And Response should return error message:    Cart permission group not found.
@@ -126,7 +126,7 @@ Share_shopping_cart_with_incorrect_cart_permission_id
     ...    AND    I send a GET request:    /company-users
     ...    AND    Save value to a variable:    [data][0][id]    companyUserId
     When I send a POST request:    /carts/${cartId}/shared-carts    {"data":{"type":"shared-carts","attributes":{"idCompanyUser":"${companyUserId}","idCartPermissionGroup":3}}}
-    Then Response status code should be:    422
+    Then Response status code should be:    ${422}
     And Response should return error code:    2501
     And Response reason should be:    Unprocessable Content
     And Response should return error message:    Cart permission group not found.
@@ -184,7 +184,7 @@ Update_permissions_of_shared_shopping_cart_with_incorrect_permission_group
     ...    AND    I send a POST request:    /carts/${cartId}/shared-carts    {"data":{"type":"shared-carts","attributes":{"idCompanyUser":"${companyUserId}","idCartPermissionGroup":2}}}
     ...    AND    Save value to a variable:    [data][id]    sharedCardId
     When I send a PATCH request:    /shared-carts/${sharedCardId}    {"data":{"type":"shared-carts","attributes":{"idCartPermissionGroup":3}}}
-    Then Response status code should be:    422
+    Then Response status code should be:    ${422}
     And Response should return error code:    2501
     And Response reason should be:    Unprocessable Content
     And Response should return error message:    Cart permission group not found.
@@ -221,7 +221,7 @@ Update_permissions_of_shared_shopping_cart_with_empty_permission_group_value
     ...    AND    I send a POST request:    /carts/${cartId}/shared-carts    {"data":{"type":"shared-carts","attributes":{"idCompanyUser":"${companyUserId}","idCartPermissionGroup":2}}}
     ...    AND    Save value to a variable:    [data][id]    sharedCardId
     When I send a PATCH request:    /shared-carts/${sharedCardId}    {"data":{"type":"shared-carts","attributes":{"idCartPermissionGroup":""}}}
-    Then Response status code should be:    422
+    Then Response status code should be:    ${422}
     And Response should return error code:    901
     And Response reason should be:    Unprocessable Content
     And Response should return error message:    idCartPermissionGroup => This value should not be blank.
@@ -241,7 +241,7 @@ Update_permissions_of_shared_shopping_cart_without_permission_group_attribute
     ...    AND    I send a POST request:    /carts/${cartId}/shared-carts    {"data":{"type":"shared-carts","attributes":{"idCompanyUser":"${companyUserId}","idCartPermissionGroup":2}}}
     ...    AND    Save value to a variable:    [data][id]    sharedCardId
     When I send a PATCH request:    /shared-carts/${sharedCardId}    {"data":{"type":"shared-carts","attributes":{}}}
-    Then Response status code should be:    422
+    Then Response status code should be:    ${422}
     And Response should return error code:    901
     And Response reason should be:    Unprocessable Content
     And Response should return error message:    idCartPermissionGroup => This field is missing.

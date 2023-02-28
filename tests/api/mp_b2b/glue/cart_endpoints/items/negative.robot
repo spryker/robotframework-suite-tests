@@ -15,7 +15,7 @@ Add_item_to_cart_non_existing_sku
     ...    AND    I send a POST request:    /carts    {"data":{"type":"carts","attributes":{"priceMode":"${mode.gross}","currency":"${currency.eur.code}","store":"${store.de}","name":"Cart-${random}"}}}
     ...    AND    Save value to a variable:    [data][id]    cart_uid
     When I send a POST request:    /carts/${cart_uid}/items    {"data": {"type": "items","attributes": {"sku": "fake","quantity": 1}}}
-    Then Response status code should be:    422
+    Then Response status code should be:    ${422}
     And Response reason should be:    Unprocessable Content
     And Response should return error code:    102
     And Response should return error message:    Product "fake" not found
@@ -74,7 +74,7 @@ Add_item_to_cart_with_missing_properties
     ...    AND    I send a POST request:    /carts    {"data":{"type":"carts","attributes":{"priceMode":"${mode.gross}","currency":"${currency.eur.code}","store":"${store.de}","name":"Cart-${random}"}}}
     ...    AND    Save value to a variable:    [data][id]    cart_uid
     When I send a POST request:    /carts/${cart_uid}/items    {"data": {"type": "items","attributes": {}}}
-    Then Response status code should be:    422
+    Then Response status code should be:    ${422}
     And Response reason should be:    Unprocessable Content
     And Response should return error code:    901
     And Array in response should contain property with value:    [errors]    detail    sku => This field is missing.
@@ -88,7 +88,7 @@ Add_item_to_cart_with_invalid_properties
     ...    AND    I send a POST request:    /carts    {"data":{"type":"carts","attributes":{"priceMode":"${mode.gross}","currency":"${currency.eur.code}","store":"${store.de}","name":"Cart-${random}"}}}
     ...    AND    Save value to a variable:    [data][id]    cart_uid
     When I send a POST request:    /carts/${cart_uid}/items    {"data": {"type": "items","attributes": {"sku": "","quantity": "" }}}
-    Then Response status code should be:    422
+    Then Response status code should be:    ${422}
     And Response reason should be:    Unprocessable Content
     And Response should return error code:    901
     And Array in response should contain property with value:    [errors]    detail    sku => This value should not be blank.
@@ -174,7 +174,7 @@ Update_item_without_changing_qty
     ...    AND    I send a POST request:    /carts/${cart_uid}/items?include=items    {"data": {"type": "items","attributes": {"sku": "${abstract_product.product_availability.concrete_available_with_stock_and_never_out_of_stock}","quantity": 1}}}
     ...    AND    Save value to a variable:    [included][0][id]    item_uid
     When I send a PATCH request:    /carts/${cart_uid}/items/${item_uid}    {"data": {"type": "items","attributes": {"quantity": 1}}}
-    Then Response status code should be:    422
+    Then Response status code should be:    ${422}
     And Response reason should be:    Unprocessable Content
     And Response should return error code:    114
     And Response should return error message:    Cart item could not be updated.
@@ -189,7 +189,7 @@ Update_item_with_invalid_parameters
     ...    AND    I send a POST request:    /carts/${cart_uid}/items?include=items    {"data": {"type": "items","attributes": {"sku": "${abstract_product.product_availability.concrete_available_with_stock_and_never_out_of_stock}","quantity": 1}}}
     ...    AND    Save value to a variable:    [included][0][id]    item_uid
     When I send a PATCH request:    /carts/${cart_uid}/items/${item_uid}    {"data": {"type": "items","attributes": {"quantity": ""}}}
-    Then Response status code should be:    422
+    Then Response status code should be:    ${422}
     And Response reason should be:    Unprocessable Content
     And Response should return error code:    901
     And Array in response should contain property with value:    [errors]    detail    quantity => This value should not be blank.
