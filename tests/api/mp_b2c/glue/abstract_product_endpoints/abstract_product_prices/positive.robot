@@ -63,9 +63,9 @@ Get_abstract_product_original_prices
     And Response body parameter should be:    [data][0][attributes][prices][0][grossAmount]    ${default_price}
     And Response body parameter should be:    [data][0][attributes][prices][1][priceTypeName]    ORIGINAL
     And Response body parameter should be greater than:    [data][0][attributes][prices][1][grossAmount]   ${default_price}
-    And Each array element of array in response should contain property with value:    [data][0][attributes][prices]    netAmount    None
+    And Each array element of array in response should contain property with value:    [data][0][attributes][prices]    netAmount    ${None}
     And Each array element of array in response should contain value:    [data][0][attributes][prices]    ${currency.eur.code}
     And Each array element of array in response should contain value:    [data][0][attributes][prices]    ${currency.eur.name}
     And Each array element of array in response should contain value:    [data][0][attributes][prices]    ${currency.eur.symbol}
-    And Each array element of array in response should contain property with value:    [data][0][attributes][prices]    volumePrices    []
+    And Each array element of array in response should contain property with value:    [data][0][attributes][prices]    volumePrices    ${array}
     And Response body has correct self link
