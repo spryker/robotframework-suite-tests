@@ -206,11 +206,11 @@ Discontinued_Alternative_Products
     Yves: get sku of the concrete product on PDP
     Yves: get sku of the abstract product on PDP
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    Zed: discontinue the following product:    ${got_abstract_product_sku}    ${got_concrete_product_sku}
+    Zed: discontinue the following product:    ${discontinued_product_abstract_sku}    ${discontinued_product_concrete_sku}
     Zed: product is successfully discontinued
     Zed: add following alternative products to the concrete:    M22613
     Zed: submit the form
-    [Teardown]    Zed: undo discontinue the following product:    ${got_abstract_product_sku}    ${got_concrete_product_sku}
+    [Teardown]    Zed: undo discontinue the following product:    ${discontinued_product_abstract_sku}    ${discontinued_product_concrete_sku}
 
 Measurement_Units
     [Documentation]    Checks checkout with Measurement Unit product
