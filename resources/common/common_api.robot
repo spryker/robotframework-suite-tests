@@ -21,6 +21,7 @@ ${default_db_host}         127.0.0.1
 ${default_db_name}         eu-docker
 ${default_db_password}     secret
 ${default_db_port}         3306
+${default_db_port_postgres}    5432
 ${default_db_user}         spryker
 ${default_db_engine}       pymysql
 ${db_engine}
@@ -1648,11 +1649,15 @@ Connect to Spryker DB
     ...    
     ...    with the example above you'll use PostgreSQL DB engine
     ${db_name}=    Set Variable If    '${db_name}' == '${EMPTY}'    ${default_db_name}    ${db_name}
-    ${db_user}=    Set Variable If    '${db_name}' == '${EMPTY}'    ${default_db_user}    ${db_user}
-    ${db_password}=    Set Variable If    '${db_name}' == '${EMPTY}'    ${default_db_password}    ${db_password}
-    ${db_host}=    Set Variable If    '${db_name}' == '${EMPTY}'    ${default_db_host}    ${db_host}
-    ${db_port}=    Set Variable If    '${db_name}' == '${EMPTY}'    ${default_db_port}    ${db_port}
+    ${db_user}=    Set Variable If    '${db_user}' == '${EMPTY}'    ${default_db_user}    ${db_user}
+    ${db_password}=    Set Variable If    '${db_password}' == '${EMPTY}'    ${default_db_password}    ${db_password}
+    ${db_host}=    Set Variable If    '${db_host}' == '${EMPTY}'    ${default_db_host}    ${db_host}
     ${db_engine}=    Set Variable If    '${db_engine}' == '${EMPTY}'    ${default_db_engine}    ${db_engine}
+    IF    '${db_engine}' == 'psycopg2'
+    ${db_port}=    Set Variable If    '${db_port_postgres}' == '${EMPTY}'    ${default_db_port_postgres}    ${db_port_postgres}
+    ELSE
+    ${db_port}=    Set Variable If    '${db_port}' == '${EMPTY}'    ${default_db_port}    ${db_port}
+    END
     Connect To Database    ${db_engine}    ${db_name}    ${db_user}    ${db_password}    ${db_host}    ${db_port}
 
 Get the first company user id and its' customer email

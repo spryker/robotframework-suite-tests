@@ -282,6 +282,8 @@ Yves: signup guest user during checkout:
     Check Checkbox  ${yves_checkout_signup_accept_terms}
     Click    ${yves_checkout_signup_tab}   
     
-Yves: Add product to wishlist as guest user
+Yves: try to add product to wishlist as guest user
+    Wait Until Element Is Visible    ${pdp_add_to_wishlist_button}
     Click    ${pdp_add_to_wishlist_button}
+    Sleep    1s
     Wait Until Element Is Visible    ${email_field}
