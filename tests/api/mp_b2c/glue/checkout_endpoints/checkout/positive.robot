@@ -315,6 +315,8 @@ Create_order_with_free_shipping_discount
     And Response body parameter should contain:    [included][0][attributes][calculatedDiscounts]    quantity: 1
 
 Create_order_with_2_product_discounts
+    [Documentation]    bug https://spryker.atlassian.net/browse/CC-26185 different prices for products in Postgres and Maria
+    [Tags]    skip-due-to-issue
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
     ...  AND    Find or create customer cart
