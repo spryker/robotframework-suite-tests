@@ -75,10 +75,10 @@ Create_a_product_review_with_empty_fields
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     When I send a POST request:    /abstract-products/${abstract_product.product_with_reviews.sku}/product-reviews    {"data": {"type": "product-reviews","attributes": {"rating": "","nickname": "","summary": "","description": ""}}}
-    Then Response status code should be:    422
+    Then Response status code should be:    ${422}
     And Response reason should be:    Unprocessable Content
     And Each array element of array in response should contain property with value:    [errors]    code    901
-    And Each array element of array in response should contain property with value:    [errors]    status    422
+    And Each array element of array in response should contain property with value:    [errors]    status    ${422}
     And Array in response should contain property with value:    [errors]    detail    rating => This value should be of type numeric.
     And Array in response should contain property with value:    [errors]    detail    rating => This value should be greater than or equal to 1.
     And Array in response should contain property with value:    [errors]    detail    summary => This value should not be blank.
