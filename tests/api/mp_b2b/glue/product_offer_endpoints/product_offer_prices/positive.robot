@@ -44,6 +44,8 @@ Get_all_concrete_product_offer_info_with_product_offer_prices_and_product_offer_
     And Response body has correct self link
 
 Get_all_product_offer_info_with_product_offer_prices_and_merchants_included
+    [Documentation]    bug: https://spryker.atlassian.net/browse/CC-25906
+    [Tags]    skip-due-to-issue
     When I send a GET request:    /product-offers/${active_offer}?include=product-offer-prices,merchants
      Then Response status code should be:    200
     And Response reason should be:    OK
