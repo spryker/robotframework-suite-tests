@@ -806,7 +806,7 @@ Discounts
 
 Back_in_Stock_Notification
     [Tags]    skip-due-to-issue
-    [Documentation]    Back in stock notification is sent and availability check
+    [Documentation]    Bug: CC-26192. Back in stock notification is sent and availability check
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Catalog    Availability
     Zed: check if product is/not in stock:    ${stock_product_abstract_sku}    true
