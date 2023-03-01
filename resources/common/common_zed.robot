@@ -80,7 +80,7 @@ Zed: wait for button in Header to be visible:
 Zed: click Action Button in a table for row that contains:
     [Arguments]    ${row_content}    ${zed_table_action_button_locator}
     Zed: perform search by:    ${row_content}
-    wait until element is visible    xpath=(//table[contains(@class,'dataTable')]/tbody//td[contains(text(),'${row_content}')]/../td[contains(@class,'column-Action') or contains(@class,'column-action')]/*[contains(.,'${zed_table_action_button_locator}')])[1]
+    Wait until element is visible    xpath=(//table[contains(@class,'dataTable')]/tbody//td[contains(text(),'${row_content}')]/../td[contains(@class,'column-Action') or contains(@class,'column-action')]/*[contains(.,'${zed_table_action_button_locator}')])[1]
     Click    xpath=(//table[contains(@class,'dataTable')]/tbody//td[contains(text(),'${row_content}')]/../td[contains(@class,'column-Action') or contains(@class,'column-action')]/*[contains(.,'${zed_table_action_button_locator}')])[1]
 
 Zed: click Action Button in Variant table for row that contains:
