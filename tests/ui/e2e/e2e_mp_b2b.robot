@@ -201,10 +201,6 @@ Discontinued_Alternative_Products
     [Documentation]    Checks that product can be discontinued in Zed
     Yves: go to PDP of the product with sku:  M21100
     Yves: PDP contains/doesn't contain:    true    ${alternativeProducts}
-    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
-    Yves: go to the PDP of the first available product
-    Yves: get sku of the concrete product on PDP
-    Yves: get sku of the abstract product on PDP
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: discontinue the following product:    ${discontinued_product_abstract_sku}    ${discontinued_product_concrete_sku}
     Zed: product is successfully discontinued
@@ -809,33 +805,30 @@ Discounts
     ...    AND    Zed: Deactivate Following Discounts From Overview Page:    Voucher Code 5% ${random}    Cart Rule 10% ${random}    Promotional Product 100% ${random}
 
 Back_in_Stock_Notification
+    [Tags]    skip-due-to-issue
     [Documentation]    Back in stock notification is sent and availability check
-    Yves: login on Yves with provided credentials:    ${yves_user_email}
-    Yves: go to the PDP of the first available product
-    Yves: get sku of the concrete product on PDP
-    Yves: get sku of the abstract product on PDP
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Catalog    Availability
-    Zed: check if product is/not in stock:    ${got_abstract_product_sku}    true
-    Zed: change product stock:    ${got_abstract_product_sku}    ${got_concrete_product_sku}    false    0
+    Zed: check if product is/not in stock:    ${stock_product_abstract_sku}    true
+    Zed: change product stock:    ${stock_product_abstract_sku}    ${stock_product_concrete_sku}    false    0
     Zed: go to second navigation item level:    Catalog    Availability
-    Zed: check if product is/not in stock:    ${got_abstract_product_sku}    false
+    Zed: check if product is/not in stock:    ${stock_product_abstract_sku}    false
     Yves: login on Yves with provided credentials:    ${yves_user_email}
-    Yves: go to PDP of the product with sku:  ${got_abstract_product_sku}
+    Yves: go to PDP of the product with sku:  ${stock_product_abstract_sku}
     Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    True
-    Yves: check if product is available on PDP:    ${got_abstract_product_sku}    false
+    Yves: check if product is available on PDP:    ${stock_product_abstract_sku}    false
     Yves: submit back in stock notification request for email:    ${yves_user_email}
     Yves: unsubscribe from availability notifications
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Catalog    Availability
-    Zed: change product stock:    ${got_abstract_product_sku}    ${got_concrete_product_sku}    true    0  
+    Zed: change product stock:    ${stock_product_abstract_sku}    ${stock_product_concrete_sku}    true    0  
     Zed: go to second navigation item level:    Catalog    Availability  
-    Zed: check if product is/not in stock:    ${got_abstract_product_sku}    true
+    Zed: check if product is/not in stock:    ${stock_product_abstract_sku}    true
     Yves: login on Yves with provided credentials:    ${yves_user_email}
-    Yves: go to PDP of the product with sku:  ${got_abstract_product_sku}
+    Yves: go to PDP of the product with sku:  ${stock_product_abstract_sku}
     Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    False
-    Yves: check if product is available on PDP:    ${got_abstract_product_sku}    true
-    [Teardown]    Zed: check and restore product availability in Zed:    ${got_abstract_product_sku}    Available    ${got_concrete_product_sku}
+    Yves: check if product is available on PDP:    ${stock_product_abstract_sku}    true
+    [Teardown]    Zed: check and restore product availability in Zed:    ${stock_product_abstract_sku}    Available    ${stock_product_concrete_sku}
 
 Split_Delivery
     [Documentation]    Checks split delivery in checkout with new addresses

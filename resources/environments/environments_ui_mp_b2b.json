@@ -93,6 +93,8 @@
        "product_with_relations_upselling_sku":"M29502",
        "volume_prices_product_abstract_sku":"M21189",
        "volume_prices_product_concrete_sku":"420685",
+       "stock_product_abstract_sku": "M72935",
+       "stock_product_concrete_sku": "103907",
        "discontinued_product_abstract_sku": "M5108",
        "discontinued_product_concrete_sku": "400065"
     }
