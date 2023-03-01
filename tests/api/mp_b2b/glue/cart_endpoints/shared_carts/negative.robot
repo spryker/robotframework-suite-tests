@@ -255,10 +255,9 @@ Add_an_item_to_the_shared_shopping_cart_by_user_without_access
     ...    AND    I set Headers:    Authorization=${token}  
     ...    AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
     ...    AND    Save value to a variable:    [data][id]    cartId
-    ...    AND    I send a GET request:    /company-users
-    ...    AND    Save value to a variable:    [data][0][id]    companyUserId
+    ...    AND    Get the first company user id and its' customer email
     ...    AND    I send a POST request:    /carts/${cartId}/shared-carts    {"data":{"type":"shared-carts","attributes":{"idCompanyUser":"${companyUserId}","idCartPermissionGroup":1}}}
-    ...    AND    I get access token for the customer:    ${yves_shared_shopping_cart_user.email}
+    ...    AND    I get access token for the customer:    ${companyUserEmail}
     ...    AND    I set Headers:    Authorization=${token}
     When I send a POST request:    /carts/${cartId}/items    {"data":{"type":"items","attributes":{"sku":"${abstract_available_product_with_stock.concrete_available_product.sku}","quantity":1}}}
     Then Response status code should be:    403
@@ -279,11 +278,10 @@ Update_an_item_quantity_at_the_shared_shopping_cart_by_user_without_access
     ...    AND    Save value to a variable:    [data][id]    cartId
     ...    AND    I send a POST request:    /carts/${cartId}/items    {"data":{"type":"items","attributes":{"sku":"${abstract_available_product_with_stock.concrete_available_product.sku}","quantity":1}}}
     ...    AND    Response status code should be:    201
-    ...    AND    I send a GET request:    /company-users
-    ...    AND    Save value to a variable:    [data][0][id]    companyUserId
+    ...    AND    Get the first company user id and its' customer email
     ...    AND    I send a POST request:    /carts/${cartId}/shared-carts    {"data":{"type":"shared-carts","attributes":{"idCompanyUser":"${companyUserId}","idCartPermissionGroup":1}}}
     ...    AND    Response status code should be:    201
-    ...    AND    I get access token for the customer:    ${yves_shared_shopping_cart_user.email}
+    ...    AND    I get access token for the customer:    ${companyUserEmail}
     ...    AND    I set Headers:    Authorization=${token}
     When I send a PATCH request:    /carts/${cartId}/items/${abstract_available_product_with_stock.concrete_available_product.sku}    {"data":{"type":"items","attributes":{"quantity":2}}}
     Then Response status code should be:    403
@@ -303,11 +301,10 @@ Remove_an_item_from_the_shared_shopping_cart_by_user_without_access
     ...    AND    Save value to a variable:    [data][id]    cartId
     ...    AND    I send a POST request:    /carts/${cartId}/items    {"data":{"type":"items","attributes":{"sku":"${abstract_available_product_with_stock.concrete_available_product.sku}","quantity":1}}}
     ...    AND    Response status code should be:    201
-    ...    AND    I send a GET request:    /company-users
-    ...    AND    Save value to a variable:    [data][0][id]    companyUserId
+    ...    AND    Get the first company user id and its' customer email
     ...    AND    I send a POST request:    /carts/${cartId}/shared-carts    {"data":{"type":"shared-carts","attributes":{"idCompanyUser":"${companyUserId}","idCartPermissionGroup":1}}}
     ...    AND    Response status code should be:    201
-    ...    AND    I get access token for the customer:    ${yves_shared_shopping_cart_user.email}
+    ...    AND    I get access token for the customer:    ${companyUserEmail}
     ...    AND    I set Headers:    Authorization=${token}
     When I send a DELETE request:    /carts/${cartId}/items/${abstract_available_product_with_stock.concrete_available_product.sku}
     Then Response status code should be:    403
