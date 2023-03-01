@@ -449,6 +449,8 @@
           "product_availability":{
              "abstract_available_with_stock_and_never_out_of_stock":"M87",
              "concrete_available_with_stock_and_never_out_of_stock":"657716",
+             "abstract_available_with_stock_and_never_out_of_stock1":"M24632",
+             "concrete_available_with_stock_and_never_out_of_stock1":"426615",
              "concrete_available_with_stock_and_never_out_of_stock_name":"FRIWA stackable chair - with closed back",
              "abstract_available_product_with_no_stock_and_never_out_of_stock":"M90851",
              "abstract_unavailable_product":"M22432",
