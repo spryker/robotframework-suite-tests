@@ -10,8 +10,6 @@ ENABLER
     
 ####POST####
 Create_a_return
-    [Documentation]   task https://spryker.atlassian.net/browse/CC-23304
-    [Tags]    skip-due-to-issue
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
     ...  AND    Cleanup all customer carts
@@ -26,7 +24,7 @@ Create_a_return
     ...  AND    Save value to a variable:    [data][attributes][orderReference]    order_reference
     ...  AND    Save value to a variable:    [included][0][attributes][items][0][uuid]    uuid
     ...  AND    Save value to a variable:    [included][0][attributes][items][0][refundableAmount]    refundable_amount
-    ...  AND    Update order status in Database:    paid    ${uuid}
+    ...  AND    Create merchant order for the item in DB and change status:    shipped   ${uuid}    ${merchants.merchant_spryker_id}
     ...  AND    Update order status in Database:    shipped by merchant    ${uuid}
     ...  AND    Run Keyword And Ignore Error    I send a POST request:    /returns     {"data":{"type":"returns","attributes":{"store":"${store.de}","returnItems":[{"salesOrderItemUuid":"${uuid}","reason":"${return_reason_damaged}"}]}}}
     ### steps below just duplicate the order creation and status change. This is needed as we 'hack' the order status in the database. ###
@@ -40,7 +38,7 @@ Create_a_return
     ...  AND    Save value to a variable:    [data][attributes][orderReference]    order_reference
     ...  AND    Save value to a variable:    [included][0][attributes][items][0][uuid]    uuid
     ...  AND    Save value to a variable:    [included][0][attributes][items][0][refundableAmount]    refundable_amount
-    ...  AND    Update order status in Database:    paid    ${uuid}
+    ...  AND    Create merchant order for the item in DB and change status:    shipped   ${uuid}    ${merchants.merchant_spryker_id}
     ...  AND    Update order status in Database:    shipped by merchant    ${uuid}
     When I send a POST request:    /returns     {"data":{"type":"returns","attributes":{"store":"${store.de}","returnItems":[{"salesOrderItemUuid":"${uuid}","reason":"${return_reason_damaged}"}]}}}
     And Save value to a variable:    [data][id]    returnId
@@ -52,8 +50,9 @@ Create_a_return
     And Response body parameter should be:    [data][attributes][customerReference]    ${yves_user.reference}
     And Response body parameter should be:    [data][attributes][returnTotals][remunerationTotal]    ${refundable_amount}
     And Response body has correct self link for created entity:    ${returnId}
+
 Create_a_return_with_return_items
-    [Documentation]   #task https://spryker.atlassian.net/browse/CC-23304
+    [Documentation]    incorrect self link https://spryker.atlassian.net/browse/CC-26186
     [Tags]    skip-due-to-issue
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
@@ -64,15 +63,15 @@ Create_a_return_with_return_items
     ...  AND    Save value to a variable:    [included][0][attributes][items][0][uuid]    uuid
     ...  AND    Save value to a variable:    [data][attributes][orderReference]    order_reference
     ...  AND    Save value to a variable:    [included][0][attributes][items][0][refundableAmount]    refundable_amount
-    ...  AND    Update order status in Database:    shipped    ${uuid}   
-
-    When I send a POST request:     /returns?include=return-items     {"data":{"type":"returns","attributes":{"store":"${store.de}","returnItems":[{"salesOrderItemUuid":"${Uuid}","reason":"${return_reason_damaged}"}]}}}
+    ...  AND    Create merchant order for the item in DB and change status:    shipped   ${uuid}    ${merchants.merchant_spryker_id}
+    ...  AND    Update order status in Database:    shipped by merchant    ${uuid} 
+    When I send a POST request:     /returns?include=return-items     {"data":{"type":"returns","attributes":{"store":"${store.de}","returnItems":[{"salesOrderItemUuid":"${uuid}","reason":"${return_reason_damaged}"}]}}}
     Then Response status code should be:     201
     And Response reason should be:     Created
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response body parameter should be:    [data][type]    returns
     And Response body parameter should be:    [data][attributes][merchantReference]    ${merchants.computer_experts.merchant_id}
-    And Response body parameter should be:    [data][id]    ${order_reference}
+    And Response body parameter should contain:    [data]    id
     And Response body parameter should be:    [data][attributes][store]    ${store.de}
     And Response body parameter should be:    [data][attributes][customerReference]    ${yves_user.reference}
     And Response body parameter should be:    [data][attributes][returnTotals][refundTotal]    0
@@ -86,15 +85,12 @@ Create_a_return_with_return_items
     And Response body parameter should contain:    [data][relationships][return-items][data]    id
     And Response body parameter should not be EMPTY:    [included]  
     And Response include should contain certain entity type:    return-items
-    And Response body parameter should be:    [included][0][attributes][uuid]    ${Uuid}
+    And Response body parameter should be:    [included][0][attributes][orderItemUuid]    ${uuid}
     And Response body parameter should be:    [included][0][attributes][reason]    ${return_reason_damaged}
     And Response body has correct self link
 
-
 ####GET####
 Retrieves_list_of_returns
-    [Documentation]   #task https://spryker.atlassian.net/browse/CC-23304
-    [Tags]    skip-due-to-issue
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
     ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
@@ -104,7 +100,8 @@ Retrieves_list_of_returns
     ...  AND    Save value to a variable:    [included][0][attributes][items][0][uuid]    uuid
     ...  AND    Save value to a variable:    [data][attributes][orderReference]    order_reference
     ...  AND    Save value to a variable:    [included][0][attributes][items][0][refundableAmount]    refundable_amount
-    ...  AND    Update order status in Database:    shipped    ${uuid}   
+    ...  AND    Create merchant order for the item in DB and change status:    shipped   ${uuid}    ${merchants.merchant_spryker_id}
+    ...  AND    Update order status in Database:    shipped by merchant    ${uuid} 
     ...  AND    I send a POST request:     /returns     {"data":{"type":"returns","attributes":{"store":"${store.de}","returnItems":[{"salesOrderItemUuid":"${Uuid}","reason":"${return_reason_damaged}"}]}}}
     When I send a GET request:     /returns
     Then Response status code should be:     200
@@ -123,8 +120,6 @@ Retrieves_list_of_returns
     And Response body has correct self link
     
 Retrieves_list_of_returns_included_return_items
-    [Documentation]   #task https://spryker.atlassian.net/browse/CC-23304
-    [Tags]    skip-due-to-issue
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
     ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
@@ -134,7 +129,8 @@ Retrieves_list_of_returns_included_return_items
     ...  AND    Save value to a variable:    [included][0][attributes][items][0][uuid]    uuid
     ...  AND    Save value to a variable:    [data][attributes][orderReference]    order_reference
     ...  AND    Save value to a variable:    [included][0][attributes][items][0][refundableAmount]    refundable_amount
-    ...  AND    Update order status in Database:    shipped    ${uuid}   
+    ...  AND    Create merchant order for the item in DB and change status:    shipped   ${uuid}    ${merchants.merchant_spryker_id}
+    ...  AND    Update order status in Database:    shipped by merchant    ${uuid} 
     ...  AND    I send a POST request:     /returns     {"data":{"type":"returns","attributes":{"store":"${store.de}","returnItems":[{"salesOrderItemUuid":"${Uuid}","reason":"${return_reason_damaged}"}]}}}
     When I send a GET request:     /returns?include=return-items
     Then Response status code should be:     200
@@ -158,13 +154,11 @@ Retrieves_list_of_returns_included_return_items
     And Each array element of array in response should contain nested property with value:    [data]    [relationships][return-items][data][0][type]    return-items
     And Response include element has self link:    return-items
     And Response include should contain certain entity type:    return-items
-    And Response body parameter should be:    [included][0][attributes][uuid]    ${Uuid}
+    And Response body parameter should be:    [included][0][attributes][orderItemUuid]    ${uuid}
     And Response body parameter should be:    [included][0][attributes][reason]    ${return_reason_damaged}
     And Response body has correct self link
 
 Retrieves_list_of_returns_included_merchants
-    [Documentation]   #task https://spryker.atlassian.net/browse/CC-23304
-    [Tags]    skip-due-to-issue
   [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
     ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
@@ -174,7 +168,8 @@ Retrieves_list_of_returns_included_merchants
     ...  AND    Save value to a variable:    [included][0][attributes][items][0][uuid]    uuid
     ...  AND    Save value to a variable:    [data][attributes][orderReference]    order_reference
     ...  AND    Save value to a variable:    [included][0][attributes][items][0][refundableAmount]    refundable_amount
-    ...  AND    Update order status in Database:    shipped    ${uuid}   
+    ...  AND    Create merchant order for the item in DB and change status:    shipped   ${uuid}    ${merchants.merchant_spryker_id}
+    ...  AND    Update order status in Database:    shipped by merchant    ${uuid} 
     ...  AND    I send a POST request:     /returns     {"data":{"type":"returns","attributes":{"store":"${store.de}","returnItems":[{"salesOrderItemUuid":"${Uuid}","reason":"${return_reason_damaged}"}]}}}
     When I send a GET request:     /returns?include=merchants
     Then Response status code should be:     200
@@ -201,9 +196,9 @@ Retrieves_list_of_returns_included_merchants
     And Response body has correct self link
 
 Retrieves_return_by_id_with_returns_items_included
-    [Documentation]   #task https://spryker.atlassian.net/browse/CC-23304
-    [Tags]    skip-due-to-issue
-  [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
+   [Documentation]    incorrect self link https://spryker.atlassian.net/browse/CC-26186
+   [Tags]    skip-due-to-issue
+   [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
     ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
     ...  AND    Save value to a variable:    [data][id]    cart_id
@@ -211,7 +206,8 @@ Retrieves_return_by_id_with_returns_items_included
     ...  AND    I send a POST request:    /checkout?include=orders    {"data": {"type": "checkout","attributes": {"customer": {"email": "${yves_user.email}","salutation": "${yves_user.salutation}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}"},"idCart": "${cart_id}","billingAddress": {"salutation": "${yves_user.salutation}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}","address1": "${default.address1}","address2": "${default.address2}","address3": "${default.address3}","zipCode": "${default.zipCode}","city": "${default.city}","iso2Code": "${default.iso2Code}","company": "${default.company}","phone": "${default.phone}","isDefaultBilling": False,"isDefaultShipping": False},"shippingAddress": {"salutation": "${yves_user.salutation}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}","address1": "${default.address1}","address2": "${default.address2}","address3": "${default.address3}","zipCode": "${default.zipCode}","city": "${default.city}","iso2Code": "${default.iso2Code}","company": "${default.company}","phone": "${default.phone}","isDefaultBilling": False,"isDefaultShipping": False},"payments": [{"paymentProviderName": "${payment.provider_name}","paymentMethodName": "${payment.method_name}","paymentSelection": "${payment.selection_name}"}],"shipment": {"idShipmentMethod": 1},"items": ["${merchants.computer_experts.concrete_product_with_offer_sku}"]}}}
     ...  AND    Save value to a variable:    [included][0][attributes][items][0][uuid]    uuid
     ...  AND    Save value to a variable:    [included][0][attributes][items][0][refundableAmount]    refundable_amount
-    ...  AND    Update order status in Database:    shipped    ${uuid}   
+    ...  AND    Create merchant order for the item in DB and change status:    shipped   ${uuid}    ${merchants.merchant_spryker_id}
+    ...  AND    Update order status in Database:    shipped by merchant    ${uuid} 
     ...  AND    I send a POST request:     /returns     {"data":{"type":"returns","attributes":{"store":"${store.de}","returnItems":[{"salesOrderItemUuid":"${Uuid}","reason":"${return_reason_damaged}"}]}}}
     ...  AND    Save value to a variable:    [data][id]    returnId
     When I send a GET request:    /returns/${returnId}?include=return-items
@@ -243,8 +239,6 @@ Retrieves_return_by_id_with_returns_items_included
     And Response body has correct self link
 
 Retrieves_return_by_id_for_sales_order
-    [Documentation]   #task https://spryker.atlassian.net/browse/CC-23304
-    [Tags]    skip-due-to-issue
   [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
     ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
@@ -253,7 +247,8 @@ Retrieves_return_by_id_for_sales_order
     ...  AND    I send a POST request:    /checkout?include=orders    {"data": {"type": "checkout","attributes": {"customer": {"email": "${yves_user.email}","salutation": "${yves_user.salutation}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}"},"idCart": "${cart_id}","billingAddress": {"salutation": "${yves_user.salutation}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}","address1": "${default.address1}","address2": "${default.address2}","address3": "${default.address3}","zipCode": "${default.zipCode}","city": "${default.city}","iso2Code": "${default.iso2Code}","company": "${default.company}","phone": "${default.phone}","isDefaultBilling": False,"isDefaultShipping": False},"shippingAddress": {"salutation": "${yves_user.salutation}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}","address1": "${default.address1}","address2": "${default.address2}","address3": "${default.address3}","zipCode": "${default.zipCode}","city": "${default.city}","iso2Code": "${default.iso2Code}","company": "${default.company}","phone": "${default.phone}","isDefaultBilling": False,"isDefaultShipping": False},"payments": [{"paymentProviderName": "${payment.provider_name}","paymentMethodName": "${payment.method_name}","paymentSelection": "${payment.selection_name}"}],"shipment": {"idShipmentMethod": 1},"items": ["${merchants.computer_experts.concrete_product_with_offer_sku}"]}}}
     ...  AND    Save value to a variable:    [included][0][attributes][items][0][uuid]    uuid
     ...  AND    Save value to a variable:    [included][0][attributes][items][0][refundableAmount]    refundable_amount
-    ...  AND    Update order status in Database:    shipped    ${uuid}   
+    ...  AND    Create merchant order for the item in DB and change status:    shipped   ${uuid}    ${merchants.merchant_spryker_id}
+    ...  AND    Update order status in Database:    shipped by merchant    ${uuid} 
     ...  AND    I send a POST request:     /returns     {"data":{"type":"returns","attributes":{"store":"${store.de}","returnItems":[{"salesOrderItemUuid":"${Uuid}","reason":"${return_reason_damaged}"}]}}}
     ...  AND    Save value to a variable:    [data][id]    returnId
     When I send a GET request:    /returns/${returnId}?include=return-items
@@ -269,8 +264,6 @@ Retrieves_return_by_id_for_sales_order
     And Response body parameter should be:    [data][attributes][returnTotals][remunerationTotal]    ${refundable_amount}
 
 Retrieves_return_by_id_with_merchants_included
-    [Documentation]   #task https://spryker.atlassian.net/browse/CC-23304
-    [Tags]    skip-due-to-issue
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
     ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
@@ -279,7 +272,8 @@ Retrieves_return_by_id_with_merchants_included
     ...  AND    I send a POST request:    /checkout?include=orders    {"data": {"type": "checkout","attributes": {"customer": {"email": "${yves_user.email}","salutation": "${yves_user.salutation}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}"},"idCart": "${cart_id}","billingAddress": {"salutation": "${yves_user.salutation}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}","address1": "${default.address1}","address2": "${default.address2}","address3": "${default.address3}","zipCode": "${default.zipCode}","city": "${default.city}","iso2Code": "${default.iso2Code}","company": "${default.company}","phone": "${default.phone}","isDefaultBilling": False,"isDefaultShipping": False},"shippingAddress": {"salutation": "${yves_user.salutation}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}","address1": "${default.address1}","address2": "${default.address2}","address3": "${default.address3}","zipCode": "${default.zipCode}","city": "${default.city}","iso2Code": "${default.iso2Code}","company": "${default.company}","phone": "${default.phone}","isDefaultBilling": False,"isDefaultShipping": False},"payments": [{"paymentProviderName": "${payment.provider_name}","paymentMethodName": "${payment.method_name}","paymentSelection": "${payment.selection_name}"}],"shipment": {"idShipmentMethod": 1},"items": ["${merchants.computer_experts.concrete_product_with_offer_sku}"]}}}
     ...  AND    Save value to a variable:    [included][0][attributes][items][0][uuid]    uuid
     ...  AND    Save value to a variable:    [included][0][attributes][items][0][refundableAmount]    refundable_amount
-    ...  AND    Update order status in Database:    shipped    ${uuid}   
+    ...  AND    Create merchant order for the item in DB and change status:    shipped   ${uuid}    ${merchants.merchant_spryker_id}
+    ...  AND    Update order status in Database:    shipped by merchant    ${uuid} 
     ...  AND    I send a POST request:     /returns     {"data":{"type":"returns","attributes":{"store":"${store.de}","returnItems":[{"salesOrderItemUuid":"${Uuid}","reason":"${return_reason_damaged}"}]}}}
     ...  AND    Save value to a variable:    [data][id]    returnId
     When I send a GET request:    /returns/${returnId}?include=merchants
