@@ -889,8 +889,7 @@ Content_Management
     ...    AND    Zed: click Action Button in a table for row that contains:    Test Page${random}    Deactivate
 
 Refunds
-    [Tags]    skip-due-to-issue
-    [Documentation]    Bug: CC-1720. Checks that refund can be created for an item and the whole order of merchant
+    [Documentation]    Checks that refund can be created for an item and the whole order of merchant
     [Setup]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: deactivate following discounts from Overview page:    20% off storage    10% off minimum order
     ...    AND    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
@@ -918,7 +917,7 @@ Refunds
     Zed: go to my order page:    ${lastPlacedOrder}
     Zed: trigger matching state of xxx merchant's shipment:    1    send to distribution
     Zed: trigger matching state of xxx merchant's shipment:    1    confirm at center
-    Zed: trigger matching state of order item inside xxx shipment:    107254    Ship
+    Zed: trigger matching state of order item inside xxx shipment:    107254    ship
     Zed: trigger matching state of order item inside xxx shipment:    107254    deliver
     Zed: trigger matching state of order item inside xxx shipment:    107254    Refund
     Zed: grand total for the order equals:    ${lastPlacedOrder}    €1,559.56
