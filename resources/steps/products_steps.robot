@@ -91,6 +91,17 @@ Zed: add following alternative products to the concrete:
     END
     Zed: submit the form
 
+Zed: concrete product has the following alternative products:
+    [Arguments]    @{alternative_products_list}
+    ${currentURL}=    Get Location
+    IF    'content-alternatives' not in '${currentURL}'    Zed: switch to the tab on 'Edit product' page:    Product Alternatives
+    ${alternative_products_list_count}=   get length  ${alternative_products_list}
+    FOR    ${index}    IN RANGE    0    ${alternative_products_list_count}
+        ${alternative_product_to_check}=    Get From List    ${alternative_products_list}    ${index}
+        Wait Until Element Is Visible    xpath=//div[@id='tab-content-alternatives']//table/tbody
+        Table Should Contain    xpath=//div[@id='tab-content-alternatives']//table/tbody    ${alternative_product_to_check}
+    END
+
 Zed: switch to the tab on 'Edit product' page:
     [Arguments]    ${tabToUse}
     Click    xpath=//form[contains(@name,'form_edit')]/div[@class='tabs-container']/ul[contains(@class,'nav-tabs')]//a[@data-toggle='tab'][text()='${tabToUse}']
@@ -105,7 +116,7 @@ Zed: product is successfully discontinued
     Page Should Contain Element    ${zed_pdp_restore_button}
 
 Zed: view product page is displayed
-     Wait Until Element Is Visible    ${zed_view_abstract_product_main_content_locator}
+    Wait Until Element Is Visible    ${zed_view_abstract_product_main_content_locator}
 
 Zed: view abstract product page contains:
     [Arguments]    @{args}
@@ -127,7 +138,8 @@ Zed: view abstract product page contains:
             Element Should Contain    ${zed_view_abstract_product_name}[${env}]    ${value}
         END
         IF    '${key}'=='variants count' and '${value}' != '${EMPTY}'
-            Clear Text    xpath=//div[@id='product-variant-table_filter']//input[@type='search']    
+            Clear Text    xpath=//div[@id='product-variant-table_filter']//input[@type='search']
+            Sleep    1s
             ${actualVariantsCount}=    Get Element Count    xpath=//table[@id='product-variant-table']//tbody/tr
             Should Be Equal    '${actualVariantsCount}'    '${value}'
         END
@@ -475,3 +487,4 @@ Zed: add new concrete product to abstract:
         END
     END
     Click    ${zed_pdp_save_button}
+    Wait Until Element Is Visible    xpath=//div[@class='title-action']/a[contains(.,'Manage Attributes')]

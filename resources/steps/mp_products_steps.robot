@@ -26,7 +26,7 @@ MP: fill product price values:
         ELSE    
             Set Test Variable    ${rowNumber}    1
         END
-        IF    '${env}' in ['mp_b2b']
+        IF    '${env}' in ['ui_mp_b2b']
             IF    '${key}'=='customer' and '${value}' != '${EMPTY}'    Run Keywords
             ...    Click    xpath=//web-spy-card[@spy-title='Price']//tbody/tr[${rowNumber}]/td[1]//spy-select
             ...    AND    MP: select option in expanded dropdown:    ${value}
@@ -40,7 +40,7 @@ MP: fill product price values:
             IF    '${key}'=='gross original' and '${value}' != '${EMPTY}'    Type Text    xpath=//web-spy-card[@spy-title='Price']//tbody/tr[${rowNumber}]/td[7]//input    ${value}
             IF    '${key}'=='quantity' and '${value}' != '${EMPTY}'    Type Text    xpath=//web-spy-card[@spy-title='Price']//tbody/tr[${rowNumber}]/td[8]//input    ${value}
         END
-        IF    '${env}' in ['mp_b2c']
+        IF    '${env}' in ['ui_mp_b2c']
             IF    '${key}'=='store' and '${value}' != '${EMPTY}'    Run Keywords
             ...    Click    xpath=//web-spy-card[@spy-title='Price']//tbody/tr[${rowNumber}]/td[1]//spy-select
             ...    AND    MP: select option in expanded dropdown:    ${value}
@@ -178,14 +178,14 @@ MP: open concrete drawer by SKU:
 
 MP: delete product price row that contains quantity:
     [Arguments]    ${quantity}
-    IF    '${env}' in ['mp_b2b']
+    IF    '${env}' in ['ui_mp_b2b']
         Scroll Element Into View    xpath=//web-spy-card[@spy-title='Price']//tbody/tr/td[8][contains(.,'${quantity}')]/ancestor::tr//td[@class='ng-star-inserted']/div
         Hover    xpath=//web-spy-card[@spy-title='Price']//tbody/tr/td[8][contains(.,'${quantity}')]/ancestor::tr//td[@class='ng-star-inserted']/div
         Click    ${product_delete_price_row_button}
         Wait Until Element Is Visible    ${product_price_deleted_popup}
         Wait Until Element Is Not Visible    ${product_price_deleted_popup}
     END
-    IF    '${env}' in ['mp_b2c']
+    IF    '${env}' in ['ui_mp_b2c']
         Scroll Element Into View    xpath=//web-spy-card[@spy-title='Price']//tbody/tr/td[7][contains(.,'${quantity}')]/ancestor::tr//td[@class='ng-star-inserted']/div
         Hover    xpath=//web-spy-card[@spy-title='Price']//tbody/tr/td[7][contains(.,'${quantity}')]/ancestor::tr//td[@class='ng-star-inserted']/div
         Click    ${product_delete_price_row_button}
