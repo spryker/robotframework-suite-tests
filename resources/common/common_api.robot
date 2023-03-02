@@ -25,8 +25,8 @@ ${default_db_port_postgres}    5432
 ${default_db_user}         spryker
 ${default_db_engine}       pymysql
 ${db_engine}
-${bapi_cli}
-${glue_cli}
+${bapi_env}
+${glue_env}
 # ${default_db_engine}       psycopg2
 
 *** Keywords ***
@@ -72,7 +72,7 @@ TestSetup
     ...    ``Default Tags    bapi``
     FOR  ${tag}  IN  @{Test Tags}
     Log   ${tag}
-       IF    '${glue_cli}' == '${EMPTY}' '${bapi_cli}' == '${EMPTY}'
+       IF    '${glue_env}' == '${EMPTY}' '${bapi_env}' == '${EMPTY}'
         IF    '${tag}'=='bapi'    
             Set Suite Variable    ${current_url}    ${bapi_url}
             Set Suite Variable    ${tag}    bapi
@@ -82,10 +82,10 @@ TestSetup
         END
     ELSE
         IF    '${tag}'=='glue'   
-            Set Suite Variable    ${current_url}    ${glue_cli}
+            Set Suite Variable    ${current_url}    ${glue_env}
             Set Suite Variable    ${tag}    glue
         ELSE IF    '${tag}'=='bapi'    
-            Set Suite Variable    ${current_url}    ${bapi_cli}
+            Set Suite Variable    ${current_url}    ${bapi_env}
             Set Suite Variable    ${tag}    bapi
         END
     END
