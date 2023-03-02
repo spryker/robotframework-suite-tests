@@ -72,16 +72,16 @@ TestSetup
     ...    ``Default Tags    bapi``
     FOR  ${tag}  IN  @{Test Tags}
     Log   ${tag}
-    IF    '${glue_cli}' == '${EMPTY}' and '${bapi_cli}' == ${EMPTY}'
-        IF          '${tag}'=='glue'  
-            Set Suite Variable    ${current_url}    ${glue_url}
-            Set Suite Variable    ${tag}    glue
-        ELSE IF    '${tag}'=='bapi'    
+       IF    '${glue_cli}' == '${EMPTY}' '${bapi_cli}' == '${EMPTY}'
+        IF    '${tag}'=='bapi'    
             Set Suite Variable    ${current_url}    ${bapi_url}
             Set Suite Variable    ${tag}    bapi
+            ELSE IF    '${tag}'=='glue'    
+            Set Suite Variable    ${current_url}    ${glue_url}
+            Set Suite Variable    ${tag}    glue
         END
     ELSE
-        IF         '${tag}'=='glue'   
+        IF    '${tag}'=='glue'   
             Set Suite Variable    ${current_url}    ${glue_cli}
             Set Suite Variable    ${tag}    glue
         ELSE IF    '${tag}'=='bapi'    
@@ -89,28 +89,8 @@ TestSetup
             Set Suite Variable    ${tag}    bapi
         END
     END
-      Log    ${current_url}
-    
-    # IF    '${bapi_cli}' == '${EMPTY}'
-    #     IF    '${tag}'=='bapi'    
-    #         Set Suite Variable    ${current_url}    ${bapi_url}
-    #         Set Suite Variable    ${tag}    bapi
-    #         ELSE IF    '${tag}'=='glue'    
-    #         Set Suite Variable    ${current_url}    ${glue_url}
-    #         Set Suite Variable    ${tag}    glue
-    #     END
-    # ELSE
-    #     IF    '${tag}'=='glue'   
-    #         Set Suite Variable    ${current_url}    ${glue_url}
-    #         Set Suite Variable    ${tag}    glue
-    #         ELSE IF    '${tag}'=='bapi'    
-    #         Set Suite Variable    ${current_url}    ${bapi_cli}
-    #         Set Suite Variable    ${tag}    bapi
-    #     END
-    # END
-    # END
-    # END
-        # Log    ${current_url}
+    END
+        Log    ${current_url}
 
 Load Variables
     [Documentation]    Keyword is used to load variable values from the environment file passed during execution. This Keyword is used during suite setup.
