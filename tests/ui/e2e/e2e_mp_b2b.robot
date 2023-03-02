@@ -640,7 +640,7 @@ Return_Management
     Zed: go to my order page:    ${lastPlacedOrder}
     Zed: trigger matching state of xxx merchant's shipment:    1    send to distribution
     Zed: trigger matching state of xxx merchant's shipment:    1    confirm at center
-    Zed: trigger matching state of xxx merchant's shipment:    1    Ship   
+    Zed: trigger matching state of xxx merchant's shipment:    1    ship   
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     Yves: go to user menu item in header:    Order History
     Yves: 'Order History' page is displayed
@@ -924,7 +924,7 @@ Refunds
     Zed: trigger matching state of order item inside xxx shipment:    107254    Refund
     Zed: grand total for the order equals:    ${lastPlacedOrder}    €1,559.56
     Zed: go to my order page:    ${lastPlacedOrder}
-    Zed: trigger matching state of xxx merchant's shipment:    1    Ship
+    Zed: trigger matching state of xxx merchant's shipment:    1    ship
     Zed: trigger matching state of xxx merchant's shipment:    1    deliver
     Zed: trigger matching state of xxx merchant's shipment:    1    Refund
     Zed: grand total for the order equals:    ${lastPlacedOrder}    €0.00
