@@ -1303,7 +1303,7 @@ Fulfill_Order_from_Merchant_Portal
     MP: wait for order to appear:    ${lastPlacedOrder}--${merchant_office_king_reference}
     MP: click on a table row that contains:    ${lastPlacedOrder}--${merchant_office_king_reference}
     MP: order grand total should be:    €32.78
-    MP: update order state using header button:    Ship
+    MP: update order state using header button:    ship
     MP: order states on drawer should contain:    Shipped
     MP: switch to the tab:    Items
     MP: change order item state on:    423172    deliver
