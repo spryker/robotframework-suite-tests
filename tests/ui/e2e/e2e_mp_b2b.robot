@@ -612,8 +612,7 @@ Unique_URL
 #     Yves: 'Order Details' page contains the following product title N times:    Presentation bundle    3
 
 Return_Management
-    [Tags]    skip-due-to-issue
-    [Documentation]    Bug: CC-23550. Checks OMS and that Yves user and in Zed main merchant can create/execute returns.
+    [Documentation]    Checks OMS and that Yves user and in Zed main merchant can create/execute returns.
     [Setup]    Run keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     ...    AND    Yves: create new 'Shopping Cart' with name:    returnCart+${random}
     Yves: go to PDP of the product with sku:    M90802
