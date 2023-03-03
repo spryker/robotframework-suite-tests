@@ -25,6 +25,8 @@ ${default_db_port_postgres}    5432
 ${default_db_user}         spryker
 ${default_db_engine}       pymysql
 ${db_engine}
+${bapi_env}
+${glue_env}
 # ${default_db_engine}       psycopg2
 
 *** Keywords ***
@@ -70,15 +72,31 @@ TestSetup
     ...    ``Default Tags    bapi``
     FOR  ${tag}  IN  @{Test Tags}
     Log   ${tag}
-    IF    '${tag}'=='bapi'    
-        Set Suite Variable    ${current_url}    ${bapi_url}
-        Set Suite Variable    ${tag}    bapi
-        ELSE IF    '${tag}'=='glue'    
-        Set Suite Variable    ${current_url}    ${glue_url}
-        Set Suite Variable    ${tag}    glue
+    IF    '${glue_env}' == '${EMPTY}'
+        IF    '${tag}'=='glue'  
+            Set Suite Variable    ${current_url}    ${glue_url}
+            Set Suite Variable    ${tag}    glue
+        END
+    ELSE
+        IF    '${tag}'=='glue'   
+            Set Suite Variable    ${current_url}    ${glue_env}
+            Set Suite Variable    ${tag}    glue
+        END
+    END
+        IF    '${bapi_env}' == '${EMPTY}'
+        IF    '${tag}'=='bapi'  
+            Set Suite Variable    ${current_url}    ${bapi_url}
+            Set Suite Variable    ${tag}    bapi
+        END
+    ELSE
+        IF    '${tag}'=='bapi'  
+            Set Suite Variable    ${current_url}    ${bapi_env}
+            Set Suite Variable    ${tag}    bapi
+        END
     END
     END
-    Log    ${current_url}
+        Log    ${current_url}
+
 
 Load Variables
     [Documentation]    Keyword is used to load variable values from the environment file passed during execution. This Keyword is used during suite setup.
