@@ -9,8 +9,6 @@ ENABLER
     TestSetup
 
 Agent_can_get_customer_impersonation_token
-    [Documentation]    bug:https://spryker.atlassian.net/browse/CC-17010
-    [Tags]    skip-due-to-issue   
     [Setup]    Run Keywords    I send a POST request:    /agent-access-tokens    {"data": {"type": "agent-access-tokens","attributes": {"username": "${agent.email}","password": "${agent.password}"}}}
     ...    AND    Response status code should be:    201
     ...    AND    Save value to a variable:    [data][attributes][accessToken]    agent_token

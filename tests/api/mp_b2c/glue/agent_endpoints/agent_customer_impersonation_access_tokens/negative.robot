@@ -34,8 +34,6 @@ Agent_cannot_impersonate_customer_with_invalid_token
     
 
 Agent_cannot_impersonate_customer_with_wrong_type
-    [Documentation]    bug:https://spryker.atlassian.net/browse/CC-17010
-    [Tags]    skip-due-to-issue   
     [Setup]    Run Keywords    I send a POST request:    /agent-access-tokens    {"data": {"type": "agent-access-tokens","attributes": {"username": "${agent.email}","password": "${agent.password}"}}}
     ...    AND    Response status code should be:    201
     ...    AND    Save value to a variable:    [data][attributes][accessToken]    agent_token
@@ -46,8 +44,6 @@ Agent_cannot_impersonate_customer_with_wrong_type
     And Response should return error message:    Invalid type.
 
 Agent_cannot_impersonate_customer_with_invalid_customer_reference
-    [Documentation]    bug:https://spryker.atlassian.net/browse/CC-17010
-    [Tags]    skip-due-to-issue   
     [Setup]    Run Keywords    I send a POST request:    /agent-access-tokens    {"data": {"type": "agent-access-tokens","attributes": {"username": "${agent.email}","password": "${agent.password}"}}}
     ...    AND    Response status code should be:    201
     ...    AND    Save value to a variable:    [data][attributes][accessToken]    agent_token
@@ -59,8 +55,6 @@ Agent_cannot_impersonate_customer_with_invalid_customer_reference
     And Response should return error message:    Failed to impersonate a customer.
 
 Agent_cannot_impersonate_customer_with_empty_customer_reference
-    [Documentation]    bug:https://spryker.atlassian.net/browse/CC-17010
-    [Tags]    skip-due-to-issue   
     [Setup]    Run Keywords    I send a POST request:    /agent-access-tokens    {"data": {"type": "agent-access-tokens","attributes": {"username": "${agent.email}","password": "${agent.password}"}}}
     ...    AND    Response status code should be:    201
     ...    AND    Save value to a variable:    [data][attributes][accessToken]    agent_token
@@ -72,8 +66,6 @@ Agent_cannot_impersonate_customer_with_empty_customer_reference
     And Response should return error message:    Failed to impersonate a customer.
 
 Agent_cannot_impersonate_customer_with_missing_customer_reference
-    [Documentation]    bug:https://spryker.atlassian.net/browse/CC-17010
-    [Tags]    skip-due-to-issue   
     [Setup]    Run Keywords    I send a POST request:    /agent-access-tokens    {"data": {"type": "agent-access-tokens","attributes": {"username": "${agent.email}","password": "${agent.password}"}}}
     ...    AND    Response status code should be:    201
     ...    AND    Save value to a variable:    [data][attributes][accessToken]    agent_token

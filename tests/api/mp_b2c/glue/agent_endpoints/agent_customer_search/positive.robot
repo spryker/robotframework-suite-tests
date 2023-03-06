@@ -8,9 +8,7 @@ Default Tags    glue
 ENABLER
     TestSetup
 
-Agent_can_get_search_for_customers_without_search_parameters
-    [Documentation]    bug:https://spryker.atlassian.net/browse/CC-17010
-    [Tags]    skip-due-to-issue    
+Agent_can_get_search_for_customers_without_search_parameters 
     [Setup]    Run Keywords    I send a POST request:    /agent-access-tokens    {"data": {"type": "agent-access-tokens","attributes": {"username": "${agent.email}","password": "${agent.password}"}}}
     ...    AND    Response status code should be:    201
     ...    AND    Save value to a variable:    [data][attributes][accessToken]    agent_token
@@ -33,9 +31,7 @@ Agent_can_get_search_for_customers_without_search_parameters
     And Response body has correct self link
     
 
-Agent_can_get_search_for_customers_by_first_name
-    [Documentation]    bug:https://spryker.atlassian.net/browse/CC-17010
-    [Tags]    skip-due-to-issue    
+Agent_can_get_search_for_customers_by_first_name  
     [Setup]    Run Keywords    I send a POST request:    /agent-access-tokens    {"data": {"type": "agent-access-tokens","attributes": {"username": "${agent.email}","password": "${agent.password}"}}}
     ...    AND    Response status code should be:    201
     ...    AND    Save value to a variable:    [data][attributes][accessToken]    agent_token
@@ -57,8 +53,6 @@ Agent_can_get_search_for_customers_by_first_name
 
 
 Agent_can_get_search_for_customers_by_last_name
-    [Documentation]    bug:https://spryker.atlassian.net/browse/CC-17010
-    [Tags]    skip-due-to-issue    
     [Setup]    Run Keywords    I send a POST request:    /agent-access-tokens    {"data": {"type": "agent-access-tokens","attributes": {"username": "${agent.email}","password": "${agent.password}"}}}
     ...    AND    Response status code should be:    201
     ...    AND    Save value to a variable:    [data][attributes][accessToken]    agent_token
@@ -80,8 +74,6 @@ Agent_can_get_search_for_customers_by_last_name
 
 
 Agent_can_get_search_for_customers_by_email
-    [Documentation]    bug:https://spryker.atlassian.net/browse/CC-17010
-    [Tags]    skip-due-to-issue    
     [Setup]    Run Keywords    I send a POST request:    /agent-access-tokens    {"data": {"type": "agent-access-tokens","attributes": {"username": "${agent.email}","password": "${agent.password}"}}}
     ...    AND    Response status code should be:    201
     ...    AND    Save value to a variable:    [data][attributes][accessToken]    agent_token
@@ -101,9 +93,7 @@ Agent_can_get_search_for_customers_by_email
     And Response body parameter should not be EMPTY:    [links][first]
     And Response body has correct self link
 
-Agent_can_get_search_for_customers_by_substring
-    [Documentation]    bug:https://spryker.atlassian.net/browse/CC-17010
-    [Tags]    skip-due-to-issue    
+Agent_can_get_search_for_customers_by_substring 
     [Setup]    Run Keywords    I send a POST request:    /agent-access-tokens    {"data": {"type": "agent-access-tokens","attributes": {"username": "${agent.email}","password": "${agent.password}"}}}
     ...    AND    Response status code should be:    201
     ...    AND    Save value to a variable:    [data][attributes][accessToken]    agent_token
@@ -124,8 +114,6 @@ Agent_can_get_search_for_customers_by_substring
     And Response body has correct self link
 
 Agent_can_get_search_for_customers_by_substring_and_not_find_any
-    [Documentation]    bug:https://spryker.atlassian.net/browse/CC-17010
-    [Tags]    skip-due-to-issue    
     [Setup]    Run Keywords    I send a POST request:    /agent-access-tokens    {"data": {"type": "agent-access-tokens","attributes": {"username": "${agent.email}","password": "${agent.password}"}}}
     ...    AND    Response status code should be:    201
     ...    AND    Save value to a variable:    [data][attributes][accessToken]    agent_token
@@ -140,9 +128,7 @@ Agent_can_get_search_for_customers_by_substring_and_not_find_any
     And Response body has correct self link
 
 
-Agent_can_get_search_for_customers_with_larger_page_size
-    [Documentation]    bug:https://spryker.atlassian.net/browse/CC-17010
-    [Tags]    skip-due-to-issue    
+Agent_can_get_search_for_customers_with_larger_page_size  
     [Setup]    Run Keywords    I send a POST request:    /agent-access-tokens    {"data": {"type": "agent-access-tokens","attributes": {"username": "${agent.email}","password": "${agent.password}"}}}
     ...    AND    Response status code should be:    201
     ...    AND    Save value to a variable:    [data][attributes][accessToken]    agent_token
@@ -172,7 +158,7 @@ Agent_can_get_search_for_customers_from_last_page
     ...    AND    Response status code should be:    201
     ...    AND    Save value to a variable:    [data][attributes][accessToken]    agent_token
     ...    AND    I Set Headers:    Content-Type=${default_header_content_type}    Authorization=Bearer ${agent_token}
-    When I send a GET request:    /agent-customer-search?page[offset]=30&page[limit]=10
+    When I send a GET request:    /agent-customer-search?page[offset]=8&page[limit]=24
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
