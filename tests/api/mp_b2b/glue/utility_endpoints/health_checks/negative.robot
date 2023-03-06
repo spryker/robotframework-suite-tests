@@ -50,7 +50,7 @@ Get_health_check_with_empty_service_name
     And Response body has correct self link
 
 #Get_health_check_with_non_existing_id
-## The bug https://spryker.atlassian.net/browse/CC-16492 related to the self link and required ID
+    #[Documentation]    The bug https://spryker.atlassian.net/browse/CC-16492 related to the self link and required ID
     # When I send a GET request:    /health-check/1
     # Then Response status code should be:    200
     # And Response reason should be:    OK

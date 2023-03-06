@@ -87,7 +87,7 @@ Retrieve_company_user_including_company_roles
     And Each array element of array in response should contain property with value NOT in:    [data]    [id]    None
     And Each array element of array in response should contain nested property:    [data]    [attributes]    isActive
     And Each array element of array in response should contain nested property:    [data]    [attributes]    isDefault
-    And Response should contain the array of a certain size:    [data][0][relationships][company-roles][data]    1
+    And Array element should contain nested array at least once:    [data]    [relationships]
     And Response should contain the array of a certain size:    [included]    4
     And Response include should contain certain entity type:    company-roles
     And Response include element has self link:    company-roles

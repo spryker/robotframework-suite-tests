@@ -20,7 +20,7 @@ Adding_not_existing_voucher_code_to_cart_of_logged_in_customer
     ...    AND    I send a POST request:    /carts/${cart_id}/items    {"data": {"type": "items","attributes": {"sku": "419901","quantity": 1}}}
     ...    AND    Response status code should be:    201
     When I send a POST request:    /carts/${cart_id}/vouchers    {"data": {"type": "vouchers","attributes": {"code": "1111111"}}}
-    Then Response status code should be:    422
+    Then Response status code should be:    ${422}
     And Response reason should be:    Unprocessable Content
     And Response should return error code:    3302
     And Response should return error message:    "Cart code cant be added."
@@ -38,7 +38,7 @@ Adding_voucher_code_that_could_not_be_applied_to_cart_of_logged_in_customer
     ...    AND    Response status code should be:    201
     ...    AND    Get voucher code by discountId from Database:    3
     When I send a POST request:    /carts/${cart_id}/vouchers    {"data": {"type": "vouchers","attributes": {"code": "${discount_voucher_code}"}}}
-    Then Response status code should be:    422
+    Then Response status code should be:    ${422}
     And Response reason should be:    Unprocessable Content
     And Response should return error code:    3302
     And Response should return error message:    "Cart code cant be added."
@@ -85,7 +85,7 @@ Adding_voucher_with_invalid_access_token
 
 ####### DELETE #######
 Deleting_voucher_without_access_token 
-    [Documentation]   #bug CC-16735 is fixed in internal B2B, but there is no fix in public MP-B2B
+    [Documentation]   bug CC-16735 is fixed in internal B2B, but there is no fix in public MP-B2B
     [Tags]    skip-due-to-issue  
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}
@@ -109,7 +109,7 @@ Deleting_voucher_without_access_token
 
 
 Deleting_voucher_with_invalid_access_token
-    [Documentation]   #bug CC-16735 is fixed in internal B2B, but there is no fix in public MP-B2B
+    [Documentation]   bug CC-16735 is fixed in internal B2B, but there is no fix in public MP-B2B
     [Tags]    skip-due-to-issue 
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}
