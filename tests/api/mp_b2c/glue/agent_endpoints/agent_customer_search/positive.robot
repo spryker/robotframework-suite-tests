@@ -9,8 +9,6 @@ ENABLER
     TestSetup
 
 Agent_can_get_search_for_customers_without_search_parameters
-    [Documentation]    bug:https://spryker.atlassian.net/browse/CC-17010
-    [Tags]    skip-due-to-issue    
     [Setup]    Run Keywords    I send a POST request:    /agent-access-tokens    {"data": {"type": "agent-access-tokens","attributes": {"username": "${agent.email}","password": "${agent.password}"}}}
     ...    AND    Response status code should be:    201
     ...    AND    Save value to a variable:    [data][attributes][accessToken]    agent_token
@@ -33,9 +31,7 @@ Agent_can_get_search_for_customers_without_search_parameters
     And Response body has correct self link
     
 
-Agent_can_get_search_for_customers_by_first_name
-    [Documentation]    bug:https://spryker.atlassian.net/browse/CC-17010
-    [Tags]    skip-due-to-issue    
+Agent_can_get_search_for_customers_by_first_name  
     [Setup]    Run Keywords    I send a POST request:    /agent-access-tokens    {"data": {"type": "agent-access-tokens","attributes": {"username": "${agent.email}","password": "${agent.password}"}}}
     ...    AND    Response status code should be:    201
     ...    AND    Save value to a variable:    [data][attributes][accessToken]    agent_token
@@ -56,9 +52,7 @@ Agent_can_get_search_for_customers_by_first_name
     And Response body has correct self link
 
 
-Agent_can_get_search_for_customers_by_last_name
-    [Documentation]    bug:https://spryker.atlassian.net/browse/CC-17010
-    [Tags]    skip-due-to-issue    
+Agent_can_get_search_for_customers_by_last_name 
     [Setup]    Run Keywords    I send a POST request:    /agent-access-tokens    {"data": {"type": "agent-access-tokens","attributes": {"username": "${agent.email}","password": "${agent.password}"}}}
     ...    AND    Response status code should be:    201
     ...    AND    Save value to a variable:    [data][attributes][accessToken]    agent_token
@@ -79,9 +73,7 @@ Agent_can_get_search_for_customers_by_last_name
     And Response body has correct self link
 
 
-Agent_can_get_search_for_customers_by_email
-    [Documentation]    bug:https://spryker.atlassian.net/browse/CC-17010
-    [Tags]    skip-due-to-issue    
+Agent_can_get_search_for_customers_by_email  
     [Setup]    Run Keywords    I send a POST request:    /agent-access-tokens    {"data": {"type": "agent-access-tokens","attributes": {"username": "${agent.email}","password": "${agent.password}"}}}
     ...    AND    Response status code should be:    201
     ...    AND    Save value to a variable:    [data][attributes][accessToken]    agent_token
@@ -101,9 +93,7 @@ Agent_can_get_search_for_customers_by_email
     And Response body parameter should not be EMPTY:    [links][first]
     And Response body has correct self link
 
-Agent_can_get_search_for_customers_by_substring
-    [Documentation]    bug:https://spryker.atlassian.net/browse/CC-17010
-    [Tags]    skip-due-to-issue    
+Agent_can_get_search_for_customers_by_substring  
     [Setup]    Run Keywords    I send a POST request:    /agent-access-tokens    {"data": {"type": "agent-access-tokens","attributes": {"username": "${agent.email}","password": "${agent.password}"}}}
     ...    AND    Response status code should be:    201
     ...    AND    Save value to a variable:    [data][attributes][accessToken]    agent_token
@@ -123,9 +113,7 @@ Agent_can_get_search_for_customers_by_substring
     And Response body parameter should not be EMPTY:    [links][first]
     And Response body has correct self link
 
-Agent_can_get_search_for_customers_by_substring_and_not_find_any
-    [Documentation]    bug:https://spryker.atlassian.net/browse/CC-17010
-    [Tags]    skip-due-to-issue    
+Agent_can_get_search_for_customers_by_substring_and_not_find_any  
     [Setup]    Run Keywords    I send a POST request:    /agent-access-tokens    {"data": {"type": "agent-access-tokens","attributes": {"username": "${agent.email}","password": "${agent.password}"}}}
     ...    AND    Response status code should be:    201
     ...    AND    Save value to a variable:    [data][attributes][accessToken]    agent_token
@@ -141,8 +129,6 @@ Agent_can_get_search_for_customers_by_substring_and_not_find_any
 
 
 Agent_can_get_search_for_customers_with_larger_page_size
-    [Documentation]    bug:https://spryker.atlassian.net/browse/CC-17010
-    [Tags]    skip-due-to-issue    
     [Setup]    Run Keywords    I send a POST request:    /agent-access-tokens    {"data": {"type": "agent-access-tokens","attributes": {"username": "${agent.email}","password": "${agent.password}"}}}
     ...    AND    Response status code should be:    201
     ...    AND    Save value to a variable:    [data][attributes][accessToken]    agent_token
@@ -166,8 +152,6 @@ Agent_can_get_search_for_customers_with_larger_page_size
 
 
 Agent_can_get_search_for_customers_from_last_page
-    [Documentation]    bug:https://spryker.atlassian.net/browse/CC-17010
-    [Tags]    skip-due-to-issue    
     [Setup]    Run Keywords    I send a POST request:    /agent-access-tokens    {"data": {"type": "agent-access-tokens","attributes": {"username": "${agent.email}","password": "${agent.password}"}}}
     ...    AND    Response status code should be:    201
     ...    AND    Save value to a variable:    [data][attributes][accessToken]    agent_token
@@ -178,7 +162,7 @@ Agent_can_get_search_for_customers_from_last_page
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response body parameter should be:    [data][0][id]    None
     And Response body parameter should be:    [data][0][type]    agent-customer-search
-    And Response should contain the array of a certain size:    [data][0][attributes][customers]    1
+    And Response should contain the array of a certain size:    [data][0][attributes][customers]    6
     And Response body parameter should be:    [data][0][attributes][customers][0][customerReference]    ${yves_user.reference}
     And Response body parameter should be:    [data][0][attributes][customers][0][email]    ${yves_user.email}
     And Response body parameter should be:     [data][0][attributes][customers][0][firstName]     ${yves_user.first_name}
