@@ -31,6 +31,8 @@ ${default_db_port}         3306
 ${default_db_user}         spryker
 ${default_db_engine}       pymysql
 ${db_engine}
+${host_yves}
+${host_at_yves}
 # ${default_db_engine}       psycopg2
 
 # ${device}              Desktop Chrome
@@ -64,6 +66,13 @@ SuiteSetup
     New Browser    ${browser}    headless=${headless}    args=['--ignore-certificate-errors']
     Set Browser Timeout    ${browser_timeout}
     Create default Main Context
+    IF    '${host_yves}' == '${EMPTY}'
+            Set Suite Variable    ${host}    ${host}
+
+    ELSE
+            Set Suite Variable    ${host}    ${host_yves}
+    END
+        Log    ${host}
     New Page    ${host}
     ${random}=    Generate Random String    5    [NUMBERS]
     Set Global Variable    ${random}
