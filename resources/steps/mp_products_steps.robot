@@ -217,6 +217,6 @@ MP: add new concrete product:
             Click    xpath=//mp-concrete-product-attributes-selector[@class='mp-concrete-product-attributes-selector']//spy-form-item//label[contains(text(),'${firstAttributeName}')]/../..//spy-select
         END
     END
-    Click    ${new_product_submit_create_button}
+    Click    ${new_product_submit_create_button}    delay=1s
     Wait Until Element Is Visible    ${new_concrete_product_created_popup}
     Wait Until Element Is Not Visible    ${new_concrete_product_created_popup}
