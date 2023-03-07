@@ -4,6 +4,9 @@
        "glue_url":"http://glue.de.spryker.local",
        "bapi_url":"http://backend-api.de.spryker.local/api/rest"
     },
+    "dataType": {
+      "array": []
+   },
     "database":{
        "db_host":"127.0.0.1",
        "db_port":"3306",
@@ -449,7 +452,10 @@
              "concrete_available_with_stock_and_never_out_of_stock_name":"FRIWA stackable chair - with closed back",
              "abstract_available_product_with_no_stock_and_never_out_of_stock":"M90851",
              "abstract_unavailable_product":"M22432",
-             "concrete_unavailable_product":"212447"
+             "concrete_unavailable_product":"212447",
+             "product_2":{
+               "abstract_available_with_stock_and_never_out_of_stock":"M24632",
+               "concrete_available_with_stock_and_never_out_of_stock":"426615"}
           },
           "abstract_product_with_variants":{
              "concretes_3":"M29456",

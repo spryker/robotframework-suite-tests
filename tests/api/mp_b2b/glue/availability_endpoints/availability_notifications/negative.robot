@@ -61,7 +61,7 @@ Subscribe_to_availability_notifications_with_non_existent_sku
 
 Subscribe_to_availability_notifications_with_invalid_email
     When I send a POST request:    /availability-notifications    {"data": {"type": "availability-notifications","attributes": {"sku": "${concrete_product_with_discontinued.sku}","email": "gmail"}}}
-    Then Response status code should be:    422
+    Then Response status code should be:    ${422}
     And Response reason should be:    Unprocessable Content
     And Each array element of array in response should contain property with value:    [errors]    code    901
     And Each array element of array in response should contain property with value:    [errors]    status    ${422}
@@ -69,7 +69,7 @@ Subscribe_to_availability_notifications_with_invalid_email
 
 Subscribe_to_availability_notifications_with_empty_sku_and_email
     When I send a POST request:    /availability-notifications    {"data": {"type": "availability-notifications","attributes": {"sku": "","email": ""}}}
-    Then Response status code should be:    422
+    Then Response status code should be:    ${422}
     And Response reason should be:    Unprocessable Content
     And Each array element of array in response should contain property with value:    [errors]    code    901
     And Each array element of array in response should contain property with value:    [errors]    status    ${422}
@@ -78,7 +78,7 @@ Subscribe_to_availability_notifications_with_empty_sku_and_email
 
 Subscribe_to_availability_notifications_without_sku_and_email
     When I send a POST request:    /availability-notifications    {"data": {"type": "availability-notifications","attributes": {}}}
-    Then Response status code should be:    422
+    Then Response status code should be:    ${422}
     And Response reason should be:    Unprocessable Content
     And Each array element of array in response should contain property with value:    [errors]    code    901
     And Each array element of array in response should contain property with value:    [errors]    status    ${422}
@@ -90,7 +90,7 @@ Subscribe_to_availability_notifications_with_existing_subscription
     ...  AND    Response status code should be:    201
     ...  AND    Save value to a variable:    [data][id]    availability_notification_id
     When I send a POST request:    /availability-notifications    {"data": {"type": "availability-notifications","attributes": {"sku": "${concrete_product_with_discontinued.sku}","email": "${yves_user.email}"}}}
-    Then Response status code should be:    422
+    Then Response status code should be:    ${422}
     And Response reason should be:    Unprocessable Content
     And Response should return error code:    4602
     And Response should return error message:    Subscription already exists.

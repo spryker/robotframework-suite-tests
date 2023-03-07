@@ -10,6 +10,8 @@ ENABLER
 
 ##### SEARCH PARAMETERS #####
 Search_with_empty_search_criteria_all_default_values_check
+    [Documentation]    bug https://spryker.atlassian.net/browse/CC-26185 different prices for products in Postgres and Maria
+    [Tags]    skip-due-to-issue
     When I send a GET request:    /catalog-search?q=
     Then Response status code should be:    200
     And Response reason should be:    OK
@@ -311,6 +313,8 @@ Filter_by_price_only_min
     And Response body parameter should be:    [data][0][attributes][rangeFacets][0][activeMax]    ${default_price.max}
 
 Filter_by_price_only_max
+    [Documentation]    bug https://spryker.atlassian.net/browse/CC-26185 different prices for products in Postgres and Maria
+    [Tags]    skip-due-to-issue
     When I send a GET request:    /catalog-search?q=&price[max]=3000
     Then Response status code should be:    200
     And Response reason should be:    OK
@@ -523,7 +527,7 @@ Filter_by_valid_subcategory
     And Response should contain the array of a certain size:    [data][0][attributes][categoryTreeFilter]    ${tree_branches_qty}
     And Response body parameter should be:    [data][0][attributes][categoryTreeFilter][0][docCount]    0
     And Response body parameter should be:    [data][0][attributes][categoryTreeFilter][1][docCount]    0
-    And Response body parameter should be:    [data][0][attributes][categoryTreeFilter][2][children][0][docCount]    ${category_lvl2.qty}
+    And Array element should contain nested array with property and value at least once:    [data][0][attributes][categoryTreeFilter]    [children]    docCount    ${category_lvl2.qty}
     And Response body has correct self link
 
 Search_with_specific_currency

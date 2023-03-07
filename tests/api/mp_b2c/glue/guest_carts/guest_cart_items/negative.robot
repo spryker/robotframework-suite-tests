@@ -42,7 +42,7 @@ Add_an_non_existing_item_to_the_guest_cart
     When I send a POST request:    /guest-carts/${guestCartId}/guest-cart-items    {"data":{"type":"guest-cart-items","attributes":{"sku":"non_existing_item","quantity":"1"}}}
     Then Array in response should contain property with value:    [errors]    code    102
     And Array in response should contain property with value:    [errors]    code    113
-    And Each array element of array in response should contain property with value:    [errors]    status    422
+    And Each array element of array in response should contain property with value:    [errors]    status    ${422}
     And Response reason should be:    Unprocessable Content
     And Array in response should contain property with value:    [errors]    detail    Product "non_existing_item" not found
     And Array in response should contain property with value:    [errors]    detail    Cart item could not be added.
@@ -54,7 +54,7 @@ Add_an_item_to_the_guest_cart_without_sku_attribute_and_quantity_attribute
     ...    AND    Cleanup All Items In The Guest Cart:    ${guest_cart_id}
     When I send a POST request:    /guest-carts/${guestCartId}/guest-cart-items    {"data":{"type":"guest-cart-items","attributes":{}}}
     Then Each array element of array in response should contain property with value:    [errors]    code    901
-    And Each array element of array in response should contain property with value:    [errors]    status    422
+    And Each array element of array in response should contain property with value:    [errors]    status    ${422}
     And Response reason should be:    Unprocessable Content
     And Array in response should contain property with value:    [errors]    detail    sku => This field is missing.
     And Array in response should contain property with value:    [errors]    detail    quantity => This field is missing.
@@ -66,7 +66,7 @@ Add_an_item_to_the_guest_cart_without_sku_and_quantity_values
     ...    AND    Cleanup All Items In The Guest Cart:    ${guest_cart_id}
     When I send a POST request:    /guest-carts/${guestCartId}/guest-cart-items    {"data":{"type":"guest-cart-items","attributes":{"sku":"","quantity":""}}}
     Then Each array element of array in response should contain property with value:    [errors]    code    901
-    And Each array element of array in response should contain property with value:    [errors]    status    422
+    And Each array element of array in response should contain property with value:    [errors]    status    ${422}
     And Response reason should be:    Unprocessable Content
     And Array in response should contain property with value:    [errors]    detail    sku => This value should not be blank.
     And Array in response should contain property with value:    [errors]    detail    quantity => This value should not be blank.
@@ -112,7 +112,7 @@ Update_an_item_quantity_at_the_guest_cart_without_quantity_attribute
     Run Keywords    Create a guest cart:    ${random}    ${concrete_available_product.with_offer}    1
     ...    AND    Save value to a variable:    [data][id]    guestCartId
     When I send a PATCH request:    /guest-carts/${guestCartId}/guest-cart-items/${concrete_available_product.with_offer}    {"data":{"type":"guest-cart-items","attributes":{}}}
-    Then Response status code should be:    422
+    Then Response status code should be:    ${422}
     And Response should return error code:    901
     And Response reason should be:    Unprocessable Content
     And Response should return error message:    quantity => This field is missing.
@@ -122,7 +122,7 @@ Update_an_item_quantity_at_the_guest_cart_with_empty_quantity_value
     Run Keywords    Create a guest cart:    ${random}    ${concrete_available_product.with_offer}    1
     ...    AND    Save value to a variable:    [data][id]    guestCartId
     When I send a PATCH request:    /guest-carts/${guestCartId}/guest-cart-items/${concrete_available_product.with_offer}    {"data":{"type":"guest-cart-items","attributes":{"quantity":""}}}
-    Then Response status code should be:    422
+    Then Response status code should be:    ${422}
     And Response should return error code:    901
     And Response reason should be:    Unprocessable Content
     And Response should return error message:    quantity => This value should not be blank.
@@ -132,7 +132,7 @@ Update_an_item_quantity_at_the_guest_cart_with_non_numeric_quantity_value
     Run Keywords    Create a guest cart:    ${random}    ${concrete_available_product.with_offer}    1
     ...    AND    Save value to a variable:    [data][id]    guestCartId
     When I send a PATCH request:    /guest-carts/${guestCartId}/guest-cart-items/${concrete_available_product.with_offer}    {"data":{"type":"guest-cart-items","attributes":{"quantity":"test"}}}
-    Then Response status code should be:    422
+    Then Response status code should be:    ${422}
     And Response should return error code:    901
     And Response reason should be:    Unprocessable Content
     And Response should return error message:    quantity => This value should be of type numeric.
