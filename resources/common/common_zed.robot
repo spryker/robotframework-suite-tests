@@ -101,7 +101,7 @@ Zed: Uncheck Checkbox by Label:
 
 Zed: submit the form
     Wait until element is visible    ${zed_save_button}
-    Click    xpath=//input[contains(@class,'safe-submit')]    delay=1s
+    Click    ${zed_save_button}    delay=1s
     Wait Until Element Is Visible    ${zed_log_out_button}
 
 Zed: perform search by:

@@ -638,7 +638,7 @@ Return_Management
     Zed: go to my order page:    ${lastPlacedOrder}
     Zed: trigger matching state of xxx merchant's shipment:    1    send to distribution
     Zed: trigger matching state of xxx merchant's shipment:    1    confirm at center
-    Zed: trigger matching state of xxx merchant's shipment:    1    ship   
+    Zed: trigger matching state of xxx merchant's shipment:    1    Ship
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     Yves: go to user menu item in header:    Order History
     Yves: 'Order History' page is displayed
@@ -916,12 +916,12 @@ Refunds
     Zed: go to my order page:    ${lastPlacedOrder}
     Zed: trigger matching state of xxx merchant's shipment:    1    send to distribution
     Zed: trigger matching state of xxx merchant's shipment:    1    confirm at center
-    Zed: trigger matching state of order item inside xxx shipment:    107254    ship
+    Zed: trigger matching state of order item inside xxx shipment:    107254    Ship
     Zed: trigger matching state of order item inside xxx shipment:    107254    deliver
     Zed: trigger matching state of order item inside xxx shipment:    107254    Refund
     Zed: grand total for the order equals:    ${lastPlacedOrder}    €1,559.56
     Zed: go to my order page:    ${lastPlacedOrder}
-    Zed: trigger matching state of xxx merchant's shipment:    1    ship
+    Zed: trigger matching state of xxx merchant's shipment:    1    Ship
     Zed: trigger matching state of xxx merchant's shipment:    1    deliver
     Zed: trigger matching state of xxx merchant's shipment:    1    Refund
     Zed: grand total for the order equals:    ${lastPlacedOrder}    €0.00
@@ -1299,7 +1299,7 @@ Fulfill_Order_from_Merchant_Portal
     MP: wait for order to appear:    ${lastPlacedOrder}--${merchant_office_king_reference}
     MP: click on a table row that contains:    ${lastPlacedOrder}--${merchant_office_king_reference}
     MP: order grand total should be:    €32.78
-    MP: update order state using header button:    ship
+    MP: update order state using header button:    Ship
     MP: order states on drawer should contain:    Shipped
     MP: switch to the tab:    Items
     MP: change order item state on:    423172    deliver

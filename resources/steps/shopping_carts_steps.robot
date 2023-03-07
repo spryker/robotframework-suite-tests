@@ -135,7 +135,6 @@ Yves: get link for external cart sharing
     Wait Until Element Is Visible    xpath=//input[@id='PREVIEW']
     ${externalURL}=    Get Element Attribute    xpath=//input[@id='PREVIEW']    value
     ${externalURL}=    Replace String Using Regexp    ${externalURL}    ${EMPTY}.*.com/    ${EMPTY}
-    ${externalURL}=    Replace String Using Regexp    ${externalURL}    ${EMPTY}.*.com/    ${EMPTY}
     Set Suite Variable    ${externalURL}
 
 Yves: Expand shopping cart accordion:
