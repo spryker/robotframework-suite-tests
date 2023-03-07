@@ -126,11 +126,10 @@ Share_Shopping_Carts
     Yves: 'Order History' page is displayed
     Yves: get the last placed order ID by current customer
     Yves: 'View Order/Reorder/Return' on the order history page:     View Order    ${lastPlacedOrder}
-    Yves: 'View Order' page is displayed
+    Yves: 'Order Details' page is displayed
 
 Quick_Order
-    [Tags]    skip-due-to-issue
-    [Documentation]    Checks Quick Order, checkout and Reorder. Bug: CC-24140
+    [Documentation]    Bug: CC-24140. Checks Quick Order, checkout and Reorder
     [Setup]    Run keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     ...    AND    Yves: delete all shopping carts
     ...    AND    Yves: create new 'Shopping Cart' with name:    quickOrderCart+${random}
@@ -201,16 +200,12 @@ Discontinued_Alternative_Products
     [Documentation]    Checks that product can be discontinued in Zed
     Yves: go to PDP of the product with sku:  M21100
     Yves: PDP contains/doesn't contain:    true    ${alternativeProducts}
-    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
-    Yves: go to the PDP of the first available product
-    Yves: get sku of the concrete product on PDP
-    Yves: get sku of the abstract product on PDP
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    Zed: discontinue the following product:    ${got_abstract_product_sku}    ${got_concrete_product_sku}
+    Zed: discontinue the following product:    ${discontinued_product_abstract_sku}    ${discontinued_product_concrete_sku}
     Zed: product is successfully discontinued
     Zed: add following alternative products to the concrete:    M22613
     Zed: submit the form
-    [Teardown]    Zed: undo discontinue the following product:    ${got_abstract_product_sku}    ${got_concrete_product_sku}
+    [Teardown]    Zed: undo discontinue the following product:    ${discontinued_product_abstract_sku}    ${discontinued_product_concrete_sku}
 
 Measurement_Units
     [Documentation]    Checks checkout with Measurement Unit product
@@ -358,8 +353,7 @@ Customer_Specific_Prices
     [Teardown]    Yves: delete 'Shopping Cart' with name:    customerPrices+${random}
 
 Agent_Assist
-    [Tags]    skip-due-to-issue
-    [Documentation]    Checks Agent creation and that it can login under customer. Bug: CC-23550
+    [Documentation]    Checks Agent creation and that it can login under customer.
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: create new Zed user with the following data:    agent+${random}@spryker.com    change123${random}    Agent    Assist    Root group    This user is an agent    en_US
     Yves: go to the 'Home' page
@@ -565,7 +559,7 @@ Request_for_Quote
 
 Unique_URL
     [Tags]    skip-due-to-issue
-    [Documentation]    Fails due to Bug:CC-12380
+    [Documentation]    Bug: CC-12380.
     Yves: login on Yves with provided credentials:    ${yves_company_user_manager_and_buyer_email}
     Yves: create new 'Shopping Cart' with name:    externalCart+${random}
     Yves: go to PDP of the product with sku:    M90806
@@ -617,8 +611,7 @@ Unique_URL
 #     Yves: 'Order Details' page contains the following product title N times:    Presentation bundle    3
 
 Return_Management
-    [Tags]    skip-due-to-issue
-    [Documentation]    Checks OMS and that Yves user and in Zed main merchant can create/execute returns. Bug: CC-23550
+    [Documentation]    Checks OMS and that Yves user and in Zed main merchant can create/execute returns.
     [Setup]    Run keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     ...    AND    Yves: create new 'Shopping Cart' with name:    returnCart+${random}
     Yves: go to PDP of the product with sku:    M90802
@@ -645,7 +638,7 @@ Return_Management
     Zed: go to my order page:    ${lastPlacedOrder}
     Zed: trigger matching state of xxx merchant's shipment:    1    send to distribution
     Zed: trigger matching state of xxx merchant's shipment:    1    confirm at center
-    Zed: trigger matching state of xxx merchant's shipment:    1    Ship   
+    Zed: trigger matching state of xxx merchant's shipment:    1    Ship
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     Yves: go to user menu item in header:    Order History
     Yves: 'Order History' page is displayed
@@ -701,7 +694,7 @@ User_Account
     Yves: go to user menu item in header:    Order History
     Yves: 'Order History' page is displayed
     Yves: go to user menu item in header:    Profile
-    Yves: 'My Profile' page is displayed
+    Yves: 'Profile' page is displayed
     Yves: go to user menu item in the left bar:    Addresses
     Yves: 'Addresses' page is displayed
     Yves: go to user menu item in the left bar:    Newsletter
@@ -775,7 +768,7 @@ Catalog
 Discounts
     [Documentation]    Discounts, Promo Products, and Coupon Codes
     [Setup]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    ...    AND    Zed: deactivate following discounts from Overview page:    Free chair    Tu & Wed $5 off 5 or more    10% off $100+    Free marker    20% off storage    	Free office chair    Free standard delivery    	10% off Safescan    5% off white    Tu & Wed €5 off 5 or more    10% off minimum order
+    ...    AND    Zed: deactivate all discounts from Overview page
     ...    AND    Zed: change product stock:    M21777    421538    true    10
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Merchandising    Discount
@@ -807,36 +800,34 @@ Discounts
     Zed: grand total for the order equals:    ${lastPlacedOrder}    €18.11
     [Teardown]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: go to second navigation item level:    Merchandising    Discount
-    ...    AND    Zed: Deactivate Following Discounts From Overview Page:    Voucher Code 5% ${random}    Cart Rule 10% ${random}    Promotional Product 100% ${random}        
+    ...    AND    Zed: Deactivate Following Discounts From Overview Page:    Voucher Code 5% ${random}    Cart Rule 10% ${random}    Promotional Product 100% ${random}
+    ...    AND    Zed: activate following discounts from Overview page:    Free chair    Tu & Wed $5 off 5 or more    10% off $100+    Free marker    20% off storage    Free office chair    Free standard delivery    10% off Safescan    5% off white    Tu & Wed €5 off 5 or more    10% off minimum order
 
 Back_in_Stock_Notification
-    [Documentation]    Back in stock notification is sent and availability check
-    Yves: login on Yves with provided credentials:    ${yves_user_email}
-    Yves: go to the PDP of the first available product
-    Yves: get sku of the concrete product on PDP
-    Yves: get sku of the abstract product on PDP
+    [Tags]    skip-due-to-issue
+    [Documentation]    Bug: CC-26192. Back in stock notification is sent and availability check
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Catalog    Availability
-    Zed: check if product is/not in stock:    ${got_abstract_product_sku}    true
-    Zed: change product stock:    ${got_abstract_product_sku}    ${got_concrete_product_sku}    false    0
+    Zed: check if product is/not in stock:    ${stock_product_abstract_sku}    true
+    Zed: change product stock:    ${stock_product_abstract_sku}    ${stock_product_concrete_sku}    false    0
     Zed: go to second navigation item level:    Catalog    Availability
-    Zed: check if product is/not in stock:    ${got_abstract_product_sku}    false
+    Zed: check if product is/not in stock:    ${stock_product_abstract_sku}    false
     Yves: login on Yves with provided credentials:    ${yves_user_email}
-    Yves: go to PDP of the product with sku:  ${got_abstract_product_sku}
+    Yves: go to PDP of the product with sku:  ${stock_product_abstract_sku}
     Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    True
-    Yves: check if product is available on PDP:    ${got_abstract_product_sku}    false
+    Yves: check if product is available on PDP:    ${stock_product_abstract_sku}    false
     Yves: submit back in stock notification request for email:    ${yves_user_email}
     Yves: unsubscribe from availability notifications
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Catalog    Availability
-    Zed: change product stock:    ${got_abstract_product_sku}    ${got_concrete_product_sku}    true    0  
+    Zed: change product stock:    ${stock_product_abstract_sku}    ${stock_product_concrete_sku}    true    0  
     Zed: go to second navigation item level:    Catalog    Availability  
-    Zed: check if product is/not in stock:    ${got_abstract_product_sku}    true
+    Zed: check if product is/not in stock:    ${stock_product_abstract_sku}    true
     Yves: login on Yves with provided credentials:    ${yves_user_email}
-    Yves: go to PDP of the product with sku:  ${got_abstract_product_sku}
+    Yves: go to PDP of the product with sku:  ${stock_product_abstract_sku}
     Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    False
-    Yves: check if product is available on PDP:    ${got_abstract_product_sku}    true
-    [Teardown]    Zed: check and restore product availability in Zed:    ${got_abstract_product_sku}    Available    ${got_concrete_product_sku}
+    Yves: check if product is available on PDP:    ${stock_product_abstract_sku}    true
+    [Teardown]    Zed: check and restore product availability in Zed:    ${stock_product_abstract_sku}    Available    ${stock_product_concrete_sku}
 
 Split_Delivery
     [Documentation]    Checks split delivery in checkout with new addresses
@@ -856,10 +847,10 @@ Split_Delivery
     Yves: fill in new delivery address for a product:
     ...    || product | salutation | firstName | lastName | street       | houseNumber | postCode | city   | country | company | phone     | additionalAddress ||
     ...    || 403125  | Dr.        | First     | Last     | First Street | 1           | 10247    | Berlin | Germany | Spryker | 123456789 | Additional street ||
-   Yves: fill in new delivery address for a product:
+    Yves: fill in new delivery address for a product:
     ...    || product | salutation | firstName | lastName | street        | houseNumber | postCode | city   | country | company | phone     | additionalAddress ||
     ...    || 107254  | Dr.        | First     | Last     | Second Street | 2           | 10247    | Berlin | Germany | Spryker | 123456789 | Additional street ||
-   Yves: fill in new delivery address for a product:
+    Yves: fill in new delivery address for a product:
     ...    || product | salutation | firstName | lastName | street       | houseNumber | postCode | city   | country | company | phone     | additionalAddress ||
     ...    || 419904  | Dr.        | First     | Last     | Third Street | 3           | 10247    | Berlin | Germany | Spryker | 123456789 | Additional street ||
     Yves: fill in the following new billing address:
@@ -898,8 +889,7 @@ Content_Management
     ...    AND    Zed: click Action Button in a table for row that contains:    Test Page${random}    Deactivate
 
 Refunds
-    [Tags]    skip-due-to-issue
-    [Documentation]    Checks that refund can be created for an item and the whole order of merchant. Bug:CC-1720
+    [Documentation]    Bug: CC-17201. Checks that refund can be created for an item and the whole order of merchant
     [Setup]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: deactivate following discounts from Overview page:    20% off storage    10% off minimum order
     ...    AND    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
@@ -1106,8 +1096,7 @@ Manage_Merchants_from_Backoffice
     ...    AND    Zed: click Action Button in a table for row that contains:     NewMerchantUpdated${random}     Deactivate
 
 Manage_Merchant_Users
-    [Tags]    skip-due-to-issue
-    [Documentation]    Checks that backoffice admin is able to create, activate, edit and delete merchant users. Bug: CC-23118
+    [Documentation]    Bug: CC-23118. Checks that backoffice admin is able to create, activate, edit and delete merchant users
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Marketplace    Merchants
     Zed: click Action Button in a table for row that contains:     Office King     Edit
@@ -1371,7 +1360,7 @@ Merchant_Portal_Customer_Specific_Prices
 
 Search_for_Merchant_Offers_and_Products
     [Tags]    skip-due-to-issue
-    [Documentation]    Checks that through search customer is able to see the list of merchant's products and offers. Fails due to CC-17153
+    [Documentation]    Bug: CC-17153. Checks that through search customer is able to see the list of merchant's products and offers
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     Yves: perform search by:    Office King
     Yves: go to the PDP of the first available product on open catalog page
@@ -1389,8 +1378,7 @@ Search_for_Merchant_Offers_and_Products
     Yves: merchant is (not) displaying in Sold By section of PDP:    Budget Stationery    true
 
 Merchant_Portal_Product_Volume_Prices
-    [Tags]    skip-due-to-issue
-    [Documentation]    Checks that merchant is able to create new multi-SKU product with volume prices. Falback to default price after delete. Bug: CC-23356
+    [Documentation]    Checks that merchant is able to create new multi-SKU product with volume prices. Falback to default price after delete.
     MP: login on MP with provided credentials:    ${merchant_office_king_email}
     MP: open navigation menu tab:    Products    
     MP: click on create new entity button:    Create Product
@@ -1535,8 +1523,7 @@ Merchant_Portal_Offer_Volume_Prices
     ...    AND    Zed: click Action Button in a table for row that contains:     OfferNewProduct${random}     Deny
 
 Merchant_Portal_My_Account
-    [Tags]    skip-due-to-issue
-    [Documentation]    Checks that MU can edit personal data in MP. Bug: CC-23118
+    [Documentation]    Bug: CC-23118. Checks that MU can edit personal data in MP
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Marketplace    Merchants
     Zed: click Action Button in a table for row that contains:     Oryx Merchant     Edit
@@ -1564,8 +1551,7 @@ Merchant_Portal_My_Account
     ...    AND    Zed: delete Zed user with the following email:    sonia+new+editmu+${random}@spryker.com
     
 Merchant_Portal_Dashboard
-    [Tags]    skip-due-to-issue
-    [Documentation]    Checks that merchant user is able to access the dashboard page. Bug: CC-23118
+    [Documentation]    Checks that merchant user is able to access the dashboard page
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Marketplace    Merchants
     Zed: click Action Button in a table for row that contains:     Oryx Merchant     Edit
@@ -1654,7 +1640,7 @@ Merchant_Product_Offer_in_Backoffice
     ...    AND    Zed: click Action Button in a table for row that contains:     ViewProduct${random}     Deny
 
 Manage_Merchant_Product
-    [Documentation]    checks that MU and BO user can manage merchant abstract and concrete products + add new concrete product. Minor bug: CC-24408
+    [Documentation]    Checks that MU and BO user can manage merchant abstract and concrete products + add new concrete product
     MP: login on MP with provided credentials:    ${merchant_office_king_email}
     MP: open navigation menu tab:    Products    
     MP: click on create new entity button:    Create Product
@@ -1819,7 +1805,7 @@ Merchant_Product_Original_Price
 
 Checkout_Address_Management
     [Tags]    skip-due-to-issue
-    [Documentation]    Checks that user can change address during the checkout and save new into the address book. Bug:CC-24090
+    [Documentation]    Bug: CC-24090. Checks that user can change address during the checkout and save new into the address book
     [Setup]    Run Keywords    
     ...    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     ...    AND    Yves: delete all user addresses
@@ -1995,8 +1981,7 @@ Minimum_Order_Value
     ...    || DE - Euro [EUR]  | ${SPACE}           | ${SPACE}                | ${SPACE}                | 10000.00           | The cart value cannot be higher than {{threshold}}. Please remove some items to proceed with the order    | Der Warenkorbwert darf nicht höher als {{threshold}} sein. Bitte entfernen Sie einige Artikel, um mit der Bestellung fortzufahren    | None           | ${EMPTY}             | ${EMPTY}                  | ${EMPTY}                  ||
 
 Order_Cancelation
-    [Tags]    skip-due-to-issue
-    [Documentation]    Check that customer is able to cancel order. Bug: CC-17072
+    [Documentation]    Check that customer is able to cancel order
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     Yves: delete all shopping carts
     Yves: delete all user addresses
@@ -2020,7 +2005,7 @@ Order_Cancelation
     Yves: get the last placed order ID by current customer
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to order page:    ${lastPlacedOrder}
-    Zed: wait for order item to be in state:    403125    cancelled
+    Zed: wait for order item to be in state:    403125    canceled
     ### NOT FINISHED AS NO REQUIREMENTS FOR MP CASE
     # Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     # Yves: create new 'Shopping Cart' with name:    cancelationCart+${random}
@@ -2192,7 +2177,7 @@ Multistore_Product_Offer
     ...    AND    Zed: click Action Button in a table for row that contains:     multistoreSKU${random}     Deny
 
 Multistore_CMS
-    [Documentation]    check CMS multistore functionality
+    [Documentation]    Check CMS multistore functionality
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Content    Pages
     Zed: create a cms page and publish it:    Multistore Page${random}    multistore-page${random}    Multistore Page    Page text
@@ -2210,7 +2195,7 @@ Multistore_CMS
 
 Product_Availability_Calculation
     [Tags]    skip-due-to-issue
-    [Documentation]    check product availability + multistore. Bug: CC-24108
+    [Documentation]    Bug: CC-24108. Check product availability + multistore
     MP: login on MP with provided credentials:    ${merchant_spryker_email}
     MP: open navigation menu tab:    Products    
     MP: click on create new entity button:    Create Product
@@ -2439,38 +2424,13 @@ User_Control
     ...    AND    Zed: go to second navigation item level:    Users    User Roles
     ...    AND    Zed: click Action Button in a table for row that contains:    controlRole${random}    Delete 
 
-Glossary
-    [Documentation]    Create + edit glossary translation in BO
-    Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    Zed: go to second navigation item level:    Administration    Glossary  
-    Zed: click button in Header:    Create Translation
-    Zed: fill glossary form:
-    ...    || Name                     | EN_US                        | DE_DE                             ||
-    ...    || cart.price.test${random} | This is a sample translation | Dies ist eine Beispielübersetzung ||
-    Zed: submit the form
-    Zed: table should contain:    cart.price.test${random}
-    Zed: go to second navigation item level:    Administration    Glossary 
-    Zed: click Action Button in a table for row that contains:    ${glossary_name}    Edit
-    Zed: fill glossary form:
-    ...    || DE_DE                    | EN_US                              ||
-    ...    || ${original_DE_text}-Test | ${original_EN_text}-Test-${random} ||
-    Zed: submit the form
-    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
-    Yves: validate the page title:    ${original_EN_text}-Test-${random}
-    Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    Zed: undo the changes in glossary translation:    ${glossary_name}     ${original_DE_text}    ${original_EN_text}
-    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
-    Yves: validate the page title:    ${original_EN_text}
-    [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    ...    AND    Zed: undo the changes in glossary translation:    ${glossary_name}     ${original_DE_text}    ${original_EN_text}
-
 Update_Customer_Data
     [Documentation]    Checks customer data can be updated from Yves and Zed
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     Yves: go to user menu item in header:    Overview
     Yves: 'Overview' page is displayed
     Yves: go to user menu item in header:    Profile
-    Yves: 'My Profile' page is displayed
+    Yves: 'Profile' page is displayed
     Yves: assert customer profile data:
     ...    || salutation | first name                           | last name                           | email                            ||
     ...    || Mr.        | ${yves_company_user_buyer_firstname} | ${yves_company_user_buyer_lastname} | ${yves_company_user_buyer_email} ||
@@ -2491,7 +2451,7 @@ Update_Customer_Data
     Yves: go to user menu item in header:    Overview
     Yves: 'Overview' page is displayed
     Yves: go to user menu item in header:    Profile
-    Yves: 'My Profile' page is displayed
+    Yves: 'Profile' page is displayed
     Yves: assert customer profile data:
     ...    || salutation | first name                           | last name                           | email                            ||
     ...    || Mr.        | ${yves_company_user_buyer_firstname} | ${yves_company_user_buyer_lastname} | ${yves_company_user_buyer_email} ||
@@ -2539,7 +2499,7 @@ Comment_Management_in_the_Cart
 
 Comment_Management_in_Order
     [Tags]    skip-due-to-issue
-    [Documentation]    Add comments in Yves and check in Zed. Bug:CC-23306
+    [Documentation]    Bug: CC-23306. Add comments in Yves and check in Zed
     Yves: login on Yves with provided credentials:    ${yves_company_user_shared_permission_owner_email}
     Yves: create new 'Shopping Cart' with name:    comments+${random}
     Yves: go to PDP of the product with sku:    ${one_variant_product_abstract_sku}
@@ -2560,3 +2520,28 @@ Comment_Management_in_Order
     Yves: check comments is visible or not in order:    true    abc${random}
     Zed: login on Zed with provided credentials:    ${zed_admin_email}    
     Zed: check comment appears at order detailed page in zed:    abc${random}    ${lastPlacedOrder}
+
+Glossary
+    [Documentation]    Create + edit glossary translation in BO
+    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: go to second navigation item level:    Administration    Glossary  
+    Zed: click button in Header:    Create Translation
+    Zed: fill glossary form:
+    ...    || Name                     | EN_US                        | DE_DE                             ||
+    ...    || cart.price.test${random} | This is a sample translation | Dies ist eine Beispielübersetzung ||
+    Zed: submit the form
+    Zed: table should contain:    cart.price.test${random}
+    Zed: go to second navigation item level:    Administration    Glossary 
+    Zed: click Action Button in a table for row that contains:    ${glossary_name}    Edit
+    Zed: fill glossary form:
+    ...    || DE_DE                    | EN_US                              ||
+    ...    || ${original_DE_text}-Test | ${original_EN_text}-Test-${random} ||
+    Zed: submit the form
+    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
+    Yves: validate the page title:    ${original_EN_text}-Test-${random}
+    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: undo the changes in glossary translation:    ${glossary_name}     ${original_DE_text}    ${original_EN_text}
+    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
+    Yves: validate the page title:    ${original_EN_text}
+    [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    ...    AND    Zed: undo the changes in glossary translation:    ${glossary_name}     ${original_DE_text}    ${original_EN_text}

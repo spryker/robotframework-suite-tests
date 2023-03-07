@@ -92,9 +92,10 @@ MP: create multi sku product with following data:
             Click    ${new_product_super_attribute_second_row_values_selector}
         END
         IF    '${key}'=='second attribute value' and '${value}' != '${EMPTY}'    MP: select option in expanded dropdown:    ${value}
-    END  
+    END
+    Sleep    1s 
     Element Should Contain    ${new_product_concretes_preview_count}    2
-    Click    ${new_product_submit_create_button}
+    Click    ${new_product_submit_create_button}    delay=1s
     Wait Until Element Is Visible    ${new_product_created_popup}
     Wait Until Element Is Not Visible    ${new_product_created_popup}
 
@@ -217,6 +218,6 @@ MP: add new concrete product:
             Click    xpath=//mp-concrete-product-attributes-selector[@class='mp-concrete-product-attributes-selector']//spy-form-item//label[contains(text(),'${firstAttributeName}')]/../..//spy-select
         END
     END
-    Click    ${new_product_submit_create_button}
+    Click    ${new_product_submit_create_button}    delay=1s
     Wait Until Element Is Visible    ${new_concrete_product_created_popup}
     Wait Until Element Is Not Visible    ${new_concrete_product_created_popup}

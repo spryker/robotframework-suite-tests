@@ -80,7 +80,7 @@ Zed: wait for button in Header to be visible:
 Zed: click Action Button in a table for row that contains:
     [Arguments]    ${row_content}    ${zed_table_action_button_locator}
     Zed: perform search by:    ${row_content}
-    wait until element is visible    xpath=(//table[contains(@class,'dataTable')]/tbody//td[contains(text(),'${row_content}')]/../td[contains(@class,'column-Action') or contains(@class,'column-action')]/*[contains(.,'${zed_table_action_button_locator}')])[1]
+    Wait until element is visible    xpath=(//table[contains(@class,'dataTable')]/tbody//td[contains(text(),'${row_content}')]/../td[contains(@class,'column-Action') or contains(@class,'column-action')]/*[contains(.,'${zed_table_action_button_locator}')])[1]
     Click    xpath=(//table[contains(@class,'dataTable')]/tbody//td[contains(text(),'${row_content}')]/../td[contains(@class,'column-Action') or contains(@class,'column-action')]/*[contains(.,'${zed_table_action_button_locator}')])[1]
 
 Zed: click Action Button in Variant table for row that contains:
@@ -100,11 +100,9 @@ Zed: Uncheck Checkbox by Label:
     Uncheck Checkbox    xpath=//input[@type='checkbox']/../../label[contains(text(),'${checkbox_label}')]//input
 
 Zed: submit the form
-    wait until element is visible    ${zed_save_button}
-    # Wait Until Keyword Succeeds    3 x    3 s    Click    
-    Click Element by xpath with JavaScript    //input[contains(@class,'safe-submit')]
+    Wait until element is visible    ${zed_save_button}
+    Click    ${zed_save_button}    delay=1s
     Wait Until Element Is Visible    ${zed_log_out_button}
-    Sleep    1s
 
 Zed: perform search by:
     [Arguments]    ${search_key}
