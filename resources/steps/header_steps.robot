@@ -79,8 +79,8 @@ Yves: go to '${pageName}' page through the header
 
 Yves: go to user menu item in header:
     [Arguments]    ${user_menu_item}
-    wait until element is visible  ${user_navigation_icon_header_menu_item}[${env}]
-    mouse over  ${user_navigation_icon_header_menu_item}[${env}]
+    Wait Until Element Is Visible  ${user_navigation_icon_header_menu_item}[${env}]
+    Mouse Over  ${user_navigation_icon_header_menu_item}[${env}]
     Wait Until Element Is Visible    ${user_navigation_fly_out_header_menu_item}[${env}]
     IF    '${env}' in ['ui_b2b','ui_mp_b2b']
         Click    //li[contains(@class,'user-navigation__item--user')]//nav[contains(@class,'user-navigation__sub-nav')]//ul[contains(@class,'list--secondary')]//a[text()='${user_menu_item}']

@@ -89,7 +89,7 @@ User_Account
     Yves: go to user menu item in header:    Orders History
     Yves: 'Order History' page is displayed
     Yves: go to user menu item in header:    My Profile
-    Yves: 'My Profile' page is displayed
+    Yves: 'Profile' page is displayed
     Yves: go To 'Wishlist' Page
     Yves: 'Wishlist' page is displayed
     Yves: go to user menu item in the left bar:    Addresses
@@ -2173,7 +2173,7 @@ Update_Customer_Data
     Yves: go to user menu item in header:    Overview
     Yves: 'Overview' page is displayed
     Yves: go to user menu item in header:    My Profile
-    Yves: 'My Profile' page is displayed
+    Yves: 'Profile' page is displayed
     Yves: assert customer profile data:
     ...    || salutation | first name                     | last name                     | email                     ||
     ...    || Mr.        | ${yves_second_user_first_name} | ${yves_second_user_last_name} | ${yves_second_user_email} ||
@@ -2194,7 +2194,7 @@ Update_Customer_Data
     Yves: go to user menu item in header:    Overview
     Yves: 'Overview' page is displayed
     Yves: go to user menu item in header:    My Profile
-    Yves: 'My Profile' page is displayed
+    Yves: 'Profile' page is displayed
     Yves: assert customer profile data:
     ...    || salutation | first name                     | last name                     | email                     ||
     ...    || Mr.        | ${yves_second_user_first_name} | ${yves_second_user_last_name} | ${yves_second_user_email} ||
