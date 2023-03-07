@@ -433,8 +433,7 @@ Split_Delivery
     ...    AND    Yves: delete all user addresses
 
 Agent_Assist
-    [Tags]    skip-due-to-issue
-    [Documentation]    Checks that agent can be used. Bug:CC-23550
+    [Documentation]    Checks that agent can be used.
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: create new Zed user with the following data:    agent+${random}@spryker.com    change${random}    Agent    Assist    Root group    This user is an agent    en_US
     Yves: go to the 'Home' page
