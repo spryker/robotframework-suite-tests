@@ -304,7 +304,7 @@
 #     [Teardown]    Run keywords    Yves: check if cart is not empty and clear it    
 #     ...    AND    Zed: login on Zed with provided credentials:    ${zed_admin_email}
 #     ...    AND    Zed: go to second navigation item level:    Merchandising    Discount
-#     ...    AND    Zed: Deactivate Following Discounts From Overview Page:    Voucher Code 5% ${random}    Cart Rule 10% ${random}    Promotional Product 100% ${random}        
+#     ...    AND    Zed: deactivate following discounts from Overview page:    Voucher Code 5% ${random}    Cart Rule 10% ${random}    Promotional Product 100% ${random}        
 
 # Recommendations
 #     [Documentation]    Checks similar products section in cart

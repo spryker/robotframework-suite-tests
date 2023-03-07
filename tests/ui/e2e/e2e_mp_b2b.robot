@@ -129,7 +129,6 @@ Share_Shopping_Carts
     Yves: 'Order Details' page is displayed
 
 Quick_Order
-    [Tags]    skip-due-to-issue
     [Documentation]    Bug: CC-24140. Checks Quick Order, checkout and Reorder
     [Setup]    Run keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     ...    AND    Yves: delete all shopping carts
@@ -801,7 +800,7 @@ Discounts
     Zed: grand total for the order equals:    ${lastPlacedOrder}    €18.11
     [Teardown]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: go to second navigation item level:    Merchandising    Discount
-    ...    AND    Zed: Deactivate Following Discounts From Overview Page:    Voucher Code 5% ${random}    Cart Rule 10% ${random}    Promotional Product 100% ${random}
+    ...    AND    Zed: deactivate following discounts from Overview page:    Voucher Code 5% ${random}    Cart Rule 10% ${random}    Promotional Product 100% ${random}
 
 Back_in_Stock_Notification
     [Tags]    skip-due-to-issue
@@ -847,10 +846,10 @@ Split_Delivery
     Yves: fill in new delivery address for a product:
     ...    || product | salutation | firstName | lastName | street       | houseNumber | postCode | city   | country | company | phone     | additionalAddress ||
     ...    || 403125  | Dr.        | First     | Last     | First Street | 1           | 10247    | Berlin | Germany | Spryker | 123456789 | Additional street ||
-   Yves: fill in new delivery address for a product:
+    Yves: fill in new delivery address for a product:
     ...    || product | salutation | firstName | lastName | street        | houseNumber | postCode | city   | country | company | phone     | additionalAddress ||
     ...    || 107254  | Dr.        | First     | Last     | Second Street | 2           | 10247    | Berlin | Germany | Spryker | 123456789 | Additional street ||
-   Yves: fill in new delivery address for a product:
+    Yves: fill in new delivery address for a product:
     ...    || product | salutation | firstName | lastName | street       | houseNumber | postCode | city   | country | company | phone     | additionalAddress ||
     ...    || 419904  | Dr.        | First     | Last     | Third Street | 3           | 10247    | Berlin | Germany | Spryker | 123456789 | Additional street ||
     Yves: fill in the following new billing address:
@@ -889,7 +888,6 @@ Content_Management
     ...    AND    Zed: click Action Button in a table for row that contains:    Test Page${random}    Deactivate
 
 Refunds
-    [Tags]    skip-due-to-issue
     [Documentation]    Bug: CC-17201. Checks that refund can be created for an item and the whole order of merchant
     [Setup]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: deactivate following discounts from Overview page:    20% off storage    10% off minimum order
@@ -1097,7 +1095,6 @@ Manage_Merchants_from_Backoffice
     ...    AND    Zed: click Action Button in a table for row that contains:     NewMerchantUpdated${random}     Deactivate
 
 Manage_Merchant_Users
-    [Tags]    skip-due-to-issue
     [Documentation]    Bug: CC-23118. Checks that backoffice admin is able to create, activate, edit and delete merchant users
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Marketplace    Merchants
@@ -1525,7 +1522,6 @@ Merchant_Portal_Offer_Volume_Prices
     ...    AND    Zed: click Action Button in a table for row that contains:     OfferNewProduct${random}     Deny
 
 Merchant_Portal_My_Account
-    [Tags]    skip-due-to-issue
     [Documentation]    Bug: CC-23118. Checks that MU can edit personal data in MP
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Marketplace    Merchants
@@ -1554,8 +1550,7 @@ Merchant_Portal_My_Account
     ...    AND    Zed: delete Zed user with the following email:    sonia+new+editmu+${random}@spryker.com
     
 Merchant_Portal_Dashboard
-    [Tags]    skip-due-to-issue
-    [Documentation]    Bug: CC-23118. Checks that merchant user is able to access the dashboard page
+    [Documentation]    Checks that merchant user is able to access the dashboard page
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Marketplace    Merchants
     Zed: click Action Button in a table for row that contains:     Oryx Merchant     Edit
@@ -2428,31 +2423,6 @@ User_Control
     ...    AND    Zed: go to second navigation item level:    Users    User Roles
     ...    AND    Zed: click Action Button in a table for row that contains:    controlRole${random}    Delete 
 
-Glossary
-    [Documentation]    Create + edit glossary translation in BO
-    Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    Zed: go to second navigation item level:    Administration    Glossary  
-    Zed: click button in Header:    Create Translation
-    Zed: fill glossary form:
-    ...    || Name                     | EN_US                        | DE_DE                             ||
-    ...    || cart.price.test${random} | This is a sample translation | Dies ist eine Beispielübersetzung ||
-    Zed: submit the form
-    Zed: table should contain:    cart.price.test${random}
-    Zed: go to second navigation item level:    Administration    Glossary 
-    Zed: click Action Button in a table for row that contains:    ${glossary_name}    Edit
-    Zed: fill glossary form:
-    ...    || DE_DE                    | EN_US                              ||
-    ...    || ${original_DE_text}-Test | ${original_EN_text}-Test-${random} ||
-    Zed: submit the form
-    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
-    Yves: validate the page title:    ${original_EN_text}-Test-${random}
-    Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    Zed: undo the changes in glossary translation:    ${glossary_name}     ${original_DE_text}    ${original_EN_text}
-    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
-    Yves: validate the page title:    ${original_EN_text}
-    [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    ...    AND    Zed: undo the changes in glossary translation:    ${glossary_name}     ${original_DE_text}    ${original_EN_text}
-
 Update_Customer_Data
     [Documentation]    Checks customer data can be updated from Yves and Zed
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
@@ -2549,3 +2519,28 @@ Comment_Management_in_Order
     Yves: check comments is visible or not in order:    true    abc${random}
     Zed: login on Zed with provided credentials:    ${zed_admin_email}    
     Zed: check comment appears at order detailed page in zed:    abc${random}    ${lastPlacedOrder}
+
+Glossary
+    [Documentation]    Create + edit glossary translation in BO
+    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: go to second navigation item level:    Administration    Glossary  
+    Zed: click button in Header:    Create Translation
+    Zed: fill glossary form:
+    ...    || Name                     | EN_US                        | DE_DE                             ||
+    ...    || cart.price.test${random} | This is a sample translation | Dies ist eine Beispielübersetzung ||
+    Zed: submit the form
+    Zed: table should contain:    cart.price.test${random}
+    Zed: go to second navigation item level:    Administration    Glossary 
+    Zed: click Action Button in a table for row that contains:    ${glossary_name}    Edit
+    Zed: fill glossary form:
+    ...    || DE_DE                    | EN_US                              ||
+    ...    || ${original_DE_text}-Test | ${original_EN_text}-Test-${random} ||
+    Zed: submit the form
+    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
+    Yves: validate the page title:    ${original_EN_text}-Test-${random}
+    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: undo the changes in glossary translation:    ${glossary_name}     ${original_DE_text}    ${original_EN_text}
+    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
+    Yves: validate the page title:    ${original_EN_text}
+    [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    ...    AND    Zed: undo the changes in glossary translation:    ${glossary_name}     ${original_DE_text}    ${original_EN_text}

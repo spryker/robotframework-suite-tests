@@ -798,7 +798,7 @@ Discounts
     Zed: grand total for the order equals:    ${lastPlacedOrder}    €1,072.31
     [Teardown]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: go to second navigation item level:    Merchandising    Discount
-    ...    AND    Zed: Deactivate Following Discounts From Overview Page:    Voucher Code 5% ${random}    Cart Rule 10% ${random}    Promotional Product 100% ${random}        
+    ...    AND    Zed: deactivate following discounts from Overview page:    Voucher Code 5% ${random}    Cart Rule 10% ${random}    Promotional Product 100% ${random}        
 
 Back_in_Stock_Notification
     [Documentation]    Back in stock notification is sent and availability check
