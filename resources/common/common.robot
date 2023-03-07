@@ -33,6 +33,9 @@ ${default_db_engine}       pymysql
 ${db_engine}
 ${host_yves}
 ${host_at_yves}
+${zed_url_host}
+${mp_url_host}
+${glue_url_host}
 # ${default_db_engine}       psycopg2
 
 # ${device}              Desktop Chrome
@@ -57,6 +60,37 @@ Set Up Keyword Arguments
         Set Test Variable    ${${key}}    ${var_value}
     END
     [Return]    &{arguments}
+Overwrite host variables
+    IF    '${host_yves}' == '${EMPTY}'
+            Set Suite Variable    ${host}    ${host}
+
+    ELSE
+            Set Suite Variable    ${host}    ${host_yves}
+    END
+        IF    '${host_at_yves}' == '${EMPTY}'
+            Set Suite Variable    ${host_at}    ${host_at}
+
+    ELSE
+            Set Suite Variable    ${host_at}    ${host_at_yves}
+    END
+        IF    '${zed_url_host}' == '${EMPTY}'
+            Set Suite Variable    ${zed_url}   ${zed_url}
+
+    ELSE
+            Set Suite Variable    ${zed_url}   ${zed_url_host}
+    END
+            IF    '${mp_url_host}' == '${EMPTY}'
+            Set Suite Variable    ${mp_url}    ${mp_url} 
+
+    ELSE
+            Set Suite Variable    ${mp_url}   ${mp_url_host}
+    END
+                IF    '${glue_url_host}' == '${EMPTY}'
+            Set Suite Variable    ${glue_url}    ${glue_url} 
+
+    ELSE
+            Set Suite Variable    ${glue_url}   ${glue_url_host}
+    END
 
 SuiteSetup
     [documentation]  Basic steps before each suite
@@ -66,13 +100,7 @@ SuiteSetup
     New Browser    ${browser}    headless=${headless}    args=['--ignore-certificate-errors']
     Set Browser Timeout    ${browser_timeout}
     Create default Main Context
-    IF    '${host_yves}' == '${EMPTY}'
-            Set Suite Variable    ${host}    ${host}
-
-    ELSE
-            Set Suite Variable    ${host}    ${host_yves}
-    END
-        Log    ${host}
+    Overwrite host variables
     New Page    ${host}
     ${random}=    Generate Random String    5    [NUMBERS]
     Set Global Variable    ${random}
