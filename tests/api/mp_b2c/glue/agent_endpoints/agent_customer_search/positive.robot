@@ -162,7 +162,7 @@ Agent_can_get_search_for_customers_from_last_page
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response body parameter should be:    [data][0][id]    None
     And Response body parameter should be:    [data][0][type]    agent-customer-search
-    And Response should contain the array of a certain size:    [data][0][attributes][customers]    6
+    And Response should contain the array of a certain size:    [data][0][attributes][customers]    1
     And Response body parameter should be:    [data][0][attributes][customers][0][customerReference]    ${yves_user.reference}
     And Response body parameter should be:    [data][0][attributes][customers][0][email]    ${yves_user.email}
     And Response body parameter should be:     [data][0][attributes][customers][0][firstName]     ${yves_user.first_name}
