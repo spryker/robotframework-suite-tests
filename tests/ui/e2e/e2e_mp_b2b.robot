@@ -800,7 +800,8 @@ Discounts
     Zed: grand total for the order equals:    ${lastPlacedOrder}    €18.11
     [Teardown]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: go to second navigation item level:    Merchandising    Discount
-    ...    AND    Zed: deactivate following discounts from Overview page:    Voucher Code 5% ${random}    Cart Rule 10% ${random}    Promotional Product 100% ${random}
+    ...    AND    Zed: Deactivate Following Discounts From Overview Page:    Voucher Code 5% ${random}    Cart Rule 10% ${random}    Promotional Product 100% ${random}
+    ...    AND    Zed: activate following discounts from Overview page:    Free chair    Tu & Wed $5 off 5 or more    10% off $100+    Free marker    20% off storage    Free office chair    Free standard delivery    10% off Safescan    5% off white    Tu & Wed €5 off 5 or more    10% off minimum order
 
 Back_in_Stock_Notification
     [Tags]    skip-due-to-issue
