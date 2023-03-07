@@ -452,8 +452,7 @@ Agent_Assist
     ...    AND    Zed: delete Zed user with the following email:    agent+${random}@spryker.com
 
 Return_Management
-    [Tags]    skip-due-to-issue
-    [Documentation]    Checks that returns work and oms process is checked. Bug:CC-23550
+    [Documentation]    Checks that returns work and oms process is checked.
     Yves: login on Yves with provided credentials:    ${yves_user_email}
     Yves: check if cart is not empty and clear it
     Yves: go to PDP of the product with sku:    007
@@ -614,7 +613,7 @@ Guest_Checkout
 
 Refunds
     [Tags]    skip-due-to-issue
-    [Documentation]    Checks that refund can be created for one item and the whole order. Fails due to bug CC-17232
+    [Documentation]    Bug: CC-17201. Checks that refund can be created for one item and the whole order
     [Setup]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: deactivate following discounts from Overview page:    Tu & Wed $5 off 5 or more    10% off $100+    20% off cameras    Tu & Wed €5 off 5 or more    10% off minimum order
     Yves: login on Yves with provided credentials:    ${yves_user_email}
