@@ -83,7 +83,7 @@ TestSetup
             Set Suite Variable    ${tag}    glue
         END
     END
-        IF    '${bapi_env}' == '${EMPTY}'
+    IF    '${bapi_env}' == '${EMPTY}'
         IF    '${tag}'=='bapi'  
             Set Suite Variable    ${current_url}    ${bapi_url}
             Set Suite Variable    ${tag}    bapi
@@ -95,7 +95,6 @@ TestSetup
         END
     END
     END
-        Log    ${current_url}
 
 Load Variables
     [Documentation]    Keyword is used to load variable values from the environment file passed during execution. This Keyword is used during suite setup.
