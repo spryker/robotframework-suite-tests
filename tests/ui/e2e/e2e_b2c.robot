@@ -1356,7 +1356,7 @@ CRUD_Product_Set
     Yves: check if cart is not empty and clear it
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: delete product set:    test set ${random}
-    Yves: go to URL and refresh until 404 occurs:    ${host}en/test-set-${random}
+    Yves: go to URL and refresh until 404 occurs:    ${yves_url}en/test-set-${random}
 
 Payment_method_update
      [Documentation]    Deactivate payment method, unset payment method for stores in zed and check its impact on yves.
