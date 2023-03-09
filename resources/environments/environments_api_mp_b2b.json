@@ -593,7 +593,9 @@
        "cms_page_collection_url":"/en/gtc",
        "brand_name":"verbatim",
        "cart_permission_group_id":"1",
-       "cart_permission_group_type":"cart-permission-groups"
+       "cart_permission_group_type":"cart-permission-groups",
+       "subcategory_nodes_storage_name1":"Fish",
+       "subcategory_nodes_storage_url1":"/en/foods/fish"
     },
     "availability":{
        "stock_is_0":"0.0000000000",
