@@ -45,14 +45,14 @@ Yves: login on Yves with provided credentials:
         IF    '${env}' in ['ui_b2b','ui_suite','ui_mp_b2b']
             ${currentURL}=    Get Location
                 IF    '.at.' in '${currentURL}'
-                    Go To    ${host_at}
+                    Go To    ${yves_at_url}
                     delete all cookies
                     Reload
                     Wait Until Element Is Visible    ${header_login_button}[${env}]
                     Click    ${header_login_button}[${env}]
                     Wait Until Element Is Visible    ${email_field}
                 ELSE
-                    Go To    ${host}
+                    Go To    ${yves_url}
                     delete all cookies
                     Reload
                     Wait Until Element Is Visible    ${header_login_button}[${env}]
@@ -62,7 +62,7 @@ Yves: login on Yves with provided credentials:
         ELSE
                 ${currentURL}=    Get Location
                     IF    '.at.' in '${currentURL}'
-                        Go To    ${host_at}
+                        Go To    ${yves_at_url}
                         delete all cookies
                         Reload
                         mouse over  ${user_navigation_icon_header_menu_item}[${env}]
@@ -70,7 +70,7 @@ Yves: login on Yves with provided credentials:
                         Click    ${user_navigation_menu_login_button}
                         Wait Until Element Is Visible    ${email_field}
                     ELSE
-                        Go To    ${host}
+                        Go To    ${yves_url}
                         delete all cookies
                         Reload
                         mouse over  ${user_navigation_icon_header_menu_item}[${env}]
@@ -155,13 +155,13 @@ Yves: logout on Yves as a customer
 Yves: go to the 'Home' page
     ${currentURL}=    Get Location
     IF    '.at.' in '${currentURL}'
-        Go To    ${host_at}
+        Go To    ${yves_at_url}
     ELSE
-        Go To    ${host}
+        Go To    ${yves_url}
     END
 
 Yves: go to AT store 'Home' page
-    Go To    ${host_at}
+    Go To    ${yves_at_url}
 
 Yves: get the last placed order ID by current customer
     [Documentation]    Returns orderID of the last order from customer account
@@ -185,17 +185,17 @@ Yves: get the last placed order ID by current customer
 Yves: go to URL:
     [Arguments]    ${url}
     ${url}=    Get URL Without Starting Slash    ${url}
-    Go To    ${host}${url}
+    Go To    ${yves_url}${url}
 
 Yves: go to AT URL:
     [Arguments]    ${url}
     ${url}=    Get URL Without Starting Slash    ${url}
-    Go To    ${host_at}${url}
+    Go To    ${yves_at_url}${url}
 
 Yves: go to newly created page by URL:
     [Arguments]    ${url}    ${iterations}=26
     FOR    ${index}    IN RANGE    0    ${iterations}
-        Go To    ${host}${url}
+        Go To    ${yves_url}${url}
         ${page_not_published}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//main//*[contains(text(),'ERROR 404')]
         Log    ${page_not_published}
         IF    '${page_not_published}'=='True'
@@ -212,7 +212,7 @@ Yves: go to newly created page by URL:
 Yves: go to newly created page by URL on AT store:
     [Arguments]    ${url}    ${iterations}=26
     FOR    ${index}    IN RANGE    0    ${iterations}
-        Go To    ${host_at}${url}
+        Go To    ${yves_at_url}${url}
         ${page_not_published}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//main//*[contains(text(),'ERROR 404')]
         Log    ${page_not_published}
         IF    '${page_not_published}'=='True'

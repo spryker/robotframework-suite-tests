@@ -31,13 +31,12 @@ ${default_db_port}         3306
 ${default_db_user}         spryker
 ${default_db_engine}       pymysql
 ${db_engine}
-${host_yves}
-${host_at_yves}
-${zed_url_host}
-${mp_url_host}
-${glue_url_host}
+${yves_env}
+${yves_at_env}
+${zed_env}
+${mp_env}
+${glue_env}
 # ${default_db_engine}       psycopg2
-
 # ${device}              Desktop Chrome
 # ${fake_email}          test.spryker+${random}@gmail.com
 
@@ -60,36 +59,32 @@ Set Up Keyword Arguments
         Set Test Variable    ${${key}}    ${var_value}
     END
     [Return]    &{arguments}
-Overwrite host variables
-    IF    '${host_yves}' == '${EMPTY}'
-            Set Suite Variable    ${host}    ${host}
 
+Overwrite env variables
+    IF    '${yves_env}' == '${EMPTY}'
+            Set Suite Variable    ${yves_url}    ${yves_url}
     ELSE
-            Set Suite Variable    ${host}    ${host_yves}
+            Set Suite Variable    ${yves_url}    ${yves_env}
     END
-        IF    '${host_at_yves}' == '${EMPTY}'
-            Set Suite Variable    ${host_at}    ${host_at}
-
+    IF    '${yves_at_env}' == '${EMPTY}'
+            Set Suite Variable    ${yves_at_url}    ${yves_at_url}
     ELSE
-            Set Suite Variable    ${host_at}    ${host_at_yves}
+            Set Suite Variable    ${yves_at_url}    ${yves_at_env}
     END
-        IF    '${zed_url_host}' == '${EMPTY}'
+    IF    '${zed_env}' == '${EMPTY}'
             Set Suite Variable    ${zed_url}   ${zed_url}
-
     ELSE
-            Set Suite Variable    ${zed_url}   ${zed_url_host}
+            Set Suite Variable    ${zed_url}   ${zed_env}
     END
-            IF    '${mp_url_host}' == '${EMPTY}'
+    IF    '${mp_env}' == '${EMPTY}'
             Set Suite Variable    ${mp_url}    ${mp_url} 
-
     ELSE
-            Set Suite Variable    ${mp_url}   ${mp_url_host}
+            Set Suite Variable    ${mp_url}   ${mp_env}
     END
-                IF    '${glue_url_host}' == '${EMPTY}'
+    IF    '${glue_env}' == '${EMPTY}'
             Set Suite Variable    ${glue_url}    ${glue_url} 
-
     ELSE
-            Set Suite Variable    ${glue_url}   ${glue_url_host}
+            Set Suite Variable    ${glue_url}   ${glue_env}
     END
 
 SuiteSetup
@@ -100,8 +95,8 @@ SuiteSetup
     New Browser    ${browser}    headless=${headless}    args=['--ignore-certificate-errors']
     Set Browser Timeout    ${browser_timeout}
     Create default Main Context
-    Overwrite host variables
-    New Page    ${host}
+    Overwrite env variables
+    New Page    ${yves_url}
     ${random}=    Generate Random String    5    [NUMBERS]
     Set Global Variable    ${random}
     ${today}=    Get Current Date    result_format=%Y-%m-%d
@@ -116,7 +111,7 @@ SuiteTeardown
 
 TestSetup
     Delete All Cookies
-    Go To    ${host}
+    Go To    ${yves_url}
 
 TestTeardown
     # Run Keyword If Test Failed    Pause Execution
@@ -295,7 +290,7 @@ Select From List By Text
 
 Create New Context
     ${new_context}=    New Context
-    New Page    ${host}
+    New Page    ${yves_url}
 
 Switch back to the Main Context
     Switch Context    ${main_context}
