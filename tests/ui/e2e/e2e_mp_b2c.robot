@@ -183,7 +183,7 @@ Volume_Prices
     [Documentation]    Checks volume prices are applied
     Yves: login on Yves with provided credentials:    ${yves_user_email}
     Yves: go to PDP of the product with sku:    193
-    Yves: change quantity on PDP:    5
+    Yves: change quantity using '+' or '-' button № times:    +    4
     Yves: add product to the shopping cart
     Yves: go to b2c shopping cart
     Yves: shopping cart contains product with unit price:    193    Sony FDR-AX40    825.00
