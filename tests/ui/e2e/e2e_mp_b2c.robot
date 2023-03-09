@@ -346,7 +346,7 @@ Add_to_Wishlist
 Discounts
     [Documentation]    Discounts, Promo Products, and Coupon Codes (includes guest checkout)
     [Setup]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    ...    AND    Zed: deactivate following discounts from Overview page:    Free Acer Notebook    Tu & Wed $5 off 5 or more    10% off $100+    Free smartphone    20% off cameras    Free Acer M2610    Free standard delivery    10% off Intel Core    5% off white    Tu & Wed €5 off 5 or more    10% off minimum order
+    ...    AND    Zed: deactivate all discounts from Overview page
     ...    AND    Zed: change product stock:    190    190_25111746    true    10
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Merchandising    Discount
@@ -1249,7 +1249,7 @@ Merchant_Portal_Offer_Volume_Prices
     ...    AND    Zed: click Action Button in a table for row that contains:     OfferNewProduct${random}     Deny
 
 Merchant_Portal_My_Account
-    [Documentation]    Checks that MU can edit personal data in MP. Bug: CC-23118
+    [Documentation]    Checks that MU can edit personal data in MP
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Marketplace    Merchants
     Zed: click Action Button in a table for row that contains:     Sony Experts     Edit
@@ -1277,8 +1277,7 @@ Merchant_Portal_My_Account
     ...    AND    Zed: delete Zed user with the following email:    sonia+new+editmu+${random}@spryker.com
     
 Merchant_Portal_Dashboard
-    [Tags]    skip-due-to-issue
-    [Documentation]    Checks that merchant user is able to access the dashboard page. Bug: CC-23118
+    [Documentation]    Checks that merchant user is able to access the dashboard page
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Marketplace    Merchants
     Zed: click Action Button in a table for row that contains:     Sony Experts     Edit
