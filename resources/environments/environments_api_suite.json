@@ -210,6 +210,14 @@
              }
           }
        },
+       "warehause_user":{
+         "name":"",
+         "password":""
+       },
+       "admin_not_warehause_user":{
+         "name":"",
+         "password":""
+       },
        "product_with_relations":{
           "has_related_products":{
              "sku":"200"
