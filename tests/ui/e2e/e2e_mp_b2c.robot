@@ -1087,7 +1087,7 @@ Wishlist_List_Supports_Offers
 
 Search_for_Merchant_Offers_and_Products
     [Tags]    skip-due-to-issue
-    [Documentation]    Checks that through search customer is able to see the list of merchant's products and offers. Fails due to CC-17153
+    [Documentation]    Bug: CC-17153. Checks that through search customer is able to see the list of merchant's products and offers
     Yves: go to the 'Home' page
     Yves: perform search by:    Video King
     Yves: go to the PDP of the first available product on open catalog page
@@ -1106,7 +1106,7 @@ Search_for_Merchant_Offers_and_Products
 
 Merchant_Portal_Product_Volume_Prices
     [Tags]    skip-due-to-issue
-    [Documentation]    Checks that merchant is able to create new multi-SKU product with volume prices. Falback to default price after delete. Bug: CC-23356
+    [Documentation]    Bug: CC-23356. Checks that merchant is able to create new multi-SKU product with volume prices. Falback to default price after delete
     MP: login on MP with provided credentials:    ${merchant_video_king_email}
     MP: open navigation menu tab:    Products    
     MP: click on create new entity button:    Create Product
@@ -1529,7 +1529,7 @@ Merchant_Product_Original_Price
 
 Checkout_Address_Management
     [Tags]    skip-due-to-issue
-    [Documentation]    Checks that user can change address during the checkout and save new into the address book. Bug:CC-24090
+    [Documentation]    Bug: CC-24090. Checks that user can change address during the checkout and save new into the address book
     [Setup]    Run Keywords    
     ...    Yves: login on Yves with provided credentials:    ${yves_user_email}
     ...    AND    Yves: delete all user addresses
@@ -1891,7 +1891,7 @@ Multistore_CMS
 
 Product_Availability_Calculation
     [Tags]    skip-due-to-issue
-    [Documentation]    check product availability + multistore. Bug: CC-24108
+    [Documentation]    Bug: CC-24108. Check product availability + multistore
     MP: login on MP with provided credentials:    ${merchant_spryker_email}
     MP: open navigation menu tab:    Products    
     MP: click on create new entity button:    Create Product
