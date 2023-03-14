@@ -1106,7 +1106,7 @@ Search_for_Merchant_Offers_and_Products
 
 Merchant_Portal_Product_Volume_Prices
     [Tags]    skip-due-to-issue
-    [Documentation]    Bug: CC-23356. Checks that merchant is able to create new multi-SKU product with volume prices. Falback to default price after delete
+    [Documentation]    Bug: CC-25609. Checks that merchant is able to create new multi-SKU product with volume prices. Falback to default price after delete
     MP: login on MP with provided credentials:    ${merchant_video_king_email}
     MP: open navigation menu tab:    Products    
     MP: click on create new entity button:    Create Product
@@ -1167,7 +1167,8 @@ Merchant_Portal_Product_Volume_Prices
     ...    AND    Zed: click Action Button in a table for row that contains:     VPNewProduct${random}     Deny
 
 Merchant_Portal_Offer_Volume_Prices
-    [Documentation]    Checks that merchant is able to create new offer with volume prices and it will be displayed on Yves. Falback to default price after delete.
+    [Tags]    skip-due-to-issue
+    [Documentation]    Bug: CC-25609. Checks that merchant is able to create new offer with volume prices and it will be displayed on Yves. Falback to default price after delete.
     MP: login on MP with provided credentials:    ${merchant_spryker_email}
     MP: open navigation menu tab:    Products    
     MP: click on create new entity button:    Create Product
@@ -1366,7 +1367,8 @@ Merchant_Product_Offer_in_Backoffice
     ...    AND    Zed: click Action Button in a table for row that contains:     ViewProduct${random}     Deny
 
 Manage_Merchant_Product
-    [Documentation]    checks that MU and BO user can manage merchant abstract and concrete products + add new concrete product
+    [Tags]    skip-due-to-issue
+    [Documentation]    Bug: CC-25609. Checks that MU and BO user can manage merchant abstract and concrete products + add new concrete product
     MP: login on MP with provided credentials:    ${merchant_budget_cameras_email}
     MP: open navigation menu tab:    Products    
     MP: click on create new entity button:    Create Product
