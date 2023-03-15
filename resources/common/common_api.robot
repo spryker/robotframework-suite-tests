@@ -1765,6 +1765,53 @@ Nested array element should contain sub-array at least once:
         IF    'FAIL' in ${result}    Continue For Loop
     END
 
+Nested array element should contain sub-array with property and value at least once:
+    [Documentation]    This keyword checks that nested array ``${parrent_array}`` in the array specified as ``${json_path}`` contains the specified sub-array ``${expected_nested_array}`` with property ${expected_property}  and value for property ${expected_value} at least once.
+    ...
+    ...    *Example:*
+    ...
+    ...    ``And Nested array element should contain sub-array with property and value at least once:      [data]    [relationships]    company-role``
+    ...
+    [Arguments]    ${json_path}     ${parrent_array}    ${expected_nested_array}    ${expected_property}    ${expected_value}
+    @{data}=    Get Value From Json    ${response_body}    ${json_path}
+    ${result}=    Set Variable    'FALSE'
+    ${list_length}=    Get Length    @{data}
+    ${log_list}=    Log List    @{data}
+    ${expected_nested_array}=    Replace String    ${expected_nested_array}    [   ${EMPTY}
+    ${expected_nested_array}=    Replace String    ${expected_nested_array}    ]   ${EMPTY}
+    ${expected_nested_array}=    Replace String    ${expected_nested_array}    '   ${EMPTY}
+    ${expected_nested_array}=    Convert To String    ${expected_nested_array}
+    FOR    ${index}    IN RANGE    0    ${list_length}
+        IF    'PASS' in ${result}    BREAK
+        ${list_element}=    Get From List    @{data}    ${index}
+        Log    ${list_element}
+        @{list_element2}=    Get Value From Json    ${list_element}    ${parrent_array}
+        ${list_length2}=    Get Length    @{list_element2}
+        Log     ${list_element2}
+        Log List    ${list_element}
+        FOR    ${index2}    IN RANGE    0    ${list_length2}
+            ${list_element}=    Get From List    @{list_element2}    ${index2}
+            Log    ${list_element}
+            ${list_length3}=    Get Length    ${list_element}
+
+           
+            ${list_element}=    Get Value From Json    ${list_element}    ${expected_nested_array}
+            Log    ${list_element}
+            Log    ${expected_property}
+            ${list_element}=    Get Value From Json    ${list_element}    ${expected_property}
+            ${list_element}=    Convert To String    ${list_element}
+            ${list_element}=    Replace String    ${list_element}    '   ${EMPTY}
+            ${list_element}=    Replace String    ${list_element}    [   ${EMPTY}
+            ${list_element}=    Replace String    ${list_element}    ]   ${EMPTY}
+            ${result}=    Run Keyword And Ignore Error    Should Contain   ${list_element}    ${expected_value}    ignore_case=True
+            IF    'PASS' in ${result}    BREAK
+            IF    ${index1} == ${list_length1}-1 and ${index2} == ${list_length2}-1
+                Fail    expected '${expected_property}' with value '${expected_value}' is not present in '${nested_array}' but should
+            END
+            IF    'FAIL' in ${result}    Continue For Loop
+        END 
+    END
+
 Array element should contain nested array with property and value at least once:
     [Documentation]    This keyword checks whether the array ``${nested_array}`` that is present in the parrent array ``${json_path}``  contsains propery ``${expected_property}`` with value ``${expected_value}`` at least once.
     ...
