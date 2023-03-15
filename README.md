@@ -1,23 +1,55 @@
 ## Description
-This repository contains sets of API and UI, built on the Robot Framework. API tests use the RequestsLibrary in conjunction with Robot Framework, while UI tests rely on the Browser library (powered by Playwright). 
+This repository contains sets of API and UI tests, built on the Robot Framework. API tests use the RequestsLibrary in conjunction with Robot Framework, while UI tests rely on the Browser library (powered by Playwright). 
 
 ## Installation
 
 ### Prerequisites
-Robot Framework is implemented using Python, and a precondition to install it is having Python or its alternative implementation PyPy installed. Another recommended precondition is having the pip package manager available.
+[Robot Framework](https://robotframework.org/) is implemented using [Python](https://www.python.org/), and a precondition to install it is having Python or its alternative implementation [PyPy](https://www.pypy.org/) installed. Another recommended precondition is having the [pip](https://pip.pypa.io/en/stable/) package manager available.
+Robot Framework requires Python 3.6 or newer.
 
-### For UI testing installation requires both Robot Framework and Browser library powered by Playwright. 
 1. Install [Robot Framework](https://github.com/robotframework/robotframework/blob/master/INSTALL.rst)
-2. Install [Browser library](https://robotframework-browser.org/#installation)
-3. Install RequestsLibrary: `pip install robotframework-requests`
+```sh
+python3 -m pip install -U robotframework
+```
+2. Install [RequestsLibrary](https://github.com/MarketSquare/robotframework-requests)
+```sh
+python3 -m pip install -U robotframework-requests
+```
+3. Install [DatabaseLibrary](https://github.com/franz-see/Robotframework-Database-Library)
+ ```sh
+ python3 -m pip install -U robotframework-databaselibrary
+ ```
+4. Install Python SQL library, depending on your configuration
+   * Engine: **MySQL**
+   ```sh
+    python3 -m pip install PyMySQL
+    ```
+   * Engine: **PostgreSQL**
+    ```sh
+    python3 -m pip install psycopg2-binary
+    ```
+###  Installation for UI tests
+##### For UI testing installation requires Robot Framework, [RequestsLibrary](https://github.com/MarketSquare/robotframework-requests), [DatabaseLibrary](https://github.com/franz-see/Robotframework-Database-Library) and [Browser library](https://robotframework-browser.org/) powered by Playwright. 
+If you installed everything from the [prerequisites](#Prerequisites), all you need to install is the Browser library.
 
-### For API testing installation requires Robot Framework, [RequestsLibrary](https://github.com/MarketSquare/robotframework-requests), [JSONLibrary](https://github.com/robotframework-thailand/robotframework-jsonlibrary), [DatabaseLibrary](https://github.com/franz-see/Robotframework-Database-Library) and [PyMySQL](https://github.com/PyMySQL/PyMySQL).
-1. Install [Robot Framework](https://github.com/robotframework/robotframework/blob/master/INSTALL.rst)
-2. Install RequestsLibrary: `pip install robotframework-requests`
-3. Install JSONLibrary: `pip install -U robotframework-jsonlibrary`
-4. Install DatabaseLibrary: `pip install -U robotframework-databaselibrary`
-5. Install PyMySQL: `python3 -m pip install PyMySQL`
-6. Import PyMySQL: `import pymysql` - if PyMySQL still doesn't work, you can use direct import command
+1. Install [Browser library](https://robotframework-browser.org/#installation)
+```sh
+python3 -m pip install -U robotframework-browser
+```
+2. Initialize the Browser library
+```sh
+rfbrowser init
+```
+###  Installation for API tests
+
+##### For API testing installation requires Robot Framework, [RequestsLibrary](https://github.com/MarketSquare/robotframework-requests), [JSONLibrary](https://github.com/robotframework-thailand/robotframework-jsonlibrary) and [DatabaseLibrary](https://github.com/franz-see/Robotframework-Database-Library).
+If you installed everything from the [prerequisites](#Prerequisites), all you need to install is the JSONLibrary.
+
+1. Install JSONLibrary
+```sh
+python3 -m pip install -U robotframework-jsonlibrary
+```
+
 
 ## How to run tests
 
