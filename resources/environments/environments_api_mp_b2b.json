@@ -62,6 +62,13 @@
           "password":"change123",
           "salutation":"Mr"
        },
+       "yves_ottom_company_user":{
+         "email":"andrew@ottom.de",
+         "first_name":"Andrew",
+         "last_name":"Wedner",
+         "password":"change123",
+         "salutation":"Mr"
+      },
        "gender":{
           "female":"Female",
           "male":"Male"
