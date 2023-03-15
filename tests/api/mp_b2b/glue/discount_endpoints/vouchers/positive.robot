@@ -10,7 +10,7 @@ ENABLER
 
 #####POST#####
 Adding_voucher_code_to_cart_of_logged_in_customer
-    [Documentation]   #bug CC-16735 is fixed in internal B2B, but there is no fix in public MP-B2B
+    [Documentation]   bug CC-16735 is fixed in internal B2B, but there is no fix in public MP-B2B
     [Tags]    skip-due-to-issue 
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}
@@ -40,7 +40,7 @@ Adding_voucher_code_to_cart_of_logged_in_customer
     ...  AND    Response status code should be:    204
 
 Checking_voucher_is_applied_after_order_is_placed
-    [Documentation]   #bug CC-16735 is fixed in internal B2B, but there is no fix in public MP-B2B; CC-16678
+    [Documentation]   bug CC-16735 is fixed in internal B2B, but there is no fix in public MP-B2B; CC-16678
     [Tags]    skip-due-to-issue 
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_second_user.email}
     ...    AND    I set Headers:    Authorization=${token}
@@ -73,7 +73,7 @@ Checking_voucher_is_applied_after_order_is_placed
 
 
 Adding_two_vouchers_with_different_priority_to_the_same_cart
-    [Documentation]   #bug CC-16735 is fixed in internal B2B, but there is no fix in public MP-B2B
+    [Documentation]   bug CC-16735 is fixed in internal B2B, but there is no fix in public MP-B2B
     [Tags]    skip-due-to-issue
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}
@@ -115,7 +115,7 @@ Adding_two_vouchers_with_different_priority_to_the_same_cart
 
 
 Adding_voucher_with_cart_rule_with_to_the_same_cart
-    [Documentation]   #bug CC-16735 is fixed in internal B2B, but there is no fix in public MP-B2B
+    [Documentation]   bug CC-16735 is fixed in internal B2B, but there is no fix in public MP-B2B
     [Tags]    skip-due-to-issue
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}
@@ -148,7 +148,7 @@ Adding_voucher_with_cart_rule_with_to_the_same_cart
 
 ####### DELETE #######
 Deleting_voucher_from_cart_of_logged_in_customer
-    [Documentation]   #bug CC-16735 is fixed in internal B2B, but there is no fix in public MP-B2B
+    [Documentation]   bug CC-16735 is fixed in internal B2B, but there is no fix in public MP-B2B
     [Tags]    skip-due-to-issue
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}

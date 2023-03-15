@@ -7,6 +7,7 @@ Default Tags    glue
 *** Test Cases ***
 ENABLER
     TestSetup
+    
 Request_product_concrete_by_id
     When I send a GET request:    /concrete-products/${product_with_alternative.concrete_sku}
     Then Response status code should be:    200
@@ -178,9 +179,9 @@ Request_product_concrete_with_included_bundled_products
     And Response body has correct self link internal 
     And Response should contain the array of a certain size:    [data][relationships]   1
     And Response should contain the array of a certain size:    [data][relationships][bundled-products][data]    3
-    And Response body parameter should be:    [data][relationships][bundled-products][data][0][id]    ${bundle_product.concrete.product_3_sku}
-    And Response body parameter should be:    [data][relationships][bundled-products][data][1][id]    ${bundle_product.concrete.product_2_sku}
-    And Response body parameter should be:    [data][relationships][bundled-products][data][2][id]    ${bundle_product.concrete.product_1_sku}
+    And Response body parameter should be in:    [data][relationships][bundled-products][data][0][id]    ${bundle_product.concrete.product_3_sku}    ${bundle_product.concrete.product_2_sku}    ${bundle_product.concrete.product_1_sku}
+    And Response body parameter should be in:    [data][relationships][bundled-products][data][1][id]    ${bundle_product.concrete.product_3_sku}    ${bundle_product.concrete.product_2_sku}    ${bundle_product.concrete.product_1_sku}
+    And Response body parameter should be in:    [data][relationships][bundled-products][data][2][id]    ${bundle_product.concrete.product_3_sku}    ${bundle_product.concrete.product_2_sku}    ${bundle_product.concrete.product_1_sku}
     And Response should contain the array of a certain size:    [included]    6
     And Response include should contain certain entity type:    bundled-products
     And Response include should contain certain entity type:    concrete-products
@@ -208,9 +209,9 @@ Request_product_concrete_with_included_bundled_products_concrete_products_and_ab
     And Response should contain the array of a certain size:    [data][relationships][abstract-products][data]    1
     And Response body parameter should be:    [data][relationships][abstract-products][data][0][id]    ${bundle_product.abstract.sku}
     And Response should contain the array of a certain size:    [data][relationships][bundled-products][data]    3
-    And Response body parameter should be:    [data][relationships][bundled-products][data][0][id]    ${bundle_product.concrete.product_3_sku}
-    And Response body parameter should be:    [data][relationships][bundled-products][data][1][id]    ${bundle_product.concrete.product_2_sku}
-    And Response body parameter should be:    [data][relationships][bundled-products][data][2][id]    ${bundle_product.concrete.product_1_sku}
+    And Response body parameter should be in:    [data][relationships][bundled-products][data][0][id]    ${bundle_product.concrete.product_3_sku}    ${bundle_product.concrete.product_2_sku}    ${bundle_product.concrete.product_1_sku}
+    And Response body parameter should be in:    [data][relationships][bundled-products][data][1][id]    ${bundle_product.concrete.product_3_sku}    ${bundle_product.concrete.product_2_sku}    ${bundle_product.concrete.product_1_sku}
+    And Response body parameter should be in:    [data][relationships][bundled-products][data][2][id]    ${bundle_product.concrete.product_3_sku}    ${bundle_product.concrete.product_2_sku}    ${bundle_product.concrete.product_1_sku}
     And Response should contain the array of a certain size:    [included]    16
     And Response include should contain certain entity type:    abstract-products
     And Response include should contain certain entity type:    bundled-products

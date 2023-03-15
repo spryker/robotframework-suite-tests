@@ -81,11 +81,10 @@ Delete_refresh_token_with_no_access_token
 
 # Spryker is designed so that deleting will return 204, but the token will not be removed and can be used (done for security reasons)
 Delete_refresh_token_for_another_user
-    [Tags]    skip-due-to-refactoring
     [Setup]    Run Keywords    I send a POST request:    /access-tokens    {"data":{"type":"access-tokens","attributes":{"username":"${yves_user.email}","password":"${yves_user.password}"}}}
     ...    AND    Response status code should be:    201
     ...    AND    Save value to a variable:    [data][attributes][refreshToken]    refresh_token
-    ...    AND    Save value to a variable:    [data][attributes][refreshToken]    access_token
+    ...    AND    Save value to a variable:    [data][attributes][accessToken]    access_token
     When I get access token for the customer:    ${yves_second_user.email}
     And I set Headers:    Authorization=${token}
     And I send a DELETE request:    /refresh-tokens/${refresh_token}

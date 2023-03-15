@@ -4,41 +4,41 @@ Suite Setup       SuiteSetup
 Suite Teardown    SuiteTeardown
 Test Setup        TestSetup
 Test Teardown     TestTeardown
-Resource    ../../resources/common/common.robot
-Resource    ../../resources/steps/header_steps.robot
-Resource    ../../resources/common/common_yves.robot
-Resource    ../../resources/common/common_zed.robot
-Resource    ../../resources/steps/pdp_steps.robot
-Resource    ../../resources/steps/shopping_lists_steps.robot
-Resource    ../../resources/steps/checkout_steps.robot
-Resource    ../../resources/steps/customer_registration_steps.robot
-Resource    ../../resources/steps/order_history_steps.robot
-Resource    ../../resources/steps/product_set_steps.robot
-Resource    ../../resources/steps/catalog_steps.robot
-Resource    ../../resources/steps/agent_assist_steps.robot
-Resource    ../../resources/steps/company_steps.robot
-Resource    ../../resources/steps/customer_account_steps.robot
-Resource    ../../resources/steps/configurable_bundle_steps.robot
-Resource    ../../resources/steps/zed_users_steps.robot
-Resource    ../../resources/steps/products_steps.robot
-Resource    ../../resources/steps/orders_management_steps.robot
-Resource    ../../resources/steps/wishlist_steps.robot
-Resource    ../../resources/steps/zed_availability_steps.robot
-Resource    ../../resources/steps/zed_discount_steps.robot
-Resource    ../../resources/steps/zed_cms_page_steps.robot
-Resource    ../../resources/steps/zed_customer_steps.robot
-Resource    ../../resources/steps/merchant_profile_steps.robot
-Resource    ../../resources/steps/zed_marketplace_steps.robot
-Resource    ../../resources/steps/mp_profile_steps.robot
-Resource    ../../resources/steps/mp_orders_steps.robot
-Resource    ../../resources/steps/mp_offers_steps.robot
-Resource    ../../resources/steps/mp_products_steps.robot
-Resource    ../../resources/steps/mp_account_steps.robot
-Resource    ../../resources/steps/mp_dashboard_steps.robot
-Resource    ../../resources/steps/zed_root_menus_steps.robot
-Resource    ../../resources/steps/minimum_order_value_steps.robot
-Resource    ../../resources/steps/availability_steps.robot
-Resource    ../../resources/steps/glossary_steps.robot
+Resource    ../../../resources/common/common.robot
+Resource    ../../../resources/steps/header_steps.robot
+Resource    ../../../resources/common/common_yves.robot
+Resource    ../../../resources/common/common_zed.robot
+Resource    ../../../resources/steps/pdp_steps.robot
+Resource    ../../../resources/steps/shopping_lists_steps.robot
+Resource    ../../../resources/steps/checkout_steps.robot
+Resource    ../../../resources/steps/customer_registration_steps.robot
+Resource    ../../../resources/steps/order_history_steps.robot
+Resource    ../../../resources/steps/product_set_steps.robot
+Resource    ../../../resources/steps/catalog_steps.robot
+Resource    ../../../resources/steps/agent_assist_steps.robot
+Resource    ../../../resources/steps/company_steps.robot
+Resource    ../../../resources/steps/customer_account_steps.robot
+Resource    ../../../resources/steps/configurable_bundle_steps.robot
+Resource    ../../../resources/steps/zed_users_steps.robot
+Resource    ../../../resources/steps/products_steps.robot
+Resource    ../../../resources/steps/orders_management_steps.robot
+Resource    ../../../resources/steps/wishlist_steps.robot
+Resource    ../../../resources/steps/zed_availability_steps.robot
+Resource    ../../../resources/steps/zed_discount_steps.robot
+Resource    ../../../resources/steps/zed_cms_page_steps.robot
+Resource    ../../../resources/steps/zed_customer_steps.robot
+Resource    ../../../resources/steps/merchant_profile_steps.robot
+Resource    ../../../resources/steps/zed_marketplace_steps.robot
+Resource    ../../../resources/steps/mp_profile_steps.robot
+Resource    ../../../resources/steps/mp_orders_steps.robot
+Resource    ../../../resources/steps/mp_offers_steps.robot
+Resource    ../../../resources/steps/mp_products_steps.robot
+Resource    ../../../resources/steps/mp_account_steps.robot
+Resource    ../../../resources/steps/mp_dashboard_steps.robot
+Resource    ../../../resources/steps/zed_root_menus_steps.robot
+Resource    ../../../resources/steps/minimum_order_value_steps.robot
+Resource    ../../../resources/steps/availability_steps.robot
+Resource    ../../../resources/steps/glossary_steps.robot
 
 *** Test Cases ***
 New_Customer_Registration
@@ -828,7 +828,7 @@ Manage_Merchants_from_Backoffice
     Zed: update Merchant on edit page with the following data:
     ...    || merchant name | merchant reference | e-mail  | uncheck store | en url | de url ||
     ...    ||               |                    |         | DE            |        |        ||
-    Yves: go to URL and refresh until 404 occurs:    ${host}en/merchant/NewMerchantURL${random}
+    Yves: go to URL and refresh until 404 occurs:    ${yves_url}en/merchant/NewMerchantURL${random}
     [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: go to second navigation item level:    Marketplace    Merchants  
     ...    AND    Zed: click Action Button in a table for row that contains:     NewMerchantUpdated${random}     Deactivate

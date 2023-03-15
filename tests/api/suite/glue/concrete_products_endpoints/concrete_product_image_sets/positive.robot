@@ -22,7 +22,8 @@ Request_concrete_product_with_one_image_set
     And Response body parameter should not be EMPTY:    [data][0][attributes][imageSets][0][images][0][externalUrlSmall]
 
 Request_concrete_product_with_multiple_images
-    [Tags]    skip-due-to-refactoring
+    [Documentation]   missing demodata https://spryker.atlassian.net/browse/CC-25735
+    [Tags]    skip-due-to-issue  
     When I send a GET request:    /concrete-products/${concrete_products.multiple_image_set.sku}/concrete-product-image-sets
     Then Response status code should be:    200
     And Response reason should be:    OK

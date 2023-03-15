@@ -31,6 +31,7 @@ Zed: verify second navigation root menus
         ${counter_1}=    Set Variable    1
         Log    ${counter}
         Click    xpath=(//ul[@id='side-menu']/li/a/span[@class='nav-label']/../../a[contains(@href,'javascript')])[${counter}]
+        Wait Until Element Is Visible    xpath=(//ul[@id='side-menu']/li/a/span[@class='nav-label']/../../a[contains(@href,'javascript')]/parent::li)[${counter}]
         ${second_navigation_count}=    Get Element Count    xpath=((//ul[@id='side-menu']/li/a/span[@class='nav-label']/../../a[contains(@href,'javascript')])[${counter}]/ancestor::li//ul[contains(@class,'nav-second-level')]//a)
             WHILE  ${counter_1} <= ${second_navigation_count}
                 ${node_state}=    Get Element Attribute    xpath=(//ul[@id='side-menu']/li/a/span[@class='nav-label']/../../a[contains(@href,'javascript')]/parent::li)[${counter}]    class

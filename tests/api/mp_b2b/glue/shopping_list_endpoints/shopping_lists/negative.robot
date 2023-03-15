@@ -19,7 +19,7 @@ Create_a_shopping_list_with_empty_values_for_required_fields
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}  
     I send a POST request:    /shopping-lists    {"data":{"type":"shopping-lists","attributes":{"name":""}}}
-    Response status code should be:    422
+    Response status code should be:    ${422}
     And Response reason should be:   Unprocessable Content
     And Response should return error code:    901
     And Array in response should contain property with value:    [errors]    detail    name => This value should not be blank.
@@ -45,7 +45,7 @@ Create_a_shopping_list_with_already_existing_name
     ...    AND    I send a POST request:    /shopping-lists    {"data":{"type":"shopping-lists","attributes":{"name":"${shopping_list_name}${random}"}}}
     ...    AND    Save value to a variable:    [data][id]    shoppingListId
     I send a POST request:    /shopping-lists    {"data":{"type":"shopping-lists","attributes":{"name":"${shopping_list_name}${random}"}}}
-    And Response status code should be:    422
+    And Response status code should be:    ${422}
     And Response reason should be:   Unprocessable Content
     And Response should return error code:    1506
     And Array in response should contain property with value:    [errors]    detail    Shopping list with given name already exists.
@@ -58,7 +58,7 @@ Create_a_shopping_list_with_too_long_name
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}  
     I send a POST request:    /shopping-lists    {"data":{"type":"shopping-lists","attributes":{"name":"12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890"}}}
-    And Response status code should be:    422
+    And Response status code should be:    ${422}
     And Response reason should be:   Unprocessable Content
     And Response should return error code:    901
     And Array in response should contain property with value:    [errors]    detail    name => This value is too long. It should have 255 characters or less.
@@ -111,7 +111,7 @@ Update_shopping_list_for_the_customer_with_empty_attribute_section
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}  
     I send a PATCH request:    /shopping-lists/shoppingListId    {"data":{"type":"shopping-lists","attributes":{}}}
-    And Response status code should be:    422
+    And Response status code should be:    ${422}
     And Response reason should be:   Unprocessable Content
     And Response should return error code:    901
     And Array in response should contain property with value:    [errors]    detail    name => This field is missing.
@@ -123,7 +123,7 @@ Update_shopping_list_with_existing_name_of_another_available_shopping_list
     ...    AND    Save value to a variable:    [data][0][id]    shoppingListId
     ...    AND    Save value to a variable:    [data][1][attributes][name]    2ndShoppingListName
     I send a PATCH request:    /shopping-lists/${shoppingListId}    {"data":{"type":"shopping-lists","attributes":{"name":"${2ndShoppingListName}"}}}
-    And Response status code should be:    422
+    And Response status code should be:    ${422}
     And Response reason should be:   Unprocessable Content
     And Response should return error code:    1506
     And Array in response should contain property with value:    [errors]    detail    Shopping list with given name already exists.
@@ -132,7 +132,7 @@ Update_shopping_list_with_empty_name
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}  
     I send a PATCH request:    /shopping-lists/shoppingListId    {"data":{"type":"shopping-lists","attributes":{"name":""}}}
-    And Response status code should be:    422
+    And Response status code should be:    ${422}
     And Response reason should be:   Unprocessable Content
     And Response should return error code:    901
     And Array in response should contain property with value:    [errors]    detail    name => This value should not be blank.
@@ -141,7 +141,7 @@ Update_shopping_list_name_with_too_long_value
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}  
     I send a PATCH request:    /shopping-lists/shoppingListId    {"data":{"type":"shopping-lists","attributes":{"name":"12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890"}}}
-    And Response status code should be:    422
+    And Response status code should be:    ${422}
     And Response reason should be:   Unprocessable Content
     And Response should return error code:    901
     And Array in response should contain property with value:    [errors]    detail    name => This value is too long. It should have 255 characters or less.

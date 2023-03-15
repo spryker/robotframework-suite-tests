@@ -8,16 +8,15 @@ Default Tags    glue
 ENABLER
     TestSetup
 
-######POST#####
+#POST#
 Create_customer_address_with_missing_required_fields
-    [Tags]    skip-due-to-refactoring
     When I get access token for the customer:    ${yves_user.email}
     And I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     And I send a POST request:    /customers/${yves_user.reference}/addresses    {"data": {"type": "addresses","attributes": {"address3": "${default.address3}"}}}
     Then Response status code should be:    422
     And Response reason should be:    Unprocessable Content
     And Each array element of array in response should contain property with value:    [errors]    code    901
-    And Each array element of array in response should contain property with value:    [errors]    status    422
+    And Each array element of array in response should contain property with value:    [errors]    status    ${422}
     And Array in response should contain property with value:    [errors]    detail    salutation => This field is missing.
     And Array in response should contain property with value:    [errors]    detail    firstName => This field is missing.
     And Array in response should contain property with value:    [errors]    detail    lastName => This field is missing.
@@ -30,14 +29,13 @@ Create_customer_address_with_missing_required_fields
     And Array in response should contain property with value:    [errors]    detail    isDefaultBilling => This field is missing.
 
 Create_customer_address_with_empty_fields
-    [Tags]    skip-due-to-refactoring
     When I get access token for the customer:    ${yves_user.email}
     And I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     And I send a POST request:    /customers/${yves_user.reference}/addresses    {"data": {"type": "addresses","attributes": {"salutation": "","firstName": "","lastName": "","address1": "","address2": "","address3": "","zipCode": "","city": "","country": "","iso2Code": "","company":"","phone": "","isDefaultShipping": "","isDefaultBilling": ""}}}
     Then Response status code should be:    422
     And Response reason should be:    Unprocessable Content
     And Each array element of array in response should contain property with value:    [errors]    code    901
-    And Each array element of array in response should contain property with value:    [errors]    status    422
+    And Each array element of array in response should contain property with value:    [errors]    status    ${422}
     And Array in response should contain property with value:    [errors]    detail    salutation => This value should not be blank.
     And Array in response should contain property with value:    [errors]    detail    salutation => The value you selected is not a valid choice.
     And Array in response should contain property with value:    [errors]    detail    firstName => This value should not be blank.
@@ -47,8 +45,8 @@ Create_customer_address_with_empty_fields
     And Array in response should contain property with value:    [errors]    detail    zipCode => This value should not be blank.
     And Array in response should contain property with value:    [errors]    detail    city => This value should not be blank.
 
-# Bug CC-15866
 Create_customer_address_with_invalid_salutation_bug_CC-15866
+    [Documentation]    Bug CC-15866
     When I get access token for the customer:    ${yves_user.email}
     And I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     And I send a POST request:    /customers/${yves_user.reference}/addresses    {"data": {"type": "addresses","attributes": {"salutation": "Fake","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}","address1": "${default.address1}","address2": "${default.address2}","zipCode": "${default.zipCode}","city": "${default.city}","iso2Code": "${default.iso2Code}","isDefaultShipping": ${default.shipping_status},"isDefaultBilling": ${default.billing_status}}}}
@@ -91,7 +89,7 @@ Create_customer_address_with_empty_type
     And Response reason should be:    Bad Request
     And Response should return error message:    Invalid type.
 
-######GET#####
+#GET#
 Get_non-existent_customer_address
     When I get access token for the customer:    ${yves_user.email}
     And I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
@@ -166,7 +164,7 @@ Get_other_customer_address_by_id_and_reference
     ...    AND    Response status code should be:    204
 
 
-######PATCH#####
+#PATCH#
 Patch_customer_address_without_id
     When I get access token for the customer:    ${yves_user.email}
     And I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
@@ -244,17 +242,16 @@ Patch_customer_address_with_wrong_reference
     ...    AND    Response status code should be:    204
 
 Patch_customer_address_with_empty_required_fields
-    [Tags]    skip-due-to-refactoring
     [Setup]    Run keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     ...    AND    I send a POST request:    /customers/${yves_user.reference}/addresses    {"data": {"type": "addresses","attributes": {"salutation": "${yves_second_user.salutation}","firstName": "${yves_second_user.first_name}","lastName": "${yves_second_user.last_name}","address1": "${default.address1}","address2": "${default.address2}","address3": "${default.address3}","zipCode": "${default.zipCode}","city": "${default.city}","country": "${default.country}","iso2Code": "${default.iso2Code}","company":"${default.company}","phone": "${default.phone}","isDefaultShipping": ${default.shipping_status},"isDefaultBilling": ${default.billing_status}}}}
     ...    AND    Response status code should be:    201
     ...    AND    Save value to a variable:    [data][id]    address_uid
     When I send a PATCH request:    /customers/${yves_user.reference}/addresses/${address_uid}    {"data": {"salutation": "${yves_second_user.salutation}","type": "addresses","attributes": {"salutation": None,"firstName": None,"lastName": None, "address1": None,"address2": None,"zipCode": None,"city": None,"iso2Code": None}}}
-    Then Response status code should be:    422
+    Then Response status code should be:    ${422}
     And Response reason should be:    Unprocessable Content
     And Each array element of array in response should contain property with value:    [errors]    code    901
-    And Each array element of array in response should contain property with value:    [errors]    status    422
+    And Each array element of array in response should contain property with value:    [errors]    status    ${422}
     And Array in response should contain property with value:    [errors]    detail    salutation => This value should not be blank.
     And Array in response should contain property with value:    [errors]    detail    firstName => This value should not be blank.
     And Array in response should contain property with value:    [errors]    detail    lastName => This value should not be blank.
@@ -267,8 +264,8 @@ Patch_customer_address_with_empty_required_fields
     ...    AND    Response status code should be:    204
 
 
-# Bug CC-15866
 Patch_customer_address_with_invalid_salutation_bug_CC-15866
+    [Documentation]    Bug CC-15866
     [Setup]    Run keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     ...    AND    I send a POST request:    /customers/${yves_user.reference}/addresses    {"data": {"type": "addresses","attributes": {"salutation": "${yves_second_user.salutation}","firstName": "${yves_second_user.first_name}","lastName": "${yves_second_user.last_name}","address1": "${default.address1}","address2": "${default.address2}","address3": "${default.address3}","zipCode": "${default.zipCode}","city": "${default.city}","country": "${default.country}","iso2Code": "${default.iso2Code}","company":"${default.company}","phone": "${default.phone}","isDefaultShipping": ${default.shipping_status},"isDefaultBilling": ${default.billing_status}}}}
@@ -282,7 +279,7 @@ Patch_customer_address_with_invalid_salutation_bug_CC-15866
     ...    AND    Response status code should be:    204
 
 
-######DELETE#####
+#DELETE#
 Delete_customer_address_with_wrong_id
     When I get access token for the customer:    ${yves_user.email}
     And I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}

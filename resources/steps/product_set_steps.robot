@@ -11,7 +11,7 @@ Yves: 'Product Sets' page contains the following sets:
     ${product_set_list_count}=   get length  ${product_set_list}
     FOR    ${index}    IN RANGE    0    ${product_set_list_count}
         ${product_set_to_check}=    Get From List    ${product_set_list}    ${index}
-        IF    '${env}' in ['b2b','mp_b2b']
+        IF    '${env}' in ['ui_b2b','ui_mp_b2b']
             Page Should Contain Element    xpath=//*[contains(@class,'product-set-card__name')][text()="${product_set_to_check}"]/ancestor::article
         ELSE
             Page Should Contain Element    xpath=//*[contains(@class,'title')][text()="${product_set_to_check}"]/ancestor::article
@@ -20,7 +20,7 @@ Yves: 'Product Sets' page contains the following sets:
 
 Yves: view the following Product Set:
     [Arguments]    ${productSetName}
-    IF    '${env}' in ['b2b','mp_b2b']
+    IF    '${env}' in ['ui_b2b','ui_mp_b2b']
         Click    xpath=//*[contains(@class,'product-set-card__name')][text()="${productSetName}"]/ancestor::article
     ELSE
         Click    xpath=//*[contains(@class,'title')][text()="${productSetName}"]/ancestor::article

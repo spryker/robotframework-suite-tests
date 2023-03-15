@@ -9,7 +9,7 @@ Zed: create new Zed user with the following data:
     [Arguments]    ${zedUserEmail}    ${zedUserPassword}   ${zedUserFirstName}    ${zedUserLastName}    ${checkboxGroup}   ${checkboxAgent}    ${userInterfaceLanguage}
     ${currentURL}=    Get Location
     IF    '/user' not in '${currentURL}'    Zed: go to second navigation item level:    Users    Users
-    IF    '${env}' in ['mp_b2b']
+    IF    '${env}' in ['ui_mp_b2b']
         Zed: click button in Header:    Add New User
     ELSE 
         Zed: click button in Header:    Add New User
@@ -24,7 +24,7 @@ Zed: create new Zed user with the following data:
     Zed: Check checkbox by Label:    ${checkboxAgent}
     Select From List By Label    ${zed_user_interface_language}    ${userInterfaceLanguage}
     Zed: submit the form
-    IF    '${env}' in ['mp_b2b']
+    IF    '${env}' in ['ui_mp_b2b']
         Zed: wait for button in Header to be visible:    Add New User    ${browser_timeout}
     ELSE 
         Zed: wait for button in Header to be visible:    Add New User    ${browser_timeout}
@@ -33,7 +33,7 @@ Zed: create new Zed user with the following data:
 
 Yves: perform search by customer:
     [Arguments]    ${searchQuery}
-    Type Text    ${agent_customer_search_widget}    ${searchQuery}
+    Type Text    ${agent_customer_search_widget}    ${searchQuery}    delay=1s
 
 Yves: agent widget contains:
     [Arguments]    ${searchQuery}

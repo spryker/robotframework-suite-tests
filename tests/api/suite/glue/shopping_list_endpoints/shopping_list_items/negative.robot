@@ -40,8 +40,7 @@ Add_a_product_to_the_non_existing_shopping_list
     And Response reason should be:    Not Found
     And Response should return error message:    Shopping list not found.
 
-# https://spryker.atlassian.net/browse/CC-19379
-Add_a_product_with_non_existing_sku_to_the_shopping_list    
+Add_a_product_with_non_existing_sku_to_the_shopping_list  
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}  
     ...    AND    I send a POST request:    /shopping-lists    {"data":{"type":"shopping-lists","attributes":{"name":"${shopping_list_name}${random}"}}}
@@ -118,7 +117,6 @@ Add_too_big_amount_of_concrete_product_to_the_shopping_list
     ...    AND    Response reason should be:    No Content
 
 Add_an_abstract_product_to_the_shopping_list  
-    [Tags]    skip-due-to-refactoring  
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}  
     ...    AND    I send a POST request:    /shopping-lists    {"data":{"type":"shopping-lists","attributes":{"name":"${shopping_list_name}${random}"}}}
@@ -127,8 +125,8 @@ Add_an_abstract_product_to_the_shopping_list
     I send a POST request:    /shopping-lists/${shoppingListId}/shopping-list-items    {"data":{"type":"shopping-list-items","attributes":{"sku":"${bundle_product.abstract.sku}","quantity":1}}}
     And Response status code should be:    422
     And Response reason should be:    Unprocessable Content
-    And Response should return error message:    1508
-    And Response should return error code:    Concrete product not found.
+    And Response should return error code:    1508
+    And Response should return error message:    Concrete product not found.
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     [Teardown]    Run Keywords    I send a DELETE request:    /shopping-lists/${shoppingListId}
     ...    AND    Response status code should be:    204
@@ -180,7 +178,6 @@ Add_a_concrete_product_without_quantity_to_the_shopping_list
     ...    AND    Response reason should be:    No Content
 
 Add_a_concrete_product_invalid_data_for_quantity_to_the_shopping_list    
-    [Tags]    skip-due-to-refactoring
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}  
     ...    AND    I send a POST request:    /shopping-lists    {"data":{"type":"shopping-lists","attributes":{"name":"${shopping_list_name}${random}"}}}
@@ -191,7 +188,14 @@ Add_a_concrete_product_invalid_data_for_quantity_to_the_shopping_list
     And Response should return error code:    901
     And Response reason should be:    Unprocessable Content
     And Array in response should contain property with value:    [errors]    detail    quantity => This value should be of type integer.
+    And Array in response should contain property with value:    [errors]    detail    quantity => This value should be less than 2147483647.
+    I send a POST request:    /shopping-lists/${shoppingListId}/shopping-list-items    {"data":{"type":"shopping-list-items","attributes":{"sku":"${concrete_available_product.sku}","quantity":"-7"}}}    
+    And Response status code should be:    422
+    And Response should return error code:    901
+    And Response reason should be:    Unprocessable Content
+    And Array in response should contain property with value:    [errors]    detail    quantity => This value should be of type integer.
     And Array in response should contain property with value:    [errors]    detail    quantity => This value should be greater than 0.
+   
     [Teardown]    Run Keywords    I send a DELETE request:    /shopping-lists/${shoppingListId}
     ...    AND    Response status code should be:    204
     ...    AND    Response reason should be:    No Content
@@ -305,15 +309,20 @@ Update_quantity_of_the_product_at_the_shopping_list_to_zero
     And Response should return error message:    quantity => This value should be greater than 0.
 
 Update_product_quntity_at_the_shopping_list_to_non_digit_value
-    [Tags]    skip-due-to-refactoring
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}  
-    I send a PATCH request:    /shopping-lists/shoppingListId/shopping-list-items/shoppingListItemId    {"data":{"type":"shopping-list-items","attributes":{"quantity":"test"}}}
+    I send a PATCH request:    /shopping-lists/shoppingListId/shopping-list-items/shoppingListItemId    {"data":{"type":"shopping-list-items","attributes":{"quantity":"-2"}}}
     And Response status code should be:    422
     And Response should return error code:    901
     And Response reason should be:    Unprocessable Content
     And Array in response should contain property with value:    [errors]    detail    quantity => This value should be of type integer.
     And Array in response should contain property with value:    [errors]    detail    quantity => This value should be greater than 0.
+    I send a PATCH request:    /shopping-lists/shoppingListId/shopping-list-items/shoppingListItemId    {"data":{"type":"shopping-list-items","attributes":{"quantity":"test"}}}
+    And Response status code should be:    422
+    And Response should return error code:    901
+    And Response reason should be:    Unprocessable Content
+    And Array in response should contain property with value:    [errors]    detail    quantity => This value should be of type integer.
+    And Array in response should contain property with value:    [errors]    detail    quantity => This value should be less than 2147483647.
 
 Update_product_in_the_shopping_list_withot_shopping_list_item_id
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
@@ -642,7 +651,7 @@ Add_a_configurable_product_with_empty_availableQuantity_value_of_to_the_shopping
     ...    AND    Response status code should be:    204
     ...    AND    Response reason should be:    No Content
 
-Add_aconfigurable_product_with_missing_availableQuantity_value_of_to_the_shopping_list
+Add_a_configurable_product_with_missing_availableQuantity_value_of_to_the_shopping_list
     [Documentation]   https://spryker.atlassian.net/browse/CC-25381
     [Tags]    skip-due-to-issue    
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}

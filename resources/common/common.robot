@@ -9,6 +9,7 @@ Library    DateTime
 Library    ../../resources/libraries/common.py
 Library    Telnet
 Library    RequestsLibrary
+Library    DatabaseLibrary
 Resource                  ../pages/yves/yves_header_section.robot
 Resource                  ../pages/yves/yves_login_page.robot
 
@@ -22,6 +23,20 @@ ${email_domain}        @spryker.com
 ${default_password}    change123
 ${admin_email}         admin@spryker.com
 ${device}
+# *** DB VARIABLES ***
+${default_db_host}         127.0.0.1
+${default_db_name}         eu-docker
+${default_db_password}     secret
+${default_db_port}         3306
+${default_db_user}         spryker
+${default_db_engine}       pymysql
+${db_engine}
+${yves_env}
+${yves_at_env}
+${zed_env}
+${mp_env}
+${glue_env}
+# ${default_db_engine}       psycopg2
 # ${device}              Desktop Chrome
 # ${fake_email}          test.spryker+${random}@gmail.com
 
@@ -45,6 +60,33 @@ Set Up Keyword Arguments
     END
     [Return]    &{arguments}
 
+Overwrite env variables
+    IF    '${yves_env}' == '${EMPTY}'
+            Set Suite Variable    ${yves_url}    ${yves_url}
+    ELSE
+            Set Suite Variable    ${yves_url}    ${yves_env}
+    END
+    IF    '${yves_at_env}' == '${EMPTY}'
+            Set Suite Variable    ${yves_at_url}    ${yves_at_url}
+    ELSE
+            Set Suite Variable    ${yves_at_url}    ${yves_at_env}
+    END
+    IF    '${zed_env}' == '${EMPTY}'
+            Set Suite Variable    ${zed_url}   ${zed_url}
+    ELSE
+            Set Suite Variable    ${zed_url}   ${zed_env}
+    END
+    IF    '${mp_env}' == '${EMPTY}'
+            Set Suite Variable    ${mp_url}    ${mp_url} 
+    ELSE
+            Set Suite Variable    ${mp_url}   ${mp_env}
+    END
+    IF    '${glue_env}' == '${EMPTY}'
+            Set Suite Variable    ${glue_url}    ${glue_url} 
+    ELSE
+            Set Suite Variable    ${glue_url}   ${glue_env}
+    END
+
 SuiteSetup
     [documentation]  Basic steps before each suite
     Remove Files    ${OUTPUTDIR}/selenium-screenshot-*.png
@@ -53,7 +95,8 @@ SuiteSetup
     New Browser    ${browser}    headless=${headless}    args=['--ignore-certificate-errors']
     Set Browser Timeout    ${browser_timeout}
     Create default Main Context
-    New Page    ${host}
+    Overwrite env variables
+    New Page    ${yves_url}
     ${random}=    Generate Random String    5    [NUMBERS]
     Set Global Variable    ${random}
     ${today}=    Get Current Date    result_format=%Y-%m-%d
@@ -68,7 +111,7 @@ SuiteTeardown
 
 TestSetup
     Delete All Cookies
-    Go To    ${host}
+    Go To    ${yves_url}
 
 TestTeardown
     # Run Keyword If Test Failed    Pause Execution
@@ -247,7 +290,7 @@ Select From List By Text
 
 Create New Context
     ${new_context}=    New Context
-    New Page    ${host}
+    New Page    ${yves_url}
 
 Switch back to the Main Context
     Switch Context    ${main_context}
@@ -320,3 +363,46 @@ Remove leading and trailing whitespace from a string:
     ${string}=    Replace String Using Regexp    ${string}    (^[ ]+|[ ]+$)    ${EMPTY}
     Set Global Variable    ${string}
     [Return]    ${string}
+
+Connect to Spryker DB
+    ${db_name}=    Set Variable If    '${db_name}' == '${EMPTY}'    ${default_db_name}    ${db_name}
+    ${db_user}=    Set Variable If    '${db_name}' == '${EMPTY}'    ${default_db_user}    ${db_user}
+    ${db_password}=    Set Variable If    '${db_name}' == '${EMPTY}'    ${default_db_password}    ${db_password}
+    ${db_host}=    Set Variable If    '${db_name}' == '${EMPTY}'    ${default_db_host}    ${db_host}
+    ${db_port}=    Set Variable If    '${db_name}' == '${EMPTY}'    ${default_db_port}    ${db_port}
+    ${db_engine}=    Set Variable If    '${db_engine}' == '${EMPTY}'    ${default_db_engine}    ${db_engine}
+    Connect To Database    ${db_engine}    ${db_name}    ${db_user}    ${db_password}    ${db_host}    ${db_port}
+
+Save the result of a SELECT DB query to a variable:
+    [Documentation]    This keyword saves any value which you receive from DB using SQL query ``${sql_query}`` to a test variable called ``${variable_name}``.
+    ...
+    ...    It can be used to save a value returned by any query into a custom test variable.
+    ...    This variable, once created, can be used during the specific test where this keyword is used and can be re-used by the keywords that follow this keyword in the test.
+    ...    It will not be visible to other tests.
+    ...    NOTE: Make sure that you expect only 1 value from DB, you can also check your query via external SQL tool.
+    ...
+    ...    *Examples:*
+    ...
+    ...    ``Save the result of a SELECT DB query to a variable:    select registration_key from spy_customer where customer_reference = '${user_reference_id}'    confirmation_key``
+    [Arguments]    ${sql_query}    ${variable_name}
+    Connect to Spryker DB
+    ${var_value} =    Query    ${sql_query}
+    Disconnect From Database
+    ${var_value}=    Convert To String    ${var_value}
+    ${var_value}=    Replace String    ${var_value}    '   ${EMPTY}
+    ${var_value}=    Replace String    ${var_value}    ,   ${EMPTY}
+    ${var_value}=    Replace String    ${var_value}    (   ${EMPTY}
+    ${var_value}=    Replace String    ${var_value}    )   ${EMPTY}
+    ${var_value}=    Replace String    ${var_value}    [   ${EMPTY}
+    ${var_value}=    Replace String    ${var_value}    ]   ${EMPTY}
+    Set Test Variable    ${${variable_name}}    ${var_value}
+    [Return]    ${variable_name}
+
+## Example of intercepting the network request
+##     [Arguments]    ${eventName}    ${timeout}=30s
+##     ${response}=    Wait for response    matcher=bazaarvoice\\.com\\/\\w+\\.gif\\?.*type=${eventName}    timeout=${timeout}
+##     Should be true    ${response}[ok]
+## OR
+##    [Arguments]    ${timeout}=30s
+##    ${response}=    Wait for response    matcher=usercentrics.*?graphql     timeout=${timeout}
+##    Should be true    ${response}[ok]

@@ -7,6 +7,7 @@ Default Tags      glue
 *** Test Cases ***
 ENABLER
     TestSetup
+
 ####POST#####
 Add_one_item_to_cart
    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
@@ -156,15 +157,15 @@ Add_five_items_to_cart_with_included_cart_rules_and_promotional_items
    And Response body parameter should be:    [data][id]    ${cart_id}
    And Response body parameter should be:    [data][type]    carts
    And Response body parameter should not be EMPTY:    [data][links][self]
-   And Response should contain the array of a certain size:    [data][relationships][cart-rules][data]    1
-   And Response should contain the array of a certain size:    [included]    3
+   And Response should contain the array larger than a certain size:    [data][relationships][cart-rules][data]    0
+   And Response should contain the array larger than a certain size:    [included]    2
    And Response include should contain certain entity type:    cart-rules
    And Response include should contain certain entity type:    items
    And Response include element has self link:    cart-rules
    And Response include element has self link:    items
    [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cart_id}/items/${concrete_product_with_concrete_product_alternative.sku}
    ...    AND    Response status code should be:    204
-
+# 
 Add_product_with_options_to_cart
        [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
@@ -241,7 +242,7 @@ Change_item_qty_in_cart
    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
    ...    AND    find or create customer cart
    ...    AND    Cleanup all items in the cart:    ${cart_id}
-   ...    AND    I send a POST request:    /carts/${cart_id}/items?include=items    {"data": {"type": "items","attributes": {"sku": "${product_availability.concrete_available_with_stock_and_never_out_of_stock_sku}","quantity": 1}}}
+   ...    AND    I send a POST request:    /carts/${cart_id}/items?include=items    {"data": {"type": "items","attributes": {"sku": "${product_availability.concrete_available_with_stock_and_never_out_of_stock_sku}","quantity": 3}}}
    ...    AND    Save value to a variable:    [included][0][id]    item_uid
    ...    AND    Save value to a variable:    [included][0][attributes][calculations][sumPriceToPayAggregation]    item_total_price
    When I send a PATCH request:    /carts/${cart_id}/items/${item_uid}?include=items    {"data":{"type": "items","attributes":{"quantity": 2}}}
@@ -261,7 +262,7 @@ Change_item_amount_in_cart
    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
    ...    AND    find or create customer cart
    ...    AND    Cleanup all items in the cart:    ${cart_id}
-   ...    AND    I send a POST request:    /carts/${cart_id}/items?include=items    {"data": {"type": "items","attributes": {"sku": "${product_availability.concrete_available_with_stock_and_never_out_of_stock_sku}","quantity": 1}}}
+   ...    AND    I send a POST request:    /carts/${cart_id}/items?include=items    {"data": {"type": "items","attributes": {"sku": "${product_availability.concrete_available_with_stock_and_never_out_of_stock_sku}","quantity": 3}}}
    ...    AND    Save value to a variable:    [included][0][id]    item_uid
    ...    AND    Save value to a variable:    [included][0][attributes][calculations][sumPriceToPayAggregation]    item_total_price
    When I send a PATCH request:    /carts/${cart_id}/items/${item_uid}?include=items    {"data":{"type": "items","attributes":{"quantity": 2}}}

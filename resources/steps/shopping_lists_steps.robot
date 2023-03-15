@@ -24,7 +24,7 @@ Yves: go To 'Shopping Lists' Page
 Yves: create new 'Shopping List' with name:
     [Arguments]    ${shoppingListName}
     ${currentURL}=    Get Location
-    IF    '/shopping-list' not in '${currentURL}'    Go To    ${host}shopping-list
+    IF    '/shopping-list' not in '${currentURL}'    Go To    ${yves_url}shopping-list
     Type Text    ${shopping_list_name_input_field}    ${shoppingListName}
     Click    ${create_shopping_list_button}
 
@@ -51,7 +51,7 @@ Yves: shopping list contains the following products:
 Yves: delete 'Shopping List' with name:
     [Arguments]    ${shoppingListName}
     ${currentURL}=    Get Location
-    IF    '/shopping-list' not in '${currentURL}'    Go To    ${host}shopping-list
+    IF    '/shopping-list' not in '${currentURL}'    Go To    ${yves_url}shopping-list
     Delete shopping list with name:    ${shoppingListName}
     Wait Until Element Is Visible    ${delete_shopping_list_button}
     Click    ${delete_shopping_list_button}
@@ -59,7 +59,7 @@ Yves: delete 'Shopping List' with name:
 Yves: view shopping list with name:
     [Arguments]    ${shoppingListName}
     ${currentURL}=    Get Location
-    IF    '/shopping-list' not in '${currentURL}'    Go To    ${host}shopping-list
+    IF    '/shopping-list' not in '${currentURL}'    Go To    ${yves_url}shopping-list
     View shopping list with name:   ${shoppingListName}
 
 Yves: add all available products from list to cart

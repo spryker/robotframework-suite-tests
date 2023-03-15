@@ -80,10 +80,10 @@ Get_search_suggestions_with_all_attributes_data
     And Each array element of array in response should contain property:    [data][0][attributes][categories]    url
     And Each array element of array in response should contain property:    [data][0][attributes][cmsPages]    name
     And Each array element of array in response should contain property:    [data][0][attributes][cmsPages]    url
-    And Response body parameter should be greater than:    [data][0][attributes][abstractProducts][0][abstractSku]    0
+    And Response body parameter should not be EMPTY:    [data][0][attributes][abstractProducts][0][abstractSku]
     And Response body parameter should be:    [data][0][attributes][abstractProducts][0][abstractName]    ${concrete_product_with_alternative.name}
     And Response body parameter should be:    [data][0][attributes][abstractProducts][0][abstractSku]    ${abstract_product_with_alternative.sku}
-    And Response body parameter should be greater than:    [data][0][attributes][abstractProducts][1][abstractSku]    0
+    And Response body parameter should not be EMPTY:    [data][0][attributes][abstractProducts][1][abstractSku]
     And Response body parameter should be:    [data][0][attributes][abstractProducts][1][abstractSku]    ${alternative_abstract_product.sku}
     And Each array element of array in response should contain property:    [data][0][attributes][abstractProducts]    price
     And Each array element of array in response should contain property:    [data][0][attributes][abstractProducts]    abstractName
@@ -157,6 +157,8 @@ Get_search_suggestions_with_cms_pages
     And Response body has correct self link
 
 Get_search_suggestions_with_category_collection
+    [Documentation]    Bug: https://spryker.atlassian.net/browse/CC-25894
+    [Tags]    skip-due-to-issue
     When I send a GET request:    /catalog-search-suggestions?q=${category_collection_name}
     Then Response status code should be:    200
     And Response reason should be:    OK

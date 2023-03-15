@@ -24,7 +24,7 @@ ${wishlistIcon}    ${wishlist_icon_header_navigation_widget}
 *** Keywords ***
 Yves: perform search by:
     [Arguments]    ${searchTerm}
-    IF    '${env}' in ['b2c','mp_b2c']    
+    IF    '${env}' in ['ui_b2c','ui_mp_b2c']    
         Run Keywords
             Wait Until Page Contains Element    ${search_form_open_menu_item}
             Click    ${search_form_open_menu_item}
@@ -82,7 +82,7 @@ Yves: go to user menu item in header:
     wait until element is visible  ${user_navigation_icon_header_menu_item}[${env}]
     mouse over  ${user_navigation_icon_header_menu_item}[${env}]
     Wait Until Element Is Visible    ${user_navigation_fly_out_header_menu_item}[${env}]
-    IF    '${env}' in ['b2b','mp_b2b']
+    IF    '${env}' in ['ui_b2b','ui_mp_b2b']
         Click    //li[contains(@class,'user-navigation__item--user')]//nav[contains(@class,'user-navigation__sub-nav')]//ul[contains(@class,'list--secondary')]//a[text()='${user_menu_item}']
     ELSE
         Click    //a[contains(@class,'user-block') and contains(text(),'${user_menu_item}')]

@@ -1,15 +1,20 @@
 *** Settings ***
-Suite Setup       SuiteSetup
-Test Setup        TestSetup
-Resource    ../../../../../../resources/common/common_api.robot
+Resource        ../../../../../../resources/common/common_api.robot
+
+Suite Setup     SuiteSetup
+Test Setup      TestSetup
+
 Default Tags    glue
+
 
 *** Test Cases ***
 ENABLER
     TestSetup
-    
+
 Agent_cannot_impersonate_customer_with_no_agent_token
-    When I send a POST request:    /agent-customer-impersonation-access-tokens    {"data": {"type": "agent-customer-impersonation-access-tokens","attributes":{"customerReference": "${yves_user.reference}"}}}
+    When I send a POST request:
+    ...    /agent-customer-impersonation-access-tokens
+    ...    {"data": {"type": "agent-customer-impersonation-access-tokens","attributes":{"customerReference": "${yves_user.reference}"}}}
     Then Response status code should be:    401
     And Response reason should be:    Unauthorized
     And Response should return error code:    4103
@@ -18,7 +23,9 @@ Agent_cannot_impersonate_customer_with_no_agent_token
 Agent_cannot_impersonate_customer_with_wrong_token_type
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I Set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
-    When I send a POST request:    /agent-customer-impersonation-access-tokens    {"data": {"type": "agent-customer-impersonation-access-tokens","attributes":{"customerReference": "${yves_user.reference}"}}}
+    When I send a POST request:
+    ...    /agent-customer-impersonation-access-tokens
+    ...    {"data": {"type": "agent-customer-impersonation-access-tokens","attributes":{"customerReference": "${yves_user.reference}"}}}
     Then Response status code should be:    401
     And Response reason should be:    Unauthorized
     And Response should return error code:    4103
@@ -26,7 +33,9 @@ Agent_cannot_impersonate_customer_with_wrong_token_type
 
 Agent_cannot_impersonate_customer_with_invalid_token
     [Setup]    I Set Headers:    Content-Type=${default_header_content_type}    Authorization=Bearer fake
-    When I send a POST request:    /agent-customer-impersonation-access-tokens    {"data": {"type": "agent-customer-impersonation-access-tokens","attributes":{"customerReference": "${yves_user.reference}"}}}
+    When I send a POST request:
+    ...    /agent-customer-impersonation-access-tokens
+    ...    {"data": {"type": "agent-customer-impersonation-access-tokens","attributes":{"customerReference": "${yves_user.reference}"}}}
     Then Response status code should be:    401
     And Response reason should be:    Unauthorized
     And Response should return error code:    001
@@ -37,7 +46,9 @@ Agent_cannot_impersonate_customer_with_wrong_type
     ...    AND    Response status code should be:    201
     ...    AND    Save value to a variable:    [data][attributes][accessToken]    agent_token
     ...    AND    I Set Headers:    Content-Type=${default_header_content_type}    Authorization=Bearer ${agent_token}
-    When I send a POST request:    /agent-customer-impersonation-access-tokens    {"data": {"type": "agent-customer-impersonation-access-token","attributes":{"customerReference": "${yves_user.reference}"}}}
+    When I send a POST request:
+    ...    /agent-customer-impersonation-access-tokens
+    ...    {"data": {"type": "agent-customer-impersonation-access-token","attributes":{"customerReference": "${yves_user.reference}"}}}
     Then Response status code should be:    400
     And Response reason should be:    Bad Request
     And Response should return error message:    Invalid type.
@@ -47,7 +58,9 @@ Agent_cannot_impersonate_customer_with_invalid_customer_reference
     ...    AND    Response status code should be:    201
     ...    AND    Save value to a variable:    [data][attributes][accessToken]    agent_token
     ...    AND    I Set Headers:    Content-Type=${default_header_content_type}    Authorization=Bearer ${agent_token}
-    When I send a POST request:    /agent-customer-impersonation-access-tokens    {"data": {"type": "agent-customer-impersonation-access-tokens","attributes":{"customerReference": "fake"}}}
+    When I send a POST request:
+    ...    /agent-customer-impersonation-access-tokens
+    ...    {"data": {"type": "agent-customer-impersonation-access-tokens","attributes":{"customerReference": "fake"}}}
     Then Response status code should be:    401
     And Response reason should be:    Unauthorized
     And Response should return error code:    4104
@@ -58,7 +71,9 @@ Agent_cannot_impersonate_customer_with_empty_customer_reference
     ...    AND    Response status code should be:    201
     ...    AND    Save value to a variable:    [data][attributes][accessToken]    agent_token
     ...    AND    I Set Headers:    Content-Type=${default_header_content_type}    Authorization=Bearer ${agent_token}
-    When I send a POST request:    /agent-customer-impersonation-access-tokens    {"data": {"type": "agent-customer-impersonation-access-tokens","attributes":{"customerReference": ""}}}
+    When I send a POST request:
+    ...    /agent-customer-impersonation-access-tokens
+    ...    {"data": {"type": "agent-customer-impersonation-access-tokens","attributes":{"customerReference": ""}}}
     Then Response status code should be:    401
     And Response reason should be:    Unauthorized
     And Response should return error code:    4104
@@ -69,7 +84,9 @@ Agent_cannot_impersonate_customer_with_missing_customer_reference
     ...    AND    Response status code should be:    201
     ...    AND    Save value to a variable:    [data][attributes][accessToken]    agent_token
     ...    AND    I Set Headers:    Content-Type=${default_header_content_type}    Authorization=Bearer ${agent_token}
-    When I send a POST request:    /agent-customer-impersonation-access-tokens    {"data": {"type": "agent-customer-impersonation-access-tokens","attributes":{}}}
+    When I send a POST request:
+    ...    /agent-customer-impersonation-access-tokens
+    ...    {"data": {"type": "agent-customer-impersonation-access-tokens","attributes":{}}}
     Then Response status code should be:    401
     And Response reason should be:    Unauthorized
     And Response should return error code:    4104

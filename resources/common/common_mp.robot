@@ -6,7 +6,7 @@ Resource    ../pages/mp/mp_login_page.robot
 *** Variable ***
 ${mp_user_menu_button}    xpath=//button[contains(@class,'spy-user-menu__action')]
 ${mp_navigation_slider_menu}    xpath=//spy-navigation
-${mp_submit_button}    xpath=//button[@type='submit']
+${mp_submit_button}    xpath=//button[@type='submit'][not(contains(text(),'Back'))]
 ${mp_items_table}    xpath=//nz-table-inner-default//table
 ${mp_search_box}    xpath=//spy-table//input[contains(@placeholder,'Search')]
 ${mp_close_drawer_button}    xpath=//button[contains(@class,'spy-drawer-wrapper__action--close')]

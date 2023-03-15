@@ -43,7 +43,7 @@ Yves: add product to the shopping cart
 
 Yves: change quantity on PDP:
     [Arguments]    ${qtyToSet}
-    IF    '${env}' in ['b2b','mp_b2b']
+    IF    '${env}' in ['ui_b2b','ui_mp_b2b']
         Type Text    ${pdp_quantity_input_filed}[${env}]    ${qtyToSet}
         Click    ${pdp_price_element_locator}
         Click    ${pdp_product_name}  
@@ -62,12 +62,12 @@ Yves: select the following 'Sales Unit' on PDP:
 Yves: change quantity using '+' or '-' button № times:
     [Arguments]    ${action}    ${clicksCount}
     FOR    ${index}    IN RANGE    0    ${clicksCount}
+        Sleep    1s
         IF    '${action}' == '+'
             Click    ${pdp_increase_quantity_button}[${env}]
         ELSE IF    '${action}' == '-'
             Click    ${pdp_decrease_quantity_button}[${env}]
         END
-        Sleep    1s
     END
 
 Yves: change variant of the product on PDP on:
@@ -193,8 +193,8 @@ Yves: get sku of the abstract product on PDP
     ${got_abstract_product_sku}=    Replace String    ${got_abstract_product_sku}    [    ${EMPTY}
     ${got_abstract_product_sku}=    Replace String    ${got_abstract_product_sku}    ]    ${EMPTY}
     ${sku_length}=    Get Length    ${got_abstract_product_sku}
-    ${got_abstract_product_sku}=    Set Variable If    '${env}'!='b2b' and '${sku_length}'=='2'    0${got_abstract_product_sku}    ${got_abstract_product_sku}
-    ${got_abstract_product_sku}=    Set Variable If    '${env}'!='b2b' and '${sku_length}'=='1'    00${got_abstract_product_sku}    ${got_abstract_product_sku}
+    ${got_abstract_product_sku}=    Set Variable If    '${env}'!='ui_b2b' and '${sku_length}'=='2'    0${got_abstract_product_sku}    ${got_abstract_product_sku}
+    ${got_abstract_product_sku}=    Set Variable If    '${env}'!='ui_b2b' and '${sku_length}'=='1'    00${got_abstract_product_sku}    ${got_abstract_product_sku}
     Set Global Variable    ${got_abstract_product_sku}
     [Return]    ${got_abstract_product_sku}
 

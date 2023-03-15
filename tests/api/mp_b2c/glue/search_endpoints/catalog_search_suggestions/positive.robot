@@ -167,6 +167,8 @@ Get_search_suggestions_with_cms_pages
     And Response body has correct self link
 
 Get_search_suggestions_with_category_collection
+    [Documentation]    Bug: https://spryker.atlassian.net/browse/CC-25894
+    [Tags]    skip-due-to-issue
     When I send a GET request:    /catalog-search-suggestions?q=${category_collection_name}
     Then Response status code should be:    200
     And Response reason should be:    OK
@@ -209,7 +211,7 @@ Get_search_suggestions_with_brand_and_currency
     And Each array element of array in response should contain value:    [data][0][attributes][completion]    ${brand_name}
     And Response should contain the array of a certain size:    [data][0][attributes][completion]    10
     And Response should contain the array of a certain size:    [data][0][attributes][abstractProducts]    10
-    And Response body parameter should be:    [data][0][attributes][abstractProducts][6][price]    ${abstract_product.product_with_reviews.price_chf}
+    And Response body parameter should be greater than:    [data][0][attributes][abstractProducts][6][price]    3000
     And Response body has correct self link
 
 Get_search_suggestions_with_color

@@ -9,7 +9,7 @@ Resource    ../pages/yves/yves_order_details_page.robot
 *** Keywords ***
 Yves: go to 'Order History' page
     Yves: go to 'Customer Account' page
-    IF    '${env}' in ['b2b','mp_b2b']
+    IF    '${env}' in ['ui_b2b','ui_mp_b2b']
         Yves: go to user menu item in the left bar:    Order History
     ELSE
         Yves: go to user menu item in the left bar:    Orders History
@@ -27,7 +27,7 @@ Yves: 'View Order/Reorder/Return' on the order history page:
 
 Yves: reorder all items from 'View Order' page
     Wait Until Element Is Visible    ${order_details_reorder_all_button}
-    Click    ${order_details_reorder_all_button}
+    Click    ${order_details_reorder_all_button}    delay=1s
     Yves: remove flash messages
 
 Yves: shipping address on the order details page is:

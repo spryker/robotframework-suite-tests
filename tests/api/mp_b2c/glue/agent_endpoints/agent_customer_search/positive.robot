@@ -7,8 +7,10 @@ Default Tags    glue
 *** Test Cases ***
 ENABLER
     TestSetup
-#bug:https://spryker.atlassian.net/browse/CC-17010
+
 Agent_can_get_search_for_customers_without_search_parameters
+    [Documentation]    bug:https://spryker.atlassian.net/browse/CC-17010
+    [Tags]    skip-due-to-issue    
     [Setup]    Run Keywords    I send a POST request:    /agent-access-tokens    {"data": {"type": "agent-access-tokens","attributes": {"username": "${agent.email}","password": "${agent.password}"}}}
     ...    AND    Response status code should be:    201
     ...    AND    Save value to a variable:    [data][attributes][accessToken]    agent_token
@@ -30,8 +32,10 @@ Agent_can_get_search_for_customers_without_search_parameters
     And Response body parameter should not be EMPTY:    [links][next]
     And Response body has correct self link
     
-#bug:https://spryker.atlassian.net/browse/CC-17010
+
 Agent_can_get_search_for_customers_by_first_name
+    [Documentation]    bug:https://spryker.atlassian.net/browse/CC-17010
+    [Tags]    skip-due-to-issue    
     [Setup]    Run Keywords    I send a POST request:    /agent-access-tokens    {"data": {"type": "agent-access-tokens","attributes": {"username": "${agent.email}","password": "${agent.password}"}}}
     ...    AND    Response status code should be:    201
     ...    AND    Save value to a variable:    [data][attributes][accessToken]    agent_token
@@ -51,8 +55,10 @@ Agent_can_get_search_for_customers_by_first_name
     And Response body parameter should not be EMPTY:    [links][first]
     And Response body has correct self link
 
-#bug:https://spryker.atlassian.net/browse/CC-17010
+
 Agent_can_get_search_for_customers_by_last_name
+    [Documentation]    bug:https://spryker.atlassian.net/browse/CC-17010
+    [Tags]    skip-due-to-issue    
     [Setup]    Run Keywords    I send a POST request:    /agent-access-tokens    {"data": {"type": "agent-access-tokens","attributes": {"username": "${agent.email}","password": "${agent.password}"}}}
     ...    AND    Response status code should be:    201
     ...    AND    Save value to a variable:    [data][attributes][accessToken]    agent_token
@@ -72,8 +78,10 @@ Agent_can_get_search_for_customers_by_last_name
     And Response body parameter should not be EMPTY:    [links][first]
     And Response body has correct self link
 
-#bug:https://spryker.atlassian.net/browse/CC-17010
+
 Agent_can_get_search_for_customers_by_email
+    [Documentation]    bug:https://spryker.atlassian.net/browse/CC-17010
+    [Tags]    skip-due-to-issue    
     [Setup]    Run Keywords    I send a POST request:    /agent-access-tokens    {"data": {"type": "agent-access-tokens","attributes": {"username": "${agent.email}","password": "${agent.password}"}}}
     ...    AND    Response status code should be:    201
     ...    AND    Save value to a variable:    [data][attributes][accessToken]    agent_token
@@ -92,8 +100,10 @@ Agent_can_get_search_for_customers_by_email
     And Response body parameter should not be EMPTY:    [links][last]
     And Response body parameter should not be EMPTY:    [links][first]
     And Response body has correct self link
-#bug:https://spryker.atlassian.net/browse/CC-17010
+
 Agent_can_get_search_for_customers_by_substring
+    [Documentation]    bug:https://spryker.atlassian.net/browse/CC-17010
+    [Tags]    skip-due-to-issue    
     [Setup]    Run Keywords    I send a POST request:    /agent-access-tokens    {"data": {"type": "agent-access-tokens","attributes": {"username": "${agent.email}","password": "${agent.password}"}}}
     ...    AND    Response status code should be:    201
     ...    AND    Save value to a variable:    [data][attributes][accessToken]    agent_token
@@ -113,8 +123,9 @@ Agent_can_get_search_for_customers_by_substring
     And Response body parameter should not be EMPTY:    [links][first]
     And Response body has correct self link
 
-#bug:https://spryker.atlassian.net/browse/CC-17010
 Agent_can_get_search_for_customers_by_substring_and_not_find_any
+    [Documentation]    bug:https://spryker.atlassian.net/browse/CC-17010
+    [Tags]    skip-due-to-issue    
     [Setup]    Run Keywords    I send a POST request:    /agent-access-tokens    {"data": {"type": "agent-access-tokens","attributes": {"username": "${agent.email}","password": "${agent.password}"}}}
     ...    AND    Response status code should be:    201
     ...    AND    Save value to a variable:    [data][attributes][accessToken]    agent_token
@@ -128,8 +139,10 @@ Agent_can_get_search_for_customers_by_substring_and_not_find_any
     And Response should contain the array of a certain size:    [data][0][attributes][customers]    0
     And Response body has correct self link
 
-#bug:https://spryker.atlassian.net/browse/CC-17010
+
 Agent_can_get_search_for_customers_with_larger_page_size
+    [Documentation]    bug:https://spryker.atlassian.net/browse/CC-17010
+    [Tags]    skip-due-to-issue    
     [Setup]    Run Keywords    I send a POST request:    /agent-access-tokens    {"data": {"type": "agent-access-tokens","attributes": {"username": "${agent.email}","password": "${agent.password}"}}}
     ...    AND    Response status code should be:    201
     ...    AND    Save value to a variable:    [data][attributes][accessToken]    agent_token
@@ -151,8 +164,10 @@ Agent_can_get_search_for_customers_with_larger_page_size
     And Response body parameter should not be EMPTY:    [links][next]
     And Response body parameter should not be EMPTY:    [links][self]
 
-#bug:https://spryker.atlassian.net/browse/CC-17010
+
 Agent_can_get_search_for_customers_from_last_page
+    [Documentation]    bug:https://spryker.atlassian.net/browse/CC-17010
+    [Tags]    skip-due-to-issue    
     [Setup]    Run Keywords    I send a POST request:    /agent-access-tokens    {"data": {"type": "agent-access-tokens","attributes": {"username": "${agent.email}","password": "${agent.password}"}}}
     ...    AND    Response status code should be:    201
     ...    AND    Save value to a variable:    [data][attributes][accessToken]    agent_token
@@ -160,7 +175,6 @@ Agent_can_get_search_for_customers_from_last_page
     When I send a GET request:    /agent-customer-search?page[offset]=30&page[limit]=10
     Then Response status code should be:    200
     And Response reason should be:    OK
-    Log    ${response_body}
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response body parameter should be:    [data][0][id]    None
     And Response body parameter should be:    [data][0][type]    agent-customer-search

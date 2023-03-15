@@ -36,8 +36,8 @@ Request_concrete_product_with_default_and_original_prices
     And Response body parameter should be:    [data][0][attributes][prices][0][priceTypeName]    DEFAULT
     And Response body parameter should be:    [data][0][attributes][prices][1][priceTypeName]    ORIGINAL
     And Response body parameter should not be EMPTY:    [data][0][attributes][prices][0][grossAmount] 
-    And Each array element of array in response should contain property with value:    [data][0][attributes][prices]    netAmount    None
-    And Each array element of array in response should contain property with value:    [data][0][attributes][prices]    volumePrices    []
+    And Each array element of array in response should contain property with value:    [data][0][attributes][prices]    netAmount    ${None}
+    And Each array element of array in response should contain property with value:    [data][0][attributes][prices]    volumePrices    ${array}
       
 Request_concrete_product_with_volume_product_prices
     When I send a GET request:    /concrete-products/${concrete_product.volume_prices.sku}/concrete-product-prices
