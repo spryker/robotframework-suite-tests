@@ -1,4 +1,10 @@
-# Installation
+## Description
+This repository contains sets of API and UI, built on the Robot Framework. API tests use the RequestsLibrary in conjunction with Robot Framework, while UI tests rely on the Browser library (powered by Playwright). 
+
+## Installation
+
+### Prerequisites
+Robot Framework is implemented using Python, and a precondition to install it is having Python or its alternative implementation PyPy installed. Another recommended precondition is having the pip package manager available.
 
 ### For UI testing installation requires both Robot Framework and Browser library powered by Playwright. 
 1. Install [Robot Framework](https://github.com/robotframework/robotframework/blob/master/INSTALL.rst)
@@ -13,11 +19,11 @@
 5. Install PyMySQL: `python3 -m pip install PyMySQL`
 6. Import PyMySQL: `import pymysql` - if PyMySQL still doesn't work, you can use direct import command
 
-# How to run tests
+## How to run tests
 
 `robot -v env:{ENVIRONMENT} {PATH}`
 
-## Supported Parameters
+### Supported Parameters
 
 | Parameter | Comment |
 |:--- |:--- |
