@@ -3,7 +3,7 @@ This repository contains sets of API and UI tests, built on the Robot Framework.
 
 ## Installation
 
-### Prerequisites {#Prerequisites}
+### Prerequisites
 [Robot Framework](https://robotframework.org/) is implemented using [Python](https://www.python.org/), and a precondition to install it is having Python or its alternative implementation [PyPy](https://www.pypy.org/) installed. Another recommended precondition is having the [pip](https://pip.pypa.io/en/stable/) package manager available.
 Robot Framework requires Python 3.6 or newer.
 
@@ -54,7 +54,7 @@ python3 -m pip install -U robotframework-jsonlibrary
 ## How to run tests
 Robot Framework test cases are executed from the command line, and the end result is, by default, an output file in XML format and an HTML report and log. After the execution, output files can be combined and otherwise post-processed with the Rebot tool.
 
-**Note**: If you prefer to run test using the default configuration of your local environment, you can navigate to the **[Execution Helper](#ExecutionHelper)** section
+**Note**: If you prefer to run test using the default configuration of your local environment, you can navigate to the **[Helper](#Helper)** section
 
 Synopsis
 ```
@@ -134,7 +134,7 @@ All these browsers that cover more than 85% of the world wide used browsers, can
 |firefox| 	Mozilla Firefox|
 |webkit| 	Apple Safari, Mail, AppStore on MacOS and iOS|
 ---
-### Execution Helper {#ExecutionHelper}
+### Helper
 For local testing, all tests are commonly executed against default hosts. To avoid typos in execution commands, you can use the [Makefile](https://makefiletutorial.com/) helper to quickly start your runs. 
 **Note:** no installation is required on macOS and Linux systems. The `make` command is included in most Linux distributions by default. 
 To run Makefile on Windows, you need to install a program called "make".
