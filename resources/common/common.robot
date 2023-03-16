@@ -86,7 +86,21 @@ Overwrite env variables
     ELSE
             Set Suite Variable    ${glue_url}   ${glue_env}
     END
-
+    &{urls}=    Create Dictionary    yves_url    ${yves_url}    yves_at_url    ${yves_at_url}    zed_url    ${zed_url}    mp_url    ${mp_url}    glue_url    ${glue_url}
+    FOR    ${key}    ${url}    IN    &{urls}
+        Log    Key is '${key}' and value is '${url}'.
+        ${url_last_character}=    Get Regexp Matches    ${url}    .$    flags=IGNORECASE
+        ${url_last_character}=    Convert To String    ${url_last_character}
+        ${url_last_character}=    Replace String    ${url_last_character}    '   ${EMPTY}
+        ${url_last_character}=    Replace String    ${url_last_character}    [   ${EMPTY}
+        ${url_last_character}=    Replace String    ${url_last_character}    ]   ${EMPTY}
+        IF    '${url_last_character}' != '/' and '${key}' != 'glue_url'
+            ${url}=    Set Variable    ${url}${/}
+        END
+        Log    ${url}
+        ${var_url}=   Set Variable    ${url}
+        Set Suite Variable    ${${key}}    ${var_url}
+    END
 SuiteSetup
     [documentation]  Basic steps before each suite
     Remove Files    ${OUTPUTDIR}/selenium-screenshot-*.png

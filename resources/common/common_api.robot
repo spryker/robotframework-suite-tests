@@ -95,6 +95,15 @@ TestSetup
         END
     END
     END
+    ${current_url_last_character}=    Get Regexp Matches    ${current_url}    .$    flags=IGNORECASE
+    ${current_url_last_character}=    Convert To String    ${current_url_last_character}
+    ${current_url_last_character}=    Replace String    ${current_url_last_character}    '   ${EMPTY}
+    ${current_url_last_character}=    Replace String    ${current_url_last_character}    [   ${EMPTY}
+    ${current_url_last_character}=    Replace String    ${current_url_last_character}    ]   ${EMPTY}
+    IF    '${current_url_last_character}' == '/'
+        ${current_url}=    Replace String Using Regexp    ${current_url}    .$    ${EMPTY}
+        Set Suite Variable    ${current_url}
+    END
 
 Load Variables
     [Documentation]    Keyword is used to load variable values from the environment file passed during execution. This Keyword is used during suite setup.
