@@ -26,7 +26,6 @@ Create_order
     And Response body has correct self link internal
 
 Create_order_include_orders
-    [Documentation]    several steps are commented out because of sheduled price issue:  https://spryker.atlassian.net/browse/CC-26185 
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
     ...    AND    Find or create customer cart
