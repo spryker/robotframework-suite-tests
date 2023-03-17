@@ -10,7 +10,6 @@ ENABLER
 
 ##### SEARCH PARAMETERS #####
 Search_with_empty_search_criteria_all_default_values_check
-    [Documentation]    bug https://spryker.atlassian.net/browse/CC-26185 different prices for products in Postgres and Maria
     When I send a GET request:    /catalog-search?q=
     Then Response status code should be:    200
     And Response reason should be:    OK
@@ -312,7 +311,6 @@ Filter_by_price_only_min
     And Response body parameter should be:    [data][0][attributes][rangeFacets][0][activeMax]    ${default_price.max}
 
 Filter_by_price_only_max
-    [Documentation]    bug https://spryker.atlassian.net/browse/CC-26185 different prices for products in Postgres and Maria
     When I send a GET request:    /catalog-search?q=&price[max]=3000
     Then Response status code should be:    200
     And Response reason should be:    OK
