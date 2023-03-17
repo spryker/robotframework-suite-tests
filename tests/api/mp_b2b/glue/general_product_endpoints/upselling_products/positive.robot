@@ -311,15 +311,15 @@ Cart_contains_product_with_upselling_relation_with_include_product_reviews
     And Response should contain the array of a certain size:    [included]    9
     And Response body parameter should be in:    [data][3][relationships][product-reviews][data][0][id]    ${concrete_of_product_with_relations_upselling.product_reviews.review_1.id}    ${concrete_of_product_with_relations_upselling.product_reviews.review_2.id}    ${concrete_of_product_with_relations_upselling.product_reviews.review_3.id}    ${concrete_of_product_with_relations_upselling.product_reviews.review_4.id}  
     And Response body parameter should be in:    [data][4][relationships][product-reviews][data][0][id]    ${concrete_of_product_with_relations_upselling.product_reviews.review_5.id}    ${concrete_of_product_with_relations_upselling.product_reviews.review_6.id}    ${concrete_of_product_with_relations_upselling.product_reviews.review_7.id}    ${concrete_of_product_with_relations_upselling.product_reviews.review_8.id}    ${concrete_of_product_with_relations_upselling.product_reviews.review_9.id}
-    # And Each array element of array in response should contain property:    [included]    id
-    # And Each array element of array in response should contain property:    [included]    attributes
-    # And Each array element of array in response should contain property:    [included]    links
-    # And Response include should contain certain entity type:    product-reviews
-    # And Each array element of array in response should contain nested property:    [included]    attributes    rating
-    # And Each array element of array in response should contain nested property:    [included]    attributes    nickname
-    # And Each array element of array in response should contain nested property:    [included]    attributes    summary
-    # And Each array element of array in response should contain nested property:    [included]    attributes    description
-    # And Each array element of array in response should contain nested property:    [included]    [links]    self
+    And Each array element of array in response should contain property:    [included]    id
+    And Each array element of array in response should contain property:    [included]    attributes
+    And Each array element of array in response should contain property:    [included]    links
+    And Response include should contain certain entity type:    product-reviews
+    And Each array element of array in response should contain nested property:    [included]    attributes    rating
+    And Each array element of array in response should contain nested property:    [included]    attributes    nickname
+    And Each array element of array in response should contain nested property:    [included]    attributes    summary
+    And Each array element of array in response should contain nested property:    [included]    attributes    description
+    And Each array element of array in response should contain nested property:    [included]    [links]    self
     # And Response body parameter should be:    [included][0][id]    ${concrete_of_product_with_relations_upselling.product_reviews.review_1.id}
     # And Response body parameter should be:    [included][0][attributes][rating]    ${concrete_of_product_with_relations_upselling.product_reviews.review_1.rating}
     # And Response body parameter should be:    [included][0][attributes][nickname]    ${concrete_of_product_with_relations_upselling.product_reviews.review_1.nickname}
