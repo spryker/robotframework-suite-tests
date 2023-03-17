@@ -33,7 +33,7 @@ test_ui_b2c:
 	robot -v env:$(ENV_UI_B2C) -v glue_env:${glue_env} -v yves_env:${yves_env} -v yves_at_env:${yves_at_env} -v zed_env:${zed_env} -v mp_env:${mp_env} --exclude skip-due-to-issueORskip-due-to-refactoring -d results tests/ui/e2e/e2e_b2c.robot
 
 test_ui_mp_b2c:
-	robot -v env:$(ENV_UI_MP_B2C) -v glue_env:${glue_env} -v yves_env:${yves_env} -v yves_at_env:${yves_at_env} -v zed_env:${zed_env} -v mp_env:${mp_env} --exclude skip-due-to-issueORskip-due-to-refactoring -d results tests/ui/e2e/e2e_mp_b2b.robot
+	robot -v env:$(ENV_UI_MP_B2C) -v glue_env:${glue_env} -v yves_env:${yves_env} -v yves_at_env:${yves_at_env} -v zed_env:${zed_env} -v mp_env:${mp_env} --exclude skip-due-to-issueORskip-due-to-refactoring -d results tests/ui/e2e/e2e_mp_b2c.robot
 
 test_ui_mp_b2b:
 	robot -v env:$(ENV_UI_MP_B2B) -v glue_env:${glue_env} -v yves_env:${yves_env} -v yves_at_env:${yves_at_env} -v zed_env:${zed_env} -v mp_env:${mp_env} --exclude skip-due-to-issueORskip-due-to-refactoring -d results tests/ui/e2e/e2e_mp_b2b.robot
