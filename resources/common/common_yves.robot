@@ -398,7 +398,7 @@ Yves: validate the page title:
     [Arguments]    ${title}
     IF    '${env}' in ['ui_b2b','ui_mp_b2b']
         Yves: try reloading page if element is/not appear:    xpath=//h3[contains(text(),'${title}')]     True
-    ELS–≠
+    ELSE
         Yves: try reloading page if element is/not appear:    xpath=//h1[contains(@class,'title')][contains(text(),'${title}')]     True
     END
     
