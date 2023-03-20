@@ -10,10 +10,37 @@ ENABLER
     
 ####POST####
 Create_a_return
-    [Tags]    skip-due-to-refactoring
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
     ...  AND    Cleanup all customer carts
+    ### steps below just duplicate the order creation and status change. This is needed as we 'hack' the order status in the database. ###
+    ### Needs to be done only once in the first test ###
+    ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
+    ...  AND    Save value to a variable:    [data][id]    cart_id
+    ...  AND    I send a POST request:    /carts/${cart_id}/items?include=items    {"data": {"type": "items","attributes": {"sku": "${abstract_product.product_availability.concrete_available_with_stock_and_never_out_of_stock}","quantity": 1, "merchantReference" : "${merchants.merchant_spryker_id}"}}}
+    ...  AND    Save value to a variable:    [included][0][id]    item_id_return      
+    ...  AND    I send a POST request:    /checkout?include=orders    {"data": {"type": "checkout","attributes": {"customer": {"email": "${yves_user.email}","salutation": "${yves_user.salutation}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}"},"idCart": "${cart_id}","billingAddress": {"salutation": "${yves_user.salutation}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}","address1": "${default.address1}","address2": "${default.address2}","address3": "${default.address3}","zipCode": "${default.zipCode}","city": "${default.city}","iso2Code": "${default.iso2Code}","company": "${default.company}","phone": "${default.phone}","isDefaultBilling": False,"isDefaultShipping": False},"shippingAddress": {"salutation": "${yves_user.salutation}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}","address1": "${default.address1}","address2": "${default.address2}","address3": "${default.address3}","zipCode": "${default.zipCode}","city": "${default.city}","iso2Code": "${default.iso2Code}","company": "${default.company}","phone": "${default.phone}","isDefaultBilling": False,"isDefaultShipping": False},"payments": [{"paymentProviderName": "${payment.provider_name}","paymentMethodName": "${payment.method_name}","paymentSelection": "${payment.selection_name}"}],"shipment": {"idShipmentMethod": 1},"items": ["${item_id_return}"]}}}
+    ...  AND    Response status code should be:    201
+    ...  AND    Save value to a variable:    [data][attributes][orderReference]    order_reference
+    ...  AND    Save value to a variable:    [included][0][attributes][items][0][uuid]    uuid
+    ...  AND    Save value to a variable:    [included][0][attributes][items][0][refundableAmount]    refundable_amount
+    ...  AND    Create merchant order for the item in DB and change status:    shipped   ${uuid}    ${merchants.merchant_spryker_id}
+    ...  AND    Update order status in Database:    shipped by merchant    ${uuid}
+    ...  AND    Run Keyword And Ignore Error    I send a POST request:    /returns     {"data":{"type":"returns","attributes":{"store":"${store.de}","returnItems":[{"salesOrderItemUuid":"${uuid}","reason":"${return_reason_damaged}"}]}}}
+    ### steps below just duplicate the order creation and status change. This is needed as we 'hack' the order status in the database. ###
+    ### Needs to be done only once in the first test ###    
+    ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
+    ...  AND    Save value to a variable:    [data][id]    cart_id
+    ...  AND    I send a POST request:    /carts/${cart_id}/items?include=items    {"data": {"type": "items","attributes": {"sku": "${abstract_product.product_availability.concrete_available_with_stock_and_never_out_of_stock}","quantity": 1, "merchantReference" : "${merchants.merchant_spryker_id}"}}}
+    ...  AND    Save value to a variable:    [included][0][id]    item_id_return      
+    ...  AND    I send a POST request:    /checkout?include=orders    {"data": {"type": "checkout","attributes": {"customer": {"email": "${yves_user.email}","salutation": "${yves_user.salutation}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}"},"idCart": "${cart_id}","billingAddress": {"salutation": "${yves_user.salutation}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}","address1": "${default.address1}","address2": "${default.address2}","address3": "${default.address3}","zipCode": "${default.zipCode}","city": "${default.city}","iso2Code": "${default.iso2Code}","company": "${default.company}","phone": "${default.phone}","isDefaultBilling": False,"isDefaultShipping": False},"shippingAddress": {"salutation": "${yves_user.salutation}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}","address1": "${default.address1}","address2": "${default.address2}","address3": "${default.address3}","zipCode": "${default.zipCode}","city": "${default.city}","iso2Code": "${default.iso2Code}","company": "${default.company}","phone": "${default.phone}","isDefaultBilling": False,"isDefaultShipping": False},"payments": [{"paymentProviderName": "${payment.provider_name}","paymentMethodName": "${payment.method_name}","paymentSelection": "${payment.selection_name}"}],"shipment": {"idShipmentMethod": 1},"items": ["${item_id_return}"]}}}
+    ...  AND    Response status code should be:    201
+    ...  AND    Save value to a variable:    [data][attributes][orderReference]    order_reference
+    ...  AND    Save value to a variable:    [included][0][attributes][items][0][uuid]    uuid
+    ...  AND    Save value to a variable:    [included][0][attributes][items][0][refundableAmount]    refundable_amount
+    ...  AND    Create merchant order for the item in DB and change status:    shipped   ${uuid}    ${merchants.merchant_spryker_id}
+    ...  AND    Update order status in Database:    shipped by merchant    ${uuid}
+    ...  AND    Run Keyword And Ignore Error    I send a POST request:    /returns     {"data":{"type":"returns","attributes":{"store":"${store.de}","returnItems":[{"salesOrderItemUuid":"${uuid}","reason":"${return_reason_damaged}"}]}}}
     ### steps below just duplicate the order creation and status change. This is needed as we 'hack' the order status in the database. ###
     ### Needs to be done only once in the first test ###
     ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
@@ -92,7 +119,6 @@ Create_a_return_with_return_items
 
 ####GET####
 Retrieves_list_of_returns
-    [Tags]    skip-due-to-refactoring
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
     ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
@@ -122,7 +148,6 @@ Retrieves_list_of_returns
     And Response body has correct self link
     
 Retrieves_list_of_returns_included_return_items
-    [Tags]    skip-due-to-refactoring
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
     ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
@@ -162,7 +187,6 @@ Retrieves_list_of_returns_included_return_items
     And Response body has correct self link
 
 Retrieves_list_of_returns_included_merchants
-  [Tags]    skip-due-to-refactoring
   [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
     ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
@@ -243,7 +267,6 @@ Retrieves_return_by_id_with_returns_items_included
     And Response body has correct self link
 
 Retrieves_return_by_id_for_sales_order
-  [Tags]    skip-due-to-refactoring
   [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
     ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
@@ -269,7 +292,6 @@ Retrieves_return_by_id_for_sales_order
     And Response body parameter should be:    [data][attributes][returnTotals][remunerationTotal]    ${refundable_amount}
 
 Retrieves_return_by_id_with_merchants_included
-    [Tags]    skip-due-to-refactoring
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
     ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}

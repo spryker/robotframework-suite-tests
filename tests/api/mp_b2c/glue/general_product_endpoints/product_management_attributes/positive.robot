@@ -52,7 +52,7 @@ Get_product_management_attribute_by_id_superattribute
     And Response body parameter should be:    [data][attributes][allowInput]    False
     And Response body parameter should be:    [data][attributes][isSuper]    False
     And Response body parameter should not be EMPTY:    [data][attributes][localizedKeys][0][translation]
-    And Response body parameter should be:    [data][attributes][localizedKeys][0][localeName]    ${locale.EN.name}
+    And Response body parameter should be in:    [data][attributes][localizedKeys][0][localeName]    ${locale.EN.name}    ${locale.DE.name}
     And Response body parameter should not be EMPTY:    [data][attributes][values][0][localizedValues][0][localeName]
     And Response body parameter should not be EMPTY:    [data][attributes][values][0][localizedValues][0][translation]
     And Each array element of array in response should contain property:    [data][attributes][localizedKeys]    translation
@@ -75,7 +75,7 @@ Get_product_management_attribute_by_id_normal_editable_attribute
     And Response body parameter should be:    [data][attributes][allowInput]    True
     And Response body parameter should be:    [data][attributes][isSuper]    False
     And Response body parameter should not be EMPTY:    [data][attributes][localizedKeys][0][translation]
-    And Response body parameter should be:    [data][attributes][localizedKeys][0][localeName]    ${locale.EN.name}
+    And Response body parameter should be in:    [data][attributes][localizedKeys][0][localeName]    ${locale.EN.name}    ${locale.DE.name}
     And Each array element of array in response should contain property:    [data][attributes][localizedKeys]    translation
     And Each array element of array in response should contain property:    [data][attributes][localizedKeys]    localeName
     And Each array element of array in response should contain property:    [data][attributes][values]    value
@@ -96,7 +96,7 @@ Get_product_management_attribute_by_id_normal_non_editable_attribute
     And Response body parameter should be:    [data][attributes][allowInput]    False
     And Response body parameter should be:    [data][attributes][isSuper]    False
     And Response body parameter should not be EMPTY:    [data][attributes][localizedKeys][0][translation]
-    And Response body parameter should be:    [data][attributes][localizedKeys][0][localeName]    ${locale.EN.name}
+    And Response body parameter should be in:    [data][attributes][localizedKeys][0][localeName]    ${locale.EN.name}    ${locale.DE.name}
     And Each array element of array in response should contain property:    [data][attributes][localizedKeys]    translation
     And Each array element of array in response should contain property:    [data][attributes][localizedKeys]    localeName
     And Each array element of array in response should contain property:    [data][attributes][values]    value
