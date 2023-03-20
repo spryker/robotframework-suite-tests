@@ -462,7 +462,7 @@ Response body parameter should be in:
     ${data}=    Replace String    ${data}    [   ${EMPTY}
     ${data}=    Replace String    ${data}    ]   ${EMPTY}
     Log    ${data}
-    Should Contain Any   ${data}    ${expected_value1}    ${expected_value2}    ${expected_value3}    ${expected_value4}    ignore_case=True
+    Should Contain Any   ${data}    ${expected_value1}    ${expected_value2}    ${expected_value3}    ${expected_value4}    ${expected_value5}    ${expected_value6}    ${expected_value7}    ${expected_value8}    ${expected_value9}      ignore_case=True
 
 Response body parameter with rounding should be:
     [Documentation]    This keyword checks that the response saved  in ``${response_body}`` test variable contains the speficied parameter ``${json_path}`` that was rounded and can differ from the expected value by 1 more cent or 1 less cent.
