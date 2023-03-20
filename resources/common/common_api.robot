@@ -25,6 +25,9 @@ ${default_db_port_postgres}    5432
 ${default_db_user}         spryker
 ${default_db_engine}       pymysql
 ${db_engine}
+${glue_env}
+${bapi_env}
+${db_port}
 # ${default_db_engine}       psycopg2
 
 *** Keywords ***
@@ -70,15 +73,38 @@ TestSetup
     ...    ``Default Tags    bapi``
     FOR  ${tag}  IN  @{Test Tags}
     Log   ${tag}
-    IF    '${tag}'=='bapi'    
-        Set Suite Variable    ${current_url}    ${bapi_url}
-        Set Suite Variable    ${tag}    bapi
-        ELSE IF    '${tag}'=='glue'    
-        Set Suite Variable    ${current_url}    ${glue_url}
-        Set Suite Variable    ${tag}    glue
+    IF    '${glue_env}' == '${EMPTY}'
+        IF    '${tag}'=='glue'  
+            Set Suite Variable    ${current_url}    ${glue_url}
+            Set Suite Variable    ${tag}    glue
+        END
+    ELSE
+        IF    '${tag}'=='glue'   
+            Set Suite Variable    ${current_url}    ${glue_env}
+            Set Suite Variable    ${tag}    glue
+        END
+    END
+    IF    '${bapi_env}' == '${EMPTY}'
+        IF    '${tag}'=='bapi'  
+            Set Suite Variable    ${current_url}    ${bapi_url}
+            Set Suite Variable    ${tag}    bapi
+        END
+    ELSE
+        IF    '${tag}'=='bapi'  
+            Set Suite Variable    ${current_url}    ${bapi_env}
+            Set Suite Variable    ${tag}    bapi
+        END
     END
     END
-    Log    ${current_url}
+    ${current_url_last_character}=    Get Regexp Matches    ${current_url}    .$    flags=IGNORECASE
+    ${current_url_last_character}=    Convert To String    ${current_url_last_character}
+    ${current_url_last_character}=    Replace String    ${current_url_last_character}    '   ${EMPTY}
+    ${current_url_last_character}=    Replace String    ${current_url_last_character}    [   ${EMPTY}
+    ${current_url_last_character}=    Replace String    ${current_url_last_character}    ]   ${EMPTY}
+    IF    '${current_url_last_character}' == '/'
+        ${current_url}=    Replace String Using Regexp    ${current_url}    .$    ${EMPTY}
+        Set Suite Variable    ${current_url}
+    END
 
 Load Variables
     [Documentation]    Keyword is used to load variable values from the environment file passed during execution. This Keyword is used during suite setup.
@@ -1653,10 +1679,21 @@ Connect to Spryker DB
     ${db_password}=    Set Variable If    '${db_password}' == '${EMPTY}'    ${default_db_password}    ${db_password}
     ${db_host}=    Set Variable If    '${db_host}' == '${EMPTY}'    ${default_db_host}    ${db_host}
     ${db_engine}=    Set Variable If    '${db_engine}' == '${EMPTY}'    ${default_db_engine}    ${db_engine}
+    IF    '${db_engine}' == 'mysql'
+        ${db_engine}=    Set Variable    pymysql
+    ELSE IF    '${db_engine}' == 'postgresql'
+        ${db_engine}=    Set Variable    psycopg2
+    END    
     IF    '${db_engine}' == 'psycopg2'
-    ${db_port}=    Set Variable If    '${db_port_postgres}' == '${EMPTY}'    ${default_db_port_postgres}    ${db_port_postgres}
+        ${db_port}=    Set Variable If    '${db_port}' == '${EMPTY}'    ${db_port_postgres_env}    ${db_port}
+        IF    '${db_port_postgres_env}' == '${EMPTY}'
+        ${db_port}=    Set Variable If    '${db_port_postgres_env}' == '${EMPTY}'    ${default_db_port_postgres}    ${db_port_postgres_env}
+        END
     ELSE
-    ${db_port}=    Set Variable If    '${db_port}' == '${EMPTY}'    ${default_db_port}    ${db_port}
+    ${db_port}=    Set Variable If    '${db_port}' == '${EMPTY}'    ${db_port_env}    ${db_port}
+        IF    '${db_port_env}' == '${EMPTY}'
+        ${db_port}=    Set Variable If    '${db_port_env}' == '${EMPTY}'    ${default_db_port}    ${db_port_env}
+        END
     END
     Connect To Database    ${db_engine}    ${db_name}    ${db_user}    ${db_password}    ${db_host}    ${db_port}
 

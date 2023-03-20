@@ -28,11 +28,17 @@ ${default_db_host}         127.0.0.1
 ${default_db_name}         eu-docker
 ${default_db_password}     secret
 ${default_db_port}         3306
+${default_db_port_postgres}    5432
 ${default_db_user}         spryker
 ${default_db_engine}       pymysql
 ${db_engine}
+${yves_env}
+${yves_at_env}
+${zed_env}
+${mp_env}
+${glue_env}
+${db_port}
 # ${default_db_engine}       psycopg2
-
 # ${device}              Desktop Chrome
 # ${fake_email}          test.spryker+${random}@gmail.com
 
@@ -56,6 +62,46 @@ Set Up Keyword Arguments
     END
     [Return]    &{arguments}
 
+Overwrite env variables
+    IF    '${yves_env}' == '${EMPTY}'
+            Set Suite Variable    ${yves_url}    ${yves_url}
+    ELSE
+            Set Suite Variable    ${yves_url}    ${yves_env}
+    END
+    IF    '${yves_at_env}' == '${EMPTY}'
+            Set Suite Variable    ${yves_at_url}    ${yves_at_url}
+    ELSE
+            Set Suite Variable    ${yves_at_url}    ${yves_at_env}
+    END
+    IF    '${zed_env}' == '${EMPTY}'
+            Set Suite Variable    ${zed_url}   ${zed_url}
+    ELSE
+            Set Suite Variable    ${zed_url}   ${zed_env}
+    END
+    IF    '${mp_env}' == '${EMPTY}'
+            Set Suite Variable    ${mp_url}    ${mp_url} 
+    ELSE
+            Set Suite Variable    ${mp_url}   ${mp_env}
+    END
+    IF    '${glue_env}' == '${EMPTY}'
+            Set Suite Variable    ${glue_url}    ${glue_url} 
+    ELSE
+            Set Suite Variable    ${glue_url}   ${glue_env}
+    END
+    &{urls}=    Create Dictionary    yves_url    ${yves_url}    yves_at_url    ${yves_at_url}    zed_url    ${zed_url}    mp_url    ${mp_url}    glue_url    ${glue_url}
+    FOR    ${key}    ${url}    IN    &{urls}
+        Log    Key is '${key}' and value is '${url}'.
+        ${url_last_character}=    Get Regexp Matches    ${url}    .$    flags=IGNORECASE
+        ${url_last_character}=    Convert To String    ${url_last_character}
+        ${url_last_character}=    Replace String    ${url_last_character}    '   ${EMPTY}
+        ${url_last_character}=    Replace String    ${url_last_character}    [   ${EMPTY}
+        ${url_last_character}=    Replace String    ${url_last_character}    ]   ${EMPTY}
+        IF    '${url_last_character}' != '/' and '${key}' != 'glue_url'
+            ${url}=    Set Variable    ${url}${/}
+        END
+        ${var_url}=   Set Variable    ${url}
+        Set Suite Variable    ${${key}}    ${var_url}
+    END
 SuiteSetup
     [documentation]  Basic steps before each suite
     Remove Files    ${OUTPUTDIR}/selenium-screenshot-*.png
@@ -64,7 +110,8 @@ SuiteSetup
     New Browser    ${browser}    headless=${headless}    args=['--ignore-certificate-errors']
     Set Browser Timeout    ${browser_timeout}
     Create default Main Context
-    New Page    ${host}
+    Overwrite env variables
+    New Page    ${yves_url}
     ${random}=    Generate Random String    5    [NUMBERS]
     Set Global Variable    ${random}
     ${today}=    Get Current Date    result_format=%Y-%m-%d
@@ -79,7 +126,7 @@ SuiteTeardown
 
 TestSetup
     Delete All Cookies
-    Go To    ${host}
+    Go To    ${yves_url}
 
 TestTeardown
     # Run Keyword If Test Failed    Pause Execution
@@ -258,7 +305,7 @@ Select From List By Text
 
 Create New Context
     ${new_context}=    New Context
-    New Page    ${host}
+    New Page    ${yves_url}
 
 Switch back to the Main Context
     Switch Context    ${main_context}
@@ -339,8 +386,23 @@ Connect to Spryker DB
     ${db_user}=    Set Variable If    '${db_name}' == '${EMPTY}'    ${default_db_user}    ${db_user}
     ${db_password}=    Set Variable If    '${db_name}' == '${EMPTY}'    ${default_db_password}    ${db_password}
     ${db_host}=    Set Variable If    '${db_name}' == '${EMPTY}'    ${default_db_host}    ${db_host}
-    ${db_port}=    Set Variable If    '${db_name}' == '${EMPTY}'    ${default_db_port}    ${db_port}
     ${db_engine}=    Set Variable If    '${db_engine}' == '${EMPTY}'    ${default_db_engine}    ${db_engine}
+    IF    '${db_engine}' == 'mysql'
+        ${db_engine}=    Set Variable    pymysql
+    ELSE IF    '${db_engine}' == 'postgresql'
+        ${db_engine}=    Set Variable    psycopg2
+    END    
+    IF    '${db_engine}' == 'psycopg2'
+        ${db_port}=    Set Variable If    '${db_port}' == '${EMPTY}'    ${db_port_postgres_env}    ${db_port}
+        IF    '${db_port_postgres_env}' == '${EMPTY}'
+        ${db_port}=    Set Variable If    '${db_port_postgres_env}' == '${EMPTY}'    ${default_db_port_postgres}    ${db_port_postgres_env}
+        END
+    ELSE
+    ${db_port}=    Set Variable If    '${db_port}' == '${EMPTY}'    ${db_port_env}    ${db_port}
+        IF    '${db_port_env}' == '${EMPTY}'
+        ${db_port}=    Set Variable If    '${db_port_env}' == '${EMPTY}'    ${default_db_port}    ${db_port_env}
+        END
+    END
     Connect To Database    ${db_engine}    ${db_name}    ${db_user}    ${db_password}    ${db_host}    ${db_port}
 
 Save the result of a SELECT DB query to a variable:

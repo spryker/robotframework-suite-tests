@@ -1569,7 +1569,7 @@ CRUD_Product_Set
     Yves: delete all shopping carts
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: delete product set:    test set ${random}
-    Yves: go to URL and refresh until 404 occurs:    ${host}en/test-set-${random}
+    Yves: go to URL and refresh until 404 occurs:    ${yves_url}en/test-set-${random}
 
 Comments_in_Cart
     [Documentation]    Add comments to cart and verify comments in Yves and Zed

@@ -28,9 +28,9 @@ Yves: create new 'Shopping Cart' with name:
     ${currentURL}=    Get Location
     IF    '/multi-cart' not in '${currentURL}'    
             IF    '.at.' in '${currentURL}'
-                Go To    ${host_at}multi-cart
+                Go To    ${yves_at_url}multi-cart
             ELSE
-                Go To    ${host}multi-cart
+                Go To    ${yves_url}multi-cart
             END    
     END
     Click    ${create_shopping_cart_button}
@@ -172,7 +172,7 @@ Yves: delete all shopping carts
     Yves: create new 'Shopping Cart' with name:    Z
     #create new empty cart that will be the last one in the list
     ${currentURL}=    Get Location
-    IF    '/shopping-list' not in '${currentURL}'    Go To    ${host}multi-cart
+    IF    '/shopping-list' not in '${currentURL}'    Go To    ${yves_url}multi-cart
     ${shoppingCartsCount}=    Get Element Count    xpath=//*[@data-qa='component quote-table']//table/tbody/tr//ul//a[contains(.,'Delete')]
     Log    ${shoppingCartsCount}
     FOR    ${index}    IN RANGE    0    ${shoppingCartsCount}-1
@@ -185,7 +185,7 @@ Yves: delete all shopping carts
 Yves: delete 'Shopping Cart' with name:
     [Arguments]    ${shoppingCartName}
     ${currentURL}=    Get Location
-    IF      '/shopping-list' not in '${currentURL}'    Go To    ${host}multi-cart
+    IF      '/shopping-list' not in '${currentURL}'    Go To    ${yves_url}multi-cart
     Delete shopping cart with name:    ${shoppingCartName}
     Wait Until Element Is Visible    ${delete_shopping_cart_button}
     Click    ${delete_shopping_cart_button}

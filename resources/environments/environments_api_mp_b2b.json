@@ -9,8 +9,8 @@
    },
     "database":{
        "db_host":"127.0.0.1",
-       "db_port":"3306",
-       "db_port_postgres": "5432",
+       "db_port_env":"3306",
+       "db_port_postgres_env": "5432",
        "db_user":"spryker",
        "db_password":"secret",
        "db_name":"eu-docker"
@@ -593,7 +593,9 @@
        "cms_page_collection_url":"/en/gtc",
        "brand_name":"verbatim",
        "cart_permission_group_id":"1",
-       "cart_permission_group_type":"cart-permission-groups"
+       "cart_permission_group_type":"cart-permission-groups",
+       "subcategory_nodes_storage_name1":"Fish",
+       "subcategory_nodes_storage_url1":"/en/foods/fish"
     },
     "availability":{
        "stock_is_0":"0.0000000000",

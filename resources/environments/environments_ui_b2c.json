@@ -1,15 +1,16 @@
 {
     "environment":"ui_b2c",
     "env":{
-       "host":"http://yves.de.spryker.local/",
-       "host_at":"http://yves.at.spryker.local/",
+       "yves_url":"http://yves.de.spryker.local/",
+       "yves_at_url":"http://yves.at.spryker.local/",
        "zed_url":"http://backoffice.de.spryker.local/",
        "mp_url":"http://mp.de.spryker.local/security-merchant-portal-gui/login/",
        "glue_url":"http://glue.de.spryker.local"
-    },
+  },
     "database":{
        "db_host":"127.0.0.1",
-       "db_port":"3306",
+       "db_port_env":"3306",
+       "db_port_postgres_env": "5432",
        "db_user":"spryker",
        "db_password":"secret",
        "db_name":"eu-docker"
