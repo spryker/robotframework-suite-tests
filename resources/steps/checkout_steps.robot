@@ -30,6 +30,7 @@ Yves: billing address same as shipping address:
 Yves: accept the terms and conditions:
     [Documentation]    ${state} can be true or false
     [Arguments]    ${state}    ${isGuest}=false
+    ${state}=    Convert To Lower Case    ${state}
     IF    '${state}' == 'true' and '${isGuest}'=='false'
         Run keywords
             Wait Until Page Contains Element    xpath=//input[@name='acceptTermsAndConditions']
@@ -234,6 +235,7 @@ Yves: assert merchant of product in cart or list:
 
 Yves: save new deviery address to address book:
     [Arguments]    ${state}
+    ${state}=    Convert To Lower Case    ${state}
     IF    '${env}' in ['ui_b2b','ui_mp_b2b']    Wait Until Page Contains Element    ${manage_your_addresses_link}
     ${checkboxState}=    Set Variable    ${EMPTY}
     ${checkboxState}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//input[@id='addressesForm_shippingAddress_isAddressSavingSkipped'][@checked]
@@ -242,6 +244,7 @@ Yves: save new deviery address to address book:
     
 Yves: save new billing address to address book:
     [Arguments]    ${state}
+    ${state}=    Convert To Lower Case    ${state}
     IF    '${env}' in ['ui_b2b','ui_mp_b2b']    Wait Until Page Contains Element    ${manage_your_addresses_link}
     ${checkboxState}=    Set Variable    ${EMPTY}
     ${checkboxState}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//input[@id='addressesForm_billingAddress_isAddressSavingSkipped'][@checked]
