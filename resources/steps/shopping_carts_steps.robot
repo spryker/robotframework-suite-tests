@@ -229,6 +229,7 @@ Yves: discount is applied:
 
 Yves: promotional product offer is/not shown in cart:
     [Arguments]    ${isShown}
+    ${isShown}=    Convert To Lower Case    ${isShown}
     IF    '${isShown}'=='true'
         Try reloading page until element is/not appear:    ${shopping_cart_promotional_product_section}    true    5
         Element Should Be Visible    ${shopping_cart_promotional_product_section}    message=Promotional products are not displayed but should be    timeout=${browser_timeout}

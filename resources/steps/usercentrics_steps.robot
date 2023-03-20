@@ -20,6 +20,7 @@ Zed: configure usercentrics pbc:
 
 Yves: page should/shouldn't contain usercentrics privacy settings form:
     [Arguments]    ${shouldContain}
+    ${shouldContain}=    Convert To Lower Case    ${shouldContain}
     IF    '${shouldContain}'=='true'
         Run Keywords
             Try reloading page until element is/not appear:    ${usercentrics_form}    true
@@ -30,6 +31,7 @@ Yves: page should/shouldn't contain usercentrics privacy settings form:
 
 Yves: usercentrics accept/deny all:
     [Arguments]    ${accept}
+    ${accept}=    Convert To Lower Case    ${accept}
     Try reloading page until element is/not appear:    ${usercentrics_form}    true
     Wait Until Page Contains Element    ${usercentrics_form}
     IF    '${accept}'=='true'
