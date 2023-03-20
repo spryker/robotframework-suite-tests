@@ -1222,6 +1222,7 @@ Merchant_Portal_Offer_Volume_Prices
     Yves: merchant's offer/product price should be:    Video King    €200.00
     Reload
     Yves: select xxx merchant's offer:    Video King
+    Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    False
     Yves: change quantity using '+' or '-' button № times:    +    3
     Yves: product price on the PDP should be:    €10.00
     Yves: merchant's offer/product price should be:    Video King     €10.00
@@ -2113,31 +2114,6 @@ User_Control
     ...    AND    Zed: go to second navigation item level:    Users    User Roles
     ...    AND    Zed: click Action Button in a table for row that contains:    controlRole${random}    Delete
 
-Glossary
-    [Documentation]    Create + edit glossary translation in BO
-    Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    Zed: go to second navigation item level:    Administration    Glossary  
-    Zed: click button in Header:    Create Translation
-    Zed: fill glossary form:
-    ...    || Name                     | EN_US                        | DE_DE                             ||
-    ...    || cart.price.test${random} | This is a sample translation | Dies ist eine Beispielübersetzung ||
-    Zed: submit the form
-    Zed: table should contain:    cart.price.test${random}
-    Zed: go to second navigation item level:    Administration    Glossary 
-    Zed: click Action Button in a table for row that contains:    ${glossary_name}    Edit
-    Zed: fill glossary form:
-    ...    || DE_DE                    | EN_US                              ||
-    ...    || ${original_DE_text}-Test | ${original_EN_text}-Test-${random} ||
-    Zed: submit the form
-    Yves: login on Yves with provided credentials:    ${yves_second_user_email}
-    Yves: validate the page title:    ${original_EN_text}-Test-${random}
-    Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    Zed: undo the changes in glossary translation:    ${glossary_name}     ${original_DE_text}    ${original_EN_text}
-    Yves: login on Yves with provided credentials:    ${yves_second_user_email}
-    Yves: validate the page title:    ${original_EN_text}
-    [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    ...    AND    Zed: undo the changes in glossary translation:    ${glossary_name}     ${original_DE_text}    ${original_EN_text}
-
 Reorder
     [Documentation]    Checks that merchant relation is saved with reorder
     Yves: login on Yves with provided credentials:    ${yves_user_email}
@@ -2198,3 +2174,28 @@ Update_Customer_Data
     ...    AND    Zed: update customer profile data:
     ...    || email                     | salutation | first name                     | last name                     ||
     ...    || ${yves_second_user_email} | Mr         | ${yves_second_user_first_name} | ${yves_second_user_last_name} ||
+
+Glossary
+    [Documentation]    Create + edit glossary translation in BO
+    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: go to second navigation item level:    Administration    Glossary  
+    Zed: click button in Header:    Create Translation
+    Zed: fill glossary form:
+    ...    || Name                     | EN_US                        | DE_DE                             ||
+    ...    || cart.price.test${random} | This is a sample translation | Dies ist eine Beispielübersetzung ||
+    Zed: submit the form
+    Zed: table should contain:    cart.price.test${random}
+    Zed: go to second navigation item level:    Administration    Glossary 
+    Zed: click Action Button in a table for row that contains:    ${glossary_name}    Edit
+    Zed: fill glossary form:
+    ...    || DE_DE                    | EN_US                              ||
+    ...    || ${original_DE_text}-Test | ${original_EN_text}-Test-${random} ||
+    Zed: submit the form
+    Yves: login on Yves with provided credentials:    ${yves_second_user_email}
+    Yves: validate the page title:    ${original_EN_text}-Test-${random}
+    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: undo the changes in glossary translation:    ${glossary_name}     ${original_DE_text}    ${original_EN_text}
+    Yves: login on Yves with provided credentials:    ${yves_second_user_email}
+    Yves: validate the page title:    ${original_EN_text}
+    [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    ...    AND    Zed: undo the changes in glossary translation:    ${glossary_name}     ${original_DE_text}    ${original_EN_text}
