@@ -455,7 +455,7 @@ Response body parameter should be in:
     ...    *Example:*
     ...
     ...    ``Response body parameter should be in:    [data][attributes][allowInput]    true    false``
-    [Arguments]    ${json_path}    ${expected_value1}    ${expected_value2}    ${expected_value3}=robotframework-dummy-value    ${expected_value4}=robotframework-dummy-value    ${expected_value5}=robotframework-dummy-value    ${expected_value6}=robotframework-dummy-value    ${expected_value7}=robotframework-dummy-value
+    [Arguments]    ${json_path}    ${expected_value1}    ${expected_value2}    ${expected_value3}=robotframework-dummy-value    ${expected_value4}=robotframework-dummy-value    ${expected_value5}=robotframework-dummy-value    ${expected_value6}=robotframework-dummy-value    ${expected_value7}=robotframework-dummy-value    ${expected_value8}=robotframework-dummy-value    ${expected_value9}=robotframework-dummy-value
     ${data}=    Get Value From Json    ${response_body}    ${json_path}
     ${data}=    Convert To String    ${data}
     ${data}=    Replace String    ${data}    '   ${EMPTY}
