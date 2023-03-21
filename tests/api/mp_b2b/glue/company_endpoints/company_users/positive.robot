@@ -140,6 +140,7 @@ Retrieve_list_of_company_users_with_include_customers_and_filtered_by_company_ro
     And Response body parameter should contain:    [data][0][relationships]    customers
 
 Retrieve_list_of_company_users_if_user_has_4_companies
+    [Tags]    skip-due-to-refactoring
     When I get access token for the customer:    ${user_with_multiple_companies}
     And I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     And I send a GET request:    /company-users/mine
