@@ -1534,7 +1534,7 @@ Cleanup all items in the cart:
             Log    list_length: ${list_length}
             FOR    ${index}    IN RANGE    0    ${list_length}
                     ${list_element}=    Get From List    @{included}    ${index}
-                    ${cart_item_uid}=    Get Value From Json    ${list_element}    [id]
+                    ${cart_item_uid}=    Get Value From Json    ${list_element}    [attributes][groupKey]
                     ${cart_item_uid}=    Convert To String    ${cart_item_uid}
                     ${cart_item_uid}=    Replace String    ${cart_item_uid}    '   ${EMPTY}
                     ${cart_item_uid}=    Replace String    ${cart_item_uid}    [   ${EMPTY}
