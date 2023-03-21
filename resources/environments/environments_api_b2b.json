@@ -56,6 +56,14 @@
           "reference":"DE-17",
           "salutation":"Ms"
        },
+       "yves_ottom_admin_user":{
+         "email":"andrew@ottom.de",
+         "first_name":"Andrew",
+         "last_name":"Wedner",
+         "password":"change123",
+         "reference":"DE-8",
+         "salutation":"Mr"
+      },
        "yves_shared_shopping_list_user":{
           "email":"Trever.m@spryker.com",
           "first_name":"Trever",
