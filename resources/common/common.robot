@@ -391,6 +391,8 @@ Connect to Spryker DB
         ${db_engine}=    Set Variable    pymysql
     ELSE IF    '${db_engine}' == 'postgresql'
         ${db_engine}=    Set Variable    psycopg2
+    ELSE IF    '${db_engine}' == 'postgres'
+        ${db_engine}=    Set Variable    psycopg2
     END    
     IF    '${db_engine}' == 'psycopg2'
         ${db_port}=    Set Variable If    '${db_port}' == '${EMPTY}'    ${db_port_postgres_env}    ${db_port}
