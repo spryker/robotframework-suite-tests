@@ -175,9 +175,17 @@ I add 'admin' role to company user and get company_user_uuid:
     Connect to Spryker DB
     ${id_customer}=    Query    select id_customer from spy_customer WHERE email='${email}'
     ${id_customer}=    Evaluate    ${id_customer[0][0]}+0
-    ${id_business_unit}=    Query    select id_company_business_unit from spy_company_business_unit where `key`='${business_unit_key}'
+    IF    '${db_engine}' == 'pymysql'
+        ${id_business_unit}=    Query    select id_company_business_unit from spy_company_business_unit where `key`='${business_unit_key}'
+    ELSE
+        ${id_business_unit}=    Query    select id_company_business_unit from spy_company_business_unit where "key"='${business_unit_key}'
+    END
     ${id_business_unit}=    Evaluate    ${id_business_unit[0][0]}+0
-    ${id_company}=    Query    select id_company from spy_company WHERE `key`='${company_key}'
+    IF    '${db_engine}' == 'pymysql'
+        ${id_company}=    Query    select id_company from spy_company WHERE `key`='${company_key}'
+    ELSE
+        ${id_company}=    Query    select id_company from spy_company WHERE "key"='${company_key}'
+    END
     ${id_company}=    Evaluate    ${id_company[0][0]}+0
     ${id_company_user}=    Query    select id_company_user from spy_company_user WHERE fk_customer=${id_customer} and fk_company_business_unit=${id_business_unit} and fk_company=${id_company}
     ${id_company_user}=    Evaluate    ${id_company_user[0][0]}+0
@@ -1757,6 +1765,7 @@ Connect to Spryker DB
         ${db_port}=    Set Variable If    '${db_port_env}' == '${EMPTY}'    ${default_db_port}    ${db_port_env}
         END
     END
+    Set Test Variable    ${db_engine}
     Connect To Database    ${db_engine}    ${db_name}    ${db_user}    ${db_password}    ${db_host}    ${db_port}
 
 Get the first company user id and its' customer email
