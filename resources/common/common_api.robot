@@ -121,7 +121,8 @@ Load Variables
     &{vars}=   Define Environment Variables From Json File    ${env}
     FOR    ${key}    ${value}    IN    &{vars}
         Log    Key is '${key}' and value is '${value}'.
-        Set Global Variable    ${${key}}    ${value}
+        ${var_value}=   Get Variable Value  ${${key}}   ${value}
+        Set Global Variable    ${${key}}    ${var_value}
     END
 
 I set Headers:
@@ -1534,12 +1535,21 @@ Cleanup all items in the cart:
             Log    list_length: ${list_length}
             FOR    ${index}    IN RANGE    0    ${list_length}
                     ${list_element}=    Get From List    @{included}    ${index}
-                    ${cart_item_uid}=    Get Value From Json    ${list_element}    [id]
+                    ${cart_item_uid}=    Get Value From Json    ${list_element}    [attributes][groupKey]
+                    ${cart_item_sku}=    Get Value From Json    ${list_element}    [attributes][sku]
                     ${cart_item_uid}=    Convert To String    ${cart_item_uid}
                     ${cart_item_uid}=    Replace String    ${cart_item_uid}    '   ${EMPTY}
                     ${cart_item_uid}=    Replace String    ${cart_item_uid}    [   ${EMPTY}
                     ${cart_item_uid}=    Replace String    ${cart_item_uid}    ]   ${EMPTY}
-                    ${response_delete}=    DELETE    ${current_url}/carts/${cart_id}/items/${cart_item_uid}    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}    expected_status=204
+                    ${cart_item_sku}=    Convert To String    ${cart_item_sku}
+                    ${cart_item_sku}=    Replace String    ${cart_item_sku}    '   ${EMPTY}
+                    ${cart_item_sku}=    Replace String    ${cart_item_sku}    [   ${EMPTY}
+                    ${cart_item_sku}=    Replace String    ${cart_item_sku}    ]   ${EMPTY}
+                    TRY
+                        ${response_delete}=    DELETE    ${current_url}/carts/${cart_id}/items/${cart_item_uid}    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}    expected_status=204
+                    EXCEPT    
+                        ${response_delete}=    DELETE    ${current_url}/carts/${cart_id}/items/${cart_item_sku}    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}    expected_status=204
+                    END
             END
         END
 
@@ -1683,6 +1693,8 @@ Connect to Spryker DB
         ${db_engine}=    Set Variable    pymysql
     ELSE IF    '${db_engine}' == 'postgresql'
         ${db_engine}=    Set Variable    psycopg2
+    ELSE IF    '${db_engine}' == 'postgres'
+        ${db_engine}=    Set Variable    psycopg2
     END    
     IF    '${db_engine}' == 'psycopg2'
         ${db_port}=    Set Variable If    '${db_port}' == '${EMPTY}'    ${db_port_postgres_env}    ${db_port}
@@ -1695,6 +1707,7 @@ Connect to Spryker DB
         ${db_port}=    Set Variable If    '${db_port_env}' == '${EMPTY}'    ${default_db_port}    ${db_port_env}
         END
     END
+    Set Test Variable    ${db_engine}
     Connect To Database    ${db_engine}    ${db_name}    ${db_user}    ${db_password}    ${db_host}    ${db_port}
 
 Get the first company user id and its' customer email
