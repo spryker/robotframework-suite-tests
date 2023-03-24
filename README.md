@@ -30,13 +30,14 @@ python3 -m pip install -U robotframework-requests
     ```
 ### Installation for UI tests
 ##### For UI testing installation requires Robot Framework, [RequestsLibrary](https://github.com/MarketSquare/robotframework-requests), [DatabaseLibrary](https://github.com/franz-see/Robotframework-Database-Library) and [Browser library](https://robotframework-browser.org/) powered by Playwright. 
-If you installed everything from the [prerequisites](#Prerequisites), all you need to install is the Browser library.
+If you installed everything from the [prerequisites](#Prerequisites), all you need to install is Node.js and the Browser library.
 
-1. Install [Browser library](https://robotframework-browser.org/#installation)
+1. Install [Node.js®](https://nodejs.org/en/download)
+2. Install [Browser library](https://robotframework-browser.org/#installation)
 ```sh
 python3 -m pip install -U robotframework-browser
 ```
-2. Initialize the Browser library
+3. Initialize the Browser library
 ```sh
 rfbrowser init
 ```
