@@ -1496,17 +1496,53 @@ Cleanup existing customer addresses:
     END
 
 Find or create customer cart
-    [Documentation]    This keyword creates or retrieves cart for the current customer token. This keyword sets ``${cart_id} `` variable
+    [Documentation]    This keyword creates or retrieves cart (in gross price mode and with eur currency) for the current customer token. This keyword sets ``${cart_id} `` variable
         ...                and it can be re-used by the keywords that follow this keyword in the test
         ...
         ...     This keyword does not accept any arguments. Makes GET request in order to fetch cart for the customer or creates it otherwise.
         ...
-        ${response}=    I send a GET request:    /carts
-        Save value to a variable:    [data][0][id]    cart_id
+        ${response}=    GET    ${current_url}/carts    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}    expected_status=200
+        ${response_body}=    Set Variable    ${response.json()}
+        ${response_headers}=    Set Variable    ${response.headers}
+        Set Test Variable    ${response_headers}    ${response_headers}
+        @{data}=    Get Value From Json    ${response_body}    [data]
+        ${cart_id}=    Get Value From Json    ${response_body}    [data][0][id]
         ${hasCart}    Run Keyword and return status     Should not be empty    ${cart_id}
-        Log    cart_id:${cart_id}
-        IF    not ${hasCart}    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}"}}}
-        IF    not ${hasCart}    Save value to a variable:    [data][id]    cart_id
+        IF    ${hasCart}
+            ${carts_number}=    Get Length    @{data}
+            FOR    ${index}    IN RANGE    0    ${carts_number}
+                    ${cart}=    Get From List    @{data}    ${index}
+                    ${cart_id}=    Get Value From Json    ${cart}    [id]
+                    ${cart_id}=    Convert To String    ${cart_id}
+                    ${cart_id}=    Replace String    ${cart_id}    '   ${EMPTY}
+                    ${cart_id}=    Replace String    ${cart_id}    [   ${EMPTY}
+                    ${cart_id}=    Replace String    ${cart_id}    ]   ${EMPTY}
+                    ${cart_mode}=    Get Value From Json    ${cart}    [attributes][priceMode]
+                    ${cart_mode}=    Convert To String    ${cart_mode}
+                    ${cart_mode}=    Replace String    ${cart_mode}    '   ${EMPTY}
+                    ${cart_mode}=    Replace String    ${cart_mode}    [   ${EMPTY}
+                    ${cart_mode}=    Replace String    ${cart_mode}    ]   ${EMPTY}
+                    ${cart_currency}=    Get Value From Json    ${cart}    [attributes][currency]
+                    ${cart_currency}=    Convert To String    ${cart_currency}
+                    ${cart_currency}=    Replace String    ${cart_currency}    '   ${EMPTY}
+                    ${cart_currency}=    Replace String    ${cart_currency}    [   ${EMPTY}
+                    ${cart_currency}=    Replace String    ${cart_currency}    ]   ${EMPTY}
+                    ${expected_cart_found}=    Run Keyword And Return Status    Should Be True    '${cart_mode}' == 'GROSS_MODE' and '${cart_currency}' == 'EUR'
+                    IF    ${expected_cart_found} == 1
+                        Set Test Variable    ${cart_id}    ${cart_id}
+                        BREAK
+                    END
+                    IF    ${index} < ${carts_number}-1 and ${expected_cart_found} == 0    
+                        Continue For Loop
+                    ELSE
+                        I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "dummyCart${random}"}}}
+                        Save value to a variable:    [data][id]    cart_id
+                    END
+            END
+        ELSE
+            I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "dummyCart${random}"}}}
+            Save value to a variable:    [data][id]    cart_id
+        END
 
 Create empty customer cart:
     [Documentation]    This keyword creates cart for the current customer token. This keyword sets ``${cart_id} `` variable
