@@ -9,7 +9,7 @@ ENABLER
     TestSetup
 
 Create_customer
-    When I send a POST request:    /customers/    {"data":{"type":"customers","attributes":{"firstName":"${yves_user.first_name}","lastName":"${yves_user.last_name}","gender":"${gender.female}","salutation":"${yves_user.salutation}","email":"${email.name}+${random}${email.domain}","password":"${yves_user.password}","confirmPassword":"${yves_user.password}","acceptedTerms":True}}}
+    When I send a POST request:    /customers/    {"data":{"type":"customers","attributes":{"firstName":"${yves_user.first_name}","lastName":"${yves_user.last_name}","gender":"${gender.female}","salutation":"${yves_user.salutation}","email":"${email.name1}+${random}${email.domain}","password":"${yves_user.password}","confirmPassword":"${yves_user.password}","acceptedTerms":True}}}
     Then Response status code should be:    201
     And Save value to a variable:    [data][id]    user_reference_id
     And Save value to a variable:    [data][attributes][email]    user_email
@@ -35,7 +35,7 @@ Create_customer
 
 
 New_customer_can_login_after_confirmation
-    [Setup]    Run Keywords    I send a POST request:    /customers/    {"data":{"type":"customers","attributes":{"firstName":"${yves_user.first_name}","lastName":"${yves_user.last_name}","gender":"${gender.female}","salutation":"${yves_user.salutation}","email":"${email.name}+${random}${email.domain}","password":"${yves_user.password}","confirmPassword":"${yves_user.password}","acceptedTerms":True}}}
+    [Setup]    Run Keywords    I send a POST request:    /customers/    {"data":{"type":"customers","attributes":{"firstName":"${yves_user.first_name}","lastName":"${yves_user.last_name}","gender":"${gender.female}","salutation":"${yves_user.salutation}","email":"${email.name1}+${random}${email.domain}","password":"${yves_user.password}","confirmPassword":"${yves_user.password}","acceptedTerms":True}}}
     ...    AND    Response status code should be:    201
     ...    AND    Save value to a variable:    [data][id]    user_reference_id
     ...    AND    Save value to a variable:    [data][attributes][email]    user_email
@@ -106,7 +106,7 @@ Get_customer_array_contains_all_available_fields
     And Response body parameter should not be EMPTY:    [data][0][attributes][updatedAt]
 
 Delete_customer
-    [Setup]    Run Keywords    I send a POST request:    /customers/    {"data":{"type":"customers","attributes":{"firstName":"${yves_third_user.first_name}","lastName":"${yves_third_user.last_name}","gender":"${gender.male}","salutation":"${yves_third_user.salutation}","email":"${email.name}+${random}${email.domain}","password":"${yves_user.password}","confirmPassword":"${yves_user.password}","acceptedTerms":True}}}
+    [Setup]    Run Keywords    I send a POST request:    /customers/    {"data":{"type":"customers","attributes":{"firstName":"${yves_third_user.first_name}","lastName":"${yves_third_user.last_name}","gender":"${gender.male}","salutation":"${yves_third_user.salutation}","email":"${email.name1}+${random}${email.domain}","password":"${yves_user.password}","confirmPassword":"${yves_user.password}","acceptedTerms":True}}}
     ...    AND    Response status code should be:    201
     ...    AND    Save value to a variable:    [data][id]    user_reference_id
     ...    AND    Save value to a variable:    [data][attributes][email]    user_email
