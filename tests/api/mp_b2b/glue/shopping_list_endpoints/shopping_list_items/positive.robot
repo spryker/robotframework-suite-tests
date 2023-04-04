@@ -443,7 +443,7 @@ Add_Configurable_products_and_regular_product
    And Response should contain the array of a certain size:    [included]    2
    And Response body parameter should be less than:   [included][1][attributes][quantity]    3
    And Response body parameter should be greater than:    [included][0][attributes][quantity]    0
-   And Nested array element should contain sub-array with property and value at least once:    [included]    [attributes]    [productConfigurationInstance]    displayData    {\"Preferred time of the day\":\"Morning\",\"Date\":\"10.10.2040\"}
+   And Nested array element should contain sub-array with property and value at least once:    [included]    [attributes]    [productConfigurationInstance]    displayData    {"Preferred time of the day":"Morning","Date":"10.10.2040"}
    And Nested array element should contain sub-array with property and value at least once:    [included]    [attributes]    [productConfigurationInstance]    configuration    {"time_of_day":"4"}
    And Nested array element should contain sub-array with property and value at least once:    [included]    [attributes]    [productConfigurationInstance]    isComplete    True
    And Response body parameter should be in:   [included][1][id]    ${shoppingListItemId2}    ${shoppingListItemId1}
