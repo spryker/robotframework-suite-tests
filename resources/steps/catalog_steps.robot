@@ -53,6 +53,7 @@ Yves: change sorting order on catalog page:
 Yves: 1st product card in catalog (not)contains:
     [Documentation]    ${elementName} can be: Price, Name, Add to Cart, Color selector, Sale label, New label
     [Arguments]    ${elementName}    ${value}
+    ${value}=    Convert To Lower Case    ${value}
     IF    '${elementName}'=='Price' and '${value}'=='true'
         Element Should Be Visible    xpath=//product-item[@data-qa='component product-item'][1]//span[contains(@class,'default-price') and contains(.,'${value}')]
     ELSE IF    '${elementName}'=='Price' and '${value}'=='false'
