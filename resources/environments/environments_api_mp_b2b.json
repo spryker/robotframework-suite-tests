@@ -68,6 +68,7 @@
        },
        "email":{
           "name":"sonia",
+          "name1":"olya",
           "domain":"@spryker.com"
        },
        "zed_admin":{
@@ -504,7 +505,9 @@
              "concrete_unavailable_product":"212447",
              "product_2":{
                "abstract_available_with_stock_and_never_out_of_stock":"M24632",
-               "concrete_available_with_stock_and_never_out_of_stock":"426615"}
+               "concrete_available_with_stock_and_never_out_of_stock":"426615"},
+               "product_3":{
+                  "abstract_available_with_stock_and_never_out_of_stock":"M87416"}
           },
           "abstract_product_with_variants":{
              "concretes_3":"M29456",

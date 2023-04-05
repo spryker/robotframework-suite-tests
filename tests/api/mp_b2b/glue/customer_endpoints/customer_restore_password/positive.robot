@@ -7,7 +7,7 @@ Default Tags    glue
 ENABLER
     TestSetup
 Restore_password_with_all_required_fields_and_valid_data
-    [Setup]    Run Keywords    I send a POST request:    /customers/    {"data":{"type":"customers","attributes":{"firstName":"${yves_user.first_name}","lastName":"${yves_user.last_name}","gender":"${gender.female}","salutation":"${yves_user.salutation}","email":"${email.name}+${random}${email.domain}","password":"${yves_user.password_new}","confirmPassword":"${yves_user.password_new}","acceptedTerms":True}}}
+    [Setup]    Run Keywords    I send a POST request:    /customers/    {"data":{"type":"customers","attributes":{"firstName":"${yves_user.first_name}","lastName":"${yves_user.last_name}","gender":"${gender.female}","salutation":"${yves_user.salutation}","email":"${email.name1}+${random}${email.domain}","password":"${yves_user.password_new}","confirmPassword":"${yves_user.password_new}","acceptedTerms":True}}}
     ...    AND    Response status code should be:    201
     ...    AND    Save value to a variable:    [data][id]    user_reference_id
     ...    AND    Save value to a variable:    [data][attributes][email]    user_email
