@@ -1810,7 +1810,7 @@ Nested array element should contain sub-array with property and value at least o
         Log List    @{actual_parent_element}
         ${actual_nested_array}=    Get From List    ${actual_parent_element}    0
         ${actual_property_array}=    Get Value From Json    ${actual_nested_array}    ${expected_nested_array}
-        Log List    @{actual_property_array}
+        Log    @{actual_property_array}
         ${actual_property_value}=    Get From List    ${actual_property_array}    0
         ${actual_property_value}=    Get Value From Json    ${actual_property_value}    ${expected_property}
         ${actual_property_value}=    Convert To String    ${actual_property_value}
