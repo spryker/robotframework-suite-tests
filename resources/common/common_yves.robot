@@ -365,11 +365,12 @@ Helper: delete all items in cart
 
 Yves: try reloading page if element is/not appear:
     [Arguments]    ${element}    ${isDisplayed}    ${iterations}=26    ${sleep}=3s
+    ${isDisplayed}=    Convert To Lower Case    ${isDisplayed}
     FOR    ${index}    IN RANGE    0    ${iterations}
         ${elementAppears}=    Run Keyword And Return Status    Element Should Be Visible    ${element}
-        IF    '${isDisplayed}'=='True' and '${elementAppears}'=='False'
+        IF    '${isDisplayed}'=='true' and '${elementAppears}'=='False'
             Run Keywords    Sleep    ${sleep}    AND    Reload
-        ELSE IF    '${isDisplayed}'=='False' and '${elementAppears}'=='True'
+        ELSE IF    '${isDisplayed}'=='false' and '${elementAppears}'=='True'
             Run Keywords    Sleep    ${sleep}    AND    Reload
         ELSE
             Exit For Loop
