@@ -46,8 +46,8 @@ Yves: 'Order Details' page contains the following product title N times:
 
 Yves: 'Order History' page contains the following order with a status:
     [Arguments]    ${orderID}    ${expectedStatus}
-    ${actualOrderStatus}=    Get Text    xpath=//div[contains(@data-qa,'component order-table')]//td[text()='${orderID}']/..//span[@data-qa='component status']
-    Should Be Equal    ${actualOrderStatus}    ${expectedStatus}    msg=None    values=True    ignore_case=True    formatter=str
+    ${actualOrderStatus}=    Get Text    xpath=//div[contains(@data-qa,'component order-table')]//td[text()='${orderID}']/..//*[@data-qa='component status']/..//ancestor::td
+    Should Contain    ${actualOrderStatus}    ${expectedStatus}    msg=None    values=True    ignore_case=True
 
 Yves: 'Order Details' page contains the cancel order button:
     [Arguments]    ${condition}
