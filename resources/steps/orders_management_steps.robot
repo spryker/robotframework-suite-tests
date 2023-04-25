@@ -75,6 +75,18 @@ Zed: trigger matching state of order item inside xxx shipment:
             Click    ${elementSelector}
     END
 
+Zed: trigger matching state of xxx order item inside xxx shipment:
+    [Arguments]    ${event}    ${item_number}=1    ${shipment}=1
+    ${elementSelector}=    Set Variable    xpath=//table[@data-qa='order-item-list'][${shipment}]/tbody//tr[${item_number}]//td//form[contains(@name,'trigger_form')]//button[contains(text(),'${event}')]
+    Try reloading page until element is/not appear:    ${elementSelector}    true    20    10s
+    Click    ${elementSelector}
+    ${order_changed_status}=    Run Keyword And Ignore Error    Element Should Not Be Visible    ${elementSelector}
+    IF    'FAIL' in ${order_changed_status}
+        Run Keywords
+            Reload
+            Click    ${elementSelector}
+    END
+
 Zed: wait for order item to be in state:
     [Arguments]    ${sku}    ${state}    ${shipment}=1
     ${elementSelector}=    Set Variable    xpath=//table[@data-qa='order-item-list'][${shipment}]/tbody//td/div[@class='sku'][contains(text(),'${sku}')]/ancestor::tr/td[@class='state-history']//a[contains(text(),'${state}')]

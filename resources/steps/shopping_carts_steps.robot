@@ -68,7 +68,7 @@ Yves: shopping cart contains the following products:
     ${items_list_count}=   get length  ${items_list}
     FOR    ${index}    IN RANGE    0    ${items_list_count}
         ${item_to_check}=    Get From List    ${items_list}    ${index}
-        Page Should Contain Element    xpath=//main[contains(@class,'cart')]//article[contains(@data-qa,'component product-card-item')]//*[contains(.,'${item_to_check}')]/ancestor::article
+        Page Should Contain Element    xpath=(//main[contains(@class,'cart')]//article[contains(@data-qa,'component product-card-item')]//*[contains(.,'${item_to_check}')]/ancestor::article)[1]
     END
 
 Yves: click on the '${buttonName}' button in the shopping cart
@@ -172,7 +172,7 @@ Yves: delete all shopping carts
     Yves: create new 'Shopping Cart' with name:    Z
     #create new empty cart that will be the last one in the list
     ${currentURL}=    Get Location
-    IF    '/shopping-list' not in '${currentURL}'    Go To    ${yves_url}multi-cart
+    IF    '/multi-cart' not in '${currentURL}'    Go To    ${yves_url}multi-cart
     ${shoppingCartsCount}=    Get Element Count    xpath=//*[@data-qa='component quote-table']//table/tbody/tr//ul//a[contains(.,'Delete')]
     Log    ${shoppingCartsCount}
     FOR    ${index}    IN RANGE    0    ${shoppingCartsCount}-1
@@ -185,7 +185,7 @@ Yves: delete all shopping carts
 Yves: delete 'Shopping Cart' with name:
     [Arguments]    ${shoppingCartName}
     ${currentURL}=    Get Location
-    IF      '/shopping-list' not in '${currentURL}'    Go To    ${yves_url}multi-cart
+    IF      '/multi-cart' not in '${currentURL}'    Go To    ${yves_url}multi-cart
     Delete shopping cart with name:    ${shoppingCartName}
     Wait Until Element Is Visible    ${delete_shopping_cart_button}
     Click    ${delete_shopping_cart_button}

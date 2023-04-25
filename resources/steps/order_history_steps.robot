@@ -16,7 +16,7 @@ Yves: go to 'Order History' page
     END
         
 Yves: 'View Order/Reorder/Return' on the order history page:
-    [Arguments]    ${orderAction}    ${lastPlacedOrder}
+    [Arguments]    ${orderAction}    ${lastPlacedOrder}=${lastPlacedOrder}
     IF    '${orderAction}' == 'View Order'
         Click   xpath=//div[contains(@data-qa,'component order-table')]//td[text()='${lastPlacedOrder}']/..//a[contains(.,'${orderAction}')]
     ELSE IF    '${orderAction}' == 'Reorder'

@@ -41,3 +41,8 @@ ${pdp_bazaarvoice_questions_locator}    xpath=//div[@data-bv-show='questions']
 ${pdp_bazaarvoice_intine_rating_locator}    xpath=//section[@data-bv-show='inline_rating']
 ${referrer_url}    xpath=//header//form[contains(@action,'currency/switch')]//input[@name='referrer-url']
 ${pdp_product_name}    xpath=//h1[contains(@class,'title')]
+${pdp_configure_button}    xpath=(//*[contains(@action,'product-configurator-gateway') or contains(@form-action,'product-configurator-gateway')]//button)[1]
+${pdp_configuration_status}    xpath=(//span[@data-qa='component status'])[1]
+${pdp_configuration_date_time}    xpath=(//*[contains(@data-qa,'collapsible-list')]//div[contains(@class,'item')][1]/div[contains(@class,'value')])[1]
+${pdp_configuration_date}    xpath=(//*[contains(@data-qa,'collapsible-list')]//div[contains(@class,'item')][2]/div[contains(@class,'value')])[1]
+
