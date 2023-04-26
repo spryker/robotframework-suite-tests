@@ -11,7 +11,6 @@ Resource    ../pages/zed/zed_order_details_page.robot
 Zed: go to order page:
     [Arguments]    ${orderID}
     Zed: go to second navigation item level:    Sales    Orders
-    Zed: perform search by:    ${orderID}
     Zed: click Action Button in a table for row that contains:    ${orderID}    View
 
 Zed: go to my order page:

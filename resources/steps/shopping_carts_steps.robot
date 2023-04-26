@@ -122,7 +122,7 @@ Yves: delete product from the shopping cart with sku:
 
 Yves: delete product from the shopping cart with name:
     [Arguments]    ${productName}
-    Click    //main[@class='page-layout-cart']//article[contains(@data-qa,'component product-card-item')]//a[contains(text(),'Canon IXUS 175')]/ancestor::article//form[contains(@name,'removeFromCartForm')]//button
+    Click    //main[@class='page-layout-cart']//article[contains(@data-qa,'component product-card-item')]//a[contains(text(),'${productName}')]/ancestor::article//form[contains(@name,'removeFromCartForm')]//button
     Yves: remove flash messages
 
 Yves: shopping cart doesn't contain the following products:

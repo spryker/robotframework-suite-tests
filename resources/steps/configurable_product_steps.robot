@@ -33,8 +33,8 @@ Yves: configuration should be equal:
     Wait Until Element Is Visible    ${pdp_configure_button}
     FOR    ${key}    ${value}    IN    &{configurationData}
         Log    Key is '${key}' and value is '${value}'.
-        IF    '${key}'=='date' and '${value}' != '${EMPTY}'   Element Text Should Be    ${pdp_configuration_date}    ${value}
-        IF    '${key}'=='date_time' and '${value}' != '${EMPTY}'   Element Text Should Be    ${pdp_configuration_date_time}    ${value}
+        IF    '${key}'=='date' and '${value}' != '${EMPTY}'   Element Text Should Be    ${pdp_configuration_date}[${env}]    ${value}
+        IF    '${key}'=='date_time' and '${value}' != '${EMPTY}'   Element Text Should Be    ${pdp_configuration_date_time}[${env}]    ${value}
     END
 
 Yves: check and go back that configuration page contains:
@@ -74,7 +74,11 @@ Zed: product configuration should be equal:
             ${position}=    Set Variable    1
         END
         IF    '${key}'=='date' and '${value}' != '${EMPTY}'    Element Should Contain    xpath=//table[@data-qa='order-item-list'][${shipment}]/tbody//tr[${position}]/td//div[@class='sku'][contains(text(),'${sku}')]/ancestor::tr//td//*[contains(@class,'sku')]/../div[last()]    ${value}
-        IF    '${key}'=='date_time' and '${value}' != '${EMPTY}'    Element Should Contain    xpath=//table[@data-qa='order-item-list'][${shipment}]/tbody//tr[${position}]/td//div[@class='sku'][contains(text(),'${sku}')]/ancestor::tr//td//*[contains(@class,'sku')]/../div[3]    ${value}
+        IF    '${key}'=='date_time' and '${value}' != '${EMPTY}'    
+            IF    '${env}' in ['ui_b2b','ui_mp_b2b']
+                Element Should Contain    xpath=//table[@data-qa='order-item-list'][${shipment}]/tbody//tr[${position}]/td//div[@class='sku'][contains(text(),'${sku}')]/ancestor::tr//td//*[contains(@class,'sku')]/../div[3]    ${value}
+            ELSE
+                Element Should Contain    xpath=//table[@data-qa='order-item-list'][${shipment}]/tbody//tr[${position}]/td//div[@class='sku'][contains(text(),'${sku}')]/ancestor::tr//td//*[contains(@class,'sku')]/../div[4]    ${value}
+            END
+        END
     END
-
-    

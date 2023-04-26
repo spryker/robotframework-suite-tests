@@ -20,6 +20,7 @@
        "yves_user_first_name":"George",
        "yves_user_last_name":"Freeman",
        "yves_user_password":"change123",
+       "yves_user_reference":"DE--5",
        "yves_user_address":"Mr George Freeman, Kirncher Str. 7, 10247 Berlin",
        "yves_second_user_email":"bill.martin@spryker.com",
        "yves_second_user_first_name":"Bill",
@@ -83,6 +84,14 @@
        "stock_product_abstract_sku": "208",
        "stock_product_concrete_sku": "208_14678762",
        "discontinued_product_abstract_sku": "172",
-       "discontinued_product_concrete_sku": "172_29801891"
+       "discontinued_product_concrete_sku": "172_29801891",
+       "configurable_product_abstract_sku": "124",
+       "configurable_product_concrete_one_sku": "124_31623088",
+       "configurable_product_concrete_one_attribute": "128 GB",
+       "configurable_product_concrete_two_sku": "124_29866591",
+       "configurable_product_concrete_two_attribute": "500 GB",
+       "configurable_product_name": "HP ProDesk 400 G3",
+       "configurable_product_concrete_one_price": "25.00",
+       "configurable_product_concrete_two_price": "310.19"
     }
  }

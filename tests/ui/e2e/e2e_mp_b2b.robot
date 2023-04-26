@@ -2582,6 +2582,7 @@ Configurable_Product_PDP_Shopping_List
     ...    || date  | date_time ||
     ...    ||       | Afternoon ||
     Yves: product configuration status should be equal:       Configuration is not complete.
+    Yves: checkout is blocked with the following message:    This cart can't be processed. Please configure items inside the cart.
     Yves: delete product from the shopping cart with sku:    ${configurable_product_concrete_sku}
     Yves: go to PDP of the product with sku:    ${configurable_product_abstract_sku}
     Yves: change the product configuration to:
