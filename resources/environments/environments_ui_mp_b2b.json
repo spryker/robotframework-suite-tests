@@ -42,6 +42,7 @@
        "yves_company_user_buyer_email":"Richi@spryker.com",
        "yves_company_user_buyer_firstname":"Armando",
        "yves_company_user_buyer_lastname":"Richi",
+       "yves_company_user_buyer_reference":"DE--15",
        "yves_company_user_buyer_address":"Mr Armando Richi, Gurmont Str. 23, 8002 Barcelona",
        "yves_company_user_special_prices_customer_email":"Elizabet@spryker.com",
        "yves_company_user_special_prices_customer_firstname":"Elizabet",
@@ -97,6 +98,10 @@
        "stock_product_abstract_sku": "M72935",
        "stock_product_concrete_sku": "103907",
        "discontinued_product_abstract_sku": "M5108",
-       "discontinued_product_concrete_sku": "400065"
+       "discontinued_product_concrete_sku": "400065",
+       "configurable_product_abstract_sku": "M636",
+       "configurable_product_concrete_sku": "574601",
+       "configurable_product_name": "CP steel cabinet, fire-resistant - 3 adjustable shelves - 1 locker - black gray / light gray",
+       "configurable_product_concrete_price": "1,826.54"
     }
  }

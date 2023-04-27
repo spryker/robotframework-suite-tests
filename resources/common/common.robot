@@ -433,6 +433,22 @@ Save the result of a SELECT DB query to a variable:
     Set Test Variable    ${${variable_name}}    ${var_value}
     [Return]    ${variable_name}
 
+Ping and go to URL:
+    [Arguments]    ${url}    ${timeout}=${EMPTY}
+    ${accessible}=    Run Keyword And Ignore Error    Send GET request and return status code:    ${url}    ${timeout}
+    ${successful}=    Run Keyword And Ignore Error    Should Contain Any    '${response.status_code}'    '200'    '201'    '202'    '301'    '302'
+    IF    'PASS' in ${accessible} and 'PASS' in ${successful}
+        Go To    ${url}
+    ELSE
+        Fail    '${url}' URL is not accessible of throws an error
+    END
+        
+Send GET request and return status code:
+    [Arguments]    ${url}    ${timeout}=5
+    ${response}=    GET    ${url}    timeout=${timeout}    allow_redirects=true    expected_status=ANY
+    Set Test Variable    ${response.status_code}    ${response.status_code}
+    [Return]    ${response.status_code}
+
 ## Example of intercepting the network request
 ##     [Arguments]    ${eventName}    ${timeout}=30s
 ##     ${response}=    Wait for response    matcher=bazaarvoice\\.com\\/\\w+\\.gif\\?.*type=${eventName}    timeout=${timeout}
