@@ -10,16 +10,18 @@ else
     exit 1
 fi
 
-# Get the version number of Python installed on the system.
+# Get the version string.
 python_version=$($python_cmd --version 2>&1 | awk '{print $2}')
 
-# Extract the major version number (i.e. 3 from 3.x).
+# Extract the major and minor version numbers (i.e. 3 and 6 from 3.6.x)
 major_version=$(echo $python_version | cut -d. -f1)
+minor_version=$(echo $python_version | cut -d. -f2)
 
-if [ "$major_version" == "3" ]; then
-    echo "Python 3 is installed."
+# Check if the major version number is 3 and the minor version number is 6 or greater
+if [ "$major_version" == "3" ] && [ "$minor_version" -ge "6" ]; then
+    echo "Python >= 3.6 is installed."
 else
-    echo "Python 3 is not installed."
+    echo "Python >= 3.6 is not installed."
     exit 1
 fi
 
