@@ -70,9 +70,19 @@ Yves: add all available products from wishlist to cart
     Wait Until Element Is Visible    ${wishlist_add_all_to_cart_button}
     Click    ${wishlist_add_all_to_cart_button}
 
-
-
-
+Yves: create new 'Whistist' with name:
+    [Arguments]    ${wishlistName}
+    ${currentURL}=    Get Location
+    IF    '/wishlist' not in '${currentURL}'    
+            IF    '.at.' in '${currentURL}'
+                Go To    ${yves_at_url}wishlist
+            ELSE
+                Go To    ${yves_url}wishlist
+            END    
+    END
+    Type Text    ${wishlist_name_input_field}    ${wishlistName}
+    Click    ${wishlist_add_new_button}
+    Yves: remove flash messages
 
 
 

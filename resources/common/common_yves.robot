@@ -33,6 +33,7 @@ Resource    ../pages/yves/yves_return_details_page.robot
 Resource    ../pages/yves/yves_checkout_summary_page.robot
 Resource    ../pages/yves/yves_checkout_cancel_payment_page.robot
 Resource    ../steps/header_steps.robot
+Resource    ../steps/checkout_steps.robot
 
 *** Variable ***
 ${notification_area}    xpath=//section[@data-qa='component notification-area']
@@ -353,7 +354,7 @@ Yves: check if cart is not empty and clear it
     Yves: go to the 'Home' page
     Yves: go to b2c shopping cart
     ${productsInCart}=    Get Element Count    xpath=//article[@class='product-card-item']//div[contains(@class,'product-card-item__box')]
-    ${cartIsEmpty}=    Run Keyword And Return Status    Element should be visible    xpath=//*[contains(@class,'spacing-top') and text()='Your shopping cart is empty!']
+    ${cartIsEmpty}=    Run Keyword And Return Status    Element should be visible    xpath=//*[contains(@class,'spacing-top') and text()='Your shopping cart is empty!']    timeout=1s
     IF    '${cartIsEmpty}'=='False'    Helper: delete all items in cart
 
 Helper: delete all items in cart
@@ -431,3 +432,23 @@ I send a POST request:
     Set Test Variable    ${response}    ${response}
     Set Test Variable    ${expected_self_link}    ${glue_url}${path}
     [Return]    ${response_body}
+
+Yves: checkout is blocked with the following message:
+    [Arguments]    ${expectedMessage}
+    ${currentURL}=    Get Url
+    IF    '/cart' in '${currentURL}'
+        ${checkout_button_state}=    Get Element Attribute    ${shopping_cart_checkout_button}    class
+        Should Contain    ${checkout_button_state}    disabled
+        Get Text    ${shopping_cart_checkout_error_message_locator}    contains    ${expectedMessage}
+    ELSE
+        TRY
+            Element Should Be Visible    ${checkout_summary_alert_message}[${env}]
+            Page Should Not Contain Element    ${checkout_summary_submit_order_button}
+            ${actualAlertMessage}=    Get Text    ${checkout_summary_alert_message}[${env}]
+            Should Be Equal    ${actualAlertMessage}    ${expectedMessage}
+        EXCEPT    
+            Yves: accept the terms and conditions:    true
+            Click    ${checkout_summary_submit_order_button}
+            Yves: flash message should be shown:    error    ${expectedMessage}
+        END
+    END
