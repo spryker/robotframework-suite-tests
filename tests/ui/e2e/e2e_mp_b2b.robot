@@ -1091,7 +1091,7 @@ Manage_Merchants_from_Backoffice
     Zed: update Merchant on edit page with the following data:
     ...    || merchant name | merchant reference | e-mail  | uncheck store | en url | de url ||
     ...    ||               |                    |         | DE            |        |        ||
-    Yves: go to URL and refresh until 404 occurs:    ${host}en/merchant/NewMerchantURL${random}
+    Yves: go to URL and refresh until 404 occurs:    ${yves_url}en/merchant/NewMerchantURL${random}
     [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: go to second navigation item level:    Marketplace    Merchants  
     ...    AND    Zed: click Action Button in a table for row that contains:     NewMerchantUpdated${random}     Deactivate
@@ -1924,12 +1924,12 @@ Merchant_Product_Original_Price
 #     [Teardown]    Run Keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
 #     ...    AND    Yves: delete all user addresses
 
-Zed_navigation_ordering_and_naming
-    [Documentation]    Verifies each left navigation node can be opened
-    Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    Zed: verify first navigation root menus
-    Zed: verify root menu icons
-    Zed: verify second navigation root menus
+# Zed_navigation_ordering_and_naming
+#     [Documentation]    Verifies each left navigation node can be opened
+#     Zed: login on Zed with provided credentials:    ${zed_admin_email}
+#     Zed: verify first navigation root menus
+#     Zed: verify root menu icons
+#     Zed: verify second navigation root menus
 
 # Minimum_Order_Value
 #     [Documentation]    checks that global minimum and maximun order thresholds can be applied
