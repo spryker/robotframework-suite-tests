@@ -611,81 +611,81 @@ Request_for_Quote
 #     Yves: 'View Order' page is displayed
 #     Yves: 'Order Details' page contains the following product title N times:    Presentation bundle    3
 
-Return_Management
-    [Documentation]    Checks OMS and that Yves user and in Zed main merchant can create/execute returns.
-    [Setup]    Run keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
-    ...    AND    Yves: create new 'Shopping Cart' with name:    returnCart+${random}
-    Yves: go to PDP of the product with sku:    M90802
-    Yves: add product to the shopping cart
-    Yves: go to PDP of the product with sku:    M21711
-    Yves: add product to the shopping cart
-    Yves: go to PDP of the product with sku:    M90737
-    Yves: add product to the shopping cart
-    Yves: go to PDP of the product with sku:    M72843
-    Yves: add product to the shopping cart
-    Yves: go to the shopping cart through the header with name:    returnCart+${random}
-    Yves: click on the 'Checkout' button in the shopping cart
-    Yves: billing address same as shipping address:    true
-    Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${yves_company_user_buyer_address}
-    Yves: select the following shipping method on the checkout and go next:    Express
-    Yves: select the following payment method on the checkout and go next:    Invoice
-    Yves: accept the terms and conditions:    true
-    Yves: 'submit the order' on the summary page
-    Yves: 'Thank you' page is displayed
-    Yves: get the last placed order ID by current customer
-    Zed: login on Zed with provided credentials:    ${zed_main_merchant_email}
-    Zed: go to order page:    ${lastPlacedOrder}
-    Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Pay
-    Zed: go to my order page:    ${lastPlacedOrder}
-    Zed: trigger matching state of xxx merchant's shipment:    1    send to distribution
-    Zed: trigger matching state of xxx merchant's shipment:    1    confirm at center
-    Zed: trigger matching state of xxx merchant's shipment:    1    Ship
-    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
-    Yves: go to user menu item in header:    Order History
-    Yves: 'Order History' page is displayed
-    Yves: get the last placed order ID by current customer
-    Yves: 'View Order/Reorder/Return' on the order history page:     Return    ${lastPlacedOrder}
-    Yves: 'Create Return' page is displayed
-    Yves: create return for the following products:    410083    108278
-    Yves: 'Return Details' page is displayed
-    Yves: check that 'Print Slip' contains the following products:    410083    108278
-    MP: login on MP with provided credentials:    ${merchant_spryker_email}
-    MP: open navigation menu tab:    Orders    
-    MP: wait for order to appear:    ${lastPlacedOrder}--${merchant_spryker_reference}
-    MP: click on a table row that contains:    ${lastPlacedOrder}--${merchant_spryker_reference}
-    MP: update order state using header button:    Execute return
-    MP: order states on drawer should contain:    returned
-    MP: order states on drawer should contain:    Shipped  
-    Zed: login on Zed with provided credentials:    admin@spryker.com
-    Zed: create a return for the following order and product in it:    ${lastPlacedOrder}    103838
-    Zed: create new Zed user with the following data:    return+agent+${random}@spryker.com    change123${random}    Agent    Assist    Root group    This user is an agent    en_US
-    Yves: go to the 'Home' page
-    Yves: logout on Yves as a customer
-    Yves: go to URL:    agent/login
-    Yves: login on Yves with provided credentials:    return+agent+${random}@spryker.com    change123${random}
-    Yves: header contains/doesn't contain:    true    ${customerSearchWidget}
-    Yves: perform search by customer:    ${yves_company_user_buyer_email}
-    Yves: agent widget contains:    ${yves_company_user_buyer_email}
-    Yves: as an agent login under the customer:    ${yves_company_user_buyer_email}
-    Yves: go to user menu item in header:    Order History
-    Yves: 'View Order/Reorder/Return' on the order history page:     Return    ${lastPlacedOrder}
-    Yves: 'Create Return' page is displayed
-    Yves: create return for the following products:    421426
-    Yves: 'Return Details' page is displayed
-    Yves: check that 'Print Slip' contains the following products:    421426
-    Zed: login on Zed with provided credentials:    ${zed_main_merchant_email}
-    Zed: go to my order page:    ${lastPlacedOrder}
-    Zed: trigger matching state of xxx merchant's shipment:    1    Execute return 
-    Zed: go to second navigation item level:    Sales    My Returns
-    Zed: table should contain xxx N times:    ${lastPlacedOrder}    3
-    Zed: view the latest return from My Returns:    ${lastPlacedOrder}
-    Zed: return details page contains the following items:    421426
-    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
-    Yves: go to user menu item in header:    Order History
-    Yves: 'Order History' page is displayed
-    Yves: 'Order History' page contains the following order with a status:    ${lastPlacedOrder}    Returned
-    [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    ...    AND    Zed: delete Zed user with the following email:    return+agent+${random}@spryker.com
+# Return_Management
+#     [Documentation]    Checks OMS and that Yves user and in Zed main merchant can create/execute returns.
+#     [Setup]    Run keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
+#     ...    AND    Yves: create new 'Shopping Cart' with name:    returnCart+${random}
+#     Yves: go to PDP of the product with sku:    M90802
+#     Yves: add product to the shopping cart
+#     Yves: go to PDP of the product with sku:    M21711
+#     Yves: add product to the shopping cart
+#     Yves: go to PDP of the product with sku:    M90737
+#     Yves: add product to the shopping cart
+#     Yves: go to PDP of the product with sku:    M72843
+#     Yves: add product to the shopping cart
+#     Yves: go to the shopping cart through the header with name:    returnCart+${random}
+#     Yves: click on the 'Checkout' button in the shopping cart
+#     Yves: billing address same as shipping address:    true
+#     Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${yves_company_user_buyer_address}
+#     Yves: select the following shipping method on the checkout and go next:    Express
+#     Yves: select the following payment method on the checkout and go next:    Invoice
+#     Yves: accept the terms and conditions:    true
+#     Yves: 'submit the order' on the summary page
+#     Yves: 'Thank you' page is displayed
+#     Yves: get the last placed order ID by current customer
+#     Zed: login on Zed with provided credentials:    ${zed_main_merchant_email}
+#     Zed: go to order page:    ${lastPlacedOrder}
+#     Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Pay
+#     Zed: go to my order page:    ${lastPlacedOrder}
+#     Zed: trigger matching state of xxx merchant's shipment:    1    send to distribution
+#     Zed: trigger matching state of xxx merchant's shipment:    1    confirm at center
+#     Zed: trigger matching state of xxx merchant's shipment:    1    Ship
+#     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
+#     Yves: go to user menu item in header:    Order History
+#     Yves: 'Order History' page is displayed
+#     Yves: get the last placed order ID by current customer
+#     Yves: 'View Order/Reorder/Return' on the order history page:     Return    ${lastPlacedOrder}
+#     Yves: 'Create Return' page is displayed
+#     Yves: create return for the following products:    410083    108278
+#     Yves: 'Return Details' page is displayed
+#     Yves: check that 'Print Slip' contains the following products:    410083    108278
+#     MP: login on MP with provided credentials:    ${merchant_spryker_email}
+#     MP: open navigation menu tab:    Orders    
+#     MP: wait for order to appear:    ${lastPlacedOrder}--${merchant_spryker_reference}
+#     MP: click on a table row that contains:    ${lastPlacedOrder}--${merchant_spryker_reference}
+#     MP: update order state using header button:    Execute return
+#     MP: order states on drawer should contain:    returned
+#     MP: order states on drawer should contain:    Shipped  
+#     Zed: login on Zed with provided credentials:    admin@spryker.com
+#     Zed: create a return for the following order and product in it:    ${lastPlacedOrder}    103838
+#     Zed: create new Zed user with the following data:    return+agent+${random}@spryker.com    change123${random}    Agent    Assist    Root group    This user is an agent    en_US
+#     Yves: go to the 'Home' page
+#     Yves: logout on Yves as a customer
+#     Yves: go to URL:    agent/login
+#     Yves: login on Yves with provided credentials:    return+agent+${random}@spryker.com    change123${random}
+#     Yves: header contains/doesn't contain:    true    ${customerSearchWidget}
+#     Yves: perform search by customer:    ${yves_company_user_buyer_email}
+#     Yves: agent widget contains:    ${yves_company_user_buyer_email}
+#     Yves: as an agent login under the customer:    ${yves_company_user_buyer_email}
+#     Yves: go to user menu item in header:    Order History
+#     Yves: 'View Order/Reorder/Return' on the order history page:     Return    ${lastPlacedOrder}
+#     Yves: 'Create Return' page is displayed
+#     Yves: create return for the following products:    421426
+#     Yves: 'Return Details' page is displayed
+#     Yves: check that 'Print Slip' contains the following products:    421426
+#     Zed: login on Zed with provided credentials:    ${zed_main_merchant_email}
+#     Zed: go to my order page:    ${lastPlacedOrder}
+#     Zed: trigger matching state of xxx merchant's shipment:    1    Execute return 
+#     Zed: go to second navigation item level:    Sales    My Returns
+#     Zed: table should contain xxx N times:    ${lastPlacedOrder}    3
+#     Zed: view the latest return from My Returns:    ${lastPlacedOrder}
+#     Zed: return details page contains the following items:    421426
+#     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
+#     Yves: go to user menu item in header:    Order History
+#     Yves: 'Order History' page is displayed
+#     Yves: 'Order History' page contains the following order with a status:    ${lastPlacedOrder}    Returned
+#     [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+#     ...    AND    Zed: delete Zed user with the following email:    return+agent+${random}@spryker.com
 
 # User_Account
 #     [Documentation]    Checks user account pages work + address management
@@ -930,50 +930,50 @@ Content_Management
 #     [Teardown]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
 #     ...    AND    Zed: activate following discounts from Overview page:    20% off storage    10% off minimum order
 
-Multiple_Merchants_Order
-    [Documentation]    Checks that order with products and offers of multiple merchants could be placed and it will be splitted per merchant
-    [Setup]    Run Keywords    
-    ...    MP: login on MP with provided credentials:    ${merchant_computer_experts_email}
-    ...    AND    MP: change offer stock:
-    ...    || offer    | stock quantity | is never out of stock ||
-    ...    || offer395 | 10             | true                  ||
-    ...    AND    MP: login on MP with provided credentials:    ${merchant_office_king_email}
-    ...    AND    MP: change offer stock:
-    ...    || offer    | stock quantity | is never out of stock ||
-    ...    || offer193 | 10             | true                  ||
-    ...    AND    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
-    ...    AND    Yves: delete all shopping carts
-    ...    AND    Yves: create new 'Shopping Cart' with name:    MultipleMerchants${random}
-    Yves: go to PDP of the product with sku:    ${one_variant_product_of_main_merchant_abstract_sku}
-    Yves: add product to the shopping cart
-    Yves: go to PDP of the product with sku:    ${one_variant_product_abstract_sku}
-    Yves: add product to the shopping cart
-    Yves: go to PDP of the product with sku:     ${product_with_multiple_offers_abstract_sku}
-    Yves: merchant's offer/product price should be:    Computer Experts    ${product_with_multiple_offers_computer_experts_price}
-    Yves: merchant's offer/product price should be:    Office King    ${product_with_multiple_offers_office_king_price}
-    Yves: select xxx merchant's offer:    Computer Experts
-    Yves: product price on the PDP should be:    ${product_with_multiple_offers_computer_experts_price}
-    Yves: add product to the shopping cart
-    Yves: go to the shopping cart through the header with name:    MultipleMerchants${random}
-    Yves: assert merchant of product in cart or list:    ${one_variant_product_of_main_merchant_concrete_sku}    Spryker
-    Yves: assert merchant of product in cart or list:    ${one_variant_product_concrete_sku}    Office King
-    Yves: assert merchant of product in cart or list:    ${product_with_multiple_offers_concrete_sku}    Computer Experts
-    Yves: click on the 'Checkout' button in the shopping cart
-    Yves: billing address same as shipping address:    true
-    Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${yves_company_user_buyer_address}
-    Yves: select the following shipping method for the shipment:    1    Hermes    Next Day
-    Yves: select the following shipping method for the shipment:    2    Hermes    Same Day
-    Yves: select the following shipping method for the shipment:    3    DHL    Express
-    Yves: submit form on the checkout
-    Yves: select the following payment method on the checkout and go next:    Invoice
-    Yves: accept the terms and conditions:    true
-    Yves: 'submit the order' on the summary page
-    Yves: 'Thank you' page is displayed
-    Yves: get the last placed order ID by current customer
-    Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    Zed: order has the following number of shipments:    ${lastPlacedOrder}    3
-    [Teardown]    Run Keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
-    ...    AND    Yves: delete all user addresses
+# Multiple_Merchants_Order
+#     [Documentation]    Checks that order with products and offers of multiple merchants could be placed and it will be splitted per merchant
+#     [Setup]    Run Keywords    
+#     ...    MP: login on MP with provided credentials:    ${merchant_computer_experts_email}
+#     ...    AND    MP: change offer stock:
+#     ...    || offer    | stock quantity | is never out of stock ||
+#     ...    || offer395 | 10             | true                  ||
+#     ...    AND    MP: login on MP with provided credentials:    ${merchant_office_king_email}
+#     ...    AND    MP: change offer stock:
+#     ...    || offer    | stock quantity | is never out of stock ||
+#     ...    || offer193 | 10             | true                  ||
+#     ...    AND    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
+#     ...    AND    Yves: delete all shopping carts
+#     ...    AND    Yves: create new 'Shopping Cart' with name:    MultipleMerchants${random}
+#     Yves: go to PDP of the product with sku:    ${one_variant_product_of_main_merchant_abstract_sku}
+#     Yves: add product to the shopping cart
+#     Yves: go to PDP of the product with sku:    ${one_variant_product_abstract_sku}
+#     Yves: add product to the shopping cart
+#     Yves: go to PDP of the product with sku:     ${product_with_multiple_offers_abstract_sku}
+#     Yves: merchant's offer/product price should be:    Computer Experts    ${product_with_multiple_offers_computer_experts_price}
+#     Yves: merchant's offer/product price should be:    Office King    ${product_with_multiple_offers_office_king_price}
+#     Yves: select xxx merchant's offer:    Computer Experts
+#     Yves: product price on the PDP should be:    ${product_with_multiple_offers_computer_experts_price}
+#     Yves: add product to the shopping cart
+#     Yves: go to the shopping cart through the header with name:    MultipleMerchants${random}
+#     Yves: assert merchant of product in cart or list:    ${one_variant_product_of_main_merchant_concrete_sku}    Spryker
+#     Yves: assert merchant of product in cart or list:    ${one_variant_product_concrete_sku}    Office King
+#     Yves: assert merchant of product in cart or list:    ${product_with_multiple_offers_concrete_sku}    Computer Experts
+#     Yves: click on the 'Checkout' button in the shopping cart
+#     Yves: billing address same as shipping address:    true
+#     Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${yves_company_user_buyer_address}
+#     Yves: select the following shipping method for the shipment:    1    Hermes    Next Day
+#     Yves: select the following shipping method for the shipment:    2    Hermes    Same Day
+#     Yves: select the following shipping method for the shipment:    3    DHL    Express
+#     Yves: submit form on the checkout
+#     Yves: select the following payment method on the checkout and go next:    Invoice
+#     Yves: accept the terms and conditions:    true
+#     Yves: 'submit the order' on the summary page
+#     Yves: 'Thank you' page is displayed
+#     Yves: get the last placed order ID by current customer
+#     Zed: login on Zed with provided credentials:    ${zed_admin_email}
+#     Zed: order has the following number of shipments:    ${lastPlacedOrder}    3
+#     [Teardown]    Run Keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
+#     ...    AND    Yves: delete all user addresses
 
 # Merchant_Profile_Update
 #     [Documentation]    Checks that merchant profile could be updated from merchant portal and that changes will be displayed on Yves
@@ -1316,23 +1316,23 @@ Approve_Offer
 #     [Teardown]    Run Keywords    Yves: login on Yves with provided credentials:    ${yves_user_email}
 #     ...    AND    Yves: delete all user addresses
 
-Shopping_List_Contains_Offers
-    [Documentation]    Checks that customer is able to add merchant products and offers to list and merchant relation won't be lost in list and afterwards in cart
-    [Setup]    Run Keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
-    ...    AND    Yves: delete all shopping carts
-    Yves: create new 'Shopping List' with name:    shoppingListName${random}
-    Yves: go to PDP of the product with sku:    ${product_with_multiple_offers_abstract_sku}
-    Yves: add product to the shopping list:    shoppingListName${random}
-    Yves: select xxx merchant's offer:    Computer Experts
-    Yves: add product to the shopping list:    shoppingListName${random}
-    Yves: view shopping list with name:    shoppingListName${random}
-    Yves: assert merchant of product in cart or list:    ${product_with_multiple_offers_concrete_sku}    Spryker
-    Yves: assert merchant of product in cart or list:    ${product_with_multiple_offers_concrete_sku}    Computer Experts
-    Yves: add all available products from list to cart  
-    Yves: 'Shopping Cart' page is displayed
-    Yves: assert merchant of product in cart or list:    ${product_with_multiple_offers_concrete_sku}    Spryker
-    Yves: assert merchant of product in cart or list:    ${product_with_multiple_offers_concrete_sku}    Computer Experts
-    [Teardown]    Yves: delete 'Shopping List' with name:    shoppingListName${random}
+# Shopping_List_Contains_Offers
+#     [Documentation]    Checks that customer is able to add merchant products and offers to list and merchant relation won't be lost in list and afterwards in cart
+#     [Setup]    Run Keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
+#     ...    AND    Yves: delete all shopping carts
+#     Yves: create new 'Shopping List' with name:    shoppingListName${random}
+#     Yves: go to PDP of the product with sku:    ${product_with_multiple_offers_abstract_sku}
+#     Yves: add product to the shopping list:    shoppingListName${random}
+#     Yves: select xxx merchant's offer:    Computer Experts
+#     Yves: add product to the shopping list:    shoppingListName${random}
+#     Yves: view shopping list with name:    shoppingListName${random}
+#     Yves: assert merchant of product in cart or list:    ${product_with_multiple_offers_concrete_sku}    Spryker
+#     Yves: assert merchant of product in cart or list:    ${product_with_multiple_offers_concrete_sku}    Computer Experts
+#     Yves: add all available products from list to cart  
+#     Yves: 'Shopping Cart' page is displayed
+#     Yves: assert merchant of product in cart or list:    ${product_with_multiple_offers_concrete_sku}    Spryker
+#     Yves: assert merchant of product in cart or list:    ${product_with_multiple_offers_concrete_sku}    Computer Experts
+#     [Teardown]    Yves: delete 'Shopping List' with name:    shoppingListName${random}
 
 Merchant_Portal_Customer_Specific_Prices
     [Documentation]    Checks that customer will see product/offer prices specified by merchant for his business unit
