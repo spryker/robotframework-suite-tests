@@ -51,6 +51,9 @@ If you installed everything from the [prerequisites](#Prerequisites), all you ne
 python3 -m pip install -U robotframework-jsonlibrary
 ```
 
+### Automated installation
+
+You can also run all of the installation steps in one go by executing the shell script `install.sh`.
 
 ## How to run tests
 Robot Framework test cases are executed from the command line, and the end result is, by default, an output file in XML format and an HTML report and log. After the execution, output files can be combined and otherwise post-processed with the Rebot tool.
