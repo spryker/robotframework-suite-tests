@@ -13,6 +13,7 @@ Library    ../../resources/libraries/common.py
 *** Variables ***
 # *** SUITE VARIABLES ***
 ${api_timeout}                 60
+${verify_ssl}                 false
 ${default_password}            change123
 ${default_allow_redirects}     true
 ${default_auth}                ${NONE}
@@ -44,6 +45,13 @@ SuiteSetup
     Set Global Variable    ${random}
     ${today}=    Get Current Date    result_format=%Y-%m-%d
     Set Global Variable    ${today}
+    ${verify_ssl}=    Convert To String    ${verify_ssl}
+    ${verify_ssl}=    Convert To Lower Case    ${verify_ssl}
+    IF    '${verify_ssl}' == 'true'
+        Set Global Variable    ${verify_ssl}    ${True}
+    ELSE
+        Set Global Variable    ${verify_ssl}    ${False}
+    END
     [Teardown]
     [Return]    ${random}
 
@@ -152,12 +160,20 @@ I get access token for the customer:
     ...
     ...    ``I get access token for the customer:    ${yves_user.email}``
     [Arguments]    ${email}    ${password}=${default_password}
-    ${hasValue}    Run Keyword and return status     Should not be empty    ${headers}
+    ${headers_not_empty}    Run Keyword and return status     Should not be empty    ${headers}
     ${data}=    Evaluate    {"data":{"type":"access-tokens","attributes":{"username":"${email}","password":"${password}"}}}
-    ${response}=    IF    ${hasValue}       run keyword    POST    ${current_url}/access-tokens    json=${data}    headers=${headers}
-    ...    ELSE    POST    ${current_url}/access-tokens    json=${data}
+    ${response}=    IF    ${headers_not_empty}       run keyword    POST    ${current_url}/access-tokens    json=${data}    headers=${headers}    verify=${verify_ssl}
+    ...    ELSE    POST    ${current_url}/access-tokens    json=${data}    verify=${verify_ssl}
+    ${response.status_code}=    Set Variable    ${response.status_code}
+    IF    ${response.status_code} != 204    
+        TRY    
+            ${response_body}=    Set Variable    ${response.json()}
+        EXCEPT
+            ${content_type}=    Get From Dictionary    ${response.headers}    content-type
+            Fail    Got: '${response.status_code}' status code on: '${response.url}' with reason: '${response.reason}'. Response content type: '${content_type}'. Details: '${response.content}'
+        END
+    END
     ${token}=    Set Variable    Bearer ${response.json()['data']['attributes']['accessToken']}
-    ${response_body}=    Set Variable    ${response.json()}
     ${response_headers}=    Set Variable    ${response.headers}
     Set Test Variable    ${token}    ${token}
     Set Test Variable    ${response}    ${response}
@@ -220,12 +236,20 @@ I get access token for the company user by uuid:
     ...
     ...    ``I get access token for the company user by uuid:    ${company_user_uuid}``
     [Arguments]    ${company_user_uuid}
-    ${hasValue}    Run Keyword and return status     Should not be empty    ${headers}
+    ${headers_not_empty}    Run Keyword and return status     Should not be empty    ${headers}
     ${data}=    Evaluate    {"data":{"type":"company-user-access-tokens","attributes":{"idCompanyUser":"${company_user_uuid}"}}}
-    ${response}=    IF    ${hasValue}       run keyword    POST    ${current_url}/company-user-access-tokens    json=${data}    headers=${headers}
-    ...    ELSE    POST    ${current_url}/company-user-access-tokens    json=${data}
+    ${response}=    IF    ${headers_not_empty}       run keyword    POST    ${current_url}/company-user-access-tokens    json=${data}    headers=${headers}    verify=${verify_ssl}
+    ...    ELSE    POST    ${current_url}/company-user-access-tokens    json=${data}    verify=${verify_ssl}
+    ${response.status_code}=    Set Variable    ${response.status_code}
+    IF    ${response.status_code} != 204    
+        TRY    
+            ${response_body}=    Set Variable    ${response.json()}
+        EXCEPT
+            ${content_type}=    Get From Dictionary    ${response.headers}    content-type
+            Fail    Got: '${response.status_code}' status code on: '${response.url}' with reason: '${response.reason}'. Response content type: '${content_type}'. Details: '${response.content}'
+        END
+    END
     ${token}=    Set Variable    Bearer ${response.json()['data']['attributes']['accessToken']}
-    ${response_body}=    Set Variable    ${response.json()}
     ${response_headers}=    Set Variable    ${response.headers}
     Set Test Variable    ${token}    ${token}
     Set Test Variable    ${response}    ${response}
@@ -248,11 +272,22 @@ I send a POST request:
     ...    ``I send a POST request:    /agent-access-tokens    {"data": {"type": "agent-access-tokens","attributes": {"username": "${agent.email}","password": "${agent.password}"}}}``
     [Arguments]   ${path}    ${json}    ${timeout}=${api_timeout}    ${allow_redirects}=${default_allow_redirects}    ${auth}=${default_auth}    ${expected_status}=ANY
     ${data}=    Evaluate    ${json}
-    ${hasValue}    Run Keyword and return status     Should not be empty    ${headers}
-    ${response}=    IF    ${hasValue}   run keyword    POST    ${current_url}${path}    json=${data}    headers=${headers}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}
-    ...    ELSE    POST    ${current_url}${path}    json=${data}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=ANY
-    ${response_body}=    IF    ${response.status_code} != 204    Set Variable    ${response.json()}
+    ${headers_not_empty}    Run Keyword and return status     Should not be empty    ${headers}
+    ${response}=    IF    ${headers_not_empty}   run keyword    POST    ${current_url}${path}    json=${data}    headers=${headers}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}    verify=${verify_ssl}
+    ...    ELSE    POST    ${current_url}${path}    json=${data}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=ANY    verify=${verify_ssl}
+    ${response.status_code}=    Set Variable    ${response.status_code}
+    IF    ${response.status_code} != 204    
+        TRY    
+            ${response_body}=    Set Variable    ${response.json()}
+        EXCEPT
+            ${content_type}=    Get From Dictionary    ${response.headers}    content-type
+            Fail    Got: '${response.status_code}' status code on: '${response.url}' with reason: '${response.reason}'. Response content type: '${content_type}'. Details: '${response.content}'
+        END
+    END
     ${response_headers}=    Set Variable    ${response.headers}
+    IF    ${response.status_code} == 204    
+        ${response_body}=    Set Variable    ${EMPTY}
+    END
     Set Test Variable    ${response_headers}    ${response_headers}
     Set Test Variable    ${response_body}    ${response_body}
     Set Test Variable    ${response}    ${response}
@@ -272,11 +307,22 @@ I send a POST request with data:
     ...    ``I send a POST request:    /agent-access-tokens    {"data": {"type": "agent-access-tokens","attributes": {"username": "${agent.email}","password": "${agent.password}"}}}``
     [Arguments]   ${path}    ${data}    ${timeout}=${api_timeout}    ${allow_redirects}=${default_allow_redirects}    ${auth}=${default_auth}    ${expected_status}=ANY
     ${data}=    Evaluate    ${data}
-    ${hasValue}    Run Keyword and return status     Should not be empty    ${headers}
-    ${response}=    IF    ${hasValue}   run keyword    POST    ${current_url}${path}    data=${data}    headers=${headers}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}
-    ...    ELSE    POST    ${current_url}${path}    data=${data}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}
-    ${response_body}=    IF    ${response.status_code} != 204    Set Variable    ${response.json()}
+    ${headers_not_empty}    Run Keyword and return status     Should not be empty    ${headers}
+    ${response}=    IF    ${headers_not_empty}   run keyword    POST    ${current_url}${path}    data=${data}    headers=${headers}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}    verify=${verify_ssl}
+    ...    ELSE    POST    ${current_url}${path}    data=${data}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}    verify=${verify_ssl}
+    ${response.status_code}=    Set Variable    ${response.status_code}
+    IF    ${response.status_code} != 204    
+        TRY    
+            ${response_body}=    Set Variable    ${response.json()}
+        EXCEPT
+            ${content_type}=    Get From Dictionary    ${response.headers}    content-type
+            Fail    Got: '${response.status_code}' status code on: '${response.url}' with reason: '${response.reason}'. Response content type: '${content_type}'. Details: '${response.content}'
+        END
+    END
     ${response_headers}=    Set Variable    ${response.headers}
+    IF    ${response.status_code} == 204    
+        ${response_body}=    Set Variable    ${EMPTY}
+    END
     Set Test Variable    ${response_headers}    ${response_headers}
     Set Test Variable    ${response_body}    ${response_body}
     Set Test Variable    ${response}    ${response}
@@ -296,11 +342,22 @@ I send a PUT request:
     ...    ``I send a PUT request:    /some-endpoint/${someID}    {"data": {"type": "some-type"}}``
     [Arguments]   ${path}    ${json}    ${timeout}=${api_timeout}    ${allow_redirects}=${default_allow_redirects}    ${auth}=${default_auth}    ${expected_status}=ANY
     ${data}=    Evaluate    ${json}
-    ${hasValue}    Run Keyword and return status     Should not be empty    ${headers}
-    ${response}=    IF    ${hasValue}   run keyword    PUT    ${current_url}${path}    json=${data}    headers=${headers}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}
-    ...    ELSE    PUT    ${current_url}${path}    json=${data}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}
-    ${response_body}=    IF    ${response.status_code} != 204    Set Variable    ${response.json()}
+    ${headers_not_empty}    Run Keyword and return status     Should not be empty    ${headers}
+    ${response}=    IF    ${headers_not_empty}   run keyword    PUT    ${current_url}${path}    json=${data}    headers=${headers}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}    verify=${verify_ssl}
+    ...    ELSE    PUT    ${current_url}${path}    json=${data}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}    verify=${verify_ssl}
+    ${response.status_code}=    Set Variable    ${response.status_code}
+    IF    ${response.status_code} != 204    
+        TRY    
+            ${response_body}=    Set Variable    ${response.json()}
+        EXCEPT
+            ${content_type}=    Get From Dictionary    ${response.headers}    content-type
+            Fail    Got: '${response.status_code}' status code on: '${response.url}' with reason: '${response.reason}'. Response content type: '${content_type}'. Details: '${response.content}'
+        END
+    END
     ${response_headers}=    Set Variable    ${response.headers}
+    IF    ${response.status_code} == 204    
+        ${response_body}=    Set Variable    ${EMPTY}
+    END
     Set Test Variable    ${response_headers}    ${response_headers}
     Set Test Variable    ${response_body}    ${response_body}
     Set Test Variable    ${response}    ${response}
@@ -320,11 +377,22 @@ I send a PUT request with data:
     ...    ``I send a PUT request:    /some-endpoint/${someID}    This is plain text body``
     [Arguments]   ${path}    ${data}    ${timeout}=${api_timeout}    ${allow_redirects}=${default_allow_redirects}    ${auth}=${default_auth}    ${expected_status}=ANY
     ${data}=    Evaluate    ${data}
-    ${hasValue}    Run Keyword and return status     Should not be empty    ${headers}
-    ${response}=    IF    ${hasValue}   run keyword    PUT    ${current_url}${path}    data=${data}    headers=${headers}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}
-    ...    ELSE    PUT    ${current_url}${path}    data=${data}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}
-    ${response_body}=    IF    ${response.status_code} != 204    Set Variable    ${response.json()}
+    ${headers_not_empty}    Run Keyword and return status     Should not be empty    ${headers}
+    ${response}=    IF    ${headers_not_empty}   run keyword    PUT    ${current_url}${path}    data=${data}    headers=${headers}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}    verify=${verify_ssl}
+    ...    ELSE    PUT    ${current_url}${path}    data=${data}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}    verify=${verify_ssl}
+    ${response.status_code}=    Set Variable    ${response.status_code}
+    IF    ${response.status_code} != 204    
+        TRY    
+            ${response_body}=    Set Variable    ${response.json()}
+        EXCEPT
+            ${content_type}=    Get From Dictionary    ${response.headers}    content-type
+            Fail    Got: '${response.status_code}' status code on: '${response.url}' with reason: '${response.reason}'. Response content type: '${content_type}'. Details: '${response.content}'
+        END
+    END
     ${response_headers}=    Set Variable    ${response.headers}
+    IF    ${response.status_code} == 204    
+        ${response_body}=    Set Variable    ${EMPTY}
+    END
     Set Test Variable    ${response_headers}    ${response_headers}
     Set Test Variable    ${response_body}    ${response_body}
     Set Test Variable    ${response}    ${response}
@@ -349,11 +417,22 @@ I send a PATCH request:
 
     [Arguments]   ${path}    ${json}    ${timeout}=${api_timeout}    ${allow_redirects}=${default_allow_redirects}    ${auth}=${default_auth}    ${expected_status}=ANY
     ${data}=    Evaluate    ${json}
-    ${hasValue}    Run Keyword and return status     Should not be empty    ${headers}
-    ${response}=    IF    ${hasValue}   run keyword    PATCH   ${current_url}${path}    json=${data}    headers=${headers}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}
-    ...    ELSE    PATCH    ${current_url}${path}    json=${data}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}
-    ${response_body}=    IF    ${response.status_code} != 204    Set Variable    ${response.json()}
+    ${headers_not_empty}    Run Keyword and return status     Should not be empty    ${headers}
+    ${response}=    IF    ${headers_not_empty}   run keyword    PATCH   ${current_url}${path}    json=${data}    headers=${headers}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}    verify=${verify_ssl}
+    ...    ELSE    PATCH    ${current_url}${path}    json=${data}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}    verify=${verify_ssl}
+    ${response.status_code}=    Set Variable    ${response.status_code}
+    IF    ${response.status_code} != 204    
+        TRY    
+            ${response_body}=    Set Variable    ${response.json()}
+        EXCEPT
+            ${content_type}=    Get From Dictionary    ${response.headers}    content-type
+            Fail    Got: '${response.status_code}' status code on: '${response.url}' with reason: '${response.reason}'. Response content type: '${content_type}'. Details: '${response.content}'
+        END
+    END
     ${response_headers}=    Set Variable    ${response.headers}
+    IF    ${response.status_code} == 204    
+        ${response_body}=    Set Variable    ${EMPTY}
+    END
     Set Test Variable    ${response_headers}    ${response_headers}
     Set Test Variable    ${response_body}    ${response_body}
     Set Test Variable    ${response}    ${response}
@@ -379,11 +458,22 @@ I send a PATCH request with data
     ...    ``I send a PATCH request:    /some-endpoint/${someID}   This is plain text body``
     [Arguments]   ${path}    ${data}    ${timeout}=${api_timeout}    ${allow_redirects}=${default_allow_redirects}    ${auth}=${default_auth}    ${expected_status}=ANY
     ${data}=    Evaluate    ${data}
-    ${hasValue}    Run Keyword and return status     Should not be empty    ${headers}
-    ${response}=    IF    ${hasValue}   run keyword    PATCH    ${current_url}${path}    data=${data}    headers=${headers}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}
-    ...    ELSE    PATCH    ${current_url}${path}    data=${data}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}
-    ${response_body}=    IF    ${response.status_code} != 204    Set Variable    ${response.json()}
+    ${headers_not_empty}    Run Keyword and return status     Should not be empty    ${headers}
+    ${response}=    IF    ${headers_not_empty}   run keyword    PATCH    ${current_url}${path}    data=${data}    headers=${headers}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}    verify=${verify_ssl}
+    ...    ELSE    PATCH    ${current_url}${path}    data=${data}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}    verify=${verify_ssl}
+    ${response.status_code}=    Set Variable    ${response.status_code}
+    IF    ${response.status_code} != 204    
+        TRY    
+            ${response_body}=    Set Variable    ${response.json()}
+        EXCEPT
+            ${content_type}=    Get From Dictionary    ${response.headers}    content-type
+            Fail    Got: '${response.status_code}' status code on: '${response.url}' with reason: '${response.reason}'. Response content type: '${content_type}'. Details: '${response.content}'
+        END
+    END
     ${response_headers}=    Set Variable    ${response.headers}
+    IF    ${response.status_code} == 204    
+        ${response_body}=    Set Variable    ${EMPTY}
+    END
     Set Test Variable    ${response_headers}    ${response_headers}
     Set Test Variable    ${response_body}    ${response_body}
     Set Test Variable    ${response}    ${response}
@@ -406,11 +496,22 @@ I send a GET request:
     ...
     ...    ``I send a GET request:    /abstract-products/${abstract_sku}``
     [Arguments]   ${path}    ${timeout}=${api_timeout}    ${allow_redirects}=${default_allow_redirects}    ${auth}=${default_auth}    ${expected_status}=ANY
-    ${hasValue}    Run Keyword and return status     Should not be empty    ${headers}
-    ${response}=    IF    ${hasValue}   run keyword    GET    ${current_url}${path}    headers=${headers}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}
-    ...    ELSE    GET    ${current_url}${path}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}
-    ${response_body}=    IF    ${response.status_code} != 204    Set Variable    ${response.json()}
+    ${headers_not_empty}    Run Keyword and return status     Should not be empty    ${headers}
+    ${response}=    IF    ${headers_not_empty}   run keyword    GET    ${current_url}${path}    headers=${headers}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}    verify=${verify_ssl}
+    ...    ELSE    GET    ${current_url}${path}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}    verify=${verify_ssl}
+    ${response.status_code}=    Set Variable    ${response.status_code}
+    IF    ${response.status_code} != 204    
+        TRY    
+            ${response_body}=    Set Variable    ${response.json()}
+        EXCEPT
+            ${content_type}=    Get From Dictionary    ${response.headers}    content-type
+            Fail    Got: '${response.status_code}' status code on: '${response.url}' with reason: '${response.reason}'. Response content type: '${content_type}'. Details: '${response.content}'
+        END
+    END
     ${response_headers}=    Set Variable    ${response.headers}
+    IF    ${response.status_code} == 204    
+        ${response_body}=    Set Variable    ${EMPTY}
+    END
     Set Test Variable    ${response_headers}    ${response_headers}
     Set Test Variable    ${response_body}    ${response_body}
     Set Test Variable    ${response}    ${response}
@@ -436,12 +537,23 @@ I send a DELETE request:
     ...
     ...    ``I send a DELETE request:    /customers/${customer_reference}/addresses/addressUID``
     [Arguments]   ${path}    ${timeout}=${api_timeout}    ${allow_redirects}=${default_allow_redirects}    ${auth}=${default_auth}    ${expected_status}=ANY
-    ${hasValue}    Run Keyword and return status     Should not be empty    ${headers}
-    ${response}=    IF    ${hasValue}   run keyword    DELETE    ${current_url}${path}    headers=${headers}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}
-    ...    ELSE    DELETE    ${current_url}${path}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}
+    ${headers_not_empty}    Run Keyword and return status     Should not be empty    ${headers}
+    ${response}=    IF    ${headers_not_empty}   run keyword    DELETE    ${current_url}${path}    headers=${headers}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}    verify=${verify_ssl}
+    ...    ELSE    DELETE    ${current_url}${path}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}    verify=${verify_ssl}
     ${response_headers}=    Set Variable    ${response.headers}
+    ${response.status_code}=    Set Variable    ${response.status_code}
+    IF    ${response.status_code} != 204    
+        TRY    
+            ${response_body}=    Set Variable    ${response.json()}
+        EXCEPT
+            ${content_type}=    Get From Dictionary    ${response.headers}    content-type
+            Fail    Got: '${response.status_code}' status code on: '${response.url}' with reason: '${response.reason}'. Response content type: '${content_type}'. Details: '${response.content}'
+        END
+    END
+    IF    ${response.status_code} == 204    
+        ${response_body}=    Set Variable    ${EMPTY}
+    END
     Set Test Variable    ${response}    ${response}
-    ${response_body}=    IF    ${response.status_code} != 204    Set Variable    ${response.json()}
     Set Test Variable    ${response_headers}    ${response_headers}
     Set Test Variable    ${response_body}    ${response_body}
     Set Test Variable    ${expected_self_link}    ${current_url}${path}
@@ -454,7 +566,7 @@ Response reason should be:
     ...
     ...    ``Response reason should be:    Created``
     [Arguments]    ${reason}
-    Should Be Equal As Strings    ${reason}    ${response.reason}
+    Should Be Equal As Strings    ${reason}    ${response.reason}    Expected 'reason': '${reason}' does not equal actual 'reason': '${response.reason}'
 
 Response status code should be:
     [Documentation]    This keyword checks that response status code saved  in ``${response}`` test variable matches the status code passed as an argument.
@@ -463,7 +575,7 @@ Response status code should be:
     ...
     ...    ``Response status code should be:    201``
     [Arguments]    ${status_code}
-    Should Be Equal As Strings    ${response.status_code}    ${status_code}
+    Should Be Equal As Strings    ${response.status_code}    ${status_code}    Expected 'status code': '${status_code}' does not equal actual 'status code': '${response.status_code}'.
 
 Response body should contain:
     [Documentation]    This keyword checks that the response saved  in ``${response_body}`` test variable contsains the string passed as an argument.
@@ -474,7 +586,7 @@ Response body should contain:
     [Arguments]    ${value}
     ${response_body}=    Convert To String    ${response_body}
     ${response_body}=    Replace String    ${response_body}    '    "
-    Should Contain    ${response_body}    ${value}
+    Should Contain    ${response_body}    ${value}    Response body does not contain expected: '${value}'.
 
 Response body parameter should be:
     [Documentation]    This keyword checks that the response saved  in ``${response_body}`` test variable contsains the speficied parameter ``${json_path}`` with he specified value ``${expected_value}``.
@@ -488,8 +600,8 @@ Response body parameter should be:
     ${data}=    Replace String    ${data}    '   ${EMPTY}
     ${data}=    Replace String    ${data}    [   ${EMPTY}
     ${data}=    Replace String    ${data}    ]   ${EMPTY}
-    Log    ${data}
-    Should Be Equal    ${data}    ${expected_value}
+    Log    ${data} 
+    Should Be Equal    ${data}    ${expected_value}    Response data in: '${json_path}', does not equal expected: '${expected_value}', actual is: '${data}'.
 
 Perform arithmetical calculation with two arguments:
     [Documentation]    This keyword calculates ``${expected_value1}``, ``${expected_value2}`` and saves  in ``${variable_name}`` variable.
@@ -531,7 +643,11 @@ Response body parameter should be in:
     ${data}=    Replace String    ${data}    [   ${EMPTY}
     ${data}=    Replace String    ${data}    ]   ${EMPTY}
     Log    ${data}
-    Should Contain Any   ${data}    ${expected_value1}    ${expected_value2}    ${expected_value3}    ${expected_value4}    ${expected_value5}    ${expected_value6}    ${expected_value7}    ${expected_value8}    ${expected_value9}      ignore_case=True
+    TRY    
+        Should Contain Any   ${data}    ${expected_value1}    ${expected_value2}    ${expected_value3}    ${expected_value4}    ${expected_value5}    ${expected_value6}    ${expected_value7}    ${expected_value8}    ${expected_value9}      ignore_case=True
+    EXCEPT
+        Fail    Response data in: '${json_path}', does not contains any: '${expected_value1}', '${expected_value2}', '${expected_value3}', '${expected_value4}', '${expected_value5}', '${expected_value6}', '${expected_value7}', '${expected_value8}', '${expected_value9}', in '${data}'.
+    END
 
 Response body parameter with rounding should be:
     [Documentation]    This keyword checks that the response saved  in ``${response_body}`` test variable contains the speficied parameter ``${json_path}`` that was rounded and can differ from the expected value by 1 more cent or 1 less cent.
@@ -559,7 +675,7 @@ Response body parameter with rounding should be:
     ELSE
         ${result}    Set Variable    False
     END
-    Should Be Equal    ${result}    True    Actual ${data} is not in expected Range [${range_value_min}; ${range_value_max}]
+    Should Be Equal    ${result}    True    Actual ${data} is not in expected Range [${range_value_min}; ${range_value_max}], json_path: '${json_path}'
 
 Response body parameter should be NOT in:
     [Documentation]    This keyword checks that the response saved  in ``${response_body}`` test variable contsains the speficied parameter ``${json_path}`` with the value that matches one of the parameters ``${expected_value1}``, ``${expected_value2}``.
@@ -576,7 +692,11 @@ Response body parameter should be NOT in:
     ${data}=    Replace String    ${data}    [   ${EMPTY}
     ${data}=    Replace String    ${data}    ]   ${EMPTY}
     Log    ${data}
-    Should NOT Contain Any   ${data}    ${expected_value1}    ${expected_value2}    ${expected_value3}    ${expected_value4}    ignore_case=True
+    TRY    
+        Should NOT Contain Any   ${data}    ${expected_value1}    ${expected_value2}    ${expected_value3}    ${expected_value4}    ignore_case=True
+    EXCEPT
+        Fail    Response data in: '${json_path}', should not contain any: ${expected_value1}, ${expected_value2}, ${expected_value3}, ${expected_value4} in '${data}'.
+    END
 
 Response body parameter should NOT be:
     [Documentation]    This keyword checks that the response saved in ``${response_body}`` test variable contsains the speficied parameter ``${json_path}`` has a value that is DIFFERENT from the value passed as an argument ``${expected_value}``.
@@ -593,8 +713,8 @@ Response body parameter should NOT be:
     ${data}=    Replace String    ${data}    [   ${EMPTY}
     ${data}=    Replace String    ${data}    ]   ${EMPTY}
     Log    ${data}
-    Should Not Be Empty    ${data} ${data} is empty but should not be
-    Should Not Be Equal    ${data}    ${expected_value}
+    Should Not Be Empty    ${data}    '${data}' in '${json_path}' is empty but should not be.
+    Should Not Be Equal    ${data}    ${expected_value}    '${data}' in '${json_path}' should be equal to '${expected_value}'.
 
 Response body parameter should have datatype:
     [Documentation]    This keyword checks that the response saved  in ``${response_body}`` test variable contsains the speficied parameter ``${parameter}`` and that parameter has the specified data type ``${expected_data_type}``.
@@ -608,7 +728,7 @@ Response body parameter should have datatype:
     [Arguments]    ${parameter}    ${expected_data_type}
     @{parameter}=    Get Value From Json    ${response_body}    ${parameter}
     ${actual_data_type}=    Evaluate datatype of a variable:    @{parameter}
-    Should Be Equal    ${actual_data_type}    ${expected_data_type}
+    Should Be Equal    ${actual_data_type}    ${expected_data_type}    Parameter: '${parameter}' should be '${expected_data_type}' but got: '${actual_data_type}'.
 
 Evaluate datatype of a variable:
     [Documentation]    This is a technical keyword that is used in ``Response body parameter should have datatype:`` and is used to evaluate the actual data type of a variable.
@@ -630,7 +750,7 @@ Response header parameter should be:
     ...    ``Response header parameter should be:    Content-Type    ${default_header_content_type}``
     [Arguments]    ${header_parameter}    ${header_value}
     ${actual_header_value}=    Get From Dictionary    ${response_headers}    ${header_parameter}
-    Should Be Equal    ${actual_header_value}    ${header_value}
+    Should Be Equal    ${actual_header_value}    ${header_value}    Header parameter: '${header_parameter}' should have value: '${header_value}' but got: '${actual_header_value}'.
 
 Response header parameter should contain:
     [Documentation]    This keyword checks that the response header saved previiously in ``${response_headers}`` test variable has the expected header with name ``${header_parameter}`` and this header contains substring ``${header_value}``
@@ -640,7 +760,7 @@ Response header parameter should contain:
     ...    ``Response header parameter should be:    Content-Type    ${default_header_content_type}``
     [Arguments]    ${header_parameter}    ${header_value}
     ${actual_header_value}=    Get From Dictionary    ${response_headers}    ${header_parameter}
-    Should Contain    ${actual_header_value}    ${header_value}
+    Should Contain    ${actual_header_value}    ${header_value}    Header parameter: '${header_parameter}' should contain value: '${header_value}' but got: '${actual_header_value}'.
 
 Response body has correct self link
     [Documentation]    This keyword checks that the actual selflink retrieved from the test variable ``${response_body}`` matches the self link recorded into the ``${expected_self_link}`` test variable on endpoint call.
@@ -653,7 +773,7 @@ Response body has correct self link
     ${actual_self_link}=    Replace String    ${actual_self_link}    [    ${EMPTY}
     ${actual_self_link}=    Replace String    ${actual_self_link}    ]    ${EMPTY}
     ${actual_self_link}=    Replace String    ${actual_self_link}    '    ${EMPTY}
-    Should Be Equal    ${actual_self_link}    ${expected_self_link}
+    Should Be Equal    ${actual_self_link}    ${expected_self_link}    Expected self link: '${expected_self_link}' does not match: '${actual_self_link}'.
 
 Response body has correct self link internal
     [Documentation]    This keyword checks that the actual selflink retrieved from the test variable ``${response_body}`` matches the self link recorded into the ``${expected_self_link}`` test variable on endpoint call.
@@ -667,7 +787,7 @@ Response body has correct self link internal
     ${actual_self_link}=    Replace String    ${actual_self_link}    ]    ${EMPTY}
     ${actual_self_link}=    Replace String    ${actual_self_link}    '    ${EMPTY}
     Log    ${response_body}
-    Should Be Equal    ${actual_self_link}    ${expected_self_link}
+    Should Be Equal    ${actual_self_link}    ${expected_self_link}    Expected internal selft link: '${expected_self_link}' does not match the actual link: '${actual_self_link}'.
 
 Response body has correct self link for created entity:
     [Documentation]    This keyword checks that the actual selflink retrieved from the test variable ``${response_body}`` plus the UID of the entity that was created and matches the self link recorded into the ``${expected_self_link}`` test variable on endpoint call.
@@ -690,7 +810,7 @@ Response body has correct self link for created entity:
     ${actual_self_link}=    Replace String    ${actual_self_link}    ]    ${EMPTY}
     ${actual_self_link}=    Replace String    ${actual_self_link}    '    ${EMPTY}
     Log    ${response_body}
-    Should Be Equal    ${actual_self_link}    ${expected_self_link}/${url}
+    Should Be Equal    ${actual_self_link}    ${expected_self_link}/${url}    Expected self link for created entity: '${expected_self_link}/${url}' does not match actual self link for created entity: '${actual_self_link}'.
 
 Response body parameter should not be EMPTY:
     [Documentation]    This keyword checks that the body parameter sent in ``${json_path}`` argument is not empty. If the parameter value is other that ``null`` the keyword will fail.
@@ -706,8 +826,8 @@ Response body parameter should not be EMPTY:
     ${data}=    Replace String    ${data}    '   ${EMPTY}
     ${data}=    Replace String    ${data}    [   ${EMPTY}
     ${data}=    Replace String    ${data}    ]   ${EMPTY}
-    Should Not Be Empty    ${data}    ${data} is empty but shoud not be
-    Should Not Be Equal    ${data}    None    Propewrty value is ${data} which is null, but it shoud be a non-null value
+    Should Not Be Empty    ${data}    '${json_path}' property value '${data}' is empty but shoud not be
+    Should Not Be Equal    ${data}    None    '${json_path}' property value is '${data}' which is null, but it shoud be a non-null.
 
 Response body parameter should be greater than:
     [Documentation]    This keyword checks that the body parameter sent in ``${json_path}`` argument is greater than a specific integer value ``${expected_value}``.
@@ -726,7 +846,7 @@ Response body parameter should be greater than:
     ${data}=    Replace String    ${data}    ]   ${EMPTY}
     ${result}=    Evaluate    float('${data}') > float('${expected_value}')
     ${result}=    Convert To String    ${result}
-    Should Be Equal    ${result}    True    Actual ${data} is not greater than expected ${expected_value}
+    Should Be Equal    ${result}    True    Actual '${data}' is not greater than expected '${expected_value}' in '${json_path}'.
 
 Response body parameter should be less than:
     [Documentation]    This keyword checks that the body parameter sent in ``${json_path}`` argument is less than a specific integer value ``${expected_value}``.
@@ -745,7 +865,7 @@ Response body parameter should be less than:
     ${data}=    Replace String    ${data}    ]   ${EMPTY}
     ${result}=    Evaluate    '${data}' < '${expected_value}'
     ${result}=    Convert To String    ${result}
-    Should Be Equal    ${result}    True    Actual ${data} is not less than expected ${expected_value}
+    Should Be Equal    ${result}    True    Actual '${data}' is not less than expected '${expected_value}' in '${json_path}'.
 
 Response should contain the array of a certain size:
     [Documentation]    This keyword checks that the body array sent in ``${json_path}`` argument contains the specific number of items ``${expected_size}``. The expected size should be an integer value.
@@ -759,8 +879,7 @@ Response should contain the array of a certain size:
     Log    @{data}
     ${list_length}=    Get Length    @{data}
     ${list_length}=    Convert To String    ${list_length}
-    #${log_list}=    Log List    @{data}
-    Should Be Equal    ${list_length}    ${expected_size}    actual size ${list_length} doesn't equal expected ${expected_size}
+    Should Be Equal    ${list_length}    ${expected_size}    actual size '${list_length}' doesn't equal expected '${expected_size}' in '${json_path}'.
 
 Response should contain the array larger than a certain size:
     [Documentation]    This keyword checks that the body array sent in ``${json_path}`` argument contains the number of items that is more than ``${expected_size}``.
@@ -778,7 +897,7 @@ Response should contain the array larger than a certain size:
     ${list_length}=    Convert To Integer    ${list_length}
     ${result}=    Evaluate   ${list_length} > ${expected_size}
     ${result}=    Convert To String    ${result}
-    Should Be Equal    ${result}    True    Actual array length is ${list_length} and it is not greater than expected ${expected_size}
+    Should Be Equal    ${result}    True    Actual array length is '${list_length}' and it is not greater than expected '${expected_size}' in '${json_path}'.
 
 Response should contain the array smaller than a certain size:
     [Documentation]    This keyword checks that the body array sent in ``${json_path}`` argument contains the number of items that is fewer than ``${expected_size}``.
@@ -797,7 +916,7 @@ Response should contain the array smaller than a certain size:
     ${list_length}=    Convert To Integer    ${list_length}
     ${result}=    Evaluate   ${list_length} < ${expected_size}
     ${result}=    Convert To String    ${result}
-    Should Be Equal    ${result}    True    Actual array length is ${list_length} and it is not greater than expected ${expected_size}
+    Should Be Equal    ${result}    True    Actual array length is '${list_length}' and it is not smaller than expected '${expected_size}' in '${json_path}'.
 
 Each array element of array in response should contain property:
     [Documentation]    This keyword checks whether the array ``${json_path}`` that is present in the ``${response_body}`` test variable contsains a property with ``${expected_property}`` name in every of it's array elements.
@@ -815,7 +934,7 @@ Each array element of array in response should contain property:
     ${log_list}=    Log List    @{data}
     FOR    ${index}    IN RANGE    0    ${list_length}
         ${list_element}=    Get From List    @{data}    ${index}
-        List Should Contain Value    ${list_element}    ${expected_property}
+        List Should Contain Value    ${list_element}    ${expected_property}    msg=Array element '${list_element}' of array '${json_path}' does not contain property: '${expected_property}'.
     END
 
 Each array element of array in response should contain value:
@@ -836,17 +955,17 @@ Each array element of array in response should contain value:
         ${list_element}=    Get From List    @{data}    ${index}
         ${sub_list_element}=    Create List    ${list_element}
         ${sub_list_element}=    Convert To String    ${sub_list_element}
-        Should Contain    : ${sub_list_element}    ${expected_value}
+        Should Contain    : ${sub_list_element}    ${expected_value}    msg=Array element:'${sub_list_element}' of array:'${json_path}' does not contain:'${expected_value}'.
     END
 
-Each array element of array in response should a nested array of a certain size:
+Each array element of array in response should contain a nested array of a certain size:
         [Documentation]    This keyword checks whether the array ``${paret_array}`` that is present in the ``${response_body}`` test variable contsains an array ``${nested_array}`` in every of it's array elements and for every its occurrence that nested array has sixe ``${array_expected_size}``.
     ...
     ...    If the nested arrays are of different sizes, this keyword will fail.
     ...
     ...    *Example:*
     ...
-    ...   ``Each array element of array in response should a nested array of a certain size:    [data]    [prices]    2``
+    ...   ``Each array element of array in response should contain a nested array of a certain size:    [data]    [prices]    2``
 
     [Arguments]    ${parent_array}    ${nested_array}    ${array_expected_size}
     @{data}=    Get Value From Json    ${response_body}    ${parent_array}
@@ -857,7 +976,7 @@ Each array element of array in response should a nested array of a certain size:
         @{list_element2}=    Get Value From Json    ${list_element}    ${nested_array}
         ${list_length2}=    Get Length    @{list_element2}
         ${list_length2}=    Convert To String    ${list_length2}
-        Should Be Equal    ${list_length2}    ${array_expected_size}    Actual array length is ${list_length2} and it is not the same as than expected ${array_expected_size}
+        Should Be Equal    ${list_length2}    ${array_expected_size}    Actual nested array size:'${list_length2}' in '${nested_array}' does not match '${array_expected_size}'.
     END
 
 Each array element of array in response should contain property with value:
@@ -879,7 +998,7 @@ Each array element of array in response should contain property with value:
     ${log_list}=    Log List    @{data}
     FOR    ${index}    IN RANGE    0    ${list_length}
         ${list_element}=    Get From List    @{data}    ${index}
-        Dictionary Should Contain Item    ${list_element}    ${expected_property}    ${expected_value}
+        Dictionary Should Contain Item    ${list_element}    ${expected_property}    ${expected_value}    msg='${json_path}' does not contain property: '${expected_property}' with value: '${expected_value}'.
     END
 
 Each array element of array in response should contain property with value in:
@@ -902,7 +1021,11 @@ Each array element of array in response should contain property with value in:
         ${list_element}=    Replace String    ${list_element}    '   ${EMPTY}
         ${list_element}=    Replace String    ${list_element}    [   ${EMPTY}
         ${list_element}=    Replace String    ${list_element}    ]   ${EMPTY}
-        Should Contain Any   ${list_element}    ${expected_value1}    ${expected_value2}    ${expected_value3}    ${expected_value4}    ignore_case=True
+        TRY
+            Should Contain Any   ${list_element}    ${expected_value1}    ${expected_value2}    ${expected_value3}    ${expected_value4}    ignore_case=True
+        EXCEPT
+            Fail    Array element: '${expected_property}' of array: '${json_path}' does not contain any: ${expected_value1}, ${expected_value2}, ${expected_value3}, ${expected_value4}
+        END
     END
 
 Each array element of array in response should contain property with value NOT in:
@@ -925,7 +1048,11 @@ Each array element of array in response should contain property with value NOT i
         ${list_element}=    Replace String    ${list_element}    '   ${EMPTY}
         ${list_element}=    Replace String    ${list_element}    [   ${EMPTY}
         ${list_element}=    Replace String    ${list_element}    ]   ${EMPTY}
-        Should Not Contain Any   ${list_element}    ${expected_value1}    ${expected_value2}    ${expected_value3}    ${expected_value4}    ignore_case=True
+        TRY
+            Should Not Contain Any   ${list_element}    ${expected_value1}    ${expected_value2}    ${expected_value3}    ${expected_value4}    ignore_case=True
+        EXCEPT
+            Fail    Array element: '${expected_property}' of array: '${json_path}' contain any but SHOULD NOT: ${expected_value1}, ${expected_value2}, ${expected_value3}, ${expected_value4}
+        END
     END
 
 Each array element of nested array should contain property with value in:
@@ -952,7 +1079,11 @@ Each array element of nested array should contain property with value in:
             ${list_element}=    Replace String    ${list_element}    '   ${EMPTY}
             ${list_element}=    Replace String    ${list_element}    [   ${EMPTY}
             ${list_element}=    Replace String    ${list_element}    ]   ${EMPTY}
-            Should Contain Any   ${list_element}    ${expected_value1}    ${expected_value2}    ${expected_value3}    ${expected_value4}    ignore_case=True
+            TRY
+                Should Contain Any   ${list_element}    ${expected_value1}    ${expected_value2}    ${expected_value3}    ${expected_value4}    ignore_case=True
+            EXCEPT
+                Fail    Nested array:'${nested_array}' of array:'${json_path}' does NOT contain property:'${expected_property}' with value in: ${expected_value1}, ${expected_value2}, ${expected_value3}, ${expected_value4}
+            END
         END
     END
 
@@ -980,7 +1111,11 @@ Each array element of nested array should contain property with value NOT in:
             ${list_element}=    Replace String    ${list_element}    '   ${EMPTY}
             ${list_element}=    Replace String    ${list_element}    [   ${EMPTY}
             ${list_element}=    Replace String    ${list_element}    ]   ${EMPTY}
-            Should Not Contain Any   ${list_element}    ${expected_value1}    ${expected_value2}    ${expected_value3}    ${expected_value4}    ignore_case=True
+            TRY
+                Should Not Contain Any   ${list_element}    ${expected_value1}    ${expected_value2}    ${expected_value3}    ${expected_value4}    ignore_case=True
+            EXCEPT
+                Fail    Nested array:'${nested_array}' of array:'${json_path}' contain property:'${expected_property}' with value in: '${expected_value1}', '${expected_value2}', '${expected_value3}', '${expected_value4}', BUT SHOULD NOT!
+            END
         END
     END
 
@@ -1254,7 +1389,7 @@ Response should return error message:
     ${data}=    Replace String    ${data}    [   ${EMPTY}
     ${data}=    Replace String    ${data}    ]   ${EMPTY}
     Log    ${data}
-    Should Be Equal    ${data}    ${error_message}    Actual ${data} doens't equal expected ${error_message}
+    Should Be Equal    ${data}    ${error_message}    Actual '${data}' error reason doens't match expected '${error_message}'
 
 Response should return error code:
     [Documentation]    This keyword checks if the ``${response_body}`` test variable that contains the response of the previous request contains the specific  ``${error_code}``.
@@ -1272,7 +1407,7 @@ Response should return error code:
     ${data}=    Replace String    ${data}    [   ${EMPTY}
     ${data}=    Replace String    ${data}    ]   ${EMPTY}
     Log    ${data}
-    Should Be Equal    ${data}    ${error_code}    Actual ${data} doens't equal expected ${error_code}
+    Should Be Equal    ${data}    ${error_code}    Actual '${data}' response error code doesn't match expected '${error_code}'
 
 Response should contain certain number of values:
     [Documentation]    This keyword checks if a certain response parameter ``${json_path} `` in the ``${response_body}`` test variable has the specified number ``${expected_count}`` of the specified values ``${expected_value}`` in it.
@@ -1288,7 +1423,7 @@ Response should contain certain number of values:
     ${list_as_string}=    Convert To String    @{data}
     ${count}=    Get Count    : ${list_as_string}    ${expected_value}
     ${count}=    Convert To String    ${count}
-    Should Be Equal    ${count}    ${expected_count}    Actual ${count} doesn't equal expected ${expected_count}
+    Should Be Equal    ${count}    ${expected_count}    Actual count '${count}' of '${expected_value}' in '${json_path}' does not match '${expected_count}'
 
 Response include should contain certain entity type:
     [Documentation]    This keyword checks that a certain entity with type ``${expected_value}`` is included into the ``[included]`` section of the ``${response_body}`` test variable.
@@ -1311,7 +1446,7 @@ Response include should contain certain entity type:
         ${result}=    Evaluate    '${type}' == '${expected_value}'
         IF    ${result}    Exit For Loop
     END
-    Should Be Equal As Strings    ${result}    True    Include section ${expected_value} was not found
+    Should Be Equal As Strings    ${result}    True    Include section '${expected_value}' was not found
 
 Response include element has self link:
     [Documentation]    This keyword checks that the ``[included]`` section of the response contains a self link in the included element with ``${expected_value}`` type.
@@ -1337,7 +1472,7 @@ Response include element has self link:
         IF    ${link_found}    Should Not Be Equal    ${link_found}    None    ${link_found} is  empty for ${expected_value} include section
         IF    ${result}    Exit For Loop
     END
-    Should Be Equal As Strings    ${result}    True    Include section ${expected_value} was not found
+    Should Be Equal As Strings    ${result}    True    Include section '${expected_value}' was not found
 
 Save value to a variable:
     [Documentation]    This keyword saves any value located in a response parameter ``${json_path}`` to a test variable called ``${name}``.
@@ -1420,7 +1555,7 @@ Response body parameter should contain:
     ${data}=    Replace String    ${data}    [   ${EMPTY}
     ${data}=    Replace String    ${data}    ]   ${EMPTY}
     Log    ${data}
-    Should Contain   ${data}    ${expected_value}
+    Should Contain   ${data}    ${expected_value}    Body parameter:'${json_path}' does not contain '${expected_value}'
 
 Response body parameter should start with:
     [Documentation]    This keyword checks that response parameter with name ``${json_path}`` starts with the specified substing ``${expected_value}``.
@@ -1437,7 +1572,7 @@ Response body parameter should start with:
     ${data}=    Replace String    ${data}    [   ${EMPTY}
     ${data}=    Replace String    ${data}    ]   ${EMPTY}
     Log    ${data}
-    Should Start With   ${data}    ${expected_value}
+    Should Start With   ${data}    ${expected_value}    msg=Body parameter:'${json_path}' does not start with:'${expected_value}'
 
 Array in response should contain property with value:
     [Documentation]    This keyword checks is the specified array (usually error array) ``${json_path} `` contains the specified property name ``${expected_property}`` with the specified value ``${expected_value}``.
@@ -1462,7 +1597,7 @@ Array in response should contain property with value:
         ${result}=    Evaluate    '${value}' == '${expected_value}'
         IF    ${result}    Exit For Loop
     END
-    Should Be Equal As Strings    ${result}    True    Value ${expected_value} was not found in the array
+    Should Be Equal As Strings    ${result}    True    Property:'${expected_property}' with value '${expected_value}' was not found in the array:'${json_path}'
 
 Cleanup existing customer addresses:
     [Documentation]    This keyword deletes any and all addresses customer with the specified customer reference has.
@@ -1473,8 +1608,18 @@ Cleanup existing customer addresses:
     ...
     ...    ``Cleanup existing customer addresses:    ${yves_user.reference}``
     [Arguments]    ${customer_reference}
-    ${response}=    GET    ${current_url}/customers/${customer_reference}/addresses    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}    expected_status=200
-    ${response_body}=    Set Variable    ${response.json()}
+    ${response}=    GET    ${current_url}/customers/${customer_reference}/addresses    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}    expected_status=200    verify=${verify_ssl}
+    IF    ${response.status_code} != 204    
+        TRY    
+            ${response_body}=    Set Variable    ${response.json()}
+        EXCEPT
+            ${content_type}=    Get From Dictionary    ${response.headers}    content-type
+            Fail    Got: '${response.status_code}' status code on: '${response.url}' with reason: '${response.reason}'. Response content type: '${content_type}'. Details: '${response.content}'
+        END
+    END
+    IF    ${response.status_code} == 204    
+        ${response_body}=    Set Variable    ${EMPTY}
+    END
     Set Variable    ${response_body}    ${response_body}
     Set Variable    ${response}    ${response}
     Should Be Equal As Strings    ${response.status_code}    200    Could not get customer addresses
@@ -1490,7 +1635,16 @@ Cleanup existing customer addresses:
         ${address_uid}=    Replace String    ${address_uid}    '   ${EMPTY}
         ${address_uid}=    Replace String    ${address_uid}    [   ${EMPTY}
         ${address_uid}=    Replace String    ${address_uid}    ]   ${EMPTY}
-        ${response_delete}=    DELETE    ${current_url}/customers/${customer_reference}/addresses/${address_uid}    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}    expected_status=204
+        ${response_delete}=    DELETE    ${current_url}/customers/${customer_reference}/addresses/${address_uid}    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}    expected_status=204    verify=${verify_ssl}
+        ${response.status_code}=    Set Variable    ${response_delete.status_code}
+        IF    ${response.status_code} != 204    
+            TRY    
+                ${response_body}=    Set Variable    ${response.json()}
+            EXCEPT
+                ${content_type}=    Get From Dictionary    ${response.headers}    content-type
+                Fail    Got: '${response.status_code}' status code on: '${response.url}' with reason: '${response.reason}'. Response content type: '${content_type}'. Details: '${response.content}'
+            END
+        END
         Set Variable    ${response_delete}    ${response_delete}
         Should Be Equal As Strings    ${response_delete.status_code}    204    Could not delete a customer address
     END
@@ -1501,8 +1655,19 @@ Find or create customer cart
         ...
         ...     This keyword does not accept any arguments. Makes GET request in order to fetch cart for the customer or creates it otherwise.
         ...
-        ${response}=    GET    ${current_url}/carts    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}    expected_status=200
-        ${response_body}=    Set Variable    ${response.json()}
+        ${response}=    GET    ${current_url}/carts    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}    expected_status=200    verify=${verify_ssl}
+        ${response.status_code}=    Set Variable    ${response.status_code}
+        IF    ${response.status_code} != 204    
+            TRY    
+                ${response_body}=    Set Variable    ${response.json()}
+            EXCEPT
+                ${content_type}=    Get From Dictionary    ${response.headers}    content-type
+                Fail    Got: '${response.status_code}' status code on: '${response.url}' with reason: '${response.reason}'. Response content type: '${content_type}'. Details: '${response.content}'
+            END
+        END
+        IF    ${response.status_code} == 204    
+            ${response_body}=    Set Variable    ${EMPTY}
+        END
         ${response_headers}=    Set Variable    ${response.headers}
         Set Test Variable    ${response_headers}    ${response_headers}
         @{data}=    Get Value From Json    ${response_body}    [data]
@@ -1604,7 +1769,6 @@ Create giftcode in Database:
     END
     Disconnect From Database
 
-
 Create a guest cart:
     [Documentation]    This keyword creates guest cart and sets ``${x_anonymous_customer_unique_id}`` that specify guest reference
         ...             and ``${guest_cart_id}`` that specify guest cart, variables
@@ -1630,8 +1794,19 @@ Cleanup all items in the cart:
         ...
         ...    ``Cleanup items in the cart:    ${cart_id}``
         [Arguments]    ${cart_id}
-        ${response}=    GET    ${current_url}/carts/${cart_id}    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}  params=include=items,bundle-items     expected_status=200
-        ${response_body}=    Set Variable    ${response.json()}
+        ${response}=    GET    ${current_url}/carts/${cart_id}    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}  params=include=items,bundle-items     expected_status=200    verify=${verify_ssl}
+        ${response.status_code}=    Set Variable    ${response.status_code}
+        IF    ${response.status_code} != 204    
+            TRY    
+                ${response_body}=    Set Variable    ${response.json()}
+            EXCEPT
+                ${content_type}=    Get From Dictionary    ${response.headers}    content-type
+                Fail    Got: '${response.status_code}' status code on: '${response.url}' with reason: '${response.reason}'. Response content type: '${content_type}'. Details: '${response.content}'
+            END
+        END
+        IF    ${response.status_code} == 204    
+            ${response_body}=    Set Variable    ${EMPTY}
+        END
         @{included}=    Get Value From Json    ${response_body}    [included]
         ${list_not_empty}=    Get length    ${included}
         IF    ${list_not_empty} > 0
@@ -1650,9 +1825,9 @@ Cleanup all items in the cart:
                     ${cart_item_sku}=    Replace String    ${cart_item_sku}    [   ${EMPTY}
                     ${cart_item_sku}=    Replace String    ${cart_item_sku}    ]   ${EMPTY}
                     TRY
-                        ${response_delete}=    DELETE    ${current_url}/carts/${cart_id}/items/${cart_item_uid}    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}    expected_status=204
+                        ${response_delete}=    DELETE    ${current_url}/carts/${cart_id}/items/${cart_item_uid}    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}    expected_status=204    verify=${verify_ssl}
                     EXCEPT    
-                        ${response_delete}=    DELETE    ${current_url}/carts/${cart_id}/items/${cart_item_sku}    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}    expected_status=204
+                        ${response_delete}=    DELETE    ${current_url}/carts/${cart_id}/items/${cart_item_sku}    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}    expected_status=204    verify=${verify_ssl}
                     END
             END
         END
@@ -1666,8 +1841,19 @@ Cleanup all customer carts
         ...    *Example:*
         ...
         ...    ``Cleanup all customer carts``
-        ${response}=    GET    ${current_url}/carts    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}  params=include=items,bundle-items     expected_status=200
-        ${response_body}=    Set Variable    ${response.json()}
+        ${response}=    GET    ${current_url}/carts    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}  params=include=items,bundle-items     expected_status=200    verify=${verify_ssl}
+        ${response.status_code}=    Set Variable    ${response.status_code}
+        IF    ${response.status_code} != 204    
+            TRY    
+                ${response_body}=    Set Variable    ${response.json()}
+            EXCEPT
+                ${content_type}=    Get From Dictionary    ${response.headers}    content-type
+                Fail    Got: '${response.status_code}' status code on: '${response.url}' with reason: '${response.reason}'. Response content type: '${content_type}'. Details: '${response.content}'
+            END
+        END
+        IF    ${response.status_code} == 204    
+            ${response_body}=    Set Variable    ${EMPTY}
+        END
         @{data}=    Get Value From Json    ${response_body}    [data]
         ${list_not_empty}=    Get length    ${data}
         IF    ${list_not_empty} > 0
@@ -1680,7 +1866,7 @@ Cleanup all customer carts
                     ${cart_uuid}=    Replace String    ${cart_uuid}    '   ${EMPTY}
                     ${cart_uuid}=    Replace String    ${cart_uuid}    [   ${EMPTY}
                     ${cart_uuid}=    Replace String    ${cart_uuid}    ]   ${EMPTY}
-                    ${response_delete}=    DELETE    ${current_url}/carts/${cart_uuid}    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}    expected_status=204
+                    ${response_delete}=    DELETE    ${current_url}/carts/${cart_uuid}    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}    expected_status=204    verify=${verify_ssl}
             END
         END
 
@@ -1693,8 +1879,19 @@ Cleanup all items in the guest cart:
         ...
         ...    ``Cleanup all items in the guest cart:    ${cart_id}``
         [Arguments]    ${cart_id}
-        ${response}=    GET    ${current_url}/guest-carts/${cart_id}    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}  params=include=guest-cart-items,bundle-items    expected_status=200
-        ${response_body}=    Set Variable    ${response.json()}
+        ${response}=    GET    ${current_url}/guest-carts/${cart_id}    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}  params=include=guest-cart-items,bundle-items    expected_status=200    verify=${verify_ssl}
+        ${response.status_code}=    Set Variable    ${response.status_code}
+        IF    ${response.status_code} != 204    
+            TRY    
+                ${response_body}=    Set Variable    ${response.json()}
+            EXCEPT
+                ${content_type}=    Get From Dictionary    ${response.headers}    content-type
+                Fail    Got: '${response.status_code}' status code on: '${response.url}' with reason: '${response.reason}'. Response content type: '${content_type}'. Details: '${response.content}'
+            END
+        END
+        IF    ${response.status_code} == 204    
+            ${response_body}=    Set Variable    ${EMPTY}
+        END
         @{included}=    Get Value From Json    ${response_body}    [included]
         ${list_not_empty}=    Get length    ${included}
         IF    ${list_not_empty} > 0
@@ -1707,7 +1904,7 @@ Cleanup all items in the guest cart:
                     ${cart_item_uid}=    Replace String    ${cart_item_uid}    '   ${EMPTY}
                     ${cart_item_uid}=    Replace String    ${cart_item_uid}    [   ${EMPTY}
                     ${cart_item_uid}=    Replace String    ${cart_item_uid}    ]   ${EMPTY}
-                    ${response_delete}=    DELETE    ${current_url}/guest-carts/${cart_id}/guest-cart-items/${cart_item_uid}    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}    expected_status=204
+                    ${response_delete}=    DELETE    ${current_url}/guest-carts/${cart_id}/guest-cart-items/${cart_item_uid}    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}    expected_status=204    verify=${verify_ssl}
             END
         END
 Cleanup all availability notifications:
@@ -1719,8 +1916,19 @@ Cleanup all availability notifications:
         ...
         ...    ``Cleanup all availability notifications in the guest cart:    ${yves_user.reference}``
         [Arguments]    ${yves_user.reference}
-        ${response}=    GET    ${current_url}/customers/${yves_user.reference}/availability-notifications    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}   expected_status=200
-        ${response_body}=    Set Variable    ${response.json()}
+        ${response}=    GET    ${current_url}/customers/${yves_user.reference}/availability-notifications    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}   expected_status=200    verify=${verify_ssl}
+        ${response.status_code}=    Set Variable    ${response.status_code}
+        IF    ${response.status_code} != 204    
+            TRY    
+                ${response_body}=    Set Variable    ${response.json()}
+            EXCEPT
+                ${content_type}=    Get From Dictionary    ${response.headers}    content-type
+                Fail    Got: '${response.status_code}' status code on: '${response.url}' with reason: '${response.reason}'. Response content type: '${content_type}'. Details: '${response.content}'
+            END
+        END
+        IF    ${response.status_code} == 204    
+            ${response_body}=    Set Variable    ${EMPTY}
+        END
         @{data}=    Get Value From Json    ${response_body}    [data]
         ${list_not_empty}=    Get length    ${data}
         IF    ${list_not_empty} > 0
@@ -1736,7 +1944,7 @@ Cleanup all availability notifications:
                     ${availability_notification_id}=    Replace String    ${availability_notification_id}    [   ${EMPTY}
                     ${availability_notification_id}=    Replace String    ${availability_notification_id}    ]   ${EMPTY}
                     Log    availability_notification_id: ${availability_notification_id}
-                    ${response_delete}=    DELETE    ${current_url}/availability-notifications/${availability_notification_id}    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}    expected_status=204
+                    ${response_delete}=    DELETE    ${current_url}/availability-notifications/${availability_notification_id}    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}    expected_status=204    verify=${verify_ssl}
             END
         END
 Update order status in Database:
@@ -1981,8 +2189,19 @@ Cleanup all existing shopping lists
         ...    *Example:*
         ...
         ...    ``Cleanup all existing shopping lists``
-        ${response}=    GET    ${current_url}/shopping-lists    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}  params=include=items,bundle-items     expected_status=200
-        ${response_body}=    Set Variable    ${response.json()}
+        ${response}=    GET    ${current_url}/shopping-lists    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}  params=include=items,bundle-items     expected_status=200    verify=${verify_ssl}
+        ${response.status_code}=    Set Variable    ${response.status_code}
+        IF    ${response.status_code} != 204    
+            TRY    
+                ${response_body}=    Set Variable    ${response.json()}
+            EXCEPT
+                ${content_type}=    Get From Dictionary    ${response.headers}    content-type
+                Fail    Got: '${response.status_code}' status code on: '${response.url}' with reason: '${response.reason}'. Response content type: '${content_type}'. Details: '${response.content}'
+            END
+        END
+        IF    ${response.status_code} == 204    
+            ${response_body}=    Set Variable    ${EMPTY}
+        END
         @{data}=    Get Value From Json    ${response_body}    [data]
         ${list_not_empty}=    Get length    ${data}
         IF    ${list_not_empty} > 0
