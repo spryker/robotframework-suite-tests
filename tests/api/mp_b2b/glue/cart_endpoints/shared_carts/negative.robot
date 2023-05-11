@@ -74,7 +74,7 @@ Share_shopping_cart_without_company_user_attribute_and_cart_permission_group_att
     [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cartId}
     ...    AND    Response status code should be:    204
     ...    AND    Response reason should be:    No Content
-# 
+
 Share_shopping_cart_to_the_other_company_user
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_ottom_admin_user.email}
     ...    AND    I set Headers:    Authorization=${token}
