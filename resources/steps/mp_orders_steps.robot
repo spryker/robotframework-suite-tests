@@ -5,11 +5,22 @@ Resource    ../pages/mp/mp_order_drawer.robot
 
 *** Keywords ***
 MP: wait for order to appear:
-    [Arguments]    ${orderReference}
-    Sleep    60s
-    MP: perform search by:    ${orderReference}
-    Table Should Contain    ${mp_items_table}     ${orderReference}
- 
+    [Arguments]    ${orderReference}    ${tries}=20    ${timeout}=1s    
+    FOR    ${index}    IN RANGE    0    ${tries}
+        MP: perform search by:    ${orderReference}
+        ${elementAppears}=    Run Keyword And Return Status    Table Should Contain    ${mp_items_table}     ${orderReference}
+        IF    '${elementAppears}'=='False'
+            Sleep    ${timeout}    
+            Reload
+        ELSE
+            Exit For Loop
+        END
+    END
+    IF    ${index} == ${tries}-1
+        Take Screenshot
+        Fail    'Timeout exceeded, merchant order was not created'
+    END
+     
 MP: order grand total should be:
     [Arguments]    ${expectedTotal}
     Wait Until Element Is Visible    ${order_grand_total}

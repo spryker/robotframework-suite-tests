@@ -68,7 +68,7 @@ Yves: shopping cart contains the following products:
     ${items_list_count}=   get length  ${items_list}
     FOR    ${index}    IN RANGE    0    ${items_list_count}
         ${item_to_check}=    Get From List    ${items_list}    ${index}
-        Page Should Contain Element    xpath=//main[contains(@class,'cart')]//article[contains(@data-qa,'component product-card-item')]//*[contains(.,'${item_to_check}')]/ancestor::article
+        Page Should Contain Element    xpath=(//main[contains(@class,'cart')]//article[contains(@data-qa,'component product-card-item')]//*[contains(.,'${item_to_check}')]/ancestor::article)[1]
     END
 
 Yves: click on the '${buttonName}' button in the shopping cart
@@ -85,7 +85,11 @@ Yves: shopping cart contains product with unit price:
     [Documentation]    Already contains '€' sign inside
     [Arguments]    ${sku}    ${productName}    ${productPrice}
     IF    '${env}' in ['ui_b2b','ui_mp_b2b']
-        Page Should Contain Element    xpath=//div[contains(@class,'product-card-item__col--description')]//div[contains(.,'SKU: ${sku}')]/ancestor::article//*[contains(@class,'product-card-item__col--description')]/div[1]//*[contains(@class,'money-price__amount')][contains(.,'€${productPrice}')]
+        TRY
+            Page Should Contain Element    xpath=//div[contains(@class,'product-card-item__col--description')]//div[contains(.,'SKU: ${sku}')]/ancestor::article//*[contains(@class,'product-card-item__col--description')]/div[1]//*[contains(@class,'money-price__amount')][contains(.,'€${productPrice}')]
+        EXCEPT
+            Page Should Contain Element    xpath=//div[contains(@class,'product-cart-item__col--description')]//div[contains(.,'SKU: ${sku}')]/ancestor::article//*[contains(@class,'product-cart-item__col--description')]/div[1]//*[contains(@class,'money-price__amount')][contains(.,'€${productPrice}')]
+        END  
     ELSE
         Page Should Contain Element    xpath=//main[@class='page-layout-cart']//article[contains(@data-qa,'component product-card-item')]//a[contains(text(),'${productName}')]/following-sibling::span/span[contains(@class,'money-price__amount') and contains(.,'${productPrice}')]
     END
@@ -118,7 +122,7 @@ Yves: delete product from the shopping cart with sku:
 
 Yves: delete product from the shopping cart with name:
     [Arguments]    ${productName}
-    Click    //main[@class='page-layout-cart']//article[contains(@data-qa,'component product-card-item')]//a[contains(text(),'Canon IXUS 175')]/ancestor::article//form[contains(@name,'removeFromCartForm')]//button
+    Click    //main[@class='page-layout-cart']//article[contains(@data-qa,'component product-card-item')]//a[contains(text(),'${productName}')]/ancestor::article//form[contains(@name,'removeFromCartForm')]//button
     Yves: remove flash messages
 
 Yves: shopping cart doesn't contain the following products:
@@ -172,7 +176,7 @@ Yves: delete all shopping carts
     Yves: create new 'Shopping Cart' with name:    Z
     #create new empty cart that will be the last one in the list
     ${currentURL}=    Get Location
-    IF    '/shopping-list' not in '${currentURL}'    Go To    ${yves_url}multi-cart
+    IF    '/multi-cart' not in '${currentURL}'    Go To    ${yves_url}multi-cart
     ${shoppingCartsCount}=    Get Element Count    xpath=//*[@data-qa='component quote-table']//table/tbody/tr//ul//a[contains(.,'Delete')]
     Log    ${shoppingCartsCount}
     FOR    ${index}    IN RANGE    0    ${shoppingCartsCount}-1
@@ -185,7 +189,7 @@ Yves: delete all shopping carts
 Yves: delete 'Shopping Cart' with name:
     [Arguments]    ${shoppingCartName}
     ${currentURL}=    Get Location
-    IF      '/shopping-list' not in '${currentURL}'    Go To    ${yves_url}multi-cart
+    IF      '/multi-cart' not in '${currentURL}'    Go To    ${yves_url}multi-cart
     Delete shopping cart with name:    ${shoppingCartName}
     Wait Until Element Is Visible    ${delete_shopping_cart_button}
     Click    ${delete_shopping_cart_button}

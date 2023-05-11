@@ -30,13 +30,14 @@ python3 -m pip install -U robotframework-requests
     ```
 ### Installation for UI tests
 ##### For UI testing installation requires Robot Framework, [RequestsLibrary](https://github.com/MarketSquare/robotframework-requests), [DatabaseLibrary](https://github.com/franz-see/Robotframework-Database-Library) and [Browser library](https://robotframework-browser.org/) powered by Playwright. 
-If you installed everything from the [prerequisites](#Prerequisites), all you need to install is the Browser library.
+If you installed everything from the [prerequisites](#Prerequisites), all you need to install is Node.js and the Browser library.
 
-1. Install [Browser library](https://robotframework-browser.org/#installation)
+1. Install [Node.js®](https://nodejs.org/en/download)
+2. Install [Browser library](https://robotframework-browser.org/#installation)
 ```sh
 python3 -m pip install -U robotframework-browser
 ```
-2. Initialize the Browser library
+3. Initialize the Browser library
 ```sh
 rfbrowser init
 ```
@@ -50,6 +51,9 @@ If you installed everything from the [prerequisites](#Prerequisites), all you ne
 python3 -m pip install -U robotframework-jsonlibrary
 ```
 
+### Automated installation
+
+You can also run all of the installation steps in one go by executing the shell script `install.sh`.
 
 ## How to run tests
 Robot Framework test cases are executed from the command line, and the end result is, by default, an output file in XML format and an HTML report and log. After the execution, output files can be combined and otherwise post-processed with the Rebot tool.
