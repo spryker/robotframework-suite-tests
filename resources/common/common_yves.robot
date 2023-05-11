@@ -422,16 +422,42 @@ I send a POST request:
     ...    ``I send a POST request:    /agent-access-tokens    {"data": {"type": "agent-access-tokens","attributes": {"username": "${agent.email}","password": "${agent.password}"}}}``
     [Arguments]   ${path}    ${json}    ${timeout}=60    ${allow_redirects}=true    ${auth}=${NONE}    ${expected_status}=ANY
     ${data}=    Evaluate    ${json}
-    ${hasValue}    Run Keyword and return status     Should not be empty    ${headers}
-    ${response}=    IF    ${hasValue}   run keyword    POST    ${glue_url}${path}    json=${data}    headers=${headers}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}
-    ...    ELSE    POST    ${glue_url}${path}    json=${data}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=ANY
-    ${response_body}=    IF    ${response.status_code} != 204    Set Variable    ${response.json()}
+    ${headers_not_empty}    Run Keyword and return status     Should not be empty    ${headers}
+    ${response}=    IF    ${headers_not_empty}   run keyword    POST    ${glue_url}${path}    json=${data}    headers=${headers}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}    verify=${verify_ssl}
+    ...    ELSE    POST    ${glue_url}${path}    json=${data}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=ANY    verify=${verify_ssl}
+    ${response.status_code}=    Set Variable    ${response.status_code}
+    IF    ${response.status_code} != 204    
+        TRY    
+            ${response_body}=    Set Variable    ${response.json()}
+        EXCEPT
+            ${content_type}=    Get From Dictionary    ${response.headers}    content-type
+            Fail    Got: '${response.status_code}' status code on: '${response.url}' with reason: '${response.reason}'. Response content type: '${content_type}'. Details: '${response.content}'
+        END
+    END
     ${response_headers}=    Set Variable    ${response.headers}
+    IF    ${response.status_code} == 204    
+        ${response_body}=    Set Variable    ${EMPTY}
+    END
     Set Test Variable    ${response_headers}    ${response_headers}
     Set Test Variable    ${response_body}    ${response_body}
     Set Test Variable    ${response}    ${response}
     Set Test Variable    ${expected_self_link}    ${glue_url}${path}
     [Return]    ${response_body}
+
+I set Headers:
+    [Documentation]    Keyword sets any number of headers for the further endpoint calls.
+    ...    Headers can have any name and any value, they are set as test variable - which means they can be used throughtout one test if set once.
+    ...    This keyword can be used to add access token to the next endpoint calls or to set header for the guest customer, etc.
+    ...
+    ...    It accepts a list of pairs haader-name=header-value as an argument. The list items should be separated by 4 spaces.
+    ...
+    ...    *Example:*
+    ...
+    ...    ``I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}``
+
+    [Arguments]    &{headers}
+    Set Test Variable    &{headers}
+    [Return]    &{headers}
 
 Yves: checkout is blocked with the following message:
     [Arguments]    ${expectedMessage}

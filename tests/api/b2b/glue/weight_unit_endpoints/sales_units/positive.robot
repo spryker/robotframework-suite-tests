@@ -43,7 +43,7 @@ Get_sales_units_for_product_with_measurement_units_include
    And Each array element of array in response should contain property:    [data]    id
    And Each array element of array in response should contain property with value:    [data]    type    sales-units
    And Response body has correct self link
-   And Each array element of array in response should a nested array of a certain size:    [data]    [relationships]    1
+   And Each array element of array in response should contain a nested array of a certain size:    [data]    [relationships]    1
    And Response should contain the array of a certain size:    [included]    ${concrete.random_weight.qty_of_units}
    And Response include should contain certain entity type:    product-measurement-units
    And Response include element has self link:    product-measurement-units

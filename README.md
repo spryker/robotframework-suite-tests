@@ -96,6 +96,7 @@ Regardless of execution approach, the path (or paths) to the test data to be exe
 | `-v headless:{headless}` |Defines if the browser should be launched in the headless mode. Possible values: `true`,`false`. **Default:** `true`| `robot -v env:ui_mp_b2c -v headless:false tests/ui/e2e/e2e_mp_b2c.robot` | For UI tests only. optional |
 | `-v browser_timeout:{timeout}` |Default time for Implicit wait in UI tests. **Default:** `60s`| `robot -v env:ui_mp_b2c -v browser_timeout:30s tests/ui/e2e/e2e_mp_b2c.robot` | For UI tests only. optional |
 | `-v api_timeout:${timeout}` |Default time for Implicit wait of the response in API tests. **Default:** `60s`| `robot -v env:api_b2c -v api_timeout:30s -s tests.api.b2c.glue .` | For API tests only. optional |
+| `-v verify_ssl:bool` |Enables/Disables SSL verification in API and UI tests **Default:** `false`| `robot -v env:api_b2c -v verify_ssl:true -s tests.api.b2c.glue .` | optional |
 | `{PATH}` | Path to the **file** to execute| `robot -v env:api_b2b tests/api/b2b/glue/cart_endpoints/carts/positive.robot` / `robot -v env:ui_b2c tests/ui/e2e/e2e_b2c.robot`| **yes for UI tests** |
 
 #### CLI Examples
