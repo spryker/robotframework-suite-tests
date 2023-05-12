@@ -116,7 +116,7 @@ Add_items_to_guest_cart_with_included_items_concrete_products_and_abstract_produ
     And Response include element has self link:   concrete-products
     And Response include element has self link:   abstract-products
     And Response include element has self link:   guest-cart-items
-    And Each array element of array in response should a nested array of a certain size:    [included]    [relationships]    1
+    And Each array element of array in response should contain a nested array of a certain size:    [included]    [relationships]    1
     And Response should contain the array of a certain size:    [included][0][relationships][abstract-products][data]    1
     And Response should contain the array of a certain size:    [included][1][relationships][abstract-products][data]    1
     And Response should contain the array of a certain size:    [included][2][relationships][concrete-products][data]    2

@@ -17,6 +17,7 @@ Resource                  ../pages/yves/yves_login_page.robot
 # *** SUITE VARIABLES ***
 ${env}                 b2b
 ${headless}            true
+${verify_ssl}          false
 ${browser}             chromium
 ${browser_timeout}     60 seconds
 ${email_domain}        @spryker.com
@@ -107,7 +108,14 @@ SuiteSetup
     Remove Files    ${OUTPUTDIR}/selenium-screenshot-*.png
     Remove Files    resources/libraries/__pycache__/*
     Load Variables    ${env}
-    New Browser    ${browser}    headless=${headless}    args=['--ignore-certificate-errors']
+    ${verify_ssl}=    Convert To Lower Case    ${verify_ssl}
+    IF    '${verify_ssl}' == 'true'
+        New Browser    ${browser}    headless=${headless}
+        Set Global Variable    ${verify_ssl}    ${True}
+    ELSE
+        New Browser    ${browser}    headless=${headless}    args=['--ignore-certificate-errors']
+        Set Global Variable    ${verify_ssl}    ${False}
+    END
     Set Browser Timeout    ${browser_timeout}
     Create default Main Context
     Overwrite env variables
@@ -227,7 +235,7 @@ Wait Until Element Is Not Visible
 
 Page Should Contain Link
     [Arguments]    ${url}    ${message}=${EMPTY}
-    ${hrefs}=    Execute JavaScript    Array.from(document.querySelectorAll('a')).map(e => e.getAttribute('href'))
+    ${hrefs}=    Evaluate Javascript     ${None}    Array.from(document.querySelectorAll('a')).map(e => e.getAttribute('href'))
     Should Contain    ${hrefs}    ${url}
 
 Scroll Element Into View
