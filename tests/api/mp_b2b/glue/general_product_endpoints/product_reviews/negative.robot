@@ -9,7 +9,7 @@ ENABLER
     TestSetup
 
 Get_a_review_with_non_existent_review_id
-    [Documentation]   # not implemented feature - https://spryker.aha.io/features/REVIEW-2
+    [Documentation]   not implemented feature - https://spryker.aha.io/features/REVIEW-2
     [Tags]    skip-due-to-issue
     When I send a GET request:    /abstract-products/${abstract_product.product_with_reviews.sku}/product-reviews/fake
     Then Response status code should be:    404
@@ -32,7 +32,7 @@ Get_reviews_with_missing_abstract_product
     And Response should return error message:    Abstract product sku is not specified.
 
 Get_review_by_id_with_missing_abstract_product
-    [Documentation]   # not implemented feature - https://spryker.aha.io/features/REVIEW-2
+    [Documentation]    not implemented feature - https://spryker.aha.io/features/REVIEW-2
     [Tags]    skip-due-to-issue
     When I send a GET request:    /abstract-products//product-reviews/78
     Then Response status code should be:    400
@@ -41,7 +41,7 @@ Get_review_by_id_with_missing_abstract_product
     And Response should return error message:    Abstract product sku is not specified.
 
 Get_a_reviews_with_non_existent_abstract_product
-    [Documentation]   # not implemented feature - https://spryker.aha.io/features/REVIEW-2
+    [Documentation]    not implemented feature - https://spryker.aha.io/features/REVIEW-2
     [Tags]    skip-due-to-issue
     When I send a GET request:    /abstract-products/fake/product-reviews/78
     Then Response status code should be:    404
@@ -84,7 +84,7 @@ Create_a_product_review_with_empty_fields
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     When I send a POST request:    /abstract-products/${abstract_product.product_with_reviews.sku}/product-reviews    {"data": {"type": "product-reviews","attributes": {"rating": "","nickname": "","summary": "","description": ""}}}
-    Then Response status code should be:    422
+    Then Response status code should be:    ${422}
     And Response reason should be:    Unprocessable Content
     And Each array element of array in response should contain property with value:    [errors]    code    901
     And Each array element of array in response should contain property with value:    [errors]    status    ${422}
@@ -97,7 +97,7 @@ Create_a_product_review_with_missing_fields
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     When I send a POST request:    /abstract-products/${abstract_product.product_with_reviews.sku}/product-reviews    {"data": {"type": "product-reviews","attributes": {}}}
-    Then Response status code should be:    422
+    Then Response status code should be:    ${422}
     And Response reason should be:    Unprocessable Content
     And Each array element of array in response should contain property with value:    [errors]    code    901
     And Each array element of array in response should contain property with value:    [errors]    status    ${422}

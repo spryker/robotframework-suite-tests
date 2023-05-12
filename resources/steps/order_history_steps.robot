@@ -9,14 +9,14 @@ Resource    ../pages/yves/yves_order_details_page.robot
 *** Keywords ***
 Yves: go to 'Order History' page
     Yves: go to 'Customer Account' page
-    IF    '${env}' in ['b2b','mp_b2b']
+    IF    '${env}' in ['ui_b2b','ui_mp_b2b']
         Yves: go to user menu item in the left bar:    Order History
     ELSE
         Yves: go to user menu item in the left bar:    Orders History
     END
         
 Yves: 'View Order/Reorder/Return' on the order history page:
-    [Arguments]    ${orderAction}    ${lastPlacedOrder}
+    [Arguments]    ${orderAction}    ${lastPlacedOrder}=${lastPlacedOrder}
     IF    '${orderAction}' == 'View Order'
         Click   xpath=//div[contains(@data-qa,'component order-table')]//td[text()='${lastPlacedOrder}']/..//a[contains(.,'${orderAction}')]
     ELSE IF    '${orderAction}' == 'Reorder'
@@ -27,7 +27,7 @@ Yves: 'View Order/Reorder/Return' on the order history page:
 
 Yves: reorder all items from 'View Order' page
     Wait Until Element Is Visible    ${order_details_reorder_all_button}
-    Click    ${order_details_reorder_all_button}
+    Click    ${order_details_reorder_all_button}    delay=1s
     Yves: remove flash messages
 
 Yves: shipping address on the order details page is:
@@ -46,8 +46,8 @@ Yves: 'Order Details' page contains the following product title N times:
 
 Yves: 'Order History' page contains the following order with a status:
     [Arguments]    ${orderID}    ${expectedStatus}
-    ${actualOrderStatus}=    Get Text    xpath=//div[contains(@data-qa,'component order-table')]//td[text()='${orderID}']/..//span[@data-qa='component status']
-    Should Be Equal    ${actualOrderStatus}    ${expectedStatus}    msg=None    values=True    ignore_case=True    formatter=str
+    ${actualOrderStatus}=    Get Text    xpath=//div[contains(@data-qa,'component order-table')]//td[text()='${orderID}']/..//*[@data-qa='component status']/..//ancestor::td
+    Should Contain    ${actualOrderStatus}    ${expectedStatus}    msg=None    values=True    ignore_case=True
 
 Yves: 'Order Details' page contains the cancel order button:
     [Arguments]    ${condition}

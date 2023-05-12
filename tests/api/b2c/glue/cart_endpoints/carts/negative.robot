@@ -114,7 +114,7 @@ Create_cart_when_cart_already_exists
              ...  AND    I set Headers:    Authorization=${token}
              ...  AND    Find or create customer cart
     When I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}"}}}
-    Then Response status code should be:    422
+    Then Response status code should be:    ${422}
     And Response reason should be:    Unprocessable Content
     And Response should return error message:    Customer already has a cart.
 
@@ -219,9 +219,9 @@ Update_cart_with_invalid_priceMod_currency_store
         ...  AND    Get ETag header value from cart
         ...  AND    I set Headers:    Authorization=${token}    If-Match=${ETag}
     When I send a PATCH request:    /carts/${cart_id}    {"data": {"type": "carts","attributes": {"priceMode": "GROSS","currency": "EU","store": "DEK"}}}
-    Then Response status code should be:    422
+    Then Response status code should be:    ${422}
     And Response reason should be:    Unprocessable Content
-    And Each array element of array in response should contain property with value:    [errors]    status    422
+    And Each array element of array in response should contain property with value:    [errors]    status    ${422}
     And Response body parameter should be:    [errors][0][code]    117
     And Response body parameter should be:    [errors][0][detail]    Currency is incorrect.
     And Response body parameter should be:    [errors][1][code]    119
@@ -238,7 +238,7 @@ Delete_cart_by_cart_id
        ...  AND    I set Headers:    Authorization=${token}
        ...  AND    Find or create customer cart
     When I send a DELETE request:    /carts/${cart_id}
-    Then Response status code should be:    422
+    Then Response status code should be:    ${422}
     And Response reason should be:    Unprocessable Content
     And Response should return error message:    Cart could not be deleted.
     And Response should return error code:    105

@@ -21,9 +21,13 @@ ${default_db_host}         127.0.0.1
 ${default_db_name}         eu-docker
 ${default_db_password}     secret
 ${default_db_port}         3306
+${default_db_port_postgres}    5432
 ${default_db_user}         spryker
 ${default_db_engine}       pymysql
 ${db_engine}
+${glue_env}
+${bapi_env}
+${db_port}
 # ${default_db_engine}       psycopg2
 
 *** Keywords ***
@@ -69,15 +73,38 @@ TestSetup
     ...    ``Default Tags    bapi``
     FOR  ${tag}  IN  @{Test Tags}
     Log   ${tag}
-    IF    '${tag}'=='bapi'    
-        Set Suite Variable    ${current_url}    ${bapi_url}
-        Set Suite Variable    ${tag}    bapi
-        ELSE IF    '${tag}'=='glue'    
-        Set Suite Variable    ${current_url}    ${glue_url}
-        Set Suite Variable    ${tag}    glue
+    IF    '${glue_env}' == '${EMPTY}'
+        IF    '${tag}'=='glue'  
+            Set Suite Variable    ${current_url}    ${glue_url}
+            Set Suite Variable    ${tag}    glue
+        END
+    ELSE
+        IF    '${tag}'=='glue'   
+            Set Suite Variable    ${current_url}    ${glue_env}
+            Set Suite Variable    ${tag}    glue
+        END
+    END
+    IF    '${bapi_env}' == '${EMPTY}'
+        IF    '${tag}'=='bapi'  
+            Set Suite Variable    ${current_url}    ${bapi_url}
+            Set Suite Variable    ${tag}    bapi
+        END
+    ELSE
+        IF    '${tag}'=='bapi'  
+            Set Suite Variable    ${current_url}    ${bapi_env}
+            Set Suite Variable    ${tag}    bapi
+        END
     END
     END
-    Log    ${current_url}
+    ${current_url_last_character}=    Get Regexp Matches    ${current_url}    .$    flags=IGNORECASE
+    ${current_url_last_character}=    Convert To String    ${current_url_last_character}
+    ${current_url_last_character}=    Replace String    ${current_url_last_character}    '   ${EMPTY}
+    ${current_url_last_character}=    Replace String    ${current_url_last_character}    [   ${EMPTY}
+    ${current_url_last_character}=    Replace String    ${current_url_last_character}    ]   ${EMPTY}
+    IF    '${current_url_last_character}' == '/'
+        ${current_url}=    Replace String Using Regexp    ${current_url}    .$    ${EMPTY}
+        Set Suite Variable    ${current_url}
+    END
 
 Load Variables
     [Documentation]    Keyword is used to load variable values from the environment file passed during execution. This Keyword is used during suite setup.
@@ -94,7 +121,8 @@ Load Variables
     &{vars}=   Define Environment Variables From Json File    ${env}
     FOR    ${key}    ${value}    IN    &{vars}
         Log    Key is '${key}' and value is '${value}'.
-        Set Global Variable    ${${key}}    ${value}
+        ${var_value}=   Get Variable Value  ${${key}}   ${value}
+        Set Global Variable    ${${key}}    ${var_value}
     END
 
 I set Headers:
@@ -136,6 +164,74 @@ I get access token for the customer:
     Set Test Variable    ${response_headers}    ${response_headers}
     Set Test Variable    ${response_body}    ${response_body}
     Set Test Variable    ${expected_self_link}    ${current_url}/access-tokens
+    Log    ${token}
+    [Return]    ${token}
+
+I add 'admin' role to company user and get company_user_uuid:
+    [Documentation]    This is a helper keyword which sets the 'Admin' role to the company user if it is not already set and returns the uuid of this company user. Requires: company user email, company key and business unit key
+    ...    *Example:*
+    ...
+    ...    ``Add 'admin' role to company user and return company_user_uuid:    anne.boleyn@spryker.com    BoB-Hotel-Jim    business-unit-jim-1``
+    [Arguments]    ${email}    ${company_key}    ${business_unit_key}
+    Connect to Spryker DB
+    ${id_customer}=    Query    select id_customer from spy_customer WHERE email='${email}'
+    ${id_customer}=    Evaluate    ${id_customer[0][0]}+0
+    IF    '${db_engine}' == 'pymysql'
+        ${id_business_unit}=    Query    select id_company_business_unit from spy_company_business_unit where `key`='${business_unit_key}'
+    ELSE
+        ${id_business_unit}=    Query    select id_company_business_unit from spy_company_business_unit where "key"='${business_unit_key}'
+    END
+    ${id_business_unit}=    Evaluate    ${id_business_unit[0][0]}+0
+    IF    '${db_engine}' == 'pymysql'
+        ${id_company}=    Query    select id_company from spy_company WHERE `key`='${company_key}'
+    ELSE
+        ${id_company}=    Query    select id_company from spy_company WHERE "key"='${company_key}'
+    END
+    ${id_company}=    Evaluate    ${id_company[0][0]}+0
+    ${id_company_user}=    Query    select id_company_user from spy_company_user WHERE fk_customer=${id_customer} and fk_company_business_unit=${id_business_unit} and fk_company=${id_company}
+    ${id_company_user}=    Evaluate    ${id_company_user[0][0]}+0
+    ${id_company_role_admin}=    Query    select id_company_role from spy_company_role WHERE name='Admin' and fk_company='${id_company}'
+    ${id_company_role_admin}=    Evaluate    ${id_company_role_admin[0][0]}+0
+    ${is_role_set}=    Query    SELECT id_company_role_to_company_user FROM spy_company_role_to_company_user WHERE fk_company_role = ${id_company_role_admin} and fk_company_user = ${id_company_user}
+    ${is_role_set_length}=    Get Length    ${is_role_set}
+    IF    ${is_role_set_length} == 0
+        ${last_id}=    Query    SELECT id_company_role_to_company_user FROM spy_company_role_to_company_user ORDER BY id_company_role_to_company_user DESC LIMIT 1;
+        ${new_id}=    Evaluate    ${last_id[0][0]}+1
+        Execute Sql String    INSERT INTO spy_company_role_to_company_user (id_company_role_to_company_user, fk_company_role, fk_company_user) VALUES (${new_id}, ${id_company_role_admin}, ${id_company_user});
+    END
+    ${company_user_uuid}=    Query    select uuid from spy_company_user where id_company_user=${id_company_user}
+    ${company_user_uuid}=    Convert To String    ${company_user_uuid}
+    ${company_user_uuid}=    Replace String    ${company_user_uuid}    '   ${EMPTY}
+    ${company_user_uuid}=    Replace String    ${company_user_uuid}    ,   ${EMPTY}
+    ${company_user_uuid}=    Replace String    ${company_user_uuid}    (   ${EMPTY}
+    ${company_user_uuid}=    Replace String    ${company_user_uuid}    )   ${EMPTY}
+    ${company_user_uuid}=    Replace String    ${company_user_uuid}    [   ${EMPTY}
+    ${company_user_uuid}=    Replace String    ${company_user_uuid}    ]   ${EMPTY}
+    Set Test Variable    ${company_user_uuid}    ${company_user_uuid}
+    [Return]    ${company_user_uuid}
+
+I get access token for the company user by uuid:
+    [Documentation]    This is a helper keyword which helps get company user access token by uuid for future use in the headers of the following requests.
+    ...
+    ...    It gets the token for the specified company user by ``${company_user_uuid}`` and saves it into the test variable ``${token}``, which can then be used within the scope of the test where this keyword was called.
+    ...    After the test ends the ``${token}`` variable is cleared. This keyword needs to be called separately for each test where you expect to need a company user token.
+    ...
+    ...    *Example:*
+    ...
+    ...    ``I get access token for the company user by uuid:    ${company_user_uuid}``
+    [Arguments]    ${company_user_uuid}
+    ${hasValue}    Run Keyword and return status     Should not be empty    ${headers}
+    ${data}=    Evaluate    {"data":{"type":"company-user-access-tokens","attributes":{"idCompanyUser":"${company_user_uuid}"}}}
+    ${response}=    IF    ${hasValue}       run keyword    POST    ${current_url}/company-user-access-tokens    json=${data}    headers=${headers}
+    ...    ELSE    POST    ${current_url}/company-user-access-tokens    json=${data}
+    ${token}=    Set Variable    Bearer ${response.json()['data']['attributes']['accessToken']}
+    ${response_body}=    Set Variable    ${response.json()}
+    ${response_headers}=    Set Variable    ${response.headers}
+    Set Test Variable    ${token}    ${token}
+    Set Test Variable    ${response}    ${response}
+    Set Test Variable    ${response_headers}    ${response_headers}
+    Set Test Variable    ${response_body}    ${response_body}
+    Set Test Variable    ${expected_self_link}    ${current_url}/company-user-access-tokens
     Log    ${token}
     [Return]    ${token}
 
@@ -428,14 +524,14 @@ Response body parameter should be in:
     ...    *Example:*
     ...
     ...    ``Response body parameter should be in:    [data][attributes][allowInput]    true    false``
-    [Arguments]    ${json_path}    ${expected_value1}    ${expected_value2}    ${expected_value3}=robotframework-dummy-value    ${expected_value4}=robotframework-dummy-value    ${expected_value5}=robotframework-dummy-value    ${expected_value6}=robotframework-dummy-value    ${expected_value7}=robotframework-dummy-value
+    [Arguments]    ${json_path}    ${expected_value1}    ${expected_value2}    ${expected_value3}=robotframework-dummy-value    ${expected_value4}=robotframework-dummy-value    ${expected_value5}=robotframework-dummy-value    ${expected_value6}=robotframework-dummy-value    ${expected_value7}=robotframework-dummy-value    ${expected_value8}=robotframework-dummy-value    ${expected_value9}=robotframework-dummy-value
     ${data}=    Get Value From Json    ${response_body}    ${json_path}
     ${data}=    Convert To String    ${data}
     ${data}=    Replace String    ${data}    '   ${EMPTY}
     ${data}=    Replace String    ${data}    [   ${EMPTY}
     ${data}=    Replace String    ${data}    ]   ${EMPTY}
     Log    ${data}
-    Should Contain Any   ${data}    ${expected_value1}    ${expected_value2}    ${expected_value3}    ${expected_value4}    ignore_case=True
+    Should Contain Any   ${data}    ${expected_value1}    ${expected_value2}    ${expected_value3}    ${expected_value4}    ${expected_value5}    ${expected_value6}    ${expected_value7}    ${expected_value8}    ${expected_value9}      ignore_case=True
 
 Response body parameter with rounding should be:
     [Documentation]    This keyword checks that the response saved  in ``${response_body}`` test variable contains the speficied parameter ``${json_path}`` that was rounded and can differ from the expected value by 1 more cent or 1 less cent.
@@ -1400,17 +1496,53 @@ Cleanup existing customer addresses:
     END
 
 Find or create customer cart
-    [Documentation]    This keyword creates or retrieves cart for the current customer token. This keyword sets ``${cart_id} `` variable
+    [Documentation]    This keyword creates or retrieves cart (in gross price mode and with eur currency) for the current customer token. This keyword sets ``${cart_id} `` variable
         ...                and it can be re-used by the keywords that follow this keyword in the test
         ...
         ...     This keyword does not accept any arguments. Makes GET request in order to fetch cart for the customer or creates it otherwise.
         ...
-        ${response}=    I send a GET request:    /carts
-        Save value to a variable:    [data][0][id]    cart_id
+        ${response}=    GET    ${current_url}/carts    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}    expected_status=200
+        ${response_body}=    Set Variable    ${response.json()}
+        ${response_headers}=    Set Variable    ${response.headers}
+        Set Test Variable    ${response_headers}    ${response_headers}
+        @{data}=    Get Value From Json    ${response_body}    [data]
+        ${cart_id}=    Get Value From Json    ${response_body}    [data][0][id]
         ${hasCart}    Run Keyword and return status     Should not be empty    ${cart_id}
-        Log    cart_id:${cart_id}
-        IF    not ${hasCart}    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}"}}}
-        IF    not ${hasCart}    Save value to a variable:    [data][id]    cart_id
+        IF    ${hasCart}
+            ${carts_number}=    Get Length    @{data}
+            FOR    ${index}    IN RANGE    0    ${carts_number}
+                    ${cart}=    Get From List    @{data}    ${index}
+                    ${cart_id}=    Get Value From Json    ${cart}    [id]
+                    ${cart_id}=    Convert To String    ${cart_id}
+                    ${cart_id}=    Replace String    ${cart_id}    '   ${EMPTY}
+                    ${cart_id}=    Replace String    ${cart_id}    [   ${EMPTY}
+                    ${cart_id}=    Replace String    ${cart_id}    ]   ${EMPTY}
+                    ${cart_mode}=    Get Value From Json    ${cart}    [attributes][priceMode]
+                    ${cart_mode}=    Convert To String    ${cart_mode}
+                    ${cart_mode}=    Replace String    ${cart_mode}    '   ${EMPTY}
+                    ${cart_mode}=    Replace String    ${cart_mode}    [   ${EMPTY}
+                    ${cart_mode}=    Replace String    ${cart_mode}    ]   ${EMPTY}
+                    ${cart_currency}=    Get Value From Json    ${cart}    [attributes][currency]
+                    ${cart_currency}=    Convert To String    ${cart_currency}
+                    ${cart_currency}=    Replace String    ${cart_currency}    '   ${EMPTY}
+                    ${cart_currency}=    Replace String    ${cart_currency}    [   ${EMPTY}
+                    ${cart_currency}=    Replace String    ${cart_currency}    ]   ${EMPTY}
+                    ${expected_cart_found}=    Run Keyword And Return Status    Should Be True    '${cart_mode}' == 'GROSS_MODE' and '${cart_currency}' == 'EUR'
+                    IF    ${expected_cart_found} == 1
+                        Set Test Variable    ${cart_id}    ${cart_id}
+                        BREAK
+                    END
+                    IF    ${index} < ${carts_number}-1 and ${expected_cart_found} == 0    
+                        Continue For Loop
+                    ELSE
+                        I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "dummyCart${random}"}}}
+                        Save value to a variable:    [data][id]    cart_id
+                    END
+            END
+        ELSE
+            I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "dummyCart${random}"}}}
+            Save value to a variable:    [data][id]    cart_id
+        END
 
 Create empty customer cart:
     [Documentation]    This keyword creates cart for the current customer token. This keyword sets ``${cart_id} `` variable
@@ -1507,12 +1639,21 @@ Cleanup all items in the cart:
             Log    list_length: ${list_length}
             FOR    ${index}    IN RANGE    0    ${list_length}
                     ${list_element}=    Get From List    @{included}    ${index}
-                    ${cart_item_uid}=    Get Value From Json    ${list_element}    [id]
+                    ${cart_item_uid}=    Get Value From Json    ${list_element}    [attributes][groupKey]
+                    ${cart_item_sku}=    Get Value From Json    ${list_element}    [attributes][sku]
                     ${cart_item_uid}=    Convert To String    ${cart_item_uid}
                     ${cart_item_uid}=    Replace String    ${cart_item_uid}    '   ${EMPTY}
                     ${cart_item_uid}=    Replace String    ${cart_item_uid}    [   ${EMPTY}
                     ${cart_item_uid}=    Replace String    ${cart_item_uid}    ]   ${EMPTY}
-                    ${response_delete}=    DELETE    ${current_url}/carts/${cart_id}/items/${cart_item_uid}    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}    expected_status=204
+                    ${cart_item_sku}=    Convert To String    ${cart_item_sku}
+                    ${cart_item_sku}=    Replace String    ${cart_item_sku}    '   ${EMPTY}
+                    ${cart_item_sku}=    Replace String    ${cart_item_sku}    [   ${EMPTY}
+                    ${cart_item_sku}=    Replace String    ${cart_item_sku}    ]   ${EMPTY}
+                    TRY
+                        ${response_delete}=    DELETE    ${current_url}/carts/${cart_id}/items/${cart_item_uid}    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}    expected_status=204
+                    EXCEPT    
+                        ${response_delete}=    DELETE    ${current_url}/carts/${cart_id}/items/${cart_item_sku}    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}    expected_status=204
+                    END
             END
         END
 
@@ -1648,11 +1789,29 @@ Connect to Spryker DB
     ...    
     ...    with the example above you'll use PostgreSQL DB engine
     ${db_name}=    Set Variable If    '${db_name}' == '${EMPTY}'    ${default_db_name}    ${db_name}
-    ${db_user}=    Set Variable If    '${db_name}' == '${EMPTY}'    ${default_db_user}    ${db_user}
-    ${db_password}=    Set Variable If    '${db_name}' == '${EMPTY}'    ${default_db_password}    ${db_password}
-    ${db_host}=    Set Variable If    '${db_name}' == '${EMPTY}'    ${default_db_host}    ${db_host}
-    ${db_port}=    Set Variable If    '${db_name}' == '${EMPTY}'    ${default_db_port}    ${db_port}
+    ${db_user}=    Set Variable If    '${db_user}' == '${EMPTY}'    ${default_db_user}    ${db_user}
+    ${db_password}=    Set Variable If    '${db_password}' == '${EMPTY}'    ${default_db_password}    ${db_password}
+    ${db_host}=    Set Variable If    '${db_host}' == '${EMPTY}'    ${default_db_host}    ${db_host}
     ${db_engine}=    Set Variable If    '${db_engine}' == '${EMPTY}'    ${default_db_engine}    ${db_engine}
+    IF    '${db_engine}' == 'mysql'
+        ${db_engine}=    Set Variable    pymysql
+    ELSE IF    '${db_engine}' == 'postgresql'
+        ${db_engine}=    Set Variable    psycopg2
+    ELSE IF    '${db_engine}' == 'postgres'
+        ${db_engine}=    Set Variable    psycopg2
+    END    
+    IF    '${db_engine}' == 'psycopg2'
+        ${db_port}=    Set Variable If    '${db_port}' == '${EMPTY}'    ${db_port_postgres_env}    ${db_port}
+        IF    '${db_port_postgres_env}' == '${EMPTY}'
+        ${db_port}=    Set Variable If    '${db_port_postgres_env}' == '${EMPTY}'    ${default_db_port_postgres}    ${db_port_postgres_env}
+        END
+    ELSE
+    ${db_port}=    Set Variable If    '${db_port}' == '${EMPTY}'    ${db_port_env}    ${db_port}
+        IF    '${db_port_env}' == '${EMPTY}'
+        ${db_port}=    Set Variable If    '${db_port_env}' == '${EMPTY}'    ${default_db_port}    ${db_port_env}
+        END
+    END
+    Set Test Variable    ${db_engine}
     Connect To Database    ${db_engine}    ${db_name}    ${db_user}    ${db_password}    ${db_host}    ${db_port}
 
 Get the first company user id and its' customer email
@@ -1693,12 +1852,12 @@ Array element should contain nested array at least once:
         IF    'FAIL' in ${result}    Continue For Loop
     END
 
-Array elelemt should contain property with value at least once:
+Array element should contain property with value at least once:
     [Documentation]    This keyword checks that element in the array specified as ``${json_path}`` contains the specified property ``${expected_property}`` with the specified value ``${expected_value}`` at least once.
     ...
     ...    *Example:*
     ...
-    ...    ``And Array elelemt should contain property with value at least once:    [data][0][attributes][categoryTreeFilter]    docCount    ${${category_lvl2.qty}}``
+    ...    ``And Array element should contain property with value at least once:    [data][0][attributes][categoryTreeFilter]    docCount    ${${category_lvl2.qty}}``
     ...
     [Arguments]    ${json_path}    ${expected_property}    ${expected_value}
     @{data}=    Get Value From Json    ${response_body}    ${json_path}
@@ -1714,12 +1873,81 @@ Array elelemt should contain property with value at least once:
         IF    'FAIL' in ${result}    Continue For Loop
     END
 
-Array elelemt should contain nested array with property and value at least once:
+Nested array element should contain sub-array at least once:
+    [Documentation]    This keyword checks that nested array ``${parrent_array}`` in the array specified as ``${json_path}`` contains the specified sub-array ``${expected_nested_array}`` at least once.
+    ...
+    ...    *Example:*
+    ...
+    ...    ``And Nested array element should contain sub-array at least once:      [data]    [relationships]    company-role``
+    ...
+    [Arguments]    ${json_path}     ${parrent_array}    ${expected_nested_array}
+    @{data}=    Get Value From Json    ${response_body}    ${json_path}
+    ${result}=    Set Variable    'FALSE'
+    ${list_length}=    Get Length    @{data}
+    ${log_list}=    Log List    @{data}
+    ${expected_nested_array}=    Replace String    ${expected_nested_array}    [   ${EMPTY}
+    ${expected_nested_array}=    Replace String    ${expected_nested_array}    ]   ${EMPTY}
+    ${expected_nested_array}=    Replace String    ${expected_nested_array}    '   ${EMPTY}
+    ${expected_nested_array}=    Create List    ${expected_nested_array}
+    FOR    ${index}    IN RANGE    0    ${list_length}
+        IF    'PASS' in ${result}    BREAK
+        ${list_element}=    Get From List    @{data}    ${index}
+        Log    ${list_element}
+        @{list_element2}=    Get Value From Json    ${list_element}    ${parrent_array}
+        @{list_element}=    Get From List    ${list_element2}    0
+        ${result}=    Run Keyword And Ignore Error    List Should Contain Sub List   ${list_element}    ${expected_nested_array}    ignore_case=True
+        IF    'PASS' in ${result}    Exit For Loop
+        IF    ${index} == ${list_length}-1
+                Fail    expected '${expected_nested_array}' array is not present in '@{data}'
+        END
+        IF    'FAIL' in ${result}    Continue For Loop
+    END
+
+Nested array element should contain sub-array with property and value at least once:
+    [Documentation]    This keyword checks whether the nested array ``${expected_nested_array}`` that is present in the parrent array ``${parrent_array}`` under the json path ``${json_path}``  contsains propery ``${expected_property}`` with value ``${expected_value}`` at least once.
+    ...
+    ...    *Example:*
+    ...
+    ...   ``Nested array element should contain sub-array with property and value at least once:    [included]    [attributes]    [productConfigurationInstance]    configuration    {"time_of_day":"4"}``
+    ...
+    [Arguments]    ${json_path}     ${parrent_array}    ${expected_nested_array}    ${expected_property}    ${expected_value}
+    @{data}=    Get Value From Json    ${response_body}    ${json_path}
+    ${result}=    Set Variable    'FALSE'
+    ${list_length}=    Get Length    @{data}
+    ${log_list}=    Log List    @{data}
+    ${expected_nested_array}=    Replace String    ${expected_nested_array}    [   ${EMPTY}
+    ${expected_nested_array}=    Replace String    ${expected_nested_array}    ]   ${EMPTY}
+    ${expected_nested_array}=    Replace String    ${expected_nested_array}    '   ${EMPTY}
+    ${expected_nested_array}=    Convert To String    ${expected_nested_array}
+    FOR    ${index}    IN RANGE    0    ${list_length}
+        IF    'PASS' in ${result}    BREAK
+        ${parrent_array_element}=    Get From List    @{data}    ${index}
+        Log    ${parrent_array_element}
+        @{actual_parent_element}=    Get Value From Json    ${parrent_array_element}    ${parrent_array}
+        Log List    @{actual_parent_element}
+        ${actual_nested_array}=    Get From List    ${actual_parent_element}    0
+        ${actual_property_array}=    Get Value From Json    ${actual_nested_array}    ${expected_nested_array}
+        Log    @{actual_property_array}
+        ${actual_property_value}=    Get From List    ${actual_property_array}    0
+        ${actual_property_value}=    Get Value From Json    ${actual_property_value}    ${expected_property}
+        ${actual_property_value}=    Convert To String    ${actual_property_value}
+        ${actual_property_value}=    Replace String    ${actual_property_value}    '   ${EMPTY}
+        ${actual_property_value}=    Replace String    ${actual_property_value}    [   ${EMPTY}
+        ${actual_property_value}=    Replace String    ${actual_property_value}    ]   ${EMPTY}
+        ${result}=    Run Keyword And Ignore Error    Should Contain   ${actual_property_value}    ${expected_value}    ignore_case=True
+            IF    'PASS' in ${result}    BREAK
+            IF    ${index} == ${list_length}-1
+                Fail    expected '${expected_property}' with value '${expected_value}' is not present in '${expected_nested_array}' but should
+            END
+            IF    'FAIL' in ${result}    Continue For Loop
+    END
+
+Array element should contain nested array with property and value at least once:
     [Documentation]    This keyword checks whether the array ``${nested_array}`` that is present in the parrent array ``${json_path}``  contsains propery ``${expected_property}`` with value ``${expected_value}`` at least once.
     ...
     ...    *Example:*
     ...
-    ...   ``And Array elelemt should contain nested array with property and value at least once:    [data][0][attributes][categoryTreeFilter]    [children]    docCount    ${category_lvl2.qty}``
+    ...   ``And Array element should contain nested array with property and value at least once:    [data][0][attributes][categoryTreeFilter]    [children]    docCount    ${category_lvl2.qty}``
     ...    
     [Arguments]    ${json_path}    ${nested_array}    ${expected_property}    ${expected_value}
     @{data}=    Get Value From Json    ${response_body}    ${json_path}

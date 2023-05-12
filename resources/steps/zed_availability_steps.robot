@@ -7,6 +7,7 @@ Resource    ../common/common.robot
 
 Zed: check if product is/not in stock:
     [Arguments]    ${sku}    ${isInStock}
+    ${isInStock}=    Convert To Lower Case    ${isInStock}
     Zed: perform search by:    ${sku}
     IF    '${isInStock}'=='true'
         Element Text Should Be    ${zed_availability_product_availability_label}     Available    Message='Expected product availability is not found'
@@ -16,6 +17,7 @@ Zed: check if product is/not in stock:
 
 Zed: change product stock:
     [Arguments]    ${skuAbstract}    ${skuConcrete}    ${isNeverOutOfStock}    ${quantityWarehouse1}    ${quantityWarehouse2}=0
+    ${isNeverOutOfStock}=    Convert To Lower Case    ${isNeverOutOfStock}
     ${currentURL}=    Get Location
     IF    '/availability-gui' not in '${currentURL}'    Zed: go to second navigation item level:    Catalog    Availability
     IF    '/availability-gui/index/edit' in '${currentURL}'    Zed: go to second navigation item level:    Catalog    Availability

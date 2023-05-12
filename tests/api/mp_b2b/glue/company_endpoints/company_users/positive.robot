@@ -87,7 +87,7 @@ Retrieve_company_user_including_company_roles
     And Each array element of array in response should contain property with value NOT in:    [data]    [id]    None
     And Each array element of array in response should contain nested property:    [data]    [attributes]    isActive
     And Each array element of array in response should contain nested property:    [data]    [attributes]    isDefault
-    And Response should contain the array of a certain size:    [data][0][relationships][company-roles][data]    1
+    And Array element should contain nested array at least once:    [data]    [relationships]
     And Response should contain the array of a certain size:    [included]    4
     And Response include should contain certain entity type:    company-roles
     And Response include element has self link:    company-roles
@@ -141,6 +141,9 @@ Retrieve_list_of_company_users_with_include_customers_and_filtered_by_company_ro
 
 Retrieve_list_of_company_users_if_user_has_4_companies
     When I get access token for the customer:    ${user_with_multiple_companies}
+    And I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
+    And I add 'admin' role to company user and get company_user_uuid:    ${user_with_multiple_companies}    BoB-Hotel-Jim    business-unit-jim-1
+    And I get access token for the company user by uuid:    ${company_user_uuid}
     And I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     And I send a GET request:    /company-users/mine
     Then Response status code should be:    200

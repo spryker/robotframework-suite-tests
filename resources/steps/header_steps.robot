@@ -24,7 +24,7 @@ ${wishlistIcon}    ${wishlist_icon_header_navigation_widget}
 *** Keywords ***
 Yves: perform search by:
     [Arguments]    ${searchTerm}
-    IF    '${env}' in ['b2c','mp_b2c']    
+    IF    '${env}' in ['ui_b2c','ui_mp_b2c']    
         Run Keywords
             Wait Until Page Contains Element    ${search_form_open_menu_item}
             Click    ${search_form_open_menu_item}
@@ -79,15 +79,15 @@ Yves: go to '${pageName}' page through the header
 
 Yves: go to user menu item in header:
     [Arguments]    ${user_menu_item}
-    wait until element is visible  ${user_navigation_icon_header_menu_item}[${env}]
-    mouse over  ${user_navigation_icon_header_menu_item}[${env}]
+    Wait Until Element Is Visible  ${user_navigation_icon_header_menu_item}[${env}]
+    Sleep    1s
+    Mouse Over  ${user_navigation_icon_header_menu_item}[${env}]
     Wait Until Element Is Visible    ${user_navigation_fly_out_header_menu_item}[${env}]
-    IF    '${env}' in ['b2b','mp_b2b']
-        Click    //li[contains(@class,'user-navigation__item--user')]//nav[contains(@class,'user-navigation__sub-nav')]//ul[contains(@class,'list--secondary')]//a[text()='${user_menu_item}']
+    IF    '${env}' in ['ui_b2b','ui_mp_b2b']
+        Click    xpath=//li[contains(@class,'user-navigation__item--user')]//nav[contains(@class,'user-navigation__sub-nav')]//ul[contains(@class,'list--secondary')]//a[text()='${user_menu_item}']
     ELSE
-        Click    //a[contains(@class,'user-block') and contains(text(),'${user_menu_item}')]
+        Click    xpath=//a[contains(@class,'user-block') and contains(text(),'${user_menu_item}')]
     END
-
 
 Yves: move mouse over header menu item:
     [Arguments]    @{header_elements_list}    ${element1}=${EMPTY}     ${element2}=${EMPTY}     ${element3}=${EMPTY}     ${element4}=${EMPTY}     ${element5}=${EMPTY}     ${element6}=${EMPTY}     ${element7}=${EMPTY}     ${element8}=${EMPTY}     ${element9}=${EMPTY}     ${element10}=${EMPTY}     ${element11}=${EMPTY}     ${element12}=${EMPTY}     ${element13}=${EMPTY}     ${element14}=${EMPTY}     ${element15}=${EMPTY}

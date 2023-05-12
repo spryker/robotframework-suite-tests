@@ -4,35 +4,36 @@ Suite Setup       SuiteSetup
 Suite Teardown    SuiteTeardown
 Test Setup        TestSetup
 Test Teardown     TestTeardown
-Resource    ../../resources/common/common.robot
-Resource    ../../resources/steps/header_steps.robot
-Resource    ../../resources/common/common_yves.robot
-Resource    ../../resources/common/common_zed.robot
-Resource    ../../resources/steps/pdp_steps.robot
-Resource    ../../resources/steps/shopping_lists_steps.robot
-Resource    ../../resources/steps/checkout_steps.robot
-Resource    ../../resources/steps/customer_registration_steps.robot
-Resource    ../../resources/steps/order_history_steps.robot
-Resource    ../../resources/steps/product_set_steps.robot
-Resource    ../../resources/steps/catalog_steps.robot
-Resource    ../../resources/steps/agent_assist_steps.robot
-Resource    ../../resources/steps/company_steps.robot
-Resource    ../../resources/steps/customer_account_steps.robot
-Resource    ../../resources/steps/configurable_bundle_steps.robot
-Resource    ../../resources/steps/zed_users_steps.robot
-Resource    ../../resources/steps/products_steps.robot
-Resource    ../../resources/steps/orders_management_steps.robot
-Resource    ../../resources/steps/wishlist_steps.robot
-Resource    ../../resources/steps/zed_availability_steps.robot
-Resource    ../../resources/steps/zed_discount_steps.robot
-Resource    ../../resources/steps/zed_cms_page_steps.robot
-Resource    ../../resources/steps/zed_customer_steps.robot
-Resource    ../../resources/steps/zed_root_menus_steps.robot
-Resource    ../../resources/steps/minimum_order_value_steps.robot
-Resource    ../../resources/steps/availability_steps.robot
-Resource    ../../resources/steps/glossary_steps.robot
-Resource    ../../resources/steps/zed_payment_methods_steps.robot
-Resource    ../../resources/steps/zed_dashboard_steps.robot
+Resource    ../../../resources/common/common.robot
+Resource    ../../../resources/steps/header_steps.robot
+Resource    ../../../resources/common/common_yves.robot
+Resource    ../../../resources/common/common_zed.robot
+Resource    ../../../resources/steps/pdp_steps.robot
+Resource    ../../../resources/steps/shopping_lists_steps.robot
+Resource    ../../../resources/steps/checkout_steps.robot
+Resource    ../../../resources/steps/customer_registration_steps.robot
+Resource    ../../../resources/steps/order_history_steps.robot
+Resource    ../../../resources/steps/product_set_steps.robot
+Resource    ../../../resources/steps/catalog_steps.robot
+Resource    ../../../resources/steps/agent_assist_steps.robot
+Resource    ../../../resources/steps/company_steps.robot
+Resource    ../../../resources/steps/customer_account_steps.robot
+Resource    ../../../resources/steps/configurable_bundle_steps.robot
+Resource    ../../../resources/steps/zed_users_steps.robot
+Resource    ../../../resources/steps/products_steps.robot
+Resource    ../../../resources/steps/orders_management_steps.robot
+Resource    ../../../resources/steps/wishlist_steps.robot
+Resource    ../../../resources/steps/zed_availability_steps.robot
+Resource    ../../../resources/steps/zed_discount_steps.robot
+Resource    ../../../resources/steps/zed_cms_page_steps.robot
+Resource    ../../../resources/steps/zed_customer_steps.robot
+Resource    ../../../resources/steps/zed_root_menus_steps.robot
+Resource    ../../../resources/steps/minimum_order_value_steps.robot
+Resource    ../../../resources/steps/availability_steps.robot
+Resource    ../../../resources/steps/glossary_steps.robot
+Resource    ../../../resources/steps/zed_payment_methods_steps.robot
+Resource    ../../../resources/steps/zed_dashboard_steps.robot
+Resource    ../../../resources/steps/configurable_product_steps.robot
 
 *** Test Cases ***
 New_Customer_Registration
@@ -83,7 +84,7 @@ User_Account
     Yves: go to user menu item in header:    Orders History
     Yves: 'Order History' page is displayed
     Yves: go to user menu item in header:    My Profile
-    Yves: 'My Profile' page is displayed
+    Yves: 'Profile' page is displayed
     Yves: go To 'Wishlist' Page
     Yves: 'Wishlist' page is displayed
     Yves: go to user menu item in the left bar:    Addresses
@@ -180,14 +181,18 @@ Product_PDP
 
 Volume_Prices
     [Documentation]    Checks volume prices are applied
+    [Setup]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    ...    AND    Zed: deactivate following discounts from Overview page:    10% off minimum order
     Yves: login on Yves with provided credentials:    ${yves_user_email}
     Yves: go to PDP of the product with sku:    193
-    Yves: change quantity on PDP:    5
+    Yves: change quantity using '+' or '-' button № times:    +    4
     Yves: add product to the shopping cart
     Yves: go to b2c shopping cart
     Yves: shopping cart contains product with unit price:    193    Sony FDR-AX40    825.00
     Yves: delete from b2c cart products with name:    Sony FDR-AX40
-    [Teardown]    Yves: check if cart is not empty and clear it
+    [Teardown]    Run keywords    Yves: check if cart is not empty and clear it
+    ...    AND    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    ...    AND    Zed: activate following discounts from Overview page:    10% off minimum order
 
 Discontinued_Alternative_Products
     [Documentation]    Checks discontinued and alternative products
@@ -196,53 +201,47 @@ Discontinued_Alternative_Products
     Yves: PDP contains/doesn't contain:    true    ${alternativeProducts}
     Yves: login on Yves with provided credentials:    ${yves_user_email}
     Yves: delete all wishlists
-    Yves: go to the PDP of the first available product
+    Yves: go to PDP of the product with sku:    ${discontinued_product_concrete_sku}
     Yves: add product to wishlist:    My wishlist
-    Yves: get sku of the concrete product on PDP
-    Yves: get sku of the abstract product on PDP
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    Zed: discontinue the following product:    ${got_abstract_product_sku}    ${got_concrete_product_sku}
+    Zed: discontinue the following product:    ${discontinued_product_abstract_sku}    ${discontinued_product_concrete_sku}
     Zed: product is successfully discontinued
     Zed: check if at least one price exists for concrete and add if doesn't:    100
     Zed: add following alternative products to the concrete:    012
     Yves: login on Yves with provided credentials:    ${yves_user_email}
     Yves: go To 'Wishlist' Page
     Yves: go to wishlist with name:    My wishlist
-    Yves: product with sku is marked as discountinued in wishlist:    ${got_concrete_product_sku}
+    Yves: product with sku is marked as discountinued in wishlist:    ${discontinued_product_concrete_sku}
     Yves: product with sku is marked as alternative in wishlist:    012
     [Teardown]    Run Keywords    Yves: login on Yves with provided credentials:    ${yves_user_email}    
     ...    AND    Yves: check if cart is not empty and clear it
     ...    AND    Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    ...    AND    Zed: undo discontinue the following product:    ${got_abstract_product_sku}    ${got_concrete_product_sku}
+    ...    AND    Zed: undo discontinue the following product:    ${discontinued_product_abstract_sku}    ${discontinued_product_concrete_sku}
 
 Back_in_Stock_Notification
     [Documentation]    Back in stock notification is sent and availability check
-    [Setup]    Run keywords    Yves: go to the 'Home' page
-    ...    AND    Yves: go to the PDP of the first available product
-    ...    AND    Yves: get sku of the concrete product on PDP
-    ...    AND    Yves: get sku of the abstract product on PDP
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Catalog    Availability
-    Zed: check if product is/not in stock:    ${got_abstract_product_sku}    true
-    Zed: change product stock:    ${got_abstract_product_sku}    ${got_concrete_product_sku}    false    0
+    Zed: check if product is/not in stock:    ${stock_product_abstract_sku}    true
+    Zed: change product stock:    ${stock_product_abstract_sku}    ${stock_product_concrete_sku}    false    0
     Zed: go to second navigation item level:    Catalog    Availability
-    Zed: check if product is/not in stock:    ${got_abstract_product_sku}    false
+    Zed: check if product is/not in stock:    ${stock_product_abstract_sku}    false
     Yves: login on Yves with provided credentials:    ${yves_second_user_email}
-    Yves: go to PDP of the product with sku:  ${got_abstract_product_sku}
+    Yves: go to PDP of the product with sku:  ${stock_product_abstract_sku}
     Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    True
-    Yves: check if product is available on PDP:    ${got_abstract_product_sku}    false
+    Yves: check if product is available on PDP:    ${stock_product_abstract_sku}    false
     Yves: submit back in stock notification request for email:    ${yves_second_user_email}
     Yves: unsubscribe from availability notifications
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Catalog    Availability
-    Zed: change product stock:    ${got_abstract_product_sku}    ${got_concrete_product_sku}    true    0
+    Zed: change product stock:    ${stock_product_abstract_sku}    ${stock_product_concrete_sku}    true    0
     Zed: go to second navigation item level:    Catalog    Availability
-    Zed: check if product is/not in stock:    ${got_abstract_product_sku}    true
+    Zed: check if product is/not in stock:    ${stock_product_abstract_sku}    true
     Yves: login on Yves with provided credentials:    ${yves_second_user_email}
-    Yves: go to PDP of the product with sku:  ${got_abstract_product_sku}
+    Yves: go to PDP of the product with sku:  ${stock_product_abstract_sku}
     Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    False
-    Yves: check if product is available on PDP:    ${got_abstract_product_sku}    true
-    [Teardown]    Zed: check and restore product availability in Zed:    ${got_abstract_product_sku}    Available    ${got_concrete_product_sku}
+    Yves: check if product is available on PDP:    ${stock_product_abstract_sku}    true
+    [Teardown]    Zed: check and restore product availability in Zed:    ${stock_product_abstract_sku}    Available    ${stock_product_concrete_sku}
 
 Add_to_Wishlist
     [Documentation]    Check creation of wishlist and adding to different wishlists
@@ -259,6 +258,9 @@ Add_to_Wishlist
     Yves: wishlist contains product with sku:    003_26138343
     Yves: go to wishlist with name:    Second wishlist
     Yves: wishlist contains product with sku:    004_30663302
+    Yves: go to PDP of the product with sku:    ${bundled_product_3_concrete_sku}
+    Delete All Cookies
+    Yves: try to add product to wishlist as guest user
     [Teardown]    Run keywords    Yves: delete all wishlists    AND    Yves: check if cart is not empty and clear it
 
 Product_Sets
@@ -335,14 +337,14 @@ Configurable_Bundle
     Yves: 'Order History' page is displayed
     Yves: get the last placed order ID by current customer
     Yves: 'View Order/Reorder/Return' on the order history page:    View Order    ${lastPlacedOrder}
-    Yves: 'View Order' page is displayed
+    Yves: 'Order Details' page is displayed
     Yves: 'Order Details' page contains the following product title N times:    Smartstation Kit    3
     [Teardown]    Yves: check if cart is not empty and clear it
 
 Discounts
     [Documentation]    Discounts, Promo Products, and Coupon Codes (includes guest checkout)
     [Setup]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    ...    AND    Zed: deactivate following discounts from Overview page:    Free Acer Notebook    Tu & Wed $5 off 5 or more    10% off $100+    Free smartphone    20% off cameras    Free Acer M2610    Free standard delivery    10% off Intel Core    5% off white    Tu & Wed €5 off 5 or more    10% off minimum order
+    ...    AND    Zed: deactivate all discounts from Overview page
     ...    AND    Zed: change product stock:    190    190_25111746    true    10
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Merchandising    Discount
@@ -426,8 +428,7 @@ Split_Delivery
     ...    AND    Yves: delete all user addresses
 
 Agent_Assist
-    [Tags]    skip-due-to-issue
-    [Documentation]    Checks that agent can be used. Bug: CC-17232
+    [Documentation]    Checks that agent can be used.
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: create new Zed user with the following data:    agent+${random}@spryker.com    change${random}    Agent    Assist    Root group    This user is an agent    en_US
     Yves: go to the 'Home' page
@@ -471,8 +472,7 @@ Agent_Assist
     ...    AND    Zed: delete Zed user with the following email:    agent+${random}@spryker.com
 
 Return_Management
-    [Tags]    skip-due-to-issue
-    [Documentation]    Checks that returns work and oms process is checked. Bug: CC-17232
+    [Documentation]    Checks that returns work and oms process is checked.
     Yves: login on Yves with provided credentials:    ${yves_user_email}
     Yves: check if cart is not empty and clear it
     Yves: go to PDP of the product with sku:    007
@@ -845,7 +845,7 @@ Product_Original_Price
 
 Checkout_Address_Management
     [Tags]    skip-due-to-issue
-    [Documentation]    Checks that user can change address during the checkout and save new into the address book. Bug:CC-24090
+    [Documentation]    Bug:CC-24090. Checks that user can change address during the checkout and save new into the address book.
     [Setup]    Run Keywords    
     ...    Yves: login on Yves with provided credentials:    ${yves_user_email}
     ...    AND    Yves: delete all user addresses
@@ -1019,8 +1019,7 @@ Minimum_Order_Value
     ...    || DE - Euro [EUR]  | ${SPACE}           | ${SPACE}                | ${SPACE}                | 10000.00           | The cart value cannot be higher than {{threshold}}. Please remove some items to proceed with the order    | Der Warenkorbwert darf nicht höher als {{threshold}} sein. Bitte entfernen Sie einige Artikel, um mit der Bestellung fortzufahren    | None           | ${EMPTY}             | ${EMPTY}                  | ${EMPTY}                  ||
 
 Order_Cancelation
-    [Tags]    skip-due-to-issue
-    [Documentation]    Check that customer is able to cancel order. Bug: CC-17072
+    [Documentation]    Check that customer is able to cancel order.
     Yves: login on Yves with provided credentials:    ${yves_second_user_email}
     Yves: check if cart is not empty and clear it
     Yves: delete all user addresses
@@ -1168,7 +1167,7 @@ Multistore_CMS
 
 Product_Availability_Calculation
     [Tags]    skip-due-to-issue
-    [Documentation]    check product availability + multistore. Bug: CC-24108
+    [Documentation]    Bug: CC-24108. check product availability + multistore. 
     [Setup]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: update warehouse:    
     ...    || warehouse  | store || 
@@ -1278,31 +1277,6 @@ User_Control
     ...    AND    Zed: go to second navigation item level:    Users    User Roles
     ...    AND    Zed: click Action Button in a table for row that contains:    controlRole${random}    Delete
 
-Glossary
-    [Documentation]    Create + edit glossary translation in BO
-    Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    Zed: go to second navigation item level:    Administration    Glossary  
-    Zed: click button in Header:    Create Translation
-    Zed: fill glossary form:
-    ...    || Name                     | EN_US                        | DE_DE                             ||
-    ...    || cart.price.test${random} | This is a sample translation | Dies ist eine Beispielübersetzung ||
-    Zed: submit the form
-    Zed: table should contain:    cart.price.test${random}
-    Zed: go to second navigation item level:    Administration    Glossary 
-    Zed: click Action Button in a table for row that contains:    ${glossary_name}    Edit
-    Zed: fill glossary form:
-    ...    || DE_DE                    | EN_US                              ||
-    ...    || ${original_DE_text}-Test | ${original_EN_text}-Test-${random} ||
-    Zed: submit the form
-    Yves: login on Yves with provided credentials:    ${yves_second_user_email}
-    Yves: validate the page title:    ${original_EN_text}-Test-${random}
-    Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    Zed: undo the changes in glossary translation:    ${glossary_name}     ${original_DE_text}    ${original_EN_text}
-    Yves: login on Yves with provided credentials:    ${yves_second_user_email}
-    Yves: validate the page title:    ${original_EN_text}
-    [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    ...    AND    Zed: undo the changes in glossary translation:    ${glossary_name}     ${original_DE_text}    ${original_EN_text}
-
 Reorder
     [Documentation]    Checks that merchant relation is saved with reorder
     Yves: login on Yves with provided credentials:    ${yves_user_email}
@@ -1334,7 +1308,7 @@ Update_Customer_Data
     Yves: go to user menu item in header:    Overview
     Yves: 'Overview' page is displayed
     Yves: go to user menu item in header:    My Profile
-    Yves: 'My Profile' page is displayed
+    Yves: 'Profile' page is displayed
     Yves: assert customer profile data:
     ...    || salutation | first name                     | last name                     | email                     ||
     ...    || Mr.        | ${yves_second_user_first_name} | ${yves_second_user_last_name} | ${yves_second_user_email} ||
@@ -1355,7 +1329,7 @@ Update_Customer_Data
     Yves: go to user menu item in header:    Overview
     Yves: 'Overview' page is displayed
     Yves: go to user menu item in header:    My Profile
-    Yves: 'My Profile' page is displayed
+    Yves: 'Profile' page is displayed
     Yves: assert customer profile data:
     ...    || salutation | first name                     | last name                     | email                     ||
     ...    || Mr.        | ${yves_second_user_first_name} | ${yves_second_user_last_name} | ${yves_second_user_email} ||
@@ -1383,7 +1357,7 @@ CRUD_Product_Set
     Yves: check if cart is not empty and clear it
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: delete product set:    test set ${random}
-    Yves: go to URL and refresh until 404 occurs:    ${host}en/test-set-${random}
+    Yves: go to URL and refresh until 404 occurs:    ${yves_url}en/test-set-${random}
 
 Payment_method_update
      [Documentation]    Deactivate payment method, unset payment method for stores in zed and check its impact on yves.
@@ -1415,34 +1389,13 @@ Payment_method_update
     ...    AND    Zed: go to second navigation item level:    Administration    Payment Methods
     ...    AND    Zed: activate/deactivate payment method:    Dummy Payment    Invoice    True
 
-Add_to_cart_products_as_a_guest_user_and_login_during_checkout
+Login_during_checkout
     Yves: go to the 'Home' page
     Yves: go to PDP of the product with sku:    ${bundled_product_3_concrete_sku}
     Yves: add product to the shopping cart
     Yves: go to b2c shopping cart  
     Yves: click on the 'Checkout' button in the shopping cart
-     Yves: proceed as a guest user and login during checkout:   ${yves_second_user_email}
-     Yves: fill in the following new shipping address:
-     ...    || salutation     | firstName                    | lastName                    | street        | houseNumber       | postCode     | city       | country     | company    | phone           | additionalAddress     ||
-    ...    || ${Salutation}  | ${Guest_user_first_name}     | ${Guest_user_last_name}     | ${random}     | ${random}         | ${random}    | ${city}    | ${country}  | ${company} | ${random} | ${additional_address} ||
-    Yves: submit form on the checkout
-    Yves: select the following shipping method on the checkout and go next:    Express
-    Yves: select the following payment method on the checkout and go next:    Invoice
-    Yves: accept the terms and conditions:    true
-    Yves: 'submit the order' on the summary page
-    Yves: 'Thank you' page is displayed
-
-Add_to_cart_products_as_a_guest_user_and_register_during_checkout
-    Yves: go to the 'Home' page
-    Yves: go to PDP of the product with sku:    ${bundled_product_3_concrete_sku}
-    Yves: add product to the shopping cart
-    Page Should Not Contain Element    ${pdp_add_to_wishlist_button}
-    Yves: go to b2c shopping cart  
-    Yves: click on the 'Checkout' button in the shopping cart
-    Yves: signup guest user during checkout:    ${Guest_user_first_name}    ${Guest_user_last_name}    abc${random}@gmail.com    Abc#${random}    Abc#${random}
-    Save the result of a SELECT DB query to a variable:    select registration_key from spy_customer where email = 'abc${random}@gmail.com'    confirmation_key
-    I send a POST request:     /customer-confirmation   {"data":{"type":"customer-confirmation","attributes":{"registrationKey":"${confirmation_key}"}}}
-    Yves: login after signup during checkout:    abc${random}@gmail.com    Abc#${random}
+    Yves: proceed as a guest user and login during checkout:   ${yves_second_user_email}
     Yves: fill in the following new shipping address:
     ...    || salutation     | firstName                    | lastName                    | street        | houseNumber       | postCode     | city       | country     | company    | phone           | additionalAddress     ||
     ...    || ${Salutation}  | ${Guest_user_first_name}     | ${Guest_user_last_name}     | ${random}     | ${random}         | ${random}    | ${city}    | ${country}  | ${company} | ${random} | ${additional_address} ||
@@ -1452,11 +1405,208 @@ Add_to_cart_products_as_a_guest_user_and_register_during_checkout
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
+    Yves: get the last placed order ID by current customer
+
+Register_during_checkout
+    [Documentation]    Guest user email should be whitelisted from the AWS side before running the test
     Yves: go to the 'Home' page
-    Yves: login on Yves with provided credentials:    ${yves_second_user_email}
     Yves: go to PDP of the product with sku:    ${bundled_product_3_concrete_sku}
-    Delete All Cookies
-    Yves: Add product to wishlist as guest user
-     [Teardown]    Zed: delete customer:
-    ...    || email                          ||
-    ...    || abc${random}@gmail.com ||
+    Yves: add product to the shopping cart
+    Page Should Not Contain Element    ${pdp_add_to_wishlist_button}
+    Yves: go to b2c shopping cart  
+    Yves: click on the 'Checkout' button in the shopping cart
+    Yves: signup guest user during checkout:    ${guest_user_first_name}    ${guest_user_last_name}    sonia+guest${random}@spryker.com    Abc#${random}    Abc#${random}
+    Save the result of a SELECT DB query to a variable:    select registration_key from spy_customer where email = 'sonia+guest${random}@spryker.com'    confirmation_key
+    I send a POST request:     /customer-confirmation   {"data":{"type":"customer-confirmation","attributes":{"registrationKey":"${confirmation_key}"}}}
+    Yves: login after signup during checkout:    sonia+guest${random}@spryker.com    Abc#${random}
+    Yves: fill in the following new shipping address:
+    ...    || salutation     | firstName                | lastName                | street    | houseNumber | postCode     | city       | country     | company    | phone     | additionalAddress         ||
+    ...    || ${salutation}  | ${guest_user_first_name} | ${guest_user_last_name} | ${random} | ${random}   | ${random}    | ${city}    | ${country}  | ${company} | ${random} | ${additional_address}     ||
+    Yves: submit form on the checkout
+    Yves: select the following shipping method on the checkout and go next:    Express
+    Yves: select the following payment method on the checkout and go next:    Invoice
+    Yves: accept the terms and conditions:    true
+    Yves: 'submit the order' on the summary page
+    Yves: 'Thank you' page is displayed
+    Yves: go to user menu item in header:    Overview
+    Yves: 'Overview' page is displayed
+    Yves: go to user menu item in header:    My Profile
+    Yves: 'Profile' page is displayed
+    Yves: assert customer profile data:
+    ...    || salutation    | first name               | last name               | email                            ||
+    ...    || ${salutation} | ${guest_user_first_name} | ${guest_user_last_name} | sonia+guest${random}@spryker.com ||
+    [Teardown]    Zed: delete customer:
+    ...    || email                            ||
+    ...    || sonia+guest${random}@spryker.com ||
+
+Glossary
+    [Documentation]    Create + edit glossary translation in BO
+    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: go to second navigation item level:    Administration    Glossary  
+    Zed: click button in Header:    Create Translation
+    Zed: fill glossary form:
+    ...    || Name                     | EN_US                        | DE_DE                             ||
+    ...    || cart.price.test${random} | This is a sample translation | Dies ist eine Beispielübersetzung ||
+    Zed: submit the form
+    Zed: table should contain:    cart.price.test${random}
+    Zed: go to second navigation item level:    Administration    Glossary 
+    Zed: click Action Button in a table for row that contains:    ${glossary_name}    Edit
+    Zed: fill glossary form:
+    ...    || DE_DE                    | EN_US                              ||
+    ...    || ${original_DE_text}-Test | ${original_EN_text}-Test-${random} ||
+    Zed: submit the form
+    Yves: login on Yves with provided credentials:    ${yves_second_user_email}
+    Yves: validate the page title:    ${original_EN_text}-Test-${random}
+    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: undo the changes in glossary translation:    ${glossary_name}     ${original_DE_text}    ${original_EN_text}
+    Yves: login on Yves with provided credentials:    ${yves_second_user_email}
+    Yves: validate the page title:    ${original_EN_text}
+    [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    ...    AND    Zed: undo the changes in glossary translation:    ${glossary_name}     ${original_DE_text}    ${original_EN_text}
+
+Configurable_Product_PDP_Wishlist
+    [Documentation]    Configure product from PDP and Wishlist
+    [Setup]    Run keywords    Yves: login on Yves with provided credentials:    ${yves_user_email}
+    ...    AND    Yves: create new 'Whistist' with name:    configProduct${random}
+    ...    AND    Yves: check if cart is not empty and clear it
+    ...    AND    Yves: delete all user addresses
+    ...    AND    Yves: create a new customer address in profile:     Mr    ${yves_user_first_name}    ${yves_user_last_name}    Kirncher Str.    7    10247    Berlin    Germany
+    Yves: go to PDP of the product with sku:    ${configurable_product_abstract_sku}
+    Yves: change variant of the product on PDP on:    ${configurable_product_concrete_one_attribute}
+    Yves: PDP contains/doesn't contain:    true    ${configureButton}
+    Yves: check and go back that configuration page contains:
+    ...    || store | locale | price_mode | currency | customer_id            | sku                                      ||
+    ...    || DE    | en_US  | GROSS_MODE | EUR      | ${yves_user_reference} | ${configurable_product_concrete_one_sku} ||
+    Yves: change the product configuration to:
+    ...    || date       | date_time ||
+    ...    || 12.12.2030 | Evening   ||
+    Yves: product configuration status should be equal:      Configuration complete!
+    Yves: configuration should be equal:
+    ...    || date       | date_time ||
+    ...    || 12.12.2030 | Evening   ||
+    Yves: change the product configuration to:
+    ...    || date  | date_time ||
+    ...    ||       | Afternoon ||
+    Yves: product configuration status should be equal:       Configuration is not complete.
+    Yves: add product to the shopping cart
+    Yves: go to b2c shopping cart
+    Yves: change the product configuration to:    
+    ...    || date       | date_time ||
+    ...    || 05.05.2035 | Afternoon ||
+    Yves: configuration should be equal:
+    ...    || date       | date_time ||
+    ...    || 05.05.2035 | Afternoon ||
+    Yves: change the product configuration to:
+    ...    || date  | date_time ||
+    ...    ||       | Afternoon ||
+    Yves: product configuration status should be equal:       Configuration is not complete.
+    Yves: click on the 'Checkout' button in the shopping cart
+    Yves: billing address same as shipping address:    true
+    Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${yves_user_address}
+    Yves: submit form on the checkout
+    Yves: select the following shipping method for the shipment:    1    Hermes    Next Day
+    Yves: submit form on the checkout
+    Yves: select the following payment method on the checkout and go next:    Invoice
+    Sleep    10s
+    Yves: checkout is blocked with the following message:    Product configuration is not completed.
+    Yves: go to the 'Home' page
+    Yves: go to b2c shopping cart
+    Yves: delete product from the shopping cart with name:    ${configurable_product_name}
+    Yves: go to PDP of the product with sku:    ${configurable_product_abstract_sku}
+    Yves: change variant of the product on PDP on:    ${configurable_product_concrete_two_attribute}
+    Yves: change the product configuration to:
+    ...    || date       | date_time ||
+    ...    || 01.01.2055 | Morning   ||
+    Yves: add product to wishlist:    configProduct${random}    select
+    Yves: go to wishlist with name:    configProduct${random}
+    Yves: wishlist contains product with sku:    ${configurable_product_concrete_two_sku}
+    Yves: configuration should be equal:
+    ...    || date       | date_time ||
+    ...    || 01.01.2055 | Morning   ||
+    Yves: change the product configuration to:
+    ...    || date       | date_time ||
+    ...    || 01.01.2055 | Afternoon ||
+    Yves: configuration should be equal:
+    ...    || date       | date_time ||
+    ...    || 01.01.2055 | Afternoon ||
+    Yves: add all available products from wishlist to cart
+    Yves: go to b2c shopping cart
+    Yves: configuration should be equal:
+    ...    || date       | date_time ||
+    ...    || 01.01.2055 | Afternoon ||
+    Yves: shopping cart contains product with unit price:    ${configurable_product_concrete_two_sku}    ${configurable_product_name}    ${configurable_product_concrete_two_price}
+    [Teardown]    Run Keywords    Yves: delete all wishlists
+    ...    AND    Yves: check if cart is not empty and clear it
+    ...    AND    Yves: delete all user addresses
+
+Configurable_Product_OMS
+    [Documentation]    Conf Product OMS check and reorder
+    [Setup]    Run keywords    Yves: login on Yves with provided credentials:    ${yves_user_email}
+    ...    AND    Yves: check if cart is not empty and clear it
+    ...    AND    Yves: delete all user addresses
+    ...    AND    Yves: create a new customer address in profile:     Mr    ${yves_user_first_name}    ${yves_user_last_name}    Kirncher Str.    7    10247    Berlin    Germany
+    Yves: go to PDP of the product with sku:    ${configurable_product_abstract_sku}
+    Yves: change variant of the product on PDP on:    ${configurable_product_concrete_one_attribute}
+    Yves: change the product configuration to:
+    ...    || date       | date_time ||
+    ...    || 12.12.2030 | Evening   ||
+    Yves: add product to the shopping cart
+    Yves: reset selected variant of the product on PDP
+    Yves: change variant of the product on PDP on:    ${configurable_product_concrete_two_attribute}
+    Yves: change the product configuration to:
+    ...    || date       | date_time ||
+    ...    || 01.01.2055 | Afternoon ||
+    Yves: add product to the shopping cart
+    Yves: go to b2c shopping cart
+    Yves: configuration should be equal:
+    ...    || date       | date_time ||
+    ...    || 12.12.2030 | Evening   ||
+    Yves: click on the 'Checkout' button in the shopping cart
+    Yves: billing address same as shipping address:    true
+    Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${yves_user_address}
+    Yves: submit form on the checkout
+    Yves: select the following shipping method for the shipment:    1    Hermes    Next Day
+    Yves: submit form on the checkout
+    Yves: select the following payment method on the checkout and go next:    Invoice
+    Yves: accept the terms and conditions:    true
+    Yves: 'submit the order' on the summary page
+    Yves: 'Thank you' page is displayed
+    Yves: get the last placed order ID by current customer
+    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: grand total for the order equals:    ${lastPlacedOrder}    €316.67
+    Zed: go to order page:    ${lastPlacedOrder}
+    Zed: product configuration should be equal:
+    ...    || shipment | position | sku                                      | date       | date_time ||
+    ...    || 1        | 1        | ${configurable_product_concrete_one_sku} | 12.12.2030 | Evening   ||
+    Zed: product configuration should be equal:
+    ...    || shipment | position | sku                                      | date       | date_time ||
+    ...    || 1        | 2        | ${configurable_product_concrete_two_sku} | 01.01.2055 | Afternoon ||
+    Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Pay
+    Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Skip timeout
+    Zed: trigger matching state of xxx order item inside xxx shipment:    Ship    2
+    Zed: trigger matching state of xxx order item inside xxx shipment:    Stock update    2
+    Zed: trigger matching state of xxx order item inside xxx shipment:    Refund    2
+    Zed: grand total for the order equals:    ${lastPlacedOrder}    €37.50
+    Zed: go to order page:    ${lastPlacedOrder}
+    Zed: trigger matching state of xxx order item inside xxx shipment:    Ship    1
+    Yves: login on Yves with provided credentials:    ${yves_user_email}
+    Yves: go to user menu item in header:    Orders History
+    Yves: 'Order History' page is displayed
+    Yves: 'View Order/Reorder/Return' on the order history page:     Return    ${lastPlacedOrder}
+    Yves: 'Create Return' page is displayed
+    Yves: create return for the following products:    ${configurable_product_concrete_one_sku}
+    Yves: 'Return Details' page is displayed
+    Yves: check that 'Print Slip' contains the following products:    ${configurable_product_concrete_one_sku}
+    Zed: login on Zed with provided credentials:    admin@spryker.com
+    Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Execute return
+    Yves: go to the 'Home' page
+    Yves: login on Yves with provided credentials:    ${yves_user_email}
+    Yves: go to user menu item in header:    Orders History
+    ### Reorder ###
+    Yves: 'View Order/Reorder/Return' on the order history page:    Reorder    ${lastPlacedOrder}
+    Yves: go to b2c shopping cart
+    Yves: shopping cart contains the following products:     ${configurable_product_name}
+    Yves: configuration should be equal:
+    ...    || date       | date_time ||
+    ...    || 12.12.2030 | Evening   ||
+    [Teardown]    Yves: check if cart is not empty and clear it

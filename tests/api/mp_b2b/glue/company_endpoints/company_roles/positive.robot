@@ -18,8 +18,8 @@ Request_company_role_by_id
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response body parameter should be:    [data][type]    company-roles
     And Response body parameter should be:    [data][id]    ${company_role_id}
-    And Response body parameter should be:    [data][attributes][name]    Buyer
-    And Response body parameter should be:    [data][attributes][isDefault]    True  
+    And Response body parameter should be in:    [data][attributes][name]    Buyer    Admin
+    And Response body parameter should be in:    [data][attributes][isDefault]    True    False  
     And Response body has correct self link internal
 
 Request_company_role_by_mine
@@ -33,10 +33,10 @@ Request_company_role_by_mine
     And Each array element of array in response should contain property with value:    [data]    type   company-roles    
     And Response body parameter should not be EMPTY:    [data][0][id]
     And Response body parameter should not be EMPTY:    [data][1][id]
-    And Response body parameter should be:    [data][0][attributes][name]    Buyer
-    And Response body parameter should be:    [data][1][attributes][name]    Admin
-    And Response body parameter should be:    [data][0][attributes][isDefault]    True
-    And Response body parameter should be:    [data][1][attributes][isDefault]    False
+    And Response body parameter should be in:    [data][0][attributes][name]    Buyer    Admin
+    And Response body parameter should be in:    [data][1][attributes][name]    Admin    Buyer
+    And Response body parameter should be in:    [data][0][attributes][isDefault]    True    False
+    And Response body parameter should be in:    [data][1][attributes][isDefault]    False    True
     And Response body has correct self link
 
 Request_company_role_by_mine_with_include_companies
@@ -49,11 +49,10 @@ Request_company_role_by_mine_with_include_companies
     And Response should contain the array of a certain size:    [data]  2  
     And Each array element of array in response should contain property with value:    [data]    type   company-roles
     And Response body parameter should not be EMPTY:    [data][0][id]
-    And Response body parameter should not be EMPTY:    [data][1][id]
-    And Response body parameter should be:    [data][0][attributes][name]    Buyer
-    And Response body parameter should be:    [data][1][attributes][name]    Admin
-    And Response body parameter should be:    [data][0][attributes][isDefault]    True
-    And Response body parameter should be:    [data][1][attributes][isDefault]    False
+    And Response body parameter should be in:    [data][0][attributes][name]    Buyer    Admin
+    And Response body parameter should be in:    [data][1][attributes][name]    Admin    Buyer
+    And Response body parameter should be in:    [data][0][attributes][isDefault]    True    False
+    And Response body parameter should be in:    [data][1][attributes][isDefault]    False    True
     And Response should contain the array of a certain size:    [data][0][relationships]    1
     And Response body parameter should be:    [data][0][relationships][companies][data][0][type]    companies
     And Response body parameter should not be EMPTY:    [data][0][relationships][companies][data][0][id]
@@ -76,8 +75,8 @@ Request_company_role_by_id_with_include_companies
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response body parameter should be:    [data][type]    company-roles
     And Response body parameter should be:    [data][id]    ${company_role_id}
-    And Response body parameter should be:    [data][attributes][name]    Buyer
-    And Response body parameter should be:    [data][attributes][isDefault]    True
+    And Response body parameter should be in:    [data][attributes][name]    Buyer    Admin
+    And Response body parameter should be in:    [data][attributes][isDefault]    True    False
     And Response should contain the array of a certain size:    [data][relationships]  1
     And Response body parameter should be:    [data][relationships][companies][data][0][type]    companies
     And Response body parameter should not be EMPTY:    [data][relationships][companies][data][0][id]

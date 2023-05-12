@@ -15,7 +15,7 @@ Product_is_available_with_stock_and_never_out_of_stock
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response body parameter should be:    [data][0][type]    abstract-product-availabilities
     And Response body parameter should be:    [data][0][id]    ${product_availability.abstract_available_with_stock_and_never_out_of_stock}
-    And Response body parameter should be greater than:    [data][0][attributes][quantity]   0
+    And Response body parameter should be greater than:    [data][0][attributes][quantity]   0.0000000000
     And Response body parameter should be:    [data][0][attributes][availability]   True
     And Response body has correct self link
 
