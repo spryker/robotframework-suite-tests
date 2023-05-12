@@ -202,7 +202,8 @@
                 "sku":"001_25904006",
                 "name":"Canon IXUS 160",
                 "sku2":"112_306918002",
-                "name2":"Acer Extensa M2610"
+                "name2":"Acer Extensa M2610",
+                "sku3":"183_21811723"
              },
              "without_stock":{
                 "sku":"192_17738941",
@@ -298,7 +299,8 @@
           "concrete_unavailable_product":"192_17738941",
           "concrete_available_with_stock_and_never_out_of_stock":"002_25904004",
           "concrete_available_with_stock_and_never_out_of_stock_name":"Canon IXUS 160",
-          "abstract_available_with_stock_and_never_out_of_stock_2":"007"
+          "abstract_available_with_stock_and_never_out_of_stock_2":"007",
+          "concrete_available_with_stock_and_never_out_of_stock_sku_2":"009_30692991"
        },
        "concrete_product_with_concrete_product_alternative":{
           "sku":"155_30149933",
