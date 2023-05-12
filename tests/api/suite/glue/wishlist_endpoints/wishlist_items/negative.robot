@@ -8,7 +8,6 @@ Default Tags    glue
 ENABLER
     TestSetup
 
-
 Adding_item_in_wishlist_by_invalid_Access_Token
     [Setup]    I set Headers:    Authorization=3485h7
     When I send a POST request:    /wishlists    {"data": { "type": "wishlists","attributes": { "name": "${random}"} }}
@@ -220,7 +219,6 @@ Deleting_items_in_wishlist_by_another_customer_wishlist
     ...    AND    I send a DELETE request:    /wishlists/${wishlist_id}
     ...    AND    Response status code should be:    204
     
-
 Deleting_concrete_product_by_abstract_product_sku
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}
@@ -238,3 +236,238 @@ Deleting_concrete_product_by_abstract_product_sku
     And Response should return error message:        No item with provided sku in wishlist.
     [Teardown]    Run Keywords    I send a DELETE request:    /wishlists/${wishlist_id}
     ...    AND    Response status code should be:    204
+
+Add_a_non-configurable_product_to_the_wishlist_with_configuration
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
+    ...    AND    I set Headers:    Authorization=${token}
+    ...    AND    I send a POST request:    /wishlists    {"data": { "type": "wishlists","attributes": { "name": "${wishlist_name}${random}" } }}
+    ...    AND    Response status code should be:    201 
+    ...    AND    Response reason should be:    Created
+    ...    AND    Save value to a variable:    [data][id]        wishlist_id
+    When I send a POST request:    /wishlists/${wishlist_id}/wishlist-items    {"data": {"type": "wishlist-items","attributes":{"sku":"${concrete_available_product.sku}","quantity":3,"productConfigurationInstance":{"displayData":'{"Preferred time of the day":"Afternoon","Date":"09.09.2050"}',"configuration":'{"time_of_day":"4"}',"configuratorKey":"DATE_TIME_CONFIGURATOR","isComplete":True,"quantity":3,"availableQuantity":4,"prices":[{"priceTypeName":"DEFAULT","netAmount":23434,"grossAmount":42502,"currency":{"code":"EUR","name":"Euro","symbol":"€"},"volumePrices":[{"netAmount":150,"grossAmount":165,"quantity":5},{"netAmount":145,"grossAmount":158,"quantity":10},{"netAmount":140,"grossAmount":152,"quantity":20}]}]}}}}
+    And Response status code should be:    422
+    And Response should return error code:    206
+    And Response should return error message:    "Cant add an item."
+    [Teardown]    Run Keywords    I send a DELETE request:    /wishlists/${wishlist_id}
+    ...    AND    Response status code should be:    204
+    ...    AND    Response reason should be:    No Content
+
+Add_a_non-configurable_product_to_the_wishlist_with_configuration_and_configurable_product
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
+    ...    AND    I set Headers:    Authorization=${token}
+    ...    AND    I send a POST request:    /wishlists    {"data": { "type": "wishlists","attributes": { "name": "${wishlist_name}${random}" } }}
+    ...    AND    Response status code should be:    201 
+    ...    AND    Response reason should be:    Created
+    ...    AND    Save value to a variable:    [data][id]        wishlist_id
+    I send a POST request:    /wishlists/${wishlist_id}/wishlist-items    {"data": {"type": "wishlist-items","attributes":{"sku":"${concrete_available_product.sku}","quantity":3,"productConfigurationInstance":{"displayData":'{"Preferred time of the day":"Afternoon","Date":"09.09.2050"}',"configuration":'{"time_of_day":"4"}',"configuratorKey":"DATE_TIME_CONFIGURATOR","isComplete":True,"quantity":3,"availableQuantity":4,"prices":[{"priceTypeName":"DEFAULT","netAmount":23434,"grossAmount":42502,"currency":{"code":"EUR","name":"Euro","symbol":"€"},"volumePrices":[{"netAmount":150,"grossAmount":165,"quantity":5},{"netAmount":145,"grossAmount":158,"quantity":10},{"netAmount":140,"grossAmount":152,"quantity":20}]}]}}}}
+    And Response status code should be:    422
+    And Response should return error code:    206
+    And Response should return error message:    "Cant add an item."
+    I send a POST request:    /wishlists/${wishlist_id}/wishlist-items    {"data": {"type": "wishlist-items","attributes":{"sku":"${configurable_product.sku}","quantity":3,"productConfigurationInstance":{"displayData":'{"Preferred time of the day":"Afternoon","Date":"09.09.2050"}',"configuration":'{"time_of_day":"4"}',"configuratorKey":"DATE_TIME_CONFIGURATOR","isComplete":True,"quantity":3,"availableQuantity":4,"prices":[{"priceTypeName":"DEFAULT","netAmount":23434,"grossAmount":42502,"currency":{"code":"EUR","name":"Euro","symbol":"€"},"volumePrices":[{"netAmount":150,"grossAmount":165,"quantity":5},{"netAmount":145,"grossAmount":158,"quantity":10},{"netAmount":140,"grossAmount":152,"quantity":20}]}]}}}}
+    And Response status code should be:    201
+    And Save value to a variable:    [data][id]    wishlist_item_id2
+    And I send a GET request:    /wishlists/${wishlist_id}?include=wishlist-items,concrete-products
+    And Response status code should be:    200
+    And Response body parameter should be:   [data][attributes][numberOfItems]    1
+    And Response body parameter should be:   [included][1][id]    ${ wishlist_item_id2}
+    And Response body parameter should be:   [included][1][attributes][sku]    ${configurable_product.sku}
+    And Response body parameter should be:    [included][1][attributes][productConfigurationInstance][displayData]    {\"Preferred time of the day\":\"Afternoon\",\"Date\":\"09.09.2050\"}
+    And Response body parameter should be:    [included][1][attributes][productConfigurationInstance][isComplete]    True
+    And Response include element has self link:   wishlist-items
+    [Teardown]    Run Keywords    I send a DELETE request:    /wishlists/${wishlist_id}
+    ...    AND    Response status code should be:    204
+    ...    AND    Response reason should be:    No Content
+
+Add_a_configurable_product_with_zero_availableQuantity_to_the_wishlist
+    [Documentation]   https://spryker.atlassian.net/browse/CC-25383
+    [Tags]    skip-due-to-issue   
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
+    ...    AND    I set Headers:    Authorization=${token}
+    ...    AND    I send a POST request:    /wishlists    {"data": { "type": "wishlists","attributes": { "name": "${wishlist_name}${random}" } }}
+    ...    AND    Response status code should be:    201 
+    ...    AND    Response reason should be:    Created
+    ...    AND    Save value to a variable:    [data][id]        wishlist_id
+    I send a POST request:    /wishlists/${wishlist_id}/wishlist-items    {"data": {"type": "wishlist-items","attributes":{"sku":"${configurable_product.sku}","quantity":3,"productConfigurationInstance":{"displayData":'{"Preferred time of the day":"Afternoon","Date":"09.09.2050"}',"configuration":'{"time_of_day":"4"}',"configuratorKey":"DATE_TIME_CONFIGURATOR","isComplete":True,"quantity":3,"availableQuantity":0,"prices":[{"priceTypeName":"DEFAULT","netAmount":23434,"grossAmount":42502,"currency":{"code":"EUR","name":"Euro","symbol":"€"},"volumePrices":[{"netAmount":150,"grossAmount":165,"quantity":5},{"netAmount":145,"grossAmount":158,"quantity":10},{"netAmount":140,"grossAmount":152,"quantity":20}]}]}}}}
+    And Response status code should be:    422
+    And Response should return error code:    901
+    And Response should return error message:    "availableQuantity => This value should be greater than 0."
+    [Teardown]    Run Keywords    I send a DELETE request:    /wishlists/${wishlist_id}
+    ...    AND    Response status code should be:    204
+    ...    AND    Response reason should be:    No Content
+
+Add_a_configurable_product_with_negative_availableQuantity_to_the_wishlist
+    [Documentation]   https://spryker.atlassian.net/browse/CC-25383
+    [Tags]    skip-due-to-issue    
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
+    ...    AND    I set Headers:    Authorization=${token}
+    ...    AND    I send a POST request:    /wishlists    {"data": { "type": "wishlists","attributes": { "name": "${wishlist_name}${random}" } }}
+    ...    AND    Response status code should be:    201 
+    ...    AND    Response reason should be:    Created
+    ...    AND    Save value to a variable:    [data][id]        wishlist_id
+    I send a POST request:    /wishlists/${wishlist_id}/wishlist-items    {"data": {"type": "wishlist-items","attributes":{"sku":"${configurable_product.sku}","quantity":3,"productConfigurationInstance":{"displayData":'{"Preferred time of the day":"Afternoon","Date":"09.09.2050"}',"configuration":'{"time_of_day":"4"}',"configuratorKey":"DATE_TIME_CONFIGURATOR","isComplete":True,"quantity":3,"availableQuantity":-1,"prices":[{"priceTypeName":"DEFAULT","netAmount":23434,"grossAmount":42502,"currency":{"code":"EUR","name":"Euro","symbol":"€"},"volumePrices":[{"netAmount":150,"grossAmount":165,"quantity":5},{"netAmount":145,"grossAmount":158,"quantity":10},{"netAmount":140,"grossAmount":152,"quantity":20}]}]}}}}
+    And Response status code should be:    422
+    And Response should return error code:    901
+    And Response should return error message:    "availableQuantity => This value should be greater than 0."
+    [Teardown]    Run Keywords    I send a DELETE request:    /wishlists/${wishlist_id}
+    ...    AND    Response status code should be:    204
+    ...    AND    Response reason should be:    No Content
+
+Add_a_configurable_product_with_empty_availableQuantity_value_of_to_the_wishlist
+    [Documentation]   https://spryker.atlassian.net/browse/CC-25381
+    [Tags]    skip-due-to-issue    
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
+    ...    AND    I set Headers:    Authorization=${token}
+    ...    AND    I send a POST request:    /wishlists    {"data": { "type": "wishlists","attributes": { "name": "${wishlist_name}${random}" } }}
+    ...    AND    Response status code should be:    201 
+    ...    AND    Response reason should be:    Created
+    ...    AND    Save value to a variable:    [data][id]        wishlist_id
+    I send a POST request:    /wishlists/${wishlist_id}/wishlist-items    {"data": {"type": "wishlist-items","attributes":{"sku":"${configurable_product.sku}","quantity":3,"productConfigurationInstance":{"displayData":'{"Preferred time of the day":"Afternoon","Date":"09.09.2050"}',"configuration":'{"time_of_day":"4"}',"configuratorKey":"DATE_TIME_CONFIGURATOR","isComplete":True,"quantity":3,"availableQuantity":"","prices":[{"priceTypeName":"DEFAULT","netAmount":23434,"grossAmount":42502,"currency":{"code":"EUR","name":"Euro","symbol":"€"},"volumePrices":[{"netAmount":150,"grossAmount":165,"quantity":5},{"netAmount":145,"grossAmount":158,"quantity":10},{"netAmount":140,"grossAmount":152,"quantity":20}]}]}}}}
+    And Response status code should be:    422
+    And Response should return error code:    901
+    And Response should return error message:    "availableQuantity => This value should not be blank."
+    And Response should return error message:    "availableQuantity => This value should be of type numeric."
+    [Teardown]    Run Keywords    I send a DELETE request:    /wishlists/${wishlist_id}
+    ...    AND    Response status code should be:    204
+    ...    AND    Response reason should be:    No Content
+
+
+Add_aconfigurable_product_with_missing_availableQuantity_value_of_to_the_wishlist
+    [Documentation]   https://spryker.atlassian.net/browse/CC-25381
+    [Tags]    skip-due-to-issue    
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
+    ...    AND    I set Headers:    Authorization=${token}
+    ...    AND    I send a POST request:    /wishlists    {"data": { "type": "wishlists","attributes": { "name": "${wishlist_name}${random}" } }}
+    ...    AND    Response status code should be:    201 
+    ...    AND    Response reason should be:    Created
+    ...    AND    Save value to a variable:    [data][id]        wishlist_id
+    I send a POST request:    /wishlists/${wishlist_id}/wishlist-items    {"data": {"type": "wishlist-items","attributes":{"sku":"${configurable_product.sku}","quantity":3,"productConfigurationInstance":{"displayData":'{"Preferred time of the day":"Afternoon","Date":"09.09.2050"}',"configuration":'{"time_of_day":"4"}',"configuratorKey":"DATE_TIME_CONFIGURATOR","isComplete":True,"quantity":3,"prices":[{"priceTypeName":"DEFAULT","netAmount":23434,"grossAmount":42502,"currency":{"code":"EUR","name":"Euro","symbol":"€"},"volumePrices":[{"netAmount":150,"grossAmount":165,"quantity":5},{"netAmount":145,"grossAmount":158,"quantity":10},{"netAmount":140,"grossAmount":152,"quantity":20}]}]}}}}
+    And Response status code should be:    422
+    And Response should return error code:    901
+    And Response should return error message:    "availableQuantity => This field is missing."
+    [Teardown]    Run Keywords    I send a DELETE request:    /wishlists/${wishlist_id}
+    ...    AND    Response status code should be:    204
+    ...    AND    Response reason should be:    No Content
+
+Add_a_configurable_product_with_string_availableQuantity_value_of_to_the_wishlist
+    [Documentation]   https://spryker.atlassian.net/browse/CC-25381
+    [Tags]    skip-due-to-issue    
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
+    ...    AND    I set Headers:    Authorization=${token}
+    ...    AND    I send a POST request:    /wishlists    {"data": { "type": "wishlists","attributes": { "name": "${wishlist_name}${random}" } }}
+    ...    AND    Response status code should be:    201 
+    ...    AND    Response reason should be:    Created
+    ...    AND    Save value to a variable:    [data][id]        wishlist_id
+    I send a POST request:    /wishlists/${wishlist_id}/wishlist-items    {"data": {"type": "wishlist-items","attributes":{"sku":"${configurable_product.sku}","quantity":3,"productConfigurationInstance":{"displayData":'{"Preferred time of the day":"Afternoon","Date":"09.09.2050"}',"configuration":'{"time_of_day":"4"}',"configuratorKey":"DATE_TIME_CONFIGURATOR","isComplete":True,"quantity":3,"availableQuantity":"test","prices":[{"priceTypeName":"DEFAULT","netAmount":23434,"grossAmount":42502,"currency":{"code":"EUR","name":"Euro","symbol":"€"},"volumePrices":[{"netAmount":150,"grossAmount":165,"quantity":5},{"netAmount":145,"grossAmount":158,"quantity":10},{"netAmount":140,"grossAmount":152,"quantity":20}]}]}}}}
+    And Response status code should be:    422
+    And Response should return error code:    901
+    And Response should return error message:    "availableQuantity => This value should be of type numeric."
+    [Teardown]    Run Keywords    I send a DELETE request:    /wishlists/${wishlist_id}
+    ...    AND    Response status code should be:    204
+    ...    AND    Response reason should be:    No Content
+
+Add_a_configurable_product_with_numeric_isComplete_value_of_to_the_wishlist
+    [Documentation]   https://spryker.atlassian.net/browse/CC-25381
+    [Tags]    skip-due-to-issue    
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
+    ...    AND    I set Headers:    Authorization=${token}
+    ...    AND    I send a POST request:    /wishlists    {"data": { "type": "wishlists","attributes": { "name": "${wishlist_name}${random}" } }}
+    ...    AND    Response status code should be:    201 
+    ...    AND    Response reason should be:    Created
+    ...    AND    Save value to a variable:    [data][id]        wishlist_id
+    I send a POST request:    /wishlists/${wishlist_id}/wishlist-items    {"data": {"type": "wishlist-items","attributes":{"sku":"${configurable_product.sku}","quantity":3,"productConfigurationInstance":{"displayData":'{"Preferred time of the day":"Afternoon","Date":"09.09.2050"}',"configuration":'{"time_of_day":"4"}',"configuratorKey":"DATE_TIME_CONFIGURATOR","isComplete":1,"quantity":3,"availableQuantity":3,"prices":[{"priceTypeName":"DEFAULT","netAmount":23434,"grossAmount":42502,"currency":{"code":"EUR","name":"Euro","symbol":"€"},"volumePrices":[{"netAmount":150,"grossAmount":165,"quantity":5},{"netAmount":145,"grossAmount":158,"quantity":10},{"netAmount":140,"grossAmount":152,"quantity":20}]}]}}}}
+    And Response status code should be:    422
+    And Response should return error code:    901
+    And Response should return error message:    "isComplete => This value should be of type boolean."
+    [Teardown]    Run Keywords    I send a DELETE request:    /wishlists/${wishlist_id}
+    ...    AND    Response status code should be:    204
+    ...    AND    Response reason should be:    No Content
+
+Add_a_configurable_product_with_string_isComplete_value_of_to_the_wishlist
+    [Documentation]   https://spryker.atlassian.net/browse/CC-25381
+    [Tags]    skip-due-to-issue    
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
+    ...    AND    I set Headers:    Authorization=${token}
+    ...    AND    I send a POST request:    /wishlists    {"data": { "type": "wishlists","attributes": { "name": "${wishlist_name}${random}" } }}
+    ...    AND    Response status code should be:    201 
+    ...    AND    Response reason should be:    Created
+    ...    AND    Save value to a variable:    [data][id]        wishlist_id
+    I send a POST request:    /wishlists/${wishlist_id}/wishlist-items    {"data": {"type": "wishlist-items","attributes":{"sku":"${configurable_product.sku}","quantity":3,"productConfigurationInstance":{"displayData":'{"Preferred time of the day":"Afternoon","Date":"09.09.2050"}',"configuration":'{"time_of_day":"4"}',"configuratorKey":"DATE_TIME_CONFIGURATOR","isComplete":"True","quantity":3,"availableQuantity":3,"prices":[{"priceTypeName":"DEFAULT","netAmount":23434,"grossAmount":42502,"currency":{"code":"EUR","name":"Euro","symbol":"€"},"volumePrices":[{"netAmount":150,"grossAmount":165,"quantity":5},{"netAmount":145,"grossAmount":158,"quantity":10},{"netAmount":140,"grossAmount":152,"quantity":20}]}]}}}}
+    And Response status code should be:    422
+    And Response should return error code:    901
+    And Response should return error message:    "isComplete => This value should be of type boolean."
+    [Teardown]    Run Keywords    I send a DELETE request:    /wishlists/${wishlist_id}
+    ...    AND    Response status code should be:    204
+    ...    AND    Response reason should be:    No Content
+
+Add_a_configurable_product_with_missing_isComplete_value_of_to_the_wishlist
+    [Documentation]   https://spryker.atlassian.net/browse/CC-25381
+    [Tags]    skip-due-to-issue    
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
+    ...    AND    I set Headers:    Authorization=${token}
+    ...    AND    I send a POST request:    /wishlists    {"data": { "type": "wishlists","attributes": { "name": "${wishlist_name}${random}" } }}
+    ...    AND    Response status code should be:    201 
+    ...    AND    Response reason should be:    Created
+    ...    AND    Save value to a variable:    [data][id]        wishlist_id
+    I send a POST request:    /wishlists/${wishlist_id}/wishlist-items    {"data": {"type": "wishlist-items","attributes":{"sku":"${configurable_product.sku}","quantity":3,"productConfigurationInstance":{"displayData":'{"Preferred time of the day":"Afternoon","Date":"09.09.2050"}',"configuration":'{"time_of_day":"4"}',"configuratorKey":"DATE_TIME_CONFIGURATOR","quantity":3,"availableQuantity":3,"prices":[{"priceTypeName":"DEFAULT","netAmount":23434,"grossAmount":42502,"currency":{"code":"EUR","name":"Euro","symbol":"€"},"volumePrices":[{"netAmount":150,"grossAmount":165,"quantity":5},{"netAmount":145,"grossAmount":158,"quantity":10},{"netAmount":140,"grossAmount":152,"quantity":20}]}]}}}}
+    And Response status code should be:    422
+    And Response should return error code:    901
+    And Response should return error message:    "isComplete => his field is missing."
+    [Teardown]    Run Keywords    I send a DELETE request:    /wishlists/${wishlist_id}
+    ...    AND    Response status code should be:    204
+    ...    AND    Response reason should be:    No Content
+
+Add_a_configurable_product_with_negative_price_value_of_to_the_wishlist
+    [Documentation]   https://spryker.atlassian.net/browse/CC-25381
+    [Tags]    skip-due-to-issue    
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
+    ...    AND    I set Headers:    Authorization=${token}
+    ...    AND    I send a POST request:    /wishlists    {"data": { "type": "wishlists","attributes": { "name": "${wishlist_name}${random}" } }}
+    ...    AND    Response status code should be:    201 
+    ...    AND    Response reason should be:    Created
+    ...    AND    Save value to a variable:    [data][id]        wishlist_id
+    I send a POST request:    /wishlists/${wishlist_id}/wishlist-items    {"data": {"type": "wishlist-items","attributes":{"sku":"${configurable_product.sku}","quantity":3,"productConfigurationInstance":{"displayData":'{"Preferred time of the day":"Afternoon","Date":"09.09.2050"}',"configuration":'{"time_of_day":"4"}',"configuratorKey":"DATE_TIME_CONFIGURATOR","isComplete":True,"quantity":3,"availableQuantity":3,"prices":[{"priceTypeName":"DEFAULT","netAmount":-23434,"grossAmount":-42502,"currency":{"code":"EUR","name":"Euro","symbol":"€"},"volumePrices":[{"netAmount":150,"grossAmount":165,"quantity":5},{"netAmount":145,"grossAmount":158,"quantity":10},{"netAmount":140,"grossAmount":152,"quantity":20}]}]}}}}
+    And Response status code should be:    422
+    And Response should return error code:    901
+    And Response should return error message:    "netAmount => This value should be greater than 0."
+    And Response should return error message:    "grossAmount => This value should be greater than 0."
+    [Teardown]    Run Keywords    I send a DELETE request:    /wishlists/${wishlist_id}
+    ...    AND    Response status code should be:    204
+    ...    AND    Response reason should be:    No Content  
+
+Add_a_configurable_product_with_empty_price_value_of_to_the_wishlist
+    [Documentation]   https://spryker.atlassian.net/browse/CC-25381
+    [Tags]    skip-due-to-issue    
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
+    ...    AND    I set Headers:    Authorization=${token}
+    ...    AND    I send a POST request:    /wishlists    {"data": { "type": "wishlists","attributes": { "name": "${wishlist_name}${random}" } }}
+    ...    AND    Response status code should be:    201 
+    ...    AND    Response reason should be:    Created
+    ...    AND    Save value to a variable:    [data][id]        wishlist_id
+    I send a POST request:    /wishlists/${wishlist_id}/wishlist-items    {"data": {"type": "wishlist-items","attributes":{"sku":"${configurable_product.sku}","quantity":3,"productConfigurationInstance":{"displayData":'{"Preferred time of the day":"Afternoon","Date":"09.09.2050"}',"configuration":'{"time_of_day":"4"}',"configuratorKey":"DATE_TIME_CONFIGURATOR","isComplete":True,"quantity":3,"availableQuantity":3,"prices":[{"priceTypeName":"DEFAULT","netAmount":"","grossAmount":"","currency":{"code":"EUR","name":"Euro","symbol":"€"},"volumePrices":[{"netAmount":150,"grossAmount":165,"quantity":5},{"netAmount":145,"grossAmount":158,"quantity":10},{"netAmount":140,"grossAmount":152,"quantity":20}]}]}}}}
+    And Response status code should be:    422
+    And Response should return error code:    901
+    And Response should return error message:    "netAmount => This value should not be blank."
+    And Response should return error message:    "netAmount => This value should be of type numeric."
+    And Response should return error message:    "grossAmount => This value should not be blank."
+    And Response should return error message:    "grossAmount => This value should be of type numeric."
+    [Teardown]    Run Keywords    I send a DELETE request:    /wishlists/${wishlist_id}
+    ...    AND    Response status code should be:    204
+    ...    AND    Response reason should be:    No Content   
+
+Add_a_configurable_product_to_the_wishlist_with_missing_price
+    [Documentation]   https://spryker.atlassian.net/browse/CC-25381
+    [Tags]    skip-due-to-issue    
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
+    ...    AND    I set Headers:    Authorization=${token}
+    ...    AND    I send a POST request:    /wishlists    {"data": { "type": "wishlists","attributes": { "name": "${wishlist_name}${random}" } }}
+    ...    AND    Response status code should be:    201 
+    ...    AND    Response reason should be:    Created
+    ...    AND    Save value to a variable:    [data][id]        wishlist_id
+    I send a POST request:    /wishlists/${wishlist_id}/wishlist-items    {"data": {"type": "wishlist-items","attributes":{"sku":"${configurable_product.sku}","quantity":3,"productConfigurationInstance":{"displayData":'{"Preferred time of the day":"Afternoon","Date":"09.09.2050"}',"configuration":'{"time_of_day":"4"}',"configuratorKey":"DATE_TIME_CONFIGURATOR","isComplete":True,"quantity":3,"availableQuantity":3,"prices":[{"priceTypeName":"DEFAULT","currency":{"code":"EUR","name":"Euro","symbol":"€"},"volumePrices":[{"netAmount":150,"grossAmount":165,"quantity":5},{"netAmount":145,"grossAmount":158,"quantity":10},{"netAmount":140,"grossAmount":152,"quantity":20}]}]}}}}
+    And Response status code should be:    422
+    And Response should return error code:    901
+    And Response should return error message:    "netAmount => This field is missing."
+    And Response should return error message:    "grossAmount => This field is missing."
+    [Teardown]    Run Keywords    I send a DELETE request:    /wishlists/${wishlist_id}
+    ...    AND    Response status code should be:    204
+    ...    AND    Response reason should be:    No Content  
