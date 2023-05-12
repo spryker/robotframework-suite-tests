@@ -8,8 +8,6 @@ Default Tags    glue
 ENABLER
     TestSetup
 
-
-Post
 Adding_item_in_wishlist 
     [Documentation]    CC-16555 API: JSON response is missing product availability and price
     [Tags]    skip-due-to-issue
@@ -144,7 +142,7 @@ Add_a_configurable_product_to_the_wishlist
 Change_preferred_time_of_the_day_of_the_configurable_product_in_the_wishlist
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}
-    ...    AND    I send a POST request:    /wishlists    {"data": { "type": "wishlists","attributes": { "name": "${wishlist_name}${random}" } }}
+    ...    AND    I send a POST request:    /wishlists    {"data": { "type": "wishlists","attributes": { "name": "update-config-product-${random}" } }}
     ...    AND    Response status code should be:    201 
     ...    AND    Response reason should be:    Created
     ...    AND    Save value to a variable:    [data][id]        wishlist_id
@@ -168,7 +166,7 @@ Change_preferred_time_of_the_day_of_the_configurable_product_in_the_wishlist
 Change_preferred_date_of_the_configurable_product_in_the_wishlist
      [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
      ...    AND    I set Headers:    Authorization=${token}
-     ...    AND    I send a POST request:    /wishlists    {"data": { "type": "wishlists","attributes": { "name": "${wishlist_name}${random}" } }}
+     ...    AND    I send a POST request:    /wishlists    {"data": { "type": "wishlists","attributes": { "name": "update-date-config-product-${random}" } }}
      ...    AND    Response status code should be:    201 
      ...    AND    Response reason should be:    Created
      ...    AND    Save value to a variable:    [data][id]        wishlist_id
@@ -191,7 +189,7 @@ Change_preferred_date_of_the_configurable_product_in_the_wishlist
 Set_configuration_for_the_configurable_product_in_the_wishlist
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}
-    ...    AND    I send a POST request:    /wishlists    {"data": { "type": "wishlists","attributes": { "name": "${wishlist_name}${random}" } }}
+    ...    AND    I send a POST request:    /wishlists    {"data": { "type": "wishlists","attributes": { "name": "configurate-product-${random}" } }}
     ...    AND    Response status code should be:    201 
     ...    AND    Response reason should be:    Created
     ...    AND    Save value to a variable:    [data][id]        wishlist_id
@@ -221,7 +219,7 @@ Set_configuration_for_the_configurable_product_in_the_wishlist
 Add_2_Configurable_products_but_with_different_configurations
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}
-    ...    AND    I send a POST request:    /wishlists    {"data": { "type": "wishlists","attributes": { "name": "${wishlist_name}${random}" } }}
+    ...    AND    I send a POST request:    /wishlists    {"data": { "type": "wishlists","attributes": { "name": "2-config-products-${random}" } }}
     ...    AND    Response status code should be:    201 
     ...    AND    Response reason should be:    Created
     ...    AND    Save value to a variable:    [data][id]        wishlist_id
@@ -259,7 +257,7 @@ Add_2_Configurable_products_but_with_different_configurations
 Add_Configurable_products_without_configurations_and_set_configuration
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}
-    ...    AND    I send a POST request:    /wishlists    {"data": { "type": "wishlists","attributes": { "name": "${wishlist_name}${random}" } }}
+    ...    AND    I send a POST request:    /wishlists    {"data": { "type": "wishlists","attributes": { "name": "no-configurations-${random}" } }}
     ...    AND    Response status code should be:    201 
     ...    AND    Response reason should be:    Created
     ...    AND    Save value to a variable:    [data][id]        wishlist_id
@@ -291,7 +289,7 @@ Add_Configurable_products_without_configurations_and_set_configuration
 Add_Configurable_products_and_regular_product
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}
-    ...    AND    I send a POST request:    /wishlists    {"data": { "type": "wishlists","attributes": { "name": "${wishlist_name}${random}" } }}
+    ...    AND    I send a POST request:    /wishlists    {"data": { "type": "wishlists","attributes": { "name": "product-mix-${random}" } }}
     ...    AND    Response status code should be:    201 
     ...    AND    Response reason should be:    Created
     ...    AND    Save value to a variable:    [data][id]        wishlist_id
@@ -322,7 +320,7 @@ Add_Configurable_products_and_regular_product
 Remove_a_configurable_product_from_the_wishlist    
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}
-    ...    AND    I send a POST request:    /wishlists    {"data": { "type": "wishlists","attributes": { "name": "${wishlist_name}${random}" } }}
+    ...    AND    I send a POST request:    /wishlists    {"data": { "type": "wishlists","attributes": { "name": "remove-product-${random}" } }}
     ...    AND    Response status code should be:    201 
     ...    AND    Response reason should be:    Created
     ...    AND    Save value to a variable:    [data][id]        wishlist_id
@@ -340,7 +338,7 @@ Remove_a_configurable_product_from_the_wishlist
 Remove_a_configurable_product_from_the_wishlist_and_leave_a_regular_product
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}
-    ...    AND    I send a POST request:    /wishlists    {"data": { "type": "wishlists","attributes": { "name": "${wishlist_name}${random}" } }}
+    ...    AND    I send a POST request:    /wishlists    {"data": { "type": "wishlists","attributes": { "name": "remove-one-product-${random}" } }}
     ...    AND    Response status code should be:    201 
     ...    AND    Response reason should be:    Created
     ...    AND    Save value to a variable:    [data][id]        wishlist_id
