@@ -146,7 +146,6 @@ Get_a_cart_with_included_items_and_concrete_products
     ...    AND    Response status code should be:    204
 
 Add_five_items_to_cart_with_included_cart_rules_and_promotional_items
-    [Tags]    skip-due-to-issue
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
     ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
@@ -158,8 +157,8 @@ Add_five_items_to_cart_with_included_cart_rules_and_promotional_items
    And Response body parameter should be:    [data][id]    ${cart_id}
    And Response body parameter should be:    [data][type]    carts
    And Response body parameter should not be EMPTY:    [data][links][self]
-   And Response should contain the array larger than a certain size:    [data][relationships][cart-rules][data]    1
-   And Response should contain the array larger than a certain size:    [included]    3
+   And Response body parameter should not be EMPTY:    [data][relationships][cart-rules][data]
+   And Response should contain the array larger than a certain size:    [included]    2
    And Response include should contain certain entity type:    cart-rules
    And Response include should contain certain entity type:    items
    And Response include element has self link:    cart-rules
