@@ -327,6 +327,7 @@
           "concrete_available_with_stock_and_never_out_of_stock_name":"Canon IXUS 175",
           "abstract_available_product_with_no_stock_and_never_out_of_stock":"154",
           "abstract_available_with_stock_and_never_out_of_stock":"004",
+          "abstract_available_with_stock_and_never_out_of_stock2":"005",
           "abstract_unavailable_product":"111"
        },
        "concrete_product_with_abstract_product_alternative":{
@@ -385,7 +386,11 @@
           "title":"This is a review",
           "text":"This is review text",
           "default_rating":"5"
-       }
+       },
+       "configurable_product":{
+         "sku_1": "124_29866591",
+         "sku_2": "124_31623088"
+ }
     },
     "product_attributes":{
        "brand_1":"Soennecken",
@@ -560,5 +565,13 @@
     },
     "wishlists":{
        "wishlist_name":"HS"
-    }
+    },
+    "productConfigurationInstance": {
+      "productConfigurationInstance":{
+      "displayData": "{\"Preferred time of the day\": \"Afternoon\", \"Date\": \"9.09.2050\"}",
+      "configuration": "{\"time_of_day\": \"3\"}",
+      "configuratorKey": "DATE_TIME_CONFIGURATOR",
+      "isComplete": true
+  }
+  }
  }
