@@ -104,8 +104,8 @@ Deleting_item_from_wishlist
     Then Response status code should be:    204
     And Response reason should be:    No Content
     [Teardown]    Run Keywords    I send a DELETE request:    /wishlists/${wishlist_id}
-    ...    AND    Response status code should be:    204
-    ...    
+    ...    AND    Response status code should be:    204    
+
 Add_a_configurable_product_with_first_product_variant_to_the_wishlist
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}
@@ -270,20 +270,20 @@ Add_2_Configurable_products_but_with_different_configurations
     And Response body parameter should be:  [data][id]    ${wishlist_id}
     And Response body parameter should be:    [data][attributes][numberOfItems]    2
     And Response should contain the array of a certain size:    [included]    4
-    And Response body parameter should be:   [included][0][type]    concrete-products
-    And Response body parameter should be:   [included][0][id]    ${configurable_product.sku_1}
-    And Response body parameter should be:   [included][1][type]    wishlist-items
-    And Response body parameter should be:   [included][1][id]    ${WishListItemId}
-    And Response body parameter should be:   [included][1][attributes][sku]    ${configurable_product.sku_1}
-    And Response body parameter should be:   [included][1][attributes][productConfigurationInstance][displayData]    {\"Preferred time of the day\":\"Afternoon\",\"Date\":\"11.11.2029\"}
-    And Response body parameter should be:   [included][1][attributes][productConfigurationInstance][isComplete]    False
-    And Response body parameter should be:   [included][2][type]    concrete-products
-    And Response body parameter should be:   [included][2][id]    ${configurable_product.sku_2}
-    And Response body parameter should be:   [included][3][type]    wishlist-items
-    And Response body parameter should be:   [included][3][id]    ${WishListItemId2}
-    And Response body parameter should be:   [included][3][attributes][sku]    ${configurable_product.sku_2}
-    And Response body parameter should be:    [included][3][attributes][productConfigurationInstance][displayData]    {\"Preferred time of the day\":\"Morning\",\"Date\":\"11.12.2029\"}
-    And Response body parameter should be:    [included][3][attributes][productConfigurationInstance][isComplete]    True
+    And Response body parameter should be in:   [included][0][type]    concrete-products    wishlist-items
+    And Response body parameter should be in:   [included][0][id]    ${configurable_product.sku_1}    ${configurable_product.sku_2}
+    And Response body parameter should be in:   [included][1][type]    wishlist-items    concrete-products
+    And Response body parameter should be in:   [included][1][id]    ${WishListItemId}    ${WishListItemId2}
+    And Response body parameter should be in:   [included][1][attributes][sku]    ${configurable_product.sku_2}    ${configurable_product.sku_1}
+    And Response body parameter should be in:   [included][1][attributes][productConfigurationInstance][displayData]    {\"Preferred time of the day\":\"Afternoon\",\"Date\":\"11.11.2029\"}    {\"Preferred time of the day\":\"Morning\",\"Date\":\"11.12.2029\"}
+    And Response body parameter should be in:   [included][1][attributes][productConfigurationInstance][isComplete]    False    True
+    And Response body parameter should be in:   [included][2][type]    concrete-products    wishlist-items
+    And Response body parameter should be in:   [included][2][id]    ${configurable_product.sku_2}    ${configurable_product.sku_1}
+    And Response body parameter should be in:   [included][3][type]    wishlist-items    concrete-products
+    And Response body parameter should be in:   [included][3][id]    ${WishListItemId2}    ${WishListItemId}
+    And Response body parameter should be in:   [included][3][attributes][sku]    ${configurable_product.sku_2}    ${configurable_product.sku_1}
+    And Response body parameter should be in:    [included][3][attributes][productConfigurationInstance][displayData]    {\"Preferred time of the day\":\"Morning\",\"Date\":\"11.12.2029\"}    {\"Preferred time of the day\":\"Afternoon\",\"Date\":\"11.11.2029\"}
+    And Response body parameter should be in:    [included][3][attributes][productConfigurationInstance][isComplete]    True    False
     And Response include element has self link:   wishlist-items
    [Teardown]    Run Keywords    I send a DELETE request:    /wishlists/${wishlist_id}
     ...    AND    Response status code should be:    204
@@ -311,14 +311,14 @@ Add_2_product_variant_of_Configurable_products_without_configurations_and_set_co
     And Response body parameter should be:    [data][attributes][numberOfItems]    2
     And Response should contain the array of a certain size:    [included]    2
     And Response body parameter should be:   [included][0][type]    wishlist-items
-    And Response body parameter should be:   [included][0][id]    ${WishListItemId}
-    And Response body parameter should be:   [included][0][attributes][sku]    ${configurable_product.sku_1}
-    And Response body parameter should be:   [included][0][attributes][productConfigurationInstance][displayData]    {\"Preferred time of the day\":\"Afternoon\",\"Date\":\"11.11.2029\"}
+    And Response body parameter should be in:   [included][0][id]    ${WishListItemId}    ${WishListItemId2}
+    And Response body parameter should be in:   [included][0][attributes][sku]    ${configurable_product.sku_1}    ${configurable_product.sku_2}
+    And Response body parameter should be in:   [included][0][attributes][productConfigurationInstance][displayData]    {\"Preferred time of the day\":\"Afternoon\",\"Date\":\"11.11.2029\"}    {\"Preferred time of the day\":\"Morning\",\"Date\":\"11.12.2029\"}
     And Response body parameter should be:   [included][0][attributes][productConfigurationInstance][isComplete]    False
     And Response body parameter should be:   [included][1][type]    wishlist-items
-    And Response body parameter should be:   [included][1][id]    ${WishListItemId2}
-    And Response body parameter should be:   [included][1][attributes][sku]    ${configurable_product.sku_2}
-    And Response body parameter should be:    [included][1][attributes][productConfigurationInstance][displayData]    {\"Preferred time of the day\":\"Morning\",\"Date\":\"11.12.2029\"}
+    And Response body parameter should be in:   [included][1][id]    ${WishListItemId2}    ${WishListItemId}
+    And Response body parameter should be in:   [included][1][attributes][sku]    ${configurable_product.sku_1}    ${configurable_product.sku_2}
+    And Response body parameter should be in:    [included][1][attributes][productConfigurationInstance][displayData]    {\"Preferred time of the day\":\"Afternoon\",\"Date\":\"11.11.2029\"}    {\"Preferred time of the day\":\"Morning\",\"Date\":\"11.12.2029\"}
     And Response body parameter should be:    [included][1][attributes][productConfigurationInstance][isComplete]    False
     And Response include element has self link:   wishlist-items
     I send a PATCH request:    /wishlists/${ wishlist_id}/wishlist-items/${WishListItemId}?include=concrete-products    {"data":{"type":"wishlist-items","attributes":{"sku":"${configurable_product.sku_1}","quantity":3,"productConfigurationInstance":{"displayData":'{"Preferred time of the day":"Morning","Date":"11.11.2029"}',"configuration":'{"time_of_day":"4"}',"configuratorKey":"${productConfigurationInstance.configuratorKey}","isComplete":True,"quantity":3,"availableQuantity":4,"prices":[{"priceTypeName":"DEFAULT","netAmount":23434,"grossAmount":42502,"currency":{"code":"EUR","name":"Euro","symbol":"€"},"volumePrices":[{"netAmount":150,"grossAmount":165,"quantity":5},{"netAmount":145,"grossAmount":158,"quantity":10},{"netAmount":140,"grossAmount":152,"quantity":20}]}]}}}}
@@ -352,13 +352,12 @@ Add_Configurable_products_and_regular_product
     And Response status code should be:    200
     And Response body parameter should be:    [data][attributes][numberOfItems]    2
     And Response should contain the array of a certain size:    [included]    2
-    And Response body parameter should be:   [included][0][id]    ${WishListItemId}
-    And Response body parameter should be:   [included][0][attributes][sku]    ${configurable_product.sku_1}
-    And Response body parameter should be:    [included][0][attributes][productConfigurationInstance][displayData]    {\"Preferred time of the day\":\"Afternoon\",\"Date\":\"11.11.2029\"}
-    And Response body parameter should be:    [included][0][attributes][productConfigurationInstance][isComplete]    True
-    And Response body parameter should be:   [included][1][id]    ${wishlist_items_id2}
-    And Response body parameter should be:   [included][1][attributes][sku]    ${concrete_available_product.with_stock}
-    And Response body parameter should be:    [included][1][attributes][productConfigurationInstance]    None
+    And Response body parameter should be in:   [included][0][id]    ${WishListItemId}    ${wishlist_items_id2}
+    And Response body parameter should be in:   [included][0][attributes][sku]    ${configurable_product.sku_1}    ${concrete_available_product.with_stock}
+    And Nested array element should contain sub-array with property and value at least once:    [included]    [attributes]    [productConfigurationInstance]    displayData    {\"Preferred time of the day\":\"Afternoon\",\"Date\":\"11.11.2029\"}
+    And Nested array element should contain sub-array with property and value at least once:    [included]    [attributes]    [productConfigurationInstance]    isComplete    True   
+    And Response body parameter should be in:   [included][1][id]    ${wishlist_items_id2}    ${WishListItemId} 
+    And Response body parameter should be in:   [included][1][attributes][sku]    ${configurable_product.sku_1}    ${concrete_available_product.with_stock}
     And Response include element has self link:   wishlist-items
     [Teardown]    Run Keywords    I send a DELETE request:    /wishlists/${wishlist_id}
     ...    AND    Response status code should be:    204

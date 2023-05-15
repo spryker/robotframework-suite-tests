@@ -327,6 +327,7 @@
           "concrete_available_with_stock_and_never_out_of_stock_name":"Canon IXUS 175",
           "abstract_available_product_with_no_stock_and_never_out_of_stock":"154",
           "abstract_available_with_stock_and_never_out_of_stock":"004",
+          "abstract_available_with_stock_and_never_out_of_stock2":"005",
           "abstract_unavailable_product":"111"
        },
        "concrete_product_with_abstract_product_alternative":{
