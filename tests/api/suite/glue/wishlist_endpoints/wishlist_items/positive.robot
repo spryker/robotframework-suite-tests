@@ -307,11 +307,10 @@ Add_Configurable_products_and_regular_product
     And Response should contain the array of a certain size:    [included]    2
     And Response body parameter should be in:   [included][0][id]    ${WishListItemId}    ${wishlist_items_id2}
     And Response body parameter should be in:   [included][0][attributes][sku]    ${configurable_product.sku}    ${concrete_available_product.sku}
-    And Response body parameter should be in:    [included][0][attributes][productConfigurationInstance][displayData]    {\"Preferred time of the day\":\"Afternoon\",\"Date\":\"11.11.2029\"}    None
-    And Response body parameter should be in:    [included][0][attributes][productConfigurationInstance][isComplete]    True    None
+    And Nested array element should contain sub-array with property and value at least once:    [included]    [attributes]    [productConfigurationInstance]    displayData    {\"Preferred time of the day\":\"Afternoon\",\"Date\":\"11.11.2029\"}
+    And Nested array element should contain sub-array with property and value at least once:    [included]    [attributes]    [productConfigurationInstance]    isComplete    True
     And Response body parameter should be in:   [included][1][id]    ${WishListItemId}    ${wishlist_items_id2}
     And Response body parameter should be in:   [included][1][attributes][sku]    ${configurable_product.sku}    ${concrete_available_product.sku}
-    And Response body parameter should be in:    [included][1][attributes][productConfigurationInstance]    None    True
     And Response include element has self link:   wishlist-items
     [Teardown]    Run Keywords    I send a DELETE request:    /wishlists/${wishlist_id}
     ...    AND    Response status code should be:    204
