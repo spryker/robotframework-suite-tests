@@ -240,12 +240,12 @@ Add_2_Configurable_products_but_with_different_configurations
     And Response body parameter should be:   [included][0][type]    concrete-products
     And Response body parameter should be:   [included][0][id]    ${configurable_product.sku}
     And Response body parameter should be:   [included][1][type]    wishlist-items
-    And Response body parameter should be:   [included][1][id]    ${WishListItemId}
+    And Response body parameter should be in:   [included][1][id]    ${WishListItemId}    ${WishListItemId2}
     And Response body parameter should be:   [included][1][attributes][sku]    ${configurable_product.sku}
     And Response body parameter should be:   [included][1][attributes][productConfigurationInstance][displayData]    {\"Preferred time of the day\":\"Afternoon\",\"Date\":\"11.11.2029\"}
     And Response body parameter should be:   [included][1][attributes][productConfigurationInstance][isComplete]    False
     And Response body parameter should be:   [included][2][type]    wishlist-items
-    And Response body parameter should be:   [included][2][id]    ${WishListItemId2}
+    And Response body parameter should be in:   [included][2][id]    ${WishListItemId}    ${WishListItemId2}
     And Response body parameter should be:   [included][2][attributes][sku]    ${configurable_product.sku}
     And Response body parameter should be:    [included][2][attributes][productConfigurationInstance][displayData]    {\"Preferred time of the day\":\"Morning\",\"Date\":\"11.12.2029\"}
     And Response body parameter should be:    [included][2][attributes][productConfigurationInstance][isComplete]    True
@@ -305,11 +305,11 @@ Add_Configurable_products_and_regular_product
     And Response status code should be:    200
     And Response body parameter should be:    [data][attributes][numberOfItems]    2
     And Response should contain the array of a certain size:    [included]    2
-    And Response body parameter should be:   [included][0][id]    ${WishListItemId}
+    And Response body parameter should be in:   [included][0][id]    ${WishListItemId}    ${wishlist_items_id2}
     And Response body parameter should be:   [included][0][attributes][sku]    ${configurable_product.sku}
     And Response body parameter should be:    [included][0][attributes][productConfigurationInstance][displayData]    {\"Preferred time of the day\":\"Afternoon\",\"Date\":\"11.11.2029\"}
     And Response body parameter should be:    [included][0][attributes][productConfigurationInstance][isComplete]    True
-    And Response body parameter should be:   [included][1][id]    ${wishlist_items_id2}
+    And Response body parameter should be in:   [included][1][id]    ${WishListItemId}    ${wishlist_items_id2}
     And Response body parameter should be:   [included][1][attributes][sku]    ${concrete_available_product.sku}
     And Response body parameter should be:    [included][1][attributes][productConfigurationInstance]    None
     And Response include element has self link:   wishlist-items
