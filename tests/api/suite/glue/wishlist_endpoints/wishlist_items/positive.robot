@@ -307,7 +307,7 @@ Add_Configurable_products_and_regular_product
     And Response should contain the array of a certain size:    [included]    2
     And Response body parameter should be in:   [included][0][id]    ${WishListItemId}    ${wishlist_items_id2}
     And Response body parameter should be in:   [included][0][attributes][sku]    ${configurable_product.sku}    ${concrete_available_product.sku}
-    And Response body parameter should be:    [included][0][attributes][productConfigurationInstance][displayData]    {\"Preferred time of the day\":\"Afternoon\",\"Date\":\"11.11.2029\"}
+    And Response body parameter should be in:    [included][0][attributes][productConfigurationInstance][displayData]    {\"Preferred time of the day\":\"Afternoon\",\"Date\":\"11.11.2029\"}    None
     And Response body parameter should be in:    [included][0][attributes][productConfigurationInstance][isComplete]    True    None
     And Response body parameter should be in:   [included][1][id]    ${WishListItemId}    ${wishlist_items_id2}
     And Response body parameter should be in:   [included][1][attributes][sku]    ${configurable_product.sku}    ${concrete_available_product.sku}
