@@ -4,9 +4,13 @@
        "glue_url":"http://glue.de.spryker.local",
        "bapi_url":"http://backend-api.de.spryker.local/api/rest"
     },
+	"dataType": {
+			"array": []
+		},
     "database":{
        "db_host":"127.0.0.1",
-       "db_port":"3306",
+       "db_port_env":"3306",
+       "db_port_postgres_env": "5432",
        "db_user":"spryker",
        "db_password":"secret",
        "db_name":"eu-docker"
@@ -52,6 +56,14 @@
           "reference":"DE-17",
           "salutation":"Ms"
        },
+       "yves_ottom_admin_user":{
+         "email":"andrew@ottom.de",
+         "first_name":"Andrew",
+         "last_name":"Wedner",
+         "password":"change123",
+         "reference":"DE-8",
+         "salutation":"Mr"
+      },
        "yves_shared_shopping_list_user":{
           "email":"Trever.m@spryker.com",
           "first_name":"Trever",
@@ -200,7 +212,8 @@
        },
        "category_lvl2":{
           "id":"12",
-          "qty":"56"
+          "qty":"56",
+          "qty_approx":"50" 
        },
        "category_lvl3":{
           "id":"13",
@@ -285,13 +298,19 @@
           },
           "random_weight":{
              "sku":"cable-vga-1-2",
+             "sku1":"cable-vga-1-1",
              "name":"VGA cable as long as you want",
+             "name1":"VGA cable (1.5m)",
              "measurement_unit":"19",
              "qty_of_units":"2",
              "amount":"5.0000000000",
+             "amount1":"1.5000000000",
              "conversion":"1",
+             "conversion1":"1",
              "precision":"100",
-             "packaging_unit":"19"
+             "precision1":"100",
+             "packaging_unit":"19",
+             "packaging_unit1":"18"
           },
           "with_brand_safescan":{
              "product_1":{
@@ -335,7 +354,8 @@
              },
              "product_3":{
                 "sku":"M21099",
-                "name":"Verbatim USB stick Store n Go V3 49172 16GB USB3.0, gray"
+                "name":"Verbatim USB stick Store n Go V3 49172 16GB USB3.0, gray",
+                "price_chf":"1130"
              }
           },
           "available_products":{
@@ -346,6 +366,7 @@
                 "superattribute":"bezugsfarbe"
              },
              "with_stock_and_never_out_of_stock_sku":"M87",
+             "with_stock_and_never_out_of_stock_sku_2":"M719",
              "with_no_stock_and_never_out_of_stock_sku":"M90851",
              "with_3_concretes":{
                 "sku":"M29456",
@@ -378,7 +399,8 @@
        "packaging_unit":{
           "m":"METR",
           "cm":"CMET",
-          "m_name":"Meter"
+          "m_name":"Meter",
+          "m_name2":"Centimeter"
        },
        "measurement_unit":{
           "m":"METR"
@@ -481,8 +503,11 @@
        },
        "subcategory_node":{
           "storage_name":"Vegetables",
-          "storage_url":"/en/foods/vegetables"
+          "storage_url":"/en/foods/vegetables",
+          "storage_name_2":"Fish",
+          "storage_url_2":"/en/foods/fish"
        },
+           
        "brand_name":"verbatim",
        "cart_permission_group_id":"1"
     },
@@ -582,5 +607,5 @@
           "no_longer_needed":"No longer needed",
           "qty":"3"
        }
-    }
- }
+
+ }}

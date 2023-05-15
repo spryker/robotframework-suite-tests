@@ -10,7 +10,7 @@ ENABLER
 
 Create_a_customer_with_already_existing_email
     I send a POST request:    /customers/    {"data":{"type":"customers","attributes":{"firstName":"${yves_third_user.first_name}","lastName":"${yves_third_user.last_name}","gender":"${gender.male}","salutation":"${yves_third_user.salutation}","email":"${yves_user.email}","password":"${yves_user.password}","confirmPassword":"${yves_user.password}","acceptedTerms":True}}}
-    Response status code should be:    422
+    Response status code should be:    ${422}
     And Response reason should be:    Unprocessable Content
     And Response should return error code:    400
     And Response should return error message:    If this email address is already in use, you will receive a password reset link. Otherwise you must first validate your e-mail address to finish registration. Please check your e-mail.
@@ -18,7 +18,7 @@ Create_a_customer_with_already_existing_email
 
 Create_a_customer_with_too_short_password
     I send a POST request:    /customers/    {"data":{"type":"customers","attributes":{"firstName":"${yves_third_user.first_name}","lastName":"${yves_third_user.last_name}","gender":"${gender.male}","salutation":"${yves_third_user.salutation}","email":"${yves_user.email}","password":"Test12!","confirmPassword":"Test12!","acceptedTerms":True}}}
-    Response status code should be:    422
+    Response status code should be:    ${422}
     And Response reason should be:    Unprocessable Content
     And Response should return error code:    901
     And Response should return error message:    password => This value is too short. It should have 8 characters or more.
@@ -26,7 +26,7 @@ Create_a_customer_with_too_short_password
 
 Create_a_customer_with_too_long_password
     I send a POST request:    /customers/    {"data":{"type":"customers","attributes":{"firstName":"${yves_third_user.first_name}","lastName":"${yves_third_user.last_name}","gender":"${gender.male}","salutation":"${yves_third_user.salutation}","email":"${yves_user.email}","password":"tests1234567890tests1234567890tests1234567890tests1234567890tests1234567890","confirmPassword":"tests1234567890tests1234567890tests1234567890tests1234567890tests1234567890","acceptedTerms":True}}}
-    Response status code should be:    422
+    Response status code should be:    ${422}
     And Response reason should be:    Unprocessable Content
     And Response should return error code:    901
     And Response should return error message:    password => This value is too long. It should have 64 characters or less.
@@ -42,7 +42,7 @@ Create_a_customer_with_too_weak_password
 
 Create_a_customer_with_not_equal_passwords
     I send a POST request:    /customers/    {"data":{"type":"customers","attributes":{"firstName":"${yves_third_user.first_name}","lastName":"${yves_third_user.last_name}","gender":"${gender.male}","salutation":"${yves_third_user.salutation}","email":"${yves_user.email}","password":"${yves_user.password}","confirmPassword":"12345678","acceptedTerms":True}}}
-    Response status code should be:    422
+    Response status code should be:    ${422}
     And Response reason should be:    Unprocessable Content
     And Response should return error code:    406
     And Response should return error message:    Value in field password should be identical to value in the confirmPassword field.
@@ -50,7 +50,7 @@ Create_a_customer_with_not_equal_passwords
 
 Create_a_customer_with_not_accepted_terms_and_coditions
     I send a POST request:    /customers/    {"data":{"type":"customers","attributes":{"firstName":"${yves_third_user.first_name}","lastName":"${yves_third_user.last_name}","gender":"${gender.male}","salutation":"${yves_third_user.salutation}","email":"${yves_user.email}","password":"${yves_user.password}","confirmPassword":"${yves_user.password}","acceptedTerms":False}}}
-    Response status code should be:    422
+    Response status code should be:    ${422}
     And Response reason should be:    Unprocessable Content
     And Response should return error code:    901
     And Response should return error message:    acceptedTerms => This value should be true.
@@ -65,7 +65,7 @@ Create_a_customer_with_empty_type
 
 Create_a_customer_with_empty_values_for_required_fields
     I send a POST request:    /customers/    {"data":{"type":"customers","attributes":{"firstName":"","lastName":"","gender":"","salutation":"","email":"","password":"","confirmPassword":"","acceptedTerms":""}}}
-    Response status code should be:    422
+    Response status code should be:    ${422}
     And Response reason should be:   Unprocessable Content
     And Response should return error code:    901
     And Array in response should contain property with value:    [errors]    detail    firstName => This value should not be blank.
@@ -89,7 +89,7 @@ Create_a_customer_with_absent_type
 
 Create_a_customer_with_wrong_email_format
     I send a POST request:    /customers/    {"data":{"type":"customers","attributes":{"firstName":"${yves_third_user.first_name}","lastName":"${yves_third_user.last_name}","gender":"${gender.male}","salutation":"${yves_third_user.salutation}","email":"test.com","password":"${yves_user.password}","confirmPassword":"${yves_user.password}","acceptedTerms":True}}}
-    Response status code should be:    422
+    Response status code should be:    ${422}
     And Response reason should be:   Unprocessable Content
     And Response should return error code:    901
     And Response should return error message:    email => This value is not a valid email address.
@@ -97,7 +97,7 @@ Create_a_customer_with_wrong_email_format
 
 Create_a_customer_with_missing_required_fields
     I send a POST request:    /customers/    {"data":{"type":"customers","attributes":{}}}
-    Response status code should be:    422
+    Response status code should be:    ${422}
     And Response reason should be:   Unprocessable Content
     And Response should return error code:    901
     And Array in response should contain property with value:    [errors]    detail    email => This field is missing.
@@ -112,7 +112,7 @@ Create_a_customer_with_missing_required_fields
 
 Create_a_customer_with_wrong_gender
     I send a POST request:    /customers/    {"data":{"type":"customers","attributes":{"firstName":"${yves_third_user.first_name}","lastName":"${yves_third_user.last_name}","gender":"test","salutation":"test","email":"${yves_third_user.first_name}@spryker.com","password":"${yves_user.password}","confirmPassword":"${yves_user.password}","acceptedTerms":True}}}
-    Response status code should be:    422
+    Response status code should be:    ${422}
     And Response reason should be:   Unprocessable Content
     And Response should return error code:    901
     And Array in response should contain property with value:    [errors]    detail    gender => The value you selected is not a valid choice.
@@ -170,7 +170,7 @@ Update_a_customer_with_empty_values_for_required_fields
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     I send a PATCH request:    /customers/${yves_user.reference}    {"data":{"type":"customers","attributes":{"firstName":"","lastName":"","gender":"","salutation":"","email":"","password":"","confirmPassword":"","acceptedTerms":False}}}
-    Response status code should be:    422
+    Response status code should be:    ${422}
     And Response reason should be:   Unprocessable Content
     And Response should return error code:    901
     And Array in response should contain property with value:    [errors]    detail    firstName => This value should not be blank.
@@ -197,7 +197,7 @@ Update_a_customer_with_invalid_data
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     I send a PATCH request:    /customers/${yves_user.reference}    {"data":{"type":"customers","attributes":{"firstName":"${yves_third_user.first_name}","lastName":"${yves_third_user.last_name}","gender":"test","salutation":"test","email":"${yves_third_user.first_name}@spryker.com","password":"${yves_user.password}","confirmPassword":"${yves_user.password}","acceptedTerms":True}}}
-    Response status code should be:    422
+    Response status code should be:    ${422}
     And Response reason should be:   Unprocessable Content
     And Response should return error code:    901
     And Array in response should contain property with value:    [errors]    detail    gender => The value you selected is not a valid choice.

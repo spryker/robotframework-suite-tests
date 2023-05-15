@@ -6,7 +6,8 @@
     },
     "database":{
        "db_host":"127.0.0.1",
-       "db_port":"3306",
+       "db_port_env":"3306",
+       "db_port_postgres_env": "5432",
        "db_user":"spryker",
        "db_password":"secret",
        "db_name":"eu-docker"
@@ -201,7 +202,8 @@
                 "sku":"001_25904006",
                 "name":"Canon IXUS 160",
                 "sku2":"112_306918002",
-                "name2":"Acer Extensa M2610"
+                "name2":"Acer Extensa M2610",
+                "sku3":"183_21811723"
              },
              "without_stock":{
                 "sku":"192_17738941",
@@ -296,7 +298,9 @@
           "concrete_available_with_stock_and_never_out_of_stock_sku_name":"Canon IXUS 175",
           "concrete_unavailable_product":"192_17738941",
           "concrete_available_with_stock_and_never_out_of_stock":"002_25904004",
-          "concrete_available_with_stock_and_never_out_of_stock_name":"Canon IXUS 160"
+          "concrete_available_with_stock_and_never_out_of_stock_name":"Canon IXUS 160",
+          "abstract_available_with_stock_and_never_out_of_stock_2":"007",
+          "concrete_available_with_stock_and_never_out_of_stock_sku_2":"009_30692991"
        },
        "concrete_product_with_concrete_product_alternative":{
           "sku":"155_30149933",
@@ -731,6 +735,7 @@
     "configurable_bundles":{
        "configurable_bundle_template_1_uuid":"8d8510d8-59fe-5289-8a65-19f0c35a0089",
        "configurable_bundle_first_slot_item_sku":"001_25904006",
+       "configurable_bundle_first_slot_item_sku2":"134_29759322",
        "configurable_bundle_fifth_slot_item_sku":"112_306918002",
        "configurable_bundle_slot_1_uuid":"332b40ac-a789-57ce-bec0-23d8dddd71eb",
        "configurable_bundle_template_2_uuid":"c8291fd3-c6ca-5b8f-8ff5-eccd6cb787de",
@@ -739,7 +744,8 @@
        "configurable_bundle_template_name_1":"Configurable Bundle \"All in\"",
        "configurable_bundle_template_name_2": "Smartstation Kit",
        "configured_bundle_quantity":2,
-       "configurable_bundle_first_slot_item_name":"Canon IXUS 160"
+       "configurable_bundle_first_slot_item_name":"Canon IXUS 160",
+       "configurable_bundle_first_slot_item_name2":"Acer Aspire S7"
     },
     "productConfigurationInstance":{
        "productConfigurationInstance":{

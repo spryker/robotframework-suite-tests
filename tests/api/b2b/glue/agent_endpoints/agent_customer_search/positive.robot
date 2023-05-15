@@ -1,13 +1,16 @@
 *** Settings ***
-Suite Setup       SuiteSetup
-Test Setup        TestSetup
-Resource    ../../../../../../resources/common/common_api.robot
+Resource        ../../../../../../resources/common/common_api.robot
+
+Suite Setup     SuiteSetup
+Test Setup      TestSetup
+
 Default Tags    glue
+
 
 *** Test Cases ***
 ENABLER
     TestSetup
-    
+
 Agent_can_get_search_for_customers_without_search_parameters
     [Setup]    Run Keywords    I send a POST request:    /agent-access-tokens    {"data": {"type": "agent-access-tokens","attributes": {"username": "${agent.email}","password": "${agent.password}"}}}
     ...    AND    Response status code should be:    201
@@ -20,16 +23,24 @@ Agent_can_get_search_for_customers_without_search_parameters
     And Response body parameter should be:    [data][0][id]    None
     And Response body parameter should be:    [data][0][type]    agent-customer-search
     And Response should contain the array of a certain size:    [data][0][attributes][customers]    10
-    And Response body parameter should be:    [data][0][attributes][customers][0][customerReference]    ${customer_reference.de_1}
-    And Response body parameter should be:    [data][0][attributes][customers][9][customerReference]    ${customer_reference.de_10}
+    And Response body parameter should be:
+    ...    [data][0][attributes][customers][0][customerReference]
+    ...    ${customer_reference.de_1}
+    And Response body parameter should be:
+    ...    [data][0][attributes][customers][9][customerReference]
+    ...    ${customer_reference.de_10}
     And Each array element of array in response should contain property:    [data][0][attributes][customers]    email
-    And Each array element of array in response should contain property:    [data][0][attributes][customers]    firstName
-    And Each array element of array in response should contain property:    [data][0][attributes][customers]    lastName
+    And Each array element of array in response should contain property:
+    ...    [data][0][attributes][customers]
+    ...    firstName
+    And Each array element of array in response should contain property:
+    ...    [data][0][attributes][customers]
+    ...    lastName
     And Response body parameter should not be EMPTY:    [links][last]
     And Response body parameter should not be EMPTY:    [links][first]
     And Response body parameter should not be EMPTY:    [links][next]
     And Response body has correct self link
-    
+
 Agent_can_get_search_for_customers_by_first_name
     [Setup]    Run Keywords    I send a POST request:    /agent-access-tokens    {"data": {"type": "agent-access-tokens","attributes": {"username": "${agent.email}","password": "${agent.password}"}}}
     ...    AND    Response status code should be:    201
@@ -42,10 +53,12 @@ Agent_can_get_search_for_customers_by_first_name
     And Response body parameter should be:    [data][0][id]    None
     And Response body parameter should be:    [data][0][type]    agent-customer-search
     And Response should contain the array of a certain size:    [data][0][attributes][customers]    1
-    And Response body parameter should be:    [data][0][attributes][customers][0][customerReference]    ${yves_user.reference}
+    And Response body parameter should be:
+    ...    [data][0][attributes][customers][0][customerReference]
+    ...    ${yves_user.reference}
     And Response body parameter should be:    [data][0][attributes][customers][0][email]    ${yves_user.email}
-    And Response body parameter should be:     [data][0][attributes][customers][0][firstName]     ${yves_user.first_name}
-    And Response body parameter should be:     [data][0][attributes][customers][0][lastName]    ${yves_user.last_name}
+    And Response body parameter should be:    [data][0][attributes][customers][0][firstName]    ${yves_user.first_name}
+    And Response body parameter should be:    [data][0][attributes][customers][0][lastName]    ${yves_user.last_name}
     And Response body parameter should not be EMPTY:    [links][last]
     And Response body parameter should not be EMPTY:    [links][first]
     And Response body has correct self link
@@ -62,10 +75,12 @@ Agent_can_get_search_for_customers_by_last_name
     And Response body parameter should be:    [data][0][id]    None
     And Response body parameter should be:    [data][0][type]    agent-customer-search
     And Response should contain the array of a certain size:    [data][0][attributes][customers]    1
-    And Response body parameter should be:    [data][0][attributes][customers][0][customerReference]    ${yves_user.reference}
+    And Response body parameter should be:
+    ...    [data][0][attributes][customers][0][customerReference]
+    ...    ${yves_user.reference}
     And Response body parameter should be:    [data][0][attributes][customers][0][email]    ${yves_user.email}
-    And Response body parameter should be:     [data][0][attributes][customers][0][firstName]     ${yves_user.first_name}
-    And Response body parameter should be:     [data][0][attributes][customers][0][lastName]    ${yves_user.last_name}
+    And Response body parameter should be:    [data][0][attributes][customers][0][firstName]    ${yves_user.first_name}
+    And Response body parameter should be:    [data][0][attributes][customers][0][lastName]    ${yves_user.last_name}
     And Response body parameter should not be EMPTY:    [links][last]
     And Response body parameter should not be EMPTY:    [links][first]
     And Response body has correct self link
@@ -82,10 +97,12 @@ Agent_can_get_search_for_customers_by_email
     And Response body parameter should be:    [data][0][id]    None
     And Response body parameter should be:    [data][0][type]    agent-customer-search
     And Response should contain the array of a certain size:    [data][0][attributes][customers]    1
-    And Response body parameter should be:    [data][0][attributes][customers][0][customerReference]    ${yves_user.reference}
+    And Response body parameter should be:
+    ...    [data][0][attributes][customers][0][customerReference]
+    ...    ${yves_user.reference}
     And Response body parameter should be:    [data][0][attributes][customers][0][email]    ${yves_user.email}
-    And Response body parameter should be:     [data][0][attributes][customers][0][firstName]     ${yves_user.first_name}
-    And Response body parameter should be:     [data][0][attributes][customers][0][lastName]    ${yves_user.last_name}
+    And Response body parameter should be:    [data][0][attributes][customers][0][firstName]    ${yves_user.first_name}
+    And Response body parameter should be:    [data][0][attributes][customers][0][lastName]    ${yves_user.last_name}
     And Response body parameter should not be EMPTY:    [links][last]
     And Response body parameter should not be EMPTY:    [links][first]
     And Response body has correct self link
@@ -132,8 +149,12 @@ Agent_can_get_search_for_customers_with_larger_page_size
     And Response body parameter should be:    [data][0][id]    None
     And Response body parameter should be:    [data][0][type]    agent-customer-search
     And Response should contain the array of a certain size:    [data][0][attributes][customers]    15
-    And Response body parameter should be:    [data][0][attributes][customers][0][customerReference]    ${customer_reference.de_1}
-    And Response body parameter should be:    [data][0][attributes][customers][14][customerReference]    ${customer_reference.de_15}
+    And Response body parameter should be:
+    ...    [data][0][attributes][customers][0][customerReference]
+    ...    ${customer_reference.de_1}
+    And Response body parameter should be:
+    ...    [data][0][attributes][customers][14][customerReference]
+    ...    ${customer_reference.de_15}
     And Response body parameter should not be EMPTY:    [links][last]
     And Response body parameter should not be EMPTY:    [links][first]
     And Response body parameter should not be EMPTY:    [links][next]
@@ -151,7 +172,9 @@ Agent_can_get_search_for_customers_from_last_page
     And Response body parameter should be:    [data][0][id]    None
     And Response body parameter should be:    [data][0][type]    agent-customer-search
     And Response should contain the array of a certain size:    [data][0][attributes][customers]    6
-    And Response body parameter should be:    [data][0][attributes][customers][5][customerReference]    ${customer_reference.de_34}
+    And Response body parameter should be:
+    ...    [data][0][attributes][customers][5][customerReference]
+    ...    ${customer_reference.de_34}
     And Response body parameter should not be EMPTY:    [links][last]
     And Response body parameter should not be EMPTY:    [links][first]
     And Response body parameter should not be EMPTY:    [links][prev]

@@ -116,7 +116,7 @@ Add_items_to_guest_cart_with_included_items_concrete_products_and_abstract_produ
     And Response include element has self link:   concrete-products
     And Response include element has self link:   abstract-products
     And Response include element has self link:   guest-cart-items
-    And Each array element of array in response should a nested array of a certain size:    [included]    [relationships]    1
+    And Each array element of array in response should contain a nested array of a certain size:    [included]    [relationships]    1
     And Response should contain the array of a certain size:    [included][0][relationships][abstract-products][data]    1
     And Response should contain the array of a certain size:    [included][1][relationships][abstract-products][data]    1
     And Response should contain the array of a certain size:    [included][2][relationships][concrete-products][data]    2
@@ -167,9 +167,9 @@ Add_items_to_guest_cart_with_included_promotional_products
     And Response body parameter should not be EMPTY:    [data][attributes][totals][priceToPay]
     And Response body parameter should be:    [included][0][type]    promotional-items
     And Response body parameter should not be EMPTY:    [included][0][id]
-    And Response body parameter should be:    [included][0][attributes][sku]    ${concrete_product_with_concrete_product_alternative.promotional_items_sku}
-    And Response body parameter should be:    [included][0][attributes][quantity]    1
-    And Response body parameter should be:    [included][0][attributes][skus]    ${concrete_product_with_concrete_product_alternative.promotional_items_sku}
+    And Response body parameter should be in:    [included][0][attributes][sku]    ${concrete_product_with_concrete_product_alternative.promotional_items_sku}   ${concrete_product_with_concrete_product_alternative.promotional_items_sku1}   ${concrete_product_with_concrete_product_alternative.sku}
+    And Response body parameter should be in:    [included][0][attributes][quantity]    1    111
+    And Response body parameter should be in:    [included][0][attributes][skus]    ${concrete_product_with_concrete_product_alternative.promotional_items_sku}   ${concrete_product_with_concrete_product_alternative.promotional_items_sku1}   ${concrete_product_with_concrete_product_alternative.sku}
 
 Add_items_to_guest_cart_with_included_bundle_items
      [Setup]    I set Headers:    X-Anonymous-Customer-Unique-Id=${random}

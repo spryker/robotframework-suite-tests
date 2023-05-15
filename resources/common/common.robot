@@ -17,6 +17,7 @@ Resource                  ../pages/yves/yves_login_page.robot
 # *** SUITE VARIABLES ***
 ${env}                 b2b
 ${headless}            true
+${verify_ssl}          false
 ${browser}             chromium
 ${browser_timeout}     60 seconds
 ${email_domain}        @spryker.com
@@ -28,11 +29,17 @@ ${default_db_host}         127.0.0.1
 ${default_db_name}         eu-docker
 ${default_db_password}     secret
 ${default_db_port}         3306
+${default_db_port_postgres}    5432
 ${default_db_user}         spryker
 ${default_db_engine}       pymysql
 ${db_engine}
+${yves_env}
+${yves_at_env}
+${zed_env}
+${mp_env}
+${glue_env}
+${db_port}
 # ${default_db_engine}       psycopg2
-
 # ${device}              Desktop Chrome
 # ${fake_email}          test.spryker+${random}@gmail.com
 
@@ -56,15 +63,63 @@ Set Up Keyword Arguments
     END
     [Return]    &{arguments}
 
+Overwrite env variables
+    IF    '${yves_env}' == '${EMPTY}'
+            Set Suite Variable    ${yves_url}    ${yves_url}
+    ELSE
+            Set Suite Variable    ${yves_url}    ${yves_env}
+    END
+    IF    '${yves_at_env}' == '${EMPTY}'
+            Set Suite Variable    ${yves_at_url}    ${yves_at_url}
+    ELSE
+            Set Suite Variable    ${yves_at_url}    ${yves_at_env}
+    END
+    IF    '${zed_env}' == '${EMPTY}'
+            Set Suite Variable    ${zed_url}   ${zed_url}
+    ELSE
+            Set Suite Variable    ${zed_url}   ${zed_env}
+    END
+    IF    '${mp_env}' == '${EMPTY}'
+            Set Suite Variable    ${mp_url}    ${mp_url} 
+    ELSE
+            Set Suite Variable    ${mp_url}   ${mp_env}
+    END
+    IF    '${glue_env}' == '${EMPTY}'
+            Set Suite Variable    ${glue_url}    ${glue_url} 
+    ELSE
+            Set Suite Variable    ${glue_url}   ${glue_env}
+    END
+    &{urls}=    Create Dictionary    yves_url    ${yves_url}    yves_at_url    ${yves_at_url}    zed_url    ${zed_url}    mp_url    ${mp_url}    glue_url    ${glue_url}
+    FOR    ${key}    ${url}    IN    &{urls}
+        Log    Key is '${key}' and value is '${url}'.
+        ${url_last_character}=    Get Regexp Matches    ${url}    .$    flags=IGNORECASE
+        ${url_last_character}=    Convert To String    ${url_last_character}
+        ${url_last_character}=    Replace String    ${url_last_character}    '   ${EMPTY}
+        ${url_last_character}=    Replace String    ${url_last_character}    [   ${EMPTY}
+        ${url_last_character}=    Replace String    ${url_last_character}    ]   ${EMPTY}
+        IF    '${url_last_character}' != '/' and '${key}' != 'glue_url'
+            ${url}=    Set Variable    ${url}${/}
+        END
+        ${var_url}=   Set Variable    ${url}
+        Set Suite Variable    ${${key}}    ${var_url}
+    END
 SuiteSetup
     [documentation]  Basic steps before each suite
     Remove Files    ${OUTPUTDIR}/selenium-screenshot-*.png
     Remove Files    resources/libraries/__pycache__/*
     Load Variables    ${env}
-    New Browser    ${browser}    headless=${headless}    args=['--ignore-certificate-errors']
+    ${verify_ssl}=    Convert To Lower Case    ${verify_ssl}
+    IF    '${verify_ssl}' == 'true'
+        New Browser    ${browser}    headless=${headless}
+        Set Global Variable    ${verify_ssl}    ${True}
+    ELSE
+        New Browser    ${browser}    headless=${headless}    args=['--ignore-certificate-errors']
+        Set Global Variable    ${verify_ssl}    ${False}
+    END
     Set Browser Timeout    ${browser_timeout}
     Create default Main Context
-    New Page    ${host}
+    Overwrite env variables
+    New Page    ${yves_url}
     ${random}=    Generate Random String    5    [NUMBERS]
     Set Global Variable    ${random}
     ${today}=    Get Current Date    result_format=%Y-%m-%d
@@ -79,7 +134,7 @@ SuiteTeardown
 
 TestSetup
     Delete All Cookies
-    Go To    ${host}
+    Go To    ${yves_url}
 
 TestTeardown
     # Run Keyword If Test Failed    Pause Execution
@@ -180,7 +235,7 @@ Wait Until Element Is Not Visible
 
 Page Should Contain Link
     [Arguments]    ${url}    ${message}=${EMPTY}
-    ${hrefs}=    Execute JavaScript    Array.from(document.querySelectorAll('a')).map(e => e.getAttribute('href'))
+    ${hrefs}=    Evaluate Javascript     ${None}    Array.from(document.querySelectorAll('a')).map(e => e.getAttribute('href'))
     Should Contain    ${hrefs}    ${url}
 
 Scroll Element Into View
@@ -258,7 +313,7 @@ Select From List By Text
 
 Create New Context
     ${new_context}=    New Context
-    New Page    ${host}
+    New Page    ${yves_url}
 
 Switch back to the Main Context
     Switch Context    ${main_context}
@@ -282,6 +337,7 @@ Conver string to List by separator:
 Try reloading page until element is/not appear:
     [Documentation]    will reload the page until an element is shown or disappears. The second argument is the expected condition (true[shown]/false[disappeared]) for the element.
     [Arguments]    ${element}    ${shouldBeDisplayed}    ${tries}=20    ${timeout}=1s
+    ${shouldBeDisplayed}=    Convert To Lower Case    ${shouldBeDisplayed}
     FOR    ${index}    IN RANGE    0    ${tries}
         ${elementAppears}=    Run Keyword And Return Status    Page Should Contain Element    ${element}
         IF    '${shouldBeDisplayed}'=='true' and '${elementAppears}'=='False'
@@ -300,6 +356,7 @@ Try reloading page until element is/not appear:
 Try reloading page until element does/not contain text:
     [Documentation]    will reload the page until an element text will be updated. The second argument is the expected condition (true[contains]/false[doesn't contain]) for the element text.
     [Arguments]    ${element}    ${expectedText}    ${shouldContain}    ${tries}=20    ${timeout}=1s
+    ${shouldContain}=    Convert To Lower Case    ${shouldContain}
     FOR    ${index}    IN RANGE    0    ${tries}
         ${textAppears}=    Run Keyword And Return Status    Element Text Should Be    ${element}    ${expectedText}
         IF    '${shouldContain}'=='true' and '${textAppears}'=='False'
@@ -334,11 +391,29 @@ Remove leading and trailing whitespace from a string:
 
 Connect to Spryker DB
     ${db_name}=    Set Variable If    '${db_name}' == '${EMPTY}'    ${default_db_name}    ${db_name}
-    ${db_user}=    Set Variable If    '${db_name}' == '${EMPTY}'    ${default_db_user}    ${db_user}
-    ${db_password}=    Set Variable If    '${db_name}' == '${EMPTY}'    ${default_db_password}    ${db_password}
-    ${db_host}=    Set Variable If    '${db_name}' == '${EMPTY}'    ${default_db_host}    ${db_host}
-    ${db_port}=    Set Variable If    '${db_name}' == '${EMPTY}'    ${default_db_port}    ${db_port}
+    ${db_user}=    Set Variable If    '${db_user}' == '${EMPTY}'    ${default_db_user}    ${db_user}
+    ${db_password}=    Set Variable If    '${db_password}' == '${EMPTY}'    ${default_db_password}    ${db_password}
+    ${db_host}=    Set Variable If    '${db_host}' == '${EMPTY}'    ${default_db_host}    ${db_host}
     ${db_engine}=    Set Variable If    '${db_engine}' == '${EMPTY}'    ${default_db_engine}    ${db_engine}
+    IF    '${db_engine}' == 'mysql'
+        ${db_engine}=    Set Variable    pymysql
+    ELSE IF    '${db_engine}' == 'postgresql'
+        ${db_engine}=    Set Variable    psycopg2
+    ELSE IF    '${db_engine}' == 'postgres'
+        ${db_engine}=    Set Variable    psycopg2
+    END    
+    IF    '${db_engine}' == 'psycopg2'
+        ${db_port}=    Set Variable If    '${db_port}' == '${EMPTY}'    ${db_port_postgres_env}    ${db_port}
+        IF    '${db_port_postgres_env}' == '${EMPTY}'
+        ${db_port}=    Set Variable If    '${db_port_postgres_env}' == '${EMPTY}'    ${default_db_port_postgres}    ${db_port_postgres_env}
+        END
+    ELSE
+    ${db_port}=    Set Variable If    '${db_port}' == '${EMPTY}'    ${db_port_env}    ${db_port}
+        IF    '${db_port_env}' == '${EMPTY}'
+        ${db_port}=    Set Variable If    '${db_port_env}' == '${EMPTY}'    ${default_db_port}    ${db_port_env}
+        END
+    END
+    Set Test Variable    ${db_engine}
     Connect To Database    ${db_engine}    ${db_name}    ${db_user}    ${db_password}    ${db_host}    ${db_port}
 
 Save the result of a SELECT DB query to a variable:
@@ -365,3 +440,28 @@ Save the result of a SELECT DB query to a variable:
     ${var_value}=    Replace String    ${var_value}    ]   ${EMPTY}
     Set Test Variable    ${${variable_name}}    ${var_value}
     [Return]    ${variable_name}
+
+Ping and go to URL:
+    [Arguments]    ${url}    ${timeout}=${EMPTY}
+    ${accessible}=    Run Keyword And Ignore Error    Send GET request and return status code:    ${url}    ${timeout}
+    ${successful}=    Run Keyword And Ignore Error    Should Contain Any    '${response.status_code}'    '200'    '201'    '202'    '301'    '302'
+    IF    'PASS' in ${accessible} and 'PASS' in ${successful}
+        Go To    ${url}
+    ELSE
+        Fail    '${url}' URL is not accessible of throws an error
+    END
+        
+Send GET request and return status code:
+    [Arguments]    ${url}    ${timeout}=5
+    ${response}=    GET    ${url}    timeout=${timeout}    allow_redirects=true    expected_status=ANY
+    Set Test Variable    ${response.status_code}    ${response.status_code}
+    [Return]    ${response.status_code}
+
+## Example of intercepting the network request
+##     [Arguments]    ${eventName}    ${timeout}=30s
+##     ${response}=    Wait for response    matcher=bazaarvoice\\.com\\/\\w+\\.gif\\?.*type=${eventName}    timeout=${timeout}
+##     Should be true    ${response}[ok]
+## OR
+##    [Arguments]    ${timeout}=30s
+##    ${response}=    Wait for response    matcher=usercentrics.*?graphql     timeout=${timeout}
+##    Should be true    ${response}[ok]

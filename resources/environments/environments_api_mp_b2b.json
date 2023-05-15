@@ -4,9 +4,13 @@
        "glue_url":"http://glue.de.spryker.local",
        "bapi_url":"http://backend-api.de.spryker.local/api/rest"
     },
+    "dataType": {
+      "array": []
+   },
     "database":{
        "db_host":"127.0.0.1",
-       "db_port":"3306",
+       "db_port_env":"3306",
+       "db_port_postgres_env": "5432",
        "db_user":"spryker",
        "db_password":"secret",
        "db_name":"eu-docker"
@@ -44,6 +48,14 @@
           "reference":"DE-30",
           "salutation":"Ms"
        },
+       "yves_ottom_admin_user":{
+         "email":"andrew@ottom.de",
+         "first_name":"Andrew",
+         "last_name":"Wedner",
+         "password":"change123",
+         "reference":"DE-8",
+         "salutation":"Mr"
+      },
        "yves_shared_shopping_list_user":{
           "email":"Trever.m@spryker.com",
           "first_name":"Trever",
@@ -309,12 +321,61 @@
                 "summary":"To heavy, uncomfortable",
                 "description":"YOu really feel there is tech on your wrist with this watch, it felt like a weight on my wrist and strap was very uncomfortable. Battery dies really fast."
              },
+             "review_2":{
+               "id":"2",
+               "rating":"4",
+               "nickname":"Bill",
+               "summary":"My boss loved it",
+               "description":"Snazzy design and exactly what my kid wanted."
+            },
+            "review_3":{
+               "id":"3",
+               "rating":"4",
+               "nickname":"Maggie",
+               "summary":"Great product.",
+               "description":"I absolutely love it but why doesnt it have a built in speaker? Had it for 2 months now, worn it every day and it's been very durable and responsive."
+            },
+            "review_4":{
+               "id":"4",
+               "rating":"5",
+               "nickname":"Maria",
+               "summary":"Easy to set up and use! ",
+               "description":"Received this as a Birthday present. I love my GearS2!!"
+            },
              "review_5":{
                 "id":"5",
                 "rating":"5",
                 "nickname":"Spencor",
                 "summary":"Five Stars",
                 "description":"Daughter is very happy with her new phone!"
+             },
+             "review_6":{
+                "id":"6",
+                "rating":"3",
+                "nickname":"Maria",
+                "summary":"Good for the price",
+                "description":"I bought the phone a year ago, I could complain but what would be the point in that."
+             },
+             "review_7":{
+                "id":"7",
+                "rating":"4",
+                "nickname":"Maggie",
+                "summary":"Great but not amazing",
+                "description":"I guess this is waht you get when you compromise. I wanted something I could use with one hand and mount on my belt. But the performance is crappyer than my old phone and so it the call clarity and speed. I was going to go for the Samsung A3 2017 but the specs are not much better and it is way bigger."
+             },
+             "review_8":{
+                "id":"8",
+                "rating":"4",
+                "nickname":"Bill",
+                "summary":"Works ok",
+                "description":"We used to have an S3 mini. We were expecting a phone about the same size or maybe a little bigger than thre S3 mini, however,to our surprise it is almost as big as an S4. Whats the deal with that?"
+             },
+             "review_9":{
+                "id":"9",
+                "rating":"4",
+                "nickname":"Spensor",
+                "summary":"Like it",
+                "description":"Accidently dropped it in the toilet and it worked fine afterwards."
              }
           },
           "category_nodes":{
@@ -448,7 +509,12 @@
              "concrete_available_with_stock_and_never_out_of_stock_name":"FRIWA stackable chair - with closed back",
              "abstract_available_product_with_no_stock_and_never_out_of_stock":"M90851",
              "abstract_unavailable_product":"M22432",
-             "concrete_unavailable_product":"212447"
+             "concrete_unavailable_product":"212447",
+             "product_2":{
+               "abstract_available_with_stock_and_never_out_of_stock":"M24632",
+               "concrete_available_with_stock_and_never_out_of_stock":"426615"},
+               "product_3":{
+                  "abstract_available_with_stock_and_never_out_of_stock":"M87416"}
           },
           "abstract_product_with_variants":{
              "concretes_3":"M29456",
@@ -516,8 +582,11 @@
              "discount_amount_with_20_percentage_off_storage":"16383",
              "discount_amount_with_10_percentage_off_minimum_order":"1882"
           }
-       }
-    },
+       },
+       "configurable_product": {
+          "sku": "574601"
+        }  
+      },
     "product_offers":{
        "inactive_offer_with_volume_price":"offer3",
        "waiting_for_approval_offer_with_volume_price":"offer4",
@@ -586,7 +655,9 @@
        "cms_page_collection_url":"/en/gtc",
        "brand_name":"verbatim",
        "cart_permission_group_id":"1",
-       "cart_permission_group_type":"cart-permission-groups"
+       "cart_permission_group_type":"cart-permission-groups",
+       "subcategory_nodes_storage_name1":"Fish",
+       "subcategory_nodes_storage_url1":"/en/foods/fish"
     },
     "availability":{
        "stock_is_0":"0.0000000000",
@@ -722,5 +793,13 @@
        "return_reason_wrong_item":"Wrong Item",
        "return_reason_no_longer_needed":"No longer needed",
        "return_reasons_qty":"3"
-    }
+    },
+   "productConfigurationInstance": {
+       "productConfigurationInstance":{
+       "displayData": "{\"Preferred time of the day\": \"Afternoon\", \"Date\": \"9.09.2050\"}",
+       "configuration": "{\"time_of_day\": \"3\"}",
+       "configuratorKey": "DATE_TIME_CONFIGURATOR",
+       "isComplete": true
+   }
+ }   
  }

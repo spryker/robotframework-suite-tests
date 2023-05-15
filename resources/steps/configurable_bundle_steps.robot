@@ -12,10 +12,10 @@ Yves: choose bundle template to configure:
 Yves: select product in the bundle slot:
     [Arguments]    ${slot}    ${sku}
     Click    xpath=//form[@name='configurator_state_form']//button[contains(.,'${slot}')]
-    IF    '${env}' in ['b2b','mp_b2b']
+    IF    '${env}' in ['ui_b2b','ui_mp_b2b']
         Click    xpath=//product-item-list[@data-qa='component configurator-product']//span[@class='configurator-product__sku'][text()='Sku: ${sku}']/ancestor::product-item-list//button
     ELSE
-        IF    '${env}' in ['b2c','mp_b2c']    Click    xpath=(//product-item-list[@data-qa='component configurator-product']//span[contains(text(),'${sku}')]/ancestor::product-item-list//button)[1]
+        IF    '${env}' in ['ui_b2c','ui_mp_b2c']    Click    xpath=(//product-item-list[@data-qa='component configurator-product']//span[contains(text(),'${sku}')]/ancestor::product-item-list//button)[1]
     END
 
 

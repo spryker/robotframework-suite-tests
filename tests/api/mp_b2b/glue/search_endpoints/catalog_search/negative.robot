@@ -9,7 +9,7 @@ ENABLER
     TestSetup
 
 Search_without_query_parameter
-    [Documentation]   # bug https://spryker.atlassian.net/browse/CC-15983
+    [Documentation]    bug https://spryker.atlassian.net/browse/CC-15983
     [Tags]    skip-due-to-issue
     When I send a GET request:    /catalog-search?
     Then Response status code should be:    400

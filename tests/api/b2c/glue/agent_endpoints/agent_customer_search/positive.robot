@@ -8,7 +8,7 @@ Default Tags    glue
 ENABLER
    TestSetup
 Agent_can_get_search_for_customers_without_search_parameters
-    [Documentation]   #bug CC-16754 is fixed, but there is no fix in public b2c demoshop
+    [Documentation]   bug CC-16754 is fixed, but there is no fix in public b2c demoshop
     [Tags]    skip-due-to-issue  
     [Setup]    Run Keywords    I send a POST request:    /agent-access-tokens    {"data": {"type": "agent-access-tokens","attributes": {"username": "${agent.email}","password": "${agent.password}"}}}
     ...    AND    Response status code should be:    201
@@ -34,7 +34,7 @@ Agent_can_get_search_for_customers_without_search_parameters
     And Response body has correct self link
 
 Agent_can_get_search_for_customers_by_email
-    [Documentation]   #bug CC-16754 is fixed, but there is no fix in public b2c demoshop
+    [Documentation]   bug CC-16754 is fixed, but there is no fix in public b2c demoshop
     [Tags]    skip-due-to-issue  
     [Setup]    Run Keywords    I send a POST request:    /agent-access-tokens    {"data": {"type": "agent-access-tokens","attributes": {"username": "${agent.email}","password": "${agent.password}"}}}
     ...    AND    Response status code should be:    201
@@ -56,7 +56,7 @@ Agent_can_get_search_for_customers_by_email
     And Response body has correct self link
 
 Agent_can_get_search_for_customers_by_first_name
-    [Documentation]   #bug CC-16754 is fixed, but there is no fix in public b2c demoshop
+    [Documentation]   bug CC-16754 is fixed, but there is no fix in public b2c demoshop
     [Tags]    skip-due-to-issue  
     [Setup]    Run Keywords    I send a POST request:    /agent-access-tokens    {"data": {"type": "agent-access-tokens","attributes": {"username": "${agent.email}","password": "${agent.password}"}}}
     ...    AND    Response status code should be:    201
@@ -78,7 +78,7 @@ Agent_can_get_search_for_customers_by_first_name
     And Response body has correct self link
 
 Agent_can_get_search_for_customers_by_last_name
-    [Documentation]   #bug CC-16754 is fixed, but there is no fix in public b2c demoshop
+    [Documentation]   bug CC-16754 is fixed, but there is no fix in public b2c demoshop
     [Tags]    skip-due-to-issue  
     [Setup]    Run Keywords    I send a POST request:    /agent-access-tokens    {"data": {"type": "agent-access-tokens","attributes": {"username": "${agent.email}","password": "${agent.password}"}}}
     ...    AND    Response status code should be:    201
@@ -100,7 +100,7 @@ Agent_can_get_search_for_customers_by_last_name
     And Response body has correct self link
 
 Agent_can_get_search_for_customers_with_changed_page_limit
-    [Documentation]   #bug CC-16754 is fixed, but there is no fix in public b2c demoshop
+    [Documentation]   bug CC-16754 is fixed, but there is no fix in public b2c demoshop
     [Tags]    skip-due-to-issue  
     [Setup]    Run Keywords    I send a POST request:    /agent-access-tokens    {"data": {"type": "agent-access-tokens","attributes": {"username": "${agent.email}","password": "${agent.password}"}}}
     ...    AND    Response status code should be:    201
@@ -125,7 +125,7 @@ Agent_can_get_search_for_customers_with_changed_page_limit
     And Response body parameter should not be EMPTY:    [data][0][attributes][customers][0][lastName]
 
 Agent_can_get_search_for_customers_by_substring
-    [Documentation]   #bug CC-16754 is fixed, but there is no fix in public b2c demoshop
+    [Documentation]   bug CC-16754 is fixed, but there is no fix in public b2c demoshop
     [Tags]    skip-due-to-issue  
     [Setup]    Run Keywords    I send a POST request:    /agent-access-tokens    {"data": {"type": "agent-access-tokens","attributes": {"username": "${agent.email}","password": "${agent.password}"}}}
     ...    AND    Response status code should be:    201
@@ -155,7 +155,7 @@ Agent_can_get_search_for_customers_by_substring
     And Response body has correct self link
 
 Agent_can_get_search_for_customers_by_incorrect_keyword
-    [Documentation]   #bug CC-16754 is fixed, but there is no fix in public b2c demoshop
+    [Documentation]   bug CC-16754 is fixed, but there is no fix in public b2c demoshop
     [Tags]    skip-due-to-issue  
     [Setup]    Run Keywords    I send a POST request:    /agent-access-tokens    {"data": {"type": "agent-access-tokens","attributes": {"username": "${agent.email}","password": "${agent.password}"}}}
     ...    AND    Response status code should be:    201

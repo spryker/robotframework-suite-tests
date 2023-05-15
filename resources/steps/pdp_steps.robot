@@ -15,6 +15,7 @@ ${relatedProducts}    ${pdp_related_products}[${env}]
 ${bazaarvoiceWriteReview}    ${pdp_bazaarvoice_write_review_button}
 ${bazaarvoiceQuestions}    ${pdp_bazaarvoice_questions_locator}
 ${bazaarvoiceInlineRating}    ${pdp_bazaarvoice_intine_rating_locator}
+${configureButton}    ${pdp_configure_button}
 
 *** Keywords ***
 Yves: PDP contains/doesn't contain:
@@ -43,7 +44,7 @@ Yves: add product to the shopping cart
 
 Yves: change quantity on PDP:
     [Arguments]    ${qtyToSet}
-    IF    '${env}' in ['b2b','mp_b2b']
+    IF    '${env}' in ['ui_b2b','ui_mp_b2b']
         Type Text    ${pdp_quantity_input_filed}[${env}]    ${qtyToSet}
         Click    ${pdp_price_element_locator}
         Click    ${pdp_product_name}  
@@ -62,26 +63,27 @@ Yves: select the following 'Sales Unit' on PDP:
 Yves: change quantity using '+' or '-' button № times:
     [Arguments]    ${action}    ${clicksCount}
     FOR    ${index}    IN RANGE    0    ${clicksCount}
+        Sleep    1s
         IF    '${action}' == '+'
             Click    ${pdp_increase_quantity_button}[${env}]
         ELSE IF    '${action}' == '-'
             Click    ${pdp_decrease_quantity_button}[${env}]
         END
-        Sleep    1s
     END
 
 Yves: change variant of the product on PDP on:
     [Arguments]    ${variantToChoose}
     Wait Until Page Contains Element    ${pdp_variant_selector}
     TRY    
-        Set Browser Timeout    10s
+        ${timeout}=    Set Variable    5s
+        Set Browser Timeout    ${timeout}
         Click    ${pdp_variant_custom_selector}    force=True
-        Wait Until Element Is Visible    ${pdp_variant_custom_selector_results}
+        Wait Until Element Is Visible    ${pdp_variant_custom_selector_results}    timeout=${timeout}
         TRY
             Click    xpath=//ul[contains(@id,'select2-attribute')][contains(@id,'results')]/li[contains(@id,'select2-attribute')][contains(.,'${variantToChoose}')]
         EXCEPT    
-            Sleep    10s
             Reload
+            Sleep    ${timeout}
             Click    xpath=//ul[contains(@id,'select2-attribute')][contains(@id,'results')]/li[contains(@id,'select2-attribute')][contains(.,'${variantToChoose}')]
         END
     EXCEPT
@@ -193,8 +195,8 @@ Yves: get sku of the abstract product on PDP
     ${got_abstract_product_sku}=    Replace String    ${got_abstract_product_sku}    [    ${EMPTY}
     ${got_abstract_product_sku}=    Replace String    ${got_abstract_product_sku}    ]    ${EMPTY}
     ${sku_length}=    Get Length    ${got_abstract_product_sku}
-    ${got_abstract_product_sku}=    Set Variable If    '${env}'!='b2b' and '${sku_length}'=='2'    0${got_abstract_product_sku}    ${got_abstract_product_sku}
-    ${got_abstract_product_sku}=    Set Variable If    '${env}'!='b2b' and '${sku_length}'=='1'    00${got_abstract_product_sku}    ${got_abstract_product_sku}
+    ${got_abstract_product_sku}=    Set Variable If    '${env}'!='ui_b2b' and '${sku_length}'=='2'    0${got_abstract_product_sku}    ${got_abstract_product_sku}
+    ${got_abstract_product_sku}=    Set Variable If    '${env}'!='ui_b2b' and '${sku_length}'=='1'    00${got_abstract_product_sku}    ${got_abstract_product_sku}
     Set Global Variable    ${got_abstract_product_sku}
     [Return]    ${got_abstract_product_sku}
 

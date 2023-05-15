@@ -71,7 +71,7 @@ Get_default&original_prices_of_a_product_offer
     And Each array element of array in response should contain nested property:    [data]    [attributes]    price
     And Each array element of array in response should contain nested property with datatype:    [data]    [attributes][price]    int
     And Response body parameter should be greater than:    [data][0][attributes][price]    0
-    And Each array element of array in response should a nested array of a certain size:    [data]    [attributes][prices]    2
+    And Each array element of array in response should contain a nested array of a certain size:    [data]    [attributes][prices]    2
     And Each array element of array in response should contain nested property:    [data]    [attributes][prices][0]    priceTypeName
     And Each array element of array in response should contain nested property:    [data]    [attributes][prices][0]    netAmount
     And Each array element of array in response should contain nested property:    [data]    [attributes][prices][0]    grossAmount
