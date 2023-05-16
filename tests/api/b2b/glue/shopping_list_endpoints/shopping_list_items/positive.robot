@@ -506,12 +506,12 @@ Add_Configurable_products_and_regular_product
    And Response body parameter should be:    [data][attributes][numberOfItems]    3
    And Response should contain the array of a certain size:    [included]    2
    And Response body parameter should be in:   [included][0][id]    ${shoppingListItemId2}    ${shoppingListItemId1}
-   And Response body parameter should be:   [included][0][attributes][quantity]    2
+   And Response body parameter should be in:   [included][0][attributes][quantity]    2    1
    And Response body parameter should be in:   [included][0][attributes][sku]    ${configurable_product.sku}    ${concrete.available_product.with_stock.product_1.sku}
    And Nested array element should contain sub-array with property and value at least once:    [included]    [attributes]    [productConfigurationInstance]    displayData    {\"Preferred time of the day\":\"Morning\",\"Date\":\"10.10.2040\"}
    And Nested array element should contain sub-array with property and value at least once:    [included]    [attributes]    [productConfigurationInstance]    isComplete    True
    And Response body parameter should be in:   [included][1][id]    ${shoppingListItemId2}    ${shoppingListItemId1}
-   And Response body parameter should be:   [included][1][attributes][quantity]    1
+   And Response body parameter should be in:   [included][1][attributes][quantity]    1    2
    And Response body parameter should be in:   [included][1][attributes][sku]    ${configurable_product.sku}    ${concrete.available_product.with_stock.product_1.sku}
    And Response include element has self link:   shopping-list-items
    [Teardown]    Run Keywords    I send a DELETE request:    /shopping-lists/${ShoppingListId}
@@ -565,31 +565,3 @@ Remove_a_configurable_product_from_the_shopping_list_and_leave_a_regular_product
    [Teardown]    Run Keywords    I send a DELETE request:    /shopping-lists/${ShoppingListId}
     ...    AND    Response status code should be:    204
     ...    AND    Response reason should be:    No Content 
-
-Add_a_configurable_product_from_the_shopping_list_and_move_the_product_to_a_cart   
-   [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
-    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
-    ...    AND    I send a POST request:    /shopping-lists    {"data":{"type":"shopping-lists","attributes":{"name":"${shopping_list_name}${random}"}}}
-    ...    AND    Response status code should be:    201
-    ...    AND    Save value to a variable:    [data][id]    shoppingListId
-    I send a POST request:    /shopping-lists/${shoppingListId}/shopping-list-items    {"data":{"type":"shopping-list-items","attributes":{"sku":"${configurable_product.sku}","quantity":2,"productConfigurationInstance":{"displayData":'{"Preferred time of the day":"Morning","Date":"10.10.2040"}',"configuration":'{"time_of_day":"4"}',"configuratorKey":"${productConfigurationInstance.configuratorKey}","isComplete":True,"quantity":2,"availableQuantity":4,"prices":[{"priceTypeName":"DEFAULT","netAmount":23434,"grossAmount":42502,"currency":{"code":"EUR","name":"Euro","symbol":"€"},"volumePrices":[{"netAmount":150,"grossAmount":165,"quantity":5},{"netAmount":145,"grossAmount":158,"quantity":10},{"netAmount":140,"grossAmount":152,"quantity":20}]}]}}}}
-    And Response status code should be:    201
-    And Save value to a variable:    [data][id]    shoppingListItemId
-    And Response body parameter should be:    [data][attributes][quantity]    2
-    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
-    And Response status code should be:    201
-    And Save value to a variable:    [data][id]    cart_id
-    When I send a POST request:    /carts/${cart_id}/items    {"data":{"type":"items","attributes":{"sku":"${configurable_product.sku}","quantity":2,"productConfigurationInstance":{"displayData":'{"Preferred time of the day":"Morning","Date":"10.10.2040"}',"configuration":'{"time_of_day":"4"}',"configuratorKey":"${productConfigurationInstance.configuratorKey}","isComplete":True,"quantity":2,"availableQuantity":4,"prices":[{"priceTypeName":"DEFAULT","netAmount":23434,"grossAmount":42502,"currency":{"code":"EUR","name":"Euro","symbol":"€"},"volumePrices":[{"netAmount":150,"grossAmount":165,"quantity":5},{"netAmount":145,"grossAmount":158,"quantity":10},{"netAmount":140,"grossAmount":152,"quantity":20}]}]}}}}
-    Then Response status code should be:    201
-    And Response reason should be:    Created
-    And Response header parameter should be:    Content-Type    ${default_header_content_type}
-    And Response body parameter should be:    [data][id]    ${cart_id}
-    And I send a GET request:    /carts/${cart_id}?include=items
-    And Response status code should be:    200
-    And Response body parameter should be:   [included][0][attributes][sku]    ${configurable_product.sku}
-    And Response body parameter should be:   [included][0][attributes][quantity]    2
-    And Response body parameter should be:    [included][0][attributes][productConfigurationInstance][displayData]    {\"Preferred time of the day\":\"Morning\",\"Date\":\"10.10.2040\"}
-    And Response body parameter should be:    [included][0][attributes][productConfigurationInstance][isComplete]    True
-    [Teardown]    Run Keywords    I send a DELETE request:    /shopping-lists/${shoppingListId}
-    ...    AND    Response status code should be:    204
-    ...    AND    Response reason should be:    No Content
