@@ -9,8 +9,6 @@ ENABLER
     TestSetup
 
 Get_agent_access_tokens
-    [Documentation]   bug CC-16754 is fixed, but there is no fix in public b2c demoshop
-    [Tags]    skip-due-to-issue  
     When I send a POST request:    /agent-access-tokens    {"data": {"type": "agent-access-tokens","attributes": {"username": "${agent.email}","password": "${agent.password}"}}}
     Then Response status code should be:    201
     And Response reason should be:    Created

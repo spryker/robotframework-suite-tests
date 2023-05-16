@@ -9,8 +9,6 @@ ENABLER
     TestSetup
     
 Agent_can_get_customer_impersonation_token
-    [Documentation]   #bug CC-16754 is fixed, but there is no fix in public b2c demoshop
-    [Tags]    skip-due-to-issue  
     [Setup]    Run Keywords    I send a POST request:    /agent-access-tokens    {"data": {"type": "agent-access-tokens","attributes": {"username": "${agent.email}","password": "${agent.password}"}}}
     ...    AND    Response status code should be:    201
     ...    AND    Save value to a variable:    [data][attributes][accessToken]    agent_token
