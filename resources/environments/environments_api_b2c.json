@@ -309,6 +309,7 @@
           "abstract_available_with_stock_and_never_out_of_stock":"209",
           "abstract_unavailable_product":"011",
           "concrete_available_product_with_stock":"001_25904006",
+          "concrete_available_product_with_stock2":"174_27253016",
           "concrete_available_product_without_stock":"031_30021637"
        },
        "abstract_product":{
@@ -388,7 +389,11 @@
           "title":"This is a review",
           "text":"This is review text",
           "default_rating":"5"
-       }
+       },
+       "configurable_product":{
+           "sku_1": "124_29866591",
+           "sku_2": "124_31623088"
+   }
     },
     "product_attributes":{
        "brand_1":"Soennecken",
@@ -562,12 +567,21 @@
     "configurable_bundles":{
        "configurable_bundle_template_1_uuid":"8d8510d8-59fe-5289-8a65-19f0c35a0089",
        "configurable_bundle_first_slot_item_sku":"001_25904006",
+       "configurable_bundle_first_slot_item_sku2":"002_25904004",
        "configurable_bundle_slot_1_uuid":"332b40ac-a789-57ce-bec0-23d8dddd71eb",
        "configurable_bundle_template_2_uuid":"c8291fd3-c6ca-5b8f-8ff5-eccd6cb787de",
        "configurable_bundle_slot_5_uuid":"9626de80-6caa-57a9-a683-2846ec5b6914",
        "configurable_bundle_slot_6_uuid":"2a5e55b1-993a-5510-864c-a4a18558aa75",
        "configurable_bundle_template_name_1":"All in",
        "configured_bundle_quantity":2
+    },
+    "productConfigurationInstance": {
+        "productConfigurationInstance":{
+        "displayData": "{\"Preferred time of the day\": \"Afternoon\", \"Date\": \"9.09.2050\"}",
+        "configuration": "{\"time_of_day\": \"3\"}",
+        "configuratorKey": "DATE_TIME_CONFIGURATOR",
+        "isComplete": true
+    }
     },
     "dataType":{
        "array":[]
