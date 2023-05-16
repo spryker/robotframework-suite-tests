@@ -72,6 +72,9 @@ Request_company_users_include_customers_and_roles_and_business_units
 Request_companies_users_if_user_has_4_companies
     [Setup]    Run Keywords    I get access token for the customer:    ${user_with_multiple_companies}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
+    ...    AND    I add 'admin' role to company user and get company_user_uuid:    ${user_with_multiple_companies}    BoB-Hotel-Jim    business-unit-jim-1
+    ...    AND    I get access token for the company user by uuid:    ${company_user_uuid}
+    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     When I send a GET request:    /company-users/mine
     Then Response status code should be:    200
     And Response reason should be:    OK

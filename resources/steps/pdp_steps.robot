@@ -15,6 +15,7 @@ ${relatedProducts}    ${pdp_related_products}[${env}]
 ${bazaarvoiceWriteReview}    ${pdp_bazaarvoice_write_review_button}
 ${bazaarvoiceQuestions}    ${pdp_bazaarvoice_questions_locator}
 ${bazaarvoiceInlineRating}    ${pdp_bazaarvoice_intine_rating_locator}
+${configureButton}    ${pdp_configure_button}
 
 *** Keywords ***
 Yves: PDP contains/doesn't contain:
@@ -74,14 +75,15 @@ Yves: change variant of the product on PDP on:
     [Arguments]    ${variantToChoose}
     Wait Until Page Contains Element    ${pdp_variant_selector}
     TRY    
-        Set Browser Timeout    10s
+        ${timeout}=    Set Variable    5s
+        Set Browser Timeout    ${timeout}
         Click    ${pdp_variant_custom_selector}    force=True
-        Wait Until Element Is Visible    ${pdp_variant_custom_selector_results}
+        Wait Until Element Is Visible    ${pdp_variant_custom_selector_results}    timeout=${timeout}
         TRY
             Click    xpath=//ul[contains(@id,'select2-attribute')][contains(@id,'results')]/li[contains(@id,'select2-attribute')][contains(.,'${variantToChoose}')]
         EXCEPT    
-            Sleep    10s
             Reload
+            Sleep    ${timeout}
             Click    xpath=//ul[contains(@id,'select2-attribute')][contains(@id,'results')]/li[contains(@id,'select2-attribute')][contains(.,'${variantToChoose}')]
         END
     EXCEPT

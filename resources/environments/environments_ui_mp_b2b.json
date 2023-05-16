@@ -1,15 +1,16 @@
 {
     "environment":"ui_mp_b2b",
     "env":{
-       "host":"http://yves.de.spryker.local/",
-       "host_at":"http://yves.at.spryker.local/",
+       "yves_url":"http://yves.de.spryker.local/",
+       "yves_at_url":"http://yves.at.spryker.local/",
        "zed_url":"http://backoffice.de.spryker.local/",
        "mp_url":"http://mp.de.spryker.local/security-merchant-portal-gui/login/",
        "glue_url":"http://glue.de.spryker.local"
-    },
+   },
     "database":{
        "db_host":"127.0.0.1",
-       "db_port":"3306",
+       "db_port_env":"3306",
+       "db_port_postgres_env": "5432",
        "db_user":"spryker",
        "db_password":"secret",
        "db_name":"eu-docker"
@@ -41,6 +42,7 @@
        "yves_company_user_buyer_email":"Richi@spryker.com",
        "yves_company_user_buyer_firstname":"Armando",
        "yves_company_user_buyer_lastname":"Richi",
+       "yves_company_user_buyer_reference":"DE--15",
        "yves_company_user_buyer_address":"Mr Armando Richi, Gurmont Str. 23, 8002 Barcelona",
        "yves_company_user_special_prices_customer_email":"Elizabet@spryker.com",
        "yves_company_user_special_prices_customer_firstname":"Elizabet",
@@ -92,6 +94,14 @@
        "product_with_relations_related_products_sku":"M29529",
        "product_with_relations_upselling_sku":"M29502",
        "volume_prices_product_abstract_sku":"M21189",
-       "volume_prices_product_concrete_sku":"420685"
+       "volume_prices_product_concrete_sku":"420685",
+       "stock_product_abstract_sku": "M72935",
+       "stock_product_concrete_sku": "103907",
+       "discontinued_product_abstract_sku": "M5108",
+       "discontinued_product_concrete_sku": "400065",
+       "configurable_product_abstract_sku": "M636",
+       "configurable_product_concrete_sku": "574601",
+       "configurable_product_name": "CP steel cabinet, fire-resistant - 3 adjustable shelves - 1 locker - black gray / light gray",
+       "configurable_product_concrete_price": "1,826.54"
     }
  }

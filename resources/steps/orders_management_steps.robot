@@ -11,7 +11,6 @@ Resource    ../pages/zed/zed_order_details_page.robot
 Zed: go to order page:
     [Arguments]    ${orderID}
     Zed: go to second navigation item level:    Sales    Orders
-    Zed: perform search by:    ${orderID}
     Zed: click Action Button in a table for row that contains:    ${orderID}    View
 
 Zed: go to my order page:
@@ -66,6 +65,18 @@ Zed: trigger matching state of order item inside xxx shipment:
     ELSE
         ${elementSelector}=    Set Variable    xpath=//table[@data-qa='order-item-list'][${shipment}]/tbody//td/div[@class='sku'][contains(text(),'${sku}')]/ancestor::tr/td/form[@class='oms-trigger-form']//button[contains(text(),'${event}')] 
     END   
+    Try reloading page until element is/not appear:    ${elementSelector}    true    20    10s
+    Click    ${elementSelector}
+    ${order_changed_status}=    Run Keyword And Ignore Error    Element Should Not Be Visible    ${elementSelector}
+    IF    'FAIL' in ${order_changed_status}
+        Run Keywords
+            Reload
+            Click    ${elementSelector}
+    END
+
+Zed: trigger matching state of xxx order item inside xxx shipment:
+    [Arguments]    ${event}    ${item_number}=1    ${shipment}=1
+    ${elementSelector}=    Set Variable    xpath=//table[@data-qa='order-item-list'][${shipment}]/tbody//tr[${item_number}]//td//form[contains(@name,'trigger_form')]//button[contains(text(),'${event}')]
     Try reloading page until element is/not appear:    ${elementSelector}    true    20    10s
     Click    ${elementSelector}
     ${order_changed_status}=    Run Keyword And Ignore Error    Element Should Not Be Visible    ${elementSelector}

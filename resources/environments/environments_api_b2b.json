@@ -9,8 +9,8 @@
 		},
     "database":{
        "db_host":"127.0.0.1",
-       "db_port":"3306",
-       "db_port_postgres": "5432",
+       "db_port_env":"3306",
+       "db_port_postgres_env": "5432",
        "db_user":"spryker",
        "db_password":"secret",
        "db_name":"eu-docker"
@@ -56,6 +56,14 @@
           "reference":"DE-17",
           "salutation":"Ms"
        },
+       "yves_ottom_admin_user":{
+         "email":"andrew@ottom.de",
+         "first_name":"Andrew",
+         "last_name":"Wedner",
+         "password":"change123",
+         "reference":"DE-8",
+         "salutation":"Mr"
+      },
        "yves_shared_shopping_list_user":{
           "email":"Trever.m@spryker.com",
           "first_name":"Trever",
@@ -434,7 +442,11 @@
           "first_slot_item_sku":"575056",
           "first_slot_uuid":"332b40ac-a789-57ce-bec0-23d8dddd71eb",
           "quantity":2
+       },
+       "configurable_product": {
+           "sku": "574601"
        }
+
     },
     "product_attributes":{
        "brand_1":"Soennecken",
@@ -598,6 +610,13 @@
           "wrong_item":"Wrong Item",
           "no_longer_needed":"No longer needed",
           "qty":"3"
+       }},
+       "productConfigurationInstance": {
+           "productConfigurationInstance":{
+           "displayData": "{\"Preferred time of the day\": \"Afternoon\", \"Date\": \"9.09.2050\"}",
+           "configuration": "{\"time_of_day\": \"3\"}",
+           "configuratorKey": "DATE_TIME_CONFIGURATOR",
+           "isComplete": true
        }
-
- }}
+     }   
+     }

@@ -33,6 +33,7 @@ Resource    ../pages/yves/yves_return_details_page.robot
 Resource    ../pages/yves/yves_checkout_summary_page.robot
 Resource    ../pages/yves/yves_checkout_cancel_payment_page.robot
 Resource    ../steps/header_steps.robot
+Resource    ../steps/checkout_steps.robot
 
 *** Variable ***
 ${notification_area}    xpath=//section[@data-qa='component notification-area']
@@ -45,14 +46,14 @@ Yves: login on Yves with provided credentials:
         IF    '${env}' in ['ui_b2b','ui_suite','ui_mp_b2b']
             ${currentURL}=    Get Location
                 IF    '.at.' in '${currentURL}'
-                    Go To    ${host_at}
+                    Go To    ${yves_at_url}
                     delete all cookies
                     Reload
                     Wait Until Element Is Visible    ${header_login_button}[${env}]
                     Click    ${header_login_button}[${env}]
                     Wait Until Element Is Visible    ${email_field}
                 ELSE
-                    Go To    ${host}
+                    Go To    ${yves_url}
                     delete all cookies
                     Reload
                     Wait Until Element Is Visible    ${header_login_button}[${env}]
@@ -62,7 +63,7 @@ Yves: login on Yves with provided credentials:
         ELSE
                 ${currentURL}=    Get Location
                     IF    '.at.' in '${currentURL}'
-                        Go To    ${host_at}
+                        Go To    ${yves_at_url}
                         delete all cookies
                         Reload
                         mouse over  ${user_navigation_icon_header_menu_item}[${env}]
@@ -70,7 +71,7 @@ Yves: login on Yves with provided credentials:
                         Click    ${user_navigation_menu_login_button}
                         Wait Until Element Is Visible    ${email_field}
                     ELSE
-                        Go To    ${host}
+                        Go To    ${yves_url}
                         delete all cookies
                         Reload
                         mouse over  ${user_navigation_icon_header_menu_item}[${env}]
@@ -155,13 +156,13 @@ Yves: logout on Yves as a customer
 Yves: go to the 'Home' page
     ${currentURL}=    Get Location
     IF    '.at.' in '${currentURL}'
-        Go To    ${host_at}
+        Go To    ${yves_at_url}
     ELSE
-        Go To    ${host}
+        Go To    ${yves_url}
     END
 
 Yves: go to AT store 'Home' page
-    Go To    ${host_at}
+    Go To    ${yves_at_url}
 
 Yves: get the last placed order ID by current customer
     [Documentation]    Returns orderID of the last order from customer account
@@ -185,17 +186,17 @@ Yves: get the last placed order ID by current customer
 Yves: go to URL:
     [Arguments]    ${url}
     ${url}=    Get URL Without Starting Slash    ${url}
-    Go To    ${host}${url}
+    Go To    ${yves_url}${url}
 
 Yves: go to AT URL:
     [Arguments]    ${url}
     ${url}=    Get URL Without Starting Slash    ${url}
-    Go To    ${host_at}${url}
+    Go To    ${yves_at_url}${url}
 
 Yves: go to newly created page by URL:
     [Arguments]    ${url}    ${iterations}=26
     FOR    ${index}    IN RANGE    0    ${iterations}
-        Go To    ${host}${url}
+        Go To    ${yves_url}${url}
         ${page_not_published}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//main//*[contains(text(),'ERROR 404')]
         Log    ${page_not_published}
         IF    '${page_not_published}'=='True'
@@ -212,7 +213,7 @@ Yves: go to newly created page by URL:
 Yves: go to newly created page by URL on AT store:
     [Arguments]    ${url}    ${iterations}=26
     FOR    ${index}    IN RANGE    0    ${iterations}
-        Go To    ${host_at}${url}
+        Go To    ${yves_at_url}${url}
         ${page_not_published}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//main//*[contains(text(),'ERROR 404')]
         Log    ${page_not_published}
         IF    '${page_not_published}'=='True'
@@ -353,7 +354,7 @@ Yves: check if cart is not empty and clear it
     Yves: go to the 'Home' page
     Yves: go to b2c shopping cart
     ${productsInCart}=    Get Element Count    xpath=//article[@class='product-card-item']//div[contains(@class,'product-card-item__box')]
-    ${cartIsEmpty}=    Run Keyword And Return Status    Element should be visible    xpath=//*[contains(@class,'spacing-top') and text()='Your shopping cart is empty!']
+    ${cartIsEmpty}=    Run Keyword And Return Status    Element should be visible    xpath=//*[contains(@class,'spacing-top') and text()='Your shopping cart is empty!']    timeout=1s
     IF    '${cartIsEmpty}'=='False'    Helper: delete all items in cart
 
 Helper: delete all items in cart
@@ -365,11 +366,12 @@ Helper: delete all items in cart
 
 Yves: try reloading page if element is/not appear:
     [Arguments]    ${element}    ${isDisplayed}    ${iterations}=26    ${sleep}=3s
+    ${isDisplayed}=    Convert To Lower Case    ${isDisplayed}
     FOR    ${index}    IN RANGE    0    ${iterations}
         ${elementAppears}=    Run Keyword And Return Status    Element Should Be Visible    ${element}
-        IF    '${isDisplayed}'=='True' and '${elementAppears}'=='False'
+        IF    '${isDisplayed}'=='true' and '${elementAppears}'=='False'
             Run Keywords    Sleep    ${sleep}    AND    Reload
-        ELSE IF    '${isDisplayed}'=='False' and '${elementAppears}'=='True'
+        ELSE IF    '${isDisplayed}'=='false' and '${elementAppears}'=='True'
             Run Keywords    Sleep    ${sleep}    AND    Reload
         ELSE
             Exit For Loop
@@ -420,13 +422,59 @@ I send a POST request:
     ...    ``I send a POST request:    /agent-access-tokens    {"data": {"type": "agent-access-tokens","attributes": {"username": "${agent.email}","password": "${agent.password}"}}}``
     [Arguments]   ${path}    ${json}    ${timeout}=60    ${allow_redirects}=true    ${auth}=${NONE}    ${expected_status}=ANY
     ${data}=    Evaluate    ${json}
-    ${hasValue}    Run Keyword and return status     Should not be empty    ${headers}
-    ${response}=    IF    ${hasValue}   run keyword    POST    ${glue_url}${path}    json=${data}    headers=${headers}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}
-    ...    ELSE    POST    ${glue_url}${path}    json=${data}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=ANY
-    ${response_body}=    IF    ${response.status_code} != 204    Set Variable    ${response.json()}
+    ${headers_not_empty}    Run Keyword and return status     Should not be empty    ${headers}
+    ${response}=    IF    ${headers_not_empty}   run keyword    POST    ${glue_url}${path}    json=${data}    headers=${headers}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}    verify=${verify_ssl}
+    ...    ELSE    POST    ${glue_url}${path}    json=${data}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=ANY    verify=${verify_ssl}
+    ${response.status_code}=    Set Variable    ${response.status_code}
+    IF    ${response.status_code} != 204    
+        TRY    
+            ${response_body}=    Set Variable    ${response.json()}
+        EXCEPT
+            ${content_type}=    Get From Dictionary    ${response.headers}    content-type
+            Fail    Got: '${response.status_code}' status code on: '${response.url}' with reason: '${response.reason}'. Response content type: '${content_type}'. Details: '${response.content}'
+        END
+    END
     ${response_headers}=    Set Variable    ${response.headers}
+    IF    ${response.status_code} == 204    
+        ${response_body}=    Set Variable    ${EMPTY}
+    END
     Set Test Variable    ${response_headers}    ${response_headers}
     Set Test Variable    ${response_body}    ${response_body}
     Set Test Variable    ${response}    ${response}
     Set Test Variable    ${expected_self_link}    ${glue_url}${path}
     [Return]    ${response_body}
+
+I set Headers:
+    [Documentation]    Keyword sets any number of headers for the further endpoint calls.
+    ...    Headers can have any name and any value, they are set as test variable - which means they can be used throughtout one test if set once.
+    ...    This keyword can be used to add access token to the next endpoint calls or to set header for the guest customer, etc.
+    ...
+    ...    It accepts a list of pairs haader-name=header-value as an argument. The list items should be separated by 4 spaces.
+    ...
+    ...    *Example:*
+    ...
+    ...    ``I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}``
+
+    [Arguments]    &{headers}
+    Set Test Variable    &{headers}
+    [Return]    &{headers}
+
+Yves: checkout is blocked with the following message:
+    [Arguments]    ${expectedMessage}
+    ${currentURL}=    Get Url
+    IF    '/cart' in '${currentURL}'
+        ${checkout_button_state}=    Get Element Attribute    ${shopping_cart_checkout_button}    class
+        Should Contain    ${checkout_button_state}    disabled
+        Get Text    ${shopping_cart_checkout_error_message_locator}    contains    ${expectedMessage}
+    ELSE
+        TRY
+            Element Should Be Visible    ${checkout_summary_alert_message}[${env}]
+            Page Should Not Contain Element    ${checkout_summary_submit_order_button}
+            ${actualAlertMessage}=    Get Text    ${checkout_summary_alert_message}[${env}]
+            Should Be Equal    ${actualAlertMessage}    ${expectedMessage}
+        EXCEPT    
+            Yves: accept the terms and conditions:    true
+            Click    ${checkout_summary_submit_order_button}
+            Yves: flash message should be shown:    error    ${expectedMessage}
+        END
+    END

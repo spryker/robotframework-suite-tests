@@ -1,15 +1,16 @@
 {
     "environment":"ui_b2c",
     "env":{
-       "host":"http://yves.de.spryker.local/",
-       "host_at":"http://yves.at.spryker.local/",
+       "yves_url":"http://yves.de.spryker.local/",
+       "yves_at_url":"http://yves.at.spryker.local/",
        "zed_url":"http://backoffice.de.spryker.local/",
        "mp_url":"http://mp.de.spryker.local/security-merchant-portal-gui/login/",
        "glue_url":"http://glue.de.spryker.local"
-    },
+  },
     "database":{
        "db_host":"127.0.0.1",
-       "db_port":"3306",
+       "db_port_env":"3306",
+       "db_port_postgres_env": "5432",
        "db_user":"spryker",
        "db_password":"secret",
        "db_name":"eu-docker"
@@ -19,6 +20,7 @@
        "yves_user_first_name":"George",
        "yves_user_last_name":"Freeman",
        "yves_user_password":"change123",
+       "yves_user_reference":"DE--5",
        "yves_user_address":"Mr George Freeman, Kirncher Str. 7, 10247 Berlin",
        "yves_second_user_email":"bill.martin@spryker.com",
        "yves_second_user_first_name":"Bill",
@@ -61,7 +63,15 @@
        "stock_product_abstract_sku": "063",
        "stock_product_concrete_sku": "063_29231675",
        "discontinued_product_abstract_sku": "016",
-       "discontinued_product_concrete_sku": "016_21748907"
+       "discontinued_product_concrete_sku": "016_21748907",
+       "configurable_product_abstract_sku": "124",
+       "configurable_product_concrete_one_sku": "124_31623088",
+       "configurable_product_concrete_one_attribute": "128 GB",
+       "configurable_product_concrete_two_sku": "124_29866591",
+       "configurable_product_concrete_two_attribute": "500 GB",
+       "configurable_product_name": "HP ProDesk 400 G3",
+       "configurable_product_concrete_one_price": "25.00",
+       "configurable_product_concrete_two_price": "310.19"
     },
     "address":{
        "street_name":"st",

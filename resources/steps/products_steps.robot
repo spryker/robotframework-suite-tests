@@ -139,7 +139,7 @@ Zed: view abstract product page contains:
         END
         IF    '${key}'=='variants count' and '${value}' != '${EMPTY}'
             Clear Text    xpath=//div[@id='product-variant-table_filter']//input[@type='search']
-            Sleep    1s
+            Wait Until Element Is Visible    xpath=//table[@id='product-variant-table']//tbody/tr[1]
             ${actualVariantsCount}=    Get Element Count    xpath=//table[@id='product-variant-table']//tbody/tr
             Should Be Equal    '${actualVariantsCount}'    '${value}'
         END
