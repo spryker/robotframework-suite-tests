@@ -512,7 +512,9 @@
              "concrete_unavailable_product":"212447",
              "product_2":{
                "abstract_available_with_stock_and_never_out_of_stock":"M24632",
-               "concrete_available_with_stock_and_never_out_of_stock":"426615"}
+               "concrete_available_with_stock_and_never_out_of_stock":"426615"},
+               "product_3":{
+                  "abstract_available_with_stock_and_never_out_of_stock":"M87416"}
           },
           "abstract_product_with_variants":{
              "concretes_3":"M29456",
@@ -580,8 +582,11 @@
              "discount_amount_with_20_percentage_off_storage":"16383",
              "discount_amount_with_10_percentage_off_minimum_order":"1882"
           }
-       }
-    },
+       },
+       "configurable_product": {
+          "sku": "574601"
+        }  
+      },
     "product_offers":{
        "inactive_offer_with_volume_price":"offer3",
        "waiting_for_approval_offer_with_volume_price":"offer4",
@@ -788,5 +793,13 @@
        "return_reason_wrong_item":"Wrong Item",
        "return_reason_no_longer_needed":"No longer needed",
        "return_reasons_qty":"3"
-    }
+    },
+   "productConfigurationInstance": {
+       "productConfigurationInstance":{
+       "displayData": "{\"Preferred time of the day\": \"Afternoon\", \"Date\": \"9.09.2050\"}",
+       "configuration": "{\"time_of_day\": \"3\"}",
+       "configuratorKey": "DATE_TIME_CONFIGURATOR",
+       "isComplete": true
+   }
+ }   
  }
