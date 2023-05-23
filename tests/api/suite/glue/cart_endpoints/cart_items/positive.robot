@@ -312,7 +312,7 @@ Change_configuration_and_quantity_in_the_cart
    And Response body parameter should be:    [included][0][attributes][productConfigurationInstance][displayData]  {"Preferred time of the day":"Afternoon","Date":"09.09.2050"}
    And Response body parameter should be:    [included][0][attributes][productConfigurationInstance][isComplete]  False
    And Response body parameter should be:    [included][0][attributes][productConfigurationInstance][configuration]  {"time_of_day":"4"}
-   When I send a PATCH request:    /carts/${cart_id}/items/${item_uid}?include=items    {"data":{"type":"items","attributes":{"sku":"${configurable_product.sku}","quantity":2,"productConfigurationInstance":{"displayData":'{"Preferred time of the day":"Morning","Date":"01.01.2025"}',"configuration":'{"time_of_day":"4"}',"configuratorKey":"${productConfigurationInstance.configuratorKey}","isComplete":True,"quantity":2,"availableQuantity":4,"prices":[{"priceTypeName":"DEFAULT","netAmount":23434,"grossAmount":42502,"currency":{"code":"EUR","name":"Euro","symbol":"€"},"volumePrices":[{"netAmount":150,"grossAmount":165,"quantity":5},{"netAmount":145,"grossAmount":158,"quantity":10},{"netAmount":140,"grossAmount":152,"quantity":20}]}]}}}}
+   When I send a PATCH request:    /carts/${cart_id}/items/${item_uid}?include=items    {"data":{"type":"items","attributes":{"sku":"${configurable_product.sku}","quantity":2,"productConfigurationInstance":{"displayData":'{"Preferred time of the day":"Morning","Date":"01.01.2055"}',"configuration":'{"time_of_day":"4"}',"configuratorKey":"${productConfigurationInstance.configuratorKey}","isComplete":True,"quantity":2,"availableQuantity":4,"prices":[{"priceTypeName":"DEFAULT","netAmount":23434,"grossAmount":42502,"currency":{"code":"EUR","name":"Euro","symbol":"€"},"volumePrices":[{"netAmount":150,"grossAmount":165,"quantity":5},{"netAmount":145,"grossAmount":158,"quantity":10},{"netAmount":140,"grossAmount":152,"quantity":20}]}]}}}}
    Then Response status code should be:    200
    And Response reason should be:    OK
    And Response header parameter should be:    Content-Type    ${default_header_content_type}
@@ -321,9 +321,6 @@ Change_configuration_and_quantity_in_the_cart
    And Response body parameter should be:    [included][0][id]    ${item_uid}
    And Response body parameter should be:    [included][0][attributes][quantity]    2
    And Response body parameter should be:    [included][0][attributes][amount]    None
-   # And Response body parameter should be:    [included][0][attributes][productConfigurationInstance][displayData]  {"Preferred time of the day":"Morning","Date":"01.01.2025"}
-   # And Response body parameter should be:    [included][0][attributes][productConfigurationInstance][isComplete]  True
-   # And Response body parameter should be:    [included][0][attributes][productConfigurationInstance][configuration]  {"time_of_day":"4"}
    And Response body parameter should be:    [included][0][attributes][calculations][sumPriceToPayAggregation]    76504
    And Response body parameter should not be EMPTY:    [data][links][self]
    [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cart_id}
