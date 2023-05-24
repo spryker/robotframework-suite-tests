@@ -427,7 +427,8 @@
           }
        },
        "configurable_product":{
-          "sku":"093_24495843"
+          "sku":"093_24495843",
+          "name":"Sony SmartWatch 3"
        },
        "discount_1":{
           "name":"10% off minimum order",

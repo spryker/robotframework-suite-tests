@@ -196,3 +196,110 @@ Remove_an_item_from_the_guest_cart_of_another_anonymous_customer
     And Response should return error code:    101
     And Response reason should be:    Not Found
     And Response should return error message:    Cart with given uuid not found.
+
+Add_a_configurable_product_to_the_cart_with_empty_quantity
+    [Setup]    I set Headers:    Content-Type=${default_header_content_type}    X-Anonymous-Customer-Unique-Id=${random}
+    Run Keywords    Create a guest cart:    ${random}    ${concrete_product_with_concrete_product_alternative.sku}    1
+    ...    AND    Save value to a variable:    [data][id]    guestCartId
+    ...    AND    Cleanup All Items In The Guest Cart:    ${guest_cart_id}
+   When I send a POST request:    /guest-carts/${guestCartId}/guest-cart-items?include=items    {"data":{"type":"guest-cart-items","attributes":{"sku":"${configurable_product.sku}","quantity":"","productConfigurationInstance":{"displayData":'{"Preferred time of the day":"Afternoon","Date":"09.09.2050"}',"configuration":'{"time_of_day":"4"}',"configuratorKey":"DATE_TIME_CONFIGURATOR","isComplete":True,"quantity":3,"availableQuantity":4,"prices":[{"priceTypeName":"DEFAULT","netAmount":23434,"grossAmount":42502,"currency":{"code":"EUR","name":"Euro","symbol":"€"},"volumePrices":[{"netAmount":150,"grossAmount":165,"quantity":5},{"netAmount":145,"grossAmount":158,"quantity":10},{"netAmount":140,"grossAmount":152,"quantity":20}]}]}}}}
+   And Response status code should be:    422
+   And Response should return error code:    901
+   And Response reason should be:    Unprocessable Content
+   And Response should return error message:    quantity => This value should not be blank.
+   And I send a GET request:    /guest-carts/${guestCartId}?include=guest-cart-items
+   Then Response status code should be:    200
+   And Response reason should be:    OK
+   And Response body parameter should be:    [data][attributes][totals][grandTotal]    0
+   And Response body parameter should not be EMPTY:    [data][links][self] 
+
+
+ Add_a_configurable_product_to_the_cart_with_0_quantity
+    [Setup]    I set Headers:    Content-Type=${default_header_content_type}    X-Anonymous-Customer-Unique-Id=${random}
+    Run Keywords    Create a guest cart:    ${random}    ${concrete_product_with_concrete_product_alternative.sku}    1
+    ...    AND    Save value to a variable:    [data][id]    guestCartId
+    ...    AND    Cleanup All Items In The Guest Cart:    ${guest_cart_id}
+   When I send a POST request:    /guest-carts/${guestCartId}/guest-cart-items?include=items    {"data":{"type":"guest-cart-items","attributes":{"sku":"${configurable_product.sku}","quantity":0,"productConfigurationInstance":{"displayData":'{"Preferred time of the day":"Afternoon","Date":"09.09.2050"}',"configuration":'{"time_of_day":"4"}',"configuratorKey":"DATE_TIME_CONFIGURATOR","isComplete":True,"quantity":3,"availableQuantity":4,"prices":[{"priceTypeName":"DEFAULT","netAmount":23434,"grossAmount":42502,"currency":{"code":"EUR","name":"Euro","symbol":"€"},"volumePrices":[{"netAmount":150,"grossAmount":165,"quantity":5},{"netAmount":145,"grossAmount":158,"quantity":10},{"netAmount":140,"grossAmount":152,"quantity":20}]}]}}}}
+   And Response status code should be:    422
+   And Response should return error code:    901
+   And Response reason should be:    Unprocessable Content
+   And Response should return error message:    quantity => This value should be greater than 0.
+   And I send a GET request:    /guest-carts/${guestCartId}?include=guest-cart-items
+   Then Response status code should be:    200
+   And Response reason should be:    OK
+   And Response body parameter should be:    [data][attributes][totals][grandTotal]    0
+   And Response body parameter should not be EMPTY:    [data][links][self] 
+
+Add_a_configurable_product_to_the_cart_with_negative_quantity
+   [Setup]    I set Headers:    Content-Type=${default_header_content_type}    X-Anonymous-Customer-Unique-Id=${random}
+    Run Keywords    Create a guest cart:    ${random}    ${concrete_product_with_concrete_product_alternative.sku}    1
+    ...    AND    Save value to a variable:    [data][id]    guestCartId
+    ...    AND    Cleanup All Items In The Guest Cart:    ${guest_cart_id}
+   When I send a POST request:    /guest-carts/${guestCartId}/guest-cart-items?include=items    {"data":{"type":"guest-cart-items","attributes":{"sku":"${configurable_product.sku}","quantity":-6,"productConfigurationInstance":{"displayData":'{"Preferred time of the day":"Afternoon","Date":"09.09.2050"}',"configuration":'{"time_of_day":"4"}',"configuratorKey":"DATE_TIME_CONFIGURATOR","isComplete":True,"quantity":3,"availableQuantity":4,"prices":[{"priceTypeName":"DEFAULT","netAmount":23434,"grossAmount":42502,"currency":{"code":"EUR","name":"Euro","symbol":"€"},"volumePrices":[{"netAmount":150,"grossAmount":165,"quantity":5},{"netAmount":145,"grossAmount":158,"quantity":10},{"netAmount":140,"grossAmount":152,"quantity":20}]}]}}}}
+   And Response status code should be:    422
+   And Response should return error code:    901
+   And Response reason should be:    Unprocessable Content
+   And Response should return error message:    quantity => This value should be greater than 0.
+   And I send a GET request:    /guest-carts/${guestCartId}?include=guest-cart-items
+   Then Response status code should be:    200
+   And Response reason should be:    OK
+   And Response body parameter should be:    [data][attributes][totals][grandTotal]    0
+   And Response body parameter should not be EMPTY:    [data][links][self]  
+
+
+Add_a_configurable_product_to_the_cart_with_negative_price
+    [Documentation]   https://spryker.atlassian.net/browse/CC-25383
+    [Tags]    skip-due-to-issue    
+    [Setup]    I set Headers:    Content-Type=${default_header_content_type}    X-Anonymous-Customer-Unique-Id=${random}
+     Run Keywords    Create a guest cart:    ${random}    ${concrete_product_with_concrete_product_alternative.sku}    1
+    ...    AND    Save value to a variable:    [data][id]    guestCartId
+     ...    AND    Cleanup All Items In The Guest Cart:    ${guest_cart_id}
+    When I send a POST request:    /guest-carts/${guestCartId}/guest-cart-items?include=items    {"data":{"type":"guest-cart-items","attributes":{"sku":"${configurable_product.sku}","quantity":1,"productConfigurationInstance":{"displayData":'{"Preferred time of the day":"Afternoon","Date":"09.09.2050"}',"configuration":'{"time_of_day":"4"}',"configuratorKey":"DATE_TIME_CONFIGURATOR","isComplete":True,"quantity":3,"availableQuantity":4,"prices":[{"priceTypeName":"DEFAULT","netAmount":-23434,"grossAmount":-42502,"currency":{"code":"EUR","name":"Euro","symbol":"€"},"volumePrices":[{"netAmount":150,"grossAmount":165,"quantity":5},{"netAmount":145,"grossAmount":158,"quantity":10},{"netAmount":140,"grossAmount":152,"quantity":20}]}]}}}}
+    And Response status code should be:    422
+    And Response should return error code:    901
+    And Response reason should be:    Unprocessable Content
+    And Response should return error message:    netAmount => This value should be greater than 0.
+    And Response should return error message:    grossAmount => This value should be greater than 0.
+   And I send a GET request:    /guest-carts/${guestCartId}?include=guest-cart-items
+   Then Response status code should be:    200
+   And Response reason should be:    OK
+   And Response body parameter should be:    [data][attributes][totals][grandTotal]    0
+   And Response body parameter should not be EMPTY:    [data][links][self]  
+
+
+Add_a_configurable_product_to_the_cart_with_empty_price
+    [Documentation]   https://spryker.atlassian.net/browse/CC-29260
+    [Tags]    skip-due-to-issue    
+    [Setup]    I set Headers:    Content-Type=${default_header_content_type}    X-Anonymous-Customer-Unique-Id=${random}
+    Run Keywords    Create a guest cart:    ${random}    ${concrete_product_with_concrete_product_alternative.sku}    1
+    ...    AND    Save value to a variable:    [data][id]    guestCartId
+    ...    AND    Cleanup All Items In The Guest Cart:    ${guest_cart_id}
+   When I send a POST request:    /guest-carts/${guestCartId}/guest-cart-items?include=items    {"data":{"type":"guest-cart-items","attributes":{"sku":"${configurable_product.sku}","quantity":1,"productConfigurationInstance":{"displayData":'{"Preferred time of the day":"Afternoon","Date":"09.09.2050"}',"configuration":'{"time_of_day":"4"}',"configuratorKey":"DATE_TIME_CONFIGURATOR","isComplete":True,"quantity":3,"availableQuantity":4,"prices":[{"priceTypeName":"DEFAULT","netAmount":"","grossAmount":"","currency":{"code":"EUR","name":"Euro","symbol":"€"},"volumePrices":[{"netAmount":150,"grossAmount":165,"quantity":5},{"netAmount":145,"grossAmount":158,"quantity":10},{"netAmount":140,"grossAmount":152,"quantity":20}]}]}}}}
+   And Response status code should be:    422
+   And Response should return error code:    901
+   And Response reason should be:    Unprocessable Content
+   And Response should return error message:    netAmount => This value should be greater than 0.
+   And Response should return error message:    grossAmount => This value should be greater than 0.
+   And I send a GET request:    /guest-carts/${guestCartId}?include=guest-cart-items
+   Then Response status code should be:    200
+   And Response reason should be:    OK
+   And Response body parameter should be:    [data][attributes][totals][grandTotal]    0
+   And Response body parameter should not be EMPTY:    [data][links][self]  
+
+Add_a_configurable_product_with_missing_isComplete_value_of_to_the_cart
+    [Documentation]   https://spryker.atlassian.net/browse/CC-29261
+    [Tags]    skip-due-to-issue   
+    [Setup]    I set Headers:    Content-Type=${default_header_content_type}    X-Anonymous-Customer-Unique-Id=${random}
+    Run Keywords    Create a guest cart:    ${random}    ${concrete_product_with_concrete_product_alternative.sku}    1
+    ...    AND    Save value to a variable:    [data][id]    guestCartId
+    ...    AND    Cleanup All Items In The Guest Cart:    ${guest_cart_id}
+   When I send a POST request:    /guest-carts/${guestCartId}/guest-cart-items?include=items    {"data":{"type":"guest-cart-items","attributes":{"sku":"${configurable_product.sku}","quantity":1,"productConfigurationInstance":{"displayData":'{"Preferred time of the day":"Afternoon","Date":"09.09.2050"}',"configuration":'{"time_of_day":"4"}',"configuratorKey":"DATE_TIME_CONFIGURATOR","quantity":3,"availableQuantity":4,"prices":[{"priceTypeName":"DEFAULT","netAmount":9,"grossAmount":10,"currency":{"code":"EUR","name":"Euro","symbol":"€"},"volumePrices":[{"netAmount":150,"grossAmount":165,"quantity":5},{"netAmount":145,"grossAmount":158,"quantity":10},{"netAmount":140,"grossAmount":152,"quantity":20}]}]}}}}
+   And Response status code should be:    422
+   And Response should return error code:    901
+   And Response reason should be:    Unprocessable Content
+   And Response should return error message:    isComplete => This field is missing.
+   And I send a GET request:    /guest-carts/${guestCartId}?include=guest-cart-items
+   Then Response status code should be:    200
+   And Response reason should be:    OK
+   And Response body parameter should be:    [data][attributes][totals][grandTotal]    0
+   And Response body parameter should not be EMPTY:    [data][links][self]  
