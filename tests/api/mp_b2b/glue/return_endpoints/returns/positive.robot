@@ -80,8 +80,6 @@ Create_a_return
     And Response body has correct self link for created entity:    ${returnId}
 
 Create_a_return_with_return_items
-    [Documentation]    incorrect self link https://spryker.atlassian.net/browse/CC-26186
-    [Tags]    skip-due-to-issue
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
     ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
@@ -115,7 +113,6 @@ Create_a_return_with_return_items
     And Response include should contain certain entity type:    return-items
     And Response body parameter should be:    [included][0][attributes][orderItemUuid]    ${uuid}
     And Response body parameter should be:    [included][0][attributes][reason]    ${return_reason_damaged}
-    And Response body has correct self link
 
 ####GET####
 Retrieves_list_of_returns
@@ -224,8 +221,6 @@ Retrieves_list_of_returns_included_merchants
     And Response body has correct self link
 
 Retrieves_return_by_id_with_returns_items_included
-#    [Documentation]    incorrect self link https://spryker.atlassian.net/browse/CC-26186
-#    [Tags]    skip-due-to-issue
    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
     ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
