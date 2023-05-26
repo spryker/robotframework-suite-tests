@@ -322,6 +322,7 @@ Create_order_with_same_items_in_different_shipments
     And Response body parameter should be:    [included][0][attributes][shipments][0][defaultNetPrice]    0
     And Response body parameter should be:    [included][0][attributes][shipments][0][currencyIsoCode]    ${currency.eur.code}
     And Response should contain certain number of values:    [included][0][attributes][expenses]    idShipment    1
+
 Create_order_with_free_shipping_discount
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
@@ -446,3 +447,4 @@ Create_order_with_2_product_discounts
     And Response body parameter should contain:    [included][0][attributes][calculatedDiscounts]    description: ${discount_2.description}
     And Response body parameter should contain:    [included][0][attributes][calculatedDiscounts]    voucherCode: None
     And Response body parameter should contain:    [included][0][attributes][calculatedDiscounts]    quantity: 3
+
