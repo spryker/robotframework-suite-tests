@@ -393,7 +393,8 @@
        },
        "configurable_product":{
            "sku_1": "124_29866591",
-           "sku_2": "124_31623088"
+           "sku_2": "124_31623088",
+           "name":"HP ProDesk 400 G3"
    }
     },
     "product_attributes":{
