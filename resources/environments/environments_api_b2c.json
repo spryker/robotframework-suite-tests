@@ -217,7 +217,8 @@
        "configurable_bundle":{
           "slot_1":{
              "product_1":"003_26138343",
-             "product_no_stock":"011_30775359"
+             "product_no_stock":"011_30775359",
+             "name":""
           },
           "slot_5":{
              "product_1":"005_30663301",

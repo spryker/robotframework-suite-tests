@@ -241,3 +241,87 @@ Delete_item_form_cart
     When I send a DELETE request:    /carts/${cart_id}/items/${item_group_key}
     Then Response status code should be:    204
     And Response reason should be:    No Content
+
+
+
+Add_a_configurable_product_to_the_cart
+   [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
+   ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
+   ...    AND    I send a POST request:    /carts   {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "config-product-to-cart-${random}"}}}
+   ...    AND    Response status code should be:    201
+   ...    AND    Save value to a variable:    [data][id]    cart_id
+   I send a POST request:    /carts/${cart_id}/items?include=items    {"data":{"type":"items","attributes":{"sku":"${configurable_product.sku}","quantity":3,"productConfigurationInstance":{"displayData":'{"Preferred time of the day":"Afternoon","Date":"09.09.2050"}',"configuration":'{"time_of_day":"4"}',"configuratorKey":"DATE_TIME_CONFIGURATOR","isComplete":True,"quantity":3,"availableQuantity":4,"prices":[{"priceTypeName":"DEFAULT","netAmount":23434,"grossAmount":42502,"currency":{"code":"EUR","name":"Euro","symbol":"€"},"volumePrices":[{"netAmount":150,"grossAmount":165,"quantity":5},{"netAmount":145,"grossAmount":158,"quantity":10},{"netAmount":140,"grossAmount":152,"quantity":20}]}]}}}}
+   And Response status code should be:    201
+   And Save value to a variable:    [data][id]    CartItemId
+   And Response body parameter should be:    [included][0][attributes][sku]    ${configurable_product.sku}
+   And Response body parameter should be:    [included][0][attributes][quantity]    3
+   And Response body parameter should be:    [included][0][attributes][productConfigurationInstance][displayData]  {"Preferred time of the day":"Afternoon","Date":"09.09.2050"}
+   And Response body parameter should be:    [included][0][attributes][productConfigurationInstance][isComplete]  True
+   When I send a GET request:    /carts/${cart_id}?include=items,concrete-products
+   Then Response status code should be:    200
+   And Response reason should be:    OK
+   And Response body parameter should be:  [data][type]    carts
+   And Response body parameter should be:  [data][id]    ${cart_id}
+   And Response body parameter should be:  [data][attributes][priceMode]    ${mode.gross}
+   And Response body parameter should be:  [data][attributes][currency]    ${currency.eur.code}
+   And Response body parameter should be:  [included][0][type]    concrete-products
+   And Response body parameter should be:  [included][0][id]    ${configurable_product.sku}
+   And Response body parameter should be:    [data][attributes][totals][expenseTotal]    0
+   And Response body parameter should not be EMPTY:    [data][attributes][totals][discountTotal]
+   And Response body parameter should be greater than:    [data][attributes][totals][taxTotal]    0
+   And Response body parameter should be greater than:    [data][attributes][totals][subtotal]    0
+   And Response body parameter should be greater than:    [data][attributes][totals][grandTotal]    0
+   And Response body parameter should be greater than:    [data][attributes][totals][priceToPay]    0
+   And Response body parameter should be:    [data][attributes][discounts][0][displayName]    ${discount_1.name}
+   And Response body parameter should not be EMPTY:    [data][attributes][discounts][0][amount]
+   And Response body parameter should be:    [data][attributes][discounts][0][code]    None
+   And Response body parameter should not be EMPTY:    [data][links][self]
+   [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cart_id}
+   ...    AND    Response status code should be:    204
+
+Update_configurable_product_quantity_in_the_cart
+   [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
+   ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
+   ...    AND    I send a POST request:    /carts   {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "update-config-product-${random}"}}}
+   ...    AND    Response status code should be:    201
+   ...    AND    Save value to a variable:    [data][id]    cart_id
+   I send a POST request:    /carts/${cart_id}/items?include=items    {"data":{"type":"items","attributes":{"sku":"${configurable_product.sku}","quantity":3,"productConfigurationInstance":{"displayData":'{"Preferred time of the day":"Afternoon","Date":"09.09.2050"}',"configuration":'{"time_of_day":"4"}',"configuratorKey":"DATE_TIME_CONFIGURATOR","isComplete":False,"quantity":3,"availableQuantity":4,"prices":[{"priceTypeName":"DEFAULT","netAmount":23434,"grossAmount":42502,"currency":{"code":"EUR","name":"Euro","symbol":"€"},"volumePrices":[{"netAmount":150,"grossAmount":165,"quantity":5},{"netAmount":145,"grossAmount":158,"quantity":10},{"netAmount":140,"grossAmount":152,"quantity":20}]}]}}}}
+   And Response status code should be:    201
+   And Save value to a variable:    [included][0][id]    item_uid
+   And Save value to a variable:    [included][0][attributes][calculations][sumPriceToPayAggregation]    item_total_price
+   And Response body parameter should be:    [included][0][attributes][sku]    ${configurable_product.sku}
+   And Response body parameter should be:    [included][0][attributes][quantity]    3
+   And Response body parameter should be:    [included][0][attributes][productConfigurationInstance][displayData]  {"Preferred time of the day":"Afternoon","Date":"09.09.2050"}
+   And Response body parameter should be:    [included][0][attributes][productConfigurationInstance][isComplete]  False
+   And Response body parameter should be:    [included][0][attributes][productConfigurationInstance][configuration]  {"time_of_day":"4"}
+   When I send a PATCH request:    /carts/${cart_id}/items/${item_uid}?include=items    {"data":{"type":"items","attributes":{"sku":"${configurable_product.sku}","quantity":2,"productConfigurationInstance":{"displayData":'{"Preferred time of the day":"Afternoon","Date":"09.09.2050"}',"configuration":'{"time_of_day":"4"}',"configuratorKey":"${productConfigurationInstance.configuratorKey}","isComplete":False,"quantity":2,"availableQuantity":4,"prices":[{"priceTypeName":"DEFAULT","netAmount":23434,"grossAmount":42502,"currency":{"code":"EUR","name":"Euro","symbol":"€"},"volumePrices":[{"netAmount":150,"grossAmount":165,"quantity":5},{"netAmount":145,"grossAmount":158,"quantity":10},{"netAmount":140,"grossAmount":152,"quantity":20}]}]}}}}
+   Then Response status code should be:    200
+   And Response reason should be:    OK
+   And Response header parameter should be:    Content-Type    ${default_header_content_type}
+   And Response body parameter should be:    [data][id]    ${cart_id}
+   And Response body parameter should be:    [data][type]    carts
+   And Response body parameter should be:    [included][0][id]    ${item_uid}
+   And Response body parameter should be:    [included][0][attributes][quantity]    2
+   And Response body parameter should be:    [included][0][attributes][amount]    None
+   And Response body parameter should be:    [included][0][attributes][calculations][sumPriceToPayAggregation]    76504
+   And Response body parameter should not be EMPTY:    [data][links][self]
+   [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cart_id}
+   ...    AND    Response status code should be:    204
+   
+
+
+Delete_configurable_product_item_form_the_cart
+   [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
+   ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
+   ...    AND    I send a POST request:    /carts   {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "delete-config-product-${random}"}}}
+   ...    AND    Response status code should be:    201
+   ...    AND    Save value to a variable:    [data][id]    cart_id
+   I send a POST request:    /carts/${cart_id}/items?include=items    {"data":{"type":"items","attributes":{"sku":"${configurable_product.sku}","quantity":3,"productConfigurationInstance":{"displayData":'{"Preferred time of the day":"Afternoon","Date":"09.09.2050"}',"configuration":'{"time_of_day":"4"}',"configuratorKey":"DATE_TIME_CONFIGURATOR","isComplete":False,"quantity":3,"availableQuantity":4,"prices":[{"priceTypeName":"DEFAULT","netAmount":23434,"grossAmount":42502,"currency":{"code":"EUR","name":"Euro","symbol":"€"},"volumePrices":[{"netAmount":150,"grossAmount":165,"quantity":5},{"netAmount":145,"grossAmount":158,"quantity":10},{"netAmount":140,"grossAmount":152,"quantity":20}]}]}}}}
+   And Response status code should be:    201
+   And Save value to a variable:    [included][0][id]    item_uid
+   When I send a DELETE request:    /carts/${cart_id}/items/${item_uid}
+   Then Response status code should be:    204
+   And Response reason should be:    No Content
+   And I send a GET request:    /carts/${cart_id}?include=items
+   And Response body parameter should be:    [data][attributes][totals][grandTotal]    0
+

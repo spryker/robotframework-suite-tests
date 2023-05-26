@@ -260,6 +260,8 @@ Add_a_configurable_product_to_the_cart_with_empty_quantity
   [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cart_id}
     ...    AND    Response status code should be:    204
     ...    AND    Response reason should be:    No Content    
+
+
 Add_a_configurable_product_to_the_cart_with_0_quantity
    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
