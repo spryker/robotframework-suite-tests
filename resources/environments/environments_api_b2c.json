@@ -218,6 +218,7 @@
           "slot_1":{
              "product_1":"003_26138343",
              "product_no_stock":"011_30775359"
+
           },
           "slot_5":{
              "product_1":"005_30663301",
@@ -392,7 +393,8 @@
        },
        "configurable_product":{
            "sku_1": "124_29866591",
-           "sku_2": "124_31623088"
+           "sku_2": "124_31623088",
+           "name":"HP ProDesk 400 G3"
    }
     },
     "product_attributes":{
