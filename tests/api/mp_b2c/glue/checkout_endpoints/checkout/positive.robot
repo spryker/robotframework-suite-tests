@@ -393,3 +393,148 @@ Create_order_with_2_product_discounts
     And Response body parameter should be:    [included][0][attributes][calculatedDiscounts]["Free standard delivery"][description]    ${discount_3.description}
     And Response body parameter should contain:    [included][0][attributes][calculatedDiscounts]    voucherCode: None
     And Response body parameter should contain:    [included][0][attributes][calculatedDiscounts]    quantity: 1
+
+
+Create_order_with_configurable_product
+     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
+    ...  AND    I set Headers:    Authorization=${token}    
+    ...  AND    Find or create customer cart
+    ...  AND    Cleanup all items in the cart:    ${cart_id}
+    ...  AND    I send a POST request:    /carts/${cart_id}/items?include=items    {"data":{"type":"items","attributes":{"sku":"${configurable_product.sku_1}","quantity":1,"productConfigurationInstance":{"displayData":'{"Preferred time of the day":"Afternoon","Date":"09.09.2050"}',"configuration":'{"time_of_day":"4"}',"configuratorKey":"DATE_TIME_CONFIGURATOR","isComplete":True,"quantity":1,"availableQuantity":4,"prices":[{"priceTypeName":"DEFAULT","netAmount":23434,"grossAmount":42502,"currency":{"code":"EUR","name":"Euro","symbol":"€"},"volumePrices":[{"netAmount":150,"grossAmount":165,"quantity":5},{"netAmount":145,"grossAmount":158,"quantity":10},{"netAmount":140,"grossAmount":152,"quantity":20}]}]}}}}
+    And Save value to a variable:    [data][id]    CartItemId
+    And Response body parameter should be:    [included][0][attributes][sku]    ${configurable_product.sku_1}
+    And Response body parameter should be:    [included][0][attributes][quantity]    1
+    And Response body parameter should be:    [included][0][attributes][productConfigurationInstance][displayData]  {"Preferred time of the day":"Afternoon","Date":"09.09.2050"}
+    And Response body parameter should be:    [included][0][attributes][productConfigurationInstance][isComplete]  True
+    When I send a POST request:    /checkout?include=orders    {"data": {"type": "checkout","attributes": {"customer": {"email": "${yves_user.email}","salutation": "${yves_user.salutation}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}"},"idCart": "${cart_id}","billingAddress": {"salutation": "${yves_user.salutation}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}","address1": "${default.address1}","address2": "${default.address2}","address3": "${default.address3}","zipCode": "${default.zipCode}","city": "${default.city}","iso2Code": "${default.iso2Code}","company": "${default.company}","phone": "${default.phone}","isDefaultBilling": False,"isDefaultShipping": False},"shippingAddress": {"salutation": "${yves_user.salutation}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}","address1": "${default.address1}","address2": "${default.address2}","address3": "${default.address3}","zipCode": "${default.zipCode}","city": "${default.city}","iso2Code": "${default.iso2Code}","company": "${default.company}","phone": "${default.phone}","isDefaultBilling": False,"isDefaultShipping": False},"payments": [{"paymentProviderName": "${payment.provider_name}","paymentMethodName": "${payment.method_name}"}],"shipment": {"idShipmentMethod": 1},"items": ["${configurable_product.sku_1}"]}}}
+    And Response status code should be:    201
+    And Response reason should be:    Created
+    And Response body parameter should be:    [data][type]    checkout
+    And Response body parameter should be:    [data][id]    None
+    And Response body parameter should contain:    [data][attributes][orderReference]    ${store.de}--
+    And Response body parameter should be:    [data][attributes][redirectUrl]    None
+    And Response body parameter should be:    [data][attributes][isExternalRedirect]    None
+    And Response body has correct self link internal
+    And Response body parameter should be:    [data][relationships][orders][data][0][type]    orders
+    And Response body parameter should contain:    [data][relationships][orders][data][0][id]    ${store.de}--
+    And Response body parameter should be:    [included][0][type]    orders
+    And Response body parameter should contain:    [included][0][id]    ${store.de}--
+    And Response body parameter should not be EMPTY:    [included][0][attributes][createdAt]
+    And Response body parameter should be:    [included][0][attributes][currencyIsoCode]    ${currency.eur.code}
+    And Response body parameter should be:    [included][0][attributes][priceMode]    ${mode.gross}
+    #totals
+    And Response body parameter should be greater than:    [included][0][attributes][totals][expenseTotal]    0
+    And Response body parameter should be greater than:    [included][0][attributes][totals][discountTotal]    0
+    And Response body parameter should be:    [included][0][attributes][totals][taxTotal]    0
+    And Response body parameter should be greater than:    [included][0][attributes][totals][subtotal]    0
+    And Response body parameter should be greater than:    [included][0][attributes][totals][grandTotal]    0
+    And Response body parameter should be:    [included][0][attributes][totals][canceledTotal]    0
+    And Response body parameter should be:    [included][0][attributes][totals][remunerationTotal]    0
+    #billingAddress
+    And Response body parameter should be:    [included][0][attributes][billingAddress][salutation]    ${yves_user.salutation}
+    And Response body parameter should be:    [included][0][attributes][billingAddress][firstName]    ${yves_user.first_name}
+    And Response body parameter should be:    [included][0][attributes][billingAddress][middleName]    None
+    And Response body parameter should be:    [included][0][attributes][billingAddress][lastName]    ${yves_user.last_name}
+    And Response body parameter should be:    [included][0][attributes][billingAddress][address1]    ${default.address1}
+    And Response body parameter should be:    [included][0][attributes][billingAddress][address2]    ${default.address2}
+    And Response body parameter should be:    [included][0][attributes][billingAddress][address3]    ${default.address3}
+    And Response body parameter should be:    [included][0][attributes][billingAddress][company]    ${default.company}
+    And Response body parameter should be:    [included][0][attributes][billingAddress][city]    ${default.city}
+    And Response body parameter should be:    [included][0][attributes][billingAddress][zipCode]    ${default.zipCode}
+    And Response body parameter should be:    [included][0][attributes][billingAddress][poBox]    None
+    And Response body parameter should be:    [included][0][attributes][billingAddress][phone]    ${default.phone}
+    And Response body parameter should be:    [included][0][attributes][billingAddress][cellPhone]    None
+    And Response body parameter should be:    [included][0][attributes][billingAddress][description]    None
+    And Response body parameter should be:    [included][0][attributes][billingAddress][comment]    None
+    And Response body parameter should be:    [included][0][attributes][billingAddress][email]    None
+    And Response body parameter should be:    [included][0][attributes][billingAddress][country]    ${default.country}
+    And Response body parameter should be:    [included][0][attributes][billingAddress][iso2Code]    ${default.iso2Code}
+    #shippingAddress
+    And Response body parameter should be:    [included][0][attributes][shippingAddress][salutation]    ${yves_user.salutation}
+    And Response body parameter should be:    [included][0][attributes][shippingAddress][firstName]    ${yves_user.first_name}
+    And Response body parameter should be:    [included][0][attributes][shippingAddress][middleName]    None
+    And Response body parameter should be:    [included][0][attributes][shippingAddress][lastName]    ${yves_user.last_name}
+    And Response body parameter should be:    [included][0][attributes][shippingAddress][address1]    ${default.address1}
+    And Response body parameter should be:    [included][0][attributes][shippingAddress][address2]    ${default.address2}
+    And Response body parameter should be:    [included][0][attributes][shippingAddress][address3]    ${default.address3}
+    And Response body parameter should be:    [included][0][attributes][shippingAddress][company]    ${default.company}
+    And Response body parameter should be:    [included][0][attributes][shippingAddress][city]    ${default.city}
+    And Response body parameter should be:    [included][0][attributes][shippingAddress][zipCode]    ${default.zipCode}
+    And Response body parameter should be:    [included][0][attributes][shippingAddress][poBox]    None
+    And Response body parameter should be:    [included][0][attributes][shippingAddress][phone]    ${default.phone}
+    And Response body parameter should be:    [included][0][attributes][shippingAddress][cellPhone]    None
+    And Response body parameter should be:    [included][0][attributes][shippingAddress][description]    None
+    And Response body parameter should be:    [included][0][attributes][shippingAddress][comment]    None
+    And Response body parameter should be:    [included][0][attributes][shippingAddress][email]    None
+    And Response body parameter should be:    [included][0][attributes][shippingAddress][country]    ${default.country}
+    And Response body parameter should be:    [included][0][attributes][shippingAddress][iso2Code]    ${default.iso2Code}
+    # #items
+    And Response body parameter should be:    [included][0][attributes][items][0][name]    ${configurable_product.name}
+    And Response body parameter should be:    [included][0][attributes][items][0][sku]    ${configurable_product.sku_1}
+    And Response body parameter should be greater than:    [included][0][attributes][items][0][sumPrice]    0
+    And Response body parameter should be:    [included][0][attributes][items][0][quantity]    1
+    And Response body parameter should be greater than:    [included][0][attributes][items][0][unitGrossPrice]    0
+    And Response body parameter should be greater than:    [included][0][attributes][items][0][sumGrossPrice]    0
+    And Response body parameter should be:    [included][0][attributes][items][0][unitNetPrice]    0
+    And Response body parameter should be:    [included][0][attributes][items][0][sumNetPrice]    0
+    And Response body parameter should be greater than:    [included][0][attributes][items][0][unitPrice]    0
+    And Response body parameter should be:    [included][0][attributes][items][0][unitTaxAmountFullAggregation]    0
+    And Response body parameter should be:    [included][0][attributes][items][0][sumTaxAmountFullAggregation]    0
+    And Response body parameter should be greater than:    [included][0][attributes][items][0][refundableAmount]    0
+    And Response body parameter should be:    [included][0][attributes][items][0][canceledAmount]    0
+    And Response body parameter should be greater than:    [included][0][attributes][items][0][sumSubtotalAggregation]    0
+    And Response body parameter should be greater than:    [included][0][attributes][items][0][unitSubtotalAggregation]    0
+    And Response body parameter should be:    [included][0][attributes][items][0][unitProductOptionPriceAggregation]    0
+    And Response body parameter should be:    [included][0][attributes][items][0][sumProductOptionPriceAggregation]    0
+    And Response body parameter should be:    [included][0][attributes][items][0][unitExpensePriceAggregation]    0
+    And Response body parameter should be:    [included][0][attributes][items][0][sumExpensePriceAggregation]    None
+    And Response body parameter should be greater than:    [included][0][attributes][items][0][unitDiscountAmountAggregation]    0
+    And Response body parameter should be greater than:    [included][0][attributes][items][0][sumDiscountAmountAggregation]    0
+    And Response body parameter should be greater than:    [included][0][attributes][items][0][unitDiscountAmountFullAggregation]    0
+    And Response body parameter should be greater than:    [included][0][attributes][items][0][sumDiscountAmountFullAggregation]    0
+    And Response body parameter should be greater than:    [included][0][attributes][items][0][unitPriceToPayAggregation]    0
+    And Response body parameter should be greater than:    [included][0][attributes][items][0][sumPriceToPayAggregation]    0
+    And Response body parameter should be:    [included][0][attributes][items][0][taxRateAverageAggregation]    0.00
+    And Response body parameter should be:    [included][0][attributes][items][0][taxAmountAfterCancellation]    None
+    And Response body parameter should be:    [included][0][attributes][items][0][orderReference]    None
+    And Response body parameter should not be EMPTY:    [included][0][attributes][items][0][uuid]
+    And Response body parameter should be:    [included][0][attributes][items][0][isReturnable]    False
+    And Response body parameter should be greater than:    [included][0][attributes][items][0][idShipment]    0
+    And Response body parameter should be:    [included][0][attributes][items][0][bundleItemIdentifier]    None
+    And Response body parameter should be:    [included][0][attributes][items][0][relatedBundleItemIdentifier]    None
+    And Response should contain the array of a certain size:    [included][0][attributes][items][0][metadata][superAttributes]    1
+    And Response body parameter should not be EMPTY:    [included][0][attributes][items][0][metadata][image]
+    And Response body parameter should be:    [included][0][attributes][items][0][salesOrderItemConfiguration][displayData]  {"Preferred time of the day":"Afternoon","Date":"09.09.2050"}
+    And Each array element of array in response should contain property:    [included][0][attributes][items]    calculatedDiscounts
+    #expenses
+    And Response body parameter should be:    [included][0][attributes][expenses][0][type]    SHIPMENT_EXPENSE_TYPE
+    And Response body parameter should be:    [included][0][attributes][expenses][0][name]    ${shipment.method_name}
+    And Response body parameter should be greater than:    [included][0][attributes][expenses][0][sumPrice]    0
+    And Response body parameter should be greater than:    [included][0][attributes][expenses][0][unitGrossPrice]    0
+    And Response body parameter should be greater than:    [included][0][attributes][expenses][0][sumGrossPrice]    0
+    And Response body parameter should be:    [included][0][attributes][expenses][0][unitNetPrice]    0
+    And Response body parameter should be:    [included][0][attributes][expenses][0][sumNetPrice]    0
+    And Response body parameter should be:    [included][0][attributes][expenses][0][canceledAmount]    None
+    And Response body parameter should be:    [included][0][attributes][expenses][0][unitDiscountAmountAggregation]    None
+    And Response body parameter should be:    [included][0][attributes][expenses][0][sumDiscountAmountAggregation]    None
+    And Response body parameter should be:    [included][0][attributes][expenses][0][taxAmountAfterCancellation]    None
+    And Response body parameter should not be EMPTY:    [included][0][attributes][expenses][0][idShipment]
+    And Response body parameter should not be EMPTY:   [included][0][attributes][expenses][0][idSalesExpense]
+    #payments
+    And Response body parameter should be greater than:    [included][0][attributes][payments][0][amount]    0
+    And Response body parameter should be:    [included][0][attributes][payments][0][paymentProvider]    ${payment.provider_name}
+    And Response body parameter should be:    [included][0][attributes][payments][0][paymentMethod]    ${payment.method_name}
+    #shipments
+    And Response body parameter should be:    [included][0][attributes][shipments][0][shipmentMethodName]    ${shipment.method_name}
+    And Response body parameter should be:    [included][0][attributes][shipments][0][carrierName]    ${shipment.carrier_name}
+    And Response body parameter should be:    [included][0][attributes][shipments][0][deliveryTime]    None
+    And Response body parameter should be greater than:    [included][0][attributes][shipments][0][defaultGrossPrice]    0
+    And Response body parameter should be:    [included][0][attributes][shipments][0][defaultNetPrice]    0
+    And Response body parameter should be:    [included][0][attributes][shipments][0][currencyIsoCode]    ${currency.eur.code}
+    #calculatedDiscounts
+    And Response body parameter should contain:    [included][0][attributes][calculatedDiscounts]    unitAmount
+    And Response body parameter should contain:    [included][0][attributes][calculatedDiscounts]    sumAmount
+    And Response body parameter should contain:    [included][0][attributes][calculatedDiscounts]    displayName
+    And Response body parameter should contain:    [included][0][attributes][calculatedDiscounts]    description
+    And Response body parameter should contain:    [included][0][attributes][calculatedDiscounts]    voucherCode
+    And Response body parameter should contain:    [included][0][attributes][calculatedDiscounts]    quantity
