@@ -151,8 +151,8 @@ Add_a_configurable_product_to_the_cart_with_negative_quantity
 
 
 Add_a_configurable_product_to_the_cart_with_negative_price
-    [Documentation]   https://spryker.atlassian.net/browse/CC-25383
-    [Tags]    skip-due-to-issue    
+   [Documentation]   https://spryker.atlassian.net/browse/CC-25383
+   [Tags]    skip-due-to-issue    
    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
    ...    AND    I send a POST request:    /carts   {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "config-product-to-cart-${random}"}}}
@@ -162,20 +162,20 @@ Add_a_configurable_product_to_the_cart_with_negative_price
    And Response status code should be:    422
    And Response should return error code:    901
    And Response reason should be:    Unprocessable Content
-    And Response should return error message:    netAmount => This value should be greater than 0.
-    And Response should return error message:    grossAmount => This value should be greater than 0.
+   And Response should return error message:    netAmount => This value should be greater than 0.
+   And Response should return error message:    grossAmount => This value should be greater than 0.
    When I send a GET request:    /carts/${cart_id}?include=items,concrete-products
    Then Response status code should be:    200
    And Response reason should be:    OK
    And Response body parameter should be:  [data][attributes][totals][priceToPay]    None
    And Response body parameter should not be EMPTY:    [data][links][self]
-  [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cart_id}
+   [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cart_id}
     ...    AND    Response status code should be:    204
     ...    AND    Response reason should be:    No Content   
 
 Add_a_configurable_product_to_the_cart_with_empty_price
-    [Documentation]   https://spryker.atlassian.net/browse/CC-25381
-    [Tags]    skip-due-to-issue    
+   [Documentation]   https://spryker.atlassian.net/browse/CC-25381
+   [Tags]    skip-due-to-issue    
    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
    ...    AND    I send a POST request:    /carts   {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "config-product-to-cart-${random}"}}}
@@ -185,20 +185,20 @@ Add_a_configurable_product_to_the_cart_with_empty_price
    And Response status code should be:    422
    And Response should return error code:    901
    And Response reason should be:    Unprocessable Content
-      And Response should return error message:    netAmount => This value should be greater than 0.
-    And Response should return error message:    grossAmount => This value should be greater than 0.
+   And Response should return error message:    netAmount => This value should be greater than 0.
+   And Response should return error message:    grossAmount => This value should be greater than 0.
    When I send a GET request:    /carts/${cart_id}?include=items,concrete-products
    Then Response status code should be:    200
    And Response reason should be:    OK
    And Response body parameter should be:  [data][attributes][totals][priceToPay]    None
    And Response body parameter should not be EMPTY:    [data][links][self]
-  [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cart_id}
+   [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cart_id}
     ...    AND    Response status code should be:    204
     ...    AND    Response reason should be:    No Content   
 
 Add_a_configurable_product_with_missing_isComplete_value_of_to_the_cart
-    [Documentation]   https://spryker.atlassian.net/browse/CC-25381
-    [Tags]    skip-due-to-issue   
+   [Documentation]   https://spryker.atlassian.net/browse/CC-25381
+   [Tags]    skip-due-to-issue   
    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
    ...    AND    I send a POST request:    /carts   {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "config-product-to-cart-${random}"}}}
@@ -220,7 +220,7 @@ Add_a_configurable_product_with_missing_isComplete_value_of_to_the_cart
 
 # PATCH #
 Update_item_in_cart_with_non_existing_item_id
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
+   [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     ...    AND    I send a GET request:    /carts
     ...    AND    Save value to a variable:    [data][0][id]    cart_uid

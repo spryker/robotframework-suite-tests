@@ -394,9 +394,8 @@ Create_order_with_2_product_discounts
     And Response body parameter should contain:    [included][0][attributes][calculatedDiscounts]    voucherCode: None
     And Response body parameter should contain:    [included][0][attributes][calculatedDiscounts]    quantity: 1
 
-
 Create_order_with_configurable_product
-     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}    
     ...  AND    Find or create customer cart
     ...  AND    Cleanup all items in the cart:    ${cart_id}

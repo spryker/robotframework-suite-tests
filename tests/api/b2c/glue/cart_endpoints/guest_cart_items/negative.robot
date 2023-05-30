@@ -172,10 +172,6 @@ Add_a_configurable_product_to_the_cart_with_empty_quantity
    And Response reason should be:    Unprocessable Content
    And Response should return error message:    quantity => This value should not be blank.
 
- 
-    
-       
-
 Add_a_configurable_product_to_the_cart_with_0_quantity
     [Setup]    Run Keywords     Create a guest cart:    ${random}    ${concrete_product_with_concrete_product_alternative.sku}    1
    ...   AND    I set Headers:     X-Anonymous-Customer-Unique-Id=${x_anonymous_customer_unique_id}
@@ -184,8 +180,6 @@ Add_a_configurable_product_to_the_cart_with_0_quantity
    And Response should return error code:    901
    And Response reason should be:    Unprocessable Content
    And Response should return error message:    quantity => This value should be greater than 0.
-
-
 
 Add_a_configurable_product_to_the_cart_with_negative_quantity
     [Setup]    Run Keywords     Create a guest cart:    ${random}    ${concrete_product_with_concrete_product_alternative.sku}    1
@@ -196,9 +190,6 @@ Add_a_configurable_product_to_the_cart_with_negative_quantity
    And Response reason should be:    Unprocessable Content
    And Response should return error message:    quantity => This value should be greater than 0.
 
-
-
-
 Add_a_configurable_product_to_the_cart_with_negative_price
     [Documentation]   https://spryker.atlassian.net/browse/CC-25383
     [Tags]    skip-due-to-issue    
@@ -208,9 +199,8 @@ Add_a_configurable_product_to_the_cart_with_negative_price
    And Response status code should be:    422
    And Response should return error code:    901
    And Response reason should be:    Unprocessable Content
-    And Response should return error message:    netAmount => This value should be greater than 0.
-    And Response should return error message:    grossAmount => This value should be greater than 0.
-
+   And Response should return error message:    netAmount => This value should be greater than 0.
+   And Response should return error message:    grossAmount => This value should be greater than 0.
 
 Add_a_configurable_product_to_the_cart_with_empty_price
     [Documentation]   https://spryker.atlassian.net/browse/CC-25381
@@ -221,9 +211,8 @@ Add_a_configurable_product_to_the_cart_with_empty_price
    And Response status code should be:    422
    And Response should return error code:    901
    And Response reason should be:    Unprocessable Content
-    And Response should return error message:    netAmount => This value should be greater than 0.
-    And Response should return error message:    grossAmount => This value should be greater than 0.
-
+   And Response should return error message:    netAmount => This value should be greater than 0.
+   And Response should return error message:    grossAmount => This value should be greater than 0.
 
 Add_a_configurable_product_with_missing_isComplete_value_of_to_the_cart
     [Documentation]   https://spryker.atlassian.net/browse/CC-25381

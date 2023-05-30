@@ -11,9 +11,9 @@ ENABLER
 
 Add_one_item_to_cart
    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
-    ...  AND    I set Headers:    Authorization=${token}
-    ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
-    ...  AND    Save value to a variable:    [data][id]    cart_id
+   ...  AND    I set Headers:    Authorization=${token}
+   ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
+   ...  AND    Save value to a variable:    [data][id]    cart_id
    When I send a POST request:    /carts/${cart_id}/items    {"data": {"type": "items","attributes": {"sku": "${product_availability.concrete_available_with_stock_and_never_out_of_stock_sku}","quantity": 1}}}
    Then Response status code should be:    201
    And Response reason should be:    Created
@@ -36,9 +36,9 @@ Add_one_item_to_cart
 
 Add_two_items_to_cart_with_included_items_concrete_products_and_abstract_products
   [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
-    ...  AND    I set Headers:    Authorization=${token}
-    ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
-    ...  AND    Save value to a variable:    [data][id]    cart_id 
+   ...  AND    I set Headers:    Authorization=${token}
+   ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
+   ...  AND    Save value to a variable:    [data][id]    cart_id 
    When I send a POST request:    /carts/${cart_id}/items?include=items,concrete-products,abstract-products    {"data": {"type": "items","attributes": {"sku": "${product_availability.concrete_available_with_stock_and_never_out_of_stock_sku}","quantity": 2}}}
    Then Response status code should be:    201
    And Response reason should be:    Created
@@ -92,9 +92,8 @@ Add_two_items_to_cart_with_included_items_concrete_products_and_abstract_product
 
 Get_a_cart_with_included_items_and_concrete_products
   [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
-    ...  AND    I set Headers:    Authorization=${token}
-    ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
-    ...  AND    Save value to a variable:    [data][id]    cart_id
+   ...    AND    I set Headers:    Authorization=${token}
+   ...    AND    Save value to a variable:    [data][id]    cart_id
    ...    AND    I send a POST request:    /carts/${cart_id}/items?include=items    {"data": {"type": "items","attributes": {"sku": "${product_availability.concrete_available_with_stock_and_never_out_of_stock_sku}","quantity": 2}}}
    ...    AND    Response status code should be:    201
    When I send a GET request:    /carts/${cart_id}?include=items,concrete-products
@@ -167,7 +166,7 @@ Add_five_items_to_cart_with_included_cart_rules_and_promotional_items
    ...    AND    Response status code should be:    204
 
 Add_product_with_options_to_cart
-      [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
+   [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
     ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
     ...  AND    Save value to a variable:    [data][id]    cart_id
@@ -256,10 +255,10 @@ Add_a_configurable_product_to_the_cart
 
 ###### PATCH #######
 Change_item_qty_in_cart
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
-    ...  AND    I set Headers:    Authorization=${token}
-    ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
-    ...  AND    Save value to a variable:    [data][id]    cart_id
+   [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
+   ...    AND    I set Headers:    Authorization=${token}
+   ...    AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
+   ...    AND    Save value to a variable:    [data][id]    cart_id
    ...    AND    I send a POST request:    /carts/${cart_id}/items?include=items    {"data": {"type": "items","attributes": {"sku": "${product_availability.concrete_available_with_stock_and_never_out_of_stock_sku}","quantity": 1}}}
    ...    AND    Save value to a variable:    [included][0][id]    item_uid
    ...    AND    Save value to a variable:    [included][0][attributes][calculations][sumPriceToPayAggregation]    item_total_price
@@ -276,10 +275,10 @@ Change_item_qty_in_cart
    ...    AND    Response status code should be:    204
 
 Change_item_amount_in_cart
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
-    ...  AND    I set Headers:    Authorization=${token}
-    ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
-    ...  AND    Save value to a variable:    [data][id]    cart_id
+   [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
+   ...    AND    I set Headers:    Authorization=${token}
+   ...    AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
+   ...    AND    Save value to a variable:    [data][id]    cart_id
    ...    AND    I send a POST request:    /carts/${cart_id}/items?include=items    {"data": {"type": "items","attributes": {"sku": "${product_availability.concrete_available_with_stock_and_never_out_of_stock_sku}","quantity": 1}}}
    ...    AND    Save value to a variable:    [included][0][id]    item_uid
    ...    AND    Save value to a variable:    [included][0][attributes][calculations][sumPriceToPayAggregation]    item_total_price
@@ -329,9 +328,9 @@ Update_configurable_product_quantity_in_the_cart
 ####### DELETE #######
 Delete_item_form_cart
   [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
-    ...  AND    I set Headers:    Authorization=${token}
-    ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
-    ...  AND    Save value to a variable:    [data][id]    cart_id
+   ...    AND    I set Headers:    Authorization=${token}
+   ...    AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
+   ...    AND    Save value to a variable:    [data][id]    cart_id
    ...    AND    I send a POST request:    /carts/${cart_id}/items?include=items    {"data": {"type": "items","attributes": {"sku": "${product_availability.concrete_available_with_stock_and_never_out_of_stock_sku}","quantity": 1}}}
    ...    AND    Save value to a variable:    [included][0][id]    item_uid
    When I send a DELETE request:    /carts/${cart_id}/items/${item_uid}

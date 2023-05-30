@@ -234,17 +234,15 @@ Change_item_qty_in_cart
 
 ####### DELETE #######
 Delete_item_form_cart
-     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
-          ...  AND    I set Headers:    Authorization=${token}
-          ...  AND    Find or create customer cart
-          ...  AND    Cleanup all items in the cart:    ${cart_id}
-          ...  AND    I send a POST request:    /carts/${cart_id}/items?include=items    {"data": {"type": "items","attributes": {"sku": "${concrete_product_with_concrete_product_alternative.sku}", "quantity": "1"}}}
-          ...  AND    Save value to a variable:    [included][0][attributes][groupKey]    item_group_key
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
+    ...  AND    I set Headers:    Authorization=${token}
+    ...  AND    Find or create customer cart
+    ...  AND    Cleanup all items in the cart:    ${cart_id}
+    ...  AND    I send a POST request:    /carts/${cart_id}/items?include=items    {"data": {"type": "items","attributes": {"sku": "${concrete_product_with_concrete_product_alternative.sku}", "quantity": "1"}}}
+    ...  AND    Save value to a variable:    [included][0][attributes][groupKey]    item_group_key
     When I send a DELETE request:    /carts/${cart_id}/items/${item_group_key}
     Then Response status code should be:    204
     And Response reason should be:    No Content
-
-
 
 Add_a_configurable_product_to_the_cart
    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
@@ -277,7 +275,7 @@ Add_a_configurable_product_to_the_cart
    And Response body parameter should not be EMPTY:    [data][links][self]
 
 Update_configurable_product_quantity_in_the_cart
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
+  [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
    ...    AND    Find or create customer cart
    ...    AND    Cleanup all items in the cart:    ${cart_id}
@@ -302,8 +300,6 @@ Update_configurable_product_quantity_in_the_cart
    And Response body parameter should be:    [included][0][attributes][calculations][sumPriceToPayAggregation]    76504
    And Response body parameter should not be EMPTY:    [data][links][self]
    
-
-
 Delete_configurable_product_item_form_the_cart
    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}

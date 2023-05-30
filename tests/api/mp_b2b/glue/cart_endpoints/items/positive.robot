@@ -356,7 +356,6 @@ Delete_item_form_cart
     [Teardown]    Run Keywords    I send a DELETE request:     /carts/${cart_uid}
     ...    AND    Response status code should be:    204
     
-
 Add_a_configurable_product_to_the_cart   
    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
@@ -405,7 +404,6 @@ Change_configuration_and_quantity_in_the_cart
    And Response body parameter should not be EMPTY:    [data][links][self]
    [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cart_id}
    ...    AND    Response status code should be:    204
-
 
 Delete_configurable_product_item_form_the_cart
    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}

@@ -218,9 +218,6 @@ Add_a_configurable_product_to_the_cart_with_empty_quantity
    And Response reason should be:    OK
    And Response body parameter should be:  [data][attributes][totals][priceToPay]    0
    And Response body parameter should not be EMPTY:    [data][links][self]
- 
-    
-       
 
 Add_a_configurable_product_to_the_cart_with_0_quantity
    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
@@ -255,11 +252,9 @@ Add_a_configurable_product_to_the_cart_with_negative_quantity
    And Response body parameter should be:  [data][attributes][totals][priceToPay]    0
    And Response body parameter should not be EMPTY:    [data][links][self]
 
-
-
 Add_a_configurable_product_to_the_cart_with_negative_price
-    [Documentation]   https://spryker.atlassian.net/browse/CC-25383
-    [Tags]    skip-due-to-issue    
+   [Documentation]   https://spryker.atlassian.net/browse/CC-25383
+   [Tags]    skip-due-to-issue    
    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
    ...    AND    Find or create customer cart
@@ -268,18 +263,17 @@ Add_a_configurable_product_to_the_cart_with_negative_price
    And Response status code should be:    422
    And Response should return error code:    901
    And Response reason should be:    Unprocessable Content
-    And Response should return error message:    netAmount => This value should be greater than 0.
-    And Response should return error message:    grossAmount => This value should be greater than 0.
+   And Response should return error message:    netAmount => This value should be greater than 0.
+   And Response should return error message:    grossAmount => This value should be greater than 0.
    When I send a GET request:    /carts/${cart_id}?include=items,concrete-products
    Then Response status code should be:    200
    And Response reason should be:    OK
    And Response body parameter should be:  [data][attributes][totals][priceToPay]    0
    And Response body parameter should not be EMPTY:    [data][links][self]
 
-
 Add_a_configurable_product_to_the_cart_with_empty_price
-    [Documentation]   https://spryker.atlassian.net/browse/CC-25381
-    [Tags]    skip-due-to-issue    
+   [Documentation]   https://spryker.atlassian.net/browse/CC-25381
+   [Tags]    skip-due-to-issue    
    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
    ...    AND    Find or create customer cart
@@ -288,8 +282,8 @@ Add_a_configurable_product_to_the_cart_with_empty_price
    And Response status code should be:    422
    And Response should return error code:    901
    And Response reason should be:    Unprocessable Content
-      And Response should return error message:    netAmount => This value should be greater than 0.
-    And Response should return error message:    grossAmount => This value should be greater than 0.
+   And Response should return error message:    netAmount => This value should be greater than 0.
+   And Response should return error message:    grossAmount => This value should be greater than 0.
    When I send a GET request:    /carts/${cart_id}?include=items,concrete-products
    Then Response status code should be:    200
    And Response reason should be:    OK
@@ -297,8 +291,8 @@ Add_a_configurable_product_to_the_cart_with_empty_price
    And Response body parameter should not be EMPTY:    [data][links][self]
 
 Add_a_configurable_product_with_missing_isComplete_value_of_to_the_cart
-    [Documentation]   https://spryker.atlassian.net/browse/CC-25381
-    [Tags]    skip-due-to-issue   
+   [Documentation]   https://spryker.atlassian.net/browse/CC-25381
+   [Tags]    skip-due-to-issue   
    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
    ...    AND    Find or create customer cart

@@ -77,7 +77,7 @@ Change_item_qty_in_guest_cart
     And Response body parameter should be:    [included][0][attributes][quantity]    10
 
 Remove_item_from_guest_cart
-     [Setup]    Run Keywords     Create a guest cart:    ${random}    ${concrete_product_with_concrete_product_alternative.sku}    1
+    [Setup]    Run Keywords     Create a guest cart:    ${random}    ${concrete_product_with_concrete_product_alternative.sku}    1
             ...   AND    I set Headers:     X-Anonymous-Customer-Unique-Id=${x_anonymous_customer_unique_id}
     When I send a DELETE request:    /guest-carts/${guest_cart_id}/guest-cart-items/${concrete_product_with_concrete_product_alternative.sku}
     Then Response status code should be:    204
@@ -92,7 +92,7 @@ Remove_item_from_guest_cart
     And Response body parameter should be:    [data][attributes][totals][priceToPay]    0
 
 Add_items_to_guest_cart_with_included_items_concrete_products_and_abstract_products
-     [Setup]    I set Headers:    X-Anonymous-Customer-Unique-Id=${random}
+    [Setup]    I set Headers:    X-Anonymous-Customer-Unique-Id=${random}
     When I send a POST request:    /guest-cart-items?include=items,concrete-products,abstract-products    {"data": {"type": "guest-cart-items","attributes": {"sku": "${concrete_product_with_concrete_product_alternative.sku}","quantity": 1}}}
     Then Response status code should be:    201
     And Response reason should be:    Created
@@ -123,7 +123,7 @@ Add_items_to_guest_cart_with_included_items_concrete_products_and_abstract_produ
     And Response should contain the array of a certain size:    [included][3][relationships][concrete-products][data]    1
 
 Add_items_to_guest_cart_with_included_cart_rules
-     [Setup]    I set Headers:    X-Anonymous-Customer-Unique-Id=${random}
+    [Setup]    I set Headers:    X-Anonymous-Customer-Unique-Id=${random}
     When I send a POST request:    /guest-cart-items?include=cart-rules    {"data": {"type": "guest-cart-items","attributes": {"sku": "${concrete_product_with_concrete_product_alternative.sku}","quantity": 10}}}
     Then Response status code should be:    201
     And Response reason should be:    Created
@@ -150,7 +150,7 @@ Add_items_to_guest_cart_with_included_cart_rules
     And Response body parameter should be:    [included][0][attributes][discountPromotionQuantity]    None
 
 Add_items_to_guest_cart_with_included_promotional_products
-     [Setup]    I set Headers:    X-Anonymous-Customer-Unique-Id=${random}
+    [Setup]    I set Headers:    X-Anonymous-Customer-Unique-Id=${random}
     When I send a POST request:    /guest-cart-items?include=promotional-items    {"data": {"type": "guest-cart-items","attributes": {"sku": "${concrete_product_with_concrete_product_alternative.sku}","quantity": 100}}}
     Then Response status code should be:    201
     And Response reason should be:    Created
@@ -172,7 +172,7 @@ Add_items_to_guest_cart_with_included_promotional_products
     And Response body parameter should be in:    [included][0][attributes][skus]    ${concrete_product_with_concrete_product_alternative.promotional_items_sku}   ${concrete_product_with_concrete_product_alternative.promotional_items_sku1}   ${concrete_product_with_concrete_product_alternative.sku}
 
 Add_items_to_guest_cart_with_included_bundle_items
-     [Setup]    I set Headers:    X-Anonymous-Customer-Unique-Id=${random}
+    [Setup]    I set Headers:    X-Anonymous-Customer-Unique-Id=${random}
     When I send a POST request:    /guest-cart-items?include=bundle-items,bundled-items    {"data": {"type": "guest-cart-items","attributes": {"sku": "${bundle_product.concrete_sku}","quantity": 1}}}
     Then Response status code should be:    201
     And Response reason should be:    Created
@@ -205,14 +205,11 @@ Add_items_to_guest_cart_with_included_bundle_items
     And Response body parameter should be:    [included][3][attributes][groupKey]    ${bundle_product.concrete_sku}
     And Response body parameter should be:    [included][3][attributes][abstractSku]    ${bundle_product.abstract_sku}
 
-
-
-
 Add_a_configurable_product_to_the_cart
-      [Setup]    I set Headers:    Content-Type=${default_header_content_type}    X-Anonymous-Customer-Unique-Id=${random}
-    Run Keywords    Create a guest cart:    ${random}    ${concrete_product_with_concrete_product_alternative.sku}    1
-    ...    AND    Save value to a variable:    [data][id]    guest_cart_id
-    ...    AND    Cleanup All Items In The Guest Cart:    ${guest_cart_id}
+   [Setup]    I set Headers:    Content-Type=${default_header_content_type}    X-Anonymous-Customer-Unique-Id=${random}
+   Run Keywords    Create a guest cart:    ${random}    ${concrete_product_with_concrete_product_alternative.sku}    1
+   ...    AND    Save value to a variable:    [data][id]    guest_cart_id
+   ...    AND    Cleanup All Items In The Guest Cart:    ${guest_cart_id}
    I send a POST request:    /guest-carts/${guest_cart_id}/guest-cart-items?include=items   {"data":{"type":"guest-cart-items","attributes":{"sku":"${configurable_product.sku_1}","quantity":3,"productConfigurationInstance":{"displayData":'{"Preferred time of the day":"Afternoon","Date":"09.09.2050"}',"configuration":'{"time_of_day":"4"}',"configuratorKey":"DATE_TIME_CONFIGURATOR","isComplete":False,"quantity":3,"availableQuantity":4,"prices":[{"priceTypeName":"DEFAULT","netAmount":23434,"grossAmount":42502,"currency":{"code":"EUR","name":"Euro","symbol":"€"},"volumePrices":[{"netAmount":150,"grossAmount":165,"quantity":5},{"netAmount":145,"grossAmount":158,"quantity":10},{"netAmount":140,"grossAmount":152,"quantity":20}]}]}}}}
    And Response status code should be:    201
    And Save value to a variable:    [data][id]    CartItemId
@@ -235,10 +232,10 @@ Add_a_configurable_product_to_the_cart
    And Response body parameter should not be EMPTY:    [data][links][self]
 
 Update_configurable_product_quantity_in_the_cart
-    [Setup]    I set Headers:    Content-Type=${default_header_content_type}    X-Anonymous-Customer-Unique-Id=${random}
-    Run Keywords    Create a guest cart:    ${random}    ${concrete_product_with_concrete_product_alternative.sku}    1
-    ...    AND    Save value to a variable:    [data][id]    guest_cart_id
-    ...    AND    Cleanup All Items In The Guest Cart:    ${guest_cart_id}
+   [Setup]    I set Headers:    Content-Type=${default_header_content_type}    X-Anonymous-Customer-Unique-Id=${random}
+   Run Keywords    Create a guest cart:    ${random}    ${concrete_product_with_concrete_product_alternative.sku}    1
+   ...    AND    Save value to a variable:    [data][id]    guest_cart_id
+   ...    AND    Cleanup All Items In The Guest Cart:    ${guest_cart_id}
    I send a POST request:    /guest-carts/${guest_cart_id}/guest-cart-items?include=items   {"data":{"type":"guest-cart-items","attributes":{"sku":"${configurable_product.sku_1}","quantity":3,"productConfigurationInstance":{"displayData":'{"Preferred time of the day":"Afternoon","Date":"09.09.2050"}',"configuration":'{"time_of_day":"4"}',"configuratorKey":"DATE_TIME_CONFIGURATOR","isComplete":False,"quantity":3,"availableQuantity":4,"prices":[{"priceTypeName":"DEFAULT","netAmount":23434,"grossAmount":42502,"currency":{"code":"EUR","name":"Euro","symbol":"€"},"volumePrices":[{"netAmount":150,"grossAmount":165,"quantity":5},{"netAmount":145,"grossAmount":158,"quantity":10},{"netAmount":140,"grossAmount":152,"quantity":20}]}]}}}}
    And Response status code should be:    201
    And Save value to a variable:    [included][0][id]    item_uid
@@ -260,13 +257,11 @@ Update_configurable_product_quantity_in_the_cart
    And Response body parameter should be:    [included][0][attributes][calculations][sumPriceToPayAggregation]    76504
    And Response body parameter should not be EMPTY:    [data][links][self]
    
-
-
 Delete_configurable_product_item_form_the_cart
-    [Setup]    I set Headers:    Content-Type=${default_header_content_type}    X-Anonymous-Customer-Unique-Id=${random}
-    Run Keywords    Create a guest cart:    ${random}    ${concrete_product_with_concrete_product_alternative.sku}    1
-    ...    AND    Save value to a variable:    [data][id]    guest_cart_id
-    ...    AND    Cleanup All Items In The Guest Cart:    ${guest_cart_id}
+  [Setup]    I set Headers:    Content-Type=${default_header_content_type}    X-Anonymous-Customer-Unique-Id=${random}
+   Run Keywords    Create a guest cart:    ${random}    ${concrete_product_with_concrete_product_alternative.sku}    1
+   ...    AND    Save value to a variable:    [data][id]    guest_cart_id
+   ...    AND    Cleanup All Items In The Guest Cart:    ${guest_cart_id}
    I send a POST request:    /guest-carts/${guest_cart_id}/guest-cart-items?include=items   {"data":{"type":"guest-cart-items","attributes":{"sku":"${configurable_product.sku_1}","quantity":3,"productConfigurationInstance":{"displayData":'{"Preferred time of the day":"Afternoon","Date":"09.09.2050"}',"configuration":'{"time_of_day":"4"}',"configuratorKey":"DATE_TIME_CONFIGURATOR","isComplete":False,"quantity":3,"availableQuantity":4,"prices":[{"priceTypeName":"DEFAULT","netAmount":23434,"grossAmount":42502,"currency":{"code":"EUR","name":"Euro","symbol":"€"},"volumePrices":[{"netAmount":150,"grossAmount":165,"quantity":5},{"netAmount":145,"grossAmount":158,"quantity":10},{"netAmount":140,"grossAmount":152,"quantity":20}]}]}}}}
    And Response status code should be:    201
    And Save value to a variable:    [included][0][id]    item_uid
