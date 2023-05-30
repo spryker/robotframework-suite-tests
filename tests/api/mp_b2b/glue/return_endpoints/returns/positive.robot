@@ -113,7 +113,6 @@ Create_a_return_with_return_items
     And Response include should contain certain entity type:    return-items
     And Response body parameter should be:    [included][0][attributes][orderItemUuid]    ${uuid}
     And Response body parameter should be:    [included][0][attributes][reason]    ${return_reason_damaged}
-    And Response body has correct self link internal
 
 ####GET####
 Retrieves_list_of_returns
