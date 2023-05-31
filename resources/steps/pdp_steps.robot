@@ -107,8 +107,7 @@ Yves: change variant of the product on PDP on:
             Run Keyword And Ignore Error    Select From List By Value    ${pdp_variant_selector}    ${variantToChoose}
         END
     END
-
-    
+    Set Browser Timeout    ${browser_timeout}  
 
 Yves: reset selected variant of the product on PDP
     Wait Until Page Contains Element    ${pdp_reset_selected_variant_locator}
@@ -120,6 +119,7 @@ Yves: change amount on PDP:
 
 Yves: product price on the PDP should be:
     [Arguments]    ${expectedProductPrice}
+    Set Browser Timeout    3s
     TRY
         ${actualProductPrice}=    Get Text    ${pdp_price_element_locator}
         Should Be Equal    ${expectedProductPrice}    ${actualProductPrice}
@@ -130,6 +130,7 @@ Yves: product price on the PDP should be:
         ${actualProductPrice}=    Get Text    ${pdp_price_element_locator}
         Should Be Equal    ${expectedProductPrice}    ${actualProductPrice}    
     END
+    Set Browser Timeout    ${browser_timeout}
 
 
 Yves: product original price on the PDP should be:
@@ -143,6 +144,7 @@ Yves: add product to the shopping list:
     ${variants_present_status}=    Run Keyword And Ignore Error    Page should contain element    ${pdp_variant_selector}
     ${shopping_list_dropdown_status}=    Run Keyword And Ignore Error    Page should contain element    ${pdp_shopping_list_selector}
     IF    'PASS' in ${variants_present_status}    Yves: change variant of the product on PDP on random value
+    Set Browser Timeout    5s
     IF    ('${shoppingListName}' != '${EMPTY}' and 'PASS' in ${shopping_list_dropdown_status})
         TRY
             Select From List By Label    ${pdp_shopping_list_selector}    ${shoppingListName}
@@ -156,6 +158,7 @@ Yves: add product to the shopping list:
             Click    ${pdp_add_to_shopping_list_button}
         END
     END
+    Set Browser Timeout    ${browser_timeout}
     Yves: remove flash messages
 
 Yves: change variant of the product on PDP on random value
@@ -168,6 +171,7 @@ Yves: change variant of the product on PDP on random value
     EXCEPT
         Run Keyword And Ignore Error    Select From List By Value    ${pdp_variant_selector}    ${variantToChoose}
     END
+    Set Browser Timeout    ${browser_timeout}
     Sleep    3s
 
 Yves: get sku of the concrete product on PDP
@@ -212,12 +216,14 @@ Yves: add product to wishlist:
             Select From List By Value    xpath=//select[contains(@name,'wishlist-name')]    ${wishlistName}
     END
     Click    ${pdp_add_to_wishlist_button}
+    Set Browser Timeout    5s
     TRY
         Yves: flash message should be shown:    success    Items added successfully
         Yves: remove flash messages 
     EXCEPT    
         Log    flash message was not shown
     END
+    Set Browser Timeout    ${browser_timeout}
 
 Yves: check if product is available on PDP:
     [Arguments]    ${abstractSku}    ${isAvailable}
@@ -263,7 +269,7 @@ Yves: merchant's offer/product price should be:
 Yves: merchant is (not) displaying in Sold By section of PDP:
     [Arguments]    ${merchantName}    ${condition}
     Wait Until Element Is Visible    ${pdp_product_sku}[${env}]
-    Try reloading page until element is/not appear:    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]     ${condition}    26    5s  
+    Try reloading page until element is/not appear:    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]     ${condition}    20    10s  
    
 Yves: select random varian if variant selector is available
     ${variants_present_status}=    Run Keyword And Return Status    Page should contain element    ${pdp_variant_selector}    ${EMPTY}    0:00:01

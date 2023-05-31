@@ -4,6 +4,7 @@ Suite Setup       SuiteSetup
 Suite Teardown    SuiteTeardown
 Test Setup        TestSetup
 Test Teardown     TestTeardown
+Test Tags    robot:recursive-stop-on-failure
 Resource    ../../../resources/common/common.robot
 Resource    ../../../resources/steps/header_steps.robot
 Resource    ../../../resources/common/common_yves.robot
@@ -719,20 +720,20 @@ Merchant_Profile_Update
     MP: open navigation menu tab:    Profile  
     MP: open profile tab:    Online Profile
     MP: update profile fields with following data:
-    ...    || email                  | phone           | delivery time | data privacy              ||
-    ...    || updated@office-king.nl | +11 222 333 444 | 2-4 weeks     | Data privacy updated text ||
+    ...    || email                  | phone           | delivery time | data privacy              | profile url en       | profile url de       ||
+    ...    || updated@office-king.nl | +11 222 333 444 | 2-4 weeks     | Data privacy updated text | https://spryker.com/ | https://spryker.com/ ||
     MP: click submit button
     Yves: go to URL:    en/merchant/video-king
     Yves: assert merchant profile fields:
     ...    || name | email                  | phone           | delivery time | data privacy              ||
     ...    ||      | updated@office-king.nl | +11 222 333 444 | 2-4 weeks     | Data privacy updated text ||
-    MP: login on MP with provided credentials:    ${merchant_video_king_email}
-    MP: open navigation menu tab:    Profile
-    MP: open profile tab:    Online Profile  
-    MP: update profile fields with following data:
-    ...    || email            | phone           | delivery time | data privacy                                         ||
-    ...    || hi@video-king.nl | +31 123 345 777 | 2-4 days      | Video King values the privacy of your personal data. ||
-    MP: click submit button
+    [Teardown]    Run Keywords    MP: login on MP with provided credentials:    ${merchant_video_king_email}
+    ...    AND    MP: open navigation menu tab:    Profile
+    ...    AND    MP: open profile tab:    Online Profile  
+    ...    AND    MP: update profile fields with following data:
+    ...    || email            | phone           | delivery time | data privacy                                         | https://spryker.com/ | https://spryker.com/ ||
+    ...    || hi@video-king.nl | +31 123 345 777 | 2-4 days      | Video King values the privacy of your personal data. | https://spryker.com/ | https://spryker.com/ ||
+    ...    AND    MP: click submit button
 
 Merchant_Profile_Set_to_Offline_from_MP
     [Documentation]    Checks that merchant is able to set store offline and then his profile, products and offers won't be displayed on Yves
@@ -744,6 +745,9 @@ Merchant_Profile_Set_to_Offline_from_MP
     MP: login on MP with provided credentials:    ${merchant_video_king_email}
     MP: open navigation menu tab:    Profile
     MP: open profile tab:    Online Profile
+    MP: update profile fields with following data:
+    ...    || profile url en       | profile url de       ||
+    ...    || https://spryker.com/ | https://spryker.com/ ||
     MP: change store status to:    offline
     Yves: go to URL:    en/merchant/video-king
     Yves: try reloading page if element is/not appear:    ${merchant_profile_main_content_locator}    false
@@ -754,15 +758,18 @@ Merchant_Profile_Set_to_Offline_from_MP
     Yves: merchant is (not) displaying in Sold By section of PDP:    Video King    false
     Yves: go to PDP of the product with sku:    ${second_product_with_multiple_offers_abstract_sku}
     Yves: merchant is (not) displaying in Sold By section of PDP:    Video King    false
-    MP: login on MP with provided credentials:    ${merchant_video_king_email}
-    MP: open navigation menu tab:    Profile
-    MP: open profile tab:    Online Profile
-    MP: change store status to:    online
-    Yves: go to the 'Home' page
-    Yves: go to PDP of the product with sku:    ${second_product_with_multiple_offers_abstract_sku}
-    Yves: merchant is (not) displaying in Sold By section of PDP:    Video King    true
-    Yves: go to URL:    en/merchant/video-king
-    Yves: try reloading page if element is/not appear:    ${merchant_profile_main_content_locator}    true
+    [Teardown]    Run Keywords    MP: login on MP with provided credentials:    ${merchant_video_king_email}
+    ...    AND    MP: open navigation menu tab:    Profile
+    ...    AND    MP: open profile tab:    Online Profile
+    ...    AND    MP: update profile fields with following data:
+    ...    || profile url en       | profile url de       ||
+    ...    || https://spryker.com/ | https://spryker.com/ ||
+    ...    AND    MP: change store status to:    online
+    ...    AND    Yves: go to the 'Home' page
+    ...    AND    Yves: go to PDP of the product with sku:    ${second_product_with_multiple_offers_abstract_sku}
+    ...    AND    Yves: merchant is (not) displaying in Sold By section of PDP:    Video King    true
+    ...    AND    Yves: go to URL:    en/merchant/video-king
+    ...    AND    Yves: try reloading page if element is/not appear:    ${merchant_profile_main_content_locator}    true
 
 Merchant_Profile_Set_to_Inactive_from_Backoffice
     [Documentation]    Checks that backoffice admin is able to deactivate merchant and then it's profile, products and offers won't be displayed on Yves

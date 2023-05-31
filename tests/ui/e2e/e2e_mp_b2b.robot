@@ -3,6 +3,7 @@ Suite Setup       SuiteSetup
 Test Setup        TestSetup
 Test Teardown     TestTeardown
 Suite Teardown    SuiteTeardown
+Test Tags    robot:recursive-stop-on-failure
 Resource    ../../../resources/common/common.robot
 Resource    ../../../resources/steps/header_steps.robot
 Resource    ../../../resources/common/common_yves.robot
@@ -130,7 +131,7 @@ Share_Shopping_Carts
     Yves: 'Order Details' page is displayed
 
 Quick_Order
-    [Documentation]    Bug: CC-24140. Checks Quick Order, checkout and Reorder
+    [Documentation]    Checks Quick Order, checkout and Reorder
     [Setup]    Run keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     ...    AND    Yves: delete all shopping carts
     ...    AND    Yves: create new 'Shopping Cart' with name:    quickOrderCart+${random}
@@ -162,7 +163,9 @@ Quick_Order
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: billing address same as shipping address:    true
     Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${yves_company_user_buyer_address}
-    Yves: select the following shipping method on the checkout and go next:    Express
+    Yves: select the following shipping method for the shipment:    1    DHL    Express
+    Yves: select the following shipping method for the shipment:    2    Hermes    Same Day
+    Yves: submit form on the checkout
     Yves: select the following payment method on the checkout and go next:    Invoice
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
@@ -173,9 +176,9 @@ Quick_Order
     Yves: 'Order History' page is displayed
     Yves: get the last placed order ID by current customer
     Yves: 'View Order/Reorder/Return' on the order history page:     View Order    ${lastPlacedOrder}
-    Yves: 'View Order' page is displayed
+    Yves: 'Order Details' page is displayed
     ### Reorder ###
-    Yves: reorder all items from 'View Order' page
+    Yves: reorder all items from 'Order Details' page
     Yves: go to the shopping cart through the header with name:    Cart from order ${lastPlacedOrder}
     Yves: 'Shopping Cart' page is displayed
     Yves: shopping cart contains the following products:     213103    520561    421340    419871    419869    425073    425084
@@ -573,7 +576,8 @@ Unique_URL
     Yves: 'Shopping Cart' page is displayed
     Yves: Shopping Cart title should be equal:    Preview: externalCart+${random}
     Yves: shopping cart contains the following products:    108302
-    [Teardown]    Yves: delete 'Shopping Cart' with name:    externalCart+${random}
+    [Teardown]    Run Keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_manager_and_buyer_email}
+    ...    AND    Yves: delete 'Shopping Cart' with name:    externalCart+${random}
 
 #### Configurable Bundles feature is not present in marketplace for now ####
 # Configurable_Bundle
@@ -890,7 +894,7 @@ Content_Management
     ...    AND    Zed: click Action Button in a table for row that contains:    Test Page${random}    Deactivate
 
 Refunds
-    [Documentation]    Bug: CC-17201. Checks that refund can be created for an item and the whole order of merchant
+    [Documentation]    Checks that refund can be created for an item and the whole order of merchant
     [Setup]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: deactivate following discounts from Overview page:    20% off storage    10% off minimum order
     ...    AND    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
@@ -985,20 +989,20 @@ Merchant_Profile_Update
     MP: open navigation menu tab:    Profile  
     MP: open profile tab:    Online Profile
     MP: update profile fields with following data:
-    ...    || email                  | phone           | delivery time | data privacy              ||
-    ...    || updated@office-king.nl | +11 222 333 444 | 2-4 weeks     | Data privacy updated text ||
+    ...    || email                  | phone           | delivery time | data privacy              | profile url en       | profile url de       ||
+    ...    || updated@office-king.nl | +11 222 333 444 | 2-4 weeks     | Data privacy updated text | https://spryker.com/ | https://spryker.com/ ||
     MP: click submit button
     Yves: go to URL:    en/merchant/office-king
     Yves: assert merchant profile fields:
     ...    || name | email                  | phone           | delivery time | data privacy              ||
     ...    ||      | updated@office-king.nl | +11 222 333 444 | 2-4 weeks     | Data privacy updated text ||
-    MP: login on MP with provided credentials:    ${merchant_office_king_email}
-    MP: open navigation menu tab:    Profile
-    MP: open profile tab:    Online Profile  
-    MP: update profile fields with following data:
-    ...    || email             | phone           | delivery time | data privacy                                          ||
-    ...    || hi@office-king.nl | +31 123 345 777 | 2-4 days      | Office King values the privacy of your personal data. ||
-    MP: click submit button
+    [Teardown]    Run Keywords    MP: login on MP with provided credentials:    ${merchant_office_king_email}
+    ...    AND    MP: open navigation menu tab:    Profile
+    ...    AND    MP: open profile tab:    Online Profile  
+    ...    AND    MP: update profile fields with following data:
+    ...    || email             | phone           | delivery time | data privacy                                          | profile url en       | profile url de       ||
+    ...    || hi@office-king.nl | +31 123 345 777 | 2-4 days      | Office King values the privacy of your personal data. | https://spryker.com/ | https://spryker.com/ ||
+    ...    AND    MP: click submit button
 
 Merchant_Profile_Set_to_Offline_from_MP
     [Documentation]    Checks that merchant is able to set store offline and then his profile, products and offers won't be displayed on Yves
@@ -1014,6 +1018,9 @@ Merchant_Profile_Set_to_Offline_from_MP
     MP: login on MP with provided credentials:    ${merchant_office_king_email}
     MP: open navigation menu tab:    Profile
     MP: open profile tab:    Online Profile
+    MP: update profile fields with following data:
+    ...    || profile url en       | profile url de       ||
+    ...    || https://spryker.com/ | https://spryker.com/ ||
     MP: change store status to:    offline
     Yves: go to URL:    en/merchant/office-king
     Yves: try reloading page if element is/not appear:    ${merchant_profile_main_content_locator}    false
@@ -1024,15 +1031,18 @@ Merchant_Profile_Set_to_Offline_from_MP
     Yves: merchant is (not) displaying in Sold By section of PDP:    Office King    false
     Yves: go to PDP of the product with sku:    ${product_with_multiple_offers_abstract_sku}
     Yves: merchant is (not) displaying in Sold By section of PDP:    Office King    false
-    MP: login on MP with provided credentials:    ${merchant_office_king_email}
-    MP: open navigation menu tab:    Profile
-    MP: open profile tab:    Online Profile
-    MP: change store status to:    online
-    Yves: go to the 'Home' page
-    Yves: go to PDP of the product with sku:    ${one_variant_product_abstract_sku}
-    Yves: merchant is (not) displaying in Sold By section of PDP:    Office King    true
-    Yves: go to URL:    en/merchant/office-king
-    Yves: try reloading page if element is/not appear:    ${merchant_profile_main_content_locator}    true
+    [Teardown]    Run Keywords    MP: login on MP with provided credentials:    ${merchant_office_king_email}
+    ...    AND    MP: open navigation menu tab:    Profile
+    ...    AND    MP: open profile tab:    Online Profile
+    ...    AND    MP: update profile fields with following data:
+    ...    || profile url en       | profile url de       ||
+    ...    || https://spryker.com/ | https://spryker.com/ ||
+    ...    AND    MP: change store status to:    online
+    ...    AND    Yves: go to the 'Home' page
+    ...    AND    Yves: go to PDP of the product with sku:    ${one_variant_product_abstract_sku}
+    ...    AND    Yves: merchant is (not) displaying in Sold By section of PDP:    Office King    true
+    ...    AND    Yves: go to URL:    en/merchant/office-king
+    ...    AND    Yves: try reloading page if element is/not appear:    ${merchant_profile_main_content_locator}    true
 
 Merchant_Profile_Set_to_Inactive_from_Backoffice
     [Documentation]    Checks that backoffice admin is able to deactivate merchant and then it's profile, products and offers won't be displayed on Yves
@@ -1091,13 +1101,13 @@ Manage_Merchants_from_Backoffice
     Zed: update Merchant on edit page with the following data:
     ...    || merchant name | merchant reference | e-mail  | uncheck store | en url | de url ||
     ...    ||               |                    |         | DE            |        |        ||
-    Yves: go to URL and refresh until 404 occurs:    ${host}en/merchant/NewMerchantURL${random}
+    Yves: go to URL and refresh until 404 occurs:    ${yves_url}en/merchant/NewMerchantURL${random}
     [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: go to second navigation item level:    Marketplace    Merchants  
     ...    AND    Zed: click Action Button in a table for row that contains:     NewMerchantUpdated${random}     Deactivate
 
 Manage_Merchant_Users
-    [Documentation]    Bug: CC-23118. Checks that backoffice admin is able to create, activate, edit and delete merchant users
+    [Documentation]    Checks that backoffice admin is able to create, activate, edit and delete merchant users
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Marketplace    Merchants
     Zed: click Action Button in a table for row that contains:     Office King     Edit
@@ -1525,7 +1535,7 @@ Merchant_Portal_Offer_Volume_Prices
     ...    AND    Zed: click Action Button in a table for row that contains:     OfferNewProduct${random}     Deny
 
 Merchant_Portal_My_Account
-    [Documentation]    Bug: CC-23118. Checks that MU can edit personal data in MP
+    [Documentation]    Checks that MU can edit personal data in MP
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Marketplace    Merchants
     Zed: click Action Button in a table for row that contains:     Oryx Merchant     Edit
@@ -1745,8 +1755,7 @@ Manage_Merchant_Product
     Yves: product price on the PDP should be:    €110.00
     Yves: change variant of the product on PDP on:    5-pack
     Yves: product price on the PDP should be:    €15.00
-    [Teardown]    Run Keywords    Yves: check if cart is not empty and clear it
-    ...    AND    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: go to second navigation item level:    Catalog    Products 
     ...    AND    Zed: click Action Button in a table for row that contains:     manageSKU${random}     Deny
 
@@ -2704,7 +2713,7 @@ Configurable_Product_RfQ_Order_Management
     Yves: 'View Order/Reorder/Return' on the order history page:     View Order
     Yves: 'Order Details' page is displayed
 #     ### Reorder ###
-    Yves: reorder all items from 'View Order' page
+    Yves: reorder all items from 'Order Details' page
     Yves: go to the shopping cart through the header with name:    Cart from order ${lastPlacedOrder}
     Yves: 'Shopping Cart' page is displayed
     Yves: shopping cart contains the following products:     ${configurable_product_concrete_sku}

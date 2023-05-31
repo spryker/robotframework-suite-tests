@@ -82,12 +82,14 @@ Zed: click Action Button in a table for row that contains:
     Zed: perform search by:    ${row_content}
     Wait until element is visible    xpath=(//table[contains(@class,'dataTable')]/tbody//td[contains(text(),'${row_content}')]/../td[contains(@class,'column-Action') or contains(@class,'column-action')]/*[contains(.,'${zed_table_action_button_locator}')])[1]
     Click    xpath=(//table[contains(@class,'dataTable')]/tbody//td[contains(text(),'${row_content}')]/../td[contains(@class,'column-Action') or contains(@class,'column-action')]/*[contains(.,'${zed_table_action_button_locator}')])[1]
+    Sleep    1s
 
 Zed: click Action Button in Variant table for row that contains:
     [Arguments]    ${row_content}    ${zed_table_action_button_locator}
     Zed: perform variant search by:    ${row_content}
     wait until element is visible    xpath=//table[contains(@class,'dataTable')]/tbody//td[contains(text(),'${row_content}')]/../td[contains(@class,'column-Action') or contains(@class,'column-action')]/*[contains(.,'${zed_table_action_button_locator}')]
     Click    xpath=//table[contains(@class,'dataTable')]/tbody//td[contains(text(),'${row_content}')]/../td[contains(@class,'column-Action') or contains(@class,'column-action')]/*[contains(.,'${zed_table_action_button_locator}')]
+    Sleep    1s
 
 Zed: Check checkbox by Label:
     [Arguments]    ${checkbox_label}
@@ -109,14 +111,14 @@ Zed: perform search by:
     Type Text    ${zed_search_field_locator}    ${search_key}
     Keyboard Key    press    Enter
     TRY
-        Wait Until Element Is Visible    ${zed_processing_block_locator}
+        Wait Until Element Is Visible    ${zed_processing_block_locator}    timeout=3s
     EXCEPT    
-        Log    processing locator is now shown
+        Log    processing locator is not shown
     END
     TRY
-        Wait Until Element Is Visible    ${zed_processing_block_locator}
+        Wait Until Element Is Visible    ${zed_processing_block_locator}    timeout=3s
     EXCEPT    
-        Log    processing locator is now shown
+        Log    processing locator is not shown
     END
     Sleep    3s
 
@@ -124,12 +126,12 @@ Zed: perform variant search by:
     [Arguments]    ${search_key}
     Type Text    ${zed_variant_search_field_locator}    ${search_key}
     TRY
-        Wait Until Element Is Visible    ${zed_product_variant_table_processing_locator}
+        Wait Until Element Is Visible    ${zed_product_variant_table_processing_locator}    timeout=3s
     EXCEPT    
         Log    processing locator is now shown
     END
     TRY
-        Wait Until Element Is Visible    ${zed_product_variant_table_processing_locator}
+        Wait Until Element Is Visible    ${zed_product_variant_table_processing_locator}    timeout=3s
     EXCEPT
        Log    processing locator is now shown
     END   

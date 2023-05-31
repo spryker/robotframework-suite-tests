@@ -368,7 +368,8 @@ Try reloading page until element does/not contain text:
         END
     END
     IF    ('${shouldContain}'=='true' and '${textAppears}'=='False') or ('${shouldContain}'=='false' and '${textAppears}'=='True')
-        Fail    'Timeout exceeded'
+        Take Screenshot
+        Fail    'Timeout exceeded, element text doesn't match the expected'
     END
 
 Type Text When Element Is Visible

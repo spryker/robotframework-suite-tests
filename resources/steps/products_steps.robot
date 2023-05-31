@@ -150,6 +150,11 @@ Zed: update abstract product data:
     ${abstractProductData}=    Set Up Keyword Arguments    @{args}
     Zed: go to second navigation item level:    Catalog    Products 
     Zed: click Action Button in a table for row that contains:     ${productAbstract}     Edit
+    ${second_locale_section_expanded}=    Run Keyword And Return Status    Page Should Contain Element    ${${zed_product_general_second_locale_expanded_section}}    3s
+    IF    '${second_locale_section_expanded}'=='False'
+        Scroll Element Into View    ${zed_product_general_second_locale_collapsed_section}
+        Click    ${zed_product_general_second_locale_collapsed_section}
+    END
     FOR    ${key}    ${value}    IN    &{abstractProductData}
         IF    '${key}'=='store' and '${value}' != '${EMPTY}'    
             Zed: Check checkbox by Label:    ${value}
@@ -165,12 +170,8 @@ Zed: update abstract product data:
             Type Text    ${zed_product_edit_name_en_input}    ${value}
         END
         IF    '${key}'=='name de' and '${value}' != '${EMPTY}'  
-            ${de_section_expanded}=    Run Keyword And Return Status    Wait Until Element Is Visible    ${zed_product_edit_name_de_input}    timeout=3s
-            IF    '${de_section_expanded}'=='False'
-                Scroll Element Into View    ${zed_product_general_deDE_collapsed_section}
-                Click    ${zed_product_general_deDE_collapsed_section}
-                Type Text    ${zed_product_edit_name_de_input}    ${value}
-            END
+            Wait Until Element Is Visible    ${zed_product_edit_name_de_input}
+            Type Text    ${zed_product_edit_name_de_input}    ${value}
         END
         IF    '${key}'=='new from' and '${value}' != '${EMPTY}'    
             Type Text    ${zed_product_edit_new_from}    ${value}
@@ -186,11 +187,13 @@ Zed: update abstract product data:
 Zed: update abstract product price on:
     [Arguments]    @{args}
     ${priceData}=    Set Up Keyword Arguments    @{args}
+    Set Browser Timeout    5s
     TRY
         Zed: switch to the tab on 'Add product' page:    Price & Tax
     EXCEPT
         Log    It's edit price case
     END
+    Set Browser Timeout    ${browser_timeout}
     FOR    ${key}    ${value}    IN    &{priceData}
         Log    Key is '${key}' and value is '${value}'.
         IF    '${key}'=='productAbstract' and '${value}' != '${EMPTY}'
@@ -247,8 +250,8 @@ Zed: start new abstract product creation:
         IF    '${key}'=='name de' and '${value}' != '${EMPTY}'  
             ${de_section_expanded}=    Run Keyword And Return Status    Wait Until Element Is Visible    ${zed_product_add_name_de_input}    timeout=3s
             IF    '${de_section_expanded}'=='False'
-                Scroll Element Into View    ${zed_product_general_deDE_collapsed_section}
-                Click    ${zed_product_general_deDE_collapsed_section}
+                Scroll Element Into View    ${zed_product_general_second_locale_collapsed_section}
+                Click    ${zed_product_general_second_locale_collapsed_section}
                 Type Text    ${zed_product_add_name_de_input}    ${value}
             END
         END
@@ -316,8 +319,8 @@ Zed: change concrete product data:
         IF    '${key}'=='name de' and '${value}' != '${EMPTY}'  
             ${de_section_expanded}=    Run Keyword And Return Status    Wait Until Element Is Visible    ${zed_pdp_concrete_name_de_input}    timeout=3s
             IF    '${de_section_expanded}'=='False'
-                Scroll Element Into View    ${zed_product_general_deDE_collapsed_section}
-                Click    ${zed_product_general_deDE_collapsed_section}
+                Scroll Element Into View    ${zed_product_general_second_locale_collapsed_section}
+                Click    ${zed_product_general_second_locale_collapsed_section}
                 Type Text    ${zed_pdp_concrete_name_de_input}    ${value}
             END
         END
@@ -341,8 +344,8 @@ Zed: change concrete product data:
         IF    '${key}'=='searchable de' and '${value}' != '${EMPTY}'
         ${de_section_expanded}=    Run Keyword And Return Status    Wait Until Element Is Visible    ${zed_pdp_concrete_searchable_de}    timeout=3s
             IF    '${de_section_expanded}'=='False'
-                Scroll Element Into View    ${zed_product_general_deDE_collapsed_section}
-                Click    ${zed_product_general_deDE_collapsed_section}
+                Scroll Element Into View    ${zed_product_general_second_locale_collapsed_section}
+                Click    ${zed_product_general_second_locale_collapsed_section}
             END
             IF    '${value}'=='true'
                 Check Checkbox    ${zed_pdp_concrete_searchable_de}
@@ -470,8 +473,8 @@ Zed: add new concrete product to abstract:
         IF    '${key}'=='name de' and '${value}' != '${EMPTY}'  
             ${de_section_expanded}=    Run Keyword And Return Status    Wait Until Element Is Visible    ${zed_add_concrete_name_de_input}    timeout=3s
             IF    '${de_section_expanded}'=='False'
-                Scroll Element Into View    ${zed_product_general_deDE_collapsed_section}
-                Click    ${zed_product_general_deDE_collapsed_section}
+                Scroll Element Into View    ${zed_product_general_second_locale_collapsed_section}
+                Click    ${zed_product_general_second_locale_collapsed_section}
                 Type Text    ${zed_add_concrete_name_de_input}    ${value}
             END
         END

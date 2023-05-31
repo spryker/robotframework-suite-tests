@@ -68,7 +68,11 @@ Yves: shopping cart contains the following products:
     ${items_list_count}=   get length  ${items_list}
     FOR    ${index}    IN RANGE    0    ${items_list_count}
         ${item_to_check}=    Get From List    ${items_list}    ${index}
-        Page Should Contain Element    xpath=(//main[contains(@class,'cart')]//article[contains(@data-qa,'component product-card-item')]//*[contains(.,'${item_to_check}')]/ancestor::article)[1]
+        IF    '${env}' in ['ui_mp_b2b']
+            Page Should Contain Element    xpath=(//main[contains(@class,'cart')]//article[contains(@data-qa,'component product-cart-item')]//*[contains(.,'${item_to_check}')]/ancestor::article)[1]
+        ELSE
+            Page Should Contain Element    xpath=(//main[contains(@class,'cart')]//article[contains(@data-qa,'component product-card-item')]//*[contains(.,'${item_to_check}')]/ancestor::article)[1]
+        END
     END
 
 Yves: click on the '${buttonName}' button in the shopping cart

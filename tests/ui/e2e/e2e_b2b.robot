@@ -167,7 +167,7 @@ Quick_Order
     Yves: 'View Order/Reorder/Return' on the order history page:     View Order    ${lastPlacedOrder}
     Yves: 'Order Details' page is displayed
     ### Reorder ###
-    Yves: reorder all items from 'View Order' page
+    Yves: reorder all items from 'Order Details' page
     Yves: 'Shopping Cart' page is displayed
     Yves: shopping cart contains the following products:    401627    520561    421340    419871    419869    425073    425084
     [Teardown]    Yves: delete 'Shopping List' with name:    quickOrderList+${random}
@@ -1805,7 +1805,7 @@ Configurable_Product_RfQ_Order_Management
     Yves: 'View Order/Reorder/Return' on the order history page:     View Order
     Yves: 'Order Details' page is displayed
     ### Reorder ###
-    Yves: reorder all items from 'View Order' page
+    Yves: reorder all items from 'Order Details' page
     Yves: go to the shopping cart through the header with name:    Cart from order ${lastPlacedOrder}
     Yves: 'Shopping Cart' page is displayed
     Yves: shopping cart contains the following products:     ${configurable_product_concrete_sku}
