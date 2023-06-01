@@ -4,6 +4,7 @@ Suite Setup       SuiteSetup
 Suite Teardown    SuiteTeardown
 Test Setup        TestSetup
 Test Teardown     TestTeardown
+Test Tags    robot:recursive-stop-on-failure
 Resource    ../../../resources/common/common.robot
 Resource    ../../../resources/steps/header_steps.robot
 Resource    ../../../resources/common/common_yves.robot

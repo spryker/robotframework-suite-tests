@@ -232,6 +232,11 @@ Zed: start new abstract product creation:
     ${abstractProductData}=    Set Up Keyword Arguments    @{args}
     Zed: go to second navigation item level:    Catalog    Products
     Zed: click button in Header:    Create Product
+    ${second_locale_section_expanded}=    Run Keyword And Return Status    Page Should Contain Element    ${zed_product_general_second_locale_expanded_section}    timeout=3s
+    IF    '${second_locale_section_expanded}'=='False'
+        Scroll Element Into View    ${zed_product_general_second_locale_collapsed_section}
+        Click    ${zed_product_general_second_locale_collapsed_section}
+    END
     FOR    ${key}    ${value}    IN    &{abstractProductData}
         IF    '${key}'=='sku' and '${value}' != '${EMPTY}'    Type Text    ${zed_product_add_sku_input}    ${value}
         IF    '${key}'=='store' and '${value}' != '${EMPTY}'    
@@ -248,12 +253,8 @@ Zed: start new abstract product creation:
             Type Text    ${zed_product_add_name_en_input}    ${value}
         END
         IF    '${key}'=='name de' and '${value}' != '${EMPTY}'  
-            ${de_section_expanded}=    Run Keyword And Return Status    Wait Until Element Is Visible    ${zed_product_add_name_de_input}    timeout=3s
-            IF    '${de_section_expanded}'=='False'
-                Scroll Element Into View    ${zed_product_general_second_locale_collapsed_section}
-                Click    ${zed_product_general_second_locale_collapsed_section}
-                Type Text    ${zed_product_add_name_de_input}    ${value}
-            END
+            Wait Until Element Is Visible    ${zed_product_add_name_de_input}
+            Type Text    ${zed_product_add_name_de_input}    ${value}
         END
         IF    '${key}'=='new from' and '${value}' != '${EMPTY}'    
             Type Text    ${zed_product_add_new_from}    ${value}
