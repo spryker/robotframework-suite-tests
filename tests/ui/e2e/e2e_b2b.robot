@@ -1556,8 +1556,8 @@ CRUD_Product_Set
     [Documentation]    CRUD operations for product sets
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: create new product set:
-    ...    || name en            | url en             | url de             | set key       | active | product                             | product 2                           | product 3                                      ||
-    ...    || test set ${random} | test-set-${random} | test-set-${random} | test${random} | true   | ${one_variant_product_abstract_sku} | ${multi_color_product_abstract_sku} | ${product_with_relations_related_products_sku} ||
+    ...    || name en            | name de            | url en             | url de             | set key       | active | product                             | product 2                           | product 3                                      ||
+    ...    || test set ${random} | test set ${random} | test-set-${random} | test-set-${random} | test${random} | true   | ${one_variant_product_abstract_sku} | ${multi_color_product_abstract_sku} | ${product_with_relations_related_products_sku} ||
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     Yves: create new 'Shopping Cart' with name:    crudSetsCart+${random}
     Yves: go to newly created page by URL:    en/test-set-${random}

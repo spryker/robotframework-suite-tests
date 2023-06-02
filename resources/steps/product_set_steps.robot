@@ -52,11 +52,13 @@ Zed: create new product set:
     Zed: click button in Header:    Create Product Set
     Wait Until Element Is Visible    ${zed_product_set_name_en_field}
     ${seteData}=    Set Up Keyword Arguments    @{args}
+    ${second_locale_section_expanded}=    Run Keyword And Return Status    Page Should Contain Element    ${zed_product_set_general_second_locale_expanded_section}    timeout=3s
+    IF    '${second_locale_section_expanded}'=='False'
+        Scroll Element Into View    ${zed_product_set_general_second_locale_collapsed_section}
+        Click    ${zed_product_set_general_second_locale_collapsed_section}
+    END
     FOR    ${key}    ${value}    IN    &{seteData}
-        IF    '${key}'=='name en' and '${value}' != '${EMPTY}'    
-            Type Text    ${zed_product_set_name_en_field}    ${value}
-            Click    ${zed_product_set_copy_en_name_button}
-        END
+        IF    '${key}'=='name en' and '${value}' != '${EMPTY}'    Type Text    ${zed_product_set_name_en_field}    ${value}
         IF    '${key}'=='name de' and '${value}' != '${EMPTY}'    Type Text    ${zed_product_set_name_de_field}    ${value}
         IF    '${key}'=='url en' and '${value}' != '${EMPTY}'    Type Text    ${zed_product_set_url_en_field}    ${value}
         IF    '${key}'=='url de' and '${value}' != '${EMPTY}'    Type Text    ${zed_product_set_url_de_field}    ${value}
@@ -93,6 +95,7 @@ Zed: create new product set:
         END
     END
     Zed: submit the form
+    Wait Until Element Is Not Visible    ${zed_save_button}
 
 Zed: switch to tab in product set:
     [Arguments]    ${tab_name}
