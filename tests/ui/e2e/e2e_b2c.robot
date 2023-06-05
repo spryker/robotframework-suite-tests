@@ -54,7 +54,7 @@ Guest_User_Access_Restrictions
     Yves: PDP contains/doesn't contain:     true    ${pdpPriceLocator}    ${addToCartButton}
     Yves: add product to the shopping cart
     Yves: go to b2c shopping cart
-    Yves: shopping cart contains product with unit price:   002    Canon IXUS 160    99.99
+    Yves: shopping cart contains product with unit price:   002    Canon IXUS 160    37.50
     Yves: go to user menu item in header:    Overview
     Yves: 'Login' page is displayed
     Yves: go To 'Wishlist' Page
@@ -68,7 +68,7 @@ Authorized_User_Access
     Yves: PDP contains/doesn't contain:     true    ${pdpPriceLocator}     ${addToCartButton}
     Yves: add product to the shopping cart
     Yves: go to b2c shopping cart
-    Yves: shopping cart contains product with unit price:    002    Canon IXUS 160    99.99
+    Yves: shopping cart contains product with unit price:    002    Canon IXUS 160    37.50
     Yves: go to user menu item in header:    Overview
     Yves: 'Overview' page is displayed
     Yves: go to user menu item in header:    Orders History
@@ -367,7 +367,7 @@ Discounts
     Yves: promotional product offer is/not shown in cart:    true
     Yves: change quantity of promotional product and add to cart:    +    1
     Yves: shopping cart contains the following products:    Kodak EasyShare M532    Canon IXUS 160
-    Yves: discount is applied:    cart rule    Promotional Product 100% ${random}    - €199.98
+    Yves: discount is applied:    cart rule    Promotional Product 100% ${random}    - €75.00
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: billing address same as shipping address:    true
     Yves: fill in the following new shipping address:
@@ -382,8 +382,7 @@ Discounts
     Yves: get the last placed order ID by current customer
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: grand total for the order equals:    ${lastPlacedOrder}    €753.55
-    [Teardown]    Run keywords    Yves: check if cart is not empty and clear it
-    ...    AND    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    [Teardown]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: deactivate following discounts from Overview page:    Voucher Code 5% ${random}    Cart Rule 10% ${random}    Promotional Product 100% ${random}
     ...    AND    Zed: activate following discounts from Overview page:    Free Acer Notebook    Tu & Wed $5 off 5 or more    10% off $100+    Free smartphone    20% off cameras    Free Acer M2610    Free standard delivery    10% off Intel Core    5% off white    Tu & Wed €5 off 5 or more    10% off minimum order
 
@@ -692,13 +691,13 @@ Refunds
     Yves: 'Thank you' page is displayed
     Yves: get the last placed order ID by current customer
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    Zed: grand total for the order equals:    ${lastPlacedOrder}    €1,041.90
+    Zed: grand total for the order equals:    ${lastPlacedOrder}    €394.41
     Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Pay
     Zed: trigger all matching states inside this order:    Skip timeout
     Zed: trigger matching state of order item inside xxx shipment:    008_30692992    Ship
     Zed: trigger matching state of order item inside xxx shipment:    008_30692992    Stock update
     Zed: trigger matching state of order item inside xxx shipment:    008_30692992    Refund
-    Zed: grand total for the order equals:    ${lastPlacedOrder}    €696.90
+    Zed: grand total for the order equals:    ${lastPlacedOrder}    €265.03
     Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Ship
     Zed: trigger all matching states inside this order:    Stock update
     Zed: trigger all matching states inside this order:    Refund
@@ -928,7 +927,7 @@ Manage_Shipments
     Yves: 'Thank you' page is displayed
     Yves: get the last placed order ID by current customer
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    Zed: grand total for the order equals:    ${lastPlacedOrder}    €577.32
+    Zed: grand total for the order equals:    ${lastPlacedOrder}    €225.87
     Zed: order has the following number of shipments:    ${lastPlacedOrder}    1
     Zed: shipment data inside xxx shipment should be:
     ...    || shipment n | delivery method | shipping method | shipping costs | requested delivery date ||
@@ -957,7 +956,7 @@ Manage_Shipments
     Zed: xxx shipment should/not contain the following products:    1    false    012_25904598
     Zed: xxx shipment should/not contain the following products:    2    true    012_25904598
     Zed: xxx shipment should/not contain the following products:    3    true    005_30663301
-    Zed: grand total for the order equals:    ${lastPlacedOrder}    €577.32
+    Zed: grand total for the order equals:    ${lastPlacedOrder}    €225.87
     [Teardown]    Run Keywords    Yves: login on Yves with provided credentials:    ${yves_user_email}
     ...    AND    Yves: check if cart is not empty and clear it
     ...    AND    Yves: delete all user addresses
@@ -980,7 +979,7 @@ Minimum_Order_Value
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: change global threshold settings:
     ...    || store & currency | minimum hard value | minimum hard en message  | minimum hard de message  | maximun hard value | maximun hard en message | maximun hard de message | soft threshold                | soft threshold value | soft threshold fixed fee | soft threshold en message | soft threshold de message ||
-    ...    || DE - Euro [EUR]  | 5                  | EN minimum {{threshold}} | DE minimum {{threshold}} | 400                | EN max {{threshold}}    | DE max {{threshold}}    | Soft Threshold with fixed fee | 100000               | 9                        | EN fixed {{fee}} fee      | DE fixed {{fee}} fee      ||
+    ...    || DE - Euro [EUR]  | 5                  | EN minimum {{threshold}} | DE minimum {{threshold}} | 150                | EN max {{threshold}}    | DE max {{threshold}}    | Soft Threshold with fixed fee | 100000               | 9                        | EN fixed {{fee}} fee      | DE fixed {{fee}} fee      ||
     Yves: login on Yves with provided credentials:    ${yves_user_email}
     Yves: go to PDP of the product with sku:    005
     Yves: add product to the shopping cart
@@ -996,7 +995,7 @@ Minimum_Order_Value
     Yves: submit form on the checkout
     Yves: select the following payment method on the checkout and go next:    Invoice
     Yves: soft threshold surcharge is added on summary page:    €9.00
-    Yves: hard threshold is applied with the following message:    EN max €400.00
+    Yves: hard threshold is applied with the following message:    EN max €150.00
     Yves: go to the 'Home' page
     Yves: go to b2c shopping cart
     Yves: delete product from the shopping cart with name:    Canon IXUS 175
@@ -1010,7 +1009,7 @@ Minimum_Order_Value
     Yves: 'Thank you' page is displayed
     Yves: get the last placed order ID by current customer
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    Zed: grand total for the order equals:    ${lastPlacedOrder}    €369.00
+    Zed: grand total for the order equals:    ${lastPlacedOrder}    €153.38
     [Teardown]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: activate following discounts from Overview page:    Free Acer Notebook    Tu & Wed $5 off 5 or more    10% off $100+    Free smartphone    20% off cameras    Free Acer M2610    Free standard delivery    10% off Intel Core    5% off white    Tu & Wed €5 off 5 or more    10% off minimum order
     ...    AND    Zed: change global threshold settings:
@@ -1341,8 +1340,8 @@ CRUD_Product_Set
     [Documentation]    CRUD operations for product sets
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: create new product set:
-    ...    || name en            | url en             | url de             | set key       | active | product | product 2 | product 3 ||
-    ...    || test set ${random} | test-set-${random} | test-set-${random} | test${random} | true   | 005     | 007       | 010       ||
+    ...    || name en            | name de            | url en             | url de             | set key       | active | product | product 2 | product 3 ||
+    ...    || test set ${random} | test set ${random} | test-set-${random} | test-set-${random} | test${random} | true   | 005     | 007       | 010       ||
     Yves: login on Yves with provided credentials:    ${yves_second_user_email}
     Yves: check if cart is not empty and clear it
     Yves: go to newly created page by URL:    en/test-set-${random}
@@ -1499,15 +1498,7 @@ Configurable_Product_PDP_Wishlist
     ...    || date  | date_time ||
     ...    ||       | Afternoon ||
     Yves: product configuration status should be equal:       Configuration is not complete.
-    Yves: click on the 'Checkout' button in the shopping cart
-    Yves: billing address same as shipping address:    true
-    Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${yves_user_address}
-    Yves: submit form on the checkout
-    Yves: select the following shipping method for the shipment:    1    Hermes    Next Day
-    Yves: submit form on the checkout
-    Yves: select the following payment method on the checkout and go next:    Invoice
-    Sleep    10s
-    Yves: checkout is blocked with the following message:    Product configuration is not completed.
+    Yves: checkout is blocked with the following message:    This cart can't be processed. Please configure items inside the cart. 
     Yves: go to the 'Home' page
     Yves: go to b2c shopping cart
     Yves: delete product from the shopping cart with name:    ${configurable_product_name}

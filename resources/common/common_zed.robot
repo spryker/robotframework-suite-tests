@@ -122,6 +122,10 @@ Zed: perform search by:
     END
     Sleep    3s
 
+Zed: clear search field
+    Clear Text    ${zed_search_field_locator}
+    Sleep    1s
+
 Zed: perform variant search by:
     [Arguments]    ${search_key}
     Type Text    ${zed_variant_search_field_locator}    ${search_key}

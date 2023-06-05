@@ -58,6 +58,7 @@ Zed: create new product set:
         Click    ${zed_product_set_general_second_locale_collapsed_section}
     END
     FOR    ${key}    ${value}    IN    &{seteData}
+        ${key}=    Convert To Lower Case    ${key}
         IF    '${key}'=='name en' and '${value}' != '${EMPTY}'    Type Text    ${zed_product_set_name_en_field}    ${value}
         IF    '${key}'=='name de' and '${value}' != '${EMPTY}'    Type Text    ${zed_product_set_name_de_field}    ${value}
         IF    '${key}'=='url en' and '${value}' != '${EMPTY}'    Type Text    ${zed_product_set_url_en_field}    ${value}
