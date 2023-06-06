@@ -466,3 +466,30 @@ Send GET request and return status code:
 ##    [Arguments]    ${timeout}=30s
 ##    ${response}=    Wait for response    matcher=usercentrics.*?graphql     timeout=${timeout}
 ##    Should be true    ${response}[ok]
+
+Run console command:
+    [Arguments]    ${command}    ${timeout}=5s
+    ${rc}    ${output}=    Run And Return RC And Output    ${command}
+    Log    ${output}
+    Should Be Equal As Integers    ${rc}    0
+    Sleep    ${timeout}
+
+Trigger p&s
+    [Arguments]    ${timeout}=5s
+    ${rc}    ${output}=    Run And Return RC And Output    cd .. && docker/sdk testing console queue:worker:start --stop-when-empty
+    Log    ${output}
+    Should Be Equal As Integers    ${rc}    0
+    Sleep    ${timeout}
+
+Trigger oms
+    [Arguments]    ${timeout}=5s
+    ${rc}    ${output}=    Run And Return RC And Output    cd .. && docker/sdk testing console order:invoice:send
+    Log    ${output}
+    Should Be Equal As Integers    ${rc}    0
+    ${rc}    ${output}=    Run And Return RC And Output    cd .. && docker/sdk testing console oms:check-timeout
+    Log    ${output}
+    Should Be Equal As Integers    ${rc}    0
+    ${rc}    ${output}=    Run And Return RC And Output    cd .. && docker/sdk testing console oms:check-condition
+    Log    ${output}
+    Should Be Equal As Integers    ${rc}    0
+    Sleep    ${timeout}
