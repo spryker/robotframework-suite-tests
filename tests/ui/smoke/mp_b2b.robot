@@ -100,6 +100,7 @@ Quick_Order
 Volume_Prices
     [Documentation]    Checks that volume prices are applied in cart
     [Setup]    Run keywords    Zed: check and restore product availability in Zed:    ${volume_prices_product_abstract_sku}    Available    ${volume_prices_product_concrete_sku}
+    ...    AND    Trigger p&s
     ...    AND    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     ...    AND    Yves: delete all shopping carts
     ...    AND    Yves: create new 'Shopping Cart' with name:    VolumePriceCart+${random}
@@ -754,6 +755,7 @@ Merchant_Portal_Offer_Volume_Prices
     MP: fill concrete product fields:
     ...    || is active | stock quantity | use abstract name | searchability ||
     ...    || true      | 100            | true              | en_US         ||
+    Trigger p&s
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Catalog    Products 
     Zed: click Action Button in a table for row that contains:     OfferNewProduct${random}     Approve
