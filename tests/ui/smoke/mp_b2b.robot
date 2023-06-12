@@ -691,12 +691,15 @@ Fulfill_Order_from_Merchant_Portal
     MP: update order state using header button:    Ship
     Trigger oms
     MP: order states on drawer should contain:    Shipped
+    Trigger oms
     MP: switch to the tab:    Items
     MP: change order item state on:    423172    deliver
     Trigger oms
     MP: switch to the tab:    Items
     MP: order item state should be:    427915    shipped
+    Trigger oms
     MP: order item state should be:    423172    delivered
+    Trigger oms
     MP: update order state using header button:    deliver
     Trigger oms
     MP: order states on drawer should contain:    Delivered
@@ -860,6 +863,7 @@ Manage_Merchant_Product
     ...    || product type | row number | store | currency | gross default | quantity ||
     ...    || concrete     | 2          | DE    | EUR      | 10            | 2        ||
     MP: save concrete product
+    Trigger p&s
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Catalog    Products 
     Zed: click Action Button in a table for row that contains:     manageProduct${random}     Approve
@@ -902,6 +906,7 @@ Manage_Merchant_Product
     MP: fill concrete product fields:
     ...    || is active | stock quantity | use abstract name | searchability ||
     ...    || true      | 3              | true              | en_US         ||
+    Trigger p&s
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Catalog    Products 
     Zed: click Action Button in a table for row that contains:     manageProduct${random}     View
