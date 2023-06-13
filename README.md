@@ -77,7 +77,7 @@ Regardless of execution approach, the path (or paths) to the test data to be exe
 
 | Parameter | Comment| Example | Required |
 |:--- |:--- |:--- |:--- |
-| `-v env:{env}` | Environment variable. Demo data, locators and hosts in tests depend on this variable value. **It's crucial to pass the env variable as tests fully depend on it.** Supported parameters are: `api_b2b`, `api_b2c`, `api_mp_b2b`, `api_mp_b2c`, `api_suite`, `ui_b2b`, `ui_b2c`, `ui_mp_b2b`, `ui_mp_b2c`, `ui_suite`| `robot -v env:api_b2b -s tests.api.b2b.glue .` / `robot -v env:ui_b2c tests/ui/e2e/e2e_b2c.robot`| **yes** |
+| `-v env:{env}` | Environment variable. Demo data, locators and hosts in tests depend on this variable value. **It's crucial to pass the env variable as tests fully depend on it.** Supported parameters are: `api_b2b`, `api_b2c`, `api_mp_b2b`, `api_mp_b2c`, `api_suite`, `ui_b2b`, `ui_b2c`, `ui_mp_b2b`, `ui_mp_b2c`, `ui_suite`| `robot -v env:api_b2b -s tests.api.b2b.glue .` / `robot -v env:ui_b2c tests/ui/e2e/b2c.robot`| **yes** |
 | `-v db_engine:{engine}`| Depending on your system setup, you can run tests against MySQL or PostgreSQL. Possible values: `mysql` or `postgresql`. **Default:** `mysql`| `robot -v env:api_b2b -v db_engine:postgresql -s tests.api.b2b.glue .` | optional |
 | `-v db_host:{host}`| Depending on your system setup, you can specify db_host if it differs from the default one. **Default:** `127.0.0.1`| `robot -v env:api_b2b -v db_host:127.2.3.4 -s tests.api.b2b.glue .` | optional |
 | `-v db_port:{port}`| Depending on your system setup, you can specify db_port if it differs from the default one. **Default MariaDB:** `3306` / **Default PostgreSQL:** `5432`| `robot -v env:api_b2b -v db_port:3390 -s tests.api.b2b.glue .` | optional |
@@ -86,18 +86,18 @@ Regardless of execution approach, the path (or paths) to the test data to be exe
 | `-v db_name:{name}`| Depending on your system setup, you can specify db_name if it differs from the default one. **Default:** `eu-docker`| `robot -v env:api_b2b -v db_name:fake_name -s tests.api.b2b.glue .` | optional |
 | `-d {PATH}` | Path to the folder to store the run report. Like `results` | `robot -v env:api_b2b -d results tests/.../example.robot`| optional |
 | `-s test_suite_name` | Test suite name is the name of any subfolder in tests folder (without path) or filename (without extension). If specified, tests from that folder/file folder will be executed.| `robot -v env:api_b2b -s tests.api.b2b.glue .` / `robot -v env:api_mp_b2b -s tests.api.mp_b2b.glue .` | optional |
-| `-v yves_env:{URL}` | You can specify Yves URL if you would like to run your tests on cloud environment| `robot -v env:ui_b2c -v yves_env:http://example.com tests/ui/e2e/e2e_b2c.robot`| optional |
-| `-v yves_at_env:{URL}` | You can specify Yves AT store URL if you would like to run your tests on cloud environment| `robot -v env:ui_b2c -v yves_env:http://example.com -v yves_at_env:http://at.example.com tests/ui/e2e/e2e_b2c.robot`| optional |
-| `-v zed_env:{URL}` | You can specify Zed URL if you would like to run your tests on cloud environment| `robot -v env:ui_b2c -v yves_env:http://example.com -v zed_env:http://bo.example.com tests/ui/e2e/e2e_b2c.robot`| optional |
+| `-v yves_env:{URL}` | You can specify Yves URL if you would like to run your tests on cloud environment| `robot -v env:ui_b2c -v yves_env:http://example.com tests/ui/e2e/b2c.robot`| optional |
+| `-v yves_at_env:{URL}` | You can specify Yves AT store URL if you would like to run your tests on cloud environment| `robot -v env:ui_b2c -v yves_env:http://example.com -v yves_at_env:http://at.example.com tests/ui/e2e/b2c.robot`| optional |
+| `-v zed_env:{URL}` | You can specify Zed URL if you would like to run your tests on cloud environment| `robot -v env:ui_b2c -v yves_env:http://example.com -v zed_env:http://bo.example.com tests/ui/e2e/b2c.robot`| optional |
 | `-v glue_env:{URL}` | You can specify Glue URL if you would like to run your tests on cloud environment| `robot -v env:api_b2c -v glue_env:http://glue.example.com -s tests.api.b2c.glue .`| optional |
 | `-v bapi_env:{URL}` | You can specify BAPI URL if you would like to run your tests on cloud environment| `robot -v env:api_b2c -v glue_env:http://glue.example.com -v bapi_env:http://bapi.example.com -s tests.api.b2c.bapi .`| optional |
-| `-v mp_env:{URL}` | You can specify Merchant Portal URL if you would like to run your tests on cloud environment| `robot -v env:ui_mp_b2c -v yves_env:http://example.com -v zed_env:http://bo.example.com -v mp_env:http://mp.example.com tests/ui/e2e/e2e_mp_b2c.robot`| optional |
-| `-v browser:{browser}`| Defines in which browser run tests. Possible values: `chromium`,`firefox`, `webkit`. **Default:** `chromium`| `robot -v env:ui_mp_b2c -v browser:firefox tests/ui/e2e/e2e_mp_b2c.robot` | For UI tests only. optional |
-| `-v headless:{headless}` |Defines if the browser should be launched in the headless mode. Possible values: `true`,`false`. **Default:** `true`| `robot -v env:ui_mp_b2c -v headless:false tests/ui/e2e/e2e_mp_b2c.robot` | For UI tests only. optional |
-| `-v browser_timeout:{timeout}` |Default time for Implicit wait in UI tests. **Default:** `60s`| `robot -v env:ui_mp_b2c -v browser_timeout:30s tests/ui/e2e/e2e_mp_b2c.robot` | For UI tests only. optional |
+| `-v mp_env:{URL}` | You can specify Merchant Portal URL if you would like to run your tests on cloud environment| `robot -v env:ui_mp_b2c -v yves_env:http://example.com -v zed_env:http://bo.example.com -v mp_env:http://mp.example.com tests/ui/e2e/mp_b2c.robot`| optional |
+| `-v browser:{browser}`| Defines in which browser run tests. Possible values: `chromium`,`firefox`, `webkit`. **Default:** `chromium`| `robot -v env:ui_mp_b2c -v browser:firefox tests/ui/e2e/mp_b2c.robot` | For UI tests only. optional |
+| `-v headless:{headless}` |Defines if the browser should be launched in the headless mode. Possible values: `true`,`false`. **Default:** `true`| `robot -v env:ui_mp_b2c -v headless:false tests/ui/e2e/mp_b2c.robot` | For UI tests only. optional |
+| `-v browser_timeout:{timeout}` |Default time for Implicit wait in UI tests. **Default:** `60s`| `robot -v env:ui_mp_b2c -v browser_timeout:30s tests/ui/e2e/mp_b2c.robot` | For UI tests only. optional |
 | `-v api_timeout:${timeout}` |Default time for Implicit wait of the response in API tests. **Default:** `60s`| `robot -v env:api_b2c -v api_timeout:30s -s tests.api.b2c.glue .` | For API tests only. optional |
 | `-v verify_ssl:bool` |Enables/Disables SSL verification in API and UI tests **Default:** `false`| `robot -v env:api_b2c -v verify_ssl:true -s tests.api.b2c.glue .` | optional |
-| `{PATH}` | Path to the **file** to execute| `robot -v env:api_b2b tests/api/b2b/glue/cart_endpoints/carts/positive.robot` / `robot -v env:ui_b2c tests/ui/e2e/e2e_b2c.robot`| **yes for UI tests** |
+| `{PATH}` | Path to the **file** to execute| `robot -v env:api_b2b tests/api/b2b/glue/cart_endpoints/carts/positive.robot` / `robot -v env:ui_b2c tests/ui/e2e/b2c.robot`| **yes for UI tests** |
 
 #### CLI Examples
 * Execute all tests in api/b2b folder (all glue and bapi API tests that exist).
@@ -122,7 +122,7 @@ Regardless of execution approach, the path (or paths) to the test data to be exe
    ```
 * Execute all E2E UI tests for MP-B2B on specific cloud environment.
    ```sh
-   robot -v env:ui_mp_b2b -v yves_env:http://yves.example.com -v zed_env:http://zed.example.com -v mp_env:http://mp.example.com -d results tests/ui/e2e/e2e_mp_b2b.robot
+   robot -v env:ui_mp_b2b -v yves_env:http://yves.example.com -v zed_env:http://zed.example.com -v mp_env:http://mp.example.com -d results tests/ui/e2e/mp_b2b.robot
    ```
 * Execute all API tests for B2B on specific cloud environment with custom DB configuration.
    ```sh
@@ -195,8 +195,8 @@ There is often a need to re-execute a subset of tests, for example, after fixing
 Combining re-execution results with the original results using the default combining outputs approach does not work too well. The main problem is that you get separate test suites and possibly already fixed failures are also shown. In this situation it is better to use --merge (-R) option to tell Rebot to merge the results instead. In practice this means that tests from the latter test runs replace tests in the original.
 | Command  	|Description| 
 |:--- |:--- |
-|`robot -v env:ui_b2c -d results tests/ui/e2e/e2e_b2c.robot`|first execute all tests|
-|`robot -v env:ui_b2c --rerunfailed results/output.xml --output results/rerun.xml tests/ui/e2e/e2e_b2c.robot`|then re-execute failing|
+|`robot -v env:ui_b2c -d results tests/ui/e2e/b2c.robot`|first execute all tests|
+|`robot -v env:ui_b2c --rerunfailed results/output.xml --output results/rerun.xml tests/ui/e2e/b2c.robot`|then re-execute failing|
 |`rebot --merge results/output.xml results/rerun.xml`| finally merge results|
 
 The message of the merged tests contains a note that results have been replaced. The message also shows the old status and message of the test.
