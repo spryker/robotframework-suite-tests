@@ -7,6 +7,8 @@ Default Tags    glue
 *** Test Cases ***
 ENABLER
     TestSetup
+
+
 ####### POST #######
 Add_item_to_cart_non_existing_sku
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
@@ -199,3 +201,110 @@ Delete_cart_item_with_missing_cart
     Then Response status code should be:    400
     And Response reason should be:    Bad Request
     And Response should return error message:    Resource id is not specified.
+
+
+Add_a_configurable_product_to_the_cart_with_empty_quantity
+   [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
+   ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
+   ...    AND    Find or create customer cart
+   ...    AND    Cleanup all items in the cart:    ${cart_id}
+   I send a POST request:    /carts/${cart_id}/items?include=items    {"data":{"type":"items","attributes":{"sku":"${configurable_product.sku_1}","quantity":"","productConfigurationInstance":{"displayData":'{"Preferred time of the day":"Afternoon","Date":"09.09.2050"}',"configuration":'{"time_of_day":"4"}',"configuratorKey":"DATE_TIME_CONFIGURATOR","isComplete":True,"quantity":3,"availableQuantity":4,"prices":[{"priceTypeName":"DEFAULT","netAmount":23434,"grossAmount":42502,"currency":{"code":"EUR","name":"Euro","symbol":"€"},"volumePrices":[{"netAmount":150,"grossAmount":165,"quantity":5},{"netAmount":145,"grossAmount":158,"quantity":10},{"netAmount":140,"grossAmount":152,"quantity":20}]}]}}}}
+   And Response status code should be:    422
+   And Response should return error code:    901
+   And Response reason should be:    Unprocessable Content
+   And Response should return error message:    quantity => This value should not be blank.
+   When I send a GET request:    /carts/${cart_id}?include=items,concrete-products
+   Then Response status code should be:    200
+   And Response reason should be:    OK
+   And Response body parameter should be:  [data][attributes][totals][priceToPay]    0
+   And Response body parameter should not be EMPTY:    [data][links][self]
+
+Add_a_configurable_product_to_the_cart_with_0_quantity
+   [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
+   ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
+   ...    AND    Find or create customer cart
+   ...    AND    Cleanup all items in the cart:    ${cart_id}
+   I send a POST request:    /carts/${cart_id}/items?include=items    {"data":{"type":"items","attributes":{"sku":"${configurable_product.sku_1}","quantity":"0","productConfigurationInstance":{"displayData":'{"Preferred time of the day":"Afternoon","Date":"09.09.2050"}',"configuration":'{"time_of_day":"4"}',"configuratorKey":"DATE_TIME_CONFIGURATOR","isComplete":True,"quantity":3,"availableQuantity":4,"prices":[{"priceTypeName":"DEFAULT","netAmount":23434,"grossAmount":42502,"currency":{"code":"EUR","name":"Euro","symbol":"€"},"volumePrices":[{"netAmount":150,"grossAmount":165,"quantity":5},{"netAmount":145,"grossAmount":158,"quantity":10},{"netAmount":140,"grossAmount":152,"quantity":20}]}]}}}}
+   And Response status code should be:    422
+   And Response should return error code:    901
+   And Response reason should be:    Unprocessable Content
+   And Response should return error message:    quantity => This value should be greater than 0.
+   When I send a GET request:    /carts/${cart_id}?include=items,concrete-products
+   Then Response status code should be:    200
+   And Response reason should be:    OK
+   And Response body parameter should be:  [data][attributes][totals][priceToPay]    0
+   And Response body parameter should not be EMPTY:    [data][links][self]
+
+
+Add_a_configurable_product_to_the_cart_with_negative_quantity
+   [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
+   ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
+   ...    AND    Find or create customer cart
+   ...    AND    Cleanup all items in the cart:    ${cart_id}
+   I send a POST request:    /carts/${cart_id}/items?include=items    {"data":{"type":"items","attributes":{"sku":"${configurable_product.sku_1}","quantity":"-1","productConfigurationInstance":{"displayData":'{"Preferred time of the day":"Afternoon","Date":"09.09.2050"}',"configuration":'{"time_of_day":"4"}',"configuratorKey":"DATE_TIME_CONFIGURATOR","isComplete":True,"quantity":3,"availableQuantity":4,"prices":[{"priceTypeName":"DEFAULT","netAmount":23434,"grossAmount":42502,"currency":{"code":"EUR","name":"Euro","symbol":"€"},"volumePrices":[{"netAmount":150,"grossAmount":165,"quantity":5},{"netAmount":145,"grossAmount":158,"quantity":10},{"netAmount":140,"grossAmount":152,"quantity":20}]}]}}}}
+   And Response status code should be:    422
+   And Response should return error code:    901
+   And Response reason should be:    Unprocessable Content
+   And Response should return error message:    quantity => This value should be greater than 0.
+   When I send a GET request:    /carts/${cart_id}?include=items,concrete-products
+   Then Response status code should be:    200
+   And Response reason should be:    OK
+   And Response body parameter should be:  [data][attributes][totals][priceToPay]    0
+   And Response body parameter should not be EMPTY:    [data][links][self]
+
+Add_a_configurable_product_to_the_cart_with_negative_price
+   [Documentation]   https://spryker.atlassian.net/browse/CC-25383
+   [Tags]    skip-due-to-issue    
+   [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
+   ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
+   ...    AND    Find or create customer cart
+   ...    AND    Cleanup all items in the cart:    ${cart_id}
+   I send a POST request:    /carts/${cart_id}/items?include=items    {"data":{"type":"items","attributes":{"sku":"${configurable_product.sku_1}","quantity":"1","productConfigurationInstance":{"displayData":'{"Preferred time of the day":"Afternoon","Date":"09.09.2050"}',"configuration":'{"time_of_day":"4"}',"configuratorKey":"DATE_TIME_CONFIGURATOR","isComplete":True,"quantity":3,"availableQuantity":4,"prices":[{"priceTypeName":"DEFAULT","netAmount":-23434,"grossAmount":-42502,"currency":{"code":"EUR","name":"Euro","symbol":"€"},"volumePrices":[{"netAmount":150,"grossAmount":165,"quantity":5},{"netAmount":145,"grossAmount":158,"quantity":10},{"netAmount":140,"grossAmount":152,"quantity":20}]}]}}}}
+   And Response status code should be:    422
+   And Response should return error code:    901
+   And Response reason should be:    Unprocessable Content
+   And Response should return error message:    netAmount => This value should be greater than 0.
+   And Response should return error message:    grossAmount => This value should be greater than 0.
+   When I send a GET request:    /carts/${cart_id}?include=items,concrete-products
+   Then Response status code should be:    200
+   And Response reason should be:    OK
+   And Response body parameter should be:  [data][attributes][totals][priceToPay]    0
+   And Response body parameter should not be EMPTY:    [data][links][self]
+
+Add_a_configurable_product_to_the_cart_with_empty_price
+   [Documentation]   https://spryker.atlassian.net/browse/CC-25381
+   [Tags]    skip-due-to-issue    
+   [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
+   ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
+   ...    AND    Find or create customer cart
+   ...    AND    Cleanup all items in the cart:    ${cart_id}
+   I send a POST request:    /carts/${cart_id}/items?include=items    {"data":{"type":"items","attributes":{"sku":"${configurable_product.sku_1}","quantity":"1","productConfigurationInstance":{"displayData":'{"Preferred time of the day":"Afternoon","Date":"09.09.2050"}',"configuration":'{"time_of_day":"4"}',"configuratorKey":"DATE_TIME_CONFIGURATOR","isComplete":True,"quantity":3,"availableQuantity":4,"prices":[{"priceTypeName":"DEFAULT","netAmount":"","grossAmount":"","currency":{"code":"EUR","name":"Euro","symbol":"€"},"volumePrices":[{"netAmount":150,"grossAmount":165,"quantity":5},{"netAmount":145,"grossAmount":158,"quantity":10},{"netAmount":140,"grossAmount":152,"quantity":20}]}]}}}}
+   And Response status code should be:    422
+   And Response should return error code:    901
+   And Response reason should be:    Unprocessable Content
+   And Response should return error message:    netAmount => This value should be greater than 0.
+   And Response should return error message:    grossAmount => This value should be greater than 0.
+   When I send a GET request:    /carts/${cart_id}?include=items,concrete-products
+   Then Response status code should be:    200
+   And Response reason should be:    OK
+   And Response body parameter should be:  [data][attributes][totals][priceToPay]    0
+   And Response body parameter should not be EMPTY:    [data][links][self]
+
+Add_a_configurable_product_with_missing_isComplete_value_of_to_the_cart
+   [Documentation]   https://spryker.atlassian.net/browse/CC-25381
+   [Tags]    skip-due-to-issue   
+   [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
+   ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
+   ...    AND    Find or create customer cart
+   ...    AND    Cleanup all items in the cart:    ${cart_id}
+   I send a POST request:    /carts/${cart_id}/items?include=items    {"data":{"type":"items","attributes":{"sku":"${configurable_product.sku_1}","quantity":"1","productConfigurationInstance":{"displayData":'{"Preferred time of the day":"Afternoon","Date":"09.09.2050"}',"configuration":'{"time_of_day":"4"}',"configuratorKey":"DATE_TIME_CONFIGURATOR","quantity":3,"availableQuantity":4,"prices":[{"priceTypeName":"DEFAULT","netAmount":23434,"grossAmount":42502,"currency":{"code":"EUR","name":"Euro","symbol":"€"},"volumePrices":[{"netAmount":150,"grossAmount":165,"quantity":5},{"netAmount":145,"grossAmount":158,"quantity":10},{"netAmount":140,"grossAmount":152,"quantity":20}]}]}}}}
+   And Response status code should be:    422
+   And Response should return error code:    901
+   And Response reason should be:    Unprocessable Content
+   And Response should return error message:    isComplete => This field is missing.
+   When I send a GET request:    /carts/${cart_id}?include=items,concrete-products
+   Then Response status code should be:    200
+   And Response reason should be:    OK
+   And Response body parameter should be:  [data][attributes][totals][priceToPay]    0
+   And Response body parameter should not be EMPTY:    [data][links][self]
+

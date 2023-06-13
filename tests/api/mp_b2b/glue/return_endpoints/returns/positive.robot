@@ -80,8 +80,6 @@ Create_a_return
     And Response body has correct self link for created entity:    ${returnId}
 
 Create_a_return_with_return_items
-    [Documentation]    incorrect self link https://spryker.atlassian.net/browse/CC-26186
-    [Tags]    skip-due-to-issue
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
     ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
@@ -96,6 +94,7 @@ Create_a_return_with_return_items
     When I send a POST request:     /returns?include=return-items     {"data":{"type":"returns","attributes":{"store":"${store.de}","returnItems":[{"salesOrderItemUuid":"${uuid}","reason":"${return_reason_damaged}"}]}}}
     Then Response status code should be:     201
     And Response reason should be:     Created
+    And Save value to a variable:    [data][id]    returnId
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response body parameter should be:    [data][type]    returns
     And Response body parameter should be:    [data][attributes][merchantReference]    ${merchants.computer_experts.merchant_id}
@@ -115,7 +114,7 @@ Create_a_return_with_return_items
     And Response include should contain certain entity type:    return-items
     And Response body parameter should be:    [included][0][attributes][orderItemUuid]    ${uuid}
     And Response body parameter should be:    [included][0][attributes][reason]    ${return_reason_damaged}
-    And Response body has correct self link
+    And Response include element has self link:    return-items
 
 ####GET####
 Retrieves_list_of_returns
@@ -224,8 +223,6 @@ Retrieves_list_of_returns_included_merchants
     And Response body has correct self link
 
 Retrieves_return_by_id_with_returns_items_included
-   [Documentation]    incorrect self link https://spryker.atlassian.net/browse/CC-26186
-   [Tags]    skip-due-to-issue
    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
     ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
@@ -264,7 +261,7 @@ Retrieves_return_by_id_with_returns_items_included
     And Each array element of array in response should contain property with value:    [included]    type    return-items
     And Each array element of array in response should contain property with value in:    [included]    [attributes][orderItemUuid]    ${Uuid}    ${Uuid}
     And Each array element of array in response should contain property with value in:    [included]    [attributes][reason]    ${return_reason_damaged}    ${return_reason_damaged}  
-    And Response body has correct self link
+    And Response body has correct self link internal
 
 Retrieves_return_by_id_for_sales_order
   [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
