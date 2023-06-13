@@ -18,7 +18,7 @@ Zed: go to my order page:
     [Arguments]    ${orderID}
     Zed: go to second navigation item level:    Sales    My Orders
     Zed: perform search by:    ${orderID}
-    Try reloading page until element is/not appear:    xpath=//table[contains(@class,'dataTable')]/tbody//td[contains(text(),'${orderID}')]/../td[contains(@class,'column-Action') or contains(@class,'column-action')]    true    20    30s
+    Try reloading page until element is/not appear:    xpath=//table[contains(@class,'dataTable')]/tbody//td[contains(text(),'${orderID}')]/../td[contains(@class,'column-Action') or contains(@class,'column-action')]    true    15    10s
     Zed: click Action Button in a table for row that contains:    ${orderID}    View
 
 Zed: trigger all matching states inside xxx order:
@@ -266,6 +266,7 @@ Yves: cancel the order:
     [Arguments]    ${order_id}
     Yves: 'View Order/Reorder/Return' on the order history page:    View Order    ${order_id}
     Wait Until Element Is Visible    ${order_details_cancel_button_locator}
+    Set Browser Timeout    3s
     TRY
         Click    ${order_details_cancel_button_locator}
         Wait Until Element Is Not Visible    ${order_details_cancel_button_locator}    timeout=5s
@@ -273,5 +274,6 @@ Yves: cancel the order:
         Click    ${order_details_cancel_button_locator}
         Wait Until Element Is Not Visible    ${order_details_cancel_button_locator}    timeout=5s
     END    
+    Set Browser Timeout    ${browser_timeout}
     Yves: go to 'Order History' page
     Yves: 'Order History' page contains the following order with a status:    ${order_id}    Canceled

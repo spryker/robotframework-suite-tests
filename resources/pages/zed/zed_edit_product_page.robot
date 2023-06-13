@@ -12,8 +12,8 @@ ${zed_product_edit_name_en_input}    xpath=//input[@id='product_form_edit_genera
 ${zed_product_edit_name_de_input}    xpath=//input[@id='product_form_edit_general_de_DE_name']
 ${zed_product_edit_new_from}    xpath=//input[@id='product_form_edit_new_from']
 ${zed_product_edit_new_to}    xpath=//input[@id='product_form_edit_new_to']
-${zed_product_general_deDE_collapsed_section}    xpath=//div[@id='tab-content-general'][contains(@class,'active')]//*[contains(.,'de_DE')]/ancestor::div[contains(@class,'ibox nested collapsed')]//i[contains(@class,'plus')]
-${zed_product_general_deDE_expanded_section}    xpath=//div[@id='tab-content-general'][contains(@class,'active')]//*[contains(.,'de_DE')]/ancestor::div[contains(@class,'ibox nested collapsed')]//i[contains(@class,'minus')]
+${zed_product_general_second_locale_collapsed_section}    xpath=//div[@id='tab-content-general'][contains(@class,'active')]//ancestor::div[contains(@class,'ibox nested collapsed')]//i[contains(@class,'plus')]
+${zed_product_general_second_locale_expanded_section}    xpath=//div[@id='tab-content-general'][contains(@class,'active')]//ancestor::div[contains(@class,'ibox nested collapsed')]//i[contains(@class,'minus')]
 ${zed_product_add_sku_input}    id=product_form_add_sku
 ${zed_product_add_name_en_input}    id=product_form_add_general_en_US_name
 ${zed_product_add_name_de_input}    id=product_form_add_general_de_DE_name

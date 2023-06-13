@@ -3,6 +3,7 @@ Suite Setup       SuiteSetup
 Test Setup        TestSetup
 Test Teardown     TestTeardown
 Suite Teardown    SuiteTeardown
+Test Tags    robot:recursive-stop-on-failure
 Resource    ../../../resources/common/common.robot
 Resource    ../../../resources/steps/header_steps.robot
 Resource    ../../../resources/common/common_yves.robot
@@ -167,7 +168,7 @@ Quick_Order
     Yves: 'View Order/Reorder/Return' on the order history page:     View Order    ${lastPlacedOrder}
     Yves: 'Order Details' page is displayed
     ### Reorder ###
-    Yves: reorder all items from 'View Order' page
+    Yves: reorder all items from 'Order Details' page
     Yves: 'Shopping Cart' page is displayed
     Yves: shopping cart contains the following products:    401627    520561    421340    419871    419869    425073    425084
     [Teardown]    Yves: delete 'Shopping List' with name:    quickOrderList+${random}
@@ -1229,9 +1230,7 @@ Minimum_Order_Value
     Yves: get the last placed order ID by current customer
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: grand total for the order equals:    ${lastPlacedOrder}    €227.29
-    [Teardown]    Run keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
-    ...    AND    Yves: delete all shopping carts
-    ...    AND    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    [Teardown]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: activate following discounts from Overview page:    Free chair    Tu & Wed $5 off 5 or more    10% off $100+    Free marker    20% off storage    	Free office chair    Free standard delivery    	10% off Safescan    5% off white    Tu & Wed €5 off 5 or more    10% off minimum order
     ...    AND    Zed: change global threshold settings:
     ...    || store & currency | minimum hard value | minimum hard en message | minimum hard de message | maximun hard value | maximun hard en message                                                                                   | maximun hard de message                                                                                                              | soft threshold | soft threshold value | soft threshold en message | soft threshold de message ||
@@ -1557,8 +1556,8 @@ CRUD_Product_Set
     [Documentation]    CRUD operations for product sets
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: create new product set:
-    ...    || name en            | url en             | url de             | set key       | active | product                             | product 2                           | product 3                                      ||
-    ...    || test set ${random} | test-set-${random} | test-set-${random} | test${random} | true   | ${one_variant_product_abstract_sku} | ${multi_color_product_abstract_sku} | ${product_with_relations_related_products_sku} ||
+    ...    || name en            | name de            | url en             | url de             | set key       | active | product                             | product 2                           | product 3                                      ||
+    ...    || test set ${random} | test set ${random} | test-set-${random} | test-set-${random} | test${random} | true   | ${one_variant_product_abstract_sku} | ${multi_color_product_abstract_sku} | ${product_with_relations_related_products_sku} ||
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     Yves: create new 'Shopping Cart' with name:    crudSetsCart+${random}
     Yves: go to newly created page by URL:    en/test-set-${random}
@@ -1805,7 +1804,7 @@ Configurable_Product_RfQ_Order_Management
     Yves: 'View Order/Reorder/Return' on the order history page:     View Order
     Yves: 'Order Details' page is displayed
     ### Reorder ###
-    Yves: reorder all items from 'View Order' page
+    Yves: reorder all items from 'Order Details' page
     Yves: go to the shopping cart through the header with name:    Cart from order ${lastPlacedOrder}
     Yves: 'Shopping Cart' page is displayed
     Yves: shopping cart contains the following products:     ${configurable_product_concrete_sku}

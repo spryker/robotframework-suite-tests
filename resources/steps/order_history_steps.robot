@@ -25,7 +25,7 @@ Yves: 'View Order/Reorder/Return' on the order history page:
         Click    xpath=//div[contains(@data-qa,'component order-table')]//td[text()='${lastPlacedOrder}']/..//a[contains(.,'${orderAction}')]
     END
 
-Yves: reorder all items from 'View Order' page
+Yves: reorder all items from 'Order Details' page
     Wait Until Element Is Visible    ${order_details_reorder_all_button}
     Click    ${order_details_reorder_all_button}    delay=1s
     Yves: remove flash messages

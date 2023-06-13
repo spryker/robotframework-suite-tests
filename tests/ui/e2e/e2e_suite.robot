@@ -532,7 +532,7 @@
 #     Yves: 'View Order/Reorder/Return' on the order history page:     View Order    ${lastPlacedOrder}
 #     Yves: 'View Order' page is displayed
 #     ### Reorder ###
-#     Yves: reorder all items from 'View Order' page
+#     Yves: reorder all items from 'Order Details' page
 #     Yves: go to the shopping cart through the header with name:    Cart from order ${lastPlacedOrder}
 #     Yves: 'Shopping Cart' page is displayed
 #     Yves: shopping cart contains the following products:    002_25904004    004_30663302    005_30663301    006_30692993    007_30691822    008_30692992    009_30692991

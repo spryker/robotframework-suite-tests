@@ -13,10 +13,10 @@ Yves: assert merchant profile fields:
     FOR    ${key}    ${value}    IN    &{profileData}
         Log    Key is '${key}' and value is '${value}'.
         IF    '${key}'=='email' and '${value}' != '${EMPTY}'    Run Keywords    
-        ...    Try reloading page until element does/not contain text:    ${merchant_profile_email_locator}    ${value}    true    10    15s
+        ...    Try reloading page until element does/not contain text:    ${merchant_profile_email_locator}    ${value}    true    26    5s
         ...    AND    Element Text Should Be    ${merchant_profile_email_locator}    ${value}
         IF    '${key}'=='name' and '${value}' != '${EMPTY}'    Run Keywords    
-            ...    Try reloading page until element does/not contain text:    ${merchant_profile_name_header_locator}[${env}]    ${value}    true    10    15s
+            ...    Try reloading page until element does/not contain text:    ${merchant_profile_name_header_locator}[${env}]    ${value}    true    26    5s
         ...    AND    Element Text Should Be    ${merchant_profile_name_header_locator}[${env}]    ${value}
         IF    '${key}'=='phone' and '${value}' != '${EMPTY}'    Element Text Should Be    ${merchant_profile_phone_locator}    ${value}
         IF    '${key}'=='delivery time' and '${value}' != '${EMPTY}'    Element Text Should Be    ${merchant_profile_delivery_time_locator}    ${value}

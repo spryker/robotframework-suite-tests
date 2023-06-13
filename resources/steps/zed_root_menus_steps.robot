@@ -11,7 +11,7 @@ Zed: verify first navigation root menus
         Log    ${counter}
         Click    xpath=(//ul[@id='side-menu']/li/a/span[@class='nav-label']/../../a[contains(@href,'/') and not (contains(@href,'javascript'))])[${counter}]
         Sleep    3s
-        Wait Until Element Is Visible    ${zed_log_out_button}
+        Wait Until Element Is Visible    ${zed_log_out_button}    10s
         ${counter}=    Evaluate    ${counter} + 1   
     END
 
@@ -30,18 +30,18 @@ Zed: verify second navigation root menus
     WHILE  ${counter} <= ${first_navigation_count}
         ${counter_1}=    Set Variable    1
         Log    ${counter}
-        Click    xpath=(//ul[@id='side-menu']/li/a/span[@class='nav-label']/../../a[contains(@href,'javascript')])[${counter}]
-        Wait Until Element Is Visible    xpath=(//ul[@id='side-menu']/li/a/span[@class='nav-label']/../../a[contains(@href,'javascript')]/parent::li)[${counter}]
+        Click Element by xpath with JavaScript    (//ul[@id='side-menu']/li/a/span[@class='nav-label']/../../a[contains(@href,'javascript')])[${counter}]
+        Wait Until Element Is Visible    xpath=(//ul[@id='side-menu']/li/a/span[@class='nav-label']/../../a[contains(@href,'javascript')]/parent::li)[${counter}]    timeout=10s
         ${second_navigation_count}=    Get Element Count    xpath=((//ul[@id='side-menu']/li/a/span[@class='nav-label']/../../a[contains(@href,'javascript')])[${counter}]/ancestor::li//ul[contains(@class,'nav-second-level')]//a)
             WHILE  ${counter_1} <= ${second_navigation_count}
                 ${node_state}=    Get Element Attribute    xpath=(//ul[@id='side-menu']/li/a/span[@class='nav-label']/../../a[contains(@href,'javascript')]/parent::li)[${counter}]    class
                 log    ${node_state}
-                IF    'active' not in '${node_state}'     Click    xpath=(//ul[@id='side-menu']/li/a/span[@class='nav-label']/../../a[contains(@href,'javascript')])[${counter}]
-                Click    xpath=((//ul[@id='side-menu']/li/a/span[@class='nav-label']/../../a[contains(@href,'javascript')])[${counter}]/ancestor::li//ul[contains(@class,'nav-second-level')]//a)[${counter_1}]
-                Wait Until Element Is Visible    ${zed_log_out_button}
+                IF    'active' not in '${node_state}'     Click Element by xpath with JavaScript    (//ul[@id='side-menu']/li/a/span[@class='nav-label']/../../a[contains(@href,'javascript')])[${counter}]
+                Click Element by xpath with JavaScript    ((//ul[@id='side-menu']/li/a/span[@class='nav-label']/../../a[contains(@href,'javascript')])[${counter}]/ancestor::li//ul[contains(@class,'nav-second-level')]//a)[${counter_1}]
+                Wait Until Element Is Visible    ${zed_log_out_button}    timeout=10s
                 Log    ${counter_1}
                 ${counter_1}=    Evaluate    ${counter_1} + 1   
             END        
-        Wait Until Element Is Visible    ${zed_log_out_button}
+        Wait Until Element Is Visible    ${zed_log_out_button}    timeout=10s
         ${counter}=    Evaluate    ${counter} + 1  
     END
