@@ -1350,6 +1350,7 @@ Merchant_Portal_Dashboard
     Zed: update Zed user:
     ...    || oldEmail                             | newEmail | password      | firstName | lastName ||
     ...    || sonia+dahboard+${random}@spryker.com |          | Change123!321 |           |          ||
+    Trigger p&s
     MP: login on MP with provided credentials:    sonia+dahboard+${random}@spryker.com    Change123!321
     MP: click button on dashboard page and check url:    Manage Offers    /product-offers
     MP: click button on dashboard page and check url:    Add Offer    /product-list
