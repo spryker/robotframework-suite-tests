@@ -476,12 +476,8 @@ Run console command:
 
 Trigger p&s
     [Arguments]    ${timeout}=5s
-    # ${rc}    ${output}=    Run And Return RC And Output    cd .. && docker/sdk testing console queue:worker:start --stop-when-empty
-    # ${rc}    ${output}=    Run And Return RC And Output    cd .. && APPLICATION_STORE=AT docker/sdk testing console queue:worker:start --stop-when-empty
-    ${rc}    ${output}=    Run And Return RC And Output    cd ../docker/mp-b2b/b2b-demo-marketplace && APPLICATION_STORE=DE docker/sdk console queue:worker:start --stop-when-empty
-    ${rc}    ${output}=    Run And Return RC And Output    cd ../docker/mp-b2b/b2b-demo-marketplace && APPLICATION_STORE=AT docker/sdk console queue:worker:start --stop-when-empty
-    
-    
+    ${rc}    ${output}=    Run And Return RC And Output    cd .. && APPLICATION_STORE=DE docker/sdk testing console queue:worker:start --stop-when-empty
+    ${rc}    ${output}=    Run And Return RC And Output    cd .. && APPLICATION_STORE=AT docker/sdk testing console queue:worker:start --stop-when-empty
     Log    ${output}
     Should Be Equal As Integers    ${rc}    0
     Sleep    ${timeout}
