@@ -1377,6 +1377,7 @@ Multistore_Product
     Zed: update abstract product price on:
     ...    || store | mode  | type    | currency | amount | tax set        ||
     ...    || AT    | gross | default | €        | 200.00 | Standard Taxes ||
+    Trigger p&s
     Zed: change concrete product data:
     ...    || productAbstract   | productConcrete              | active | searchable en | searchable de ||
     ...    || multiSKU${random} | multiSKU${random}-farbe-grey | true   | true          | true          ||
@@ -1401,6 +1402,7 @@ Multistore_Product
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     Yves: create new 'Shopping Cart' with name:    multiProductCart+${random}
     Yves: go to AT URL:    en/search?q=multiSKU${random}
+    Trigger p&s
     Try reloading page until element is/not appear:    ${catalog_product_card_locator}    true    21    5s
     Yves: 1st product card in catalog (not)contains:     Price    €200.00
     Yves: go to PDP of the product with sku:    multiSKU${random}
