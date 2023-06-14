@@ -1242,6 +1242,7 @@ Create_New_Offer
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Catalog    Products 
     Zed: click Action Button in a table for row that contains:     SprykerSKU${random}     Approve
+    Trigger p&s
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}   
     Yves: go to URL:    en/search?q=SprykerSKU${random}
     Try reloading page until element is/not appear:    ${catalog_product_card_locator}    true    21    5s
