@@ -1607,6 +1607,7 @@ CRUD_Product_Set
     Yves: delete all shopping carts
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: delete product set:    test set ${random}
+    Trigger p&s
     Yves: go to URL and refresh until 404 occurs:    ${yves_url}en/test-set-${random}
 
 Comments_in_Cart
