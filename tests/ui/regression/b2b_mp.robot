@@ -41,6 +41,7 @@ Resource    ../../../resources/steps/order_comments_steps.robot
 Resource    ../../../resources/steps/configurable_product_steps.robot
 
 *** Test Cases ***
+
 Guest_User_Access_Restrictions
     [Documentation]    Checks that guest users are not able to see: Prices, Availability, Quick Order, "My Account" features
     Yves: header contains/doesn't contain:    false    ${priceModeSwitcher}    ${currencySwitcher}[${env}]     ${quickOrderIcon}    ${accountIcon}    ${shoppingListIcon}    ${shoppingCartIcon}
