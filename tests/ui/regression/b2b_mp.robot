@@ -190,6 +190,7 @@ Quick_Order
 Volume_Prices
     [Documentation]    Checks that volume prices are applied in cart
     [Setup]    Run keywords    Zed: check and restore product availability in Zed:    ${volume_prices_product_abstract_sku}    Available    ${volume_prices_product_concrete_sku}
+    ...    AND    Trigger p&s
     ...    AND    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     ...    AND    Yves: delete all shopping carts
     ...    AND    Yves: create new 'Shopping Cart' with name:    VolumePriceCart+${random}
