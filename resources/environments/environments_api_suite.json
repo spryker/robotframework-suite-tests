@@ -210,13 +210,13 @@
              }
           }
        },
-       "warehause_user":{
+       "warehouse_user":{
          "name":"",
          "password":""
        },
-       "admin_not_warehause_user":{
-         "name":"",
-         "password":""
+       "admin_not_warehouse_user":{
+         "email":"richard@spryker.com",
+         "password":"change123"
        },
        "product_with_relations":{
           "has_related_products":{
