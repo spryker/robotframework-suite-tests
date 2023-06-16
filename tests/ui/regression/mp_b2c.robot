@@ -48,7 +48,6 @@ New_Customer_Registration
     Register a new customer with data:
     ...    || salutation | first name          | last name | e-mail                       | password            ||
     ...    || Mr.        | Test${random}       | User      | sonia+${random}@spryker.com  | Change123!${random} ||
-    Trigger p&s
     Yves: flash message should be shown:    success    Almost there! We send you an email to validate your email address. Please confirm it to be able to log in.
     [Teardown]    Zed: delete customer:
     ...    || email                       ||
