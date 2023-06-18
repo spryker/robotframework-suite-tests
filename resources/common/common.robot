@@ -16,7 +16,7 @@ Resource                  ../pages/yves/yves_login_page.robot
 *** Variables ***
 # *** SUITE VARIABLES ***
 ${env}                 b2b
-${headless}            false
+${headless}            true
 ${verify_ssl}          false
 ${browser}             chromium
 ${browser_timeout}     60 seconds
