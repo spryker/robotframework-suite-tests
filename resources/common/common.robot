@@ -137,7 +137,7 @@ TestSetup
     Go To    ${yves_url}
 
 TestTeardown
-    Run Keyword If Test Failed    Pause Execution
+    # Run Keyword If Test Failed    Pause Execution
     Delete All Cookies
 
 Create default Main Context
