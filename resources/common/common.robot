@@ -16,7 +16,7 @@ Resource                  ../pages/yves/yves_login_page.robot
 *** Variables ***
 # *** SUITE VARIABLES ***
 ${env}                 b2b
-${headless}            true
+${headless}            false
 ${verify_ssl}          false
 ${browser}             chromium
 ${browser_timeout}     60 seconds
@@ -137,7 +137,7 @@ TestSetup
     Go To    ${yves_url}
 
 TestTeardown
-    # Run Keyword If Test Failed    Pause Execution
+    Run Keyword If Test Failed    Pause Execution
     Delete All Cookies
 
 Create default Main Context
@@ -476,20 +476,24 @@ Run console command:
 
 Trigger p&s
     [Arguments]    ${timeout}=5s
-    ${rc}    ${output}=    Run And Return RC And Output    cd .. && docker/sdk testing console queue:worker:start --stop-when-empty
-    Log    ${output}
-    Should Be Equal As Integers    ${rc}    0
-    Sleep    ${timeout}
+    IF    '.local' in '${yves_url}' or '.local' in '${zed_url}' or '.local' in '${glue_url}' or '.local' in '${bapi_url}'
+        ${rc}    ${output}=    Run And Return RC And Output    cd .. && docker/sdk testing console queue:worker:start --stop-when-empty
+        Log    ${output}
+        Should Be Equal As Integers    ${rc}    0
+        Sleep    ${timeout}
+    END
 
 Trigger oms
     [Arguments]    ${timeout}=5s
-    ${rc}    ${output}=    Run And Return RC And Output    cd .. && docker/sdk testing console order:invoice:send
-    Log    ${output}
-    Should Be Equal As Integers    ${rc}    0
-    ${rc}    ${output}=    Run And Return RC And Output    cd .. && docker/sdk testing console oms:check-timeout
-    Log    ${output}
-    Should Be Equal As Integers    ${rc}    0
-    ${rc}    ${output}=    Run And Return RC And Output    cd .. && docker/sdk testing console oms:check-condition
-    Log    ${output}
-    Should Be Equal As Integers    ${rc}    0
-    Sleep    ${timeout}
+    IF    '.local' in '${yves_url}' or '.local' in '${zed_url}' or '.local' in '${glue_url}' or '.local' in '${bapi_url}'
+        ${rc}    ${output}=    Run And Return RC And Output    cd .. && docker/sdk testing console order:invoice:send
+        Log    ${output}
+        Should Be Equal As Integers    ${rc}    0
+        ${rc}    ${output}=    Run And Return RC And Output    cd .. && docker/sdk testing console oms:check-timeout
+        Log    ${output}
+        Should Be Equal As Integers    ${rc}    0
+        ${rc}    ${output}=    Run And Return RC And Output    cd .. && docker/sdk testing console oms:check-condition
+        Log    ${output}
+        Should Be Equal As Integers    ${rc}    0
+        Sleep    ${timeout}
+    END

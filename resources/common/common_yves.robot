@@ -194,53 +194,53 @@ Yves: go to AT URL:
     Go To    ${yves_at_url}${url}
 
 Yves: go to newly created page by URL:
-    [Arguments]    ${url}    ${iterations}=26
+    [Arguments]    ${url}    ${delay}=5s    ${iterations}=31
     FOR    ${index}    IN RANGE    0    ${iterations}
         Go To    ${yves_url}${url}
         ${page_not_published}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//main//*[contains(text(),'ERROR 404')]
         Log    ${page_not_published}
         IF    '${page_not_published}'=='True'
-            Run Keyword    Sleep    5s
+            Run Keyword    Sleep    ${delay}
         ELSE
             Exit For Loop
         END
         IF    ${index} == ${iterations}-1
             Take Screenshot
-            Fail    expected element state is not reached
+            Fail    Newly created URL is not accessible (404 error), check P&S
         END
     END
 
 Yves: go to newly created page by URL on AT store:
-    [Arguments]    ${url}    ${iterations}=26
+    [Arguments]    ${url}    ${delay}=5s    ${iterations}=31
     FOR    ${index}    IN RANGE    0    ${iterations}
         Go To    ${yves_at_url}${url}
         ${page_not_published}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//main//*[contains(text(),'ERROR 404')]
         Log    ${page_not_published}
         IF    '${page_not_published}'=='True'
-            Run Keyword    Sleep    5s
+            Run Keyword    Sleep    ${delay}
         ELSE
             Exit For Loop
         END
         IF    ${index} == ${iterations}-1
             Take Screenshot
-            Fail    expected element state is not reached
+            Fail    Newly created CMS page is not accessible (404 error), check P&S
         END
     END
 
 Yves: go to URL and refresh until 404 occurs:
-    [Arguments]    ${url}    ${iterations}=26
+    [Arguments]    ${url}    ${delay}=5s    ${iterations}=31
     FOR    ${index}    IN RANGE    0    ${iterations}
         Go To    ${url}
         ${page_not_published}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//main//*[contains(text(),'ERROR 404')]
         Log    ${page_not_published}
         IF    '${page_not_published}'=='False'
-            Run Keyword    Sleep    5s
+            Run Keyword    Sleep    ${delay}
         ELSE
             Exit For Loop
         END
         IF    ${index} == ${iterations}-1
             Take Screenshot
-            Fail    expected element state is not reached
+            Fail    URL is still accessible but should not, check P&S
         END
     END
 
