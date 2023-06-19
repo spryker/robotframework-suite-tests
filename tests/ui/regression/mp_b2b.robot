@@ -661,6 +661,7 @@ Return_Management
     Yves: 'View Order/Reorder/Return' on the order history page:     Return    ${lastPlacedOrder}
     Yves: 'Create Return' page is displayed
     Yves: create return for the following products:    410083    108278
+    Trigger oms
     Yves: 'Return Details' page is displayed
     Yves: check that 'Print Slip' contains the following products:    410083    108278
     MP: login on MP with provided credentials:    ${merchant_spryker_email}
@@ -673,6 +674,7 @@ Return_Management
     MP: order states on drawer should contain:    Shipped  
     Zed: login on Zed with provided credentials:    admin@spryker.com
     Zed: create a return for the following order and product in it:    ${lastPlacedOrder}    103838
+    Trigger oms
     Zed: create new Zed user with the following data:    return+agent+${random}@spryker.com    change123${random}    Agent    Assist    Root group    This user is an agent    en_US
     Trigger p&s
     Yves: go to the 'Home' page
@@ -687,6 +689,7 @@ Return_Management
     Yves: 'View Order/Reorder/Return' on the order history page:     Return    ${lastPlacedOrder}
     Yves: 'Create Return' page is displayed
     Yves: create return for the following products:    421426
+    Trigger oms
     Yves: 'Return Details' page is displayed
     Yves: check that 'Print Slip' contains the following products:    421426
     Zed: login on Zed with provided credentials:    ${zed_main_merchant_email}
