@@ -15,9 +15,9 @@ ${shopping_cart_promotional_product_add_to_cart_button}    xpath=//product-item[
 &{shopping_cart_promotional_product_decrease_quantity_button}    ui_b2c=xpath=(//product-item[contains(@data-qa,'component product-item')]//quantity-counter//div[contains(@class,'button button--quantity js-quantity-counter__decr')])[1]    ui_b2b=xpath=(//product-item[contains(@data-qa,'component product-item')]//quantity-counter/button[contains(@class,'decrement')])[1]    ui_mp_b2b=xpath=(//product-item[contains(@data-qa,'component product-item')]//quantity-counter/button[contains(@class,'decrement')])[1]    ui_mp_b2c=xpath=(//product-item[contains(@data-qa,'component product-item')]//quantity-counter//div[contains(@class,'js-quantity-counter__decr')])[1]
 &{shopping_cart_surcharge_amount}    ui_b2c=xpath=//div[@data-qa='component cart-summary']//li[contains(text(),'Surcharge')]//span    ui_b2b=xpath=//div[@data-qa='component cart-summary']//li//div[contains(text(),'Surcharge')]/following-sibling::div    ui_mp_b2b=xpath=//div[@data-qa='component cart-summary']//li//div[contains(text(),'Surcharge')]/following-sibling::div    ui_mp_b2c=xpath=//div[@data-qa='component cart-summary']//li[contains(text(),'Surcharge')]//span
 ${shopping_cart_write_comment_placeholder}    xpath=//div[@data-qa='component add-comment-form']//form[@method='POST']/textarea
-${shopping_cart_add_comment_button}    xpath=//button[contains(@class,"js-add-comment-form__button")]
-${shopping_cart_edit_comment_button}    xpath=//button[contains(@class,"button--hollow-icon-small") and not (contains(@class,"js-comment-form__remove-button"))]
-${shopping_cart_edit_comment_placeholder}    xpath=//comment-form[@data-qa='component comment-form']//form[@method='POST']//textarea
+${shopping_cart_add_comment_button}    xpath=//button[contains(@class,"add-comment-form")]
+${shopping_cart_edit_comment_button}    xpath=(//comment-form//*[@title='edit']/ancestor::button)[1]
+${shopping_cart_edit_comment_placeholder}    xpath=(//comment-form[@data-qa='component comment-form']//form[@method='POST']//textarea)[1]
 ${shopping_cart_update_comment_button}    xpath=//button[contains(@action,"/comment/update")]
 ${shopping_cart_remove_comment_button}    xpath=//button[contains(@action,"/comment/remove")]
 ###xpath OR operator exapme###
