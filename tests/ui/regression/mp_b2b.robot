@@ -2068,6 +2068,7 @@ Order_Cancelation
     Yves: go to 'Order History' page
     Yves: get the last placed order ID by current customer
     Yves: cancel the order:    ${lastPlacedOrder}
+    Trigger oms
     Yves: get the last placed order ID by current customer
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to order page:    ${lastPlacedOrder}
@@ -2096,6 +2097,7 @@ Order_Cancelation
     # Zed: login on Zed with provided credentials:    ${zed_admin_email}
     # Zed: go to order page:    ${lastPlacedOrder}
     # Zed: trigger matching state of order item inside xxx shipment:    403125    Pay
+    # Trigger oms
     # Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     # Yves: go to 'Order History' page
     # Yves: 'View Order/Reorder/Return' on the order history page:    View Order    ${lastPlacedOrder}
@@ -2103,6 +2105,7 @@ Order_Cancelation
     # Zed: login on Zed with provided credentials:    ${zed_admin_email}
     # Zed: go to order page:    ${lastPlacedOrder}
     # Zed: trigger matching state of order item inside xxx shipment:    403125    Skip timeout 
+    # Trigger oms
     # Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     # Yves: go to 'Order History' page
     # Yves: 'View Order/Reorder/Return' on the order history page:    View Order    ${lastPlacedOrder}
@@ -2111,7 +2114,9 @@ Order_Cancelation
     # Zed: login on Zed with provided credentials:    ${zed_admin_email}
     # Zed: go to order page:    ${lastPlacedOrder}
     # Zed: trigger matching state of order item inside xxx shipment:    107254    Pay
+    # Trigger oms
     # Zed: trigger matching state of order item inside xxx shipment:    107254    Skip timeout
+    # Trigger oms
     # Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     # Yves: go to 'Order History' page
     # Yves: 'View Order/Reorder/Return' on the order history page:    View Order    ${lastPlacedOrder}
