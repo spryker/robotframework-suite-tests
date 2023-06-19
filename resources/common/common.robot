@@ -107,6 +107,7 @@ SuiteSetup
     [documentation]  Basic steps before each suite
     Remove Files    ${OUTPUTDIR}/selenium-screenshot-*.png
     Remove Files    resources/libraries/__pycache__/*
+    Remove Files    ${OUTPUTDIR}/*.png
     Load Variables    ${env}
     ${verify_ssl}=    Convert To Lower Case    ${verify_ssl}
     IF    '${verify_ssl}' == 'true'
@@ -336,7 +337,7 @@ Conver string to List by separator:
 
 Try reloading page until element is/not appear:
     [Documentation]    will reload the page until an element is shown or disappears. The second argument is the expected condition (true[shown]/false[disappeared]) for the element.
-    [Arguments]    ${element}    ${shouldBeDisplayed}    ${tries}=20    ${timeout}=1s
+    [Arguments]    ${element}    ${shouldBeDisplayed}    ${tries}=20    ${timeout}=1s    ${message}='Timeout exceeded, element state doesn't match the expected'
     ${shouldBeDisplayed}=    Convert To Lower Case    ${shouldBeDisplayed}
     FOR    ${index}    IN RANGE    0    ${tries}
         ${elementAppears}=    Run Keyword And Return Status    Page Should Contain Element    ${element}
@@ -350,7 +351,7 @@ Try reloading page until element is/not appear:
     END
     IF    ('${shouldBeDisplayed}'=='true' and '${elementAppears}'=='False') or ('${shouldBeDisplayed}'=='false' and '${elementAppears}'=='True')
         Take Screenshot
-        Fail    'Timeout exceeded, element state doesn't match the expected'
+        Fail    ${message}
     END
 
 Try reloading page until element does/not contain text:

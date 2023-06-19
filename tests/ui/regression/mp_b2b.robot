@@ -2557,7 +2557,7 @@ Comments_in_Cart
     Yves: add product to the shopping cart
     Yves: go to the shopping cart through the header with name:    commentCart+${random}
     Yves: add comment on cart:    abc${random}
-    Yves: check comments are visible or not in cart:    abc${random}
+    Yves: check comments are visible or not in cart:    true    abc${random}
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: billing address same as shipping address:    true
     Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${yves_company_user_shared_permission_owner_address}
