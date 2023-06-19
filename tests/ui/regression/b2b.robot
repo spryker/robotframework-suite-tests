@@ -1283,6 +1283,7 @@ Order_Cancelation
     Yves: go to 'Order History' page
     Yves: get the last placed order ID by current customer
     Yves: cancel the order:    ${lastPlacedOrder}
+    Trigger oms
     Yves: get the last placed order ID by current customer
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to order page:    ${lastPlacedOrder}
