@@ -17,8 +17,8 @@ ${mp_error_flyout}    xpath=//span[contains(@class,'alert')][contains(@class,'ic
 *** Keywords ***
 MP: login on MP with provided credentials:
     [Arguments]    ${email}    ${password}=${default_password}
-    go to    ${mp_url}
-    delete all cookies
+    Go To    ${mp_url}
+    Delete All Cookies
     Reload
     Wait Until Element Is Visible    ${mp_user_name_field}
     Type Text    ${mp_user_name_field}    ${email}
@@ -28,8 +28,8 @@ MP: login on MP with provided credentials:
 
 MP: login on MP with provided credentials and expect error:
     [Arguments]    ${email}    ${password}=${default_password}
-    go to    ${mp_url}
-    delete all cookies
+    Go To    ${mp_url}
+    Delete All Cookies
     Reload
     Wait Until Element Is Visible    ${mp_user_name_field}
     Type Text    ${mp_user_name_field}    ${email}
