@@ -1846,6 +1846,7 @@ Configurable_Product_RfQ_Order_Management
     Yves: get the last placed order ID by current customer
     Yves: 'View Order/Reorder/Return' on the order history page:     Return    ${lastPlacedOrder}
     Yves: 'Create Return' page is displayed
+    Trigger oms
     Yves: create return for the following products:    ${configurable_product_concrete_sku}
     Yves: 'Return Details' page is displayed
     Yves: check that 'Print Slip' contains the following products:    ${configurable_product_concrete_sku}
