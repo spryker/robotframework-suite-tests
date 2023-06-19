@@ -1312,6 +1312,7 @@ Order_Cancelation
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to order page:    ${lastPlacedOrder}
     Zed: trigger matching state of order item inside xxx shipment:    403125    Pay
+    Trigger oms
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     Yves: go to 'Order History' page
     Yves: 'View Order/Reorder/Return' on the order history page:    View Order    ${lastPlacedOrder}
