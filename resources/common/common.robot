@@ -495,12 +495,12 @@ Trigger oms
         Should Be Equal As Integers    ${rc}    0
         ${rc}    ${output}=    Run And Return RC And Output    cd .. && APPLICATION_STORE=DE docker/sdk testing console oms:check-timeout
         Log    ${output}
-        ${rc}    ${output}=    Run And Return RC And Output    cd .. && APPLICATION_STORE=AT docker/sdk testing console order:invoice:send
+        ${rc}    ${output}=    Run And Return RC And Output    cd .. && APPLICATION_STORE=AT docker/sdk testing console oms:check-timeout
         Log    ${output}
         Should Be Equal As Integers    ${rc}    0
         ${rc}    ${output}=    Run And Return RC And Output    cd .. && APPLICATION_STORE=DE docker/sdk testing console oms:check-condition
         Log    ${output}
-        ${rc}    ${output}=    Run And Return RC And Output    cd .. && APPLICATION_STORE=AT docker/sdk testing console order:invoice:send
+        ${rc}    ${output}=    Run And Return RC And Output    cd .. && APPLICATION_STORE=AT docker/sdk testing console oms:check-condition
         Log    ${output}
         Should Be Equal As Integers    ${rc}    0
         Sleep    ${timeout}
