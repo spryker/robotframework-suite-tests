@@ -1359,6 +1359,7 @@ Fulfill_Order_from_Merchant_Portal
     MP: click on a table row that contains:    ${lastPlacedOrder}--${merchant_office_king_reference}
     MP: order grand total should be:    €32.78
     MP: update order state using header button:    Ship
+    Trigger oms
     MP: order states on drawer should contain:    Shipped
     MP: switch to the tab:    Items
     MP: change order item state on:    423172    deliver
@@ -1366,6 +1367,7 @@ Fulfill_Order_from_Merchant_Portal
     MP: order item state should be:    427915    shipped
     MP: order item state should be:    423172    delivered
     MP: update order state using header button:    deliver
+    Trigger oms
     MP: order states on drawer should contain:    Delivered
     MP: switch to the tab:    Items
     MP: order item state should be:    427915    delivered
