@@ -528,6 +528,7 @@ Return_Management
     Yves: 'View Order/Reorder/Return' on the order history page:     Return    ${lastPlacedOrder}
     Yves: 'Create Return' page is displayed
     Yves: create return for the following products:    008_30692992
+    Trigger oms
     Yves: 'Return Details' page is displayed
     Yves: check that 'Print Slip' contains the following products:    008_30692992
     Zed: login on Zed with provided credentials:    ${zed_main_merchant_email}
