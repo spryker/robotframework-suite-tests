@@ -1104,6 +1104,7 @@ Fulfill_Order_from_Merchant_Portal
     MP: click on a table row that contains:    ${lastPlacedOrder}--${merchant_budget_cameras_reference}
     MP: order grand total should be:    €247.08
     MP: update order state using header button:    Ship
+    Trigger oms
     MP: order states on drawer should contain:    Shipped 
     MP: switch to the tab:    Items
     MP: change order item state on:    041_25904691    deliver
@@ -1111,6 +1112,7 @@ Fulfill_Order_from_Merchant_Portal
     MP: order item state should be:    104_30727010    shipped
     MP: order item state should be:    041_25904691    delivered
     MP: update order state using header button:    deliver
+    Trigger oms
     MP: order states on drawer should contain:    Delivered
     MP: switch to the tab:    Items
     MP: order item state should be:    104_30727010    delivered
