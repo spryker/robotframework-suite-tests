@@ -36,6 +36,12 @@ Zed: trigger all matching states inside this order:
         ELSE
             Exit For Loop
         END
+        IF    ${index} == ${iterations}-1
+            Scroll Element Into View    xpath=(//div[@id='order-overview']//form[@name='oms_trigger_form']//button[@id='oms_trigger_form_submit'])[1]
+            Take Screenshot
+            ${order_state}=    Get Text    xpath=(//div[@id='order-overview']//form[@name='oms_trigger_form'])[1]
+            Fail    Order stuck in '${order_state}' state. Expected state '${status}' is not reached. Check if OMS is functional
+        END
     END
     Click    xpath=//div[@id='order-overview']//form[@name='oms_trigger_form']//button[@id='oms_trigger_form_submit'][text()='${status}']
     ${order_changed_status}=    Run Keyword And Ignore Error    Element Should Not Be Visible    xpath=//div[@id='order-overview']//form[@name='oms_trigger_form']//button[@id='oms_trigger_form_submit'][text()='${status}']    timeout=1s
