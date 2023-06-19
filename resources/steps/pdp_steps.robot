@@ -258,7 +258,7 @@ Yves: select xxx merchant's offer:
     [Arguments]    ${merchantName}
     Wait Until Element Is Visible    ${pdp_product_sku}[${env}]
     Click    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]/ancestor::div[contains(@class,'offer-item')]//span[contains(@class,'radio__box')]
-    Sleep    3s
+    Sleep    5s
     Wait Until Element Contains    ${referrer_url}    offer
 
 Yves: merchant's offer/product price should be:
