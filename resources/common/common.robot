@@ -488,17 +488,14 @@ Trigger oms
     IF    '.local' in '${yves_url}' or '.local' in '${zed_url}' or '.local' in '${glue_url}' or '.local' in '${bapi_url}'
         ${rc}    ${output}=    Run And Return RC And Output    cd .. && APPLICATION_STORE=DE docker/sdk testing console order:invoice:send
         ${rc}    ${output}=    Run And Return RC And Output    cd .. && APPLICATION_STORE=AT docker/sdk testing console order:invoice:send
-
-       Log    ${output}
+        Log    ${output}
         Should Be Equal As Integers    ${rc}    0
         ${rc}    ${output}=    Run And Return RC And Output    cd .. && APPLICATION_STORE=DE docker/sdk testing console oms:check-timeout
         ${rc}    ${output}=    Run And Return RC And Output    cd .. && APPLICATION_STORE=AT docker/sdk testing console order:invoice:send
-
         Log    ${output}
         Should Be Equal As Integers    ${rc}    0
         ${rc}    ${output}=    Run And Return RC And Output    cd .. && APPLICATION_STORE=DE docker/sdk testing console oms:check-condition
         ${rc}    ${output}=    Run And Return RC And Output    cd .. && APPLICATION_STORE=AT docker/sdk testing console order:invoice:send
-   
         Log    ${output}
         Should Be Equal As Integers    ${rc}    0
         Sleep    ${timeout}
