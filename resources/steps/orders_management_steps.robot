@@ -63,10 +63,12 @@ Zed: trigger matching state of xxx merchant's shipment:
     ${elementSelector}=    Set Variable    xpath=//div[@id='items']//h3[contains(.,'Shipment ${shipment_number}')]/../../following-sibling::div[2]//form[@name='event_trigger_form']//button[@id='event_trigger_form_submit'][text()='${event}']
     ${shipment_available_transitions_count}=    Get Element Count    xpath=//div[@id='items']//h3[contains(.,'Shipment ${shipment_number}')]/../../following-sibling::div[2]//form[@name='event_trigger_form']//button[@id='event_trigger_form_submit']
     ${shipment_available_transitions}=    Create List
-    FOR    ${element}    IN    @{shipment_available_transitions_count}
-        ${shipment_available_transition}=    Get Text    xpath=(//div[@id='items']//h3[contains(.,'Shipment ${shipment_number}')]/../../following-sibling::div[2]//form[@name='event_trigger_form']//button[@id='event_trigger_form_submit'])[${element}]
+    Set Browser Timeout    5s
+    FOR    ${index}    IN RANGE    1    ${shipment_available_transitions_count}+1
+        ${shipment_available_transition}=    Get Text    xpath=(//div[@id='items']//h3[contains(.,'Shipment ${shipment_number}')]/../../following-sibling::div[2]//form[@name='event_trigger_form']//button[@id='event_trigger_form_submit'])[${index}]
         Append To List    ${shipment_available_transitions}    ${shipment_available_transition}
     END
+    Set Browser Timeout    ${browser_timeout}
     ${shipment_available_transitions}=    Convert To String    ${shipment_available_transitions}
     Try reloading page until element is/not appear:    ${elementSelector}    true    ${iterations}    ${delay}    message=Expected shipment state transition '${event}' for shipment# '${shipment_number}' is not available. Only '${shipment_available_transitions}' is/are available. Check if OMS is functional
     Click    ${elementSelector}
@@ -128,10 +130,12 @@ Zed: trigger matching state of xxx order item inside xxx shipment:
     ${elementSelector}=    Set Variable    xpath=//table[@data-qa='order-item-list'][${shipment}]/tbody//tr[${item_number}]//td//form[contains(@name,'trigger_form')]//button[contains(text(),'${event}')]
     ${item_available_transitions_count}=    Get Element Count    xpath=//table[@data-qa='order-item-list'][${shipment}]/tbody//tr[${item_number}]//td//form[contains(@name,'trigger_form')]//button
     ${item_available_transitions}=    Create List
-    FOR    ${element}    IN    @{item_available_transitions_count}
-        ${item_available_transition}=    Get Text    xpath=(//table[@data-qa='order-item-list'][${shipment}]/tbody//tr[${item_number}]//td//form[contains(@name,'trigger_form')]//button)[${element}]
+    Set Browser Timeout    5s
+    FOR    ${index}    IN RANGE    1    ${item_available_transitions_count}+1
+        ${item_available_transition}=    Get Text    xpath=(//table[@data-qa='order-item-list'][${shipment}]/tbody//tr[${item_number}]//td//form[contains(@name,'trigger_form')]//button)[${index}]
         Append To List    ${item_available_transitions}    ${item_available_transition}
     END
+    Set Browser Timeout    ${browser_timeout}
     ${item_available_transitions}=    Convert To String    ${item_available_transitions}
     Try reloading page until element is/not appear:    ${elementSelector}    true    ${iterations}    ${delay}    message=Expected item state transition '${event}' for item number '${item_number}' is not available in shipment# '${shipment}'. Only '${item_available_transitions}' is/are available. Check if OMS is functional
     Click    ${elementSelector}
