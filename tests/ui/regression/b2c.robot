@@ -1648,6 +1648,7 @@ Configurable_Product_OMS
     Yves: 'View Order/Reorder/Return' on the order history page:     Return    ${lastPlacedOrder}
     Yves: 'Create Return' page is displayed
     Yves: create return for the following products:    ${configurable_product_concrete_one_sku}
+    Trigger oms
     Yves: 'Return Details' page is displayed
     Yves: check that 'Print Slip' contains the following products:    ${configurable_product_concrete_one_sku}
     Zed: login on Zed with provided credentials:    admin@spryker.com
