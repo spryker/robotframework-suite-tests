@@ -97,14 +97,16 @@ Zed: trigger matching state of order item inside xxx shipment:
     END   
     ${item_available_transitions_count}=    Get Element Count    ${item_available_transition_selector}
     ${item_available_transitions}=    Create List
-    FOR    ${element}    IN    @{item_available_transitions_count}
+    Set Browser Timeout    5s
+    FOR    ${index}    IN RANGE    1    ${item_available_transitions_count}+1
         IF    '${env}' in ['ui_mp_b2b','ui_mp_b2c']
-            ${item_available_transition}=    Get Text    xpath=(//table[@data-qa='order-item-list'][${shipment}]/tbody//td//div[@class='sku'][contains(text(),'${sku}')]/ancestor::tr//td/form[@name='event_item_trigger_form']//button)[${element}]
+            ${item_available_transition}=    Get Text    xpath=(//table[@data-qa='order-item-list'][${shipment}]/tbody//td//div[@class='sku'][contains(text(),'${sku}')]/ancestor::tr//td/form[@name='event_item_trigger_form']//button)[${index}]
         ELSE
-            ${item_available_transition}=    Get Text    xpath=(//table[@data-qa='order-item-list'][${shipment}]/tbody//td/div[@class='sku'][contains(text(),'${sku}')]/ancestor::tr/td/form[@class='oms-trigger-form']//button)[${element}]
+            ${item_available_transition}=    Get Text    xpath=(//table[@data-qa='order-item-list'][${shipment}]/tbody//td/div[@class='sku'][contains(text(),'${sku}')]/ancestor::tr/td/form[@class='oms-trigger-form']//button)[${index}]
         END
         Append To List    ${item_available_transitions}    ${item_available_transition}
     END
+    Set Browser Timeout    ${browser_timeout}
     ${item_available_transition}=    Convert To String    ${item_available_transition}
     Try reloading page until element is/not appear:    ${elementSelector}    true    ${iterations}    ${delay}    message=Expected item state transition '${event}' for item '${sku}' is not available. Only '${item_available_transitions}' is/are available. Check if OMS is functional
     Click    ${elementSelector}
