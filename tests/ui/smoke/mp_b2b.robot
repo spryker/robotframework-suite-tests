@@ -921,7 +921,7 @@ Manage_Merchant_Product
     Zed: change concrete product price on:
     ...    || productAbstract    | productConcrete      | store | mode  | type   | currency | amount ||
     ...    || manageSKU${random} | manageSKU${random}-3 | DE    | gross | default| €        | 15.00  ||
-    Trigger p&s
+    Trigger multistore p&s 
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     Yves: go to PDP of the product with sku:     manageSKU${random}
     Yves: product name on PDP should be:    ENUpdatedmanageProduct${random}

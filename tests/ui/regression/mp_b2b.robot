@@ -2304,7 +2304,7 @@ Product_Availability_Calculation
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Catalog    Products 
     Zed: click Action Button in a table for row that contains:     availabilityProduct${random}     Approve
-    Trigger p&s
+    Trigger multistore p&s 
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email} 
     Yves: delete all shopping carts
     Yves: create new 'Shopping Cart' with name:    prodAvailCalculation+${random}
@@ -2356,7 +2356,7 @@ Product_Availability_Calculation
     Zed: update warehouse:    
     ...    || warehouse                                         | unselect store || 
     ...    || Spryker ${merchant_spryker_reference} Warehouse 1 | AT             ||
-    Trigger p&s
+    Trigger multistore p&s 
     Yves: go to AT store 'Home' page
     Yves: go to PDP of the product with sku:     availabilitySKU${random}
     Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    True
@@ -2406,7 +2406,7 @@ Offer_Availability_Calculation
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Catalog    Products 
     Zed: click Action Button in a table for row that contains:     offAvProduct${random}     Approve
-    Trigger p&s
+    Trigger multistore p&s
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     Yves: delete all shopping carts
     Yves: create new 'Shopping Cart' with name:    offAvailability${random}
@@ -2430,7 +2430,7 @@ Offer_Availability_Calculation
     ...    || row number | store | currency | gross default | quantity ||
     ...    || 3          | AT    | EUR      | 10            | 1        ||
     MP: save offer
-    Trigger p&s
+    Trigger multistore p&s
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     Yves: delete all shopping carts
     Yves: create new 'Shopping Cart' with name:    offAvailability${random}

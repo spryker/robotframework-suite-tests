@@ -1238,7 +1238,7 @@ Product_Availability_Calculation
     Zed: change concrete product stock:
     ...    || productAbstract          | productConcrete                     | warehouse n1 | warehouse n1 qty | warehouse n1 never out of stock ||
     ...    || availabilitySKU${random} | availabilitySKU${random}-color-grey | Warehouse2   | 5                | false                            ||
-    Trigger p&s
+    Trigger multistore p&s 
     Yves: login on Yves with provided credentials:    ${yves_second_user_email}
     Yves: check if cart is not empty and clear it
     Yves: delete all user addresses
@@ -1291,7 +1291,7 @@ Product_Availability_Calculation
     Zed: update warehouse:    
     ...    || warehouse  | unselect store || 
     ...    || Warehouse1 | AT             ||
-    Trigger p&s
+    Trigger multistore p&s 
     Yves: go to AT store 'Home' page
     Yves: login on Yves with provided credentials:    ${yves_second_user_email}
     Yves: go to AT URL:    en/search?q=availabilitySKU${random}
