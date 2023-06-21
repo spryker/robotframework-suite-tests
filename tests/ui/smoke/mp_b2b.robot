@@ -155,7 +155,6 @@ Agent_Assist
     [Documentation]    Checks Agent creation and that it can login under customer.
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: create new Zed user with the following data:    agent+${random}@spryker.com    change123${random}    Agent    Assist    Root group    This user is an agent    en_US
-    Trigger p&s
     Yves: go to the 'Home' page
     Yves: go to URL:    agent/login
     Yves: login on Yves with provided credentials:    agent+${random}@spryker.com    change123${random}
@@ -255,7 +254,6 @@ Request_for_Quote
     [Documentation]    Checks user can request and receive quote
     [Setup]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: create new Zed user with the following data:    agent_quote+${random}@spryker.com    change123${random}    Request    Quote    Root group    This user is an agent    en_US
-    Trigger p&s
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     Yves: delete all shopping carts
     Yves: create new 'Shopping Cart' with name:    RfQCart+${random}
@@ -364,6 +362,7 @@ Return_Management
     Yves: 'View Order/Reorder/Return' on the order history page:     Return    ${lastPlacedOrder}
     Yves: 'Create Return' page is displayed
     Yves: create return for the following products:    410083    108278
+    Trigger oms
     Yves: 'Return Details' page is displayed
     Yves: check that 'Print Slip' contains the following products:    410083    108278
     MP: login on MP with provided credentials:    ${merchant_spryker_email}
@@ -389,6 +388,7 @@ Return_Management
     Yves: go to user menu item in header:    Order History
     Yves: 'View Order/Reorder/Return' on the order history page:     Return    ${lastPlacedOrder}
     Yves: 'Create Return' page is displayed
+    Trigger oms
     Yves: create return for the following products:    421426
     Yves: 'Return Details' page is displayed
     Yves: check that 'Print Slip' contains the following products:    421426
@@ -444,7 +444,6 @@ Refunds
     [Documentation]    Checks that refund can be created for an item and the whole order of merchant
     [Setup]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: deactivate following discounts from Overview page:    20% off storage    10% off minimum order
-    ...    AND    Trigger p&s
     ...    AND    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     ...    AND    Yves: create new 'Shopping Cart' with name:    refunds+${random}
     Yves: go to PDP of the product with sku:    ${one_variant_product_of_main_merchant_abstract_sku}
@@ -620,8 +619,8 @@ Create_New_Offer
     ...    || row number | store | currency | gross default ||
     ...    || 1          | DE    | EUR      | 200           ||
     MP: save offer
-    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     Trigger p&s
+    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     Yves: create new 'Shopping Cart' with name:    newOfferCart${random}
     Yves: go to PDP of the product with sku:     SprykerSKU${random}-2
     Yves: merchant is (not) displaying in Sold By section of PDP:    Office King    true
@@ -691,15 +690,12 @@ Fulfill_Order_from_Merchant_Portal
     MP: update order state using header button:    Ship
     Trigger oms
     MP: order states on drawer should contain:    Shipped
-    Trigger oms
     MP: switch to the tab:    Items
     MP: change order item state on:    423172    deliver
     Trigger oms
     MP: switch to the tab:    Items
     MP: order item state should be:    427915    shipped
-    Trigger oms
     MP: order item state should be:    423172    delivered
-    Trigger oms
     MP: update order state using header button:    deliver
     Trigger oms
     MP: order states on drawer should contain:    Delivered
