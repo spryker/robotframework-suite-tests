@@ -51,12 +51,14 @@ Yves: share shopping cart with user:
 
 Yves: go to the shopping cart through the header with name:
     [Arguments]    ${shoppingCartName}
+    Yves: remove flash messages
     Wait Until Element Is Visible    ${shopping_car_icon_header_menu_item}[${env}]
     Mouse Over    ${shopping_car_icon_header_menu_item}[${env}]
     Wait Until Element Is Visible    ${shopping_cart_sub_navigation_widget}
-    Click    //*[contains(@class,'icon--cart')]/ancestor::li//div[contains(@class,'js-user-navigation__sub-nav-cart')]//div[@class='mini-cart-detail']//*[contains(@class,'mini-cart-detail__title')]/*[text()='${shoppingCartName}']
+    Click    xpath=//*[contains(@class,'icon--cart')]/ancestor::li//div[contains(@class,'js-user-navigation__sub-nav-cart')]//div[@class='mini-cart-detail']//*[contains(@class,'mini-cart-detail__title')]/*[text()='${shoppingCartName}']
 
 Yves: go to b2c shopping cart
+    Yves: remove flash messages
     Wait Until Element Is Visible    ${shopping_car_icon_header_menu_item}[${env}]
     Click     ${shopping_car_icon_header_menu_item}[${env}]
     Wait Until Element Is Visible    ${shopping_cart_main_content_locator}[${env}]
