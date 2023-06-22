@@ -2317,3 +2317,36 @@ Create merchant order for the item in DB and change status:
     ${random_merchant_order_item_reference}=    Generate Random String    10    [NUMBERS]
     Execute Sql String    INSERT INTO spy_merchant_sales_order_item (id_merchant_sales_order_item, fk_merchant_sales_order, fk_sales_order_item, fk_state_machine_item_state, merchant_order_item_reference) VALUES (${new_merchant_order_item_id}, ${new_merchant_order_id}, ${sales_order_item_id}, ${state_id}, '${random_merchant_order_item_reference}');
     Disconnect From Database
+
+Delete country by iso2_code in Database:
+    [Documentation]    This keyword deletes a country by iso2_code in the DB table spy_country.
+        ...    *Example:*
+        ...
+        ...    ``Delete country by iso2_code in Database:    DE``
+        ... 
+    [Arguments]    ${iso2_code}
+    Connect to Spryker DB
+    Execute Sql String    DELETE FROM spy_country WHERE iso2_code = '${iso2_code}';
+    Disconnect From Database
+
+Create dynamic entity configuration in Database:
+     [Documentation]    This keyword create dynamic entity configuration in the DB table spy_dynamic_entity_configuration.
+        ...    *Example:*
+        ...
+        ...    ``Create dynamic entity configuration in Database:    country    spy_country     1   {"identifier":"id_country","fields":[...]}``
+        ... 
+    [Arguments]    ${table_alias}   ${table_name}    ${is_active}    ${definition}
+    Connect to Spryker DB
+    Execute Sql String  INSERT INTO spy_dynamic_entity_configuration (table_alias, table_name, is_active, definition) VALUES ('${table_alias}', '${table_name}', ${is_active}, '${definition}');
+    Disconnect From Database   
+
+Delete dynamic entity configuration in Database:
+     [Documentation]    This keyword delete dynamic entity configuration in the DB table spy_dynamic_entity_configuration.
+        ...    *Example:*
+        ...
+        ...    ``Delete dynamic entity configuration in Database:    country```
+        ... 
+    [Arguments]    ${table_alias}
+    Connect to Spryker DB
+    Execute Sql String  DELETE FROM spy_dynamic_entity_configuration WHERE table_alias = '${table_alias}';
+    Disconnect From Database
