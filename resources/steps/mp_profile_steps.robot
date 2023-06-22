@@ -17,10 +17,10 @@ MP: change store status to:
     IF    ('${store_status}' == 'true' or '${store_status}' == 'online') and '${store_is_online}' != 'true'
         Click    ${store_status_checkbox}
     ELSE IF    ('${store_status}' == 'false' or '${store_status}' == 'offline') and '${store_is_online}' == 'true'
-    
         Click    ${store_status_checkbox}
     END
     MP: click submit button
+    Wait Until Element Is Visible    ${mp_success_flyout}    timeout=5s
 
 MP: update profile fields with following data:
     [Arguments]    @{args}
@@ -32,4 +32,6 @@ MP: update profile fields with following data:
         IF    '${key}'=='phone' and '${value}' != '${EMPTY}'    Type Text    ${merchant_profile_phone_field}    ${value}
         IF    '${key}'=='delivery time' and '${value}' != '${EMPTY}'    Type Text    ${merchant_profile_delivery_time_en_field}    ${value}
         IF    '${key}'=='data privacy' and '${value}' != '${EMPTY}'     Type Text    ${merchant_profile_data_privacy_en_field}    ${value}
+        IF    '${key}'=='profile url en' and '${value}' != '${EMPTY}'     Type Text    ${merchant_profile_store_profile_url_en_field}    ${value}
+        IF    '${key}'=='profile url de' and '${value}' != '${EMPTY}'     Type Text    ${merchant_profile_store_profile_url_de_field}    ${value}
     END  

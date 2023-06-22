@@ -13,6 +13,7 @@ Yves: 'Shopping List' widget contains:
     Page Should Contain Element    xpath=//*[contains(@class,'icon--header-shopping-list')]/ancestor::li//div[contains(@class,'js-user-navigation__sub-nav-shopping-list')]//span[text()[contains(.,'${accessLevel}')]]/..//a/*[text()='${shoppingListName}']
 
 Yves: go To 'Shopping Lists' Page
+    Yves: remove flash messages
     Mouse Over    ${shopping_list_icon_header_menu_item}
     ${button_exists}=    Run Keyword And Return Status    Element Should Be Visible    ${shopping_list_sub_navigation_all_lists_button}
     IF    ${button_exists}=='PASS'

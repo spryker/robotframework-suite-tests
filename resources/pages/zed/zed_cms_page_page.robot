@@ -7,14 +7,14 @@ ${zed_cms_page_general_is_searchable_checkbox}    id=cms_page_isSearchable
 ${zed_cms_page_general_template_dropdown}    id=cms_page_fkTemplate
 ${zed_cms_page_general_valid_from_datapicker}    id=cms_page_validFrom
 ${zed_cms_page_general_valid_to_datapicker}    id=cms_page_validTo
-${zed_cms_page_general_enUS_name_field}    id=cms_page_pageAttributes_0_name
-${zed_cms_page_general_enUS_url_field}    id=cms_page_pageAttributes_0_url
-${zed_cms_page_general_deDE_collapsed_section}    xpath=//div[@id='tab-content-general'][contains(@class,'active')]//*[contains(.,'de_DE')]/ancestor::div[contains(@class,'ibox nested collapsed')]//i[contains(@class,'plus')]
-${zed_cms_page_general_deDE_expanded_section}    xpath=//div[@id='tab-content-general'][contains(@class,'active')]//*[contains(.,'de_DE')]/ancestor::div[contains(@class,'ibox nested collapsed')]//i[contains(@class,'minus')]
-${zed_cms_page_content_deDE_title_collapsed_section}    xpath=(//div[@id='tab-content-title'][contains(@class,'active')]//*[contains(.,'de_DE')]/ancestor::div[contains(@class,'ibox nested collapsed')]//i[contains(@class,'plus')])[1]
-${zed_cms_page_content_deDE_content_collapsed_section}    xpath=(//div[@id='tab-content-content'][contains(@class,'active')]//*[contains(.,'de_DE')]/ancestor::div[contains(@class,'ibox nested collapsed')]//i[contains(@class,'plus')])[1]
-${zed_cms_page_general_deDE_name_field}    id=cms_page_pageAttributes_1_name
-${zed_cms_page_general_deDE_url_field}    id=cms_page_pageAttributes_1_url
+${zed_cms_page_general_first_locale_name_field}    id=cms_page_pageAttributes_0_name
+${zed_cms_page_general_first_locale_url_field}    id=cms_page_pageAttributes_0_url
+${zed_cms_page_general_second_locale_collapsed_section}    xpath=(//div[@id='tab-content-general'][contains(@class,'active')]//*/ancestor::div[contains(@class,'ibox nested')])[2]//i[contains(@class,'plus')]
+${zed_cms_page_general_second_locale_expanded_section}    xpath=(//div[@id='tab-content-general'][contains(@class,'active')]//*/ancestor::div[contains(@class,'ibox nested')])[2]//i[contains(@class,'minus')]
+${zed_cms_page_content_second_locale_title_collapsed_section}    xpath=//div[@id='tab-content-title'][contains(@class,'active')]//ancestor::div[contains(@class,'ibox nested collapsed')][2]/div/a/*[@class='ibox-tools'][1]//i[contains(@class,'plus')]
+${zed_cms_page_content_second_locale_content_collapsed_section}    xpath=//div[@id='tab-content-content'][contains(@class,'active')]//ancestor::div[contains(@class,'ibox nested collapsed')][2]/div/a/*[@class='ibox-tools'][1]//i[contains(@class,'plus')]
+${zed_cms_page_general_second_locale_name_field}    id=cms_page_pageAttributes_1_name
+${zed_cms_page_general_second_locale_url_field}    id=cms_page_pageAttributes_1_url
 ${zed_cms_page_save_button}    id=submit-cms
 # Placeholders
 ${zed_cms_page_placeholder_title_enUS_field}    xpath=//*[@id='cms_glossary_glossaryAttributes_0_translations_0_translation']/following-sibling::div//div[@class='note-editing-area']//div[@role='textbox']

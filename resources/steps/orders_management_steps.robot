@@ -18,7 +18,7 @@ Zed: go to my order page:
     [Arguments]    ${orderID}
     Zed: go to second navigation item level:    Sales    My Orders
     Zed: perform search by:    ${orderID}
-    Try reloading page until element is/not appear:    xpath=//table[contains(@class,'dataTable')]/tbody//td[contains(text(),'${orderID}')]/../td[contains(@class,'column-Action') or contains(@class,'column-action')]    true    20    30s
+    Try reloading page until element is/not appear:    xpath=//table[contains(@class,'dataTable')]/tbody//td[contains(text(),'${orderID}')]/../td[contains(@class,'column-Action') or contains(@class,'column-action')]    true    15    10s
     Zed: click Action Button in a table for row that contains:    ${orderID}    View
 
 Zed: trigger all matching states inside xxx order:
@@ -27,69 +27,135 @@ Zed: trigger all matching states inside xxx order:
     Zed: trigger all matching states inside this order:    ${status}
 
 Zed: trigger all matching states inside this order:
-    [Arguments]    ${status}
+    [Arguments]    ${status}    ${delay}=3s    ${iterations}=21
     Reload
-    FOR    ${index}    IN RANGE    0    21
+    FOR    ${index}    IN RANGE    0    ${iterations}
         ${order_state_reached}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//div[@id='order-overview']//form[@name='oms_trigger_form']//button[@id='oms_trigger_form_submit'][text()='${status}']
         IF    '${order_state_reached}'=='False'
-            Run Keywords    Sleep    3s    AND    Reload
+            Run Keywords    Sleep    ${delay}    AND    Reload
         ELSE
             Exit For Loop
         END
+        IF    ${index} == ${iterations}-1
+            Scroll Element Into View    xpath=(//div[@id='order-overview']//form[@name='oms_trigger_form']//button[@id='oms_trigger_form_submit'])[1]
+            Take Screenshot
+            ${order_state}=    Get Text    xpath=(//div[@id='order-overview']//form[@name='oms_trigger_form'])[1]
+            Fail    Expected order state transition '${status}' is not available. Only '${order_state}' is available. Check if OMS is functional
+        END
     END
     Click    xpath=//div[@id='order-overview']//form[@name='oms_trigger_form']//button[@id='oms_trigger_form_submit'][text()='${status}']
-    ${order_changed_status}=    Run Keyword And Ignore Error    Element Should Not Be Visible    xpath=//div[@id='order-overview']//form[@name='oms_trigger_form']//button[@id='oms_trigger_form_submit'][text()='${status}']
+    ${order_changed_status}=    Run Keyword And Ignore Error    Element Should Not Be Visible    xpath=//div[@id='order-overview']//form[@name='oms_trigger_form']//button[@id='oms_trigger_form_submit'][text()='${status}']    timeout=1s
     IF    'FAIL' in ${order_changed_status}
-        Run Keywords
-           Reload
-           Click    xpath=//div[@id='order-overview']//form[@name='oms_trigger_form']//button[@id='oms_trigger_form_submit'][text()='${status}']
+            Reload
+            Click    xpath=//div[@id='order-overview']//form[@name='oms_trigger_form']//button[@id='oms_trigger_form_submit'][text()='${status}']
+    END
+    ${order_changed_status}=    Run Keyword And Ignore Error    Element Should Not Be Visible    xpath=//div[@id='order-overview']//form[@name='oms_trigger_form']//button[@id='oms_trigger_form_submit'][text()='${status}']    timeout=1s
+    IF    'FAIL' in ${order_changed_status}
+            ${order_state}=    Get Text    xpath=//div[@id='order-overview']//form[@name='oms_trigger_form']//button[@id='oms_trigger_form_submit'][text()='${status}']
+            Scroll Element Into View    xpath=//div[@id='order-overview']//form[@name='oms_trigger_form']//button[@id='oms_trigger_form_submit'][text()='${status}']
+            Take Screenshot
+            Fail    Order stuck in '${order_state}' state. Check if OMS is functional
     END
 
 Zed: trigger matching state of xxx merchant's shipment:
     [Documentation]    Marketplace specific method, suitable for My Orders of merchant. Triggers action for whole shipment
-    [Arguments]    ${shipment_number}    ${event}
+    [Arguments]    ${shipment_number}    ${event}    ${delay}=10s    ${iterations}=20
     ${elementSelector}=    Set Variable    xpath=//div[@id='items']//h3[contains(.,'Shipment ${shipment_number}')]/../../following-sibling::div[2]//form[@name='event_trigger_form']//button[@id='event_trigger_form_submit'][text()='${event}']
-    Try reloading page until element is/not appear:    ${elementSelector}    true    20    10s
+    ${shipment_available_transitions_count}=    Get Element Count    xpath=//div[@id='items']//h3[contains(.,'Shipment ${shipment_number}')]/../../following-sibling::div[2]//form[@name='event_trigger_form']//button[@id='event_trigger_form_submit']
+    ${shipment_available_transitions}=    Create List
+    Set Browser Timeout    1s
+    FOR    ${index}    IN RANGE    1    ${shipment_available_transitions_count}+1
+        ${shipment_available_transition}=    Get Text    xpath=(//div[@id='items']//h3[contains(.,'Shipment ${shipment_number}')]/../../following-sibling::div[2]//form[@name='event_trigger_form']//button[@id='event_trigger_form_submit'])[${index}]
+        Append To List    ${shipment_available_transitions}    ${shipment_available_transition}
+    END
+    Set Browser Timeout    ${browser_timeout}
+    ${shipment_available_transitions}=    Convert To String    ${shipment_available_transitions}
+    Try reloading page until element is/not appear:    ${elementSelector}    true    ${iterations}    ${delay}    message=Expected shipment state transition '${event}' for shipment# '${shipment_number}' is not available. Only '${shipment_available_transitions}' is/are available. Check if OMS is functional
     Click    ${elementSelector}
-    ${order_changed_status}=    Run Keyword And Ignore Error    Element Should Not Be Visible    ${elementSelector}
+    ${order_changed_status}=    Run Keyword And Ignore Error    Element Should Not Be Visible    ${elementSelector}    timeout=1s
     IF    'FAIL' in ${order_changed_status}
-        Run Keywords
             Reload
             Click    ${elementSelector}
     END
+    ${order_changed_status}=    Run Keyword And Ignore Error    Element Should Not Be Visible    ${elementSelector}    timeout=1s
+    IF    'FAIL' in ${order_changed_status}
+            ${order_state}=    Get Text    ${elementSelector}
+            Scroll Element Into View    ${elementSelector}
+            Take Screenshot
+            Fail    Order stuck in '${order_state}' state. Check if OMS is functional
+    END
 
 Zed: trigger matching state of order item inside xxx shipment:
-    [Arguments]    ${sku}    ${event}    ${shipment}=1
+    [Arguments]    ${sku}    ${event}    ${shipment}=1    ${delay}=10s    ${iterations}=20
     IF    '${env}' in ['ui_mp_b2b','ui_mp_b2c']
         ${elementSelector}=    Set Variable    xpath=//table[@data-qa='order-item-list'][${shipment}]/tbody//td//div[@class='sku'][contains(text(),'${sku}')]/ancestor::tr//td/form[@name='event_item_trigger_form']//button[contains(text(),'${event}')]
     ELSE
         ${elementSelector}=    Set Variable    xpath=//table[@data-qa='order-item-list'][${shipment}]/tbody//td/div[@class='sku'][contains(text(),'${sku}')]/ancestor::tr/td/form[@class='oms-trigger-form']//button[contains(text(),'${event}')] 
     END   
-    Try reloading page until element is/not appear:    ${elementSelector}    true    20    10s
+    IF    '${env}' in ['ui_mp_b2b','ui_mp_b2c']
+        ${item_available_transition_selector}=    Set Variable    xpath=//table[@data-qa='order-item-list'][${shipment}]/tbody//td//div[@class='sku'][contains(text(),'${sku}')]/ancestor::tr//td/form[@name='event_item_trigger_form']//button
+    ELSE
+        ${item_available_transition_selector}=    Set Variable    xpath=//table[@data-qa='order-item-list'][${shipment}]/tbody//td/div[@class='sku'][contains(text(),'${sku}')]/ancestor::tr/td/form[@class='oms-trigger-form']//button
+    END   
+    ${item_available_transitions_count}=    Get Element Count    ${item_available_transition_selector}
+    ${item_available_transitions}=    Create List
+    Set Browser Timeout    1s
+    FOR    ${index}    IN RANGE    1    ${item_available_transitions_count}+1
+        IF    '${env}' in ['ui_mp_b2b','ui_mp_b2c']
+            ${item_available_transition}=    Get Text    xpath=(//table[@data-qa='order-item-list'][${shipment}]/tbody//td//div[@class='sku'][contains(text(),'${sku}')]/ancestor::tr//td/form[@name='event_item_trigger_form']//button)[${index}]
+        ELSE
+            ${item_available_transition}=    Get Text    xpath=(//table[@data-qa='order-item-list'][${shipment}]/tbody//td/div[@class='sku'][contains(text(),'${sku}')]/ancestor::tr/td/form[@class='oms-trigger-form']//button)[${index}]
+        END
+        Append To List    ${item_available_transitions}    ${item_available_transition}
+    END
+    Set Browser Timeout    ${browser_timeout}
+    ${item_available_transition}=    Convert To String    ${item_available_transition}
+    Try reloading page until element is/not appear:    ${elementSelector}    true    ${iterations}    ${delay}    message=Expected item state transition '${event}' for item '${sku}' is not available. Only '${item_available_transitions}' is/are available. Check if OMS is functional
     Click    ${elementSelector}
-    ${order_changed_status}=    Run Keyword And Ignore Error    Element Should Not Be Visible    ${elementSelector}
+    ${order_changed_status}=    Run Keyword And Ignore Error    Element Should Not Be Visible    ${elementSelector}    timeout=1s
     IF    'FAIL' in ${order_changed_status}
-        Run Keywords
             Reload
             Click    ${elementSelector}
+    END
+    ${order_changed_status}=    Run Keyword And Ignore Error    Element Should Not Be Visible    ${elementSelector}    timeout=1s
+    IF    'FAIL' in ${order_changed_status}
+            ${order_item_state}=    Get Text    ${elementSelector}
+            Scroll Element Into View    ${elementSelector}
+            Take Screenshot
+            Fail    Order item stuck in '${order_item_state}' state. Check if OMS is functional
     END
 
 Zed: trigger matching state of xxx order item inside xxx shipment:
-    [Arguments]    ${event}    ${item_number}=1    ${shipment}=1
+    [Arguments]    ${event}    ${item_number}=1    ${shipment}=1    ${delay}=10s    ${iterations}=20
     ${elementSelector}=    Set Variable    xpath=//table[@data-qa='order-item-list'][${shipment}]/tbody//tr[${item_number}]//td//form[contains(@name,'trigger_form')]//button[contains(text(),'${event}')]
-    Try reloading page until element is/not appear:    ${elementSelector}    true    20    10s
+    ${item_available_transitions_count}=    Get Element Count    xpath=//table[@data-qa='order-item-list'][${shipment}]/tbody//tr[${item_number}]//td//form[contains(@name,'trigger_form')]//button
+    ${item_available_transitions}=    Create List
+    Set Browser Timeout    1s
+    FOR    ${index}    IN RANGE    1    ${item_available_transitions_count}+1
+        ${item_available_transition}=    Get Text    xpath=(//table[@data-qa='order-item-list'][${shipment}]/tbody//tr[${item_number}]//td//form[contains(@name,'trigger_form')]//button)[${index}]
+        Append To List    ${item_available_transitions}    ${item_available_transition}
+    END
+    Set Browser Timeout    ${browser_timeout}
+    ${item_available_transitions}=    Convert To String    ${item_available_transitions}
+    Try reloading page until element is/not appear:    ${elementSelector}    true    ${iterations}    ${delay}    message=Expected item state transition '${event}' for item number '${item_number}' is not available in shipment# '${shipment}'. Only '${item_available_transitions}' is/are available. Check if OMS is functional
     Click    ${elementSelector}
-    ${order_changed_status}=    Run Keyword And Ignore Error    Element Should Not Be Visible    ${elementSelector}
+    ${order_changed_status}=    Run Keyword And Ignore Error    Element Should Not Be Visible    ${elementSelector}    timeout=1s
     IF    'FAIL' in ${order_changed_status}
-        Run Keywords
             Reload
             Click    ${elementSelector}
     END
+    ${order_changed_status}=    Run Keyword And Ignore Error    Element Should Not Be Visible    ${elementSelector}    timeout=1s
+    IF    'FAIL' in ${order_changed_status}
+            ${order_item_state}=    Get Text    ${elementSelector}
+            Scroll Element Into View    ${elementSelector}
+            Take Screenshot
+            Fail    Order item stuck in '${order_item_state}' state. Check if OMS is functional
+    END
 
 Zed: wait for order item to be in state:
-    [Arguments]    ${sku}    ${state}    ${shipment}=1
+    [Arguments]    ${sku}    ${state}    ${shipment}=1    ${delay}=10s    ${iterations}=20
     ${elementSelector}=    Set Variable    xpath=//table[@data-qa='order-item-list'][${shipment}]/tbody//td/div[@class='sku'][contains(text(),'${sku}')]/ancestor::tr/td[@class='state-history']//a[contains(text(),'${state}')]
-    Try reloading page until element is/not appear:    ${elementSelector}    true    20    10s
+    Try reloading page until element is/not appear:    ${elementSelector}    true    ${iterations}    ${delay}    message=Expected order item state '${state}' is not available for the item '${sku}'. Check if OMS is functional
 
 Yves: create return for the following products:
     [Arguments]    @{sku_list}    ${element1}=${EMPTY}     ${element2}=${EMPTY}     ${element3}=${EMPTY}     ${element4}=${EMPTY}     ${element5}=${EMPTY}     ${element6}=${EMPTY}     ${element7}=${EMPTY}     ${element8}=${EMPTY}     ${element9}=${EMPTY}     ${element10}=${EMPTY}     ${element11}=${EMPTY}     ${element12}=${EMPTY}     ${element13}=${EMPTY}     ${element14}=${EMPTY}     ${element15}=${EMPTY}
@@ -149,7 +215,7 @@ Zed: order has the following number of shipments:
     Zed: click Action Button in a table for row that contains:    ${orderID}    View
     Wait Until Element Is Visible    xpath=//table[@data-qa='order-item-list'][1]
     ${actualShipments}=    Get Element Count    xpath=//table[@data-qa='order-item-list']
-    Should Be Equal    '${expectedShipments}'    '${actualShipments}'
+    Should Be Equal    '${expectedShipments}'    '${actualShipments}'    msg=Expected '${expectedShipments}' number of shipments inside the '${orderID}' order, but got '${actualShipments}'
 
 Zed: return details page contains the following items:
     [Arguments]    @{sku_list}    ${element1}=${EMPTY}     ${element2}=${EMPTY}     ${element3}=${EMPTY}     ${element4}=${EMPTY}     ${element5}=${EMPTY}     ${element6}=${EMPTY}     ${element7}=${EMPTY}     ${element8}=${EMPTY}     ${element9}=${EMPTY}     ${element10}=${EMPTY}     ${element11}=${EMPTY}     ${element12}=${EMPTY}     ${element13}=${EMPTY}     ${element14}=${EMPTY}     ${element15}=${EMPTY}
@@ -157,7 +223,7 @@ Zed: return details page contains the following items:
     ${sku_list_count}=   get length  ${sku_list}
     FOR    ${index}    IN RANGE    0    ${sku_list_count}
         ${sku_to_check}=    Get From List    ${sku_list}    ${index}
-        Page Should Contain Element    xpath=//table[@data-qa='return-items-table']//td//a[contains(@href,'view/variant')]/../div[@class='sku'][contains(text(),'SKU: ${sku_to_check}')]
+        Page Should Contain Element    xpath=//table[@data-qa='return-items-table']//td//a[contains(@href,'view/variant')]/../div[@class='sku'][contains(text(),'SKU: ${sku_to_check}')]    message=Return details page doesn't contain '${sku_list}' but should.
     END
 
 Zed: view the latest return from My Returns:
@@ -266,6 +332,7 @@ Yves: cancel the order:
     [Arguments]    ${order_id}
     Yves: 'View Order/Reorder/Return' on the order history page:    View Order    ${order_id}
     Wait Until Element Is Visible    ${order_details_cancel_button_locator}
+    Set Browser Timeout    3s
     TRY
         Click    ${order_details_cancel_button_locator}
         Wait Until Element Is Not Visible    ${order_details_cancel_button_locator}    timeout=5s
@@ -273,5 +340,6 @@ Yves: cancel the order:
         Click    ${order_details_cancel_button_locator}
         Wait Until Element Is Not Visible    ${order_details_cancel_button_locator}    timeout=5s
     END    
+    Set Browser Timeout    ${browser_timeout}
     Yves: go to 'Order History' page
     Yves: 'Order History' page contains the following order with a status:    ${order_id}    Canceled

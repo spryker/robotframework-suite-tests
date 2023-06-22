@@ -18,15 +18,15 @@ Yves: add comment on cart:
 Yves: check comments are visible or not in cart:
     [Arguments]    ${condition}    @{comments}    
     FOR    ${element}    IN    @{comments}
-        IF    '${condition}' == 'true'    Element Should Be Visible    xpath=//div[contains(@class,"comment-form__readonly")]/p[contains(text(),'${element}')]
-        IF    '${condition}' == 'false'    Element Should Not Be Visible    xpath=//div[contains(@class,"comment-form__readonly")]/p[contains(text(),'${element}')]
+        IF    '${condition}' == 'true'    Element Should Be Visible    xpath=(//comment-form[@data-qa='component comment-form']//p[contains(text(),'${element}')])[1]    message=Comment '${element}' is not visible in the shopping cart but should
+        IF    '${condition}' == 'false'    Element Should Not Be Visible    xpath=(//comment-form[@data-qa='component comment-form']//p[contains(text(),'${element}')])[1]    message=Comment '${element}' is visible in the shopping cart but should not
     END
 
 Yves: check comments is visible or not in order:
     [Arguments]    ${condition}    @{comments}    
     FOR    ${element}    IN    @{comments}
-        IF    '${condition}' == 'true'    Element Should Be Visible    xpath=//div[contains(@class,"comment-form__readonly")]/p[contains(text(),'${element}')]
-        IF    '${condition}' == 'false'    Element Should Not Be Visible    xpath=//div[contains(@class,"comment-form__readonly")]/p[contains(text(),'${element}')]
+        IF    '${condition}' == 'true'    Element Should Be Visible    xpath=(//comment-form[@data-qa='component comment-form']//p[contains(text(),'${element}')])[1]    message=Comment '${element}' is not visible in BO:order details page but should
+        IF    '${condition}' == 'false'    Element Should Not Be Visible    xpath=(//div[contains(@class,"comment-form__readonly")]/p[contains(text(),'${element}')])[1]   message=Comment '${element}' is visible in BO:order details page but should not
     END
 
 Yves: go to order details page to check comment:
@@ -53,12 +53,12 @@ Zed: check comment appears at order detailed page in zed:
        END
 
 Yves: edit comment on cart:
-    [Arguments]    ${comment}
+    [Arguments]    ${comment_to_set}
     Click    ${shopping_cart_edit_comment_button}
     Click    ${shopping_cart_edit_comment_placeholder}
     Clear Text    ${shopping_cart_edit_comment_placeholder}  
     Keyboard Key    press    Tab
-    Input Text    ${shopping_cart_edit_comment_placeholder}    ${comment}
+    Input Text    ${shopping_cart_edit_comment_placeholder}    ${comment_to_set}
     Click    ${shopping_cart_update_comment_button}
 
 Yves: delete comment on cart

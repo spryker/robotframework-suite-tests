@@ -11,31 +11,37 @@ Zed: create a cms page and publish it:
     Click    ${zed_new_cms_page_create_button}
 # General page information input
     Page Should Contain Element    xpath=//body//*[contains(text(),'Create CMS Page')]    message=Page for CMS creation is not opened
-    Element Should Be Visible    ${zed_cms_page_general_enUS_name_field}    message=US section of CMS page is not open
-    Scroll Element Into View    ${zed_cms_page_general_deDE_collapsed_section}
-    Click    ${zed_cms_page_general_deDE_collapsed_section}
-    ${de_section_expanded}=    Run Keyword And Return Status    Wait Until Element Is Visible    ${zed_cms_page_general_deDE_name_field}    message=DE section of CMS page is not open    timeout=3s
-    IF    '${de_section_expanded}'=='False'
-        Scroll Element Into View    ${zed_cms_page_general_deDE_collapsed_section}
-        Click    ${zed_cms_page_general_deDE_collapsed_section}
+    Element Should Be Visible    ${zed_cms_page_general_first_locale_name_field}    message=First locale section of CMS page is not open
+    Scroll Element Into View    ${zed_cms_page_general_second_locale_collapsed_section}
+    Set Browser Timeout    5s
+    TRY
+        Click    ${zed_cms_page_general_second_locale_collapsed_section}
+    EXCEPT    
+        Log    Second locale section of CMS is already open
     END
-    Wait Until Element Is Visible    ${zed_cms_page_general_deDE_name_field}    message=DE section of CMS page is not open
+    Set Browser Timeout    ${browser_timeout}
+    ${second_locale_section_expanded}=    Run Keyword And Return Status    Wait Until Element Is Visible    ${zed_cms_page_general_second_locale_name_field}    message=DE section of CMS page is not open    timeout=3s
+    IF    '${second_locale_section_expanded}'=='False'
+        Scroll Element Into View    ${zed_cms_page_general_second_locale_collapsed_section}
+        Click    ${zed_cms_page_general_second_locale_collapsed_section}
+    END
+    Wait Until Element Is Visible    ${zed_cms_page_general_second_locale_name_field}    message=Second locale section of CMS page is not open
     Check checkbox    ${zed_cms_page_general_is_searchable_checkbox}
-    Type Text    ${zed_cms_page_general_enUS_name_field}    ${enName}
-    Type Text    ${zed_cms_page_general_enUS_url_field}    ${enURL}
-    Type Text    ${zed_cms_page_general_deDE_name_field}    ${enName}
-    Type Text    ${zed_cms_page_general_deDE_url_field}    ${enURL}
+    Type Text    ${zed_cms_page_general_first_locale_name_field}    ${enName}
+    Type Text    ${zed_cms_page_general_first_locale_url_field}    ${enURL}
+    Type Text    ${zed_cms_page_general_second_locale_name_field}    ${enName}
+    Type Text    ${zed_cms_page_general_second_locale_url_field}    ${enURL}
     Click    ${zed_cms_page_save_button}
 # Placeholder information input
     ${page_was_created}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//body//*[contains(text(),'Edit Placeholders: ${enName}')]
     IF    '${page_was_created}'=='False'    Click    ${zed_cms_page_save_button}
     Page Should Contain Element    xpath=//body//*[contains(text(),'Edit Placeholders: ${enName}')]    message=CMS page was not created
-    Scroll Element Into View    ${zed_cms_page_content_deDE_title_collapsed_section}
-    Click    ${zed_cms_page_content_deDE_title_collapsed_section}
-    ${de_section_expanded}=    Run Keyword And Return Status    Wait Until Element Is Visible    ${zed_cms_page_placeholder_title_deDE_field}    message=DE section of CMS page is not open    timeout=3s
-    IF    '${de_section_expanded}'=='False'
-        Scroll Element Into View    ${zed_cms_page_content_deDE_title_collapsed_section}
-        Click    ${zed_cms_page_content_deDE_title_collapsed_section}
+    Scroll Element Into View    ${zed_cms_page_content_second_locale_title_collapsed_section}
+    Click    ${zed_cms_page_content_second_locale_title_collapsed_section}
+    ${second_locale_section_expanded}=    Run Keyword And Return Status    Wait Until Element Is Visible    ${zed_cms_page_placeholder_title_deDE_field}    message=DE section of CMS page is not open    timeout=3s
+    IF    '${second_locale_section_expanded}'=='False'
+        Scroll Element Into View    ${zed_cms_page_content_second_locale_title_collapsed_section}
+        Click    ${zed_cms_page_content_second_locale_title_collapsed_section}
     END
     Wait Until Element Is Visible    ${zed_cms_page_placeholder_title_deDE_field}    message=DE section of Title tab is not open
     Clear Text    ${zed_cms_page_placeholder_title_enUS_field}
@@ -44,12 +50,12 @@ Zed: create a cms page and publish it:
     Type Text    ${zed_cms_page_placeholder_title_deDE_field}    ${enTitlePlaceholder}
     Zed: go to tab:    Content
     Page Should Contain Element    ${zed_cms_page_placeholder_content_enUS_field}    message=EN section of Content tab is not visible
-    Scroll Element Into View    ${zed_cms_page_content_deDE_content_collapsed_section}
-    Click    ${zed_cms_page_content_deDE_content_collapsed_section}
-    ${de_section_expanded}=    Run Keyword And Return Status    Wait Until Element Is Visible    ${zed_cms_page_placeholder_content_deDE_field}    message=DE section of CMS page is not open    timeout=3s
-    IF    '${de_section_expanded}'=='False'
-        Scroll Element Into View    ${zed_cms_page_content_deDE_content_collapsed_section}
-        Click    ${zed_cms_page_content_deDE_content_collapsed_section}
+    Scroll Element Into View    ${zed_cms_page_content_second_locale_content_collapsed_section}
+    Click    ${zed_cms_page_content_second_locale_content_collapsed_section}
+    ${second_locale_section_expanded}=    Run Keyword And Return Status    Wait Until Element Is Visible    ${zed_cms_page_placeholder_content_deDE_field}    message=DE section of CMS page is not open    timeout=3s
+    IF    '${second_locale_section_expanded}'=='False'
+        Scroll Element Into View    ${zed_cms_page_content_second_locale_content_collapsed_section}
+        Click    ${zed_cms_page_content_second_locale_content_collapsed_section}
     END
     Clear Text    ${zed_cms_page_placeholder_content_enUS_field}
     Type Text    ${zed_cms_page_placeholder_content_enUS_field}    ${enContentPlaceholder}

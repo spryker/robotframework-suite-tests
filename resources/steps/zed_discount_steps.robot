@@ -71,29 +71,35 @@ Zed: deactivate following discounts from Overview page:
     ${items_list_count}=   get length  ${discountNames}
     Zed: go to second navigation item level:    Merchandising    Discount
     FOR    ${name}    IN    @{discountNames}
+        Zed: clear search field
         Zed: perform search by:    ${name}
         ${isDiscountActive}=    Set Variable    ${EMPTY}
         ${isDiscountActive}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//td[contains(text(),'${name}')]/following-sibling::td[contains(@class,'Action')]//button[contains(.,'Deactivate')]
-        IF    '${isDiscountActive}'=='True'    Click    xpath=//td[contains(text(),'${name}')]/following-sibling::td[contains(@class,'Action')]//button[contains(.,'Deactivate')]
+        IF    '${isDiscountActive}'=='True'    
+            Click    xpath=//td[contains(text(),'${name}')]/following-sibling::td[contains(@class,'Action')]//button[contains(.,'Deactivate')]
+            Wait Until Element Is Visible    xpath=/descendant::button[@type='submit'][contains(.,'Activate')][1]
+        END
     END
 
 Zed: deactivate all discounts from Overview page
     Zed: go to second navigation item level:    Merchandising    Discount
     Wait Until Element Is Visible    xpath=/descendant::a[contains(.,'View')][1]
+    Zed: clear search field
     Save the result of a SELECT DB query to a variable:    select COUNT(id_discount) from spy_discount    DiscountPagesCount
     ${DiscountPagesCount}=    Evaluate    ${DiscountPagesCount} / 10
+    ${DiscountPagesCount}=    Evaluate    math.ceil(${DiscountPagesCount})    math
     ${DiscountPagesCount}=    Convert To Integer    ${DiscountPagesCount}
     FOR    ${PagesCounter}    IN RANGE    0    ${DiscountPagesCount}+1
         ${DiscountActiveCount}=    Get Element Count    xpath=//button[@type='submit'][contains(.,'Deactivate')]
         IF    ${DiscountActiveCount} > 0
             FOR    ${DiscountCounter}    IN RANGE    0    ${DiscountActiveCount}
                 Click    xpath=/descendant::button[@type='submit'][contains(.,'Deactivate')][1]
-                Wait Until Element Is Visible    xpath=/descendant::a[contains(.,'View')][1]
+                Wait Until Element Is Visible    xpath=/descendant::button[@type='submit'][contains(.,'Activate')][1]
             END
         END
         Exit For Loop If    ${PagesCounter} == ${DiscountPagesCount}
-        Click    xpath=//li[contains(@class,'paginate_button')][contains(.,'Next')]
-        Sleep    1s
+        Click    xpath=//li[contains(@class,'paginate_button')][contains(@id,'next')]
+        Sleep    2s
     END
 
 Zed: activate following discounts from Overview page:
@@ -101,8 +107,12 @@ Zed: activate following discounts from Overview page:
     ${items_list_count}=   get length  ${discountNames}
     Zed: go to second navigation item level:    Merchandising    Discount
     FOR    ${name}    IN    @{discountNames}
+        Zed: clear search field
         Zed: perform search by:    ${name}
         ${isDiscountInactive}=    Set Variable    ${EMPTY}
         ${isDiscountInactive}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//td[contains(text(),'${name}')]/following-sibling::td[contains(@class,'Action')]//button[contains(.,'Activate')]
-        IF    '${isDiscountInactive}'=='True'    Click    xpath=//td[contains(text(),'${name}')]/following-sibling::td[contains(@class,'Action')]//button[contains(.,'Activate')]
+        IF    '${isDiscountInactive}'=='True'   
+            Click    xpath=//td[contains(text(),'${name}')]/following-sibling::td[contains(@class,'Action')]//button[contains(.,'Activate')]
+            Wait Until Element Is Visible    xpath=/descendant::button[@type='submit'][contains(.,'Deactivate')][1]
+        END
     END
