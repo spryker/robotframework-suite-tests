@@ -107,6 +107,7 @@ SuiteSetup
     [documentation]  Basic steps before each suite
     Remove Files    ${OUTPUTDIR}/selenium-screenshot-*.png
     Remove Files    resources/libraries/__pycache__/*
+    Remove Files    ${OUTPUTDIR}/*.png
     Load Variables    ${env}
     ${verify_ssl}=    Convert To Lower Case    ${verify_ssl}
     IF    '${verify_ssl}' == 'true'
@@ -336,7 +337,7 @@ Conver string to List by separator:
 
 Try reloading page until element is/not appear:
     [Documentation]    will reload the page until an element is shown or disappears. The second argument is the expected condition (true[shown]/false[disappeared]) for the element.
-    [Arguments]    ${element}    ${shouldBeDisplayed}    ${tries}=20    ${timeout}=1s
+    [Arguments]    ${element}    ${shouldBeDisplayed}    ${tries}=20    ${timeout}=1s    ${message}='Timeout exceeded, element state doesn't match the expected'
     ${shouldBeDisplayed}=    Convert To Lower Case    ${shouldBeDisplayed}
     FOR    ${index}    IN RANGE    0    ${tries}
         ${elementAppears}=    Run Keyword And Return Status    Page Should Contain Element    ${element}
@@ -350,7 +351,7 @@ Try reloading page until element is/not appear:
     END
     IF    ('${shouldBeDisplayed}'=='true' and '${elementAppears}'=='False') or ('${shouldBeDisplayed}'=='false' and '${elementAppears}'=='True')
         Take Screenshot
-        Fail    'Timeout exceeded, element state doesn't match the expected'
+        Fail    ${message}
     END
 
 Try reloading page until element does/not contain text:
@@ -368,7 +369,8 @@ Try reloading page until element does/not contain text:
         END
     END
     IF    ('${shouldContain}'=='true' and '${textAppears}'=='False') or ('${shouldContain}'=='false' and '${textAppears}'=='True')
-        Fail    'Timeout exceeded'
+        Take Screenshot
+        Fail    'Timeout exceeded, element text doesn't match the expected'
     END
 
 Type Text When Element Is Visible
@@ -465,3 +467,52 @@ Send GET request and return status code:
 ##    [Arguments]    ${timeout}=30s
 ##    ${response}=    Wait for response    matcher=usercentrics.*?graphql     timeout=${timeout}
 ##    Should be true    ${response}[ok]
+
+Run console command:
+    [Arguments]    ${command}    ${timeout}=5s
+    ${rc}    ${output}=    Run And Return RC And Output    ${command}
+    Log    ${output}
+    Should Be Equal As Integers    ${rc}    0
+    Sleep    ${timeout}
+
+Trigger p&s
+    [Arguments]    ${timeout}=5s
+    IF    '.local' in '${yves_url}' or '.local' in '${zed_url}' or '.local' in '${glue_url}' or '.local' in '${bapi_url}'
+        ${rc}    ${output}=    Run And Return RC And Output    cd .. && APPLICATION_STORE=DE docker/sdk testing console queue:worker:start --stop-when-empty
+        Log    ${output}
+        Should Be Equal As Integers    ${rc}    0
+        Sleep    ${timeout}
+    END  
+
+Trigger multistore p&s 
+    [Arguments]    ${timeout}=5s
+    IF    '.local' in '${yves_url}' or '.local' in '${zed_url}' or '.local' in '${glue_url}' or '.local' in '${bapi_url}'
+        ${rc}    ${output}=    Run And Return RC And Output    cd .. && APPLICATION_STORE=DE docker/sdk testing console queue:worker:start --stop-when-empty
+        Log    ${output}
+        Sleep    ${timeout}
+        ${rc}    ${output}=    Run And Return RC And Output    cd .. && APPLICATION_STORE=AT docker/sdk testing console queue:worker:start --stop-when-empty    
+        Log    ${output}
+        Should Be Equal As Integers    ${rc}    0
+        Sleep    ${timeout}
+    END  
+
+Trigger oms
+    [Arguments]    ${timeout}=5s
+    IF    '.local' in '${yves_url}' or '.local' in '${zed_url}' or '.local' in '${glue_url}' or '.local' in '${bapi_url}'
+        ${rc}    ${output}=    Run And Return RC And Output    cd .. && APPLICATION_STORE=DE docker/sdk testing console order:invoice:send
+        Log    ${output}
+        ${rc}    ${output}=    Run And Return RC And Output    cd .. && APPLICATION_STORE=AT docker/sdk testing console order:invoice:send
+        Log    ${output}
+        Should Be Equal As Integers    ${rc}    0
+        ${rc}    ${output}=    Run And Return RC And Output    cd .. && APPLICATION_STORE=DE docker/sdk testing console oms:check-timeout
+        Log    ${output}
+        ${rc}    ${output}=    Run And Return RC And Output    cd .. && APPLICATION_STORE=AT docker/sdk testing console oms:check-timeout
+        Log    ${output}
+        Should Be Equal As Integers    ${rc}    0
+        ${rc}    ${output}=    Run And Return RC And Output    cd .. && APPLICATION_STORE=DE docker/sdk testing console oms:check-condition
+        Log    ${output}
+        ${rc}    ${output}=    Run And Return RC And Output    cd .. && APPLICATION_STORE=AT docker/sdk testing console oms:check-condition
+        Log    ${output}
+        Should Be Equal As Integers    ${rc}    0
+        Sleep    ${timeout}
+    END

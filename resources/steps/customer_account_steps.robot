@@ -31,6 +31,7 @@ Yves: go to user menu item in the left bar:
 Yves: create a new customer address in profile:
     [Documentation]
     [Arguments]    ${salutation}    ${firstName}    ${lastName}    ${street}    ${houseNumber}    ${postCode}    ${city}    ${country}    ${isDefaultShipping}=True     ${isDefaultBilling}=True       ${company}=    ${phone}=    ${additionalAddress}=
+    Yves: remove flash messages
     IF    '${env}' in ['ui_b2c','ui_mp_b2c']
         Yves: go to user menu item in header:    My Profile
     ELSE IF   '${env}' in ['ui_b2b','ui_mp_b2b']
@@ -53,6 +54,7 @@ Yves: create a new customer address in profile:
     Wait Until Element Is Visible    ${customer_account_add_new_address_button}[${env}]
 
 Yves: check that user has address exists/doesn't exist:
+    Yves: remove flash messages
     [Arguments]    ${exists}    ${firstName}    ${lastName}    ${street}    ${houseNumber}    ${postCode}    ${city}    ${country}    ${isDefaultShipping}=True     ${isDefaultBilling}=True       ${company}=NUll    ${phone}=NUll    ${additionalAddress}=NUll
     IF    '${env}' in ['ui_b2c','ui_mp_b2c']
         Yves: go to user menu item in header:    My Profile
@@ -75,6 +77,7 @@ Yves: check that user has address exists/doesn't exist:
 
 Yves: delete user address:
     [Arguments]    ${street}
+    Yves: remove flash messages
     IF    '${env}' in ['ui_b2c','ui_mp_b2c']
         Yves: go to user menu item in header:    My Profile
     ELSE IF    '${env}' in ['ui_b2b','ui_mp_b2b']
@@ -88,6 +91,7 @@ Yves: delete user address:
     END
 
 Yves: delete all user addresses
+    Yves: remove flash messages
     IF    '${env}' in ['ui_b2c','ui_mp_b2c']
         Yves: go to user menu item in header:    My Profile
     ELSE IF    '${env}' in ['ui_b2b','ui_mp_b2b']

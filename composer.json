@@ -1,0 +1,7 @@
+{
+    "name": "spryker/robotframework-suite-tests",
+    "description": "Automated tests for the Robot Framework",
+    "type": "library",
+    "license": "MIT",
+    "require": {}
+}

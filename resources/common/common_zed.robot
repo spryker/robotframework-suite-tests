@@ -9,6 +9,7 @@ ${zed_log_out_button}   xpath=//ul[@class='nav navbar-top-links navbar-right']//
 ${zed_save_button}      xpath=//input[contains(@class,'safe-submit')]
 ${zed_success_flash_message}    xpath=//div[@class='flash-messages']/div[@class='alert alert-success']
 ${zed_error_flash_message}    xpath=//div[@class='flash-messages']/div[@class='alert alert-danger']
+${zed_error_message}    xpath=//div[@class='alert alert-danger']
 ${zed_table_locator}    xpath=//table[contains(@class,'dataTable')]/tbody
 ${zed_search_field_locator}     xpath=//input[@type='search']
 ${zed_variant_search_field_locator}     xpath=//*[@id='product-variant-table_filter']//input[@type='search']
@@ -20,8 +21,8 @@ ${zed_attribute_access_denied_header}    xpath=//div[@class='wrapper wrapper-con
 *** Keywords ***
 Zed: login on Zed with provided credentials:
     [Arguments]    ${email}    ${password}=${default_password}
-    go to    ${zed_url}
-    delete all cookies
+    Go To    ${zed_url}
+    Delete All Cookies
     Reload
     Wait Until Element Is Visible    ${zed_user_name_field}
     Type Text    ${zed_user_name_field}    ${email}
@@ -31,8 +32,8 @@ Zed: login on Zed with provided credentials:
 
 Zed: login with deactivated user/invalid data:
    [Arguments]    ${email}    ${password}=${default_password}
-    go to    ${zed_url}
-    delete all cookies
+    Go To    ${zed_url}
+    Delete All Cookies
     Reload
     Wait Until Element Is Visible    ${zed_user_name_field}
     Type Text    ${zed_user_name_field}    ${email}
@@ -82,12 +83,14 @@ Zed: click Action Button in a table for row that contains:
     Zed: perform search by:    ${row_content}
     Wait until element is visible    xpath=(//table[contains(@class,'dataTable')]/tbody//td[contains(text(),'${row_content}')]/../td[contains(@class,'column-Action') or contains(@class,'column-action')]/*[contains(.,'${zed_table_action_button_locator}')])[1]
     Click    xpath=(//table[contains(@class,'dataTable')]/tbody//td[contains(text(),'${row_content}')]/../td[contains(@class,'column-Action') or contains(@class,'column-action')]/*[contains(.,'${zed_table_action_button_locator}')])[1]
+    Sleep    1s
 
 Zed: click Action Button in Variant table for row that contains:
     [Arguments]    ${row_content}    ${zed_table_action_button_locator}
     Zed: perform variant search by:    ${row_content}
     wait until element is visible    xpath=//table[contains(@class,'dataTable')]/tbody//td[contains(text(),'${row_content}')]/../td[contains(@class,'column-Action') or contains(@class,'column-action')]/*[contains(.,'${zed_table_action_button_locator}')]
     Click    xpath=//table[contains(@class,'dataTable')]/tbody//td[contains(text(),'${row_content}')]/../td[contains(@class,'column-Action') or contains(@class,'column-action')]/*[contains(.,'${zed_table_action_button_locator}')]
+    Sleep    1s
 
 Zed: Check checkbox by Label:
     [Arguments]    ${checkbox_label}
@@ -103,33 +106,49 @@ Zed: submit the form
     Wait until element is visible    ${zed_save_button}
     Click    ${zed_save_button}    delay=1s
     Wait Until Element Is Visible    ${zed_log_out_button}
+    ${error_flash_message}=    Run Keyword And Ignore Error    Page Should Not Contain Element    ${zed_error_flash_message}    1s
+    IF    'FAIL' in ${error_flash_message}
+        Click    ${zed_save_button}    delay=1s
+        Wait Until Element Is Visible    ${zed_log_out_button}
+    END
+    ${error_message}=    Run Keyword And Ignore Error    Page Should Not Contain Element    ${zed_error_message}    1s
+    IF    'FAIL' in ${error_message}
+        Click    ${zed_save_button}    delay=1s
+        Wait Until Element Is Visible    ${zed_log_out_button}
+    END
+    Page Should Not Contain Element    ${zed_error_message}    1s
+    Page Should Not Contain Element    ${zed_error_flash_message}    1s
 
 Zed: perform search by:
     [Arguments]    ${search_key}
     Type Text    ${zed_search_field_locator}    ${search_key}
     Keyboard Key    press    Enter
     TRY
-        Wait Until Element Is Visible    ${zed_processing_block_locator}
+        Wait Until Element Is Visible    ${zed_processing_block_locator}    timeout=3s
     EXCEPT    
-        Log    processing locator is now shown
+        Log    processing locator is not shown
     END
     TRY
-        Wait Until Element Is Visible    ${zed_processing_block_locator}
+        Wait Until Element Is Visible    ${zed_processing_block_locator}    timeout=3s
     EXCEPT    
-        Log    processing locator is now shown
+        Log    processing locator is not shown
     END
     Sleep    3s
+
+Zed: clear search field
+    Clear Text    ${zed_search_field_locator}
+    Sleep    1s
 
 Zed: perform variant search by:
     [Arguments]    ${search_key}
     Type Text    ${zed_variant_search_field_locator}    ${search_key}
     TRY
-        Wait Until Element Is Visible    ${zed_product_variant_table_processing_locator}
+        Wait Until Element Is Visible    ${zed_product_variant_table_processing_locator}    timeout=3s
     EXCEPT    
         Log    processing locator is now shown
     END
     TRY
-        Wait Until Element Is Visible    ${zed_product_variant_table_processing_locator}
+        Wait Until Element Is Visible    ${zed_product_variant_table_processing_locator}    timeout=3s
     EXCEPT
        Log    processing locator is now shown
     END   

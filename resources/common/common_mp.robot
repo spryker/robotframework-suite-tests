@@ -11,12 +11,14 @@ ${mp_items_table}    xpath=//nz-table-inner-default//table
 ${mp_search_box}    xpath=//spy-table//input[contains(@placeholder,'Search')]
 ${mp_close_drawer_button}    xpath=//button[contains(@class,'spy-drawer-wrapper__action--close')]
 ${spinner_loader}    xpath=//span[contains(@class,'ant-spin-dot')]
+${mp_success_flyout}    xpath=//span[contains(@class,'alert')][contains(@class,'icon')][contains(@class,'success')]
+${mp_error_flyout}    xpath=//span[contains(@class,'alert')][contains(@class,'icon')][contains(@class,'error')]
 
 *** Keywords ***
 MP: login on MP with provided credentials:
     [Arguments]    ${email}    ${password}=${default_password}
-    go to    ${mp_url}
-    delete all cookies
+    Go To    ${mp_url}
+    Delete All Cookies
     Reload
     Wait Until Element Is Visible    ${mp_user_name_field}
     Type Text    ${mp_user_name_field}    ${email}
@@ -26,8 +28,8 @@ MP: login on MP with provided credentials:
 
 MP: login on MP with provided credentials and expect error:
     [Arguments]    ${email}    ${password}=${default_password}
-    go to    ${mp_url}
-    delete all cookies
+    Go To    ${mp_url}
+    Delete All Cookies
     Reload
     Wait Until Element Is Visible    ${mp_user_name_field}
     Type Text    ${mp_user_name_field}    ${email}
@@ -50,9 +52,9 @@ MP: perform search by:
     [Arguments]    ${searchKey}
     Type Text    ${mp_search_box}    ${searchKey}
     TRY
-        Wait Until Element Is Visible    ${spinner_loader}
-        Wait Until Element Is Not Visible    ${spinner_loader}
-        Wait Until Element Is Enabled    ${mp_items_table}
+        Wait Until Element Is Visible    ${spinner_loader}    timeout=3s
+        Wait Until Element Is Not Visible    ${spinner_loader}    timeout=3s
+        Wait Until Element Is Enabled    ${mp_items_table}    timeout=3s
     EXCEPT    
         Log    Spinner was not shown
     END

@@ -41,7 +41,13 @@ Zed: change product stock:
     Type Text    xpath=//input[contains(@id,'AvailabilityGui_stock_stocks_1_quantity')]    ${quantityWarehouse2}
     Click    ${zed_save_button}
     #Resave to apply changes
-    Click    ${zed_save_button}
+    Set Browser Timeout    3s
+    TRY
+        Click    ${zed_save_button}
+    EXCEPT    
+        Log    Form is already submitted
+    END
+    Set Browser Timeout    ${browser_timeout}
 
 Zed: check and restore product availability in Zed:
     [Arguments]    ${skuAbstract}    ${expectedStatus}    ${skuConcrete}
