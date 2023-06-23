@@ -2,7 +2,8 @@
     "environment":"api_mp_b2c",
     "env":{
        "glue_url":"http://glue.de.spryker.local",
-       "bapi_url":"http://glue-backend.de.spryker.local"
+       "bapi_url":"http://glue-backend.de.spryker.local",
+       "sapi_url":"https://glue-storefront.de.spryker.local"
     },
     "database":{
        "db_host":"127.0.0.1",

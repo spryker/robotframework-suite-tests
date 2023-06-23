@@ -2,7 +2,8 @@
     "environment":"api_b2b",
     "env":{
        "glue_url":"http://glue.de.spryker.local",
-       "bapi_url":"http://glue-backend.de.spryker.local"
+       "bapi_url":"http://glue-backend.de.spryker.local",
+       "sapi_url":"https://glue-storefront.de.spryker.local"
     },
 	"dataType": {
 			"array": []
@@ -213,7 +214,7 @@
        "category_lvl2":{
           "id":"12",
           "qty":"56",
-          "qty_approx":"50" 
+          "qty_approx":"50"
        },
        "category_lvl3":{
           "id":"13",
@@ -512,7 +513,7 @@
           "storage_name_2":"Fish",
           "storage_url_2":"/en/foods/fish"
        },
-           
+
        "brand_name":"verbatim",
        "cart_permission_group_id":"1"
     },
@@ -619,5 +620,5 @@
            "configuratorKey": "DATE_TIME_CONFIGURATOR",
            "isComplete": true
        }
-     }   
+     }
      }

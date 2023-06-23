@@ -80,12 +80,12 @@ Overwrite env variables
             Set Suite Variable    ${zed_url}   ${zed_env}
     END
     IF    '${mp_env}' == '${EMPTY}'
-            Set Suite Variable    ${mp_url}    ${mp_url} 
+            Set Suite Variable    ${mp_url}    ${mp_url}
     ELSE
             Set Suite Variable    ${mp_url}   ${mp_env}
     END
     IF    '${glue_env}' == '${EMPTY}'
-            Set Suite Variable    ${glue_url}    ${glue_url} 
+            Set Suite Variable    ${glue_url}    ${glue_url}
     ELSE
             Set Suite Variable    ${glue_url}   ${glue_env}
     END
@@ -403,7 +403,7 @@ Connect to Spryker DB
         ${db_engine}=    Set Variable    psycopg2
     ELSE IF    '${db_engine}' == 'postgres'
         ${db_engine}=    Set Variable    psycopg2
-    END    
+    END
     IF    '${db_engine}' == 'psycopg2'
         ${db_port}=    Set Variable If    '${db_port}' == '${EMPTY}'    ${db_port_postgres_env}    ${db_port}
         IF    '${db_port_postgres_env}' == '${EMPTY}'
@@ -452,7 +452,7 @@ Ping and go to URL:
     ELSE
         Fail    '${url}' URL is not accessible of throws an error
     END
-        
+
 Send GET request and return status code:
     [Arguments]    ${url}    ${timeout}=5
     ${response}=    GET    ${url}    timeout=${timeout}    allow_redirects=true    expected_status=ANY
@@ -477,28 +477,28 @@ Run console command:
 
 Trigger p&s
     [Arguments]    ${timeout}=5s
-    IF    '.local' in '${yves_url}' or '.local' in '${zed_url}' or '.local' in '${glue_url}' or '.local' in '${bapi_url}'
+    IF    '.local' in '${yves_url}' or '.local' in '${zed_url}' or '.local' in '${glue_url}' or '.local' in '${bapi_url}' or '.local' in '${sapi_url}'
         ${rc}    ${output}=    Run And Return RC And Output    cd .. && APPLICATION_STORE=DE docker/sdk testing console queue:worker:start --stop-when-empty
         Log    ${output}
         Should Be Equal As Integers    ${rc}    0
         Sleep    ${timeout}
-    END  
+    END
 
-Trigger multistore p&s 
+Trigger multistore p&s
     [Arguments]    ${timeout}=5s
-    IF    '.local' in '${yves_url}' or '.local' in '${zed_url}' or '.local' in '${glue_url}' or '.local' in '${bapi_url}'
+    IF    '.local' in '${yves_url}' or '.local' in '${zed_url}' or '.local' in '${glue_url}' or '.local' in '${bapi_url}' or '.local' in '${sapi_url}'
         ${rc}    ${output}=    Run And Return RC And Output    cd .. && APPLICATION_STORE=DE docker/sdk testing console queue:worker:start --stop-when-empty
         Log    ${output}
         Sleep    ${timeout}
-        ${rc}    ${output}=    Run And Return RC And Output    cd .. && APPLICATION_STORE=AT docker/sdk testing console queue:worker:start --stop-when-empty    
+        ${rc}    ${output}=    Run And Return RC And Output    cd .. && APPLICATION_STORE=AT docker/sdk testing console queue:worker:start --stop-when-empty
         Log    ${output}
         Should Be Equal As Integers    ${rc}    0
         Sleep    ${timeout}
-    END  
+    END
 
 Trigger oms
     [Arguments]    ${timeout}=5s
-    IF    '.local' in '${yves_url}' or '.local' in '${zed_url}' or '.local' in '${glue_url}' or '.local' in '${bapi_url}'
+    IF    '.local' in '${yves_url}' or '.local' in '${zed_url}' or '.local' in '${glue_url}' or '.local' in '${bapi_url}' or '.local' in '${sapi_url}'
         ${rc}    ${output}=    Run And Return RC And Output    cd .. && APPLICATION_STORE=DE docker/sdk testing console order:invoice:send
         Log    ${output}
         ${rc}    ${output}=    Run And Return RC And Output    cd .. && APPLICATION_STORE=AT docker/sdk testing console order:invoice:send
