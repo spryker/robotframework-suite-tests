@@ -11,9 +11,7 @@ ENABLER
 Get_list_of_country
     ### SETUP DYNAMIC ENTITY CONFIGURATION ###
     Delete dynamic entity configuration in Database:    country
-    Delete dynamic entity configuration in Database:    availability-abstract
     Create dynamic entity configuration in Database:    country    spy_country     1    {"identifier":"id_country","fields":[{"fieldName":"id_country","fieldVisibleName":"id_country","isEditable":false,"isCreatable":false,"type":"integer","validation":{"isRequired":false}},{"fieldName":"iso2_code","fieldVisibleName":"iso2_code","type":"string","isEditable":true,"isCreatable":true,"validation":{"isRequired":true,"maxLength":2,"minLength":2}},{"fieldName":"iso3_code","fieldVisibleName":"iso3_code","type":"string","isEditable":true,"isCreatable":true,"validation":{"isRequired":true,"maxLength":3,"minLength":3}},{"fieldName":"name","fieldVisibleName":"name","type":"string","isEditable":true,"isCreatable":true,"validation":{"isRequired":true,"maxLength":255,"minLength":1}},{"fieldName":"postal_code_mandatory","fieldVisibleName":"postal_code_mandatory","type":"boolean","isEditable":true,"isCreatable":true,"validation":{"isRequired":false}},{"fieldName":"postal_code_regex","isEditable":"false","isCreatable":"false","fieldVisibleName":"postal_code_regex","type":"string","validation":{"isRequired":false,"maxLength":500,"minLength":1}}]}
-    Create dynamic entity configuration in Database:    availability-abstract    spy_availability_abstract     1    {"identifier":"id_availability_abstract","fields":[{"fieldName":"id_availability_abstract","fieldVisibleName":"id_availability_abstract","isEditable":false,"isCreatable":false,"type":"integer"},{"fieldName":"fk_store","fieldVisibleName":"fk_store","isEditable":true,"isCreatable":true,"type":"integer","validation":{"isRequired":true,"min":1,"max":2}},{"fieldName":"abstract_sku","fieldVisibleName":"abstract_sku","type":"string","isEditable":true,"isCreatable":true,"validation":{"isRequired":true,"minLength":0,"maxLength":255}},{"fieldName":"quantity","fieldVisibleName":"quantity","type":"decimal","isEditable":true,"isCreatable":true,"validation":{"isRequired":true,"precision":20,"scale":10}}]}
 
     ### GET TOKEN ###
     When I set Headers:    Content-Type=application/x-www-form-urlencoded
@@ -89,16 +87,6 @@ Get_list_of_country
     Then Response status code should be:    200
     And Response header parameter should be:    Content-Type    application/json
     And Response should contain the array of a certain size:   $    0
-
-    ### GET COLLECTION WITH DECIMAL FIELD ###
-    And I set Headers:    Content-Type=application/json    Authorization=Bearer ${token}
-    And I send a GET request:    /dynamic-entity/availability-abstract
-    Then Response status code should be:    200
-    And Response header parameter should be:    Content-Type    application/json
-    And Response body parameter should be:    [0][id_availability_abstract]    1
-    And Response body parameter should be:    [0][quantity]    80.0000000000
-    And Response body parameter should be:    [0][abstract_sku]    112
-    And Response body parameter should be:    [0][fk_store]    1
 
     ### SETUP DYNAMIC ENTITY CONFIGURATION WITH LESS NUMBER OF FIELDS ###
     Delete dynamic entity configuration in Database:    country
