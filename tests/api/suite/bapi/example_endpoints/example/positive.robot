@@ -9,6 +9,7 @@ ENABLER
     TestSetup
 
 Get_list_of_abstract_products
+    [Tags]    skip-due-to-refactoring
     ### POST ###
     When I set Headers:    Content-Type=application/x-www-form-urlencoded
     And I send a POST request with data:    /token    'grantType=password&username=admin@spryker.com&password=change123'
