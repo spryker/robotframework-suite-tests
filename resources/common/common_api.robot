@@ -2338,6 +2338,7 @@ Create dynamic entity configuration in Database:
     [Arguments]    ${table_alias}   ${table_name}    ${is_active}    ${definition}
     Connect to Spryker DB
     Execute Sql String  INSERT INTO spy_dynamic_entity_configuration (table_alias, table_name, is_active, definition) VALUES ('${table_alias}', '${table_name}', ${is_active}, '${definition}');
+    Sleep   5s
     Disconnect From Database   
 
 Delete dynamic entity configuration in Database:
