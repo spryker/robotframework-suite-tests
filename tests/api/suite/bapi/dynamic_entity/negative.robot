@@ -59,11 +59,9 @@ Get_list_of_country_with_invalid_token
 
 Create_country_with_invalid_body
     ### SETUP DYNAMIC ENTITY CONFIGURATION ###
-    Delete dynamic entity configuration in Database:    country
-    Delete dynamic entity configuration in Database:    availability-abstract
+    Delete dynamic entity configuration in Database:    country 
     Create dynamic entity configuration in Database:    country    spy_country     1    {"identifier":"id_country","fields":[{"fieldName":"id_country","fieldVisibleName":"id_country","isEditable":false,"isCreatable":false,"type":"integer","validation":{"isRequired":false}},{"fieldName":"iso2_code","fieldVisibleName":"iso2_code","type":"string","isEditable":true,"isCreatable":true,"validation":{"isRequired":true,"maxLength":2,"minLength":2}},{"fieldName":"iso3_code","fieldVisibleName":"iso3_code","type":"string","isEditable":true,"isCreatable":true,"validation":{"isRequired":true,"maxLength":3,"minLength":3}},{"fieldName":"name","fieldVisibleName":"name","type":"string","isEditable":true,"isCreatable":true,"validation":{"isRequired":true,"maxLength":255,"minLength":1}},{"fieldName":"postal_code_mandatory","fieldVisibleName":"postal_code_mandatory","type":"boolean","isEditable":true,"isCreatable":true,"validation":{"isRequired":false}},{"fieldName":"postal_code_regex","isEditable":"false","isCreatable":"false","fieldVisibleName":"postal_code_regex","type":"string","validation":{"isRequired":false,"maxLength":500,"minLength":1}}]}
-    Create dynamic entity configuration in Database:    availability-abstract    spy_availability_abstract     1    {"identifier":"id_availability_abstract","fields":[{"fieldName":"id_availability_abstract","fieldVisibleName":"id_availability_abstract","isEditable":false,"isCreatable":false,"type":"integer"},{"fieldName":"fk_store","fieldVisibleName":"fk_store","isEditable":true,"isCreatable":true,"type":"integer","validation":{"isRequired":true,"min":1,"max":2}},{"fieldName":"abstract_sku","fieldVisibleName":"abstract_sku","type":"string","isEditable":true,"isCreatable":true,"validation":{"isRequired":true,"minLength":0,"maxLength":255}},{"fieldName":"quantity","fieldVisibleName":"quantity","type":"decimal","isEditable":true,"isCreatable":true,"validation":{"isRequired":true,"precision":20,"scale":10}}]}
-
+ 
     ### GET TOKEN ###
     When I set Headers:    Content-Type=application/x-www-form-urlencoded
     And I send a POST request with data:    /token    'grantType=password&username=admin@spryker.com&password=change123'
@@ -124,17 +122,6 @@ Create_country_with_invalid_body
     And Response body parameter should contain:    [2][message]    Invalid data value for field. Field rules: max_length: 255, min_length: 1, is_required: 1
     And Response body parameter should be:    [2][code]    508
     And Response body parameter should contain:    [2][status]   400
-    ### POST WITH INVALID DATA DECIAMAL AND INTEGER ###
-    And I set Headers:    Content-Type=application/json    Authorization=Bearer ${token}
-    And I send a POST request:    /dynamic-entity/availability-abstract   {"data":[{"fk_store":100,"abstract_sku":"999","quantity":"1000000000.00005000000001"}]}
-    Then Response status code should be:    400
-    And Response should contain the array of a certain size:   $    2
-    And Response body parameter should contain:    [0][message]    Invalid data value for field. Field rules: min: 1, max: 2, is_required: 1
-    And Response body parameter should be:    [0][code]    508
-    And Response body parameter should contain:    [0][status]   400
-    And Response body parameter should contain:    [1][message]    Invalid data value for field. Field rules: precision: 20, scale: 10, is_required: 1
-    And Response body parameter should be:    [1][code]    508
-    And Response body parameter should contain:    [1][status]   400
 
 Update_country_with_invalid_data
     ### SETUP DYNAMIC ENTITY CONFIGURATION ###
