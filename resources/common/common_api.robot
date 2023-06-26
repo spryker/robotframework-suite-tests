@@ -59,7 +59,7 @@ SuiteSetup
 TestSetup
     [Documentation]   This setup should be called in Settings of every test suite. It defines which url variable will be used in the test suite.
     ...
-    ...    At the moment it is used to define if the test is for GLUE (``glue`` tag) or BAPI (``bapi`` tag) or SAPI (``sapi`` tag) by checking for the default or test tag.
+    ...    At the moment it is used to define if the test is for GLUE (``glue`` tag) or BAPI (``bapi`` tag) by checking for the default or test tag.
     ...    If the tag is there it replaces the domein URL with bapi url.
     ...
     ...    To set a tag to a test case use ``[Tags]`` under the test name.
