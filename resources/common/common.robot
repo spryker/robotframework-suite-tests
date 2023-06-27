@@ -1,5 +1,5 @@
 *** Settings ***
-Library    Browser    run_on_failure=Take Screenshot EMBED fullPage=True
+Library    Browser    run_on_failure=Take Screenshot \ EMBED \ fullPage=True
 Library    String
 Library    Dialogs
 Library    OperatingSystem
@@ -44,6 +44,10 @@ ${db_port}
 # ${fake_email}          test.spryker+${random}@gmail.com
 
 *** Keywords ***
+
+Capture Screenshot
+    Take Screenshot    EMBED    fullPage=True
+
 Load Variables
     [Arguments]    ${env}
     &{vars}=   Define Environment Variables From Json File    ${env}
@@ -350,7 +354,7 @@ Try reloading page until element is/not appear:
         END
     END
     IF    ('${shouldBeDisplayed}'=='true' and '${elementAppears}'=='False') or ('${shouldBeDisplayed}'=='false' and '${elementAppears}'=='True')
-        Take Screenshot
+        Take Screenshot    EMBED    fullPage=True
         Fail    ${message}
     END
 
@@ -369,7 +373,7 @@ Try reloading page until element does/not contain text:
         END
     END
     IF    ('${shouldContain}'=='true' and '${textAppears}'=='False') or ('${shouldContain}'=='false' and '${textAppears}'=='True')
-        Take Screenshot
+        Take Screenshot    EMBED    fullPage=True
         Fail    'Timeout exceeded, element text doesn't match the expected'
     END
 
