@@ -148,7 +148,7 @@ Zed: trigger matching state of xxx order item inside xxx shipment:
     IF    'FAIL' in ${order_changed_status}
             ${order_item_state}=    Get Text    ${elementSelector}
             Scroll Element Into View    ${elementSelector}
-            Take Screenshot
+            Take Screenshot    EMBED    fullPage=True
             Fail    Order item stuck in '${order_item_state}' state. Check if OMS is functional
     END
 

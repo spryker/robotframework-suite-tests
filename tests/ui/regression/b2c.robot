@@ -499,6 +499,7 @@ Return_Management
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
+    Trigger oms
     Yves: get the last placed order ID by current customer
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Pay
@@ -617,6 +618,7 @@ Guest_Checkout
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
+    Trigger oms
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: get the last placed order ID of the customer by email:    sonia+guest${random}@spryker.com
     Zed: trigger all matching states inside xxx order:    ${zedLastPlacedOrder}    Pay
@@ -669,6 +671,7 @@ Guest_Checkout_Addresses
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
+    Trigger oms
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: get the last placed order ID of the customer by email:    sonia+guest+new${random}@spryker.com
     Zed: trigger all matching states inside xxx order:    ${zedLastPlacedOrder}    Pay
@@ -711,6 +714,7 @@ Refunds
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
+    Trigger oms
     Yves: get the last placed order ID by current customer
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: grand total for the order equals:    ${lastPlacedOrder}    €394.41
@@ -1095,6 +1099,7 @@ Order_Cancelation
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed    
+    Trigger oms
     Yves: go to 'Order History' page
     Yves: get the last placed order ID by current customer
     ### change the order state of one product ###
@@ -1262,6 +1267,7 @@ Product_Availability_Calculation
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed    
+    Trigger oms
     Yves: get the last placed order ID by current customer
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to order page:    ${lastPlacedOrder}
@@ -1614,6 +1620,7 @@ Configurable_Product_OMS
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
     Yves: get the last placed order ID by current customer
+    Trigger oms
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: grand total for the order equals:    ${lastPlacedOrder}    €316.67
     Zed: go to order page:    ${lastPlacedOrder}

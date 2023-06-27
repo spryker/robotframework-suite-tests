@@ -481,6 +481,7 @@ Return_Management
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
+    Trigger oms
     Yves: get the last placed order ID by current customer
     Zed: login on Zed with provided credentials:    ${zed_main_merchant_email}
     Zed: go to order page:    ${lastPlacedOrder}
@@ -614,6 +615,7 @@ Guest_Checkout
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
+    Trigger oms
     Zed: login on Zed with provided credentials:    ${zed_main_merchant_email}
     Zed: get the last placed order ID of the customer by email:    sonia+guest${random}@spryker.com
     Zed: trigger all matching states inside xxx order:    ${zedLastPlacedOrder}    Pay
@@ -655,6 +657,7 @@ Refunds
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
+    Trigger oms
     Yves: get the last placed order ID by current customer
     Zed: login on Zed with provided credentials:    ${zed_main_merchant_email}
     Zed: grand total for the order equals:    ${lastPlacedOrder}    €394.41
@@ -800,7 +803,7 @@ Merchant_Profile_Set_to_Offline_from_MP
     ...    AND    Yves: go to PDP of the product with sku:    ${second_product_with_multiple_offers_abstract_sku}
     ...    AND    Yves: merchant is (not) displaying in Sold By section of PDP:    Video King    true
     ...    AND    Yves: go to URL:    en/merchant/video-king
-    ...    AND    Yves: try reloading page if element is/not appear:    ${merchant_profile_main_content_locator}    true
+    ...    AND    Yves: go to newly created page by URL:    url=en/merchant/video-king    delay=5s    iterations=26
 
 Merchant_Profile_Set_to_Inactive_from_Backoffice
     [Documentation]    Checks that backoffice admin is able to deactivate merchant and then it's profile, products and offers won't be displayed on Yves
@@ -1090,6 +1093,7 @@ Fulfill_Order_from_Merchant_Portal
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
+    Trigger oms
     Yves: get the last placed order ID by current customer
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Pay
@@ -2016,6 +2020,7 @@ Product_Availability_Calculation
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
+    Trigger oms
     Yves: get the last placed order ID by current customer
     Yves: go to PDP of the product with sku:     availabilitySKU${random}
     Yves: change quantity using '+' or '-' button № times:    +    5
@@ -2139,6 +2144,7 @@ Offer_Availability_Calculation
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
+    Trigger oms
     Yves: get the last placed order ID by current customer
     Yves: go to PDP of the product with sku:     offAvKU${random}
     Yves: select xxx merchant's offer:    Spryker
@@ -2380,6 +2386,7 @@ Configurable_Product_OMS
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
+    Trigger oms
     Yves: get the last placed order ID by current customer
     Zed: login on Zed with provided credentials:    ${zed_main_merchant_email}
     Zed: grand total for the order equals:    ${lastPlacedOrder}    €316.67

@@ -768,7 +768,7 @@ Merchant_Profile_Set_to_Offline_from_MP
     ...    AND    Yves: go to PDP of the product with sku:    ${second_product_with_multiple_offers_abstract_sku}
     ...    AND    Yves: merchant is (not) displaying in Sold By section of PDP:    Video King    true
     ...    AND    Yves: go to URL:    en/merchant/video-king
-    ...    AND    Yves: try reloading page if element is/not appear:    ${merchant_profile_main_content_locator}    true
+    ...    AND    Yves: go to newly created page by URL:    url=en/merchant/video-king    delay=5s    iterations=26
 
 Merchant_Profile_Set_to_Inactive_from_Backoffice
     [Documentation]    Checks that backoffice admin is able to deactivate merchant and then it's profile, products and offers won't be displayed on Yves
