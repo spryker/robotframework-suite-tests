@@ -509,7 +509,7 @@ Return_Management
     MP: click on a table row that contains:    ${lastPlacedOrder}--${merchant_spryker_reference}
     MP: update order state using header button:    Execute return
     Trigger oms
-    MP: order states on drawer should contain:    returned
+    MP: order states on drawer should contain:    Returned
     MP: order states on drawer should contain:    Shipped   
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: create a return for the following order and product in it:    ${lastPlacedOrder}    012_25904598
@@ -1110,7 +1110,7 @@ Fulfill_Order_from_Merchant_Portal
     MP: order item state should be:    041_25904691    delivered
     MP: update order state using header button:    Deliver
     Trigger oms
-    MP: order states on drawer should contain:    delivered
+    MP: order states on drawer should contain:    Delivered
     MP: switch to the tab:    Items
     MP: order item state should be:    104_30727010    delivered
     MP: order item state should be:    041_25904691    delivered
@@ -2422,7 +2422,7 @@ Configurable_Product_OMS
     MP: click on a table row that contains:    ${lastPlacedOrder}--${merchant_spryker_reference}
     MP: update order state using header button:    Execute return
     Trigger oms
-    MP: order states on drawer should contain:    returned
+    MP: order states on drawer should contain:    Returned
     MP: order states on drawer should contain:    Refunded  
     Yves: go to the 'Home' page
     Yves: login on Yves with provided credentials:    ${yves_user_email}
