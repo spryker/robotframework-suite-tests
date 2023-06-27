@@ -668,7 +668,7 @@ Refunds
     Trigger oms
     Zed: trigger matching state of order item inside xxx shipment:    008_30692992    Ship
     Trigger oms
-    Zed: trigger matching state of order item inside xxx shipment:    008_30692992    deliver
+    Zed: trigger matching state of order item inside xxx shipment:    008_30692992    Deliver
     Trigger oms
     Zed: trigger matching state of order item inside xxx shipment:    008_30692992    Refund
     Trigger oms
@@ -676,7 +676,7 @@ Refunds
     Zed: go to my order page:    ${lastPlacedOrder}
     Zed: trigger matching state of xxx merchant's shipment:    1    Ship
     Trigger oms
-    Zed: trigger matching state of xxx merchant's shipment:    1    deliver
+    Zed: trigger matching state of xxx merchant's shipment:    1    Deliver
     Trigger oms
     Zed: trigger matching state of xxx merchant's shipment:    1    Refund
     Trigger oms
@@ -1104,13 +1104,13 @@ Fulfill_Order_from_Merchant_Portal
     Trigger oms
     MP: order states on drawer should contain:    Shipped 
     MP: switch to the tab:    Items
-    MP: change order item state on:    041_25904691    deliver
+    MP: change order item state on:    041_25904691    Deliver
     MP: switch to the tab:    Items
     MP: order item state should be:    104_30727010    shipped
     MP: order item state should be:    041_25904691    delivered
-    MP: update order state using header button:    deliver
+    MP: update order state using header button:    Deliver
     Trigger oms
-    MP: order states on drawer should contain:    Delivered
+    MP: order states on drawer should contain:    delivered
     MP: switch to the tab:    Items
     MP: order item state should be:    104_30727010    delivered
     MP: order item state should be:    041_25904691    delivered
@@ -2399,7 +2399,7 @@ Configurable_Product_OMS
     Trigger oms
     Zed: trigger matching state of xxx order item inside xxx shipment:    Ship    2
     Trigger oms
-    Zed: trigger matching state of xxx order item inside xxx shipment:    deliver    2
+    Zed: trigger matching state of xxx order item inside xxx shipment:    Deliver    2
     Trigger oms
     Zed: trigger matching state of xxx order item inside xxx shipment:    Refund    2
     Trigger oms

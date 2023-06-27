@@ -943,7 +943,7 @@ Refunds
     Trigger oms
     Zed: trigger matching state of order item inside xxx shipment:    107254    Ship
     Trigger oms
-    Zed: trigger matching state of order item inside xxx shipment:    107254    deliver
+    Zed: trigger matching state of order item inside xxx shipment:    107254    Deliver
     Trigger oms
     Zed: trigger matching state of order item inside xxx shipment:    107254    Refund
     Trigger oms
@@ -951,7 +951,7 @@ Refunds
     Zed: go to my order page:    ${lastPlacedOrder}
     Zed: trigger matching state of xxx merchant's shipment:    1    Ship
     Trigger oms
-    Zed: trigger matching state of xxx merchant's shipment:    1    deliver
+    Zed: trigger matching state of xxx merchant's shipment:    1    Deliver
     Trigger oms
     Zed: trigger matching state of xxx merchant's shipment:    1    Refund
     Trigger oms
@@ -1356,11 +1356,11 @@ Fulfill_Order_from_Merchant_Portal
     Trigger oms
     MP: order states on drawer should contain:    Shipped
     MP: switch to the tab:    Items
-    MP: change order item state on:    423172    deliver
+    MP: change order item state on:    423172    Deliver
     MP: switch to the tab:    Items
     MP: order item state should be:    427915    shipped
     MP: order item state should be:    423172    delivered
-    MP: update order state using header button:    deliver
+    MP: update order state using header button:    Deliver
     Trigger oms
     MP: order states on drawer should contain:    Delivered
     MP: switch to the tab:    Items
@@ -2763,7 +2763,7 @@ Configurable_Product_RfQ_Order_Management
     Trigger oms
     Zed: trigger matching state of xxx order item inside xxx shipment:    Ship    2
     Trigger oms
-    Zed: trigger matching state of xxx order item inside xxx shipment:    deliver    2
+    Zed: trigger matching state of xxx order item inside xxx shipment:    Deliver    2
     Trigger oms
     Zed: trigger matching state of xxx order item inside xxx shipment:    Refund    2
     Trigger oms
