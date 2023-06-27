@@ -365,7 +365,7 @@ Helper: delete all items in cart
     END
 
 Yves: try reloading page if element is/not appear:
-    [Arguments]    ${element}    ${isDisplayed}    ${iterations}=26    ${sleep}=3s
+    [Arguments]    ${element}    ${isDisplayed}    ${iterations}=26    ${sleep}=5s
     ${isDisplayed}=    Convert To Lower Case    ${isDisplayed}
     FOR    ${index}    IN RANGE    0    ${iterations}
         ${elementAppears}=    Run Keyword And Return Status    Element Should Be Visible    ${element}
@@ -376,6 +376,7 @@ Yves: try reloading page if element is/not appear:
         ELSE
             Exit For Loop
         END
+        
         IF    ${index} == ${iterations}-1
             Take Screenshot    EMBED    fullPage=True
             Fail    expected element state is not reached

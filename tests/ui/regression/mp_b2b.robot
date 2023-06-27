@@ -1049,7 +1049,7 @@ Merchant_Profile_Set_to_Offline_from_MP
     ...    || profile url en       | profile url de       ||
     ...    || https://spryker.com/ | https://spryker.com/ ||
     MP: change store status to:    offline
-    # Trigger p&s
+    Trigger p&s
     Yves: go to URL:    en/merchant/office-king
     Yves: try reloading page if element is/not appear:    ${merchant_profile_main_content_locator}    false
     Yves: perform search by:    Office King
@@ -1066,7 +1066,7 @@ Merchant_Profile_Set_to_Offline_from_MP
     ...    || profile url en       | profile url de       ||
     ...    || https://spryker.com/ | https://spryker.com/ ||
     ...    AND    MP: change store status to:    online
-    # ...    AND    Trigger p&s
+    ...    AND    Trigger p&s
     ...    AND    Yves: go to the 'Home' page
     ...    AND    Yves: go to PDP of the product with sku:    ${one_variant_product_abstract_sku}
     ...    AND    Yves: merchant is (not) displaying in Sold By section of PDP:    Office King    true
