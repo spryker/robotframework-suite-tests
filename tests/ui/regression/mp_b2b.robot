@@ -43,6 +43,7 @@ Resource    ../../../resources/steps/configurable_product_steps.robot
 *** Test Cases ***
 
 Guest_User_Access_Restrictions
+    [Tags]    smoke
     [Documentation]    Checks that guest users are not able to see: Prices, Availability, Quick Order, "My Account" features
     Yves: header contains/doesn't contain:    false    ${priceModeSwitcher}    ${currencySwitcher}[${env}]     ${quickOrderIcon}    ${accountIcon}    ${shoppingListIcon}    ${shoppingCartIcon}
     Yves: go to PDP of the product with sku:    ${one_variant_product_abstract_sku} 
@@ -133,6 +134,7 @@ Share_Shopping_Carts
     Yves: 'Order Details' page is displayed
 
 Quick_Order
+    [Tags]    smoke
     [Documentation]    Checks Quick Order, checkout and Reorder
     [Setup]    Run keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     ...    AND    Yves: delete all shopping carts
@@ -189,6 +191,7 @@ Quick_Order
     [Teardown]    Yves: delete 'Shopping List' with name:    quickOrderList+${random}
 
 Volume_Prices
+    [Tags]    smoke
     [Documentation]    Checks that volume prices are applied in cart
     [Setup]    Run keywords    Zed: check and restore product availability in Zed:    ${volume_prices_product_abstract_sku}    Available    ${volume_prices_product_concrete_sku}
     ...    AND    Trigger p&s
@@ -321,6 +324,7 @@ Default_Merchants
     Zed: table should contain:    Products Restrictions Merchant
 
 Product_Restrictions
+    [Tags]    smoke
     [Documentation]    Checks White and Aluminium lists
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     Yves: perform search by:    Soennecken
@@ -341,6 +345,7 @@ Product_Restrictions
     Yves: 'Catalog' page should show products:    10
 
 Customer_Specific_Prices
+    [Tags]    smoke
     [Documentation]    Checks that product price can be different for different customers
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     Yves: perform search by:    ${one_variant_product_abstract_name}
@@ -360,6 +365,7 @@ Customer_Specific_Prices
     [Teardown]    Yves: delete 'Shopping Cart' with name:    customerPrices+${random}
 
 Agent_Assist
+    [Tags]    smoke
     [Documentation]    Checks Agent creation and that it can login under customer.
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: create new Zed user with the following data:    agent+${random}@spryker.com    change123${random}    Agent    Assist    Root group    This user is an agent    en_US
@@ -412,6 +418,7 @@ Business_Unit_Address_on_Checkout
     Yves: shipping address on the order details page is:    Mr. Armando Richi Spryker Systems GmbH Gurmont Str. 23 8002 Barcelona, Spain 3490284322
 
 Approval_Process
+    [Tags]    smoke
     [Documentation]    Checks role permissions on checkout and Approval process
     [Setup]    Run keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_with_limit_email}
     ...    AND    Yves: create new 'Shopping Cart' with name:    approvalCart+${random}
@@ -493,6 +500,7 @@ Approval_Process
     Yves: 'Thank you' page is displayed
 
 Request_for_Quote
+    [Tags]    smoke
     [Documentation]    Checks user can request and receive quote
     [Setup]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: create new Zed user with the following data:    agent_quote+${random}@spryker.com    change123${random}    Request    Quote    Root group    This user is an agent    en_US
@@ -619,6 +627,7 @@ Unique_URL
 #     Yves: 'Order Details' page contains the following product title N times:    Presentation bundle    3
 
 Return_Management
+    [Tags]    smoke
     [Documentation]    Checks OMS and that Yves user and in Zed main merchant can create/execute returns.
     [Setup]    Run keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     ...    AND    Yves: create new 'Shopping Cart' with name:    returnCart+${random}
@@ -751,6 +760,7 @@ Product_PDP
     Yves: PDP contains/doesn't contain:    true    ${pdpPriceLocator}    ${addToCartButton}    ${pdp_limited_warranty_option}     ${pdp_insurance_coverage_option}
 
 Product_labels
+    [Tags]    smoke
     [Documentation]    Checks that products have labels on PLP and PDP
     Yves: go to first navigation item level:    Sale %
     Yves: 1st product card in catalog (not)contains:     Sale label    true
@@ -762,6 +772,7 @@ Product_labels
     Yves: PDP contains/doesn't contain:    true    ${pdp_new_label}[${env}] 
 
 Catalog
+    [Tags]    smoke
     [Documentation]    Checks that catalog options and search work
     Yves: login on Yves with provided credentials:    ${yves_user_email}
     Yves: perform search by:    claire
@@ -911,6 +922,7 @@ Content_Management
     ...    AND    Zed: click Action Button in a table for row that contains:    Test Page${random}    Deactivate
 
 Refunds
+    [Tags]    smoke
     [Documentation]    Checks that refund can be created for an item and the whole order of merchant
     [Setup]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: deactivate following discounts from Overview page:    20% off storage    10% off minimum order
@@ -962,6 +974,7 @@ Refunds
     ...    AND    Zed: activate following discounts from Overview page:    20% off storage    10% off minimum order
 
 Multiple_Merchants_Order
+    [Tags]    smoke
     [Documentation]    Checks that order with products and offers of multiple merchants could be placed and it will be splitted per merchant
     [Setup]    Run Keywords    
     ...    MP: login on MP with provided credentials:    ${merchant_computer_experts_email}
@@ -1106,6 +1119,7 @@ Merchant_Profile_Set_to_Inactive_from_Backoffice
     ...    AND    Zed: click Action Button in a table for row that contains:     Office King     Activate
 
 Manage_Merchants_from_Backoffice
+    [Tags]    smoke
     [Documentation]    Checks that backoffice admin is able to create, approve, edit merchants
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: create new Merchant with the following data:
@@ -1218,6 +1232,7 @@ Create_and_Approve_New_Merchant_Product
     Yves: go to URL and refresh until 404 occurs:    ${url}
 
 Create_New_Offer
+    [Tags]    smoke
     [Documentation]    Checks that merchant is able to create new offer and it will be displayed on Yves
     MP: login on MP with provided credentials:    ${merchant_spryker_email}
     MP: open navigation menu tab:    Products    
@@ -1304,6 +1319,7 @@ Approve_Offer
     Yves: product price on the PDP should be:     ${product_with_multiple_offers_office_king_price}
 
 Fulfill_Order_from_Merchant_Portal
+    [Tags]    smoke
     [Documentation]    Checks that merchant is able to process his order through OMS from merchant portal
     [Setup]    Run Keywords    
     ...    MP: login on MP with provided credentials:    ${merchant_computer_experts_email}
@@ -1373,6 +1389,7 @@ Fulfill_Order_from_Merchant_Portal
     ...    AND    Yves: delete all user addresses
 
 Shopping_List_Contains_Offers
+    [Tags]    smoke
     [Documentation]    Checks that customer is able to add merchant products and offers to list and merchant relation won't be lost in list and afterwards in cart
     [Setup]    Run Keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     ...    AND    Yves: delete all shopping carts
@@ -1391,6 +1408,7 @@ Shopping_List_Contains_Offers
     [Teardown]    Yves: delete 'Shopping List' with name:    shoppingListName${random}
 
 Merchant_Portal_Customer_Specific_Prices
+    [Tags]    smoke
     [Documentation]    Checks that customer will see product/offer prices specified by merchant for his business unit
     MP: login on MP with provided credentials:    ${merchant_spryker_email}
     MP: open navigation menu tab:    Products
@@ -1501,6 +1519,7 @@ Merchant_Portal_Product_Volume_Prices
     ...    AND    Zed: click Action Button in a table for row that contains:     VPNewProduct${random}     Deny
 
 Merchant_Portal_Offer_Volume_Prices
+    [Tags]    smoke
     [Documentation]    Checks that merchant is able to create new offer with volume prices and it will be displayed on Yves. Falback to default price after delete
     MP: login on MP with provided credentials:    ${merchant_spryker_email}
     MP: open navigation menu tab:    Products    
@@ -1705,6 +1724,7 @@ Merchant_Product_Offer_in_Backoffice
     ...    AND    Zed: click Action Button in a table for row that contains:     ViewProduct${random}     Deny
 
 Manage_Merchant_Product
+    [Tags]    smoke
     [Documentation]    Checks that MU and BO user can manage merchant abstract and concrete products + add new concrete product
     MP: login on MP with provided credentials:    ${merchant_office_king_email}
     MP: open navigation menu tab:    Products    
@@ -1990,6 +2010,7 @@ Manage_Shipments
     ...    AND    Yves: delete all user addresses
 
 Zed_navigation_ordering_and_naming
+    [Tags]    smoke
     [Documentation]    Verifies each left navigation node can be opened
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: verify first navigation root menus
@@ -2493,6 +2514,7 @@ Offer_Availability_Calculation
     ...    AND    Zed: click Action Button in a table for row that contains:      offAvProduct${random}     Deny
 
 User_Control
+    [Tags]    smoke
     [Documentation]    Create a user with limited access
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: create new role with name:    controlRole${random}

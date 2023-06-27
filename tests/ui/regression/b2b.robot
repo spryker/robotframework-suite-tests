@@ -35,6 +35,7 @@ Resource    ../../../resources/steps/configurable_product_steps.robot
  
 *** Test Cases ***
 Guest_User_Access_Restrictions
+    [Tags]    smoke
     [Documentation]    Checks that guest users are not able to see: Prices, Availability, Quick Order, "My Account" features
     Yves: header contains/doesn't contain:    false    ${priceModeSwitcher}    ${currencySwitcher}[${env}]     ${quickOrderIcon}    ${accountIcon}    ${shoppingListIcon}    ${shoppingCartIcon}
     Yves: go to PDP of the product with sku:    ${one_variant_product_abstract_sku} 
@@ -132,6 +133,7 @@ Share_Shopping_Carts
     Yves: shopping cart contains/doesn't contain the following elements:   false    ${shopping_cart_checkout_button}
 
 Quick_Order
+    [Tags]    smoke
     [Documentation]    Checks Quick Order, checkout and Reorder
     [Setup]    Run keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     ...    AND    Yves: delete all shopping carts
@@ -174,6 +176,7 @@ Quick_Order
     [Teardown]    Yves: delete 'Shopping List' with name:    quickOrderList+${random}
  
 Volume_Prices
+    [Tags]    smoke
     [Documentation]    Checks that volume prices are applied in cart
     [Setup]    Run keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     ...    AND    Yves: create new 'Shopping Cart' with name:    VolumePriceCart+${random}
@@ -302,6 +305,7 @@ Product_Relations
     [Teardown]    Yves: delete 'Shopping Cart' with name:    productRelationCart+${random}
 
 Default_Merchants
+    [Tags]    smoke
     [Documentation]    Checks that default merchants are present in Zed
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Marketplace    Merchants
@@ -310,6 +314,7 @@ Default_Merchants
     Zed: table should contain:    Products Restrictions Merchant
 
 Product_Restrictions
+    [Tags]    smoke
     [Documentation]    Checks White and Black lists
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     Yves: perform search by:    Soennecken
@@ -330,6 +335,7 @@ Product_Restrictions
     Yves: 'Catalog' page should show products:    10
 
 Customer_Specific_Prices
+    [Tags]    smoke
     [Documentation]    Checks that product price can be different for different customers
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     Yves: perform search by:    ${one_variant_product_abstract_name}
@@ -349,6 +355,7 @@ Customer_Specific_Prices
     [Teardown]    Yves: delete 'Shopping Cart' with name:    customerPrices+${random}
 
 Agent_Assist
+    [Tags]    smoke
     [Documentation]    Checks Agent creation and that it can login under customer.
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: create new Zed user with the following data:    agent+${random}@spryker.com    change123${random}    Agent    Assist    Root group    This user is an agent    en_US
@@ -402,6 +409,7 @@ Business_Unit_Address_on_Checkout
     Yves: shipping address on the order details page is:    Mr. Armando Richi Spryker Systems GmbH Gurmont Str. 23 8002 Barcelona, Spain 3490284322
 
 Approval_Process
+    [Tags]    smoke
     [Documentation]    Checks role permissions on checkout and Approval process
     [Setup]    Run keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_with_limit_email}
     ...    AND    Yves: create new 'Shopping Cart' with name:    approvalCart+${random}
@@ -483,6 +491,7 @@ Approval_Process
     Yves: 'Thank you' page is displayed
 
 Request_for_Quote
+    [Tags]    smoke
     [Documentation]    Checks user can request and receive quote.
     [Setup]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: create new Zed user with the following data:    agent_quote+${random}@spryker.com    change123${random}    Request    Quote    Root group    This user is an agent    en_US
@@ -607,6 +616,7 @@ Configurable_Bundle
     Yves: 'Order Details' page contains the following product title N times:    Presentation bundle    3
 
 Return_Management
+    [Tags]    smoke
     [Documentation]    Checks OMS and that Yves and Zed users can create returns.
     [Setup]    Run keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     ...    AND    Yves: create new 'Shopping Cart' with name:    returnCart+${random}
@@ -671,6 +681,7 @@ Return_Management
     ...    AND    Zed: delete Zed user with the following email:    return+agent+${random}@spryker.com
 
 User_Account
+    [Tags]    smoke
     [Documentation]    Checks user account pages work + address management
     Yves: login on Yves with provided credentials:    ${yves_user_email}
     Yves: go to user menu item in header:    Overview
@@ -718,6 +729,7 @@ Product_PDP
     Yves: PDP contains/doesn't contain:    true    ${pdpPriceLocator}    ${addToCartButton}    ${pdp_warranty_option}    ${pdp_insurance_option} 
 
 Product_labels
+    [Tags]    smoke
     [Documentation]    Checks that products have labels on PLP and PDP
     Yves: go to first navigation item level:    Sale %
     Yves: 1st product card in catalog (not)contains:     Sale label    true
@@ -729,6 +741,7 @@ Product_labels
     Yves: PDP contains/doesn't contain:    true    ${pdp_new_label}[${env}] 
 
 Catalog
+    [Tags]    smoke
     [Documentation]    Checks that catalog options and search work
     Yves: login on Yves with provided credentials:    ${yves_user_email}
     Yves: perform search by:    claire
@@ -750,6 +763,7 @@ Catalog
     Yves: 'Catalog' page should show products:    3
 
 Catalog_Actions
+    [Tags]    smoke
     [Documentation]    Checks quick add to cart and product groups
     [Setup]    Run keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     ...    AND    Yves: create new 'Shopping Cart' with name:    catalogActions+${random}
@@ -768,6 +782,7 @@ Catalog_Actions
     [Teardown]    Yves: delete 'Shopping Cart' with name:    catalogActions+${random}
 
 Discounts
+    [Tags]    smoke
     [Documentation]    Discounts, Promo Products, and Coupon Codes
     [Setup]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: deactivate all discounts from Overview page
@@ -838,6 +853,7 @@ Back_in_Stock_Notification
     [Teardown]    Zed: check and restore product availability in Zed:    ${stock_product_abstract_sku}    Available    ${stock_product_concrete_sku}
 
 Split_Delivery
+    [Tags]    smoke
     [Documentation]    Checks split delivery in checkout with new addresses
     [Setup]    Run Keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     ...    AND    Yves: delete all shopping carts
@@ -898,6 +914,7 @@ Content_Management
     ...    AND    Zed: click Action Button in a table for row that contains:    Test Page${random}    Deactivate
 
 Refunds
+    [Tags]    smoke
     [Documentation]    Checks that refund can be created for an item and the whole order
     [Setup]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: deactivate following discounts from Overview page:    20% off storage    10% off minimum order
@@ -943,6 +960,7 @@ Refunds
     ...    AND    Zed: activate following discounts from Overview page:    20% off storage    10% off minimum order
 
 Manage_Product
+    [Tags]    smoke
     [Documentation]    checks that BO user can manage abstract and concrete products + create new
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: start new abstract product creation:
@@ -1037,6 +1055,7 @@ Manage_Product
     ...    AND    Yves: delete all shopping carts
 
 Product_Original_Price
+    [Tags]    smoke
     [Documentation]    checks that Orignal price is displayed on the PDP and in Catalog
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: start new abstract product creation:
@@ -1203,6 +1222,7 @@ Manage_Shipments
     ...    AND    Yves: delete all user addresses
 
 Zed_navigation_ordering_and_naming
+    [Tags]    smoke
     [Documentation]    Verifies each left navigation node can be opened
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: verify first navigation root menus
@@ -1536,6 +1556,7 @@ Product_Availability_Calculation
     ...    || Warehouse1 | AT             ||
 
 User_Control
+    [Tags]    smoke
     [Documentation]    Create a user with limited access
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: create new role with name:    controlRole${random}

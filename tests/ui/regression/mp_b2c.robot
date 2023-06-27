@@ -44,6 +44,7 @@ Resource    ../../../resources/steps/configurable_product_steps.robot
 
 *** Test Cases ***
 New_Customer_Registration
+    [Tags]    smoke
     [Documentation]    Check that a new user can be registered in the system
     Register a new customer with data:
     ...    || salutation | first name          | last name | e-mail                       | password            ||
@@ -84,6 +85,7 @@ Authorized_User_Access
     [Teardown]    Yves: check if cart is not empty and clear it
 
 User_Account
+    [Tags]    smoke
     [Documentation]    Checks user account pages work + address management
     Yves: login on Yves with provided credentials:    ${yves_second_user_email}
     Yves: go to user menu item in header:    Overview
@@ -121,6 +123,7 @@ User_Account
     ...    AND     Yves: delete all user addresses
 
 Catalog
+    [Tags]    smoke
     [Documentation]    Checks that catalog options and search work
     Yves: perform search by:    canon
     Yves: 'Catalog' page should show products:    29
@@ -158,6 +161,7 @@ Catalog
 #     [Teardown]    Yves: check if cart is not empty and clear it
 
 Product_labels
+    [Tags]    smoke
     [Documentation]    Checks that products have labels on PLP and PDP
     Yves: go to first navigation item level:    Sale
     Yves: 1st product card in catalog (not)contains:     Sale label    true
@@ -349,6 +353,7 @@ Add_to_Wishlist
 #     [Teardown]    Yves: check if cart is not empty and clear it
 
 Discounts
+    [Tags]    smoke
     [Documentation]    Discounts, Promo Products, and Coupon Codes (includes guest checkout)
     [Setup]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: deactivate all discounts from Overview page
@@ -439,6 +444,7 @@ Split_Delivery
     ...    AND    Yves: delete all user addresses
 
 Agent_Assist
+    [Tags]    smoke
     [Documentation]    Checks that agent can be used.
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: create new Zed user with the following data:    agent+${random}@spryker.com    change${random}    Agent    Assist    Root group    This user is an agent    en_US
@@ -458,6 +464,7 @@ Agent_Assist
     ...    AND    Zed: delete Zed user with the following email:    agent+${random}@spryker.com
 
 Return_Management
+    [Tags]    smoke
     [Documentation]    Checks that returns work and oms process is checked.
     Yves: login on Yves with provided credentials:    ${yves_user_email}
     Yves: check if cart is not empty and clear it
@@ -580,6 +587,7 @@ Product_Relations
     [Teardown]    Yves: check if cart is not empty and clear it
 
 Guest_Checkout
+    [Tags]    smoke
     [Documentation]    Guest checkout with discounts and OMS
     Yves: go to the 'Home' page
     Yves: logout on Yves as a customer
@@ -634,6 +642,7 @@ Guest_Checkout
     [Teardown]    Run keywords    Yves: check if cart is not empty and clear it
 
 Refunds
+    [Tags]    smoke
     [Documentation]    Checks that refund can be created for one item and the whole order
     [Setup]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: deactivate all discounts from Overview page
@@ -688,6 +697,7 @@ Refunds
     ...    AND    Zed: activate following discounts from Overview page:    Tu & Wed $5 off 5 or more    10% off $100+    20% off cameras    Tu & Wed €5 off 5 or more    10% off minimum order
     
 Multiple_Merchants_Order
+    [Tags]    smoke
     [Documentation]    Checks that order with products and offers of multiple merchants could be placed and it will be splitted per merchant
     [Setup]    Run Keywords    
     ...    MP: login on MP with provided credentials:    ${merchant_video_king_email}
@@ -840,6 +850,7 @@ Merchant_Profile_Set_to_Inactive_from_Backoffice
     ...    AND    Zed: click Action Button in a table for row that contains:     Video King     Activate
 
 Manage_Merchants_from_Backoffice
+    [Tags]    smoke
     [Documentation]    Checks that backoffice admin is able to create, approve, edit merchants
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: create new Merchant with the following data:
@@ -912,6 +923,7 @@ Manage_Merchant_Users
     ...    AND    Zed: submit the form
 
 Create_and_Approve_New_Merchant_Product
+    [Tags]    smoke
     [Documentation]    Checks that merchant is able to create new multi-SKU product and marketplace operator is able to approve it in BO
     MP: login on MP with provided credentials:    ${merchant_budget_cameras_email}
     MP: open navigation menu tab:    Products    
@@ -1042,6 +1054,7 @@ Approve_Offer
     Yves: product price on the PDP should be:     ${second_product_with_multiple_offers_video_king_price}
 
 Fulfill_Order_from_Merchant_Portal
+    [Tags]    smoke
     [Documentation]    Checks that merchant is able to process his order through OMS from merchant portal
     [Setup]    Run Keywords    
     ...    MP: login on MP with provided credentials:    ${merchant_video_king_email}
@@ -1122,6 +1135,7 @@ Fulfill_Order_from_Merchant_Portal
     ...    AND    Yves: delete all user addresses
 
 Wishlist_List_Supports_Offers
+    [Tags]    smoke
     [Documentation]    Checks that customer is able to add merchant products and offers to list and merchant relation won't be lost in list and afterwards in cart
     [Setup]    Run Keywords    Yves: login on Yves with provided credentials:    ${yves_user_email}
     ...    AND    Yves: delete all wishlists
@@ -1162,6 +1176,7 @@ Search_for_Merchant_Offers_and_Products
     Yves: merchant is (not) displaying in Sold By section of PDP:    Budget Cameras    true
 
 Merchant_Portal_Product_Volume_Prices
+    [Tags]    smoke
     [Documentation]    Checks that merchant is able to create new multi-SKU product with volume prices. Falback to default price after delete
     MP: login on MP with provided credentials:    ${merchant_video_king_email}
     MP: open navigation menu tab:    Products    
@@ -1361,6 +1376,7 @@ Merchant_Portal_Dashboard
     ...    AND    Zed: delete Zed user with the following email:    sonia+dahboard+${random}@spryker.com
 
 Merchant_Product_Offer_in_Backoffice
+    [Tags]    smoke
     [Documentation]    Check View action and filtration for Mproduct and Moffer in backoffice
     MP: login on MP with provided credentials:    ${merchant_spryker_email}
     MP: open navigation menu tab:    Products    
@@ -1537,6 +1553,7 @@ Manage_Merchant_Product
     ...    AND    Zed: click Action Button in a table for row that contains:     manageSKU${random}     Deny
 
 Merchant_Product_Original_Price
+    [Tags]    smoke
     [Documentation]    checks that Orignal price is displayed on the PDP and in Catalog
     MP: login on MP with provided credentials:    ${merchant_budget_cameras_email}
     MP: open navigation menu tab:    Products    
@@ -1711,6 +1728,7 @@ Manage_Shipments
     ...    AND    Yves: delete all user addresses
 
 Zed_navigation_ordering_and_naming
+    [Tags]    smoke
     [Documentation]    Verifies each left navigation node can be opened
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: verify first navigation root menus
@@ -2062,6 +2080,7 @@ Product_Availability_Calculation
     ...    || Spryker ${merchant_spryker_reference} Warehouse 1 | AT    ||
 
 Offer_Availability_Calculation
+    [Tags]    smoke
     [Documentation]    check offer availability
     MP: login on MP with provided credentials:    ${merchant_video_king_email}
     MP: open navigation menu tab:    Products    
@@ -2174,6 +2193,7 @@ Offer_Availability_Calculation
     ...    AND    Zed: click Action Button in a table for row that contains:      offAvProduct${random}     Deny
 
 User_Control
+    [Tags]    smoke
     [Documentation]    Create a user with limited access
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: create new role with name:    controlRole${random}
@@ -2193,6 +2213,7 @@ User_Control
     ...    AND    Zed: click Action Button in a table for row that contains:    controlRole${random}    Delete
 
 Reorder
+    [Tags]    smoke
     [Documentation]    Checks that merchant relation is saved with reorder
     Yves: login on Yves with provided credentials:    ${yves_user_email}
     Yves: check if cart is not empty and clear it
