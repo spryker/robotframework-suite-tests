@@ -1,5 +1,5 @@
 *** Settings ***
-Library    Browser
+Library    Browser    run_on_failure=Take Screenshot EMBED fullPage=True
 Library    String
 Library    Dialogs
 Library    OperatingSystem
