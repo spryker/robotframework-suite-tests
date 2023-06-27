@@ -365,7 +365,7 @@ Helper: delete all items in cart
     END
 
 Yves: try reloading page if element is/not appear:
-    [Arguments]    ${element}    ${isDisplayed}    ${iterations}=26    ${sleep}=5s
+    [Arguments]    ${element}    ${isDisplayed}    ${iterations}=26    ${sleep}=3s
     ${isDisplayed}=    Convert To Lower Case    ${isDisplayed}
     FOR    ${index}    IN RANGE    0    ${iterations}
         ${elementAppears}=    Run Keyword And Return Status    Element Should Be Visible    ${element}
