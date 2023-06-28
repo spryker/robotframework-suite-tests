@@ -1454,6 +1454,7 @@ Payment_method_update
     Yves: fill in the following new shipping address:
     ...    ||      firstName                    |           lastName                  |    street           |    houseNumber     |    city     |    postCode    |    phone        ||
     ...    || ${yves_second_user_first_name}    |     ${yves_second_user_last_name}   |    ${random}        |    ${random}       |    Berlin   |   ${random}    |    ${random}    ||
+    Yves: billing address same as shipping address:    true
     Yves: submit form on the checkout
     Yves: select the following shipping method on the checkout and go next:     Standard: €4.90
     Yves: check that the payment method is/not present in the checkout process:     ${checkout_payment_invoice_locator}    false
