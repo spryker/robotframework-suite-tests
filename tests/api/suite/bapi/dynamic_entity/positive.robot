@@ -104,6 +104,7 @@ Get_list_of_country
     And Response body parameter should be:    [253][id_country]    254
     And Response body parameter should be:    [253][iso2_code]    ZM
     And Response body parameter should be:    [253][name]    Zambia
+    [Teardown]    Run Keyword    Delete dynamic entity configuration in Database:    country
 
 Get_country_by_id
     ### SETUP DYNAMIC ENTITY CONFIGURATION ###
@@ -133,6 +134,7 @@ Get_country_by_id
     And Response body parameter should be:    [0][name]    Ukraine
     And Response body parameter should be:    [0][postal_code_mandatory]    True
     And Response body parameter should be:    [0][postal_code_regex]    \\\\d{5}
+    [Teardown]    Run Keyword    Delete dynamic entity configuration in Database:    country
 
 Create_and_update_country_collection: 
     ### SETUP DYNAMIC ENTITY CONFIGURATION ###
@@ -239,6 +241,12 @@ Create_and_update_country_collection:
     And Response body parameter should be:    [2][iso3_code]    XCC
     And Response body parameter should be:    [2][name]    XCC
     And Response body parameter should be:    [2][id_country]    ${xxc_country_id}
+    [Teardown]    Run Keywords    Delete dynamic entity configuration in Database:    country
+    ...   AND    Delete country by iso2_code in Database:   XM
+    ...   AND    Delete country by iso2_code in Database:   XA
+    ...   AND    Delete country by iso2_code in Database:   XB
+    ...   AND    Delete country by iso2_code in Database:   XC
+    ...   AND    Delete country by iso2_code in Database:   XX
 
 Upsert_country_collection:
     ### SETUP DYNAMIC ENTITY CONFIGURATION ###
@@ -337,3 +345,10 @@ Upsert_country_collection:
     And Response body parameter should be:    [0][iso2_code]    XS
     And Response body parameter should be:    [0][iso3_code]    XXS
     And Response body parameter should be:    [0][name]    XXS
+    [Teardown]    Run Keywords    Delete dynamic entity configuration in Database:    country
+    ...   AND    Delete country by iso2_code in Database:   XA
+    ...   AND    Delete country by iso2_code in Database:   XB
+    ...   AND    Delete country by iso2_code in Database:   XC
+    ...   AND    Delete country by iso2_code in Database:   XX
+    ...   AND    Delete country by iso2_code in Database:   XL
+    ...   AND    Delete country by iso2_code in Database:   XS
