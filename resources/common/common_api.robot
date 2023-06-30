@@ -2354,6 +2354,15 @@ Delete dynamic entity configuration in Database:
 
 I get access token by user credentials:
     [Documentation]    This is a helper keyword which helps get access token for future use in the headers of the following requests.
+    ...
+    ...    It gets the token for the specified user ``${email}`` and saves it into the test variable ``${token}``, which can then be used within the scope of the test where this keyword was called.
+    ...    After the test ends the ``${token}`` variable is cleared. This keyword needs to be called separately for each test where you expect to need a customer token.
+    ...
+    ...    The password in this case is not passed to the keyword and the default password stored in ``${default_password}`` will be used when getting token.
+    ...
+    ...    *Example:*
+    ...
+    ...    ``I get access token by user credentials:    ${zed_admin.email}``
     [Arguments]    ${email}    ${password}=${default_password}
     When I set Headers:    Content-Type=application/x-www-form-urlencoded
     And I send a POST request:    /token    {"grantType": "${grant_type.password}","username": "${email}","password": "${password}"}
