@@ -2351,3 +2351,12 @@ Delete dynamic entity configuration in Database:
     Connect to Spryker DB
     Execute Sql String  DELETE FROM spy_dynamic_entity_configuration WHERE table_alias = '${table_alias}';
     Disconnect From Database
+
+I get access token by user credentials:
+    [Documentation]    This is a helper keyword which helps get access token for future use in the headers of the following requests.
+    [Arguments]    ${email}    ${password}=${default_password}
+    When I set Headers:    Content-Type=application/x-www-form-urlencoded
+    And I send a POST request:    /token    {"grantType": "${grant_type.password}","username": "${email}","password": "${password}"}
+    Save value to a variable:    [access_token]    token
+    Log    ${token}
+    [Return]    ${token}
