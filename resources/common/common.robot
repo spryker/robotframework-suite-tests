@@ -45,9 +45,6 @@ ${db_port}
 
 *** Keywords ***
 
-Capture Screenshot
-    Take Screenshot    EMBED    fullPage=True
-
 Load Variables
     [Arguments]    ${env}
     &{vars}=   Define Environment Variables From Json File    ${env}
