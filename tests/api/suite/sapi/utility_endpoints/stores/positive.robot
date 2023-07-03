@@ -32,7 +32,7 @@ Get_all_availiable_stores
     And Each array element of array in response should contain nested property:    [data]    [attributes][countries]    postalCodeMandatory
     And Each array element of array in response should contain nested property:    [data]    [attributes][countries]    postalCodeRegex
     And Each array element of array in response should contain nested property:    [data]    [links]    self
-
+    And Response body has correct self link
 
 Get_store_by_id
     And I set Headers:    Content-Type=${default_header_content_type}
@@ -56,3 +56,4 @@ Get_store_by_id
     And Each array element of array in response should contain property:    [data][attributes][countries]    name
     And Each array element of array in response should contain property:    [data][attributes][countries]    postalCodeMandatory
     And Each array element of array in response should contain property:    [data][attributes][countries]    postalCodeRegex
+    And Response body has correct self link internal
