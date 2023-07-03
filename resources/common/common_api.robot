@@ -2337,8 +2337,20 @@ Create dynamic entity configuration in Database:
         ... 
     [Arguments]    ${table_alias}   ${table_name}    ${is_active}    ${definition}
     Connect to Spryker DB
-    Execute Sql String  INSERT INTO spy_dynamic_entity_configuration (table_alias, table_name, is_active, definition) VALUES ('${table_alias}', '${table_name}', '${is_active}', '${definition}');
-    Sleep   5s
+    ${last_id}=    Query    SELECT id_dynamic_entity_configuration FROM spy_dynamic_entity_configuration ORDER BY id_dynamic_entity_configuration DESC LIMIT 1;
+    ${new_id}=    Set Variable    ${EMPTY}
+    ${last_id_length}=    Get Length    ${last_id}
+    IF    ${last_id_length} > 0    
+        ${new_id}=    Evaluate    ${last_id[0][0]} + 1
+    ELSE
+        ${new_id}=    Evaluate    1
+    END
+    Log    ${new_id}
+    IF    '${db_engine}' == 'pymysql'
+        Execute Sql String  insert ignore into spy_dynamic_entity_configuration (id_dynamic_entity_configuration, table_alias, table_name, is_active, definition) VALUE (${new_id}, '${table_alias}', '${table_name}', '${is_active}', '${definition}');
+    ELSE
+        Execute Sql String  INSERT INTO spy_dynamic_entity_configuration (table_alias, table_name, is_active, definition) VALUES ('${table_alias}', '${table_name}', '${is_active}', '${definition}');
+    END
     Disconnect From Database   
 
 Delete dynamic entity configuration in Database:
