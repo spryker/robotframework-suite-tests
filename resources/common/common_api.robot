@@ -2347,9 +2347,9 @@ Create dynamic entity configuration in Database:
     END
     Log    ${new_id}
     IF    '${db_engine}' == 'pymysql'
-        Execute Sql String  insert ignore into spy_dynamic_entity_configuration (id_dynamic_entity_configuration, table_alias, table_name, is_active, definition) VALUE (${new_id}, '${table_alias}', '${table_name}', '${is_active}', '${definition}');
-    ELSE
         Execute Sql String  INSERT INTO spy_dynamic_entity_configuration (table_alias, table_name, is_active, definition) VALUES ('${table_alias}', '${table_name}', '${is_active}', '${definition}');
+    ELSE
+        Execute Sql String  insert ignore into spy_dynamic_entity_configuration (id_dynamic_entity_configuration, table_alias, table_name, is_active, definition) VALUE (${new_id}, '${table_alias}', '${table_name}', '${is_active}', '${definition}')
     END
     Disconnect From Database   
 
