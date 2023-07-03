@@ -126,7 +126,7 @@ Yves: product price on the PDP should be:
     EXCEPT    
         Sleep    ${browser_timeout}
         Reload
-        Take Screenshot
+        Take Screenshot    EMBED    fullPage=True
         ${actualProductPrice}=    Get Text    ${pdp_price_element_locator}
         Should Be Equal    ${expectedProductPrice}    ${actualProductPrice}    
     END

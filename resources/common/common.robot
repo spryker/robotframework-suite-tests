@@ -1,5 +1,5 @@
 *** Settings ***
-Library    Browser
+Library    Browser    run_on_failure=Take Screenshot \ EMBED \ fullPage=True
 Library    String
 Library    Dialogs
 Library    OperatingSystem
@@ -44,6 +44,7 @@ ${db_port}
 # ${fake_email}          test.spryker+${random}@gmail.com
 
 *** Keywords ***
+
 Load Variables
     [Arguments]    ${env}
     &{vars}=   Define Environment Variables From Json File    ${env}
@@ -350,7 +351,7 @@ Try reloading page until element is/not appear:
         END
     END
     IF    ('${shouldBeDisplayed}'=='true' and '${elementAppears}'=='False') or ('${shouldBeDisplayed}'=='false' and '${elementAppears}'=='True')
-        Take Screenshot
+        Take Screenshot    EMBED    fullPage=True
         Fail    ${message}
     END
 
@@ -369,7 +370,7 @@ Try reloading page until element does/not contain text:
         END
     END
     IF    ('${shouldContain}'=='true' and '${textAppears}'=='False') or ('${shouldContain}'=='false' and '${textAppears}'=='True')
-        Take Screenshot
+        Take Screenshot    EMBED    fullPage=True
         Fail    'Timeout exceeded, element text doesn't match the expected'
     END
 
@@ -478,7 +479,7 @@ Run console command:
 Trigger p&s
     [Arguments]    ${timeout}=5s
     IF    '.local' in '${yves_url}' or '.local' in '${zed_url}' or '.local' in '${glue_url}' or '.local' in '${bapi_url}' or '.local' in '${sapi_url}'
-        ${rc}    ${output}=    Run And Return RC And Output    cd .. && APPLICATION_STORE=DE docker/sdk testing console queue:worker:start --stop-when-empty
+        ${rc}    ${output}=    Run And Return RC And Output    cd .. && APPLICATION_STORE=DE docker/sdk console queue:worker:start --stop-when-empty
         Log    ${output}
         Should Be Equal As Integers    ${rc}    0
         Sleep    ${timeout}
@@ -487,10 +488,10 @@ Trigger p&s
 Trigger multistore p&s
     [Arguments]    ${timeout}=5s
     IF    '.local' in '${yves_url}' or '.local' in '${zed_url}' or '.local' in '${glue_url}' or '.local' in '${bapi_url}' or '.local' in '${sapi_url}'
-        ${rc}    ${output}=    Run And Return RC And Output    cd .. && APPLICATION_STORE=DE docker/sdk testing console queue:worker:start --stop-when-empty
+        ${rc}    ${output}=    Run And Return RC And Output    cd .. && APPLICATION_STORE=DE docker/sdk console queue:worker:start --stop-when-empty
         Log    ${output}
         Sleep    ${timeout}
-        ${rc}    ${output}=    Run And Return RC And Output    cd .. && APPLICATION_STORE=AT docker/sdk testing console queue:worker:start --stop-when-empty
+        ${rc}    ${output}=    Run And Return RC And Output    cd .. && APPLICATION_STORE=AT docker/sdk console queue:worker:start --stop-when-empty
         Log    ${output}
         Should Be Equal As Integers    ${rc}    0
         Sleep    ${timeout}
@@ -499,19 +500,19 @@ Trigger multistore p&s
 Trigger oms
     [Arguments]    ${timeout}=5s
     IF    '.local' in '${yves_url}' or '.local' in '${zed_url}' or '.local' in '${glue_url}' or '.local' in '${bapi_url}' or '.local' in '${sapi_url}'
-        ${rc}    ${output}=    Run And Return RC And Output    cd .. && APPLICATION_STORE=DE docker/sdk testing console order:invoice:send
+        ${rc}    ${output}=    Run And Return RC And Output    cd .. && APPLICATION_STORE=DE docker/sdk console order:invoice:send
         Log    ${output}
-        ${rc}    ${output}=    Run And Return RC And Output    cd .. && APPLICATION_STORE=AT docker/sdk testing console order:invoice:send
-        Log    ${output}
-        Should Be Equal As Integers    ${rc}    0
-        ${rc}    ${output}=    Run And Return RC And Output    cd .. && APPLICATION_STORE=DE docker/sdk testing console oms:check-timeout
-        Log    ${output}
-        ${rc}    ${output}=    Run And Return RC And Output    cd .. && APPLICATION_STORE=AT docker/sdk testing console oms:check-timeout
+        ${rc}    ${output}=    Run And Return RC And Output    cd .. && APPLICATION_STORE=AT docker/sdk console order:invoice:send
         Log    ${output}
         Should Be Equal As Integers    ${rc}    0
-        ${rc}    ${output}=    Run And Return RC And Output    cd .. && APPLICATION_STORE=DE docker/sdk testing console oms:check-condition
+        ${rc}    ${output}=    Run And Return RC And Output    cd .. && APPLICATION_STORE=DE docker/sdk console oms:check-timeout
         Log    ${output}
-        ${rc}    ${output}=    Run And Return RC And Output    cd .. && APPLICATION_STORE=AT docker/sdk testing console oms:check-condition
+        ${rc}    ${output}=    Run And Return RC And Output    cd .. && APPLICATION_STORE=AT docker/sdk console oms:check-timeout
+        Log    ${output}
+        Should Be Equal As Integers    ${rc}    0
+        ${rc}    ${output}=    Run And Return RC And Output    cd .. && APPLICATION_STORE=DE docker/sdk console oms:check-condition
+        Log    ${output}
+        ${rc}    ${output}=    Run And Return RC And Output    cd .. && APPLICATION_STORE=AT docker/sdk console oms:check-condition
         Log    ${output}
         Should Be Equal As Integers    ${rc}    0
         Sleep    ${timeout}
