@@ -68,9 +68,9 @@ Get_abstract_product_volume_prices
     And Response body parameter should be:    [data][0][attributes][prices][0][priceTypeName]    DEFAULT
     And Response body parameter should be:    [data][0][attributes][prices][0][netAmount]    None
     And Response body parameter should be:    [data][0][attributes][prices][0][grossAmount]    ${default_price}
-    And Response body parameter should be:    [data][0][attributes][prices][0][currency][code]    ${currency.eur.code}
-    And Response body parameter should be:    [data][0][attributes][prices][0][currency][name]    ${currency.eur.name}
-    And Response body parameter should be:    [data][0][attributes][prices][0][currency][symbol]    ${currency.eur.symbol}
+    And Response body parameter should be in:    [data][0][attributes][prices][0][currency][code]    ${currency.eur.code}    ${currency.chf.code}
+    And Response body parameter should be in:    [data][0][attributes][prices][0][currency][name]    ${currency.eur.name}    ${currency.chf.name}
+    And Response body parameter should be in:    [data][0][attributes][prices][0][currency][symbol]    ${currency.eur.symbol}    ${currency.chf.symbol}
     And Response should contain the array of a certain size:    [data][0][attributes][prices][0][volumePrices]   3
     And Each array element of array in response should contain property:    [data][0][attributes][prices][0][volumePrices]    grossAmount
     And Each array element of array in response should contain property:    [data][0][attributes][prices][0][volumePrices]    netAmount
@@ -109,9 +109,9 @@ Get_abstract_product_with_include_abstract_product_prices_with_volume_prices
     And Response body parameter should be:    [included][0][id]    ${abstract_product.product_with_volume_prices.abstract_sku}
     And Response body parameter should be:    [included][0][attributes][prices][0][priceTypeName]    DEFAULT
     And Response body parameter should be greater than:    [included][0][attributes][prices][0][grossAmount]    0
-    And Response body parameter should be:    [included][0][attributes][prices][0][currency][code]    ${currency.eur.code}
-    And Response body parameter should be:    [included][0][attributes][prices][0][currency][name]    ${currency.eur.name}
-    And Response body parameter should be:    [included][0][attributes][prices][0][currency][symbol]    ${currency.eur.symbol}
+    And Response body parameter should be in:    [included][0][attributes][prices][0][currency][code]    ${currency.eur.code}    ${currency.chf.code}
+    And Response body parameter should be in:    [included][0][attributes][prices][0][currency][name]    ${currency.eur.name}    ${currency.chf.name}
+    And Response body parameter should be in:    [included][0][attributes][prices][0][currency][symbol]    ${currency.eur.symbol}    ${currency.chf.symbol}
 
 Get_abstract_product_with_original_price
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
