@@ -9,7 +9,7 @@ ENABLER
     TestSetup
 
 Get_abstract_product_prices_detault_only
-    When I send a GET request:    /abstract-products/${abstract_available_product_with.concretes_3_sku}/abstract-product-prices
+    When I send a GET request:    /abstract-products/${abstract_available_product_with.concretes_3_sku}/abstract-product-prices?currency=EUR&priceMode=GROSS_MODE
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
@@ -27,7 +27,7 @@ Get_abstract_product_prices_detault_only
     And Response body has correct self link
 
 Get_abstract_product_volume_prices
-    When I send a GET request:    /abstract-products/${concrete_product.product_with_volume_prices.abstract_sku}/abstract-product-prices
+    When I send a GET request:    /abstract-products/${concrete_product.product_with_volume_prices.abstract_sku}/abstract-product-prices?currency=EUR&priceMode=GROSS_MODE
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
@@ -51,7 +51,7 @@ Get_abstract_product_volume_prices
     And Response body has correct self link
 
 Get_abstract_product_original_prices
-    When I send a GET request:    /abstract-products/${concrete_product.product_with_original_prices.abstract_sku}/abstract-product-prices
+    When I send a GET request:    /abstract-products/${concrete_product.product_with_original_prices.abstract_sku}/abstract-product-prices?currency=EUR&priceMode=GROSS_MODE
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
@@ -67,5 +67,25 @@ Get_abstract_product_original_prices
     And Each array element of array in response should contain value:    [data][0][attributes][prices]    ${currency.eur.code}
     And Each array element of array in response should contain value:    [data][0][attributes][prices]    ${currency.eur.name}
     And Each array element of array in response should contain value:    [data][0][attributes][prices]    ${currency.eur.symbol}
+    And Each array element of array in response should contain property with value:    [data][0][attributes][prices]    volumePrices    ${array}
+    And Response body has correct self link
+
+Get_abstract_product_original_prices_CHF
+    When I send a GET request:    /abstract-products/${concrete_product.product_with_original_prices.abstract_sku}/abstract-product-prices?currency=CHF&priceMode=GROSS_MODE
+    Then Response status code should be:    200
+    And Response reason should be:    OK
+    And Response header parameter should be:    Content-Type    ${default_header_content_type}
+    And Response body parameter should be:    [data][0][id]    ${concrete_product.product_with_original_prices.abstract_sku}
+    And Response body parameter should be greater than:    [data][0][attributes][price]   100
+    And Save value to a variable:    [data][0][attributes][price]    default_price
+    And Response should contain the array of a certain size:    [data][0][attributes][prices]    2
+    And Response body parameter should be:    [data][0][attributes][prices][0][priceTypeName]    DEFAULT
+    And Response body parameter should be:    [data][0][attributes][prices][0][grossAmount]    ${default_price}
+    And Response body parameter should be:    [data][0][attributes][prices][1][priceTypeName]    ORIGINAL
+    And Response body parameter should be greater than:    [data][0][attributes][prices][1][grossAmount]   ${default_price}
+    And Each array element of array in response should contain property with value:    [data][0][attributes][prices]    netAmount    ${None}
+    And Each array element of array in response should contain value:    [data][0][attributes][prices]    ${currency.chf.code}
+    And Each array element of array in response should contain value:    [data][0][attributes][prices]    ${currency.chf.name}
+    And Each array element of array in response should contain value:    [data][0][attributes][prices]    ${currency.chf.symbol}
     And Each array element of array in response should contain property with value:    [data][0][attributes][prices]    volumePrices    ${array}
     And Response body has correct self link

@@ -9,7 +9,7 @@ ENABLER
     TestSetup
 
 Get_abstract_prices_by_concrete_SKU
-    When I send a GET request:    /abstract-products/${product_with_alternative.concrete_sku}/abstract-product-prices
+    When I send a GET request:    /abstract-products/${product_with_alternative.concrete_sku}/abstract-product-prices?currency=EUR&priceMode=GROSS_MODE
     Then Response status code should be:    404
     And Response reason should be:    Not Found
     And Response should return error code:    307
