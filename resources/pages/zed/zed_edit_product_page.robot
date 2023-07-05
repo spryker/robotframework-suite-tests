@@ -33,3 +33,13 @@ ${zed_add_concrete_valid_from}    id=product_concrete_form_add_valid_from
 ${zed_add_concrete_valid_to}    id=product_concrete_form_add_valid_to
 ${zed_add_concrete_use_price_from_abstract}    id=price-source-checkbox
 ${zed_add_concrete_autogenerate_sku}    id=sku-autogenerate-checkbox-input
+${zed_add_scheduled_prices_button}    xpath=//div[@id='tab-content-scheduled_prices']//a[contains(@href, 'price-product-schedule-gui/create')]
+${zed_scheduled_price_form_store_selector}    id=price_product_schedule_priceProduct_moneyValue_store_idStore
+${zed_scheduled_price_form_currency_selector}    id=price_product_schedule_priceProduct_moneyValue_currency_idCurrency
+${zed_scheduled_price_form_net_price_input}    id=price_product_schedule_priceProduct_moneyValue_netAmount
+${zed_scheduled_price_form_gross_price_input}    id=price_product_schedule_priceProduct_moneyValue_grossAmount
+${zed_scheduled_price_form_price_type_selector}    id=price_product_schedule_priceProduct_priceType_idPriceType
+${zed_scheduled_price_form_start_from_input}    id=price_product_schedule_activeFrom_date
+${zed_scheduled_price_form_finish_at_input}    id=price_product_schedule_activeTo_date
+${zed_scheduled_price_form_start_time_hours_selector}    id=price_product_schedule_activeFrom_time_hour
+${zed_scheduled_price_form_finish_time_hours_selector}    id=price_product_schedule_activeTo_time_hour

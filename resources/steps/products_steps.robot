@@ -189,6 +189,47 @@ Zed: update abstract product data:
     END
     Click    ${zed_pdp_save_button}
 
+Zed: update abstract product scheduled prices:
+    [Arguments]    @{args}
+    ${abstractProductData}=    Set Up Keyword Arguments    @{args}
+    Zed: go to second navigation item level:    Catalog    Products 
+    Zed: click Action Button in a table for row that contains:     ${abstract_sku}     Edit
+    Wait Until Element Is Visible    ${zed_product_edit_new_from}
+    Zed: switch to the tab on 'Edit product' page:    Scheduled Prices
+    Wait Until Element Is Visible    ${zed_add_scheduled_prices_button}
+    Click    ${zed_add_scheduled_prices_button}
+    FOR    ${key}    ${value}    IN    &{abstractProductData}
+        IF    '${key}'=='store' and '${value}' != '${EMPTY}'    
+            Select From List By Label    ${zed_scheduled_price_form_store_selector}    ${value}
+        END
+        IF    '${key}'=='currency' and '${value}' != '${EMPTY}'    
+            Select From List By Label    ${zed_scheduled_price_form_currency_selector}    ${value}
+        END
+        IF    '${key}'=='net price' and '${value}' != '${EMPTY}'    
+            Type Text    ${zed_scheduled_price_form_net_price_input}    ${value}
+        END
+        IF    '${key}'=='gross price' and '${value}' != '${EMPTY}'    
+            Type Text    ${zed_scheduled_price_form_gross_price_input}    ${value}
+        END
+        IF    '${key}'=='price type' and '${value}' != '${EMPTY}'    
+            Select From List By Label    ${zed_scheduled_price_form_price_type_selector}    ${value}
+        END
+        IF    '${key}'=='start from' and '${value}' != '${EMPTY}'    
+            Add/Edit element attribute with JavaScript:    ${zed_scheduled_price_form_start_from_input}    value    ${value}    
+        END
+        IF    '${key}'=='hours from' and '${value}' != '${EMPTY}'    
+            Select From List By Label    ${zed_scheduled_price_form_start_time_hours_selector}    ${value}
+        END
+        IF    '${key}'=='finish at' and '${value}' != '${EMPTY}'    
+            Add/Edit element attribute with JavaScript:    ${zed_scheduled_price_form_finish_at_input}    value    ${value}
+        END
+        IF    '${key}'=='hours to' and '${value}' != '${EMPTY}'    
+            Select From List By Label    ${zed_scheduled_price_form_finish_time_hours_selector}    ${value}
+        END
+    END
+    Click    id=price_product_schedule_submit
+
+
 Zed: update abstract product price on:
     [Arguments]    @{args}
     ${priceData}=    Set Up Keyword Arguments    @{args}

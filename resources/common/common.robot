@@ -15,8 +15,8 @@ Resource                  ../pages/yves/yves_login_page.robot
 
 *** Variables ***
 # *** SUITE VARIABLES ***
-${env}                 b2b
-${headless}            true
+${env}                 ui_mp_b2b
+${headless}            false
 ${verify_ssl}          false
 ${browser}             chromium
 ${browser_timeout}     60 seconds
@@ -517,3 +517,16 @@ Trigger oms
         Should Be Equal As Integers    ${rc}    0
         Sleep    ${timeout}
     END
+
+Trigger events for schedule prices
+    [Arguments]    ${timeout}=5s
+    IF    '.local' in '${yves_url}' or '.local' in '${zed_url}' or '.local' in '${glue_url}' or '.local' in '${bapi_url}'
+        ${rc}    ${output}=    Run And Return RC And Output    cd .. && APPLICATION_STORE=DE docker/sdk console price-product-schedule:apply
+        Log    ${output}
+        Should Be Equal As Integers    ${rc}    0
+        Sleep    ${timeout}
+        ${rc}    ${output}=    Run And Return RC And Output    cd .. && APPLICATION_STORE=AT docker/sdk console price-product-schedule:apply
+        Log    ${output}
+        Should Be Equal As Integers    ${rc}    0
+        Sleep    ${timeout}
+    END  
