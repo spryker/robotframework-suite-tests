@@ -58,6 +58,7 @@ Yves: change price for the product in the quote request with sku xxx on:
     IF    '${use_default_price_state}'=='True'    Click    xpath=//article[@data-qa='component quote-request-cart-item']//div[contains(@class,'quote-request-cart-item__column--content')][contains(.,'${sku}')]/ancestor::article//*[contains(@class,'quote-request-cart-item__column--total')]//span[@data-qa='component checkbox use_default_price']    delay=1s
     Wait Until Element Is Visible    xpath=//article[@data-qa='component quote-request-cart-item']//div[contains(@class,'quote-request-cart-item__column--content')][contains(.,'${sku}')]/ancestor::article//*[contains(@class,'quote-request-cart-item__column--total')]//input[@type='text']//ancestor::div[contains(@id,'quote_request_agent_form')]
     Type Text    xpath=//article[@data-qa='component quote-request-cart-item']//div[contains(@class,'quote-request-cart-item__column--content')][contains(.,'${sku}')]/ancestor::article//*[contains(@class,'quote-request-cart-item__column--total')]//input[@type='text']    ${priceToSet}
+    Take Screenshot    EMBED    fullPage=True
 
 Yves: add the following note to the quote request:
     [Arguments]    ${noteToSet}

@@ -513,7 +513,9 @@ Request_for_Quote
     Yves: view quote request with reference:    ${lastCreatedRfQ}
     Yves: 'Quote Request Details' page is displayed
     Yves: click 'Revise' button on the 'Quote Request Details' page
+    Take Screenshot    EMBED    fullPage=True
     Yves: change price for the product in the quote request with sku xxx on:    403125    500
+    Take Screenshot    EMBED    fullPage=True
     Yves: click 'Send to Customer' button on the 'Quote Request Details' page
     Yves: logout on Yves as a customer
     Yves: go to the 'Home' page
