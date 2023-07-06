@@ -11,9 +11,10 @@ Resource    order_history_steps.robot
 *** Keywords ***
 Yves: add comment on cart:
     [Arguments]    ${comment}
-    Click    ${shopping_cart_write_comment_placeholder}
+    Click    ${shopping_cart_write_comment_placeholder}    delay=0.5s
     Type Text    ${shopping_cart_write_comment_placeholder}    ${comment}
-    Click    ${shopping_cart_add_comment_button}
+    Keyboard Key    press    Enter
+    Click    ${shopping_cart_add_comment_button}    delay=0.5s
 
 Yves: check comments are visible or not in cart:
     [Arguments]    ${condition}    @{comments}    
@@ -54,19 +55,19 @@ Zed: check comment appears at order detailed page in zed:
 
 Yves: edit comment on cart:
     [Arguments]    ${comment_to_set}
-    Click    ${shopping_cart_edit_comment_button}
-    Click    ${shopping_cart_edit_comment_placeholder}
+    Click    ${shopping_cart_edit_comment_button}    delay=0.5s
+    Click    ${shopping_cart_edit_comment_placeholder}    delay=0.5s
     Clear Text    ${shopping_cart_edit_comment_placeholder}  
-    Keyboard Key    press    Tab
+    Keyboard Key    press    Enter
     Input Text    ${shopping_cart_edit_comment_placeholder}    ${comment_to_set}
-    Click    ${shopping_cart_update_comment_button}
+    Click    ${shopping_cart_update_comment_button}    delay=0.5s
 
 Yves: delete comment on cart
-    Click    ${shopping_cart_remove_comment_button} 
+    Click    ${shopping_cart_remove_comment_button}    delay=0.5s 
     Page Should Not Contain Element    ${shopping_cart_remove_comment_button}
 
 Yves: add comment on order in order detail page:
     [Arguments]    ${comment}
-    Click    ${order_details_page_add_comments_textbox}
+    Click    ${order_details_page_add_comments_textbox}    delay=0.5s
     Type Text    ${order_details_page_add_comments_textbox}    ${comment}
-    Click    ${add_comment_button_order_details_page}
+    Click    ${add_comment_button_order_details_page}    delay=0.5s
