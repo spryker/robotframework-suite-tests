@@ -928,7 +928,7 @@ Refunds
     Zed: grand total for the order equals:    ${lastPlacedOrder}    €1,559.56
     Zed: go to my order page:    ${lastPlacedOrder}
     Zed: trigger matching state of xxx merchant's shipment:    1    Ship
-    Zed: trigger matching state of xxx merchant's shipment:    1    deliver
+    Zed: trigger matching state of xxx merchant's shipment:    1    Deliver
     Zed: trigger matching state of xxx merchant's shipment:    1    Refund
     Zed: grand total for the order equals:    ${lastPlacedOrder}    €0.00
     [Teardown]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
