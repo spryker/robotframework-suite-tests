@@ -205,7 +205,7 @@ Yves: go to newly created page by URL:
             Exit For Loop
         END
         IF    ${index} == ${iterations}-1
-            Take Screenshot
+            Take Screenshot    EMBED    fullPage=True
             Fail    Newly created URL is not accessible (404 error), check P&S
         END
     END
@@ -222,7 +222,7 @@ Yves: go to newly created page by URL on AT store:
             Exit For Loop
         END
         IF    ${index} == ${iterations}-1
-            Take Screenshot
+            Take Screenshot    EMBED    fullPage=True
             Fail    Newly created CMS page is not accessible (404 error), check P&S
         END
     END
@@ -239,7 +239,7 @@ Yves: go to URL and refresh until 404 occurs:
             Exit For Loop
         END
         IF    ${index} == ${iterations}-1
-            Take Screenshot
+            Take Screenshot    EMBED    fullPage=True
             Fail    URL is still accessible but should not, check P&S
         END
     END
@@ -376,8 +376,9 @@ Yves: try reloading page if element is/not appear:
         ELSE
             Exit For Loop
         END
+        
         IF    ${index} == ${iterations}-1
-            Take Screenshot
+            Take Screenshot    EMBED    fullPage=True
             Fail    expected element state is not reached
         END
     END

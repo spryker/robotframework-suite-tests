@@ -17,7 +17,7 @@ MP: wait for order to appear:
         END
     END
     IF    ${index} == ${tries}-1
-        Take Screenshot
+        Take Screenshot    EMBED    fullPage=True
         Fail    'Timeout exceeded, merchant order was not created'
     END
      
