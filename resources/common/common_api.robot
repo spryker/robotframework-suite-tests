@@ -603,6 +603,24 @@ Response body parameter should be:
     Log    ${data} 
     Should Be Equal    ${data}    ${expected_value}    Response data in: '${json_path}', does not equal expected: '${expected_value}', actual is: '${data}'.
 
+Response body case insensative parameter should be:
+    [Documentation]    This keyword checks that the response saved  in ``${response_body}`` test variable contsains the speficied parameter ``${json_path}`` with he specified value ``${expected_value}``.
+    ...
+    ...    *Example:*
+    ...
+    ...    ``Response body parameter should be:    [data][0][type]    abstract-product-availabilities``
+    [Arguments]    ${json_path}    ${expected_value}
+    ${data}=    Get Value From Json    ${response_body}    ${json_path}
+    ${data}=    Convert To String    ${data}
+    ${data}=    Replace String    ${data}    '   ${EMPTY}
+    ${data}=    Replace String    ${data}    [   ${EMPTY}
+    ${data}=    Replace String    ${data}    ]   ${EMPTY}
+    ${data}=    Convert To Lower Case    ${data}
+    ${expected_value}=    Convert To Lower Case    ${expected_value}
+    Log    ${data} 
+    Log    ${expected_value}
+    Should Be Equal    ${data}    ${expected_value}    Response data in: '${json_path}', does not equal expected: '${expected_value}', actual is: '${data}'.
+
 Perform arithmetical calculation with two arguments:
     [Documentation]    This keyword calculates ``${expected_value1}``, ``${expected_value2}`` and saves  in ``${variable_name}`` variable.
     ...
