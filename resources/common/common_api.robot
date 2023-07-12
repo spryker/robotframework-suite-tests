@@ -589,7 +589,7 @@ Response body should contain:
     Should Contain    ${response_body}    ${value}    Response body does not contain expected: '${value}'.
 
 Response body parameter should be:
-    [Documentation]    This keyword checks that the response saved  in ``${response_body}`` test variable contsains the speficied parameter ``${json_path}`` with he specified value ``${expected_value}``.
+    [Documentation]    This keyword checks that the response saved  in ``${response_body}`` test variable contsains the speficied parameter ``${json_path}`` with the specified value ``${expected_value}``.
     ...
     ...    *Example:*
     ...
@@ -603,12 +603,12 @@ Response body parameter should be:
     Log    ${data} 
     Should Be Equal    ${data}    ${expected_value}    Response data in: '${json_path}', does not equal expected: '${expected_value}', actual is: '${data}'.
 
-Response body case insensative parameter should be:
-    [Documentation]    This keyword checks that the response saved  in ``${response_body}`` test variable contsains the speficied parameter ``${json_path}`` with he specified value ``${expected_value}``.
+Response body case-insensitive parameter should be:
+    [Documentation]    This keyword checks that the response saved in ``${response_body}`` test variable contains the specified parameter ``${json_path}`` with the specified case-insensitive value ``${expected_value}``.
     ...
     ...    *Example:*
     ...
-    ...    ``Response body parameter should be:    [data][0][type]    abstract-product-availabilities``
+    ...    ``Response body case-insensitive parameter should be:    [data][0][type]    Abstract-Product-Availabilities``
     [Arguments]    ${json_path}    ${expected_value}
     ${data}=    Get Value From Json    ${response_body}    ${json_path}
     ${data}=    Convert To String    ${data}

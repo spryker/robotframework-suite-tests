@@ -169,10 +169,10 @@ Get_order_by_order_id
     And Response body parameter should be greater than:    [data][attributes][expenses][0][idSalesExpense]    0
     #payments
     And Response body parameter should be greater than:    [data][attributes][payments][0][amount]    0
-    And Response body case insensative parameter should be:
+    And Response body case-insensitive parameter should be:
     ...    [data][attributes][payments][0][paymentProvider]
     ...    ${payment_provider_name}
-    And Response body case insensative parameter should be:    [data][attributes][payments][0][paymentMethod]    ${payment_method_name}
+    And Response body case-insensitive parameter should be:    [data][attributes][payments][0][paymentMethod]    ${payment_method_name}
     #shipments
     And Response body parameter should be:
     ...    [data][attributes][shipments][0][shipmentMethodName]

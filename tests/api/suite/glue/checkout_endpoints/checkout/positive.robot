@@ -162,7 +162,7 @@ Create_order_include_orders
     #payments
     And Response body parameter should be greater than:    [included][0][attributes][payments][0][amount]    0
     And Response body parameter should be:    [included][0][attributes][payments][0][paymentProvider]    ${payment.provider_name_1}
-    And Response body case insensative parameter should be:    [included][0][attributes][payments][0][paymentMethod]    ${payment.method_name}
+    And Response body case-insensitive parameter should be:    [included][0][attributes][payments][0][paymentMethod]    ${payment.method_name}
     #shipments
     And Response body parameter should be:    [included][0][attributes][shipments][0][shipmentMethodName]    ${shipment.method_name_1}
     And Response body parameter should be:    [included][0][attributes][shipments][0][carrierName]    ${shipment.carrier_name}
@@ -537,7 +537,7 @@ Create_order_with_configurable_bundle_item
     #payments
     And Response body parameter should be greater than:    [included][0][attributes][payments][0][amount]    0
     And Response body parameter should be:    [included][0][attributes][payments][0][paymentProvider]    ${payment.provider_name_1}
-    And Response body case insensative parameter should be:    [included][0][attributes][payments][0][paymentMethod]    ${payment.method_name}
+    And Response body case-insensitive parameter should be:    [included][0][attributes][payments][0][paymentMethod]    ${payment.method_name}
     #shipments
     And Response body parameter should be:    [included][0][attributes][shipments][0][shipmentMethodName]    ${shipment.method_name_1}
     And Response body parameter should be:    [included][0][attributes][shipments][0][carrierName]    ${shipment.carrier_name}
@@ -687,10 +687,10 @@ Create_checkout_with_gift_card
     #payments
     And Response body parameter should be:    [included][0][attributes][payments][0][amount]    ${gift_card.amount}
     And Response body parameter should be:    [included][0][attributes][payments][0][paymentProvider]    ${gift_card.paymentProvider}
-    And Response body case insensative parameter should be:    [included][0][attributes][payments][0][paymentMethod]    ${gift_card.paymentMethod}
+    And Response body case-insensitive parameter should be:    [included][0][attributes][payments][0][paymentMethod]    ${gift_card.paymentMethod}
     And Response body parameter should be greater than:    [included][0][attributes][payments][1][amount]    0
     And Response body parameter should be:    [included][0][attributes][payments][1][paymentProvider]    ${payment.provider_name_1}
-    And Response body case insensative parameter should be:    [included][0][attributes][payments][1][paymentMethod]    ${payment.method_name}
+    And Response body case-insensitive parameter should be:    [included][0][attributes][payments][1][paymentMethod]    ${payment.method_name}
     #shipments
     And Response body parameter should be:    [included][0][attributes][shipments][0][shipmentMethodName]    ${shipment.method_name_1}
     And Response body parameter should be:    [included][0][attributes][shipments][0][carrierName]    ${shipment.carrier_name}
@@ -845,11 +845,11 @@ Create_checkout_with_gift_card_when_gift_amount_partially_used
     #payments
     And Response body parameter should be:    [included][0][attributes][payments][0][amount]    ${gift_card.amount}
     And Response body parameter should be:    [included][0][attributes][payments][0][paymentProvider]    ${gift_card.paymentProvider}
-    And Response body case insensative parameter should be:    [included][0][attributes][payments][0][paymentMethod]    ${gift_card.paymentMethod}
+    And Response body case-insensitive parameter should be:    [included][0][attributes][payments][0][paymentMethod]    ${gift_card.paymentMethod}
     
     And Response body parameter should be greater than:    [included][0][attributes][payments][1][amount]    0
     And Response body parameter should be:    [included][0][attributes][payments][1][paymentProvider]    ${payment.provider_name_1}
-    And Response body case insensative parameter should be:    [included][0][attributes][payments][1][paymentMethod]    ${payment.method_name}
+    And Response body case-insensitive parameter should be:    [included][0][attributes][payments][1][paymentMethod]    ${payment.method_name}
     #shipments
     And Response body parameter should be:    [included][0][attributes][shipments][0][shipmentMethodName]    ${shipment.method_name_1}
     And Response body parameter should be:    [included][0][attributes][shipments][0][carrierName]    ${shipment.carrier_name}
@@ -997,7 +997,7 @@ Create_order_with_configurable_product
     #payments
     And Response body parameter should be greater than:    [included][0][attributes][payments][0][amount]    0
     And Response body parameter should be:    [included][0][attributes][payments][0][paymentProvider]    ${payment.provider_name_1}
-    And Response body case insensative parameter should be:    [included][0][attributes][payments][0][paymentMethod]    ${payment.method_name}
+    And Response body case-insensitive parameter should be:    [included][0][attributes][payments][0][paymentMethod]    ${payment.method_name}
     #shipments
     And Response body parameter should be:    [included][0][attributes][shipments][0][shipmentMethodName]    ${shipment.method_name_1}
     And Response body parameter should be:    [included][0][attributes][shipments][0][carrierName]    ${shipment.carrier_name}
