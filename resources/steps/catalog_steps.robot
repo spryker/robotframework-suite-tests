@@ -129,3 +129,17 @@ Yves: select product color:
     Mouse Over    xpath=//product-item[@data-qa='component product-item'][1]//*[contains(@class,'item__name')]
     Wait Until Element Is Visible    xpath=//product-item[@data-qa='component product-item'][1]//product-item-color-selector
     Mouse Over    xpath=//product-item[@data-qa='component product-item'][1]//product-item-color-selector//span[contains(@class,'tooltip')][contains(text(),'${colour}')]/ancestor::button
+
+Yves: 1st product card in catalog should have default price:  
+    [Arguments]    ${price}
+    Element Should Be Visible    xpath=//product-item[@data-qa='component product-item'][1]//span[contains(@class,'default-price')]    message=Product with default price is not visible on the catalog
+    ${actual_price}=    Set Variable    ${EMPTY}
+    ${actual_price}=    Get Text    xpath=//product-item[@data-qa='component product-item'][1]//span[contains(@class,'default-price')]
+    Should Contain    ${actual_price}    ${price}    Actual default price ${actual_price} not same as expected ${price}
+
+Yves: 1st product card in catalog should have original price:  
+    [Arguments]    ${price}
+    Element Should Be Visible    xpath=//product-item[@data-qa='component product-item'][1]//span[contains(@class,'original-price')]    message=Product with original price is not visible on the catalog
+    ${actual_price}=    Set Variable    ${EMPTY}
+    ${actual_price}=    Get Text    xpath=//product-item[@data-qa='component product-item'][1]//span[contains(@class,'original-price')]
+    Should Contain    ${actual_price}    ${price}    Actual original price ${actual_price} not same as expected ${price}

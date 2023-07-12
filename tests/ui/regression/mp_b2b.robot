@@ -801,7 +801,7 @@ Resource    ../../../resources/steps/configurable_product_steps.robot
 #     ...    AND    Zed: change product stock:    M21777    421538    true    10
 #     Zed: login on Zed with provided credentials:    ${zed_admin_email}
 #     Zed: go to second navigation item level:    Merchandising    Discount
-#     Zed: create a discount and activate it:    voucher    Percentage    5    sku = '*'    test${random}    discountName=Voucher Code 5% ${random}
+    #  Zed: create a discount and activate it:    voucher    Percentage    5    sku = '*'    test${random}    discountName=Voucher Code 5% ${random}
 #     Zed: create a discount and activate it:    cart rule    Percentage    10    sku = '*'    discountName=Cart Rule 10% ${random}
 #     Zed: create a discount and activate it:    cart rule    Percentage    100    discountName=Promotional Product 100% ${random}    promotionalProductDiscount=True    promotionalProductAbstractSku=M29503    promotionalProductQuantity=2
 #     Trigger p&s
@@ -2834,16 +2834,22 @@ Resource    ../../../resources/steps/configurable_product_steps.robot
 #     [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
 #     ...    AND    Zed: delete Zed user with the following email:    agent_config+${random}@spryker.com
         
-
+ 
 СRUD_Shedule_Prices_via_UI
     [Setup]    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: update abstract product scheduled prices:
     ...    || abstract_sku | store | currency | net price | gross price | price type | start from | hours from | finish at  | hours to ||
-    ...    || M859         | DE    | EUR      | 100       | 80          | DEFAULT    | 2023-07-03 | 03         | 2228-07-04 | 06       ||
+    ...    || M58035       | DE    | EUR      | 80        | 100         | DEFAULT    | 2023-07-03 | 03         | 2228-07-04 | 06       ||
+    Zed: update concrete product scheduled prices:
+    ...    || abstract_sku | concrete_sku | store | currency | net price | gross price | price type | start from | hours from | finish at  | hours to ||
+    ...    || M58035       | 102124       | AT    | CHF      | 110       | 120         | ORIGINAL   | 2023-07-03 | 03         | 2040-07-04 | 06       ||
+    Zed: update concrete product scheduled prices:
+    ...    || abstract_sku | concrete_sku | store | currency | net price | gross price | price type | start from | hours from | finish at  | hours to ||
+    ...    || M58035       | 102124       | DE    | CHF      | 200       | 250         | DEFAULT    | 2030-07-03 | 03         | 2040-07-04 | 06       ||
     # Trigger events for schedule prices
     # Trigger p&s
-    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
-    Yves: perform search by:    M21691
-    Yves: product with name in the catalog should have price:   Wolf steel cabinet - wide storage cabinet, with base plinth    80
-    Yves: go to PDP of the product with sku:    M21691
-    Yves: product price on the PDP should be:    80
+    # Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
+    # Yves: perform search by:    M58035
+    # Yves: 1st product card in catalog should have default price:    80
+    # Yves: go to PDP of the product with sku:    M58035
+    # Yves: product price on the PDP should be:    80
