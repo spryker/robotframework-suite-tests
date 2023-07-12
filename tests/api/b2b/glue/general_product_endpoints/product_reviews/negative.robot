@@ -33,13 +33,11 @@ Get_reviews_with_missing_abstract_product
     And Response should return error message:    Abstract product sku is not specified.
 
 Get_review_by_id_with_missing_abstract_product
-    [Documentation]    not impemented yet - will be covered as part of https://spryker.aha.io/features/REVIEW-2
-    [Tags]    skip-due-to-issue
     When I send a GET request:    /abstract-products//product-reviews/78
     Then Response status code should be:    400
     And Response reason should be:    Bad Request
-    And Response should return error code:    311
-    And Response should return error message:    Abstract product sku is not specified.
+    And Response should return error code:    301
+    And Response should return error message:    Abstract product is not found.
 
 Get_a_reviews_with_non_existent_abstract_product
    [Documentation]    not impemented yet - will be covered as part of https://spryker.aha.io/features/REVIEW-2
