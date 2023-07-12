@@ -8,18 +8,19 @@ Resource    ../../../../../../resources/common/common_api.robot
 
 ENABLER
     TestSetup
-    
+
 Get_a_review_with_non_existent_review_id
     When I send a GET request:    /abstract-products/${abstract_product.product_with_reviews.sku}/product-reviews/fake
-    Then Response status code should be:    501
-    And Response reason should be:    Not Implemented
-    And Response should return error message:    Resource is not available.
+    Then Response status code should be:    404
+    And Response reason should be:    Not Found
+    And Response should return error code:    302
+    And Response should return error message:    Product review is not found.
 
 
 
 Get_a_reviews_with_non_existent_abstract_product
     [Documentation]   # will be covered by a separate feature https://spryker.aha.io/features/REVIEW-2, bug CC-16486
-    [Tags]    skip-due-to-issue  
+    [Tags]    skip-due-to-issue
     When I send a GET request:    /abstract-products/fake/product-reviews/78
     Then Response status code should be:    404
     And Response reason should be:    Not Found
