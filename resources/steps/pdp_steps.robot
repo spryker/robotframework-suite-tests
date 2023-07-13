@@ -46,8 +46,7 @@ Yves: change quantity on PDP:
     [Arguments]    ${qtyToSet}
     IF    '${env}' in ['ui_b2b','ui_mp_b2b']
         Type Text    ${pdp_quantity_input_filed}[${env}]    ${qtyToSet}
-        Click    ${pdp_price_element_locator}
-        Click    ${pdp_product_name}  
+        Keyboard Key    press    Enter 
         Sleep    1s
     ELSE
         Add/Edit element attribute with JavaScript:    ${pdp_quantity_input_filed}[${env}]    value    ${qtyToSet}
@@ -126,7 +125,7 @@ Yves: product price on the PDP should be:
     EXCEPT    
         Sleep    ${browser_timeout}
         Reload
-        Take Screenshot
+        Take Screenshot    EMBED    fullPage=True
         ${actualProductPrice}=    Get Text    ${pdp_price_element_locator}
         Should Be Equal    ${expectedProductPrice}    ${actualProductPrice}    
     END

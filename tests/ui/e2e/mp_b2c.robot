@@ -499,7 +499,7 @@ Return_Management
     MP: wait for order to appear:    ${lastPlacedOrder}--${merchant_spryker_reference}
     MP: click on a table row that contains:    ${lastPlacedOrder}--${merchant_spryker_reference}
     MP: update order state using header button:    Execute return
-    MP: order states on drawer should contain:    returned
+    MP: order states on drawer should contain:    Returned
     MP: order states on drawer should contain:    Shipped   
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: create a return for the following order and product in it:    ${lastPlacedOrder}    012_25904598
@@ -646,12 +646,12 @@ Refunds
     Zed: trigger matching state of xxx merchant's shipment:    1    send to distribution
     Zed: trigger matching state of xxx merchant's shipment:    1    confirm at center
     Zed: trigger matching state of order item inside xxx shipment:    008_30692992    Ship
-    Zed: trigger matching state of order item inside xxx shipment:    008_30692992    deliver
+    Zed: trigger matching state of order item inside xxx shipment:    008_30692992    Deliver
     Zed: trigger matching state of order item inside xxx shipment:    008_30692992    Refund
     Zed: grand total for the order equals:    ${lastPlacedOrder}    €265.03
     Zed: go to my order page:    ${lastPlacedOrder}
     Zed: trigger matching state of xxx merchant's shipment:    1    Ship
-    Zed: trigger matching state of xxx merchant's shipment:    1    deliver
+    Zed: trigger matching state of xxx merchant's shipment:    1    Deliver
     Zed: trigger matching state of xxx merchant's shipment:    1    Refund
     Zed: grand total for the order equals:    ${lastPlacedOrder}    €0.00
     [Teardown]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
@@ -768,7 +768,7 @@ Merchant_Profile_Set_to_Offline_from_MP
     ...    AND    Yves: go to PDP of the product with sku:    ${second_product_with_multiple_offers_abstract_sku}
     ...    AND    Yves: merchant is (not) displaying in Sold By section of PDP:    Video King    true
     ...    AND    Yves: go to URL:    en/merchant/video-king
-    ...    AND    Yves: try reloading page if element is/not appear:    ${merchant_profile_main_content_locator}    true
+    ...    AND    Yves: go to newly created page by URL:    url=en/merchant/video-king    delay=5s    iterations=26
 
 Merchant_Profile_Set_to_Inactive_from_Backoffice
     [Documentation]    Checks that backoffice admin is able to deactivate merchant and then it's profile, products and offers won't be displayed on Yves
@@ -1059,11 +1059,11 @@ Fulfill_Order_from_Merchant_Portal
     MP: update order state using header button:    Ship
     MP: order states on drawer should contain:    Shipped 
     MP: switch to the tab:    Items
-    MP: change order item state on:    041_25904691    deliver
+    MP: change order item state on:    041_25904691    Deliver
     MP: switch to the tab:    Items
     MP: order item state should be:    104_30727010    shipped
     MP: order item state should be:    041_25904691    delivered
-    MP: update order state using header button:    deliver
+    MP: update order state using header button:    Deliver
     MP: order states on drawer should contain:    Delivered
     MP: switch to the tab:    Items
     MP: order item state should be:    104_30727010    delivered
@@ -1700,7 +1700,7 @@ Minimum_Order_Value
     Yves: 'Thank you' page is displayed
     Yves: get the last placed order ID by current customer
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    Zed: grand total for the order equals:    ${lastPlacedOrder}    €179.63
+    Zed: grand total for the order equals:    ${lastPlacedOrder}    €153.38
     [Teardown]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: activate following discounts from Overview page:    Free Acer Notebook    Tu & Wed $5 off 5 or more    10% off $100+    Free smartphone    20% off cameras    Free Acer M2610    Free standard delivery    10% off Intel Core    5% off white    Tu & Wed €5 off 5 or more    10% off minimum order
     ...    AND    Zed: change global threshold settings:
@@ -2323,7 +2323,7 @@ Configurable_Product_OMS
     Zed: trigger matching state of xxx merchant's shipment:    1    send to distribution
     Zed: trigger matching state of xxx merchant's shipment:    1    confirm at center
     Zed: trigger matching state of xxx order item inside xxx shipment:    Ship    2
-    Zed: trigger matching state of xxx order item inside xxx shipment:    deliver    2
+    Zed: trigger matching state of xxx order item inside xxx shipment:    Deliver    2
     Zed: trigger matching state of xxx order item inside xxx shipment:    Refund    2
     Zed: grand total for the order equals:    ${lastPlacedOrder}    €37.50
     Zed: go to my order page:    ${lastPlacedOrder}
@@ -2341,7 +2341,7 @@ Configurable_Product_OMS
     MP: wait for order to appear:    ${lastPlacedOrder}--${merchant_spryker_reference}
     MP: click on a table row that contains:    ${lastPlacedOrder}--${merchant_spryker_reference}
     MP: update order state using header button:    Execute return
-    MP: order states on drawer should contain:    returned
+    MP: order states on drawer should contain:    Returned
     MP: order states on drawer should contain:    Refunded  
     Yves: go to the 'Home' page
     Yves: login on Yves with provided credentials:    ${yves_user_email}
