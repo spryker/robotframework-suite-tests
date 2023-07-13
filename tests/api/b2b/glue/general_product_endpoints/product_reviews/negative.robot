@@ -43,7 +43,7 @@ Get_a_reviews_with_non_existent_abstract_product
     When I send a GET request:    /abstract-products/fake/product-reviews/78
     Then Response status code should be:    404
     And Response reason should be:    Not Found
-And Response should return error code:    301
+    And Response should return error code:    301
     And Response should return error message:    Abstract product is not found.
 
 Create_a_product_review_without_token
