@@ -479,3 +479,5 @@ Yves: checkout is blocked with the following message:
             Yves: flash message should be shown:    error    ${expectedMessage}
         END
     END
+
+

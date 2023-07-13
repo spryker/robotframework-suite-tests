@@ -143,3 +143,5 @@ Yves: 1st product card in catalog should have original price:
     ${actual_price}=    Set Variable    ${EMPTY}
     ${actual_price}=    Get Text    xpath=//product-item[@data-qa='component product-item'][1]//span[contains(@class,'original-price')]
     Should Contain    ${actual_price}    ${price}    Actual original price ${actual_price} not same as expected ${price}
+
+    

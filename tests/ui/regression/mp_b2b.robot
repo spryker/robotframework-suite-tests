@@ -2837,19 +2837,22 @@ Resource    ../../../resources/steps/configurable_product_steps.robot
  
 СRUD_Shedule_Prices_via_UI
     [Setup]    Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    # Zed: update abstract product scheduled prices:
-    # ...    || abstract_sku | store | currency | net price | gross price | price type | start from | hours from | finish at  | hours to ||
-    # ...    || M58035       | DE    | EUR      | 80        | 100         | DEFAULT    | 2023-07-03 | 03         | 2228-07-04 | 06       ||
-    # Zed: update concrete product scheduled prices:
-    # ...    || abstract_sku | concrete_sku | store | currency | net price | gross price | price type | start from | hours from | finish at  | hours to ||
-    # ...    || M58035       | 102124       | AT    | CHF      | 110       | 120         | ORIGINAL   | 2023-07-03 | 03         | 2040-07-04 | 06       ||
+    Zed: update abstract product scheduled prices:
+    ...    || abstract_sku | store | currency | net price | gross price | price type | start from | hours from | finish at  | hours to ||
+    ...    || M58035       | DE    | EUR      | 80        | 100         | DEFAULT    | 2022-07-03 | 045        | 2029-07-04 | 07       ||
     Zed: update concrete product scheduled prices:
     ...    || abstract_sku | concrete_sku | store | currency | net price | gross price | price type | start from | hours from | finish at  | hours to ||
-    ...    || M58035       | 102124       | DE    | CHF      | 200       | 250         | DEFAULT    | 2030-07-03 | 03         | 2040-07-04 | 06       ||
+    ...    || M58035       | 102124       | AT    | CHF      | 110       | 120         | ORIGINAL   | 2023-07-03 | 06         | 2040-07-04 | 08       ||
+    Zed: update concrete product scheduled prices:
+    ...    || abstract_sku | concrete_sku | store | currency | net price | gross price | price type | start from | hours from | finish at  | hours to ||
+    ...    || M58035       | 102124       | DE    | CHF      | 200       | 250         | DEFAULT    | 2030-07-03 | 09         | 2040-07-04 | 09       ||
     # Trigger events for schedule prices
     # Trigger p&s
-    # Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
-    # Yves: perform search by:    M58035
-    # Yves: 1st product card in catalog should have default price:    80
-    # Yves: go to PDP of the product with sku:    M58035
-    # Yves: product price on the PDP should be:    80
+    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
+    Yves: perform search by:    M58035
+    Yves: 1st product card in catalog should have default price:    100
+    Yves: go to PDP of the product with sku:    M58035
+    Yves: product price on the PDP should be:    100
+    Yves: change variant of the product on PDP on:    500 x 930 x 400
+    Yves: change currency on:    CHF
+    Yves: product price on the PDP should be:    250 

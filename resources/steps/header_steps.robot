@@ -104,3 +104,17 @@ Yves: '${headerItem}' widget is shown
             Wait Until Element Is Visible    ${agent_quote_requests_widget}
             Page Should Contain Element    ${agent_quote_requests_widget}
     END
+
+
+Yves: change currency on:
+    [Arguments]    ${currency}
+    Click    ${currency_switcher_header_menu_item}[${env}]
+    ${currency}=    Convert To Lower Case   ${currency}
+    IF    '${currency}' == 'chf'
+        Click    ${currency_switcher_CHF_curency}
+    ELSE
+        Click    ${currency_switcher_EUR_curency}
+    END
+
+
+

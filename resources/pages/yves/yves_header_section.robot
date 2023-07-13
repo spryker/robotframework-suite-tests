@@ -6,7 +6,9 @@ ${user_navigation_menu_login_button}    xpath=//a[@class='user-block__button but
 ${company_name_icon_header_menu_item}    xpath=//div[@class='header__top']//a[contains(@class,'navigation-top__company')]
 ${company_account_navigation_fly_out_header_menu_item}    xpath=//div[@class='header__top']//a[contains(@class,'navigation-top__company')]/..//nav[contains(@class,'navigation-list')]/ul
 ${price_mode_switcher_header_menu_item}    xpath=//*[@data-qa='component navigation-top']//select[@name='price-mode']
-&{currency_switcher_header_menu_item}    ui_b2b=xpath=//*[@data-qa='component navigation-top']//select[@name='currency-iso-code']    ui_b2c=xpath=//div[@class='header__select']//select[@name='currency-iso-code']    ui_mp_b2b=xpath=//*[@data-qa='component navigation-top']//select[@name='currency-iso-code']    ui_mp_b2c=xpath=//div[@class='header__select']//select[@name='currency-iso-code']
+&{currency_switcher_header_menu_item}    ui_b2b=xpath=//*[@data-qa='component navigation-top']//select[@name='currency-iso-code']    ui_b2c=xpath=//div[@class='header__select']//select[@name='currency-iso-code']    ui_mp_b2b=xpath=//header//custom-select[contains(@data-qa,'currency-iso-code')]//span[contains(@id,'select2-currency-iso-code')]    ui_mp_b2c=xpath=//div[@class='header__select']//select[@name='currency-iso-code']
+${currency_switcher_CHF_curency}    xpath=//li[contains(@id,'select2-currency-iso-code')][contains(@id,'CHF')]
+${currency_switcher_EUR_curency}    xpath=//li[contains(@id,'select2-currency-iso-code')][contains(@id,'EUR')]
 ${language_switcher_header_menu_item}    xpath=//*[@class='header__top']//*[@data-qa='component language-switcher']//select
 ${quick_order_icon_header_menu_item}    xpath=//*[contains(@class,'icon--quick-order')]/ancestor::a
 ${shopping_list_icon_header_menu_item}    xpath=//*[contains(@class,'icon--header-shopping-list')]/ancestor::a
