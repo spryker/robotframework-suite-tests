@@ -2837,12 +2837,12 @@ Resource    ../../../resources/steps/configurable_product_steps.robot
  
 СRUD_Shedule_Prices_via_UI
     [Setup]    Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    Zed: update abstract product scheduled prices:
-    ...    || abstract_sku | store | currency | net price | gross price | price type | start from | hours from | finish at  | hours to ||
-    ...    || M58035       | DE    | EUR      | 80        | 100         | DEFAULT    | 2023-07-03 | 03         | 2228-07-04 | 06       ||
-    Zed: update concrete product scheduled prices:
-    ...    || abstract_sku | concrete_sku | store | currency | net price | gross price | price type | start from | hours from | finish at  | hours to ||
-    ...    || M58035       | 102124       | AT    | CHF      | 110       | 120         | ORIGINAL   | 2023-07-03 | 03         | 2040-07-04 | 06       ||
+    # Zed: update abstract product scheduled prices:
+    # ...    || abstract_sku | store | currency | net price | gross price | price type | start from | hours from | finish at  | hours to ||
+    # ...    || M58035       | DE    | EUR      | 80        | 100         | DEFAULT    | 2023-07-03 | 03         | 2228-07-04 | 06       ||
+    # Zed: update concrete product scheduled prices:
+    # ...    || abstract_sku | concrete_sku | store | currency | net price | gross price | price type | start from | hours from | finish at  | hours to ||
+    # ...    || M58035       | 102124       | AT    | CHF      | 110       | 120         | ORIGINAL   | 2023-07-03 | 03         | 2040-07-04 | 06       ||
     Zed: update concrete product scheduled prices:
     ...    || abstract_sku | concrete_sku | store | currency | net price | gross price | price type | start from | hours from | finish at  | hours to ||
     ...    || M58035       | 102124       | DE    | CHF      | 200       | 250         | DEFAULT    | 2030-07-03 | 03         | 2040-07-04 | 06       ||

@@ -265,13 +265,13 @@ Zed: update concrete product scheduled prices:
             Select From List By Label    ${zed_scheduled_price_form_price_type_selector}    ${value}
         END
         IF    '${key}'=='start from' and '${value}' != '${EMPTY}'    
-            Add/Edit element attribute with JavaScript:    ${zed_scheduled_price_form_start_from_input}    value    ${value}    
+            Evaluate Javascript    ${None}  document.getElementById("price_product_schedule_activeFrom_date").setAttribute("value", "${value}")   
         END
         IF    '${key}'=='hours from' and '${value}' != '${EMPTY}'    
             Select From List By Label    ${zed_scheduled_price_form_start_time_hours_selector}    ${value}
         END
         IF    '${key}'=='finish at' and '${value}' != '${EMPTY}'    
-            Add/Edit element attribute with JavaScript:    ${zed_scheduled_price_form_finish_at_input}    value    ${value}
+            Evaluate Javascript    ${None}  document.getElementById("price_product_schedule_activeFrom_date").setAttribute("value", "${value}")
         END
         IF    '${key}'=='hours to' and '${value}' != '${EMPTY}'    
             Select From List By Label    ${zed_scheduled_price_form_finish_time_hours_selector}    ${value}
