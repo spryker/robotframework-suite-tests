@@ -21,6 +21,7 @@ Get_list_of_country_with_invalid_token
     And Response reason should be:    Bad Request
     And Response should return error code:    001
     And Response should return error message:    Invalid access token.
+    [Teardown]    Run Keyword    Delete dynamic entity configuration in Database:    country
 
 Get_list_of_country_with_invalid_resource_prefix
     ### SETUP DYNAMIC ENTITY CONFIGURATION ###
@@ -36,6 +37,7 @@ Get_list_of_country_with_invalid_resource_prefix
     And Response body parameter should be:    [0][message]    Not found
     And Response body parameter should be:    [0][status]    404
     And Response body parameter should be:    [0][code]    007
+    [Teardown]    Run Keyword    Delete dynamic entity configuration in Database:    country
 
 Get_list_of_country_with_invalid_resource_name
     ### SETUP DYNAMIC ENTITY CONFIGURATION ###
@@ -51,6 +53,7 @@ Get_list_of_country_with_invalid_resource_name
     And Response body parameter should be:    [0][message]    Not found
     And Response body parameter should be:    [0][status]    404
     And Response body parameter should be:    [0][code]    007
+    [Teardown]    Run Keyword    Delete dynamic entity configuration in Database:    country
 
 Get_list_of_country_with_invalid_id
     ### SETUP DYNAMIC ENTITY CONFIGURATION ###
@@ -80,6 +83,7 @@ Create_country_with_empty_body
     Then Response status code should be:    400
     And Response body parameter should contain:    [0][message]    Invalid or missing data format. Please ensure that the data is provided in the correct format
     And Response body parameter should be:    [0][code]    501
+    [Teardown]    Run Keyword    Delete dynamic entity configuration in Database:    country
 
 Create_country_with_empty_json
     ### SETUP DYNAMIC ENTITY CONFIGURATION ###
@@ -93,6 +97,7 @@ Create_country_with_empty_json
     Then Response status code should be:    400
     And Response body parameter should contain:    [0][message]    Invalid or missing data format. Please ensure that the data is provided in the correct format
     And Response body parameter should be:    [0][code]    501
+    [Teardown]    Run Keyword    Delete dynamic entity configuration in Database:    country
 
 Create_country_with_empty_data
     ### SETUP DYNAMIC ENTITY CONFIGURATION ###
@@ -106,6 +111,7 @@ Create_country_with_empty_data
     Then Response status code should be:    400
     And Response body parameter should contain:    [0][message]    Invalid or missing data format. Please ensure that the data is provided in the correct format
     And Response body parameter should be:    [0][code]    501
+    [Teardown]    Run Keyword    Delete dynamic entity configuration in Database:    country
 
 Create_country_with_invalid_data
     ### SETUP DYNAMIC ENTITY CONFIGURATION ###
@@ -121,6 +127,8 @@ Create_country_with_invalid_data
     And Response body parameter should contain:    [0][message]    The required field must not be empty. Field: iso3_code
     And Response body parameter should be:    [0][code]    509
     And Response body parameter should contain:    [0][status]   400
+    [Teardown]    Run Keywords    Delete dynamic entity configuration in Database:    country
+    ...   AND    Delete country by iso2_code in Database:   XX
 
 Create_country_with_invalid_resource_name
     ### SETUP DYNAMIC ENTITY CONFIGURATION ###
@@ -136,6 +144,8 @@ Create_country_with_invalid_resource_name
     And Response body parameter should contain:    [0][message]    Not found
     And Response body parameter should be:    [0][code]    007
     And Response body parameter should contain:    [0][status]   404
+    [Teardown]    Run Keywords    Delete dynamic entity configuration in Database:    country
+    ...   AND    Delete country by iso2_code in Database:   XX
 
 Create_country_with_invalid_field_value
     ### SETUP DYNAMIC ENTITY CONFIGURATION ###
@@ -158,7 +168,7 @@ Create_country_with_invalid_field_value
     And Response body parameter should be:    [2][code]    508
     And Response body parameter should contain:    [2][status]   400
     [Teardown]    Run Keywords    Delete dynamic entity configuration in Database:    country
-    ...   AND    Delete country by iso2_code in Database:   XX
+    ...   AND    Delete country by iso2_code in Database:   X
 
 Update_country_with_invalid_data
     ### SETUP DYNAMIC ENTITY CONFIGURATION ###
@@ -189,6 +199,9 @@ Update_country_with_invalid_data
     And Response body parameter should contain:    [0][message]    Invalid data value for field: iso2_code, row number: 1. Field rules: max_length: 2, min_length: 2, is_required: 1
     And Response body parameter should be:    [0][code]    508
     And Response body parameter should be:    [0][status]    400
+    [Teardown]    Run Keywords    Delete dynamic entity configuration in Database:    country
+    ...   AND    Delete country by iso2_code in Database:   XA
+    ...   AND    Delete country by iso2_code in Database:   XB
 
 Update_country_collection_with_invalid_data
     ### SETUP DYNAMIC ENTITY CONFIGURATION ###
@@ -214,6 +227,9 @@ Update_country_collection_with_invalid_data
     And Response body parameter should contain:    [1][message]    Invalid data value for field: iso3_code, row number: 2. Field rules: max_length: 3, min_length: 3, is_required: 1
     And Response body parameter should be:    [1][code]    508
     And Response body parameter should be:    [1][status]    400
+    [Teardown]    Run Keywords    Delete dynamic entity configuration in Database:    country
+    ...   AND    Delete country by iso2_code in Database:   XA
+    ...   AND    Delete country by iso2_code in Database:   XB
 
 Update_country_with_invalid_field_type
     ### SETUP DYNAMIC ENTITY CONFIGURATION ###
@@ -237,7 +253,7 @@ Update_country_with_invalid_field_type
     And Response body parameter should be:    [0][code]    507
     And Response body parameter should be:    [0][status]    400
     [Teardown]    Run Keywords    Delete dynamic entity configuration in Database:    country
-    ...   AND    Delete country by iso2_code in Database:   XX
+    ...   AND    Delete country by iso2_code in Database:   XA
     ...   AND    Delete country by iso2_code in Database:   XB
 
 Upsert_with_invalid_id

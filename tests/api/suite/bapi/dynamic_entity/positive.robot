@@ -32,6 +32,7 @@ Get_country_collection
     And Response body parameter should be:    [253][name]    Zambia
     And Response body parameter should be:    [253][postal_code_mandatory]    True
     And Response body parameter should be:    [253][postal_code_regex]    \\\\d{5}
+    [Teardown]    Run Keyword    Delete dynamic entity configuration in Database:    country
 
 Get_country_Collection_with_filter_first_item
     ### SETUP DYNAMIC ENTITY CONFIGURATION ###
@@ -48,6 +49,7 @@ Get_country_Collection_with_filter_first_item
     And Response body parameter should be:    [0][iso2_code]    AC
     And Response body parameter should be:    [0][iso3_code]    ASC
     And Response body parameter should be:    [0][name]    Ascension Island
+    [Teardown]    Run Keyword    Delete dynamic entity configuration in Database:    country
 
 Get_country_collection_with_filter
     ### SETUP DYNAMIC ENTITY CONFIGURATION ###
@@ -66,6 +68,7 @@ Get_country_collection_with_filter
     And Response body parameter should be:    [0][name]    Ukraine
     And Response body parameter should be:    [0][postal_code_mandatory]    True
     And Response body parameter should be:    [0][postal_code_regex]    \\\\d{5}
+    [Teardown]    Run Keyword    Delete dynamic entity configuration in Database:    country
 
 Get_country_collection_with_paginations
     ### SETUP DYNAMIC ENTITY CONFIGURATION ###
@@ -91,6 +94,7 @@ Get_country_collection_with_paginations
     And Response body parameter should be:    [1][name]    Uganda
     And Response body parameter should be:    [1][postal_code_mandatory]    False
     And Response body parameter should be:    [1][postal_code_regex]    None
+    [Teardown]    Run Keyword    Delete dynamic entity configuration in Database:    country
 
 Get_country_collection_with_paginations_out_of_items
     ### SETUP DYNAMIC ENTITY CONFIGURATION ###
@@ -104,6 +108,7 @@ Get_country_collection_with_paginations_out_of_items
     Then Response status code should be:    200
     And Response header parameter should be:    Content-Type    application/json
     And Response should contain the array of a certain size:   $    0
+    [Teardown]    Run Keyword    Delete dynamic entity configuration in Database:    country
 
 
 Get_country_collection_with_short_configuration
