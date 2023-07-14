@@ -251,7 +251,7 @@ Create_order_include_orders
     And Response body parameter should be:
     ...    [included][0][attributes][payments][0][paymentProvider]
     ...    ${payment_provider_name}
-    And Response body parameter should be:
+    And Response body case-insensitive parameter should be:
     ...    [included][0][attributes][payments][0][paymentMethod]
     ...    ${payment_method_name}
     #shipments
@@ -859,7 +859,7 @@ Create_order_with_configurable_product
     # payments
     And Response body parameter should be greater than:    [included][0][attributes][payments][0][amount]    0
     And Response body parameter should be:    [included][0][attributes][payments][0][paymentProvider]    ${payment_provider_name}
-    And Response body parameter should be:    [included][0][attributes][payments][0][paymentMethod]    ${payment_method_name}
+    And Response body case-insensitive parameter should be:    [included][0][attributes][payments][0][paymentMethod]    ${payment_method_name}
     #shipments
     And Response body parameter should be:    [included][0][attributes][shipments][0][shipmentMethodName]    ${shipment_method.name}
     And Response body parameter should be:    [included][0][attributes][shipments][0][carrierName]    ${shipment_method.carrier_name}
