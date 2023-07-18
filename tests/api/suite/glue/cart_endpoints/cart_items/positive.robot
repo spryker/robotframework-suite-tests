@@ -93,6 +93,7 @@ Add_two_items_to_cart_with_included_items_concrete_products_and_abstract_product
 Get_a_cart_with_included_items_and_concrete_products
   [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
    ...    AND    I set Headers:    Authorization=${token}
+   ...    AND    Cleanup all customer carts
    ...    AND    Find or create customer cart
    ...    AND    Cleanup all items in the cart:    ${cart_id}
    ...    AND    I send a POST request:    /carts/${cart_id}/items?include=items    {"data": {"type": "items","attributes": {"sku": "${product_availability.concrete_available_with_stock_and_never_out_of_stock_sku}","quantity": 2}}}
