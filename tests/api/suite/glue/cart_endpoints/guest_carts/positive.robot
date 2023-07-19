@@ -177,20 +177,20 @@ Convert_guest_cart_to_customer_cart
         ...    AND    I set Headers:     X-Anonymous-Customer-Unique-Id=${x_anonymous_customer_unique_id}
         ...    AND    I get access token for the customer:    ${yves_user.email}
         ...    AND    I set Headers:    Authorization=${token}
-    When I send a GET request:    /carts?include=items
+    When I send a GET request:    /carts/${guest_cart_id}?include=items
     Then Response status code should be:    200
     And Response reason should be:    OK
-    And Each array element of array in response should contain nested property with value:    [data]    type    carts
-    And Each array element of array in response should contain property:    [data]    id
-    And Each array element of array in response should contain nested property:    [data]    [attributes]    priceMode
-    And Each array element of array in response should contain nested property:    [data]    [attributes]    currency
-    And Each array element of array in response should contain nested property:    [data]    [attributes]    store
-    And Each array element of array in response should contain nested property with datatype:    [data]    [attributes][totals][expenseTotal]    int
-    And Each array element of array in response should contain nested property with datatype:    [data]    [attributes][totals][discountTotal]    int
-    And Each array element of array in response should contain nested property:    [data]    [attributes]    taxTotal
-    And Each array element of array in response should contain nested property:    [data]    [attributes]    subtotal
-    And Each array element of array in response should contain nested property:    [data]    [attributes]    grandTotal
-    And Each array element of array in response should contain nested property:    [data]    [attributes]    priceToPay
-    And Each array element of array in response should contain nested property with value:    [included]    type    items
-    And Each array element of array in response should contain nested property:    [included]    [attributes]    sku
-    And Each array element of array in response should contain nested property:    [included]    [attributes]    quantity
+    And Response body parameter should be:    [data][type]   carts
+    And Response body parameter should not be EMPTY:    [data][id]
+    And Response body parameter should not be EMPTY:    [data][attributes][priceMode]
+    And Response body parameter should not be EMPTY:    [data][attributes][currency]
+    And Response body parameter should not be EMPTY:    [data][attributes][store]
+    And Response body parameter should be:    [data][attributes][totals][expenseTotal]    0
+    And Response body parameter should be:    [data][attributes][totals][discountTotal]    0
+    And Response body parameter should not be EMPTY:    [data][attributes][totals][taxTotal]
+    And Response body parameter should be greater than:     [data][attributes][totals][subtotal]    8000    
+    And Response body parameter should be greater than:    [data][attributes][totals][subtotal]    8000
+    And Response body parameter should be greater than:    [data][attributes][totals][subtotal]    8000
+    And Response body parameter should be:    [included][0][type]    items
+    And Response body parameter should be:    [included][0][attributes][sku]   ${concrete_product_with_concrete_product_alternative.sku}
+    And Response body parameter should be:    [included][0][attributes][quantity]   1
