@@ -9,6 +9,9 @@ ${price_mode_switcher_header_menu_item}    xpath=//*[@data-qa='component navigat
 &{currency_switcher_header_menu_item}    ui_b2b=xpath=//*[@data-qa='component navigation-top']//select[@name='currency-iso-code']    ui_b2c=xpath=//div[@class='header__select']//select[@name='currency-iso-code']    ui_mp_b2b=xpath=//header//custom-select[contains(@data-qa,'currency-iso-code')]//span[contains(@id,'select2-currency-iso-code')]    ui_mp_b2c=xpath=//div[@class='header__select']//select[@name='currency-iso-code']
 ${currency_switcher_CHF_curency}    xpath=//li[contains(@id,'select2-currency-iso-code')][contains(@id,'CHF')]
 ${currency_switcher_EUR_curency}    xpath=//li[contains(@id,'select2-currency-iso-code')][contains(@id,'EUR')]
+&{price_mode_switcher_header_menu_item}    ui_mp_b2b=xpath=//header//custom-select[contains(@data-qa,'custom-select price-mode')]//span[contains(@id,'select2-price-mode-5p-container')]
+${currency_switcher_net_prices_curency}    xpath=//li[contains(@id,'select2-price-mode')][contains(@id,'NET_MODE')]
+${currency_switcher_gross_prices_curency}    xpath=//li[contains(@id,'select2-price-mode')][contains(@id,'GROSS_MODE')]
 ${language_switcher_header_menu_item}    xpath=//*[@class='header__top']//*[@data-qa='component language-switcher']//select
 ${quick_order_icon_header_menu_item}    xpath=//*[contains(@class,'icon--quick-order')]/ancestor::a
 ${shopping_list_icon_header_menu_item}    xpath=//*[contains(@class,'icon--header-shopping-list')]/ancestor::a

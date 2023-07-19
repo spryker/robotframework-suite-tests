@@ -2839,20 +2839,42 @@ Resource    ../../../resources/steps/configurable_product_steps.robot
     [Setup]    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: update abstract product scheduled prices:
     ...    || abstract_sku | store | currency | net price | gross price | price type | start from | hours from | finish at  | hours to ||
-    ...    || M58035       | DE    | EUR      | 80        | 100         | DEFAULT    | 2022-07-03 | 045        | 2029-07-04 | 07       ||
+    ...    || M58035       | DE    | EUR      | 80        | 100         | DEFAULT    | 2022-07-03 | 09         | 2029-07-14 | 07       ||
+    ## DE+AT, CHF, gross price, valide dates, default/originnal prices
     Zed: update concrete product scheduled prices:
     ...    || abstract_sku | concrete_sku | store | currency | net price | gross price | price type | start from | hours from | finish at  | hours to ||
-    ...    || M58035       | 102124       | AT    | CHF      | 110       | 120         | ORIGINAL   | 2023-07-03 | 06         | 2040-07-04 | 08       ||
+    ...    || M58035       | 102124       | AT    | CHF      | 110       | 120         | ORIGINAL   | 2023-07-02 | 11         | 2040-07-14 | 06       ||
     Zed: update concrete product scheduled prices:
-    ...    || abstract_sku | concrete_sku | store | currency | net price | gross price | price type | start from | hours from | finish at  | hours to ||
-    ...    || M58035       | 102124       | DE    | CHF      | 200       | 250         | DEFAULT    | 2030-07-03 | 09         | 2040-07-04 | 09       ||
+    ...    || abstract_sku | concrete_sku | store | currency | net price | gross price | price type | start from | hours from | finish at   | hours to ||
+    ...    || M58035       | 102124       | DE    | CHF      | 200       | 250         | DEFAULT    | 2023-05-03 | 12         | 2040-07-15  | 07       ||
+    # DE, EUR, net price, valide dates, default/originnal prices
+    Zed: update concrete product scheduled prices:
+    ...    || abstract_sku | concrete_sku | store | currency | net price | gross price | price type | start from | hours from | finish at   | hours to ||
+    ...    || M58035       | 102126       | DE    | EUR      | 300       | 350         | DEFAULT    | 2023-06-04 | 13         | 2040-07-16  | 08       ||
+    Zed: update concrete product scheduled prices:
+    ...    || abstract_sku | concrete_sku | store | currency | net price | gross price | price type | start from | hours from | finish at   | hours to ||
+    ...    || M58035       | 102126       | DE    | EUR      | 290       | 340         | ORIGINAL   | 2022-07-05 | 14         | 2040-07-18  | 09       ||
+    ## DE, EUR, gross price, INvalide dates, default price
+    Zed: update concrete product scheduled prices:
+    ...    || abstract_sku | concrete_sku | store | currency | net price | gross price | price type | start from | hours from | finish at   | hours to ||
+    ...    || M58035       | 102128       | DE    | EUR      | 400       | 440         | DEFAULT    | 2022-07-06 | 15         | 2023-07-17  | 17       ||
     # Trigger events for schedule prices
     # Trigger p&s
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     Yves: perform search by:    M58035
+    Yves: change currency on:    EUR
     Yves: 1st product card in catalog should have default price:    100
     Yves: go to PDP of the product with sku:    M58035
     Yves: product price on the PDP should be:    100
     Yves: change variant of the product on PDP on:    500 x 930 x 400
+    Yves: product price on the PDP should be:    100
     Yves: change currency on:    CHF
     Yves: product price on the PDP should be:    250 
+    Yves: change variant of the product on PDP on:    500 x 930 x 500
+    Yves: change currency on:    EUR
+    Yves: change price type on:    Net prices
+    Yves: product price on the PDP should be:    290 
+# #    [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+# #     ...    AND    Zed: delete scheduled price for abstract product:
+    
+ 

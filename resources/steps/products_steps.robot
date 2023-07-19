@@ -236,6 +236,7 @@ Zed: update abstract product scheduled prices:
     END
     Click    id=price_product_schedule_submit
 
+
 Zed: update concrete product scheduled prices:
     [Arguments]    @{args}
     ${concreteProductData}=    Set Up Keyword Arguments    @{args}
@@ -265,13 +266,14 @@ Zed: update concrete product scheduled prices:
             Select From List By Label    ${zed_scheduled_price_form_price_type_selector}    ${value}
         END
         IF    '${key}'=='start from' and '${value}' != '${EMPTY}'    
-            Evaluate Javascript    ${None}  document.getElementById("price_product_schedule_activeFrom_date").setAttribute("value", "${value}")   
+            Evaluate Javascript    ${None}  document.getElementById("price_product_schedule_activeFrom_date").setAttribute("value", "${value}")
+   
         END
         IF    '${key}'=='hours from' and '${value}' != '${EMPTY}'    
             Select From List By Label    ${zed_scheduled_price_form_start_time_hours_selector}    ${value}
         END
         IF    '${key}'=='finish at' and '${value}' != '${EMPTY}'    
-            Evaluate Javascript    ${None}  document.getElementById("price_product_schedule_activeFrom_date").setAttribute("value", "${value}")
+            Evaluate Javascript    ${None}  document.getElementById("price_product_schedule_activeTo_date").setAttribute("value", "${value}")
         END
         IF    '${key}'=='hours to' and '${value}' != '${EMPTY}'    
             Select From List By Label    ${zed_scheduled_price_form_finish_time_hours_selector}    ${value}
@@ -594,3 +596,11 @@ Zed: add new concrete product to abstract:
     END
     Click    ${zed_pdp_save_button}
     Wait Until Element Is Visible    xpath=//div[@class='title-action']/a[contains(.,'Manage Attributes')]
+
+Zed: delete scheduled price for abstract product:
+    [Arguments]    ${abstract_sku}    ${concrete_sku}
+    Zed: go to second navigation item level:    Catalog    Products 
+    Zed: click Action Button in a table for row that contains:     ${abstract_sku}     Edit
+    Wait Until Element Is Visible    ${zed_product_edit_new_from}
+    Zed: switch to the tab on 'Edit product' page:    Scheduled Prices
+    Wait Until Element Is Visible    ${zed_add_scheduled_prices_button}
