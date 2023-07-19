@@ -169,8 +169,6 @@ Update_guest_cart_with_empty_priceMod_currency_store
     And Response body has correct self link internal
 
 Convert_guest_cart_to_customer_cart
-    [Documentation]    test has been skiped, need refactoring
-    [Tags]    skip-due-to-refactoring 
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
         ...   AND    I set Headers:    Authorization=${token}
         ...   AND    Cleanup all customer carts    
@@ -180,11 +178,12 @@ Convert_guest_cart_to_customer_cart
         ...   AND    I set Headers:     X-Anonymous-Customer-Unique-Id=${x_anonymous_customer_unique_id}
         ...   AND    I get access token for the customer:    ${yves_user.email}
         ...   AND    I set Headers:    Authorization=${token}
-    When I send a GET request:    /carts/${guest_cart_id}?include=items
+    When I send a GET request:    /carts?include=items
+    When I send a GET request:    /carts/${cart_id}?include=items
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response body parameter should be:    [data][type]   carts
-    And Response body parameter should be:    [data][id]    ${guest_cart_id}
+    And Response body parameter should be:    [data][id]    ${cart_id}
     And Response body parameter should be:    [data][attributes][priceMode]    ${mode.gross}
     And Response body parameter should be:    [data][attributes][currency]    ${currency.eur.code}
     And Response body parameter should be:    [data][attributes][store]    ${store.de}
