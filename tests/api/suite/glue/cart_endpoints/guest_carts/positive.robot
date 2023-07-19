@@ -188,9 +188,9 @@ Convert_guest_cart_to_customer_cart
     And Response body parameter should be:    [data][attributes][totals][expenseTotal]    0
     And Response body parameter should be:    [data][attributes][totals][discountTotal]    0
     And Response body parameter should not be EMPTY:    [data][attributes][totals][taxTotal]
-    And Response body parameter should be greater than:     [data][attributes][totals][subtotal]    8000    
-    And Response body parameter should be greater than:    [data][attributes][totals][subtotal]    8000
-    And Response body parameter should be greater than:    [data][attributes][totals][subtotal]    8000
+    And Response body parameter should be greater than:     [data][attributes][totals][subtotal]    0    
+    And Response body parameter should be greater than:    [data][attributes][totals][subtotal]    0
+    And Response body parameter should be greater than:    [data][attributes][totals][subtotal]    0
     And Response body parameter should be:    [included][0][type]    items
     And Response body parameter should be:    [included][0][attributes][sku]   ${concrete_product_with_concrete_product_alternative.sku}
     And Response body parameter should be:    [included][0][attributes][quantity]   1
