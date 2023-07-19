@@ -182,7 +182,7 @@ Convert_guest_cart_to_customer_cart
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response body parameter should be:    [data][type]   carts
-    And Response body parameter should be:    [data][id]    ${cart_id}
+    And Response body parameter should be:    [data][id]    ${guest_cart_id}
     And Response body parameter should be:    [data][attributes][priceMode]    ${mode.gross}
     And Response body parameter should be:    [data][attributes][currency]    ${currency.eur.code}
     And Response body parameter should be:    [data][attributes][store]    ${store.de}
