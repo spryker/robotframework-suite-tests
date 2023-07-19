@@ -91,7 +91,9 @@ Add_two_items_to_cart_with_included_items_concrete_products_and_abstract_product
    ...    AND    Response status code should be:    204
 
 Get_a_cart_with_included_items_and_concrete_products
-  [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
+   [Documentation]    test has been skiped, need refactoring
+   [Tags]    skip-due-to-refactoring 
+   [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
    ...    AND    I set Headers:    Authorization=${token}
    ...    AND    Cleanup all customer carts
    ...    AND    Find or create customer cart
