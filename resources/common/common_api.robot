@@ -1859,6 +1859,10 @@ Cleanup all customer carts
         ...    *Example:*
         ...
         ...    ``Cleanup all customer carts``
+        IF    '${env}' not in ['api_b2c','api_mp_b2c']
+            I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "dummyCart-${{random.randint(0, 100)}}${random}"}}}
+            Save value to a variable:    [data][id]    cart_id   
+        END
         ${response}=    GET    ${current_url}/carts    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}  params=include=items,bundle-items     expected_status=200    verify=${verify_ssl}
         ${response.status_code}=    Set Variable    ${response.status_code}
         IF    ${response.status_code} != 204    
@@ -1884,7 +1888,15 @@ Cleanup all customer carts
                     ${cart_uuid}=    Replace String    ${cart_uuid}    '   ${EMPTY}
                     ${cart_uuid}=    Replace String    ${cart_uuid}    [   ${EMPTY}
                     ${cart_uuid}=    Replace String    ${cart_uuid}    ]   ${EMPTY}
-                    ${response_delete}=    DELETE    ${current_url}/carts/${cart_uuid}    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}    expected_status=204    verify=${verify_ssl}
+                    IF    '${env}' not in ['api_b2c','api_mp_b2c'] 
+                        IF    '${cart_uuid}' == '${cart_id}'
+                            Continue For Loop
+                        ELSE    
+                            ${response_delete}=    DELETE    ${current_url}/carts/${cart_uuid}    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}    expected_status=204    verify=${verify_ssl}
+                        END
+                    ELSE    
+                        ${response_delete}=    DELETE    ${current_url}/carts/${cart_uuid}    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}    expected_status=204    verify=${verify_ssl}  
+                    END    
             END
         END
 
