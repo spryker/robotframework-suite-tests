@@ -169,8 +169,6 @@ Update_guest_cart_with_empty_priceMod_currency_store
     And Response body has correct self link internal
 
 Convert_guest_cart_to_customer_cart
-    [Documentation]    test has been skiped, need refactoring
-    [Tags]    skip-due-to-refactoring 
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
         ...   AND    I set Headers:    Authorization=${token}
         ...   AND    Find or create customer cart
