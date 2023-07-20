@@ -68,7 +68,7 @@ Get_list_of_country_with_invalid_id
     And Response header parameter should be:    Content-Type    application/json
     And Response body parameter should be:    [0][message]    The entity could not be found in the database.
     And Response body parameter should be:    [0][status]    404
-    And Response body parameter should be:    [0][code]    504
+    And Response body parameter should be:    [0][code]    1303
     [Teardown]    Run Keyword    Delete dynamic entity configuration in Database:    country
 
 Create_country_with_empty_body
@@ -82,7 +82,7 @@ Create_country_with_empty_body
     And I send a POST request:    /dynamic-entity/country   ''
     Then Response status code should be:    400
     And Response body parameter should contain:    [0][message]    Invalid or missing data format. Please ensure that the data is provided in the correct format
-    And Response body parameter should be:    [0][code]    501
+    And Response body parameter should be:    [0][code]    1301
     [Teardown]    Run Keyword    Delete dynamic entity configuration in Database:    country
 
 Create_country_with_empty_json
@@ -96,7 +96,7 @@ Create_country_with_empty_json
     And I send a POST request:    /dynamic-entity/country   {}
     Then Response status code should be:    400
     And Response body parameter should contain:    [0][message]    Invalid or missing data format. Please ensure that the data is provided in the correct format
-    And Response body parameter should be:    [0][code]    501
+    And Response body parameter should be:    [0][code]    1301
     [Teardown]    Run Keyword    Delete dynamic entity configuration in Database:    country
 
 Create_country_with_empty_data
@@ -110,7 +110,7 @@ Create_country_with_empty_data
     And I send a POST request:    /dynamic-entity/country   {"data": []}
     Then Response status code should be:    400
     And Response body parameter should contain:    [0][message]    Invalid or missing data format. Please ensure that the data is provided in the correct format
-    And Response body parameter should be:    [0][code]    501
+    And Response body parameter should be:    [0][code]    1301
     [Teardown]    Run Keyword    Delete dynamic entity configuration in Database:    country
 
 Create_country_with_invalid_data
@@ -125,7 +125,7 @@ Create_country_with_invalid_data
     And I send a POST request:    /dynamic-entity/country   {"data":[{"iso2_code":"XX","name":"XXX"}]}
     Then Response status code should be:    400
     And Response body parameter should contain:    [0][message]    The required field must not be empty. Field: iso3_code
-    And Response body parameter should be:    [0][code]    509
+    And Response body parameter should be:    [0][code]    1307
     And Response body parameter should contain:    [0][status]   400
     [Teardown]    Run Keywords    Delete dynamic entity configuration in Database:    country
     ...   AND    Delete country by iso2_code in Database:   XX
@@ -159,13 +159,13 @@ Create_country_with_invalid_field_value
     Then Response status code should be:    400
     And Response should contain the array of a certain size:   $    3
     And Response body parameter should contain:    [0][message]    Invalid data value for field: iso2_code, row number: 1. Field rules: max_length: 2, min_length: 2, is_required: 1
-    And Response body parameter should be:    [0][code]    508
+    And Response body parameter should be:    [0][code]    1306
     And Response body parameter should contain:    [0][status]   400
     And Response body parameter should contain:    [1][message]    Invalid data value for field: iso3_code, row number: 1. Field rules: max_length: 3, min_length: 3, is_required: 1
-    And Response body parameter should be:    [1][code]    508
+    And Response body parameter should be:    [1][code]    1306
     And Response body parameter should contain:    [1][status]   400
     And Response body parameter should contain:    [2][message]    Invalid data value for field: name, row number: 1. Field rules: max_length: 255, min_length: 1, is_required: 1
-    And Response body parameter should be:    [2][code]    508
+    And Response body parameter should be:    [2][code]    1306
     And Response body parameter should contain:    [2][status]   400
     [Teardown]    Run Keywords    Delete dynamic entity configuration in Database:    country
     ...   AND    Delete country by iso2_code in Database:   X
@@ -197,7 +197,7 @@ Update_country_with_invalid_data
     And I send a PATCH request:    /dynamic-entity/country/${xxa_country_id}    {"data":{"iso2_code":"XXXX"}}
     Then Response status code should be:    400
     And Response body parameter should contain:    [0][message]    Invalid data value for field: iso2_code, row number: 1. Field rules: max_length: 2, min_length: 2, is_required: 1
-    And Response body parameter should be:    [0][code]    508
+    And Response body parameter should be:    [0][code]    1306
     And Response body parameter should be:    [0][status]    400
     [Teardown]    Run Keywords    Delete dynamic entity configuration in Database:    country
     ...   AND    Delete country by iso2_code in Database:   XA
@@ -222,10 +222,10 @@ Update_country_collection_with_invalid_data
     And I send a PATCH request:    /dynamic-entity/country    {"data":[{"id_country":${xxa_country_id},"iso2_code":"XXXX"},{"id_country":${xxb_country_id},"iso3_code":"XXXXX"}]}
     Then Response status code should be:    400
     And Response body parameter should contain:    [0][message]    Invalid data value for field: iso2_code, row number: 1. Field rules: max_length: 2, min_length: 2, is_required: 1
-    And Response body parameter should be:    [0][code]    508
+    And Response body parameter should be:    [0][code]    1306
     And Response body parameter should be:    [0][status]    400
     And Response body parameter should contain:    [1][message]    Invalid data value for field: iso3_code, row number: 2. Field rules: max_length: 3, min_length: 3, is_required: 1
-    And Response body parameter should be:    [1][code]    508
+    And Response body parameter should be:    [1][code]    1306
     And Response body parameter should be:    [1][status]    400
     [Teardown]    Run Keywords    Delete dynamic entity configuration in Database:    country
     ...   AND    Delete country by iso2_code in Database:   XA
@@ -250,7 +250,7 @@ Update_country_with_invalid_field_type
     And I send a PATCH request:    /dynamic-entity/country/${xxa_country_id}    {"data":{"iso2_code":1234}}
     Then Response status code should be:    400
     And Response body parameter should contain:    [0][message]    Invalid data type for field: iso2_code
-    And Response body parameter should be:    [0][code]    507
+    And Response body parameter should be:    [0][code]    1305
     And Response body parameter should be:    [0][status]    400
     [Teardown]    Run Keywords    Delete dynamic entity configuration in Database:    country
     ...   AND    Delete country by iso2_code in Database:   XA
@@ -269,7 +269,7 @@ Upsert_with_invalid_id
     Then Response status code should be:    400
     And Response header parameter should be:    Content-Type    application/json
     And Response body parameter should be:    [0][message]    Entity not found by identifier, and new identifier can not be persisted. Please update the request.
-    And Response body parameter should be:    [0][code]    510
+    And Response body parameter should be:    [0][code]    1308
     And Response body parameter should be:    [0][status]    400
     [Teardown]    Run Keywords    Delete dynamic entity configuration in Database:    country
     ...   AND    Delete country by iso2_code in Database:   XX
