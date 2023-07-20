@@ -2872,9 +2872,9 @@ Resource    ../../../resources/steps/configurable_product_steps.robot
     # Yves: change currency on:    CHF
     # Yves: product price on the PDP should be:    250 
     # Yves: change variant of the product on PDP on:    500 x 930 x 500
-    # Yves: change currency on:    EUR
+    Yves: change currency on:    EUR
     Yves: change price type on:    Net prices
-    Yves: product price on the PDP should be:    80 
+    # Yves: product price on the PDP should be:    80 
 #    [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
 #     ...    AND    Zed: delete scheduled price for abstract product:
 #     ...    AND    Yves: change currency on:    EUR
