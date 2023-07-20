@@ -111,18 +111,19 @@ Yves: change currency on:
     Click    ${currency_switcher_header_menu_item}[${env}]
     ${currency}=    Convert To Lower Case   ${currency}
     IF    '${currency}' == 'chf'
-        Click    ${currency_switcher_CHF_curency}
+        Click    ${currency_switcher_CHF_currency}
     ELSE
-        Click    ${currency_switcher_EUR_curency}
+        Click    ${currency_switcher_EUR_currency}
     END
 
 Yves: change price type on:
     [Arguments]    ${price_mode}
-    Click    ${price_mode_switcher_header_menu_item}[${env}]
+    Click    ${price_mode_switcher_header_menu_item}
+    # Evaluate Javascript     ${None}     document.evaluate("${price_mode_switcher_header_menu_item}", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.click()
     ${price_mode}=    Convert To Lower Case   ${price_mode}
     IF    '${price_mode}' == 'Net prices'
-        Click    ${currency_switcher_net_prices_curency}
+        Click    ${currency_switcher_net_prices_currency}
     ELSE
-        Click    ${currency_switcher_gross_prices_curency}
+        Click    ${currency_switcher_gross_prices_currency}
     END
 

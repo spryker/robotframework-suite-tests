@@ -597,10 +597,11 @@ Zed: add new concrete product to abstract:
     Click    ${zed_pdp_save_button}
     Wait Until Element Is Visible    xpath=//div[@class='title-action']/a[contains(.,'Manage Attributes')]
 
-Zed: delete scheduled price for abstract product:
-    [Arguments]    ${abstract_sku}    ${concrete_sku}
-    Zed: go to second navigation item level:    Catalog    Products 
-    Zed: click Action Button in a table for row that contains:     ${abstract_sku}     Edit
-    Wait Until Element Is Visible    ${zed_product_edit_new_from}
-    Zed: switch to the tab on 'Edit product' page:    Scheduled Prices
-    Wait Until Element Is Visible    ${zed_add_scheduled_prices_button}
+# Zed: delete scheduled price for abstract product:
+#     [Arguments]    ${abstract_sku}    ${concrete_sku}
+#     Zed: go to second navigation item level:    Catalog    Products 
+#     Zed: click Action Button in a table for row that contains:     ${abstract_sku}     Edit
+#     Wait Until Element Is Visible    ${zed_product_edit_new_from}
+#     Zed: switch to the tab on 'Edit product' page:    Scheduled Prices
+#     Wait Until Element Is Visible    ${zed_add_scheduled_prices_button}
+    
