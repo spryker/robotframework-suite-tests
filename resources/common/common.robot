@@ -176,6 +176,23 @@ Click Element by xpath with JavaScript
     [Arguments]    ${xpath}
     Evaluate Javascript     ${None}     document.evaluate("${xpath}", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.click()
 
+Click Element with JavaScript:
+    [Documentation]    This keyword force clicks on web element using native JavaScript inside the browser. *Note*: it doesn't automatically wait until action is finished. 
+    ...
+    ...    *Examples:*
+    ...    
+    ...    `Click Element with JavaScript    id=w3loginbtn`
+    ...    
+    ...    `Click Element with JavaScript    xpath=//a[@id='w3loginbtn']`
+    ...    
+    ...    `Click Element with JavaScript    css=#w3loginbtn`
+    ...    
+    ...    `Click Element with JavaScript    name=w3loginname`
+    ...    
+    [Arguments]    ${locator}
+    ${element}=    Get Element    ${locator}
+    Evaluate JavaScript    ${element}    (e) => e.click({force:true})
+
 Click Element by id with JavaScript
     [Arguments]    ${id}
     Evaluate Javascript     ${None}    document.getElementById("${id}").click()
