@@ -207,20 +207,20 @@ Convert_guest_cart_to_customer_cart
         ...   AND    I set Headers:     X-Anonymous-Customer-Unique-Id=${x_anonymous_customer_unique_id}
         ...   AND    I get access token for the customer:    ${yves_user.email}
         ...   AND    I set Headers:    Authorization=${token}
-    When I send a GET request:    /carts?include=items
+    When I send a GET request:    /carts/${cart_id}?include=items
     Then Response status code should be:    200
     And Response reason should be:    OK
-    And Response body parameter should be:    [data][0][type]    carts
-    And Response body parameter should be:    [data][0][id]    ${cart_id}
-    And Response body parameter should be:    [data][0][attributes][priceMode]    ${mode.gross}
-    And Response body parameter should be:    [data][0][attributes][currency]    ${currency.eur.code}
-    And Response body parameter should be:    [data][0][attributes][store]    ${store.de}
-    And Response body parameter should not be EMPTY:    [data][0][attributes][totals][expenseTotal]
-    And Response body parameter should not be EMPTY:    [data][0][attributes][totals][discountTotal]
-    Response body parameter should be greater than:    [data][0][attributes][totals][taxTotal]    0
-    Response body parameter should be greater than:    [data][0][attributes][totals][subtotal]    0
-    Response body parameter should be greater than:    [data][0][attributes][totals][grandTotal]    0
-    Response body parameter should be greater than:    [data][0][attributes][totals][grandTotal]    0
+    And Response body parameter should be:    [data][type]    carts
+    And Response body parameter should be:    [data][id]    ${cart_id}
+    And Response body parameter should be:    [data][attributes][priceMode]    ${mode.gross}
+    And Response body parameter should be:    [data][attributes][currency]    ${currency.eur.code}
+    And Response body parameter should be:    [data][attributes][store]    ${store.de}
+    And Response body parameter should not be EMPTY:    [data][attributes][totals][expenseTotal]
+    And Response body parameter should not be EMPTY:    [data][attributes][totals][discountTotal]
+    Response body parameter should be greater than:    [data][attributes][totals][taxTotal]    0
+    Response body parameter should be greater than:    [data][attributes][totals][subtotal]    0
+    Response body parameter should be greater than:    [data][attributes][totals][grandTotal]    0
+    Response body parameter should be greater than:    [data][attributes][totals][grandTotal]    0
     And Response body parameter should be:    [included][0][type]    items
     And Response body parameter should be:    [included][0][attributes][sku]    ${concrete_product_with_concrete_product_alternative.sku}
     And Response body parameter should be:    [included][0][attributes][quantity]    1

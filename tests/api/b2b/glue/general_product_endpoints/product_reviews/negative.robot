@@ -12,13 +12,11 @@ ENABLER
     TestSetup
 
 Get_a_review_with_non_existent_review_id
-    [Documentation]    not impemented yet - will be covered as part of https://spryker.aha.io/features/REVIEW-2
-    [Tags]    skip-due-to-issue
     When I send a GET request:    /abstract-products/${abstract.with_review.sku}/product-reviews/fake
     Then Response status code should be:    404
     And Response reason should be:    Not Found
-    And Response should return error code:    3402
-    And Response should return error message:    Product review not found.
+    And Response should return error code:    302
+    And Response should return error message:    Product review is not found.
 
 Get_reviews_with_non_existent_abstract_product
     When I send a GET request:    /abstract-products/fake/product-reviews
@@ -35,8 +33,6 @@ Get_reviews_with_missing_abstract_product
     And Response should return error message:    Abstract product sku is not specified.
 
 Get_review_by_id_with_missing_abstract_product
-    [Documentation]    not impemented yet - will be covered as part of https://spryker.aha.io/features/REVIEW-2
-    [Tags]    skip-due-to-issue
     When I send a GET request:    /abstract-products//product-reviews/78
     Then Response status code should be:    400
     And Response reason should be:    Bad Request
@@ -44,13 +40,11 @@ Get_review_by_id_with_missing_abstract_product
     And Response should return error message:    Abstract product sku is not specified.
 
 Get_a_reviews_with_non_existent_abstract_product
-   [Documentation]    not impemented yet - will be covered as part of https://spryker.aha.io/features/REVIEW-2
-    [Tags]    skip-due-to-issue
     When I send a GET request:    /abstract-products/fake/product-reviews/78
     Then Response status code should be:    404
     And Response reason should be:    Not Found
-    And Response should return error code:    3402
-    And Response should return error message:    Product review not found.
+    And Response should return error code:    301
+    And Response should return error message:    Abstract product is not found.
 
 Create_a_product_review_without_token
     When I send a POST request:
