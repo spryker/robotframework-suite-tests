@@ -159,6 +159,11 @@ Yves: select the following payment method on the checkout and go next:
     ELSE IF    '${env}' in ['ui_mp_b2b'] and '${paymentMethod}'=='Invoice'
         Run Keywords
             Click    //form[@id='payment-form']//li[@class='checkout-list__item'][contains(.,'${paymentMethod}')]//span[contains(@class,'toggler-radio__box')]
+            Type Text    ${checkout_payment_invoice_date_of_birth_field}    11.11.1111
+            Click    ${submit_checkout_form_button}[${env}]
+    ELSE IF    '${env}' in ['ui_mp_b2b'] and '${paymentMethod}'=='Invoice (Marketplace)'
+        Run Keywords
+            Click    //form[@id='payment-form']//li[@class='checkout-list__item'][contains(.,'${paymentMethod}')]//span[contains(@class,'toggler-radio__box')]
             Type Text    ${checkout_payment_marketplace_invoice_date_field}    11.11.1111
             Click    ${submit_checkout_form_button}[${env}]
     ELSE IF    ('${env}'=='ui_suite' and '${paymentProvider}'!='${EMPTY}')
@@ -174,6 +179,11 @@ Yves: select the following payment method on the checkout and go next:
         Type Text    ${checkout_payment_card_security_code_field}    123
         Click    ${submit_checkout_form_button}[${env}]
     ELSE IF    '${env}' in ['ui_mp_b2c'] and '${paymentMethod}'=='Invoice'
+        Run Keywords
+            Click    //form[@name='paymentForm']//toggler-radio[contains(.,'${paymentMethod}')]//span[contains(@class,'toggler-radio__box')]
+            Type Text    ${checkout_payment_invoice_date_of_birth_field}    11.11.1111
+            Click    ${submit_checkout_form_button}[${env}]    
+    ELSE IF    '${env}' in ['ui_mp_b2c'] and '${paymentMethod}'=='Invoice (Marketplace)'
         Run Keywords
             Click    //form[@name='paymentForm']//toggler-radio[contains(.,'${paymentMethod}')]//span[contains(@class,'toggler-radio__box')]
             Type Text    ${checkout_payment_marketplace_invoice_date_field}    11.11.1111
