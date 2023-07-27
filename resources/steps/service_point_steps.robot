@@ -33,11 +33,12 @@ Create service point in DB
     IF    '${key}' == '${None}'
         ${key}=    Generate Random String    5    [LETTERS]
     END
+    ${idServicePoint}=    Get next id from table    spy_service_point    id_service_point
     Connect to Spryker DB
     IF    '${db_engine}' == 'pymysql'
         Execute Sql String    insert ignore into spy_service_point (`key`, name, uuid, is_active) value ('${key}', '${name}', '${uuid}', ${isActive});
     ELSE
-        Execute Sql String    INSERT INTO spy_service_point (`key`, name, uuid, is_active) VALUES ('${key}', '${name}', '${uuid}', ${isActive});
+        Execute Sql String    INSERT INTO spy_service_point (id_service_point, key, name, uuid, is_active) VALUES (${idServicePoint}, '${key}', '${name}', '${uuid}', ${isActive});
     END
     Disconnect From Database
     IF    '${storeName}' != '${None}'
@@ -52,12 +53,13 @@ Create service point store relation in DB
         ...
     [Arguments]    ${servicePointUuid}    ${storeName}
     ${idServicePoint}=    Get id service point by uuid    ${servicePointUuid}
+    ${idServicePointStore}=    Get next id from table    spy_service_point_store    id_service_point_store
     Connect to Spryker DB
     ${storeIds}=    Query    SELECT id_store FROM spy_store WHERE name = '${storeName}' ORDER BY id_store DESC LIMIT 1;
     IF    '${db_engine}' == 'pymysql'
         Execute Sql String    insert ignore into spy_service_point_store (fk_service_point, fk_store) value (${idServicePoint}, ${storeIds[0][0]});
     ELSE
-        Execute Sql String    INSERT INTO spy_service_point (fk_service_point, fk_store) VALUES (${idServicePoint}, ${storeIds[0][0]});
+        Execute Sql String    INSERT INTO spy_service_point_store (id_service_point_store, fk_service_point, fk_store) VALUES (${idServicePointStore}, ${idServicePoint}, ${storeIds[0][0]});
     END
     Disconnect From Database
 
@@ -87,12 +89,13 @@ Create service point address in DB
     IF    '${zipCode}' == '${None}'
         ${zipCode}=    Generate Random String    5    [NUMBERS]
     END
+    ${idServicePointAddress}=    Get next id from table    spy_service_point_address    id_service_point_address
     Connect to Spryker DB
     ${countryIds}=    Query    SELECT id_country FROM spy_country WHERE iso2_code = '${countryIso2Code}' ORDER BY id_country DESC LIMIT 1;
     IF    '${db_engine}' == 'pymysql'
         Execute Sql String    insert ignore into spy_service_point_address (fk_service_point, fk_country, uuid, address1, address2, address3, city, zip_code) value (${idServicePoint}, ${countryIds[0][0]}, '${uuid}', '${address1}', '${address2}', '${address3}', '${city}', '${zipCode}');
     ELSE
-        Execute Sql String    INSERT INTO spy_service_point_address (fk_service_point, fk_country, uuid, address1, address2, address3, city, zip_code) value (${idServicePoint}, ${countryIds[0][0]}, '${uuid}', '${address1}', '${address2}', '${address3}', '${city}', '${zipCode}');
+        Execute Sql String    INSERT INTO spy_service_point_address (id_service_point_address, fk_service_point, fk_country, uuid, address1, address2, address3, city, zip_code) VALUES (${idServicePointAddress}, ${idServicePoint}, ${countryIds[0][0]}, '${uuid}', '${address1}', '${address2}', '${address3}', '${city}', '${zipCode}');
     END
     Disconnect From Database
 
@@ -122,12 +125,13 @@ Create service in DB
         ${key}=    Generate Random String    5    [LETTERS]
     END
     ${idServicePoint}=    Get id service point by uuid    ${servicePointUuid}
+    ${idService}=    Get next id from table    spy_service    id_service
     Connect to Spryker DB
     ${serviceTypeIds}=    Query    SELECT id_service_type FROM spy_service_type WHERE uuid = '${serviceTypeUuid}' ORDER BY id_service_type DESC LIMIT 1;
     IF    '${db_engine}' == 'pymysql'
         Execute Sql String    insert ignore into spy_service (fk_service_point, fk_service_type, `key`, uuid, is_active) value (${idServicePoint}, ${serviceTypeIds[0][0]}, '${key}', '${uuid}', ${isActive});
     ELSE
-        Execute Sql String    INSERT INTO spy_service (fk_service_point, fk_service_type, `key`, uuid, is_active) VALUES (${idServicePoint}, ${serviceTypeIds[0][0]}, '${key}', '${uuid}', ${isActive});
+        Execute Sql String    INSERT INTO spy_service (id_service, fk_service_point, fk_service_type, key, uuid, is_active) VALUES (${idService}, ${idServicePoint}, ${serviceTypeIds[0][0]}, '${key}', '${uuid}', ${isActive});
     END
     Disconnect From Database
 
@@ -147,11 +151,12 @@ Create service type in DB
     IF    '${key}' == '${None}'
         ${key}=    Generate Random String    5    [LETTERS]
     END
+    ${idServiceType}=    Get next id from table    spy_service_type    id_service_type
     Connect to Spryker DB
     IF    '${db_engine}' == 'pymysql'
         Execute Sql String    insert ignore into spy_service_type (`key`, name, uuid) value ('${key}', '${name}', '${uuid}');
     ELSE
-        Execute Sql String    INSERT INTO spy_service_type (`key`, name, uuid) VALUES ('${key}', '${name}', '${uuid}');
+        Execute Sql String    INSERT INTO spy_service_type (id_service_type, key, name, uuid) VALUES (${idServiceType}, '${key}', '${name}', '${uuid}');
     END
     Disconnect From Database
 
