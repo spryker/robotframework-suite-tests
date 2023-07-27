@@ -2,7 +2,8 @@
     "environment":"api_mp_b2b",
     "env":{
        "glue_url":"http://glue.de.spryker.local",
-       "bapi_url":"http://glue-backend.de.spryker.local"
+       "bapi_url":"http://glue-backend.de.spryker.local",
+       "sapi_url":"http://glue-storefront.de.spryker.local"
     },
     "dataType": {
       "array": []
@@ -586,7 +587,7 @@
        "configurable_product": {
           "sku": "574601",
           "name":"CP steel cabinet, fire-resistant - 3 adjustable shelves - 1 locker - black gray / light gray"
-        }  
+        }
       },
     "product_offers":{
        "inactive_offer_with_volume_price":"offer3",
@@ -802,5 +803,5 @@
        "configuratorKey": "DATE_TIME_CONFIGURATOR",
        "isComplete": true
    }
- }   
+ }
  }

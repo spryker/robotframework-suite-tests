@@ -196,8 +196,8 @@ MP: delete product price row that contains quantity:
 
 MP: add new concrete product:
     [Arguments]    @{args}
-    Click    ${product_drawer_concretes_tab}
-    Click    ${mp_add_concrete_products_button}
+    Click    ${product_drawer_concretes_tab}    delay=1s
+    Click    ${mp_add_concrete_products_button}    delay=1s
     ${productData}=    Set Up Keyword Arguments    @{args}
     FOR    ${key}    ${value}    IN    &{productData}
         Log    Key is '${key}' and value is '${value}'.
@@ -205,17 +205,17 @@ MP: add new concrete product:
             Set Test Variable    ${firstAttributeName}    ${value}
         END
         IF    '${key}'=='first attribute value' and '${value}' != '${EMPTY}'
-            Click    xpath=//mp-concrete-product-attributes-selector[@class='mp-concrete-product-attributes-selector']//spy-form-item//label[contains(text(),'${firstAttributeName}')]/../..//spy-select
+            Click    xpath=//mp-concrete-product-attributes-selector[@class='mp-concrete-product-attributes-selector']//spy-form-item//label[contains(text(),'${firstAttributeName}')]/../..//spy-select    delay=1s
             MP: select option in expanded dropdown:    ${value}
-            Click    xpath=//mp-concrete-product-attributes-selector[@class='mp-concrete-product-attributes-selector']//spy-form-item//label[contains(text(),'${firstAttributeName}')]/../..//spy-select
+            Click    xpath=//mp-concrete-product-attributes-selector[@class='mp-concrete-product-attributes-selector']//spy-form-item//label[contains(text(),'${firstAttributeName}')]/../..//spy-select    delay=1s
         END
         IF    '${key}'=='second attribute' and '${value}' != '${EMPTY}'    
             Set Test Variable    ${firstAttributeName}    ${value}
         END
         IF    '${key}'=='second attribute value' and '${value}' != '${EMPTY}'
-            Click    xpath=//mp-concrete-product-attributes-selector[@class='mp-concrete-product-attributes-selector']//spy-form-item//label[contains(text(),'${firstAttributeName}')]/../..//spy-select
+            Click    xpath=//mp-concrete-product-attributes-selector[@class='mp-concrete-product-attributes-selector']//spy-form-item//label[contains(text(),'${firstAttributeName}')]/../..//spy-select    delay=1s
             MP: select option in expanded dropdown:    ${value}
-            Click    xpath=//mp-concrete-product-attributes-selector[@class='mp-concrete-product-attributes-selector']//spy-form-item//label[contains(text(),'${firstAttributeName}')]/../..//spy-select
+            Click    xpath=//mp-concrete-product-attributes-selector[@class='mp-concrete-product-attributes-selector']//spy-form-item//label[contains(text(),'${firstAttributeName}')]/../..//spy-select    delay=1s
         END
     END
     Click    ${new_product_submit_create_button}    delay=1s
