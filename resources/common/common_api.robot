@@ -600,6 +600,17 @@ Response body should contain:
     ${response_body}=    Replace String    ${response_body}    '    "
     Should Contain    ${response_body}    ${value}    Response body does not contain expected: '${value}'.
 
+Response body should not contain:
+    [Documentation]    This keyword checks that the response saved  in ``${response_body}`` test variable does not contain the string passed as an argument.
+    ...
+    ...    *Example:*
+    ...
+    ...    ``Response body should not contain:    "localizedName": "Weight"``
+    [Arguments]    ${value}
+    ${response_body}=    Convert To String    ${response_body}
+    ${response_body}=    Replace String    ${response_body}    '    "
+    Should Not Contain    ${response_body}    ${value}    Response body contains not expected: '${value}'.
+
 Response body parameter should be:
     [Documentation]    This keyword checks that the response saved  in ``${response_body}`` test variable contsains the speficied parameter ``${json_path}`` with the specified value ``${expected_value}``.
     ...
@@ -2423,3 +2434,27 @@ I get access token by user credentials:
     Save value to a variable:    [access_token]    token
     Log    ${token}
     [Return]    ${token}
+
+Trigger publish trigger-events
+    [Documentation]    This keyword triggers publish:trigger-events console command using provided resource, path and store.
+        ...    *Example:*
+        ...
+        ...    ``Trigger publish trigger-events    resource=service_point    consolePath=..    storeName=DE    timeout=5s``
+        ...
+    [Arguments]    ${resource}    ${consolePath}=..    ${storeName}=DE    ${timeout}=5s
+    ${rc}    ${output}=    Run And Return RC And Output    cd ${consolePath} && APPLICATION_STORE=${storeName} docker/sdk console publish:trigger-events -r ${resource}
+    Log    ${output}
+    Should Be Equal As Integers    ${rc}    0
+    Trigger p&s    ${timeout}    ${consolePath}    ${storeName}
+
+Trigger p&s
+    [Documentation]    This keyword triggers P&S using provided timout, path, and store.
+        ...    *Example:*
+        ...
+        ...    ``Trigger p&s    timeout=5s    consolePath=..    storeName=DE``
+        ...
+    [Arguments]    ${timeout}=5s    ${consolePath}=..    ${storeName}=DE
+    ${rc}    ${output}=    Run And Return RC And Output    cd ${consolePath} && APPLICATION_STORE=${storeName} docker/sdk console queue:worker:start --stop-when-empty
+    Log    ${output}
+    Should Be Equal As Integers    ${rc}    0
+    Sleep    ${timeout}
