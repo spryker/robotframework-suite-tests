@@ -15,7 +15,7 @@ Abstract_prices_detault_only
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     When I send a GET request:
-    ...    /abstract-products/${abstract.available_products.with_3_concretes.sku}/abstract-product-prices
+    ...    /abstract-products/${abstract.available_products.with_3_concretes.sku}/abstract-product-prices?currency=EUR&priceMode=GROSS_MODE
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
@@ -34,10 +34,33 @@ Abstract_prices_detault_only
     And Response should contain the array of a certain size:    [data][0][attributes][prices][0][volumePrices]    0
     And Response body has correct self link
 
+Abstract_prices_detault_only_CHF
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
+    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
+    When I send a GET request:
+    ...    /abstract-products/${abstract.available_products.with_3_concretes.sku}/abstract-product-prices?currency=EUR&priceMode=GROSS_MODE
+    Then Response status code should be:    200
+    And Response reason should be:    OK
+    And Response header parameter should be:    Content-Type    ${default_header_content_type}
+    And Response body parameter should be:    [data][0][id]    ${abstract.available_products.with_3_concretes.sku}
+    And Response body parameter should be greater than:    [data][0][attributes][price]    100
+    And Save value to a variable:    [data][0][attributes][price]    default_price
+    And Response should contain the array of a certain size:    [data][0][attributes][prices]    1
+    And Response body parameter should be:    [data][0][attributes][prices][0][priceTypeName]    DEFAULT
+    And Response body parameter should be:    [data][0][attributes][prices][0][netAmount]    None
+    And Response body parameter should be:    [data][0][attributes][prices][0][grossAmount]    ${default_price}
+    And Response body parameter should be:    [data][0][attributes][prices][0][currency][code]    ${currency.chf.code}
+    And Response body parameter should be:    [data][0][attributes][prices][0][currency][name]    ${currency.chf.name}
+    And Response body parameter should be:
+    ...    [data][0][attributes][prices][0][currency][symbol]
+    ...    ${currency.chf.symbol}
+    And Response should contain the array of a certain size:    [data][0][attributes][prices][0][volumePrices]    0
+    And Response body has correct self link
+
 Abstract_volume_prices
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
-    When I send a GET request:    /abstract-products/${abstract.volume_prices.sku}/abstract-product-prices
+    When I send a GET request:    /abstract-products/${abstract.volume_prices.sku}/abstract-product-prices?currency=EUR&priceMode=GROSS_MODE
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
@@ -77,7 +100,7 @@ Abstract_volume_prices
 Abstract_prices_original_price
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
-    When I send a GET request:    /abstract-products/${abstract.original_prices.sku}/abstract-product-prices
+    When I send a GET request:    /abstract-products/${abstract.original_prices.sku}/abstract-product-prices?currency=EUR&priceMode=GROSS_MODE
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}

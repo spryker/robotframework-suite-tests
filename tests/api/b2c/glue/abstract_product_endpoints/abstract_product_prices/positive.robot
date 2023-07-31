@@ -8,7 +8,7 @@ Default Tags    glue
 ENABLER
     TestSetup
 Abstract_prices_detault_only
-    When I send a GET request:    /abstract-products/${multivariant.abstract_product.concretes_3}/abstract-product-prices
+    When I send a GET request:    /abstract-products/${multivariant.abstract_product.concretes_3}/abstract-product-prices?currency=EUR&priceMode=GROSS_MODE
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
@@ -25,8 +25,26 @@ Abstract_prices_detault_only
     And Response should contain the array of a certain size:    [data][0][attributes][prices][0][volumePrices]   0
     And Response body has correct self link
 
+Abstract_prices_detault_only_CHF
+    When I send a GET request:    /abstract-products/${multivariant.abstract_product.concretes_3}/abstract-product-prices?currency=CHF&priceMode=GROSS_MODE
+    Then Response status code should be:    200
+    And Response reason should be:    OK
+    And Response header parameter should be:    Content-Type    ${default_header_content_type}
+    And Response body parameter should be:    [data][0][id]    ${multivariant.abstract_product.concretes_3}
+    And Response body parameter should be greater than:    [data][0][attributes][price]   100
+    And Save value to a variable:    [data][0][attributes][price]    default.price
+    And Response should contain the array of a certain size:    [data][0][attributes][prices]    1
+    And Response body parameter should be:    [data][0][attributes][prices][0][priceTypeName]    DEFAULT
+    And Response body parameter should be:    [data][0][attributes][prices][0][netAmount]    None
+    And Response body parameter should be:    [data][0][attributes][prices][0][grossAmount]    ${default.price}
+    And Response body parameter should be:    [data][0][attributes][prices][0][currency][code]    ${currency.chf.code}
+    And Response body parameter should be:    [data][0][attributes][prices][0][currency][name]    ${currency.chf.name}
+    And Response body parameter should be:    [data][0][attributes][prices][0][currency][symbol]    ${currency.chf.symbol}
+    And Response should contain the array of a certain size:    [data][0][attributes][prices][0][volumePrices]   0
+    And Response body has correct self link
+
 Abstract_volume_prices
-    When I send a GET request:    /abstract-products/${abstract_product.volume_prices.sku}/abstract-product-prices
+    When I send a GET request:    /abstract-products/${abstract_product.volume_prices.sku}/abstract-product-prices?currency=EUR&priceMode=GROSS_MODE
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
@@ -50,7 +68,7 @@ Abstract_volume_prices
     And Response body has correct self link
 
 Abstract_prices_original_price
-    When I send a GET request:    /abstract-products/${abstract_product.original_prices.sku}/abstract-product-prices
+    When I send a GET request:    /abstract-products/${abstract_product.original_prices.sku}/abstract-product-prices?currency=EUR&priceMode=GROSS_MODE
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
