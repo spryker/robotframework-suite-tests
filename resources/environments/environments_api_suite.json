@@ -2,7 +2,8 @@
     "environment":"api_suite",
     "env":{
        "glue_url":"http://glue.de.spryker.local",
-       "bapi_url":"http://glue-backend.de.spryker.local"
+       "bapi_url":"http://glue-backend.de.spryker.local",
+       "sapi_url":"http://glue-storefront.de.spryker.local"
     },
     "database":{
        "db_host":"127.0.0.1",
@@ -210,6 +211,14 @@
                 "name":"Samsung F90BN"
              }
           }
+       },
+       "warehouse_user":{
+         "name":"",
+         "password":""
+       },
+       "admin_not_warehouse_user":{
+         "email":"richard@spryker.com",
+         "password":"change123"
        },
        "product_with_relations":{
           "has_related_products":{
@@ -758,7 +767,7 @@
     },
     "dataType":{
        "arrow":[
-          
+
        ]
     }
  }

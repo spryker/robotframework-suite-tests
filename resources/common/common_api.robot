@@ -28,6 +28,7 @@ ${default_db_engine}       pymysql
 ${db_engine}
 ${glue_env}
 ${bapi_env}
+${sapi_env}
 ${db_port}
 # ${default_db_engine}       psycopg2
 
@@ -82,25 +83,36 @@ TestSetup
     FOR  ${tag}  IN  @{Test Tags}
     Log   ${tag}
     IF    '${glue_env}' == '${EMPTY}'
-        IF    '${tag}'=='glue'  
+        IF    '${tag}'=='glue'
             Set Suite Variable    ${current_url}    ${glue_url}
             Set Suite Variable    ${tag}    glue
         END
     ELSE
-        IF    '${tag}'=='glue'   
+        IF    '${tag}'=='glue'
             Set Suite Variable    ${current_url}    ${glue_env}
             Set Suite Variable    ${tag}    glue
         END
     END
     IF    '${bapi_env}' == '${EMPTY}'
-        IF    '${tag}'=='bapi'  
+        IF    '${tag}'=='bapi'
             Set Suite Variable    ${current_url}    ${bapi_url}
             Set Suite Variable    ${tag}    bapi
         END
     ELSE
-        IF    '${tag}'=='bapi'  
+        IF    '${tag}'=='bapi'
             Set Suite Variable    ${current_url}    ${bapi_env}
             Set Suite Variable    ${tag}    bapi
+        END
+    END
+    IF    '${sapi_env}' == '${EMPTY}'
+        IF    '${tag}'=='sapi'
+            Set Suite Variable    ${current_url}    ${sapi_url}
+            Set Suite Variable    ${tag}    sapi
+        END
+    ELSE
+        IF    '${tag}'=='sapi'
+            Set Suite Variable    ${current_url}    ${sapi_env}
+            Set Suite Variable    ${tag}    sapi
         END
     END
     END
@@ -165,8 +177,8 @@ I get access token for the customer:
     ${response}=    IF    ${headers_not_empty}       run keyword    POST    ${current_url}/access-tokens    json=${data}    headers=${headers}    verify=${verify_ssl}
     ...    ELSE    POST    ${current_url}/access-tokens    json=${data}    verify=${verify_ssl}
     ${response.status_code}=    Set Variable    ${response.status_code}
-    IF    ${response.status_code} != 204    
-        TRY    
+    IF    ${response.status_code} != 204
+        TRY
             ${response_body}=    Set Variable    ${response.json()}
         EXCEPT
             ${content_type}=    Get From Dictionary    ${response.headers}    content-type
@@ -241,8 +253,8 @@ I get access token for the company user by uuid:
     ${response}=    IF    ${headers_not_empty}       run keyword    POST    ${current_url}/company-user-access-tokens    json=${data}    headers=${headers}    verify=${verify_ssl}
     ...    ELSE    POST    ${current_url}/company-user-access-tokens    json=${data}    verify=${verify_ssl}
     ${response.status_code}=    Set Variable    ${response.status_code}
-    IF    ${response.status_code} != 204    
-        TRY    
+    IF    ${response.status_code} != 204
+        TRY
             ${response_body}=    Set Variable    ${response.json()}
         EXCEPT
             ${content_type}=    Get From Dictionary    ${response.headers}    content-type
@@ -276,8 +288,8 @@ I send a POST request:
     ${response}=    IF    ${headers_not_empty}   run keyword    POST    ${current_url}${path}    json=${data}    headers=${headers}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}    verify=${verify_ssl}
     ...    ELSE    POST    ${current_url}${path}    json=${data}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=ANY    verify=${verify_ssl}
     ${response.status_code}=    Set Variable    ${response.status_code}
-    IF    ${response.status_code} != 204    
-        TRY    
+    IF    ${response.status_code} != 204
+        TRY
             ${response_body}=    Set Variable    ${response.json()}
         EXCEPT
             ${content_type}=    Get From Dictionary    ${response.headers}    content-type
@@ -285,7 +297,7 @@ I send a POST request:
         END
     END
     ${response_headers}=    Set Variable    ${response.headers}
-    IF    ${response.status_code} == 204    
+    IF    ${response.status_code} == 204
         ${response_body}=    Set Variable    ${EMPTY}
     END
     Set Test Variable    ${response_headers}    ${response_headers}
@@ -311,8 +323,8 @@ I send a POST request with data:
     ${response}=    IF    ${headers_not_empty}   run keyword    POST    ${current_url}${path}    data=${data}    headers=${headers}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}    verify=${verify_ssl}
     ...    ELSE    POST    ${current_url}${path}    data=${data}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}    verify=${verify_ssl}
     ${response.status_code}=    Set Variable    ${response.status_code}
-    IF    ${response.status_code} != 204    
-        TRY    
+    IF    ${response.status_code} != 204
+        TRY
             ${response_body}=    Set Variable    ${response.json()}
         EXCEPT
             ${content_type}=    Get From Dictionary    ${response.headers}    content-type
@@ -320,7 +332,7 @@ I send a POST request with data:
         END
     END
     ${response_headers}=    Set Variable    ${response.headers}
-    IF    ${response.status_code} == 204    
+    IF    ${response.status_code} == 204
         ${response_body}=    Set Variable    ${EMPTY}
     END
     Set Test Variable    ${response_headers}    ${response_headers}
@@ -346,8 +358,8 @@ I send a PUT request:
     ${response}=    IF    ${headers_not_empty}   run keyword    PUT    ${current_url}${path}    json=${data}    headers=${headers}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}    verify=${verify_ssl}
     ...    ELSE    PUT    ${current_url}${path}    json=${data}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}    verify=${verify_ssl}
     ${response.status_code}=    Set Variable    ${response.status_code}
-    IF    ${response.status_code} != 204    
-        TRY    
+    IF    ${response.status_code} != 204
+        TRY
             ${response_body}=    Set Variable    ${response.json()}
         EXCEPT
             ${content_type}=    Get From Dictionary    ${response.headers}    content-type
@@ -355,7 +367,7 @@ I send a PUT request:
         END
     END
     ${response_headers}=    Set Variable    ${response.headers}
-    IF    ${response.status_code} == 204    
+    IF    ${response.status_code} == 204
         ${response_body}=    Set Variable    ${EMPTY}
     END
     Set Test Variable    ${response_headers}    ${response_headers}
@@ -381,8 +393,8 @@ I send a PUT request with data:
     ${response}=    IF    ${headers_not_empty}   run keyword    PUT    ${current_url}${path}    data=${data}    headers=${headers}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}    verify=${verify_ssl}
     ...    ELSE    PUT    ${current_url}${path}    data=${data}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}    verify=${verify_ssl}
     ${response.status_code}=    Set Variable    ${response.status_code}
-    IF    ${response.status_code} != 204    
-        TRY    
+    IF    ${response.status_code} != 204
+        TRY
             ${response_body}=    Set Variable    ${response.json()}
         EXCEPT
             ${content_type}=    Get From Dictionary    ${response.headers}    content-type
@@ -390,7 +402,7 @@ I send a PUT request with data:
         END
     END
     ${response_headers}=    Set Variable    ${response.headers}
-    IF    ${response.status_code} == 204    
+    IF    ${response.status_code} == 204
         ${response_body}=    Set Variable    ${EMPTY}
     END
     Set Test Variable    ${response_headers}    ${response_headers}
@@ -421,8 +433,8 @@ I send a PATCH request:
     ${response}=    IF    ${headers_not_empty}   run keyword    PATCH   ${current_url}${path}    json=${data}    headers=${headers}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}    verify=${verify_ssl}
     ...    ELSE    PATCH    ${current_url}${path}    json=${data}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}    verify=${verify_ssl}
     ${response.status_code}=    Set Variable    ${response.status_code}
-    IF    ${response.status_code} != 204    
-        TRY    
+    IF    ${response.status_code} != 204
+        TRY
             ${response_body}=    Set Variable    ${response.json()}
         EXCEPT
             ${content_type}=    Get From Dictionary    ${response.headers}    content-type
@@ -430,7 +442,7 @@ I send a PATCH request:
         END
     END
     ${response_headers}=    Set Variable    ${response.headers}
-    IF    ${response.status_code} == 204    
+    IF    ${response.status_code} == 204
         ${response_body}=    Set Variable    ${EMPTY}
     END
     Set Test Variable    ${response_headers}    ${response_headers}
@@ -462,8 +474,8 @@ I send a PATCH request with data
     ${response}=    IF    ${headers_not_empty}   run keyword    PATCH    ${current_url}${path}    data=${data}    headers=${headers}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}    verify=${verify_ssl}
     ...    ELSE    PATCH    ${current_url}${path}    data=${data}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}    verify=${verify_ssl}
     ${response.status_code}=    Set Variable    ${response.status_code}
-    IF    ${response.status_code} != 204    
-        TRY    
+    IF    ${response.status_code} != 204
+        TRY
             ${response_body}=    Set Variable    ${response.json()}
         EXCEPT
             ${content_type}=    Get From Dictionary    ${response.headers}    content-type
@@ -471,7 +483,7 @@ I send a PATCH request with data
         END
     END
     ${response_headers}=    Set Variable    ${response.headers}
-    IF    ${response.status_code} == 204    
+    IF    ${response.status_code} == 204
         ${response_body}=    Set Variable    ${EMPTY}
     END
     Set Test Variable    ${response_headers}    ${response_headers}
@@ -500,8 +512,8 @@ I send a GET request:
     ${response}=    IF    ${headers_not_empty}   run keyword    GET    ${current_url}${path}    headers=${headers}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}    verify=${verify_ssl}
     ...    ELSE    GET    ${current_url}${path}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}    verify=${verify_ssl}
     ${response.status_code}=    Set Variable    ${response.status_code}
-    IF    ${response.status_code} != 204    
-        TRY    
+    IF    ${response.status_code} != 204
+        TRY
             ${response_body}=    Set Variable    ${response.json()}
         EXCEPT
             ${content_type}=    Get From Dictionary    ${response.headers}    content-type
@@ -509,7 +521,7 @@ I send a GET request:
         END
     END
     ${response_headers}=    Set Variable    ${response.headers}
-    IF    ${response.status_code} == 204    
+    IF    ${response.status_code} == 204
         ${response_body}=    Set Variable    ${EMPTY}
     END
     Set Test Variable    ${response_headers}    ${response_headers}
@@ -542,15 +554,15 @@ I send a DELETE request:
     ...    ELSE    DELETE    ${current_url}${path}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}    verify=${verify_ssl}
     ${response_headers}=    Set Variable    ${response.headers}
     ${response.status_code}=    Set Variable    ${response.status_code}
-    IF    ${response.status_code} != 204    
-        TRY    
+    IF    ${response.status_code} != 204
+        TRY
             ${response_body}=    Set Variable    ${response.json()}
         EXCEPT
             ${content_type}=    Get From Dictionary    ${response.headers}    content-type
             Fail    Got: '${response.status_code}' status code on: '${response.url}' with reason: '${response.reason}'. Response content type: '${content_type}'. Details: '${response.content}'
         END
     END
-    IF    ${response.status_code} == 204    
+    IF    ${response.status_code} == 204
         ${response_body}=    Set Variable    ${EMPTY}
     END
     Set Test Variable    ${response}    ${response}
@@ -589,7 +601,7 @@ Response body should contain:
     Should Contain    ${response_body}    ${value}    Response body does not contain expected: '${value}'.
 
 Response body parameter should be:
-    [Documentation]    This keyword checks that the response saved  in ``${response_body}`` test variable contsains the speficied parameter ``${json_path}`` with he specified value ``${expected_value}``.
+    [Documentation]    This keyword checks that the response saved  in ``${response_body}`` test variable contsains the speficied parameter ``${json_path}`` with the specified value ``${expected_value}``.
     ...
     ...    *Example:*
     ...
@@ -600,7 +612,25 @@ Response body parameter should be:
     ${data}=    Replace String    ${data}    '   ${EMPTY}
     ${data}=    Replace String    ${data}    [   ${EMPTY}
     ${data}=    Replace String    ${data}    ]   ${EMPTY}
-    Log    ${data} 
+    Log    ${data}
+    Should Be Equal    ${data}    ${expected_value}    Response data in: '${json_path}', does not equal expected: '${expected_value}', actual is: '${data}'.
+
+Response body case-insensitive parameter should be:
+    [Documentation]    This keyword checks that the response saved in ``${response_body}`` test variable contains the specified parameter ``${json_path}`` with the specified case-insensitive value ``${expected_value}``.
+    ...
+    ...    *Example:*
+    ...
+    ...    ``Response body case-insensitive parameter should be:    [data][0][type]    Abstract-Product-Availabilities``
+    [Arguments]    ${json_path}    ${expected_value}
+    ${data}=    Get Value From Json    ${response_body}    ${json_path}
+    ${data}=    Convert To String    ${data}
+    ${data}=    Replace String    ${data}    '   ${EMPTY}
+    ${data}=    Replace String    ${data}    [   ${EMPTY}
+    ${data}=    Replace String    ${data}    ]   ${EMPTY}
+    ${data}=    Convert To Lower Case    ${data}
+    ${expected_value}=    Convert To Lower Case    ${expected_value}
+    Log    ${data}
+    Log    ${expected_value}
     Should Be Equal    ${data}    ${expected_value}    Response data in: '${json_path}', does not equal expected: '${expected_value}', actual is: '${data}'.
 
 Perform arithmetical calculation with two arguments:
@@ -643,7 +673,7 @@ Response body parameter should be in:
     ${data}=    Replace String    ${data}    [   ${EMPTY}
     ${data}=    Replace String    ${data}    ]   ${EMPTY}
     Log    ${data}
-    TRY    
+    TRY
         Should Contain Any   ${data}    ${expected_value1}    ${expected_value2}    ${expected_value3}    ${expected_value4}    ${expected_value5}    ${expected_value6}    ${expected_value7}    ${expected_value8}    ${expected_value9}      ignore_case=True
     EXCEPT
         Fail    Response data in: '${json_path}', does not contains any: '${expected_value1}', '${expected_value2}', '${expected_value3}', '${expected_value4}', '${expected_value5}', '${expected_value6}', '${expected_value7}', '${expected_value8}', '${expected_value9}', in '${data}'.
@@ -692,7 +722,7 @@ Response body parameter should be NOT in:
     ${data}=    Replace String    ${data}    [   ${EMPTY}
     ${data}=    Replace String    ${data}    ]   ${EMPTY}
     Log    ${data}
-    TRY    
+    TRY
         Should NOT Contain Any   ${data}    ${expected_value1}    ${expected_value2}    ${expected_value3}    ${expected_value4}    ignore_case=True
     EXCEPT
         Fail    Response data in: '${json_path}', should not contain any: ${expected_value1}, ${expected_value2}, ${expected_value3}, ${expected_value4} in '${data}'.
@@ -1379,7 +1409,7 @@ Response should return error message:
     ...
     ...    ``Response should return error message:    Can`t find abstract product image sets.``
     [Arguments]    ${error_message}
-    IF    '${tag}'=='bapi'   
+    IF    '${tag}'=='bapi' or '${tag}'=='sapi'
         ${data}=    Get Value From Json    ${response_body}    [errors][0][message]
     ELSE
         ${data}=    Get Value From Json    ${response_body}    [errors][0][detail]
@@ -1609,15 +1639,15 @@ Cleanup existing customer addresses:
     ...    ``Cleanup existing customer addresses:    ${yves_user.reference}``
     [Arguments]    ${customer_reference}
     ${response}=    GET    ${current_url}/customers/${customer_reference}/addresses    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}    expected_status=200    verify=${verify_ssl}
-    IF    ${response.status_code} != 204    
-        TRY    
+    IF    ${response.status_code} != 204
+        TRY
             ${response_body}=    Set Variable    ${response.json()}
         EXCEPT
             ${content_type}=    Get From Dictionary    ${response.headers}    content-type
             Fail    Got: '${response.status_code}' status code on: '${response.url}' with reason: '${response.reason}'. Response content type: '${content_type}'. Details: '${response.content}'
         END
     END
-    IF    ${response.status_code} == 204    
+    IF    ${response.status_code} == 204
         ${response_body}=    Set Variable    ${EMPTY}
     END
     Set Variable    ${response_body}    ${response_body}
@@ -1637,8 +1667,8 @@ Cleanup existing customer addresses:
         ${address_uid}=    Replace String    ${address_uid}    ]   ${EMPTY}
         ${response_delete}=    DELETE    ${current_url}/customers/${customer_reference}/addresses/${address_uid}    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}    expected_status=204    verify=${verify_ssl}
         ${response.status_code}=    Set Variable    ${response_delete.status_code}
-        IF    ${response.status_code} != 204    
-            TRY    
+        IF    ${response.status_code} != 204
+            TRY
                 ${response_body}=    Set Variable    ${response.json()}
             EXCEPT
                 ${content_type}=    Get From Dictionary    ${response.headers}    content-type
@@ -1657,15 +1687,15 @@ Find or create customer cart
         ...
         ${response}=    GET    ${current_url}/carts    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}    expected_status=200    verify=${verify_ssl}
         ${response.status_code}=    Set Variable    ${response.status_code}
-        IF    ${response.status_code} != 204    
-            TRY    
+        IF    ${response.status_code} != 204
+            TRY
                 ${response_body}=    Set Variable    ${response.json()}
             EXCEPT
                 ${content_type}=    Get From Dictionary    ${response.headers}    content-type
                 Fail    Got: '${response.status_code}' status code on: '${response.url}' with reason: '${response.reason}'. Response content type: '${content_type}'. Details: '${response.content}'
             END
         END
-        IF    ${response.status_code} == 204    
+        IF    ${response.status_code} == 204
             ${response_body}=    Set Variable    ${EMPTY}
         END
         ${response_headers}=    Set Variable    ${response.headers}
@@ -1697,7 +1727,7 @@ Find or create customer cart
                         Set Test Variable    ${cart_id}    ${cart_id}
                         BREAK
                     END
-                    IF    ${index} < ${carts_number}-1 and ${expected_cart_found} == 0    
+                    IF    ${index} < ${carts_number}-1 and ${expected_cart_found} == 0
                         Continue For Loop
                     ELSE
                         I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "dummyCart${random}"}}}
@@ -1711,14 +1741,14 @@ Find or create customer cart
 
 Create empty customer cart:
     [Documentation]    This keyword creates cart for the current customer token. This keyword sets ``${cart_id} `` variable
-        ...                and it can be re-used by the keywords that follow this keyword in the test. 
-        ...    
+        ...                and it can be re-used by the keywords that follow this keyword in the test.
+        ...
         ...    Note: work only for registered customers. For guest users use ``Create a guest cart:``
         ...
         ...    *Example:*
         ...
         ...    ``Create empty customer cart:    ${mode.gross}    ${currency.eur.code}    ${store.de}    cart_rules``
-        ...    
+        ...
         [Arguments]    ${price_mode}    ${currency_code}    ${store_code}    ${cart_name}
         I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${price_mode}","currency": "${currency_code}","store": "${store_code}","name": "${cart_name}-${random}"}}}
         Save value to a variable:    [data][id]    cart_id
@@ -1748,7 +1778,7 @@ Create giftcode in Database:
         ...    *Example:*
         ...
         ...    ``Create giftcode in Database:    checkout_${random}    ${gift_card.amount}``
-        ... 
+        ...
     [Arguments]    ${spy_gift_card_code}    ${spy_gift_card_value}
     ${amount}=   Evaluate    ${spy_gift_card_value} / 100
     ${amount}=    Evaluate    "%.f" % ${amount}
@@ -1756,7 +1786,7 @@ Create giftcode in Database:
     ${last_id}=    Query    SELECT id_gift_card FROM spy_gift_card ORDER BY id_gift_card DESC LIMIT 1;
     ${new_id}=    Set Variable    ${EMPTY}
     ${last_id_length}=    Get Length    ${last_id}
-    IF    ${last_id_length} > 0    
+    IF    ${last_id_length} > 0
         ${new_id}=    Evaluate    ${last_id[0][0]} + 1
     ELSE
         ${new_id}=    Evaluate    1
@@ -1796,15 +1826,15 @@ Cleanup all items in the cart:
         [Arguments]    ${cart_id}
         ${response}=    GET    ${current_url}/carts/${cart_id}    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}  params=include=items,bundle-items     expected_status=200    verify=${verify_ssl}
         ${response.status_code}=    Set Variable    ${response.status_code}
-        IF    ${response.status_code} != 204    
-            TRY    
+        IF    ${response.status_code} != 204
+            TRY
                 ${response_body}=    Set Variable    ${response.json()}
             EXCEPT
                 ${content_type}=    Get From Dictionary    ${response.headers}    content-type
                 Fail    Got: '${response.status_code}' status code on: '${response.url}' with reason: '${response.reason}'. Response content type: '${content_type}'. Details: '${response.content}'
             END
         END
-        IF    ${response.status_code} == 204    
+        IF    ${response.status_code} == 204
             ${response_body}=    Set Variable    ${EMPTY}
         END
         @{included}=    Get Value From Json    ${response_body}    [included]
@@ -1826,7 +1856,7 @@ Cleanup all items in the cart:
                     ${cart_item_sku}=    Replace String    ${cart_item_sku}    ]   ${EMPTY}
                     TRY
                         ${response_delete}=    DELETE    ${current_url}/carts/${cart_id}/items/${cart_item_uid}    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}    expected_status=204    verify=${verify_ssl}
-                    EXCEPT    
+                    EXCEPT
                         ${response_delete}=    DELETE    ${current_url}/carts/${cart_id}/items/${cart_item_sku}    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}    expected_status=204    verify=${verify_ssl}
                     END
             END
@@ -1837,21 +1867,25 @@ Cleanup all customer carts
         ...
         ...    Before using this method you should get customer token and set it into the headers with the help of ``I get access token for the customer:`` and ``I set Headers:``
         ...    This keyword does not accept any arguments.
-        ...    
+        ...
         ...    *Example:*
         ...
         ...    ``Cleanup all customer carts``
+        IF    '${env}' not in ['api_b2c','api_mp_b2c']
+            I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "dummyCart-${{random.randint(0, 100)}}${random}"}}}
+            Save value to a variable:    [data][id]    cart_id
+        END
         ${response}=    GET    ${current_url}/carts    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}  params=include=items,bundle-items     expected_status=200    verify=${verify_ssl}
         ${response.status_code}=    Set Variable    ${response.status_code}
-        IF    ${response.status_code} != 204    
-            TRY    
+        IF    ${response.status_code} != 204
+            TRY
                 ${response_body}=    Set Variable    ${response.json()}
             EXCEPT
                 ${content_type}=    Get From Dictionary    ${response.headers}    content-type
                 Fail    Got: '${response.status_code}' status code on: '${response.url}' with reason: '${response.reason}'. Response content type: '${content_type}'. Details: '${response.content}'
             END
         END
-        IF    ${response.status_code} == 204    
+        IF    ${response.status_code} == 204
             ${response_body}=    Set Variable    ${EMPTY}
         END
         @{data}=    Get Value From Json    ${response_body}    [data]
@@ -1866,7 +1900,15 @@ Cleanup all customer carts
                     ${cart_uuid}=    Replace String    ${cart_uuid}    '   ${EMPTY}
                     ${cart_uuid}=    Replace String    ${cart_uuid}    [   ${EMPTY}
                     ${cart_uuid}=    Replace String    ${cart_uuid}    ]   ${EMPTY}
-                    ${response_delete}=    DELETE    ${current_url}/carts/${cart_uuid}    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}    expected_status=204    verify=${verify_ssl}
+                    IF    '${env}' not in ['api_b2c','api_mp_b2c']
+                        IF    '${cart_uuid}' == '${cart_id}'
+                            Continue For Loop
+                        ELSE
+                            ${response_delete}=    DELETE    ${current_url}/carts/${cart_uuid}    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}    expected_status=204    verify=${verify_ssl}
+                        END
+                    ELSE
+                        ${response_delete}=    DELETE    ${current_url}/carts/${cart_uuid}    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}    expected_status=204    verify=${verify_ssl}
+                    END
             END
         END
 
@@ -1881,15 +1923,15 @@ Cleanup all items in the guest cart:
         [Arguments]    ${cart_id}
         ${response}=    GET    ${current_url}/guest-carts/${cart_id}    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}  params=include=guest-cart-items,bundle-items    expected_status=200    verify=${verify_ssl}
         ${response.status_code}=    Set Variable    ${response.status_code}
-        IF    ${response.status_code} != 204    
-            TRY    
+        IF    ${response.status_code} != 204
+            TRY
                 ${response_body}=    Set Variable    ${response.json()}
             EXCEPT
                 ${content_type}=    Get From Dictionary    ${response.headers}    content-type
                 Fail    Got: '${response.status_code}' status code on: '${response.url}' with reason: '${response.reason}'. Response content type: '${content_type}'. Details: '${response.content}'
             END
         END
-        IF    ${response.status_code} == 204    
+        IF    ${response.status_code} == 204
             ${response_body}=    Set Variable    ${EMPTY}
         END
         @{included}=    Get Value From Json    ${response_body}    [included]
@@ -1918,15 +1960,15 @@ Cleanup all availability notifications:
         [Arguments]    ${yves_user.reference}
         ${response}=    GET    ${current_url}/customers/${yves_user.reference}/availability-notifications    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}   expected_status=200    verify=${verify_ssl}
         ${response.status_code}=    Set Variable    ${response.status_code}
-        IF    ${response.status_code} != 204    
-            TRY    
+        IF    ${response.status_code} != 204
+            TRY
                 ${response_body}=    Set Variable    ${response.json()}
             EXCEPT
                 ${content_type}=    Get From Dictionary    ${response.headers}    content-type
                 Fail    Got: '${response.status_code}' status code on: '${response.url}' with reason: '${response.reason}'. Response content type: '${content_type}'. Details: '${response.content}'
             END
         END
-        IF    ${response.status_code} == 204    
+        IF    ${response.status_code} == 204
             ${response_body}=    Set Variable    ${EMPTY}
         END
         @{data}=    Get Value From Json    ${response_body}    [data]
@@ -1948,11 +1990,11 @@ Cleanup all availability notifications:
             END
         END
 Update order status in Database:
-    [Documentation]    This keyword updates order status in database to any required status. This allows to skip going through the order workflow manually 
-    ...    but just switch to the status you need to create a test. 
+    [Documentation]    This keyword updates order status in database to any required status. This allows to skip going through the order workflow manually
+    ...    but just switch to the status you need to create a test.
     ...    There is no separate endpoint to update order status and this keyword allows to do this via database value update.
     ...    *Example:*
-    ...    
+    ...
     ...    ``Update order status in Database:    7    shipped``
     [Arguments]    ${order_item_status_name}    ${uuid_to_use}
     Connect to Spryker DB
@@ -1962,7 +2004,7 @@ Update order status in Database:
     ${expected_state_id}=    Query    SELECT id_oms_order_item_state FROM spy_oms_order_item_state WHERE name='${order_item_status_name}';
     ${last_id_length}=    Get Length    ${last_id}
     ${expected_state_id_length}=    Get Length    ${expected_state_id}
-    IF    ${expected_state_id_length} > 0 
+    IF    ${expected_state_id_length} > 0
         ${state_id}=    Set Variable    ${expected_state_id[0][0]}
     ELSE
         ${new_id}=    Evaluate    ${last_id[0][0]} + 1
@@ -1971,7 +2013,7 @@ Update order status in Database:
     END
     Execute Sql String    update spy_sales_order_item set fk_oms_order_item_state = '${state_id}' where uuid= '${uuid_to_use}'
     Disconnect From Database
- 
+
 Get voucher code by discountId from Database:
     [Documentation]    This keyword allows to get voucher code according to the discount ID. Discount_id can be found in Backoffice > Merchandising > Discount page
     ...        and set this id as an argument of a keyword.
@@ -1987,14 +2029,14 @@ Get voucher code by discountId from Database:
     END
 
 Connect to Spryker DB
-    [Documentation]    This keyword allows to connect to Spryker DB. 
+    [Documentation]    This keyword allows to connect to Spryker DB.
     ...        Supports both MariaDB and PostgeSQL.
-    ...    
+    ...
     ...        To specify the expected DB engine, use ``db_engine`` variabl. Default one -> *MariaDB*
-    ...    
+    ...
     ...    *Example:*
     ...    ``robot -v env:api_suite -v db_engine:psycopg2``
-    ...    
+    ...
     ...    with the example above you'll use PostgreSQL DB engine
     ${db_name}=    Set Variable If    '${db_name}' == '${EMPTY}'    ${default_db_name}    ${db_name}
     ${db_user}=    Set Variable If    '${db_user}' == '${EMPTY}'    ${default_db_user}    ${db_user}
@@ -2007,7 +2049,7 @@ Connect to Spryker DB
         ${db_engine}=    Set Variable    psycopg2
     ELSE IF    '${db_engine}' == 'postgres'
         ${db_engine}=    Set Variable    psycopg2
-    END    
+    END
     IF    '${db_engine}' == 'psycopg2'
         ${db_port}=    Set Variable If    '${db_port}' == '${EMPTY}'    ${db_port_postgres_env}    ${db_port}
         IF    '${db_port_postgres_env}' == '${EMPTY}'
@@ -2024,9 +2066,9 @@ Connect to Spryker DB
 
 Get the first company user id and its' customer email
     [Documentation]    This keyword sends the GET reguest to the ``/company-users?include=customers`` endpoint and returns first available company user id and its' customer email in
-    ...    ``${companyUserId}``  and  ``${companyUserEmail}`` variables. 
+    ...    ``${companyUserId}``  and  ``${companyUserEmail}`` variables.
     ...    If the fist company user is anne.boleyn@spryker.com - the next one will be taken and Anna is a 'BoB' user
-    ...    
+    ...
     I send a GET request:    /company-users?include=customers
     Save value to a variable:    [data][0][id]    companyUserId
     Save value to a variable:    [included][0][attributes][email]    companyUserEmail
@@ -2041,7 +2083,7 @@ Array element should contain nested array at least once:
     ...    *Example:*
     ...
     ...   ``Array element should contain nested array at least once:    [data]    [relationships]``
-    ...    
+    ...
     [Arguments]    ${parent_array}    ${expected_nested_array}
     @{data}=    Get Value From Json    ${response_body}    ${parent_array}
     ${list_length}=    Get Length    @{data}
@@ -2156,7 +2198,7 @@ Array element should contain nested array with property and value at least once:
     ...    *Example:*
     ...
     ...   ``And Array element should contain nested array with property and value at least once:    [data][0][attributes][categoryTreeFilter]    [children]    docCount    ${category_lvl2.qty}``
-    ...    
+    ...
     [Arguments]    ${json_path}    ${nested_array}    ${expected_property}    ${expected_value}
     @{data}=    Get Value From Json    ${response_body}    ${json_path}
     ${list_length1}=    Get Length    @{data}
@@ -2188,10 +2230,10 @@ Array element should contain nested array with property and value at least once:
 
 Get company user id by customer reference:
     [Documentation]    This keyword sends the GET reguest to the ``/company-users?include=customers`` endpoint and returns company user id by customer reference. Sets variable : ``${companyUserId}``
-    ...    
+    ...
     ...    *Example:*
     ...    ``Get company user id by customer reference:    ${yves_fifth_user.reference}``
-    ...    
+    ...
     [Arguments]    ${customer_reference}
     I send a GET request:    /company-users?include=customers
     @{data}=    Get Value From Json    ${response_body}    [data]
@@ -2216,7 +2258,7 @@ Get company user id by customer reference:
         IF    '${company_user_customer_id}' == '${customer_reference}'    BREAK
         IF    ${index} == ${list_length}-1
             Fail    expected customer reference '${customer_reference}' is not present in '@{data}' but should
-        END        
+        END
     END
 
 Cleanup all existing shopping lists
@@ -2224,21 +2266,21 @@ Cleanup all existing shopping lists
         ...
         ...    Before using this method you should get customer token and set it into the headers with the help of ``I get access token for the customer:`` and ``I set Headers:``
         ...    This keyword does not accept any arguments.
-        ...    
+        ...
         ...    *Example:*
         ...
         ...    ``Cleanup all existing shopping lists``
         ${response}=    GET    ${current_url}/shopping-lists    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}  params=include=items,bundle-items     expected_status=200    verify=${verify_ssl}
         ${response.status_code}=    Set Variable    ${response.status_code}
-        IF    ${response.status_code} != 204    
-            TRY    
+        IF    ${response.status_code} != 204
+            TRY
                 ${response_body}=    Set Variable    ${response.json()}
             EXCEPT
                 ${content_type}=    Get From Dictionary    ${response.headers}    content-type
                 Fail    Got: '${response.status_code}' status code on: '${response.url}' with reason: '${response.reason}'. Response content type: '${content_type}'. Details: '${response.content}'
             END
         END
-        IF    ${response.status_code} == 204    
+        IF    ${response.status_code} == 204
             ${response_body}=    Set Variable    ${EMPTY}
         END
         @{data}=    Get Value From Json    ${response_body}    [data]
@@ -2258,11 +2300,11 @@ Cleanup all existing shopping lists
         END
 
 Create merchant order for the item in DB and change status:
-    [Documentation]    This keyword creates new merchant order in the DB and sets the desired status . This allows to skip going through the order workflow manually 
-    ...    but just switch to the status you need to create a test. 
+    [Documentation]    This keyword creates new merchant order in the DB and sets the desired status . This allows to skip going through the order workflow manually
+    ...    but just switch to the status you need to create a test.
     ...    There is no separate endpoint to update order status and this keyword allows to do this via database value update.
     ...    *Example:*
-    ...    
+    ...
     ...    ``Create merchant order for the item in DB and change status:    shipped    ${uuid}    ${merchants.sony_experts.merchant_reference}``
     [Arguments]    ${order_item_status_name}    ${uuid_to_use}    ${merchant_reference}
     Connect to Spryker DB
@@ -2276,7 +2318,7 @@ Create merchant order for the item in DB and change status:
         ${state_id}=    Convert To String    ${state_id}
     END
     ${expected_state_id_length}=    Get Length    ${expected_state_id}
-    IF    ${expected_state_id_length} > 0 
+    IF    ${expected_state_id_length} > 0
         ${state_id}=    Set Variable    ${expected_state_id[0][0]}
     ELSE
         ${state_id}=    Set Variable    ${state_id}
@@ -2317,3 +2359,67 @@ Create merchant order for the item in DB and change status:
     ${random_merchant_order_item_reference}=    Generate Random String    10    [NUMBERS]
     Execute Sql String    INSERT INTO spy_merchant_sales_order_item (id_merchant_sales_order_item, fk_merchant_sales_order, fk_sales_order_item, fk_state_machine_item_state, merchant_order_item_reference) VALUES (${new_merchant_order_item_id}, ${new_merchant_order_id}, ${sales_order_item_id}, ${state_id}, '${random_merchant_order_item_reference}');
     Disconnect From Database
+
+Delete country by iso2_code in Database:
+    [Documentation]    This keyword deletes a country by iso2_code in the DB table spy_country.
+        ...    *Example:*
+        ...
+        ...    ``Delete country by iso2_code in Database:    DE``
+        ...
+    [Arguments]    ${iso2_code}
+    Connect to Spryker DB
+    Execute Sql String    DELETE FROM spy_country WHERE iso2_code = '${iso2_code}';
+    Disconnect From Database
+
+Create dynamic entity configuration in Database:
+     [Documentation]    This keyword create dynamic entity configuration in the DB table spy_dynamic_entity_configuration.
+        ...    *Example:*
+        ...
+        ...    ``Create dynamic entity configuration in Database:    country    spy_country     1   {"identifier":"id_country","fields":[...]}``
+        ...
+    [Arguments]    ${table_alias}   ${table_name}    ${is_active}    ${definition}
+    Connect to Spryker DB
+    ${last_id}=    Query    SELECT id_dynamic_entity_configuration FROM spy_dynamic_entity_configuration ORDER BY id_dynamic_entity_configuration DESC LIMIT 1;
+    ${new_id}=    Set Variable    ${EMPTY}
+    ${last_id_length}=    Get Length    ${last_id}
+    IF    ${last_id_length} > 0
+        ${new_id}=    Evaluate    ${last_id[0][0]} + 1
+    ELSE
+        ${new_id}=    Evaluate    1
+    END
+    Log    ${new_id}
+    IF    '${db_engine}' == 'pymysql'
+        Execute Sql String  insert ignore into spy_dynamic_entity_configuration (table_alias, table_name, is_active, definition) value ('${table_alias}', '${table_name}', '${is_active}', '${definition}');
+    ELSE
+        Execute Sql String  insert into spy_dynamic_entity_configuration (id_dynamic_entity_configuration, table_alias, table_name, is_active, definition) values (${new_id}, '${table_alias}', '${table_name}', '${is_active}', '${definition}')
+    END
+    Disconnect From Database
+
+Delete dynamic entity configuration in Database:
+     [Documentation]    This keyword delete dynamic entity configuration in the DB table spy_dynamic_entity_configuration.
+        ...    *Example:*
+        ...
+        ...    ``Delete dynamic entity configuration in Database:    country```
+        ...
+    [Arguments]    ${table_alias}
+    Connect to Spryker DB
+    Execute Sql String  DELETE FROM spy_dynamic_entity_configuration WHERE table_alias = '${table_alias}';
+    Disconnect From Database
+
+I get access token by user credentials:
+    [Documentation]    This is a helper keyword which helps get access token for future use in the headers of the following requests.
+    ...
+    ...    It gets the token for the specified user ``${email}`` and saves it into the test variable ``${token}``, which can then be used within the scope of the test where this keyword was called.
+    ...    After the test ends the ``${token}`` variable is cleared. This keyword needs to be called separately for each test where you expect to need a customer token.
+    ...
+    ...    The password in this case is not passed to the keyword and the default password stored in ``${default_password}`` will be used when getting token.
+    ...
+    ...    *Example:*
+    ...
+    ...    ``I get access token by user credentials:    ${zed_admin.email}``
+    [Arguments]    ${email}    ${password}=${default_password}
+    When I set Headers:    Content-Type=application/x-www-form-urlencoded
+    And I send a POST request:    /token    {"grantType": "${grant_type.password}","username": "${email}","password": "${password}"}
+    Save value to a variable:    [access_token]    token
+    Log    ${token}
+    [Return]    ${token}
