@@ -38,7 +38,7 @@ Abstract_prices_detault_only_CHF
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     When I send a GET request:
-    ...    /abstract-products/${abstract.available_products.with_3_concretes.sku}/abstract-product-prices?currency=EUR&priceMode=GROSS_MODE
+    ...    /abstract-products/${abstract.available_products.with_3_concretes.sku}/abstract-product-prices?currency=CHF&priceMode=GROSS_MODE
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
