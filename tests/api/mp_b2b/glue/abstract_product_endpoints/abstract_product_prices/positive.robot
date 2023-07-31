@@ -9,7 +9,6 @@ ENABLER
     TestSetup
     
 Get_abstract_prices_detault_only
-    [Documentation]    https://spryker.atlassian.net/browse/CC-29970 
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}  
     When I send a GET request:    /abstract-products/${abstract_product.abstract_product_with_variants.concretes_3}/abstract-product-prices?currency=EUR&priceMode=GROSS_MODE
@@ -31,7 +30,6 @@ Get_abstract_prices_detault_only
 
 
 Get_abstract_prices_detault_only_CHF
-    [Documentation]    https://spryker.atlassian.net/browse/CC-29970 
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}  
     When I send a GET request:    /abstract-products/${abstract_product.abstract_product_with_variants.concretes_3}/abstract-product-prices?currency=CHF&priceMode=GROSS_MODE
@@ -52,7 +50,6 @@ Get_abstract_prices_detault_only_CHF
     And Response body has correct self link
 
 Get_abstract_product_with_include_abstract_product_prices_only_default
-    [Documentation]    https://spryker.atlassian.net/browse/CC-29970 
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}  
     When I send a GET request:    /abstract-products/${abstract_product.abstract_product_with_variants.concretes_3}?include=abstract-product-prices&currency=EUR&priceMode=GROSS_MODE
@@ -80,7 +77,6 @@ Get_abstract_product_with_include_abstract_product_prices_only_default
     And Response body parameter should be:    [included][0][attributes][prices][0][currency][symbol]    ${currency.eur.symbol}
     
 Get_abstract_product_volume_prices
-    [Documentation]    https://spryker.atlassian.net/browse/CC-29970 
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}  
     When I send a GET request:    /abstract-products/${abstract_product.product_with_volume_prices.abstract_sku}/abstract-product-prices?currency=EUR&priceMode=GROSS_MODE
@@ -106,7 +102,6 @@ Get_abstract_product_volume_prices
     And Response body has correct self link
 
 Get_abstract_product_with_include_abstract_product_prices_with_volume_prices
-    [Documentation]    https://spryker.atlassian.net/browse/CC-29970 
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}  
     When I send a GET request:    /abstract-products/${abstract_product.product_with_volume_prices.abstract_sku}?include=abstract-product-prices&currency=EUR&priceMode=GROSS_MODE
@@ -140,7 +135,6 @@ Get_abstract_product_with_include_abstract_product_prices_with_volume_prices
     And Response body parameter should be:    [included][0][attributes][prices][0][currency][symbol]    ${currency.eur.symbol}
 
 Get_abstract_product_with_original_price
-    [Documentation]    https://spryker.atlassian.net/browse/CC-29970 
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}  
     When I send a GET request:    /abstract-products/${abstract_product.product_with_original_prices.abstract_sku}/abstract-product-prices?currency=EUR&priceMode=GROSS_MODE

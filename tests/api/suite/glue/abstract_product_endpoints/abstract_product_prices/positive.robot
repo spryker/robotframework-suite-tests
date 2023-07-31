@@ -69,8 +69,7 @@ Abstract_volume_prices
     And Response body parameter should be greater than:    [data][0][attributes][prices][0][volumePrices][0][quantity]    1
     And Response body has correct self link
 
-Abstract_prices_original_price
-    [Tags]    
+Abstract_prices_original_price 
     When I send a GET request:    /abstract-products/${abstract_product.product_with_original_prices.sku}/abstract-product-prices?currency=EUR&priceMode=GROSS_MODE
     Then Response status code should be:    200
     And Response reason should be:    OK
