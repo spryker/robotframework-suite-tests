@@ -15,7 +15,7 @@ Get_abstract_prices_by_concrete_SKU
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     When I send a GET request:
-    ...    /abstract-products/${concrete.alternative_products.product_1.sku}/abstract-product-prices?currency=EUR&priceMode=GROSS_MODE
+    ...    /abstract-products/${concrete.alternative_products.product_1.sku}/abstract-product-prices
     Then Response status code should be:    404
     And Response reason should be:    Not Found
     And Response should return error code:    307
@@ -40,7 +40,7 @@ Get_abstract_prices_with_missing_SKU
     And Response should return error message:    Abstract product sku is not specified.
 
 Get_abstract_prices_with_missing_token
-    When I send a GET request:    /abstract-products/${abstract.original_prices.sku}/abstract-product-prices?currency=EUR&priceMode=GROSS_MODE
+    When I send a GET request:    /abstract-products/${abstract.original_prices.sku}/abstract-product-prices
     Then Response status code should be:    403
     And Response reason should be:    Forbidden
     And Response should return error code:    002
@@ -48,7 +48,7 @@ Get_abstract_prices_with_missing_token
 
 Get_abstract_prices_with_invalid_token
     [Setup]    I set Headers:    Content-Type=${default_header_content_type}    Authorization=fake
-    When I send a GET request:    /abstract-products/${abstract.original_prices.sku}/abstract-product-prices?currency=EUR&priceMode=GROSS_MODE
+    When I send a GET request:    /abstract-products/${abstract.original_prices.sku}/abstract-product-prices
     Then Response status code should be:    401
     And Response reason should be:    Unauthorized
     And Response should return error code:    001
