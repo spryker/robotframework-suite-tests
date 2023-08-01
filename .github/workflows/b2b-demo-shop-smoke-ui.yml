@@ -3,9 +3,7 @@ name: "[b2b][internal] Robot Smoke UI"
 on:
     schedule:
         - cron: '0 3 * * *'
-    push:
-        branches:
-            - cc-30088/integrate-demoshops-workflows
+    workflow_dispatch:
 
 jobs:
     docker-alpine-php-8-1-mariadb-robot-ui:
