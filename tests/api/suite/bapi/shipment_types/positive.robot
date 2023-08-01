@@ -9,7 +9,7 @@ ENABLER
     TestSetup
 
 *** Test Cases ***
-Positive Test - Create Shipment Type
+Create_shipment_type
     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
     ...    AND    I set Headers:    Content-Type=application/vnd.api+json   Authorization=Bearer ${token}
     When I send a POST request:    /shipment-types   {"data": {"type": "shipment-types","attributes": {"name": "Some Shipment Type ${random}","key": "some-shipment-type-${random}","isActive": "true","stores": ["DE", "AT"]}}}
@@ -26,7 +26,7 @@ Positive Test - Create Shipment Type
     And Response body has correct self link for created entity:    ${shipment_type_id}
     # [Teardown]
 
-Create New Delivery Type With Existing Not-Unique Name and IsActive and Unique Key
+Create_new_delivery_type_with_existing_not-uniqu_name_and_IsActive_and_unique_key
     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
     ...    AND    I set Headers:    Content-Type=application/vnd.api+json   Authorization=Bearer ${token}
     When I send a POST request:    /shipment-types   {"data": {"type": "shipment-types","attributes": {"name": "not_unnique_name","key": "new-shipment-type-${random}","isActive": "true","stores": ["DE", "AT"]}}}
@@ -46,11 +46,11 @@ Create New Delivery Type With Existing Not-Unique Name and IsActive and Unique K
     And Response body has correct self link for created entity:    ${shipment_type_id}
     # [Teardown]
     
-Update Delivery Type via PATCH - Change Name and Store Relation, deactivate
+Update_Delivery_type_Change_name_and_store_relation_deactivate
     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
     ...    AND    I set Headers:    Content-Type=application/vnd.api+json   Authorization=Bearer ${token}  
     When I send a POST request:    /shipment-types
-    ...    {"data": {"type": "shipment-types","attributes": {"name": "name${random}","key": "key${random}","isActive": "true","stores": ["DE", "AT"]}}}
+    ...    {"data": {"type": "shipment-types","attributes": {"name": "name${random}","key": "key${random}","isActive": "true","stores": ["DE"]}}}
     Then Response status code should be:    201
     And Save value to a variable:    [data][id]    shipment_type_uuid
     # Update the Delivery Type with new attributes via PATCH request
@@ -64,7 +64,7 @@ Update Delivery Type via PATCH - Change Name and Store Relation, deactivate
     And Response body has correct self link internal
     # [Teardown]
 
-GET single Delivery Type with valid token
+Retrive_single_delivery_type_with_valid_token
     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
     ...    AND    I set Headers:    Content-Type=application/vnd.api+json   Authorization=Bearer ${token}
     When I send a POST request:    /shipment-types
@@ -82,7 +82,7 @@ GET single Delivery Type with valid token
     And Response body parameter should be in:    [data][attributes][stores]    AT    DE
     And Response body has correct self link internal
 
-GET list of Delivery Types with valid token
+Retrive_list_of_delivery_types_with_valid_token
     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
     ...    AND    I set Headers:    Content-Type=application/vnd.api+json   Authorization=Bearer ${token} 
     # #prepare test data
