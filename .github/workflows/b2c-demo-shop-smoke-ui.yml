@@ -1,4 +1,4 @@
-name: "[b2c-demo-marketplace] CI Robot Regression UI"
+name: "[b2c-mp][internal] Robot Smoke UI"
 
 on:
     schedule:
@@ -24,11 +24,11 @@ jobs:
               with:
                   python-version: '3.9'
 
-            - name: Up-merge fresh `internal` branch
+            - name: Clone project
               run: |
                   git config --global user.email "github-actions[bot]@users.noreply.github.com"
                   git config --global user.name "github-actions[bot]"
-                  git clone -b internal --single-branch https://github.com/spryker-shop/b2c-demo-marketplace.git .
+                  git clone -b internal --single-branch https://github.com/spryker-shop/b2c-demo-shop.git .
             - name: Install packages
               run: |
                   sudo apt-get install apache2-utils
@@ -63,11 +63,11 @@ jobs:
               run: |
                   cd robotframework-tests
                   rfbrowser init
-                  robot -v env:ui_mp_b2c -v headless:true -d results --exclude skip-due-to-issueORskip-due-to-refactoring tests/ui/regression/mp_b2c.robot
+                  robot -v env:ui_b2c -v headless:true -d results --include smoke --exclude skip-due-to-issueORskip-due-to-refactoring tests/ui/regression/b2c.robot
                   touch results/time.txt && echo $(date) > results/time.txt
             - name: Upload artifacts
               if: always()
               run: |
-                  AWS_DEFAULT_REGION=${{env.ROBOT_TESTS_ARTIFACTS_BUCKET_REGION}} AWS_ACCESS_KEY_ID=${{ secrets.ROBOT_TESTS_ARTIFACTS_KEY }} AWS_SECRET_ACCESS_KEY=${{ secrets.ROBOT_TESTS_ARTIFACTS_SECRET }} aws s3 cp robotframework-tests/results s3://${{vars.ROBOT_TESTS_ARTIFACTS_BUCKET}}/robot-ui-testing/b2c_mp_regression/${GITHUB_RUN_ID}/PHP8.0MariaDBRobotUi/ \
+                  AWS_DEFAULT_REGION=${{env.ROBOT_TESTS_ARTIFACTS_BUCKET_REGION}} AWS_ACCESS_KEY_ID=${{ secrets.ROBOT_TESTS_ARTIFACTS_KEY }} AWS_SECRET_ACCESS_KEY=${{ secrets.ROBOT_TESTS_ARTIFACTS_SECRET }} aws s3 cp robotframework-tests/results s3://${{vars.ROBOT_TESTS_ARTIFACTS_BUCKET}}/robot-ui-testing/b2c_smoke/${GITHUB_RUN_ID}/PHP8.1MariaDBRobotUi/ \
                     --recursive \
                     --expires "$(date -d '+7 days' --utc +'%Y-%m-%dT%H:%M:%SZ')"
