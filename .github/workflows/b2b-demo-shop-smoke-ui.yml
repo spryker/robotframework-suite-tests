@@ -1,4 +1,4 @@
-name: "[b2c-mp][internal] Robot Smoke UI"
+name: "[b2b][internal] Robot Smoke UI"
 
 on:
     schedule:
