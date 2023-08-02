@@ -10,8 +10,8 @@ ENABLER
 
 Retrieves_list_of_service_point_addresses
     When I send a GET request:    /service-points/${servicePoints[0].uuid}/service-point-addresses
-    Then Response status code should be:    501
-    And Response should return error message:    The endpoint is not implemented.
+    Then Response status code should be:    404
+    And Response should return error message:    The endpoint is not found.
 
 Retrieves_a_service_point_address_by_not_existing_service_point_and_service_point_address_ids
     When I send a GET request:    /service-points/NonExistId/service-point-addresses/NonExistId
