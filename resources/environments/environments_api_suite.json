@@ -775,12 +775,12 @@
         "servicePoints":[
             {
                 "uuid":"test-service-point",
-                "name":"Test Service Point",
+                "name":"TSP",
                 "key":"tsp"
             },
             {
                 "uuid":"test-service-point-2",
-                "name":"Test Service Point 2",
+                "name":"TSP2",
                 "key":"tsp2"
             }
         ],
@@ -790,7 +790,7 @@
                 "address1":"Test address",
                 "address2":"Test address 2",
                 "address3":"Test address 3",
-                "city":"Test City",
+                "city":"City",
                 "zipCode":"10115"
             }
         ],
