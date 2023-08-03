@@ -144,12 +144,6 @@ Retrieves_list_of_service_points_with_addresses_relations
     And Each array element of array in response should contain nested property:    [data]    [attributes]    name
     And Each array element of array in response should contain nested property:    [data]    [attributes]    key
     And Each array element of array in response should contain nested property:    [data]    [links]    self
-    And Each array element of array in response should contain property:    [data]    id
-    And Each array element of array in response should contain property:    [data]    attributes
-    And Each array element of array in response should contain property with value:    [data]    type    service-points
-    And Each array element of array in response should contain nested property:    [data]    [attributes]    name
-    And Each array element of array in response should contain nested property:    [data]    [attributes]    key
-    And Each array element of array in response should contain nested property:    [data]    [links]    self
     And Response should contain the array of a certain size:    [included]    1
     And Each array element of array in response should contain property:    [included]    type
     And Each array element of array in response should contain property:    [included]    id
