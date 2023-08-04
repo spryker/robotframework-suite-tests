@@ -8,7 +8,7 @@ Default Tags    glue
 ENABLER
     TestSetup
 
-Get_a_shipment_type_collection
+Retrieves_a_shipment_type_collection
     When I send a GET request:   /shipment-types
     Then Response status code should be:    200
     And Response reason should be:  OK
@@ -22,7 +22,7 @@ Get_a_shipment_type_collection
     Each array element of array in response should contain nested property with value:    [data]    [type]    shipment-types
     And Response body has correct self link
 
-Get_a_shipment_type_by_uuid
+Retrieves_a_shipment_type_by_uuid
     When I send a GET request:   /shipment-types/${shipment_type_delivery.uuid}
     Then Response status code should be:    200
     And Response reason should be:  OK
