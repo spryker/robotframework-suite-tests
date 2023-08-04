@@ -1,0 +1,26 @@
+*** Settings ***
+Suite Setup    SuiteSetup
+Test Setup    TestSetup
+Resource    ../../../../../../resources/common/common_api.robot
+Default Tags    glue
+
+*** Test Cases ***
+ENABLER
+    TestSetup
+
+Get_a_shipment_type_with_non_existed_shipment_type_uuid
+    When I send a GET request:   /shipment-types/NON_EXIST_SHIPMENT_TYPE_UUID
+    Then Response status code should be:    404
+    And Response reason should be:  Not Found
+    And Response should return error code:    5501
+    And Response should return error message:    A delivery type entity was not found.
+
+Get_a_shipment_type_by_uuid_with_a_wrong_uri
+    When I send a GET request:   /shipment-type/${shipment_type_delivery.uuid}
+    Then Response status code should be:    404
+    And Response reason should be:  Not Found
+
+Get_a_shipment_type_collection_with_an_invalid_url
+    When I send a GET request: /shipment-type
+    Then Response status code should be:    404
+    And Response reason should be:  Not Found
