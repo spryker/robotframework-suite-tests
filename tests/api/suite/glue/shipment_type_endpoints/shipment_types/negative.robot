@@ -20,7 +20,7 @@ Retrieves_a_shipment_type_by_uuid_with_a_wrong_uri
     Then Response status code should be:    404
     And Response reason should be:  Not Found
 
-Retrieves_a_shipment_type_collection_with_an_invalid_url
+Retrieves_a_shipment_type_collection_with_a_wrong_uri
     When I send a GET request: /shipment-type
     Then Response status code should be:    404
     And Response reason should be:  Not Found
