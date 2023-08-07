@@ -3,7 +3,8 @@
     "env":{
        "glue_url":"http://glue.de.spryker.local",
        "bapi_url":"http://glue-backend.de.spryker.local",
-       "sapi_url":"http://glue-storefront.de.spryker.local"
+       "sapi_url":"http://glue-storefront.de.spryker.local",
+       "console_path":".."
     },
     "database":{
        "db_host":"127.0.0.1",
@@ -771,15 +772,10 @@
        ]
     },
     "shipment_types": {
-        "shipment_type_delivery": {
-            "uuid": "9e1bd563-3106-52d1-9717-18e8d491e3b3",
-            "name": "Delivery",
-            "key": "delivery"
-        },
-        "shipment_type_pickup": {
-            "uuid": "174d9dc0-55ae-5c4b-a2f2-a419027029ef",
-            "name": "Pickup",
-            "key": "pickup"
+        "shipment_type_delivery_test": {
+            "uuid": "6c2ca512-4631-4aee-93c9-ec8177358a19",
+            "name": "Delivery test",
+            "key": "delivery_test"
         }
     }
  }

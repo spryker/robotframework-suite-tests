@@ -2423,3 +2423,47 @@ I get access token by user credentials:
     Save value to a variable:    [access_token]    token
     Log    ${token}
     [Return]    ${token}
+
+Trigger publish trigger-events
+    [Documentation]    This keyword triggers publish:trigger-events console command using provided resource, path and store.
+        ...    *Example:*
+        ...
+        ...    ``Trigger publish trigger-events    resource=service_point    consolePath=..    storeName=DE    timeout=5s``
+        ...
+    [Arguments]    ${resource}    ${consolePath}=..    ${storeName}=DE    ${timeout}=5s
+    ${rc}    ${output}=    Run And Return RC And Output    cd ${consolePath} && APPLICATION_STORE=${storeName} docker/sdk console publish:trigger-events -r ${resource}
+    Log    ${output}
+    Should Be Equal As Integers    ${rc}    0
+    Trigger p&s    ${timeout}    ${consolePath}    ${storeName}
+
+Get next id from table
+    [Documentation]    This keyword returns next ID from the given table.
+        ...    *Example:*
+        ...
+        ...    ``Get next id from table    tableName=product    idColumnName=id_product``
+        ...
+    [Arguments]    ${tableName}    ${idColumnName}
+    Connect to Spryker DB
+    ${lastId}=    Query    SELECT ${idColumnName} FROM ${tableName} ORDER BY ${idColumnName} DESC LIMIT 1;
+    ${newId}=    Set Variable    ${EMPTY}
+    ${lastIdLength}=    Get Length    ${lastId}
+    IF    ${lastIdLength} > 0
+        ${newId}=    Evaluate    ${lastId[0][0]} + 1
+    ELSE
+        ${newId}=    Evaluate    1
+    END
+    Disconnect From Database
+    Log    ${newId}
+    [Return]    ${newId}
+
+Trigger p&s
+    [Documentation]    This keyword triggers P&S using provided timout, path, and store.
+        ...    *Example:*
+        ...
+        ...    ``Trigger p&s    timeout=5s    consolePath=..    storeName=DE``
+        ...
+    [Arguments]    ${timeout}=5s    ${consolePath}=..    ${storeName}=DE
+    ${rc}    ${output}=    Run And Return RC And Output    cd ${consolePath} && APPLICATION_STORE=${storeName} docker/sdk console queue:worker:start --stop-when-empty
+    Log    ${output}
+    Should Be Equal As Integers    ${rc}    0
+    Sleep    ${timeout}

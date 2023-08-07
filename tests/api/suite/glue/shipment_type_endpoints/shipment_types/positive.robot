@@ -1,12 +1,15 @@
 *** Settings ***
 Suite Setup    SuiteSetup
 Test Setup    TestSetup
-Resource    ../../../../../../resources/common/common_api.robot
+Resource    ../../../../../../resources/steps/shipment_type_steps.robot
 Default Tags    glue
 
 *** Test Cases ***
 ENABLER
     TestSetup
+    Deactivate shipment types
+    Create shipment type in DB    ${shipment_type_delivery_test.uuid}    ${shipment_type_delivery_test.name}    ${shipment_type_delivery_test.key}
+    Trigger publish trigger-events    shipment_type    ${console_path}
 
 Retrieves_a_shipment_type_collection
     When I send a GET request:   /shipment-types
@@ -23,12 +26,15 @@ Retrieves_a_shipment_type_collection
     And Response body has correct self link
 
 Retrieves_a_shipment_type_by_uuid
-    When I send a GET request:   /shipment-types/${shipment_type_delivery.uuid}
+    When I send a GET request:   /shipment-types/${shipment_type_delivery_test.uuid}
     Then Response status code should be:    200
     And Response reason should be:  OK
     And Response body parameter should be:    [data][type]    shipment-types
-    And Response body parameter should be:    [data][id]    ${shipment_type_delivery.uuid}
-    And Response body parameter should be:    [data][attributes][name]    ${shipment_type_delivery.name}
-    And Response body parameter should be:    [data][attributes][key]    ${shipment_type_delivery.key}
+    And Response body parameter should be:    [data][id]    ${shipment_type_delivery_test.uuid}
+    And Response body parameter should be:    [data][attributes][name]    ${shipment_type_delivery_test.name}
+    And Response body parameter should be:    [data][attributes][key]    ${shipment_type_delivery_test.key}
     And Response body has correct self link internal
 
+DISABLER
+    Delete shipment type in DB    ${shipment_type_delivery_test.uuid}
+    Active shipment types
