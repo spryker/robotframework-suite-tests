@@ -770,8 +770,8 @@
        ]
     },
    "shipment_type":{
-      "name":"Pickup",
-      "uuid":"174d9dc0-55ae-5c4b-a2f2-a419027029ef"
+       "name":"Pickup",
+       "uuid":"174d9dc0-55ae-5c4b-a2f2-a419027029ef"
    }
 
  }
