@@ -776,6 +776,11 @@
             "uuid": "6c2ca512-4631-4aee-93c9-ec8177358a19",
             "name": "Delivery test",
             "key": "delivery_test"
+        },
+        "shipment_type_pickup_test": {
+            "uuid": "97f6940e-2721-454d-bcc0-8cc505060ac3",
+            "name": "Pickup test",
+            "key": "pickup_test"
         }
     }
  }

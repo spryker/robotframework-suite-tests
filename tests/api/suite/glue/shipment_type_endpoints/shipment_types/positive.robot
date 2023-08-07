@@ -9,6 +9,7 @@ ENABLER
     TestSetup
     Deactivate shipment types
     Create shipment type in DB    ${shipment_type_delivery_test.uuid}    ${shipment_type_delivery_test.name}    ${shipment_type_delivery_test.key}
+    Create shipment type in DB    ${shipment_type_pickup_test.uuid}    ${shipment_type_pickup_test.name}    ${shipment_type_pickup_test.key}
     Trigger publish trigger-events    shipment_type    ${console_path}
 
 Retrieves_a_shipment_type_collection
@@ -25,6 +26,22 @@ Retrieves_a_shipment_type_collection
     Each array element of array in response should contain nested property with value:    [data]    [type]    shipment-types
     And Response body has correct self link
 
+Retrieves_a_shipment_type_collection_with_a_desc_sorting_by_key
+    When I send a GET request:   /shipment-types?sort=-key
+    Then Response status code should be:    200
+    And Response reason should be:  OK
+    And Each array element of array in response should contain property:    [data]    id
+    And Each array element of array in response should contain property:    [data]    type
+    And Each array element of array in response should contain property:    [data]    attributes
+    And Each array element of array in response should contain property:    [data]    links
+    And Each array element of array in response should contain nested property:    [data]    [attributes]    name
+    And Each array element of array in response should contain nested property:    [data]    [attributes]    key
+    And Each array element of array in response should contain nested property:    [data]    [links]    self
+    Each array element of array in response should contain nested property with value:    [data]    [type]    shipment-types
+    And Response body parameter should be:    [data][0][attributes][key]    ${shipment_type_pickup_test.key}
+    And Response body parameter should be:    [data][1][attributes][key]    ${shipment_type_delivery_test.key}
+    And Response body has correct self link
+
 Retrieves_a_shipment_type_by_uuid
     When I send a GET request:   /shipment-types/${shipment_type_delivery_test.uuid}
     Then Response status code should be:    200
@@ -37,4 +54,5 @@ Retrieves_a_shipment_type_by_uuid
 
 DISABLER
     Delete shipment type in DB    ${shipment_type_delivery_test.uuid}
+    Delete shipment type in DB    ${shipment_type_pickup_test.uuid}
     Active shipment types
