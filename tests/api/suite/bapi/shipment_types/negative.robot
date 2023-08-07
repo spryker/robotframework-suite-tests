@@ -38,9 +38,21 @@ Create_shipment_type_with_incorrect_token
     And Response reason should be:    Unauthorized
 
 Create_shipment_type_without_key_in_request
+    [Documentation]    FRW-1597: Attribute validation in Glue Requests
+    [Tags]    skip-due-to-issue
     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
     ...    AND    I set Headers:    Content-Type=application/vnd.api+json   Authorization=Bearer ${token} 
     When I send a POST request:    /shipment-types    {"data": {"type": "shipment-types","attributes": {"name": "Some Shipment Type","isActive": "true","stores": ["DE", "AT"]}}}
+    Then Response status code should be:    400
+    And Response reason should be:    Bad Request
+    And Response body should contain:    5502
+
+Create_shipment_type_with_empty_key_in_request
+    [Documentation]    FRW-1597: Attribute validation in Glue Requests
+    [Tags]    skip-due-to-issue
+    [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
+    ...    AND    I set Headers:    Content-Type=application/vnd.api+json   Authorization=Bearer ${token} 
+    When I send a POST request:    /shipment-types        {"data": {"type": "shipment-types","attributes": {"name": "Some Shipment Type ${random}","key": "","isActive": "true","stores": ["DE", "AT"]}}}
     Then Response status code should be:    400
     And Response reason should be:    Bad Request
     And Response body should contain:    5502
@@ -52,7 +64,6 @@ Create_shipment_type_with_already_used_key
     Then Response status code should be:    400
     And Response reason should be:    Bad Request
     And Response body should contain:    5503
-
 
 Update_sipment_type_without_token
     When I send a PATCH request:    /shipment-types/${shipment_type.uuid}
@@ -68,10 +79,22 @@ Update_sipment_type_with_incorrect_token
     And Response reason should be:    Unauthorized
 
 Update_sipment_type_without_key
+    [Documentation]    FRW-1597: Attribute validation in Glue Requests
+    [Tags]    skip-due-to-issue
     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
     ...    AND    I set Headers:    Content-Type=application/vnd.api+json   Authorization=Bearer ${token}  
     When I send a PATCH request:    /shipment-types
     ...    {"data": {"type": "shipment-types","attributes": {"name": "updated_name${random}","isActive": "false","stores": ["AT"]}}} 
+    Then Response status code should be:    400
+    And Response reason should be:    Bad Request
+
+Update_sipment_type_with_empty_key
+    [Documentation]    FRW-1597: Attribute validation in Glue Requests
+    [Tags]    skip-due-to-issue
+    [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
+    ...    AND    I set Headers:    Content-Type=application/vnd.api+json   Authorization=Bearer ${token}  
+    When I send a PATCH request:    /shipment-types
+    ...    {"data": {"type": "shipment-types","attributes": {"name": "name${random}","key": "","isActive": "true","stores": ["DE"]}}}
     Then Response status code should be:    400
     And Response reason should be:    Bad Request
 

@@ -92,7 +92,7 @@ Retrive_list_of_shipment_types_with_valid_token
     ...    {"data": {"type": "shipment-types","attributes": {"name": "shipment-type1${random}","key": "shipment-key1${random}","isActive": "true","stores": ["DE", "AT"]}}}
     When I send a POST request:    /shipment-types
     ...    {"data": {"type": "shipment-types","attributes": {"name": "shipment-type2${random}","key": "shipment-key2${random}","isActive": "true","stores": ["AT"]}}}
-    # run get request
+    # # run get request
     When I send a GET request:    /shipment-types
     Then Response status code should be:    200
     And Response reason should be:    OK
@@ -106,3 +106,4 @@ Retrive_list_of_shipment_types_with_valid_token
     And Response body has correct self link
     [Teardown]     Run Keywords    Delete shipment type in DB:    shipment-key1${random}
     ...    AND    Delete shipment type in DB:    shipment-key2${random}
+# обновиться и проверить последний тест
