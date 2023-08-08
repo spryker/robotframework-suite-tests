@@ -106,3 +106,10 @@ Retrive_list_of_shipment_types_with_valid_token
     And Response body has correct self link
     [Teardown]     Run Keywords    Delete shipment type in DB:    shipment-key1${random}
     ...    AND    Delete shipment type in DB:    shipment-key2${random}
+    
+
+
+   When I send a GET request:    /shipment-types?name=pickup   (key, store, isActive)
+
+   When I send a GET request:    /shipment-types?name=pickup   (pagination) 
+   When I send a GET request:    /shipment-types?name=pickup
