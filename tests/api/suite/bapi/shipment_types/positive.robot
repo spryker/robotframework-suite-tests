@@ -46,7 +46,7 @@ Create_new_shipment_type_with_existing_Not-Uniqu_Name_unique_key_and_IsActive
     And Response body parameter should be in:    [data][attributes][stores]    AT    DE
     And Response body has correct self link for created entity:    ${shipment_type_id}
     [Teardown]     Run Keywords    Delete shipment type in DB:    new-shipment-type-${random}
-    ...    AND    Delete shipment type in DB:    second-shipment-type-${random}
+     ...    AND    Delete shipment type in DB:    second-shipment-type-${random}
     
 Update_sipment_type_change_name_store_relation_and_deactivate
     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
@@ -92,7 +92,7 @@ Retrive_list_of_shipment_types_with_valid_token
     ...    {"data": {"type": "shipment-types","attributes": {"name": "shipment-type1${random}","key": "shipment-key1${random}","isActive": "true","stores": ["DE", "AT"]}}}
     When I send a POST request:    /shipment-types
     ...    {"data": {"type": "shipment-types","attributes": {"name": "shipment-type2${random}","key": "shipment-key2${random}","isActive": "true","stores": ["AT"]}}}
-    # # run get request
+    # run get request
     When I send a GET request:    /shipment-types
     Then Response status code should be:    200
     And Response reason should be:    OK
@@ -106,4 +106,3 @@ Retrive_list_of_shipment_types_with_valid_token
     And Response body has correct self link
     [Teardown]     Run Keywords    Delete shipment type in DB:    shipment-key1${random}
     ...    AND    Delete shipment type in DB:    shipment-key2${random}
-# обновиться и проверить последний тест
