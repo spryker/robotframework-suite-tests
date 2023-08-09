@@ -771,6 +771,43 @@
 
        ]
     },
+    "servicePoints": {
+        "servicePoints":[
+            {
+                "uuid":"test-service-point",
+                "name":"TSP",
+                "key":"tsp"
+            },
+            {
+                "uuid":"test-service-point-2",
+                "name":"TSP2",
+                "key":"tsp2"
+            }
+        ],
+        "servicePointAddresses":[
+            {
+                "uuid":"test-service-point-address",
+                "address1":"Test address",
+                "address2":"Test address 2",
+                "address3":"Test address 3",
+                "city":"City",
+                "zipCode":"10115"
+            }
+        ],
+        "services":[
+            {
+                "uuid":"test-service",
+                "key":"ts"
+            }
+        ],
+        "serviceTypes":[
+            {
+                "uuid":"test-service-type",
+                "name":"Test service type",
+                "key":"tst"
+            }
+        ]
+    },
     "shipment_types": {
         "shipment_type_delivery_test": {
             "uuid": "6c2ca512-4631-4aee-93c9-ec8177358a19",
