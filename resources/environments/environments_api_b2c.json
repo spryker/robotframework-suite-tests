@@ -2,7 +2,8 @@
     "environment":"api_b2c",
     "env":{
        "glue_url":"http://glue.de.spryker.local",
-       "bapi_url":"http://glue-backend.de.spryker.local"
+       "bapi_url":"http://glue-backend.de.spryker.local",
+       "sapi_url":"http://glue-storefront.de.spryker.local"
     },
     "database":{
        "db_host":"127.0.0.1",
@@ -269,7 +270,7 @@
           "name":"Lenovo IdeaPad Yoga 500",
           "name_in_lower_case":"lenovo ideapad yoga 500",
           "promotional_items_sku":"112",
-          "promotional_items_sku1":"68"    
+          "promotional_items_sku1":"68"
        },
        "abstract_product_with_alternative":{
           "sku":"155",

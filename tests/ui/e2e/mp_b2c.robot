@@ -299,7 +299,7 @@ Add_to_Wishlist
 #     ...    || Mr.        | ${yves_second_user_first_name} | ${yves_second_user_last_name} | Kirncher Str. | 7           | 10247    | Berlin | Germany | Spryker | 123456789 | Additional street ||
 #     Yves: submit form on the checkout
 #     Yves: select the following shipping method on the checkout and go next:    Express
-#     Yves: select the following payment method on the checkout and go next:    Invoice
+#     Yves: select the following payment method on the checkout and go next:    Invoice (Marketplace)
 #     Yves: accept the terms and conditions:    true
 #     Yves: 'submit the order' on the summary page
 #     Yves: 'Thank you' page is displayed
@@ -333,7 +333,7 @@ Add_to_Wishlist
 #     ...    || Mr.        | ${yves_second_user_first_name} | ${yves_second_user_last_name} | Kirncher Str. | 7           | 10247    | Berlin | Germany | Spryker | 123456789 | Additional street ||
 #     Yves: submit form on the checkout
 #     Yves: select the following shipping method on the checkout and go next:    Express
-#     Yves: select the following payment method on the checkout and go next:    Invoice
+#     Yves: select the following payment method on the checkout and go next:    Invoice (Marketplace)
 #     Yves: accept the terms and conditions:    true
 #     Yves: 'submit the order' on the summary page
 #     Yves: 'Thank you' page is displayed
@@ -423,7 +423,7 @@ Split_Delivery
     Yves: select the following shipping method for the shipment:    2    Hermes    Same Day
     Yves: select the following shipping method for the shipment:    3    DHL    Express
     Yves: submit form on the checkout
-    Yves: select the following payment method on the checkout and go next:    Invoice
+    Yves: select the following payment method on the checkout and go next:    Invoice (Marketplace)
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
@@ -473,7 +473,7 @@ Return_Management
     ...    || Mr.        | Guest     | User     | Kirncher Str. | 7           | 10247    | Berlin | Germany | Spryker | 123456789 | Additional street ||
     Yves: submit form on the checkout
     Yves: select the following shipping method on the checkout and go next:    Express
-    Yves: select the following payment method on the checkout and go next:    Invoice
+    Yves: select the following payment method on the checkout and go next:    Invoice (Marketplace)
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
@@ -582,10 +582,10 @@ Guest_Checkout
     Yves: fill in new delivery address for a product:
     ...    || product        | salutation | firstName | lastName | street       | houseNumber | postCode | city   | country | company | phone     | additionalAddress ||
     ...    || Canon IXUS 285 | Dr.        | First     | Last     | First Street | 1           | 10247    | Berlin | Germany | Spryker | 123456789 | Additional street ||
-   Yves: fill in new delivery address for a product:
+    Yves: fill in new delivery address for a product:
     ...    || product        | salutation | firstName | lastName | street        | houseNumber | postCode | city   | country | company | phone     | additionalAddress ||
     ...    || Canon IXUS 175 | Dr.        | First     | Last     | Second Street | 2           | 10247    | Berlin | Germany | Spryker | 123456789 | Additional street ||
-   Yves: fill in new delivery address for a product:
+    Yves: fill in new delivery address for a product:
     ...    || product        | salutation | firstName | lastName | street       | houseNumber | postCode | city   | country | company | phone     | additionalAddress ||
     ...    || Canon IXUS 165 | Dr.        | First     | Last     | Third Street | 3           | 10247    | Berlin | Germany | Spryker | 123456789 | Additional street ||
     Yves: fill in the following new billing address:
@@ -596,7 +596,7 @@ Guest_Checkout
     Yves: select the following shipping method for the shipment:    2    Hermes    Same Day
     Yves: select the following shipping method for the shipment:    3    DHL    Express
     Yves: submit form on the checkout
-    Yves: select the following payment method on the checkout and go next:    Invoice
+    Yves: select the following payment method on the checkout and go next:    Invoice (Marketplace)
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
@@ -633,7 +633,7 @@ Refunds
     ...    || Mr.        | ${yves_second_user_first_name} | ${yves_second_user_last_name} | Kirncher Str. | 7           | 10247    | Berlin | Germany | Spryker | 123456789 | Additional street ||
     Yves: submit form on the checkout
     Yves: select the following shipping method on the checkout and go next:    Express
-    Yves: select the following payment method on the checkout and go next:    Invoice
+    Yves: select the following payment method on the checkout and go next:    Invoice (Marketplace)
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
@@ -699,7 +699,7 @@ Multiple_Merchants_Order
     Yves: select the following shipping method for the shipment:    2    Hermes    Same Day
     Yves: select the following shipping method for the shipment:    3    DHL    Express
     Yves: submit form on the checkout
-    Yves: select the following payment method on the checkout and go next:    Invoice
+    Yves: select the following payment method on the checkout and go next:    Invoice (Marketplace)
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
@@ -1043,7 +1043,7 @@ Fulfill_Order_from_Merchant_Portal
     Yves: select the following shipping method for the shipment:    2    Hermes    Same Day
     Yves: select the following shipping method for the shipment:    3    DHL    Express
     Yves: submit form on the checkout
-    Yves: select the following payment method on the checkout and go next:    Invoice
+    Yves: select the following payment method on the checkout and go next:    Invoice (Marketplace)
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
@@ -1535,8 +1535,7 @@ Merchant_Product_Original_Price
     ...    AND    Zed: click Action Button in a table for row that contains:     originalSKU${random}     Deny
 
 Checkout_Address_Management
-    [Tags]    skip-due-to-issue
-    [Documentation]    Bug: CC-24090. Checks that user can change address during the checkout and save new into the address book
+    [Documentation]    Checks that user can change address during the checkout and save new into the address book
     [Setup]    Run Keywords    
     ...    Yves: login on Yves with provided credentials:    ${yves_user_email}
     ...    AND    Yves: delete all user addresses
@@ -1554,7 +1553,7 @@ Checkout_Address_Management
     Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${yves_user_address}
     Yves: submit form on the checkout
     Yves: select the following shipping method on the checkout and go next:    Express
-    Yves: select the following payment method on the checkout and go next:    Invoice
+    Yves: select the following payment method on the checkout and go next:    Invoice (Marketplace)
     Yves: return to the previous checkout step:    Address
     Yves: fill in the following new billing address:
     ...    || salutation | firstName | lastName | street         | houseNumber | postCode | city   | country | company | phone     | additionalAddress ||
@@ -1566,7 +1565,7 @@ Checkout_Address_Management
     Yves: save new deviery address to address book:    true
     Yves: submit form on the checkout
     Yves: select the following shipping method on the checkout and go next:    Express
-    Yves: select the following payment method on the checkout and go next:    Invoice
+    Yves: select the following payment method on the checkout and go next:    Invoice (Marketplace)
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
@@ -1612,7 +1611,7 @@ Manage_Shipments
     Yves: submit form on the checkout
     Yves: select the following shipping method for the shipment:    1    Hermes    Next Day
     Yves: submit form on the checkout
-    Yves: select the following payment method on the checkout and go next:    Invoice
+    Yves: select the following payment method on the checkout and go next:    Invoice (Marketplace)
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
@@ -1684,7 +1683,7 @@ Minimum_Order_Value
     Yves: submit form on the checkout
     Yves: select the following shipping method for the shipment:    1    Hermes    Next Day
     Yves: submit form on the checkout
-    Yves: select the following payment method on the checkout and go next:    Invoice
+    Yves: select the following payment method on the checkout and go next:    Invoice (Marketplace)
     Yves: soft threshold surcharge is added on summary page:    €9.00
     Yves: hard threshold is applied with the following message:    EN max €150.00
     Yves: go to the 'Home' page
@@ -1693,7 +1692,7 @@ Minimum_Order_Value
     Yves: soft threshold surcharge is added in the cart:    €9.00
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: submit form on the checkout
-    Yves: select the following payment method on the checkout and go next:    Invoice
+    Yves: select the following payment method on the checkout and go next:    Invoice (Marketplace)
     Yves: soft threshold surcharge is added on summary page:    €9.00
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
@@ -1722,7 +1721,7 @@ Order_Cancelation
     ...    || Mr.        | ${yves_second_user_first_name} | ${yves_second_user_last_name} | Kirncher Str. | 7           | 10247    | Berlin | Germany | Spryker | 123456789 | Additional street ||
     Yves: submit form on the checkout
     Yves: select the following shipping method on the checkout and go next:    Express
-    Yves: select the following payment method on the checkout and go next:    Invoice
+    Yves: select the following payment method on the checkout and go next:    Invoice (Marketplace)
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed    
@@ -1747,7 +1746,7 @@ Order_Cancelation
     # ...    || Mr.        | ${yves_second_user_first_name} | ${yves_second_user_last_name} | Kirncher Str. | 7           | 10247    | Berlin | Germany | Spryker | 123456789 | Additional street ||
     # Yves: submit form on the checkout
     # Yves: select the following shipping method on the checkout and go next:    Express
-    # Yves: select the following payment method on the checkout and go next:    Invoice
+    # Yves: select the following payment method on the checkout and go next:    Invoice (Marketplace)
     # Yves: 'submit the order' on the summary page
     # Yves: accept the terms and conditions:    true
     # Yves: 'Thank you' page is displayed    
@@ -1949,7 +1948,7 @@ Product_Availability_Calculation
     Yves: submit form on the checkout
     Yves: select the following shipping method for the shipment:    1    DHL    Express
     Yves: submit form on the checkout
-    Yves: select the following payment method on the checkout and go next:    Invoice
+    Yves: select the following payment method on the checkout and go next:    Invoice (Marketplace)
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
@@ -2067,7 +2066,7 @@ Offer_Availability_Calculation
     Yves: submit form on the checkout
     Yves: select the following shipping method for the shipment:    1    DHL    Express
     Yves: submit form on the checkout
-    Yves: select the following payment method on the checkout and go next:    Invoice
+    Yves: select the following payment method on the checkout and go next:    Invoice (Marketplace)
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
@@ -2131,7 +2130,7 @@ Reorder
     ...    || Mr.        | Guest     | User     | Kirncher Str. | 7           | 10247    | Berlin | Germany | Spryker | 123456789 | Additional street ||
     Yves: submit form on the checkout
     Yves: select the following shipping method on the checkout and go next:    Express
-    Yves: select the following payment method on the checkout and go next:    Invoice
+    Yves: select the following payment method on the checkout and go next:    Invoice (Marketplace)
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
@@ -2238,14 +2237,7 @@ Configurable_Product_PDP_Wishlist
     ...    || date  | date_time ||
     ...    ||       | Afternoon ||
     Yves: product configuration status should be equal:       Configuration is not complete.
-    Yves: click on the 'Checkout' button in the shopping cart
-    Yves: billing address same as shipping address:    true
-    Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${yves_user_address}
-    Yves: submit form on the checkout
-    Yves: select the following shipping method for the shipment:    1    Hermes    Next Day
-    Yves: submit form on the checkout
-    Yves: select the following payment method on the checkout and go next:    Invoice
-    Yves: checkout is blocked with the following message:    Product configuration is not completed.
+    Yves: checkout is blocked with the following message:    This cart can't be processed. Please configure items inside the cart.
     Yves: go to the 'Home' page
     Yves: go to b2c shopping cart
     Yves: delete product from the shopping cart with name:    ${configurable_product_name}
@@ -2304,7 +2296,7 @@ Configurable_Product_OMS
     Yves: submit form on the checkout
     Yves: select the following shipping method for the shipment:    1    Hermes    Next Day
     Yves: submit form on the checkout
-    Yves: select the following payment method on the checkout and go next:    Invoice
+    Yves: select the following payment method on the checkout and go next:    Invoice (Marketplace)
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
