@@ -600,6 +600,17 @@ Response body should contain:
     ${response_body}=    Replace String    ${response_body}    '    "
     Should Contain    ${response_body}    ${value}    Response body does not contain expected: '${value}'.
 
+Response body should not contain:
+    [Documentation]    This keyword checks that the response saved  in ``${response_body}`` test variable does not contain the string passed as an argument.
+    ...
+    ...    *Example:*
+    ...
+    ...    ``Response body should not contain:    "localizedName": "Weight"``
+    [Arguments]    ${value}
+    ${response_body}=    Convert To String    ${response_body}
+    ${response_body}=    Replace String    ${response_body}    '    "
+    Should Not Contain    ${response_body}    ${value}    Response body contains not expected: '${value}'.
+
 Response body parameter should be:
     [Documentation]    This keyword checks that the response saved  in ``${response_body}`` test variable contsains the speficied parameter ``${json_path}`` with the specified value ``${expected_value}``.
     ...
@@ -1782,16 +1793,8 @@ Create giftcode in Database:
     [Arguments]    ${spy_gift_card_code}    ${spy_gift_card_value}
     ${amount}=   Evaluate    ${spy_gift_card_value} / 100
     ${amount}=    Evaluate    "%.f" % ${amount}
+    ${new_id}=    Get next id from table    spy_gift_card    id_gift_card
     Connect to Spryker DB
-    ${last_id}=    Query    SELECT id_gift_card FROM spy_gift_card ORDER BY id_gift_card DESC LIMIT 1;
-    ${new_id}=    Set Variable    ${EMPTY}
-    ${last_id_length}=    Get Length    ${last_id}
-    IF    ${last_id_length} > 0
-        ${new_id}=    Evaluate    ${last_id[0][0]} + 1
-    ELSE
-        ${new_id}=    Evaluate    1
-    END
-    Log    ${new_id}
     IF    '${db_engine}' == 'pymysql'
         Execute Sql String    insert ignore into spy_gift_card (code,name,currency_iso_code,value) value ('${spy_gift_card_code}','Gift_card_${amount}','EUR','${spy_gift_card_value}')
     ELSE
@@ -2378,16 +2381,8 @@ Create dynamic entity configuration in Database:
         ...    ``Create dynamic entity configuration in Database:    country    spy_country     1   {"identifier":"id_country","fields":[...]}``
         ...
     [Arguments]    ${table_alias}   ${table_name}    ${is_active}    ${definition}
+    ${new_id}=    Get next id from table    spy_dynamic_entity_configuration    id_dynamic_entity_configuration
     Connect to Spryker DB
-    ${last_id}=    Query    SELECT id_dynamic_entity_configuration FROM spy_dynamic_entity_configuration ORDER BY id_dynamic_entity_configuration DESC LIMIT 1;
-    ${new_id}=    Set Variable    ${EMPTY}
-    ${last_id_length}=    Get Length    ${last_id}
-    IF    ${last_id_length} > 0
-        ${new_id}=    Evaluate    ${last_id[0][0]} + 1
-    ELSE
-        ${new_id}=    Evaluate    1
-    END
-    Log    ${new_id}
     IF    '${db_engine}' == 'pymysql'
         Execute Sql String  insert ignore into spy_dynamic_entity_configuration (table_alias, table_name, is_active, definition) value ('${table_alias}', '${table_name}', '${is_active}', '${definition}');
     ELSE
@@ -2423,3 +2418,47 @@ I get access token by user credentials:
     Save value to a variable:    [access_token]    token
     Log    ${token}
     [Return]    ${token}
+
+Trigger publish trigger-events
+    [Documentation]    This keyword triggers publish:trigger-events console command using provided resource, path and store.
+        ...    *Example:*
+        ...
+        ...    ``Trigger publish trigger-events    resource=service_point    consolePath=..    storeName=DE    timeout=5s``
+        ...
+    [Arguments]    ${resource}    ${consolePath}=..    ${storeName}=DE    ${timeout}=5s
+    ${rc}    ${output}=    Run And Return RC And Output    cd ${consolePath} && APPLICATION_STORE=${storeName} docker/sdk console publish:trigger-events -r ${resource}
+    Log    ${output}
+    Should Be Equal As Integers    ${rc}    0
+    Trigger p&s    ${timeout}    ${consolePath}    ${storeName}
+
+Trigger p&s
+    [Documentation]    This keyword triggers P&S using provided timout, path, and store.
+        ...    *Example:*
+        ...
+        ...    ``Trigger p&s    timeout=5s    consolePath=..    storeName=DE``
+        ...
+    [Arguments]    ${timeout}=5s    ${consolePath}=..    ${storeName}=DE
+    ${rc}    ${output}=    Run And Return RC And Output    cd ${consolePath} && APPLICATION_STORE=${storeName} docker/sdk console queue:worker:start --stop-when-empty
+    Log    ${output}
+    Should Be Equal As Integers    ${rc}    0
+    Sleep    ${timeout}
+
+Get next id from table
+    [Documentation]    This keyword returns next ID from the given table.
+        ...    *Example:*
+        ...
+        ...    ``Get next id from table    tableName=product    idColumnName=id_product``
+        ...
+    [Arguments]    ${tableName}    ${idColumnName}
+    Connect to Spryker DB
+    ${lastId}=    Query    SELECT ${idColumnName} FROM ${tableName} ORDER BY ${idColumnName} DESC LIMIT 1;
+    ${newId}=    Set Variable    ${EMPTY}
+    ${lastIdLength}=    Get Length    ${lastId}
+    IF    ${lastIdLength} > 0
+        ${newId}=    Evaluate    ${lastId[0][0]} + 1
+    ELSE
+        ${newId}=    Evaluate    1
+    END
+    Disconnect From Database
+    Log    ${newId}
+    [Return]    ${newId}
