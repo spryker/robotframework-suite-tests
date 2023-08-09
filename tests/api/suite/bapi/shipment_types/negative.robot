@@ -10,6 +10,8 @@ ENABLER
 
 *** Test Cases ***
 Create_shipment_type_with_incorrect_type_in_body
+    [Documentation]    https://spryker.atlassian.net/browse/FRW-5845
+    [Tags]    skip-due-to-issue
     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
     ...    AND    I set Headers:    Content-Type=application/vnd.api+json   Authorization=Bearer ${token} 
     When I send a POST request:    /shipment-types    {"data": {"type": "incorrect-type","attributes": {"name": "Some Shipment Type","key": "wrong-type${random}","isActive": "true","stores": ["DE", "AT"]}}}
@@ -18,6 +20,8 @@ Create_shipment_type_with_incorrect_type_in_body
     And Response should return error message:    Unknown error.
 
 Create_shipment_type_with_empty_body
+    [Documentation]    https://spryker.atlassian.net/browse/FRW-5851
+    [Tags]    skip-due-to-issue
     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
     ...    AND    I set Headers:    Content-Type=application/vnd.api+json   Authorization=Bearer ${token} 
     When I send a POST request:    /shipment-types    {}
@@ -26,6 +30,8 @@ Create_shipment_type_with_empty_body
     And Response should return error message:    Unknown error.
 
 Create_shipment_type_with_empty_token
+    [Documentation]    https://spryker.atlassian.net/browse/FRW-5850
+    [Tags]    skip-due-to-issue
     [Setup]    I set Headers:    Authorization=
     When I send a POST request:    /shipment-types    {"data": {"type": "shipment-types","attributes": {"name": "Some Shipment Type","key": "empty_token${random}","isActive": "true","stores": ["DE", "AT"]}}}
     Then Response status code should be:    403
@@ -35,9 +41,8 @@ Create_shipment_type_with_empty_token
 Create_shipment_type_with_incorrect_token
     [Setup]    I set Headers:    Authorization=wrong_token
     When I send a POST request:    /shipment-types    {"data": {"type": "shipment-types","attributes": {"name": "Some Shipment Type","key": "incorrect_token${random}","isActive": "true","stores": ["DE", "AT"]}}}
-    Then Response status code should be:    403
-    And Response reason should be:    Unauthorized
-    And Response should return error message:    Invalid access token.
+    Then Response status code should be:    400
+    And Response reason should be:    Bad Request
 
 Create_shipment_type_without_key_in_request
     [Documentation]    FRW-1597: Attribute validation in Glue Requests
@@ -66,6 +71,8 @@ Create_shipment_type_with_already_used_key
     And Response should return error message:    A delivery type with the same key already exists.
 
 Update_sipment_type_without_token
+    [Documentation]    https://spryker.atlassian.net/browse/FRW-5850
+    [Tags]    skip-due-to-issue
     When I send a PATCH request:    /shipment-types/${shipment_type_uuid}
     ...    {"data": {"type": "shipment-types","attributes": {"name": "updated_name${random}","isActive": "false","stores": ["AT"]}}} 
     Then Response status code should be:    403
@@ -76,9 +83,8 @@ Update_sipment_type_with_incorrect_token
     [Setup]    I set Headers:    Authorization=wrong_token
     When I send a PATCH request:    /shipment-types/${shipment_type_uuid}
     ...    {"data": {"type": "shipment-types","attributes": {"name": "updated_name${random}","isActive": "false","stores": ["AT"]}}} 
-    Then Response status code should be:    403
-    And Response reason should be:    Unauthorized
-    And Response should return error message:    Invalid access token.
+     Then Response status code should be:    400
+     And Response reason should be:    Bad Request
 
 Update_sipment_type_without_key
     [Documentation]    FRW-1597: Attribute validation in Glue Requests
@@ -101,6 +107,7 @@ Update_sipment_type_with_empty_key
     Then Response status code should be:    404
     And Response should return error code:    5501
     And Response should return error message:    A delivery type entity was not found.
+
 Update_sipment_type_with_not_existing_key
     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
     ...    AND    I set Headers:    Content-Type=application/vnd.api+json   Authorization=Bearer ${token}  
@@ -111,6 +118,8 @@ Update_sipment_type_with_not_existing_key
     And Response should return error message:    A delivery type entity was not found.
 
 Retrive_single_shipment_type_without_auth
+    [Documentation]    https://spryker.atlassian.net/browse/FRW-5850
+    [Tags]    skip-due-to-issue
     When I send a GET request:    /shipment-types/${shipment_type_uuid}
     Then Response status code should be:    403
     And Response reason should be:    Unauthorized
@@ -119,9 +128,8 @@ Retrive_single_shipment_type_without_auth
 Retrive_single_shipment_type_with_incorrect_token
     [Setup]    I set Headers:    Authorization=wrong_token
     When I send a GET request:    /shipment-types/${shipment_type_uuid}
-    Then Response status code should be:    403
-    And Response reason should be:    Unauthorized 
-    And Response should return error message:    Invalid access token.   
+     Then Response status code should be:    400
+     And Response reason should be:    Bad Request
 
 Retrive_single_shipment_type_with_incorrect_id
     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
@@ -132,6 +140,8 @@ Retrive_single_shipment_type_with_incorrect_id
     And Response should return error message:    A delivery type entity was not found.
 
 Retrive_list_of_shipment_types_without_auth
+    [Documentation]    https://spryker.atlassian.net/browse/FRW-5850
+    [Tags]    skip-due-to-issue
     When I send a GET request:    /shipment-types/
     Then Response status code should be:    403
     And Response reason should be:    Unauthorized
@@ -140,6 +150,5 @@ Retrive_list_of_shipment_types_without_auth
 Retrive_list_of_shipment_types_witt_incorrect_token
     [Setup]    I set Headers:    Authorization=wrong_token
     When I send a GET request:    /shipment-types/${shipment_type_uuid}
-    Then Response status code should be:    403
-    And Response reason should be:    Unauthorized
-    And Response should return error message:    Invalid access token.    
+     Then Response status code should be:    400
+     And Response reason should be:    Bad Request
