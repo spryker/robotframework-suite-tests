@@ -9,7 +9,7 @@ Deactivate shipment types
     [Documentation]    This keyword deactivates shipment types. If `uuid` is provided, deactivates shipment type by uuid.
         ...    *Example:*
         ...
-        ...    ``Deactivate shipment types in DB    uuid=e086c160-b5de-474c-a19b-1f42c85ae996``
+        ...    ``Deactivate shipment types    uuid=e086c160-b5de-474c-a19b-1f42c85ae996``
         ...
     [Arguments]    ${uuid}=${None}
     ${query}    Set Variable    UPDATE spy_shipment_type SET is_active = false
@@ -22,11 +22,11 @@ Deactivate shipment types
     Disconnect From Database
     Trigger publish trigger-events    shipment_type    ${console_path}    timeout=1s
 
-Active shipment types
+Activate shipment types
     [Documentation]    This keyword activates shipment types. If `uuid` is provided, activates shipment type by uuid.
         ...    *Example:*
         ...
-        ...    ``Activate shipment types in DB    uuid=e086c160-b5de-474c-a19b-1f42c85ae996``
+        ...    ``Activate shipment types    uuid=e086c160-b5de-474c-a19b-1f42c85ae996``
         ...
     [Arguments]    ${uuid}=${None}
     ${query}    Set Variable    UPDATE spy_shipment_type SET is_active = true
@@ -104,7 +104,6 @@ Delete shipment type in DB
         ...    ``Delete shipment type in DB    uuid=e086c160-b5de-474c-a19b-1f42c85ae996    withRelations=true``
         ...
     [Arguments]    ${uuid}    ${withRelations}=${True}
-    Deactivate shipment types    ${uuid}
     IF    ${withRelations}
         ${idShipmentType}=    Get id shipment type by uuid    ${uuid}
         Connect to Spryker DB
