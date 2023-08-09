@@ -53,6 +53,8 @@ Retrieves_a_shipment_type_by_uuid
     And Response body has correct self link internal
 
 DISABLER
+    Deactivate shipment types   ${shipment_type_delivery_test.uuid}
+    Deactivate shipment types   ${shipment_type_pickup_test.uuid}
     Delete shipment type in DB    ${shipment_type_delivery_test.uuid}
     Delete shipment type in DB    ${shipment_type_pickup_test.uuid}
     Active shipment types
