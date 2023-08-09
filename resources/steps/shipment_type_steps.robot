@@ -55,7 +55,7 @@ Deactivate shipment types BAPI
     Disconnect From Database
     Trigger publish trigger-events    shipment_type    ${console_path}    timeout=1s
 
-Active shipment types
+Activate shipment types BAPI
     [Documentation]    This keyword activates shipment types. If `uuid` is provided, activates shipment type by uuid.
         ...    *Example:*
         ...
@@ -71,3 +71,4 @@ Active shipment types
     Execute Sql String    ${query};
     Disconnect From Database
     Trigger publish trigger-events    shipment_type    ${console_path}    timeout=1s
+  
