@@ -208,8 +208,6 @@ Get_search_suggestions_with_cms_pages
     And Response body has correct self link
 
 Get_search_suggestions_with_category_collection
-    [Documentation]    https://spryker.atlassian.net/browse/CC-25997
-    [Tags]    skip-due-to-issue
     When I send a GET request:    /catalog-search-suggestions?q=${category_collection.name}
     Then Response status code should be:    200
     And Response reason should be:    OK
