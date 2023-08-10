@@ -38,6 +38,8 @@ Adding_voucher_code_to_cart_of_logged_in_customer
     ...  AND    Response status code should be:    204
 
 Checking_voucher_is_applied_after_order_is_placed
+    [Documentation]   bug CC-16735 is fixed in internal B2B, but there is no fix in public MP-B2B
+    [Tags]    skip-due-to-issue 
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_second_user.email}
     ...    AND    I set Headers:    Authorization=${token}
     ...    AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
