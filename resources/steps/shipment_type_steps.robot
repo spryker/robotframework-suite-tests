@@ -42,7 +42,7 @@ Deactivate shipment types BAPI
     [Documentation]    This keyword deactivates shipment types. If `uuid` is provided, deactivates shipment type by uuid.
         ...    *Example:*
         ...
-        ...    ``Deactivate shipment types in DB    uuid=e086c160-b5de-474c-a19b-1f42c85ae996``
+        ...    ``Deactivate shipment types BAPI    uuid=e086c160-b5de-474c-a19b-1f42c85ae996``
         ...
     [Arguments]    ${uuid}=${None}
     ${query}    Set Variable    UPDATE spy_shipment_type SET is_active = false
@@ -59,7 +59,7 @@ Activate shipment types BAPI
     [Documentation]    This keyword activates shipment types. If `uuid` is provided, activates shipment type by uuid.
         ...    *Example:*
         ...
-        ...    ``Activate shipment types in DB    uuid=e086c160-b5de-474c-a19b-1f42c85ae996``
+        ...    ``Activate shipment types BAPI    uuid=e086c160-b5de-474c-a19b-1f42c85ae996``
         ...
     [Arguments]    ${uuid}=${None}
     ${query}    Set Variable    UPDATE spy_shipment_type SET is_active = true
