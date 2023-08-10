@@ -38,37 +38,4 @@ Delete shipment type in DB:
     Execute Sql String    DELETE FROM spy_shipment_type WHERE `key` = '${key}';
     Disconnect From Database
 
-Deactivate shipment types BAPI
-    [Documentation]    This keyword deactivates shipment types. If `uuid` is provided, deactivates shipment type by uuid.
-        ...    *Example:*
-        ...
-        ...    ``Deactivate shipment types BAPI    uuid=e086c160-b5de-474c-a19b-1f42c85ae996``
-        ...
-    [Arguments]    ${uuid}=${None}
-    ${query}    Set Variable    UPDATE spy_shipment_type SET is_active = false
-    IF    '${uuid}' != '${None}'
-         ${query}    Set Variable    ${query} WHERE uuid = '${uuid}'
-    END
-    Log   ${query}
-    Connect to Spryker DB
-    Execute Sql String    ${query};
-    Disconnect From Database
-    Trigger publish trigger-events    shipment_type    ${console_path}    timeout=1s
-
-Activate shipment types BAPI
-    [Documentation]    This keyword activates shipment types. If `uuid` is provided, activates shipment type by uuid.
-        ...    *Example:*
-        ...
-        ...    ``Activate shipment types BAPI    uuid=e086c160-b5de-474c-a19b-1f42c85ae996``
-        ...
-    [Arguments]    ${uuid}=${None}
-    ${query}    Set Variable    UPDATE spy_shipment_type SET is_active = true
-    IF    '${uuid}' != '${None}'
-         ${query}    Set Variable    ${query} WHERE uuid = '${uuid}'
-    END
-    Log   ${query}
-    Connect to Spryker DB
-    Execute Sql String    ${query};
-    Disconnect From Database
-    Trigger publish trigger-events    shipment_type    ${console_path}    timeout=1s
-  
+    

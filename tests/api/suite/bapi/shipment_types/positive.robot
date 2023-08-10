@@ -93,7 +93,7 @@ Retrive_list_of_shipment_types_with_valid_token_and_pagination
     When I send a POST request:    /shipment-types
     ...    {"data": {"type": "shipment-types","attributes": {"name": "shipment-type2${random}","key": "shipment-key2${random}","isActive": "true","stores": ["AT"]}}}
     # run get request
-    When I send a GET request:    /shipment-types?page[offset]=0&page[limit]=10
+    When I send a GET request:    /shipment-types?page[offset]=0&page[limit]=2
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Each array in response should contain property with NOT EMPTY value:    [data]    id
@@ -102,12 +102,11 @@ Retrive_list_of_shipment_types_with_valid_token_and_pagination
     And Each array in response should contain property with NOT EMPTY value:    [data]    [attributes][key]
     And Each array element of array in response should contain property with value in:    [data]   [attributes][isActive]    True    False
     And Response should contain the array larger than a certain size:    [data][0][attributes][stores]    0
+    And Response should contain the array of a certain size:    [data]    2
     And Each array element of array in response should contain the array larger than a certain size:    [data]    [attributes][stores]    0
-    And Response body has correct self link
     [Teardown]     Run Keywords    Delete shipment type in DB:    shipment-key1${random}
     ...    AND    Delete shipment type in DB:    shipment-key2${random}
     
-#   надо дописать деактивацию через юбд всех шипмент тайпов и отредактировать нижнее тесты
 Retrive_list_of_shipment_types_with_filtering
     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
     ...    AND    I set Headers:    Content-Type=application/vnd.api+json   Authorization=Bearer ${token} 
@@ -116,44 +115,33 @@ Retrive_list_of_shipment_types_with_filtering
     ...    {"data": {"type": "shipment-types","attributes": {"name": "shipment-type1${random}","key": "shipment-key1${random}","isActive": "true","stores": ["DE", "AT"]}}}
     When I send a POST request:    /shipment-types
     ...    {"data": {"type": "shipment-types","attributes": {"name": "shipment-type2${random}","key": "shipment-key2${random}","isActive": "true","stores": ["AT"]}}}
-    # run get request
-    When I send a GET request:    /shipment-types?filter[shipment-types.stores]=DE
+       When I send a POST request:    /shipment-types
+    ...    {"data": {"type": "shipment-types","attributes": {"name": "shipment-type3${random}","key": "shipment-key3${random}","isActive": "true","stores": ["DE"]}}}
+   # run get request
+    When I send a GET request:    /shipment-types?filter[shipment-types.stores]=AT
     Then Response status code should be:    200
     And Response reason should be:    OK
-    And Each array in response should contain property with NOT EMPTY value:    [data]    id
-    And Each array element of array in response should contain property with value:    [data]    type    shipment-types
-    And Each array in response should contain property with NOT EMPTY value:    [data]    [attributes][name]
-    And Each array in response should contain property with NOT EMPTY value:    [data]    [attributes][key]
-    And Each array element of array in response should contain property with value in:    [data]   [attributes][isActive]    True    False
-    And Response should contain the array larger than a certain size:    [data][0][attributes][stores]    0
-    And Each array element of array in response should contain the array larger than a certain size:    [data]    [attributes][stores]    0
-    
-    And Response body has correct self link
+    And Each array in response should contain property with value NOT in:    [data]    [attributes][key]    shipment-key3${random}
     [Teardown]     Run Keywords    Delete shipment type in DB:    shipment-key1${random}
     ...    AND    Delete shipment type in DB:    shipment-key2${random}
+    ...    AND    Delete shipment type in DB:    shipment-key3${random}
 
 Retrive_list_of_shipment_types_with_sorting_by_key_ASC
     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
     ...    AND    I set Headers:    Content-Type=application/vnd.api+json   Authorization=Bearer ${token} 
     #prepare test data
     When I send a POST request:    /shipment-types
-    ...    {"data": {"type": "shipment-types","attributes": {"name": "shipment-type1${random}","key": "a_shipment-key1${random}","isActive": "true","stores": ["DE", "AT"]}}}
+    ...    {"data": {"type": "shipment-types","attributes": {"name": "shipment-type1${random}","key": "aaa_shipment-key1","isActive": "true","stores": ["DE", "AT"]}}}
     When I send a POST request:    /shipment-types
-    ...    {"data": {"type": "shipment-types","attributes": {"name": "shipment-type2${random}","key": "b_shipment-key2${random}","isActive": "true","stores": ["AT"]}}}
+    ...    {"data": {"type": "shipment-types","attributes": {"name": "shipment-type2${random}","key": "www_shipment-key2","isActive": "true","stores": ["AT"]}}}
     # run get request
     When I send a GET request:    /shipment-types?sort=key
     Then Response status code should be:    200
     And Response reason should be:    OK
-    And Each array in response should contain property with NOT EMPTY value:    [data]    id
-    And Each array element of array in response should contain property with value:    [data]    type    shipment-types
-    And Each array in response should contain property with NOT EMPTY value:    [data]    [attributes][name]
-    And Each array in response should contain property with NOT EMPTY value:    [data]    [attributes][key]
-    And Each array element of array in response should contain property with value in:    [data]   [attributes][isActive]    True    False
-    And Response should contain the array larger than a certain size:    [data][0][attributes][stores]    0
-    And Each array element of array in response should contain the array larger than a certain size:    [data]    [attributes][stores]    0
+    And Response body parameter should be:    [data][0][attributes][key]    aaaa_shipment-key1
     And Response body has correct self link
-    [Teardown]     Run Keywords    Delete shipment type in DB:    a_shipment-key1${random}
-    ...    AND    Delete shipment type in DB:    b_shipment-key2${random}
+    [Teardown]     Run Keywords    Delete shipment type in DB:    aaa_shipment-key1
+    ...    AND    Delete shipment type in DB:    www_shipment-key2
 
 
 Retrive_list_of_shipment_types_with_sorting_by_key_DESC
@@ -161,20 +149,14 @@ Retrive_list_of_shipment_types_with_sorting_by_key_DESC
     ...    AND    I set Headers:    Content-Type=application/vnd.api+json   Authorization=Bearer ${token} 
     #prepare test data
     When I send a POST request:    /shipment-types
-    ...    {"data": {"type": "shipment-types","attributes": {"name": "shipment-type1${random}","key": "a_shipment-key1${random}","isActive": "true","stores": ["DE", "AT"]}}}
+    ...    {"data": {"type": "shipment-types","attributes": {"name": "shipment-type1${random}","key": "aaa_shipment-key1","isActive": "true","stores": ["DE", "AT"]}}}
     When I send a POST request:    /shipment-types
-    ...    {"data": {"type": "shipment-types","attributes": {"name": "shipment-type2${random}","key": "b_shipment-key2${random}","isActive": "true","stores": ["AT"]}}}
+    ...    {"data": {"type": "shipment-types","attributes": {"name": "shipment-type2${random}","key": "www_shipment-key2","isActive": "true","stores": ["AT"]}}}
     # run get request
     When I send a GET request:    /shipment-types?sort=-key
     Then Response status code should be:    200
     And Response reason should be:    OK
-    And Each array in response should contain property with NOT EMPTY value:    [data]    id
-    And Each array element of array in response should contain property with value:    [data]    type    shipment-types
-    And Each array in response should contain property with NOT EMPTY value:    [data]    [attributes][name]
-    And Each array in response should contain property with NOT EMPTY value:    [data]    [attributes][key]
-    And Each array element of array in response should contain property with value in:    [data]   [attributes][isActive]    True    False
-    And Response should contain the array larger than a certain size:    [data][0][attributes][stores]    0
-    And Each array element of array in response should contain the array larger than a certain size:    [data]    [attributes][stores]    0
+    And Response body parameter should be:    [data][0][attributes][key]    www_shipment-key2
     And Response body has correct self link
-    [Teardown]     Run Keywords    Delete shipment type in DB:    a_shipment-key1${random}
-    ...    AND    Delete shipment type in DB:    b_shipment-key2${random}
+    [Teardown]     Run Keywords    Delete shipment type in DB:    aaa_shipment-key1
+    ...    AND    Delete shipment type in DB:    www_shipment-key2

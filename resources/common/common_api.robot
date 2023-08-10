@@ -1125,14 +1125,41 @@ Each array in response should contain property with NOT EMPTY value:
     Should Not Be Empty     ${list_element}    '${json_path}' property value '${expected_property}' is empty but shoud not be
     END
 
-Each array element of array in response should contain property with value NOT in:
+Each array in response should contain property with value NOT in: 
     [Documentation]    This keyword checks that each array element contsains the speficied parameter ``${expected_property}`` with the value that does not match any of the parameters ``${expected_value1}``, ``${expected_value2}``, etc..
     ...
     ...    The minimal number of arguments is 1, maximum is 4
     ...
     ...    *Example:*
     ...
-    ...    ``Each array element of array in response should contain property with value in:    [data]    [attributes][isSuper]    None``
+    ...    ``Each array element in response should contain property with value NOT in:    [data]    [attributes][isSuper]    None``
+    [Arguments]    ${json_path}    ${expected_property}    ${expected_value1}    ${expected_value2}=robotframework-dummy-value    ${expected_value3}=robotframework-dummy-value    ${expected_value4}=robotframework-dummy-value
+
+    @{data}=    Get Value From Json    ${response_body}    ${json_path}
+    ${list_length}=    Get Length    @{data}
+    ${log_list}=    Log List    @{data}
+    FOR    ${index}    IN RANGE    0    ${list_length}
+        ${list_element}=    Get From List    @{data}    ${index}
+        ${list_element}=    Get Value From Json    ${list_element}    ${expected_property}
+        ${list_element}=    Convert To String    ${list_element}
+        ${list_element}=    Replace String    ${list_element}    '   ${EMPTY}
+        ${list_element}=    Replace String    ${list_element}    [   ${EMPTY}
+        ${list_element}=    Replace String    ${list_element}    ]   ${EMPTY}
+        TRY
+            Should Not Contain Any   ${list_element}    ${expected_value1}    ${expected_value2}    ${expected_value3}    ${expected_value4}    ignore_case=True
+        EXCEPT
+            Fail    Element: '${expected_property}' of array: '${json_path}' contain any but SHOULD NOT: ${expected_value1}, ${expected_value2}, ${expected_value3}, ${expected_value4}
+        END
+    END
+
+Each array element of array in response should contain property with value NOT in:
+    [Documentation]    This keyword checks that each array element of array contsains the speficied parameter ``${expected_property}`` with the value that does not match any of the parameters ``${expected_value1}``, ``${expected_value2}``, etc..
+    ...
+    ...    The minimal number of arguments is 1, maximum is 4
+    ...
+    ...    *Example:*
+    ...
+    ...    ``Each array element of array in response should contain property with value NOT in:    [data]    [attributes][isSuper]    None``
     [Arguments]    ${json_path}    ${expected_property}    ${expected_value1}    ${expected_value2}=robotframework-dummy-value    ${expected_value3}=robotframework-dummy-value    ${expected_value4}=robotframework-dummy-value
 
     @{data}=    Get Value From Json    ${response_body}    ${json_path}
