@@ -772,40 +772,48 @@
        ]
     },
     "servicePoints": {
-        "servicePoints":[
-            {
-                "uuid":"test-service-point",
-                "name":"TSP",
-                "key":"tsp"
-            },
-            {
-                "uuid":"test-service-point-2",
-                "name":"TSP2",
-                "key":"tsp2"
-            }
-        ],
-        "servicePointAddresses":[
-            {
-                "uuid":"test-service-point-address",
-                "address1":"Test address",
-                "address2":"Test address 2",
-                "address3":"Test address 3",
-                "city":"City",
-                "zipCode":"10115"
-            }
-        ],
-        "services":[
-            {
-                "uuid":"test-service",
-                "key":"ts"
-            }
-        ],
-        "serviceTypes":[
-            {
-                "uuid":"test-service-type",
-                "name":"Test service type",
-                "key":"tst"
-            }
-        ]
-    }
- }
+      "servicePoints":[
+          {
+              "uuid":"test-service-point",
+              "name":"TSP",
+              "key":"tsp"
+          },
+          {
+              "uuid":"test-service-point-2",
+              "name":"TSP2",
+              "key":"tsp2"
+          }
+      ],
+      "servicePointAddresses":[
+          {
+              "uuid":"test-service-point-address",
+              "address1":"Test address",
+              "address2":"Test address 2",
+              "address3":"Test address 3",
+              "city":"City",
+              "zipCode":"10115"
+          }
+      ],
+      "services":[
+          {
+              "uuid":"test-service",
+              "key":"ts"
+          }
+      ],
+      "serviceTypes":[
+          {
+              "uuid":"test-service-type",
+              "name":"Test service type",
+              "key":"tst"
+          }
+      ]
+  },
+   "shipment_type":{
+       "shipment_type_uuid":"174d9dc0-55ae-5c4b-a2f2-a419027029ef",
+       "shipment_type_name":"Pickup"
+   }
+
+
+}
+
+ 
