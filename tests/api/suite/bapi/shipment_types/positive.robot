@@ -138,7 +138,7 @@ Retrive_list_of_shipment_types_with_sorting_by_key_ASC
     When I send a GET request:    /shipment-types?sort=key
     Then Response status code should be:    200
     And Response reason should be:    OK
-    And Response body parameter should be:    [data][0][attributes][key]    aaaa_shipment-key1
+    And Response body parameter should be:    [data][0][attributes][key]    aaa_shipment-key1
     And Response body has correct self link
     [Teardown]     Run Keywords    Delete shipment type in DB:    aaa_shipment-key1
     ...    AND    Delete shipment type in DB:    www_shipment-key2

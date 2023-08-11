@@ -2,6 +2,7 @@
 Suite Setup       SuiteSetup
 Test Setup    TestSetup
 Resource    ../../../../../resources/common/common_api.robot
+Resource    ../../../../../resources/steps/shipment_type_steps.robot
 Default Tags    bapi
 
 *** Test Cases ***
@@ -65,10 +66,12 @@ Create_shipment_type_with_empty_key_in_request
 Create_shipment_type_with_already_used_key
     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
     ...    AND    I set Headers:    Content-Type=application/vnd.api+json   Authorization=Bearer ${token} 
+    ...    AND    I send a POST request:    /shipment-types    {"data": {"type": "shipment-types","attributes": {"name": "Some Shipment Type","key": "existing-shipment-type-key","isActive": "true","stores": ["DE", "AT"]}}}
     When I send a POST request:    /shipment-types    {"data": {"type": "shipment-types","attributes": {"name": "Some Shipment Type","key": "existing-shipment-type-key","isActive": "true","stores": ["DE", "AT"]}}}
     Then Response status code should be:    400
     And Response should return error code:    5502
     And Response should return error message:    A delivery type with the same key already exists.
+    [Teardown]     Delete shipment type in DB:    existing-shipment-type-key
 
 Update_sipment_type_without_token
     [Documentation]    https://spryker.atlassian.net/browse/FRW-5850
