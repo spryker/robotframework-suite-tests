@@ -935,21 +935,20 @@ Response should contain the array larger than a certain size:
     @{data}=    Get Value From Json    ${response_body}    ${json_path}
     Log    @{data}
     ${list_length}=    Get Length    @{data}
-    Log    ${list_length}
     ${list_length}=    Convert To Integer    ${list_length}
     ${result}=    Evaluate   ${list_length} > ${expected_size}
     ${result}=    Convert To String    ${result}
     Should Be Equal    ${result}    True    Actual array length is '${list_length}' and it is not greater than expected '${expected_size}' in '${json_path}'.
 
-Each array element of array in response should contain the array larger than a certain size:
-    [Documentation]    This keyword checks that each element in the array specified as ``${json_path}`` contains the `` ${expected_array}`` with certain size greater than ``${expected_size}``.
+Each array element of the array in response should contain a nested array larger than a certain size:
+    [Documentation]    This keyword checks that each element in the array specified as ``${json_path}`` contains the `` ${nested_array}` with certain size greater than ``${expected_size}``.
     ...
-    ...    If at least one array element has ``${expected_array}`` grater than ``${expected_size}``, the keyword will fail.
+    ...    If at least one array element has ``${nested_array} `` less than ``${expected_size}``, the keyword will fail.
 
     ...    *Example:*
     ...
-    ...    `` Each array element of array in response should contain the array larger than a certain size:    [data]    [attributes][stores]    0``
-    [Arguments]    ${json_path}    ${expected_array}    ${expected_size}
+    ...    `` Each array element of the array in response should contain a nested array larger than a certain size:    [data]    [attributes][stores]    0``
+    [Arguments]    ${json_path}    ${nested_array}    ${expected_size}
     @{data}=    Get Value From Json    ${response_body}    ${json_path}
     ${list_length}=    Get Length    @{data}
     ${log_list}=    Log List    @{data}
@@ -957,21 +956,12 @@ Each array element of array in response should contain the array larger than a c
     @{data}=    Get Value From Json    ${response_body}    ${json_path}
     ${list_length}=    Get Length    @{data}
     ${list_length}=    Get From List    @{data}    ${index}
-    @{data}=    Get Value From Json    ${list_length}    ${expected_array}
-    ${list_length_new}=    Get Length    @{data}
-        FOR    ${index}    IN RANGE    0    ${list_length_new}
-    ${list_length_new}=    Convert To Integer    ${list_length_new}
-    Log    ${list_length_new}
-    ${result}=    Evaluate   ${list_length_new} > ${expected_size}
+    @{data}=    Get Value From Json    ${list_length}    ${nested_array} 
+    ${nested_array_list_length}=    Get Length    @{data}
+    ${result}=    Evaluate   ${nested_array_list_length} > ${expected_size}
     ${result}=    Convert To String    ${result}
-    Should Be Equal    ${result}    True    Each array '${list_length_new}' is not greater than expected '${expected_size}' in '${json_path}'.
-    # Should Not Be Equal    ${result}    False    At leat one ${expected_array} length greater than expected '${expected_size}' in '${json_path}'.
-        END
-    END 
-    
-
-
-
+    Should Be Equal    ${result}    True    Actual nested array length is '${nested_array_list_length}' not greater than expected '${expected_size}'.    
+    END
 
 Response should contain the array smaller than a certain size:
     [Documentation]    This keyword checks that the body array sent in ``${json_path}`` argument contains the number of items that is fewer than ``${expected_size}``.
@@ -1122,7 +1112,7 @@ Each array in response should contain property with NOT EMPTY value:
         ${list_element}=    Replace String    ${list_element}    '   ${EMPTY}
         ${list_element}=    Replace String    ${list_element}    [   ${EMPTY}
         ${list_element}=    Replace String    ${list_element}    ]   ${EMPTY}  
-    Should Not Be Empty     ${list_element}    '${json_path}' property value '${expected_property}' is empty but shoud not be
+    Should Not Be Empty     ${list_element}    '${expected_property}' property value in json path '${json_path}' is empty but shoud Not Be EMPTY
     END
 
 Each array in response should contain property with value NOT in: 
