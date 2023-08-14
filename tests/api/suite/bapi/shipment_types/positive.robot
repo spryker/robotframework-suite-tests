@@ -27,11 +27,12 @@ Create_shipment_type
     And Response body has correct self link for created entity:    ${shipment_type_id}
     [Teardown]     Delete shipment type in DB:    some-shipment-type-${random}
 
-CCreate_new_shipment_type_with_existing_name
+Create_new_shipment_type_with_existing_name
     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer ${token}
-    When I send a POST request:    /shipment-types   {"data": {"type": "shipment-types","attributes": {"name": "not_unique_name","key": "new-shipment-type-${random}","isActive": "true","stores": ["DE", "AT"]}}}
+    When I send a POST request:    /shipment-types   {"data": {"type": "shipment-types","attributes": {"name": "not_unique_name","key": "new-shipment-type-${random}","isActive": "true","stores": ["AT"]}}}
     Then Response status code should be:    201
+    And Save value to a variable:    [data][id]    new_shipment_type_uuid
     # Create new shipment type with existing name
     When I send a POST request:    /shipment-types   {"data": {"type": "shipment-types","attributes": {"name": "not_unique_name","key": "second-shipment-type-${random}","isActive": "true","stores": ["DE", "AT"]}}}
     Then Response status code should be:    201
@@ -45,8 +46,13 @@ CCreate_new_shipment_type_with_existing_name
     And Response body parameter should be in:    [data][attributes][stores]    DE    AT
     And Response body parameter should be in:    [data][attributes][stores]    AT    DE
     And Response body has correct self link for created entity:    ${shipment_type_id}
+    # check that first shipment time still exist and not overrided
+    And I send a GET request:    /shipment-types/
+    And I send a GET request:    /shipment-types/${new_shipment_type_uuid}
+    And Response body parameter should be:    [data][attributes][key]    new-shipment-type-${random}   
+    And Response body parameter should be:    [data][attributes][name]    not_unique_name
     [Teardown]     Run Keywords    Delete shipment type in DB:    new-shipment-type-${random}
-     ...    AND    Delete shipment type in DB:    second-shipment-type-${random}
+    ...    AND    Delete shipment type in DB:    second-shipment-type-${random}
     
 Update_sipment_type_change_name_store_relation_and_deactivate
     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
