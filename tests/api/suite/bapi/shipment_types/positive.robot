@@ -12,7 +12,7 @@ ENABLER
 *** Test Cases ***
 Create_shipment_type
     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
-    ...    AND    I set Headers:    Content-Type=application/vnd.api+json   Authorization=Bearer ${token}
+    ...    AND    I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer ${token}
     When I send a POST request:    /shipment-types   {"data": {"type": "shipment-types","attributes": {"name": "Some Shipment Type ${random}","key": "some-shipment-type-${random}","isActive": "true","stores": ["DE", "AT"]}}}
     Then Response status code should be:    201
     And Response reason should be:    Created
@@ -27,19 +27,19 @@ Create_shipment_type
     And Response body has correct self link for created entity:    ${shipment_type_id}
     [Teardown]     Delete shipment type in DB:    some-shipment-type-${random}
 
-Create_new_shipment_type_with_existing_Not-Uniqu_Name_unique_key_and_IsActive
+CCreate_new_shipment_type_with_existing_name
     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
-    ...    AND    I set Headers:    Content-Type=application/vnd.api+json   Authorization=Bearer ${token}
-    When I send a POST request:    /shipment-types   {"data": {"type": "shipment-types","attributes": {"name": "not_unnique_name","key": "new-shipment-type-${random}","isActive": "true","stores": ["DE", "AT"]}}}
+    ...    AND    I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer ${token}
+    When I send a POST request:    /shipment-types   {"data": {"type": "shipment-types","attributes": {"name": "not_unique_name","key": "new-shipment-type-${random}","isActive": "true","stores": ["DE", "AT"]}}}
     Then Response status code should be:    201
     # Create new shipment type with existing name
-    When I send a POST request:    /shipment-types   {"data": {"type": "shipment-types","attributes": {"name": "not_unnique_name","key": "second-shipment-type-${random}","isActive": "true","stores": ["DE", "AT"]}}}
+    When I send a POST request:    /shipment-types   {"data": {"type": "shipment-types","attributes": {"name": "not_unique_name","key": "second-shipment-type-${random}","isActive": "true","stores": ["DE", "AT"]}}}
     Then Response status code should be:    201
     And Response reason should be:    Created 
     And Response body parameter should be:    [data][type]    shipment-types
     And Save value to a variable:    [data][id]    shipment_type_id
     And Response body parameter should not be EMPTY:    [data][id]
-    And Response body parameter should be:    [data][attributes][name]    not_unnique_name
+    And Response body parameter should be:    [data][attributes][name]    not_unique_name
     And Response body parameter should be:    [data][attributes][key]    second-shipment-type-${random}
     And Response body parameter should be:    [data][attributes][isActive]    True
     And Response body parameter should be in:    [data][attributes][stores]    DE    AT
@@ -50,7 +50,7 @@ Create_new_shipment_type_with_existing_Not-Uniqu_Name_unique_key_and_IsActive
     
 Update_sipment_type_change_name_store_relation_and_deactivate
     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
-    ...    AND    I set Headers:    Content-Type=application/vnd.api+json   Authorization=Bearer ${token}  
+    ...    AND    I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer ${token}
     When I send a POST request:    /shipment-types
     ...    {"data": {"type": "shipment-types","attributes": {"name": "name${random}","key": "update-shipment-type-key${random}","isActive": "true","stores": ["DE"]}}}
     Then Response status code should be:    201
@@ -60,6 +60,7 @@ Update_sipment_type_change_name_store_relation_and_deactivate
     ...    {"data": {"type": "shipment-types","attributes": {"name": "updated_name${random}","isActive": "false","stores": ["AT"]}}} 
     Then Response status code should be:    200
     And Response reason should be:    OK
+    When I send a GET request:    /shipment-types/${shipment_type_uuid}
     And Response body parameter should be:    [data][attributes][name]    updated_name${random}
     And Response body parameter should be:    [data][attributes][isActive]    False
     And Response body parameter should be:    [data][attributes][stores]    AT
@@ -68,7 +69,7 @@ Update_sipment_type_change_name_store_relation_and_deactivate
 
 Retrive_single_shipment_type_with_valid_token
     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
-    ...    AND    I set Headers:    Content-Type=application/vnd.api+json   Authorization=Bearer ${token}
+    ...    AND    I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer ${token}
     When I send a POST request:    /shipment-types
     ...    {"data": {"type": "shipment-types","attributes": {"name": "shipment-type${random}","key": "shipment-key${random}","isActive": "true","stores": ["DE", "AT"]}}}
     Then Response status code should be:    201
@@ -86,7 +87,7 @@ Retrive_single_shipment_type_with_valid_token
 
 Retrive_list_of_shipment_types_with_valid_token_and_pagination
     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
-    ...    AND    I set Headers:    Content-Type=application/vnd.api+json   Authorization=Bearer ${token} 
+    ...    AND    I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer ${token}
     #prepare test data
     When I send a POST request:    /shipment-types
     ...    {"data": {"type": "shipment-types","attributes": {"name": "shipment-type1${random}","key": "shipment-key1${random}","isActive": "true","stores": ["DE", "AT"]}}}
@@ -109,7 +110,7 @@ Retrive_list_of_shipment_types_with_valid_token_and_pagination
     
 Retrive_list_of_shipment_types_with_filtering
     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
-    ...    AND    I set Headers:    Content-Type=application/vnd.api+json   Authorization=Bearer ${token} 
+    ...    AND    I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer ${token}
     #prepare test data
     When I send a POST request:    /shipment-types
     ...    {"data": {"type": "shipment-types","attributes": {"name": "shipment-type1${random}","key": "shipment-key1${random}","isActive": "true","stores": ["DE", "AT"]}}}
@@ -128,7 +129,7 @@ Retrive_list_of_shipment_types_with_filtering
 
 Retrive_list_of_shipment_types_with_sorting_by_key_ASC
     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
-    ...    AND    I set Headers:    Content-Type=application/vnd.api+json   Authorization=Bearer ${token} 
+    ...    AND    I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer ${token}
     #prepare test data
     When I send a POST request:    /shipment-types
     ...    {"data": {"type": "shipment-types","attributes": {"name": "shipment-type1${random}","key": "aaa_shipment-key1","isActive": "true","stores": ["DE", "AT"]}}}
@@ -146,7 +147,7 @@ Retrive_list_of_shipment_types_with_sorting_by_key_ASC
 
 Retrive_list_of_shipment_types_with_sorting_by_key_DESC
     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
-    ...    AND    I set Headers:    Content-Type=application/vnd.api+json   Authorization=Bearer ${token} 
+    ...    AND    I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer ${token}
     #prepare test data
     When I send a POST request:    /shipment-types
     ...    {"data": {"type": "shipment-types","attributes": {"name": "shipment-type1${random}","key": "aaa_shipment-key1","isActive": "true","stores": ["DE", "AT"]}}}
