@@ -940,14 +940,14 @@ Response should contain the array larger than a certain size:
     ${result}=    Convert To String    ${result}
     Should Be Equal    ${result}    True    Actual array length is '${list_length}' and it is not greater than expected '${expected_size}' in '${json_path}'.
 
-Each array element of array in response should contain a nested array larger a certain size:
+Each array element of the array in response should contain a nested array larger than a certain size:
     [Documentation]    This keyword checks that each element in the array specified as ``${json_path}`` contains the `` ${nested_array}` with certain size greater than ``${expected_size}``.
     ...
     ...    If at least one array element has ``${nested_array} `` less than ``${expected_size}``, the keyword will fail.
 
     ...    *Example:*
     ...
-    ...    `` Each array element of array in response should contain a nested array larger a certain size:    [data]    [attributes][stores]    0``
+    ...    `` Each array element of the array in response should contain a nested array larger than a certain size:    [data]    [attributes][stores]    0``
     [Arguments]    ${json_path}    ${nested_array}    ${expected_size}
     @{data}=    Get Value From Json    ${response_body}    ${json_path}
     ${list_length}=    Get Length    @{data}
@@ -958,31 +958,10 @@ Each array element of array in response should contain a nested array larger a c
     ${list_length}=    Get From List    @{data}    ${index}
     @{data}=    Get Value From Json    ${list_length}    ${nested_array} 
     ${nested_array_list_length}=    Get Length    @{data}
-    FOR    ${index}    IN RANGE    0    ${nested_array_list_length}
-    ${nested_array_list_length}=    Convert To Integer    ${nested_array_list_length}
-    Log    ${nested_array_list_length}
     ${result}=    Evaluate   ${nested_array_list_length} > ${expected_size}
     ${result}=    Convert To String    ${result}
-    # Should Be Equal    ${result}    True    Actual array length is '${nested_array_list_length}' is not greater than expected  '${expected_size}' in '${nested_array}'.
-    Should Be Equal    ${nested_array_list_length}    ${expected_size}    Actual nested array size:'${nested_array_list_length} ' in '${nested_array}' does not match '${expected_size}'.
-       END
-    END 
-    [Arguments]    ${parent_array}    ${nested_array}    ${array_expected_size}
-    @{data}=    Get Value From Json    ${response_body}    ${parent_array}
-    ${list_length}=    Get Length    @{data}
-    ${log_list}=    Log List    @{data}
-    FOR    ${index}    IN RANGE    0    ${list_length}
-        ${list_element}=    Get From List    @{data}    ${index}
-        @{list_element2}=    Get Value From Json    ${list_element}    ${nested_array}
-        ${list_length2}=    Get Length    @{list_element2}
-        ${list_length2}=    Convert To String    ${list_length2}
-        Should Be Equal    ${list_length2}    ${array_expected_size}    Actual nested array size:'${list_length2}' in '${nested_array}' does not match '${array_expected_size}'.
+    Should Be Equal    ${result}    True    Actual nested array length is '${nested_array_list_length}' not greater than expected '${expected_size}'.    
     END
-
-
-
-
-
 
 Response should contain the array smaller than a certain size:
     [Documentation]    This keyword checks that the body array sent in ``${json_path}`` argument contains the number of items that is fewer than ``${expected_size}``.

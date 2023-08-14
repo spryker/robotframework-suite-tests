@@ -104,7 +104,7 @@ Retrive_list_of_shipment_types_with_valid_token_and_pagination
     And Each array element of array in response should contain property with value in:    [data]   [attributes][isActive]    True    False
     And Response should contain the array larger than a certain size:    [data][0][attributes][stores]    0
     And Response should contain the array of a certain size:    [data]    2
-    And Each array element of array in response should contain a nested array larger a certain size:    [data]    [attributes][stores]    0
+    And Each array element of the array in response should contain a nested array larger than a certain size:    [data]    [attributes][stores]    0
    [Teardown]     Run Keywords    Delete shipment type in DB:    shipment-key1${random}
     ...    AND    Delete shipment type in DB:    shipment-key2${random}
     
