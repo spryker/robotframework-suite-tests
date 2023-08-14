@@ -14,8 +14,12 @@ Get shipment type id from DB by key:
         ...
     [Arguments]    ${key}
     Connect to Spryker DB
-    ${id_shipment_type_store}    Query    SELECT id_shipment_type FROM spy_shipment_type WHERE "key" = '${key}' ORDER BY id_shipment_type DESC LIMIT 1;
+    IF    '${db_engine}' == 'pymysql' 
+    ${id_shipment_type_store}    Query    SELECT id_shipment_type FROM spy_shipment_type WHERE `key` = '${key}' ORDER BY id_shipment_type DESC LIMIT 1;
     Disconnect From Database
+    ELSE
+    ${id_shipment_type_store}    Query    SELECT id_shipment_type FROM spy_shipment_type WHERE "key" = '${key}' ORDER BY id_shipment_type DESC LIMIT 1;
+    END
     [Return]    ${id_shipment_type_store[0][0]}
 
 Delete shipment type in DB:
@@ -28,8 +32,13 @@ Delete shipment type in DB:
     IF    ${withRelations}
         ${id_shipment_type_store}=    Get shipment type id from DB by key:    ${key} 
         Connect to Spryker DB
+        IF    '${db_engine}' == 'pymysql' 
+        Execute Sql String    DELETE FROM spy_shipment_type_store WHERE fk_shipment_type = ${id_shipment_type_store};
+        Execute Sql String    DELETE FROM spy_shipment_type WHERE `key` = '${key}';
+        ELSE
         Execute Sql String    DELETE FROM spy_shipment_type_store WHERE fk_shipment_type = ${id_shipment_type_store};
         Execute Sql String    DELETE FROM spy_shipment_type WHERE "key" = '${key}';
+        END
         Disconnect From Database
     END
     Connect to Spryker DB
