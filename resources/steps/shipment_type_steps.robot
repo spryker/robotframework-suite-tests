@@ -14,7 +14,7 @@ Get shipment type id from DB by key:
         ...
     [Arguments]    ${key}
     Connect to Spryker DB
-    ${id_shipment_type_store}    Query    SELECT id_shipment_type FROM spy_shipment_type WHERE `key` = '${key}' ORDER BY id_shipment_type DESC LIMIT 1;
+    ${id_shipment_type_store}    Query    SELECT id_shipment_type FROM spy_shipment_type WHERE "key" = '${key}' ORDER BY id_shipment_type DESC LIMIT 1;
     Disconnect From Database
     [Return]    ${id_shipment_type_store[0][0]}
 
@@ -29,10 +29,10 @@ Delete shipment type in DB:
         ${id_shipment_type_store}=    Get shipment type id from DB by key:    ${key} 
         Connect to Spryker DB
         Execute Sql String    DELETE FROM spy_shipment_type_store WHERE fk_shipment_type = ${id_shipment_type_store};
-        Execute Sql String    DELETE FROM spy_shipment_type WHERE `key` = '${key}';
+        Execute Sql String    DELETE FROM spy_shipment_type WHERE "key" = '${key}';
         Disconnect From Database
     END
     Connect to Spryker DB
-    Execute Sql String    DELETE FROM spy_shipment_type WHERE `key` = '${key}';
+    Execute Sql String    DELETE FROM spy_shipment_type WHERE "key" = '${key}';
     Disconnect From Database
 
