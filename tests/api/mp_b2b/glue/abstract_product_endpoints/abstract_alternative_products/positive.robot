@@ -23,7 +23,7 @@ Product_has_abstract_alternative
 
 Product_has_abstract_alternative_with_includes
     [Documentation]   bug CC-16536 is fixed in internal B2B, but there is no fix in public MP-B2B
-    [Tags]    skip-due-to-issue 
+    [Tags]    skip-due-to-issue
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}  
     When I send a GET request:    /concrete-products/${concrete_product_with_alternative.sku}/abstract-alternative-products?include=abstract-product-image-sets,abstract-product-availabilities,abstract-product-prices,category-nodes
