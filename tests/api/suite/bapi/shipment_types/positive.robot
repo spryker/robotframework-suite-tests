@@ -90,6 +90,7 @@ Retrive_single_shipment_type_with_valid_token
     And Response body parameter should be in:    [data][attributes][stores]    DE    AT
     And Response body parameter should be in:    [data][attributes][stores]    AT    DE
     And Response body has correct self link internal
+    [Teardown]     Delete shipment type in DB:    shipment-key${random}
 
 Retrive_list_of_shipment_types_with_valid_token_and_pagination
     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
@@ -122,7 +123,7 @@ Retrive_list_of_shipment_types_with_filtering
     ...    {"data": {"type": "shipment-types","attributes": {"name": "shipment-type1${random}","key": "shipment-key1${random}","isActive": "true","stores": ["DE", "AT"]}}}
     When I send a POST request:    /shipment-types
     ...    {"data": {"type": "shipment-types","attributes": {"name": "shipment-type2${random}","key": "shipment-key2${random}","isActive": "true","stores": ["AT"]}}}
-       When I send a POST request:    /shipment-types
+    When I send a POST request:    /shipment-types
     ...    {"data": {"type": "shipment-types","attributes": {"name": "shipment-type3${random}","key": "shipment-key3${random}","isActive": "true","stores": ["DE"]}}}
    # run get request
     When I send a GET request:    /shipment-types?filter[shipment-types.stores]=AT
