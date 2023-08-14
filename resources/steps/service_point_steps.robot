@@ -206,4 +206,4 @@ Deactivate service points
     Connect to Spryker DB
     Execute Sql String    ${query};
     Disconnect From Database
-    Trigger publish trigger-events    service_point    ${console_path}    timeout=1s
+    Trigger publish trigger-events    service_point    timeout=1s
