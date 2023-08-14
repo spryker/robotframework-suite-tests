@@ -10,7 +10,7 @@ Get shipment type id from DB by key:
     [Documentation]    This keyword gets the entry from the DB table `spy_shipment_type`. 
         ...    *Example:*
         ...
-        ...    ``Get shipment type id in DB by key:    some-shipment-type-61152``
+        ...    ``Get shipment type id from DB by key:   some-shipment-type-61152``
         ...
     [Arguments]    ${key}
     Connect to Spryker DB

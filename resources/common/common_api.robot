@@ -1112,7 +1112,7 @@ Each array in response should contain property with NOT EMPTY value:
         ${list_element}=    Replace String    ${list_element}    '   ${EMPTY}
         ${list_element}=    Replace String    ${list_element}    [   ${EMPTY}
         ${list_element}=    Replace String    ${list_element}    ]   ${EMPTY}  
-    Should Not Be Empty     ${list_element}    '${json_path}' property value '${expected_property}' is empty but shoud not be
+    Should Not Be Empty     ${list_element}    '${expected_property}' property value in json path '${json_path}' is empty but shoud Not Be EMPTY
     END
 
 Each array in response should contain property with value NOT in: 
