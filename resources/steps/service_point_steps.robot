@@ -17,6 +17,18 @@ Get id service point by uuid
     Disconnect From Database
     [Return]    ${servicePointIds[0][0]}
 
+Get id service type by uuid
+    [Documentation]    This keyword returns Service Type ID by Service Type UUID.
+        ...    *Example:*
+        ...
+        ...    ``Get id service type by uuid    uuid=262feb9d-33a7-5c55-9b04-45b1fd22067e``
+        ...
+    [Arguments]    ${uuid}
+    Connect to Spryker DB
+    ${serviceTypeIds}    Query    SELECT id_service_type FROM spy_service_type WHERE uuid = '${uuid}' ORDER BY id_service_type DESC LIMIT 1;
+    Disconnect From Database
+    [Return]    ${serviceTypeIds[0][0]}
+
 Create service point in DB
     [Documentation]    This keyword creates a new entry in the DB table `spy_service_point`. If `storeName` is provided, creates store relation.
         ...    *Example:*
