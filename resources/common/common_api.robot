@@ -2430,7 +2430,7 @@ Run console command
     [Documentation]    This keyword executes console command using provided command and parameters. If docker is enabled, it will execute the command using docker.
         ...    *Example:*
         ...
-        ...    ``Execute console command    command=publish:trigger-events parameters=-r service_point    storeName=DE``
+        ...    ``Run console command    command=publish:trigger-events parameters=-r service_point    storeName=DE``
         ...
     [Arguments]    ${command}    ${storeName}=DE
     ${consoleCommand}=    Set Variable    cd ${cli_path} && APPLICATION_STORE=${storeName} docker/sdk ${command}

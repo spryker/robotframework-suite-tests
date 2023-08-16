@@ -497,7 +497,7 @@ Run console command
     [Documentation]    This keyword executes console command using provided command and parameters. If docker is enabled, it will execute the command using docker.
         ...    *Example:*
         ...
-        ...    ``Execute console command    command=publish:trigger-events parameters=-r service_point    storeName=DE``
+        ...    ``Run console command    command=publish:trigger-events parameters=-r service_point    storeName=DE``
         ...
     [Arguments]    ${command}    ${storeName}=DE
     ${consoleCommand}=    Set Variable    cd ${cli_path} && APPLICATION_STORE=${storeName} docker/sdk ${command}
@@ -518,7 +518,7 @@ Trigger p&s
 Trigger multistore p&s
     [Arguments]    ${timeout}=5s
     IF    '.local' in '${yves_url}' or '.local' in '${zed_url}' or '.local' in '${glue_url}' or '.local' in '${bapi_url}' or '.local' in '${sapi_url}'
-        Trigger p&s    ${timeout}
+        Trigger p&s    ${timeout}    DE
         Trigger p&s    ${timeout}    AT
     END
 
