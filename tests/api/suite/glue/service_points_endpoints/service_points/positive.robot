@@ -12,7 +12,7 @@ ENABLER
 Retrieves_list_of_service_points
     [Setup]    Run Keywords    Create service point in DB    ${servicePoints[0].uuid}    ${servicePoints[0].name}    ${servicePoints[0].key}
     ...    AND    Create service point address in DB    ${servicePoints[0].uuid}
-    ...    AND    Trigger publish trigger-events    service_point    ${console_path}
+    ...    AND    Trigger publish trigger-events    service_point
     When I send a GET request:    /service-points
     Then Response status code should be:    200
     And Response reason should be:    OK
@@ -33,7 +33,7 @@ Retrieves_list_of_service_points_filtered_by_service_type_key
     ...    AND    Create service type in DB    uuid=${serviceTypes[0].uuid}    key=${serviceTypes[0].key}
     ...    AND    Create service in DB    servicePointUuid=${servicePoints[0].uuid}    serviceTypeUuid=${serviceTypes[0].uuid}
     ...    AND    Create service point with address and store relations in DB    servicePointUuid=${servicePoints[1].uuid}
-    ...    AND    Trigger publish trigger-events    service_point    ${console_path}
+    ...    AND    Trigger publish trigger-events    service_point
     When I send a GET request:    /service-points?filter[service-points.serviceTypeKey]=${serviceTypes[0].key}
     Then Response status code should be:    200
     And Response reason should be:    OK
@@ -53,7 +53,7 @@ Retrieves_list_of_service_points_filtered_by_name_using_full_text_search
     [Setup]    Run Keywords    Create service point in DB    name=${servicePoints[0].name}    uuid=${servicePoints[0].uuid}
     ...    AND    Create service point address in DB    servicePointUuid=${servicePoints[0].uuid}
     ...    AND    Create service point with address and store relations in DB    servicePointUuid=${servicePoints[1].uuid}
-    ...    AND    Trigger publish trigger-events    service_point    ${console_path}
+    ...    AND    Trigger publish trigger-events    service_point
     When I send a GET request:    /service-points?q=${servicePoints[0].name}
     Then Response status code should be:    200
     And Response reason should be:    OK
@@ -72,7 +72,7 @@ Retrieves_list_of_service_points_filtered_by_city_using_full_text_search
     [Setup]    Run Keywords    Create service point in DB    name=${servicePoints[0].name}    uuid=${servicePoints[0].uuid}
     ...    AND    Create service point address in DB    servicePointUuid=${servicePoints[0].uuid}    city=${servicePointAddresses[0].city}
     ...    AND    Create service point with address and store relations in DB    servicePointUuid=${servicePoints[1].uuid}
-    ...    AND    Trigger publish trigger-events    service_point    ${console_path}
+    ...    AND    Trigger publish trigger-events    service_point
     When I send a GET request:    /service-points?q=${servicePointAddresses[0].city}
     Then Response status code should be:    200
     And Response reason should be:    OK
@@ -92,7 +92,7 @@ Retrieves_list_of_service_points_sort_by_city_asc
     ...    AND    Create service point address in DB    servicePointUuid=${servicePoints[0].uuid}    city=A
     ...    AND    Create service point in DB    uuid=${servicePoints[1].uuid}
     ...    AND    Create service point address in DB    servicePointUuid=${servicePoints[1].uuid}    city=B
-    ...    AND    Trigger publish trigger-events    service_point    ${console_path}
+    ...    AND    Trigger publish trigger-events    service_point
     When I send a GET request:    /service-points?sort=city
     Then Response status code should be:    200
     And Response reason should be:    OK
@@ -114,7 +114,7 @@ Retrieves_list_of_service_points_sort_by_city_desc
     ...    AND    Create service point address in DB    servicePointUuid=${servicePoints[0].uuid}    city=A
     ...    AND    Create service point in DB    uuid=${servicePoints[1].uuid}
     ...    AND    Create service point address in DB    servicePointUuid=${servicePoints[1].uuid}    city=B
-    ...    AND    Trigger publish trigger-events    service_point    ${console_path}
+    ...    AND    Trigger publish trigger-events    service_point
     When I send a GET request:    /service-points?sort=-city
     Then Response status code should be:    200
     And Response reason should be:    OK
@@ -134,7 +134,7 @@ Retrieves_list_of_service_points_sort_by_city_desc
 Retrieves_list_of_service_points_with_addresses_relations
     [Setup]    Run Keywords    Create service point in DB    ${servicePoints[0].uuid}
     ...    AND    Create service point address in DB    ${servicePoints[0].uuid}    ${servicePointAddresses[0].uuid}    ${servicePointAddresses[0].address1}    ${servicePointAddresses[0].address2}    ${servicePointAddresses[0].address3}    ${servicePointAddresses[0].city}    ${servicePointAddresses[0].zipCode}    DE
-    ...    AND    Trigger publish trigger-events    service_point    ${console_path}
+    ...    AND    Trigger publish trigger-events    service_point
     When I send a GET request:    /service-points?include=service-point-addresses
     Then Response status code should be:    200
     And Response reason should be:    OK
@@ -169,7 +169,7 @@ Retrieves_list_of_service_points_with_addresses_relations
 
 Retrieves_a_service_point_by_id
     [Setup]    Run Keywords    Create service point in DB    name=${servicePoints[0].name}    key=${servicePoints[0].key}    uuid=${servicePoints[0].uuid}
-    ...    AND    Trigger publish trigger-events    service_point    ${console_path}
+    ...    AND    Trigger publish trigger-events    service_point
     When I send a GET request:    /service-points/${servicePoints[0].uuid}
     Then Response status code should be:    200
     And Response reason should be:    OK
@@ -183,7 +183,7 @@ Retrieves_a_service_point_by_id
 Retrieves_a_service_point_by_id_with_address_relation
     [Setup]    Run Keywords    Create service point in DB    name=${servicePoints[0].name}    key=${servicePoints[0].key}    uuid=${servicePoints[0].uuid}
     ...    AND    Create service point address in DB    ${servicePoints[0].uuid}    ${servicePointAddresses[0].uuid}    ${servicePointAddresses[0].address1}    ${servicePointAddresses[0].address2}    ${servicePointAddresses[0].address3}    ${servicePointAddresses[0].city}    ${servicePointAddresses[0].zipCode}    DE
-    ...    AND    Trigger publish trigger-events    service_point    ${console_path}
+    ...    AND    Trigger publish trigger-events    service_point
     When I send a GET request:    /service-points/${servicePoints[0].uuid}?include=service-point-addresses
     Then Response status code should be:    200
     And Response reason should be:    OK
@@ -204,7 +204,7 @@ Retrieves_a_service_point_by_id_with_address_relation
 
 Retrieves_a_service_point_by_id_with_empty_address_relation
     [Setup]    Run Keywords    Create service point in DB    name=${servicePoints[0].name}    key=${servicePoints[0].key}    uuid=${servicePoints[0].uuid}
-    ...    AND    Trigger publish trigger-events    service_point    ${console_path}
+    ...    AND    Trigger publish trigger-events    service_point
     When I send a GET request:    /service-points/${servicePoints[0].uuid}?include=service-point-addresses
     Then Response status code should be:    200
     And Response reason should be:    OK
