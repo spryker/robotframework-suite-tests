@@ -72,7 +72,7 @@ Delete warehouse in DB:
     [Documentation]    This keyword deletes the entry from the DB table `spy_stock`.
         ...    *Example:*
         ...
-        ...    ``Delete warehouse in DB    uuid=33a7-5c55-9b04``
+        ...    ``Delete warehouse in DB    834b3731-02d4-5d6f-9a61-d63ae5e70517``
         ...
     [Arguments]    ${uuid}
     Connect to Spryker DB
@@ -83,7 +83,7 @@ Delete push notification subscription in DB:
     [Documentation]    This keyword deletes the entry from the DB table `spy_push_notification_subscription`.
         ...    *Example:*
         ...
-        ...    ``Delete push notification subscription in DB    uuid=33a7-5c55-9b04``
+        ...    ``Delete push notification subscription in DB    834b3731-02d4-5d6f-9a61-d63ae5e70517``
         ...
     [Arguments]    ${uuid}
     Connect to Spryker DB
