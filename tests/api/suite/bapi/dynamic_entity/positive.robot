@@ -45,10 +45,10 @@ Get_country_Collection_with_filter_first_item
     And I send a GET request:    /dynamic-entity/country?filter[country.iso2_code]=AC
     Then Response status code should be:    200
     And Response header parameter should be:    Content-Type    application/json
-    And Response body parameter should be:    [id_country]    1
-    And Response body parameter should be:    [iso2_code]    AC
-    And Response body parameter should be:    [iso3_code]    ASC
-    And Response body parameter should be:    [name]    Ascension Island
+    And Response body parameter should be:    [0][id_country]    1
+    And Response body parameter should be:    [0][iso2_code]    AC
+    And Response body parameter should be:    [0][iso3_code]    ASC
+    And Response body parameter should be:    [0][name]    Ascension Island
     [Teardown]    Run Keyword    Delete dynamic entity configuration in Database:    country
 
 Get_country_collection_with_filter
@@ -62,12 +62,12 @@ Get_country_collection_with_filter
     And I send a GET request:    /dynamic-entity/country?filter[country.iso2_code]=UA
     Then Response status code should be:    200
     And Response header parameter should be:    Content-Type    application/json
-    And Response body parameter should be:    [id_country]    235
-    And Response body parameter should be:    [iso2_code]    UA
-    And Response body parameter should be:    [iso3_code]    UKR
-    And Response body parameter should be:    [name]    Ukraine
-    And Response body parameter should be:    [postal_code_mandatory]    True
-    And Response body parameter should be:    [postal_code_regex]    \\\\d{5}
+    And Response body parameter should be:    [0][id_country]    235
+    And Response body parameter should be:    [0][iso2_code]    UA
+    And Response body parameter should be:    [0][iso3_code]    UKR
+    And Response body parameter should be:    [0][name]    Ukraine
+    And Response body parameter should be:    [0][postal_code_mandatory]    True
+    And Response body parameter should be:    [0][postal_code_regex]    \\\\d{5}
     [Teardown]    Run Keyword    Delete dynamic entity configuration in Database:    country
 
 Get_country_collection_with_paginations
@@ -171,11 +171,11 @@ Create_and_update_country:
     And I send a POST request:    /dynamic-entity/country   {"data":[{"iso2_code":"XM","iso3_code":"XXM","name":"POST XM"}]}
     Then Response status code should be:    201
     And Response header parameter should be:    Content-Type    application/json
-    And Response body parameter should be:    [iso2_code]    XM
-    And Response body parameter should be:    [iso3_code]    XXM
-    And Response body parameter should be:    [name]    POST XM
-    Response body parameter should be greater than :    [id_country]    200
-    When Save value to a variable:    [id_country]    xxa_country_id
+    And Response body parameter should be:    [0][iso2_code]    XM
+    And Response body parameter should be:    [0][iso3_code]    XXM
+    And Response body parameter should be:    [0][name]    POST XM
+    Response body parameter should be greater than :    [0][id_country]    200
+    When Save value to a variable:    [0][id_country]    xxa_country_id
     ### UPDATE COUNTRY ###
     And I set Headers:    Content-Type==application/json    Authorization=Bearer ${token}
     And I send a PATCH request:    /dynamic-entity/country/${xxa_country_id}    {"data":{"iso2_code":"XX","iso3_code":"XXX","name":"Country XX"}}
