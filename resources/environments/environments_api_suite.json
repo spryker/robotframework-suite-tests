@@ -807,5 +807,31 @@
                 "key":"tst"
             }
         ]
+    },
+    "warehouses":{
+        "warehouses": [
+            {
+                "uuid": "test-warehouse",
+                "is_active": true,
+                "name": "Test warehouse"
+            }
+        ]
+    },
+    "push_notifications": {
+        "push_notification_subscriptions": [
+            {
+                "providerName": "web-push-php",
+                "group": {
+                    "name": "warehouse",
+                    "identifier": ""
+                },
+                "payload": {
+                    "endpoint": "endpoint",
+                    "publicKey": "publicKey",
+                    "authToken": "authToken"
+                },
+                "localeName": ""
+            }
+        ]
     }
  }
