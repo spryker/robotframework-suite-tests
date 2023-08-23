@@ -25,6 +25,10 @@ ${default_db_port}         3306
 ${default_db_port_postgres}    5432
 ${default_db_user}         spryker
 ${default_db_engine}       pymysql
+${docker}     ${False}
+${docker_db_host}     database
+${docker_cli_url}     http://cli:9000
+${cli_path}    ..
 ${db_engine}
 ${glue_env}
 ${bapi_env}
@@ -52,6 +56,9 @@ SuiteSetup
         Set Global Variable    ${verify_ssl}    ${True}
     ELSE
         Set Global Variable    ${verify_ssl}    ${False}
+    END
+    IF    ${docker}
+        Set Global Variable    ${db_host}    ${docker_db_host}
     END
     [Teardown]
     [Return]    ${random}
@@ -2492,28 +2499,39 @@ I get access token by user credentials:
     Log    ${token}
     [Return]    ${token}
 
+Run console command
+    [Documentation]    This keyword executes console command using provided command and parameters. If docker is enabled, it will execute the command using docker.
+        ...    *Example:*
+        ...
+        ...    ``Run console command    command=publish:trigger-events parameters=-r service_point    storeName=DE``
+        ...
+    [Arguments]    ${command}    ${storeName}=DE
+    ${consoleCommand}=    Set Variable    cd ${cli_path} && APPLICATION_STORE=${storeName} docker/sdk ${command}
+    IF    ${docker}
+        ${consoleCommand}=    Set Variable    curl --request POST -LsS --data "APPLICATION_STORE='${storeName}' COMMAND='${command}' cli.sh" --max-time 1000 --url "${docker_cli_url}/console"
+    END
+    ${rc}    ${output}=    Run And Return RC And Output    ${consoleCommand}
+    Log   ${output}
+    Should Be Equal As Integers    ${rc}    0
+
 Trigger publish trigger-events
     [Documentation]    This keyword triggers publish:trigger-events console command using provided resource, path and store.
         ...    *Example:*
         ...
-        ...    ``Trigger publish trigger-events    resource=service_point    consolePath=..    storeName=DE    timeout=5s``
+        ...    ``Trigger publish trigger-events    resource=service_point    storeName=DE    timeout=5s``
         ...
-    [Arguments]    ${resource}    ${consolePath}=..    ${storeName}=DE    ${timeout}=5s
-    ${rc}    ${output}=    Run And Return RC And Output    cd ${consolePath} && APPLICATION_STORE=${storeName} docker/sdk console publish:trigger-events -r ${resource}
-    Log    ${output}
-    Should Be Equal As Integers    ${rc}    0
-    Trigger p&s    ${timeout}    ${consolePath}    ${storeName}
+    [Arguments]    ${resource}    ${storeName}=DE    ${timeout}=5s
+    Run console command    console publish:trigger-events -r ${resource}    ${storeName}
+    Trigger p&s    ${timeout}    ${storeName}
 
 Trigger p&s
     [Documentation]    This keyword triggers P&S using provided timout, path, and store.
         ...    *Example:*
         ...
-        ...    ``Trigger p&s    timeout=5s    consolePath=..    storeName=DE``
+        ...    ``Trigger p&s    timeout=5s    storeName=DE``
         ...
-    [Arguments]    ${timeout}=5s    ${consolePath}=..    ${storeName}=DE
-    ${rc}    ${output}=    Run And Return RC And Output    cd ${consolePath} && APPLICATION_STORE=${storeName} docker/sdk console queue:worker:start --stop-when-empty
-    Log    ${output}
-    Should Be Equal As Integers    ${rc}    0
+    [Arguments]    ${timeout}=5s    ${storeName}=DE
+    Run console command    console queue:worker:start --stop-when-empty    ${storeName}
     Sleep    ${timeout}
 
 Get next id from table

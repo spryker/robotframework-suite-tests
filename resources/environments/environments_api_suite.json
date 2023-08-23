@@ -772,39 +772,65 @@
        ]
     },
     "servicePoints": {
-      "servicePoints":[
+        "servicePoints":[
+            {
+                "uuid":"test-service-point",
+                "name":"TSP",
+                "key":"tsp"
+            },
+            {
+                "uuid":"test-service-point-2",
+                "name":"TSP2",
+                "key":"tsp2"
+            }
+        ],
+        "servicePointAddresses":[
+            {
+                "uuid":"test-service-point-address",
+                "address1":"Test address",
+                "address2":"Test address 2",
+                "address3":"Test address 3",
+                "city":"City",
+                "zipCode":"10115"
+            }
+        ],
+        "services":[
+            {
+                "uuid":"test-service",
+                "key":"ts"
+            }
+        ],
+        "serviceTypes":[
+            {
+                "uuid":"test-service-type",
+                "name":"Test service type",
+                "key":"tst"
+            }
+        ]
+    },
+    "warehouses":{
+      "warehouses": [
           {
-              "uuid":"test-service-point",
-              "name":"TSP",
-              "key":"tsp"
-          },
-          {
-              "uuid":"test-service-point-2",
-              "name":"TSP2",
-              "key":"tsp2"
+              "uuid": "test-warehouse",
+              "is_active": true,
+              "name": "Test warehouse"
           }
-      ],
-      "servicePointAddresses":[
+      ]
+  },
+  "push_notifications": {
+      "push_notification_subscriptions": [
           {
-              "uuid":"test-service-point-address",
-              "address1":"Test address",
-              "address2":"Test address 2",
-              "address3":"Test address 3",
-              "city":"City",
-              "zipCode":"10115"
-          }
-      ],
-      "services":[
-          {
-              "uuid":"test-service",
-              "key":"ts"
-          }
-      ],
-      "serviceTypes":[
-          {
-              "uuid":"test-service-type",
-              "name":"Test service type",
-              "key":"tst"
+              "providerName": "web-push-php",
+              "group": {
+                  "name": "warehouse",
+                  "identifier": ""
+              },
+              "payload": {
+                  "endpoint": "endpoint",
+                  "publicKey": "publicKey",
+                  "authToken": "authToken"
+              },
+              "localeName": ""
           }
       ]
   },
@@ -812,8 +838,4 @@
        "shipment_type_uuid":"174d9dc0-55ae-5c4b-a2f2-a419027029ef",
        "shipment_type_name":"Pickup"
    }
-
-
-}
-
- 
+ }

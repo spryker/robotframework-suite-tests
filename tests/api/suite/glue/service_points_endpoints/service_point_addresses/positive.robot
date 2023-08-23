@@ -12,7 +12,7 @@ ENABLER
 Retrieves_a_service_point_address_by_id
     [Setup]    Run Keywords    Create service point in DB    ${servicePoints[0].uuid}
     ...    AND    Create service point address in DB    ${servicePoints[0].uuid}    ${servicePointAddresses[0].uuid}    ${servicePointAddresses[0].address1}    ${servicePointAddresses[0].address2}    ${servicePointAddresses[0].address3}    ${servicePointAddresses[0].city}    ${servicePointAddresses[0].zipCode}    DE
-    ...    AND    Trigger publish trigger-events    service_point    ${console_path}
+    ...    AND    Trigger publish trigger-events    service_point
     When I send a GET request:    /service-points/${servicePoints[0].uuid}/service-point-addresses/${servicePointAddresses[0].uuid}
     Then Response status code should be:    200
     And Response reason should be:    OK

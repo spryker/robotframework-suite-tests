@@ -15,7 +15,7 @@ Retrieves_list_of_service_points_by_incorrect_url
 
 Retrieves_a_service_point_by_incorrect_url
     [Setup]    Run Keywords    Create service point in DB    ${servicePoints[0].uuid}
-    ...    AND    Trigger publish trigger-events    service_point    ${console_path}
+    ...    AND    Trigger publish trigger-events    service_point
     When I send a GET request:    /service-point/${servicePoints[0].uuid}
     Then Response status code should be:    404
     And Response should return error message:    Not Found
