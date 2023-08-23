@@ -32,6 +32,10 @@ ${default_db_port}         3306
 ${default_db_port_postgres}    5432
 ${default_db_user}         spryker
 ${default_db_engine}       pymysql
+${docker}     ${False}
+${docker_db_host}     database
+${docker_cli_url}     http://cli:9000
+${cli_path}    ..
 ${db_engine}
 ${yves_env}
 ${yves_at_env}
@@ -128,6 +132,9 @@ SuiteSetup
     Set Global Variable    ${today}
     ${test_customer_email}=     set variable    test.spryker+${random}@gmail.com
     Set Global Variable  ${test_customer_email}
+    IF    ${docker}
+        Set Global Variable    ${db_host}    ${docker_db_host}
+    END
     [Teardown]
     [Return]    ${random}
 
@@ -177,18 +184,18 @@ Click Element by xpath with JavaScript
     Evaluate Javascript     ${None}     document.evaluate("${xpath}", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.click()
 
 Click Element with JavaScript:
-    [Documentation]    This keyword force clicks on web element using native JavaScript inside the browser. *Note*: it doesn't automatically wait until action is finished. 
+    [Documentation]    This keyword force clicks on web element using native JavaScript inside the browser. *Note*: it doesn't automatically wait until action is finished.
     ...
     ...    *Examples:*
-    ...    
+    ...
     ...    `Click Element with JavaScript    id=w3loginbtn`
-    ...    
+    ...
     ...    `Click Element with JavaScript    xpath=//a[@id='w3loginbtn']`
-    ...    
+    ...
     ...    `Click Element with JavaScript    css=#w3loginbtn`
-    ...    
+    ...
     ...    `Click Element with JavaScript    name=w3loginname`
-    ...    
+    ...
     [Arguments]    ${locator}
     ${element}=    Get Element    ${locator}
     Evaluate JavaScript    ${element}    (e) => e.click({force:true})
@@ -486,51 +493,43 @@ Send GET request and return status code:
 ##    ${response}=    Wait for response    matcher=usercentrics.*?graphql     timeout=${timeout}
 ##    Should be true    ${response}[ok]
 
-Run console command:
-    [Arguments]    ${command}    ${timeout}=5s
-    ${rc}    ${output}=    Run And Return RC And Output    ${command}
-    Log    ${output}
+Run console command
+    [Documentation]    This keyword executes console command using provided command and parameters. If docker is enabled, it will execute the command using docker.
+        ...    *Example:*
+        ...
+        ...    ``Run console command    command=publish:trigger-events parameters=-r service_point    storeName=DE``
+        ...
+    [Arguments]    ${command}    ${storeName}=DE
+    ${consoleCommand}=    Set Variable    cd ${cli_path} && APPLICATION_STORE=${storeName} docker/sdk ${command}
+    IF    ${docker}
+        ${consoleCommand}=    Set Variable    curl --request POST -LsS --data "APPLICATION_STORE='${storeName}' COMMAND='${command}' cli.sh" --max-time 1000 --url "${docker_cli_url}/console"
+    END
+    ${rc}    ${output}=    Run And Return RC And Output    ${consoleCommand}
+    Log   ${output}
     Should Be Equal As Integers    ${rc}    0
-    Sleep    ${timeout}
 
 Trigger p&s
-    [Arguments]    ${timeout}=5s
+    [Arguments]    ${timeout}=5s    ${storeName}=DE
     IF    '.local' in '${yves_url}' or '.local' in '${zed_url}' or '.local' in '${glue_url}' or '.local' in '${bapi_url}' or '.local' in '${sapi_url}'
-        ${rc}    ${output}=    Run And Return RC And Output    cd .. && APPLICATION_STORE=DE docker/sdk console queue:worker:start --stop-when-empty
-        Log    ${output}
-        Should Be Equal As Integers    ${rc}    0
+        Run console command    console queue:worker:start --stop-when-empty    ${storeName}
         Sleep    ${timeout}
     END
 
 Trigger multistore p&s
     [Arguments]    ${timeout}=5s
     IF    '.local' in '${yves_url}' or '.local' in '${zed_url}' or '.local' in '${glue_url}' or '.local' in '${bapi_url}' or '.local' in '${sapi_url}'
-        ${rc}    ${output}=    Run And Return RC And Output    cd .. && APPLICATION_STORE=DE docker/sdk console queue:worker:start --stop-when-empty
-        Log    ${output}
-        Sleep    ${timeout}
-        ${rc}    ${output}=    Run And Return RC And Output    cd .. && APPLICATION_STORE=AT docker/sdk console queue:worker:start --stop-when-empty
-        Log    ${output}
-        Should Be Equal As Integers    ${rc}    0
-        Sleep    ${timeout}
+        Trigger p&s    ${timeout}    DE
+        Trigger p&s    ${timeout}    AT
     END
 
 Trigger oms
     [Arguments]    ${timeout}=5s
     IF    '.local' in '${yves_url}' or '.local' in '${zed_url}' or '.local' in '${glue_url}' or '.local' in '${bapi_url}' or '.local' in '${sapi_url}'
-        ${rc}    ${output}=    Run And Return RC And Output    cd .. && APPLICATION_STORE=DE docker/sdk console order:invoice:send
-        Log    ${output}
-        ${rc}    ${output}=    Run And Return RC And Output    cd .. && APPLICATION_STORE=AT docker/sdk console order:invoice:send
-        Log    ${output}
-        Should Be Equal As Integers    ${rc}    0
-        ${rc}    ${output}=    Run And Return RC And Output    cd .. && APPLICATION_STORE=DE docker/sdk console oms:check-timeout
-        Log    ${output}
-        ${rc}    ${output}=    Run And Return RC And Output    cd .. && APPLICATION_STORE=AT docker/sdk console oms:check-timeout
-        Log    ${output}
-        Should Be Equal As Integers    ${rc}    0
-        ${rc}    ${output}=    Run And Return RC And Output    cd .. && APPLICATION_STORE=DE docker/sdk console oms:check-condition
-        Log    ${output}
-        ${rc}    ${output}=    Run And Return RC And Output    cd .. && APPLICATION_STORE=AT docker/sdk console oms:check-condition
-        Log    ${output}
-        Should Be Equal As Integers    ${rc}    0
+        Run console command    console order:invoice:send    DE
+        Run console command    console order:invoice:send    AT
+        Run console command    console oms:check-timeout    DE
+        Run console command    console oms:check-timeout    AT
+        Run console command    console oms:check-condition    DE
+        Run console command    console oms:check-condition    AT
         Sleep    ${timeout}
     END
