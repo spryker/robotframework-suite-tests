@@ -1,5 +1,4 @@
 {
-          "first_name":"Max",
    "environment":"api_suite",
    "env":{
       "glue_url":"http://glue.de.spryker.local",
