@@ -947,6 +947,29 @@ Response should contain the array larger than a certain size:
     ${result}=    Convert To String    ${result}
     Should Be Equal    ${result}    True    Actual array length is '${list_length}' and it is not greater than expected '${expected_size}' in '${json_path}'.
 
+Each array element of the array in response should contain a nested array larger than a certain size:
+    [Documentation]    This keyword checks that each element in the array specified as ``${json_path}`` contains the `` ${nested_array}` with certain size greater than ``${expected_size}``.
+    ...
+    ...    If at least one array element has ``${nested_array} `` less than ``${expected_size}``, the keyword will fail.
+
+    ...    *Example:*
+    ...
+    ...    `` Each array element of the array in response should contain a nested array larger than a certain size:    [data]    [attributes][stores]    0``
+    [Arguments]    ${json_path}    ${nested_array}    ${expected_size}
+    @{data}=    Get Value From Json    ${response_body}    ${json_path}
+    ${list_length}=    Get Length    @{data}
+    ${log_list}=    Log List    @{data}
+    FOR    ${index}    IN RANGE    0    ${list_length}
+    @{data}=    Get Value From Json    ${response_body}    ${json_path}
+    ${list_length}=    Get Length    @{data}
+    ${list_length}=    Get From List    @{data}    ${index}
+    @{data}=    Get Value From Json    ${list_length}    ${nested_array} 
+    ${nested_array_list_length}=    Get Length    @{data}
+    ${result}=    Evaluate   ${nested_array_list_length} > ${expected_size}
+    ${result}=    Convert To String    ${result}
+    Should Be Equal    ${result}    True    Actual nested array length is '${nested_array_list_length}' not greater than expected '${expected_size}'.    
+    END
+
 Response should contain the array smaller than a certain size:
     [Documentation]    This keyword checks that the body array sent in ``${json_path}`` argument contains the number of items that is fewer than ``${expected_size}``.
     ...    The expected size should be an integer value that is less than you expect elements. So if you expect an array to have 0 or 1 elements, the ``${expected_size}`` should be 2.
@@ -1076,14 +1099,64 @@ Each array element of array in response should contain property with value in:
         END
     END
 
-Each array element of array in response should contain property with value NOT in:
+Each array in response should contain property with NOT EMPTY value:
+    [Documentation]    This keyword checks that each element in the array specified as ``${json_path}`` contains the specified property ``${expected_property}`` with NOT EMPTY  value.
+    ...
+    ...    If at least one array element has this property with EMPTY value, the keyword will fail.
+
+    ...    *Example:*
+    ...
+    ...    ``Each array element in response should contain property with NOT EMPTY value:    [data]    [attributes][name]``
+
+    [Arguments]    ${json_path}    ${expected_property}
+    @{data}=    Get Value From Json    ${response_body}    ${json_path}
+    ${list_length}=    Get Length    @{data}
+    ${log_list}=    Log List    @{data}
+    FOR    ${index}    IN RANGE    0    ${list_length}
+        ${list_element}=    Get From List    @{data}    ${index}    
+        ${list_element}=    Get Value From Json    ${list_element}    ${expected_property}
+        ${list_element}=    Convert To String    ${list_element}
+        ${list_element}=    Replace String    ${list_element}    '   ${EMPTY}
+        ${list_element}=    Replace String    ${list_element}    [   ${EMPTY}
+        ${list_element}=    Replace String    ${list_element}    ]   ${EMPTY}  
+    Should Not Be Empty     ${list_element}    '${expected_property}' property value in json path '${json_path}' is empty but shoud Not Be EMPTY
+    END
+
+Each array in response should contain property with value NOT in: 
     [Documentation]    This keyword checks that each array element contsains the speficied parameter ``${expected_property}`` with the value that does not match any of the parameters ``${expected_value1}``, ``${expected_value2}``, etc..
     ...
     ...    The minimal number of arguments is 1, maximum is 4
     ...
     ...    *Example:*
     ...
-    ...    ``Each array element of array in response should contain property with value in:    [data]    [attributes][isSuper]    None``
+    ...    ``Each array element in response should contain property with value NOT in:    [data]    [attributes][isSuper]    None``
+    [Arguments]    ${json_path}    ${expected_property}    ${expected_value1}    ${expected_value2}=robotframework-dummy-value    ${expected_value3}=robotframework-dummy-value    ${expected_value4}=robotframework-dummy-value
+
+    @{data}=    Get Value From Json    ${response_body}    ${json_path}
+    ${list_length}=    Get Length    @{data}
+    ${log_list}=    Log List    @{data}
+    FOR    ${index}    IN RANGE    0    ${list_length}
+        ${list_element}=    Get From List    @{data}    ${index}
+        ${list_element}=    Get Value From Json    ${list_element}    ${expected_property}
+        ${list_element}=    Convert To String    ${list_element}
+        ${list_element}=    Replace String    ${list_element}    '   ${EMPTY}
+        ${list_element}=    Replace String    ${list_element}    [   ${EMPTY}
+        ${list_element}=    Replace String    ${list_element}    ]   ${EMPTY}
+        TRY
+            Should Not Contain Any   ${list_element}    ${expected_value1}    ${expected_value2}    ${expected_value3}    ${expected_value4}    ignore_case=True
+        EXCEPT
+            Fail    Element: '${expected_property}' of array: '${json_path}' contain any but SHOULD NOT: ${expected_value1}, ${expected_value2}, ${expected_value3}, ${expected_value4}
+        END
+    END
+
+Each array element of array in response should contain property with value NOT in:
+    [Documentation]    This keyword checks that each array element of array contsains the speficied parameter ``${expected_property}`` with the value that does not match any of the parameters ``${expected_value1}``, ``${expected_value2}``, etc..
+    ...
+    ...    The minimal number of arguments is 1, maximum is 4
+    ...
+    ...    *Example:*
+    ...
+    ...    ``Each array element of array in response should contain property with value NOT in:    [data]    [attributes][isSuper]    None``
     [Arguments]    ${json_path}    ${expected_property}    ${expected_value1}    ${expected_value2}=robotframework-dummy-value    ${expected_value3}=robotframework-dummy-value    ${expected_value4}=robotframework-dummy-value
 
     @{data}=    Get Value From Json    ${response_body}    ${json_path}
