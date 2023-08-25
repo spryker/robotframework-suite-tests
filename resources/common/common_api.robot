@@ -25,6 +25,10 @@ ${default_db_port}         3306
 ${default_db_port_postgres}    5432
 ${default_db_user}         spryker
 ${default_db_engine}       pymysql
+${docker}     ${False}
+${docker_db_host}     database
+${docker_cli_url}     http://cli:9000
+${cli_path}    ..
 ${db_engine}
 ${glue_env}
 ${bapi_env}
@@ -52,6 +56,9 @@ SuiteSetup
         Set Global Variable    ${verify_ssl}    ${True}
     ELSE
         Set Global Variable    ${verify_ssl}    ${False}
+    END
+    IF    ${docker}
+        Set Global Variable    ${db_host}    ${docker_db_host}
     END
     [Teardown]
     [Return]    ${random}
@@ -600,6 +607,17 @@ Response body should contain:
     ${response_body}=    Replace String    ${response_body}    '    "
     Should Contain    ${response_body}    ${value}    Response body does not contain expected: '${value}'.
 
+Response body should not contain:
+    [Documentation]    This keyword checks that the response saved  in ``${response_body}`` test variable does not contain the string passed as an argument.
+    ...
+    ...    *Example:*
+    ...
+    ...    ``Response body should not contain:    "localizedName": "Weight"``
+    [Arguments]    ${value}
+    ${response_body}=    Convert To String    ${response_body}
+    ${response_body}=    Replace String    ${response_body}    '    "
+    Should Not Contain    ${response_body}    ${value}    Response body contains not expected: '${value}'.
+
 Response body parameter should be:
     [Documentation]    This keyword checks that the response saved  in ``${response_body}`` test variable contsains the speficied parameter ``${json_path}`` with the specified value ``${expected_value}``.
     ...
@@ -929,6 +947,29 @@ Response should contain the array larger than a certain size:
     ${result}=    Convert To String    ${result}
     Should Be Equal    ${result}    True    Actual array length is '${list_length}' and it is not greater than expected '${expected_size}' in '${json_path}'.
 
+Each array element of the array in response should contain a nested array larger than a certain size:
+    [Documentation]    This keyword checks that each element in the array specified as ``${json_path}`` contains the `` ${nested_array}` with certain size greater than ``${expected_size}``.
+    ...
+    ...    If at least one array element has ``${nested_array} `` less than ``${expected_size}``, the keyword will fail.
+
+    ...    *Example:*
+    ...
+    ...    `` Each array element of the array in response should contain a nested array larger than a certain size:    [data]    [attributes][stores]    0``
+    [Arguments]    ${json_path}    ${nested_array}    ${expected_size}
+    @{data}=    Get Value From Json    ${response_body}    ${json_path}
+    ${list_length}=    Get Length    @{data}
+    ${log_list}=    Log List    @{data}
+    FOR    ${index}    IN RANGE    0    ${list_length}
+    @{data}=    Get Value From Json    ${response_body}    ${json_path}
+    ${list_length}=    Get Length    @{data}
+    ${list_length}=    Get From List    @{data}    ${index}
+    @{data}=    Get Value From Json    ${list_length}    ${nested_array} 
+    ${nested_array_list_length}=    Get Length    @{data}
+    ${result}=    Evaluate   ${nested_array_list_length} > ${expected_size}
+    ${result}=    Convert To String    ${result}
+    Should Be Equal    ${result}    True    Actual nested array length is '${nested_array_list_length}' not greater than expected '${expected_size}'.    
+    END
+
 Response should contain the array smaller than a certain size:
     [Documentation]    This keyword checks that the body array sent in ``${json_path}`` argument contains the number of items that is fewer than ``${expected_size}``.
     ...    The expected size should be an integer value that is less than you expect elements. So if you expect an array to have 0 or 1 elements, the ``${expected_size}`` should be 2.
@@ -1058,14 +1099,64 @@ Each array element of array in response should contain property with value in:
         END
     END
 
-Each array element of array in response should contain property with value NOT in:
+Each array in response should contain property with NOT EMPTY value:
+    [Documentation]    This keyword checks that each element in the array specified as ``${json_path}`` contains the specified property ``${expected_property}`` with NOT EMPTY  value.
+    ...
+    ...    If at least one array element has this property with EMPTY value, the keyword will fail.
+
+    ...    *Example:*
+    ...
+    ...    ``Each array element in response should contain property with NOT EMPTY value:    [data]    [attributes][name]``
+
+    [Arguments]    ${json_path}    ${expected_property}
+    @{data}=    Get Value From Json    ${response_body}    ${json_path}
+    ${list_length}=    Get Length    @{data}
+    ${log_list}=    Log List    @{data}
+    FOR    ${index}    IN RANGE    0    ${list_length}
+        ${list_element}=    Get From List    @{data}    ${index}    
+        ${list_element}=    Get Value From Json    ${list_element}    ${expected_property}
+        ${list_element}=    Convert To String    ${list_element}
+        ${list_element}=    Replace String    ${list_element}    '   ${EMPTY}
+        ${list_element}=    Replace String    ${list_element}    [   ${EMPTY}
+        ${list_element}=    Replace String    ${list_element}    ]   ${EMPTY}  
+    Should Not Be Empty     ${list_element}    '${expected_property}' property value in json path '${json_path}' is empty but shoud Not Be EMPTY
+    END
+
+Each array in response should contain property with value NOT in: 
     [Documentation]    This keyword checks that each array element contsains the speficied parameter ``${expected_property}`` with the value that does not match any of the parameters ``${expected_value1}``, ``${expected_value2}``, etc..
     ...
     ...    The minimal number of arguments is 1, maximum is 4
     ...
     ...    *Example:*
     ...
-    ...    ``Each array element of array in response should contain property with value in:    [data]    [attributes][isSuper]    None``
+    ...    ``Each array element in response should contain property with value NOT in:    [data]    [attributes][isSuper]    None``
+    [Arguments]    ${json_path}    ${expected_property}    ${expected_value1}    ${expected_value2}=robotframework-dummy-value    ${expected_value3}=robotframework-dummy-value    ${expected_value4}=robotframework-dummy-value
+
+    @{data}=    Get Value From Json    ${response_body}    ${json_path}
+    ${list_length}=    Get Length    @{data}
+    ${log_list}=    Log List    @{data}
+    FOR    ${index}    IN RANGE    0    ${list_length}
+        ${list_element}=    Get From List    @{data}    ${index}
+        ${list_element}=    Get Value From Json    ${list_element}    ${expected_property}
+        ${list_element}=    Convert To String    ${list_element}
+        ${list_element}=    Replace String    ${list_element}    '   ${EMPTY}
+        ${list_element}=    Replace String    ${list_element}    [   ${EMPTY}
+        ${list_element}=    Replace String    ${list_element}    ]   ${EMPTY}
+        TRY
+            Should Not Contain Any   ${list_element}    ${expected_value1}    ${expected_value2}    ${expected_value3}    ${expected_value4}    ignore_case=True
+        EXCEPT
+            Fail    Element: '${expected_property}' of array: '${json_path}' contain any but SHOULD NOT: ${expected_value1}, ${expected_value2}, ${expected_value3}, ${expected_value4}
+        END
+    END
+
+Each array element of array in response should contain property with value NOT in:
+    [Documentation]    This keyword checks that each array element of array contsains the speficied parameter ``${expected_property}`` with the value that does not match any of the parameters ``${expected_value1}``, ``${expected_value2}``, etc..
+    ...
+    ...    The minimal number of arguments is 1, maximum is 4
+    ...
+    ...    *Example:*
+    ...
+    ...    ``Each array element of array in response should contain property with value NOT in:    [data]    [attributes][isSuper]    None``
     [Arguments]    ${json_path}    ${expected_property}    ${expected_value1}    ${expected_value2}=robotframework-dummy-value    ${expected_value3}=robotframework-dummy-value    ${expected_value4}=robotframework-dummy-value
 
     @{data}=    Get Value From Json    ${response_body}    ${json_path}
@@ -1782,16 +1873,8 @@ Create giftcode in Database:
     [Arguments]    ${spy_gift_card_code}    ${spy_gift_card_value}
     ${amount}=   Evaluate    ${spy_gift_card_value} / 100
     ${amount}=    Evaluate    "%.f" % ${amount}
+    ${new_id}=    Get next id from table    spy_gift_card    id_gift_card
     Connect to Spryker DB
-    ${last_id}=    Query    SELECT id_gift_card FROM spy_gift_card ORDER BY id_gift_card DESC LIMIT 1;
-    ${new_id}=    Set Variable    ${EMPTY}
-    ${last_id_length}=    Get Length    ${last_id}
-    IF    ${last_id_length} > 0
-        ${new_id}=    Evaluate    ${last_id[0][0]} + 1
-    ELSE
-        ${new_id}=    Evaluate    1
-    END
-    Log    ${new_id}
     IF    '${db_engine}' == 'pymysql'
         Execute Sql String    insert ignore into spy_gift_card (code,name,currency_iso_code,value) value ('${spy_gift_card_code}','Gift_card_${amount}','EUR','${spy_gift_card_value}')
     ELSE
@@ -2378,16 +2461,8 @@ Create dynamic entity configuration in Database:
         ...    ``Create dynamic entity configuration in Database:    country    spy_country     1   {"identifier":"id_country","fields":[...]}``
         ...
     [Arguments]    ${table_alias}   ${table_name}    ${is_active}    ${definition}
+    ${new_id}=    Get next id from table    spy_dynamic_entity_configuration    id_dynamic_entity_configuration
     Connect to Spryker DB
-    ${last_id}=    Query    SELECT id_dynamic_entity_configuration FROM spy_dynamic_entity_configuration ORDER BY id_dynamic_entity_configuration DESC LIMIT 1;
-    ${new_id}=    Set Variable    ${EMPTY}
-    ${last_id_length}=    Get Length    ${last_id}
-    IF    ${last_id_length} > 0
-        ${new_id}=    Evaluate    ${last_id[0][0]} + 1
-    ELSE
-        ${new_id}=    Evaluate    1
-    END
-    Log    ${new_id}
     IF    '${db_engine}' == 'pymysql'
         Execute Sql String  insert ignore into spy_dynamic_entity_configuration (table_alias, table_name, is_active, definition) value ('${table_alias}', '${table_name}', '${is_active}', '${definition}');
     ELSE
@@ -2423,3 +2498,58 @@ I get access token by user credentials:
     Save value to a variable:    [access_token]    token
     Log    ${token}
     [Return]    ${token}
+
+Run console command
+    [Documentation]    This keyword executes console command using provided command and parameters. If docker is enabled, it will execute the command using docker.
+        ...    *Example:*
+        ...
+        ...    ``Run console command    command=publish:trigger-events parameters=-r service_point    storeName=DE``
+        ...
+    [Arguments]    ${command}    ${storeName}=DE
+    ${consoleCommand}=    Set Variable    cd ${cli_path} && APPLICATION_STORE=${storeName} docker/sdk ${command}
+    IF    ${docker}
+        ${consoleCommand}=    Set Variable    curl --request POST -LsS --data "APPLICATION_STORE='${storeName}' COMMAND='${command}' cli.sh" --max-time 1000 --url "${docker_cli_url}/console"
+    END
+    ${rc}    ${output}=    Run And Return RC And Output    ${consoleCommand}
+    Log   ${output}
+    Should Be Equal As Integers    ${rc}    0
+
+Trigger publish trigger-events
+    [Documentation]    This keyword triggers publish:trigger-events console command using provided resource, path and store.
+        ...    *Example:*
+        ...
+        ...    ``Trigger publish trigger-events    resource=service_point    storeName=DE    timeout=5s``
+        ...
+    [Arguments]    ${resource}    ${storeName}=DE    ${timeout}=5s
+    Run console command    console publish:trigger-events -r ${resource}    ${storeName}
+    Trigger p&s    ${timeout}    ${storeName}
+
+Trigger p&s
+    [Documentation]    This keyword triggers P&S using provided timout, path, and store.
+        ...    *Example:*
+        ...
+        ...    ``Trigger p&s    timeout=5s    storeName=DE``
+        ...
+    [Arguments]    ${timeout}=5s    ${storeName}=DE
+    Run console command    console queue:worker:start --stop-when-empty    ${storeName}
+    Sleep    ${timeout}
+
+Get next id from table
+    [Documentation]    This keyword returns next ID from the given table.
+        ...    *Example:*
+        ...
+        ...    ``Get next id from table    tableName=product    idColumnName=id_product``
+        ...
+    [Arguments]    ${tableName}    ${idColumnName}
+    Connect to Spryker DB
+    ${lastId}=    Query    SELECT ${idColumnName} FROM ${tableName} ORDER BY ${idColumnName} DESC LIMIT 1;
+    ${newId}=    Set Variable    ${EMPTY}
+    ${lastIdLength}=    Get Length    ${lastId}
+    IF    ${lastIdLength} > 0
+        ${newId}=    Evaluate    ${lastId[0][0]} + 1
+    ELSE
+        ${newId}=    Evaluate    1
+    END
+    Disconnect From Database
+    Log    ${newId}
+    [Return]    ${newId}
