@@ -42,6 +42,10 @@ Delete shipment type in DB:
         Disconnect From Database
     END
     Connect to Spryker DB
-    Execute Sql String    DELETE FROM spy_shipment_type WHERE "key" = '${key}';
+    IF    '${db_engine}' == 'pymysql' 
+        Execute Sql String    DELETE FROM spy_shipment_type WHERE `key` = '${key}';
+    ELSE
+        Execute Sql String    DELETE FROM spy_shipment_type WHERE "key" = '${key}';
+    END
     Disconnect From Database
 
