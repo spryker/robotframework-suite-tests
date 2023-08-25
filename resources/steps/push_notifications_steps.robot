@@ -45,10 +45,11 @@ Assign user to Warehouse in DB:
     Connect to Spryker DB
     IF    '${db_engine}' == 'pymysql'
         Execute Sql String    INSERT IGNORE INTO spy_warehouse_user_assignment (`uuid`, fk_warehouse, user_uuid, is_active) VALUE ('random_uuid', ${fk_warehouse[0][0]}, '${user_uuid[0][0]}', 1);
+        Execute Sql String    UPDATE spy_user SET is_warehouse_user = 1 WHERE username = '${email}';
     ELSE
-        Execute Sql String    INSERT INTO spy_warehouse_user_assignment (id_warehouse_user_assignment, uuid, fk_warehouse, user_uuid, is_active) VALUES ('random_uuid', ${fk_warehouse[0][0]}, '${user_uuid[0][0]}', true);
+        Execute Sql String    INSERT INTO spy_warehouse_user_assignment (id_warehouse_user_assignment, uuid, fk_warehouse, user_uuid, is_active) VALUES (${idWarehouseUserAssignment}, 'random_uuid', ${fk_warehouse[0][0]}, '${user_uuid[0][0]}', true);
+        Execute Sql String    UPDATE spy_user SET is_warehouse_user = true WHERE username = '${email}';
     END
-    Execute Sql String    UPDATE spy_user SET is_warehouse_user = 1 WHERE username = '${email}';
     Disconnect From Database
 
 De-assign user from Warehouse in DB:
@@ -65,7 +66,11 @@ De-assign user from Warehouse in DB:
     ${user_uuid}    Query    SELECT uuid FROM spy_user WHERE username = '${email}' LIMIT 1;
     ${fk_warehouse}    Query    SELECT id_stock FROM spy_stock WHERE uuid = '${warehouse_uuid}' LIMIT 1;
     Execute Sql String    DELETE FROM spy_warehouse_user_assignment WHERE user_uuid = '${user_uuid[0][0]}' AND fk_warehouse = ${fk_warehouse[0][0]};
-    Execute Sql String    UPDATE spy_user SET is_warehouse_user = 0 WHERE username = '${email}';
+    IF    '${db_engine}' == 'pymysql'
+        Execute Sql String    UPDATE spy_user SET is_warehouse_user = 0 WHERE username = '${email}';
+    ELSE
+        Execute Sql String    UPDATE spy_user SET is_warehouse_user = false WHERE username = '${email}';
+    END
     Disconnect From Database
 
 Delete warehouse in DB:
