@@ -14,8 +14,6 @@ ENABLER
 ##### SEARCH PARAMETERS #####
 
 Search_with_empty_search_criteria_all_default_values_check
-    [Documentation]    https://spryker.atlassian.net/browse/CC-25997
-    [Tags]    skip-due-to-issue
     When I send a GET request:    /catalog-search?q=
     Then Response status code should be:    200
     And Response reason should be:    OK
@@ -323,8 +321,6 @@ Search_by_attribute_(brand)
     And Response body has correct self link
 
 Search_by_several_attributes
-    [Documentation]    https://spryker.atlassian.net/browse/CC-25997
-    [Tags]    skip-due-to-issue
     When I send a GET request:    /catalog-search?q=${color_3}+${material_3}
     Then Response status code should be:    200
     And Response reason should be:    OK
@@ -340,8 +336,6 @@ Search_by_several_attributes
 #### FILTERING #####
 
 Filter_by_rating_only_min
-   [Documentation]    https://spryker.atlassian.net/browse/CC-25997
-   [Tags]    skip-due-to-issue
     When I send a GET request:    /catalog-search?q=&rating[min]=3
     Then Response status code should be:    200
     And Response reason should be:    OK
@@ -358,8 +352,6 @@ Filter_by_rating_only_min
     And Response body parameter should be:    [data][0][attributes][rangeFacets][0][activeMax]    ${default_rating.max}
 
 Filter_by_rating_only_max
-    [Documentation]    https://spryker.atlassian.net/browse/CC-25997
-    [Tags]    skip-due-to-issue
     When I send a GET request:    /catalog-search?q=&rating[max]=${default_rating.min}
     Then Response status code should be:    200
     And Response reason should be:    OK
@@ -420,8 +412,6 @@ Filter_by_brand_two_brands
     And Response body parameter should be:    [data][0][attributes][valueFacets][4][activeValue][1]    ${brand_1}
 
 Filter_by_brand_empty_brand
-    [Documentation]    https://spryker.atlassian.net/browse/CC-25997
-    [Tags]    skip-due-to-issue
     When I send a GET request:    /catalog-search?q=&brand=
     Then Response status code should be:    200
     And Response reason should be:    OK
@@ -452,8 +442,6 @@ Filter_by_brand_non_existing_brand
     And Response body has correct self link
 
 Filter_by_label_one_label
-    [Documentation]    https://spryker.atlassian.net/browse/CC-25997
-    [Tags]    skip-due-to-issue
     When I send a GET request:    /catalog-search?q=&label=${label.manual}
     Then Response status code should be:    200
     And Response reason should be:    OK
@@ -467,8 +455,6 @@ Filter_by_label_one_label
     And Response body has correct self link
 
 Filter_by_label_two_labels
-    [Documentation]    https://spryker.atlassian.net/browse/CC-25997
-    [Tags]    skip-due-to-issue
     When I send a GET request:    /catalog-search?q=&label[]=${label.new}&label[]=${label.manual}
     Then Response status code should be:    200
     And Response reason should be:    OK
@@ -496,8 +482,6 @@ Filter_by_label_non_existing_label
     And Response body parameter should be:    [data][0][attributes][valueFacets][1][activeValue][0]    test123
 
 Filter_by_label_empty_label
-    [Documentation]    https://spryker.atlassian.net/browse/CC-25997
-    [Tags]    skip-due-to-issue
     When I send a GET request:    /catalog-search?q=&label[]=
     Then Response status code should be:    200
     And Response reason should be:    OK
@@ -537,8 +521,6 @@ Filter_by_color_one_color
     And Response body has correct self link
 
 Filter_by_color_two_colors
-    [Documentation]    https://spryker.atlassian.net/browse/CC-25997
-    [Tags]    skip-due-to-issue
     When I send a GET request:    /catalog-search?q=&farbe[]=${color_1}&farbe[]=${color_2}
     Then Response status code should be:    200
     And Response reason should be:    OK
@@ -564,8 +546,6 @@ Filter_by_color_non_existing_color
     And Response body parameter should be:    [data][0][attributes][valueFacets][2][activeValue][0]    test123
 
 Filter_by_color_empty_color
-    [Documentation]    https://spryker.atlassian.net/browse/CC-25997
-    [Tags]    skip-due-to-issue
     When I send a GET request:    /catalog-search?q=&farbe[]=
     Then Response status code should be:    200
     And Response reason should be:    OK
@@ -582,8 +562,6 @@ Filter_by_color_empty_color
     And Response body parameter should be:    [data][0][attributes][valueFacets][2][activeValue][0]    ${EMPTY}
 
 Filter_by_material_one_material
-    [Documentation]    https://spryker.atlassian.net/browse/CC-25997
-    [Tags]    skip-due-to-issue
     When I send a GET request:    /catalog-search?q=&material=${material_1}
     Then Response status code should be:    200
     And Response reason should be:    OK
@@ -607,8 +585,6 @@ Filter_by_material_one_material
     And Response body has correct self link
 
 Filter_by_material_two_materails
-    [Documentation]    https://spryker.atlassian.net/browse/CC-25997
-    [Tags]    skip-due-to-issue
     When I send a GET request:    /catalog-search?q=&material[]=${material_1}&material[]=${material_2}
     Then Response status code should be:    200
     And Response reason should be:    OK
@@ -636,8 +612,6 @@ Filter_by_material_non_existing_materail
     And Response body parameter should be:    [data][0][attributes][valueFacets][3][activeValue][0]    test123
 
 Filter_by_material_empty_material
-    [Documentation]    https://spryker.atlassian.net/browse/CC-25997
-    [Tags]    skip-due-to-issue
     When I send a GET request:    /catalog-search?q=&material[]=
     Then Response status code should be:    200
     And Response reason should be:    OK
@@ -654,8 +628,6 @@ Filter_by_material_empty_material
     And Response body parameter should be:    [data][0][attributes][valueFacets][3][activeValue][0]    ${EMPTY}
 
 Filter_by_valid_main_category
-    [Documentation]    https://spryker.atlassian.net/browse/CC-25997
-    [Tags]    skip-due-to-issue
     When I send a GET request:    /catalog-search?q=&category=${category_lvl1.id}
     Then Response status code should be:    200
     And Response reason should be:    OK
@@ -785,8 +757,6 @@ Search_with_specific_currency
 ##### PAGINATION AND SORTING #####
 
 Search_set_specific_page_with_ipp.default
-    [Documentation]    https://spryker.atlassian.net/browse/CC-25997
-    [Tags]    skip-due-to-issue
     # here page 4 is selected using offset because 36/12=3 full pages, search shows the next page after the offset
     When I send a GET request:    /catalog-search?q=&page[limit]=${ipp.default}&page[offset]=36
     Then Response status code should be:    200
@@ -811,8 +781,6 @@ Search_set_specific_page_with_ipp.default
     And Response body parameter should not be EMPTY:    [links][next]
 
 Search_set_specific_page_and_nonipp.default
-    [Documentation]    https://spryker.atlassian.net/browse/CC-25997
-    [Tags]    skip-due-to-issue
     When I send a GET request:    /catalog-search?q=&page[limit]=${ipp.middle}&page[offset]=36
     Then Response status code should be:    200
     And Response reason should be:    OK
@@ -836,8 +804,6 @@ Search_set_specific_page_and_nonipp.default
     And Response body parameter should not be EMPTY:    [links][next]
 
 Search_set_last_page_and_nonipp.default
-    [Documentation]    https://spryker.atlassian.net/browse/CC-25997
-    [Tags]    skip-due-to-issue
     When I send a GET request:
     ...    /catalog-search?q=&page[limit]=${ipp.biggest}&page[offset]=${total_number_of_products_in_search}
     Then Response status code should be:    200
@@ -859,8 +825,6 @@ Search_set_last_page_and_nonipp.default
     And Response body parameter should not be EMPTY:    [links][prev]
 
 Search_set_invalid_ipp
-    [Documentation]    https://spryker.atlassian.net/browse/CC-25997
-    [Tags]    skip-due-to-issue
     When I send a GET request:    /catalog-search?q=&page[limit]=18&page[offset]=1
     Then Response status code should be:    200
     And Response reason should be:    OK
@@ -883,8 +847,6 @@ Search_set_invalid_ipp
     And Response body parameter should not be EMPTY:    [links][next]
 
 Search_sort_by_name_asc
-     [Documentation]    https://spryker.atlassian.net/browse/CC-25997
-     [Tags]    skip-due-to-issue
     When I send a GET request:    /catalog-search?q=&sort=name_asc
     Then Response status code should be:    200
     And Response reason should be:    OK
@@ -896,8 +858,6 @@ Search_sort_by_name_asc
     And Response body has correct self link
 
 Search_sort_by_name_desc
-    [Documentation]    https://spryker.atlassian.net/browse/CC-25997
-    [Tags]    skip-due-to-issue
     When I send a GET request:    /catalog-search?q=&sort=name_desc
     Then Response status code should be:    200
     And Response reason should be:    OK
@@ -909,8 +869,6 @@ Search_sort_by_name_desc
     And Response body has correct self link
 
 Search_sort_by_rating
-     [Documentation]    https://spryker.atlassian.net/browse/CC-25997
-     [Tags]    skip-due-to-issue
     When I send a GET request:    /catalog-search?q=&sort=rating
     Then Response status code should be:    200
     And Response reason should be:    OK
