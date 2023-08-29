@@ -151,12 +151,12 @@ Get_country_by_id
     And I send a GET request:    /dynamic-entity/country/235
     Then Response status code should be:    200
     And Response header parameter should be:    Content-Type    application/json
-    And Response body parameter should be:    [0][id_country]    235
-    And Response body parameter should be:    [0][iso2_code]    UA
-    And Response body parameter should be:    [0][iso3_code]    UKR
-    And Response body parameter should be:    [0][name]    Ukraine
-    And Response body parameter should be:    [0][postal_code_mandatory]    True
-    And Response body parameter should be:    [0][postal_code_regex]    \\\\d{5}
+    And Response body parameter should be:    [id_country]    235
+    And Response body parameter should be:    [iso2_code]    UA
+    And Response body parameter should be:    [iso3_code]    UKR
+    And Response body parameter should be:    [name]    Ukraine
+    And Response body parameter should be:    [postal_code_mandatory]    True
+    And Response body parameter should be:    [postal_code_regex]    \\\\d{5}
     [Teardown]    Run Keyword    Delete dynamic entity configuration in Database:    country
 
 Create_and_update_country:
@@ -181,33 +181,33 @@ Create_and_update_country:
     And I send a PATCH request:    /dynamic-entity/country/${xxa_country_id}    {"data":{"iso2_code":"XX","iso3_code":"XXX","name":"Country XX"}}
     Then Response status code should be:    200
     And Response header parameter should be:    Content-Type    application/json
-    And Response body parameter should be:    [0][iso2_code]    XX
-    And Response body parameter should be:    [0][iso3_code]    XXX
-    And Response body parameter should be:    [0][name]    Country XX
-    And Response body parameter should be:    [0][id_country]    ${xxa_country_id}
+    And Response body parameter should be:    [iso2_code]    XX
+    And Response body parameter should be:    [iso3_code]    XXX
+    And Response body parameter should be:    [name]    Country XX
+    And Response body parameter should be:    [id_country]    ${xxa_country_id}
     ### GET COUNTRY AND VALIDATE DATA ###
     And I set Headers:    Content-Type==application/json    Authorization=Bearer ${token}
     And I send a GET request:    /dynamic-entity/country/${xxa_country_id}
     Then Response status code should be:    200
     And Response header parameter should be:    Content-Type    application/json
-    And Response body parameter should be:    [0][iso2_code]    XX
-    And Response body parameter should be:    [0][iso3_code]    XXX
-    And Response body parameter should be:    [0][name]    Country XX
+    And Response body parameter should be:    [iso2_code]    XX
+    And Response body parameter should be:    [iso3_code]    XXX
+    And Response body parameter should be:    [name]    Country XX
     ### UPDATE ONE FIELD OF COUNTRY ###
     And I set Headers:    Content-Type==application/json    Authorization=Bearer ${token}
     And I send a PATCH request:    /dynamic-entity/country/${xxa_country_id}    {"data":{"name":"Test Country"}}
     Then Response status code should be:    200
     And Response header parameter should be:    Content-Type    application/json
-    And Response body parameter should be:    [0][name]    Test Country
-    And Response body parameter should be:    [0][id_country]    ${xxa_country_id}
+    And Response body parameter should be:    [name]    Test Country
+    And Response body parameter should be:    [id_country]    ${xxa_country_id}
     ### GET COUNTRY AND VALIDATE DATA ###
     And I set Headers:    Content-Type==application/json    Authorization=Bearer ${token}
     And I send a GET request:    /dynamic-entity/country/${xxa_country_id}
     Then Response status code should be:    200
     And Response header parameter should be:    Content-Type    application/json
-    And Response body parameter should be:    [0][iso2_code]    XX
-    And Response body parameter should be:    [0][iso3_code]    XXX
-    And Response body parameter should be:    [0][name]    Test Country
+    And Response body parameter should be:    [iso2_code]    XX
+    And Response body parameter should be:    [iso3_code]    XXX
+    And Response body parameter should be:    [name]    Test Country
     [Teardown]    Run Keywords    Delete dynamic entity configuration in Database:    country
     ...   AND    Delete country by iso2_code in Database:   XX
     ...   AND    Delete country by iso2_code in Database:   XM
@@ -293,33 +293,33 @@ Upsert_country_collection:
     And I send a PUT request:    /dynamic-entity/country/${xaa_country_id}    {"data":{"iso2_code":"XX","iso3_code":"XXX","name":"Country XXX"}}
     Then Response status code should be:    200
     And Response header parameter should be:    Content-Type    application/json
-    And Response body parameter should be:    [0][iso2_code]    XX
-    And Response body parameter should be:    [0][iso3_code]    XXX
-    And Response body parameter should be:    [0][name]    Country XXX
-    And Response body parameter should be:    [0][id_country]    ${xaa_country_id}
+    And Response body parameter should be:    [iso2_code]    XX
+    And Response body parameter should be:    [iso3_code]    XXX
+    And Response body parameter should be:    [name]    Country XXX
+    And Response body parameter should be:    [id_country]    ${xaa_country_id}
     ### GET COUNTRY AND VALIDATE DATA ###
     And I set Headers:    Content-Type==application/json    Authorization=Bearer ${token}
     And I send a GET request:    /dynamic-entity/country/${xaa_country_id}
     Then Response status code should be:    200
     And Response header parameter should be:    Content-Type    application/json
-    And Response body parameter should be:    [0][iso2_code]    XX
-    And Response body parameter should be:    [0][iso3_code]    XXX
-    And Response body parameter should be:    [0][name]    Country XXX
+    And Response body parameter should be:    [iso2_code]    XX
+    And Response body parameter should be:    [iso3_code]    XXX
+    And Response body parameter should be:    [name]    Country XXX
     ### PARTIAL UPDATE ONE COUNTRY ###
     And I set Headers:    Content-Type==application/json    Authorization=Bearer ${token}
     And I send a PUT request:    /dynamic-entity/country/${xaa_country_id}    {"data":{"name":"Country XXL"}}
     Then Response status code should be:    200
     And Response header parameter should be:    Content-Type    application/json
-    And Response body parameter should be:    [0][name]    Country XXL
-    And Response body parameter should be:    [0][id_country]    ${xaa_country_id}
+    And Response body parameter should be:    [name]    Country XXL
+    And Response body parameter should be:    [id_country]    ${xaa_country_id}
     ### GET COUNTRY AND VALIDATE DATA ###
     And I set Headers:    Content-Type==application/json    Authorization=Bearer ${token}
     And I send a GET request:    /dynamic-entity/country/${xaa_country_id}
     Then Response status code should be:    200
     And Response header parameter should be:    Content-Type    application/json
-    And Response body parameter should be:    [0][iso2_code]    XX
-    And Response body parameter should be:    [0][iso3_code]    XXX
-    And Response body parameter should be:    [0][name]    Country XXL
+    And Response body parameter should be:    [iso2_code]    XX
+    And Response body parameter should be:    [iso3_code]    XXX
+    And Response body parameter should be:    [name]    Country XXL
     ### UPSERT COUNTRY COLLECTION ###
     And I set Headers:    Content-Type==application/json    Authorization=Bearer ${token}
     And I send a PUT request:    /dynamic-entity/country    {"data":[{"id_country":${xaa_country_id},"iso2_code":"XL","iso3_code":"XXL","name":"XXL"},{"id_country":${xbb_country_id},"iso2_code":"XS","iso3_code":"XXS","name":"XXS"}]}
@@ -338,16 +338,16 @@ Upsert_country_collection:
     And I send a GET request:    /dynamic-entity/country/${xaa_country_id}
     Then Response status code should be:    200
     And Response header parameter should be:    Content-Type    application/json
-    And Response body parameter should be:    [0][iso2_code]    XL
-    And Response body parameter should be:    [0][iso3_code]    XXL
-    And Response body parameter should be:    [0][name]    XXL
+    And Response body parameter should be:    [iso2_code]    XL
+    And Response body parameter should be:    [iso3_code]    XXL
+    And Response body parameter should be:    [name]    XXL
     And I set Headers:    Content-Type==application/json    Authorization=Bearer ${token}
     And I send a GET request:    /dynamic-entity/country/${xbb_country_id}
     Then Response status code should be:    200
     And Response header parameter should be:    Content-Type    application/json
-    And Response body parameter should be:    [0][iso2_code]    XS
-    And Response body parameter should be:    [0][iso3_code]    XXS
-    And Response body parameter should be:    [0][name]    XXS
+    And Response body parameter should be:    [iso2_code]    XS
+    And Response body parameter should be:    [iso3_code]    XXS
+    And Response body parameter should be:    [name]    XXS
     [Teardown]    Run Keywords    Delete dynamic entity configuration in Database:    country
     ...   AND    Delete country by iso2_code in Database:   XA
     ...   AND    Delete country by iso2_code in Database:   XB

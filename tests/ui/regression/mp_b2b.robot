@@ -122,7 +122,7 @@ Share_Shopping_Carts
     Yves: select the following shipping method for the shipment:    1    Hermes    Next Day
     Yves: select the following shipping method for the shipment:    2    Hermes    Same Day
     Yves: submit form on the checkout
-    Yves: select the following payment method on the checkout and go next:    Invoice
+    Yves: select the following payment method on the checkout and go next:    Marketplace Invoice
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
@@ -170,7 +170,7 @@ Quick_Order
     Yves: select the following shipping method for the shipment:    1    DHL    Express
     Yves: select the following shipping method for the shipment:    2    Hermes    Same Day
     Yves: submit form on the checkout
-    Yves: select the following payment method on the checkout and go next:    Invoice
+    Yves: select the following payment method on the checkout and go next:    Marketplace Invoice
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
@@ -236,7 +236,7 @@ Measurement_Units
     Yves: billing address same as shipping address:    true
     Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${yves_company_user_manager_and_buyer_address}
     Yves: select the following shipping method on the checkout and go next:    Express
-    Yves: select the following payment method on the checkout and go next:    Invoice
+    Yves: select the following payment method on the checkout and go next:    Marketplace Invoice
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
@@ -259,7 +259,7 @@ Packaging_Units
     Yves: billing address same as shipping address:    true
     Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${yves_company_user_manager_and_buyer_address}
     Yves: select the following shipping method on the checkout and go next:    Express
-    Yves: select the following payment method on the checkout and go next:    Invoice
+    Yves: select the following payment method on the checkout and go next:    Marketplace Invoice
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
@@ -297,7 +297,7 @@ Packaging_Units
 #     Yves: billing address same as shipping address:    true
 #     Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${yves_company_user_buyer_address}
 #     Yves: select the following shipping method on the checkout and go next:    Express
-#     Yves: select the following payment method on the checkout and go next:    Invoice
+#     Yves: select the following payment method on the checkout and go next:    Marketplace Invoice
 #     Yves: accept the terms and conditions:    true
 #     Yves: 'submit the order' on the summary page
 #     Yves: 'Thank you' page is displayed
@@ -406,7 +406,7 @@ Business_Unit_Address_on_Checkout
     Yves: billing address same as shipping address:    true
     Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${yves_company_user_buyer_address}
     Yves: select the following shipping method on the checkout and go next:    Express
-    Yves: select the following payment method on the checkout and go next:    Invoice
+    Yves: select the following payment method on the checkout and go next:    Marketplace Invoice
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
@@ -429,7 +429,7 @@ Approval_Process
     Yves: billing address same as shipping address:    true
     Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${yves_company_user_buyer_with_limit_address}
     Yves: select the following shipping method on the checkout and go next:    Express
-    Yves: select the following payment method on the checkout and go next:    Invoice
+    Yves: select the following payment method on the checkout and go next:    Marketplace Invoice
     Yves: select approver on the 'Summary' page:    Lilu Dallas (€1,000.00)
     Yves: 'send the request' on the summary page
     Yves: 'Summary' page is displayed
@@ -445,7 +445,7 @@ Approval_Process
     Yves: billing address same as shipping address:    true
     Yves: select the following existing address on the checkout as 'shipping' address and go next:            ${yves_company_user_buyer_with_limit_address}
     Yves: select the following shipping method on the checkout and go next:    Express
-    Yves: select the following payment method on the checkout and go next:    Invoice
+    Yves: select the following payment method on the checkout and go next:    Marketplace Invoice
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
@@ -457,7 +457,7 @@ Approval_Process
     Yves: billing address same as shipping address:    true
     Yves: select the following existing address on the checkout as 'shipping' address and go next:            ${yves_company_user_buyer_with_limit_address}
     Yves: select the following shipping method on the checkout and go next:    Express
-    Yves: select the following payment method on the checkout and go next:    Invoice
+    Yves: select the following payment method on the checkout and go next:    Marketplace Invoice
     Yves: select approver on the 'Summary' page:    Lilu Dallas (€1,000.00)
     Yves: 'send the request' on the summary page
     Yves: 'Summary' page is displayed
@@ -564,7 +564,7 @@ Request_for_Quote
     Yves: billing address same as shipping address:    true
     Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${yves_company_user_buyer_address}
     Yves: select the following shipping method on the checkout and go next:    Express
-    Yves: select the following payment method on the checkout and go next:    Invoice
+    Yves: select the following payment method on the checkout and go next:    Marketplace Invoice
     Yves: shopping cart contains product with unit price:    403125    EUROKRAFT hand truck - with open shovel - load capacity 400 kg    500
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
@@ -615,7 +615,7 @@ Unique_URL
 #     Yves: billing address same as shipping address:    true
 #     Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${yves_company_user_manager_and_buyer_address}
 #     Yves: select the following shipping method on the checkout and go next:    Express
-#     Yves: select the following payment method on the checkout and go next:    Invoice
+#     Yves: select the following payment method on the checkout and go next:    Marketplace Invoice
 #     Yves: accept the terms and conditions:    true
 #     Yves: 'submit the order' on the summary page
 #     Yves: 'Thank you' page is displayed
@@ -644,7 +644,7 @@ Return_Management
     Yves: billing address same as shipping address:    true
     Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${yves_company_user_buyer_address}
     Yves: select the following shipping method on the checkout and go next:    Express
-    Yves: select the following payment method on the checkout and go next:    Invoice
+    Yves: select the following payment method on the checkout and go next:    Marketplace Invoice
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
@@ -821,7 +821,7 @@ Discounts
     Yves: billing address same as shipping address:    true
     Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${yves_company_user_buyer_address}
     Yves: select the following shipping method on the checkout and go next:    Express
-    Yves: select the following payment method on the checkout and go next:    Invoice
+    Yves: select the following payment method on the checkout and go next:    Marketplace Invoice
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
@@ -893,7 +893,7 @@ Split_Delivery
     Yves: select the following shipping method for the shipment:    2    Hermes    Same Day
     Yves: select the following shipping method for the shipment:    3    DHL    Express
     Yves: submit form on the checkout
-    Yves: select the following payment method on the checkout and go next:    Invoice
+    Yves: select the following payment method on the checkout and go next:    Marketplace Invoice
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
@@ -939,14 +939,14 @@ Refunds
     Yves: billing address same as shipping address:    true
     Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${yves_company_user_buyer_address}
     Yves: select the following shipping method on the checkout and go next:    Express
-    Yves: select the following payment method on the checkout and go next:    Invoice
+    Yves: select the following payment method on the checkout and go next:    Marketplace Invoice
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
     Trigger oms
     Yves: get the last placed order ID by current customer
     Zed: login on Zed with provided credentials:    ${zed_main_merchant_email}
-    Zed: grand total for the order equals:    ${lastPlacedOrder}    €1,762.85
+    Zed: grand total for the order equals:    ${lastPlacedOrder}    €1,230.73
     Zed: go to order page:    ${lastPlacedOrder}
     Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Pay   
     Trigger oms
@@ -961,7 +961,7 @@ Refunds
     Trigger oms
     Zed: trigger matching state of order item inside xxx shipment:    107254    Refund
     Trigger oms
-    Zed: grand total for the order equals:    ${lastPlacedOrder}    €1,559.56
+    Zed: grand total for the order equals:    ${lastPlacedOrder}    €1,027.44
     Zed: go to my order page:    ${lastPlacedOrder}
     Zed: trigger matching state of xxx merchant's shipment:    1    Ship
     Trigger oms
@@ -1010,7 +1010,7 @@ Multiple_Merchants_Order
     Yves: select the following shipping method for the shipment:    2    Hermes    Same Day
     Yves: select the following shipping method for the shipment:    3    DHL    Express
     Yves: submit form on the checkout
-    Yves: select the following payment method on the checkout and go next:    Invoice
+    Yves: select the following payment method on the checkout and go next:    Marketplace Invoice
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
@@ -1356,7 +1356,7 @@ Fulfill_Order_from_Merchant_Portal
     Yves: select the following shipping method for the shipment:    2    Hermes    Same Day
     Yves: select the following shipping method for the shipment:    3    Hermes    Next Day
     Yves: submit form on the checkout
-    Yves: select the following payment method on the checkout and go next:    Invoice
+    Yves: select the following payment method on the checkout and go next:    Marketplace Invoice
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
@@ -1911,7 +1911,7 @@ Checkout_Address_Management
     Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${yves_company_user_buyer_address}
     Yves: submit form on the checkout
     Yves: select the following shipping method on the checkout and go next:    Express
-    Yves: select the following payment method on the checkout and go next:    Invoice
+    Yves: select the following payment method on the checkout and go next:    Marketplace Invoice
     Yves: return to the previous checkout step:    Address
     Yves: fill in the following new billing address:
     ...    || salutation | firstName | lastName | street         | houseNumber | postCode | city   | country | company | phone     | additionalAddress ||
@@ -1923,7 +1923,7 @@ Checkout_Address_Management
     Yves: save new deviery address to address book:    true
     Yves: submit form on the checkout
     Yves: select the following shipping method on the checkout and go next:    Express
-    Yves: select the following payment method on the checkout and go next:    Invoice
+    Yves: select the following payment method on the checkout and go next:    Marketplace Invoice
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
@@ -1970,7 +1970,7 @@ Manage_Shipments
     Yves: click checkout button:    Next
     Yves: select the following shipping method for the shipment:    1    Hermes    Next Day
     Yves: submit form on the checkout
-    Yves: select the following payment method on the checkout and go next:    Invoice
+    Yves: select the following payment method on the checkout and go next:    Marketplace Invoice
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
@@ -2044,7 +2044,7 @@ Minimum_Order_Value
     Yves: select the following shipping method for the shipment:    1    Hermes    Next Day
     Yves: select the following shipping method for the shipment:    2    Hermes    Next Day
     Yves: submit form on the checkout
-    Yves: select the following payment method on the checkout and go next:    Invoice
+    Yves: select the following payment method on the checkout and go next:    Marketplace Invoice
     Yves: soft threshold surcharge is added on summary page:    €9.00
     Yves: hard threshold is applied with the following message:    EN max €400.00
     Yves: go to the 'Home' page
@@ -2053,7 +2053,7 @@ Minimum_Order_Value
     Yves: soft threshold surcharge is added in the cart:    €9.00
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: submit form on the checkout
-    Yves: select the following payment method on the checkout and go next:    Invoice
+    Yves: select the following payment method on the checkout and go next:    Marketplace Invoice
     Yves: soft threshold surcharge is added on summary page:    €9.00
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
@@ -2082,7 +2082,7 @@ Order_Cancelation
     Yves: submit form on the checkout
     Yves: select the following shipping method for the shipment:    1    Hermes    Next Day
     Yves: submit form on the checkout
-    Yves: select the following payment method on the checkout and go next:    Invoice
+    Yves: select the following payment method on the checkout and go next:    Marketplace Invoice
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed    
@@ -2108,7 +2108,7 @@ Order_Cancelation
     # Yves: submit form on the checkout
     # Yves: select the following shipping method for the shipment:    1    Hermes    Next Day
     # Yves: submit form on the checkout
-    # Yves: select the following payment method on the checkout and go next:    Invoice
+    # Yves: select the following payment method on the checkout and go next:    Marketplace Invoice
     # Yves: accept the terms and conditions:    true
     # Yves: 'submit the order' on the summary page
     # Yves: 'Thank you' page is displayed    
@@ -2156,7 +2156,7 @@ Order_Cancelation
     # Yves: submit form on the checkout
     # Yves: select the following shipping method for the shipment:    1    Hermes    Next Day
     # Yves: submit form on the checkout
-    # Yves: select the following payment method on the checkout and go next:    Invoice
+    # Yves: select the following payment method on the checkout and go next:    Marketplace Invoice
     # Yves: accept the terms and conditions:    true
     # Yves: 'submit the order' on the summary page
     # Yves: 'Thank you' page is displayed    
@@ -2349,7 +2349,7 @@ Product_Availability_Calculation
     Yves: submit form on the checkout
     Yves: select the following shipping method for the shipment:    1    DHL    Express
     Yves: submit form on the checkout
-    Yves: select the following payment method on the checkout and go next:    Invoice
+    Yves: select the following payment method on the checkout and go next:    Marketplace Invoice
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
@@ -2478,7 +2478,7 @@ Offer_Availability_Calculation
     Yves: submit form on the checkout
     Yves: select the following shipping method for the shipment:    1    DHL    Express
     Yves: submit form on the checkout
-    Yves: select the following payment method on the checkout and go next:    Invoice
+    Yves: select the following payment method on the checkout and go next:    Marketplace Invoice
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
@@ -2582,7 +2582,7 @@ Comments_in_Cart
     Yves: billing address same as shipping address:    true
     Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${yves_company_user_shared_permission_owner_address}
     Yves: select the following shipping method on the checkout and go next:    Express
-    Yves: select the following payment method on the checkout and go next:    Invoice
+    Yves: select the following payment method on the checkout and go next:    Marketplace Invoice
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
@@ -2618,7 +2618,7 @@ Comment_Management_in_Order
     Yves: billing address same as shipping address:    true
     Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${yves_company_user_shared_permission_owner_address}
     Yves: select the following shipping method on the checkout and go next:    Express
-    Yves: select the following payment method on the checkout and go next:    Invoice
+    Yves: select the following payment method on the checkout and go next:    Marketplace Invoice
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
@@ -2767,7 +2767,7 @@ Configurable_Product_RfQ_Order_Management
     Yves: billing address same as shipping address:    true
     Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${yves_company_user_buyer_address}
     Yves: select the following shipping method on the checkout and go next:    Express
-    Yves: select the following payment method on the checkout and go next:    Invoice
+    Yves: select the following payment method on the checkout and go next:    Marketplace Invoice
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed

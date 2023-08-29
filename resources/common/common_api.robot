@@ -314,7 +314,7 @@ I send a POST request:
     [Return]    ${response_body}
 
 I send a POST request with data:
-    [Documentation]    This keyword is used to make POST requests. It accepts the endpoint *without the domain* and the body in plain text.
+    [Documentation]    This keyword is used to make POST requests with a plain text data. It accepts the endpoint *without the domain* and the body in plain text.
     ...    Variables can and should be used in the endpoint url and in the body.
     ...
     ...    If the endpoint needs to have any headers (e.g. token for authorisation), ``I set Headers`` keyword should be called before this keyword to set the headers beforehand.
@@ -323,7 +323,7 @@ I send a POST request with data:
     ...
     ...    *Example:*
     ...
-    ...    ``I send a POST request:    /agent-access-tokens    {"data": {"type": "agent-access-tokens","attributes": {"username": "${agent.email}","password": "${agent.password}"}}}``
+    ...    ``I send a POST request:    /agent-access-tokens    This is plain text body``
     [Arguments]   ${path}    ${data}    ${timeout}=${api_timeout}    ${allow_redirects}=${default_allow_redirects}    ${auth}=${default_auth}    ${expected_status}=ANY
     ${data}=    Evaluate    ${data}
     ${headers_not_empty}    Run Keyword and return status     Should not be empty    ${headers}
@@ -349,7 +349,7 @@ I send a POST request with data:
     [Return]    ${response_body}
 
 I send a PUT request:
-    [Documentation]    This keyword is used to make POST requests. It accepts the endpoint *without the domain* and the body in JSON.
+    [Documentation]    This keyword is used to make PUT requests. It accepts the endpoint *without the domain* and the body in JSON.
     ...    Variables can and should be used in the endpoint url and in the body JSON.
     ...
     ...    If the endpoint needs to have any headers (e.g. token for authorisation), ``I set Headers`` keyword should be called before this keyword to set the headers beforehand.
@@ -384,7 +384,7 @@ I send a PUT request:
     [Return]    ${response_body}
 
 I send a PUT request with data:
-    [Documentation]    This keyword is used to make POST requests. It accepts the endpoint *without the domain* and the body in plain text.
+    [Documentation]    This keyword is used to make PUT requests with a plain text data. It accepts the endpoint *without the domain* and the body in plain text.
     ...    Variables can and should be used in the endpoint url and in the body plain text.
     ...
     ...    If the endpoint needs to have any headers (e.g. token for authorisation), ``I set Headers`` keyword should be called before this keyword to set the headers beforehand.
@@ -458,8 +458,8 @@ I send a PATCH request:
     Set Test Variable    ${expected_self_link}    ${current_url}${path}
     [Return]    ${response_body}
 
-I send a PATCH request with data
-    [Documentation]    This keyword is used to make PATCH requests. It accepts the endpoint *without the domain* and the body in plain text.
+I send a PATCH request with data:
+    [Documentation]    This keyword is used to make PATCH requests with a plain text data. It accepts the endpoint *without the domain* and the body in plain text.
     ...    Variables can and should be used in the endpoint url and in the body JSON.
     ...
     ...    If the endpoint needs to have any headers (e.g. token for authorisation), ``I set Headers`` keyword should be called before this keyword to set the headers beforehand.
