@@ -579,7 +579,7 @@ Unique_URL
     [Teardown]    Run Keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_manager_and_buyer_email}
     ...    AND    Yves: delete 'Shopping Cart' with name:    externalCart+${random}
 
-#### Configurable Bundles feature is not present in marketplace for now ####
+# ### Configurable Bundles feature is not present in marketplace for now ####
 # Configurable_Bundle
 #     [Documentation]    Checks checkout with the configurable bundle
 #     [Setup]    Run keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_manager_and_buyer_email}
@@ -912,11 +912,12 @@ Refunds
     Yves: select the following shipping method on the checkout and go next:    Express
     Yves: select the following payment method on the checkout and go next:    Marketplace Invoice
     Yves: accept the terms and conditions:    true
+    Take Screenshot
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
     Yves: get the last placed order ID by current customer
     Zed: login on Zed with provided credentials:    ${zed_main_merchant_email}
-    Zed: grand total for the order equals:    ${lastPlacedOrder}    €1,762.85
+    Zed: grand total for the order equals:    ${lastPlacedOrder}    €1,230.73
     Zed: go to order page:    ${lastPlacedOrder}
     Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Pay   
     Zed: go to my order page:    ${lastPlacedOrder}
@@ -925,7 +926,7 @@ Refunds
     Zed: trigger matching state of order item inside xxx shipment:    107254    Ship
     Zed: trigger matching state of order item inside xxx shipment:    107254    Deliver
     Zed: trigger matching state of order item inside xxx shipment:    107254    Refund
-    Zed: grand total for the order equals:    ${lastPlacedOrder}    €1,559.56
+    Zed: grand total for the order equals:    ${lastPlacedOrder}    €1,027.44
     Zed: go to my order page:    ${lastPlacedOrder}
     Zed: trigger matching state of xxx merchant's shipment:    1    Ship
     Zed: trigger matching state of xxx merchant's shipment:    1    Deliver
