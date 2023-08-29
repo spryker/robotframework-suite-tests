@@ -946,7 +946,7 @@ Refunds
     Trigger oms
     Yves: get the last placed order ID by current customer
     Zed: login on Zed with provided credentials:    ${zed_main_merchant_email}
-    Zed: grand total for the order equals:    ${lastPlacedOrder}    €1,762.85
+    Zed: grand total for the order equals:    ${lastPlacedOrder}    €1,230.73
     Zed: go to order page:    ${lastPlacedOrder}
     Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Pay   
     Trigger oms
@@ -961,7 +961,7 @@ Refunds
     Trigger oms
     Zed: trigger matching state of order item inside xxx shipment:    107254    Refund
     Trigger oms
-    Zed: grand total for the order equals:    ${lastPlacedOrder}    €1,559.56
+    Zed: grand total for the order equals:    ${lastPlacedOrder}    €1,027.44
     Zed: go to my order page:    ${lastPlacedOrder}
     Zed: trigger matching state of xxx merchant's shipment:    1    Ship
     Trigger oms
