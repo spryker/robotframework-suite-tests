@@ -774,6 +774,7 @@ Catalog_Actions
     Yves: 1st product card in catalog (not)contains:     Add to Cart    false
     Yves: perform search by:    ${multi_color_product_abstract_sku}
     Yves: 1st product card in catalog (not)contains:      Add to Cart    true
+    Set Timeout    2s
     Yves: 1st product card in catalog (not)contains:      Color selector   true
     Yves: select product color:    Blue
     Yves: quick add to cart for first item in catalog
