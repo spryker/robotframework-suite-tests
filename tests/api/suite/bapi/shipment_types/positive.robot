@@ -11,7 +11,6 @@ ENABLER
 
 *** Test Cases ***
 Create_shipment_type
-    [Tags]    skip-due-to-issue
     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer ${token}
     When I send a POST request:    /shipment-types   {"data": {"type": "shipment-types","attributes": {"name": "Some Shipment Type ${random}","key": "some-shipment-type-${random}","isActive": "true","stores": ["DE", "AT"]}}}
@@ -29,7 +28,6 @@ Create_shipment_type
     [Teardown]     Delete shipment type in DB:    some-shipment-type-${random}
 
 Create_new_shipment_type_with_existing_name
-    [Tags]    skip-due-to-issue
     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer ${token}
     When I send a POST request:    /shipment-types   {"data": {"type": "shipment-types","attributes": {"name": "not_unique_name","key": "new-shipment-type-${random}","isActive": "true","stores": ["AT"]}}}
@@ -57,7 +55,6 @@ Create_new_shipment_type_with_existing_name
     ...    AND    Delete shipment type in DB:    second-shipment-type-${random}
 
 Update_sipment_type_change_name_store_relation_and_deactivate
-    [Tags]    skip-due-to-issue
     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer ${token}
     When I send a POST request:    /shipment-types
@@ -77,7 +74,6 @@ Update_sipment_type_change_name_store_relation_and_deactivate
     [Teardown]     Delete shipment type in DB:    update-shipment-type-key${random}
 
 Retrive_single_shipment_type_with_valid_token
-    [Tags]    skip-due-to-issue
     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer ${token}
     When I send a POST request:    /shipment-types
@@ -139,7 +135,6 @@ Retrive_list_of_shipment_types_with_filtering
     ...    AND    Delete shipment type in DB:    shipment-key3${random}
 
 Retrive_list_of_shipment_types_with_sorting_by_key_ASC
-    [Tags]    skip-due-to-issue
     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer ${token}
     #prepare test data
@@ -158,7 +153,6 @@ Retrive_list_of_shipment_types_with_sorting_by_key_ASC
 
 
 Retrive_list_of_shipment_types_with_sorting_by_key_DESC
-    [Tags]    skip-due-to-issue
     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer ${token}
     #prepare test data
