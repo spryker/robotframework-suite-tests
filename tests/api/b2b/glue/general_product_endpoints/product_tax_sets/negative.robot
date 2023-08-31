@@ -10,7 +10,7 @@ Default Tags    glue
 *** Test Cases ***
 ENABLER
     TestSetup
-# bug CC-16486
+
 
 Get_a_tax_set_with_concrete_sku
     When I send a GET request:
