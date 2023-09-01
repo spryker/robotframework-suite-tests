@@ -20,7 +20,7 @@ Assign_user_to_warehouse
     And Response body parameter should be:    [data][type]    warehouse-user-assignments
     And Response body parameter should not be EMPTY:    [data][attributes][userUuid]
     And Response body parameter should be:    [data][attributes][isActive]    False
-    And Response body parameter should be:    [data][attributes][warehouse][name]    Spryker MER000001 Warehouse 1
+    And Response body parameter should be:    [data][attributes][warehouse][name]    ${warehous[0].warehous_name}
     And Response body parameter should not be EMPTY:    [data][attributes][warehouse][uuid]
     And Response body parameter should be:    [data][attributes][warehouse][isActive]    True
     And Response body parameter should not be EMPTY:    [data][relationships][users][data][0][id]
@@ -29,9 +29,9 @@ Assign_user_to_warehouse
     # And Response body has correct self link internal
     And Each array in response should contain property with NOT EMPTY value:    [included]    id
     And Each array element of array in response should contain property with value:    [included]    type    users
-    And Response body parameter should be:    [included][0][attributes][username]    martha@video-king.nl
-    And Response body parameter should be:    [included][0][attributes][firstName]    Martha
-    And Response body parameter should be:    [included][0][attributes][lastName]    Farmer
+    And Response body parameter should be:    [included][0][attributes][username]    ${warehous_user[0].user_name}
+    And Response body parameter should be:    [included][0][attributes][firstName]    ${warehous_user[0].user_first_name}
+    And Response body parameter should be:    [included][0][attributes][lastName]    ${warehous_user[0].user_last_name}
     [Teardown]     Run Keywords    I send a DELETE request:    /warehouse-user-assignments/${warehous_assigment_id}
     ...  AND    Response status code should be:    204
 
