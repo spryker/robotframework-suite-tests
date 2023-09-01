@@ -75,16 +75,22 @@ Get_warehous_user_assigments_list
     Then Save value to a variable:    [data][id]   warehous_assigment_id_2
     Then I send a GET request:    /warehouse-user-assignments
     Then Response status code should be:    200
-    # And Response body parameter should be:    [data][id]    ${warehous_assigment_id}
+    And Response should contain the array of a certain size:    [data]    2
+    And Response body parameter should be in:    [data][0][id]    ${warehous_assigment_id_1}    ${warehous_assigment_id_2}
+    And Response body parameter should be in:    [data][1][id]    ${warehous_assigment_id_1}    ${warehous_assigment_id_2}
+    And Response body parameter should be in:    [data][0][attributes][warehouse][name]    ${warehous[0].warehous_name}    ${warehous[0].video_king_warehous_name}
+    And Response body parameter should be in:    [data][1][attributes][warehouse][name]    ${warehous[0].warehous_name}    ${warehous[0].video_king_warehous_name}
+
     # And Response body parameter should be:    [data][type]    warehouse-user-assignments
     # And Response body parameter should not be EMPTY:    [data][attributes][userUuid]
     # And Response body parameter should be:    [data][attributes][isActive]    False
     # And Response body parameter should be:    [data][attributes][warehouse][name]    ${warehous[0].warehous_name}
     # And Response body parameter should not be EMPTY:    [data][attributes][warehouse][uuid]
     # And Response body parameter should be:    [data][attributes][warehouse][isActive]    True
-    # And Response body has correct self link internal   
-    # [Teardown]     Run Keywords    I send a DELETE request:    /warehouse-user-assignments/${warehous_assigment_id}
-    # ...  AND    Response status code should be:    204
+    [Teardown]     Run Keywords    I send a DELETE request:    /warehouse-user-assignments/${warehous_assigment_id_1}
+    ...  AND    Response status code should be:    204
+    ...  AND    I send a DELETE request:    /warehouse-user-assignments/${warehous_assigment_id_2}
+    ...  AND    Response status code should be:    204
 
 
 
