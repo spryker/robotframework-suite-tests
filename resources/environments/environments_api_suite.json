@@ -64,6 +64,9 @@
          "email":"admin@spryker.com",
          "password":"change123"
       },
+      "zed_user":{
+         "email":"michele@sony-experts.com"
+      },
       "gender":{
          "female":"Female",
          "male":"Male"

@@ -9,7 +9,7 @@ ENABLER
     TestSetup
 
 Assign_user_to_warehouse
-    [Setup]    Run Keywords    I get access token by user credentials:    michele@sony-experts.com
+    [Setup]    Run Keywords    I get access token by user credentials:    ${zed_user.email}
      ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=Bearer ${token}    
     When I send a POST request:    /warehouse-user-assignments    {"data": {"type": "warehouse-user-assignments", "attributes":{"userUuid": "${warehous_user[0].user_uuid}","warehouse" :{"uuid": "${warehous[0].warehous_uuid}"},"isActive":"false"}}}
     Then Response status code should be:    201
