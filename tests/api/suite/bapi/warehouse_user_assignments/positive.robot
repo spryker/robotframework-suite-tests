@@ -2,7 +2,6 @@
 Suite Setup       SuiteSetup
 Test Setup    TestSetup
 Resource    ../../../../../resources/common/common_api.robot
-Resource    ../../../../../resources/steps/shipment_type_steps.robot
 Default Tags    bapi
 
 *** Test Cases ***
@@ -12,7 +11,7 @@ ENABLER
 Assign_user_to_warehouse
     [Setup]    Run Keywords    I get access token by user credentials:    michele@sony-experts.com
      ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=Bearer ${token}    
-    When I send a POST request:    /warehouse-user-assignments?include=users    {"data": {"type": "warehouse-user-assignments", "attributes":{"userUuid": "48a6c610-693e-5d88-bdce-3c6018b3abd2","warehouse" :{"uuid": "e84b3cb8-a94a-5a7e-9adb-cc5353f7a73f"},"isActive":"false"}}}
+    When I send a POST request:    /warehouse-user-assignments?include=users    {"data": {"type": "warehouse-user-assignments", "attributes":{"userUuid": "${warehous_user[0].user_uuid}","warehouse" :{"uuid": "${warehous[0].warehous_uuid}"},"isActive":"false"}}}
     Then Response status code should be:    201
     Then Save value to a variable:    [data][id]   warehous_assigment_id
     Then Save value to a variable:    [included][0][id]   user_id
