@@ -8,6 +8,13 @@ Default Tags    bapi
 ENABLER
     TestSetup
 
+Precondition_test
+    [Setup]    Run Keywords    I get access token by user credentials:    ${zed_user.email}
+     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=Bearer ${token}  
+    When I send a POST request:    /warehouse-user-assignments    {"data": {"type": "warehouse-user-assignments", "attributes":{"userUuid": "${warehous_user[0].user_uuid}","warehouse" :{"uuid": "${warehouse[0].warehouse_uuid}"},"isActive":"false"}}}
+    Then Response status code should be:    201
+    Then Save value to a variable:    [data][id]   warehouse_assigment_id
+
 *** Test Cases ***
 Create_warehouse_user_assigment_with_invalid_token
     [Setup]    Run Keywords    I get access token by user credentials:    invalid
@@ -55,13 +62,13 @@ Create_warehouse_user_assignment_with_multiple_active_assignments
     Then Response status code should be:    400
 
 Get_user_assigments_by_UUID_without_token
-    Then I send a GET request:    /warehouse-user-assignments/${warehous_assigment_id_1}
+    Then I send a GET request:    /warehouse-user-assignments/${warehous_assigment_id}
     Then Response status code should be:    401
 
 Get_user_assigments_by_UUID_with_invalid_token
     [Setup]    Run Keywords    I get access token by user credentials:    invalid
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=Bearer ${token}  
-    Then I send a GET request:    /warehouse-user-assignments/${warehous_assigment_id_1}
+    Then I send a GET request:    /warehouse-user-assignments/${warehous_assigment_id}
     Then Response status code should be:    403
 
 Get_user_assigments_by_invalid_UUID
@@ -73,49 +80,37 @@ Get_user_assigments_by_invalid_UUID
 Get_user_assigments_list_with_invalid_token
     [Setup]    Run Keywords    I get access token by user credentials:    invalid
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=Bearer ${token}  
-    Then I send a GET request:    /warehouse-user-assignments/${warehous_assigment_id_1}
+    Then I send a GET request:    /warehouse-user-assignments/${warehous_assigment_id}
     Then Response status code should be:    401
 
 Get_user_assigments_list_without_token
-    Then I send a GET request:    /warehouse-user-assignments/${warehous_assigment_id_1}
+    Then I send a GET request:    /warehouse-user-assignments/${warehous_assigment_id}
     Then Response status code should be:    401
 
 Update_warehous_user_assigment_without_token   
-    When I send a POST request:    /warehouse-user-assignments    {"data": {"type": "warehouse-user-assignments", "attributes":{"userUuid": "${warehous_user[0].user_uuid}","warehouse" :{"uuid": "${warehouse[0].warehouse_uuid}"},"isActive":"false"}}}
-    Then Response status code should be:    201
-    Then Save value to a variable:    [data][id]   warehouse_assigment_id
     Then I send a PATCH request:    /warehouse-user-assignments/${warehouse_assigment_id}    {"data":{"attributes":{"isActive":"true"}}} 
     Then Response status code should be:    401
 
 Update_warehous_user_assigment_with_invalid_token
     [Setup]    Run Keywords    I get access token by user credentials:    invalid
      ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=Bearer ${token}    
-    When I send a POST request:    /warehouse-user-assignments    {"data": {"type": "warehouse-user-assignments", "attributes":{"userUuid": "${warehous_user[0].user_uuid}","warehouse" :{"uuid": "${warehouse[0].warehouse_uuid}"},"isActive":"false"}}}
-    Then Response status code should be:    201
-    Then Save value to a variable:    [data][id]   warehouse_assigment_id
     Then I send a PATCH request:    /warehouse-user-assignments/${warehouse_assigment_id}    {"data":{"attributes":{"isActive":"true"}}} 
     Then Response status code should be:    403
 
 Update_warehous_user_assigment_with_incorrect_uuid
     [Setup]    Run Keywords    I get access token by user credentials:    ${zed_user.email}
      ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=Bearer ${token}    
-    When I send a POST request:    /warehouse-user-assignments    {"data": {"type": "warehouse-user-assignments", "attributes":{"userUuid": "${warehous_user[0].user_uuid}","warehouse" :{"uuid": "${warehouse[0].warehouse_uuid}"},"isActive":"false"}}}
+    When I send a POST request:    /warehouse-user-assignments    {"data": {"type": "warehouse-user-assignments", "attributes":{"userUuid": "${warehous_user[0].user_uuid_2}","warehouse" :{"uuid": "${warehouse[0].warehouse_uuid}"},"isActive":"false"}}}
     Then Response status code should be:    201
-    Then Save value to a variable:    [data][id]   warehouse_assigment_id
+    Then Save value to a variable:    [data][id]   warehouse_assigment_id_1
     Then I send a PATCH request:    /warehouse-user-assignments/invalid    {"data":{"attributes":{"isActive":"true"}}} 
-    Then Response status code should be:    400    
-
-Precondition_test
-    [Setup]    Run Keywords    I get access token by user credentials:    ${zed_user.email}
-     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=Bearer ${token}  
-    When I send a POST request:    /warehouse-user-assignments    {"data": {"type": "warehouse-user-assignments", "attributes":{"userUuid": "${warehous_user[0].user_uuid}","warehouse" :{"uuid": "${warehouse[0].warehouse_uuid}"},"isActive":"false"}}}
-    Then Response status code should be:    201
-    Then Save value to a variable:    [data][id]   warehouse_assigment_id
+    Then Response status code should be:    400  
+    [Teardown]     Run Keywords    I send a DELETE request:    /warehouse-user-assignments/${warehouse_assigment_id_1}
+    ...  AND    Response status code should be:    204 
 
 Delete_warehous_user_assigment_without_token
     Then I send a DELETE request:    /warehouse-user-assignments/${warehouse_assigment_id}   
     Then Response status code should be:    400
-
 
  Delete_warehous_user_assigment_with_invalid_token
     [Setup]    Run Keywords    I get access token by user credentials:    invalid
@@ -123,7 +118,6 @@ Delete_warehous_user_assigment_without_token
     Then I send a DELETE request:    /warehouse-user-assignments/${warehouse_assigment_id} 
     Then Response status code should be:    400
  
-
  Delete_warehous_user_assigment_with_invalid_uuid
     [Setup]    Run Keywords    I get access token by user credentials:    ${zed_user.email}
      ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=Bearer ${token}    
@@ -131,7 +125,7 @@ Delete_warehous_user_assigment_without_token
     Then Response status code should be:    201
     Then I send a DELETE request:    /warehouse-user-assignments/invalid  
     Then Response status code should be:    400
-
+# *******
 Teardown_test
     [Setup]    Run Keywords    I get access token by user credentials:    ${zed_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=Bearer ${token}   

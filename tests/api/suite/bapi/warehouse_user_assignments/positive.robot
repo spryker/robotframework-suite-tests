@@ -156,7 +156,7 @@ Get_warehouse_user_assigments_with_filter_by_user_uuid
     And Response body parameter should be:    [data][0][attributes][warehouse][name]    ${warehouse[0].warehouse_name}
     And Response body parameter should be:    [data][0][attributes][warehouse][uuid]    ${warehouse[0].warehouse_uuid}
     And Response body parameter should be:    [data][0][attributes][warehouse][isActive]    True
-     [Teardown]     Run Keywords    I send a DELETE request:    /warehouse-user-assignments/${warehouse_assigment_id_1}
+    [Teardown]     Run Keywords    I send a DELETE request:    /warehouse-user-assignments/${warehouse_assigment_id_1}
     ...  AND    Response status code should be:    204
     ...  AND    I send a DELETE request:    /warehouse-user-assignments/${warehouse_assigment_id_2}
     ...  AND    Response status code should be:    204  
