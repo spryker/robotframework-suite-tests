@@ -82,6 +82,10 @@ ENABLER
 #     Then I send a GET request:    /warehouse-user-assignments/${warehous_assigment_id}
 #     Then Response status code should be:    401
 
+# Get_user_assigments_list_with_invalid_filters
+#     Then I send a GET request:    /warehouse-user-assignments/?filter[warehouse-user-assignments.warehouse]=${warehouse[0].video_king_warehouse_uuid}
+#     Then Response status code should be:    404
+
 # Update_warehous_user_assigment_without_token   
 #     Then I send a PATCH request:    /warehouse-user-assignments/${warehouse_assigment_id}    {"data":{"attributes":{"isActive":"true"}}} 
 #     Then Response status code should be:    401
@@ -103,9 +107,28 @@ ENABLER
 #     [Teardown]     Run Keywords    I send a DELETE request:    /warehouse-user-assignments/${warehouse_assigment_id_1}
 #     ...  AND    Response status code should be:    204 
 
-# Delete_warehous_user_assigment_without_token
-#     Then I send a DELETE request:    /warehouse-user-assignments/${warehouse_assigment_id}   
-#     Then Response status code should be:    400
+Update_one_of_already exist_warehous_user_assigment_with_two_assigments_to active
+    [Setup]    Run Keywords    I get access token by user credentials:    ${zed_user.email}
+     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=Bearer ${token}    
+    When I send a POST request:    /warehouse-user-assignments?include=users    {"data": {"type": "warehouse-user-assignments", "attributes":{"userUuid": "${warehous_user[0].user_uuid}","warehouse" :{"uuid": "${warehouse[0].warehouse_uuid}"},"isActive":"false"}}}
+    Then Response status code should be:    201
+    Then Save value to a variable:    [data][id]   warehouse_assigment_id_1
+    When I send a POST request:    /warehouse-user-assignments?include=users    {"data": {"type": "warehouse-user-assignments", "attributes":{"userUuid": "${warehous_user[0].user_uuid_2}","warehouse" :{"uuid": "${warehouse[0].video_king_warehouse_uuid}"},"isActive":"true"}}}
+    Then Response status code should be:    201
+    Then Save value to a variable:    [data][id]   warehouse_assigment_id_2
+    Then I send a PATCH request:    /warehouse-user-assignments/${warehouse_assigment_id}    {"data":{"attributes":{"isActive":"true"}}} 
+    Then Response status code should be:    200
+    Then I send a GET request:    /warehouse-user-assignments/${warehouse_assigment_id}
+    Then Response status code should be:    200
+
+    [Teardown]     Run Keywords    I send a DELETE request:    /warehouse-user-assignments/${warehouse_assigment_id_1}
+    ...  AND    Response status code should be:    204
+    ...  AND    I send a DELETE request:    /warehouse-user-assignments/${warehouse_assigment_id_2}
+    ...  AND    Response status code should be:    204
+
+Delete_warehous_user_assigment_without_token
+    Then I send a DELETE request:    /warehouse-user-assignments/${warehouse_assigment_id}   
+    Then Response status code should be:    400
 
  Delete_warehous_user_assigment_with_invalid_token
     [Setup]    Run Keywords    I get access token by user credentials:    invalid
