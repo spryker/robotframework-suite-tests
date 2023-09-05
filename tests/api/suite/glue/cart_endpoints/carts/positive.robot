@@ -26,12 +26,12 @@ Get_cart_by_cart_id
     And Response body parameter should be:    [data][attributes][store]    ${store.de}
     And Response body parameter should be:    [data][attributes][name]    ${test_cart_name}-${random}
     And Response body parameter should be:    [data][attributes][isDefault]    True
-    And Response body parameter should be:    [data][attributes][totals][expenseTotal]    None
-    And Response body parameter should be:    [data][attributes][totals][discountTotal]    None
-    And Response body parameter should be:    [data][attributes][totals][taxTotal]    None
-    And Response body parameter should be:    [data][attributes][totals][subtotal]    None
-    And Response body parameter should be:    [data][attributes][totals][grandTotal]    None
-    And Response body parameter should be:    [data][attributes][totals][priceToPay]    None
+    And Response body parameter should be:    [data][attributes][totals][expenseTotal]    0
+    And Response body parameter should be:    [data][attributes][totals][discountTotal]    0
+    And Response body parameter should be:    [data][attributes][totals][taxTotal]    0
+    And Response body parameter should be:    [data][attributes][totals][subtotal]    0
+    And Response body parameter should be:    [data][attributes][totals][grandTotal]    0
+    And Response body parameter should be:    [data][attributes][totals][priceToPay]    0
     And Response should contain the array of a certain size:    [data][attributes][discounts]    0
     And Response body has correct self link internal
     [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cart_id}
@@ -95,7 +95,7 @@ Get_cart_by_cart_id_with_included_items
     And Response body has correct self link internal
     And Response should contain the array of a certain size:    [data][relationships][items][data]    3
     And Each array element of array in response should contain property with value:    [data][relationships][items][data]    type    items
-    And Response body parameter should contain:    [data][relationships][items][data][0][id]    ${concrete_products.sku_1}   
+    And Response body parameter should contain:    [data][relationships][items][data][0][id]    ${concrete_products.sku_1}
     And Response body parameter should contain:    [data][relationships][items][data][1][id]    ${concrete_products.sku_2}
     And Response body parameter should contain:    [data][relationships][items][data][2][id]    ${concrete_products.sku_3}
     And Response should contain the array of a certain size:    [included]    3
@@ -245,12 +245,12 @@ Update_cart_by_cart_id_with_all_attributes
     And Response body parameter should be:    [data][attributes][store]    ${store.de}
     And Response body parameter should be:    [data][attributes][name]    ${test_cart_name}-${random}
     And Response body parameter should be:    [data][attributes][isDefault]    True
-    And Response body parameter should be:    [data][attributes][totals][expenseTotal]    None
-    And Response body parameter should be:    [data][attributes][totals][discountTotal]    None
-    And Response body parameter should be:    [data][attributes][totals][taxTotal]    None
-    And Response body parameter should be:    [data][attributes][totals][subtotal]    None
-    And Response body parameter should be:    [data][attributes][totals][grandTotal]    None
-    And Response body parameter should be:    [data][attributes][totals][priceToPay]    None
+    And Response body parameter should be:    [data][attributes][totals][expenseTotal]    0
+    And Response body parameter should be:    [data][attributes][totals][discountTotal]    0
+    And Response body parameter should be:    [data][attributes][totals][taxTotal]    0
+    And Response body parameter should be:    [data][attributes][totals][subtotal]    0
+    And Response body parameter should be:    [data][attributes][totals][grandTotal]    0
+    And Response body parameter should be:    [data][attributes][totals][priceToPay]    0
     And Response should contain the array of a certain size:    [data][attributes][discounts]    0
     And Response body has correct self link internal
     [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cart_id}
@@ -275,12 +275,12 @@ Update_cart_with_empty_priceMod_currency_store
     And Response body parameter should be:    [data][attributes][store]    ${store.de}
     And Response body parameter should be:    [data][attributes][name]    ${test_cart_name}-${random}
     And Response body parameter should be:    [data][attributes][isDefault]    True
-    And Response body parameter should be:    [data][attributes][totals][expenseTotal]    None
-    And Response body parameter should be:    [data][attributes][totals][discountTotal]    None
-    And Response body parameter should be:    [data][attributes][totals][taxTotal]    None
-    And Response body parameter should be:    [data][attributes][totals][subtotal]    None
-    And Response body parameter should be:    [data][attributes][totals][grandTotal]    None
-    And Response body parameter should be:    [data][attributes][totals][priceToPay]    None
+    And Response body parameter should be:    [data][attributes][totals][expenseTotal]    0
+    And Response body parameter should be:    [data][attributes][totals][discountTotal]    0
+    And Response body parameter should be:    [data][attributes][totals][taxTotal]    0
+    And Response body parameter should be:    [data][attributes][totals][subtotal]    0
+    And Response body parameter should be:    [data][attributes][totals][grandTotal]    0
+    And Response body parameter should be:    [data][attributes][totals][priceToPay]    0
     And Response should contain the array of a certain size:    [data][attributes][discounts]    0
     And Response body has correct self link internal
     [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cart_id}
@@ -304,12 +304,12 @@ Update_cart_with_name_attribute
     And Response body parameter should be:    [data][attributes][store]    ${store.de}
     And Response body parameter should be:    [data][attributes][name]    ${test_cart_name}-${random}
     And Response body parameter should be:    [data][attributes][isDefault]    True
-    And Response body parameter should be:    [data][attributes][totals][expenseTotal]    None
-    And Response body parameter should be:    [data][attributes][totals][discountTotal]    None
-    And Response body parameter should be:    [data][attributes][totals][taxTotal]    None
-    And Response body parameter should be:    [data][attributes][totals][subtotal]    None
-    And Response body parameter should be:    [data][attributes][totals][grandTotal]    None
-    And Response body parameter should be:    [data][attributes][totals][priceToPay]    None
+    And Response body parameter should be:    [data][attributes][totals][expenseTotal]    0
+    And Response body parameter should be:    [data][attributes][totals][discountTotal]    0
+    And Response body parameter should be:    [data][attributes][totals][taxTotal]    0
+    And Response body parameter should be:    [data][attributes][totals][subtotal]    0
+    And Response body parameter should be:    [data][attributes][totals][grandTotal]    0
+    And Response body parameter should be:    [data][attributes][totals][priceToPay]    0
     And Response should contain the array of a certain size:    [data][attributes][discounts]    0
     And Response body has correct self link internal
     [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cart_id}
@@ -347,7 +347,7 @@ Get_cart_with_included_cart_rules
     And Each array element of array in response should contain property with value:    [data][relationships][cart-rules][data]    type    cart-rules
     And Each array element of array in response should contain property:    [data][relationships][cart-rules][data]    id
     And Response body parameter should be:     [included][0][attributes][amount]    3202
-    And Response body parameter should not be EMPTY:    [included][0][attributes][amount]    
+    And Response body parameter should not be EMPTY:    [included][0][attributes][amount]
     And Each array element of array in response should contain property with value:    [included]    type    cart-rules
     And Each array element of array in response should contain property:    [included]    id
     And Each array element of array in response should contain property:    [included]    attributes
@@ -415,12 +415,12 @@ Update_cart_with_existing_name
     And Response body parameter should be:    [data][attributes][store]    ${store.de}
     And Response body parameter should NOT be:    [data][attributes][name]    "My Cart"
     And Response body parameter should be:    [data][attributes][isDefault]    True
-    And Response body parameter should be:    [data][attributes][totals][expenseTotal]    None
-    And Response body parameter should be:    [data][attributes][totals][discountTotal]    None
-    And Response body parameter should be:    [data][attributes][totals][taxTotal]    None
-    And Response body parameter should be:    [data][attributes][totals][subtotal]    None
-    And Response body parameter should be:    [data][attributes][totals][grandTotal]    None
-    And Response body parameter should be:    [data][attributes][totals][priceToPay]    None
+    And Response body parameter should be:    [data][attributes][totals][expenseTotal]    0
+    And Response body parameter should be:    [data][attributes][totals][discountTotal]    0
+    And Response body parameter should be:    [data][attributes][totals][taxTotal]    0
+    And Response body parameter should be:    [data][attributes][totals][subtotal]    0
+    And Response body parameter should be:    [data][attributes][totals][grandTotal]    0
+    And Response body parameter should be:    [data][attributes][totals][priceToPay]    0
     And Response should contain the array of a certain size:    [data][attributes][discounts]    0
     And Response body has correct self link internal
     [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cart_id}
