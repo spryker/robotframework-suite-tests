@@ -6,78 +6,49 @@ Resource    ../common/common_api.robot
 
 *** Keywords ***
 
-Get shipment type id from DB by key:
-    [Documentation]    This keyword gets the entry from the DB table `spy_shipment_type`. 
+Create_warehouse_user_assigment:
+    [Documentation]    This keyword creates new warehouse user assigment in the DB table `spy_warehouse_user_assignment`. 
         ...    *Example:*
         ...
-        ...    ``Get shipment type id from DB by key:   some-shipment-type-61152``
+        ...    ``Create_warehouse_user_assigment:   ${warehouse[0].warehouse_uuid}    ${warehous_user[0].user_uuid}    false``
         ...
-    [Arguments]    ${key}
+    [Arguments]    ${warehouse_uuid}    ${user_uuid}    ${isActive}
     Connect to Spryker DB
-    IF    '${db_engine}' == 'pymysql' 
-    ${id_shipment_type_store}    Query    SELECT id_shipment_type FROM spy_shipment_type WHERE `key` = '${key}' ORDER BY id_shipment_type DESC LIMIT 1;
-    Disconnect From Database
+    IF    '${db_engine}' == 'pymysql'
+        Execute Sql String    insert ignore into spy_warehouse_user_assignment (uuid, fk_warehouse, user_uuid, is_active) value ('${warehouse_uuid}','9', '${user_uuid}', ${isActive});
     ELSE
-    ${id_shipment_type_store}    Query    SELECT id_shipment_type FROM spy_shipment_type WHERE "key" = '${key}' ORDER BY id_shipment_type DESC LIMIT 1;
+        Execute Sql String    INSERT INTO spy_warehouse_user_assignment (uuid, fk_warehouse, user_uuid, is_active) VALUES  ('${warehouse_uuid}','9', '${user_uuid}', ${isActive});
     END
-    [Return]    ${id_shipment_type_store[0][0]}
+    Disconnect From Database
 
-Delete shipment type in DB:
-    [Documentation]    This keyword deletes the entry from the DB table `spy_shipment_type`. If `withRelations=true`, deletes with relations.
+Get_warehouse_user_assigment_id:
+    [Documentation]    This keyword retrive  warehouse user assigment in the DB table `spy_warehouse_user_assignment` by uuuid and user_uuid. 
         ...    *Example:*
         ...
-        ...    ``Delete shipment type in DB:    some-shipment-type-61152    withRelations=true``
+        ...    ``Get_warehouse_user_assigment_id:   ${warehouse[0].warehouse_uuid}    ${warehous_user[0].user_uuid}`
         ...
-    [Arguments]    ${key}    ${withRelations}=${True}
-    IF    ${withRelations}
-        ${id_shipment_type_store}=    Get shipment type id from DB by key:    ${key} 
+    [Arguments]    ${warehouse_uuid}    ${user_uuid}
+    Connect to Spryker DB
+    IF    '${db_engine}' == 'pymysql'
+    ${id_warehouse_user_assigment}    Query    SELECT id_warehouse_user_assignment FROM spy_warehouse_user_assignment WHERE uuid = '${warehouse[0].warehouse_uuid}' AND user_uuid='${warehous_user[0].user_uuid}';
+    ELSE
+       ${id_warehouse_user_assigment}    Query    SELECT id_warehouse_user_assignment FROM spy_warehouse_user_assignment WHERE uuid = '${warehouse[0].warehouse_uuid}' AND user_uuid='${warehous_user[0].user_uuid}';
+    END
+    Disconnect From Database
+    [Return]    ${id_warehouse_user_assigment[0][0]}
+
+Remove_warehous_user_assigment:
+    [Documentation]    This keyword deletes the entry from the DB table `spy_warehouse_user_assignment`.
+        ...    *Example:*
+        ...
+        ...    ``Remove_warehous_user_assigment:    ${warehouse[0].warehouse_uuid}    ${warehous_user[0].user_uuid}``
+        ...
+    [Arguments]    ${warehouse[0].warehouse_uuid}    ${warehous_user[0].user_uuid}
+        ${id_warehouse_user_assigment}=    Get_warehouse_user_assigment_id:   ${warehouse[0].warehouse_uuid}    ${warehous_user[0].user_uuid} 
         Connect to Spryker DB
-        IF    '${db_engine}' == 'pymysql' 
-        Execute Sql String    DELETE FROM spy_shipment_type_store WHERE fk_shipment_type = ${id_shipment_type_store};
-        Execute Sql String    DELETE FROM spy_shipment_type WHERE `key` = '${key}';
-        ELSE
-        Execute Sql String    DELETE FROM spy_shipment_type_store WHERE fk_shipment_type = ${id_shipment_type_store};
-        Execute Sql String    DELETE FROM spy_shipment_type WHERE "key" = '${key}';
-        END
-        Disconnect From Database
-    END
-    Connect to Spryker DB
     IF    '${db_engine}' == 'pymysql' 
-        Execute Sql String    DELETE FROM spy_shipment_type WHERE `key` = '${key}';
+    Execute Sql String    DELETE FROM spy_warehouse_user_assignment WHERE id_warehouse_user_assigment = ${id_warehouse_user_assigment};
     ELSE
-        Execute Sql String    DELETE FROM spy_shipment_type WHERE "key" = '${key}';
+    Execute Sql String    DELETE FROM spy_warehouse_user_assignment WHERE id_warehouse_user_assigment = ${id_warehouse_user_assigment};
     END
     Disconnect From Database
-    
-
-Create_warehouse_user_assigment
-    [Documentation]    This is a helper keyword which helps get access token for future use in the headers of the following requests.
-    ...
-    ...    It gets the token for the specified user ``${email}`` and saves it into the test variable ``${token}``, which can then be used within the scope of the test where this keyword was called.
-    ...    After the test ends the ``${token}`` variable is cleared. This keyword needs to be called separately for each test where you expect to need a customer token.
-    ...
-    ...    The password in this case is not passed to the keyword and the default password stored in ``${default_password}`` will be used when getting token.
-    ...
-    ...    *Example:*
-    ...
-    ...    ``I get access token by user credentials:    ${zed_admin.email}``   
-    When I get access token by user credentials:    ${zed_user.email}
-    And I set Headers:    Content-Type=${default_header_content_type}    Authorization=Bearer ${token} 
-    When I send a POST request:    /warehouse-user-assignments    {"data": {"type": "warehouse-user-assignments", "attributes":{"userUuid": "${warehous_user[0].user_uuid}","warehouse" :{"uuid": "${warehouse[0].warehouse_uuid}"},"isActive":"false"}}}
-    And Save value to a variable:    [data][id]   warehouse_assigment_id
-
-Remove_warehous_user_assigment
-    [Documentation]    This is a helper keyword which helps get access token for future use in the headers of the following requests.
-    ...
-    ...    It gets the token for the specified user ``${email}`` and saves it into the test variable ``${token}``, which can then be used within the scope of the test where this keyword was called.
-    ...    After the test ends the ``${token}`` variable is cleared. This keyword needs to be called separately for each test where you expect to need a customer token.
-    ...
-    ...    The password in this case is not passed to the keyword and the default password stored in ``${default_password}`` will be used when getting token.
-    ...
-    ...    *Example:*
-    ...
-    ...    ``I get access token by user credentials:    ${zed_admin.email}``   
-    When I get access token by user credentials:    ${zed_user.email}
-    And I set Headers:    Content-Type=${default_header_content_type}    Authorization=Bearer ${token} 
-    When I send a DELETE request:    /warehouse-user-assignments/${warehouse_assigment_id}
-    And Response status code should be:    204   
