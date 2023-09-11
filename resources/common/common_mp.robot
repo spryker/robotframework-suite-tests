@@ -80,7 +80,7 @@ MP: click on create new entity button:
 MP: select option in expanded dropdown:
     [Arguments]    ${optionName}
     Wait Until Element Is Visible    xpath=//nz-option-container[contains(@class,'ant-select-dropdown')]//span[contains(text(),'${optionName}')]
-    Click    xpath=//nz-option-container[contains(@class,'ant-select-dropdown')]//span[contains(text(),'${optionName}')]    delay=1s
+    Click With Options    xpath=//nz-option-container[contains(@class,'ant-select-dropdown')]//span[contains(text(),'${optionName}')]    delay=1s
 
     
 MP: switch to the tab:

@@ -154,7 +154,7 @@ Yves: Expand shopping cart accordion:
      Log    ${accordionState}
      IF    'active' not in '${accordionState}'
          Run Keywords
-            Click    xpath=//div[@data-qa='component cart-sidebar']//*[contains(@class,'cart-sidebar-item__title')][contains(.,'${accordionTitle}')]    delay=1s
+            Click With Options    xpath=//div[@data-qa='component cart-sidebar']//*[contains(@class,'cart-sidebar-item__title')][contains(.,'${accordionTitle}')]    delay=1s
             Wait Until Element Is Visible    xpath=//div[@data-qa='component cart-sidebar']//*[contains(@class,'cart-sidebar-item__title')][contains(.,'${accordionTitle}')]/../div[contains(@class,'cart-sidebar-item__content')]
      END
 
@@ -171,7 +171,7 @@ Yves: change quantity of the configurable bundle in the shopping cart on:
     ELSE
         Type Text    xpath=//article[contains(@data-qa,'configured-bundle-secondary')][1]//ancestor::*[contains(@data-qa, 'component formatted-number-input')]//input[contains(@class,'formatted-number-input')][contains(@data-min-quantity,'1')]    ${quantity}
     END
-    Click    xpath=//main//article[contains(@data-qa,'configured-bundle')][1]//a[text()='${confBundleTitle}']/ancestor::article    delay=1s
+    Click With Options    xpath=//main//article[contains(@data-qa,'configured-bundle')][1]//a[text()='${confBundleTitle}']/ancestor::article    delay=1s
     Yves: remove flash messages
 
 Yves: delete all shopping carts

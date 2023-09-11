@@ -59,7 +59,7 @@ Yves: select the following existing address on the checkout as 'shipping' addres
                     ${selected_address}=    Get Text    xpath=//div[contains(@class,'shippingAddress')]//select[@name='checkout-full-addresses'][contains(@class,'address__form')]/..//span[contains(@id,'checkout-full-address')]
                 END
     END
-    Click    ${submit_checkout_form_button}[${env}]    delay=1s
+    Click With Options    ${submit_checkout_form_button}[${env}]    delay=1s
 
 Yves: fill in the following new shipping address:
     [Documentation]    Possible argument names: salutation, firstName, lastName, street, houseNumber, postCode, city, country, company, phone, additionalAddress
