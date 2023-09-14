@@ -74,12 +74,13 @@ ENABLER
 #     ...  AND    Response status code should be:    204
 
 # !!!
-# Get_warehouse_user_assigments_by_UUID_without_token
-#     And Create_warehouse_user_assigment:    ${warehouse[0].warehouse_uuid}    ${warehous_user[0].user_uuid}    false
-#     Then Get_warehouse_user_assigment_id:   ${warehouse[0].warehouse_uuid}    ${warehous_user[0].user_uuid}
-#     Then I send a GET request:    /warehouse-user-assignments/${id_warehouse_user_assigment[0][0]}
-#     Then Response status code should be:    401
-#     And Remove_warehous_user_assigment:    ${warehouse[0].warehouse_uuid}    ${warehous_user[0].user_uuid}
+Get_warehouse_user_assigments_by_UUID_without_token
+
+    And Create_warehouse_user_assigment:    ${warehouse[0].warehouse_uuid}    ${warehous_user[0].user_uuid}    false
+    Then Get_warehouse_user_assigment_id:   ${warehouse[0].warehouse_uuid}    ${warehous_user[0].user_uuid}
+    Then I send a GET request:    /warehouse-user-assignments/${id_warehouse_user_assigment}
+    Then Response status code should be:    404
+    And Remove_warehous_user_assigment:    ${warehouse[0].warehouse_uuid}    ${warehous_user[0].user_uuid}
 
 # !!!
 # Get_user_assigments_by_UUID_with_invalid_token
