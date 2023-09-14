@@ -48,8 +48,8 @@ Remove_warehous_user_assigment:
         ${id_warehouse_user_assigment}=    Get_warehouse_user_assigment_id:   ${warehouse[0].warehouse_uuid}    ${warehous_user[0].user_uuid} 
         Connect to Spryker DB
     IF    '${db_engine}' == 'pymysql' 
-    Execute Sql String    DELETE FROM spy_warehouse_user_assignment WHERE spy_warehouse_user_assignment = ${id_warehouse_user_assigment};
+    Execute Sql String    DELETE FROM spy_warehouse_user_assignment WHERE id_warehouse_user_assignment = ${id_warehouse_user_assigment};
     ELSE
-    Execute Sql String    DELETE FROM spy_warehouse_user_assignment WHERE spy_warehouse_user_assignment = ${id_warehouse_user_assigment};
+    Execute Sql String    DELETE FROM spy_warehouse_user_assignment WHERE id_warehouse_user_assignment = ${id_warehouse_user_assigment};
     END
     Disconnect From Database
