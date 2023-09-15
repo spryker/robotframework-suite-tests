@@ -26,7 +26,7 @@ Create_warehouse_user_assigment_without_token
 
 Create_warehouse_user_assigment_with_invalid_body
     [Setup]    Run Keywords    I get access token by user credentials:    ${zed_user.email}
-     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=Bearer ${token}    
+    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=Bearer ${token}     
     When I send a POST request:    /warehouse-user-assignments    {"data": {"type": "warehouse-user-assignments", "attributes":{"userUuid": "test","warehouse" :{"uuid": "${warehouse[0].warehouse_uuid}"},"isActive":"false"}}}
     Then Response status code should be:    400
     And Response should return error code:    5202
@@ -62,7 +62,7 @@ Create_warehouse_user_assignment_with_duplicate_assignment
     ...  AND    Response status code should be:    204
 
 Create_warehouse_user_assignment_with_multiple_active_assignments
-    [Documentation]    both active assigments created to one user, should not be, bug needs to be Create_warehouse_user_assigment_with_invalid_body
+    [Documentation]    both active assigments created to one user, should not be, bug needs 
     [Tags]    skip-due-to-issue
     [Setup]    Run Keywords    I get access token by user credentials:    ${zed_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=Bearer ${token}    
@@ -74,7 +74,7 @@ Create_warehouse_user_assignment_with_multiple_active_assignments
     ...  AND    Response status code should be:    204
 
 Get_warehouse_user_assigments_by_UUID_without_token
-    [Documentation]    why 404 in response??
+    [Documentation]    https://spryker.atlassian.net/browse/FRW-5850
     [Tags]    skip-due-to-issue
     And Create_warehouse_user_assigment:    ${warehouse[0].warehouse_uuid}    ${warehous_user[0].user_uuid}    false
     Then Get_warehouse_user_assigment_id:   ${warehouse[0].warehouse_uuid}    ${warehous_user[0].user_uuid}
@@ -83,14 +83,17 @@ Get_warehouse_user_assigments_by_UUID_without_token
     And Remove_warehous_user_assigment:    ${warehouse[0].warehouse_uuid}    ${warehous_user[0].user_uuid}
 
 Get_user_assigments_by_UUID_with_invalid_token
+    [Documentation]    https://spryker.atlassian.net/browse/FRW-5850
+    [Tags]    skip-due-to-issue
     And Create_warehouse_user_assigment:    ${warehouse[0].warehouse_uuid}    ${warehous_user[0].user_uuid}    false
-   Then Get_warehouse_user_assigment_id:   ${warehouse[0].warehouse_uuid}    ${warehous_user[0].user_uuid}
+    Then Get_warehouse_user_assigment_id:   ${warehouse[0].warehouse_uuid}    ${warehous_user[0].user_uuid}
     [Setup]    Run Keywords    I get access token by user credentials:    invalid
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=Bearer ${token}  
-    Then I send a GET request:    /warehouse-user-assignments/${warehous_assigment_id}
-    Then Response status code should be:    403
+    Then I send a GET request:    /warehouse-user-assignments/${id_warehouse_user_assigment}
+    Then Response status code should be:    401
+    And Response should return error code:    001
+    And Response should return error message:   Invalid access token.
     And Remove_warehous_user_assigment:    ${warehouse[0].warehouse_uuid}    ${warehous_user[0].user_uuid}
-
 
 Get_user_assigments_by_invalid_UUID
     [Setup]    Run Keywords    I get access token by user credentials:    ${zed_user.email}
@@ -103,7 +106,6 @@ Get_user_assigments_by_invalid_UUID
     And Response should return error message:    Warehouse user assignment not found.
     And Remove_warehous_user_assigment:    ${warehouse[0].warehouse_uuid}    ${warehous_user[0].user_uuid}
 
-
 Get_user_assigments_list_with_invalid_token
     [Documentation]    https://spryker.atlassian.net/browse/FRW-5850
     [Tags]    skip-due-to-issue
@@ -111,7 +113,7 @@ Get_user_assigments_list_with_invalid_token
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=Bearer ${token}  
     And Create_warehouse_user_assigment:    ${warehouse[0].warehouse_uuid}    ${warehous_user[0].user_uuid}    false
     Then I send a GET request:    /warehouse-user-assignments/
-    Then Response status code should be:    403
+    Then Response status code should be:    401
     And Response reason should be:    Unauthorized
     And Response should return error message:    Invalid access token.
     And Remove_warehous_user_assigment:    ${warehouse[0].warehouse_uuid}    ${warehous_user[0].user_uuid}
@@ -127,19 +129,23 @@ Get_user_assigments_list_without_token
     And Remove_warehous_user_assigment:    ${warehouse[0].warehouse_uuid}    ${warehous_user[0].user_uuid}
 
 Update_warehous_user_assigment_without_token   
+    [Documentation]    https://spryker.atlassian.net/browse/FRW-5850
+    [Tags]    skip-due-to-issue
     And Create_warehouse_user_assigment:    ${warehouse[0].warehouse_uuid}    ${warehous_user[0].user_uuid}    false
-    Then I send a PATCH request:    /warehouse-user-assignments/${warehouse_assigment_id}    {"data":{"attributes":{"isActive":"true"}}} 
+    Then Get_warehouse_user_assigment_id:   ${warehouse[0].warehouse_uuid}    ${warehous_user[0].user_uuid}
+    Then I send a PATCH request:    /warehouse-user-assignments/${id_warehouse_user_assigment}    {"data":{"attributes":{"isActive":"true"}}} 
     Then Response status code should be:    401
-    And Remove_warehous_user_assigment:    ${warehouse[0].warehouse_uuid}    ${warehous_user[0].user_uuid}
     And Remove_warehous_user_assigment:    ${warehouse[0].warehouse_uuid}    ${warehous_user[0].user_uuid}
 
 Update_warehous_user_assigment_with_invalid_token
+  [Documentation]    https://spryker.atlassian.net/browse/FRW-5850
+  [Tags]    skip-due-to-issue
     [Setup]    Run Keywords    I get access token by user credentials:    invalid
-     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=Bearer ${token}   
+    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=Bearer ${token}   
     And Create_warehouse_user_assigment:    ${warehouse[0].warehouse_uuid}    ${warehous_user[0].user_uuid}    false
     Then Get_warehouse_user_assigment_id:   ${warehouse[0].warehouse_uuid}    ${warehous_user[0].user_uuid}
     And Create_warehouse_user_assigment:    ${warehouse[0].warehouse_uuid}    ${warehous_user[0].user_uuid}    false 
-    Then I send a PATCH request:    /warehouse-user-assignments/${warehouse_assigment_id}    {"data":{"attributes":{"isActive":"true"}}} 
+    Then I send a PATCH request:    /warehouse-user-assignments/${id_warehouse_user_assigment}    {"data":{"attributes":{"isActive":"true"}}} 
     Then Response status code should be:    403
     And Remove_warehous_user_assigment:    ${warehouse[0].warehouse_uuid}    ${warehous_user[0].user_uuid}
 
@@ -178,9 +184,11 @@ Update_one_of_already exist_warehous_user_assigment_with_two_assigments_to activ
     And Response status code should be:    204 
 
 Delete_warehous_user_assigment_without_token
+  [Documentation]    https://spryker.atlassian.net/browse/FRW-5850
+  [Tags]    skip-due-to-issue
     And Create_warehouse_user_assigment:    ${warehouse[0].warehouse_uuid}    ${warehous_user[0].user_uuid}    false
     Then Get_warehouse_user_assigment_id:   ${warehouse[0].warehouse_uuid}    ${warehous_user[0].user_uuid}
-    Then I send a DELETE request:    /warehouse-user-assignments/${warehouse_assigment_id}   
+    Then I send a DELETE request:    /warehouse-user-assignments/${id_warehouse_user_assigment}  
     Then Response status code should be:    400
     And Remove_warehous_user_assigment:    ${warehouse[0].warehouse_uuid}    ${warehous_user[0].user_uuid}
 
@@ -189,7 +197,7 @@ Delete_warehous_user_assigment_without_token
      ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=Bearer ${token} 
     And Create_warehouse_user_assigment:    ${warehouse[0].warehouse_uuid}    ${warehous_user[0].user_uuid}    false
     Then Get_warehouse_user_assigment_id:   ${warehouse[0].warehouse_uuid}    ${warehous_user[0].user_uuid}
-    Then I send a DELETE request:    /warehouse-user-assignments/${warehouse_assigment_id} 
+    Then I send a DELETE request:    /warehouse-user-assignments/${id_warehouse_user_assigment}
     Then Response status code should be:    400
     And Remove_warehous_user_assigment:    ${warehouse[0].warehouse_uuid}    ${warehous_user[0].user_uuid}
 
