@@ -33,7 +33,7 @@ Create_warehouse_user_assigment_with_invalid_body
     And Response should return error message:    User not found.
 
 Create_warehouse_user_assigment_with_empty_body
-    [Documentation]    fail with 500 error, bug need to be created   
+    [Documentation]    https://spryker.atlassian.net/browse/FRW-1597  
     [Tags]    skip-due-to-issue
     [Setup]    Run Keywords    I get access token by user credentials:    ${zed_user.email}
      ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=Bearer ${token}    
