@@ -10,7 +10,7 @@ ENABLER
    TestSetup
 
 *** Test Cases ***
-Retrieve Push Notification Providers Successfully
+Retrieve_push_notification_provider
     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
     ...    AND    I set Headers:    Content-Type=application/vnd.api+json   Authorization=Bearer ${token}
     When I send a GET request:    /push-notification-providers
@@ -23,7 +23,7 @@ Retrieve Push Notification Providers Successfully
     And Response body has correct self link for created entity:    ${push_notification_provider_id}
     [Teardown]    # No teardown needed as we are not creating a new entity
 
-Create Push Notification Provider Successfully
+Create_push_notification_provider
     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
     ...    AND    I set Headers:    Content-Type=application/vnd.api+json   Authorization=Bearer ${token}
     When I send a POST request:    /push-notification-providers    {"data": {"type": "push-notification-providers","attributes": {"name": "My Push Notification Provider ${random}"}}}
@@ -35,7 +35,7 @@ Create Push Notification Provider Successfully
     # And Response body has correct self link for created entity:    ${push_notification_provider_id}
     [Teardown]    I send a DELETE request:    /push-notification-providers/${push_notification_provider_id}
 
-Update Push Notification Provider Successfully
+Update_push_notification_provider
     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_user.email}
     ...    AND    I set Headers:    Content-Type=application/vnd.api+json   Authorization=Bearer ${token}
     ...    AND    I send a POST request:    /push-notification-providers    {"data": {"type": "push-notification-providers","attributes": {"name": "My Push Notification Provider ${random}"}}}
@@ -47,7 +47,7 @@ Update Push Notification Provider Successfully
     And Response body has correct self link for created entity:    ${push_notification_provider_id}
     [Teardown]    I send a DELETE request:    /push-notification-providers/${push_notification_provider_id}
 
-Retrieve Push Notification Provider Successfully
+Retrieve_push_notification_provider_by_id
     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_user.email}
     ...    AND    I set Headers:    Content-Type=application/vnd.api+json   Authorization=Bearer ${token}
     ...    AND    I send a POST request:    /push-notification-providers    {"data": {"type": "push-notification-providers","attributes": {"name": "My Push Notification Provider ${random}"}}}
