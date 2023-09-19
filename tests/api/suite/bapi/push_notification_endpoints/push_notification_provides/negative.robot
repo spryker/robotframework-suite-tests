@@ -130,3 +130,20 @@ Update_non-existent_push_notification_provider
     And Response should return error code:    5001
     And Response should return error message:    Push notification provider is not found.
 
+ Update_push_notification_provider_with_existing_name
+    [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
+    ...    AND    I set Headers:    Content-Type=application/vnd.api+json   Authorization=Bearer ${token}
+    When I send a POST request:    /push-notification-providers    {"data": {"type": "push-notification-providers","attributes": {"name": "Provider1 ${random}"}}}
+    Then Save value to a variable:    [data][id]    push_notification_provider_id
+    Then Response status code should be:    201
+    When I send a POST request:    /push-notification-providers    {"data": {"type": "push-notification-providers","attributes": {"name": "Provider2 ${random}"}}}
+    Then Save value to a variable:    [data][id]    push_notification_provider_id_2
+    When I send a PATCH request:    /push-notification-providers/${push_notification_provider_id_2}  {"data": {"type": "push-notification-providers","attributes": {"name": "Provider1 ${random}"}}}
+    Then Response status code should be:    400
+    And Response should return error code:    5008
+    And Response should return error message:    A push notification provider with the same name already exists.
+    [Teardown]    I send a DELETE request:    /push-notification-providers/${push_notification_provider_id}   
+
+Delete_push_notification_provider_with_not_exist_id
+    Then I send a DELETE request:    /push-notification-providers/invalid
+    Then Response status code should be:    404
