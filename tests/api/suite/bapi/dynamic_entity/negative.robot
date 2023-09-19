@@ -170,6 +170,23 @@ Create_country_with_invalid_field_value
     [Teardown]    Run Keywords    Delete dynamic entity configuration in Database:    countries
     ...   AND    Delete country by iso2_code in Database:   X
 
+Create_country_with_invalid_field
+    ### SETUP DYNAMIC ENTITY CONFIGURATION ###
+    Delete dynamic entity configuration in Database:    countries
+    Create dynamic entity configuration in Database:   countries    spy_country     1    {"identifier":"id_country","fields":[{"fieldName":"id_country","fieldVisibleName":"id_country","isEditable":false,"isCreatable":false,"type":"integer","validation":{"isRequired":false}},{"fieldName":"iso2_code","fieldVisibleName":"iso2_code","type":"string","isEditable":true,"isCreatable":true,"validation":{"isRequired":true,"maxLength":2,"minLength":2}},{"fieldName":"name","fieldVisibleName":"name","type":"string","isEditable":true,"isCreatable":true,"validation":{"isRequired":true,"maxLength":255,"minLength":1}},{"fieldName":"postal_code_mandatory","fieldVisibleName":"postal_code_mandatory","type":"boolean","isEditable":true,"isCreatable":true,"validation":{"isRequired":false}},{"fieldName":"postal_code_regex","isEditable":"false","isCreatable":"false","fieldVisibleName":"postal_code_regex","type":"string","validation":{"isRequired":false,"maxLength":500,"minLength":1}}]}
+    ### GET TOKEN ###
+    I get access token by user credentials:   ${zed_admin.email}
+    ### POST WITH INVALID DATA ###
+    Delete country by iso2_code in Database:   XX
+    And I set Headers:    Content-Type=application/json    Authorization=Bearer ${token}
+    And I send a POST request:    /dynamic-entity/countries   {"data":[{"iso2_code":"XX","iso3_code":"XXX","name":"XXX"}]}
+    Then Response status code should be:    400
+    And Response body parameter should contain:    [0][message]    The provided `iso3_code` is incorrect or invalid.
+    And Response body parameter should be:    [0][code]    1311
+    And Response body parameter should contain:    [0][status]   400
+    [Teardown]    Run Keywords    Delete dynamic entity configuration in Database:    countries
+    ...   AND    Delete country by iso2_code in Database:   XX
+
 Update_country_with_invalid_data
     ### SETUP DYNAMIC ENTITY CONFIGURATION ###
     Delete dynamic entity configuration in Database:    countries
@@ -256,6 +273,24 @@ Update_country_with_invalid_field_type
     ...   AND    Delete country by iso2_code in Database:   XA
     ...   AND    Delete country by iso2_code in Database:   XB
 
+
+Update_country_with_invalid_field
+    ### SETUP DYNAMIC ENTITY CONFIGURATION ###
+    Delete dynamic entity configuration in Database:    countries
+    Create dynamic entity configuration in Database:   countries    spy_country     1    {"identifier":"id_country","fields":[{"fieldName":"id_country","fieldVisibleName":"id_country","isEditable":false,"isCreatable":false,"type":"integer","validation":{"isRequired":false}},{"fieldName":"iso2_code","fieldVisibleName":"iso2_code","type":"string","isEditable":true,"isCreatable":true,"validation":{"isRequired":true,"maxLength":2,"minLength":2}},{"fieldName":"name","fieldVisibleName":"name","type":"string","isEditable":true,"isCreatable":true,"validation":{"isRequired":true,"maxLength":255,"minLength":1}},{"fieldName":"postal_code_mandatory","fieldVisibleName":"postal_code_mandatory","type":"boolean","isEditable":true,"isCreatable":true,"validation":{"isRequired":false}},{"fieldName":"postal_code_regex","isEditable":"false","isCreatable":"false","fieldVisibleName":"postal_code_regex","type":"string","validation":{"isRequired":false,"maxLength":500,"minLength":1}}]}
+    ### GET TOKEN ###
+    I get access token by user credentials:   ${zed_admin.email}
+    ### POST WITH INVALID DATA ###
+    Delete country by iso2_code in Database:   XX
+    And I set Headers:    Content-Type=application/json    Authorization=Bearer ${token}
+    And I send a PATCH request:    /dynamic-entity/countries   {"data":[{"iso2_code":"XX","iso3_code":"XXX","name":"XXX"}]}
+    Then Response status code should be:    400
+    And Response body parameter should contain:    [0][message]    The provided `iso3_code` is incorrect or invalid.
+    And Response body parameter should be:    [0][code]    1311
+    And Response body parameter should contain:    [0][status]   400
+    [Teardown]    Run Keywords    Delete dynamic entity configuration in Database:    countries
+    ...   AND    Delete country by iso2_code in Database:   XX
+
 Upsert_with_invalid_id
     ### SETUP DYNAMIC ENTITY CONFIGURATION ###
     Delete dynamic entity configuration in Database:    countries
@@ -268,7 +303,7 @@ Upsert_with_invalid_id
     And I send a PUT request:    /dynamic-entity/countries/1000    {"data":{"iso2_code":"XX","iso3_code":"XXX","name":"Country XXX"}}
     Then Response status code should be:    400
     And Response header parameter should be:    Content-Type    application/json
-    And Response body parameter should be:    [0][message]    Entity not found by identifier, and new identifier can not be persisted. Please update the request.
+    And Response body parameter should be:    [0][message]    Entity `id_country: 1000` not found by identifier, and new identifier can not be persisted. Please update the request.
     And Response body parameter should be:    [0][code]    1308
     And Response body parameter should be:    [0][status]    400
     [Teardown]    Run Keywords    Delete dynamic entity configuration in Database:    countries

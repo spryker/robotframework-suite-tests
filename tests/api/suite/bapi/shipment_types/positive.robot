@@ -11,7 +11,6 @@ ENABLER
 
 *** Test Cases ***
 Create_shipment_type
-    [Tags]    skip-due-to-issue
     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer ${token}
     When I send a POST request:    /shipment-types   {"data": {"type": "shipment-types","attributes": {"name": "Some Shipment Type ${random}","key": "some-shipment-type-${random}","isActive": "true","stores": ["DE", "AT"]}}}
@@ -29,7 +28,6 @@ Create_shipment_type
     [Teardown]     Delete shipment type in DB:    some-shipment-type-${random}
 
 Create_new_shipment_type_with_existing_name
-    [Tags]    skip-due-to-issue
     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer ${token}
     When I send a POST request:    /shipment-types   {"data": {"type": "shipment-types","attributes": {"name": "not_unique_name","key": "new-shipment-type-${random}","isActive": "true","stores": ["AT"]}}}
@@ -38,7 +36,7 @@ Create_new_shipment_type_with_existing_name
     # Create new shipment type with existing name
     When I send a POST request:    /shipment-types   {"data": {"type": "shipment-types","attributes": {"name": "not_unique_name","key": "second-shipment-type-${random}","isActive": "true","stores": ["DE", "AT"]}}}
     Then Response status code should be:    201
-    And Response reason should be:    Created
+    And Response reason should be:    Created 
     And Response body parameter should be:    [data][type]    shipment-types
     And Save value to a variable:    [data][id]    shipment_type_id
     And Response body parameter should not be EMPTY:    [data][id]
@@ -51,13 +49,12 @@ Create_new_shipment_type_with_existing_name
     # check that first shipment time still exist and not overrided
     And I send a GET request:    /shipment-types/
     And I send a GET request:    /shipment-types/${new_shipment_type_uuid}
-    And Response body parameter should be:    [data][attributes][key]    new-shipment-type-${random}
+    And Response body parameter should be:    [data][attributes][key]    new-shipment-type-${random}   
     And Response body parameter should be:    [data][attributes][name]    not_unique_name
     [Teardown]     Run Keywords    Delete shipment type in DB:    new-shipment-type-${random}
     ...    AND    Delete shipment type in DB:    second-shipment-type-${random}
-
+    
 Update_sipment_type_change_name_store_relation_and_deactivate
-    [Tags]    skip-due-to-issue
     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer ${token}
     When I send a POST request:    /shipment-types
@@ -66,7 +63,7 @@ Update_sipment_type_change_name_store_relation_and_deactivate
     And Save value to a variable:    [data][id]    shipment_type_uuid
     # Update the Delivery Type with new attributes via PATCH request
     When I send a PATCH request:    /shipment-types/${shipment_type_uuid}
-    ...    {"data": {"type": "shipment-types","attributes": {"name": "updated_name${random}","isActive": "false","stores": ["AT"]}}}
+    ...    {"data": {"type": "shipment-types","attributes": {"name": "updated_name${random}","isActive": "false","stores": ["AT"]}}} 
     Then Response status code should be:    200
     And Response reason should be:    OK
     When I send a GET request:    /shipment-types/${shipment_type_uuid}
@@ -77,7 +74,6 @@ Update_sipment_type_change_name_store_relation_and_deactivate
     [Teardown]     Delete shipment type in DB:    update-shipment-type-key${random}
 
 Retrive_single_shipment_type_with_valid_token
-    [Tags]    skip-due-to-issue
     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer ${token}
     When I send a POST request:    /shipment-types
@@ -118,7 +114,7 @@ Retrive_list_of_shipment_types_with_valid_token_and_pagination
     And Each array element of the array in response should contain a nested array larger than a certain size:    [data]    [attributes][stores]    0
     [Teardown]     Run Keywords    Delete shipment type in DB:    shipment-key1${random}
     ...    AND    Delete shipment type in DB:    shipment-key2${random}
-
+    
 Retrive_list_of_shipment_types_with_filtering
     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer ${token}
@@ -139,7 +135,6 @@ Retrive_list_of_shipment_types_with_filtering
     ...    AND    Delete shipment type in DB:    shipment-key3${random}
 
 Retrive_list_of_shipment_types_with_sorting_by_key_ASC
-    [Tags]    skip-due-to-issue
     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer ${token}
     #prepare test data
@@ -158,7 +153,6 @@ Retrive_list_of_shipment_types_with_sorting_by_key_ASC
 
 
 Retrive_list_of_shipment_types_with_sorting_by_key_DESC
-    [Tags]    skip-due-to-issue
     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer ${token}
     #prepare test data
