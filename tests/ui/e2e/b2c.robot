@@ -185,6 +185,7 @@ Volume_Prices
     [Setup]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: deactivate following discounts from Overview page:    10% off minimum order
     Yves: login on Yves with provided credentials:    ${yves_user_email}
+    Yves: check if cart is not empty and clear it
     Yves: go to PDP of the product with sku:    193
     Yves: change quantity using '+' or '-' button № times:    +    4
     Yves: add product to the shopping cart
@@ -668,7 +669,7 @@ Guest_Checkout_Addresses
 Refunds
     [Documentation]    Checks that refund can be created for one item and the whole order
     [Setup]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    ...    AND    Zed: deactivate following discounts from Overview page:    Tu & Wed $5 off 5 or more    10% off $100+    20% off cameras    Tu & Wed €5 off 5 or more    10% off minimum order
+    ...    AND    Zed: deactivate all discounts from Overview page
     Yves: login on Yves with provided credentials:    ${yves_user_email}
     Yves: check if cart is not empty and clear it
     Yves: go to PDP of the product with sku:    007
@@ -844,8 +845,7 @@ Product_Original_Price
     Yves: product original price on the PDP should be:    €50.00
 
 Checkout_Address_Management
-    [Tags]    skip-due-to-issue
-    [Documentation]    Bug:CC-24090. Checks that user can change address during the checkout and save new into the address book.
+    [Documentation]    Checks that user can change address during the checkout and save new into the address book.
     [Setup]    Run Keywords    
     ...    Yves: login on Yves with provided credentials:    ${yves_user_email}
     ...    AND    Yves: delete all user addresses
@@ -971,7 +971,7 @@ Zed_navigation_ordering_and_naming
 Minimum_Order_Value
     [Documentation]    checks that global minimum and maximun order thresholds can be applied
     [Setup]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    ...    AND    Zed: deactivate following discounts from Overview page:    Free Acer Notebook    Tu & Wed $5 off 5 or more    10% off $100+    Free smartphone    20% off cameras    Free Acer M2610    Free standard delivery    10% off Intel Core    5% off white    Tu & Wed €5 off 5 or more    10% off minimum order
+    ...    AND    Zed: deactivate all discounts from Overview page
     ...    AND    Yves: login on Yves with provided credentials:    ${yves_user_email}
     ...    AND    Yves: check if cart is not empty and clear it
     ...    AND    Yves: delete all user addresses
@@ -995,7 +995,7 @@ Minimum_Order_Value
     Yves: submit form on the checkout
     Yves: select the following payment method on the checkout and go next:    Invoice
     Yves: soft threshold surcharge is added on summary page:    €9.00
-    Yves: hard threshold is applied with the following message:    EN max €150.00
+    Yves: hard threshold is applied with the following message:    €150.00
     Yves: go to the 'Home' page
     Yves: go to b2c shopping cart
     Yves: delete product from the shopping cart with name:    Canon IXUS 175
@@ -1164,8 +1164,7 @@ Multistore_CMS
     ...    AND    Zed: click Action Button in a table for row that contains:    Multistore Page${random}    Deactivate
 
 Product_Availability_Calculation
-    [Tags]    skip-due-to-issue
-    [Documentation]    Bug: CC-24108. check product availability + multistore. 
+    [Documentation]    Check product availability + multistore. 
     [Setup]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: update warehouse:    
     ...    || warehouse  | store || 
@@ -1358,7 +1357,7 @@ CRUD_Product_Set
     Yves: go to URL and refresh until 404 occurs:    ${yves_url}en/test-set-${random}
 
 Payment_method_update
-     [Documentation]    Deactivate payment method, unset payment method for stores in zed and check its impact on yves.
+    [Documentation]    Deactivate payment method, unset payment method for stores in zed and check its impact on yves.
     Yves: login on Yves with provided credentials:    ${yves_second_user_email}
     Yves: go to PDP of the product with sku:    020
     Yves: add product to the shopping cart
@@ -1367,6 +1366,7 @@ Payment_method_update
     Yves: fill in the following new shipping address:
     ...    ||      firstName                    |           lastName                  |    street           |    houseNumber     |    city      |    postCode    |    phone        ||
     ...    || ${yves_second_user_first_name}    |     ${yves_second_user_last_name}   |    ${random}        |    ${random}       |    Berlin    |   ${random}    |    ${random}    ||
+    Yves: billing address same as shipping address:    true
     Yves: submit form on the checkout
     Yves: select the following shipping method on the checkout and go next:     Standard: €4.90
     Yves: check that the payment method is/not present in the checkout process:    ${checkout_payment_invoice_locator}    true
@@ -1379,6 +1379,7 @@ Payment_method_update
     Yves: fill in the following new shipping address:
     ...    ||      firstName                    |           lastName                  |    street           |    houseNumber     |    city     |    postCode    |    phone        ||
     ...    || ${yves_second_user_first_name}    |     ${yves_second_user_last_name}   |    ${random}        |    ${random}       |    Berlin   |   ${random}    |    ${random}    ||
+    Yves: billing address same as shipping address:    true
     Yves: submit form on the checkout
     Yves: select the following shipping method on the checkout and go next:     Standard: €4.90
     Yves: check that the payment method is/not present in the checkout process:     ${checkout_payment_invoice_locator}    false
@@ -1397,6 +1398,7 @@ Login_during_checkout
     Yves: fill in the following new shipping address:
     ...    || salutation     | firstName                    | lastName                    | street        | houseNumber       | postCode     | city       | country     | company    | phone           | additionalAddress     ||
     ...    || ${Salutation}  | ${Guest_user_first_name}     | ${Guest_user_last_name}     | ${random}     | ${random}         | ${random}    | ${city}    | ${country}  | ${company} | ${random} | ${additional_address} ||
+    Yves: billing address same as shipping address:    true
     Yves: submit form on the checkout
     Yves: select the following shipping method on the checkout and go next:    Express
     Yves: select the following payment method on the checkout and go next:    Invoice
@@ -1420,6 +1422,7 @@ Register_during_checkout
     Yves: fill in the following new shipping address:
     ...    || salutation     | firstName                | lastName                | street    | houseNumber | postCode     | city       | country     | company    | phone     | additionalAddress         ||
     ...    || ${salutation}  | ${guest_user_first_name} | ${guest_user_last_name} | ${random} | ${random}   | ${random}    | ${city}    | ${country}  | ${company} | ${random} | ${additional_address}     ||
+    Yves: billing address same as shipping address:    true
     Yves: submit form on the checkout
     Yves: select the following shipping method on the checkout and go next:    Express
     Yves: select the following payment method on the checkout and go next:    Invoice

@@ -47,17 +47,21 @@ MP: open navigation menu tab:
 MP: click submit button
     Wait Until Element Is Visible    ${mp_submit_button}
     Click    ${mp_submit_button}
+    Wait Until Network Is Idle
 
 MP: perform search by:
     [Arguments]    ${searchKey}
+    Reload
     Type Text    ${mp_search_box}    ${searchKey}
-    TRY
-        Wait Until Element Is Visible    ${spinner_loader}    timeout=3s
-        Wait Until Element Is Not Visible    ${spinner_loader}    timeout=3s
-        Wait Until Element Is Enabled    ${mp_items_table}    timeout=3s
-    EXCEPT    
-        Log    Spinner was not shown
-    END
+    Keyboard Key    press    Enter
+    # TRY
+    #     Wait Until Element Is Visible    ${spinner_loader}    timeout=1s
+    #     Wait Until Element Is Not Visible    ${spinner_loader}    timeout=1s
+    #     Wait Until Element Is Enabled    ${mp_items_table}    timeout=1s
+    # EXCEPT    
+    #     Log    Spinner was not shown
+    # END
+    Wait Until Network Is Idle
 
 
 MP: click on a table row that contains:
@@ -80,7 +84,8 @@ MP: click on create new entity button:
 MP: select option in expanded dropdown:
     [Arguments]    ${optionName}
     Wait Until Element Is Visible    xpath=//nz-option-container[contains(@class,'ant-select-dropdown')]//span[contains(text(),'${optionName}')]
-    Click With Options    xpath=//nz-option-container[contains(@class,'ant-select-dropdown')]//span[contains(text(),'${optionName}')]    delay=1s
+    Click    xpath=//nz-option-container[contains(@class,'ant-select-dropdown')]//span[contains(text(),'${optionName}')]
+    Sleep    1s
 
     
 MP: switch to the tab:

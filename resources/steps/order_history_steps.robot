@@ -51,6 +51,7 @@ Yves: 'Order History' page contains the following order with a status:
 
 Yves: 'Order Details' page contains the cancel order button:
     [Arguments]    ${condition}
+    ${condition}=    Convert To Lower Case    ${condition}
     IF    '${condition}' == 'true'    
         Element Should Be Visible    ${order_details_cancel_button_locator}
     ELSE

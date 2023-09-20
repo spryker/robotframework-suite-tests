@@ -143,6 +143,7 @@ SuiteTeardown
 
 TestSetup
     Delete All Cookies
+    Set Browser Timeout    ${browser_timeout}
     Go To    ${yves_url}
 
 TestTeardown
@@ -341,6 +342,11 @@ Create New Context
     ${new_context}=    New Context
     New Page    ${yves_url}
 
+Close Current Context
+    ${context_ids}=    Get Context Ids
+    ${count_context_ids}=    Get Length    ${context_ids}
+    IF    ${count_context_ids}>1    Close Context    CURRENT
+
 Switch back to the Main Context
     Switch Context    ${main_context}
 
@@ -384,7 +390,7 @@ Try reloading page until element does/not contain text:
     [Arguments]    ${element}    ${expectedText}    ${shouldContain}    ${tries}=20    ${timeout}=1s
     ${shouldContain}=    Convert To Lower Case    ${shouldContain}
     FOR    ${index}    IN RANGE    0    ${tries}
-        ${textAppears}=    Run Keyword And Return Status    Element Text Should Be    ${element}    ${expectedText}
+        ${textAppears}=    Run Keyword And Return Status    Element Text Should Be    ${element}    ${expectedText}    
         IF    '${shouldContain}'=='true' and '${textAppears}'=='False'
             Run Keywords    Sleep    ${timeout}    AND    Reload
         ELSE IF     '${shouldContain}'=='false' and '${textAppears}'=='True'

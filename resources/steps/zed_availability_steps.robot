@@ -41,7 +41,7 @@ Zed: change product stock:
     Type Text    xpath=//input[contains(@id,'AvailabilityGui_stock_stocks_1_quantity')]    ${quantityWarehouse2}
     Click    ${zed_save_button}
     #Resave to apply changes
-    Set Browser Timeout    3s
+    Set Browser Timeout    1s
     TRY
         Click    ${zed_save_button}
     EXCEPT    
@@ -51,14 +51,15 @@ Zed: change product stock:
 
 Zed: check and restore product availability in Zed:
     [Arguments]    ${skuAbstract}    ${expectedStatus}    ${skuConcrete}
+    ${expectedStatus}=    Convert To Lower Case    ${expectedStatus}
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Catalog    Availability
     Zed: perform search by:    ${skuAbstract}
     ${isProductAvailable}=    Run Keyword And Return Status    Element Text Should Be    ${zed_availability_product_availability_label}     Available
-    IF    '${expectedStatus}'=='Available' and '${isProductAvailable}'=='False'
+    IF    '${expectedStatus}'=='available' and '${isProductAvailable}'=='False'
         Zed: change product stock:    ${skuAbstract}    ${skuConcrete}    true    10    0
     ELSE
-        IF   '${expectedStatus}'=='Not Available' and '${isProductAvailable}'=='True'
+        IF   '${expectedStatus}'=='not available' and '${isProductAvailable}'=='True'
         Zed: change product stock:    ${skuAbstract}    ${skuConcrete}    false    0    0
         END
     END

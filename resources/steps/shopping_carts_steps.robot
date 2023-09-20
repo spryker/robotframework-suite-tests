@@ -86,18 +86,20 @@ Yves: click on the '${buttonName}' button in the shopping cart
 Yves: shopping cart contains product with unit price:
     [Documentation]    Already contains '€' sign inside
     [Arguments]    ${sku}    ${productName}    ${productPrice}
+    Wait Until Network Is Idle
     IF    '${env}' in ['ui_b2b','ui_mp_b2b']
         TRY
-            Page Should Contain Element    xpath=//div[contains(@class,'product-card-item__col--description')]//div[contains(.,'SKU: ${sku}')]/ancestor::article//*[contains(@class,'product-card-item__col--description')]/div[1]//*[contains(@class,'money-price__amount')][contains(.,'€${productPrice}')]
+            Page Should Contain Element    xpath=//div[contains(@class,'product-card-item__col--description')]//div[contains(.,'SKU: ${sku}')]/ancestor::article//*[contains(@class,'product-card-item__col--description')]/div[1]//*[contains(@class,'money-price__amount')][contains(.,'€${productPrice}')]    timeout=1s
         EXCEPT
-            Page Should Contain Element    xpath=//div[contains(@class,'product-cart-item__col--description')]//div[contains(.,'SKU: ${sku}')]/ancestor::article//*[contains(@class,'product-cart-item__col--description')]/div[1]//*[contains(@class,'money-price__amount')][contains(.,'€${productPrice}')]
+            Page Should Contain Element    xpath=//div[contains(@class,'product-cart-item__col--description')]//div[contains(.,'SKU: ${sku}')]/ancestor::article//*[contains(@class,'product-cart-item__col--description')]/div[1]//*[contains(@class,'money-price__amount')][contains(.,'€${productPrice}')]    timeout=1s
         END  
     ELSE
-        Page Should Contain Element    xpath=//main[@class='page-layout-cart']//article[contains(@data-qa,'component product-card-item')]//a[contains(text(),'${productName}')]/following-sibling::span/span[contains(@class,'money-price__amount') and contains(.,'${productPrice}')]
+        Page Should Contain Element    xpath=//main[@class='page-layout-cart']//article[contains(@data-qa,'component product-card-item')]//a[contains(text(),'${productName}')]/following-sibling::span/span[contains(@class,'money-price__amount') and contains(.,'${productPrice}')]    timeout=1s
     END
 
 Yves: shopping cart contains/doesn't contain the following elements:
     [Arguments]    ${condition}    @{shopping_cart_elements_list}    ${element1}=${EMPTY}     ${element2}=${EMPTY}     ${element3}=${EMPTY}     ${element4}=${EMPTY}     ${element5}=${EMPTY}     ${element6}=${EMPTY}     ${element7}=${EMPTY}     ${element8}=${EMPTY}     ${element9}=${EMPTY}     ${element10}=${EMPTY}     ${element11}=${EMPTY}     ${element12}=${EMPTY}     ${element13}=${EMPTY}     ${element14}=${EMPTY}     ${element15}=${EMPTY}
+    ${condition}=    Convert To Lower Case    ${condition}
     ${shopping_cart_elements_list_count}=   get length  ${shopping_cart_elements_list}
     FOR    ${index}    IN RANGE    0    ${shopping_cart_elements_list_count}
         ${shopping_cart_element_to_check}=    Get From List    ${shopping_cart_elements_list}    ${index}
@@ -175,10 +177,16 @@ Yves: change quantity of the configurable bundle in the shopping cart on:
     Yves: remove flash messages
 
 Yves: delete all shopping carts
-    Yves: create new 'Shopping Cart' with name:    Z
+    Yves: create new 'Shopping Cart' with name:    Y
     #create new empty cart that will be the last one in the list
     ${currentURL}=    Get Location
-    IF    '/multi-cart' not in '${currentURL}'    Go To    ${yves_url}multi-cart
+    IF    '/multi-cart' not in '${currentURL}'    
+            IF    '.at.' in '${currentURL}'
+                Go To    ${yves_at_url}multi-cart
+            ELSE
+                Go To    ${yves_url}multi-cart
+            END    
+    END
     ${shoppingCartsCount}=    Get Element Count    xpath=//*[@data-qa='component quote-table']//table/tbody/tr//ul//a[contains(.,'Delete')]
     Log    ${shoppingCartsCount}
     FOR    ${index}    IN RANGE    0    ${shoppingCartsCount}-1
@@ -191,7 +199,13 @@ Yves: delete all shopping carts
 Yves: delete 'Shopping Cart' with name:
     [Arguments]    ${shoppingCartName}
     ${currentURL}=    Get Location
-    IF      '/multi-cart' not in '${currentURL}'    Go To    ${yves_url}multi-cart
+    IF    '/multi-cart' not in '${currentURL}'    
+            IF    '.at.' in '${currentURL}'
+                Go To    ${yves_at_url}multi-cart
+            ELSE
+                Go To    ${yves_url}multi-cart
+            END    
+    END
     Delete shopping cart with name:    ${shoppingCartName}
     Wait Until Element Is Visible    ${delete_shopping_cart_button}
     Click    ${delete_shopping_cart_button}

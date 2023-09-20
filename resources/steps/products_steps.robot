@@ -121,7 +121,7 @@ Zed: view product page is displayed
 Zed: view abstract product page contains:
     [Arguments]    @{args}
     ${abstractProductData}=    Set Up Keyword Arguments    @{args}
-    ${second_locale_section_expanded}=    Run Keyword And Return Status    Page Should Contain Element    ${zed_view_abstract_general_second_locale_expanded_section}    timeout=3s
+    ${second_locale_section_expanded}=    Run Keyword And Return Status    Page Should Contain Element    ${zed_view_abstract_general_second_locale_expanded_section}    timeout=1s
     IF    '${second_locale_section_expanded}'=='False'
         Scroll Element Into View    ${zed_view_abstract_general_second_locale_collapsed_section}
         Click    ${zed_view_abstract_general_second_locale_collapsed_section}
@@ -192,7 +192,7 @@ Zed: update abstract product data:
 Zed: update abstract product price on:
     [Arguments]    @{args}
     ${priceData}=    Set Up Keyword Arguments    @{args}
-    Set Browser Timeout    5s
+    Set Browser Timeout    1s
     TRY
         Zed: switch to the tab on 'Add product' page:    Price & Tax
     EXCEPT
@@ -237,7 +237,7 @@ Zed: start new abstract product creation:
     ${abstractProductData}=    Set Up Keyword Arguments    @{args}
     Zed: go to second navigation item level:    Catalog    Products
     Zed: click button in Header:    Create Product
-    ${second_locale_section_expanded}=    Run Keyword And Return Status    Page Should Contain Element    ${zed_product_general_second_locale_expanded_section}    timeout=3s
+    ${second_locale_section_expanded}=    Run Keyword And Return Status    Page Should Contain Element    ${zed_product_general_second_locale_expanded_section}    timeout=1s
     IF    '${second_locale_section_expanded}'=='False'
         Scroll Element Into View    ${zed_product_general_second_locale_collapsed_section}
         Click    ${zed_product_general_second_locale_collapsed_section}
@@ -316,7 +316,7 @@ Zed: change concrete product data:
     Zed: switch to the tab on 'Edit product' page:    Variants
     Zed: click Action Button in Variant table for row that contains:    ${productConcrete}    Edit
     Wait Until Element Is Visible    ${zed_pdp_concrete_main_content_locator}
-    ${second_locale_section_expanded}=    Run Keyword And Return Status    Page Should Contain Element    ${zed_product_general_second_locale_expanded_section}    timeout=3s
+    ${second_locale_section_expanded}=    Run Keyword And Return Status    Page Should Contain Element    ${zed_product_general_second_locale_expanded_section}    timeout=1s
     IF    '${second_locale_section_expanded}'=='False'
         Scroll Element Into View    ${zed_product_general_second_locale_collapsed_section}
         Click    ${zed_product_general_second_locale_collapsed_section}
@@ -332,10 +332,10 @@ Zed: change concrete product data:
             Type Text    ${zed_pdp_concrete_name_de_input}    ${value}
         END
         IF    '${key}'=='active' and '${value}' != '${EMPTY}'
-            ${is_active}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//div[@class='title-action']/a[contains(.,'Activate')]    timeout=3s
+            ${is_active}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//div[@class='title-action']/a[contains(.,'Activate')]    timeout=1s
             IF    '${is_active}'=='True' and '${value}'=='true'
                 Zed: click button in Header:    Activate
-                ${second_locale_section_expanded}=    Run Keyword And Return Status    Page Should Contain Element    ${zed_product_general_second_locale_expanded_section}    timeout=3s
+                ${second_locale_section_expanded}=    Run Keyword And Return Status    Page Should Contain Element    ${zed_product_general_second_locale_expanded_section}    timeout=1s
                 IF    '${second_locale_section_expanded}'=='False'
                     Scroll Element Into View    ${zed_product_general_second_locale_collapsed_section}
                     Click    ${zed_product_general_second_locale_collapsed_section}
@@ -343,7 +343,7 @@ Zed: change concrete product data:
             END
             IF    '${is_active}'=='False' and '${value}'=='false'
                 Zed: click button in Header:    Deactivate
-                ${second_locale_section_expanded}=    Run Keyword And Return Status    Page Should Contain Element    ${zed_product_general_second_locale_expanded_section}    timeout=3s
+                ${second_locale_section_expanded}=    Run Keyword And Return Status    Page Should Contain Element    ${zed_product_general_second_locale_expanded_section}    timeout=1s
                 IF    '${second_locale_section_expanded}'=='False'
                     Scroll Element Into View    ${zed_product_general_second_locale_collapsed_section}
                     Click    ${zed_product_general_second_locale_collapsed_section}
@@ -452,7 +452,7 @@ Zed: add new concrete product to abstract:
     Wait Until Element Is Visible    ${zed_pdp_abstract_main_content_locator}
     Zed: click button in Header:    Add Variant
     Wait Until Element Is Visible    ${zed_pdp_add_concrete_main_content_locator}
-    ${second_locale_section_expanded}=    Run Keyword And Return Status    Page Should Contain Element    ${zed_product_general_second_locale_expanded_section}    timeout=3s
+    ${second_locale_section_expanded}=    Run Keyword And Return Status    Page Should Contain Element    ${zed_product_general_second_locale_expanded_section}    timeout=1s
     IF    '${second_locale_section_expanded}'=='False'
         Scroll Element Into View    ${zed_product_general_second_locale_collapsed_section}
         Click    ${zed_product_general_second_locale_collapsed_section}

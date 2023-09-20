@@ -87,17 +87,19 @@ Zed: perform Merchant User search by:
     [Arguments]    ${search_key}
     Wait Until Page Contains Element    ${zed_table_locator}
     Type Text    ${zed_merchant_user_search_field_locator}    ${search_key}
-    TRY
-        Wait Until Element Is Visible    ${zed_processing_block_locator}    3s
-    EXCEPT    
-        Log    processing locator is now shown
-    END
-    TRY
-        Wait Until Element Is Not Visible    ${zed_processing_block_locator}    3s
-    EXCEPT    
-        Log    processing locator is now shown
-    END
-    Sleep    3s
+    Keyboard Key    press    Enter
+    # TRY
+    #     Wait Until Element Is Visible    ${zed_processing_block_locator}    3s
+    # EXCEPT    
+    #     Log    processing locator is now shown
+    # END
+    # TRY
+    #     Wait Until Element Is Not Visible    ${zed_processing_block_locator}    3s
+    # EXCEPT    
+    #     Log    processing locator is now shown
+    # END
+    # Sleep    3s
+    Wait Until Network Is Idle
 
 Zed: click Action Button in Merchant Users table for row that contains:
     [Arguments]    ${row_content}    ${zed_table_action_button_locator}

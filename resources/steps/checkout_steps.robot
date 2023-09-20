@@ -18,10 +18,11 @@ ${selected address}
 *** Keywords ***
 Yves: billing address same as shipping address:
     [Arguments]    ${state}
+    ${state}=    Convert To Lower Case    ${state}
     Wait Until Page Contains Element    xpath=//form[@name='addressesForm']
     IF    '${env}' in ['ui_b2b','ui_mp_b2b']    Wait Until Page Contains Element    ${manage_your_addresses_link}
     ${checkboxState}=    Set Variable    ${EMPTY}
-    ${checkboxState}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//input[@id='addressesForm_billingSameAsShipping'][@checked]
+    ${checkboxState}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//input[@id='addressesForm_billingSameAsShipping'][@checked]    timeout=1s
     IF    '${checkboxState}'=='False' and '${state}' == 'true'    Click Element by xpath with JavaScript    //input[@id='addressesForm_billingSameAsShipping']
     IF    '${checkboxState}'=='True' and '${state}' == 'false'    Click Element by xpath with JavaScript    //input[@id='addressesForm_billingSameAsShipping']
     IF    '${state}' == 'true'    Wait Until Element Is Not Visible    ${billing_address_section}[${env}]
@@ -59,7 +60,8 @@ Yves: select the following existing address on the checkout as 'shipping' addres
                     ${selected_address}=    Get Text    xpath=//div[contains(@class,'shippingAddress')]//select[@name='checkout-full-addresses'][contains(@class,'address__form')]/..//span[contains(@id,'checkout-full-address')]
                 END
     END
-    Click With Options    ${submit_checkout_form_button}[${env}]    delay=1s
+    Click    ${submit_checkout_form_button}[${env}]
+    Sleep    1s
 
 Yves: fill in the following new shipping address:
     [Documentation]    Possible argument names: salutation, firstName, lastName, street, houseNumber, postCode, city, country, company, phone, additionalAddress
@@ -248,7 +250,7 @@ Yves: save new deviery address to address book:
     ${state}=    Convert To Lower Case    ${state}
     IF    '${env}' in ['ui_b2b','ui_mp_b2b']    Wait Until Page Contains Element    ${manage_your_addresses_link}
     ${checkboxState}=    Set Variable    ${EMPTY}
-    ${checkboxState}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//input[@id='addressesForm_shippingAddress_isAddressSavingSkipped'][@checked]
+    ${checkboxState}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//input[@id='addressesForm_shippingAddress_isAddressSavingSkipped'][@checked]    timeout=1s
     IF    '${checkboxState}'=='False' and '${state}' == 'true'    Click Element by xpath with JavaScript    //input[@id='addressesForm_shippingAddress_isAddressSavingSkipped']
     IF    '${checkboxState}'=='True' and '${state}' == 'false'    Click Element by xpath with JavaScript    //input[@id='addressesForm_shippingAddress_isAddressSavingSkipped']
     
@@ -257,7 +259,7 @@ Yves: save new billing address to address book:
     ${state}=    Convert To Lower Case    ${state}
     IF    '${env}' in ['ui_b2b','ui_mp_b2b']    Wait Until Page Contains Element    ${manage_your_addresses_link}
     ${checkboxState}=    Set Variable    ${EMPTY}
-    ${checkboxState}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//input[@id='addressesForm_billingAddress_isAddressSavingSkipped'][@checked]
+    ${checkboxState}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//input[@id='addressesForm_billingAddress_isAddressSavingSkipped'][@checked]    timeout=1s
     IF    '${checkboxState}'=='False' and '${state}' == 'true'    Click Element by xpath with JavaScript    //input[@id='addressesForm_billingAddress_isAddressSavingSkipped']
     IF    '${checkboxState}'=='True' and '${state}' == 'false'    Click Element by xpath with JavaScript    //input[@id='addressesForm_billingAddress_isAddressSavingSkipped']
     
@@ -268,6 +270,7 @@ Yves: return to the previous checkout step:
     
 Yves: check that the payment method is/not present in the checkout process:
     [Arguments]    ${payment_method_locator}    ${condition}
+    ${condition}=    Convert To Lower Case    ${condition}
     IF    '${condition}' == 'true'
         Page Should Contain Element    ${payment_method_locator}
     ELSE IF    '${condition}' == 'false'

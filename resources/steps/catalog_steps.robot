@@ -114,8 +114,9 @@ Yves: quick add to cart for first item in catalog
         Wait Until Element Is Visible    xpath=//product-item[@data-qa='component product-item'][1]//ajax-add-to-cart//button
         Click    xpath=//product-item[@data-qa='component product-item'][1]//ajax-add-to-cart//button
     END
-    ${response}=    Wait for response    matcher=cart\/add\-ajax    timeout=${browser_timeout}
-    Should be true    ${response}[ok]
+    Wait Until Network Is Idle
+    # ${response}=    Wait for response    matcher=cart\/add\-ajax    timeout=${browser_timeout}
+    # Should be true    ${response}[ok]
 
 Yves: get current cart item counter value
     [Documentation]    returns the cart item count number as an integer

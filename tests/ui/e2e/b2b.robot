@@ -67,7 +67,7 @@ Share_Shopping_Lists
     Yves: add all available products from list to cart  
     Yves: 'Shopping Cart' page is displayed
     Yves: shopping cart contains the following products:    403125
-    [Teardown]    Run Keywords    Close Context    CURRENT    AND    Yves: delete 'Shopping List' with name:    shoppingListName+${random}
+    [Teardown]    Run Keywords    Close Current Context    AND    Yves: delete 'Shopping List' with name:    shoppingListName+${random}
 
 Share_Shopping_Carts
     [Documentation]    Checks that cart can be shared and used for checkout
@@ -890,7 +890,7 @@ Content_Management
 Refunds
     [Documentation]    Checks that refund can be created for an item and the whole order
     [Setup]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    ...    AND    Zed: deactivate following discounts from Overview page:    20% off storage    10% off minimum order
+    ...    AND    Zed: deactivate all discounts from Overview page
     ...    AND    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     ...    AND    Yves: create new 'Shopping Cart' with name:    refunds+${random}
     Yves: go to PDP of the product with sku:    ${one_variant_product_abstract_sku}
@@ -922,7 +922,7 @@ Refunds
     Zed: trigger all matching states inside this order:    Refund
     Zed: grand total for the order equals:    ${lastPlacedOrder}    €0.00
     [Teardown]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    ...    AND    Zed: activate following discounts from Overview page:    20% off storage    10% off minimum order
+    ...    AND    Zed: activate following discounts from Overview page:    Free chair    Tu & Wed $5 off 5 or more    10% off $100+    Free marker    20% off storage    	Free office chair    Free standard delivery    	10% off Safescan    5% off white    Tu & Wed €5 off 5 or more    10% off minimum order
 
 Manage_Product
     [Documentation]    checks that BO user can manage abstract and concrete products + create new
@@ -1063,8 +1063,7 @@ Product_Original_Price
     Yves: product original price on the PDP should be:    €50.00
 
 Checkout_Address_Management
-    [Tags]    skip-due-to-issue
-    [Documentation]    Bug:CC-24090. Checks that user can change address during the checkout and save new into the address book. 
+    [Documentation]    Checks that user can change address during the checkout and save new into the address book. 
     [Setup]    Run Keywords    
     ...    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     ...    AND    Yves: delete all user addresses
@@ -1191,7 +1190,7 @@ Zed_navigation_ordering_and_naming
 Minimum_Order_Value
     [Documentation]    checks that global minimum and maximun order thresholds can be applied
     [Setup]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    ...    AND    Zed: deactivate following discounts from Overview page:    Free chair    Tu & Wed $5 off 5 or more    10% off $100+    Free marker    20% off storage    	Free office chair    Free standard delivery    	10% off Safescan    5% off white    Tu & Wed €5 off 5 or more    10% off minimum order
+    ...    AND    Zed: deactivate all discounts from Overview page
     ...    AND    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     ...    AND    Yves: delete all shopping carts
     ...    AND    Yves: delete all user addresses
@@ -1258,7 +1257,6 @@ Order_Cancelation
     Yves: go to 'Order History' page
     Yves: get the last placed order ID by current customer
     Yves: cancel the order:    ${lastPlacedOrder}
-    Yves: get the last placed order ID by current customer
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to order page:    ${lastPlacedOrder}
     Zed: wait for order item to be in state:    403125    cancelled
@@ -1407,8 +1405,7 @@ Multistore_CMS
     ...    AND    Zed: click Action Button in a table for row that contains:    Multistore Page${random}    Deactivate
 
 Product_Availability_Calculation
-    [Tags]    skip-due-to-issue
-    [Documentation]    Bug: CC-24108. check product availability + multistore. 
+    [Documentation]    Check product availability + multistore. 
     [Setup]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: update warehouse:    
     ...    || warehouse  | store || 

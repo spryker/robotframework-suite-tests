@@ -95,7 +95,8 @@ MP: create multi sku product with following data:
     END
     Sleep    1s 
     Element Should Contain    ${new_product_concretes_preview_count}    2
-    Click With Options    ${new_product_submit_create_button}    delay=1s
+    Click    ${new_product_submit_create_button}
+    Sleep    1s
     Wait Until Element Is Visible    ${new_product_created_popup}
     Wait Until Element Is Not Visible    ${new_product_created_popup}
 
@@ -120,8 +121,15 @@ MP: fill abstract product required fields:
     END  
 MP: save abstract product    
     MP: click submit button
-    Wait Until Element Is Visible    ${product_updated_popup}
-    Wait Until Element Is Not Visible    ${product_updated_popup}
+            Wait Until Element Is Visible    ${product_updated_popup}
+        Wait Until Element Is Not Visible    ${product_updated_popup}
+    # TRY
+    #     Wait Until Element Is Visible    ${product_updated_popup}
+    #     Wait Until Element Is Not Visible    ${product_updated_popup}
+    # EXCEPT    
+    #     Pause Execution
+    # END
+    
 
 MP: fill concrete product fields:
     [Arguments]    @{args}
@@ -196,8 +204,10 @@ MP: delete product price row that contains quantity:
 
 MP: add new concrete product:
     [Arguments]    @{args}
-    Click With Options    ${product_drawer_concretes_tab}    delay=1s
-    Click With Options    ${mp_add_concrete_products_button}    delay=1s
+    Click    ${product_drawer_concretes_tab}
+    Sleep    1s
+    Click    ${mp_add_concrete_products_button}
+    Sleep    1s
     ${productData}=    Set Up Keyword Arguments    @{args}
     FOR    ${key}    ${value}    IN    &{productData}
         Log    Key is '${key}' and value is '${value}'.
@@ -205,19 +215,24 @@ MP: add new concrete product:
             Set Test Variable    ${firstAttributeName}    ${value}
         END
         IF    '${key}'=='first attribute value' and '${value}' != '${EMPTY}'
-            Click With Options    xpath=//mp-concrete-product-attributes-selector[@class='mp-concrete-product-attributes-selector']//spy-form-item//label[contains(text(),'${firstAttributeName}')]/../..//spy-select    delay=1s
+            Click    xpath=//mp-concrete-product-attributes-selector[@class='mp-concrete-product-attributes-selector']//spy-form-item//label[contains(text(),'${firstAttributeName}')]/../..//spy-select
+            Sleep    1s
             MP: select option in expanded dropdown:    ${value}
-            Click With Options    xpath=//mp-concrete-product-attributes-selector[@class='mp-concrete-product-attributes-selector']//spy-form-item//label[contains(text(),'${firstAttributeName}')]/../..//spy-select    delay=1s
+            Click    xpath=//mp-concrete-product-attributes-selector[@class='mp-concrete-product-attributes-selector']//spy-form-item//label[contains(text(),'${firstAttributeName}')]/../..//spy-select
+            Sleep    1s
         END
         IF    '${key}'=='second attribute' and '${value}' != '${EMPTY}'    
             Set Test Variable    ${firstAttributeName}    ${value}
         END
         IF    '${key}'=='second attribute value' and '${value}' != '${EMPTY}'
-            Click With Options    xpath=//mp-concrete-product-attributes-selector[@class='mp-concrete-product-attributes-selector']//spy-form-item//label[contains(text(),'${firstAttributeName}')]/../..//spy-select    delay=1s
+            Click    xpath=//mp-concrete-product-attributes-selector[@class='mp-concrete-product-attributes-selector']//spy-form-item//label[contains(text(),'${firstAttributeName}')]/../..//spy-${product_tax_selector}
+            Sleep    1s
             MP: select option in expanded dropdown:    ${value}
-            Click With Options    xpath=//mp-concrete-product-attributes-selector[@class='mp-concrete-product-attributes-selector']//spy-form-item//label[contains(text(),'${firstAttributeName}')]/../..//spy-select    delay=1s
+            Click    xpath=//mp-concrete-product-attributes-selector[@class='mp-concrete-product-attributes-selector']//spy-form-item//label[contains(text(),'${firstAttributeName}')]/../..//spy-select
+            Sleep    1s
         END
     END
-    Click With Options    ${new_product_submit_create_button}    delay=1s
+    Click    ${new_product_submit_create_button}
+    Sleep    1s
     Wait Until Element Is Visible    ${new_concrete_product_created_popup}
     Wait Until Element Is Not Visible    ${new_concrete_product_created_popup}

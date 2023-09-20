@@ -317,6 +317,7 @@ Zed: shipment data inside xxx shipment should be:
 
 Zed: xxx shipment should/not contain the following products:
     [Arguments]    ${shipment}    ${condition}    @{sku_list}    ${element1}=${EMPTY}     ${element2}=${EMPTY}     ${element3}=${EMPTY}     ${element4}=${EMPTY}     ${element5}=${EMPTY}     ${element6}=${EMPTY}     ${element7}=${EMPTY}     ${element8}=${EMPTY}     ${element9}=${EMPTY}     ${element10}=${EMPTY}     ${element11}=${EMPTY}     ${element12}=${EMPTY}     ${element13}=${EMPTY}     ${element14}=${EMPTY}     ${element15}=${EMPTY}
+    ${condition}=    Convert To Lower Case    ${condition}
     ${sku_list_count}=   get length  ${sku_list}
     FOR    ${index}    IN RANGE    0    ${sku_list_count}
         ${sku_to_check}=    Get From List    ${sku_list}    ${index}
@@ -332,14 +333,16 @@ Yves: cancel the order:
     [Arguments]    ${order_id}
     Yves: 'View Order/Reorder/Return' on the order history page:    View Order    ${order_id}
     Wait Until Element Is Visible    ${order_details_cancel_button_locator}
-    Set Browser Timeout    3s
-    TRY
-        Click    ${order_details_cancel_button_locator}
-        Wait Until Element Is Not Visible    ${order_details_cancel_button_locator}    timeout=5s
-    EXCEPT    
-        Click    ${order_details_cancel_button_locator}
-        Wait Until Element Is Not Visible    ${order_details_cancel_button_locator}    timeout=5s
-    END    
-    Set Browser Timeout    ${browser_timeout}
+    Wait Until Network Is Idle
+    # Set Browser Timeout    1s
+    # TRY
+    Click    ${order_details_cancel_button_locator}
+    Wait Until Network Is Idle
+    Wait Until Element Is Not Visible    ${order_details_cancel_button_locator}
+    # EXCEPT    
+    #     Click    ${order_details_cancel_button_locator}
+    #     Wait Until Element Is Not Visible    ${order_details_cancel_button_locator}
+    # END    
+    # Set Browser Timeout    ${browser_timeout}
     Yves: go to 'Order History' page
     Yves: 'Order History' page contains the following order with a status:    ${order_id}    Canceled
