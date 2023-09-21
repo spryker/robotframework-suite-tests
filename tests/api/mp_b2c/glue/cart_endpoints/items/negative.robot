@@ -141,7 +141,7 @@ Update_item_in_cart_with_another_user_token
     ...    AND    Cleanup all items in the cart:    ${cart_id}
     ...    AND    I send a POST request:    /carts/${cart_id}/items?include=items    {"data": {"type": "items","attributes": {"sku": "${product_availability.concrete_available_with_stock_and_never_out_of_stock_sku}","quantity": 1}}}
     ...    AND    Save value to a variable:    [included][0][id]    item_uid
-    ...    AND    I get access token for the customer:    ${Yves_second_user.email}
+    ...    AND    I get access token for the customer:    ${yves_second_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     When I send a PATCH request:    /carts/${cart_id}/items/${item_uid}    {"data": {"type": "items","attributes": {"quantity": 1}}}
     Then Response status code should be:    404

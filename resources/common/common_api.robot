@@ -1523,6 +1523,10 @@ Response should return error code:
     [Arguments]    ${error_code}
     ${error_code}=    Convert To String    ${error_code}
     ${data}=    Get Value From Json    ${response_body}    [errors][0][code]
+    ${code_is_present}=    Run Keyword And Ignore Error    Should Not Be Empty    ${data}
+    IF    'FAIL' in ${code_is_present}
+        ${data}=    Get Value From Json    ${response_body}    [errors][0][status]
+    END
     ${data}=    Convert To String    ${data}
     ${data}=    Replace String    ${data}    '   ${EMPTY}
     ${data}=    Replace String    ${data}    [   ${EMPTY}

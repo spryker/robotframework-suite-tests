@@ -26,10 +26,10 @@
           "reference":"DE--21",
           "salutation":"Ms"
        },
-       "Yves_second_user":{
+       "yves_second_user":{
           "email":"bill.martin@spryker.com",
-          "first_name":"Martin",
-          "last_name":"Bill",
+          "first_name": "Bill",
+          "last_name":"Martin",
           "password":"change123",
           "reference":"DE--4",
           "salutation":"Mr"

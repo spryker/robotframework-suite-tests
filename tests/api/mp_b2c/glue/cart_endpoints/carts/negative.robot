@@ -36,7 +36,7 @@ Get_cart_by_cart_id_from_another_customer
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
         ...  AND    I set Headers:    Authorization=${token}
         ...  AND    Find or create customer cart
-        ...  AND    I get access token for the customer:    ${Yves_second_user.email}
+        ...  AND    I get access token for the customer:    ${yves_second_user.email}
         ...  AND    I set Headers:    Authorization=${token}
     When I send a GET request:    /carts/${cart_id}
     Then Response status code should be:    404
@@ -48,9 +48,9 @@ Get_cart_by_customer_id_with_invalid_access_token
      [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
         ...  AND    I set Headers:    Authorization=${token}
         ...  AND    Find or create customer cart
-        ...  AND    I get access token for the customer:    ${Yves_second_user.email}
+        ...  AND    I get access token for the customer:    ${yves_second_user.email}
         ...  AND    I set Headers:    Authorization=234567thgf
-    When I send a GET request:    /customers/${Yves_second_user.reference}/carts
+    When I send a GET request:    /customers/${yves_second_user.reference}/carts
     Then Response status code should be:    401
     And Response reason should be:    Unauthorized
     And Response should return error message:    Invalid access token.
@@ -60,9 +60,9 @@ Get_cart_by_customer_id_without_access_token
    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
         ...  AND    I set Headers:    Authorization=${token}
         ...  AND    Find or create customer cart
-        ...  AND    I get access token for the customer:    ${Yves_second_user.email}
+        ...  AND    I get access token for the customer:    ${yves_second_user.email}
         ...  AND    I set Headers:    Authorization=
-    When I send a GET request:    /customers/${Yves_second_user.reference}/carts
+    When I send a GET request:    /customers/${yves_second_user.reference}/carts
     Then Response status code should be:    403
     And Response reason should be:    Forbidden
     And Response should return error message:    Missing access token.
@@ -72,7 +72,7 @@ Get_cart_with_non_existing_customer_id
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
        ...  AND    I set Headers:    Authorization=${token}
        ...  AND    Find or create customer cart
-       ...  AND    I get access token for the customer:    ${Yves_second_user.email}
+       ...  AND    I get access token for the customer:    ${yves_second_user.email}
     When I send a GET request:    /customers/user-01/carts
     Then Response status code should be:    403
     And Response reason should be:    Forbidden
@@ -83,7 +83,7 @@ Get_cart_without_customer_id
    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
          ...  AND    I set Headers:    Authorization=${token}
          ...  AND    Find or create customer cart
-         ...  AND    I get access token for the customer:    ${Yves_second_user.email}
+         ...  AND    I get access token for the customer:    ${yves_second_user.email}
     When I send a GET request:    /customers//carts
     Then Response status code should be:    403
     And Response reason should be:    Forbidden
@@ -94,7 +94,7 @@ Get_cart_from_another_customer_id
      [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
        ...  AND    I set Headers:    Authorization=${token}
        ...  AND    Find or create customer cart
-       ...  AND    I get access token for the customer:    ${Yves_second_user.email}
+       ...  AND    I get access token for the customer:    ${yves_second_user.email}
        ...  AND    I set Headers:    Authorization=${token}
     When I send a GET request:    /customers/${Yves_user.reference}/carts
     Then Response status code should be:    403
@@ -161,7 +161,7 @@ Update_cart_from_another_customer_cart_id
         ...  AND    Find or create customer cart
         ...  AND    Cleanup all items in the cart:    ${cart_id}
         ...  AND    Get ETag header value from cart
-        ...  AND    I get access token for the customer:    ${Yves_second_user.email}
+        ...  AND    I get access token for the customer:    ${yves_second_user.email}
         ...  AND    I set Headers:    Authorization=${token}    If-Match=${Etag}
 
     When I send a PATCH request:    /carts/${cart_id}    {"data": {"type": "carts","attributes": {"priceMode": "${mode.net}","currency": "${currency.eur.code}","store": "${store.de}"}}}
