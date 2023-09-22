@@ -27,4 +27,4 @@ Create_new_service_point
     And Response body parameter should be in:    [data][attributes][stores]    AT    DE
     And Response body has correct self link for created entity:    ${service_point_id}
     Get service point uuid by key:    ${service_point_key}
-    [Teardown]   Delete service point in DB    ${servicePointUuid}    False
+    # [Teardown]   Delete service point in DB    ${servicePointUuid}
