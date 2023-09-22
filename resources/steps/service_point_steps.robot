@@ -159,11 +159,11 @@ Create service type in DB
         Execute Sql String    INSERT INTO spy_service_type (id_service_type, key, name, uuid) VALUES (${idServiceType}, '${key}', '${name}', '${uuid}');
     END
     Disconnect From Database
-Get service point uuid by key
+Get service point uuid by key:
     [Documentation]    This keyword returns Service Point UUID by Service Point KEY.
         ...    *Example:*
         ...
-        ...    ``Get service point uuid by key    some-service-point-34395``
+        ...    ``Get service point uuid by key:    some-service-point-34395``
         ...
     [Arguments]    ${key}
     Connect to Spryker DB
@@ -173,8 +173,8 @@ Get service point uuid by key
     ${servicePointUuid}    Query    SELECT uuid FROM spy_service_point WHERE "key" = '${key}' ORDER BY uuid DESC LIMIT 1;
     END
     Disconnect From Database
-    Set Test Variable    ${SPUuid}    ${SPUuid[0][0]}
-    [Return]    ${SPUuid[0][0]}
+    Set Test Variable    ${servicePointUuid}     ${servicePointUuid[0][0]}
+    [Return]    ${servicePointUuid[0][0]}
 
 Delete service point in DB
     [Documentation]    This keyword deletes the entry from the DB table `spy_service_point`. If `withRelations=true`, deletes with relations.
