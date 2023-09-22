@@ -2,6 +2,7 @@
 Suite Setup       SuiteSetup
 Test Setup        TestSetup
 Resource    ../../../../../../resources/common/common_api.robot
+Resource    ../../../../../../resources/steps/service_point_steps.robot
 Default Tags    bapi
 
 *** Test Cases ***
@@ -24,5 +25,5 @@ Create_new_service_point
     And Response body parameter should be in:    [data][attributes][stores]    DE    AT
     And Response body parameter should be in:    [data][attributes][stores]    AT    DE
     And Response body has correct self link for created entity:    ${service_point_id}
-    # [Teardown]     Delete service point in DB    some-service-point-${random}
+    [Teardown]     Delete service point in DB    ${SPUuid}
 

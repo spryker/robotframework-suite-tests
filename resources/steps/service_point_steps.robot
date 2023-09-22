@@ -173,7 +173,8 @@ Get service point uuid by key
     ${servicePointUuid}    Query    SELECT uuid FROM spy_service_point WHERE "key" = '${key}' ORDER BY uuid DESC LIMIT 1;
     END
     Disconnect From Database
-    [Return]    ${servicePointIds[0][0]}
+    Set Test Variable    ${SPUuid}    ${SPUuid[0][0]}
+    [Return]    ${SPUuid[0][0]}
 
 Delete service point in DB
     [Documentation]    This keyword deletes the entry from the DB table `spy_service_point`. If `withRelations=true`, deletes with relations.
