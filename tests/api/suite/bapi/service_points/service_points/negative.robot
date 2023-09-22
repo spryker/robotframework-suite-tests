@@ -26,8 +26,10 @@ Create_new_service_point_with_existing_name
     And Response body parameter should not be EMPTY:    [data][id]
     And Response body parameter should be:    [data][attributes][name]    Not Unique Name
     And Response body parameter should be:    [data][attributes][key]    another-service-point-${random}
-    [Teardown]     Run Keywords    Delete service point in DB:    unique-service-point-${random}
-    ...    AND    Delete service point in DB:    another-service-point-${random}
+    [Teardown]     Run Keywords    Get service point uuid by key:    ${service_point_key}
+    ...    AND    Delete service point in DB    ${servicePointUuid}
+    ...    AND    Get service point uuid by key:    ${service_point_key}
+    ...    AND    Delete service point in DB    ${servicePointUuid}
 
 Create_Service_Point_With_Existing_Key
     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
@@ -37,7 +39,8 @@ Create_Service_Point_With_Existing_Key
     Then Response status code should be:    400
     And Response should return error code:    5404
     And Response should return error message:    A service point with the same key already exists.
-    [Teardown]     Delete service point in DB:    existing_service_point
+    Get service point uuid by key:    ${service_point_key}
+    # [Teardown]   Delete service point in DB    ${servicePointUuid}
 
 Create_Service_Point_With_Invalid_Key_Length
     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
