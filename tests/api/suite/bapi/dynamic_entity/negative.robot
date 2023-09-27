@@ -200,15 +200,15 @@ Update_country_with_invalid_data
     And I send a POST request:    /dynamic-entity/countries   {"data":[{"iso2_code":"XA","iso3_code":"XXA","name":"XXA"},{"iso2_code":"XB","iso3_code":"XXB","name":"XXB"}]}
     Then Response status code should be:    201
     And Response header parameter should be:    Content-Type    application/json
-    And Response body parameter should be:    [0][iso2_code]    XA
-    And Response body parameter should be:    [0][iso3_code]    XXA
-    And Response body parameter should be:    [0][name]   XXA
-    And Response body parameter should be:    [1][iso2_code]    XB
-    And Response body parameter should be:    [1][iso3_code]    XXB
-    And Response body parameter should be:    [1][name]   XXB
-    Response body parameter should be greater than :    [0][id_country]    200
-    When Save value to a variable:    [0][id_country]    xxa_country_id
-    When Save value to a variable:    [1][id_country]    xxb_country_id
+    And Response body parameter should be:    [data][0][iso2_code]    XA
+    And Response body parameter should be:    [data][0][iso3_code]    XXA
+    And Response body parameter should be:    [data][0][name]   XXA
+    And Response body parameter should be:    [data][1][iso2_code]    XB
+    And Response body parameter should be:    [data][1][iso3_code]    XXB
+    And Response body parameter should be:    [data][1][name]   XXB
+    Response body parameter should be greater than :    [data][0][id_country]    200
+    When Save value to a variable:    [data][0][id_country]    xxa_country_id
+    When Save value to a variable:    [data][1][id_country]    xxb_country_id
     ### UPDATE COUNTRY WITH INVALID DATA ###
     And I set Headers:    Content-Type==application/json    Authorization=Bearer ${token}
     And I send a PATCH request:    /dynamic-entity/countries/${xxa_country_id}    {"data":{"iso2_code":"XXXX"}}
@@ -232,8 +232,8 @@ Update_country_collection_with_invalid_data
     And I set Headers:    Content-Type=application/json    Authorization=Bearer ${token}
     And I send a POST request:    /dynamic-entity/countries   {"data":[{"iso2_code":"XA","iso3_code":"XXA","name":"XXA"},{"iso2_code":"XB","iso3_code":"XXB","name":"XXB"}]}
     Then Response status code should be:    201
-    When Save value to a variable:    [0][id_country]    xxa_country_id
-    When Save value to a variable:    [1][id_country]    xxb_country_id
+    When Save value to a variable:    [data][0][id_country]    xxa_country_id
+    When Save value to a variable:    [data][1][id_country]    xxb_country_id
     ### UPDATE COUNTRY COLLECTION WITH INVALID DATA ###
     And I set Headers:    Content-Type==application/json    Authorization=Bearer ${token}
     And I send a PATCH request:    /dynamic-entity/countries    {"data":[{"id_country":${xxa_country_id},"iso2_code":"XXXX"},{"id_country":${xxb_country_id},"iso3_code":"XXXXX"}]}
@@ -260,8 +260,8 @@ Update_country_with_invalid_field_type
     And I set Headers:    Content-Type=application/json    Authorization=Bearer ${token}
     And I send a POST request:    /dynamic-entity/countries   {"data":[{"iso2_code":"XA","iso3_code":"XXA","name":"XXA"},{"iso2_code":"XB","iso3_code":"XXB","name":"XXB"}]}
     Then Response status code should be:    201
-    When Save value to a variable:    [0][id_country]    xxa_country_id
-    When Save value to a variable:    [1][id_country]    xxb_country_id
+    When Save value to a variable:    [data][0][id_country]    xxa_country_id
+    When Save value to a variable:    [data][1][id_country]    xxb_country_id
     ### UPDATE COUNTRY WITH INVALID FILELD TYPE ###
     And I set Headers:    Content-Type==application/json    Authorization=Bearer ${token}
     And I send a PATCH request:    /dynamic-entity/countries/${xxa_country_id}    {"data":{"iso2_code":1234}}
