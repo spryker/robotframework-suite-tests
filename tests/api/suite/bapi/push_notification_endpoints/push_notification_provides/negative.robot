@@ -55,7 +55,7 @@ Create_push_notification_provider_without_authorization
     And Response should return error message:    Invalid access token.
 # !!!!!
 Create_push_notification_provider_with_invalid_type
-    [Documentation]    entity created but shoukld not be, bug need to be attached
+    [Documentation]    https://spryker.atlassian.net/browse/FRW-6312
     [Tags]    skip-due-to-issue
     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
     ...    AND    I set Headers:    Content-Type=application/vnd.api+json   Authorization=Bearer ${token}
