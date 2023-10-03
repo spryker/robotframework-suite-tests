@@ -41,7 +41,7 @@ Create_warehouse_user_assigment_with_empty_body
     Then Response status code should be:    400
 
 Create_warehouse_user_assigment_with_incorrect_type
-    [Documentation]    201 response, warehouse-user-assigment successfully created with incorrect type 
+    [Documentation]    https://spryker.atlassian.net/browse/FRW-6312
     [Tags]    skip-due-to-issue
     [Setup]    Run Keywords    I get access token by user credentials:    ${zed_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=Bearer ${token}    
