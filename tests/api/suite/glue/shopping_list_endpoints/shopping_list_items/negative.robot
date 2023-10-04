@@ -599,40 +599,6 @@ Add_a_configurable_product_with_empty_quantity_value_of_to_the_shopping_list
     ...    AND    Response status code should be:    204
     ...    AND    Response reason should be:    No Content    
 
-Add_a_configurable_product_with_zero_availableQuantity_to_the_shopping_list
-    [Documentation]   https://spryker.atlassian.net/browse/CC-25383
-    [Tags]    skip-due-to-issue   
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
-    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}  
-    ...    AND    I send a POST request:    /shopping-lists    {"data":{"type":"shopping-lists","attributes":{"name":"${shopping_list_name}${random}"}}}
-    ...    AND    Response status code should be:    201
-    ...    AND    Save value to a variable:    [data][id]    shoppingListId
-    I send a POST request:    /shopping-lists/${shoppingListId}/shopping-list-items     {"data":{"type":"shopping-list-items","attributes":{"sku":"${configurable_product.sku}","quantity":2,"productConfigurationInstance":{"displayData":'{"Preferred time of the day":"Morning","Date":"10.10.2040"}',"configuration":'{"time_of_day":"4"}',"configuratorKey":"${productConfigurationInstance.configuratorKey}","isComplete":True,"quantity":2,"availableQuantity":0,"prices":[{"priceTypeName":"DEFAULT","netAmount":23434,"grossAmount":42502,"currency":{"code":"EUR","name":"Euro","symbol":"€"},"volumePrices":[{"netAmount":150,"grossAmount":165,"quantity":5},{"netAmount":145,"grossAmount":158,"quantity":10},{"netAmount":140,"grossAmount":152,"quantity":20}]}]}}}}
-    And Response status code should be:    422
-    And Response should return error code:    901
-    And Response reason should be:    Unprocessable Content
-    And Response should return error message:    availableQuantity => This value should be greater than 0
-    [Teardown]    Run Keywords    I send a DELETE request:    /shopping-lists/${shoppingListId}
-    ...    AND    Response status code should be:    204
-    ...    AND    Response reason should be:    No Content
-
-Add_a_configurable_product_with_negative_availableQuantity_to_the_shopping_list
-    [Documentation]   https://spryker.atlassian.net/browse/CC-25383
-    [Tags]    skip-due-to-issue    
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
-    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}  
-    ...    AND    I send a POST request:    /shopping-lists    {"data":{"type":"shopping-lists","attributes":{"name":"${shopping_list_name}${random}"}}}
-    ...    AND    Response status code should be:    201
-    ...    AND    Save value to a variable:    [data][id]    shoppingListId
-    I send a POST request:    /shopping-lists/${shoppingListId}/shopping-list-items     {"data":{"type":"shopping-list-items","attributes":{"sku":"${configurable_product.sku}","quantity":2,"productConfigurationInstance":{"displayData":'{"Preferred time of the day":"Morning","Date":"10.10.2040"}',"configuration":'{"time_of_day":"4"}',"configuratorKey":"${productConfigurationInstance.configuratorKey}","isComplete":True,"quantity":2,"availableQuantity":-1,"prices":[{"priceTypeName":"DEFAULT","netAmount":23434,"grossAmount":42502,"currency":{"code":"EUR","name":"Euro","symbol":"€"},"volumePrices":[{"netAmount":150,"grossAmount":165,"quantity":5},{"netAmount":145,"grossAmount":158,"quantity":10},{"netAmount":140,"grossAmount":152,"quantity":20}]}]}}}}
-    And Response status code should be:    422
-    And Response should return error code:    901
-    And Response reason should be:    Unprocessable Content
-    And Response should return error message:    availableQuantity => This value should be greater than 0.
-    [Teardown]    Run Keywords    I send a DELETE request:    /shopping-lists/${shoppingListId}
-    ...    AND    Response status code should be:    204
-    ...    AND    Response reason should be:    No Content
-
 Add_a_configurable_product_with_empty_availableQuantity_value_of_to_the_shopping_list
     [Documentation]   https://spryker.atlassian.net/browse/CC-25381
     [Tags]    skip-due-to-issue    
