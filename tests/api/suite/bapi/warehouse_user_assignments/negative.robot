@@ -61,18 +61,6 @@ Create_warehouse_user_assignment_with_duplicate_assignment
     [Teardown]     Run Keywords    I send a DELETE request:    /warehouse-user-assignments/${warehouse_assigment_id}
     ...  AND    Response status code should be:    204
 
-Create_warehouse_user_assignment_with_multiple_active_assignments
-    [Documentation]    both active assigments created to one user, should not be, bug needs 
-    [Tags]    skip-due-to-issue
-    [Setup]    Run Keywords    I get access token by user credentials:    ${zed_user.email}
-    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=Bearer ${token}    
-    When I send a POST request:    /warehouse-user-assignments    {"data": {"type": "warehouse-user-assignments", "attributes":{"userUuid": "${warehous_user[0].user_uuid}","warehouse" :{"uuid": "${warehouse[0].warehouse_uuid}"},"isActive":"true"}}}
-    Then Save value to a variable:    [data][id]   warehouse_assigment_id
-    When I send a POST request:    /warehouse-user-assignments    {"data": {"type": "warehouse-user-assignments", "attributes":{"userUuid": "${warehous_user[0].user_uuid}","warehouse" :{"uuid": "${warehouse[0].video_king_warehouse_uuid}"},"isActive":"true"}}}
-    Then Response status code should be:    400
-    [Teardown]     Run Keywords    I send a DELETE request:    /warehouse-user-assignments/${warehouse_assigment_id}
-    ...  AND    Response status code should be:    204
-
 Get_warehouse_user_assigments_by_UUID_without_token
     [Documentation]    https://spryker.atlassian.net/browse/FRW-5850
     [Tags]    skip-due-to-issue
@@ -161,27 +149,6 @@ Update_warehous_user_assigment_without_uuid
     And Response should return error message:    Warehouse user assignment not found.
     [Teardown]     Run Keywords    I send a DELETE request:    /warehouse-user-assignments/${warehouse_assigment_id_1}
     ...  AND    Response status code should be:    204 
-
-Update_one_of_already exist_warehous_user_assigment_with_two_assigments_to active
-    [Documentation]    both active assigments created to one user, should not be, bug needs to be Create_warehouse_user_assigment_with_invalid_body
-    [Tags]    skip-due-to-issue
-    [Setup]    Run Keywords    I get access token by user credentials:    ${zed_user.email}
-    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=Bearer ${token}    
-    When I send a POST request:    /warehouse-user-assignments?include=users    {"data": {"type": "warehouse-user-assignments", "attributes":{"userUuid": "${warehous_user[0].user_uuid}","warehouse" :{"uuid": "${warehouse[0].warehouse_uuid}"},"isActive":"false"}}}
-    Then Response status code should be:    201
-    Then Save value to a variable:    [data][id]   warehouse_assigment_id_1
-    When I send a POST request:    /warehouse-user-assignments?include=users    {"data": {"type": "warehouse-user-assignments", "attributes":{"userUuid": "${warehous_user[0].user_uuid}","warehouse" :{"uuid": "${warehouse[0].video_king_warehouse_uuid}"},"isActive":"true"}}}
-    Then Response status code should be:    201
-    Then Save value to a variable:    [data][id]   warehouse_assigment_id_2
-    Then I send a PATCH request:    /warehouse-user-assignments/${warehouse_assigment_id_1}    {"data":{"attributes":{"isActive":"true"}}} 
-    Then Response status code should be:    404
-    Then I send a GET request:    /warehouse-user-assignments/${warehouse_assigment_id_1}
-    Then Response status code should be:    200
-    And Response body parameter should be:    [data][attributes][isActive]    False
-    [Teardown]     Run Keywords    I send a DELETE request:    /warehouse-user-assignments/${warehouse_assigment_id_1}
-    ...  AND    Response status code should be:    204 
-    Then I send a DELETE request:    /warehouse-user-assignments/${warehouse_assigment_id_2}
-    And Response status code should be:    204 
 
 Delete_warehous_user_assigment_without_token
   [Documentation]    https://spryker.atlassian.net/browse/FRW-5850

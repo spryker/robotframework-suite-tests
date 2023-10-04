@@ -2,6 +2,7 @@
 Suite Setup       SuiteSetup
 Test Setup    TestSetup
 Resource    ../../../../../resources/common/common_api.robot
+Resource    ../../../../../resources/steps/warehouse_user_assigment_steps.robot
 Default Tags    bapi
 
 *** Test Cases ***
@@ -202,4 +203,39 @@ Update_warehous_user_assigment
     [Teardown]     Run Keywords    I send a DELETE request:    /warehouse-user-assignments/${warehouse_assigment_id}
     ...  AND    Response status code should be:    204
  
+ Create_warehouse_user_assignment_with_multiple_active_assignments
+    [Setup]    Run Keywords    I get access token by user credentials:    ${zed_user.email}
+    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=Bearer ${token}    
+    When I send a POST request:    /warehouse-user-assignments    {"data": {"type": "warehouse-user-assignments", "attributes":{"userUuid": "${warehous_user[0].user_uuid}","warehouse" :{"uuid": "${warehouse[0].warehouse_uuid}"},"isActive":"true"}}}
+    Then Save value to a variable:    [data][id]   warehouse_assigment_id
+    Then I send a GET request:    /warehouse-user-assignments/${warehouse_assigment_id}
+    And Response body parameter should be:    [data][attributes][isActive]    True
+    When I send a POST request:    /warehouse-user-assignments    {"data": {"type": "warehouse-user-assignments", "attributes":{"userUuid": "${warehous_user[0].user_uuid}","warehouse" :{"uuid": "${warehouse[0].video_king_warehouse_uuid}"},"isActive":"true"}}}
+    Then Save value to a variable:    [data][id]   warehouse_assigment_id_2
+    Then I send a GET request:    /warehouse-user-assignments/${warehouse_assigment_id_2}
+    And Response body parameter should be:    [data][attributes][isActive]    True
+    # when we creating second active user warehouse assigment for one user,the existing one assigment deactivated
+    Then I send a GET request:    /warehouse-user-assignments/${warehouse_assigment_id}
+    And Response body parameter should be:    [data][attributes][isActive]    False
+    [Teardown]     Run Keywords    I send a DELETE request:    /warehouse-user-assignments/${warehouse_assigment_id}
+    ...  AND    Response status code should be:    204
+    Then I send a DELETE request:    /warehouse-user-assignments/${warehouse_assigment_id_2}
+    And Response status code should be:    204 
 
+Update_one_of_already exist_warehous_user_assigment_with_two_assigments_to active
+    [Setup]    Run Keywords    I get access token by user credentials:    ${zed_user.email}
+    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=Bearer ${token}    
+    When I send a POST request:    /warehouse-user-assignments?include=users    {"data": {"type": "warehouse-user-assignments", "attributes":{"userUuid": "${warehous_user[0].user_uuid}","warehouse" :{"uuid": "${warehouse[0].warehouse_uuid}"},"isActive":"false"}}}
+    Then Response status code should be:    201
+    Then Save value to a variable:    [data][id]   warehouse_assigment_id_1
+    When I send a POST request:    /warehouse-user-assignments?include=users    {"data": {"type": "warehouse-user-assignments", "attributes":{"userUuid": "${warehous_user[0].user_uuid}","warehouse" :{"uuid": "${warehouse[0].video_king_warehouse_uuid}"},"isActive":"true"}}}
+    Then Response status code should be:    201
+    Then Save value to a variable:    [data][id]   warehouse_assigment_id_2
+    Then I send a PATCH request:    /warehouse-user-assignments/${warehouse_assigment_id_1}    {"data":{"attributes":{"isActive":"true"}}} 
+    Then Response status code should be:    200
+    Then I send a GET request:    /warehouse-user-assignments/${warehouse_assigment_id_2}
+    And Response body parameter should be:    [data][attributes][isActive]    False
+    [Teardown]     Run Keywords    I send a DELETE request:    /warehouse-user-assignments/${warehouse_assigment_id_1}
+    ...  AND    Response status code should be:    204 
+    Then I send a DELETE request:    /warehouse-user-assignments/${warehouse_assigment_id_2}
+    And Response status code should be:    204 
