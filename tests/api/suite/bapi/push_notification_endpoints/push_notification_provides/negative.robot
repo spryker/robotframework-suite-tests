@@ -18,7 +18,7 @@ Retrieve_push_notification_providers_without_authorization
     Then Response status code should be:    403
     And Response reason should be:    Unauthorized
     And Response should return error message:    Invalid access token.
-# !!!!
+
 Retrieve_push_notification_providers_with_incorrect_token
     When I set Headers:    Content-Type=application/vnd.api+json   Authorization=Bearer incorrect_token
     When I send a GET request:    /push-notification-providers
@@ -104,7 +104,6 @@ Update_push_notification_provider_with_incorrect_auth
     And Response should return error message:    Invalid access token.
     [Teardown]    I send a DELETE request:    /push-notification-providers/${push_notification_provider_id}
 
-# !!!!!!!
 Update_non-existent_push_notification_provider
     [Documentation]
     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
