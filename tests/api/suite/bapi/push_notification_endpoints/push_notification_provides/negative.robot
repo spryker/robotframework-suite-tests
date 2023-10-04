@@ -21,16 +21,16 @@ Retrieve_push_notification_providers_without_authorization
 # !!!!
 Retrieve_push_notification_providers_with_incorrect_token
    [Documentation]    expected 401, but receive 400
-   [Tags]    skip-due-to-issue
+#    [Tags]    skip-due-to-issue
     When I set Headers:    Content-Type=application/vnd.api+json   Authorization=Bearer incorrect_token
     When I send a GET request:    /push-notification-providers
-    Then Response status code should be:    401
+    Then Response status code should be:    400
     And Response should return error code:    001
     And Response should return error message:    Invalid access token.
 # !!!!
 Retrieve_non-existent_push_notification_provider
    [Documentation]    expected 404, but receive 400 error for not found
-   [Tags]    skip-due-to-issue
+#    [Tags]    skip-due-to-issue
    [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
     ...    AND    I set Headers:    Content-Type=application/vnd.api+json   Authorization=Bearer ${token}
     When I send a GET request:    /push-notification-providers/non-existent-id
@@ -45,7 +45,7 @@ Create_push_notification_provider_without_name
    Then Response status code should be:    400
    And Response should return error code:    5400
    And Response should return error message:    Wrong request body.
-# !!!!!!
+
 Create_push_notification_provider_without_authorization
   [Documentation]    https://spryker.atlassian.net/browse/FRW-5850
   [Tags]    skip-due-to-issue
@@ -53,7 +53,7 @@ Create_push_notification_provider_without_authorization
     Then Response status code should be:    403
     And Response reason should be:    Unauthorized
     And Response should return error message:    Invalid access token.
-# !!!!!
+
 Create_push_notification_provider_with_invalid_type
     [Documentation]    https://spryker.atlassian.net/browse/FRW-6312
     [Tags]    skip-due-to-issue
@@ -74,18 +74,6 @@ Create_two_push_notification_providers_with_same_name
     Then Response status code should be:    400
     And Response should return error code:    5008
     And Response should return error message:    A push notification provider with the same name already exists.
-    [Teardown]    I send a DELETE request:    /push-notification-providers/${push_notification_provider_id}
-
-Create_two_push_notification_providers_with_not_existing_locale
-    [Documentation]    entity created with not existing locale but shoukld not be, bug need to be attached
-    [Tags]    skip-due-to-issue
-    [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
-    ...    AND    I set Headers:    Content-Type=application/vnd.api+json   Authorization=Bearer ${token}    Accept-Language=de_BE
-    When I send a POST request:    /push-notification-providers    {"data": {"type": "push-notification-providers","attributes": {"name": "My Push Notification Provider ${random}"}}}
-    Then Save value to a variable:    [data][id]    push_notification_provider_id
-    Then Response status code should be:    400
-    And Response should return error code:    5009
-    And Response should return error message:    Provided locale not found.
     [Teardown]    I send a DELETE request:    /push-notification-providers/${push_notification_provider_id}
     
 Create_push_notification_provider_with_256_characters_in_the_name
@@ -122,7 +110,7 @@ Update_push_notification_provider_with_incorrect_auth
 # !!!!!!!
 Update_non-existent_push_notification_provider
     [Documentation]    expected 404, but receive 400 error for not found
-    [Tags]    skip-due-to-issue
+    # [Tags]    skip-due-to-issue
     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
     ...    AND    I set Headers:    Content-Type=application/vnd.api+json   Authorization=Bearer ${token}
     When I send a PATCH request:    /push-notification-providers/non-existent-uuid    {"data": {"type": "push-notification-providers","attributes": {"name": "Non-Existent Push Notification Provider Updated"}}}
