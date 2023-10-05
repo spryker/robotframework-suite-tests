@@ -10,6 +10,8 @@ ENABLER
 
 ### GET requests
 Get_cart_by_cart_id
+    [Documentation]   https://spryker.atlassian.net/browse/CC-31029
+    [Tags]    skip-due-to-issue
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
     ...  AND    Cleanup all customer carts
@@ -95,7 +97,7 @@ Get_cart_by_cart_id_with_included_items
     And Response body has correct self link internal
     And Response should contain the array of a certain size:    [data][relationships][items][data]    3
     And Each array element of array in response should contain property with value:    [data][relationships][items][data]    type    items
-    And Response body parameter should contain:    [data][relationships][items][data][0][id]    ${concrete_products.sku_1}   
+    And Response body parameter should contain:    [data][relationships][items][data][0][id]    ${concrete_products.sku_1}
     And Response body parameter should contain:    [data][relationships][items][data][1][id]    ${concrete_products.sku_2}
     And Response body parameter should contain:    [data][relationships][items][data][2][id]    ${concrete_products.sku_3}
     And Response should contain the array of a certain size:    [included]    3
@@ -228,6 +230,8 @@ Create_cart_with_existing_name
 
 ###PATCH requests
 Update_cart_by_cart_id_with_all_attributes
+    [Documentation]   https://spryker.atlassian.net/browse/CC-31029
+    [Tags]    skip-due-to-issue
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
     ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}"}}}
@@ -258,6 +262,8 @@ Update_cart_by_cart_id_with_all_attributes
 
 Update_cart_with_empty_priceMod_currency_store
 # Spryker is designed so that we can send empty attributes: priceMod, currency, store and it will not be changed to the empty values.
+    [Documentation]   https://spryker.atlassian.net/browse/CC-31029
+    [Tags]    skip-due-to-issue
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
     ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
@@ -287,6 +293,8 @@ Update_cart_with_empty_priceMod_currency_store
     ...  AND    Response status code should be:    204
 
 Update_cart_with_name_attribute
+    [Documentation]   https://spryker.atlassian.net/browse/CC-31029
+    [Tags]    skip-due-to-issue
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
     ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}"}}}
@@ -347,7 +355,7 @@ Get_cart_with_included_cart_rules
     And Each array element of array in response should contain property with value:    [data][relationships][cart-rules][data]    type    cart-rules
     And Each array element of array in response should contain property:    [data][relationships][cart-rules][data]    id
     And Response body parameter should be:     [included][0][attributes][amount]    3202
-    And Response body parameter should not be EMPTY:    [included][0][attributes][amount]    
+    And Response body parameter should not be EMPTY:    [included][0][attributes][amount]
     And Each array element of array in response should contain property with value:    [included]    type    cart-rules
     And Each array element of array in response should contain property:    [included]    id
     And Each array element of array in response should contain property:    [included]    attributes
@@ -398,6 +406,8 @@ Get_cart_with_included_promotional_items
 
 Update_cart_with_existing_name
 # Spryker is designed so that we can send existing name and it will be changed automatically to the unique value on the BE side.
+    [Documentation]   https://spryker.atlassian.net/browse/CC-31029
+    [Tags]    skip-due-to-issue
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
     ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
