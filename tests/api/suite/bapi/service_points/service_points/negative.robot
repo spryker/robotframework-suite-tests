@@ -47,7 +47,7 @@ ENABLER
 #     Then Response status code should be:    403
 #     And Response should return error message:    Invalid access token
     #!!!!!! 
-# Create_Service_Point_With_Invalid_Name_Length
+# Create_Service_Point_With_Empty_Name_Length
     # [Documentation]    500
     # [Tags]    skip-due-to-issue
     # [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
@@ -103,9 +103,9 @@ ENABLER
     # Then Response status code should be:    400
     # And Response should return error code:    5401
     # And Response should return error message:    Wrong request body.
-# !!!!!!
+
 # Update_Service_Point_With_Wrong_type
-    # [Documentation]    response 200 but request PATCH should fail
+    # [Documentation]    https://spryker.atlassian.net/browse/FRW-6312
     # [Tags]    skip-due-to-issue
     # [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
     # ...    AND    I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer ${token}

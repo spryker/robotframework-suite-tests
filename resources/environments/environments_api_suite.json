@@ -826,8 +826,7 @@
                "providerName": "web-push-php",
                "group": {
                    "name": "warehouse",
-                   "identifier": ""
-               },
+                   "identifier": ""               },
                "payload": {
                    "endpoint": "endpoint",
                    "publicKey": "publicKey",
@@ -837,6 +836,10 @@
            }
        ]
    },
+      "push_notification_providers":{
+         "push_notification_provider_uuid":"2a304ddf-d51b-514f-bd11-6e818a27fe23"
+},
+
    "shipment_type":{
        "shipment_type_uuid":"174d9dc0-55ae-5c4b-a2f2-a419027029ef",
        "shipment_type_name":"Pickup"

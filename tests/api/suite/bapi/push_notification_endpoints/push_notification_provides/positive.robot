@@ -47,7 +47,7 @@ Update_push_notification_provider
     And Response body has correct self link internal
     [Teardown]    I send a DELETE request:    /push-notification-providers/${push_notification_provider_id}
 
-Retrieve_push_notification_provider
+Retrieve_push_notification_providers
     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
     ...    AND    I set Headers:    Content-Type=application/vnd.api+json   Authorization=Bearer ${token}
     When I send a POST request:    /push-notification-providers    {"data": {"type": "push-notification-providers","attributes": {"name": "My Push Notification Provider1 ${random}"}}}
@@ -69,6 +69,7 @@ Retrieve_push_notification_provider
 Retrieve_push_notification_provider_with_pagination
     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
     ...    AND    I set Headers:    Content-Type=application/vnd.api+json   Authorization=Bearer ${token}
+    And I send a DELETE request:    /push-notification-providers/${push_notification_provider_uuid}
     When I send a POST request:    /push-notification-providers    {"data": {"type": "push-notification-providers","attributes": {"name": "My Push Notification Provider1 ${random}"}}}
     Then Save value to a variable:    [data][id]    push_notification_provider_id
     When I send a POST request:    /push-notification-providers    {"data": {"type": "push-notification-providers","attributes": {"name": "My Push Notification Provider2 ${random}"}}}
