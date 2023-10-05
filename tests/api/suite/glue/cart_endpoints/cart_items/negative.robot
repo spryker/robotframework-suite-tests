@@ -151,7 +151,7 @@ Add_a_configurable_product_to_the_cart_with_negative_quantity
 
 
 Add_a_configurable_product_to_the_cart_with_negative_price
-   [Documentation]   https://spryker.atlassian.net/browse/CC-25383
+   [Documentation]   https://spryker.atlassian.net/browse/CC-30918
    [Tags]    skip-due-to-issue
    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}

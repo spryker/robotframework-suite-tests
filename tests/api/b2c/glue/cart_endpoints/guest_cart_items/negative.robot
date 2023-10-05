@@ -191,7 +191,7 @@ Add_a_configurable_product_to_the_cart_with_negative_quantity
    And Response should return error message:    quantity => This value should be greater than 0.
 
 Add_a_configurable_product_to_the_cart_with_negative_price
-    [Documentation]   https://spryker.atlassian.net/browse/CC-25383
+    [Documentation]   https://spryker.atlassian.net/browse/CC-30918
     [Tags]    skip-due-to-issue    
     [Setup]    Run Keywords     Create a guest cart:    ${random}    ${concrete_product_with_concrete_product_alternative.sku}    1
    ...   AND    I set Headers:     X-Anonymous-Customer-Unique-Id=${x_anonymous_customer_unique_id}
