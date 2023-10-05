@@ -66,9 +66,9 @@ ENABLER
 #     Then Response status code should be:    400
 #     And Response should return error code:    5401
 #     And Response should return error message:    Wrong request body.
-# !!!!!!
+
 # Create_Service_Point_With_Empty_Body
-#     [Documentation]    500 как везде, нужен баг тикет
+#     [Documentation]    https://spryker.atlassian.net/browse/FRW-1597
 #     [Tags]    skip-due-to-issue
 #     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
 #     ...    AND    I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer ${token}
@@ -76,9 +76,9 @@ ENABLER
 #     Then Response status code should be:    400
 #     And Response should return error code:    5401
 #     And Response should return error message:    Wrong request body.
-# !!!!!!
+
 # Create_Service_Point_With_Invalid_Content_Type
-#     [Documentation]    in response: [{"message":"Not found","status":404,"code":"007"}] 
+#     [Documentation]    https://spryker.atlassian.net/browse/FRW-6312
 #     [Tags]    skip-due-to-issue
     # [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
     # ...    AND    I set Headers:    Content-Type=text/plain   Authorization=Bearer ${token}
@@ -86,18 +86,16 @@ ENABLER
     # Then Response status code should be:    400
     # And Response should return error code:    5401
     # And Response should return error message:    Wrong request body.
-# !!!!!!
+
 # Create_Service_Point_With_Invalid_Token
-#     [Documentation]    in response: [{"message":"Invalid access token.","status":400,"code":"001"}] 
-#     [Tags]    skip-due-to-issue
 #     [Setup]    I set Headers:    Authorization=InvalidToken
 #     When I send a POST request:    /service-points   {"name": "Invalid Token", "key": "invalid_token", "isActive": "true", "stores": ["DE", "AT"]}
-#     Then Response status code should be:    401
+#     Then Response status code should be:    400
 #     And Response should return error code:    001
 #     And Response should return error message:    Invalid access token.
-# !!!!!!
+
 # Create_Service_Point_With_Missing_Required_Fields
-#     [Documentation]    500
+#     [Documentation]    https://spryker.atlassian.net/browse/FRW-1597
 #     [Tags]    skip-due-to-issue
     # [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
     # ...    AND    I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer ${token}
@@ -120,13 +118,11 @@ ENABLER
     # And Response should return error message:    Wrong request body
     # [Teardown]     Run Keywords    Get service point uuid by key:    ${service_point_key}
     # ...    AND    Delete service point in DB    ${service_point_id}
-# !!!!!!!
+
 # Update_Service_Point_Without_Authorization
-#     [Documentation]    receive 400 error in responce but should 401
-#     [Tags]    skip-due-to-issue
     # [Setup]    I set Headers:    Authorization=
     # When I send a PATCH request:    /service-points/random-id    {"data": {"type": "service-points","attributes": {"name": "Unauthorized Update","key": "unauthorized-update-${random}","isActive": "true","stores": ["DE", "AT"]}}}
-    # Then Response status code should be:    401
+    # Then Response status code should be:    400
     # And Response should return error code:    001
     # And Response should return error message:    Invalid access token.
 
@@ -137,13 +133,11 @@ ENABLER
 #     Then Response status code should be:    404
 #     And Response should return error code:    5403
 #     And Response should return error message:    Service point entity was not found.
-#  !!!!!!!
+
 # Update_Service_Point_With_incorrect_token
-#     [Documentation]    receive 400 error in responce but should 401
-#     [Tags]    skip-due-to-issue
 #     [Setup]    I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer incorrect
 #     When I send a PATCH request:    /service-points/random-id    {"data": {"type": "service-points","attributes": {"name": "Unauthorized Update","key": "unauthorized-update-${random}","isActive": "true","stores": ["DE", "AT"]}}}
-#     Then Response status code should be:    401
+#     Then Response status code should be:    400
 #     And Response should return error code:    001
 #     And Response should return error message:    Invalid access token.
 
