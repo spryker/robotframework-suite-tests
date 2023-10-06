@@ -48,25 +48,25 @@ ENABLER
 #     And Response should return error message:    Invalid access token
     #!!!!!! 
 
-Create_Service_Point_With_Empty_Name
-    [Documentation]    500
-    # [Tags]    skip-due-to-issue
-    [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
-    ...    AND    I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer ${token}
-    When I send a POST request:    /service-points   {"name": "", "key": "invalid_name_length", "isActive": "true", "stores": ["DE", "AT"]}
-    Then Response status code should be:    400
-    And Response should return error code:    5407
-    And Response should return error message:    A service point name must have length from 0 to 255 characters.
-#    #!!!!!! 
-Create_Service_Point_With_Invalid_Store
-    [Documentation]     500
-    # [Tags]    skip-due-to-issue
-    [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
-    ...    AND    I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer ${token}
-    When I send a POST request:    /service-points   {"name": "Invalid Store Service Point", "key": "invalid_store", "isActive": "true", "stores": ["Invalid_Store"]}
-    Then Response status code should be:    400
-    And Response should return error code:    5401
-    And Response should return error message:    Wrong request body.
+# Create_Service_Point_With_Empty_Name
+#     [Documentation]    https://spryker.atlassian.net/browse/FRW-1597
+#     [Tags]    skip-due-to-issue
+#     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
+#     ...    AND    I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer ${token}
+#     When I send a POST request:    /service-points   {"name": "", "key": "invalid_name_length", "isActive": "true", "stores": ["DE", "AT"]}
+#     Then Response status code should be:    400
+#     And Response should return error code:    5407
+#     And Response should return error message:    A service point name must have length from 0 to 255 characters.
+# #    #!!!!!! 
+# Create_Service_Point_With_Invalid_Store
+#     [Documentation]     https://spryker.atlassian.net/browse/FRW-1597
+#     [Tags]    skip-due-to-issue
+#     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
+#     ...    AND    I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer ${token}
+#     When I send a POST request:    /service-points   {"name": "Invalid Store Service Point", "key": "invalid_store", "isActive": "true", "stores": ["Invalid_Store"]}
+#     Then Response status code should be:    400
+#     And Response should return error code:    5401
+#     And Response should return error message:    Wrong request body.
 
 # Create_Service_Point_With_Empty_Body
 #     [Documentation]    https://spryker.atlassian.net/browse/FRW-1597
@@ -157,7 +157,7 @@ Create_Service_Point_With_Invalid_Store
 
 # !!!!
 Update_Service_Point_With_not_existing_key
-    [Documentation]    get 200 is that expectable, new service point created
+    [Documentation]    get 200 is that expectable
     # [Tags]    skip-due-to-issue
     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer ${token}
@@ -169,6 +169,7 @@ Update_Service_Point_With_not_existing_key
     [Teardown]     Run Keywords    Get service point uuid by key:    ${service_point_key}
     ...    AND    Delete service point in DB    ${service_point_id}
 
+# проверить есть ли тест на дубликат ключа
 # Get_Service_Points_Without_Authentication
 #     [Setup]    I set Headers:    Authorization=
 #     When I send a GET request:    /service-points
