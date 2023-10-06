@@ -42,13 +42,12 @@ Yves: page contains CMS element:
         Element Should Be Visible    xpath=//div[contains(@class,'catalog-cms-block')]//*[.="${text}"]
     END
 
-
 Yves: change sorting order on catalog page:
     [Arguments]    ${sortingOption}
     Click    xpath=//span[contains(@id,'select2-sort')]
     Wait Until Element Is Visible    xpath=//ul[contains(@role,'listbox')]//li[contains(@id,'select2-sort') and contains(text(),'${sortingOption}')]
     Click    xpath=//ul[contains(@role,'listbox')]//li[contains(@id,'select2-sort') and contains(text(),'${sortingOption}')]
-
+    Wait Until Network Is Idle
 
 Yves: 1st product card in catalog (not)contains:
     [Documentation]    ${elementName} can be: Price, Name, Add to Cart, Color selector, Sale label, New label
@@ -114,9 +113,7 @@ Yves: quick add to cart for first item in catalog
         Wait Until Element Is Visible    xpath=//product-item[@data-qa='component product-item'][1]//ajax-add-to-cart//button
         Click    xpath=//product-item[@data-qa='component product-item'][1]//ajax-add-to-cart//button
     END
-    Wait Until Network Is Idle
-    # ${response}=    Wait for response    matcher=cart\/add\-ajax    timeout=${browser_timeout}
-    # Should be true    ${response}[ok]
+    Repeat Keyword    3    Wait Until Network Is Idle
 
 Yves: get current cart item counter value
     [Documentation]    returns the cart item count number as an integer
@@ -124,9 +121,11 @@ Yves: get current cart item counter value
     ${currentCartCounter}=    Convert To Integer    ${currentCartCounterText}
     [return]    ${currentCartCounter}
 
-Yves: select product color:
+Yves: mouse over color on product card:
     [Documentation]    the color should start with capital letter, e.g. Black, Red, White
     [Arguments]    ${colour}
     Mouse Over    xpath=//product-item[@data-qa='component product-item'][1]//*[contains(@class,'item__name')]
+    Wait Until Network Is Idle
     Wait Until Element Is Visible    xpath=//product-item[@data-qa='component product-item'][1]//product-item-color-selector
     Mouse Over    xpath=//product-item[@data-qa='component product-item'][1]//product-item-color-selector//span[contains(@class,'tooltip')][contains(text(),'${colour}')]/ancestor::button
+    Wait Until Network Is Idle

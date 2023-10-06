@@ -333,16 +333,9 @@ Yves: cancel the order:
     [Arguments]    ${order_id}
     Yves: 'View Order/Reorder/Return' on the order history page:    View Order    ${order_id}
     Wait Until Element Is Visible    ${order_details_cancel_button_locator}
-    Wait Until Network Is Idle
-    # Set Browser Timeout    1s
-    # TRY
+    Repeat Keyword    3    Wait Until Network Is Idle
     Click    ${order_details_cancel_button_locator}
-    Wait Until Network Is Idle
+    Repeat Keyword    2    Wait Until Network Is Idle
     Wait Until Element Is Not Visible    ${order_details_cancel_button_locator}
-    # EXCEPT    
-    #     Click    ${order_details_cancel_button_locator}
-    #     Wait Until Element Is Not Visible    ${order_details_cancel_button_locator}
-    # END    
-    # Set Browser Timeout    ${browser_timeout}
     Yves: go to 'Order History' page
     Yves: 'Order History' page contains the following order with a status:    ${order_id}    Canceled

@@ -40,7 +40,7 @@ Yves: add product to the shopping cart
     ${variants_present_status}=    Run Keyword And Return Status    Page Should Not Contain Element    ${pdp_variant_selector}    timeout=0:00:01
     IF    '${variants_present_status}'=='False'    Yves: change variant of the product on PDP on random value
     Click    ${pdp_add_to_cart_button}
-    Wait Until Network Is Idle
+    Repeat Keyword    2    Wait Until Network Is Idle
     Yves: remove flash messages
 
 Yves: change quantity on PDP:
@@ -144,12 +144,13 @@ Yves: add product to the shopping list:
     ${variants_present_status}=    Run Keyword And Ignore Error    Page Should Not Contain Element    ${pdp_variant_selector}    timeout=1s
     ${shopping_list_dropdown_status}=    Run Keyword And Ignore Error    Page should contain element    ${pdp_shopping_list_selector}    timeout=1s
     IF    'FAIL' in ${variants_present_status}    Yves: change variant of the product on PDP on random value
-    Set Browser Timeout    5s
+    Set Browser Timeout    3s
     IF    ('${shoppingListName}' != '${EMPTY}' and 'PASS' in ${shopping_list_dropdown_status})
         TRY
+            Wait Until Element Is Enabled    ${pdp_shopping_list_selector}
             Select From List By Label    ${pdp_shopping_list_selector}    ${shoppingListName}
             Wait Until Element Is Visible    ${pdp_add_to_shopping_list_button}
-            click    ${pdp_add_to_shopping_list_button}    
+            Click    ${pdp_add_to_shopping_list_button}    
             Wait Until Network Is Idle
         EXCEPT    
             Click    xpath=//span[@class='select2-selection select2-selection--single']//span[contains(@id,'select2-idShoppingList')]
@@ -174,8 +175,7 @@ Yves: change variant of the product on PDP on random value
         Run Keyword And Ignore Error    Select From List By Value    ${pdp_variant_selector}    ${variantToChoose}
     END
     Set Browser Timeout    ${browser_timeout}
-    Sleep    1s
-    Wait Until Network Is Idle
+    Repeat Keyword    3    Wait Until Network Is Idle
 
 Yves: get sku of the concrete product on PDP
     Wait Until Element Is Visible    ${pdp_product_sku}[${env}]
@@ -263,7 +263,7 @@ Yves: select xxx merchant's offer:
     Wait Until Element Is Visible    ${pdp_product_sku}[${env}]
     Click    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]/ancestor::div[contains(@class,'offer-item')]//span[contains(@class,'radio__box')]
     TRY
-        Wait Until Network Is Idle
+        Repeat Keyword    2    Wait Until Network Is Idle
         Wait For Elements State    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]/ancestor::div[contains(@class,'offer-item')]//span[contains(@class,'radio__box')]/../input    state=checked    timeout=3s
     EXCEPT    
         Wait For Elements State    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]/ancestor::div[contains(@class,'offer-item')]//span[contains(@class,'radio__box')]/../input    state=checked    timeout=3s

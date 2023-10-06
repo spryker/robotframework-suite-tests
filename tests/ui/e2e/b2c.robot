@@ -149,7 +149,7 @@ Catalog_Actions
     Yves: perform search by:    002
     Yves: 1st product card in catalog (not)contains:      Add to Cart    true
     Yves: 1st product card in catalog (not)contains:      Color selector   true
-    Yves: select product color:    silver
+    Yves: mouse over color on product card:    silver
     Yves: quick add to cart for first item in catalog
     Yves: go to b2c shopping cart
     Yves: shopping cart contains the following products:    NEX-VG20EH    Canon IXUS 160
@@ -845,7 +845,7 @@ Product_Original_Price
     Yves: product original price on the PDP should be:    €50.00
 
 Checkout_Address_Management
-    [Documentation]    Checks that user can change address during the checkout and save new into the address book.
+    [Documentation]    Bug: CC-30439. Checks that user can change address during the checkout and save new into the address book
     [Setup]    Run Keywords    
     ...    Yves: login on Yves with provided credentials:    ${yves_user_email}
     ...    AND    Yves: delete all user addresses
@@ -995,7 +995,7 @@ Minimum_Order_Value
     Yves: submit form on the checkout
     Yves: select the following payment method on the checkout and go next:    Invoice
     Yves: soft threshold surcharge is added on summary page:    €9.00
-    Yves: hard threshold is applied with the following message:    €150.00
+    Yves: hard threshold is applied with the following message:    EN max €150.00
     Yves: go to the 'Home' page
     Yves: go to b2c shopping cart
     Yves: delete product from the shopping cart with name:    Canon IXUS 175
@@ -1164,7 +1164,7 @@ Multistore_CMS
     ...    AND    Zed: click Action Button in a table for row that contains:    Multistore Page${random}    Deactivate
 
 Product_Availability_Calculation
-    [Documentation]    Check product availability + multistore. 
+    [Documentation]    Bug: CC-24108. Check product availability + multistore
     [Setup]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: update warehouse:    
     ...    || warehouse  | store || 

@@ -9,10 +9,11 @@ ${mp_navigation_slider_menu}    xpath=//spy-navigation
 ${mp_submit_button}    xpath=//button[@type='submit'][not(contains(text(),'Back'))]
 ${mp_items_table}    xpath=//nz-table-inner-default//table
 ${mp_search_box}    xpath=//spy-table//input[contains(@placeholder,'Search')]
-${mp_close_drawer_button}    xpath=//button[contains(@class,'spy-drawer-wrapper__action--close')]
+${mp_close_drawer_button}    xpath=(//button[contains(@class,'spy-drawer-wrapper__action--close')])[1]
 ${spinner_loader}    xpath=//span[contains(@class,'ant-spin-dot')]
 ${mp_success_flyout}    xpath=//span[contains(@class,'alert')][contains(@class,'icon')][contains(@class,'success')]
 ${mp_error_flyout}    xpath=//span[contains(@class,'alert')][contains(@class,'icon')][contains(@class,'error')]
+${mp_notification_wrapper}    xpath=//spy-notification-wrapper
 
 *** Keywords ***
 MP: login on MP with provided credentials:
@@ -47,27 +48,26 @@ MP: open navigation menu tab:
 MP: click submit button
     Wait Until Element Is Visible    ${mp_submit_button}
     Click    ${mp_submit_button}
-    Wait Until Network Is Idle
+    Repeat Keyword    2    Wait Until Network Is Idle
 
 MP: perform search by:
     [Arguments]    ${searchKey}
-    Reload
+    Clear Text    ${mp_search_box}
     Type Text    ${mp_search_box}    ${searchKey}
     Keyboard Key    press    Enter
-    # TRY
-    #     Wait Until Element Is Visible    ${spinner_loader}    timeout=1s
-    #     Wait Until Element Is Not Visible    ${spinner_loader}    timeout=1s
-    #     Wait Until Element Is Enabled    ${mp_items_table}    timeout=1s
-    # EXCEPT    
-    #     Log    Spinner was not shown
-    # END
-    Wait Until Network Is Idle
-
+    TRY
+        Wait For Response    timeout=10s
+    EXCEPT    
+        Log    Search event is not fired
+    END
+    Repeat Keyword    2    Wait Until Network Is Idle
 
 MP: click on a table row that contains:
     [Arguments]    ${rowContent}
     Wait Until Element Is Visible    xpath=//div[@class='spy-table-column-text'][contains(text(),'${rowContent}')]/ancestor::tr[contains(@class,'ant-table-row')] 
     Click    xpath=//div[@class='spy-table-column-text'][contains(text(),'${rowContent}')]/ancestor::tr[contains(@class,'ant-table-row')]
+    Wait Until Page Contains Element    ${mp_close_drawer_button}
+    Repeat Keyword    2    Wait Until Network Is Idle
 
 MP: close drawer
     Wait Until Element Is Visible    ${mp_close_drawer_button}
@@ -85,11 +85,19 @@ MP: select option in expanded dropdown:
     [Arguments]    ${optionName}
     Wait Until Element Is Visible    xpath=//nz-option-container[contains(@class,'ant-select-dropdown')]//span[contains(text(),'${optionName}')]
     Click    xpath=//nz-option-container[contains(@class,'ant-select-dropdown')]//span[contains(text(),'${optionName}')]
-    Sleep    1s
-
+    Repeat Keyword    2    Wait Until Network Is Idle
+    Sleep    0.5s
     
 MP: switch to the tab:
     [Arguments]    ${tabName}
     Wait Until Element Is Visible    xpath=//web-spy-tabs[@class='spy-tabs']//div[@role='tab'][contains(@class,'ant-tabs')]//div[contains(text(),'${tabName}')]
     Click    xpath=//web-spy-tabs[@class='spy-tabs']//div[@role='tab'][contains(@class,'ant-tabs')]//div[contains(text(),'${tabName}')]
     
+MP: remove notification wrapper
+    TRY
+        ${flash_massage_state}=    Page Should Contain Element    ${mp_notification_wrapper}    message=Notification wrapper message is not shown    timeout=1s
+        Remove element from HTML with JavaScript    //spy-notification-wrapper
+        Remove element from HTML with JavaScript    (//spy-notification-wrapper//div)[1]
+    EXCEPT    
+        Log    Flash message is not shown
+    END

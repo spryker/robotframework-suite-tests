@@ -1063,7 +1063,7 @@ Product_Original_Price
     Yves: product original price on the PDP should be:    €50.00
 
 Checkout_Address_Management
-    [Documentation]    Checks that user can change address during the checkout and save new into the address book. 
+    [Documentation]    Bug: CC-30439. Checks that user can change address during the checkout and save new into the address book
     [Setup]    Run Keywords    
     ...    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     ...    AND    Yves: delete all user addresses
@@ -1405,7 +1405,7 @@ Multistore_CMS
     ...    AND    Zed: click Action Button in a table for row that contains:    Multistore Page${random}    Deactivate
 
 Product_Availability_Calculation
-    [Documentation]    Check product availability + multistore. 
+    [Documentation]    Bug: CC-24108. Check product availability + multistore
     [Setup]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: update warehouse:    
     ...    || warehouse  | store || 

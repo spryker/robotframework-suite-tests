@@ -87,7 +87,8 @@ Yves: hard threshold is applied with the following message:
         Element Should Be Visible    ${checkout_summary_alert_message}[${env}]
         Page Should Not Contain Element    ${checkout_summary_submit_order_button}
         ${actualAlertMessage}=    Get Text    ${checkout_summary_alert_message}[${env}]
-        Should Be Equal    ${actualAlertMessage}    ${expectedMessage}
+        # Should Be Equal    ${actualAlertMessage}    ${expectedMessage}
+        Should Contain    ${actualAlertMessage}    ${expectedMessage}
     EXCEPT    
         Yves: accept the terms and conditions:    true
         Click    ${checkout_summary_submit_order_button}

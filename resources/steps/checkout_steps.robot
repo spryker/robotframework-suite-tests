@@ -53,15 +53,17 @@ Yves: select the following existing address on the checkout as 'shipping' addres
                     ${selected_address}=    Get Text    xpath=//select[contains(@name,'shippingAddress')][contains(@id,'addressesForm_shippingAddress_id')]/..//span[contains(@id,'shippingAddress_id')]
                 ELSE IF    '${env}' in ['ui_b2b','ui_mp_b2b']
                     Click    xpath=//div[contains(@class,'shippingAddress')]//select[@name='checkout-full-addresses'][contains(@class,'address__form')]/..//span[contains(@id,'checkout-full-address')]
+                    Wait Until Network Is Idle
                     Wait Until Element Is Visible    xpath=//span[@class='select2-results']
                     Sleep    1s
                     Click    xpath=//ul[contains(@id,'checkout-full-addresses')]//li[@role='option'][contains(@id,'business_unit_address')][contains(.,'${addressToUse}')]
-                    Sleep    3s
+                    Wait Until Network Is Idle
+                    Sleep    1s
                     ${selected_address}=    Get Text    xpath=//div[contains(@class,'shippingAddress')]//select[@name='checkout-full-addresses'][contains(@class,'address__form')]/..//span[contains(@id,'checkout-full-address')]
                 END
     END
     Click    ${submit_checkout_form_button}[${env}]
-    Sleep    1s
+    Wait Until Network Is Idle
 
 Yves: fill in the following new shipping address:
     [Documentation]    Possible argument names: salutation, firstName, lastName, street, houseNumber, postCode, city, country, company, phone, additionalAddress
@@ -161,7 +163,7 @@ Yves: select the following payment method on the checkout and go next:
     ELSE IF    '${env}' in ['ui_mp_b2b'] and '${paymentMethod}'=='Invoice'
         Run Keywords
             Click    //form[@id='payment-form']//li[@class='checkout-list__item'][contains(.,'${paymentMethod}')]//span[contains(@class,'toggler-radio__box')]
-            Type Text    ${checkout_payment_invoice_date_of_birth_field}    11.11.1111
+            Type Text    ${checkout_payment_marketplace_invoice_date_field}    11.11.1111
             Click    ${submit_checkout_form_button}[${env}]
     ELSE IF    '${env}' in ['ui_mp_b2b'] and '${paymentMethod}'=='Invoice (Marketplace)'
         Run Keywords

@@ -96,11 +96,23 @@ Yves: login on Yves with provided credentials:
 Yves: go to PDP of the product with sku:
     [Arguments]    ${sku}
     Yves: go to URL:    /search?q=${sku}
-    Wait Until Page Contains Element    ${catalog_main_page_locator}[${env}]
-    Wait Until Page Contains Element    ${catalog_product_card_locator}
-    Click    ${catalog_product_card_locator}
-    Wait Until Page Contains Element    ${pdp_main_container_locator}[${env}]
-    Wait Until Network Is Idle
+    TRY
+        Wait Until Page Contains Element    ${catalog_main_page_locator}[${env}]
+        Wait Until Page Contains Element    ${catalog_product_card_locator}
+        Click    ${catalog_product_card_locator}
+        Wait Until Page Contains Element    ${pdp_main_container_locator}[${env}]
+        Wait Until Network Is Idle
+    EXCEPT    
+        Yves: go to URL:    /search?q=${sku}
+        Reload
+        Wait Until Network Is Idle
+        Wait Until Page Contains Element    ${catalog_main_page_locator}[${env}]
+        Wait Until Page Contains Element    ${catalog_product_card_locator}
+        Click    ${catalog_product_card_locator}
+        Wait Until Page Contains Element    ${pdp_main_container_locator}[${env}]
+        Wait Until Network Is Idle
+    END
+
 
 Yves: '${pageName}' page is displayed
     IF    '${pageName}' == 'Company Users'    Page Should Contain Element    ${company_users_main_content_locator}    ${pageName} page is not displayed

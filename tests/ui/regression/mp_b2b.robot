@@ -1886,7 +1886,7 @@ Merchant_Product_Original_Price
 
 Checkout_Address_Management
     [Tags]    skip-due-to-issue
-    [Documentation]    Bug: CC-24090. Checks that user can change address during the checkout and save new into the address book
+    [Documentation]    Bug: CC-30439. Checks that user can change address during the checkout and save new into the address book
     [Setup]    Run Keywords    
     ...    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     ...    AND    Yves: delete all user addresses
@@ -2286,7 +2286,7 @@ Multistore_CMS
     ...    AND    Zed: click Action Button in a table for row that contains:    Multistore Page${random}    Deactivate
 
 Product_Availability_Calculation
-    [Documentation]    Check product availability + multistore
+    [Documentation]    Bug: CC-24108. Check product availability + multistore
     MP: login on MP with provided credentials:    ${merchant_spryker_email}
     MP: open navigation menu tab:    Products    
     MP: click on create new entity button:    Create Product

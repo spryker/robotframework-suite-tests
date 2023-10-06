@@ -38,7 +38,7 @@ Zed: check if at least one price exists for concrete and add if doesn't:
     [Arguments]    ${price}
     ${currentURL}=    Get Location
     IF    'content-price' not in '${currentURL}'    Zed: switch to the tab on 'Edit product' page:    Price & Stock
-    ${exists}=    BuiltIn.Run Keyword And Return Status    Element Should Exist    xpath=///table[@id='price-table-collection']//input[@id='product_concrete_form_edit_prices_1-93-DEFAULT-BOTH_moneyValue_gross_amount']
+    ${exists}=    BuiltIn.Run Keyword And Return Status    Element Should Exist    xpath=//table[@id='price-table-collection']//input[@id='product_concrete_form_edit_prices_1-93-DEFAULT-BOTH_moneyValue_gross_amount']
     IF        '${exists}'=='False'    Type Text    xpath=//table[@id='price-table-collection']//input[@id='product_concrete_form_edit_prices_1-93-DEFAULT-BOTH_moneyValue_gross_amount']    ${price}
     Click    ${zed_pdp_save_button}
 
@@ -503,4 +503,3 @@ Zed: add new concrete product to abstract:
         END
     END
     Click    ${zed_pdp_save_button}
-    Wait Until Element Is Visible    xpath=//div[@class='title-action']/a[contains(.,'Manage Attributes')]

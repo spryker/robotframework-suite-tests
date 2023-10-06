@@ -83,15 +83,14 @@ Zed: click Action Button in a table for row that contains:
     Zed: perform search by:    ${row_content}
     Wait until element is visible    xpath=(//table[contains(@class,'dataTable')]/tbody//td[contains(text(),'${row_content}')]/../td[contains(@class,'column-Action') or contains(@class,'column-action')]/*[contains(.,'${zed_table_action_button_locator}')])[1]
     Click    xpath=(//table[contains(@class,'dataTable')]/tbody//td[contains(text(),'${row_content}')]/../td[contains(@class,'column-Action') or contains(@class,'column-action')]/*[contains(.,'${zed_table_action_button_locator}')])[1]
-    Sleep    0.5s
-    Wait Until Network Is Idle
+    Repeat Keyword    3    Wait Until Network Is Idle
 
 Zed: click Action Button in Variant table for row that contains:
     [Arguments]    ${row_content}    ${zed_table_action_button_locator}
     Zed: perform variant search by:    ${row_content}
     wait until element is visible    xpath=//table[contains(@class,'dataTable')]/tbody//td[contains(text(),'${row_content}')]/../td[contains(@class,'column-Action') or contains(@class,'column-action')]/*[contains(.,'${zed_table_action_button_locator}')]
     Click    xpath=//table[contains(@class,'dataTable')]/tbody//td[contains(text(),'${row_content}')]/../td[contains(@class,'column-Action') or contains(@class,'column-action')]/*[contains(.,'${zed_table_action_button_locator}')]
-    Wait Until Network Is Idle
+    Repeat Keyword    2    Wait Until Network Is Idle
 
 Zed: Check checkbox by Label:
     [Arguments]    ${checkbox_label}
@@ -106,18 +105,18 @@ Zed: Uncheck Checkbox by Label:
 Zed: submit the form
     Wait until element is visible    ${zed_save_button}
     Click    ${zed_save_button}
-    Wait Until Network Is Idle
+    Repeat Keyword    2    Wait Until Network Is Idle
     Wait Until Element Is Visible    ${zed_log_out_button}
     ${error_flash_message}=    Run Keyword And Ignore Error    Page Should Not Contain Element    ${zed_error_flash_message}    1s
     IF    'FAIL' in ${error_flash_message}
         Click    ${zed_save_button}
-        Wait Until Network Is Idle
+        Repeat Keyword    2    Wait Until Network Is Idle
         Wait Until Element Is Visible    ${zed_log_out_button}
     END
     ${error_message}=    Run Keyword And Ignore Error    Page Should Not Contain Element    ${zed_error_message}    1s
     IF    'FAIL' in ${error_message}
         Click    ${zed_save_button}
-        Wait Until Network Is Idle
+        Repeat Keyword    2    Wait Until Network Is Idle
         Wait Until Element Is Visible    ${zed_log_out_button}
     END
     Page Should Not Contain Element    ${zed_error_message}    1s
@@ -125,43 +124,31 @@ Zed: submit the form
 
 Zed: perform search by:
     [Arguments]    ${search_key}
+    Clear Text    ${zed_search_field_locator}
     Type Text    ${zed_search_field_locator}    ${search_key}
     Keyboard Key    press    Enter
-    Wait Until Network Is Idle
     TRY
-        Wait Until Element Is Visible    ${zed_processing_block_locator}    timeout=1s
-        Wait Until Element Is Not Visible    ${zed_processing_block_locator}    
+        Wait For Response    timeout=10s
     EXCEPT    
-        Wait Until Element Is Not Visible    ${zed_processing_block_locator}    
+        Log    Search event is not fired
     END
-    TRY
-        Wait Until Element Is Not Visible    ${zed_processing_block_locator}    
-    EXCEPT    
-        Log    Processing block is not shown
-    END
-    Wait Until Network Is Idle
+    Repeat Keyword    2    Wait Until Network Is Idle
 
 Zed: clear search field
     Clear Text    ${zed_search_field_locator}
-    Wait Until Network Is Idle
+    Repeat Keyword    2    Wait Until Network Is Idle
 
 Zed: perform variant search by:
     [Arguments]    ${search_key}
+    Clear Text    ${zed_variant_search_field_locator}
     Type Text    ${zed_variant_search_field_locator}    ${search_key}
     Keyboard Key    press    Enter
-    Wait Until Network Is Idle
     TRY
-        Wait Until Element Is Visible    ${zed_product_variant_table_processing_locator}    timeout=1s
-        Wait Until Element Is Not Visible    ${zed_product_variant_table_processing_locator}    
+        Wait For Response    timeout=10s
     EXCEPT    
-        Wait Until Element Is Not Visible    ${zed_product_variant_table_processing_locator}    
+        Log    Search event is not fired
     END
-    TRY
-        Wait Until Element Is Not Visible    ${zed_product_variant_table_processing_locator}    
-    EXCEPT    
-        Log    Processing block is not shown
-    END
-    Wait Until Network Is Idle
+    Repeat Keyword    2    Wait Until Network Is Idle
 
 Zed: table should contain:
     [Arguments]    ${search_key}
@@ -197,6 +184,7 @@ Zed: click Action Button(without search) in a table for row that contains:
     [Arguments]    ${row_content}    ${zed_table_action_button_locator}
     wait until element is visible    xpath=//table[contains(@class,'dataTable')]/tbody//td[contains(text(),'${row_content}')]/../td[contains(@class,'column-Action') or contains(@class,'column-action')]/*[contains(.,'${zed_table_action_button_locator}')]
     Click    xpath=//table[contains(@class,'dataTable')]/tbody//td[contains(text(),'${row_content}')]/../td[contains(@class,'column-Action') or contains(@class,'column-action')]/*[contains(.,'${zed_table_action_button_locator}')]
+    Wait Until Network Is Idle
 
 Zed: filter by merchant:
     [Arguments]    ${merchant}
