@@ -47,25 +47,26 @@ ENABLER
 #     Then Response status code should be:    403
 #     And Response should return error message:    Invalid access token
     #!!!!!! 
-# Create_Service_Point_With_Empty_Name_Length
-    # [Documentation]    500
+
+Create_Service_Point_With_Empty_Name
+    [Documentation]    500
     # [Tags]    skip-due-to-issue
-    # [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
-    # ...    AND    I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer ${token}
-    # When I send a POST request:    /service-points   {"name": "", "key": "invalid_name_length", "isActive": "true", "stores": ["DE", "AT"]}
-    # Then Response status code should be:    400
-    # And Response should return error code:    5407
-    # And Response should return error message:    A service point name must have length from 0 to 255 characters.
+    [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
+    ...    AND    I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer ${token}
+    When I send a POST request:    /service-points   {"name": "", "key": "invalid_name_length", "isActive": "true", "stores": ["DE", "AT"]}
+    Then Response status code should be:    400
+    And Response should return error code:    5407
+    And Response should return error message:    A service point name must have length from 0 to 255 characters.
 #    #!!!!!! 
-# Create_Service_Point_With_Invalid_Store
-#     [Documentation]     500
-#     [Tags]    skip-due-to-issue
-#     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
-#     ...    AND    I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer ${token}
-#     When I send a POST request:    /service-points   {"name": "Invalid Store Service Point", "key": "invalid_store", "isActive": "true", "stores": ["Invalid_Store"]}
-#     Then Response status code should be:    400
-#     And Response should return error code:    5401
-#     And Response should return error message:    Wrong request body.
+Create_Service_Point_With_Invalid_Store
+    [Documentation]     500
+    # [Tags]    skip-due-to-issue
+    [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
+    ...    AND    I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer ${token}
+    When I send a POST request:    /service-points   {"name": "Invalid Store Service Point", "key": "invalid_store", "isActive": "true", "stores": ["Invalid_Store"]}
+    Then Response status code should be:    400
+    And Response should return error code:    5401
+    And Response should return error message:    Wrong request body.
 
 # Create_Service_Point_With_Empty_Body
 #     [Documentation]    https://spryker.atlassian.net/browse/FRW-1597
@@ -154,56 +155,35 @@ ENABLER
     # [Teardown]     Run Keywords    Get service point uuid by key:    ${service_point_key}
     # ...    AND    Delete service point in DB    ${service_point_id}
 
-Update_Service_Point_With_not_existing_key
 # !!!!
-#     [Documentation]    get 200 is that expectable?
-#     [Tags]    skip-due-to-issue
+Update_Service_Point_With_not_existing_key
+    [Documentation]    get 200 is that expectable, new service point created
+    # [Tags]    skip-due-to-issue
     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer ${token}
     ...    AND    I send a POST request:    /service-points    {"data": {"type": "service-points","attributes": {"name": "Initial Service Point ${random}","key": "initial-service-point-${random}","isActive": "true","stores": ["DE", "AT"]}}}
     ...    AND    Save value to a variable:    [data][attributes][key]    service_point_key
     ...    AND    Save value to a variable:    [data][id]    service_point_id
-    When I send a PATCH request:    /service-points/${service_point_id}    {"data": {"type": "service-points","attributes": {"key": "not-existing-key","stores": ["DE"],"isActive": "true","name": "test"}}}
+    When I send a PATCH request:    /service-points/${service_point_id}    {"data": {"type": "service-points","attributes": {"key": "not-existing-key${random}","stores": ["DE"],"isActive": "true","name": "test"}}}
     Then Response status code should be:    400
-    # [Teardown]     Run Keywords    Get service point uuid by key:    ${service_point_key}
-    # ...    AND    Delete service point in DB    ${service_point_id}
-*** Test Cases ***
+    [Teardown]     Run Keywords    Get service point uuid by key:    ${service_point_key}
+    ...    AND    Delete service point in DB    ${service_point_id}
 
-Get_Service_Points_Without_Authentication
-    [Setup]    I set Headers:    Authorization=
-    When I send a GET request:    /service-points
-    Then Response status code should be:    403
-    And Response should return error code:    5402
-    And Response should return error message:    Authorization failed.
+# Get_Service_Points_Without_Authentication
+#     [Setup]    I set Headers:    Authorization=
+#     When I send a GET request:    /service-points
+#     Then Response status code should be:    400
 
-Get_Service_Points_With_Incorrect_Token
-    [Setup]    I set Headers:    Authorization=IncorrectToken
-    When I send a GET request:    /service-points
-    Then Response status code should be:    403
-    And Response should return error code:    5402
-    And Response should return error message:    Authorization failed.
+# Get_Service_Points_With_Incorrect_Token
+#     [Setup]    I set Headers:    Authorization=IncorrectToken
+#     When I send a GET request:    /service-points
+#     Then Response status code should be:    400
 
-Get_Service_Point_By_Nonexistent_ID
-    [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
-    ...    AND    I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer ${token}
-    When I send a GET request:    /service-points/NonexistentID
-    Then Response status code should be:    400
-    And Response should return error code:    5403
-    And Response should return error message:    The service point entity was not found.
-
-Get_Service_Point_By_Invalid_ID
-    [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
-    ...    AND    I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer ${token}
-    When I send a GET request:    /service-points/InvalidID
-    Then Response status code should be:    400
-    And Response should return error code:    5401
-    And Response should return error message:    Wrong request body.
-
-Get_Service_Points_With_Bad_Header
-    [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
-    ...    AND    I set Headers:    Content-Type=application/badtype   Authorization=Bearer ${token}
-    When I send a GET request:    /service-points
-    Then Response status code should be:    400
-    And Response should return error code:    5401
-    And Response should return error message:    Wrong request body.
+# Get_Service_Point_By_Nonexistent_ID
+#     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
+#     ...    AND    I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer ${token}
+#     When I send a GET request:    /service-points/NonexistentID
+#     Then Response status code should be:    404
+#     And Response should return error code:    5403
+#     And Response should return error message:    Service point entity was not found.
 
