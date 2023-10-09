@@ -74,7 +74,7 @@ MP: add offer price:
 MP: save offer    
     MP: click submit button
     Wait Until Element Is Visible    ${offer_saved_popup}
-    Wait Until Element Is Not Visible    ${offer_saved_popup}
+    MP: remove notification wrapper
 
 MP: change offer stock:
     [Arguments]    @{args}
@@ -107,7 +107,7 @@ MP: delete offer price row that contains quantity:
     Hover    xpath=//web-spy-card[@spy-title='Price']//tbody/tr/td[7][contains(.,'${quantity}')]/ancestor::tr//td[@class='ng-star-inserted']/div
     Click    ${product_delete_price_row_button}
     Wait Until Element Is Visible    ${product_price_deleted_popup}
-    Wait Until Element Is Not Visible    ${product_price_deleted_popup}
+    MP: remove notification wrapper
 
 Zed: view offer page is displayed
     Wait Until Element Is Visible    ${zed_view_offer_page_main_content_locator}

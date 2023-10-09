@@ -27,7 +27,7 @@ Yves: 'View Order/Reorder/Return' on the order history page:
 
 Yves: reorder all items from 'Order Details' page
     Wait Until Element Is Visible    ${order_details_reorder_all_button}
-    Click    ${order_details_reorder_all_button}    delay=1s
+    Click With Options    ${order_details_reorder_all_button}    delay=1s
     Yves: remove flash messages
 
 Yves: shipping address on the order details page is:
@@ -51,6 +51,7 @@ Yves: 'Order History' page contains the following order with a status:
 
 Yves: 'Order Details' page contains the cancel order button:
     [Arguments]    ${condition}
+    ${condition}=    Convert To Lower Case    ${condition}
     IF    '${condition}' == 'true'    
         Element Should Be Visible    ${order_details_cancel_button_locator}
     ELSE

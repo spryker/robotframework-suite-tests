@@ -10,7 +10,13 @@ Zed: verify first navigation root menus
     WHILE  ${counter} <= ${first_navigation_count}
         Log    ${counter}
         Click    xpath=(//ul[@id='side-menu']/li/a/span[@class='nav-label']/../../a[contains(@href,'/') and not (contains(@href,'javascript'))])[${counter}]
-        Sleep    3s
+        Repeat Keyword    2    Wait Until Network Is Idle
+        TRY
+            ${app_terms_overlay_state}=    Page Should Contain Element    xpath=//app-terms-and-conditions-dialog/ancestor::div[contains(@class,'overlay-container')]    message=Overlay is not displayed    timeout=1s
+            Remove element from HTML with JavaScript    //app-terms-and-conditions-dialog/ancestor::div[contains(@class,'overlay-container')]
+        EXCEPT
+            Log    Overlay is not displayed
+        END
         Wait Until Element Is Visible    ${zed_log_out_button}    10s
         ${counter}=    Evaluate    ${counter} + 1   
     END
