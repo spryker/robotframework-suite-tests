@@ -151,7 +151,7 @@ Catalog
 #     Yves: perform search by:    002
 #     Yves: 1st product card in catalog (not)contains:      Add to Cart    true
 #     Yves: 1st product card in catalog (not)contains:      Color selector   true
-#     Yves: select product color:    black
+#     Yves: mouse over color on product card:    black
 #     Yves: quick add to cart for first item in catalog
 #     Yves: go to b2c shopping cart
 #     Yves: shopping cart contains the following products:    NEX-VG20EH    Canon IXUS 160
@@ -719,8 +719,8 @@ Merchant_Profile_Update
     MP: open navigation menu tab:    Profile  
     MP: open profile tab:    Online Profile
     MP: update profile fields with following data:
-    ...    || email                  | phone           | delivery time | data privacy              | profile url en       | profile url de       ||
-    ...    || updated@office-king.nl | +11 222 333 444 | 2-4 weeks     | Data privacy updated text | https://spryker.com/ | https://spryker.com/ ||
+    ...    || email                  | phone           | delivery time | data privacy              ||
+    ...    || updated@office-king.nl | +11 222 333 444 | 2-4 weeks     | Data privacy updated text ||
     MP: click submit button
     Yves: go to URL:    en/merchant/video-king
     Yves: assert merchant profile fields:
@@ -730,8 +730,8 @@ Merchant_Profile_Update
     ...    AND    MP: open navigation menu tab:    Profile
     ...    AND    MP: open profile tab:    Online Profile  
     ...    AND    MP: update profile fields with following data:
-    ...    || email            | phone           | delivery time | data privacy                                         | https://spryker.com/ | https://spryker.com/ ||
-    ...    || hi@video-king.nl | +31 123 345 777 | 2-4 days      | Video King values the privacy of your personal data. | https://spryker.com/ | https://spryker.com/ ||
+    ...    || email            | phone           | delivery time | data privacy                                         ||
+    ...    || hi@video-king.nl | +31 123 345 777 | 2-4 days      | Video King values the privacy of your personal data. ||
     ...    AND    MP: click submit button
 
 Merchant_Profile_Set_to_Offline_from_MP
@@ -744,9 +744,6 @@ Merchant_Profile_Set_to_Offline_from_MP
     MP: login on MP with provided credentials:    ${merchant_video_king_email}
     MP: open navigation menu tab:    Profile
     MP: open profile tab:    Online Profile
-    MP: update profile fields with following data:
-    ...    || profile url en       | profile url de       ||
-    ...    || https://spryker.com/ | https://spryker.com/ ||
     MP: change store status to:    offline
     Yves: go to URL:    en/merchant/video-king
     Yves: try reloading page if element is/not appear:    ${merchant_profile_main_content_locator}    false
@@ -760,9 +757,6 @@ Merchant_Profile_Set_to_Offline_from_MP
     [Teardown]    Run Keywords    MP: login on MP with provided credentials:    ${merchant_video_king_email}
     ...    AND    MP: open navigation menu tab:    Profile
     ...    AND    MP: open profile tab:    Online Profile
-    ...    AND    MP: update profile fields with following data:
-    ...    || profile url en       | profile url de       ||
-    ...    || https://spryker.com/ | https://spryker.com/ ||
     ...    AND    MP: change store status to:    online
     ...    AND    Yves: go to the 'Home' page
     ...    AND    Yves: go to PDP of the product with sku:    ${second_product_with_multiple_offers_abstract_sku}
@@ -926,7 +920,7 @@ Create_New_Offer
     MP: fill product price values:
     ...    || product type | row number | store | currency | gross default ||
     ...    || abstract     | 1          | DE    | EUR      | 100           ||
-    MP: save abstract product 
+    MP: save abstract product
     MP: click on a table row that contains:    SprykerSKU${random}
     MP: open concrete drawer by SKU:    SprykerSKU${random}-2
     MP: fill concrete product fields:
@@ -1093,8 +1087,7 @@ Wishlist_List_Supports_Offers
     [Teardown]    Run keywords    Yves: delete all wishlists    AND    Yves: check if cart is not empty and clear it
 
 Search_for_Merchant_Offers_and_Products
-    [Tags]    skip-due-to-issue
-    [Documentation]    Bug: CC-17153. Checks that through search customer is able to see the list of merchant's products and offers
+    [Documentation]    Checks that through search customer is able to see the list of merchant's products and offers
     Yves: go to the 'Home' page
     Yves: perform search by:    Video King
     Yves: go to the PDP of the first available product on open catalog page
@@ -1535,7 +1528,7 @@ Merchant_Product_Original_Price
     ...    AND    Zed: click Action Button in a table for row that contains:     originalSKU${random}     Deny
 
 Checkout_Address_Management
-    [Documentation]    Checks that user can change address during the checkout and save new into the address book
+    [Documentation]    Bug: CC-30439. Checks that user can change address during the checkout and save new into the address book
     [Setup]    Run Keywords    
     ...    Yves: login on Yves with provided credentials:    ${yves_user_email}
     ...    AND    Yves: delete all user addresses
@@ -1894,7 +1887,6 @@ Multistore_CMS
     ...    AND    Zed: click Action Button in a table for row that contains:    Multistore Page${random}    Deactivate
 
 Product_Availability_Calculation
-    [Tags]    skip-due-to-issue
     [Documentation]    Bug: CC-24108. Check product availability + multistore
     MP: login on MP with provided credentials:    ${merchant_spryker_email}
     MP: open navigation menu tab:    Products    

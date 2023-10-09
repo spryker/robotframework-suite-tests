@@ -35,16 +35,20 @@ MP: update order state using header button:
     [Arguments]    ${buttonName}
     Wait Until Element Is Enabled    xpath=//div[@class='mp-manage-order__transitions']//button[contains(text(),'${buttonName}')]
     Click    xpath=//div[@class='mp-manage-order__transitions']//button[contains(text(),'${buttonName}')]
-    Wait Until Element Is Visible    xpath=//span[text()='The state is updated successfully.']
-    Wait Until Element Is Not Visible    xpath=//span[text()='The state is updated successfully.']
+    Wait For Response
+    Wait Until Network Is Idle
+    Wait Until Element Is Visible    ${mp_success_flyout}
+    MP: remove notification wrapper
 
 MP: change order item state on:
     [Arguments]    ${sku}    ${state}
     Wait Until Element Is Visible    xpath=//web-mp-order-items-table[@table-id='web-mp-order-items-table']//spy-table[@class='spy-table']//tbody
     Click    xpath=//web-mp-order-items-table[@table-id='web-mp-order-items-table']//spy-table[@class='spy-table']//tbody//orc-render-item//*[contains(text(),'${sku}')]/ancestor::tr/td//spy-checkbox
     Click    xpath=//*[contains(@class,'table-features')]//*[contains(@class,'batch-actions')]//button[contains(text(),'${state}')]
-    Wait Until Element Is Visible    xpath=//span[text()='The state is updated successfully.']
-    Wait Until Element Is Not Visible    xpath=//span[text()='The state is updated successfully.']
+    Wait For Response
+    Wait Until Network Is Idle
+    Wait Until Element Is Visible    ${mp_success_flyout}
+    MP: remove notification wrapper
 
 MP: order item state should be:
     [Arguments]    ${sku}    ${state}

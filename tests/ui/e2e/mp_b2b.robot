@@ -990,8 +990,8 @@ Merchant_Profile_Update
     MP: open navigation menu tab:    Profile  
     MP: open profile tab:    Online Profile
     MP: update profile fields with following data:
-    ...    || email                  | phone           | delivery time | data privacy              | profile url en       | profile url de       ||
-    ...    || updated@office-king.nl | +11 222 333 444 | 2-4 weeks     | Data privacy updated text | https://spryker.com/ | https://spryker.com/ ||
+    ...    || email                  | phone           | delivery time | data privacy              ||
+    ...    || updated@office-king.nl | +11 222 333 444 | 2-4 weeks     | Data privacy updated text ||
     MP: click submit button
     Yves: go to URL:    en/merchant/office-king
     Yves: assert merchant profile fields:
@@ -1001,8 +1001,8 @@ Merchant_Profile_Update
     ...    AND    MP: open navigation menu tab:    Profile
     ...    AND    MP: open profile tab:    Online Profile  
     ...    AND    MP: update profile fields with following data:
-    ...    || email             | phone           | delivery time | data privacy                                          | profile url en       | profile url de       ||
-    ...    || hi@office-king.nl | +31 123 345 777 | 2-4 days      | Office King values the privacy of your personal data. | https://spryker.com/ | https://spryker.com/ ||
+    ...    || email             | phone           | delivery time | data privacy                                          ||
+    ...    || hi@office-king.nl | +31 123 345 777 | 2-4 days      | Office King values the privacy of your personal data. ||
     ...    AND    MP: click submit button
 
 Merchant_Profile_Set_to_Offline_from_MP
@@ -1019,9 +1019,6 @@ Merchant_Profile_Set_to_Offline_from_MP
     MP: login on MP with provided credentials:    ${merchant_office_king_email}
     MP: open navigation menu tab:    Profile
     MP: open profile tab:    Online Profile
-    MP: update profile fields with following data:
-    ...    || profile url en       | profile url de       ||
-    ...    || https://spryker.com/ | https://spryker.com/ ||
     MP: change store status to:    offline
     Yves: go to URL:    en/merchant/office-king
     Yves: try reloading page if element is/not appear:    ${merchant_profile_main_content_locator}    false
@@ -1035,9 +1032,6 @@ Merchant_Profile_Set_to_Offline_from_MP
     [Teardown]    Run Keywords    MP: login on MP with provided credentials:    ${merchant_office_king_email}
     ...    AND    MP: open navigation menu tab:    Profile
     ...    AND    MP: open profile tab:    Online Profile
-    ...    AND    MP: update profile fields with following data:
-    ...    || profile url en       | profile url de       ||
-    ...    || https://spryker.com/ | https://spryker.com/ ||
     ...    AND    MP: change store status to:    online
     ...    AND    Yves: go to the 'Home' page
     ...    AND    Yves: go to PDP of the product with sku:    ${one_variant_product_abstract_sku}
@@ -1371,8 +1365,7 @@ Merchant_Portal_Customer_Specific_Prices
     Yves: merchant's offer/product price should be:    Spryker     €632.12
 
 Search_for_Merchant_Offers_and_Products
-    [Tags]    skip-due-to-issue
-    [Documentation]    Bug: CC-17153. Checks that through search customer is able to see the list of merchant's products and offers
+    [Documentation]    Checks that through search customer is able to see the list of merchant's products and offers
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     Yves: perform search by:    Office King
     Yves: go to the PDP of the first available product on open catalog page
@@ -1816,8 +1809,7 @@ Merchant_Product_Original_Price
     ...    AND    Zed: click Action Button in a table for row that contains:     originalSKU${random}     Deny
 
 Checkout_Address_Management
-    [Tags]    skip-due-to-issue
-    [Documentation]    Bug: CC-24090. Checks that user can change address during the checkout and save new into the address book
+    [Documentation]    Bug: CC-30439. Checks that user can change address during the checkout and save new into the address book
     [Setup]    Run Keywords    
     ...    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     ...    AND    Yves: delete all user addresses
@@ -2204,7 +2196,6 @@ Multistore_CMS
     ...    AND    Zed: click Action Button in a table for row that contains:    Multistore Page${random}    Deactivate
 
 Product_Availability_Calculation
-    [Tags]    skip-due-to-issue
     [Documentation]    Bug: CC-24108. Check product availability + multistore
     MP: login on MP with provided credentials:    ${merchant_spryker_email}
     MP: open navigation menu tab:    Products    

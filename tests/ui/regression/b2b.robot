@@ -775,7 +775,7 @@ Catalog_Actions
     Yves: perform search by:    ${multi_color_product_abstract_sku}
     Yves: 1st product card in catalog (not)contains:      Add to Cart    true
     Yves: 1st product card in catalog (not)contains:      Color selector   true
-    Yves: select product color:    Blue
+    Yves: mouse over color on product card:    Blue
     Yves: quick add to cart for first item in catalog
     Yves: go to the shopping cart through the header with name:    catalogActions+${random}
     Yves: shopping cart contains the following products:    420573    107255
@@ -1104,7 +1104,7 @@ Product_Original_Price
 
 Checkout_Address_Management
     [Tags]    skip-due-to-issue
-    [Documentation]    Bug:CC-24090. Checks that user can change address during the checkout and save new into the address book. 
+    [Documentation]    Bug: CC-30439. Checks that user can change address during the checkout and save new into the address book
     [Setup]    Run Keywords    
     ...    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     ...    AND    Yves: delete all user addresses
@@ -1460,8 +1460,7 @@ Multistore_CMS
     ...    AND    Zed: click Action Button in a table for row that contains:    Multistore Page${random}    Deactivate
 
 Product_Availability_Calculation
-    [Tags]    skip-due-to-issue
-    [Documentation]    Bug: CC-24108. check product availability + multistore. 
+    [Documentation]    Bug: CC-24108. Check product availability + multistore
     [Setup]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: update warehouse:    
     ...    || warehouse  | store || 
