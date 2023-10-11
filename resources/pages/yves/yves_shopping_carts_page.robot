@@ -39,5 +39,5 @@ Select access level to share shopping cart with:
     Select From List By Label    xpath=//div[@data-qa="share-cart-table"]//*[text()='Users']/../../div[@data-qa='component user-share-list']//li[contains(.,'${customerToShareWith}')]//select    ${accessLevel}
 
 Delete first available shopping cart
-        ${can_be_deleted}=    Run Keyword And Return Status    Page Should Contain Element    ${delete_first_shopping_cart_button}
+        ${can_be_deleted}=    Run Keyword And Return Status    Page Should Contain Element    ${delete_first_shopping_cart_button}    timeout=1s
         IF    '${can_be_deleted}'=='True'    Click    ${delete_first_shopping_cart_button}

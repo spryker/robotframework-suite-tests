@@ -41,6 +41,7 @@ ${notification_area}    xpath=//section[@data-qa='component notification-area']
 *** Keywords ***
 Yves: login on Yves with provided credentials:
     [Arguments]    ${email}    ${password}=${default_password}
+    Set Browser Timeout    ${browser_timeout}
     ${currentURL}=    Get Url
     IF    '/login' not in '${currentURL}'
         IF    '${env}' in ['ui_b2b','ui_suite','ui_mp_b2b']
@@ -94,11 +95,24 @@ Yves: login on Yves with provided credentials:
 
 Yves: go to PDP of the product with sku:
     [Arguments]    ${sku}
-    Yves: go to the 'Home' page
-    Yves: perform search by:    ${sku}
-    Wait Until Page Contains Element    ${catalog_product_card_locator}
-    Click    ${catalog_product_card_locator}
-    Wait Until Page Contains Element    ${pdp_main_container_locator}[${env}]
+    Yves: go to URL:    /search?q=${sku}
+    TRY
+        Wait Until Page Contains Element    ${catalog_main_page_locator}[${env}]
+        Wait Until Page Contains Element    ${catalog_product_card_locator}
+        Click    ${catalog_product_card_locator}
+        Wait Until Page Contains Element    ${pdp_main_container_locator}[${env}]
+        Wait Until Network Is Idle
+    EXCEPT    
+        Yves: go to URL:    /search?q=${sku}
+        Reload
+        Wait Until Network Is Idle
+        Wait Until Page Contains Element    ${catalog_main_page_locator}[${env}]
+        Wait Until Page Contains Element    ${catalog_product_card_locator}
+        Click    ${catalog_product_card_locator}
+        Wait Until Page Contains Element    ${pdp_main_container_locator}[${env}]
+        Wait Until Network Is Idle
+    END
+
 
 Yves: '${pageName}' page is displayed
     IF    '${pageName}' == 'Company Users'    Page Should Contain Element    ${company_users_main_content_locator}    ${pageName} page is not displayed
@@ -129,9 +143,12 @@ Yves: '${pageName}' page is displayed
     ...    ELSE        Fail    '${pageName}' page is not displayed or the page name is incorrect
 
 Yves: remove flash messages
-    ${flash_massage_state}=    Run Keyword And Ignore Error    Page Should Contain Element    ${notification_area}    1s
-    Log    ${flash_massage_state}
-    IF    'PASS' in ${flash_massage_state}     Remove element from HTML with JavaScript    //section[@data-qa='component notification-area']
+    TRY
+        ${flash_massage_state}=    Page Should Contain Element    ${notification_area}    message=Flash message is not shown    timeout=1s
+        Remove element from HTML with JavaScript    //section[@data-qa='component notification-area']
+    EXCEPT    
+        Log    Flash message is not shown
+    END
 
 Yves: flash message '${condition}' be shown
     IF    '${condition}' == 'should'
@@ -154,6 +171,7 @@ Yves: logout on Yves as a customer
     Reload
 
 Yves: go to the 'Home' page
+    Set Browser Timeout    ${browser_timeout}
     ${currentURL}=    Get Location
     IF    '.at.' in '${currentURL}'
         Go To    ${yves_at_url}
@@ -162,23 +180,13 @@ Yves: go to the 'Home' page
     END
 
 Yves: go to AT store 'Home' page
+    Set Browser Timeout    ${browser_timeout}
     Go To    ${yves_at_url}
 
 Yves: get the last placed order ID by current customer
     [Documentation]    Returns orderID of the last order from customer account
-    IF    '${env}'=='ui_suite'    Yves: go to URL:    /customer/order
-    ${currentURL}=    Get Location
-    IF    '${env}' in ['ui_b2b','ui_mp_b2b']
-        Set Test Variable    ${menuItem}    Order History
-    ELSE
-        Set Test Variable    ${menuItem}    Orders History
-    END
-    IF    '/customer/order' not in '${currentURL}'
-        Run Keywords
-            Yves: go to the 'Home' page
-            Yves: go to user menu item in header:    ${menuItem}
-            Yves: 'Order History' page is displayed
-    END
+    Set Browser Timeout    ${browser_timeout}
+    Yves: go to URL:    /customer/order
     ${lastPlacedOrder}=    Get Text    xpath=//div[contains(@data-qa,'component order-table')]//tr[1]//td[1]
     Set Suite Variable    ${lastPlacedOrder}    ${lastPlacedOrder}
     [Return]    ${lastPlacedOrder}
@@ -186,21 +194,28 @@ Yves: get the last placed order ID by current customer
 Yves: go to URL:
     [Arguments]    ${url}
     ${url}=    Get URL Without Starting Slash    ${url}
-    Go To    ${yves_url}${url}
+    Set Browser Timeout    ${browser_timeout}
+    ${currentURL}=    Get Location
+    IF    '.at.' in '${currentURL}'
+        Go To    ${yves_at_url}${url}
+    ELSE
+        Go To    ${yves_url}${url}
+    END    
 
 Yves: go to AT URL:
     [Arguments]    ${url}
+    Set Browser Timeout    ${browser_timeout}
     ${url}=    Get URL Without Starting Slash    ${url}
     Go To    ${yves_at_url}${url}
 
 Yves: go to newly created page by URL:
     [Arguments]    ${url}    ${delay}=5s    ${iterations}=31
     FOR    ${index}    IN RANGE    0    ${iterations}
-        Go To    ${yves_url}${url}
+        Go To    ${yves_url}${url}?${index}
         ${page_not_published}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//main//*[contains(text(),'ERROR 404')]
         Log    ${page_not_published}
         IF    '${page_not_published}'=='True'
-            Run Keyword    Sleep    ${delay}
+            Sleep    ${delay}
         ELSE
             Exit For Loop
         END
@@ -213,11 +228,11 @@ Yves: go to newly created page by URL:
 Yves: go to newly created page by URL on AT store:
     [Arguments]    ${url}    ${delay}=5s    ${iterations}=31
     FOR    ${index}    IN RANGE    0    ${iterations}
-        Go To    ${yves_at_url}${url}
+        Go To    ${yves_at_url}${url}?${index}
         ${page_not_published}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//main//*[contains(text(),'ERROR 404')]
         Log    ${page_not_published}
         IF    '${page_not_published}'=='True'
-            Run Keyword    Sleep    ${delay}
+            Sleep    ${delay}
         ELSE
             Exit For Loop
         END
@@ -246,6 +261,7 @@ Yves: go to URL and refresh until 404 occurs:
 
 Yves: go to external URL:
     [Arguments]    ${url}
+    Set Browser Timeout    ${browser_timeout}
     Go To    ${url}
 
 Yves: go to second navigation item level:
