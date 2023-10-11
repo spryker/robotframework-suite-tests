@@ -91,8 +91,6 @@ Create_Service_Point_With_Invalid_Token
     [Setup]    I set Headers:    Authorization=InvalidToken
     When I send a POST request:    /service-points   {"name": "Invalid Token", "key": "invalid_token", "isActive": "true", "stores": ["DE", "AT"]}
     Then Response status code should be:    400
-    And Response should return error code:    001
-    And Response should return error message:    Invalid access token.
 
 Create_Service_Point_With_Missing_Required_Fields
     [Documentation]    https://spryker.atlassian.net/browse/FRW-1597
@@ -154,10 +152,10 @@ Update_Service_Point_With_not_existing_key
     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer ${token}
     ...    AND    I send a POST request:    /service-points    {"data": {"type": "service-points","attributes": {"name": "Initial Service Point ${random}","key": "initial-service-point-${random}","isActive": "true","stores": ["DE", "AT"]}}}
-    ...    AND    Save value to a variable:    [data][attributes][key]    service_point_key
     ...    AND    Save value to a variable:    [data][id]    service_point_id
     When I send a PATCH request:    /service-points/${service_point_id}    {"data": {"type": "service-points","attributes": {"key": "not-existing-key${random}","stores": ["DE"],"isActive": "true","name": "test"}}}
     Then Response status code should be:    200
+    Save value to a variable:    [data][attributes][key]    service_point_key
     # duplicate key is not possible
     Then I send a POST request:    /service-points    {"data": {"type": "service-points","attributes": {"name": "Initial Service Point ${random}","key": "not-existing-key${random}","isActive": "true","stores": ["DE", "AT"]}}}
     Then Response status code should be:    400

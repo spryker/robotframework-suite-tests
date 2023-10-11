@@ -54,10 +54,11 @@ Create_new_service_point
 Create_Service_Point_With_Valid_Key_Length
     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer ${token}
-    When I send a POST request:    /service-points    {"data": {"type": "service-points","attributes": {"name": "Incorrect key lenghth","key": "fihslafnkjskdjfnskadfkafkjsadfkjsdjnnkfjsdkfjdskdjfhnjdksbfjhdsbfjkdsfbjsdfjksdfjksdfhdjksfhkdsf jkdsfhjdhsfjhdsjfhdsfjhsjkfhkshkjdsahf78348937489137489yewhkjdsfildksh9832urqewdiosjakrj3982diasjif8d3j89siojfdisakjfdiksdjfkasdjfhkjdashfjkldsahfldchgjhjjghj","isActive": "true","stores": ["DE", "AT"]}}}
+    When I send a POST request:    /service-points    {"data": {"type": "service-points","attributes": {"name": "Correct key lenghth","key": "fihslafnkjskdjfnskadfkafkjsadfkjsdjnnkfjsdkfjdskdjfhnjdksbfjhdsbfjkdsfbjsdfjksdfjksdfhdjksfhkdsf jkdsfhjdhsfjhdsjfhdsfjhsjkfhkshkjdsahf78348937489137489yewhkjdsfildksh9832urqewdiosjakrj3982diasjif8d3j89siojfdisakjfdiksdjfkasdjfhkjdashfjkldsahfldc${random}","isActive": "true","stores": ["DE", "AT"]}}}
     Then Response status code should be:    201
+    And Save value to a variable:    [data][attributes][key]    service_point_key
     And Save value to a variable:    [data][id]    new_service_point_id
-    [Teardown]     Run Keywords    Get service point uuid by key:    ${service_point_key_1}
+    [Teardown]     Run Keywords    Get service point uuid by key:    ${service_point_key}
     ...    AND    Delete service point in DB    ${servicePointUuid}
 
 Update_Service_Point
@@ -74,7 +75,7 @@ Update_Service_Point
     And Response body parameter should be:    [data][attributes][isActive]    False
     And Response body parameter should be:    [data][attributes][stores]    DE
     [Teardown]     Run Keywords    Get service point uuid by key:    ${service_point_key}
-    ...    AND    Delete service point in DB    ${service_point_id}
+    ...    AND    Delete service point in DB    ${servicePointUuid}
 
 Get_All_Service_Points
     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
@@ -92,9 +93,9 @@ Get_All_Service_Points
     And Each array in response should contain property with NOT EMPTY value:    [data]    [attributes][isActive]
     And Each array element of array in response should contain property with value in:    [data]    [attributes][stores]    DE    AT
     [Teardown]     Run Keywords    Get service point uuid by key:    ${service_point_key1}
-    ...    AND    Delete service point in DB    ${service_point_key1}
+    ...    AND    Delete service point in DB    ${servicePointUuid}
     ...    AND    Get service point uuid by key:    ${service_point_key2}
-    ...    AND    Delete service point in DB    ${service_point_key2}
+    ...    AND    Delete service point in DB    ${servicePointUuid}
 
 Get_Service_Point_By_ID
     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
@@ -113,6 +114,6 @@ Get_Service_Point_By_ID
     And Response body parameter should be:    [data][attributes][stores]    AT
     And Response body has correct self link internal
     [Teardown]     Run Keywords    Get service point uuid by key:    ${service_point_key_to_get}
-    ...    AND    Delete service point in DB    ${service_point_id_to_get}
+    ...    AND    Delete service point in DB   ${servicePointUuid}
 
 

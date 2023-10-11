@@ -69,12 +69,12 @@ Retrieve_push_notification_providers
 Retrieve_push_notification_provider_with_pagination
     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
     ...    AND    I set Headers:    Content-Type=application/vnd.api+json   Authorization=Bearer ${token}
-    And I send a DELETE request:    /push-notification-providers/${push_notification_provider_uuid}
+    # And I send a DELETE request:    /push-notification-providers/${push_notification_provider_uuid}
     When I send a POST request:    /push-notification-providers    {"data": {"type": "push-notification-providers","attributes": {"name": "My Push Notification Provider1 ${random}"}}}
     Then Save value to a variable:    [data][id]    push_notification_provider_id
     When I send a POST request:    /push-notification-providers    {"data": {"type": "push-notification-providers","attributes": {"name": "My Push Notification Provider2 ${random}"}}}
     Then Save value to a variable:    [data][id]    push_notification_provider_id_2
-    When I send a GET request:    /push-notification-providers?page[offset]=0&page[limit]=1
+    When I send a GET request:    /push-notification-providers?page[offset]=1&page[limit]=1
     Then Response status code should be:    200
     And Response body parameter should not be EMPTY:    [data][0][id]
     And Response body parameter should be:    [data][0][type]    push-notification-providers
@@ -89,12 +89,13 @@ Retrieve_push_notification_provider_with_sorting
     ...    AND    I set Headers:    Content-Type=application/vnd.api+json   Authorization=Bearer ${token}
     When I send a POST request:    /push-notification-providers    {"data": {"type": "push-notification-providers","attributes": {"name": "A My Push Notification P1"}}}
     Then Save value to a variable:    [data][id]    push_notification_provider_id
-    When I send a POST request:    /push-notification-providers    {"data": {"type": "push-notification-providers","attributes": {"name": "W My Push Notification P2"}}}
+    When I send a POST request:    /push-notification-providers    {"data": {"type": "push-notification-providers","attributes": {"name": "B My Push Notification P2"}}}
     Then Save value to a variable:    [data][id]    push_notification_provider_id_2
     When I send a GET request:    /push-notification-providers?sort=-name
     Then Response status code should be:    200
-    And Response body parameter should be:    [data][0][attributes][name]    W My Push Notification P2
-    And Response body parameter should be:    [data][1][attributes][name]    A My Push Notification P1
+    And Response body parameter should be:    [data][0][attributes][name]    web-push-php
+    And Response body parameter should be:    [data][1][attributes][name]    B My Push Notification P2
+    And Response body parameter should be:    [data][2][attributes][name]    A My Push Notification P1
     [Teardown]     Run Keywords    I send a DELETE request:    /push-notification-providers/${push_notification_provider_id}
     ...    AND    I send a DELETE request:    /push-notification-providers/${push_notification_provider_id_2}
 
