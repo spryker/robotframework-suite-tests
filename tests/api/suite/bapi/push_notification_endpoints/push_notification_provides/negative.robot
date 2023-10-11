@@ -125,7 +125,8 @@ Update_non-existent_push_notification_provider
     Then Response status code should be:    400
     And Response should return error code:    5008
     And Response should return error message:    A push notification provider with the same name already exists.
-    [Teardown]    I send a DELETE request:    /push-notification-providers/${push_notification_provider_id}   
+    [Teardown]     Run Keywords    I send a DELETE request:    /push-notification-providers/${push_notification_provider_id}
+    ...    AND    I send a DELETE request:    /push-notification-providers/${push_notification_provider_id_2}
 
 Delete_push_notification_provider_with_not_exist_id
     Then I send a DELETE request:    /push-notification-providers/invalid
