@@ -13,14 +13,15 @@ Create_warehouse_user_assigment:
         ...    ``Create_warehouse_user_assigment:   ${warehouse[0].warehouse_uuid}    ${warehous_user[0].user_uuid}    false``
         ...
     [Arguments]    ${warehouse_uuid}    ${user_uuid}    ${isActive}
+    ${idWarehouseUserAssignment}=    Get next id from table    spy_warehouse_user_assignment    id_warehouse_user_assignment
     Connect to Spryker DB
     IF    '${db_engine}' == 'pymysql'
         Execute Sql String    insert ignore into spy_warehouse_user_assignment (uuid, fk_warehouse, user_uuid, is_active) value ('${warehouse_uuid}','9', '${user_uuid}', ${isActive});
     ELSE
-        Execute Sql String    INSERT INTO spy_warehouse_user_assignment (uuid, fk_warehouse, user_uuid, is_active) VALUES  ('${warehouse_uuid}','9', '${user_uuid}', ${isActive});
+        Execute Sql String    INSERT INTO spy_warehouse_user_assignment (id_warehouse_user_assignment, uuid, fk_warehouse, user_uuid, is_active) VALUES (${idWarehouseUserAssignment},'${warehouse_uuid}',9, '${user_uuid}', ${isActive});
     END
     Disconnect From Database
-
+    
 Get_warehouse_user_assigment_id:
     [Documentation]    This keyword retrive  warehouse user assigment in the DB table `spy_warehouse_user_assignment` by uuuid and user_uuid. 
         ...    *Example:*
