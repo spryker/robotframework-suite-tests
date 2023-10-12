@@ -837,5 +837,9 @@
    "shipment_type":{
        "shipment_type_uuid":"174d9dc0-55ae-5c4b-a2f2-a419027029ef",
        "shipment_type_name":"Pickup"
-   }
+   },
+   "dynamic_entity":{
+      "dummy_api_key":"eba8110c9f9bf5685e8b5f4eba9b17c2",
+      "dummy_key_hash":"f683f48de788d57cd396fc212ef33fd146e1ff0b51cde37ecb4ddd77eeed1706"
+  }
 }
