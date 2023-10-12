@@ -166,4 +166,4 @@ Delete_warehous_user_assigment_without_token
     Then I send a DELETE request:    /warehouse-user-assignments/${id_warehouse_user_assigment}
     Then Response status code should be:    400
     And Remove_warehous_user_assigment:    ${warehouse[0].warehouse_uuid}    ${warehous_user[0].user_uuid}
-
+ 
