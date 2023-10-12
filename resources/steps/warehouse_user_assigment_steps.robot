@@ -16,7 +16,7 @@ Create_warehouse_user_assigment:
     ${idWarehouseUserAssignment}=    Get next id from table    spy_warehouse_user_assignment    id_warehouse_user_assignment
     Connect to Spryker DB
     IF    '${db_engine}' == 'pymysql'
-        Execute Sql String    insert ignore into spy_warehouse_user_assignment (uuid, fk_warehouse, user_uuid, is_active) value ('${warehouse_uuid}','9', '${user_uuid}', ${isActive});
+        Execute Sql String    insert ignore into spy_warehouse_user_assignment (uuid, fk_warehouse, user_uuid, is_active) value ('${warehouse_uuid}',${fk_warehouse}, '${user_uuid}', ${isActive});
     ELSE
         Execute Sql String    INSERT INTO spy_warehouse_user_assignment (id_warehouse_user_assignment, uuid, fk_warehouse, user_uuid, is_active) VALUES (${idWarehouseUserAssignment},'${warehouse_uuid}',${fk_warehouse}, '${user_uuid}', ${isActive});
     END
