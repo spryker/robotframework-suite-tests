@@ -88,7 +88,7 @@ Create_Service_Point_With_Invalid_Content_Type
     And Response should return error message:    Wrong request body.
 
 Create_Service_Point_With_Invalid_Token
-    [Setup]    I set Headers:    Authorization=InvalidToken
+    [Setup]    I set Headers:    Authorization=Bearer InvalidToken
     When I send a POST request:    /service-points   {"name": "Invalid Token", "key": "invalid_token", "isActive": "true", "stores": ["DE", "AT"]}
     Then Response status code should be:    400
 
@@ -168,7 +168,7 @@ Get_Service_Points_Without_Authentication
     Then Response status code should be:    400
 
 Get_Service_Points_With_Incorrect_Token
-    [Setup]    I set Headers:    Authorization=IncorrectToken
+    [Setup]    I set Headers:    Authorization=Bearer IncorrectToken
     When I send a GET request:    /service-points
     Then Response status code should be:    400
 
