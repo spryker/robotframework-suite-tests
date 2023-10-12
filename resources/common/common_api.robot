@@ -35,6 +35,8 @@ ${bapi_env}
 ${sapi_env}
 ${db_port}
 # ${default_db_engine}       psycopg2
+${default_store}    DE
+${default_language}    en
 
 *** Keywords ***
 SuiteSetup
@@ -132,6 +134,7 @@ TestSetup
         ${current_url}=    Replace String Using Regexp    ${current_url}    .$    ${EMPTY}
         Set Suite Variable    ${current_url}
     END
+    I set default Headers:    Store=${default_store}    Accept-Language=${default_language}
 
 Load Variables
     [Documentation]    Keyword is used to load variable values from the environment file passed during execution. This Keyword is used during suite setup.
@@ -164,7 +167,15 @@ I set Headers:
     ...    ``I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}``
 
     [Arguments]    &{headers}
+    Set To Dictionary    ${headers}    Store=${default_store}    Accept-Language=${default_language}
+    Log Dictionary    ${headers}
     Set Test Variable    &{headers}
+    [Return]    &{headers}
+
+I set default Headers:
+    [Arguments]    &{headers}
+    Log Dictionary    ${headers}
+    Set Suite Variable    &{headers}
     [Return]    &{headers}
 
 I get access token for the customer:
