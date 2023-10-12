@@ -156,13 +156,14 @@ Update_Service_Point_Address_Empty_Zip_Code
     And Response should return error message:    A service point address zip code must have length from 4 to 15 characters.
 
 Retrive_address_for_Nonexistent_Service_Point
-    [Documentation]    200 response BUG
+    [Documentation]    https://spryker.atlassian.net/browse/CC-31547
+    [Tags]    skip-due-to-issue
     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer ${token}
     When I send a GET request:    /service-points/NonexistentID/service-point-addresses
     Then Response status code should be:    404
     And Response should return error code:    5403
-    And Response should return error message:    The service point entity does not exist.
+    And Response should return error message:    Service point entity was not found.
 
 Read_Service_Point_Address_No_Authentication
     [Documentation]    https://spryker.atlassian.net/browse/FRW-5850
