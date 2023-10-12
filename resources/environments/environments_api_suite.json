@@ -868,8 +868,13 @@
          {
             "uuid":"262feb9d-33a7-5c55-9b04-45b1fd22067e",
             "name":"Spryker Main Store",
-            "key":"sp1"            
+            "key":"sp1"           
          }
+      },
+      "service_point_address":
+      {
+            "uuid":"74768ee9-e7dd-5e3c-bafd-b654e7946c54",
+            "address1":"Caroline-Michaelis-Straße"
       }
       }
 }
