@@ -6,7 +6,7 @@ Resource    ../common/common_api.robot
 
 *** Keywords ***
 Get id service point by uuid
-    [Documentation]    This keyword returns Service Point ID by Service Point UUID.
+    [Documentation]    This keyword returns Service Point ID ${servicePointIds[0][0]} by Service Point UUID.
         ...    *Example:*
         ...
         ...    ``Get id service point by uuid    uuid=262feb9d-33a7-5c55-9b04-45b1fd22067e``
@@ -183,7 +183,7 @@ Create region in DB:
     Disconnect From Database
 
 Get service point uuid by key:
-    [Documentation]    This keyword returns Service Point UUID by Service Point KEY.
+    [Documentation]    This keyword returns Service Point UUID ${servicePointUuid} by Service Point KEY.
         ...    *Example:*
         ...
         ...    ``Get service point uuid by key:    some-service-point-34395``
