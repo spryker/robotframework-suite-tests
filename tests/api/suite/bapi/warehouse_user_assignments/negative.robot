@@ -64,7 +64,7 @@ Create_warehouse_user_assignment_with_duplicate_assignment
 Get_warehouse_user_assigments_by_UUID_without_token
     [Documentation]    https://spryker.atlassian.net/browse/FRW-5850
     [Tags]    skip-due-to-issue
-    And Create_warehouse_user_assigment:    ${warehouse[0].warehouse_uuid}    ${warehous_user[0].user_uuid}    false
+    And Create_warehouse_user_assigment:    ${warehouse[0].warehouse_uuid}    ${warehouse[0].fk_warehouse_spryker}    ${warehous_user[0].user_uuid}    false
     Then Get_warehouse_user_assigment_id:   ${warehouse[0].warehouse_uuid}    ${warehous_user[0].user_uuid}
     Then I send a GET request:    /warehouse-user-assignments/${id_warehouse_user_assigment}
     Then Response status code should be:    403
@@ -73,7 +73,7 @@ Get_warehouse_user_assigments_by_UUID_without_token
 Get_user_assigments_by_UUID_with_invalid_token
     [Documentation]    https://spryker.atlassian.net/browse/FRW-5850
     [Tags]    skip-due-to-issue
-    And Create_warehouse_user_assigment:    ${warehouse[0].warehouse_uuid}    ${warehous_user[0].user_uuid}    false
+    And Create_warehouse_user_assigment:    ${warehouse[0].warehouse_uuid}    ${warehouse[0].fk_warehouse_spryker}    ${warehous_user[0].user_uuid}    false
     Then Get_warehouse_user_assigment_id:   ${warehouse[0].warehouse_uuid}    ${warehous_user[0].user_uuid}
     [Setup]    Run Keywords    I get access token by user credentials:    invalid
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=Bearer ${token}  
@@ -86,7 +86,7 @@ Get_user_assigments_by_UUID_with_invalid_token
 Get_user_assigments_by_invalid_UUID
     [Setup]    Run Keywords    I get access token by user credentials:    ${zed_user.email}
      ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=Bearer ${token}  
-    And Create_warehouse_user_assigment:    ${warehouse[0].warehouse_uuid}    ${warehous_user[0].user_uuid}    false
+    And Create_warehouse_user_assigment:    ${warehouse[0].warehouse_uuid}    ${warehouse[0].fk_warehouse_spryker}    ${warehous_user[0].user_uuid}    false
     Then Get_warehouse_user_assigment_id:   ${warehouse[0].warehouse_uuid}    ${warehous_user[0].user_uuid}
     Then I send a GET request:    /warehouse-user-assignments/invalid
     Then Response status code should be:    404
@@ -99,7 +99,7 @@ Get_user_assigments_list_with_invalid_token
     [Tags]    skip-due-to-issue
     [Setup]    Run Keywords    I get access token by user credentials:    invalid
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=Bearer ${token}  
-    And Create_warehouse_user_assigment:    ${warehouse[0].warehouse_uuid}    ${warehous_user[0].user_uuid}    false
+    And Create_warehouse_user_assigment:    ${warehouse[0].warehouse_uuid}    ${warehouse[0].fk_warehouse_spryker}    ${warehous_user[0].user_uuid}    false
     Then I send a GET request:    /warehouse-user-assignments/
     Then Response status code should be:    401
     And Response reason should be:    Unauthorized
@@ -109,7 +109,7 @@ Get_user_assigments_list_with_invalid_token
 Get_user_assigments_list_without_token
     [Documentation]    https://spryker.atlassian.net/browse/FRW-5850
     [Tags]    skip-due-to-issue
-    And Create_warehouse_user_assigment:    ${warehouse[0].warehouse_uuid}    ${warehous_user[0].user_uuid}    false
+    And Create_warehouse_user_assigment:    ${warehouse[0].warehouse_uuid}    ${warehouse[0].fk_warehouse_spryker}   ${warehous_user[0].user_uuid}    false
     Then I send a GET request:    /warehouse-user-assignments/
     Then Response status code should be:    403
     And Response reason should be:    Unauthorized
@@ -119,7 +119,7 @@ Get_user_assigments_list_without_token
 Update_warehous_user_assigment_without_token   
     [Documentation]    https://spryker.atlassian.net/browse/FRW-5850
     [Tags]    skip-due-to-issue
-    And Create_warehouse_user_assigment:    ${warehouse[0].warehouse_uuid}    ${warehous_user[0].user_uuid}    false
+    And Create_warehouse_user_assigment:    ${warehouse[0].warehouse_uuid}    ${warehouse[0].fk_warehouse_spryker}    ${warehous_user[0].user_uuid}    false
     Then Get_warehouse_user_assigment_id:   ${warehouse[0].warehouse_uuid}    ${warehous_user[0].user_uuid}
     Then I send a PATCH request:    /warehouse-user-assignments/${id_warehouse_user_assigment}    {"data":{"attributes":{"isActive":"true"}}} 
     Then Response status code should be:    401
@@ -130,9 +130,9 @@ Update_warehous_user_assigment_with_invalid_token
   [Tags]    skip-due-to-issue
     [Setup]    Run Keywords    I get access token by user credentials:    invalid
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=Bearer ${token}   
-    And Create_warehouse_user_assigment:    ${warehouse[0].warehouse_uuid}    ${warehous_user[0].user_uuid}    false
+    And Create_warehouse_user_assigment:    ${warehouse[0].warehouse_uuid}    ${warehouse[0].fk_warehouse_spryker}    ${warehous_user[0].user_uuid}    false
     Then Get_warehouse_user_assigment_id:   ${warehouse[0].warehouse_uuid}    ${warehous_user[0].user_uuid}
-    And Create_warehouse_user_assigment:    ${warehouse[0].warehouse_uuid}    ${warehous_user[0].user_uuid}    false 
+    And Create_warehouse_user_assigment:    ${warehouse[0].warehouse_uuid}    ${warehouse[0].fk_warehouse_spryker}    ${warehous_user[0].user_uuid}    false 
     Then I send a PATCH request:    /warehouse-user-assignments/${id_warehouse_user_assigment}    {"data":{"attributes":{"isActive":"true"}}} 
     Then Response status code should be:    403
     And Remove_warehous_user_assigment:    ${warehouse[0].warehouse_uuid}    ${warehous_user[0].user_uuid}
@@ -153,7 +153,7 @@ Update_warehous_user_assigment_without_uuid
 Delete_warehous_user_assigment_without_token
   [Documentation]    https://spryker.atlassian.net/browse/FRW-5850
   [Tags]    skip-due-to-issue
-    And Create_warehouse_user_assigment:    ${warehouse[0].warehouse_uuid}    ${warehous_user[0].user_uuid}    false
+    And Create_warehouse_user_assigment:    ${warehouse[0].warehouse_uuid}    ${warehouse[0].fk_warehouse_spryker}    ${warehous_user[0].user_uuid}    false
     Then Get_warehouse_user_assigment_id:   ${warehouse[0].warehouse_uuid}    ${warehous_user[0].user_uuid}
     Then I send a DELETE request:    /warehouse-user-assignments/${id_warehouse_user_assigment}  
     Then Response status code should be:    400
@@ -161,9 +161,9 @@ Delete_warehous_user_assigment_without_token
 
  Delete_warehous_user_assigment_with_invalid_token
     And I set Headers:    Content-Type=${default_header_content_type}    Authorization=Bearer invalid
-    And Create_warehouse_user_assigment:    ${warehouse[0].warehouse_uuid}    ${warehous_user[0].user_uuid}    false
+    And Create_warehouse_user_assigment:    ${warehouse[0].warehouse_uuid}    ${warehouse[0].fk_warehouse_spryker}    ${warehous_user[0].user_uuid}    false
     Then Get_warehouse_user_assigment_id:   ${warehouse[0].warehouse_uuid}    ${warehous_user[0].user_uuid}
     Then I send a DELETE request:    /warehouse-user-assignments/${id_warehouse_user_assigment}
     Then Response status code should be:    400
     And Remove_warehous_user_assigment:    ${warehouse[0].warehouse_uuid}    ${warehous_user[0].user_uuid}
-
+ 

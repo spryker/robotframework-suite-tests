@@ -861,27 +861,30 @@
             "warehouse_name":"Spryker MER000001 Warehouse 1",
             "warehouse_name_budjet_cameras":"Budget Cameras MER000005 Warehouse 1",
             "video_king_warehouse_uuid":"62372576-6a2b-5a71-9e9c-737bc47b0bf1",
-            "video_king_warehouse_name":"Video King MER000002 Warehouse 1"
+            "video_king_warehouse_name":"Video King MER000002 Warehouse 1",
+            "fk_warehouse_spryker":"9"
          }],
-   "demo_service_point": {
-      "spryker_main_store":
-         {
-            "uuid":"262feb9d-33a7-5c55-9b04-45b1fd22067e",
-            "uuid2":"7e3b03e0-c53c-5298-9ece-968f4628b4f8",
-            "name":"Spryker Main Store",
-            "key":"sp1"           
-         }
-      },
-      "service_point_address":
-      {
-            "uuid":"74768ee9-e7dd-5e3c-bafd-b654e7946c54",
-            "uuid2":"7a711afc-02ce-5f54-a08c-fadfaf5713c6",
-            "address1":"Julie-Wolfthorn-Straße",
-            "address2":"1",
-            "address3":"None",
-            "city":"Berlin",
-            "zip":"10115"
-
-      }
-      }
+         "demo_service_point": {
+            "spryker_main_store":
+               {
+                  "uuid":"262feb9d-33a7-5c55-9b04-45b1fd22067e",
+                  "uuid2":"7e3b03e0-c53c-5298-9ece-968f4628b4f8",
+                  "name":"Spryker Main Store",
+                  "key":"sp1"           
+               }
+            },
+            "service_point_address":
+            {
+                  "uuid":"74768ee9-e7dd-5e3c-bafd-b654e7946c54",
+                  "uuid2":"7a711afc-02ce-5f54-a08c-fadfaf5713c6",
+                  "address1":"Julie-Wolfthorn-Straße",
+                  "address2":"1",
+                  "address3":"None",
+                  "city":"Berlin",
+                  "zip":"10115"
+      
+            }
+            }
 }
+      
+
