@@ -64,6 +64,9 @@
          "email":"admin@spryker.com",
          "password":"change123"
       },
+      "zed_user":{
+         "email":"michele@sony-experts.com"
+      },
       "gender":{
          "female":"Female",
          "male":"Male"
@@ -823,8 +826,7 @@
                "providerName": "web-push-php",
                "group": {
                    "name": "warehouse",
-                   "identifier": ""
-               },
+                   "identifier": ""               },
                "payload": {
                    "endpoint": "endpoint",
                    "publicKey": "publicKey",
@@ -834,8 +836,58 @@
            }
        ]
    },
+      "push_notification_providers":{
+         "push_notification_provider_uuid":"2a304ddf-d51b-514f-bd11-6e818a27fe23"
+},
+
    "shipment_type":{
        "shipment_type_uuid":"174d9dc0-55ae-5c4b-a2f2-a419027029ef",
        "shipment_type_name":"Pickup"
-   }
+   },
+   "warehouse_user_assigment":{
+      "warehous_user":[
+        { 
+            "user_uuid":"48a6c610-693e-5d88-bdce-3c6018b3abd2",
+            "user_uuid_2":"84b8f847-d755-5763-b128-8e138e6571fc",
+            "user_uuid_3":"8565d483-70cd-5c73-bc6a-96d2e70ddee1",
+            "user_name":"martha@video-king.nl",
+            "user_first_name":"Martha",
+            "user_last_name":"Farmer"
+         }],
+      "warehouse":[
+        { 
+            "warehouse_uuid":"e84b3cb8-a94a-5a7e-9adb-cc5353f7a73f",
+            "warehouse_uuid_budjet_cameras":"86496ec7-0d44-518c-81e4-f472b9e8547d",
+            "warehouse_name":"Spryker MER000001 Warehouse 1",
+            "warehouse_name_budjet_cameras":"Budget Cameras MER000005 Warehouse 1",
+            "video_king_warehouse_uuid":"62372576-6a2b-5a71-9e9c-737bc47b0bf1",
+            "video_king_warehouse_name":"Video King MER000002 Warehouse 1",
+            "fk_warehouse_spryker":"9"
+         }],
+         "demo_service_point": {
+            "spryker_main_store":
+               {
+                  "uuid":"262feb9d-33a7-5c55-9b04-45b1fd22067e",
+                  "uuid2":"7e3b03e0-c53c-5298-9ece-968f4628b4f8",
+                  "name":"Spryker Main Store",
+                  "key":"sp1"           
+               }
+            },
+            "service_point_address":
+            {
+                  "uuid":"74768ee9-e7dd-5e3c-bafd-b654e7946c54",
+                  "uuid2":"7a711afc-02ce-5f54-a08c-fadfaf5713c6",
+                  "address1":"Julie-Wolfthorn-Straße",
+                  "address2":"1",
+                  "address3":"None",
+                  "city":"Berlin",
+                  "zip":"10115"
+      
+            }
+            },
+            "dynamic_entity":{
+               "dummy_api_key":"eba8110c9f9bf5685e8b5f4eba9b17c2",
+               "dummy_key_hash":"f683f48de788d57cd396fc212ef33fd146e1ff0b51cde37ecb4ddd77eeed1706"
+           }
+         
 }
