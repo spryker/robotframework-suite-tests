@@ -53,7 +53,7 @@ Create_Service_Point_Address_with_region_uuid
     Then Response status code should be:    201
     And Save value to a variable:    [data][attributes][key]    service_point_key
     And Save value to a variable:    [data][id]    service_point_id
-    And Create reagion in DB:    60    DE    Germany    123456789
+    And Create region in DB:    60    DE    Germany    123456789
     When I send a POST request:    /service-points/${service_point_id}/service-point-addresses    {"data":{"type":"service-point-addresses","attributes":{"regionUuid":"123456789","address1":"Park Avenue","address2":"Building №2","address3":"address3","city":"Dreamtown","zipCode":"30-221","countryIso2Code":"DE"}}}
     Then Response status code should be:    201
     And Save value to a variable:    [data][id]    service_point_address_id

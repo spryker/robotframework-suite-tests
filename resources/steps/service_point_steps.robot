@@ -160,11 +160,11 @@ Create service type in DB
     END
     Disconnect From Database
 
-Create reagion in DB:
+Create region in DB:
     [Documentation]    This keyword creates a new entry in the DB table `spy_region`.
         ...    *Example:*
         ...
-        ...    ``Create reagion in DB:    country=60  iso2_code=DE    name=Germany``
+        ...    ``Create region in DB:    country=60  iso2_code=DE    name=Germany``
         ...
     [Arguments]    ${country}    ${iso2_code}   ${name}=${None}    ${uuid}=${None}
     IF    '${name}' == '${None}'
@@ -173,11 +173,12 @@ Create reagion in DB:
     IF    '${uuid}' == '${None}'
         ${uuid}=    Generate Random String    5    [LETTERS]
     END
+    ${new_id}=    Get next id from table    spy_region    id_region
     Connect to Spryker DB
     IF    '${db_engine}' == 'pymysql'
         Execute Sql String    insert ignore into spy_region (fk_country, iso2_code, name, uuid) value ('${country}', '${iso2_code}', '${name}','${uuid}');
     ELSE
-        Execute Sql String    INSERT INTO spy_region (id_region, fk_country, iso2_code, name, uuid) VALUES (1, '${country}', '${iso2_code}', '${name}','${uuid}');
+        Execute Sql String    INSERT INTO spy_region (id_region, fk_country, iso2_code, name, uuid) VALUES (${new_id}, '${country}', '${iso2_code}', '${name}','${uuid}');
     END
     Disconnect From Database
 
@@ -196,7 +197,7 @@ Get service point uuid by key:
     END
     Disconnect From Database
     Set Test Variable    ${servicePointUuid}     ${servicePointUuid[0][0]}
-    [Return]    ${servicePointUuid[0][0]}
+    [Return]    ${servicePointUuid}
 
 Delete service point in DB
     [Documentation]    This keyword deletes the entry from the DB table `spy_service_point`. If `withRelations=true`, deletes with relations.
