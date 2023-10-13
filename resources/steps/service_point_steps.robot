@@ -196,7 +196,7 @@ Get service point uuid by key:
     END
     Disconnect From Database
     Set Test Variable    ${servicePointUuid}     ${servicePointUuid[0][0]}
-    [Return]    ${servicePointUuid[0][0]}
+    [Return]    ${servicePointUuid}
 
 Delete service point in DB
     [Documentation]    This keyword deletes the entry from the DB table `spy_service_point`. If `withRelations=true`, deletes with relations.
