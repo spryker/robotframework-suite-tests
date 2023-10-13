@@ -159,6 +159,28 @@ Create service type in DB
         Execute Sql String    INSERT INTO spy_service_type (id_service_type, key, name, uuid) VALUES (${idServiceType}, '${key}', '${name}', '${uuid}');
     END
     Disconnect From Database
+
+Create reagion in DB:
+    [Documentation]    This keyword creates a new entry in the DB table `spy_region`.
+        ...    *Example:*
+        ...
+        ...    ``Create reagion in DB:    country=60  iso2_code=DE    name=Germany``
+        ...
+    [Arguments]    ${country}    ${iso2_code}   ${name}=${None}    ${uuid}=${None}
+    IF    '${name}' == '${None}'
+        ${name}=    Generate Random String    5    [LETTERS]
+    END
+    IF    '${uuid}' == '${None}'
+        ${uuid}=    Generate Random String    5    [LETTERS]
+    END
+    Connect to Spryker DB
+    IF    '${db_engine}' == 'pymysql'
+        Execute Sql String    insert ignore into spy_region (fk_country, iso2_code, name, uuid) value ('${country}', '${iso2_code}', '${name}','${uuid}');
+    ELSE
+        Execute Sql String    INSERT INTO spy_region (id_region, fk_country, iso2_code, name, uuid) VALUES (1, '${country}', '${iso2_code}', '${name}','${uuid}');
+    END
+    Disconnect From Database
+
 Get service point uuid by key:
     [Documentation]    This keyword returns Service Point UUID by Service Point KEY.
         ...    *Example:*
@@ -196,6 +218,18 @@ Delete service point in DB
     Execute Sql String    DELETE FROM spy_service_point WHERE uuid = '${uuid}';
     Disconnect From Database
 
+Delete service point address in DB
+    [Documentation]    This keyword deletes the entry from the DB table `spy_service_point_address`. 
+        ...    *Example:*
+        ...
+        ...    ``Delete service point address in DB    uuid=262feb9d-33a7-5c55-9b04-45b1fd22067e``
+        ...
+    [Arguments]    ${uuid}
+    Connect to Spryker DB
+    Execute Sql String    DELETE FROM spy_service_point_address WHERE uuid = '${uuid}';
+    Disconnect From Database
+
+  
 Delete service type in DB
     [Documentation]    This keyword deletes the entry from the DB table `spy_service_type`.
         ...    *Example:*
