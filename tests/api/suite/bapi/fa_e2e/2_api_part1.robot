@@ -11,9 +11,9 @@ ENABLER
     TestSetup
 
 E2E_fulfilment_app_tests
+# Go to BO and made user a warehouse user, assign warehouse same as for 091 product
     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer ${token}
-    # Go to BO and made user a warehouse user, assign warehouse same as for 091 product
     When I send a POST request:    /warehouse-user-assignments    {"data": {"type": "warehouse-user-assignments", "attributes":{"userUuid": "${warehous_user[0].user_uuid}","warehouse" :{"uuid": "${warehouse[0].warehouse_uuid}"},"isActive":"true"}}}
     Then Response status code should be:    201
     Then Save value to a variable:    [data][id]   warehouse_assigment_id
