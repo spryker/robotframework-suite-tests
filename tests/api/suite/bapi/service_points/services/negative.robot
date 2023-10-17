@@ -40,3 +40,18 @@ Get_Nonexistent_Service
     And Response should return error code:    5418
     And Response should return error message:    The service entity was not found.
 
+# # Create_Duplicate_Service_Point_Service_Relation
+# #     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
+# #     ...    AND    I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer ${token}
+# #     When I send a POST request:    /service-types    {"data": {"type": "service-types", "attributes": {"name": "Test Service ${random}", "key": "service1-test${random}"}}
+# #     Then Response status code should be:    201
+# #     And Save value to a variable:    [data][id]    service_type_id
+# #     When I send a POST request:    /service-points/${demo_service_point.spryker_main_store.uuid}/service-point-service-types    {"data": {"type": "service-point-service-types", "attributes": {"serviceTypeId": "${service_type_id}"}}
+# #     Then Response status code should be:    201
+# #     And Save value to a variable:    [data][id]    service_point_service_id
+# #     When I send a POST request:    /service-points/${demo_service_point.spryker_main_store.uuid}/service-point-service-types    {"data": {"type": "service-point-service-types", "attributes": {"serviceTypeId": "${service_type_id}"}}
+# #     Then Response status code should be:    400
+# #     And Response should return error code:    5429
+# #     And Response should return error message:    A relation between service point service and service type already exists.
+# #     [Teardown]    Run Keywords    Delete service type by ID:    ${service_type_id}
+# #     ...    AND    Delete service point service type by ID:    ${service_point_service_id}
