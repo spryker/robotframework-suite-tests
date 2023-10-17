@@ -16,7 +16,6 @@ Create_Service
     Then Response status code should be:    201
     Then Save value to a variable:    [data][attributes][key]    service_point_key
     And Save value to a variable:    [data][id]    service_point_id
-    # #create service point address
     # #create a service type
     When I send a POST request:    /service-types    {"data": {"type": "service-types", "attributes": {"name": "Test Service ${random}", "key": "service1-test${random}"}}}
     Then Response status code should be:    201
