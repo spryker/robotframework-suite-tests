@@ -33,3 +33,10 @@ Resource    ../../../../../resources/steps/order_comments_steps.robot
 Resource    ../../../../../resources/steps/zed_order_steps.robot
 Resource    ../../../../../resources/steps/configurable_product_steps.robot
 
+
+*** Test Cases ***
+Assign_warehouse_to_warehouse_user_in_BO
+    [Documentation]   Made user a warehouse user, assign a warehouse 
+    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: create new warehouse user:        
+    Zed: assign warehouse to user:    ${user}    ${warehouse}
