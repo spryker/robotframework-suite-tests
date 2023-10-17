@@ -72,22 +72,25 @@ Zed: deactivate the created user:
     Wait Until Element Is Visible    ${zed_success_flash_message}
 
 Zed: create new warehouse user:
-    [Arguments]    ${email}
+    [Arguments]    @{args}
+    ${newWarehouseUser}=    Set Up Keyword Arguments    @{args}
     Zed: go to second navigation item level:    Users    Users
     Zed: click button in Header:    Add New User
-    Zed: click Action Button in a table for row that contains:    ${oldEmail}    Edit
-    Wait Until Element Is Visible    ${zed_user_email_field}
-    FOR    ${key}    ${value}    IN    &{newUserData}
+    FOR    ${key}    ${value}    IN    ${newWarehouseUser}
         Log    Key is '${key}' and value is '${value}'.
-        IF    '${key}'=='newEmail' and '${value}' != '${EMPTY}'    Type Text    ${zed_user_email_field}    ${value}
-        IF    '${key}'=='password' and '${value}' != '${EMPTY}'
-            Type Text    ${zed_user_password_filed}    ${value}
-            Type Text    ${zed_user_repeat_password_field}    ${value}
+        IF    '${key}'=='E-mail' and '${value}' != '${EMPTY}'   Type Text    ${zed_translation_name}    ${value}
+        IF    '${key}'=='Password' and '${value}' != '${EMPTY}'   Type Text    ${zed_translation_EN_US}    ${value}
+        IF    '${key}'=='Repeat Password' and '${value}' != '${EMPTY}'   Type Text    ${zed_translation_DE_DE}     ${value}
+        IF    '${key}'=='First Name' and '${value}' != '${EMPTY}'   Type Text    ${zed_translation_EN_US}    ${value} 
+        IF    '${key}'=='Last Name' and '${value}' != '${EMPTY}'   Type Text    ${zed_translation_DE_DE}     ${value}
+        IF    '${key}'=='This user is a warehouse user' and '${value}' != '${EMPTY}'    
+            Zed: Check checkbox by Label:    ${value}
         END
-        IF    '${key}'=='firstName' and '${value}' != '${EMPTY}'    Type Text    ${zed_user_first_name_field}    ${value}
-        IF    '${key}'=='lastName' and '${value}' != '${EMPTY}'    Type Text    ${zed_user_last_name_field}    ${value}
+
+
     END
-    Zed: submit the form
+    Click    ${zed_pdp_save_button}
+ 
     
  Zed: assign warehouse to user:
     [Arguments]    ${email}
