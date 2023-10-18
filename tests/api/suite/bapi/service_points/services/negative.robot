@@ -51,6 +51,8 @@ Get_Services_No_Auth
     Then Response status code should be:    404
 
 Create_Duplicate_Service_Point_Service_Relation
+    [Documentation]    https://spryker.atlassian.net/browse/CC-31581
+    [Tags]    skip-due-to-issue
     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer ${token}
     #create a service point
