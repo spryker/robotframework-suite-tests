@@ -31,14 +31,10 @@ Resource    ../../../../../resources/steps/availability_steps.robot
 Resource    ../../../../../resources/steps/glossary_steps.robot
 Resource    ../../../../../resources/steps/order_comments_steps.robot
 Resource    ../../../../../resources/steps/zed_order_steps.robot
-Resource    ../../../../../resources/steps/configurable_product_steps.robot
-
-
-*** Test Cases ***
-Assign_warehouse_to_warehouse_user_in_BO
-    [Documentation]   Made user a warehouse user, assign a warehouse 
-    Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    Zed: create new warehouse user:   
-        ...    || sku                      | store | name en                      | name de                        | new from   | new to     ||
-    ...    || discontinuedSKU${random} | DE    | discontinuedProduct${random} | DEdiscontinuedProduct${random} | 01.01.2020 | 01.01.2030 ||     
-    # Zed: assign warehouse to user:    ${user}    ${warehouse}
+Resource    ../../../../../resources/steps/configurable_product_steps.robot  
+   
+   
+   
+   
+   
+    #  check status in BO and finish an order
