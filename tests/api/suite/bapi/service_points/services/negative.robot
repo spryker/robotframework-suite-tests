@@ -63,11 +63,11 @@ Create_Duplicate_Service_Point_Service_Relation
     Then Response status code should be:    201
     And Save value to a variable:    [data][id]    service_type_id
     #  #create a service
-    When I send a POST request:    /services    {"data": {"type": "services", "attributes": {"serviceTypeUuid": "${service_type_id}", "servicePointUuid": "${service_point_id}", "isActive":"true", "key": "service-point-1-collects${random}"}}}
+    When I send a POST request:    /services    {"data": {"type": "services", "attributes": {"serviceTypeUuid": "${service_type_id}", "servicePointUuid": "${service_point_id}", "isActive":"true", "key": "service2-point-1-collects${random}"}}}
     Then Response status code should be:    201
     And Response reason should be:    Created
     Then Save value to a variable:    [data][id]    service_id
-    When I send a POST request:    /services    {"data": {"type": "services", "attributes": {"serviceTypeUuid": "${service_type_id}", "servicePointUuid": "${service_point_id}", "isActive":"true", "key": "new-key${random}"}}}
+    When I send a POST request:    /services    {"data": {"type": "services", "attributes": {"serviceTypeUuid": "${service_type_id}", "servicePointUuid": "${service_point_id}", "isActive":"true", "key": "new-key2${random}"}}}
     When Response status code should be:    400
     And Response should return error code:    5429
     And Response should return error message:    A service with defined relation of service point and service type already exists.
