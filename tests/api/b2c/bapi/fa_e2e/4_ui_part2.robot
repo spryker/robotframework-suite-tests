@@ -1,5 +1,5 @@
 *** Settings ***
-Suite Setup       SuiteSetup
+Suite Setup       common.SuiteSetup
 Test Setup        TestSetup
 Test Teardown     TestTeardown
 Suite Teardown    SuiteTeardown
@@ -36,3 +36,4 @@ Resource    ../../../../../resources/steps/configurable_product_steps.robot
 
 *** Test Cases ***   
 # Go to BO and PAY for order, skip timeout, click generate pick list
+]
