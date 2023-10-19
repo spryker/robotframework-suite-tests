@@ -18,7 +18,7 @@ ENABLER
 
 Bapi_move_throe_picking_process
     [Tags]    bapi
-    Then I get access token by user credentials:   ${zed_admin.email_de}
+    Then I get access token by user credentials:   ${zed_admin.email}
     And I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer ${token}
 #     # Check that picking lists created
     And I send a GET request:    /picking-lists/?include=picking-list-items,concrete-products,sales-shipments,sales-orders

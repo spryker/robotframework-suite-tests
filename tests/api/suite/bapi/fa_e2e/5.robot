@@ -43,7 +43,7 @@ Change_OMS_States
     Yves: login on Yves with provided credentials:    ${yves_user_email}
     Yves: get the last placed order ID by current customer
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    Zed: go to order page:    DE--5
+    Zed: go to order page:    ${lastPlacedOrder}
     Zed: trigger all matching states inside this order:    picking list generation schedule
     # Trigger oms
     Zed: wait for order item to be in state:    091_25873091    picking list generation started
