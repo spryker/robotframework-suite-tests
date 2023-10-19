@@ -37,9 +37,13 @@ Create_order_in_Glue
     Then Response status code should be:    201
     And Save value to a variable:    [included][0][attributes][items][0][uuid]    uuid
     And Update order status in Database:    waiting    ${uuid} 
+    Trigger oms
     And Update order status in Database:    picking list generation scheduled    ${uuid}
-    And Update order status in Database:    picking list generation started    ${uuid}  
+    Trigger oms
+    And Update order status in Database:    picking list generation started    ${uuid}
+    Trigger oms  
     And Update order status in Database:    ready for picking    ${uuid}
+    Trigger oms
 
   
 Bapi_move_throe_picking_process
