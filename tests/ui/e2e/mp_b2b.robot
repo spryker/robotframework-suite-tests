@@ -2763,8 +2763,4 @@ Data_exchange_API_Configuration_in_Zed
     Response body parameter should be:    [data][comment]    None
     ### DELETE TEST CONFIGURATION AND TEST MIME TYPE FROM DB ###
     [Teardown]    Run Keywords    Delete dynamic entity configuration in Database:    mime-types
-    ...    AND    Delete mime_type by id_mime_type in Database:    ${id_mime_type} 
-
-
-
-
+    ...    AND    Delete mime_type by id_mime_type in Database:    ${id_mime_type}
