@@ -37,7 +37,7 @@ Get_Service_By_ID__No_Auth
 
 Get_Nonexistent_Service
     Run Keywords    I get access token by user credentials:   ${zed_admin.email}
-    ...    AND    I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer ${token}
+    ...    AND    I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer ${bapi_access_token}
     When I send a GET request:    /services/nonexistent_id
     Then Response status code should be:    400
     And Response should return error code:    5400

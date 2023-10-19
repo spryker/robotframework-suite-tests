@@ -74,5 +74,11 @@
     "categories":{
        "category_1":"Digital Cameras",
        "category_2":"Camcorders"
-    }
+    },
+    "misc":{
+      "grant_type":{
+         "password":"password",
+         "refresh_token":"refresh_token"
+      }
+   }
  }

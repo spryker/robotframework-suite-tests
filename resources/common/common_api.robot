@@ -2496,9 +2496,12 @@ I get access token by user credentials:
     [Arguments]    ${email}    ${password}=${default_password}
     When I set Headers:    Content-Type=application/x-www-form-urlencoded
     And I send a POST request:    /token    {"grantType": "${grant_type.password}","username": "${email}","password": "${password}"}
-    Save value to a variable:    [access_token]    token
-    Log    ${token}
-    [Return]    ${token}
+    Save value to a variable:    [access_token]    bapi_access_token
+    Log    ${response_body}
+    ${length}=    Get Length    ${bapi_access_token}
+    Run Keyword If    ${length} == 0    Fail    Access token is empty!
+    Log    ${bapi_access_token}
+    [Return]    ${bapi_access_token}
 
 Run console command
     [Documentation]    This keyword executes console command using provided command and parameters. If docker is enabled, it will execute the command using docker.
