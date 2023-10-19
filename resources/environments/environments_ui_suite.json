@@ -23,6 +23,7 @@
        "yves_user_last_name":"Wagner",
        "yves_user_password":"change123",
        "zed_admin_email":"admin@spryker.com",
+       "zed_admin_email_de":"admin@spryker.com",
        "zed_admin_password":"change123",
        "yves_second_user_email":"bill.martin@spryker.com",
        "yves_second_user_first_name":"Martin",
