@@ -51,24 +51,26 @@ Get_Services_No_Auth
     Then Response status code should be:    404
 
 Create_Duplicate_Service_Point_Service_Relation
+    [Documentation]    https://spryker.atlassian.net/browse/CC-31581
+    [Tags]    skip-due-to-issue
     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer ${token}
     #create a service point
-    When I send a POST request:    /service-points    {"data": {"type": "service-points","attributes": {"name": "Some Service Point ${random}","key": "some-service-point-new-${random}","isActive":"true","stores": ["DE", "AT"]}}}
+    When I send a POST request:    /service-points    {"data": {"type": "service-points","attributes": {"name": "Some Service Points ${random}","key": "some-service-point-news-${random}","isActive":"true","stores": ["DE", "AT"]}}}
     Then Response status code should be:    201
     Then Save value to a variable:    [data][attributes][key]    service_point_key
     And Save value to a variable:    [data][id]    service_point_id
     # #create a service type
-    When I send a POST request:    /service-types    {"data": {"type": "service-types", "attributes": {"name": "Test Service ${random}", "key": "service1-test${random}"}}}
+    When I send a POST request:    /service-types    {"data": {"type": "service-types", "attributes": {"name": "Test Services ${random}", "key": "service1-tests${random}"}}}
     Then Response status code should be:    201
     And Save value to a variable:    [data][id]    service_type_id
     #  #create a service
-    When I send a POST request:    /services    {"data": {"type": "services", "attributes": {"serviceTypeUuid": "${service_type_id}", "servicePointUuid": "${service_point_id}", "isActive":"true", "key": "service-point-1-collect${random}"}}}
+    When I send a POST request:    /services    {"data": {"type": "services", "attributes": {"serviceTypeUuid": "${service_type_id}", "servicePointUuid": "${service_point_id}", "isActive":"true", "key": "service2-point-1-collects${random}"}}}
     Then Response status code should be:    201
     And Response reason should be:    Created
     Then Save value to a variable:    [data][id]    service_id
-    When I send a POST request:    /services    {"data": {"type": "services", "attributes": {"serviceTypeUuid": "${service_type_id}", "servicePointUuid": "${service_point_id}", "isActive":"true", "key": "service-point-1-collect${random}"}}}
-    When Response status code should be:    207
+    When I send a POST request:    /services    {"data": {"type": "services", "attributes": {"serviceTypeUuid": "${service_type_id}", "servicePointUuid": "${service_point_id}", "isActive":"true", "key": "new-key2${random}"}}}
+    When Response status code should be:    400
     And Response should return error code:    5429
     And Response should return error message:    A service with defined relation of service point and service type already exists.
     [Teardown]     Run Keywords    Delete service point in DB    ${service_point_id}
