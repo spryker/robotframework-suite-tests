@@ -34,6 +34,25 @@ Zed: update Zed user:
     END
     Zed: submit the form
 
+Zed: set Zed user a warehouse user:
+    [Arguments]    @{args}
+    ${newUserData}=    Set Up Keyword Arguments    @{args}
+    ${currentURL}=    Get Location
+    IF    '/user' not in '${currentURL}'    Zed: go to second navigation item level:    Users    Users
+    Zed: click Action Button in a table for row that contains:    ${oldEmail}    Edit
+    Wait Until Element Is Visible    ${zed_user_email_field}
+    FOR    ${key}    ${value}    IN    &{newUserData}
+        Log    Key is '${key}' and value is '${value}'.
+        IF    '${key}'=='password' and '${value}' != '${EMPTY}'
+            Type Text    ${zed_user_password_filed}    ${value}
+            Type Text    ${zed_user_repeat_password_field}    ${value}
+        END
+        IF    '${key}'=='firstName' and '${value}' != '${EMPTY}'    Type Text    ${zed_user_first_name_field}    ${value}
+        IF    '${key}'=='lastName' and '${value}' != '${EMPTY}'    Type Text    ${zed_user_last_name_field}    ${value}
+    END
+    Zed: submit the form
+
+
 Zed: create new role with name:
     [Documentation]    Create a new role.
     [Arguments]    ${name}

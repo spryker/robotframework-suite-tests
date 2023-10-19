@@ -62,6 +62,7 @@
       },
       "zed_admin":{
          "email":"admin@spryker.com",
+         "email_de":"admin_de@spryker.com",
          "password":"change123"
       },
       "zed_user":{
