@@ -40,7 +40,7 @@ Resource    ../../../../../resources/steps/configurable_product_steps.robot
 *** Test Cases ***
 
 Make_user_a_warehouse_user
-    Zed: login on Zed with provided credentials:    ${zed_admin_email_de}
+    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: update Zed user:
     ...    || oldEmail                       | password      | user_is_warehouse_user ||
     ...    || admin_de@spryker.com           | Change123!321 | true                   ||
