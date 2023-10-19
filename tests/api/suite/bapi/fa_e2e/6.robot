@@ -22,7 +22,9 @@ Bapi_move_throe_picking_process
     And I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer ${token}
 #     # Check that picking lists created
     And I send a GET request:    /picking-lists/?include=picking-list-items,concrete-products,sales-shipments,sales-orders
-    Then Save value to a variable:    [data][id]    cart_id
+    Then Response status code should be:    200
+
+    # Then Save value to a variable:    [data][id]    cart_id
 
 #     # Go to DB and choose last picking list, save uuid to variable picklist
 #     Then I send a POST request:   /picking-lists/${picklist}/start-picking    {"data":[]}

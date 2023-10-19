@@ -19,7 +19,7 @@ ENABLER
 Create_order_in_Glue
     [Tags]    glue
     # create a GLUE order
-    And I get access token for the customer:    ${yves_second_user.email}
+    And I get access token for the customer:    ${yves_user.email}
     Then I set Headers:    Authorization=${token}
     Then Cleanup all customer carts
     Then I send a POST request:    /carts    {"data":{"type":"carts","attributes":{"priceMode":"${mode.gross}","currency":"${currency.eur.code}","store":"${store.de}","name": "${test_cart_name}-${random}"}}}
@@ -35,10 +35,4 @@ Create_order_in_Glue
     And Save value to a variable:    [included][0][attributes][items][1][uuid]    uuid1
     And Update order status in Database:    waiting    ${uuid} 
     And Update order status in Database:    waiting    ${uuid1} 
-    # Trigger oms
-    # And Update order status in Database:    picking list generation scheduled    ${uuid}
-    # Trigger oms
-    # And Update order status in Database:    picking list generation started    ${uuid}
-    # Trigger oms  
-    # And Update order status in Database:    ready for picking    ${uuid}
-    # Trigger oms
+
