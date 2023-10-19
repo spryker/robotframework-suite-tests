@@ -43,3 +43,8 @@ E2E_fulfilment_app_tests
     Then I send a PATCH request:    /picking-lists/${picklist}/picking-list-items    {"data":[{"id":"${item1}","type":"picking-list-items","attributes":{"numberOfPicked":1,"numberOfNotPicked":0}},{"id":"${item2}","type":"picking-list-items","attributes":{"numberOfPicked":0,"numberOfNotPicked":1}}]}
     # check that status of picking list = finished
     #  check status in BO and finish an order
+
+
+    # Ui test
+#     [Setup]    Run Keywords    common.SuiteSetup  AND  common.TestSetup
+#     Zed: login on Zed with provided credentials:    ${zed_admin_email}
