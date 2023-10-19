@@ -1,46 +1,25 @@
 *** Settings ***
-Library    BuiltIn
-Suite Setup       SuiteSetup
-Suite Teardown    SuiteTeardown
-Test Setup        TestSetup
-Test Teardown     TestTeardown
-Test Tags    robot:recursive-stop-on-failure
-Resource    ../../../../../resources/common/common.robot
-Resource    ../../../../../resources/steps/header_steps.robot
-Resource    ../../../../../resources/common/common_yves.robot
+Suite Setup       common_api.SuiteSetup
+Test Setup        common_api.TestSetup
+Resource    ../../../../../../resources/common/common_api.robot
+Resource    ../../../../../resources/steps/service_point_steps.robot
+Resource     ../../../../../resources/common/common.robot
 Resource    ../../../../../resources/common/common_zed.robot
-Resource    ../../../../../resources/steps/pdp_steps.robot
-Resource    ../../../../../resources/steps/shopping_lists_steps.robot
-Resource    ../../../../../resources/steps/checkout_steps.robot
-Resource    ../../../../../resources/steps/customer_registration_steps.robot
-Resource    ../../../../../resources/steps/order_history_steps.robot
-Resource    ../../../../../resources/steps/product_set_steps.robot
-Resource    ../../../../../resources/steps/catalog_steps.robot
-Resource    ../../../../../resources/steps/agent_assist_steps.robot
-Resource    ../../../../../resources/steps/company_steps.robot
-Resource    ../../../../../resources/steps/customer_account_steps.robot
-Resource    ../../../../../resources/steps/configurable_bundle_steps.robot
+# Resource    ../../../../../resources/steps/orders_management_steps.robot
 Resource    ../../../../../resources/steps/zed_users_steps.robot
-Resource    ../../../../../resources/steps/products_steps.robot
-Resource    ../../../../../resources/steps/orders_management_steps.robot
-Resource    ../../../../../resources/steps/wishlist_steps.robot
-Resource    ../../../../../resources/steps/zed_availability_steps.robot
-Resource    ../../../../../resources/steps/zed_discount_steps.robot
-Resource    ../../../../../resources/steps/zed_cms_page_steps.robot
-Resource    ../../../../../resources/steps/zed_customer_steps.robot
-Resource    ../../../../../resources/steps/zed_root_menus_steps.robot
-Resource    ../../../../../resources/steps/minimum_order_value_steps.robot
-Resource    ../../../../../resources/steps/availability_steps.robot
-Resource    ../../../../../resources/steps/glossary_steps.robot
-Resource    ../../../../../resources/steps/zed_payment_methods_steps.robot
-Resource    ../../../../../resources/steps/zed_dashboard_steps.robot
-Resource    ../../../../../resources/steps/configurable_product_steps.robot
+
+Default Tags    bapi
 
 
 *** Test Cases ***
+ENABLER
+    common_api.TestSetup
 
-Make_user_a_warehouse_user
-    Zed: login on Zed with provided credentials:    ${zed_admin_email_de}
-    Zed: update Zed user:
-    ...    || oldEmail                       | password      | user_is_warehouse_user ||
-    ...    || admin_de@spryker.com           | Change123!321 | true                   ||
+Assign_user_to_active_warehouse
+    [Tags]    bapi
+    And I get access token by user credentials:   ${zed_admin.email}
+    I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer ${token}
+    # make warehouse active [warehouse = Spryker Mer 000001 Warehouse 1]
+    When I send a POST request:    /warehouse-user-assignments    {"data": {"type": "warehouse-user-assignments", "attributes":{"userUuid": "${warehous_user[0].de_admin_user_uuid}","warehouse" :{"uuid": "${warehouse[0].warehouse_uuid}"},"isActive":"true"}}}
+    Then Response status code should be:    201
+    Then Save value to a variable:    [data][id]   warehouse_assigment_id    

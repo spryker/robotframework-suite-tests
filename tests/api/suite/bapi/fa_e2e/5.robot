@@ -46,10 +46,6 @@ Change_OMS_States
     Zed: go to order page:    ${lastPlacedOrder}
     Zed: trigger all matching states inside this order:    picking list generation schedule
     # Trigger oms
-    Zed: wait for order item to be in state:    091_25873091    picking list generation started
-    Zed: wait for order item to be in state:    093_24495843    picking list generation started
-    Zed: trigger all matching states inside this order:    prepare for picking
-    # Trigger oms
     Zed: wait for order item to be in state:    091_25873091    ready for picking
     Zed: wait for order item to be in state:    093_24495843    ready for picking
 
