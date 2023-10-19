@@ -11,7 +11,7 @@ ENABLER
 
 Create_Service_No_Auth
     And Create service point in DB    uuid=262feb9d-33a7${random}    name=TestSP${random}    key=sp11${random}    isActive=true    storeName=DE
-    Then Create service type in DB    uuid=33a7-5c55-9b04${random}    name=TestType${random}    key=sp11${random}    
+    Then Create service type in DB    uuid=33a7-5c55-9b04${random}    name=TestType${random}    key=sp11${random}
     When I send a POST request:    /services    {"data": {"type": "services", "attributes": {"serviceTypeUuid": "33a7-5c55-9b04${random} ", "servicePointUuid": "262feb9d-33a7${random}", "isActive": "true", "key": "service-point-1-collect"}}}
     Then Response status code should be:    404
     [Teardown]     Run Keywords    Delete service point in DB    262feb9d-33a7${random}
@@ -19,7 +19,7 @@ Create_Service_No_Auth
 
 Create_Service_Invalid_Auth
     Create service point in DB    uuid=262feb9d-33a7${random}    name=TestSP1${random}    key=sp11${random}    isActive=true    storeName=DE
-    Create service type in DB    uuid=33a7-5c55-9b04${random}    name=TestType1${random}    key=sp11${random}    
+    Create service type in DB    uuid=33a7-5c55-9b04${random}    name=TestType1${random}    key=sp11${random}
     When I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer invalid
     When I send a POST request:    /services    {"data": {"type": "services", "attributes": {"serviceTypeUuid": "33a7-5c55-9b04${random}", "servicePointUuid": "262feb9d-33a7${random}", "isActive": "true", "key": "service-point-1-collect"}}}
     Then Response status code should be:    400
@@ -28,7 +28,7 @@ Create_Service_Invalid_Auth
 
 Get_Service_By_ID__No_Auth
     When Create service point in DB    uuid=262feb9d-33a7${random}    name=TestSP2${random}    key=sp11${random}    isActive=true    storeName=DE
-    And Create service type in DB    uuid=33a7-5c55-9b04${random}    name=TestType2${random}     key=sp11${random} 
+    And Create service type in DB    uuid=33a7-5c55-9b04${random}    name=TestType2${random}     key=sp11${random}
     Then Create service in DB    servicePointUuid=262feb9d-33a7${random}    serviceTypeUuid=33a7-5c55-9b04${random}    uuid=262feb1fd22067e${random}    key=s1f${random}    isActive=true
     And I send a GET request:    /services/262feb1fd22067e${random}
     Then Response status code should be:    404
@@ -37,7 +37,7 @@ Get_Service_By_ID__No_Auth
 
 Get_Nonexistent_Service
     Run Keywords    I get access token by user credentials:   ${zed_admin.email}
-    ...    AND    I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer ${bapi_access_token}
+    ...    AND    I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer ${token}
     When I send a GET request:    /services/nonexistent_id
     Then Response status code should be:    400
     And Response should return error code:    5400
@@ -45,10 +45,12 @@ Get_Nonexistent_Service
 
 Get_Services_No_Auth
     When Create service point in DB    uuid=262feb9d-33a7${random}    name=TestSP2a${random}    key=sp11a${random}    isActive=true    storeName=DE
-    And Create service type in DB    uuid=33a7-5c55-9b04${random}    name=TestType2a${random}     key=sp11a${random} 
+    And Create service type in DB    uuid=33a7-5c55-9b04${random}    name=TestType2a${random}     key=sp11a${random}
     Then Create service in DB    servicePointUuid=262feb9d-33a7${random}    serviceTypeUuid=33a7-5c55-9b04${random}    uuid=262feb1fd22067e${random}    key=s1f${random}    isActive=true
     When I send a GET request:    /services
     Then Response status code should be:    404
+    [Teardown]     Run Keywords    Delete service point in DB    262feb9d-33a7${random}
+    ...    AND    Delete service type in DB    33a7-5c55-9b04${random}
 
 Create_Duplicate_Service_Point_Service_Relation
     [Documentation]    https://spryker.atlassian.net/browse/CC-31581

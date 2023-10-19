@@ -28,7 +28,7 @@ ${default_db_engine}       pymysql
 ${docker}     ${False}
 ${docker_db_host}     database
 ${docker_cli_url}     http://cli:9000
-${cli_path}    ..
+${cli_path}    ../suite-nonsplit/
 ${db_engine}
 ${glue_env}
 ${bapi_env}
@@ -963,11 +963,11 @@ Each array element of the array in response should contain a nested array larger
     @{data}=    Get Value From Json    ${response_body}    ${json_path}
     ${list_length}=    Get Length    @{data}
     ${list_length}=    Get From List    @{data}    ${index}
-    @{data}=    Get Value From Json    ${list_length}    ${nested_array} 
+    @{data}=    Get Value From Json    ${list_length}    ${nested_array}
     ${nested_array_list_length}=    Get Length    @{data}
     ${result}=    Evaluate   ${nested_array_list_length} > ${expected_size}
     ${result}=    Convert To String    ${result}
-    Should Be Equal    ${result}    True    Actual nested array length is '${nested_array_list_length}' not greater than expected '${expected_size}'.    
+    Should Be Equal    ${result}    True    Actual nested array length is '${nested_array_list_length}' not greater than expected '${expected_size}'.
     END
 
 Response should contain the array smaller than a certain size:
@@ -1113,16 +1113,16 @@ Each array in response should contain property with NOT EMPTY value:
     ${list_length}=    Get Length    @{data}
     ${log_list}=    Log List    @{data}
     FOR    ${index}    IN RANGE    0    ${list_length}
-        ${list_element}=    Get From List    @{data}    ${index}    
+        ${list_element}=    Get From List    @{data}    ${index}
         ${list_element}=    Get Value From Json    ${list_element}    ${expected_property}
         ${list_element}=    Convert To String    ${list_element}
         ${list_element}=    Replace String    ${list_element}    '   ${EMPTY}
         ${list_element}=    Replace String    ${list_element}    [   ${EMPTY}
-        ${list_element}=    Replace String    ${list_element}    ]   ${EMPTY}  
+        ${list_element}=    Replace String    ${list_element}    ]   ${EMPTY}
     Should Not Be Empty     ${list_element}    '${expected_property}' property value in json path '${json_path}' is empty but shoud Not Be EMPTY
     END
 
-Each array in response should contain property with value NOT in: 
+Each array in response should contain property with value NOT in:
     [Documentation]    This keyword checks that each array element contsains the speficied parameter ``${expected_property}`` with the value that does not match any of the parameters ``${expected_value1}``, ``${expected_value2}``, etc..
     ...
     ...    The minimal number of arguments is 1, maximum is 4
@@ -2496,12 +2496,12 @@ I get access token by user credentials:
     [Arguments]    ${email}    ${password}=${default_password}
     When I set Headers:    Content-Type=application/x-www-form-urlencoded
     And I send a POST request:    /token    {"grantType": "${grant_type.password}","username": "${email}","password": "${password}"}
-    Save value to a variable:    [access_token]    bapi_access_token
+    Save value to a variable:    [access_token]    token
     Log    ${response_body}
-    ${length}=    Get Length    ${bapi_access_token}
+    ${length}=    Get Length    ${token}
     Run Keyword If    ${length} == 0    Fail    Access token is empty!
-    Log    ${bapi_access_token}
-    [Return]    ${bapi_access_token}
+    Log    ${token}
+    [Return]    ${token}
 
 Run console command
     [Documentation]    This keyword executes console command using provided command and parameters. If docker is enabled, it will execute the command using docker.
