@@ -3,10 +3,6 @@ Suite Setup       common_api.SuiteSetup
 Test Setup        common_api.TestSetup
 Resource    ../../../../../../resources/common/common_api.robot
 Resource    ../../../../../resources/steps/service_point_steps.robot
-Resource     ../../../../../resources/common/common.robot
-Resource    ../../../../../resources/common/common_zed.robot
-# Resource    ../../../../../resources/steps/orders_management_steps.robot
-Resource    ../../../../../resources/steps/zed_users_steps.robot
 
 Default Tags    bapi
 

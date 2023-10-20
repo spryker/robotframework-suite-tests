@@ -54,6 +54,7 @@ Make user not a warehouse user:
         ...    ``Make user not a warehouse user:   ${warehous_user[0].user_uuid}    0``
         ...
     [Arguments]    ${warehouse_uuid}    ${isActive}
+    Connect to Spryker DB
     IF    '${db_engine}' == 'pymysql'
         Execute Sql String    UPDATE spy_user SET is_warehouse_user = '${isActive}' WHERE uuid = '${warehouse_uuid}';
     ELSE
