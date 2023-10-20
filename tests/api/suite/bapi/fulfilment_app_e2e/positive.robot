@@ -55,7 +55,6 @@ Fulfilment_app_e2e
     And Update order status in Database:    waiting    ${uuid} 
     And Update order status in Database:    waiting    ${uuid1}     
     # MOVE ORDER ITEMS TO PROPER STATE USING BO, PICKING LIST GENERATED AUTOMATICALLY. UI TEST
-    Remove Tags
     common.TestSetup
     Yves: login on Yves with provided credentials:    ${yves_user.email}
     Yves: get the last placed order ID by current customer
@@ -67,7 +66,8 @@ Fulfilment_app_e2e
     Zed: wait for order item to be in state:    091_25873091    ready for picking
     Zed: wait for order item to be in state:    093_24495843    ready for picking
     # START PICKING PROCESS AND PICKING ITEMS BY BAPI
-    # Set Tags   bapi
+    Remove Tags    glue
+    Set Tags   bapi
     common_api.TestSetup
     common_api.I set Headers:    Content-Type=${default_header_content_type}
     Then I get access token by user credentials:   ${zed_admin.email_de}    Change123!321
@@ -80,7 +80,7 @@ Fulfilment_app_e2e
     And Response body parameter should be:    [data][0][attributes][status]    ready-for-picking
     # START PICKING
     common_api.I send a POST request:   /picking-lists/${picklist_id}/start-picking    {"data": [{"type": "picking-lists","attributes": {"action": "startPicking"}}]}
-    Then Response status code should be:    200
+    Then Response status code should be:    201
     And Response body parameter should be:    [data][attributes][status]    picking-started
     # PICKING ONE ITEM, ANOTHER ITEM STILL NOT PICKED
     Then I send a PATCH request:    /picking-lists/${picklist_id}/picking-list-items    {"data":[{"id":"${item_id_1}","type":"picking-list-items","attributes":{"numberOfPicked":1,"numberOfNotPicked":0}},{"id":"${item_id_2}","type":"picking-list-items","attributes":{"numberOfPicked":0,"numberOfNotPicked":0}}]}
@@ -95,6 +95,6 @@ Fulfilment_app_e2e
     # CLEAN SYSTEM, REMOVE CREATED RELATIONS IN DB
     [Teardown]     Run Keywords    Remove picking list item by uuid in DB:    ${item_id_1}
     ...  AND    Remove picking list item by uuid in DB:    ${item_id_2} 
-    ...  AND    Remove picking list item by uuid in DB:    ${pick_list_uuid}
+    ...  AND    Remove picking list by uuid in DB:    ${pick_list_uuid}
     ...  AND    Make user not a warehouse user:   ${warehous_user[0].user_uuid}    0
     ...  AND    I send a DELETE request:    /warehouse-user-assignments/${warehouse_assigment_id}
