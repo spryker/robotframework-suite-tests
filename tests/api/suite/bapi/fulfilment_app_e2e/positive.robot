@@ -21,19 +21,19 @@ Test Tags     robot:recursive-stop-on-failure
 *** Test Cases ***
 
 Fulfilment_app_e2e
-    # Logged in to BO and set checkbox is a warehouse user = true for admin_de user. UI test
+    # LOGGED IN TO BO and SET CHECKBOX is a warehouse user = true FOR admin_de USER. UI TEST
     Zed: login on Zed with provided credentials:    ${zed_admin.email}
     Zed: update Zed user:
     ...    || oldEmail                       | password      | user_is_warehouse_user ||
     ...    || admin_de@spryker.com           | Change123!321 | true                   ||
     common_api.TestSetup
-    # Assign admin_de user to warehouse [Spryker Mer 000001 Warehouse 1] make warehouse active by BAPI
+    # ASSIGN admin_de user TO WAREHOUSE [Spryker Mer 000001 Warehouse 1] MAKE WAREHOUSE ACTIVE BY BAPI
     And I get access token by user credentials:   ${zed_admin.email}
     common_api.I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer ${token}
     common_api.I send a POST request:    /warehouse-user-assignments    {"data": {"type": "warehouse-user-assignments", "attributes":{"userUuid": "${warehous_user[0].de_admin_user_uuid}","warehouse" :{"uuid": "${warehouse[0].warehouse_uuid}"},"isActive":"true"}}}
     Then Response status code should be:    201
     Then Save value to a variable:    [data][id]   warehouse_assigment_id  
-    # Create an order by GLUE
+    # CREATE AN ORDER BY GLUE
     common_api.I set Headers:    Content-Type=${default_header_content_type}
     Set Tags    glue
     common_api.TestSetup
@@ -51,27 +51,25 @@ Fulfilment_app_e2e
     Then Response status code should be:    201
     And Save value to a variable:    [included][0][attributes][items][0][uuid]    uuid
     And Save value to a variable:    [included][0][attributes][items][1][uuid]    uuid1
-    # move order items into waiting state by DB
+    # MOVE ORDER ITEMS INTO WAITING STATE
     And Update order status in Database:    waiting    ${uuid} 
     And Update order status in Database:    waiting    ${uuid1}     
-    # move order items to proper states using BO, picking list generated automatically. UI test
-    common.SuiteSetup
+    # MOVE ORDER ITEMS TO PROPER STATE USING BO, PICKING LIST GENERATED AUTOMATICALLY. UI TEST
+    Remove Tags
     common.TestSetup
-    common.TestTeardown
-    common.SuiteTeardown
     Yves: login on Yves with provided credentials:    ${yves_user.email}
     Yves: get the last placed order ID by current customer
     Zed: login on Zed with provided credentials:    ${zed_admin.email}
     Zed: go to order page:    ${lastPlacedOrder}
     Zed: trigger all matching states inside this order:    picking list generation schedule
     # Trigger oms
-    # order ready for pickking process 
+    # ORDER READY FOR PICKING
     Zed: wait for order item to be in state:    091_25873091    ready for picking
     Zed: wait for order item to be in state:    093_24495843    ready for picking
-    # Start picking process and picking itemes bu BAPI
-    common_api.I set Headers:    Content-Type=${default_header_content_type}
-    Set Tags    bapi
+    # START PICKING PROCESS AND PICKING ITEMS BY BAPI
+    # Set Tags   bapi
     common_api.TestSetup
+    common_api.I set Headers:    Content-Type=${default_header_content_type}
     Then I get access token by user credentials:   ${zed_admin.email_de}    Change123!321
     common_api.I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer ${token}
     common_api.I send a GET request:    /picking-lists/?include=picking-list-items,concrete-products,sales-shipments,sales-orders,include=warehouses
@@ -80,21 +78,21 @@ Fulfilment_app_e2e
     Then Save value to a variable:    [data][0][relationships][picking-list-items][data][0][id]    item_id_1
     Then Save value to a variable:    [data][0][relationships][picking-list-items][data][1][id]    item_id_2
     And Response body parameter should be:    [data][0][attributes][status]    ready-for-picking
-    # start picking
+    # START PICKING
     common_api.I send a POST request:   /picking-lists/${picklist_id}/start-picking    {"data": [{"type": "picking-lists","attributes": {"action": "startPicking"}}]}
     Then Response status code should be:    200
     And Response body parameter should be:    [data][attributes][status]    picking-started
-    # picking one item, another item still not picked
+    # PICKING ONE ITEM, ANOTHER ITEM STILL NOT PICKED
     Then I send a PATCH request:    /picking-lists/${picklist_id}/picking-list-items    {"data":[{"id":"${item_id_1}","type":"picking-list-items","attributes":{"numberOfPicked":1,"numberOfNotPicked":0}},{"id":"${item_id_2}","type":"picking-list-items","attributes":{"numberOfPicked":0,"numberOfNotPicked":0}}]}
     Then Response status code should be:    200
     And Response body parameter should be:    [data][0][attributes][status]    picking-started
     And Response body parameter should be in:    [data][0][relationships][picking-list-items][data][0][id]    ${item_id_1}    ${item_id_2}
     And Response body parameter should be in:    [data][0][relationships][picking-list-items][data][1][id]    ${item_id_1}    ${item_id_2}
-    # picking second item, picking finished
+    # PICKING SECOND ITEM, PICKING FINISHED
     Then I send a PATCH request:    /picking-lists/${picklist_id}/picking-list-items    {"data":[{"id":"${item_id_1}","type":"picking-list-items","attributes":{"numberOfPicked":1,"numberOfNotPicked":0}},{"id":"${item_id_2}","type":"picking-list-items","attributes":{"numberOfPicked":0,"numberOfNotPicked":1}}]}
     Then Response status code should be:    200
     And Response body parameter should be:    [data][0][attributes][status]    picking-finished
-    # clean the system, remove created relations
+    # CLEAN SYSTEM, REMOVE CREATED RELATIONS IN DB
     [Teardown]     Run Keywords    Remove picking list item by uuid in DB:    ${item_id_1}
     ...  AND    Remove picking list item by uuid in DB:    ${item_id_2} 
     ...  AND    Remove picking list item by uuid in DB:    ${pick_list_uuid}
