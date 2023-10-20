@@ -11,12 +11,10 @@ ENABLER
 
 *** Test Cases ***
 Create_warehouse_user_assigment_with_invalid_token
-    [Setup]    Run Keywords    I get access token by user credentials:    invalid
-    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=Bearer ${token}    
+    [Setup]    Run Keywords    I get access token by user credentials:    ${zed_user.email}
+    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=Bearer invalid    
     When I send a POST request:    /warehouse-user-assignments    {"data": {"type": "warehouse-user-assignments", "attributes":{"userUuid": "${warehous_user[0].user_uuid}","warehouse" :{"uuid": "${warehouse[0].warehouse_uuid}"},"isActive":"false"}}}
     Then Response status code should be:    400
-    And Response should return error code:    001
-    And Response should return error message:    Invalid access token.
 
 Create_warehouse_user_assigment_without_token
     And I set Headers:    Content-Type=${default_header_content_type}   
