@@ -35,8 +35,6 @@ Resource    ../../../../../resources/steps/glossary_steps.robot
 Resource    ../../../../../resources/steps/zed_payment_methods_steps.robot
 Resource    ../../../../../resources/steps/zed_dashboard_steps.robot
 Resource    ../../../../../resources/steps/configurable_product_steps.robot
-Resource    ../../../../../resources/common/common_api.robot
-
 
 *** Test Cases ***
 
@@ -45,6 +43,5 @@ Make_user_a_warehouse_user
     Zed: update Zed user:
     ...    || oldEmail                       | password      | user_is_warehouse_user ||
     ...    || admin_de@spryker.com           | Change123!321 | true                   ||
-
 
 
