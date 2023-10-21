@@ -31,6 +31,12 @@ Zed: update Zed user:
         END
         IF    '${key}'=='firstName' and '${value}' != '${EMPTY}'    Type Text    ${zed_user_first_name_field}    ${value}
         IF    '${key}'=='lastName' and '${value}' != '${EMPTY}'    Type Text    ${zed_user_last_name_field}    ${value}
+        IF    '${key}'=='user_is_warehouse_user' and '${value}' == 'true'   
+            Zed: Check checkbox by Label:     This user is a warehouse user
+        END
+        IF    '${key}'=='user_is_warehouse_user' and '${value}' == 'false'   
+            Zed: Uncheck Checkbox by Label:    This user is a warehouse user
+        END
     END
     Zed: submit the form
 
@@ -70,3 +76,13 @@ Zed: deactivate the created user:
     Zed: go to second navigation item level:    Users    Users
     Zed: click Action Button in a table for row that contains:    ${email}    Deactivate
     Wait Until Element Is Visible    ${zed_success_flash_message}
+
+
+
+
+
+
+    
+ Zed: assign warehouse to user:
+    [Arguments]    ${email}
+    Zed: go to second navigation item level:    Users    Users   
