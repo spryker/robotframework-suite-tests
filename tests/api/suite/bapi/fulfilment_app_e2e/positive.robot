@@ -96,5 +96,5 @@ Fulfilment_app_e2e
     [Teardown]     Run Keywords    Remove picking list item by uuid in DB:    ${item_id_1}
     ...  AND    Remove picking list item by uuid in DB:    ${item_id_2} 
     ...  AND    Remove picking list by uuid in DB:    ${picklist_id}
-    ...  AND    Make user not a warehouse user:   ${warehous_user[0].user_uuid}    0
+    ...  AND    Make user not a warehouse user:   ${warehous_user[0].de_admin_user_uuid}    0
     ...  AND    I send a DELETE request:    /warehouse-user-assignments/${warehouse_assigment_id}
