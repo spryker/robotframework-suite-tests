@@ -672,23 +672,24 @@
        "shipment_type_name":"Pickup"
    },
    "warehouse_user_assigment":{
-      "warehouse_user":[
-         { 
           "user_uuid":"48a6c610-693e-5d88-bdce-3c6018b3abd2",
           "admin_user_uuid":"c0e244d4-03e8-556f-aa8d-174be9d236e5",
           "de_admin_user_uuid":"92cd431f-96e3-5259-91cb-ab9f6d14829f",
-          "user_uuid_2":"84b8f847-d755-5763-b128-8e138e6571fc",
+          "user_uuid_2":"92cd431f-96e3-5259-91cb-ab9f6d14829f",
           "user_uuid_3":"8565d483-70cd-5c73-bc6a-96d2e70ddee1",
           "user_name":"martha@video-king.nl",
           "user_first_name":"Martha",
-          "user_last_name":"Farmer"
-      }]}, 
+          "user_last_name":"Farmer",
+          "user_name_1":"admin@spryker.com",
+          "user_first_name_1":"Admin",
+          "user_last_name_1":"Spryker"
+      }, 
    "warehouse": {
-       "warehouse_uuid": "e84b3cb8-a94a-5a7e-9adb-cc5353f7a73f",
+       "warehouse_uuid": "8e5f7bf2-ab97-595c-9b42-487392e2af9b",
        "warehouse_uuid_budget_cameras": "86496ec7-0d44-518c-81e4-f472b9e8547d",
        "warehouse_name": "Spryker MER000001 Warehouse 1",
        "warehouse_name_budget_cameras": "Budget Cameras MER000005 Warehouse 1",
-       "video_king_warehouse_uuid": "62372576-6a2b-5a71-9e9c-737bc47b0bf1",
+       "video_king_warehouse_uuid": "86496ec7-0d44-518c-81e4-f472b9e8547d",
        "video_king_warehouse_name": "Video King MER000002 Warehouse 1",
        "fk_warehouse_spryker": "9"
               },
