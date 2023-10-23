@@ -691,7 +691,7 @@
        "warehouse_name_budget_cameras": "Budget Cameras MER000005 Warehouse 1",
        "video_king_warehouse_uuid": "86496ec7-0d44-518c-81e4-f472b9e8547d",
        "video_king_warehouse_name": "Video King MER000002 Warehouse 1",
-       "fk_warehouse_spryker": "9"
+       "fk_warehouse_spryker": "4"
               },
    "demo_service_point": {
         "spryker_main_store": {
