@@ -32,6 +32,7 @@ ${default_db_port}         3306
 ${default_db_port_postgres}    5432
 ${default_db_user}         spryker
 ${default_db_engine}       pymysql
+###
 ${docker}     ${False}
 ${docker_db_host}     database
 ${docker_cli_url}     http://cli:9000
@@ -108,15 +109,17 @@ Overwrite env variables
         ${var_url}=   Set Variable    ${url}
         Set Suite Variable    ${${key}}    ${var_url}
     END
+
 SuiteSetup
     [documentation]  Basic steps before each suite
     Remove Files    ${OUTPUTDIR}/selenium-screenshot-*.png
     Remove Files    resources/libraries/__pycache__/*
     Remove Files    ${OUTPUTDIR}/*.png
+    Remove Files    ${OUTPUTDIR}/*.yml
     Load Variables    ${env}
     ${verify_ssl}=    Convert To Lower Case    ${verify_ssl}
     IF    '${verify_ssl}' == 'true'
-        New Browser    ${browser}    headless=${headless}
+        New Browser    ${browser}    headless=${headless}    
         Set Global Variable    ${verify_ssl}    ${True}
     ELSE
         New Browser    ${browser}    headless=${headless}    args=['--ignore-certificate-errors']
@@ -153,7 +156,7 @@ TestTeardown
 Create default Main Context
     Log    ${device}
     IF  '${device}' == '${EMPTY}'
-        ${main_context}=    New Context    viewport={'width': 1440, 'height': 1080}
+        ${main_context}=    New Context    viewport={'width': 1440, 'height': 1080}    acceptDownloads=True
     ELSE
         ${device}=    Get Device    ${device}
         ${main_context}=    New Context    &{device}
@@ -235,6 +238,10 @@ Wait Until Page Does Not Contain Element
 Wait Until Element Is Enabled
     [Arguments]    ${locator}    ${message}=${EMPTY}    ${timeout}=${browser_timeout}
     Wait For Elements State    ${locator}    enabled    ${timeout}    ${message}
+
+Wait Until Element Is Disabled
+    [Arguments]    ${locator}    ${message}=${EMPTY}    ${timeout}=${browser_timeout}
+    Wait For Elements State    ${locator}    disabled    ${timeout}    ${message}
 
 Element Should Be Visible
     [Arguments]    ${locator}    ${message}=${EMPTY}    ${timeout}=0:00:05
@@ -368,7 +375,7 @@ Conver string to List by separator:
 
 Try reloading page until element is/not appear:
     [Documentation]    will reload the page until an element is shown or disappears. The second argument is the expected condition (true[shown]/false[disappeared]) for the element.
-    [Arguments]    ${element}    ${shouldBeDisplayed}    ${tries}=20    ${timeout}=1s    ${message}='Timeout exceeded, element state doesn't match the expected'
+    [Arguments]    ${element}    ${shouldBeDisplayed}    ${tries}=20    ${timeout}=3s    ${message}='Timeout exceeded, element state doesn't match the expected'
     ${shouldBeDisplayed}=    Convert To Lower Case    ${shouldBeDisplayed}
     FOR    ${index}    IN RANGE    0    ${tries}
         ${elementAppears}=    Run Keyword And Return Status    Page Should Contain Element    ${element}

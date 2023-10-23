@@ -2554,3 +2554,17 @@ Get next id from table
     Disconnect From Database
     Log    ${newId}
     [Return]    ${newId}
+
+Get concrete product sku by id from DB:
+    [Documentation]    This keyword returns product concrete sku from DB found by id_product. Returns '${concrete_sku}' variable
+    ...    *Example:*
+    ...
+    ...    ``Get concrete product sku by id from DB:    ${id_product}``
+    ...
+    [Arguments]    ${id_product}
+    common_api.Connect to Spryker DB
+    ${concrete_sku}=    Query    select sku from spy_product WHERE id_product='${id_product}';
+    ${concrete_sku}=    Get From List    ${concrete_sku}    0
+    ${concrete_sku}=    Convert To String    ${concrete_sku[0]}
+    Set Test Variable    ${concrete_sku}    ${concrete_sku}
+    Disconnect From Database

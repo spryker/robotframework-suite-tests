@@ -367,3 +367,20 @@ Authorization_by_x_api_key
     Then Response status code should be:    200
     And Response header parameter should be:    Content-Type    application/json
     [Teardown]    Delete api key from db
+
+Availability_recalculation_after_stock_update
+    [Documentation]    checks that product availability is recalculated after stock update via data exchange api
+    [Setup]    Find first available product via data exchange api
+    Make sure that concrete product is available:    ${concrete_sku}
+    Remove Tags    *
+    Set Tags    bapi
+    common_api.TestSetup
+    When I get access token by user credentials:   ${zed_admin.email}
+    And I set Headers:    Content-Type==application/json    Authorization=Bearer ${token}
+    And I send a PATCH request:    /dynamic-entity/stock-products/${index}    {"data":{"is_never_out_of_stock":${false},"quantity":0}}
+    Then Response status code should be:    200
+    And Response body parameter should be:    [data][is_never_out_of_stock]    False
+    And Response body parameter should be:    [data][quantity]    0
+    # common_api.Trigger p&s
+    And Product availability status should be changed on:    is_available=False
+    [Teardown]    Restore product initial stock via data exchange api:
