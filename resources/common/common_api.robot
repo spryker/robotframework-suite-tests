@@ -28,7 +28,7 @@ ${default_db_engine}       pymysql
 ${docker}     ${False}
 ${docker_db_host}     database
 ${docker_cli_url}     http://cli:9000
-${cli_path}    ../suite-nonsplit/
+${cli_path}    ..
 ${db_engine}
 ${glue_env}
 ${bapi_env}
