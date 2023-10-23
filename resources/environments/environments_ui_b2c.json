@@ -88,6 +88,10 @@
        "guest_user_last_name":"martin"
     },
     "misc":{
-       "order_state":"New"
+       "order_state":"New",
+       "grant_type":{
+         "password":"password",
+         "refresh_token":"refresh_token"
+      }
     }
  }

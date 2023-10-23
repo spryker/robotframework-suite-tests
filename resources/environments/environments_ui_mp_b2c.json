@@ -95,5 +95,11 @@
        "configurable_product_name": "HP ProDesk 400 G3",
        "configurable_product_concrete_one_price": "25.00",
        "configurable_product_concrete_two_price": "310.19"
-    }
+    },
+    "misc":{
+      "grant_type":{
+         "password":"password",
+         "refresh_token":"refresh_token"
+      }
+   }
  }
