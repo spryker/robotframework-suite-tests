@@ -77,7 +77,13 @@ Zed: update cms page and publish it:
     Zed: go to second navigation item level:    Content    Pages
     Zed: perform search by:    ${cmsPage}
     Zed: click Action Button in a table for row that contains:     ${cmsPage}     Edit
-    Click    xpath=(//a[contains(@href,'edit-page')])[1]
+    Set Browser Timeout    3s
+    TRY
+        Click    xpath=(//a[contains(@href,'edit-page')])[2]
+    EXCEPT    
+        Click    xpath=(//a[contains(@href,'edit-page')])[1]
+    END
+    Set Browser Timeout    ${browser_timeout}
     Wait Until Element Is Visible    ${zed_cms_page_general_is_searchable_checkbox}
     FOR    ${key}    ${value}    IN    &{cmsPageData}
         IF    '${key}'=='unselect store' and '${value}' != '${EMPTY}'    

@@ -49,6 +49,7 @@ Yves: company menu '${condition}' be available for logged in user
 
 Yves: header contains/doesn't contain:
     [Arguments]    ${condition}    @{header_elements_list}    ${element1}=${EMPTY}     ${element2}=${EMPTY}     ${element3}=${EMPTY}     ${element4}=${EMPTY}     ${element5}=${EMPTY}     ${element6}=${EMPTY}     ${element7}=${EMPTY}     ${element8}=${EMPTY}     ${element9}=${EMPTY}     ${element10}=${EMPTY}     ${element11}=${EMPTY}     ${element12}=${EMPTY}     ${element13}=${EMPTY}     ${element14}=${EMPTY}     ${element15}=${EMPTY}
+    ${condition}=    Convert To Lower Case    ${condition}
     ${header_elements_list_count}=   get length  ${header_elements_list}
     FOR    ${index}    IN RANGE    0    ${header_elements_list_count}
         ${header_element_to_check}=    Get From List    ${header_elements_list}    ${index}
@@ -80,7 +81,6 @@ Yves: go to '${pageName}' page through the header
 Yves: go to user menu item in header:
     [Arguments]    ${user_menu_item}
     Wait Until Element Is Visible  ${user_navigation_icon_header_menu_item}[${env}]
-    Sleep    1s
     Mouse Over  ${user_navigation_icon_header_menu_item}[${env}]
     Wait Until Element Is Visible    ${user_navigation_fly_out_header_menu_item}[${env}]
     IF    '${env}' in ['ui_b2b','ui_mp_b2b']

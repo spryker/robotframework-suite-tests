@@ -155,7 +155,7 @@ Catalog
 #     Yves: perform search by:    002
 #     Yves: 1st product card in catalog (not)contains:      Add to Cart    true
 #     Yves: 1st product card in catalog (not)contains:      Color selector   true
-#     Yves: select product color:    black
+#     Yves: mouse over color on product card:    black
 #     Yves: quick add to cart for first item in catalog
 #     Yves: go to b2c shopping cart
 #     Yves: shopping cart contains the following products:    NEX-VG20EH    Canon IXUS 160
@@ -307,7 +307,7 @@ Add_to_Wishlist
 #     ...    || Mr.        | ${yves_second_user_first_name} | ${yves_second_user_last_name} | Kirncher Str. | 7           | 10247    | Berlin | Germany | Spryker | 123456789 | Additional street ||
 #     Yves: submit form on the checkout
 #     Yves: select the following shipping method on the checkout and go next:    Express
-#     Yves: select the following payment method on the checkout and go next:    Invoice
+#     Yves: select the following payment method on the checkout and go next:    Marketplace Invoice
 #     Yves: accept the terms and conditions:    true
 #     Yves: 'submit the order' on the summary page
 #     Yves: 'Thank you' page is displayed
@@ -341,7 +341,7 @@ Add_to_Wishlist
 #     ...    || Mr.        | ${yves_second_user_first_name} | ${yves_second_user_last_name} | Kirncher Str. | 7           | 10247    | Berlin | Germany | Spryker | 123456789 | Additional street ||
 #     Yves: submit form on the checkout
 #     Yves: select the following shipping method on the checkout and go next:    Express
-#     Yves: select the following payment method on the checkout and go next:    Invoice
+#     Yves: select the following payment method on the checkout and go next:    Marketplace Invoice
 #     Yves: accept the terms and conditions:    true
 #     Yves: 'submit the order' on the summary page
 #     Yves: 'Thank you' page is displayed
@@ -433,7 +433,7 @@ Split_Delivery
     Yves: select the following shipping method for the shipment:    2    Hermes    Same Day
     Yves: select the following shipping method for the shipment:    3    DHL    Express
     Yves: submit form on the checkout
-    Yves: select the following payment method on the checkout and go next:    Invoice
+    Yves: select the following payment method on the checkout and go next:    Marketplace Invoice
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
@@ -485,7 +485,7 @@ Return_Management
     ...    || Mr.        | Guest     | User     | Kirncher Str. | 7           | 10247    | Berlin | Germany | Spryker | 123456789 | Additional street ||
     Yves: submit form on the checkout
     Yves: select the following shipping method on the checkout and go next:    Express
-    Yves: select the following payment method on the checkout and go next:    Invoice
+    Yves: select the following payment method on the checkout and go next:    Marketplace Invoice
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
@@ -620,7 +620,7 @@ Guest_Checkout
     Yves: select the following shipping method for the shipment:    2    Hermes    Same Day
     Yves: select the following shipping method for the shipment:    3    DHL    Express
     Yves: submit form on the checkout
-    Yves: select the following payment method on the checkout and go next:    Invoice
+    Yves: select the following payment method on the checkout and go next:    Marketplace Invoice
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
@@ -663,7 +663,7 @@ Refunds
     ...    || Mr.        | ${yves_second_user_first_name} | ${yves_second_user_last_name} | Kirncher Str. | 7           | 10247    | Berlin | Germany | Spryker | 123456789 | Additional street ||
     Yves: submit form on the checkout
     Yves: select the following shipping method on the checkout and go next:    Express
-    Yves: select the following payment method on the checkout and go next:    Invoice
+    Yves: select the following payment method on the checkout and go next:    Marketplace Invoice
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
@@ -742,7 +742,7 @@ Multiple_Merchants_Order
     Yves: select the following shipping method for the shipment:    2    Hermes    Same Day
     Yves: select the following shipping method for the shipment:    3    DHL    Express
     Yves: submit form on the checkout
-    Yves: select the following payment method on the checkout and go next:    Invoice
+    Yves: select the following payment method on the checkout and go next:    Marketplace Invoice
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
@@ -762,8 +762,8 @@ Merchant_Profile_Update
     MP: open navigation menu tab:    Profile  
     MP: open profile tab:    Online Profile
     MP: update profile fields with following data:
-    ...    || email                  | phone           | delivery time | data privacy              | profile url en       | profile url de       ||
-    ...    || updated@office-king.nl | +11 222 333 444 | 2-4 weeks     | Data privacy updated text | https://spryker.com/ | https://spryker.com/ ||
+    ...    || email                  | phone           | delivery time | data privacy              ||
+    ...    || updated@office-king.nl | +11 222 333 444 | 2-4 weeks     | Data privacy updated text ||
     MP: click submit button
     Trigger p&s
     Yves: go to URL:    en/merchant/video-king
@@ -774,8 +774,8 @@ Merchant_Profile_Update
     ...    AND    MP: open navigation menu tab:    Profile
     ...    AND    MP: open profile tab:    Online Profile  
     ...    AND    MP: update profile fields with following data:
-    ...    || email            | phone           | delivery time | data privacy                                         | https://spryker.com/ | https://spryker.com/ ||
-    ...    || hi@video-king.nl | +31 123 345 777 | 2-4 days      | Video King values the privacy of your personal data. | https://spryker.com/ | https://spryker.com/ ||
+    ...    || email            | phone           | delivery time | data privacy                                         ||
+    ...    || hi@video-king.nl | +31 123 345 777 | 2-4 days      | Video King values the privacy of your personal data. ||
     ...    AND    MP: click submit button
 
 Merchant_Profile_Set_to_Offline_from_MP
@@ -788,9 +788,6 @@ Merchant_Profile_Set_to_Offline_from_MP
     MP: login on MP with provided credentials:    ${merchant_video_king_email}
     MP: open navigation menu tab:    Profile
     MP: open profile tab:    Online Profile
-    MP: update profile fields with following data:
-    ...    || profile url en       | profile url de       ||
-    ...    || https://spryker.com/ | https://spryker.com/ ||
     MP: change store status to:    offline
     Trigger p&s
     Yves: go to URL:    en/merchant/video-king
@@ -805,9 +802,6 @@ Merchant_Profile_Set_to_Offline_from_MP
     [Teardown]    Run Keywords    MP: login on MP with provided credentials:    ${merchant_video_king_email}
     ...    AND    MP: open navigation menu tab:    Profile
     ...    AND    MP: open profile tab:    Online Profile
-    ...    AND    MP: update profile fields with following data:
-    ...    || profile url en       | profile url de       ||
-    ...    || https://spryker.com/ | https://spryker.com/ ||
     ...    AND    MP: change store status to:    online
     ...    AND    Trigger p&s
     ...    AND    Yves: go to the 'Home' page
@@ -1103,7 +1097,7 @@ Fulfill_Order_from_Merchant_Portal
     Yves: select the following shipping method for the shipment:    2    Hermes    Same Day
     Yves: select the following shipping method for the shipment:    3    DHL    Express
     Yves: submit form on the checkout
-    Yves: select the following payment method on the checkout and go next:    Invoice
+    Yves: select the following payment method on the checkout and go next:    Marketplace Invoice
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
@@ -1612,7 +1606,7 @@ Merchant_Product_Original_Price
 
 Checkout_Address_Management
     [Tags]    skip-due-to-issue
-    [Documentation]    Bug: CC-24090. Checks that user can change address during the checkout and save new into the address book
+    [Documentation]    Bug: CC-30439. Checks that user can change address during the checkout and save new into the address book
     [Setup]    Run Keywords    
     ...    Yves: login on Yves with provided credentials:    ${yves_user_email}
     ...    AND    Yves: delete all user addresses
@@ -1630,7 +1624,7 @@ Checkout_Address_Management
     Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${yves_user_address}
     Yves: submit form on the checkout
     Yves: select the following shipping method on the checkout and go next:    Express
-    Yves: select the following payment method on the checkout and go next:    Invoice
+    Yves: select the following payment method on the checkout and go next:    Marketplace Invoice
     Yves: return to the previous checkout step:    Address
     Yves: fill in the following new billing address:
     ...    || salutation | firstName | lastName | street         | houseNumber | postCode | city   | country | company | phone     | additionalAddress ||
@@ -1642,7 +1636,7 @@ Checkout_Address_Management
     Yves: save new deviery address to address book:    true
     Yves: submit form on the checkout
     Yves: select the following shipping method on the checkout and go next:    Express
-    Yves: select the following payment method on the checkout and go next:    Invoice
+    Yves: select the following payment method on the checkout and go next:    Marketplace Invoice
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
@@ -1688,7 +1682,7 @@ Manage_Shipments
     Yves: submit form on the checkout
     Yves: select the following shipping method for the shipment:    1    Hermes    Next Day
     Yves: submit form on the checkout
-    Yves: select the following payment method on the checkout and go next:    Invoice
+    Yves: select the following payment method on the checkout and go next:    Marketplace Invoice
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
@@ -1762,7 +1756,7 @@ Minimum_Order_Value
     Yves: submit form on the checkout
     Yves: select the following shipping method for the shipment:    1    Hermes    Next Day
     Yves: submit form on the checkout
-    Yves: select the following payment method on the checkout and go next:    Invoice
+    Yves: select the following payment method on the checkout and go next:    Marketplace Invoice
     Yves: soft threshold surcharge is added on summary page:    €9.00
     Yves: hard threshold is applied with the following message:    EN max €150.00
     Yves: go to the 'Home' page
@@ -1771,7 +1765,7 @@ Minimum_Order_Value
     Yves: soft threshold surcharge is added in the cart:    €9.00
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: submit form on the checkout
-    Yves: select the following payment method on the checkout and go next:    Invoice
+    Yves: select the following payment method on the checkout and go next:    Marketplace Invoice
     Yves: soft threshold surcharge is added on summary page:    €9.00
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
@@ -1800,7 +1794,7 @@ Order_Cancelation
     ...    || Mr.        | ${yves_second_user_first_name} | ${yves_second_user_last_name} | Kirncher Str. | 7           | 10247    | Berlin | Germany | Spryker | 123456789 | Additional street ||
     Yves: submit form on the checkout
     Yves: select the following shipping method on the checkout and go next:    Express
-    Yves: select the following payment method on the checkout and go next:    Invoice
+    Yves: select the following payment method on the checkout and go next:    Marketplace Invoice
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed    
@@ -1826,7 +1820,7 @@ Order_Cancelation
     # ...    || Mr.        | ${yves_second_user_first_name} | ${yves_second_user_last_name} | Kirncher Str. | 7           | 10247    | Berlin | Germany | Spryker | 123456789 | Additional street ||
     # Yves: submit form on the checkout
     # Yves: select the following shipping method on the checkout and go next:    Express
-    # Yves: select the following payment method on the checkout and go next:    Invoice
+    # Yves: select the following payment method on the checkout and go next:    Marketplace Invoice
     # Yves: 'submit the order' on the summary page
     # Yves: accept the terms and conditions:    true
     # Yves: 'Thank you' page is displayed    
@@ -1980,7 +1974,6 @@ Multistore_CMS
     ...    AND    Zed: click Action Button in a table for row that contains:    Multistore Page${random}    Deactivate
 
 Product_Availability_Calculation
-    [Tags]    skip-due-to-issue
     [Documentation]    Bug: CC-24108. Check product availability + multistore
     MP: login on MP with provided credentials:    ${merchant_spryker_email}
     MP: open navigation menu tab:    Products    
@@ -2035,7 +2028,7 @@ Product_Availability_Calculation
     Yves: submit form on the checkout
     Yves: select the following shipping method for the shipment:    1    DHL    Express
     Yves: submit form on the checkout
-    Yves: select the following payment method on the checkout and go next:    Invoice
+    Yves: select the following payment method on the checkout and go next:    Marketplace Invoice
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
@@ -2160,7 +2153,7 @@ Offer_Availability_Calculation
     Yves: submit form on the checkout
     Yves: select the following shipping method for the shipment:    1    DHL    Express
     Yves: submit form on the checkout
-    Yves: select the following payment method on the checkout and go next:    Invoice
+    Yves: select the following payment method on the checkout and go next:    Marketplace Invoice
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
@@ -2229,7 +2222,7 @@ Reorder
     ...    || Mr.        | Guest     | User     | Kirncher Str. | 7           | 10247    | Berlin | Germany | Spryker | 123456789 | Additional street ||
     Yves: submit form on the checkout
     Yves: select the following shipping method on the checkout and go next:    Express
-    Yves: select the following payment method on the checkout and go next:    Invoice
+    Yves: select the following payment method on the checkout and go next:    Marketplace Invoice
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
@@ -2344,7 +2337,7 @@ Configurable_Product_PDP_Wishlist
     Yves: submit form on the checkout
     Yves: select the following shipping method for the shipment:    1    Hermes    Next Day
     Yves: submit form on the checkout
-    Yves: select the following payment method on the checkout and go next:    Invoice
+    Yves: select the following payment method on the checkout and go next:    Marketplace Invoice
     Yves: checkout is blocked with the following message:    Product configuration is not completed.
     Yves: go to the 'Home' page
     Yves: go to b2c shopping cart
@@ -2404,7 +2397,7 @@ Configurable_Product_OMS
     Yves: submit form on the checkout
     Yves: select the following shipping method for the shipment:    1    Hermes    Next Day
     Yves: submit form on the checkout
-    Yves: select the following payment method on the checkout and go next:    Invoice
+    Yves: select the following payment method on the checkout and go next:    Marketplace Invoice
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed

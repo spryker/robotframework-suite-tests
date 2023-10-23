@@ -1,12 +1,13 @@
 *** Settings ***
-Suite Setup       SuiteSetup
-Test Setup        TestSetup
+Suite Setup       common_api.SuiteSetup
+Test Setup        common_api.TestSetup
 Resource    ../../../../../resources/common/common_api.robot
+Resource    ../../../../../resources/steps/dynamic_entity_steps.robot
 Default Tags    bapi
 
 *** Test Cases ***
 ENABLER
-    TestSetup
+    common_api.TestSetup
 
 Get_country_collection
     ### SETUP DYNAMIC ENTITY CONFIGURATION ###
@@ -357,3 +358,12 @@ Upsert_country_collection:
     ...   AND    Delete country by iso2_code in Database:   XX
     ...   AND    Delete country by iso2_code in Database:   XL
     ...   AND    Delete country by iso2_code in Database:   XS
+
+Authorization_by_x_api_key
+    [Documentation]    data excahnge api should support 2 autorization options: by x-api-key and by backoffice user token.
+    [Setup]    Create api key in db
+    When I set Headers:    x-api-key=${dummy_api_key}
+    And I send a GET request:    /dynamic-entity/categories
+    Then Response status code should be:    200
+    And Response header parameter should be:    Content-Type    application/json
+    [Teardown]    Delete api key from db
