@@ -114,6 +114,7 @@ SuiteSetup
     Remove Files    resources/libraries/__pycache__/*
     Remove Files    ${OUTPUTDIR}/*.png
     Load Variables    ${env}
+    ${verify_ssl}=    Convert To String    ${verify_ssl}
     ${verify_ssl}=    Convert To Lower Case    ${verify_ssl}
     IF    '${verify_ssl}' == 'true'
         New Browser    ${browser}    headless=${headless}
