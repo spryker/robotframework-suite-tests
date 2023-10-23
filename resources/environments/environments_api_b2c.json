@@ -639,13 +639,13 @@
        ]
    },
    "warehouses":{
-       "warehouses": [
+       "warehouses": 
            {
                "uuid": "test-warehouse",
                "is_active": true,
                "name": "Test warehouse"
            }
-       ]
+       
    },
    "push_notifications": {
       "push_notification_subscriptions": [

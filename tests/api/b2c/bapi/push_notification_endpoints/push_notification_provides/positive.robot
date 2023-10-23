@@ -115,10 +115,10 @@ Retrieve_push_notification_provider_by_id
     And Response body parameter should be:    [data][attributes][name]    My Push Notification Provider ${random}
     [Teardown]    I send a DELETE request:    /push-notification-providers/${push_notification_provider_id}
 
-Delete_push_notification_provider_while_push_notofocation_subscribtion_exists
-    [Setup]    Run Keywords    Create warehouse in DB:    ${warehouses[0].name}     ${True}     ${warehouses[0].uuid}
-    ...    AND    Assign user to Warehouse in DB:    richard@spryker.com    ${warehouses[0].uuid}
-    I get access token by user credentials:    richard@spryker.com
+Delete_push_notification_provider_while_push_notification_subscribtion_exists
+    [Setup]    Run Keywords    Create warehouse in DB:    ${warehouses.name}     ${True}     ${warehouses.uuid}
+    ...    AND    Assign user to Warehouse in DB:    admin@spryker.com   ${warehouses.uuid}
+    I get access token by user credentials:    admin@spryker.com
     When I set Headers:    Content-Type=${default_header_content_type}    Authorization=Bearer ${token}
     # create a provider for push notification
     When I send a POST request:    /push-notification-providers    {"data": {"type": "push-notification-providers","attributes": {"name": "My Push Notification Provider ${random}"}}}
@@ -126,14 +126,14 @@ Delete_push_notification_provider_while_push_notofocation_subscribtion_exists
     And Save value to a variable:    [data][id]    push_notification_provider_id
     And Save value to a variable:    [data][attributes][name]    push_notification_provider_name
     # create a subscription
-    And I send a POST request:    /push-notification-subscriptions    {"data":{"type":"push-notification-subscriptions","attributes":{"providerName":"${push_notification_provider_name}","group":{"name":"${push_notification_subscriptions[0].group.name}","identifier":"${warehouses[0].uuid}"},"payload":{"endpoint":"${push_notification_subscriptions[0].payload.endpoint}","publicKey":"${push_notification_subscriptions[0].payload.publicKey}","authToken":"${push_notification_subscriptions[0].payload.authToken}"},"localeName":"${locale.DE.name}"}}}
+    And I send a POST request:    /push-notification-subscriptions    {"data":{"type":"push-notification-subscriptions","attributes":{"providerName":"${push_notification_provider_name}","group":{"name":"${push_notification_subscriptions[0].group.name}","identifier":"${warehouses.uuid}"},"payload":{"endpoint":"${push_notification_subscriptions[0].payload.endpoint}","publicKey":"${push_notification_subscriptions[0].payload.publicKey}","authToken":"${push_notification_subscriptions[0].payload.authToken}"},"localeName":"${locale.DE.name}"}}}
     Then Response status code should be:    201
     And Save value to a variable:    [data][id]    push_notification_subscription_uuid
     Then I send a DELETE request:    /push-notification-providers/${push_notification_provider_id}
     Then Response status code should be:    400
     And Response should return error code:    5004
     And Response should return error message:    Unable to delete push notification provider while push notification subscription exists.
-    [Teardown]    Run Keywords    De-assign user from Warehouse in DB:    richard@spryker.com    ${warehouses[0].uuid}
-    ...    AND    Delete warehouse in DB:   ${warehouses[0].uuid}
+    [Teardown]    Run Keywords    De-assign user from Warehouse in DB:    admin@spryker.com    ${warehouses.uuid}
+    ...    AND    Delete warehouse in DB:   ${warehouses.uuid}
     ...    AND    Delete push notification subscription in DB:    ${push_notification_subscription_uuid}
     ...    AND    I send a DELETE request:    /push-notification-providers/${push_notification_provider_id}
