@@ -756,7 +756,7 @@ Catalog_Actions
     Yves: perform search by:    ${multi_color_product_abstract_sku}
     Yves: 1st product card in catalog (not)contains:      Add to Cart    true
     Yves: 1st product card in catalog (not)contains:      Color selector   true
-    Yves: select product color:    Blue
+    Yves: mouse over color on product card:    Blue
     Yves: quick add to cart for first item in catalog
     Yves: go to the shopping cart through the header with name:    catalogActions+${random}
     Yves: shopping cart contains the following products:    420573    107255
