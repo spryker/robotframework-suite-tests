@@ -26,6 +26,7 @@ ${default_db_port_postgres}    5432
 ${default_db_user}         spryker
 ${default_db_engine}       pymysql
 ${docker}     ${False}
+${ignore_console_commands}    ${False}
 ${docker_db_host}     database
 ${docker_cli_url}     http://cli:9000
 ${cli_path}    ..
@@ -34,6 +35,7 @@ ${glue_env}
 ${bapi_env}
 ${sapi_env}
 ${db_port}
+${project_location}
 # ${default_db_engine}       psycopg2
 
 *** Keywords ***
@@ -52,6 +54,7 @@ SuiteSetup
     Set Global Variable    ${today}
     ${verify_ssl}=    Convert To String    ${verify_ssl}
     ${verify_ssl}=    Convert To Lower Case    ${verify_ssl}
+    Overwrite env variables
     IF    '${verify_ssl}' == 'true'
         Set Global Variable    ${verify_ssl}    ${True}
     ELSE
@@ -123,6 +126,7 @@ TestSetup
         END
     END
     END
+    Overwrite env variables
     ${current_url_last_character}=    Get Regexp Matches    ${current_url}    .$    flags=IGNORECASE
     ${current_url_last_character}=    Convert To String    ${current_url_last_character}
     ${current_url_last_character}=    Replace String    ${current_url_last_character}    '   ${EMPTY}
@@ -151,6 +155,17 @@ Load Variables
         ${var_value}=   Get Variable Value  ${${key}}   ${value}
         Set Global Variable    ${${key}}    ${var_value}
     END
+
+Overwrite env variables
+    IF    '${project_location}' == '${EMPTY}'
+            Set Suite Variable    ${cli_path}    ${cli_path}
+    ELSE
+            Set Suite Variable    ${cli_path}    ${project_location}
+    END
+    IF    '${ignore_console_commands}' == 'true'    Set Suite Variable    ${ignore_console_commands}    ${True}
+    IF    '${ignore_console_commands}' == 'false'    Set Suite Variable    ${ignore_console_commands}    ${False}
+    IF    '${docker}' == 'true'    Set Suite Variable    ${docker}    ${True}
+    IF    '${docker}' == 'false'    Set Suite Variable    ${docker}    ${False}
 
 I set Headers:
     [Documentation]    Keyword sets any number of headers for the further endpoint calls.
@@ -2507,13 +2522,18 @@ Run console command
         ...    ``Run console command    command=publish:trigger-events parameters=-r service_point    storeName=DE``
         ...
     [Arguments]    ${command}    ${storeName}=DE
-    ${consoleCommand}=    Set Variable    cd ${cli_path} && APPLICATION_STORE=${storeName} docker/sdk ${command}
-    IF    ${docker}
-        ${consoleCommand}=    Set Variable    curl --request POST -LsS --data "APPLICATION_STORE='${storeName}' COMMAND='${command}' cli.sh" --max-time 1000 --url "${docker_cli_url}/console"
+    IF    ${ignore_console_commands} != True
+        IF    '.local' in '${current_url}'
+            ${consoleCommand}=    Set Variable    cd ${cli_path} && APPLICATION_STORE=${storeName} docker/sdk ${command}
+            IF    ${docker}
+                ${consoleCommand}=    Set Variable    curl --request POST -LsS --data "APPLICATION_STORE='${storeName}' COMMAND='${command}' cli.sh" --max-time 1000 --url "${docker_cli_url}/console"
+            END
+            ${rc}    ${output}=    Run And Return RC And Output    ${consoleCommand}
+            Log   ${output}
+            Should Be Equal As Integers    ${rc}    0    message=CLI command can't be executed. Check '${docker}' variable value and cli execution path
+        END
     END
-    ${rc}    ${output}=    Run And Return RC And Output    ${consoleCommand}
-    Log   ${output}
-    Should Be Equal As Integers    ${rc}    0
+
 
 Trigger publish trigger-events
     [Documentation]    This keyword triggers publish:trigger-events console command using provided resource, path and store.

@@ -381,6 +381,8 @@ Availability_recalculation_after_stock_update
     Then Response status code should be:    200
     And Response body parameter should be:    [data][is_never_out_of_stock]    False
     And Response body parameter should be:    [data][quantity]    0
-    # common_api.Trigger p&s
+    common_api.Trigger p&s
     And Product availability status should be changed on:    is_available=False
-    [Teardown]    Restore product initial stock via data exchange api:
+    [Teardown]    Run Keywords    Remove Tags    *
+    ...    AND    Set Tags    bapi
+    ...    AND    Restore product initial stock via data exchange api:

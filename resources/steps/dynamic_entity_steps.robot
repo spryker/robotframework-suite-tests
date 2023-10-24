@@ -192,6 +192,7 @@ Product availability status should be changed on:
     I set Headers:    Content-Type==application/json
     FOR    ${index}    IN RANGE    0    ${iterations}
         I send a GET request:    /concrete-products/${concrete_sku}/concrete-product-availabilities
+        Response status code should be:    200
         ${actual_availability}=    Run Keyword And Ignore Error    Response body parameter should be:    [data][0][attributes][availability]   ${is_available}
         IF    'PASS' in ${actual_availability}
             Exit For Loop
