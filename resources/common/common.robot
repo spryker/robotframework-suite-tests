@@ -45,7 +45,7 @@ ${mp_env}
 ${glue_env}
 ${db_port}
 ${project_location}
-${ignore_console_commands}    ${False}
+${ignore_console}    ${False}
 # ${default_db_engine}       psycopg2
 # ${device}              Desktop Chrome
 # ${fake_email}          test.spryker+${random}@gmail.com
@@ -102,8 +102,8 @@ Overwrite env variables
     ELSE
             Set Suite Variable    ${cli_path}    ${project_location}
     END
-    IF    '${ignore_console_commands}' == 'true'    Set Suite Variable    ${ignore_console_commands}    ${True}
-    IF    '${ignore_console_commands}' == 'false'    Set Suite Variable    ${ignore_console_commands}    ${False}
+    IF    '${ignore_console}' == 'true'    Set Suite Variable    ${ignore_console}    ${True}
+    IF    '${ignore_console}' == 'false'    Set Suite Variable    ${ignore_console}    ${False}
     IF    '${docker}' == 'true'    Set Suite Variable    ${docker}    ${True}
     IF    '${docker}' == 'false'    Set Suite Variable    ${docker}    ${False}
     &{urls}=    Create Dictionary    yves_url    ${yves_url}    yves_at_url    ${yves_at_url}    zed_url    ${zed_url}    mp_url    ${mp_url}    glue_url    ${glue_url}
@@ -524,14 +524,16 @@ Run console command
         ...    ``Run console command    command=publish:trigger-events parameters=-r service_point    storeName=DE``
         ...
     [Arguments]    ${command}    ${storeName}=DE
-    IF    '.local' in '${yves_url}' or '.local' in '${zed_url}' or '.local' in '${glue_url}' or '.local' in '${bapi_url}' or '.local' in '${sapi_url}'
-        ${consoleCommand}=    Set Variable    cd ${cli_path} && APPLICATION_STORE=${storeName} docker/sdk ${command}
-        IF    ${docker}
-            ${consoleCommand}=    Set Variable    curl --request POST -LsS --data "APPLICATION_STORE='${storeName}' COMMAND='${command}' cli.sh" --max-time 1000 --url "${docker_cli_url}/console"
+    IF    ${ignore_console} != True
+        IF    '.local' in '${current_url}'
+            ${consoleCommand}=    Set Variable    cd ${cli_path} && APPLICATION_STORE=${storeName} docker/sdk ${command}
+            IF    ${docker}
+                ${consoleCommand}=    Set Variable    curl --request POST -LsS --data "APPLICATION_STORE='${storeName}' COMMAND='${command}' cli.sh" --max-time 1000 --url "${docker_cli_url}/console"
+            END
+            ${rc}    ${output}=    Run And Return RC And Output    ${consoleCommand}
+            Log   ${output}
+            Should Be Equal As Integers    ${rc}    0    message=CLI command can't be executed. Check '${docker}' variable value and cli execution path
         END
-        ${rc}    ${output}=    Run And Return RC And Output    ${consoleCommand}
-        Log   ${output}
-        Should Be Equal As Integers    ${rc}    0    message=CLI command can't be executed. Check '${docker}' variable value and cli execution path
     END
 
 Trigger p&s

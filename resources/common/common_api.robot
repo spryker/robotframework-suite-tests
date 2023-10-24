@@ -26,7 +26,6 @@ ${default_db_port_postgres}    5432
 ${default_db_user}         spryker
 ${default_db_engine}       pymysql
 ${docker}     ${False}
-${ignore_console_commands}    ${False}
 ${docker_db_host}     database
 ${docker_cli_url}     http://cli:9000
 ${cli_path}    ..
@@ -36,6 +35,7 @@ ${bapi_env}
 ${sapi_env}
 ${db_port}
 ${project_location}
+${ignore_console}    ${False}
 # ${default_db_engine}       psycopg2
 
 *** Keywords ***
@@ -162,8 +162,8 @@ Overwrite env variables
     ELSE
             Set Suite Variable    ${cli_path}    ${project_location}
     END
-    IF    '${ignore_console_commands}' == 'true'    Set Suite Variable    ${ignore_console_commands}    ${True}
-    IF    '${ignore_console_commands}' == 'false'    Set Suite Variable    ${ignore_console_commands}    ${False}
+    IF    '${ignore_console}' == 'true'    Set Suite Variable    ${ignore_console}    ${True}
+    IF    '${ignore_console}' == 'false'    Set Suite Variable    ${ignore_console}    ${False}
     IF    '${docker}' == 'true'    Set Suite Variable    ${docker}    ${True}
     IF    '${docker}' == 'false'    Set Suite Variable    ${docker}    ${False}
 
@@ -2522,7 +2522,7 @@ Run console command
         ...    ``Run console command    command=publish:trigger-events parameters=-r service_point    storeName=DE``
         ...
     [Arguments]    ${command}    ${storeName}=DE
-    IF    ${ignore_console_commands} != True
+    IF    ${ignore_console} != True
         IF    '.local' in '${current_url}'
             ${consoleCommand}=    Set Variable    cd ${cli_path} && APPLICATION_STORE=${storeName} docker/sdk ${command}
             IF    ${docker}
@@ -2533,7 +2533,6 @@ Run console command
             Should Be Equal As Integers    ${rc}    0    message=CLI command can't be executed. Check '${docker}' variable value and cli execution path
         END
     END
-
 
 Trigger publish trigger-events
     [Documentation]    This keyword triggers publish:trigger-events console command using provided resource, path and store.
