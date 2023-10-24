@@ -2126,6 +2126,7 @@ Connect to Spryker DB
     ${db_password}=    Set Variable If    '${db_password}' == '${EMPTY}'    ${default_db_password}    ${db_password}
     ${db_host}=    Set Variable If    '${db_host}' == '${EMPTY}'    ${default_db_host}    ${db_host}
     ${db_engine}=    Set Variable If    '${db_engine}' == '${EMPTY}'    ${default_db_engine}    ${db_engine}
+    ${db_engine}=    Convert To Lower Case    ${db_engine}
     IF    '${db_engine}' == 'mysql'
         ${db_engine}=    Set Variable    pymysql
     ELSE IF    '${db_engine}' == 'postgresql'

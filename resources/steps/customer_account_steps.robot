@@ -32,12 +32,14 @@ Yves: create a new customer address in profile:
     [Documentation]
     [Arguments]    ${salutation}    ${firstName}    ${lastName}    ${street}    ${houseNumber}    ${postCode}    ${city}    ${country}    ${isDefaultShipping}=True     ${isDefaultBilling}=True       ${company}=    ${phone}=    ${additionalAddress}=
     Yves: remove flash messages
-    IF    '${env}' in ['ui_b2c','ui_mp_b2c']
-        Yves: go to user menu item in header:    My Profile
-    ELSE IF   '${env}' in ['ui_b2b','ui_mp_b2b']
-        Yves: go to user menu item in header:    Profile
+    ${currentURL}=    Get Location
+    IF    '/multi-cart' not in '${currentURL}'    
+            IF    '.at.' in '${currentURL}'
+                Go To    ${yves_at_url}customer/address
+            ELSE
+                Go To    ${yves_url}customer/address
+            END    
     END
-    Yves: go to user menu item in the left bar:    Addresses
     Wait Until Element Is Visible    ${customer_account_add_new_address_button}[${env}]
     Click    ${customer_account_add_new_address_button}[${env}]
     Wait Until Element Is Visible    ${customer_account_address_form}
@@ -56,6 +58,7 @@ Yves: create a new customer address in profile:
 Yves: check that user has address exists/doesn't exist:
     Yves: remove flash messages
     [Arguments]    ${exists}    ${firstName}    ${lastName}    ${street}    ${houseNumber}    ${postCode}    ${city}    ${country}    ${isDefaultShipping}=True     ${isDefaultBilling}=True       ${company}=NUll    ${phone}=NUll    ${additionalAddress}=NUll
+    ${exists}=    Convert To Lower Case    ${exists}
     IF    '${env}' in ['ui_b2c','ui_mp_b2c']
         Yves: go to user menu item in header:    My Profile
     ELSE IF     '${env}' in ['ui_b2b','ui_mp_b2b']
@@ -91,13 +94,14 @@ Yves: delete user address:
     END
 
 Yves: delete all user addresses
-    Yves: remove flash messages
-    IF    '${env}' in ['ui_b2c','ui_mp_b2c']
-        Yves: go to user menu item in header:    My Profile
-    ELSE IF    '${env}' in ['ui_b2b','ui_mp_b2b']
-        Yves: go to user menu item in header:    Profile
+    ${currentURL}=    Get Location
+    IF    '/multi-cart' not in '${currentURL}'    
+            IF    '.at.' in '${currentURL}'
+                Go To    ${yves_at_url}customer/address
+            ELSE
+                Go To    ${yves_url}customer/address
+            END    
     END
-    Yves: go to user menu item in the left bar:    Addresses
     ${userAddresses}=    Get Element Count    xpath=//form[contains(@action,'address/delete')]//button
     IF    ${userAddresses} != 0
         FOR    ${index}    IN RANGE    0    ${userAddresses}

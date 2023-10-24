@@ -248,7 +248,7 @@ Add_a_configurable_product_to_the_cart_with_negative_quantity
 
 
 Add_a_configurable_product_to_the_cart_with_negative_price
-    [Documentation]   https://spryker.atlassian.net/browse/CC-25383
+    [Documentation]   https://spryker.atlassian.net/browse/CC-30918
     [Tags]    skip-due-to-issue    
     [Setup]    I set Headers:    Content-Type=${default_header_content_type}    X-Anonymous-Customer-Unique-Id=${random}
     Run Keywords    Create a guest cart:    ${random}    ${concrete_product_with_concrete_product_alternative.sku}    1

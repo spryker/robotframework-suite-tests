@@ -6,7 +6,7 @@ Resource    ../common/common_api.robot
 
 *** Keywords ***
 Get id service point by uuid
-    [Documentation]    This keyword returns Service Point ID by Service Point UUID.
+    [Documentation]    This keyword returns Service Point ID ${servicePointIds[0][0]} by Service Point UUID.
         ...    *Example:*
         ...
         ...    ``Get id service point by uuid    uuid=262feb9d-33a7-5c55-9b04-45b1fd22067e``
@@ -160,6 +160,45 @@ Create service type in DB
     END
     Disconnect From Database
 
+Create region in DB:
+    [Documentation]    This keyword creates a new entry in the DB table `spy_region`.
+        ...    *Example:*
+        ...
+        ...    ``Create region in DB:    country=60  iso2_code=DE    name=Germany``
+        ...
+    [Arguments]    ${country}    ${iso2_code}   ${name}=${None}    ${uuid}=${None}
+    IF    '${name}' == '${None}'
+        ${name}=    Generate Random String    5    [LETTERS]
+    END
+    IF    '${uuid}' == '${None}'
+        ${uuid}=    Generate Random String    5    [LETTERS]
+    END
+    ${new_id}=    Get next id from table    spy_region    id_region
+    Connect to Spryker DB
+    IF    '${db_engine}' == 'pymysql'
+        Execute Sql String    insert ignore into spy_region (fk_country, iso2_code, name, uuid) value ('${country}', '${iso2_code}', '${name}','${uuid}');
+    ELSE
+        Execute Sql String    INSERT INTO spy_region (id_region, fk_country, iso2_code, name, uuid) VALUES (${new_id}, '${country}', '${iso2_code}', '${name}','${uuid}');
+    END
+    Disconnect From Database
+
+Get service point uuid by key:
+    [Documentation]    This keyword returns Service Point UUID ${servicePointUuid} by Service Point KEY.
+        ...    *Example:*
+        ...
+        ...    ``Get service point uuid by key:    some-service-point-34395``
+        ...
+    [Arguments]    ${key}
+    Connect to Spryker DB
+    IF    '${db_engine}' == 'pymysql' 
+    ${servicePointUuid}    Query    SELECT uuid FROM spy_service_point WHERE `key` = '${key}' ORDER BY uuid DESC LIMIT 1;
+    ELSE
+    ${servicePointUuid}    Query    SELECT uuid FROM spy_service_point WHERE "key" = '${key}' ORDER BY uuid DESC LIMIT 1;
+    END
+    Disconnect From Database
+    Set Test Variable    ${servicePointUuid}     ${servicePointUuid[0][0]}
+    [Return]    ${servicePointUuid}
+
 Delete service point in DB
     [Documentation]    This keyword deletes the entry from the DB table `spy_service_point`. If `withRelations=true`, deletes with relations.
         ...    *Example:*
@@ -180,6 +219,18 @@ Delete service point in DB
     Execute Sql String    DELETE FROM spy_service_point WHERE uuid = '${uuid}';
     Disconnect From Database
 
+Delete service point address in DB
+    [Documentation]    This keyword deletes the entry from the DB table `spy_service_point_address`. 
+        ...    *Example:*
+        ...
+        ...    ``Delete service point address in DB    uuid=262feb9d-33a7-5c55-9b04-45b1fd22067e``
+        ...
+    [Arguments]    ${uuid}
+    Connect to Spryker DB
+    Execute Sql String    DELETE FROM spy_service_point_address WHERE uuid = '${uuid}';
+    Disconnect From Database
+
+  
 Delete service type in DB
     [Documentation]    This keyword deletes the entry from the DB table `spy_service_type`.
         ...    *Example:*

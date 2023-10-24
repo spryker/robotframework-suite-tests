@@ -120,7 +120,7 @@
 #     Yves: perform search by:    002
 #     Yves: 1st product card in catalog (not)contains:      Add to Cart    true
 #     Yves: 1st product card in catalog (not)contains:      Color selector   true
-#     Yves: select product color:    silver
+#     Yves: mouse over color on product card:    silver
 #     Yves: quick add to cart for first item in catalog
 #     Yves: go to b2c shopping cart
 #     Yves: shopping cart contains the following products:    NEX-VG20EH    Canon IXUS 160
