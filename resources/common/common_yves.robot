@@ -44,7 +44,7 @@ Yves: login on Yves with provided credentials:
     Set Browser Timeout    ${browser_timeout}
     ${currentURL}=    Get Url
     IF    '/login' not in '${currentURL}'
-        IF    '${env}' in ['ui_b2b','ui_suite','ui_mp_b2b','api_suite']
+        IF    '${env}' in ['ui_b2b','ui_suite','ui_mp_b2b']
             ${currentURL}=    Get Location
                 IF    '.at.' in '${currentURL}'
                     Go To    ${yves_at_url}
