@@ -1690,6 +1690,11 @@ Data_exchange_API_Configuration_in_Zed
     Response body parameter should be:    [data][is_allowed]    True
     Response body parameter should be:    [data][extensions]    "dummy"
     Response body parameter should be:    [data][comment]    None
+    Zed: edit data exchange api configuration:
+    ...    || table_name  | is_enabled ||
+    ...    || mime-types  | false      ||
+    Zed: save data exchange api configuration
+    Zed: wait until info box is not displayed
     ### DELETE TEST CONFIGURATION AND TEST MIME TYPE FROM DB ###
     [Teardown]    Run Keywords    Delete dynamic entity configuration in Database:    mime-types
     ...    AND    Delete mime_type by id_mime_type in Database:    ${id_mime_type}
