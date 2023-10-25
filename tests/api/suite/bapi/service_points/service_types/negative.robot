@@ -92,8 +92,6 @@ Update_Not_Existing_Service_Type
 Update_Service_Type_with_incorrect_type
     [Documentation]    https://spryker.atlassian.net/browse/FRW-6312
     [Tags]    skip-due-to-issue
-    [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
-    ...    AND    I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer ${token} 
     Create service type in DB    uuid=serv-ty${random}    name=New Service     key=serv-ty${random}
     When I send a PATCH request:    /service-types/serv-ty${random}    {"data": {"type": "incorrect-types", "attributes": {"name": "Updated Service", "key": "serv-ty${random}"}}}
     Then Response status code should be:    400
