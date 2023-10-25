@@ -26,6 +26,8 @@ Create_Service_Type_With_256_Length_Name
     And Response should return error message:    A service type name must have length from 1 to 255 characters.
 
 Create_Duplicate_Service_Type_Key
+    [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
+    ...    AND    I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer ${token}
     Create service type in DB    uuid=with-duplicate-key    name=Duplicate key     key=with-duplicate-key
     When I send a POST request:    /service-types    {"data": {"type": "service-types", "attributes": {"name": "Another Service 2 ${random}", "key": "with-duplicate-key"}}}
     Then Response status code should be:    400
@@ -34,6 +36,8 @@ Create_Duplicate_Service_Type_Key
     [Teardown]    Delete service type in DB    with-duplicate-key
 
 Create_Service_Type_With_Duplicate_Name
+    [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
+    ...    AND    I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer ${token}
     Create service type in DB    uuid=with-duplicate-name${random}    name=Duplicate Service     key=with-duplicate-name${random}
     When I send a POST request:    /service-types    {"data": {"type": "service-types", "attributes": {"name": "Duplicate Service", "key": "another-key${random}"}}}
     Then Response status code should be:    400
@@ -68,6 +72,8 @@ Create_Service_Type_with_incorrect_Auth
     Then Response status code should be:    400
 
 Update_Service_Type_Key
+    [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
+    ...    AND    I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer ${token}
     Create service type in DB    uuid=update-service-type-key${random}    name=update-service-type-key     key=update-service-type-key${random}
     When I send a PATCH request:    /service-types/update-service-type-key${random}    {"data": {"type": "service-types", "attributes": {"key": "new-key"}}}
     Then Response status code should be:    400
