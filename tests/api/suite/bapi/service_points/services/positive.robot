@@ -104,5 +104,3 @@ Get_Service_By_ID
     And Response body parameter should not be EMPTY:    [data][id]
     [Teardown]     Run Keywords    Delete service point in DB    ${service_point_id}
     ...    AND    Delete service type in DB    ${service_type_id}
-
-
