@@ -100,3 +100,118 @@ Delete mime_type by id_mime_type in Database:
     common_api.Connect to Spryker DB
     Execute Sql String    DELETE FROM spy_mime_type WHERE id_mime_type = '${id_mime_type}';
     Disconnect From Database
+
+Zed: download data exchange api specification should be active:
+    [Arguments]    ${expected_condition}
+    ${currentURL}=    Get Location
+    IF    '/configuration-list' not in '${currentURL}'    Zed: go to first navigation item level:    Data Exchange API Configuration
+    ${expected_condition}=    Convert To Lower Case    ${expected_condition}
+    IF    '${expected_condition}' == 'true' 
+        Wait Until Element Is Enabled    ${data_exchange_download_spec_button}    timeout=3s    message=Data Exchange API spec is NOT downloadable
+    ELSE
+        ${download_button_state}=    Get Element Attribute  ${data_exchange_download_spec_button}    class
+        Should Contain    ${download_button_state}    disabled    message=Data Exchange API spec is downloadable BUT should NOT
+    END
+
+Zed: download data exchange api specification
+    [Documentation]    Downloads BAPI spec file and returns file location (path) in '${specification_file_path}' variable
+    ${dl_promise}    Promise To Wait For Download    saveAs=${OUTPUTDIR}/tmp.file
+    Click    ${data_exchange_download_spec_button}
+    ${file_object}=    Wait For  ${dl_promise}
+    File Should Exist    ${file_object}[saveAs]
+    Move File    ${file_object}[saveAs]    ${OUTPUTDIR}/${file_object.suggestedFilename}
+    Should Be Equal    ${file_object.suggestedFilename}    schema.yml
+    Set Test Variable    ${specification_file_path}    ${OUTPUTDIR}/${file_object.suggestedFilename}
+    
+Zed: check that downloaded api specification contains:
+    [Arguments]    ${expected_content}
+    ${file_content}=   Get File  ${specification_file_path}
+    Should Contain    ${file_content}    ${expected_content}
+
+Zed: check that downloaded api specification does not contain:
+    [Arguments]    ${expected_content}
+    ${file_content}=   Get File  ${specification_file_path}
+    Should Not Contain    ${file_content}    ${expected_content}
+
+Zed: delete dowloaded api specification
+    Remove File    ${specification_file_path}
+
+Zed: wait until info box is not displayed
+    [Arguments]    ${iterations}=20    ${delays}=10s
+    Try reloading page until element is/not appear:    ${zed_info_flash_message}    false    tries=${iterations}    timeout=${delays}
+
+Find first available product via data exchange api
+    [Arguments]    ${start_from_index}=0    ${end_index}=100
+    Remove Tags    *
+    Set Tags    bapi
+    common_api.TestSetup
+    I get access token by user credentials:   ${zed_admin.email}    
+    I set Headers:    Content-Type=application/json    Authorization=Bearer ${token}
+    FOR    ${index}    IN RANGE    ${start_from_index}    ${end_index}   
+        I send a GET request:    /dynamic-entity/stock-products/${index}
+        ${is_200}=    Run Keyword And Ignore Error    Response status code should be:    200
+        IF    'FAIL' in ${is_200}    Continue For Loop
+        Save value to a variable:    [data][is_never_out_of_stock]    initial_is_never_out_of_stock
+        Save value to a variable:    [data][quantity]    initial_quantity
+        IF    '${initial_is_never_out_of_stock}' == 'False'
+                IF    ${initial_quantity} > 0
+                    Save value to a variable:    [data][fk_product]    fk_product
+                    Set Test Variable    ${index}    ${index}
+                    Exit For Loop
+                ELSE
+                    Continue For Loop
+                END
+        ELSE
+            Save value to a variable:    [data][fk_product]    fk_product
+            Set Test Variable    ${index}    ${index}
+            Exit For Loop
+        END
+    END
+    Get concrete product sku by id from DB:    ${fk_product}
+    [Return]    ${concrete_sku}
+
+Make sure that concrete product is available:
+    [Arguments]    ${sku}=${concrete_sku}
+    Remove Tags    *
+    Set Tags    glue
+    common_api.TestSetup
+    I set Headers:    Content-Type==application/json
+    I send a GET request:    /concrete-products/${concrete_sku}/concrete-product-availabilities
+    ${is_avaialbe}=    Run Keyword And Ignore Error    Response body parameter should be:    [data][0][attributes][availability]   True
+    IF    'FAIL' in ${is_avaialbe}    
+        ${index}=    Evaluate    ${index}+1
+        Find first available product via data exchange api    ${index}
+    END
+
+Product availability status should be changed on:
+    [Arguments]    ${is_available}    ${sku}=${concrete_sku}    ${sleep_time}=5s    ${iterations}=26
+    ${is_available}=    Convert To Title Case    ${is_available}
+    Remove Tags    *
+    Set Tags    glue
+    common_api.TestSetup
+    I set Headers:    Content-Type==application/json
+    FOR    ${index}    IN RANGE    0    ${iterations}
+        I send a GET request:    /concrete-products/${concrete_sku}/concrete-product-availabilities
+        Response status code should be:    200
+        ${actual_availability}=    Run Keyword And Ignore Error    Response body parameter should be:    [data][0][attributes][availability]   ${is_available}
+        IF    'PASS' in ${actual_availability}
+            Exit For Loop
+        END
+        IF    'FAIL' in ${actual_availability}
+            Sleep    ${sleep_time}
+            Continue For Loop
+        END
+        IF    ${index} == ${iterations}-1
+            Fail    Expected product availability is not reached. Check P&S
+        END
+    END
+
+
+Restore product initial stock via data exchange api:
+    [Arguments]    ${id_stock_product}=${index}
+    Remove Tags    *
+    Set Tags    bapi
+    common_api.TestSetup
+    I get access token by user credentials:   ${zed_admin.email}    
+    I set Headers:    Content-Type=application/json    Authorization=Bearer ${token}
+    I send a PATCH request:    /dynamic-entity/stock-products/${id_stock_product}    {"data":{"is_never_out_of_stock":${initial_is_never_out_of_stock},"quantity":${initial_quantity}}}

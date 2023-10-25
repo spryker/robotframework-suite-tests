@@ -21,7 +21,7 @@ Yves: Go to 'Shopping Carts' page
     Mouse Over    ${shopping_car_icon_header_menu_item}[${env}]
     Wait Until Page Contains Element    ${shopping_cart_sub_navigation_widget}
     Click Element by xpath with JavaScript    ${shopping_cart_sub_navigation_all_carts_button}
-
+    Repeat Keyword    3    Wait Until Network Is Idle
 
 Yves: create new 'Shopping Cart' with name:
     [Arguments]    ${shoppingCartName}

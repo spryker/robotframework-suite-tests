@@ -2715,6 +2715,45 @@ Configurable_Product_RfQ_Order_Management
     [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: delete Zed user with the following email:    agent_config+${random}@spryker.com
 
+Data_exchange_API_download_specification
+    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: download data exchange api specification should be active:    true
+    Zed: download data exchange api specification
+    Zed: check that downloaded api specification contains:    /product-attributes
+    Zed: check that downloaded api specification does not contain:    /mime-types
+    Zed: delete dowloaded api specification
+    Zed: start creation of new data exchange api configuration for db table:    spy_mime_type
+    Zed: edit data exchange api configuration:
+    ...    || table_name  | is_enabled ||
+    ...    || mime-types  | true       ||
+    Zed: edit data exchange api configuration:
+    ...    || field_name   | enabled | visible_name | type    | creatable | editable | required ||
+    ...    || id_mime_type | true    | id_mime_type | integer | true      | false    | false    ||
+    Zed: edit data exchange api configuration:
+    ...    || field_name  | enabled | visible_name | type    | creatable | editable | required ||
+    ...    || comment     | true    | comment      | string  | true      | true     | false    ||
+    Zed: edit data exchange api configuration:
+    ...    || field_name  | enabled | visible_name | type    | creatable | editable | required ||
+    ...    || extensions  | true    | extensions   | string  | true      | true     | false    ||
+    Zed: edit data exchange api configuration:
+    ...    || field_name  | enabled | visible_name | type    | creatable | editable | required ||
+    ...    || is_allowed  | true    | is_allowed   | boolean | true      | true     | true     ||
+    Zed: edit data exchange api configuration:
+    ...    || field_name | enabled | visible_name | type   | creatable | editable | required ||
+    ...    || name       | true    | name         | string | true      | true     | true     ||
+    Zed: save data exchange api configuration
+    Zed: download data exchange api specification should be active:    false
+    Zed: wait until info box is not displayed
+    Zed: download data exchange api specification
+    Zed: check that downloaded api specification contains:    /mime-types
+    Zed: edit data exchange api configuration:
+    ...    || table_name  | is_enabled ||
+    ...    || mime-types  | false      ||
+    Zed: save data exchange api configuration
+    Zed: wait until info box is not displayed
+    [Teardown]    Run Keywords    Zed: delete dowloaded api specification
+    ...    AND    Delete dynamic entity configuration in Database:    mime-types
+
 Data_exchange_API_Configuration_in_Zed
     [Tags]    bapi
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
@@ -2761,6 +2800,11 @@ Data_exchange_API_Configuration_in_Zed
     Response body parameter should be:    [data][is_allowed]    True
     Response body parameter should be:    [data][extensions]    "dummy"
     Response body parameter should be:    [data][comment]    None
+    Zed: edit data exchange api configuration:
+    ...    || table_name  | is_enabled ||
+    ...    || mime-types  | false      ||
+    Zed: save data exchange api configuration
+    Zed: wait until info box is not displayed
     ### DELETE TEST CONFIGURATION AND TEST MIME TYPE FROM DB ###
     [Teardown]    Run Keywords    Delete dynamic entity configuration in Database:    mime-types
     ...    AND    Delete mime_type by id_mime_type in Database:    ${id_mime_type}
