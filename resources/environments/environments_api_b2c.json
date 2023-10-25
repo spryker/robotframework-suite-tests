@@ -303,6 +303,14 @@
              "meta_description":"Portable charm With a bevy of trendy, eye catching colours to suit any lifestyle and show your personality, this slim and lightweight tablet designed to be"
           }
        },
+      "warehouse_user":{
+        "name":"",
+        "password":""
+      },
+      "admin_not_warehouse_user":{
+        "email":"admin@spryker.com",
+        "password":"change123"
+      },
        "product_availability":{
           "concrete_available_with_stock_and_never_out_of_stock_sku":"005_30663301",
           "concrete_available_with_stock_and_never_out_of_stock_sku1":"004_30663302",
@@ -590,5 +598,115 @@
        "array":[]
       },
       "dummy_api_key":"eba8110c9f9bf5685e8b5f4eba9b17c2",
-      "dummy_key_hash":"f683f48de788d57cd396fc212ef33fd146e1ff0b51cde37ecb4ddd77eeed1706"
- }
+      "dummy_key_hash":"f683f48de788d57cd396fc212ef33fd146e1ff0b51cde37ecb4ddd77eeed1706",
+  
+   "servicePoints": {
+       "servicePoints":[
+           {
+               "uuid":"test-service-point",
+               "name":"TSP",
+               "key":"tsp"
+           },
+           {
+               "uuid":"test-service-point-2",
+               "name":"TSP2",
+               "key":"tsp2"
+           }
+       ],
+       "servicePointAddresses":[
+           {
+               "uuid":"test-service-point-address",
+               "address1":"Test address",
+               "address2":"Test address 2",
+               "address3":"Test address 3",
+               "city":"City",
+               "zipCode":"10115"
+           }
+       ],
+       "services":[
+           {
+               "uuid":"test-service",
+               "key":"ts"
+           }
+       ],
+       "serviceTypes":[
+           {
+               "uuid":"test-service-type",
+               "name":"Test service type",
+               "key":"tst"
+           }
+       ]
+   },
+   "warehouses":{
+       "warehouses": 
+           {
+               "uuid": "test-warehouse",
+               "is_active": true,
+               "name": "Test warehouse"
+           }
+       
+   },
+   "push_notifications": {
+      "push_notification_subscriptions": [
+           {
+               "providerName": "web-push-php",
+               "group": {
+                   "name": "warehouse",
+                   "identifier": ""               
+                  },
+               "payload": {
+                   "endpoint": "endpoint",
+                   "publicKey": "publicKey",
+                   "authToken": "authToken"
+               },
+               "localeName": ""
+           }
+       ]
+   },
+   "push_notification_providers":{
+      "push_notification_provider_uuid":"2a304ddf-d51b-514f-bd11-6e818a27fe23"
+         },
+   "shipment_type":{
+       "shipment_type_uuid":"174d9dc0-55ae-5c4b-a2f2-a419027029ef",
+       "shipment_type_name":"Pickup"
+   },
+   "warehouse_user_assigment":{
+          "user_uuid":"48a6c610-693e-5d88-bdce-3c6018b3abd2",
+          "admin_user_uuid":"c0e244d4-03e8-556f-aa8d-174be9d236e5",
+          "de_admin_user_uuid":"92cd431f-96e3-5259-91cb-ab9f6d14829f",
+          "user_uuid_2":"92cd431f-96e3-5259-91cb-ab9f6d14829f",
+          "user_uuid_3":"8565d483-70cd-5c73-bc6a-96d2e70ddee1",
+          "user_name":"martha@video-king.nl",
+          "user_first_name":"Martha",
+          "user_last_name":"Farmer",
+          "user_name_1":"admin@spryker.com",
+          "user_first_name_1":"Admin",
+          "user_last_name_1":"Spryker"
+      }, 
+   "warehouse": {
+       "warehouse_uuid": "8e5f7bf2-ab97-595c-9b42-487392e2af9b",
+       "warehouse_uuid_budget_cameras": "86496ec7-0d44-518c-81e4-f472b9e8547d",
+       "warehouse_name": "Spryker MER000001 Warehouse 1",
+       "warehouse_name_budget_cameras": "Budget Cameras MER000005 Warehouse 1",
+       "video_king_warehouse_uuid": "86496ec7-0d44-518c-81e4-f472b9e8547d",
+       "video_king_warehouse_name": "Video King MER000002 Warehouse 1",
+       "fk_warehouse_spryker": "4"
+              },
+   "demo_service_point": {
+        "spryker_main_store": {
+            "uuid": "262feb9d-33a7-5c55-9b04-45b1fd22067e",
+            "uuid2": "7e3b03e0-c53c-5298-9ece-968f4628b4f8",
+            "name": "Spryker Main Store",
+            "key": "sp1"
+      },
+        "service_point_address": {
+            "uuid": "74768ee9-e7dd-5e3c-bafd-b654e7946c54",
+            "uuid2": "7a711afc-02ce-5f54-a08c-fadfaf5713c6",
+            "address1": "Julie-Wolfthorn-Straße",
+            "address2": "1",
+            "address3": "None",
+            "city": "Berlin",
+            "zip": "10115"
+              }
+            }
+}
