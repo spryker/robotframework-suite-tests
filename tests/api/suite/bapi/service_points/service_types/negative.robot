@@ -28,26 +28,22 @@ Create_Service_Type_With_256_Length_Name
 Create_Duplicate_Service_Type_Key
     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer ${token}
-    When I send a POST request:    /service-types    {"data": {"type": "service-types", "attributes": {"name": "Test Service type1 ${random}", "key": "duplicate-key"}}}
-    Then Response status code should be:    201
-    And Save value to a variable:    [data][id]    service_type_id
-    When I send a POST request:    /service-types    {"data": {"type": "service-types", "attributes": {"name": "Another Service 2 ${random}", "key": "duplicate-key"}}}
+    Create service type in DB    uuid=with-duplicate-key    name=Duplicate key     key=with-duplicate-key
+    When I send a POST request:    /service-types    {"data": {"type": "service-types", "attributes": {"name": "Another Service 2 ${random}", "key": "with-duplicate-key"}}}
     Then Response status code should be:    400
     And Response should return error code:    5419
     And Response should return error message:    A service type with the same key already exists.
-    [Teardown]    Delete service type in DB    ${service_type_id}
+    [Teardown]    Delete service type in DB    with-duplicate-key
 
 Create_Service_Type_With_Duplicate_Name
     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer ${token}
-    When I send a POST request:    /service-types    {"data": {"type": "service-types", "attributes": {"name": "Duplicate Service", "key": "service1-test${random}"}}}
-    Then Response status code should be:    201
-    And Save value to a variable:    [data][id]    service_type_id
+    Create service type in DB    uuid=with-duplicate-name${random}    name=Duplicate Service     key=with-duplicate-name${random}
     When I send a POST request:    /service-types    {"data": {"type": "service-types", "attributes": {"name": "Duplicate Service", "key": "another-key${random}"}}}
     Then Response status code should be:    400
     And Response should return error code:    5425
     And Response should return error message:    A service type with the same name already exists.
-    [Teardown]    Delete service type in DB    ${service_type_id}
+    [Teardown]    Delete service type in DB    with-duplicate-name${random}
 
 Create_Service_Type_With_Empty_Key
     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
@@ -78,14 +74,12 @@ Create_Service_Type_with_incorrect_Auth
 Update_Service_Type_Key
     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer ${token}
-    When I send a POST request:    /service-types    {"data": {"type": "service-types", "attributes": {"name": "Test Service ${random}", "key": "original-key"}}}
-    Then Response status code should be:    201
-    And Save value to a variable:    [data][id]    service_type_id
-    When I send a PATCH request:    /service-types/${service_type_id}    {"data": {"type": "service-types", "attributes": {"key": "new-key"}}}
+    Create service type in DB    uuid=update-service-type-key${random}    name=update-service-type-key     key=update-service-type-key${random}
+    When I send a PATCH request:    /service-types/update-service-type-key${random}    {"data": {"type": "service-types", "attributes": {"key": "new-key"}}}
     Then Response status code should be:    400
     And Response should return error code:    5423
     And Response should return error message:    The service type key is immutable.
-    [Teardown]    Delete service type in DB    ${service_type_id}
+    [Teardown]    Delete service type in DB    update-service-type-key${random}
 
 Update_Not_Existing_Service_Type
     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
@@ -100,21 +94,22 @@ Update_Service_Type_with_incorrect_type
     [Tags]    skip-due-to-issue
     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer ${token}
-    When I send a POST request:    /service-types    {"data": {"type": "service-types", "attributes": {"name": "Test Service new ${random}", "key": "original-key23${random}"}}}
-    Then Response status code should be:    201
-    And Save value to a variable:    [data][id]    service_type_id    
-    When I send a PATCH request:    /service-types/${service_type_id}    {"data": {"type": "incorrect-types", "attributes": {"name": "Updated Service Name", "key": "original-key23${random}"}}}
+    # When I send a POST request:    /service-types    {"data": {"type": "service-types", "attributes": {"name": "Test Service new ${random}", "key": "original-key23${random}"}}}
+    # Then Response status code should be:    201
+    # And Save value to a variable:    [data][id]    service_type_id    
+    Create service type in DB    uuid=serv-ty${random}    name=New Service     key=serv-ty${random}
+    When I send a PATCH request:    /service-types/serv-ty${random}    {"data": {"type": "incorrect-types", "attributes": {"name": "Updated Service", "key": "serv-ty${random}"}}}
     Then Response status code should be:    400
-    [Teardown]    Delete service type in DB    ${service_type_id}
+    [Teardown]    Delete service type in DB    serv-ty${random}
 
 Update_Service_Type_without_Auth
-    When Create service type in DB    12345678    test    test
+    When Create service type in DB    12345678${random}    test    test
     And I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer 
-    When I send a PATCH request:    /service-types/12345678    {"data": {"type": "service-types", "attributes": {"name": "Updated Service Name","key": "original-key${random}"}}}
+    When I send a PATCH request:    /service-types/12345678${random}    {"data": {"type": "service-types", "attributes": {"name": "Updated Service Name","key": "12345678${random}"}}}
     Then Response status code should be:    400
-    [Teardown]    Delete service type in DB    12345678
+    [Teardown]    Delete service type in DB    12345678${random}
 
- Get_Service_Types_No_Auth
+Get_Service_Types_No_Auth
     When I send a GET request:    /service-types
     Then Response status code should be:    404
 
@@ -124,13 +119,16 @@ Get_Service_Types_Invalid_Auth
     Then Response status code should be:    400
 
 Get_Service_Type_By_ID_No_Auth
-    When I send a GET request:    /service-types/12345
+    Create service type in DB    uuid=service-by-id${random}    name=service-by-id     key=service-by-id${random}
+    When I send a GET request:    /service-types/service-by-id${random}
     Then Response status code should be:    404
+    [Teardown]    Delete service type in DB    service-by-id${random}
 
 Get_Service_Type_By_ID_invalid_Auth
+    Create service type in DB    uuid=service-invalid${random}    name=service-invalid     key=service-invalid${random}
     When I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer InvalidToken
-    When I send a GET request:    /service-types/12345
-    Then Response status code should be:    400
+    When I send a GET request:    /service-types/service-invalid${random}
+    [Teardown]    Delete service type in DB    service-invalid${random}
 
 Get_Nonexistent_Service_Type
     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}

@@ -8,6 +8,25 @@ Default Tags    bapi
 *** Test Cases ***
 ENABLER
     TestSetup
+
+Get_Services_List
+    [Setup]
+    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
+    ...    AND    I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer ${token}
+    When I send a GET request:    /services
+    Then Response status code should be:    200
+    And Array in response should contain property with value:    [data]  type    services
+    And Response should contain the array larger than a certain size:    [data]    1
+    And Response body parameter should not be EMPTY:    [data][0][attributes][uuid]
+    And Response body parameter should not be EMPTY:    [data][1][attributes][uuid]
+    And Response body parameter should not be EMPTY:    [data][0][id]
+    And Response body parameter should not be EMPTY:    [data][1][id]
+    And Response body parameter should be:    data[0][attributes][isActive]    True
+    And Response body parameter should be:    data[1][attributes][isActive]    True
+    And Response body parameter should be in:    data[0][attributes][key]    s1    s2
+    And Response body parameter should be in:    data[1][attributes][key]    s1    s2
+    And Response body has correct self link
+
 Create_Service
     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer ${token}
@@ -85,21 +104,3 @@ Get_Service_By_ID
     And Response body parameter should not be EMPTY:    [data][id]
     [Teardown]     Run Keywords    Delete service point in DB    ${service_point_id}
     ...    AND    Delete service type in DB    ${service_type_id}
-
-Get_Services_List
-    [Setup]
-    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
-    ...    AND    I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer ${token}
-    When I send a GET request:    /services
-    Then Response status code should be:    200
-    And Array in response should contain property with value:    [data]  type    services
-    And Response should contain the array larger than a certain size:    [data]    1
-    And Response body parameter should not be EMPTY:    [data][0][attributes][uuid]
-    And Response body parameter should not be EMPTY:    [data][1][attributes][uuid]
-    And Response body parameter should not be EMPTY:    [data][0][id]
-    And Response body parameter should not be EMPTY:    [data][1][id]
-    And Response body parameter should be:    data[0][attributes][isActive]    True
-    And Response body parameter should be:    data[1][attributes][isActive]    True
-    And Response body parameter should be in:    data[0][attributes][key]    s1    s2
-    And Response body parameter should be in:    data[1][attributes][key]    s1    s2
-    And Response body has correct self link
