@@ -308,8 +308,8 @@
         "password":""
       },
       "admin_not_warehouse_user":{
-        "email":"admin@spryker.com",
-        "password":"change123"
+          "email":"admin@spryker.com",
+          "password":"change123"
       },
        "product_availability":{
           "concrete_available_with_stock_and_never_out_of_stock_sku":"005_30663301",
