@@ -499,6 +499,7 @@ Return_Management
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Pay
     Zed: trigger all matching states inside this order:    Skip timeout
+    Zed: trigger all matching states inside this order:    skip picking
     Zed: trigger all matching states inside this order:    Ship
     Yves: login on Yves with provided credentials:    ${yves_user_email}
     Yves: go to user menu item in header:    Orders History
@@ -662,6 +663,7 @@ Guest_Checkout_Addresses
     Zed: shipping address inside xxx shipment should be:    2    Dr First, Last, Second Street, 2, Additional street, Spryker, 10247, Berlin, Germany 
     Zed: shipping address inside xxx shipment should be:    3    Dr First, Last, Third Street, 3, Additional street, Spryker, 10247, Berlin, Germany 
     Zed: trigger all matching states inside this order:    Skip timeout
+    Zed: trigger all matching states inside this order:    skip picking
     Zed: trigger all matching states inside this order:    Ship
     Zed: trigger all matching states inside this order:    Stock update
     Zed: trigger all matching states inside this order:    Close
@@ -696,6 +698,7 @@ Refunds
     Zed: grand total for the order equals:    ${lastPlacedOrder}    €394.41
     Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Pay
     Zed: trigger all matching states inside this order:    Skip timeout
+    Zed: trigger all matching states inside this order:    skip picking
     Zed: trigger matching state of order item inside xxx shipment:    008_30692992    Ship
     Zed: trigger matching state of order item inside xxx shipment:    008_30692992    Stock update
     Zed: trigger matching state of order item inside xxx shipment:    008_30692992    Refund
@@ -734,6 +737,9 @@ Manage_Product
     Zed: change concrete product stock:
     ...    || productAbstract    | productConcrete               | warehouse n1 | warehouse n1 qty | warehouse n1 never out of stock ||
     ...    || manageSKU${random} | manageSKU${random}-color-blue | Warehouse1   | 100              | false                           ||
+    Zed: update abstract product data:
+    ...    || productAbstract    ||
+    ...    || manageSKU${random} ||
     Yves: login on Yves with provided credentials:    ${yves_user_email}
     Yves: go to URL:    en/search?q=manageSKU${random}
     Try reloading page until element is/not appear:    ${catalog_product_card_locator}    true    21    5s
@@ -1577,6 +1583,7 @@ Configurable_Product_OMS
     ...    || 1        | 2        | ${configurable_product_concrete_two_sku} | 01.01.2055 | Afternoon ||
     Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Pay
     Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Skip timeout
+    Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    skip picking
     Zed: trigger matching state of xxx order item inside xxx shipment:    Ship    2
     Zed: trigger matching state of xxx order item inside xxx shipment:    Stock update    2
     Zed: trigger matching state of xxx order item inside xxx shipment:    Refund    2
