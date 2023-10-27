@@ -848,6 +848,8 @@
       "warehous_user":[
         { 
             "user_uuid":"48a6c610-693e-5d88-bdce-3c6018b3abd2",
+            "admin_user_uuid":"c0e244d4-03e8-556f-aa8d-174be9d236e5",
+            "de_admin_user_uuid":"92cd431f-96e3-5259-91cb-ab9f6d14829f",
             "user_uuid_2":"84b8f847-d755-5763-b128-8e138e6571fc",
             "user_uuid_3":"8565d483-70cd-5c73-bc6a-96d2e70ddee1",
             "user_name":"martha@video-king.nl",
