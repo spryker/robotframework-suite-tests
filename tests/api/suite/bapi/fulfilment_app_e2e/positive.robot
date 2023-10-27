@@ -69,16 +69,27 @@ Fulfilment_app_e2e
     common_api.I set Headers:    Content-Type=${default_header_content_type}
     Then I get access token by user credentials:   ${zed_admin.email_de}    Change123!321
     common_api.I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer ${token}
-    common_api.I send a GET request:    /picking-lists/?include=picking-list-items,concrete-products,sales-shipments,sales-orders,include=warehouses
+    common_api.I send a GET request:    /picking-lists/?include=picking-list-items,concrete-products,sales-shipments,sales-orders,warehouses
     Then Response status code should be:    200
     Then Save value to a variable:    [data][0][id]    picklist_id
+    And Response body parameter should be:    [data][0][type]    picking-lists
     Then Save value to a variable:    [data][0][relationships][picking-list-items][data][0][id]    item_id_1
     Then Save value to a variable:    [data][0][relationships][picking-list-items][data][1][id]    item_id_2
     And Response body parameter should be:    [data][0][attributes][status]    ready-for-picking
+    And Response body parameter should be in:    [included][0][type]    concrete-products    sales-orders    sales-shipments    picking-list-items    warehouses
+    And Response body parameter should be in:    [included][1][type]    concrete-products    sales-orders    sales-shipments    picking-list-items    warehouses
+    And Response body parameter should be in:    [included][2][type]    concrete-products    sales-orders    sales-shipments    picking-list-items    warehouses
+    And Response body parameter should be in:    [included][3][type]    concrete-products    sales-orders    sales-shipments    picking-list-items    warehouses
+    And Response body parameter should be in:    [included][4][type]    concrete-products    sales-orders    sales-shipments    picking-list-items    warehouses
+    And Response body parameter should be in:    [included][5][type]    concrete-products    sales-orders    sales-shipments    picking-list-items    warehouses
+    And Response body parameter should be in:    [included][6][type]    concrete-products    sales-orders    sales-shipments    picking-list-items    warehouses
+    And Each array in response should contain property with NOT EMPTY value:    [included]    id
     # #START PICKING
     common_api.I send a POST request:   /picking-lists/${picklist_id}/start-picking    {"data": [{"type": "picking-lists","attributes": {"action": "startPicking"}}]}
     Then Response status code should be:    201
     And Response body parameter should be:    [data][attributes][status]    picking-started
+    And Response body parameter should be:    [data][type]    picking-lists
+    And Response body parameter should not be EMPTY:    [data][id]
     # #PICKING ONE ITEM, ANOTHER ITEM STILL NOT PICKED
     Then I send a PATCH request:    /picking-lists/${picklist_id}/picking-list-items    {"data":[{"id":"${item_id_1}","type":"picking-list-items","attributes":{"numberOfPicked":1,"numberOfNotPicked":0}},{"id":"${item_id_2}","type":"picking-list-items","attributes":{"numberOfPicked":0,"numberOfNotPicked":0}}]}
     Then Response status code should be:    200
@@ -89,7 +100,6 @@ Fulfilment_app_e2e
     Then I send a PATCH request:    /picking-lists/${picklist_id}/picking-list-items    {"data":[{"id":"${item_id_1}","type":"picking-list-items","attributes":{"numberOfPicked":1,"numberOfNotPicked":0}},{"id":"${item_id_2}","type":"picking-list-items","attributes":{"numberOfPicked":0,"numberOfNotPicked":1}}]}
     Then Response status code should be:    200
     And Response body parameter should be:    [data][0][attributes][status]    picking-finished
-    
     #CLEAN SYSTEM, REMOVE CREATED RELATIONS IN DB
     [Teardown]     Run Keywords    Remove picking list item by uuid in DB:    ${item_id_1}
     ...  AND    Remove picking list item by uuid in DB:    ${item_id_2} 
