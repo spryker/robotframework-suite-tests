@@ -42,7 +42,7 @@ Remove_warehous_user_assigment:
         ...    ``Remove_warehous_user_assigment:    ${warehouse[0].warehouse_uuid}    ${warehous_user[0].user_uuid}``
         ...
     [Arguments]    ${warehouse[0].warehouse_uuid}    ${warehous_user[0].user_uuid}
-        ${id_warehouse_user_assigment}= Get_warehouse_user_assigment_id: ${warehouse[0].warehouse_uuid} ${warehous_user[0].user_uuid}
+        ${id_warehouse_user_assigment}=    Get_warehouse_user_assigment_id:   ${warehouse[0].warehouse_uuid}    ${warehous_user[0].user_uuid}
     Connect to Spryker DB
     Execute Sql String    DELETE FROM spy_warehouse_user_assignment WHERE id_warehouse_user_assignment = ${id_warehouse_user_assigment};
     Disconnect From Database
