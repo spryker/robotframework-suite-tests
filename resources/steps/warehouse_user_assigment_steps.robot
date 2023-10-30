@@ -35,11 +35,11 @@ Get_warehouse_user_assigment_id:
     Set Test Variable    ${id_warehouse_user_assigment}    ${id_warehouse_user_assigment[0][0]}
     [Return]    ${id_warehouse_user_assigment}
 
-Remove_warehouse_user_assigment:
+Remove_warehous_user_assigment:
     [Documentation]    This keyword deletes the entry from the DB table `spy_warehouse_user_assignment`.
         ...    *Example:*
         ...
-        ...    ``Remove_warehouse_user_assigment:    ${warehouse[0].warehouse_uuid}    ${warehous_user[0].user_uuid}``
+        ...    ``Remove_warehous_user_assigment:    ${warehouse[0].warehouse_uuid}    ${warehous_user[0].user_uuid}``
         ...
     [Arguments]    ${warehouse[0].warehouse_uuid}    ${warehous_user[0].user_uuid}
         ${id_warehouse_user_assigment}=    Get_warehouse_user_assigment_id:   ${warehouse[0].warehouse_uuid}    ${warehous_user[0].user_uuid}
