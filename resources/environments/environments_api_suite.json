@@ -845,7 +845,7 @@
        "shipment_type_name":"Pickup"
    },
    "warehouse_user_assigment":{
-      "warehouse_user":[
+      "warehous_user":[
         {
             "user_uuid":"48a6c610-693e-5d88-bdce-3c6018b3abd2",
             "admin_user_uuid":"c0e244d4-03e8-556f-aa8d-174be9d236e5",
