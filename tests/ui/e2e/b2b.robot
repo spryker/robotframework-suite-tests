@@ -1,8 +1,8 @@
 *** Settings ***
-Suite Setup       SuiteSetup
-Test Setup        TestSetup
-Test Teardown     TestTeardown
-Suite Teardown    SuiteTeardown
+Suite Setup       common.SuiteSetup
+Test Setup        common.TestSetup
+Test Teardown     common.TestTeardown
+Suite Teardown    common.SuiteTeardown
 Test Tags    robot:recursive-stop-on-failure
 Resource    ../../../resources/common/common.robot
 Resource    ../../../resources/steps/header_steps.robot
@@ -32,6 +32,7 @@ Resource    ../../../resources/steps/glossary_steps.robot
 Resource    ../../../resources/steps/order_comments_steps.robot
 Resource    ../../../resources/steps/zed_order_steps.robot
 Resource    ../../../resources/steps/configurable_product_steps.robot
+Resource    ../../../resources/steps/dynamic_entity_steps.robot
  
 *** Test Cases ***
 Guest_User_Access_Restrictions
@@ -755,7 +756,7 @@ Catalog_Actions
     Yves: perform search by:    ${multi_color_product_abstract_sku}
     Yves: 1st product card in catalog (not)contains:      Add to Cart    true
     Yves: 1st product card in catalog (not)contains:      Color selector   true
-    Yves: select product color:    Blue
+    Yves: mouse over color on product card:    Blue
     Yves: quick add to cart for first item in catalog
     Yves: go to the shopping cart through the header with name:    catalogActions+${random}
     Yves: shopping cart contains the following products:    420573    107255
@@ -951,6 +952,9 @@ Manage_Product
     Zed: change concrete product stock:
     ...    || productAbstract    | productConcrete               | warehouse n1 | warehouse n1 qty | warehouse n1 never out of stock ||
     ...    || manageSKU${random} | manageSKU${random}-farbe-blue | Warehouse1   | 100              | false                           ||
+    Zed: update abstract product data:
+    ...    || productAbstract    ||
+    ...    || manageSKU${random} ||
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     Yves: go to URL:    en/search?q=manageSKU${random}
     Try reloading page until element is/not appear:    ${catalog_product_card_locator}    true    21    5s
@@ -1810,3 +1814,97 @@ Configurable_Product_RfQ_Order_Management
     ...    || 12.12.2030 | Evening   ||
     [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: delete Zed user with the following email:    agent_config+${random}@spryker.com
+    
+Data_exchange_API_download_specification
+    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: download data exchange api specification should be active:    true
+    Zed: download data exchange api specification
+    Zed: check that downloaded api specification contains:    /product-attributes
+    Zed: check that downloaded api specification does not contain:    /mime-types
+    Zed: delete dowloaded api specification
+    Zed: start creation of new data exchange api configuration for db table:    spy_mime_type
+    Zed: edit data exchange api configuration:
+    ...    || table_name  | is_enabled ||
+    ...    || mime-types  | true       ||
+    Zed: edit data exchange api configuration:
+    ...    || field_name   | enabled | visible_name | type    | creatable | editable | required ||
+    ...    || id_mime_type | true    | id_mime_type | integer | true      | false    | false    ||
+    Zed: edit data exchange api configuration:
+    ...    || field_name  | enabled | visible_name | type    | creatable | editable | required ||
+    ...    || comment     | true    | comment      | string  | true      | true     | false    ||
+    Zed: edit data exchange api configuration:
+    ...    || field_name  | enabled | visible_name | type    | creatable | editable | required ||
+    ...    || extensions  | true    | extensions   | string  | true      | true     | false    ||
+    Zed: edit data exchange api configuration:
+    ...    || field_name  | enabled | visible_name | type    | creatable | editable | required ||
+    ...    || is_allowed  | true    | is_allowed   | boolean | true      | true     | true     ||
+    Zed: edit data exchange api configuration:
+    ...    || field_name | enabled | visible_name | type   | creatable | editable | required ||
+    ...    || name       | true    | name         | string | true      | true     | true     ||
+    Zed: save data exchange api configuration
+    Zed: download data exchange api specification should be active:    false
+    Zed: wait until info box is not displayed
+    Zed: download data exchange api specification
+    Zed: check that downloaded api specification contains:    /mime-types
+    Zed: edit data exchange api configuration:
+    ...    || table_name  | is_enabled ||
+    ...    || mime-types  | false      ||
+    Zed: save data exchange api configuration
+    Zed: wait until info box is not displayed
+    [Teardown]    Run Keywords    Zed: delete dowloaded api specification
+    ...    AND    Delete dynamic entity configuration in Database:    mime-types
+
+Data_exchange_API_Configuration_in_Zed
+    [Tags]    bapi
+    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: start creation of new data exchange api configuration for db table:    spy_mime_type
+    Zed: edit data exchange api configuration:
+    ...    || table_name  | is_enabled ||
+    ...    || mime-types  | true       ||
+    Zed: edit data exchange api configuration:
+    ...    || field_name   | enabled | visible_name | type    | creatable | editable | required ||
+    ...    || id_mime_type | true    | id_mime_type | integer | true      | false    | false    ||
+    Zed: edit data exchange api configuration:
+    ...    || field_name  | enabled | visible_name | type    | creatable | editable | required ||
+    ...    || comment     | true    | comment      | string  | true      | true     | false    ||
+    Zed: edit data exchange api configuration:
+    ...    || field_name  | enabled | visible_name | type    | creatable | editable | required ||
+    ...    || extensions  | true    | extensions   | string  | true      | true     | false    ||
+    Zed: edit data exchange api configuration:
+    ...    || field_name  | enabled | visible_name | type    | creatable | editable | required ||
+    ...    || is_allowed  | true    | is_allowed   | boolean | true      | true     | true     ||
+    Zed: edit data exchange api configuration:
+    ...    || field_name | enabled | visible_name | type   | creatable | editable | required ||
+    ...    || name       | true    | name         | string | true      | true     | true     ||
+    Zed: save data exchange api configuration
+    common_api.TestSetup
+    I get access token by user credentials:   ${zed_admin_email}
+    ### CREATE TEST MIME TYPE USING DATA EXCHANGE API ###
+    common_api.I set Headers:    Content-Type=application/json    Authorization=Bearer ${token}
+    common_api.I send a POST request:    /dynamic-entity/mime-types    {"data":[{"name":"POST ${random}","is_allowed":${false},"extensions":"[\\"fake\\"]"}]}
+    Response status code should be:    201
+    Response header parameter should be:    Content-Type    application/json
+    Response body parameter should be:    [data][0][name]    POST ${random}
+    Response body parameter should be:    [data][0][is_allowed]    False
+    Response body parameter should be:    [data][0][extensions]    "fake"
+    Response body parameter should be:    [data][0][comment]    None
+    Save value to a variable:    [data][0][id_mime_type]    id_mime_type
+    ### UPDATE TEST MIME TYPE USING DATA EXCHANGE API ###
+    common_api.I send a PATCH request:    /dynamic-entity/mime-types/${id_mime_type}    {"data":{"comment":${null},"extensions":"[\\"dummy\\"]","is_allowed":${true},"name":"PATCH ${random}"}}
+    Response status code should be:    200
+    ### GET UPDATE TEST MIME TYPE BY ID ###
+    common_api.I send a GET request:    /dynamic-entity/mime-types/${id_mime_type}
+    Response status code should be:    200
+    Response header parameter should be:    Content-Type    application/json
+    Response body parameter should be:    [data][name]    PATCH ${random}
+    Response body parameter should be:    [data][is_allowed]    True
+    Response body parameter should be:    [data][extensions]    "dummy"
+    Response body parameter should be:    [data][comment]    None
+    Zed: edit data exchange api configuration:
+    ...    || table_name  | is_enabled ||
+    ...    || mime-types  | false      ||
+    Zed: save data exchange api configuration
+    Zed: wait until info box is not displayed
+    ### DELETE TEST CONFIGURATION AND TEST MIME TYPE FROM DB ###
+    [Teardown]    Run Keywords    Delete dynamic entity configuration in Database:    mime-types
+    ...    AND    Delete mime_type by id_mime_type in Database:    ${id_mime_type}

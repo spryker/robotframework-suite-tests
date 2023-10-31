@@ -60,4 +60,4 @@ Make user a warehouse user/ not a warehouse user:
     ELSE
         Execute Sql String    UPDATE spy_user SET is_warehouse_user = '${isActive}' WHERE uuid = '${user_uuid}';
     END
-    Disconnect From Database        
+    Disconnect From Database

@@ -39,8 +39,14 @@ Zed: trigger all matching states inside this order:
         IF    ${index} == ${iterations}-1
             Scroll Element Into View    xpath=(//div[@id='order-overview']//form[@name='oms_trigger_form']//button[@id='oms_trigger_form_submit'])[1]
             Take Screenshot    EMBED    fullPage=True
-            ${order_state}=    Get Text    xpath=(//div[@id='order-overview']//form[@name='oms_trigger_form'])[1]
-            Fail    Expected order state transition '${status}' is not available. Only '${order_state}' is available. Check if OMS is functional
+            ${order_available_states}=    Set Variable    xpath=//div[@id='order-overview']//form[@name='oms_trigger_form']
+            ${order_available_states_count}=    Get Element Count    ${order_available_states}
+            ${order_available_states}=    Create List
+            FOR    ${index}    IN RANGE    1    ${order_available_states_count}+1
+                ${order_available_state}=    Get Text    xpath=(//div[@id='order-overview']//form[@name='oms_trigger_form'])[${index}]
+                Append To List    ${order_available_states}    ${order_available_state}
+            END
+            Fail    Expected order state transition '${status}' is not available. Only '${order_available_states}' is/are available. Check if OMS is functional
         END
     END
     Click    xpath=//div[@id='order-overview']//form[@name='oms_trigger_form']//button[@id='oms_trigger_form_submit'][text()='${status}']
@@ -332,6 +338,7 @@ Zed: xxx shipment should/not contain the following products:
 Yves: cancel the order:
     [Arguments]    ${order_id}
     Yves: 'View Order/Reorder/Return' on the order history page:    View Order    ${order_id}
+    Yves: try reloading page if element is/not appear:    ${order_details_cancel_button_locator}    true
     Wait Until Element Is Visible    ${order_details_cancel_button_locator}
     Repeat Keyword    3    Wait Until Network Is Idle
     Click    ${order_details_cancel_button_locator}

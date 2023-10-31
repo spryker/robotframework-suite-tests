@@ -34,6 +34,8 @@ ${glue_env}
 ${bapi_env}
 ${sapi_env}
 ${db_port}
+${project_location}
+${ignore_console}    ${False}
 # ${default_db_engine}       psycopg2
 
 *** Keywords ***
@@ -52,6 +54,7 @@ SuiteSetup
     Set Global Variable    ${today}
     ${verify_ssl}=    Convert To String    ${verify_ssl}
     ${verify_ssl}=    Convert To Lower Case    ${verify_ssl}
+    Overwrite env variables
     IF    '${verify_ssl}' == 'true'
         Set Global Variable    ${verify_ssl}    ${True}
     ELSE
@@ -123,6 +126,7 @@ TestSetup
         END
     END
     END
+    Overwrite env variables
     ${current_url_last_character}=    Get Regexp Matches    ${current_url}    .$    flags=IGNORECASE
     ${current_url_last_character}=    Convert To String    ${current_url_last_character}
     ${current_url_last_character}=    Replace String    ${current_url_last_character}    '   ${EMPTY}
@@ -151,6 +155,17 @@ Load Variables
         ${var_value}=   Get Variable Value  ${${key}}   ${value}
         Set Global Variable    ${${key}}    ${var_value}
     END
+
+Overwrite env variables
+    IF    '${project_location}' == '${EMPTY}'
+            Set Suite Variable    ${cli_path}    ${cli_path}
+    ELSE
+            Set Suite Variable    ${cli_path}    ${project_location}
+    END
+    IF    '${ignore_console}' == 'true'    Set Suite Variable    ${ignore_console}    ${True}
+    IF    '${ignore_console}' == 'false'    Set Suite Variable    ${ignore_console}    ${False}
+    IF    '${docker}' == 'true'    Set Suite Variable    ${docker}    ${True}
+    IF    '${docker}' == 'false'    Set Suite Variable    ${docker}    ${False}
 
 I set Headers:
     [Documentation]    Keyword sets any number of headers for the further endpoint calls.
@@ -963,11 +978,11 @@ Each array element of the array in response should contain a nested array larger
     @{data}=    Get Value From Json    ${response_body}    ${json_path}
     ${list_length}=    Get Length    @{data}
     ${list_length}=    Get From List    @{data}    ${index}
-    @{data}=    Get Value From Json    ${list_length}    ${nested_array} 
+    @{data}=    Get Value From Json    ${list_length}    ${nested_array}
     ${nested_array_list_length}=    Get Length    @{data}
     ${result}=    Evaluate   ${nested_array_list_length} > ${expected_size}
     ${result}=    Convert To String    ${result}
-    Should Be Equal    ${result}    True    Actual nested array length is '${nested_array_list_length}' not greater than expected '${expected_size}'.    
+    Should Be Equal    ${result}    True    Actual nested array length is '${nested_array_list_length}' not greater than expected '${expected_size}'.
     END
 
 Response should contain the array smaller than a certain size:
@@ -1113,16 +1128,16 @@ Each array in response should contain property with NOT EMPTY value:
     ${list_length}=    Get Length    @{data}
     ${log_list}=    Log List    @{data}
     FOR    ${index}    IN RANGE    0    ${list_length}
-        ${list_element}=    Get From List    @{data}    ${index}    
+        ${list_element}=    Get From List    @{data}    ${index}
         ${list_element}=    Get Value From Json    ${list_element}    ${expected_property}
         ${list_element}=    Convert To String    ${list_element}
         ${list_element}=    Replace String    ${list_element}    '   ${EMPTY}
         ${list_element}=    Replace String    ${list_element}    [   ${EMPTY}
-        ${list_element}=    Replace String    ${list_element}    ]   ${EMPTY}  
+        ${list_element}=    Replace String    ${list_element}    ]   ${EMPTY}
     Should Not Be Empty     ${list_element}    '${expected_property}' property value in json path '${json_path}' is empty but shoud Not Be EMPTY
     END
 
-Each array in response should contain property with value NOT in: 
+Each array in response should contain property with value NOT in:
     [Documentation]    This keyword checks that each array element contsains the speficied parameter ``${expected_property}`` with the value that does not match any of the parameters ``${expected_value1}``, ``${expected_value2}``, etc..
     ...
     ...    The minimal number of arguments is 1, maximum is 4
@@ -2497,6 +2512,9 @@ I get access token by user credentials:
     When I set Headers:    Content-Type=application/x-www-form-urlencoded
     And I send a POST request:    /token    {"grantType": "${grant_type.password}","username": "${email}","password": "${password}"}
     Save value to a variable:    [access_token]    token
+    Log    ${response_body}
+    ${length}=    Get Length    ${token}
+    Run Keyword If    ${length} == 0    Fail    Access token is empty!
     Log    ${token}
     [Return]    ${token}
 
@@ -2507,13 +2525,17 @@ Run console command
         ...    ``Run console command    command=publish:trigger-events parameters=-r service_point    storeName=DE``
         ...
     [Arguments]    ${command}    ${storeName}=DE
-    ${consoleCommand}=    Set Variable    cd ${cli_path} && APPLICATION_STORE=${storeName} docker/sdk ${command}
-    IF    ${docker}
-        ${consoleCommand}=    Set Variable    curl --request POST -LsS --data "APPLICATION_STORE='${storeName}' COMMAND='${command}' cli.sh" --max-time 1000 --url "${docker_cli_url}/console"
+    IF    ${ignore_console} != True
+        IF    '.local' in '${current_url}'
+            ${consoleCommand}=    Set Variable    cd ${cli_path} && APPLICATION_STORE=${storeName} docker/sdk ${command}
+            IF    ${docker}
+                ${consoleCommand}=    Set Variable    curl --request POST -LsS --data "APPLICATION_STORE='${storeName}' COMMAND='${command}' cli.sh" --max-time 1000 --url "${docker_cli_url}/console"
+            END
+            ${rc}    ${output}=    Run And Return RC And Output    ${consoleCommand}
+            Log   ${output}
+            Should Be Equal As Integers    ${rc}    0    message=CLI command can't be executed. Check '${docker}' variable value and cli execution path
+        END
     END
-    ${rc}    ${output}=    Run And Return RC And Output    ${consoleCommand}
-    Log   ${output}
-    Should Be Equal As Integers    ${rc}    0
 
 Trigger publish trigger-events
     [Documentation]    This keyword triggers publish:trigger-events console command using provided resource, path and store.
@@ -2554,3 +2576,17 @@ Get next id from table
     Disconnect From Database
     Log    ${newId}
     [Return]    ${newId}
+
+Get concrete product sku by id from DB:
+    [Documentation]    This keyword returns product concrete sku from DB found by id_product. Returns '${concrete_sku}' variable
+    ...    *Example:*
+    ...
+    ...    ``Get concrete product sku by id from DB:    ${id_product}``
+    ...
+    [Arguments]    ${id_product}
+    common_api.Connect to Spryker DB
+    ${concrete_sku}=    Query    select sku from spy_product WHERE id_product='${id_product}';
+    ${concrete_sku}=    Get From List    ${concrete_sku}    0
+    ${concrete_sku}=    Convert To String    ${concrete_sku[0]}
+    Set Test Variable    ${concrete_sku}    ${concrete_sku}
+    Disconnect From Database

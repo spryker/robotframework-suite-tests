@@ -23,8 +23,14 @@ Yves: billing address same as shipping address:
     IF    '${env}' in ['ui_b2b','ui_mp_b2b']    Wait Until Page Contains Element    ${manage_your_addresses_link}
     ${checkboxState}=    Set Variable    ${EMPTY}
     ${checkboxState}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//input[@id='addressesForm_billingSameAsShipping'][@checked]    timeout=1s
-    IF    '${checkboxState}'=='False' and '${state}' == 'true'    Click Element by xpath with JavaScript    //input[@id='addressesForm_billingSameAsShipping']
-    IF    '${checkboxState}'=='True' and '${state}' == 'false'    Click Element by xpath with JavaScript    //input[@id='addressesForm_billingSameAsShipping']
+    IF    '${checkboxState}'=='False' and '${state}' == 'true'    
+        Click Element by xpath with JavaScript    //input[@id='addressesForm_billingSameAsShipping']
+        Repeat Keyword    3    Wait Until Network Is Idle
+    END
+    IF    '${checkboxState}'=='True' and '${state}' == 'false'    
+        Click Element by xpath with JavaScript    //input[@id='addressesForm_billingSameAsShipping']
+        Repeat Keyword    3    Wait Until Network Is Idle
+    END
     IF    '${state}' == 'true'    Wait Until Element Is Not Visible    ${billing_address_section}[${env}]
     IF    '${state}' == 'false'    Wait Until Element Is Visible    ${billing_address_section}[${env}]
 
