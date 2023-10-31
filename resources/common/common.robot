@@ -43,6 +43,8 @@ ${zed_env}
 ${mp_env}
 ${glue_env}
 ${db_port}
+${project_location}
+${ignore_console}    ${False}
 # ${default_db_engine}       psycopg2
 # ${device}              Desktop Chrome
 # ${fake_email}          test.spryker+${random}@gmail.com
@@ -94,6 +96,15 @@ Overwrite env variables
     ELSE
             Set Suite Variable    ${glue_url}   ${glue_env}
     END
+    IF    '${project_location}' == '${EMPTY}'
+            Set Suite Variable    ${cli_path}    ${cli_path}
+    ELSE
+            Set Suite Variable    ${cli_path}    ${project_location}
+    END
+    IF    '${ignore_console}' == 'true'    Set Suite Variable    ${ignore_console}    ${True}
+    IF    '${ignore_console}' == 'false'    Set Suite Variable    ${ignore_console}    ${False}
+    IF    '${docker}' == 'true'    Set Suite Variable    ${docker}    ${True}
+    IF    '${docker}' == 'false'    Set Suite Variable    ${docker}    ${False}
     &{urls}=    Create Dictionary    yves_url    ${yves_url}    yves_at_url    ${yves_at_url}    zed_url    ${zed_url}    mp_url    ${mp_url}    glue_url    ${glue_url}
     FOR    ${key}    ${url}    IN    &{urls}
         Log    Key is '${key}' and value is '${url}'.

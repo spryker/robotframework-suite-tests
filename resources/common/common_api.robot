@@ -34,6 +34,8 @@ ${glue_env}
 ${bapi_env}
 ${sapi_env}
 ${db_port}
+${project_location}
+${ignore_console}    ${False}
 # ${default_db_engine}       psycopg2
 
 *** Keywords ***
@@ -52,6 +54,7 @@ SuiteSetup
     Set Global Variable    ${today}
     ${verify_ssl}=    Convert To String    ${verify_ssl}
     ${verify_ssl}=    Convert To Lower Case    ${verify_ssl}
+    Overwrite env variables
     IF    '${verify_ssl}' == 'true'
         Set Global Variable    ${verify_ssl}    ${True}
     ELSE
@@ -123,6 +126,7 @@ TestSetup
         END
     END
     END
+    Overwrite env variables
     ${current_url_last_character}=    Get Regexp Matches    ${current_url}    .$    flags=IGNORECASE
     ${current_url_last_character}=    Convert To String    ${current_url_last_character}
     ${current_url_last_character}=    Replace String    ${current_url_last_character}    '   ${EMPTY}
@@ -151,6 +155,17 @@ Load Variables
         ${var_value}=   Get Variable Value  ${${key}}   ${value}
         Set Global Variable    ${${key}}    ${var_value}
     END
+
+Overwrite env variables
+    IF    '${project_location}' == '${EMPTY}'
+            Set Suite Variable    ${cli_path}    ${cli_path}
+    ELSE
+            Set Suite Variable    ${cli_path}    ${project_location}
+    END
+    IF    '${ignore_console}' == 'true'    Set Suite Variable    ${ignore_console}    ${True}
+    IF    '${ignore_console}' == 'false'    Set Suite Variable    ${ignore_console}    ${False}
+    IF    '${docker}' == 'true'    Set Suite Variable    ${docker}    ${True}
+    IF    '${docker}' == 'false'    Set Suite Variable    ${docker}    ${False}
 
 I set Headers:
     [Documentation]    Keyword sets any number of headers for the further endpoint calls.
