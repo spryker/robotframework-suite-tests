@@ -6,6 +6,7 @@ Test Teardown     common.TestTeardown
 Suite Teardown    common.SuiteTeardown
 Test Tags    robot:recursive-stop-on-failure
 Resource    ../../../resources/common/common.robot
+Resource    ../../../resources/common/common_api.robot
 Resource    ../../../resources/steps/header_steps.robot
 Resource    ../../../resources/common/common_yves.robot
 Resource    ../../../resources/common/common_zed.robot
