@@ -56,7 +56,7 @@ Fulfilment_app_e2e
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to order page:    ${lastPlacedOrder}
     Zed: trigger all matching states inside this order:    picking list generation schedule
-    # Trigger oms
+    Trigger oms
     # # ORDER READY FOR PICKING
     Zed: wait for order item to be in state:    091_25873091    ready for picking
     Zed: wait for order item to be in state:    093_24495843    ready for picking
@@ -87,9 +87,9 @@ Fulfilment_app_e2e
     Then I send a PATCH request:    /picking-lists/${picklist_id}/picking-list-items    {"data":[{"id":"${item_id_1}","type":"picking-list-items","attributes":{"numberOfPicked":1,"numberOfNotPicked":0}},{"id":"${item_id_2}","type":"picking-list-items","attributes":{"numberOfPicked":0,"numberOfNotPicked":1}}]}
     Then Response status code should be:    200
     And Response body parameter should be:    [data][0][attributes][status]    picking-finished
-    # # CLEAN SYSTEM, REMOVE CREATED RELATIONS IN DB
-    # [Teardown]     Run Keywords    Remove picking list item by uuid in DB:    ${item_id_1}
-    # ...  AND    Remove picking list item by uuid in DB:    ${item_id_2} 
-    # ...  AND    Remove picking list by uuid in DB:    ${picklist_id}
-    # ...  AND    Make user a warehouse user/ not a warehouse user:   ${warehous_user[0].de_admin_user_uuid}    0
-    # ...  AND    I send a DELETE request:    /warehouse-user-assignments/${warehouse_assigment_id}
+    # CLEAN SYSTEM, REMOVE CREATED RELATIONS IN DB
+    [Teardown]     Run Keywords    Remove picking list item by uuid in DB:    ${item_id_1}
+    ...  AND    Remove picking list item by uuid in DB:    ${item_id_2} 
+    ...  AND    Remove picking list by uuid in DB:    ${picklist_id}
+    ...  AND    Make user a warehouse user/ not a warehouse user:   ${warehous_user[0].de_admin_user_uuid}    0
+    ...  AND    I send a DELETE request:    /warehouse-user-assignments/${warehouse_assigment_id}
