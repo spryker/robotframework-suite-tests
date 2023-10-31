@@ -229,7 +229,7 @@ Update_warehouse_user_assigment
     ...  AND    Response status code should be:    204
     ...  AND    Make user a warehouse user/ not a warehouse user:   ${warehous_user[0].user_uuid}    0
 
- Create_warehouse_user_assignment_with_multiple_active_assignments
+Create_warehouse_user_assignment_with_multiple_active_assignments
     [Setup]    Run Keywords    I get access token by user credentials:    ${zed_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=Bearer ${token}
     ...    AND    Make user a warehouse user/ not a warehouse user:   ${warehous_user[0].user_uuid}    1
