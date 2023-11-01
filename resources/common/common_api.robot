@@ -25,7 +25,7 @@ ${default_db_port}         3306
 ${default_db_port_postgres}    5432
 ${default_db_user}         spryker
 ${default_db_engine}       pymysql
-${docker}     ${False}
+${default_docker}     ${False}
 ${docker_db_host}     database
 ${docker_cli_url}     http://cli:9000
 ${cli_path}    ..
@@ -35,7 +35,8 @@ ${bapi_env}
 ${sapi_env}
 ${db_port}
 ${project_location}
-${ignore_console}    ${False}
+${ignore_console}
+${default_ignore_console}    ${True}
 # ${default_db_engine}       psycopg2
 
 *** Keywords ***
@@ -161,6 +162,16 @@ Overwrite env variables
             Set Suite Variable    ${cli_path}    ${cli_path}
     ELSE
             Set Suite Variable    ${cli_path}    ${project_location}
+    END
+    IF    '${ignore_console}' == '${EMPTY}'
+            Set Suite Variable    ${ignore_console}    ${default_ignore_console}
+    ELSE
+            Set Suite Variable    ${ignore_console}    ${ignore_console}
+    END
+    IF    '${docker}' == '${EMPTY}'
+            Set Suite Variable    ${docker}    ${default_docker}
+    ELSE
+            Set Suite Variable    ${docker}    ${docker}
     END
     IF    '${ignore_console}' == 'true'    Set Suite Variable    ${ignore_console}    ${True}
     IF    '${ignore_console}' == 'false'    Set Suite Variable    ${ignore_console}    ${False}
@@ -2525,15 +2536,18 @@ Run console command
         ...    ``Run console command    command=publish:trigger-events parameters=-r service_point    storeName=DE``
         ...
     [Arguments]    ${command}    ${storeName}=DE
-    IF    ${ignore_console} != True
-        IF    '.local' in '${current_url}'
-            ${consoleCommand}=    Set Variable    cd ${cli_path} && APPLICATION_STORE=${storeName} docker/sdk ${command}
-            IF    ${docker}
-                ${consoleCommand}=    Set Variable    curl --request POST -LsS --data "APPLICATION_STORE='${storeName}' COMMAND='${command}' cli.sh" --max-time 1000 --url "${docker_cli_url}/console"
-            END
+    IF    '.local' in '${current_url}' or ${docker}
+        ${consoleCommand}=    Set Variable    cd ${cli_path} && APPLICATION_STORE=${storeName} docker/sdk ${command}
+        IF    ${docker}
+            ${consoleCommand}=    Set Variable    curl --request POST -LsS --data "APPLICATION_STORE='${storeName}' COMMAND='${command}' cli.sh" --max-time 1000 --url "${docker_cli_url}/console"
             ${rc}    ${output}=    Run And Return RC And Output    ${consoleCommand}
             Log   ${output}
-            Should Be Equal As Integers    ${rc}    0    message=CLI command can't be executed. Check '${docker}' variable value and cli execution path
+            Should Be Equal As Integers    ${rc}    0    message=CLI command can't be executed. Check '{docker}', '{ignore_console}' variables value and cli execution path: '{cli_path}'
+        END
+        IF    ${ignore_console} != True
+            ${rc}    ${output}=    Run And Return RC And Output    ${consoleCommand}
+            Log   ${output}
+            Should Be Equal As Integers    ${rc}    0    message=CLI command can't be executed. Check '{docker}', '{ignore_console}' variables value and cli execution path: '{cli_path}'
         END
     END
 
@@ -2555,7 +2569,7 @@ Trigger p&s
         ...
     [Arguments]    ${timeout}=5s    ${storeName}=DE
     Run console command    console queue:worker:start --stop-when-empty    ${storeName}
-    Sleep    ${timeout}
+    IF    ${docker} or ${ignore_console} != True    Sleep    ${timeout}
 
 Get next id from table
     [Documentation]    This keyword returns next ID from the given table.

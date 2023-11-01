@@ -97,11 +97,17 @@ Regardless of execution approach, the path (or paths) to the test data to be exe
 | `-v headless:{headless}`       | Defines if the browser should be launched in the headless mode. Possible values: `true`,`false`. **Default:** `true`                                                                                                                                                                                                 | `robot -v env:ui_mp_b2c -v headless:false tests/ui/e2e/mp_b2c.robot`                                                                               | For UI tests only. optional              |
 | `-v browser_timeout:{timeout}` | Default time for Implicit wait in UI tests. **Default:** `60s`                                                                                                                                                                                                                                                       | `robot -v env:ui_mp_b2c -v browser_timeout:30s tests/ui/e2e/mp_b2c.robot`                                                                          | For UI tests only. optional              |
 | `-v api_timeout:${timeout}`    | Default time for Implicit wait of the response in API tests. **Default:** `60s`                                                                                                                                                                                                                                      | `robot -v env:api_b2c -v api_timeout:30s -s tests.api.b2c.glue .`                                                                                  | For API tests only. optional             |
-| `-v verify_ssl:bool`           | Enables/Disables SSL verification in API and UI tests **Default:** `false`                                                                                                                                                                                                                                           | `robot -v env:api_b2c -v verify_ssl:true -s tests.api.b2c.glue .`                                                                                  | optional                                 |
-| `-v docker:bool`               | Enables/Disables Docker compatibility **Default:** `false`                                                                                                                                                                                                                                                           | `robot -v env:api_b2c -v docker:True -s tests.api.b2c.glue .`                                                                                      | **yes for running tests via docker/sdk** |
-| `{PATH}`                       | Path to the **file** to execute                                                                                                                                                                                                                                                                                      | `robot -v env:api_b2b tests/api/b2b/glue/cart_endpoints/carts/positive.robot` / `robot -v env:ui_b2c tests/ui/e2e/b2c.robot`                       | **yes for UI tests**                     |
+| `-v verify_ssl:bool`           | Enables/Disables SSL verification in API and UI tests. **Default:** `false`                                                                                                                                                                                                                                           | `robot -v env:api_b2c -v verify_ssl:true -s tests.api.b2c.glue .`                                                                                  | optional                                 |
+| `-v docker:bool`               | Enables/Disables Docker compatibility. **Default:** `false`                                                                                                                                                                                                                                                           | `robot -v env:api_b2c -v docker:True -s tests.api.b2c.glue .`                                                                                      | **yes for running tests via docker/sdk** |
+| `-v ignore_console:bool`               | Enables/Disables docker/sdk commands during test execution, such as 'trigger oms' or 'trigger p&s'. **Default:** `true`, meaning console commands are **not** executed                                                                                                                                                                                                                                                           | `robot -v env:ui_b2c -v ignore_console:False tests/ui/e2e/mp_b2c.robot`                                                                                      | optional. If `-v docker:true` - this parameter is set to `False` by default, meaning docker/sdk commands are executable |
+| `-v project_location:${absolute_path}`               | Absolute project/application **root** folder location for docker/sdk cli commands                                                                                                                                                         | `robot -v env:ui_b2c -v ignore_console:True -v project_location:/Users/your_user/projects/b2c tests/ui/e2e/mp_b2c.robot`                                                                                      | optional. If `-v docker:true` - this parameter is ignored |
+| `{PATH}`                       | Path to the **file** to execute                                                                                                                                                                                                                                                                                      | `robot -v env:api_b2b tests/api/b2b/glue/cart_endpoints/carts/positive.robot` / `robot -v env:ui_b2c tests/ui/e2e/b2c.robot` **where** `tests/ui/e2e/b2c.robot` and `tests/api/b2b/glue/cart_endpoints/carts/positive.robot` is a `{PATH}`                        | **yes for UI tests**                     |
 
 #### CLI Examples
+* Execute all tests (positive and negative) in api/suite folder (all glue, bapi  and sapi API tests that exist) via docker/sdk.
+   ```sh
+   docker/sdk exec robot-framework robot -v docker:True -v env:api_suite -d results -s tests.api.suite .
+   ```
 * Execute all tests in api/b2b folder (all glue, bapi  and sapi API tests that exist).
    ```sh
    robot -v env:api_b2b -d results -s tests.api.b2b .
@@ -149,20 +155,28 @@ To run Makefile on Windows, you need to install a program called "make".
 ##### Supported Helper commands
 | Command | Comment| Optional arguments |
 |:--- |:--- |:--- |
-|`make test_api_b2b`| Run all API tests for B2B on default local environment| `glue_env=` / `bapi_env=` / `sapi_env=` |
-|`make test_api_b2c`| Run all API tests for B2C on default local environment| `glue_env=` / `bapi_env=` / `sapi_env=` |
-|`make test_api_mp_b2b`| Run all API tests for MP-B2B on default local environment| `glue_env=` / `bapi_env=` / `sapi_env=` |
-|`make test_api_mp_b2c`| Run all API tests for MP-B2C on default local environment| `glue_env=` / `bapi_env=` / `sapi_env=` |
-|`make test_api_suite`| Run all API tests for Suite on default local environment| `glue_env=` / `bapi_env=` / `sapi_env=` |
-|`make test_ui_suite`| Run all UI tests for Suite on default local environment|`glue_env=` / `yves_env=` / `yves_at_env=` / `zed_env=` / `mp_env=`|
-|`make test_ui_b2b`| Run all UI tests for B2B on default local environment|`glue_env=` / `yves_env=` / `yves_at_env=` / `zed_env=` / `mp_env=`|
-|`make test_ui_b2c`| Run all UI tests for B2C on default local environment|`glue_env=` / `yves_env=` / `yves_at_env=` / `zed_env=` / `mp_env=`|
-|`make test_ui_mp_b2b`| Run all UI tests for MP-B2B on default local environment|`glue_env=` / `yves_env=` / `yves_at_env=` / `zed_env=` / `mp_env=`|
-|`make test_ui_mp_b2c`| Run all UI tests for MP-B2C on default local environment|`glue_env=` / `yves_env=` / `yves_at_env=` / `zed_env=` / `mp_env=`|
+|`make test_api_b2b`| Run all API tests for B2B on default local environment| `glue_env=` / `bapi_env=` / `sapi_env=` / `docker=` / `ignore_console=` / `project_location=` |
+|`make test_api_b2c`| Run all API tests for B2C on default local environment| `glue_env=` / `bapi_env=` / `sapi_env=` / `docker=` / `ignore_console=` / `project_location=`|
+|`make test_api_mp_b2b`| Run all API tests for MP-B2B on default local environment| `glue_env=` / `bapi_env=` / `sapi_env=` / `docker=` / `ignore_console=` / `project_location=`|
+|`make test_api_mp_b2c`| Run all API tests for MP-B2C on default local environment| `glue_env=` / `bapi_env=` / `sapi_env=` / `docker=` / `ignore_console=` / `project_location=`|
+|`make test_api_suite`| Run all API tests for Suite on default local environment| `glue_env=` / `bapi_env=` / `sapi_env=` / `docker=` / `ignore_console=` / `project_location=`|
+|`make test_ui_suite`| Run all UI tests for Suite on default local environment|`glue_env=` / `bapi_env=` / `yves_env=` / `yves_at_env=` / `zed_env=` / `mp_env=`/ `docker=` / `ignore_console=` / `project_location=`|
+|`make test_ui_b2b`| Run all UI tests for B2B on default local environment|`glue_env=` / `bapi_env=` / `yves_env=` / `yves_at_env=` / `zed_env=` / `mp_env=` / `docker=` / `ignore_console=` / `project_location=`|
+|`make test_ui_b2c`| Run all UI tests for B2C on default local environment|`glue_env=` / `bapi_env=` / `yves_env=` / `yves_at_env=` / `zed_env=` / `mp_env=` / `docker=` / `ignore_console=` / `project_location=`|
+|`make test_ui_mp_b2b`| Run all UI tests for MP-B2B on default local environment|`glue_env=` / `bapi_env=` / `yves_env=` / `yves_at_env=` / `zed_env=` / `mp_env=` / `docker=` / `ignore_console=` / `project_location=`|
+|`make test_ui_mp_b2c`| Run all UI tests for MP-B2C on default local environment|`glue_env=` / `bapi_env=` / `yves_env=` / `yves_at_env=` / `zed_env=` / `mp_env=` / `docker=` / `ignore_console=` / `project_location=`|
 ##### Helper Examples
 * Run all API tests for B2B on local environment
    ```sh
    make test_api_b2b
+   ```
+* Run all UI tests for MP-B2C on local environment with disabled docker/sdk commands
+   ```sh
+   make test_ui_mp_b2c ignore_console=true
+   ```
+* Run all UI tests for MP-B2C on local environment with enabled docker/sdk commands and specify your application location
+   ```sh
+   make test_ui_mp_b2c ignore_console=false project_location=/Users/your_user/projects/mp-b2b
    ```
 * Run all API tests for B2B on cloud environment
    ```sh
