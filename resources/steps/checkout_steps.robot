@@ -33,6 +33,7 @@ Yves: billing address same as shipping address:
     END
     IF    '${state}' == 'true'    Wait Until Element Is Not Visible    ${billing_address_section}[${env}]
     IF    '${state}' == 'false'    Wait Until Element Is Visible    ${billing_address_section}[${env}]
+    Repeat Keyword    3    Wait Until Network Is Idle
 
 Yves: accept the terms and conditions:
     [Documentation]    ${state} can be true or false
@@ -50,26 +51,34 @@ Yves: accept the terms and conditions:
 
 Yves: select the following existing address on the checkout as 'shipping' address and go next:
     [Arguments]    ${addressToUse}
+    Reload
+    Repeat Keyword    3    Wait Until Network Is Idle
     Wait Until Element Is Visible    ${checkout_address_delivery_selector}[${env}] 
-    WHILE  '${selected_address}' != '${addressToUse}'
-        Run Keywords         
-                IF    '${env}' in ['ui_b2c','ui_mp_b2c']
-                    Select From List By Label    ${checkout_address_delivery_selector}[${env}]    ${addressToUse}
-                    Sleep    1s
-                    ${selected_address}=    Get Text    xpath=//select[contains(@name,'shippingAddress')][contains(@id,'addressesForm_shippingAddress_id')]/..//span[contains(@id,'shippingAddress_id')]
-                ELSE IF    '${env}' in ['ui_b2b','ui_mp_b2b']
-                    Click    xpath=//div[contains(@class,'shippingAddress')]//select[@name='checkout-full-addresses'][contains(@class,'address__form')]/..//span[contains(@id,'checkout-full-address')]
-                    Wait Until Network Is Idle
-                    Wait Until Element Is Visible    xpath=//span[@class='select2-results']
-                    Sleep    1s
-                    Click    xpath=//ul[contains(@id,'checkout-full-addresses')]//li[@role='option'][contains(@id,'business_unit_address')][contains(.,'${addressToUse}')]
-                    Wait Until Network Is Idle
-                    Sleep    1s
-                    ${selected_address}=    Get Text    xpath=//div[contains(@class,'shippingAddress')]//select[@name='checkout-full-addresses'][contains(@class,'address__form')]/..//span[contains(@id,'checkout-full-address')]
-                END
+    WHILE  '${selected_address}' != '${addressToUse}'  
+        IF    '${env}' in ['ui_b2c','ui_mp_b2c']
+            Repeat Keyword    2    Select From List By Label    ${checkout_address_delivery_selector}[${env}]    ${addressToUse}
+            Select From List By Label    ${checkout_address_delivery_selector}[${env}]    ${addressToUse}
+            Repeat Keyword    3    Wait Until Network Is Idle
+            Sleep    1s
+            ${selected_address}=    Get Text    xpath=//select[contains(@name,'shippingAddress')][contains(@id,'addressesForm_shippingAddress_id')]/..//span[contains(@id,'shippingAddress_id')]
+        ELSE IF    '${env}' in ['ui_b2b','ui_mp_b2b']
+            Repeat Keyword    2    Select From List By Label    ${checkout_address_delivery_selector}[${env}]    ${addressToUse}
+            Repeat Keyword    3    Wait Until Network Is Idle
+            Sleep    1s
+            ### Legacy solution ###
+            # Click    xpath=//div[contains(@class,'shippingAddress')]//select[@name='checkout-full-addresses'][contains(@class,'address__form')]/..//span[contains(@id,'checkout-full-address')]
+            # Repeat Keyword    3    Wait Until Network Is Idle
+            # Wait Until Element Is Visible    xpath=//span[@class='select2-results']
+            # Sleep    1s
+            # Click    xpath=//ul[contains(@id,'checkout-full-addresses')]//li[@role='option'][contains(@id,'business_unit_address')][contains(.,'${addressToUse}')]
+            # Repeat Keyword    3    Wait Until Network Is Idle
+            # Sleep    1s
+            ### Legacy solution ###
+            ${selected_address}=    Get Text    xpath=//div[contains(@class,'shippingAddress')]//select[@name='checkout-full-addresses'][contains(@class,'address__form')]/..//span[contains(@id,'checkout-full-address')]
+        END
     END
     Click    ${submit_checkout_form_button}[${env}]
-    Wait Until Network Is Idle
+    Repeat Keyword    3    Wait Until Network Is Idle
 
 Yves: fill in the following new shipping address:
     [Documentation]    Possible argument names: salutation, firstName, lastName, street, houseNumber, postCode, city, country, company, phone, additionalAddress
@@ -91,6 +100,8 @@ Yves: fill in the following new shipping address:
         IF    '${key}'=='phone' and '${value}' != '${EMPTY}'    Type Text    ${checkout_shipping_address_phone_field}    ${value}
         IF    '${key}'=='additionalAddress' and '${value}' != '${EMPTY}'    Type Text    ${checkout_shipping_address_additional_address_field}    ${value}
     END
+    Repeat Keyword    3    Wait Until Network Is Idle
+    Sleep    1s
 
 Yves: fill in the following new billing address:
     [Documentation]    Possible argument names: salutation, firstName, lastName, street, houseNumber, postCode, city, country, company, phone, additionalAddress
@@ -113,13 +124,17 @@ Yves: fill in the following new billing address:
         IF    '${key}'=='phone' and '${value}' != '${EMPTY}'    Type Text    ${checkout_billing_address_phone_field}    ${value}
         IF    '${key}'=='additionalAddress' and '${value}' != '${EMPTY}'    Type Text    ${checkout_billing_address_additional_address_field}    ${value}
     END
+    Repeat Keyword    3    Wait Until Network Is Idle
+    Sleep    1s
 
 Yves: select delivery to multiple addresses
     Select From List By Label    ${checkout_address_delivery_selector}[${env}]    Deliver to multiple addresses
 
 Yves: click checkout button:
     [Arguments]    ${buttonName}
+    Repeat Keyword    3    Wait Until Network Is Idle
     Click    xpath=//button[@type='submit' and contains(text(),'${buttonName}')]
+    Repeat Keyword    3    Wait Until Network Is Idle
 
 Yves: fill in new delivery address for a product:
     [Documentation]    Possible argument names: product (SKU or Name), salutation, firstName, lastName, street, houseNumber, postCode, city, country, company, phone, additionalAddress
@@ -142,6 +157,8 @@ Yves: fill in new delivery address for a product:
         IF    '${key}'=='phone' and '${value}' != '${EMPTY}'    Type Text    xpath=//article[contains(@data-qa,'component product-card-item')]//*[contains(.,'${item}')]/ancestor::div[contains(@class,'address-item-form')][1]//input[contains(@name,'[phone]')]    ${value}
         IF    '${key}'=='additionalAddress' and '${value}' != '${EMPTY}'    Type Text    xpath=//article[contains(@data-qa,'component product-card-item')]//*[contains(.,'${item}')]/ancestor::div[contains(@class,'address-item-form')][1]//input[contains(@name,'[address3]')]    ${value}
     END
+    Repeat Keyword    3    Wait Until Network Is Idle
+    Sleep    1s
 
 Yves: select the following shipping method on the checkout and go next:
     [Arguments]    ${shippingMethod}
@@ -151,9 +168,11 @@ Yves: select the following shipping method on the checkout and go next:
         Click    xpath=//div[@data-qa='component shipment-sidebar']//*[contains(.,'Shipping Method')]/../ul//label[contains(.,'${shippingMethod}')]/span[contains(@class,'radio__box')]
     END
     Click    ${submit_checkout_form_button}[${env}]
+    Repeat Keyword    3    Wait Until Network Is Idle
 
 Yves: submit form on the checkout
     Click    ${submit_checkout_form_button}[${env}]
+    Repeat Keyword    3    Wait Until Network Is Idle
 
 Yves: select the following shipping method for the shipment:
     [Arguments]    ${shipment}    ${shippingProvider}    ${shippingMethod}
@@ -164,22 +183,26 @@ Yves: select the following payment method on the checkout and go next:
     IF    '${env}'=='ui_b2b' and '${paymentMethod}'=='Invoice'
         Run keywords
             Click    //form[@id='payment-form']//li[@class='checkout-list__item'][contains(.,'${paymentMethod}')]//span[contains(@class,'toggler-radio__box')]
-            Type Text    ${checkout_payment_invoice_date_of_birth_field}    11.11.1111
+            ${date_of_birth_present}=    Run Keyword And Ignore Error    Page Should Contain Element    ${checkout_payment_invoice_date_of_birth_field}    timeout=1s
+            IF    'PASS' in ${date_of_birth_present}    Type Text    ${checkout_payment_invoice_date_of_birth_field}    11.11.1111
             Click    ${submit_checkout_form_button}[${env}]
     ELSE IF    '${env}' in ['ui_mp_b2b'] and '${paymentMethod}'=='Invoice'
         Run Keywords
             Click    //form[@id='payment-form']//li[@class='checkout-list__item'][contains(.,'${paymentMethod}')]//span[contains(@class,'toggler-radio__box')]
-            Type Text    ${checkout_payment_marketplace_invoice_date_field}    11.11.1111
+            ${date_of_birth_present}=    Run Keyword And Ignore Error    Page Should Contain Element    ${checkout_payment_marketplace_invoice_date_field}    timeout=1s
+            IF    'PASS' in ${date_of_birth_present}    Type Text    ${checkout_payment_marketplace_invoice_date_field}    11.11.1111
             Click    ${submit_checkout_form_button}[${env}]
     ELSE IF    '${env}' in ['ui_mp_b2b'] and '${paymentMethod}'=='Invoice (Marketplace)'
         Run Keywords
             Click    //form[@id='payment-form']//li[@class='checkout-list__item'][contains(.,'${paymentMethod}')]//span[contains(@class,'toggler-radio__box')]
-            Type Text    ${checkout_payment_marketplace_invoice_date_field}    11.11.1111
+            ${date_of_birth_present}=    Run Keyword And Ignore Error    Page Should Contain Element    ${checkout_payment_marketplace_invoice_date_field}    timeout=1s
+            IF    'PASS' in ${date_of_birth_present}    Type Text    ${checkout_payment_marketplace_invoice_date_field}    11.11.1111
             Click    ${submit_checkout_form_button}[${env}]
     ELSE IF    '${env}' in ['ui_mp_b2b'] and '${paymentMethod}'=='Marketplace Invoice'
         Run Keywords
             Click    //form[@id='payment-form']//li[@class='checkout-list__item'][contains(.,'${paymentMethod}')]//span[contains(@class,'toggler-radio__box')]
-            Type Text    ${checkout_payment_marketplace_invoice_date_field}    11.11.1111
+            ${date_of_birth_present}=    Run Keyword And Ignore Error    Page Should Contain Element    ${checkout_payment_marketplace_invoice_date_field}    timeout=1s
+            IF    'PASS' in ${date_of_birth_present}    Type Text    ${checkout_payment_marketplace_invoice_date_field}    11.11.1111
             Click    ${submit_checkout_form_button}[${env}]
     ELSE IF    ('${env}'=='ui_suite' and '${paymentProvider}'!='${EMPTY}')
         Run Keywords
@@ -196,22 +219,26 @@ Yves: select the following payment method on the checkout and go next:
     ELSE IF    '${env}' in ['ui_mp_b2c'] and '${paymentMethod}'=='Invoice'
         Run Keywords
             Click    //form[@name='paymentForm']//toggler-radio[contains(.,'${paymentMethod}')]//span[contains(@class,'toggler-radio__box')]
-            Type Text    ${checkout_payment_invoice_date_of_birth_field}    11.11.1111
+            ${date_of_birth_present}=    Run Keyword And Ignore Error    Page Should Contain Element    ${checkout_payment_invoice_date_of_birth_field}    timeout=1s
+            IF    'PASS' in ${date_of_birth_present}    Type Text    ${checkout_payment_invoice_date_of_birth_field}    11.11.1111
             Click    ${submit_checkout_form_button}[${env}]    
     ELSE IF    '${env}' in ['ui_mp_b2c'] and '${paymentMethod}'=='Invoice (Marketplace)'
         Run Keywords
             Click    //form[@name='paymentForm']//toggler-radio[contains(.,'${paymentMethod}')]//span[contains(@class,'toggler-radio__box')]
-            Type Text    ${checkout_payment_marketplace_invoice_date_field}    11.11.1111
+            ${date_of_birth_present}=    Run Keyword And Ignore Error    Page Should Contain Element    ${checkout_payment_marketplace_invoice_date_field}    timeout=1s
+            IF    'PASS' in ${date_of_birth_present}    Type Text    ${checkout_payment_marketplace_invoice_date_field}    11.11.1111
             Click    ${submit_checkout_form_button}[${env}]    
     ELSE IF    '${env}' in ['ui_mp_b2c'] and '${paymentMethod}'=='Marketplace Invoice'
         Run Keywords
             Click    //form[@name='paymentForm']//toggler-radio[contains(.,'${paymentMethod}')]//span[contains(@class,'toggler-radio__box')]
-            Type Text    ${checkout_payment_marketplace_invoice_date_field}    11.11.1111
+            ${date_of_birth_present}=    Run Keyword And Ignore Error    Page Should Contain Element    ${checkout_payment_marketplace_invoice_date_field}    timeout=1s
+            IF    'PASS' in ${date_of_birth_present}    Type Text    ${checkout_payment_marketplace_invoice_date_field}    11.11.1111
             Click    ${submit_checkout_form_button}[${env}]    
    ELSE
         Run keywords
         Click    //form[@name='paymentForm']//span[contains(@class,'toggler') and contains(text(),'${paymentMethod}')]/preceding-sibling::span[@class='toggler-radio__box']
-            Type Text    ${checkout_payment_invoice_date_of_birth_field}    11.11.1111
+            ${date_of_birth_present}=    Run Keyword And Ignore Error    Page Should Contain Element    ${checkout_payment_invoice_date_of_birth_field}    timeout=1s
+            IF    'PASS' in ${date_of_birth_present}    Type Text    ${checkout_payment_invoice_date_of_birth_field}    11.11.1111
             Click    ${submit_checkout_form_button}[${env}]
     END
 
@@ -255,7 +282,7 @@ Yves: proceed with checkout as guest:
     Type Text    ${yves_checkout_login_guest_firstName_field}     ${firstName}
     Type Text    ${yves_checkout_login_guest_lastName_field}     ${lastName}
     Type Text    ${yves_checkout_login_guest_email_field}     ${email}
-    Yves: accept the terms and conditions:    true    true
+    Yves: accept the terms and conditions:    true    isGuest=true
     Click    ${yves_checkout_login_buy_as_guest_submit_button}
 
 Yves: assert merchant of product in cart or list:
@@ -269,8 +296,14 @@ Yves: save new deviery address to address book:
     IF    '${env}' in ['ui_b2b','ui_mp_b2b']    Wait Until Page Contains Element    ${manage_your_addresses_link}
     ${checkboxState}=    Set Variable    ${EMPTY}
     ${checkboxState}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//input[@id='addressesForm_shippingAddress_isAddressSavingSkipped'][@checked]    timeout=1s
-    IF    '${checkboxState}'=='False' and '${state}' == 'true'    Click Element by xpath with JavaScript    //input[@id='addressesForm_shippingAddress_isAddressSavingSkipped']
-    IF    '${checkboxState}'=='True' and '${state}' == 'false'    Click Element by xpath with JavaScript    //input[@id='addressesForm_shippingAddress_isAddressSavingSkipped']
+    IF    '${checkboxState}'=='False' and '${state}' == 'true'    
+        Click    xpath=//input[@id='addressesForm_shippingAddress_isAddressSavingSkipped']/ancestor::span[contains(@data-qa,'checkbox')]
+        Repeat Keyword    3    Wait Until Network Is Idle
+    END
+    IF    '${checkboxState}'=='True' and '${state}' == 'false'
+        Click    xpath=//input[@id='addressesForm_shippingAddress_isAddressSavingSkipped']/ancestor::span[contains(@data-qa,'checkbox')]
+        Repeat Keyword    3    Wait Until Network Is Idle
+    END
     
 Yves: save new billing address to address book:
     [Arguments]    ${state}
@@ -278,13 +311,20 @@ Yves: save new billing address to address book:
     IF    '${env}' in ['ui_b2b','ui_mp_b2b']    Wait Until Page Contains Element    ${manage_your_addresses_link}
     ${checkboxState}=    Set Variable    ${EMPTY}
     ${checkboxState}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//input[@id='addressesForm_billingAddress_isAddressSavingSkipped'][@checked]    timeout=1s
-    IF    '${checkboxState}'=='False' and '${state}' == 'true'    Click Element by xpath with JavaScript    //input[@id='addressesForm_billingAddress_isAddressSavingSkipped']
-    IF    '${checkboxState}'=='True' and '${state}' == 'false'    Click Element by xpath with JavaScript    //input[@id='addressesForm_billingAddress_isAddressSavingSkipped']
+    IF    '${checkboxState}'=='False' and '${state}' == 'true'    
+        Click    xpath=//input[@id='addressesForm_billingAddress_isAddressSavingSkipped']/ancestor::span[contains(@data-qa,'checkbox')]
+        Repeat Keyword    3    Wait Until Network Is Idle
+    END
+    IF    '${checkboxState}'=='True' and '${state}' == 'false'    
+        Click    xpath=//input[@id='addressesForm_billingAddress_isAddressSavingSkipped']/ancestor::span[contains(@data-qa,'checkbox')]
+        Repeat Keyword    3    Wait Until Network Is Idle
+    END
     
 Yves: return to the previous checkout step:
     [Arguments]    ${checkoutStep}
     ${checkoutStep}=    Convert To Lower Case    ${checkoutStep}
     Click    //ul[@data-qa='component breadcrumb']//a[contains(@href,'${checkoutStep}')]
+    Repeat Keyword    3    Wait Until Network Is Idle
     
 Yves: check that the payment method is/not present in the checkout process:
     [Arguments]    ${payment_method_locator}    ${condition}
@@ -302,6 +342,7 @@ Yves: check that the payment method is/not present in the checkout process:
     Type Text    ${email_field}    ${email}
     Type Text    ${password_field}    ${password}
     Click    ${form_login_button}
+    Repeat Keyword    3    Wait Until Network Is Idle
 
 Yves: signup guest user during checkout:
       [Arguments]      ${firstName}    ${lastName}    ${email}     ${password}      ${confirmpassword} 

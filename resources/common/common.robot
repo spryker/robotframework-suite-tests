@@ -3,6 +3,7 @@ Library    Browser    run_on_failure=Take Screenshot \ EMBED \ fullPage=True
 Library    String
 Library    Dialogs
 Library    OperatingSystem
+Library    Process
 Library    Collections
 Library    BuiltIn
 Library    DateTime
@@ -15,7 +16,7 @@ Resource                  ../pages/yves/yves_login_page.robot
 
 *** Variables ***
 # *** SUITE VARIABLES ***
-${env}                 b2b
+${env}                 ui_mp_b2b
 ${headless}            true
 ${verify_ssl}          false
 ${browser}             chromium
@@ -32,7 +33,8 @@ ${default_db_port}         3306
 ${default_db_port_postgres}    5432
 ${default_db_user}         spryker
 ${default_db_engine}       pymysql
-${docker}     ${False}
+###
+${default_docker}     ${False}
 ${docker_db_host}     database
 ${docker_cli_url}     http://cli:9000
 ${cli_path}    ..
@@ -43,6 +45,9 @@ ${zed_env}
 ${mp_env}
 ${glue_env}
 ${db_port}
+${project_location}
+${ignore_console}
+${default_ignore_console}    ${True}
 # ${default_db_engine}       psycopg2
 # ${device}              Desktop Chrome
 # ${fake_email}          test.spryker+${random}@gmail.com
@@ -94,6 +99,25 @@ Overwrite env variables
     ELSE
             Set Suite Variable    ${glue_url}   ${glue_env}
     END
+    IF    '${project_location}' == '${EMPTY}'
+            Set Suite Variable    ${cli_path}    ${cli_path}
+    ELSE
+            Set Suite Variable    ${cli_path}    ${project_location}
+    END
+    IF    '${ignore_console}' == '${EMPTY}'
+            Set Suite Variable    ${ignore_console}    ${default_ignore_console}
+    ELSE
+            Set Suite Variable    ${ignore_console}    ${ignore_console}
+    END
+    IF    '${docker}' == '${EMPTY}'
+            Set Suite Variable    ${docker}    ${default_docker}
+    ELSE
+            Set Suite Variable    ${docker}    ${docker}
+    END
+    IF    '${ignore_console}' == 'true'    Set Suite Variable    ${ignore_console}    ${True}
+    IF    '${ignore_console}' == 'false'    Set Suite Variable    ${ignore_console}    ${False}
+    IF    '${docker}' == 'true'    Set Suite Variable    ${docker}    ${True}
+    IF    '${docker}' == 'false'    Set Suite Variable    ${docker}    ${False}
     &{urls}=    Create Dictionary    yves_url    ${yves_url}    yves_at_url    ${yves_at_url}    zed_url    ${zed_url}    mp_url    ${mp_url}    glue_url    ${glue_url}
     FOR    ${key}    ${url}    IN    &{urls}
         Log    Key is '${key}' and value is '${url}'.
@@ -108,12 +132,15 @@ Overwrite env variables
         ${var_url}=   Set Variable    ${url}
         Set Suite Variable    ${${key}}    ${var_url}
     END
+
 SuiteSetup
     [documentation]  Basic steps before each suite
     Remove Files    ${OUTPUTDIR}/selenium-screenshot-*.png
     Remove Files    resources/libraries/__pycache__/*
     Remove Files    ${OUTPUTDIR}/*.png
+    Remove Files    ${OUTPUTDIR}/*.yml
     Load Variables    ${env}
+    ${verify_ssl}=    Convert To String    ${verify_ssl}
     ${verify_ssl}=    Convert To Lower Case    ${verify_ssl}
     IF    '${verify_ssl}' == 'true'
         New Browser    ${browser}    headless=${headless}
@@ -235,6 +262,10 @@ Wait Until Page Does Not Contain Element
 Wait Until Element Is Enabled
     [Arguments]    ${locator}    ${message}=${EMPTY}    ${timeout}=${browser_timeout}
     Wait For Elements State    ${locator}    enabled    ${timeout}    ${message}
+
+Wait Until Element Is Disabled
+    [Arguments]    ${locator}    ${message}=${EMPTY}    ${timeout}=${browser_timeout}
+    Wait For Elements State    ${locator}    disabled    ${timeout}    ${message}
 
 Element Should Be Visible
     [Arguments]    ${locator}    ${message}=${EMPTY}    ${timeout}=0:00:05
@@ -506,36 +537,43 @@ Run console command
         ...    ``Run console command    command=publish:trigger-events parameters=-r service_point    storeName=DE``
         ...
     [Arguments]    ${command}    ${storeName}=DE
-    ${consoleCommand}=    Set Variable    cd ${cli_path} && APPLICATION_STORE=${storeName} docker/sdk ${command}
-    IF    ${docker}
-        ${consoleCommand}=    Set Variable    curl --request POST -LsS --data "APPLICATION_STORE='${storeName}' COMMAND='${command}' cli.sh" --max-time 1000 --url "${docker_cli_url}/console"
+    IF    '.local' in '${yves_url}' or '.local' in '${zed_url}' or '.local' in '${glue_url}' or '.local' in '${bapi_url}' or '.local' in '${sapi_url}' or '.local' in '${mp_url}' or ${docker}
+        ${consoleCommand}=    Set Variable    cd ${cli_path} && APPLICATION_STORE=${storeName} docker/sdk ${command}
+        IF    ${docker}
+            ${consoleCommand}=    Set Variable    curl --request POST -LsS --data "APPLICATION_STORE='${storeName}' COMMAND='${command}' cli.sh" --max-time 1000 --url "${docker_cli_url}/console"
+            ${rc}    ${output}=    Run And Return RC And Output    ${consoleCommand}
+            Log   ${output}
+            Should Be Equal As Integers    ${rc}    0    message=CLI command can't be executed. Check '{docker}', '{ignore_console}' variables value and cli execution path: '{cli_path}'
+        END
+        IF    ${ignore_console} != True
+            ${rc}    ${output}=    Run And Return RC And Output    ${consoleCommand}
+            Log   ${output}
+            Should Be Equal As Integers    ${rc}    0    message=CLI command can't be executed. Check '{docker}', '{ignore_console}' variables value and cli execution path: '{cli_path}'
+        END
     END
-    ${rc}    ${output}=    Run And Return RC And Output    ${consoleCommand}
-    Log   ${output}
-    Should Be Equal As Integers    ${rc}    0
 
 Trigger p&s
     [Arguments]    ${timeout}=5s    ${storeName}=DE
-    IF    '.local' in '${yves_url}' or '.local' in '${zed_url}' or '.local' in '${glue_url}' or '.local' in '${bapi_url}' or '.local' in '${sapi_url}'
-        Run console command    console queue:worker:start --stop-when-empty    ${storeName}
-        Sleep    ${timeout}
-    END
+    Run console command    console queue:worker:start --stop-when-empty    ${storeName}
+    IF    ${docker} or ${ignore_console} != True    Sleep    ${timeout}
+
+Trigger API specification update
+    [Arguments]    ${timeout}=5s    ${storeName}=DE
+    Run console command    cli glue api:generate:documentation --invalidated-after-interval 90sec    ${storeName}
+    IF    ${docker} or ${ignore_console} != True    Sleep    ${timeout}
 
 Trigger multistore p&s
     [Arguments]    ${timeout}=5s
-    IF    '.local' in '${yves_url}' or '.local' in '${zed_url}' or '.local' in '${glue_url}' or '.local' in '${bapi_url}' or '.local' in '${sapi_url}'
-        Trigger p&s    ${timeout}    DE
-        Trigger p&s    ${timeout}    AT
-    END
+    Trigger p&s    ${timeout}    DE
+    Trigger p&s    ${timeout}    AT
 
 Trigger oms
     [Arguments]    ${timeout}=5s
-    IF    '.local' in '${yves_url}' or '.local' in '${zed_url}' or '.local' in '${glue_url}' or '.local' in '${bapi_url}' or '.local' in '${sapi_url}'
-        Run console command    console order:invoice:send    DE
-        Run console command    console order:invoice:send    AT
-        Run console command    console oms:check-timeout    DE
-        Run console command    console oms:check-timeout    AT
-        Run console command    console oms:check-condition    DE
-        Run console command    console oms:check-condition    AT
-        Sleep    ${timeout}
-    END
+    Run console command    console order:invoice:send    DE
+    Run console command    console order:invoice:send    AT
+    Run console command    console oms:check-timeout    DE
+    Run console command    console oms:check-timeout    AT
+    Run console command    console oms:check-condition    DE
+    Run console command    console oms:check-condition    AT
+    IF    ${docker} or ${ignore_console} != True    Sleep    ${timeout}
+
