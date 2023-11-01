@@ -34,6 +34,7 @@ ${default_db_port_postgres}    5432
 ${default_db_user}         spryker
 ${default_db_engine}       pymysql
 ###
+${docker}
 ${default_docker}     ${False}
 ${docker_db_host}     database
 ${docker_cli_url}     http://cli:9000
