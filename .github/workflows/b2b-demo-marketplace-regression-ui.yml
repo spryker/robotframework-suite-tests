@@ -64,7 +64,7 @@ jobs:
               run: |
                   cd robotframework-tests
                   rfbrowser init
-                  robot -v env:ui_mp_b2b -v headless:true -d results --exclude skip-due-to-issueORskip-due-to-refactoring tests/ui/e2e/mp_b2b.robot
+                  robot -v env:ui_mp_b2b -v headless:true -v ignore_console:false -d results --exclude skip-due-to-issueORskip-due-to-refactoring tests/ui/e2e/mp_b2b.robot
                   touch results/time.txt && echo $(date) > results/time.txt
             - name: Upload artifacts
               if: always()
