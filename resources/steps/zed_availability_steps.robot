@@ -48,6 +48,7 @@ Zed: change product stock:
         Log    Form is already submitted
     END
     Set Browser Timeout    ${browser_timeout}
+    common.Trigger multistore p&s
 
 Zed: check and restore product availability in Zed:
     [Arguments]    ${skuAbstract}    ${expectedStatus}    ${skuConcrete}
@@ -63,5 +64,3 @@ Zed: check and restore product availability in Zed:
         Zed: change product stock:    ${skuAbstract}    ${skuConcrete}    false    0    0
         END
     END
-
-

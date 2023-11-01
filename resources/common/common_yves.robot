@@ -44,45 +44,16 @@ Yves: login on Yves with provided credentials:
     Set Browser Timeout    ${browser_timeout}
     ${currentURL}=    Get Url
     IF    '/login' not in '${currentURL}'
-        IF    '${env}' in ['ui_b2b','ui_suite','ui_mp_b2b']
-            ${currentURL}=    Get Location
-                IF    '.at.' in '${currentURL}'
-                    Go To    ${yves_at_url}
-                    delete all cookies
-                    Reload
-                    Wait Until Element Is Visible    ${header_login_button}[${env}]
-                    Click    ${header_login_button}[${env}]
-                    Wait Until Element Is Visible    ${email_field}
-                ELSE
-                    Go To    ${yves_url}
-                    delete all cookies
-                    Reload
-                    Wait Until Element Is Visible    ${header_login_button}[${env}]
-                    Click    ${header_login_button}[${env}]
-                    Wait Until Element Is Visible    ${email_field}
-                END
+        IF    '.at.' in '${currentURL}'
+            Delete All Cookies
+            Reload
+            Go To    ${yves_at_url}login
         ELSE
-                ${currentURL}=    Get Location
-                    IF    '.at.' in '${currentURL}'
-                        Go To    ${yves_at_url}
-                        delete all cookies
-                        Reload
-                        mouse over  ${user_navigation_icon_header_menu_item}[${env}]
-                        Wait Until Element Is Visible    ${user_navigation_menu_login_button}
-                        Click    ${user_navigation_menu_login_button}
-                        Wait Until Element Is Visible    ${email_field}
-                    ELSE
-                        Go To    ${yves_url}
-                        delete all cookies
-                        Reload
-                        mouse over  ${user_navigation_icon_header_menu_item}[${env}]
-                        Wait Until Element Is Visible    ${user_navigation_menu_login_button}
-                        Click    ${user_navigation_menu_login_button}
-                        Wait Until Element Is Visible    ${email_field}
-                    END
-                    
-        END
-    END
+            Delete All Cookies
+            Reload
+            Go To    ${yves_url}login
+        END  
+    END  
     Type Text    ${email_field}    ${email}
     Type Text    ${password_field}    ${password}
     Click    ${form_login_button}

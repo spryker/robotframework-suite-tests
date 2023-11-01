@@ -82,6 +82,7 @@ Yves: click on the '${buttonName}' button in the shopping cart
         Click    ${shopping_cart_request_quote_button}
         Wait Until Page Does Not Contain Element    ${shopping_cart_request_quote_button}
     END
+    Repeat Keyword    3    Wait Until Network Is Idle
 
 Yves: shopping cart contains product with unit price:
     [Documentation]    Already contains '€' sign inside

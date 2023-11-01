@@ -5,7 +5,8 @@ Resource    ../pages/mp/mp_order_drawer.robot
 
 *** Keywords ***
 MP: wait for order to appear:
-    [Arguments]    ${orderReference}    ${tries}=20    ${timeout}=1s    
+    [Arguments]    ${orderReference}    ${tries}=20    ${timeout}=1s   
+    common.Trigger oms 
     FOR    ${index}    IN RANGE    0    ${tries}
         MP: perform search by:    ${orderReference}
         ${elementAppears}=    Run Keyword And Return Status    Table Should Contain    ${mp_items_table}     ${orderReference}
@@ -39,6 +40,7 @@ MP: update order state using header button:
     Wait Until Network Is Idle
     Wait Until Element Is Visible    ${mp_success_flyout}
     MP: remove notification wrapper
+    common.Trigger oms
 
 MP: change order item state on:
     [Arguments]    ${sku}    ${state}
@@ -49,6 +51,7 @@ MP: change order item state on:
     Wait Until Network Is Idle
     Wait Until Element Is Visible    ${mp_success_flyout}
     MP: remove notification wrapper
+    common.Trigger oms
 
 MP: order item state should be:
     [Arguments]    ${sku}    ${state}
