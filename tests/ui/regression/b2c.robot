@@ -1695,7 +1695,9 @@ Configurable_Product_OMS
     ...    || date       | date_time ||
     ...    || 12.12.2030 | Evening   ||
     [Teardown]    Yves: check if cart is not empty and clear it
+
 Fulfilment_app_e2e
+    [Tags]    smoke
     # # LOGGED IN TO BO and SET CHECKBOX is a warehouse user = true FOR admin_de USER. UI TEST
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: update Zed user:
