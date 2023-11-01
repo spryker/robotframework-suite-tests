@@ -157,7 +157,7 @@ Delete_warehous_user_assigment_without_token
     Then Response status code should be:    400
     And Remove_warehous_user_assigment:    ${warehouse[0].warehouse_uuid}    ${warehous_user[0].user_uuid}
 
- Delete_warehous_user_assigment_with_invalid_token
+Delete_warehous_user_assigment_with_invalid_token
     And I set Headers:    Content-Type=${default_header_content_type}    Authorization=Bearer invalid
     And Create_warehouse_user_assigment:    ${warehouse[0].warehouse_uuid}    ${warehouse[0].fk_warehouse_spryker}    ${warehous_user[0].user_uuid}    false
     Then Get_warehouse_user_assigment_id:   ${warehouse[0].warehouse_uuid}    ${warehous_user[0].user_uuid}

@@ -643,16 +643,14 @@
    },
    "push_notification_providers":{
          "push_notification_provider_uuid":"2a304ddf-d51b-514f-bd11-6e818a27fe23"
- },
- 
+   }, 
+   "admin_not_warehouse_user_email":"admin@spryker.com",
+   "admin_not_warehouse_user_password":"change123",
+
    "shipment_type":{
        "shipment_type_uuid":"174d9dc0-55ae-5c4b-a2f2-a419027029ef",
        "shipment_type_name":"Pickup"
-   },
-   "admin_not_warehouse_user":{
-      "email":"admin@spryker.com",
-      "password":"change123"
-    },
+   },  
    "warehouse_user_assigment":{
       "warehous_user":[
         { 
@@ -693,5 +691,5 @@
                   "address3":"None",
                   "city":"Berlin",
                   "zip":"10115"
-            }         
+            }    
  }
