@@ -1697,6 +1697,8 @@ Fulfilment_app_e2e
     Zed: update Zed user:
     ...    || oldEmail                       | password      | user_is_warehouse_user ||
     ...    || admin_de@spryker.com           | Change123!321 | true                   ||
+    Remove Tags    *
+    Set Tags   bapi
     common_api.TestSetup
     # # ASSIGN admin_de user TO WAREHOUSE [Warehouse 1] MAKE WAREHOUSE ACTIVE BY BAPI
     And I get access token by user credentials:   ${zed_admin_email}
@@ -1706,6 +1708,7 @@ Fulfilment_app_e2e
     Then Save value to a variable:    [data][id]   warehouse_assigment_id  
     # CREATE AN ORDER BY GLUE
     common_api.I set Headers:    Content-Type=${default_header_content_type}
+    Remove Tags    *
     Set Tags    glue
     common_api.TestSetup
     When I get access token for the customer:    ${yves_user_email}    
@@ -1730,7 +1733,7 @@ Fulfilment_app_e2e
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to order page:    ${lastPlacedOrder}
     Zed: trigger all matching states inside this order:    picking list generation schedule
-    Trigger oms
+    # Trigger oms
     # # ORDER READY FOR PICKING
     Zed: wait for order item to be in state:    091_25873091    ready for picking
     Zed: wait for order item to be in state:    093_24495843    ready for picking
