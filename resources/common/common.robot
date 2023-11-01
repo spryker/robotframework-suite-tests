@@ -3,6 +3,7 @@ Library    Browser    run_on_failure=Take Screenshot \ EMBED \ fullPage=True
 Library    String
 Library    Dialogs
 Library    OperatingSystem
+Library    Process
 Library    Collections
 Library    BuiltIn
 Library    DateTime
@@ -15,7 +16,7 @@ Resource                  ../pages/yves/yves_login_page.robot
 
 *** Variables ***
 # *** SUITE VARIABLES ***
-${env}                 b2b
+${env}                 ui_mp_b2b
 ${headless}            true
 ${verify_ssl}          false
 ${browser}             chromium
@@ -33,7 +34,7 @@ ${default_db_port_postgres}    5432
 ${default_db_user}         spryker
 ${default_db_engine}       pymysql
 ###
-${docker}     ${False}
+${default_docker}     ${False}
 ${docker_db_host}     database
 ${docker_cli_url}     http://cli:9000
 ${cli_path}    ..
@@ -45,7 +46,8 @@ ${mp_env}
 ${glue_env}
 ${db_port}
 ${project_location}
-${ignore_console}    ${False}
+${ignore_console}
+${default_ignore_console}    ${True}
 # ${default_db_engine}       psycopg2
 # ${device}              Desktop Chrome
 # ${fake_email}          test.spryker+${random}@gmail.com
@@ -101,6 +103,16 @@ Overwrite env variables
             Set Suite Variable    ${cli_path}    ${cli_path}
     ELSE
             Set Suite Variable    ${cli_path}    ${project_location}
+    END
+    IF    '${ignore_console}' == '${EMPTY}'
+            Set Suite Variable    ${ignore_console}    ${default_ignore_console}
+    ELSE
+            Set Suite Variable    ${ignore_console}    ${ignore_console}
+    END
+    IF    '${docker}' == '${EMPTY}'
+            Set Suite Variable    ${docker}    ${default_docker}
+    ELSE
+            Set Suite Variable    ${docker}    ${docker}
     END
     IF    '${ignore_console}' == 'true'    Set Suite Variable    ${ignore_console}    ${True}
     IF    '${ignore_console}' == 'false'    Set Suite Variable    ${ignore_console}    ${False}
@@ -525,22 +537,30 @@ Run console command
         ...    ``Run console command    command=publish:trigger-events parameters=-r service_point    storeName=DE``
         ...
     [Arguments]    ${command}    ${storeName}=DE
-    IF    ${ignore_console} != True
-        IF    '.local' in '${current_url}'
-            ${consoleCommand}=    Set Variable    cd ${cli_path} && APPLICATION_STORE=${storeName} docker/sdk ${command}
-            IF    ${docker}
-                ${consoleCommand}=    Set Variable    curl --request POST -LsS --data "APPLICATION_STORE='${storeName}' COMMAND='${command}' cli.sh" --max-time 1000 --url "${docker_cli_url}/console"
-            END
+    IF    '.local' in '${yves_url}' or '.local' in '${zed_url}' or '.local' in '${glue_url}' or '.local' in '${bapi_url}' or '.local' in '${sapi_url}' or '.local' in '${mp_url}' or ${docker}
+        ${consoleCommand}=    Set Variable    cd ${cli_path} && APPLICATION_STORE=${storeName} docker/sdk ${command}
+        IF    ${docker}
+            ${consoleCommand}=    Set Variable    curl --request POST -LsS --data "APPLICATION_STORE='${storeName}' COMMAND='${command}' cli.sh" --max-time 1000 --url "${docker_cli_url}/console"
             ${rc}    ${output}=    Run And Return RC And Output    ${consoleCommand}
             Log   ${output}
-            Should Be Equal As Integers    ${rc}    0    message=CLI command can't be executed. Check '${docker}' variable value and cli execution path
+            Should Be Equal As Integers    ${rc}    0    message=CLI command can't be executed. Check '{docker}', '{ignore_console}' variables value and cli execution path: '{cli_path}'
+        END
+        IF    ${ignore_console} != True
+            ${rc}    ${output}=    Run And Return RC And Output    ${consoleCommand}
+            Log   ${output}
+            Should Be Equal As Integers    ${rc}    0    message=CLI command can't be executed. Check '{docker}', '{ignore_console}' variables value and cli execution path: '{cli_path}'
         END
     END
 
 Trigger p&s
     [Arguments]    ${timeout}=5s    ${storeName}=DE
     Run console command    console queue:worker:start --stop-when-empty    ${storeName}
-    Sleep    ${timeout}
+    IF    ${docker} or ${ignore_console} != True    Sleep    ${timeout}
+
+Trigger API specification update
+    [Arguments]    ${timeout}=5s    ${storeName}=DE
+    Run console command    cli glue api:generate:documentation --invalidated-after-interval 90sec    ${storeName}
+    IF    ${docker} or ${ignore_console} != True    Sleep    ${timeout}
 
 Trigger multistore p&s
     [Arguments]    ${timeout}=5s
@@ -555,4 +575,4 @@ Trigger oms
     Run console command    console oms:check-timeout    AT
     Run console command    console oms:check-condition    DE
     Run console command    console oms:check-condition    AT
-    Sleep    ${timeout}
+    IF    ${docker} or ${ignore_console} != True    Sleep    ${timeout}
