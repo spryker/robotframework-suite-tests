@@ -48,4 +48,3 @@ Delete shipment type in DB:
         Execute Sql String    DELETE FROM spy_shipment_type WHERE "key" = '${key}';
     END
     Disconnect From Database
-
