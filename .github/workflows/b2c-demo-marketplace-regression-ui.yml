@@ -59,12 +59,13 @@ jobs:
               continue-on-error: true
               run: |
                   docker/sdk cli composer dump-autoload -o -a
-                  APPLICATION_STORE=AT docker/sdk console queue:worker:start --stop-when-empty
+                  APPLICATION_STORE=DE docker/sdk testing console queue:worker:start --stop-when-empty
+                  APPLICATION_STORE=AT docker/sdk testing console queue:worker:start --stop-when-empty
             - name: Run Tests
               run: |
                   cd robotframework-tests
                   rfbrowser init
-                  robot -v env:ui_mp_b2c -v headless:true -d results --exclude skip-due-to-issueORskip-due-to-refactoring tests/ui/regression/mp_b2c.robot
+                  robot -v env:ui_mp_b2c -v headless:true -v ignore_console:false -d results --exclude skip-due-to-issueORskip-due-to-refactoring tests/ui/e2e/mp_b2c.robot
                   touch results/time.txt && echo $(date) > results/time.txt
             - name: Upload artifacts
               if: always()
