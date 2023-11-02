@@ -31,7 +31,7 @@
        "yves_second_user_password":"change123",
        "zed_admin_email":"admin@spryker.com",
        "zed_admin_password":"change123",
-       "zed_admin_email_de":"admin@spryker.com",
+       "zed_admin_email_de":"admin_de@spryker.com",
        "zed_main_merchant_email":"richard@spryker.com",
        "merchant_budget_cameras_email":"jason.weidmann@budgetcamerasonline.com",
        "merchant_budget_cameras_reference":"MER000005",
