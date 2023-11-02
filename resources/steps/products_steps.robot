@@ -76,7 +76,21 @@ Zed: change concrete product price on:
             Type Text    ${inputField}    ${value}
         END
     END
+    Sleep    1s
     Click    ${zed_pdp_save_button}
+    ### resave to apply changes
+    Set Browser Timeout    1s
+    TRY
+        Click    ${zed_pdp_save_button}
+    EXCEPT    
+        Log    Form is already submitted
+    END
+    Set Browser Timeout    ${browser_timeout}
+    ${is_success_message_displayed}=    Run Keyword And Ignore Error    Element Should Be Visible    ${zed_success_flash_message}    timeout=1s
+    IF    'FAIL' in ${is_success_message_displayed}    Click    ${zed_pdp_save_button}
+    Page Should Contain Element    ${zed_success_flash_message}
+
+
 
 Zed: add following alternative products to the concrete:
     [Arguments]    @{alternative_products_list}
