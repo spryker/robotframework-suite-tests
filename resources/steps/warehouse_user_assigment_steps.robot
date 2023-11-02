@@ -47,11 +47,11 @@ Remove_warehous_user_assigment:
     Execute Sql String    DELETE FROM spy_warehouse_user_assignment WHERE id_warehouse_user_assignment = ${id_warehouse_user_assigment};
     Disconnect From Database
 
-Make user not a warehouse user:
+Make user a warehouse user/ not a warehouse user:
     [Documentation]    This keyword update user with warehouse assigment in the DB table `spy_user`.
         ...    *Example:*
         ...
-        ...    ``Make user not a warehouse user:   ${user_uuid}    0``
+        ...    ``Make user a warehouse user/ not a warehouse user:   ${user_uuid}    0``
         ...
     [Arguments]    ${user_uuid}    ${isActive}
     common_api.Connect to Spryker DB
