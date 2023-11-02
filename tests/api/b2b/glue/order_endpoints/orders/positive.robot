@@ -428,8 +428,8 @@ Get_order_by_order_id_with_mode.net_&_chf_currency_&_express_shipment_method
     ...    ${shipment.shipment_method2.name}
     And Response body parameter should be:    [data][attributes][shipments][0][carrierName]    ${shipment.carrier_name}
     And Response body parameter should be:    [data][attributes][shipments][0][deliveryTime]    None
-    And Response body parameter should be greater than:    [data][attributes][shipments][0][defaultGrossPrice]    0
-    And Response body parameter should be:    [data][attributes][shipments][0][defaultNetPrice]    0
+    And Response body parameter should be:    [data][attributes][shipments][0][defaultGrossPrice]    0
+    And Response body parameter should be greater than:    [data][attributes][shipments][0][defaultNetPrice]    0
     And Response body parameter should be:    [data][attributes][shipments][0][currencyIsoCode]    ${currency.chf.code}
 
 Get_order_by_order_id_with_split_shipment
@@ -717,10 +717,10 @@ Get_order_by_order_id_with_2_product_discounts
     And Response body parameter should be:    [data][attributes][items][0][sku]    ${discount.product_1.sku}
     And Response body parameter should be in:
     ...    [data][attributes][items][0][calculatedDiscounts][0][unitAmount]
-    ...    ${discount.product_1.with_discount_20_percent_off_storage}    ${discount.product_1.with_discount_10_percent_off_minimum_order}    ${discount.product_3.with_10_percent_discount_amount}    ${discount.product_2.with_discount_20_percent_off_storage}    ${discount.product_2.with_discount_10_percent_off_minimum_order}    
+    ...    ${discount.product_1.with_discount_20_percent_off_storage}    ${discount.product_1.with_discount_10_percent_off_minimum_order}    ${discount.product_3.with_10_percent_discount_amount}    ${discount.product_2.with_discount_20_percent_off_storage}    ${discount.product_2.with_discount_10_percent_off_minimum_order}
     And Response body parameter should be in:
     ...    [data][attributes][items][0][calculatedDiscounts][0][sumAmount]
-    ...    ${discount.product_1.with_discount_20_percent_off_storage}    ${discount.product_1.with_discount_10_percent_off_minimum_order}    ${discount.product_3.with_10_percent_discount_amount}    ${discount.product_2.with_discount_20_percent_off_storage}    ${discount.product_2.with_discount_10_percent_off_minimum_order}    
+    ...    ${discount.product_1.with_discount_20_percent_off_storage}    ${discount.product_1.with_discount_10_percent_off_minimum_order}    ${discount.product_3.with_10_percent_discount_amount}    ${discount.product_2.with_discount_20_percent_off_storage}    ${discount.product_2.with_discount_10_percent_off_minimum_order}
     And Response body parameter should be in:
     ...    [data][attributes][items][0][calculatedDiscounts][0][displayName]
     ...    ${discounts.discount_1.name}    ${discounts.discount_2.name}    ${discounts.discount_3.name}
