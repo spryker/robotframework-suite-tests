@@ -4,12 +4,12 @@ on:
     workflow_dispatch:
 
 jobs:
-    docker-alpine-php-8-1-mariadb-robot-ui:
-        name: "Docker / Alpine / PHP 8.1 / MariaDB / Robot / UI"
+    docker-alpine-php-8-2-mariadb-robot-ui:
+        name: "Docker / Alpine / PHP 8.2 / MariaDB / Robot / UI"
         runs-on: ubuntu-20.04
         env:
             PROGRESS_TYPE: plain
-            SPRYKER_PLATFORM_IMAGE: spryker/php:8.1
+            SPRYKER_PLATFORM_IMAGE: spryker/php:8.2
             TRAVIS: 1
             ROBOT_TESTS_ARTIFACTS_BUCKET_REGION: eu-west-1
         steps:
@@ -59,16 +59,17 @@ jobs:
               continue-on-error: true
               run: |
                   docker/sdk cli composer dump-autoload -o -a
-                  APPLICATION_STORE=AT docker/sdk console queue:worker:start --stop-when-empty
+                  APPLICATION_STORE=DE docker/sdk testing console queue:worker:start --stop-when-empty
+                  APPLICATION_STORE=AT docker/sdk testing console queue:worker:start --stop-when-empty
             - name: Run Tests
               run: |
                   cd robotframework-tests
                   rfbrowser init
-                  robot -v env:ui_mp_b2c -v headless:true -d results --exclude skip-due-to-issueORskip-due-to-refactoring tests/ui/regression/mp_b2c.robot
+                  robot -v env:ui_mp_b2c -v headless:true -v ignore_console:false -d results --exclude skip-due-to-issueORskip-due-to-refactoring tests/ui/e2e/mp_b2c.robot
                   touch results/time.txt && echo $(date) > results/time.txt
             - name: Upload artifacts
               if: always()
               run: |
-                  AWS_DEFAULT_REGION=${{env.ROBOT_TESTS_ARTIFACTS_BUCKET_REGION}} AWS_ACCESS_KEY_ID=${{ secrets.ROBOT_TESTS_ARTIFACTS_KEY }} AWS_SECRET_ACCESS_KEY=${{ secrets.ROBOT_TESTS_ARTIFACTS_SECRET }} aws s3 cp robotframework-tests/results s3://${{vars.ROBOT_TESTS_ARTIFACTS_BUCKET}}/robot-ui-testing/b2c_mp_regression/${GITHUB_RUN_ID}/PHP8.1MariaDBRobotUi/ \
+                  AWS_DEFAULT_REGION=${{env.ROBOT_TESTS_ARTIFACTS_BUCKET_REGION}} AWS_ACCESS_KEY_ID=${{ secrets.ROBOT_TESTS_ARTIFACTS_KEY }} AWS_SECRET_ACCESS_KEY=${{ secrets.ROBOT_TESTS_ARTIFACTS_SECRET }} aws s3 cp robotframework-tests/results s3://${{vars.ROBOT_TESTS_ARTIFACTS_BUCKET}}/robot-ui-testing/b2c_mp_regression/${GITHUB_RUN_ID}/PHP8.2MariaDBRobotUi/ \
                     --recursive \
                     --expires "$(date -d '+7 days' --utc +'%Y-%m-%dT%H:%M:%SZ')"

@@ -1,181 +1,75 @@
-# *** Settings ***
-# Suite Setup       SuiteSetup
-# Test Setup        TestSetup
-# Resource    ../../../../../../resources/common/common_api.robot
-# Resource    ../../../../../../resources/steps/service_point_steps.robot
-# Default Tags    bapi
+*** Settings ***
+Suite Setup       SuiteSetup
+Test Setup        TestSetup
+Resource    ../../../../../../resources/common/common_api.robot
+Resource    ../../../../../../resources/steps/service_point_steps.robot
+Default Tags    bapi
 
-# *** Test Cases ***
-# ENABLER
-#     TestSetup
+*** Test Cases ***
+ENABLER
+    TestSetup
 
-# *** Test Cases ***
-# Create_Service_Point_With_Existing_Key
-#     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
-#     ...    AND    I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer ${token}
-#     When I send a POST request:    /service-points    {"data": {"type": "service-points","attributes": {"name": "Service Point Name1","key": "service-point${random}","isActive": "true","stores": ["DE", "AT"]}}}
-#     Then Response status code should be:    201
-#     Then Save value to a variable:    [data][attributes][key]    service_point_key
-#     When I send a POST request:    /service-points    {"data": {"type": "service-points","attributes": {"name": "Service Point Name2","key": "service-point${random}","isActive": "true","stores": ["DE", "AT"]}}}
-#     Then Response status code should be:    400
-#     And Response should return error code:    5404
-#     And Response should return error message:    A service point with the same key already exists.
-#     [Teardown]     Run Keywords    Get service point uuid by key:    ${service_point_key}
-#     ...    AND    Delete service point in DB    ${servicePointUuid}
+Create_Service_No_Auth
+    And Create service point in DB    uuid=262feb9d-33a7${random}    name=TestSP${random}    key=sp11${random}    isActive=true    storeName=DE
+    Then Create service type in DB    uuid=33a7-5c55-9b04${random}    name=TestType${random}    key=sp11${random}
+    When I send a POST request:    /services    {"data": {"type": "services", "attributes": {"serviceTypeUuid": "33a7-5c55-9b04${random} ", "servicePointUuid": "262feb9d-33a7${random}", "isActive": "true", "key": "service-point-1-collect"}}}
+    Then Response status code should be:    404
+    [Teardown]     Run Keywords    Delete service point in DB    262feb9d-33a7${random}
+    ...    AND    Delete service type in DB    33a7-5c55-9b04${random}
 
-# Create_Service_Point_With_Invalid_Key_Length
-#     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
-#     ...    AND    I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer ${token}
-#     When I send a POST request:    /service-points    {"data": {"type": "service-points","attributes": {"name": "Incorrect key lenghth","key": "fihslafnkjskdjfnskadfkafkjsadfkjsdjnnkfjsdkfjdskdjfhnjdksbfjhdsbfjkdsfbjsdfjksdfjksdfhdjksfhkdsf jkdsfhjdhsfjhdsjfhdsfjhsjkfhkshkjdsahf78348937489137489yewhkjdsfildksh9832urqewdiosjakrj3982diasjif8d3j89siojfdisakjfdiksdjfkasdjfhkjdashfjkldsahfldchgjhjjghjg2","isActive": "true","stores": ["DE", "AT"]}}}
-#     Then Response status code should be:    400
-#     And Response should return error code:    5405
-#     And Response should return error message:    A service point key must have length from 1 to 255 characters.
+Create_Service_Invalid_Auth
+    Create service point in DB    uuid=262feb9d-33a7${random}    name=TestSP1${random}    key=sp11${random}    isActive=true    storeName=DE
+    Create service type in DB    uuid=33a7-5c55-9b04${random}    name=TestType1${random}    key=sp11${random}
+    When I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer invalid
+    When I send a POST request:    /services    {"data": {"type": "services", "attributes": {"serviceTypeUuid": "33a7-5c55-9b04${random}", "servicePointUuid": "262feb9d-33a7${random}", "isActive": "true", "key": "service-point-1-collect"}}}
+    Then Response status code should be:    400
+    [Teardown]     Run Keywords    Delete service point in DB    262feb9d-33a7${random}
+     ...    AND    Delete service type in DB    33a7-5c55-9b04${random}
 
-# Create_Service_Point_With_Empty_Key
-#     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
-#     ...    AND    I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer ${token}
-#     When I send a POST request:    /service-points    {"data": {"type": "service-points","attributes": {"name": "New Service Point", "key": "", "isActive": "true", "stores": ["DE", "AT"]}}}
-#     Then Response status code should be:    400
-#     And Response should return error code:    5405
-#     And Response should return error message:    A service point key must have length from 1 to 255 characters.
+Get_Service_By_ID__No_Auth
+    When Create service point in DB    uuid=262feb9d-33a7${random}    name=TestSP2${random}    key=sp11${random}    isActive=true    storeName=DE
+    And Create service type in DB    uuid=33a7-5c55-9b04${random}    name=TestType2${random}     key=sp11${random}
+    Then Create service in DB    servicePointUuid=262feb9d-33a7${random}    serviceTypeUuid=33a7-5c55-9b04${random}    uuid=262feb1fd22067e${random}    key=s1f${random}    isActive=true
+    And I send a GET request:    /services/262feb1fd22067e${random}
+    Then Response status code should be:    404
+    [Teardown]     Run Keywords    Delete service point in DB    262feb9d-33a7${random}
+    ...    AND    Delete service type in DB    33a7-5c55-9b04${random}
 
-# Create_Service_Point_Without_Authorization
-#     [Documentation]    https://spryker.atlassian.net/browse/FRW-5850
-#     [Tags]    skip-due-to-issue
-#     [Setup]    I set Headers:    Authorization=
-#     When I send a POST request:    /service-points   {"name": "New Service Point", "key": "new_service_point", "isActive": "true", "stores": ["DE", "AT"]}
-#     Then Response status code should be:    403
-#     And Response should return error message:    Invalid access token
+Get_Nonexistent_Service
+    When I get access token by user credentials:   ${zed_admin.email}
+    And I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer ${token}
+    When I send a GET request:    /services/nonexistent_id
+    Then Response status code should be:    400
+    And Response should return error code:    5400
+    And Response should return error message:    The service entity was not found.
 
-# Create_Service_Point_With_Empty_Name
-#     [Documentation]    https://spryker.atlassian.net/browse/FRW-1597
-#     [Tags]    skip-due-to-issue
-#     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
-#     ...    AND    I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer ${token}
-#     When I send a POST request:    /service-points   {"name": "", "key": "invalid_name_length", "isActive": "true", "stores": ["DE", "AT"]}
-#     Then Response status code should be:    400
-#     And Response should return error code:    5407
-#     And Response should return error message:    A service point name must have length from 0 to 255 characters.
+Get_Services_No_Auth
+    When Create service point in DB    uuid=262feb9d-33a7${random}    name=TestSP2a${random}    key=sp11a${random}    isActive=true    storeName=DE
+    And Create service type in DB    uuid=33a7-5c55-9b04${random}    name=TestType2a${random}     key=sp11a${random}
+    Then Create service in DB    servicePointUuid=262feb9d-33a7${random}    serviceTypeUuid=33a7-5c55-9b04${random}    uuid=262feb1fd22067e${random}    key=s1f${random}    isActive=true
+    When I send a GET request:    /services
+    Then Response status code should be:    404
+    [Teardown]     Run Keywords    Delete service point in DB    262feb9d-33a7${random}
+    ...    AND    Delete service type in DB    33a7-5c55-9b04${random}
 
-# Create_Service_Point_With_Invalid_Store
-#     [Documentation]     https://spryker.atlassian.net/browse/FRW-1597
-#     [Tags]    skip-due-to-issue
-#     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
-#     ...    AND    I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer ${token}
-#     When I send a POST request:    /service-points   {"name": "Invalid Store Service Point", "key": "invalid_store", "isActive": "true", "stores": ["Invalid_Store"]}
-#     Then Response status code should be:    400
-#     And Response should return error code:    5401
-#     And Response should return error message:    Wrong request body.
-
-# Create_Service_Point_With_Empty_Body
-#     [Documentation]    https://spryker.atlassian.net/browse/FRW-1597
-#     [Tags]    skip-due-to-issue
-#     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
-#     ...    AND    I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer ${token}
-#     When I send a POST request:    /service-points   {}
-#     Then Response status code should be:    400
-#     And Response should return error code:    5401
-#     And Response should return error message:    Wrong request body.
-
-# Create_Service_Point_With_Invalid_Content_Type
-#     [Documentation]    https://spryker.atlassian.net/browse/FRW-6312
-#     [Tags]    skip-due-to-issue
-#     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
-#     ...    AND    I set Headers:    Content-Type=text/plain   Authorization=Bearer ${token}
-#     When I send a POST request:    /service-points   {"name": "Invalid Content Type", "key": "invalid_content_type", "isActive": "true", "stores": ["DE", "AT"]}
-#     Then Response status code should be:    400
-#     And Response should return error code:    5401
-#     And Response should return error message:    Wrong request body.
-
-# Create_Service_Point_With_Invalid_Token
-#     [Setup]    I set Headers:    Authorization=Bearer InvalidToken
-#     When I send a POST request:    /service-points   {"name": "Invalid Token", "key": "invalid_token", "isActive": "true", "stores": ["DE", "AT"]}
-#     Then Response status code should be:    400
-
-# Create_Service_Point_With_Missing_Required_Fields
-#     [Documentation]    https://spryker.atlassian.net/browse/FRW-1597
-#     [Tags]    skip-due-to-issue
-#     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
-#     ...    AND    I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer ${token}
-#     When I send a POST request:    /service-points   {"isActive": "true", "stores": ["DE", "AT"]}
-#     Then Response status code should be:    400
-#     And Response should return error code:    5401
-#     And Response should return error message:    Wrong request body.
-
-# Update_Service_Point_With_Wrong_type
-#     [Documentation]    https://spryker.atlassian.net/browse/FRW-6312
-#     [Tags]    skip-due-to-issue
-#     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
-#     ...    AND    I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer ${token}
-#     ...    AND    I send a POST request:    /service-points    {"data": {"type": "service-points","attributes": {"name": "Initial Service Point ${random}","key": "initial-service-point-${random}","isActive": "true","stores": ["DE", "AT"]}}}
-#     ...    AND    Save value to a variable:    [data][attributes][key]    service_point_key
-#     ...    AND    Save value to a variable:    [data][id]    service_point_id
-#     When I send a PATCH request:    /service-points/${service_point_id}    {"data": {"type": "invalid-type","attributes": {"key": "initial-service-point-${random}","stores": ["DE"],"isActive": "false","name": "Updated Service Point"}}}
-#     Then Response status code should be:    400
-#     And Response should return error code:    5401
-#     And Response should return error message:    Wrong request body
-#     [Teardown]     Run Keywords    Get service point uuid by key:    ${service_point_key}
-#     ...    AND    Delete service point in DB    ${service_point_id}
-
-# Update_Service_Point_Without_Authorization
-#     [Setup]    I set Headers:    Authorization=
-#     When I send a PATCH request:    /service-points/random-id    {"data": {"type": "service-points","attributes": {"name": "Unauthorized Update","key": "unauthorized-update-${random}","isActive": "true","stores": ["DE", "AT"]}}}
-#     Then Response status code should be:    400
-
-# Update_Service_Point_With_Nonexistent_ID
-#     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
-#     ...    AND    I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer ${token}
-#     When I send a PATCH request:    /service-points/nonexistent-id    {"data": {"type": "service-points","attributes": {"name": "Nonexistent ID","key": "nonexistent-id-${random}","isActive": "true","stores": ["DE", "AT"]}}}
-#     Then Response status code should be:    404
-#     And Response should return error code:    5403
-#     And Response should return error message:    Service point entity was not found.
-
-# Update_Service_Point_With_incorrect_token
-#     [Setup]    I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer incorrect
-#     When I send a PATCH request:    /service-points/random-id    {"data": {"type": "service-points","attributes": {"name": "Unauthorized Update","key": "unauthorized-update-${random}","isActive": "true","stores": ["DE", "AT"]}}}
-#     Then Response status code should be:    400
-
-# Update_Service_Point_With_Empty_Name
-#     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
-#     ...    AND    I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer ${token}
-#     ...    AND    I send a POST request:    /service-points    {"data": {"type": "service-points","attributes": {"name": "Initial Service Point ${random}","key": "initial-service-point-${random}","isActive": "true","stores": ["DE", "AT"]}}}
-#     ...    AND    Save value to a variable:    [data][attributes][key]    service_point_key
-#     ...    AND    Save value to a variable:    [data][id]    service_point_id
-#     When I send a PATCH request:    /service-points/${service_point_id}    {"data": {"type": "service-points","attributes": {"key": "Initial Service Point ${random}","stores": ["DE"],"isActive": "true","name": ""}}}
-#     Then Response status code should be:    400
-#     And Response should return error code:    5407
-#     And Response should return error message:    A service point name must have length from 1 to 255 characters.
-#     [Teardown]     Run Keywords    Get service point uuid by key:    ${service_point_key}
-#     ...    AND    Delete service point in DB    ${service_point_id}
-
-# Update_Service_Point_With_not_existing_key
-#     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
-#     ...    AND    I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer ${token}
-#     ...    AND    I send a POST request:    /service-points    {"data": {"type": "service-points","attributes": {"name": "Initial Service Point ${random}","key": "initial-service-point-${random}","isActive": "true","stores": ["DE", "AT"]}}}
-#     ...    AND    Save value to a variable:    [data][id]    service_point_id
-#     When I send a PATCH request:    /service-points/${service_point_id}    {"data": {"type": "service-points","attributes": {"key": "not-existing-key${random}","stores": ["DE"],"isActive": "true","name": "test"}}}
-#     Then Response status code should be:    200
-#     Save value to a variable:    [data][attributes][key]    service_point_key
-#     # duplicate key is not possible
-#     Then I send a POST request:    /service-points    {"data": {"type": "service-points","attributes": {"name": "Initial Service Point ${random}","key": "not-existing-key${random}","isActive": "true","stores": ["DE", "AT"]}}}
-#     Then Response status code should be:    400
-#     [Teardown]     Run Keywords    Get service point uuid by key:    ${service_point_key}
-#     ...    AND    Delete service point in DB    ${service_point_id}
-
-# Get_Service_Points_Without_Authentication
-#     [Setup]    I set Headers:    Authorization=
-#     When I send a GET request:    /service-points
-#     Then Response status code should be:    400
-
-# Get_Service_Points_With_Incorrect_Token
-#     [Setup]    I set Headers:    Authorization=Bearer IncorrectToken
-#     When I send a GET request:    /service-points
-#     Then Response status code should be:    400
-
-# Get_Service_Point_By_Nonexistent_ID
-#     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
-#     ...    AND    I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer ${token}
-#     When I send a GET request:    /service-points/NonexistentID
-#     Then Response status code should be:    404
-#     And Response should return error code:    5403
-#     And Response should return error message:    Service point entity was not found.
+Create_Duplicate_Service_Point_Service_Relation
+    [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
+    ...    AND    I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer ${token}
+    # #create a service point
+    When I send a POST request:    /service-points    {"data": {"type": "service-points","attributes": {"name": "Some Service Points ${random}","key": "some-service-point-news-${random}","isActive":"true","stores": ["DE", "AT"]}}}
+    Then Response status code should be:    201
+    Then Save value to a variable:    [data][attributes][key]    service_point_key
+    And Save value to a variable:    [data][id]    service_point_id
+    # #create a service type
+    Create service type in DB    uuid=36796774${random}    name=TestTypeNewQ${random}     key=test-key-goes-here${random}
+    #  #create a service
+    When I send a POST request:    /services    {"data": {"type": "services", "attributes": {"serviceTypeUuid": "${36796774${random}}", "servicePointUuid": "${service_point_id}", "isActive":"true", "key": "service2-point-1-collects${random}"}}}
+    Then Response status code should be:    201
+    And Response reason should be:    Created
+    Then Save value to a variable:    [data][id]    service_id
+    When I send a POST request:    /services    {"data": {"type": "services", "attributes": {"serviceTypeUuid": "${36796774${random}}", "servicePointUuid": "${service_point_id}", "isActive":"true", "key": "new-key2${random}"}}}
+    When Response status code should be:    400
+    And Response should return error code:    5429
+    And Response should return error message:    A service with defined relation of service point and service type already exists.
+    [Teardown]     Run Keywords    Delete service point in DB    ${service_point_id}
+    ...    AND    Delete service type in DB    ${36796774${random}}

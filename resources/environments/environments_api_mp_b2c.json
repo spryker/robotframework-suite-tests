@@ -537,7 +537,7 @@
              "contact_person_phone":"030/123456789",
              "public_email":"support@sony-experts.com",
              "public_phone":"+49 30 234567691",
-             "description":"Capture your moment with the best cameras from Sony. From pocket-size to professional-style, they all pack features to deliver the best quality pictures.Discover the range of Sony cameras, lenses and accessories, and capture your favorite moments with precision and style with the best cameras can offer.",
+             "description":"Capture your moment with the best cameras from Sony. From pocket-size to professional-style, they all pack features to deliver the best quality pictures. Discover the range of Sony cameras, lenses and accessories, and capture your favorite moments with precision and style with the best cameras can offer.",
              "addresses":{
                 "city_munchen":"München",
                 "address1":"Matthias-Pschorr-Straße"
@@ -684,12 +684,15 @@
             },
    "service_point_address":
             {
-                  "uuid":"74768ee9-e7dd-5e3c-bafd-b654e7946c54",
-                  "uuid2":"7a711afc-02ce-5f54-a08c-fadfaf5713c6",
-                  "address1":"Julie-Wolfthorn-Straße",
-                  "address2":"1",
-                  "address3":"None",
-                  "city":"Berlin",
-                  "zip":"10115"
-            }    
- }
+                  "service_point_address_uuid":"74768ee9-e7dd-5e3c-bafd-b654e7946c54",
+                  "service_point_address_uuid2":"7a711afc-02ce-5f54-a08c-fadfaf5713c6",
+                  "service_point_address_address1":"Julie-Wolfthorn-Straße",
+                  "service_point_address_address2":"1",
+                  "service_point_address_address3":"None",
+                  "service_point_address_city":"Berlin",
+                  "service_point_address_zip":"10115"
+            }
+            
+         
+}
+
