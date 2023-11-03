@@ -2419,7 +2419,7 @@ Configurable_Product_OMS
     ...    || 12.12.2030 | Evening   ||
     [Teardown]    Yves: check if cart is not empty and clear it
     
-ata_exchange_API_download_specification
+Data_exchange_API_download_specification
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: download data exchange api specification should be active:    true
     Zed: download data exchange api specification
