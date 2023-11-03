@@ -77,34 +77,41 @@ Yves: change variant of the product on PDP on:
     TRY    
         ${timeout}=    Set Variable    3s
         Set Browser Timeout    ${timeout}
-        Click With Options    ${pdp_variant_custom_selector}    force=True
+        Click    ${pdp_variant_custom_selector}
+        Wait Until Network Is Idle
         Wait Until Element Is Visible    ${pdp_variant_custom_selector_results}    timeout=${timeout}
         TRY
             Click    xpath=//ul[contains(@id,'select2-attribute')][contains(@id,'results')]/li[contains(@id,'select2-attribute')][contains(.,'${variantToChoose}')]
+            Repeat Keyword    3    Wait Until Network Is Idle
         EXCEPT    
             Reload
             Sleep    ${timeout}
             Click    xpath=//ul[contains(@id,'select2-attribute')][contains(@id,'results')]/li[contains(@id,'select2-attribute')][contains(.,'${variantToChoose}')]
+            Repeat Keyword    3    Wait Until Network Is Idle
         END
     EXCEPT
         Run Keyword And Ignore Error    Select From List By Value    ${pdp_variant_selector}    ${variantToChoose}
+        Repeat Keyword    3    Wait Until Network Is Idle
     END
     Set Browser Timeout    ${browser_timeout}
     ${variant_selected}=    Run Keyword And Return Status    Wait For Elements State    ${pdp_reset_selected_variant_locator}    attached    timeout=3s
     IF    '${variant_selected}'=='False'
         TRY    
             Set Browser Timeout    3s
-            Click With Options    ${pdp_variant_custom_selector}    force=True
+            Click    ${pdp_variant_custom_selector}
             Wait Until Element Is Visible    ${pdp_variant_custom_selector_results}
             TRY
                 Click    xpath=//ul[contains(@id,'select2-attribute')][contains(@id,'results')]/li[contains(@id,'select2-attribute')][contains(.,'${variantToChoose}')]
+                Repeat Keyword    3    Wait Until Network Is Idle
             EXCEPT    
-                Sleep    3s
                 Reload
+                Repeat Keyword    3    Wait Until Network Is Idle
                 Click    xpath=//ul[contains(@id,'select2-attribute')][contains(@id,'results')]/li[contains(@id,'select2-attribute')][contains(.,'${variantToChoose}')]
+                Repeat Keyword    3    Wait Until Network Is Idle
             END
         EXCEPT
             Run Keyword And Ignore Error    Select From List By Value    ${pdp_variant_selector}    ${variantToChoose}
+            Repeat Keyword    3    Wait Until Network Is Idle
         END
     END
     Set Browser Timeout    ${browser_timeout}  
@@ -118,20 +125,46 @@ Yves: change amount on PDP:
     Type Text    ${pdp_amount_input_filed}    ${amountToSet}
 
 Yves: product price on the PDP should be:
-    [Arguments]    ${expectedProductPrice}
-    Set Browser Timeout    3s
-    TRY
-        ${actualProductPrice}=    Get Text    ${pdp_price_element_locator}
-        Should Be Equal    ${expectedProductPrice}    ${actualProductPrice}
-    EXCEPT    
-        Sleep    ${browser_timeout}
-        Reload
-        Take Screenshot    EMBED    fullPage=True
-        ${actualProductPrice}=    Get Text    ${pdp_price_element_locator}
-        Should Be Equal    ${expectedProductPrice}    ${actualProductPrice}    
+    [Arguments]    ${expectedProductPrice}    ${wait_for_p&s}=${False}    ${iterations}=21    ${delay}=5s
+    ${wait_for_p&s}=    Convert To String    ${wait_for_p&s}
+    ${wait_for_p&s}=    Convert To Lower Case    ${wait_for_p&s}
+    IF    '${wait_for_p&s}' == 'true'
+        ${wait_for_p&s}=    Set Variable    ${True}
     END
-    Set Browser Timeout    ${browser_timeout}
-
+    IF    '${wait_for_p&s}' == 'false'
+        ${wait_for_p&s}=    Set Variable    ${False}
+    END
+    Set Browser Timeout    3s
+    IF    ${wait_for_p&s}
+        FOR    ${index}    IN RANGE    0    ${iterations}
+            ${actualProductPrice}=    Get Text    ${pdp_price_element_locator}
+            ${result}=    Run Keyword And Ignore Error    Should Be Equal    ${expectedProductPrice}    ${actualProductPrice}
+            IF    'FAIL' in ${result}   
+                Sleep    ${delay}
+                Reload
+                Continue For Loop
+            ELSE
+                Exit For Loop
+                Set Browser Timeout    ${browser_timeout}
+            END
+            IF    ${index} == ${iterations}-1
+                Take Screenshot    EMBED    fullPage=True
+                Fail    Actual product price is ${actualProductPrice}, expected ${expectedProductPrice}
+            END
+        END
+    ELSE
+        TRY
+            ${actualProductPrice}=    Get Text    ${pdp_price_element_locator}
+            Should Be Equal    ${expectedProductPrice}    ${actualProductPrice}    message=Actual product price is ${actualProductPrice}, expected ${expectedProductPrice}
+        EXCEPT    
+            Sleep    ${browser_timeout}
+            Reload
+            Take Screenshot    EMBED    fullPage=True
+            ${actualProductPrice}=    Get Text    ${pdp_price_element_locator}
+            Should Be Equal    ${expectedProductPrice}    ${actualProductPrice}    message= Actual product price is ${actualProductPrice}, expected ${expectedProductPrice}
+        END
+        Set Browser Timeout    ${browser_timeout}
+    END
 
 Yves: product original price on the PDP should be:
     [Arguments]    ${expectedProductPrice}

@@ -97,6 +97,7 @@ Zed: create new product set:
     END
     Zed: submit the form
     Wait Until Element Is Not Visible    ${zed_save_button}
+    common.Trigger multistore p&s
 
 Zed: switch to tab in product set:
     [Arguments]    ${tab_name}

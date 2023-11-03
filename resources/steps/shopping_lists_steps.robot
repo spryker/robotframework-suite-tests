@@ -18,6 +18,7 @@ Yves: go To 'Shopping Lists' Page
     ${button_exists}=    Run Keyword And Return Status    Element Should Be Visible    ${shopping_list_sub_navigation_all_lists_button}
     IF    ${button_exists}=='PASS'
         Click Element by xpath with JavaScript    ${shopping_list_sub_navigation_all_lists_button}
+        Repeat Keyword    3    Wait Until Network Is Idle
     ELSE
         Click    ${shopping_list_icon_header_menu_item}
     END

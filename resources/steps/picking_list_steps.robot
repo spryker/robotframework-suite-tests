@@ -2,9 +2,7 @@
 Library    DatabaseLibrary
 Library    BuiltIn
 Library    ../../resources/libraries/common.py
-
-Resource    ../common/common_api.robot
-
+Resource   ../common/common_api.robot
 
 *** Keywords ***
 Remove picking list by uuid in DB:
