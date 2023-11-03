@@ -56,7 +56,7 @@ Update_Service
     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer ${token}
     #create a service point
-    When I send a POST request:    /service-points    {"data": {"type": "service-points","attributes": {"name": "Some Service Point ${random}","key": "some-service-point-new-${random}","isActive":"true","stores": ["DE", "AT"]}}}
+    When I send a POST request:    /service-points    {"data": {"type": "service-points","attributes": {"name": "Some Service Point new ${random}","key": "some-service-point-new-key-${random}","isActive":"true","stores": ["DE", "AT"]}}}
     Then Response status code should be:    201
     Then Save value to a variable:    [data][attributes][key]    service_point_key
     And Save value to a variable:    [data][id]    service_point_id

@@ -55,7 +55,7 @@ Get_Services_No_Auth
 Create_Duplicate_Service_Point_Service_Relation
     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer ${token}
-    #create a service point
+    # #create a service point
     When I send a POST request:    /service-points    {"data": {"type": "service-points","attributes": {"name": "Some Service Points ${random}","key": "some-service-point-news-${random}","isActive":"true","stores": ["DE", "AT"]}}}
     Then Response status code should be:    201
     Then Save value to a variable:    [data][attributes][key]    service_point_key
