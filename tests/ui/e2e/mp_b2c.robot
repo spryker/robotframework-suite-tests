@@ -42,6 +42,12 @@ Resource    ../../../resources/steps/availability_steps.robot
 Resource    ../../../resources/steps/glossary_steps.robot
 Resource    ../../../resources/steps/configurable_product_steps.robot
 Resource    ../../../resources/steps/dynamic_entity_steps.robot
+Resource    ../../../resources/common/common_api.robot
+Resource    ../../../resources/steps/service_point_steps.robot
+Resource    ../../../resources/steps/service_point_steps.robot
+Resource    ../../../resources/steps/warehouse_user_assigment_steps.robot
+Resource    ../../../resources/steps/picking_list_steps.robot
+Default Tags    bapi
 
 *** Test Cases ***
 New_Customer_Registration
@@ -2513,3 +2519,96 @@ Data_exchange_API_Configuration_in_Zed
     [Teardown]    Run Keywords    Delete dynamic entity configuration in Database:    mime-types
     ...    AND    Delete mime_type by id_mime_type in Database:    ${id_mime_type}
     ...    AND    common.Trigger API specification update
+
+
+Fulfilment_app_e2e
+    # #LOGGED IN TO BO and SET CHECKBOX is a warehouse user = true FOR admin_de USER. UI TEST
+    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: update Zed user:
+    ...    || oldEmail                       | password      | user_is_warehouse_user ||
+    ...    || admin_de@spryker.com           | Change123!321 | true                   ||
+    common_api.TestSetup
+    Remove Tags    *
+    Set Tags   bapi
+    # #ASSIGN admin_de user TO WAREHOUSE [Spryker Mer 000001 Warehouse 1] MAKE WAREHOUSE ACTIVE BY BAPI
+    And I get access token by user credentials:   ${zed_admin_email}
+    common_api.I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer ${token}
+    common_api.I send a POST request:    /warehouse-user-assignments    {"data": {"type": "warehouse-user-assignments", "attributes":{"userUuid": "${warehous_user[0].de_admin_user_uuid}","warehouse" :{"uuid": "${warehouse[0].warehouse_uuid}"},"isActive":"true"}}}
+    Then Response status code should be:    201
+    Then Save value to a variable:    [data][id]   warehouse_assigment_id  
+    # #CREATE AN ORDER BY GLUE
+    common_api.I set Headers:    Content-Type=${default_header_content_type}
+    Remove Tags    *
+    Set Tags    glue
+    common_api.TestSetup
+    When I get access token for the customer:    ${yves_user_email}    
+    Then common_api.I set Headers:    Authorization=${token}
+    When Find or create customer cart
+    Then Cleanup all items in the cart:    ${cart_id}
+    common_api.I send a POST request:    /carts/${cart_id}/items?include=items    {"data": {"type": "items","attributes": {"sku": "091_25873091","quantity": 1}}}
+    common_api.I send a POST request:    /carts/${cart_id}/items?include=items    {"data": {"type": "items","attributes": {"sku": "093_24495843","quantity": 1}}}
+    common_api.I send a POST request:    /checkout-data    {"data": {"type": "checkout-data","attributes": {"customer": {"email": "${yves_user_email}","salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}"},"idCart": "${cart_id}","billingAddress": {"salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}","address1": "${default.address1}","address2": "${default.address2}","address3": "${default.address3}","zipCode": "${default.zipCode}","city": "${default.city}","iso2Code": "${default.iso2Code}","company": "${default.company}","phone": "${default.phone}","isDefaultBilling": True,"isDefaultShipping": True},"shippingAddress": {"salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}","address1": "${default.address1}","address2": "${default.address2}","address3": "${default.address3}","zipCode": "${default.zipCode}","city": "${default.city}","iso2Code": "${default.iso2Code}","company": "${default.company}","phone": "${default.phone}","isDefaultBilling": True,"isDefaultShipping": True},"payments": [{"paymentProviderName": "${payment_provider_name_1}","paymentMethodName": "${payment_method_name_1}"}],"shipment": {"idShipmentMethod": 1},"items": ["091_25873091","093_24495843"]}}}
+    Then Response status code should be:    200
+    common_api.I send a POST request:    /checkout?include=orders    {"data": {"type": "checkout","attributes": {"customer": {"email": "${yves_user_email}","salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}"},"idCart": "${cart_id}","billingAddress": {"salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}","address1": "${default.address1}","address2": "${default.address2}","address3": "${default.address3}","zipCode": "${default.zipCode}","city": "${default.city}","iso2Code": "${default.iso2Code}","company": "${default.company}","phone": "${default.phone}","isDefaultBilling": False,"isDefaultShipping": False},"shippingAddress": {"salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}","address1": "${default.address1}","address2": "${default.address2}","address3": "${default.address3}","zipCode": "${default.zipCode}","city": "${default.city}","iso2Code": "${default.iso2Code}","company": "${default.company}","phone": "${default.phone}","isDefaultBilling": False,"isDefaultShipping": False},"payments": [{"paymentProviderName": "${payment_provider_name_1}","paymentMethodName": "${payment_method_name_1}"}],"shipment": {"idShipmentMethod": 1},"items": ["091_25873091","093_24495843"]}}}
+    Then Response status code should be:    201
+    And Save value to a variable:    [included][0][attributes][items][0][uuid]    uuid
+    And Save value to a variable:    [included][0][attributes][items][1][uuid]    uuid1
+    #MOVE ORDER ITEMS INTO WAITING STATE
+    And Update order status in Database:    waiting    ${uuid} 
+    And Update order status in Database:    waiting    ${uuid1}     
+    # #MOVE ORDER ITEMS TO PROPER STATE USING BO, PICKING LIST GENERATED AUTOMATICALLY. UI TEST
+    common.TestSetup
+    Yves: login on Yves with provided credentials:    ${yves_user_email}
+    Yves: get the last placed order ID by current customer
+    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: go to order page:    ${lastPlacedOrder}
+    Zed: trigger all matching states inside this order:    picking list generation schedule
+    Zed: trigger all matching states inside this order:    prepare for picking
+    common.Trigger oms
+    # #ORDER READY FOR PICKING
+    Zed: wait for order item to be in state:    091_25873091    ready for picking
+    Zed: wait for order item to be in state:    093_24495843    ready for picking
+    # #START PICKING PROCESS AND PICKING ITEMS BY BAPI
+    Remove Tags    glue
+    Set Tags   bapi
+    common_api.TestSetup
+    common_api.I set Headers:    Content-Type=${default_header_content_type}
+    Then I get access token by user credentials:   ${zed_admin_email_de}    Change123!321
+    common_api.I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer ${token}
+    common_api.I send a GET request:    /picking-lists/?include=picking-list-items,concrete-products,sales-shipments,sales-orders,warehouses
+    Then Response status code should be:    200
+    Then Save value to a variable:    [data][0][id]    picklist_id
+    And Response body parameter should be:    [data][0][type]    picking-lists
+    Then Save value to a variable:    [data][0][relationships][picking-list-items][data][0][id]    item_id_1
+    Then Save value to a variable:    [data][0][relationships][picking-list-items][data][1][id]    item_id_2
+    And Response body parameter should be:    [data][0][attributes][status]    ready-for-picking
+    And Response body parameter should be in:    [included][0][type]    concrete-products    sales-orders    sales-shipments    picking-list-items    warehouses
+    And Response body parameter should be in:    [included][1][type]    concrete-products    sales-orders    sales-shipments    picking-list-items    warehouses
+    And Response body parameter should be in:    [included][2][type]    concrete-products    sales-orders    sales-shipments    picking-list-items    warehouses
+    And Response body parameter should be in:    [included][3][type]    concrete-products    sales-orders    sales-shipments    picking-list-items    warehouses
+    And Response body parameter should be in:    [included][4][type]    concrete-products    sales-orders    sales-shipments    picking-list-items    warehouses
+    And Response body parameter should be in:    [included][5][type]    concrete-products    sales-orders    sales-shipments    picking-list-items    warehouses
+    And Response body parameter should be in:    [included][6][type]    concrete-products    sales-orders    sales-shipments    picking-list-items    warehouses
+    And Each array in response should contain property with NOT EMPTY value:    [included]    id
+    # #START PICKING
+    common_api.I send a POST request:   /picking-lists/${picklist_id}/start-picking    {"data": [{"type": "picking-lists","attributes": {"action": "startPicking"}}]}
+    Then Response status code should be:    201
+    And Response body parameter should be:    [data][attributes][status]    picking-started
+    And Response body parameter should be:    [data][type]    picking-lists
+    And Response body parameter should not be EMPTY:    [data][id]
+    # #PICKING ONE ITEM, ANOTHER ITEM STILL NOT PICKED
+    Then I send a PATCH request:    /picking-lists/${picklist_id}/picking-list-items    {"data":[{"id":"${item_id_1}","type":"picking-list-items","attributes":{"numberOfPicked":1,"numberOfNotPicked":0}},{"id":"${item_id_2}","type":"picking-list-items","attributes":{"numberOfPicked":0,"numberOfNotPicked":0}}]}
+    Then Response status code should be:    200
+    And Response body parameter should be:    [data][0][attributes][status]    picking-started
+    And Response body parameter should be in:    [data][0][relationships][picking-list-items][data][0][id]    ${item_id_1}    ${item_id_2}
+    And Response body parameter should be in:    [data][0][relationships][picking-list-items][data][1][id]    ${item_id_1}    ${item_id_2}
+    # #PICKING SECOND ITEM, PICKING FINISHED
+    Then I send a PATCH request:    /picking-lists/${picklist_id}/picking-list-items    {"data":[{"id":"${item_id_1}","type":"picking-list-items","attributes":{"numberOfPicked":1,"numberOfNotPicked":0}},{"id":"${item_id_2}","type":"picking-list-items","attributes":{"numberOfPicked":0,"numberOfNotPicked":1}}]}
+    Then Response status code should be:    200
+    And Response body parameter should be:    [data][0][attributes][status]    picking-finished
+    #CLEAN SYSTEM, REMOVE CREATED RELATIONS IN DB
+    [Teardown]     Run Keywords    Remove picking list item by uuid in DB:    ${item_id_1}
+    ...  AND    Remove picking list item by uuid in DB:    ${item_id_2} 
+    ...  AND    Remove picking list by uuid in DB:    ${picklist_id}
+    ...  AND    Make user a warehouse user/ not a warehouse user:   ${warehous_user[0].de_admin_user_uuid}    0
+    ...  AND    I send a DELETE request:    /warehouse-user-assignments/${warehouse_assigment_id}       

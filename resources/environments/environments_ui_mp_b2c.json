@@ -20,6 +20,7 @@
     "users":{
        "yves_user_email":"george.freeman@spryker.com",
        "yves_user_first_name":"George",
+       "yves_user_salutation":"Mr",
        "yves_user_last_name":"Freeman",
        "yves_user_password":"change123",
        "yves_user_reference":"DE--5",
@@ -30,6 +31,7 @@
        "yves_second_user_password":"change123",
        "zed_admin_email":"admin@spryker.com",
        "zed_admin_password":"change123",
+       "zed_admin_email_de":"admin_de@spryker.com",
        "zed_main_merchant_email":"richard@spryker.com",
        "merchant_budget_cameras_email":"jason.weidmann@budgetcamerasonline.com",
        "merchant_budget_cameras_reference":"MER000005",
@@ -101,5 +103,104 @@
          "password":"password",
          "refresh_token":"refresh_token"
       }
-   }
+   },
+    "address":{
+       "street_name":"st",
+       "city":"Berlin",
+       "country":"Germany",
+       "additional_address":"additional street",
+       "company":"spryker"
+    },
+   "address_api":{
+      "default":{
+         "address1":"Third, 33, 11",
+         "address2":"33-B",
+         "address3":"third. address. line",
+         "zipCode":"12312",
+         "city":"Berlin",
+         "country":"Germany",
+         "iso2Code":"DE",
+         "company":"Spryker",
+         "phone":"22111-3-4-5",
+         "shipping_status":"False",
+         "billing_status":"False"
+      },
+      "changed":{
+         "address1":"New Street 123",
+         "address2":"75d",
+         "address3":"third. address. line - changed",
+         "phone":"555-555-55"
+      }
+   },
+   "shop":{
+      "currency":{
+         "eur":{
+            "name":"Euro",
+            "code":"EUR",
+            "symbol":"€"
+         },
+         "chf":{
+            "name":"Swiss Franc",
+            "code":"CHF",
+            "symbol":"CHF"
+         },
+         "dollar":{
+            "name":"US Dollar",
+            "code":"USD",
+            "symbol":"$"
+         }
+      },
+      "locale":{
+         "DE":{
+            "name":"de_DE",
+            "code":"de"
+         },
+         "EN":{
+            "name":"en_US",
+            "code":"en"
+         }
+      },
+      "mode":{
+         "gross":"GROSS_MODE",
+         "net":"NET_MODE"
+      },
+      "store":{
+         "us":"US",
+         "de":"DE"
+      }
+   },
+    "guest_user":{
+       "salutation":"Mr.",
+       "guest_user_first_name":"Guest",
+       "guest_user_last_name":"martin"
+    },
+   "other":{
+      "order_state":"New",
+      "default_header_content_type":"application/vnd.api+json",
+      "urlencoded_header_content_type":"application/x-www-form-urlencoded"
+      },
+   "payment":{
+      "payment_provider_name":"dummyMarketplacePayment",
+      "payment_method_name":"Invoice",
+      "payment_selection_name":"dummyMarketplacePaymentInvoice",
+      "payment_provider_name_1":"DummyPayment",
+      "payment_method_name_1":"Credit Card"
+   },
+   "warehouse_user_assigment":{
+      "warehous_user":[
+        { 
+            "admin_user_uuid":"c0e244d4-03e8-556f-aa8d-174be9d236e5",
+            "de_admin_user_uuid":"92cd431f-96e3-5259-91cb-ab9f6d14829f"
+         }],
+      "warehouse":[
+        { 
+            "warehouse_uuid":"e84b3cb8-a94a-5a7e-9adb-cc5353f7a73f",
+            "warehouse_uuid_budjet_cameras":"5bf5cc56-a50b-5029-9011-feeed83af180",
+            "warehouse_name":"Spryker MER000001 Warehouse 1",
+            "warehouse_uuid_warehouse1":"834b3731-02d4-5d6f-9a61-d63ae5e70517",
+            "warehouse_name_budjet_cameras":"Budget Cameras MER000005 Warehouse 1",
+            "video_king_warehouse_uuid":"86496ec7-0d44-518c-81e4-f472b9e8547d",
+            "video_king_warehouse_name":"Video King MER000002 Warehouse 1",
+            "fk_warehouse_spryker":"4"
+         }]
  }
