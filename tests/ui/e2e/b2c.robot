@@ -1463,7 +1463,7 @@ Register_during_checkout
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: signup guest user during checkout:    ${guest_user_first_name}    ${guest_user_last_name}    sonia+guest${random}@spryker.com    Abc#${random}    Abc#${random}
     common.Save the result of a SELECT DB query to a variable:    select registration_key from spy_customer where email = 'sonia+guest${random}@spryker.com'    confirmation_key
-    common_yves.I send a POST request:     /customer-confirmation   {"data":{"type":"customer-confirmation","attributes":{"registrationKey":"${confirmation_key}"}}}
+    common_api.I send a POST request:     /customer-confirmation   {"data":{"type":"customer-confirmation","attributes":{"registrationKey":"${confirmation_key}"}}}
     Yves: login after signup during checkout:    sonia+guest${random}@spryker.com    Abc#${random}
     Yves: fill in the following new shipping address:
     ...    || salutation     | firstName                | lastName                | street    | houseNumber | postCode     | city       | country     | company    | phone     | additionalAddress         ||
@@ -1762,6 +1762,8 @@ Fulfilment_app_e2e
     Zed: update Zed user:
     ...    || oldEmail                       | password      | user_is_warehouse_user ||
     ...    || admin_de@spryker.com           | Change123!321 | true                   ||
+    Remove Tags    *
+    Set Tags   bapi
     common_api.TestSetup
     # # ASSIGN admin_de user TO WAREHOUSE [Warehouse 1] MAKE WAREHOUSE ACTIVE BY BAPI
     And I get access token by user credentials:   ${zed_admin_email}
@@ -1771,6 +1773,7 @@ Fulfilment_app_e2e
     Then Save value to a variable:    [data][id]   warehouse_assigment_id  
     # CREATE AN ORDER BY GLUE
     common_api.I set Headers:    Content-Type=${default_header_content_type}
+    Remove Tags    *
     Set Tags    glue
     common_api.TestSetup
     When I get access token for the customer:    ${yves_user_email}    

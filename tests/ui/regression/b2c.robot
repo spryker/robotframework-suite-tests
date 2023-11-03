@@ -603,7 +603,7 @@ Guest_Checkout
     ...    AND    Zed: go to second navigation item level:    Merchandising    Discount
     ...    AND    Zed: create a discount and activate it:    voucher    Percentage    5    sku = '*'    guestTest${random}    discountName=Guest Voucher Code 5% ${random}
     ...    AND    Zed: create a discount and activate it:    cart rule    Percentage    10    sku = '*'    discountName=Guest Cart Rule 10% ${random}
-    common.Trigger p&s 
+    Trigger p&s
     Yves: go to the 'Home' page
     Yves: logout on Yves as a customer
     Yves: go to PDP of the product with sku:    ${bundle_product_abstract_sku}
@@ -785,7 +785,7 @@ Manage_Product
     Zed: change concrete product stock:
     ...    || productAbstract    | productConcrete               | warehouse n1 | warehouse n1 qty | warehouse n1 never out of stock ||
     ...    || manageSKU${random} | manageSKU${random}-color-blue | Warehouse1   | 100              | false                           ||
-    common.Trigger p&s 
+    Trigger p&s
     Yves: login on Yves with provided credentials:    ${yves_user_email}
     Yves: go to URL:    en/search?q=manageSKU${random}
     Try reloading page until element is/not appear:    ${catalog_product_card_locator}    true    21    5s
@@ -1691,6 +1691,7 @@ Configurable_Product_OMS
     ...    || date       | date_time ||
     ...    || 12.12.2030 | Evening   ||
     [Teardown]    Yves: check if cart is not empty and clear it
+ 
 Fulfilment_app_e2e
     # # LOGGED IN TO BO and SET CHECKBOX is a warehouse user = true FOR admin_de USER. UI TEST
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
@@ -1733,7 +1734,7 @@ Fulfilment_app_e2e
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to order page:    ${lastPlacedOrder}
     Zed: trigger all matching states inside this order:    picking list generation schedule
-    # Trigger oms
+    Trigger oms
     # # ORDER READY FOR PICKING
     Zed: wait for order item to be in state:    091_25873091    ready for picking
     Zed: wait for order item to be in state:    093_24495843    ready for picking
