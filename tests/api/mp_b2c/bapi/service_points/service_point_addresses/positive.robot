@@ -92,15 +92,15 @@ Update_Service_Point_Address
 Retrive_Service_Point_Address
     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer ${token}
-    When I send a GET request:    /service-points/${demo_service_point.spryker_main_store.uuid2}/service-point-addresses
+    When I send a GET request:    /service-points/${spryker_main_store.uuid2}/service-point-addresses
     Then Response status code should be:    200
     And Response body parameter should be:    [data][0][type]    service-point-addresses
-    And Response body parameter should be:    [data][0][id]    ${service_point_address.uuid2}
+    And Response body parameter should be:    [data][0][id]    ${service_point_address_uuid2}
     And Response body parameter should be:    [data][0][attributes][countryIso2Code]    DE
-    And Response body parameter should be:    [data][0][attributes][uuid]    ${service_point_address.uuid2} 
-    And Response body parameter should be:    [data][0][attributes][address1]    ${service_point_address.address1}
-    And Response body parameter should be:    [data][0][attributes][address2]    ${service_point_address.address2}
-    And Response body parameter should be:    [data][0][attributes][address3]    ${service_point_address.address3}
-    And Response body parameter should be:    [data][0][attributes][zipCode]    ${service_point_address.zip}
-    And Response body parameter should be:    [data][0][attributes][city]    ${service_point_address.city}
+    And Response body parameter should be:    [data][0][attributes][uuid]    ${service_point_address_uuid2} 
+    And Response body parameter should be:    [data][0][attributes][address1]    ${service_point_address_address1}
+    And Response body parameter should be:    [data][0][attributes][address2]    ${service_point_address_address2}
+    And Response body parameter should be:    [data][0][attributes][address3]    ${service_point_address_address3}
+    And Response body parameter should be:    [data][0][attributes][zipCode]    ${service_point_address_zip}
+    And Response body parameter should be:    [data][0][attributes][city]    ${service_point_address_city}
     And Response body has correct self link
