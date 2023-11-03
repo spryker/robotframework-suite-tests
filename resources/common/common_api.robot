@@ -56,6 +56,7 @@ SuiteSetup
     Set Global Variable    ${today}
     ${verify_ssl}=    Convert To String    ${verify_ssl}
     ${verify_ssl}=    Convert To Lower Case    ${verify_ssl}
+    Overwrite env variables
     IF    '${verify_ssl}' == 'true'
         Set Global Variable    ${verify_ssl}    ${True}
     ELSE
@@ -127,6 +128,7 @@ TestSetup
         END
     END
     END
+    Overwrite env variables
     ${current_url_last_character}=    Get Regexp Matches    ${current_url}    .$    flags=IGNORECASE
     ${current_url_last_character}=    Convert To String    ${current_url_last_character}
     ${current_url_last_character}=    Replace String    ${current_url_last_character}    '   ${EMPTY}
