@@ -679,19 +679,18 @@
                   "uuid2":"7e3b03e0-c53c-5298-9ece-968f4628b4f8",
                   "name":"Spryker Main Store",
                   "key":"sp1"           
-               }
-            },
-   "service_point_address":
+               },
+            "service_point_address":
             {
-                  "service_point_address_uuid":"74768ee9-e7dd-5e3c-bafd-b654e7946c54",
-                  "service_point_address_uuid2":"7a711afc-02ce-5f54-a08c-fadfaf5713c6",
-                  "service_point_address_address1":"Julie-Wolfthorn-Straße",
-                  "service_point_address_address2":"1",
-                  "service_point_address_address3":"None",
-                  "service_point_address_city":"Berlin",
-                  "service_point_address_zip":"10115"
+                  "uuid":"74768ee9-e7dd-5e3c-bafd-b654e7946c54",
+                  "uuid2":"7a711afc-02ce-5f54-a08c-fadfaf5713c6",
+                  "address1":"Julie-Wolfthorn-Straße",
+                  "address2":"1",
+                  "address3":"None",
+                  "city":"Berlin",
+                  "zip":"10115"
             }
             
-         
+         }       
 }
 
