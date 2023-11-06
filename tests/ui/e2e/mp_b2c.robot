@@ -2323,14 +2323,22 @@ Fulfilment_app_e2e
     And Save value to a variable:    [included][0][attributes][items][0][uuid]    uuid
     And Save value to a variable:    [included][0][attributes][items][1][uuid]    uuid1
     # #MOVE ORDER ITEMS INTO WAITING STATE
-    And Update order status in Database:    waiting    ${uuid} 
-    And Update order status in Database:    waiting    ${uuid1}     
-    # #MOVE ORDER ITEMS TO PROPER STATE USING BO, PICKING LIST GENERATED AUTOMATICALLY. UI TEST
     common.TestSetup
     Yves: login on Yves with provided credentials:    ${yves_user_email}
     Yves: get the last placed order ID by current customer
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to order page:    ${lastPlacedOrder}
+    Zed: wait for order item to be in state:    091_25873091    payment pending
+    Zed: wait for order item to be in state:    093_24495843    payment pending
+    Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Pay    
+    common.Trigger oms
+    Zed: wait for order item to be in state:    091_25873091    confirmed
+    Zed: wait for order item to be in state:    093_24495843    confirmed
+    Zed: trigger all matching states inside this order:    skip timeout
+    common.Trigger oms
+    Zed: wait for order item to be in state:    091_25873091    waiting
+    Zed: wait for order item to be in state:    093_24495843    waiting
+    # #MOVE ORDER ITEMS TO PROPER STATE USING BO, PICKING LIST GENERATED AUTOMATICALLY. UI TEST
     Zed: trigger all matching states inside this order:    picking list generation schedule
     Zed: trigger all matching states inside this order:    prepare for picking
     common.Trigger oms
