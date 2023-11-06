@@ -34,8 +34,8 @@ Create_warehouse_user_assigment_as_warehouse_user_for_other_user
     ...    AND    Make user a warehouse user/ not a warehouse user:   ${warehous_user[0].user_uuid}    1
     ...    AND    Make user a warehouse user/ not a warehouse user:   ${warehous_user[0].user_uuid_2}    1
     When I send a POST request:    /warehouse-user-assignments    {"data": {"type": "warehouse-user-assignments", "attributes":{"userUuid": "${warehous_user[0].user_uuid_2}","warehouse" :{"uuid": "${warehouse[0].warehouse_uuid}"},"isActive":"false"}}}
-    Then Response status code should be:    403
-    And Response should return error message:    Unauthorized request.
+    Then Response status code should be:    404
+    And Response should return error message:    Warehouse user assignment not found.
     And Make user a warehouse user/ not a warehouse user:   ${warehous_user[0].user_uuid}    0
     And Make user a warehouse user/ not a warehouse user:   ${warehous_user[0].user_uuid_2}    0
 
