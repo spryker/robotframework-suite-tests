@@ -105,7 +105,7 @@ Update_Service_Point_Address_Without_Authentication
     [Documentation]    https://spryker.atlassian.net/browse/FRW-5850 in response 400, expected 403
     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}   Authorization=
-    When I send a PATCH request:    /service-points/${spryker_main_store.uuid}/service-point-addresses/${service_point_address_uuid}    {"data": {"type": "service-point-addresses", "attributes": {"address1": "New Address", "zipCode": "40-123", "city": "New City"}}}
+    When I send a PATCH request:    /service-points/${spryker_main_store.uuid}/service-point-addresses/${service_point_address.uuid}    {"data": {"type": "service-point-addresses", "attributes": {"address1": "New Address", "zipCode": "40-123", "city": "New City"}}}
     Then Response status code should be:    400
     And Response should return error message:    Invalid access token.
 
@@ -113,7 +113,7 @@ Update_Service_Point_Address_With_Incorrect_Token
     [Documentation]    https://spryker.atlassian.net/browse/FRW-5850 in response 400, expected 401
     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}   Authorization=IncorrectToken
-    When I send a PATCH request:    /service-points/${spryker_main_store.uuid}/service-point-addresses/${service_point_address_uuid}      {"data": {"type": "service-point-addresses", "attributes": {"address1": "New Address", "zipCode": "40-123", "city": "New City"}}}
+    When I send a PATCH request:    /service-points/${spryker_main_store.uuid}/service-point-addresses/${service_point_address.uuid}      {"data": {"type": "service-point-addresses", "attributes": {"address1": "New Address", "zipCode": "40-123", "city": "New City"}}}
     Then Response status code should be:    400
     And Response should return error code:    001
     And Response should return error message:    Invalid access token.
@@ -129,13 +129,13 @@ Update_Nonexistent_Service_Point_Address
 Update_Service_Point_Address_Invalid_Content_Type
     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
     ...    AND    I set Headers:    Content-Type=application/json   Authorization=Bearer ${token}
-    When I send a PATCH request:    /service-points/${spryker_main_store.uuid}/service-point-addresses/${service_point_address_uuid}      {"data": {"type": "invalid", "attributes": {"address1": "New Address", "zipCode": "40-123", "city": "New City"}}}
+    When I send a PATCH request:    /service-points/${spryker_main_store.uuid}/service-point-addresses/${service_point_address.uuid}      {"data": {"type": "invalid", "attributes": {"address1": "New Address", "zipCode": "40-123", "city": "New City"}}}
     Then Response status code should be:    404
 
 Update_Service_Point_Address_Nonexistent_Service_Point
     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer ${token}
-    When I send a PATCH request:    /service-points/NonexistentID/service-point-addresses/${service_point_address_uuid}      {"data": {"type": "service-point-addresses", "attributes": {"address1": "New Address", "zipCode": "40-123", "city": "New City"}}}
+    When I send a PATCH request:    /service-points/NonexistentID/service-point-addresses/${service_point_address.uuid}      {"data": {"type": "service-point-addresses", "attributes": {"address1": "New Address", "zipCode": "40-123", "city": "New City"}}}
     Then Response status code should be:    404
     And Response should return error code:    5403
     And Response should return error message:    Service point entity was not found.
@@ -143,14 +143,14 @@ Update_Service_Point_Address_Nonexistent_Service_Point
 Update_Service_Point_Address_Invalid_Region
     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer ${token}
-    When I send a PATCH request:    /service-points/${spryker_main_store.uuid}/service-point-addresses/${service_point_address_uuid}      {"data": {"type": "service-point-addresses", "attributes": {"regionUuid": "InvalidRegion", "address1": "New Address", "zipCode": "40-123", "city": "New City"}}}
+    When I send a PATCH request:    /service-points/${spryker_main_store.uuid}/service-point-addresses/${service_point_address.uuid}      {"data": {"type": "service-point-addresses", "attributes": {"regionUuid": "InvalidRegion", "address1": "New Address", "zipCode": "40-123", "city": "New City"}}}
     Then Response status code should be:    400
     And Response should return error code:    5410
 
 Update_Service_Point_Address_Empty_Zip_Code
     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer ${token}
-    When I send a PATCH request:    /service-points/${spryker_main_store.uuid}/service-point-addresses/${service_point_address_uuid}     {"data": {"type": "service-point-addresses", "attributes": {"address1": "New Address", "zipCode": "", "city": "New City"}}}
+    When I send a PATCH request:    /service-points/${spryker_main_store.uuid}/service-point-addresses/${service_point_address.uuid}     {"data": {"type": "service-point-addresses", "attributes": {"address1": "New Address", "zipCode": "", "city": "New City"}}}
     Then Response status code should be:    400
     And Response should return error code:    5415
     And Response should return error message:    A service point address zip code must have length from 4 to 15 characters.
