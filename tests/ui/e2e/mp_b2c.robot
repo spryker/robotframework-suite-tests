@@ -2330,18 +2330,19 @@ Fulfilment_app_e2e
     Zed: go to order page:    ${lastPlacedOrder}
     Zed: wait for order item to be in state:    091_25873091    payment pending
     Zed: wait for order item to be in state:    093_24495843    payment pending
-    Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Pay    
-    common.Trigger oms
+    Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Pay 
+    common.Trigger oms   
     Zed: wait for order item to be in state:    091_25873091    confirmed
     Zed: wait for order item to be in state:    093_24495843    confirmed
-    Zed: trigger all matching states inside this order:    skip timeout
+    Zed: trigger all matching states inside this order:    Skip timeout
     common.Trigger oms
     Zed: wait for order item to be in state:    091_25873091    waiting
     Zed: wait for order item to be in state:    093_24495843    waiting
     # #MOVE ORDER ITEMS TO PROPER STATE USING BO, PICKING LIST GENERATED AUTOMATICALLY. UI TEST
     Zed: trigger all matching states inside this order:    picking list generation schedule
-    Zed: trigger all matching states inside this order:    prepare for picking
     common.Trigger oms
+    Zed: wait for order item to be in state:    091_25873091    picking list generation started
+    Zed: wait for order item to be in state:    093_24495843    picking list generation started
     # #ORDER READY FOR PICKING
     Zed: wait for order item to be in state:    091_25873091    ready for picking
     Zed: wait for order item to be in state:    093_24495843    ready for picking
