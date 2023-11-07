@@ -2551,23 +2551,28 @@ Fulfilment_app_e2e
     Then Response status code should be:    201
     And Save value to a variable:    [included][0][attributes][items][0][uuid]    uuid
     And Save value to a variable:    [included][0][attributes][items][1][uuid]    uuid1
-    #MOVE ORDER ITEMS INTO WAITING STATE
-    And Update order status in Database:    waiting    ${uuid} 
-    And Update order status in Database:    waiting    ${uuid1}     
-    # #MOVE ORDER ITEMS TO PROPER STATE USING BO, PICKING LIST GENERATED AUTOMATICALLY. UI TEST
+    # #MOVE ORDER ITEMS INTO WAITING STATE
     UI_test_setup
     Yves: login on Yves with provided credentials:    ${yves_user_email}
     Yves: get the last placed order ID by current customer
+    Trigger oms
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to order page:    ${lastPlacedOrder}
+    Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Pay 
+    Zed: wait for order item to be in state:    091_25873091    confirmed
+    Zed: wait for order item to be in state:    093_24495843    confirmed
+    Zed: trigger all matching states inside this order:    Skip timeout
+    Zed: wait for order item to be in state:    091_25873091    waiting
+    Zed: wait for order item to be in state:    093_24495843    waiting
+    # #MOVE ORDER ITEMS TO PROPER STATE USING BO, PICKING LIST GENERATED AUTOMATICALLY. UI TEST
     Zed: trigger all matching states inside this order:    picking list generation schedule
-    Zed: trigger all matching states inside this order:    prepare for picking
-    Trigger oms
+    Zed: wait for order item to be in state:    091_25873091    picking list generation started
+    Zed: wait for order item to be in state:    093_24495843    picking list generation started
     # #ORDER READY FOR PICKING
     Zed: wait for order item to be in state:    091_25873091    ready for picking
     Zed: wait for order item to be in state:    093_24495843    ready for picking
     # #START PICKING PROCESS AND PICKING ITEMS BY BAPI
-    Remove Tags    glue
+    Remove Tags    *
     Set Tags   bapi
     API_test_setup
     I set Headers:    Content-Type=${default_header_content_type}
@@ -2604,12 +2609,12 @@ Fulfilment_app_e2e
     Then I send a PATCH request:    /picking-lists/${picklist_id}/picking-list-items    {"data":[{"id":"${item_id_1}","type":"picking-list-items","attributes":{"numberOfPicked":1,"numberOfNotPicked":0}},{"id":"${item_id_2}","type":"picking-list-items","attributes":{"numberOfPicked":0,"numberOfNotPicked":1}}]}
     Then Response status code should be:    200
     And Response body parameter should be:    [data][0][attributes][status]    picking-finished
-    #CLEAN SYSTEM, REMOVE CREATED RELATIONS IN DB
+    # #CLEAN SYSTEM, REMOVE CREATED RELATIONS IN DB
     [Teardown]     Run Keywords    Remove picking list item by uuid in DB:    ${item_id_1}
     ...  AND    Remove picking list item by uuid in DB:    ${item_id_2} 
     ...  AND    Remove picking list by uuid in DB:    ${picklist_id}
     ...  AND    Make user a warehouse user/ not a warehouse user:   ${warehous_user[0].de_admin_user_uuid}    0
-    ...  AND    I send a DELETE request:    /warehouse-user-assignments/${warehouse_assigment_id}       
+    ...  AND    I send a DELETE request:    /warehouse-user-assignments/${warehouse_assigment_id}     
 
 # Click_and_collect
 #     [Documentation]    checks that product offer is successfully replaced with a target product offer
