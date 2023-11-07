@@ -231,7 +231,7 @@ Delete_a_cusomer_without_access_token
 
 Delete_a_customer_without_id
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
-    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}  
+    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     I send a DELETE request:    /customers/
     Response status code should be:    400
     And Response reason should be:    Bad Request
@@ -250,7 +250,7 @@ Delete_a_customer_with_wrong_id
 
 Delete_a_customer_with_access_token_from_another
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
-    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}  
+    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     I send a DELETE request:    /customers/DE--30
     Response status code should be:    403
     And Response reason should be:    Forbidden

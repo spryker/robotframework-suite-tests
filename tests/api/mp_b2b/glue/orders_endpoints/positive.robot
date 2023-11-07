@@ -156,7 +156,7 @@ Get_order_by_order_id
     And Response body parameter should contain:    [data][attributes][calculatedDiscounts]    voucherCode
     And Response body parameter should contain:    [data][attributes][calculatedDiscounts]    quantity
     And Response body has correct self link internal
-    
+
 Get_order_by_order_id_with_different_items_and_quantity
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
@@ -417,7 +417,7 @@ Get_order_by_order_id_with_2_product_discounts
     ...  AND    Save value to a variable:    [data][id]    cart_id
     ...  AND    I send a POST request:    /carts/${cartId}/items    {"data": {"type": "items","attributes": {"sku": "${discount_concrete_product.product_1.sku}","quantity": 1, "merchantReference": "${merchants.merchant_spryker_id}"}}}
     ...  AND    I send a POST request:    /carts/${cartId}/items    {"data": {"type": "items","attributes": {"sku": "${discount_concrete_product.product_2.sku}","quantity": 1, "merchantReference": "${merchants.merchant_spryker_id}"}}}
-    ...  AND    I send a POST request:    /carts/${cartId}/items    {"data": {"type": "items","attributes": {"sku": "${discount_concrete_product.product_3.sku}","quantity": 1, "merchantReference": "${merchants.merchant_office_king_id}"}}}    
+    ...  AND    I send a POST request:    /carts/${cartId}/items    {"data": {"type": "items","attributes": {"sku": "${discount_concrete_product.product_3.sku}","quantity": 1, "merchantReference": "${merchants.merchant_office_king_id}"}}}
     ...  AND    I send a POST request:    /checkout?include=orders    {"data": {"type": "checkout","attributes": {"customer": {"email": "${yves_user.email}","salutation": "${yves_user.salutation}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}"},"idCart": "${cart_id}","billingAddress": {"salutation": "${yves_user.salutation}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}","address1": "${default.address1}","address2": "${default.address2}","address3": "${default.address3}","zipCode": "${default.zipCode}","city": "${default.city}","iso2Code": "${default.iso2Code}","company": "${default.company}","phone": "${default.phone}","isDefaultBilling": False,"isDefaultShipping": False},"shippingAddress": {"salutation": "${yves_user.salutation}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}","address1": "${default.address1}","address2": "${default.address2}","address3": "${default.address3}","zipCode": "${default.zipCode}","city": "${default.city}","iso2Code": "${default.iso2Code}","company": "${default.company}","phone": "${default.phone}","isDefaultBilling": False,"isDefaultShipping": False},"payments": [{"paymentProviderName": "${payment.provider_name}","paymentMethodName": "${payment.method_name}", "paymentSelection": "${payment.selection_name}"}],"shipment": {"idShipmentMethod": 1},"items": ["${discount_concrete_product.product_1.sku}", "${discount_concrete_product.product_2.sku}", "${discount_concrete_product.product_3.sku}"]}}}
     ...  AND    Save value to a variable:    [data][attributes][orderReference]    order_id
     When I send a GET request:    /orders/${order_id}
@@ -441,14 +441,14 @@ Get_order_by_order_id_with_2_product_discounts
     And Response should contain the array of a certain size:    [data][attributes][items][0][calculatedDiscounts]    2
     And Response body parameter should be in:    [data][attributes][items][0][name]    ${discount_concrete_product.product_1.name}    ${discount_concrete_product.product_2.name}    ${discount_concrete_product.product_3.name}
     And Response body parameter should be in:    [data][attributes][items][0][sku]    ${discount_concrete_product.product_1.sku}    ${discount_concrete_product.product_2.sku}    ${discount_concrete_product.product_3.sku}
-    And Response body parameter should be in:    [data][attributes][items][0][calculatedDiscounts][0][unitAmount]    ${discount_concrete_product.product_1.discount_amount_with_20_percentage_off_storage}    ${discount_concrete_product.product_1.discount_amount_with_10_percentage_off_minimum_order}  
-    And Response body parameter should be in:    [data][attributes][items][0][calculatedDiscounts][0][sumAmount]    ${discount_concrete_product.product_1.discount_amount_with_20_percentage_off_storage}    ${discount_concrete_product.product_1.discount_amount_with_10_percentage_off_minimum_order}  
+    And Response body parameter should be in:    [data][attributes][items][0][calculatedDiscounts][0][unitAmount]    ${discount_concrete_product.product_1.discount_amount_with_20_percentage_off_storage}    ${discount_concrete_product.product_1.discount_amount_with_10_percentage_off_minimum_order}
+    And Response body parameter should be in:    [data][attributes][items][0][calculatedDiscounts][0][sumAmount]    ${discount_concrete_product.product_1.discount_amount_with_20_percentage_off_storage}    ${discount_concrete_product.product_1.discount_amount_with_10_percentage_off_minimum_order}
     And Response body parameter should be in:    [data][attributes][items][0][calculatedDiscounts][0][displayName]    ${discount_1.name}    ${discount_2.name}
     And Response body parameter should be in:    [data][attributes][items][0][calculatedDiscounts][0][description]    ${discount_1.description}    ${discount_2.description}
     And Response body parameter should be:    [data][attributes][items][0][calculatedDiscounts][0][voucherCode]    None
     And Response body parameter should be:    [data][attributes][items][0][calculatedDiscounts][0][quantity]    1
     #item 1 - "20% off storage" discount and "10% off minimum order" discount
-    And Response body parameter should be in:    [data][attributes][items][0][calculatedDiscounts][1][unitAmount]    ${discount_concrete_product.product_1.discount_amount_with_20_percentage_off_storage}    ${discount_concrete_product.product_1.discount_amount_with_10_percentage_off_minimum_order}  
+    And Response body parameter should be in:    [data][attributes][items][0][calculatedDiscounts][1][unitAmount]    ${discount_concrete_product.product_1.discount_amount_with_20_percentage_off_storage}    ${discount_concrete_product.product_1.discount_amount_with_10_percentage_off_minimum_order}
     And Response body parameter should be in:    [data][attributes][items][0][calculatedDiscounts][1][sumAmount]    ${discount_concrete_product.product_1.discount_amount_with_20_percentage_off_storage}    ${discount_concrete_product.product_1.discount_amount_with_10_percentage_off_minimum_order}
     And Response body parameter should be in:    [data][attributes][items][0][calculatedDiscounts][1][displayName]    ${discount_1.name}    ${discount_2.name}
     And Response body parameter should be in:    [data][attributes][items][0][calculatedDiscounts][1][description]    ${discount_1.description}    ${discount_2.description}

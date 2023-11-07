@@ -57,7 +57,6 @@ New_Customer_Registration
     [Teardown]    Zed: delete customer:
     ...    || email                       ||
     ...    || sonia+${random}@spryker.com ||
-
 Guest_User_Access_Restrictions
     [Documentation]    Checks that guest users see products info and cart but not profile
     Yves: header contains/doesn't contain:    true    ${currencySwitcher}[${env}]   ${wishlistIcon}    ${accountIcon}    ${shoppingCartIcon}
@@ -70,7 +69,6 @@ Guest_User_Access_Restrictions
     Yves: 'Login' page is displayed
     Yves: go To 'Wishlist' Page
     Yves: 'Login' page is displayed
-
 Authorized_User_Access
     [Documentation]    Checks that authorized users see products info, cart and profile
     Yves: login on Yves with provided credentials:    ${yves_second_user_email}
@@ -87,7 +85,6 @@ Authorized_User_Access
     Yves: go To 'Wishlist' Page
     Yves: 'Wishlist' page is displayed
     [Teardown]    Yves: check if cart is not empty and clear it
-
 User_Account
     [Documentation]    Checks user account pages work + address management
     Yves: login on Yves with provided credentials:    ${yves_second_user_email}
@@ -124,7 +121,6 @@ User_Account
     Yves: check that user has address exists/doesn't exist:    true    ${yves_second_user_first_name}${random}    ${yves_second_user_last_name}${random}    address 1${random}    address 2 ${random}    ${random}    Berlin${random}    Austria
     [Teardown]    Run Keywords    Yves: login on Yves with provided credentials:    ${yves_second_user_email}
     ...    AND     Yves: delete all user addresses
-
 Catalog
     [Documentation]    Checks that catalog options and search work
     Yves: perform search by:    canon
@@ -144,7 +140,6 @@ Catalog
     Yves: select filter value:    Color    blue
     Yves: 'Catalog' page should show products:    2
     [Teardown]    Yves: check if cart is not empty and clear it
-
 # Catalog_Actions
 #     ### Quick add to cart from catalog is not supported by Marketplace for now ###
 #     [Documentation]    Checks quick add to cart and product groups.
@@ -161,7 +156,6 @@ Catalog
 #     Yves: go to b2c shopping cart
 #     Yves: shopping cart contains the following products:    NEX-VG20EH    Canon IXUS 160
 #     [Teardown]    Yves: check if cart is not empty and clear it
-
 Product_labels
     [Documentation]    Checks that products have labels on PLP and PDP
     Yves: go to first navigation item level:    Sale
@@ -173,7 +167,6 @@ Product_labels
     Yves: go to the PDP of the first available product on open catalog page
     Yves: PDP contains/doesn't contain:    true    ${pdp_new_label}[${env}]
     [Teardown]    Yves: check if cart is not empty and clear it
-
 Product_PDP
     [Documentation]    Checks that PDP contains required elements
     Yves: go to PDP of the product with sku:    135
@@ -185,7 +178,6 @@ Product_PDP
     Yves: PDP contains/doesn't contain:    true    ${pdpPriceLocator}   ${pdp_add_to_cart_disabled_button}[${env}]    ${pdp_limited_warranty_option}    ${pdp_gift_wrapping_option}     ${pdp_add_to_wishlist_button}    ${relatedProducts}
     Yves: change variant of the product on PDP on:    Flash
     Yves: PDP contains/doesn't contain:    true    ${pdpPriceLocator}    ${addToCartButton}    ${pdp_limited_warranty_option}    ${pdp_gift_wrapping_option}     ${pdp_add_to_wishlist_button}    ${relatedProducts}
-
 Volume_Prices
     [Documentation]    Checks volume prices are applied
     Yves: login on Yves with provided credentials:    ${yves_user_email}
@@ -197,7 +189,6 @@ Volume_Prices
     Yves: shopping cart contains product with unit price:    193    Sony FDR-AX40    825.00
     Yves: delete from b2c cart products with name:    Sony FDR-AX40
     [Teardown]    Yves: check if cart is not empty and clear it
-
 Discontinued_Alternative_Products
     [Documentation]    Checks discontinued and alternative products
     Yves: go to PDP of the product with sku:    ${product_with_relations_alternative_products_sku}
@@ -252,7 +243,6 @@ Back_in_Stock_Notification
     Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    False
     Yves: check if product is available on PDP:    ${stock_product_abstract_sku}    true
     [Teardown]    Zed: check and restore product availability in Zed:    ${stock_product_abstract_sku}    Available    ${stock_product_concrete_sku}
-
 Add_to_Wishlist
     [Documentation]    Check creation of wishlist and adding to different wishlists
     Yves: login on Yves with provided credentials:    ${yves_user_email}
@@ -270,7 +260,6 @@ Add_to_Wishlist
     Yves: go to wishlist with name:    Second wishlist
     Yves: wishlist contains product with sku:    004_30663302
     [Teardown]    Run keywords    Yves: delete all wishlists    AND    Yves: check if cart is not empty and clear it
-
 # Product_Sets
 #     ### Product Sets are not supported by Marketplace for now ###
 #     [Documentation]    Check the usage of product sets
@@ -285,7 +274,6 @@ Add_to_Wishlist
 #     Yves: shopping cart contains the following products:    TomTom Golf    Samsung Galaxy S6 edge
 #     Yves: delete from b2c cart products with name:    TomTom Golf    Samsung Galaxy S6 edge
 #     [Teardown]    Yves: check if cart is not empty and clear it
-
 # Product_Bundles
 #     ### Product Bundles are not supported by Marketplace for now ###
 #     [Documentation]    Checks checkout with Bundle product. Fails due to bug CC-16679
@@ -312,7 +300,6 @@ Add_to_Wishlist
 #     Yves: 'submit the order' on the summary page
 #     Yves: 'Thank you' page is displayed
 #     [Teardown]    Yves: check if cart is not empty and clear it
-
 # Configurable_Bundle
 #     ### Configurable Bundles are not supported by Marketplace for now ###
 #     [Documentation]    Check the usage of configurable bundles (includes authorized checkout)
@@ -352,7 +339,6 @@ Add_to_Wishlist
 #     Yves: 'View Order' page is displayed
 #     Yves: 'Order Details' page contains the following product title N times:    Smartstation Kit    3
 #     [Teardown]    Yves: check if cart is not empty and clear it
-
 Discounts
     [Documentation]    Discounts, Promo Products, and Coupon Codes (includes guest checkout)
     [Setup]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
@@ -443,7 +429,6 @@ Split_Delivery
     [Teardown]    Run Keywords    Yves: login on Yves with provided credentials:    ${yves_user_email}
     ...    AND    Yves: check if cart is not empty and clear it
     ...    AND    Yves: delete all user addresses
-
 Agent_Assist
     [Documentation]    Checks that agent can be used.
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
@@ -462,7 +447,6 @@ Agent_Assist
     [Teardown]    Run Keywords    Yves: check if cart is not empty and clear it
     ...    AND    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: delete Zed user with the following email:    agent+${random}@spryker.com
-
 Return_Management
     [Documentation]    Checks that returns work and oms process is checked.
     Yves: login on Yves with provided credentials:    ${yves_user_email}
@@ -545,7 +529,6 @@ Return_Management
     ...    AND    Yves: delete all user addresses
     ...    AND    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: delete Zed user with the following email:    returnagent+${random}@spryker.com
-
 Content_Management
     [Documentation]    Checks cms content can be edited in zed and that correct cms elements are present on homepage
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
@@ -576,7 +559,6 @@ Product_Relations
     Yves: go to b2c shopping cart
     Yves: shopping cart contains/doesn't contain the following elements:    true    ${upSellProducts}
     [Teardown]    Yves: check if cart is not empty and clear it
-
 Guest_Checkout
     [Documentation]    Guest checkout with discounts and OMS
     Yves: go to the 'Home' page
@@ -625,7 +607,6 @@ Guest_Checkout
     Zed: trigger matching state of xxx merchant's shipment:    1    confirm at center
     Zed: trigger matching state of xxx merchant's shipment:    1    Ship   
     [Teardown]    Run keywords    Yves: check if cart is not empty and clear it
-
 Refunds
     [Documentation]    Checks that refund can be created for one item and the whole order
     [Setup]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
@@ -724,7 +705,6 @@ Multiple_Merchants_Order
     Zed: order has the following number of shipments:    ${lastPlacedOrder}    3
     [Teardown]    Run Keywords    Yves: login on Yves with provided credentials:    ${yves_second_user_email}
     ...    AND    Yves: delete all user addresses
-
 Merchant_Profile_Update
     [Documentation]    Checks that merchant profile could be updated from merchant portal and that changes will be displayed on Yves
     Yves: go to URL:    en/merchant/Video-king
@@ -781,7 +761,6 @@ Merchant_Profile_Set_to_Offline_from_MP
     ...    AND    Yves: merchant is (not) displaying in Sold By section of PDP:    Video King    true
     ...    AND    Yves: go to URL:    en/merchant/video-king
     ...    AND    Yves: go to newly created page by URL:    url=en/merchant/video-king    delay=5s    iterations=26
-
 Merchant_Profile_Set_to_Inactive_from_Backoffice
     [Documentation]    Checks that backoffice admin is able to deactivate merchant and then it's profile, products and offers won't be displayed on Yves
     [Setup]    Run Keywords    
@@ -889,7 +868,6 @@ Manage_Merchant_Users
     ...    AND    Zed: go to tab:     Users
     ...    AND    Zed: click Action Button in Merchant Users table for row that contains:    sonia+mu+${random}@spryker.com    Delete
     ...    AND    Zed: submit the form
-
 Create_and_Approve_New_Merchant_Product
     [Documentation]    Checks that merchant is able to create new multi-SKU product and marketplace operator is able to approve it in BO
     MP: login on MP with provided credentials:    ${merchant_budget_cameras_email}
@@ -929,7 +907,6 @@ Create_and_Approve_New_Merchant_Product
     Trigger p&s
     Yves: go to the 'Home' page
     Yves: go to URL and refresh until 404 occurs:    ${url}
-
 Create_New_Offer
     [Documentation]    Checks that merchant is able to create new offer and it will be displayed on Yves
     MP: login on MP with provided credentials:    ${merchant_spryker_email}
@@ -1020,7 +997,6 @@ Approve_Offer
     Yves: merchant's offer/product price should be:    Video King    ${second_product_with_multiple_offers_video_king_price}
     Yves: select xxx merchant's offer:    Video King
     Yves: product price on the PDP should be:     ${second_product_with_multiple_offers_video_king_price}
-
 Fulfill_Order_from_Merchant_Portal
     [Documentation]    Checks that merchant is able to process his order through OMS from merchant portal
     [Setup]    Run Keywords    
@@ -1096,7 +1072,6 @@ Fulfill_Order_from_Merchant_Portal
     MP: order item state should be:    041_25904691    delivered
     [Teardown]    Run Keywords    Yves: login on Yves with provided credentials:    ${yves_user_email}
     ...    AND    Yves: delete all user addresses
-
 Wishlist_List_Supports_Offers
     [Documentation]    Checks that customer is able to add merchant products and offers to list and merchant relation won't be lost in list and afterwards in cart
     [Setup]    Run Keywords    Yves: login on Yves with provided credentials:    ${yves_user_email}
@@ -1117,7 +1092,6 @@ Wishlist_List_Supports_Offers
     Yves: assert merchant of product in b2c cart:    ${product_with_multiple_offers_abstract_name}    Spryker
     Yves: assert merchant of product in b2c cart:    ${product_with_multiple_offers_abstract_name}    Budget Cameras
     [Teardown]    Run keywords    Yves: delete all wishlists    AND    Yves: check if cart is not empty and clear it
-
 Search_for_Merchant_Offers_and_Products
     [Documentation]    Checks that through search customer is able to see the list of merchant's products and offers
     Yves: go to the 'Home' page
@@ -1135,7 +1109,6 @@ Search_for_Merchant_Offers_and_Products
     Yves: go to the PDP of the first available product on open catalog page
     Yves: select random varian if variant selector is available
     Yves: merchant is (not) displaying in Sold By section of PDP:    Budget Cameras    true
-
 Merchant_Portal_Product_Volume_Prices
     [Documentation]    Checks that merchant is able to create new multi-SKU product with volume prices. Falback to default price after delete
     MP: login on MP with provided credentials:    ${merchant_video_king_email}
@@ -1338,7 +1311,6 @@ Merchant_Portal_Dashboard
     MP: click button on dashboard page and check url:    Manage Orders    /orders
     [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: delete Zed user with the following email:    sonia+dahboard+${random}@spryker.com
-
 Merchant_Product_Offer_in_Backoffice
     [Documentation]    Check View action and filtration for Mproduct and Moffer in backoffice
     MP: login on MP with provided credentials:    ${merchant_spryker_email}
@@ -1623,7 +1595,6 @@ Checkout_Address_Management
     Zed: shipping address inside xxx shipment should be:    1    Mr First, Last, Shipping Street, 7, Additional street, Spryker, 10247, Vienna, Austria 
     [Teardown]    Run Keywords    Yves: login on Yves with provided credentials:    ${yves_user_email}
     ...    AND    Yves: delete all user addresses
-
 Manage_Shipments
     [Documentation]    Checks create/edit shipment functions from backoffice
     Yves: login on Yves with provided credentials:    ${yves_user_email}
@@ -1692,14 +1663,12 @@ Manage_Shipments
     [Teardown]    Run Keywords    Yves: login on Yves with provided credentials:    ${yves_user_email}
     ...    AND    Yves: check if cart is not empty and clear it
     ...    AND    Yves: delete all user addresses
-
 Zed_navigation_ordering_and_naming
     [Documentation]    Verifies each left navigation node can be opened
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: verify first navigation root menus
     Zed: verify root menu icons
     Zed: verify second navigation root menus
-
 Minimum_Order_Value
     [Documentation]    checks that global minimum and maximun order thresholds can be applied
     [Setup]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
@@ -1824,7 +1793,6 @@ Order_Cancelation
     # [Teardown]    Run keywords    Yves: login on Yves with provided credentials:    ${yves_user_email}
     # ...    AND    Yves: check if cart is not empty and clear it
     # ...    AND    Yves: delete all user addresses
-
 Multistore_Product_Offer
     [Documentation]    check product and offer multistore functionality
     MP: login on MP with provided credentials:    ${merchant_budget_cameras_email}
@@ -2179,7 +2147,6 @@ User_Control
     [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: go to second navigation item level:    Users    User Roles
     ...    AND    Zed: click Action Button in a table for row that contains:    controlRole${random}    Delete
-
 Reorder
     [Documentation]    Checks that merchant relation is saved with reorder
     Yves: login on Yves with provided credentials:    ${yves_user_email}
@@ -2204,7 +2171,6 @@ Reorder
     Yves: assert merchant of product in b2c cart:    Canon IXUS 285    Spryker
     [Teardown]    Run Keywords    Yves: check if cart is not empty and clear it
     ...    AND    Yves: delete all user addresses
-
 Update_Customer_Data
     [Documentation]    Checks customer data can be updated from Yves and Zed
     Yves: login on Yves with provided credentials:    ${yves_second_user_email}
@@ -2240,7 +2206,6 @@ Update_Customer_Data
     ...    AND    Zed: update customer profile data:
     ...    || email                     | salutation | first name                     | last name                     ||
     ...    || ${yves_second_user_email} | Mr         | ${yves_second_user_first_name} | ${yves_second_user_last_name} ||
-
 Glossary
     [Documentation]    Create + edit glossary translation in BO
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
@@ -2335,7 +2300,6 @@ Configurable_Product_PDP_Wishlist
     [Teardown]    Run Keywords    Yves: delete all wishlists
     ...    AND    Yves: check if cart is not empty and clear it
     ...    AND    Yves: delete all user addresses
-
 Configurable_Product_OMS
     [Documentation]    Conf Product OMS check and reorder
     [Setup]    Run keywords    Yves: login on Yves with provided credentials:    ${yves_user_email}

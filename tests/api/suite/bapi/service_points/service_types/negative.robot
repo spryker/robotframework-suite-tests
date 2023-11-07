@@ -62,7 +62,7 @@ Create_Service_Type_With_Empty_Name
     And Response should return error message:    A service type name must have length from 1 to 255 characters.
 
 Create_Service_Type_without_Auth
-    And I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer 
+    And I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer
     When I send a POST request:    /service-types    {"data": {"type": "service-types", "attributes": {"name": "Test Service ${random}", "key": "service1-test${random}"}}}
     Then Response status code should be:    400
 
@@ -92,6 +92,8 @@ Update_Not_Existing_Service_Type
 Update_Service_Type_with_incorrect_type
     [Documentation]    https://spryker.atlassian.net/browse/FRW-6312
     [Tags]    skip-due-to-issue
+    [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
+    ...    AND    I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer ${token}
     Create service type in DB    uuid=serv-ty${random}    name=New Service     key=serv-ty${random}
     When I send a PATCH request:    /service-types/serv-ty${random}    {"data": {"type": "incorrect-types", "attributes": {"name": "Updated Service", "key": "serv-ty${random}"}}}
     Then Response status code should be:    400
@@ -99,30 +101,40 @@ Update_Service_Type_with_incorrect_type
 
 Update_Service_Type_without_Auth
     When Create service type in DB    12345678${random}    test    test
-    And I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer 
+    And I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer
     When I send a PATCH request:    /service-types/12345678${random}    {"data": {"type": "service-types", "attributes": {"name": "Updated Service Name","key": "12345678${random}"}}}
     Then Response status code should be:    400
     [Teardown]    Delete service type in DB    12345678${random}
 
 Get_Service_Types_No_Auth
+    I set Headers:    Content-Type=${default_header_content_type}
     When I send a GET request:    /service-types
-    Then Response status code should be:    404
+    Then Response status code should be:    403
+    And Response should return error message:    Unauthorized request.
 
 Get_Service_Types_Invalid_Auth
     When I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer InvalidToken
     When I send a GET request:    /service-types
     Then Response status code should be:    400
+    And Response should return error code:    001
+    And Response should return error message:    Invalid access token.
 
 Get_Service_Type_By_ID_No_Auth
+    I set Headers:    Content-Type=${default_header_content_type}
     Create service type in DB    uuid=service-by-id${random}    name=service-by-id     key=service-by-id${random}
     When I send a GET request:    /service-types/service-by-id${random}
-    Then Response status code should be:    404
+    Then Response status code should be:    403
+    And Response should return error message:    Unauthorized request.
     [Teardown]    Delete service type in DB    service-by-id${random}
 
 Get_Service_Type_By_ID_invalid_Auth
+    I set Headers:    Content-Type=${default_header_content_type}
     Create service type in DB    uuid=service-invalid${random}    name=service-invalid     key=service-invalid${random}
     When I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer InvalidToken
     When I send a GET request:    /service-types/service-invalid${random}
+    Then Response status code should be:    400
+    And Response should return error code:    001
+    And Response should return error message:    Invalid access token.
     [Teardown]    Delete service type in DB    service-invalid${random}
 
 Get_Nonexistent_Service_Type
@@ -132,5 +144,3 @@ Get_Nonexistent_Service_Type
     Then Response status code should be:    404
     And Response should return error code:    5418
     And Response should return error message:    The service type entity was not found.
-
-     
