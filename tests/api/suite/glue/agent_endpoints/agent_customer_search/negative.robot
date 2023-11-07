@@ -1,12 +1,12 @@
 *** Settings ***
-Suite Setup        SuiteSetup
-Test Setup        TestSetup
+Suite Setup    API_suite_setup
+Test Setup        API_test_setup
 Default Tags    glue
 Resource    ../../../../../../resources/common/common_api.robot
 
 *** Test Cases ***
 ENABLER
-   TestSetup
+   API_test_setup
 Not_agent_can't_get_search_for_customers
     When I send a POST request:    /agent-access-tokens    {"data": {"type": "agent-access-tokens","attributes": {"username": "${non_agent.email}","password": "${non_agent.password}"}}}
     Then Response status code should be:    401

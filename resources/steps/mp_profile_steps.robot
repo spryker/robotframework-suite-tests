@@ -22,7 +22,7 @@ MP: change store status to:
     END
     MP: click submit button
     Wait Until Element Is Visible    ${mp_success_flyout}    timeout=5s
-    common.Trigger multistore p&s
+    Trigger multistore p&s
 
 MP: update profile fields with following data:
     [Arguments]    @{args}

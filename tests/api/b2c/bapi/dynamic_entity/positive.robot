@@ -1,13 +1,13 @@
 *** Settings ***
-Suite Setup       common_api.SuiteSetup
-Test Setup        common_api.TestSetup
+Suite Setup       API_suite_setup
+Test Setup        API_test_setup
 Resource    ../../../../../resources/common/common_api.robot
 Resource    ../../../../../resources/steps/dynamic_entity_steps.robot
 Default Tags    bapi
 
 *** Test Cases ***
 ENABLER
-    common_api.TestSetup
+    API_test_setup
 
 Get_country_collection
     ### SETUP DYNAMIC ENTITY CONFIGURATION ###
@@ -374,14 +374,14 @@ Availability_recalculation_after_stock_update
     Make sure that concrete product is available:    ${concrete_sku}
     Remove Tags    *
     Set Tags    bapi
-    common_api.TestSetup
+    API_test_setup
     When I get access token by user credentials:   ${zed_admin.email}
     And I set Headers:    Content-Type==application/json    Authorization=Bearer ${token}
     And I send a PATCH request:    /dynamic-entity/stock-products/${index}    {"data":{"is_never_out_of_stock":${false},"quantity":0}}
     Then Response status code should be:    200
     And Response body parameter should be:    [data][is_never_out_of_stock]    False
     And Response body parameter should be:    [data][quantity]    0
-    common_api.Trigger p&s
+    Trigger p&s
     And Product availability status should be changed on:    is_available=False
     [Teardown]    Run Keywords    Remove Tags    *
     ...    AND    Set Tags    bapi

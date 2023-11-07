@@ -6,9 +6,6 @@ Resource    ../pages/yves/yves_checkout_summary_page.robot
 Resource    ../common/common_yves.robot
 Resource    ../common/common.robot
 
-
-
-
 *** Variables ***
 ${cancelRequestButton}    ${checkout_summary_cancel_request_button}
 ${alertWarning}    ${checkout_summary_alert_warning}
@@ -34,6 +31,15 @@ Yves: billing address same as shipping address:
     IF    '${state}' == 'true'    Wait Until Element Is Not Visible    ${billing_address_section}[${env}]
     IF    '${state}' == 'false'    Wait Until Element Is Visible    ${billing_address_section}[${env}]
     Repeat Keyword    3    Wait Until Network Is Idle
+
+Yves: 'billing same as shipping' checkbox should be displayed:
+    [Arguments]    ${expected_condition}
+    ${expected_condition}=    Convert To Lower Case    ${expected_condition}
+    IF    '${expected_condition}' == 'true'
+        Element Should Be Visible    ${checkout_address_billing_same_as_shipping_checkbox}    message='billing same as shipping' checkbox is not displayed
+    ELSE
+        Element Should Not Be Visible    ${checkout_address_billing_same_as_shipping_checkbox}    message='billing same as shipping' checkbox is displayed but should NOT
+    END
 
 Yves: accept the terms and conditions:
     [Documentation]    ${state} can be true or false
@@ -65,15 +71,6 @@ Yves: select the following existing address on the checkout as 'shipping' addres
             Repeat Keyword    2    Select From List By Label    ${checkout_address_delivery_selector}[${env}]    ${addressToUse}
             Repeat Keyword    3    Wait Until Network Is Idle
             Sleep    1s
-            ### Legacy solution ###
-            # Click    xpath=//div[contains(@class,'shippingAddress')]//select[@name='checkout-full-addresses'][contains(@class,'address__form')]/..//span[contains(@id,'checkout-full-address')]
-            # Repeat Keyword    3    Wait Until Network Is Idle
-            # Wait Until Element Is Visible    xpath=//span[@class='select2-results']
-            # Sleep    1s
-            # Click    xpath=//ul[contains(@id,'checkout-full-addresses')]//li[@role='option'][contains(@id,'business_unit_address')][contains(.,'${addressToUse}')]
-            # Repeat Keyword    3    Wait Until Network Is Idle
-            # Sleep    1s
-            ### Legacy solution ###
             ${selected_address}=    Get Text    xpath=//div[contains(@class,'shippingAddress')]//select[@name='checkout-full-addresses'][contains(@class,'address__form')]/..//span[contains(@id,'checkout-full-address')]
         END
     END
@@ -129,6 +126,10 @@ Yves: fill in the following new billing address:
 
 Yves: select delivery to multiple addresses
     Select From List By Label    ${checkout_address_delivery_selector}[${env}]    Deliver to multiple addresses
+
+Yves: select multiple addresses from toggler
+    Wait Until Element Is Visible    ${checkout_address_multiple_addresses_toggler_button}
+    Click    ${checkout_address_multiple_addresses_toggler_button}
 
 Yves: click checkout button:
     [Arguments]    ${buttonName}
@@ -356,9 +357,42 @@ Yves: signup guest user during checkout:
     Wait Until Element Is Visible   ${yves_checkout_signup_accept_terms}
     Check Checkbox  ${yves_checkout_signup_accept_terms}
     Click    ${yves_checkout_signup_tab}   
-    
-Yves: try to add product to wishlist as guest user
-    Wait Until Element Is Visible    ${pdp_add_to_wishlist_button}
-    Click    ${pdp_add_to_wishlist_button}
-    Sleep    1s
-    Wait Until Element Is Visible    ${email_field}
+
+Yves: select xxx shipment type for item number xxx:
+    [Arguments]    ${shipment_type}    ${item_number}
+    ${item_number}=    Evaluate    ${item_number}-1
+    Wait Until Element Is Visible    xpath=//input[contains(@id,'addressesForm_multiShippingAddresses_${item_number}')]/following-sibling::span[contains(text(), '${shipment_type}')]
+    Click    xpath=//input[contains(@id,'addressesForm_multiShippingAddresses_${item_number}')]/following-sibling::span[contains(text(), '${shipment_type}')]
+    Repeat Keyword    2    Wait Until Network Is Idle
+
+Yves: check store availabiity for item number xxx:
+    [Arguments]    @{args}
+    ${availabilityData}=    Set Up Keyword Arguments    @{args}
+    ${item_number}=    Set Variable    1
+    FOR    ${key}    ${value}    IN    &{availabilityData}
+        Log    Key is '${key}' and value is '${value}'.
+        IF    '${key}'=='item_number' and '${value}' != '${EMPTY}'    
+            ${item_number}=    Set Variable    ${value}
+        END
+        IF    '${key}'=='store' and '${value}' != '${EMPTY}'    
+            Click    xpath=(//article)[${item_number}]//shipment-type-toggler//service-point-selector[contains(@data-qa,'service-point-selector')]
+            Wait Until Element Is Visible    ${checkout_service_point_popup_close_button}
+            Type Text    ${checkout_service_point_popup_search_field}    ${value}
+            Repeat Keyword    3    Wait Until Network Is Idle
+        END
+        IF    '${key}'=='availability' and '${value}' != '${EMPTY}'
+            ${value}=    Convert To Lower Case    ${value}
+            IF    '${value}' == 'green'
+                Page Should Contain Element    xpath=(//div[contains(@id,'service-point-selector')]//*[contains(@data-qa,'service-point-availability-status')]//span[contains(@class,'all-items-available')])[1]
+            # ELSE IF    '${value}' == 'yellow'
+            #     Page Should Contain Element    xpath=
+            # ELSE IF    '${value}' == 'red'
+            #     Page Should Contain Element    xpath=
+            END
+        END
+    END
+    Click    ${checkout_service_point_popup_close_button}
+    Repeat Keyword    3    Wait Until Network Is Idle
+
+Yves: select service point store for item number xxx:
+    Log    message

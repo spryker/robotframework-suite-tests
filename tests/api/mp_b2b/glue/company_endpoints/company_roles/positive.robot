@@ -1,12 +1,12 @@
 *** Settings ***
-Test Setup    TestSetup
-Suite Setup       SuiteSetup
+Test Setup    API_test_setup
+Suite Setup       API_suite_setup
 Resource    ../../../../../../resources/common/common_api.robot
 Default Tags    glue
 
 *** Test Cases ***
 ENABLER
-    TestSetup
+    API_test_setup
 Request_company_role_by_id
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}  

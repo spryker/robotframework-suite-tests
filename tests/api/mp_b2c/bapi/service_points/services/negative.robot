@@ -1,13 +1,13 @@
 *** Settings ***
-Suite Setup       SuiteSetup
-Test Setup        TestSetup
+Suite Setup       API_suite_setup
+Test Setup        API_test_setup
 Resource    ../../../../../../resources/common/common_api.robot
 Resource    ../../../../../../resources/steps/service_point_steps.robot
 Default Tags    bapi
 
 *** Test Cases ***
 ENABLER
-    TestSetup
+    API_test_setup
 
 Create_Service_No_Auth
     And Create service point in DB    uuid=262feb9d-33a7${random}    name=TestSP${random}    key=sp11${random}    isActive=true    storeName=DE

@@ -70,7 +70,7 @@ Zed: create a cms page and publish it:
     Zed: go to second navigation item level:    Content    Pages
     Zed: perform search by:    ${enName}
     Page Should Contain Element    xpath=//td[contains(@class,'name') and contains(text(),'${enName}')]/following-sibling::td[contains(@class,'status')]//span[contains(@class,'label') and contains(text(),'Active')]    message=CMS page is not found or not activated
-    common.Trigger multistore p&s
+    Trigger multistore p&s
 
 Zed: update cms page and publish it:
     [Arguments]    @{args}
@@ -94,4 +94,4 @@ Zed: update cms page and publish it:
     Click    ${zed_cms_page_save_button}
     Click    ${zed_cms_page_publish_button}
     Zed: message should be shown:    successfully published
-    common.Trigger multistore p&s
+    Trigger multistore p&s

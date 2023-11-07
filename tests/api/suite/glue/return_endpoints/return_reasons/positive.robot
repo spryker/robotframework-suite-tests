@@ -1,13 +1,13 @@
 *** Settings ***
 Resource    ../../../../../../resources/common/common_api.robot
-Suite Setup        SuiteSetup
-Test Setup         TestSetup
+Suite Setup    API_suite_setup
+Test Setup    API_test_setup
 Default Tags    glue
 
 *** Test Cases ***
 #GET requests
 ENABLER
-    TestSetup
+    API_test_setup
 Get_return_reason
     When I send a GET request:    /return-reasons
     Then Response status code should be:    200

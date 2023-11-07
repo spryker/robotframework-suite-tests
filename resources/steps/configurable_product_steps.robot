@@ -1,5 +1,5 @@
 *** Settings ***
-Resource    ../common/common.robot
+Resource    ../common/common_ui.robot
 Resource    ../../resources/pages/yves/yves_product_configurator_page.robot
 Resource    ../../resources/pages/yves/yves_product_details_page.robot
 Resource    ../../resources/pages/zed/zed_order_details_page.robot

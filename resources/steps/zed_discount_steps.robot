@@ -87,7 +87,7 @@ Zed: deactivate all discounts from Overview page
     Zed: go to second navigation item level:    Merchandising    Discount
     Wait Until Element Is Visible    xpath=/descendant::a[contains(.,'View')][1]
     Zed: clear search field
-    common.Save the result of a SELECT DB query to a variable:    select COUNT(id_discount) from spy_discount    DiscountPagesCount
+    Save the result of a SELECT DB query to a variable:    select COUNT(id_discount) from spy_discount    DiscountPagesCount
     ${DiscountPagesCount}=    Evaluate    ${DiscountPagesCount} / 10
     ${DiscountPagesCount}=    Evaluate    math.ceil(${DiscountPagesCount})    math
     ${DiscountPagesCount}=    Convert To Integer    ${DiscountPagesCount}

@@ -1,5 +1,5 @@
 *** Settings ***
-Resource    ../../common/common.robot
+Resource    ../../common/common_ui.robot
 
 *** Variable ***
 ${shopping_lists_main_content_locator}    xpath=//div[@data-qa='component shopping-list-overview-table']

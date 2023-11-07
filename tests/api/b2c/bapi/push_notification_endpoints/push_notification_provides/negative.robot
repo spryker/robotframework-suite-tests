@@ -1,14 +1,14 @@
 
 *** Settings ***
-Suite Setup       SuiteSetup
-Test Setup        TestSetup
+Suite Setup       API_suite_setup
+Test Setup        API_test_setup
 Resource    ../../../../../../resources/common/common_api.robot
 Resource    ../../../../../../resources/steps/push_notifications_steps.robot
 Default Tags    bapi
 
 *** Test Cases ***
 ENABLER
-   TestSetup
+   API_test_setup
 
 *** Test Cases ***
 Retrieve_push_notification_providers_without_authorization
@@ -31,7 +31,7 @@ Retrieve_non-existent_push_notification_provider
    [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
     ...    AND    I set Headers:    Content-Type=application/vnd.api+json   Authorization=Bearer ${token}
     When I send a GET request:    /push-notification-providers/non-existent-id
-    Then Response status code should be:    400
+    Then Response status code should be:    404
     And Response should return error code:    5001
     And Response should return error message:    The push notification provider was not found.
 
