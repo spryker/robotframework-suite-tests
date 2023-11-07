@@ -43,7 +43,6 @@ Resource    ../../../resources/steps/configurable_product_steps.robot
 Resource    ../../../resources/steps/dynamic_entity_steps.robot
 Resource    ../../../resources/common/common_api.robot
 Resource    ../../../resources/steps/service_point_steps.robot
-Resource    ../../../resources/steps/service_point_steps.robot
 Resource    ../../../resources/steps/warehouse_user_assigment_steps.robot
 Resource    ../../../resources/steps/picking_list_steps.robot
 Default Tags    bapi

@@ -395,3 +395,4 @@ Yves: check store availabiity for item number xxx:
     Repeat Keyword    3    Wait Until Network Is Idle
 
 Yves: select service point store for item number xxx:
+    Log    message

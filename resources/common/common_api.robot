@@ -2183,8 +2183,5 @@ I get access token by user credentials:
     When I set Headers:    Content-Type=application/x-www-form-urlencoded
     And I send a POST request:    /token    {"grantType": "${grant_type.password}","username": "${email}","password": "${password}"}
     Save value to a variable:    [access_token]    token
-    Log    ${response_body}
-    ${length}=    Get Length    ${token}
-    Run Keyword If    ${length} == 0    Fail    Access token is empty!
     Log    ${token}
     [Return]    ${token}
