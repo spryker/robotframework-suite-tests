@@ -7,7 +7,7 @@ Default Tags    bapi
 
 *** Test Cases ***
 ENABLER
-   API_test_setup
+    API_test_setup
 
 *** Test Cases ***
 Create_push_notification_provider

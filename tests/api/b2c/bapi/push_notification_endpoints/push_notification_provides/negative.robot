@@ -31,7 +31,7 @@ Retrieve_non-existent_push_notification_provider
    [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
     ...    AND    I set Headers:    Content-Type=application/vnd.api+json   Authorization=Bearer ${token}
     When I send a GET request:    /push-notification-providers/non-existent-id
-    Then Response status code should be:    400
+    Then Response status code should be:    404
     And Response should return error code:    5001
     And Response should return error message:    The push notification provider was not found.
 
