@@ -32,6 +32,3 @@ ${checkout_billing_address_country_select}    id=addressesForm_billingAddress_is
 ${checkout_billing_address_phone_field}    id=addressesForm_billingAddress_phone
 ${manage_your_addresses_link}    xpath=//a[contains(@href,'customer/address')]
 &{billing_address_section}    ui_b2b=xpath=//form[@name='addressesForm']//div[contains(@class,'billing-same-as-shipping')]    ui_b2c=xpath=//form[@name='addressesForm']//div[contains(@class,'billing-address')]    ui_suite=xpath=//form[@name='addressesForm']//div[contains(@class,'billing-same-as-shipping')]    ui_mp_b2b=xpath=//form[@name='addressesForm']//div[contains(@class,'billing-same-as-shipping')]    ui_mp_b2c=xpath=//form[@name='addressesForm']//div[contains(@class,'billing-address')]
-${checkout_service_point_select_popup}    xpath=//div[contains(@id,'service-point-selector')]
-${checkout_service_point_popup_search_field}    xpath=(//div[contains(@id,'service-point-selector')]//input[contains(@class,'search')])[1]
-${checkout_service_point_popup_close_button}    xpath=(//div[contains(@id,'service-point-selector')]//button[contains(@class,'close')][contains(@class,'main-popup')])[1]

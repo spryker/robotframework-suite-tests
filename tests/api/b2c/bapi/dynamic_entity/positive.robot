@@ -371,7 +371,6 @@ Authorization_by_x_api_key
 Availability_recalculation_after_stock_update
     [Documentation]    checks that product availability is recalculated after stock update via data exchange api
     [Setup]    Find first available product via data exchange api
-    Make sure that concrete product is available:    ${concrete_sku}
     Remove Tags    *
     Set Tags    bapi
     API_test_setup

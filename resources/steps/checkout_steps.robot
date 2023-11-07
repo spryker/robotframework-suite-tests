@@ -376,14 +376,16 @@ Yves: check store availabiity for item number xxx:
         END
         IF    '${key}'=='store' and '${value}' != '${EMPTY}'    
             Click    xpath=(//article)[${item_number}]//shipment-type-toggler//service-point-selector[contains(@data-qa,'service-point-selector')]
-            Wait Until Element Is Visible    ${checkout_service_point_popup_close_button}
-            Type Text    ${checkout_service_point_popup_search_field}    ${value}
-            Repeat Keyword    3    Wait Until Network Is Idle
+            Sleep    2s
+            Fill Text    xpath=((//div[contains(@id,'service-point-selector')])[${item_number}]//input[contains(@class,'search')])[1]    ${value}    force=True
+            Keyboard Key    press    Enter
+            Sleep    2s
+            Repeat Keyword    5    Wait Until Network Is Idle
         END
         IF    '${key}'=='availability' and '${value}' != '${EMPTY}'
             ${value}=    Convert To Lower Case    ${value}
             IF    '${value}' == 'green'
-                Page Should Contain Element    xpath=(//div[contains(@id,'service-point-selector')]//*[contains(@data-qa,'service-point-availability-status')]//span[contains(@class,'all-items-available')])[1]
+                Page Should Contain Element    xpath=((//div[contains(@id,'service-point-selector')])[${item_number}]//*[contains(@data-qa,'service-point-availability-status')]//span[contains(@class,'all-items-available')])[1]
             # ELSE IF    '${value}' == 'yellow'
             #     Page Should Contain Element    xpath=
             # ELSE IF    '${value}' == 'red'
@@ -391,8 +393,42 @@ Yves: check store availabiity for item number xxx:
             END
         END
     END
-    Click    ${checkout_service_point_popup_close_button}
+    Click With Options    xpath=((//div[contains(@id,'service-point-selector')])[${item_number}]//button[contains(@class,'close')][contains(@class,'main-popup')])[1]    force=True
     Repeat Keyword    3    Wait Until Network Is Idle
 
-Yves: select service point store for item number xxx:
-    Log    message
+Yves: select pickup service point store for item number xxx:
+    [Arguments]    @{args}
+    ${servicePointData}=    Set Up Keyword Arguments    @{args}
+    ${item_number}=    Set Variable    1
+    FOR    ${key}    ${value}    IN    &{servicePointData}
+        Log    Key is '${key}' and value is '${value}'.
+        IF    '${key}'=='item_number' and '${value}' != '${EMPTY}'    
+            ${item_number}=    Set Variable    ${value}
+        END
+        IF    '${key}'=='store' and '${value}' != '${EMPTY}'    
+            Log    (//article)[${item_number}]//shipment-type-toggler//service-point-selector[contains(@data-qa,'service-point-selector')]
+            Click    xpath=(//article)[${item_number}]//shipment-type-toggler//service-point-selector[contains(@data-qa,'service-point-selector')]
+            Sleep    2s
+            Fill Text    xpath=((//div[contains(@id,'service-point-selector')])[${item_number}]//input[contains(@class,'search')])[1]    ${value}    force=True
+            Keyboard Key    press    Enter
+            Sleep    2s
+            Repeat Keyword    5    Wait Until Network Is Idle
+            Click With Options    xpath=((//div[contains(@id,'service-point-selector')])[${item_number}]//button[contains(@class,'select-button')])[position()=1]    force=true
+            Repeat Keyword    3    Wait Until Network Is Idle
+            Sleep    1s
+        END
+    END
+
+Yves: checkout summary page contains product with unit price:
+    [Arguments]    ${sku}    ${productName}    ${productPrice}
+    Reload
+    Wait Until Network Is Idle
+    IF    '${env}' in ['ui_b2b','ui_mp_b2b']
+        TRY
+            Page Should Contain Element    xpath=//div[contains(@class,'product-card-item__col--description')]//div[contains(.,'SKU: ${sku}')]/ancestor::article//*[contains(@class,'product-card-item__col--description')]/div[1]//*[contains(@class,'money-price__amount')][contains(.,'${productPrice}')]    timeout=1s
+        EXCEPT
+            Page Should Contain Element    xpath=//div[contains(@class,'product-cart-item__col--description')]//div[contains(.,'SKU: ${sku}')]/ancestor::article//*[contains(@class,'product-cart-item__col--description')]/div[1]//*[contains(@class,'money-price__amount')][contains(.,'${productPrice}')]    timeout=1s
+        END  
+    ELSE
+        Page Should Contain Element    xpath=//article[contains(@data-qa,'component product-card-item')]//*[contains(text(),'${productName}')]/following-sibling::span/span[contains(@class,'money-price__amount') and contains(.,'${productPrice}')]    timeout=1s
+    END
