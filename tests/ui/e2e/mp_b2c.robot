@@ -2328,8 +2328,6 @@ Fulfilment_app_e2e
     Yves: get the last placed order ID by current customer
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to order page:    ${lastPlacedOrder}
-    Zed: wait for order item to be in state:    091_25873091    payment pending
-    Zed: wait for order item to be in state:    093_24495843    payment pending
     Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Pay 
     common.Trigger oms   
     Zed: wait for order item to be in state:    091_25873091    confirmed
