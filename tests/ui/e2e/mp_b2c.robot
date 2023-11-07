@@ -1,9 +1,8 @@
 *** Settings ***
-Library    BuiltIn
-Suite Setup       common.SuiteSetup
-Test Setup        common.TestSetup
-Test Teardown     common.TestTeardown
-Suite Teardown    common.SuiteTeardown
+Suite Setup       UI_suite_setup
+Test Setup        UI_test_setup
+Test Teardown     UI_test_teardown
+Suite Teardown    UI_suite_teardown
 Test Tags    robot:recursive-stop-on-failure
 Resource    ../../../resources/common/common.robot
 Resource    ../../../resources/steps/header_steps.robot
@@ -214,7 +213,7 @@ Discontinued_Alternative_Products
     Zed: product is successfully discontinued
     Zed: check if at least one price exists for concrete and add if doesn't:    100
     Zed: add following alternative products to the concrete:    012
-    common.Trigger p&s
+    Trigger p&s
     Yves: login on Yves with provided credentials:    ${yves_user_email}
     Yves: go To 'Wishlist' Page
     Yves: go to wishlist with name:    My wishlist
@@ -224,7 +223,7 @@ Discontinued_Alternative_Products
     ...    AND    Yves: check if cart is not empty and clear it
     ...    AND    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: undo discontinue the following product:    ${discontinued_product_abstract_sku}    ${discontinued_product_concrete_sku}
-    ...    AND    common.Trigger p&s
+    ...    AND    Trigger p&s
 
 Back_in_Stock_Notification
     [Documentation]    Back in stock notification is sent and availability check
@@ -365,7 +364,7 @@ Discounts
     Zed: create a discount and activate it:    voucher    Percentage    5    sku = '*'    test${random}    discountName=Voucher Code 5% ${random}
     Zed: create a discount and activate it:    cart rule    Percentage    10    sku = '*'    discountName=Cart Rule 10% ${random}
     Zed: create a discount and activate it:    cart rule    Percentage    100    discountName=Promotional Product 100% ${random}    promotionalProductDiscount=True    promotionalProductAbstractSku=002    promotionalProductQuantity=2
-    common.Trigger p&s
+    Trigger p&s
     Yves: login on Yves with provided credentials:    ${yves_user_email}
     Yves: check if cart is not empty and clear it
     Yves: go to PDP of the product with sku:    190
@@ -403,7 +402,7 @@ Discounts
     ...    AND    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: deactivate following discounts from Overview page:    Voucher Code 5% ${random}    Cart Rule 10% ${random}    Promotional Product 100% ${random}
     ...    AND    Zed: activate following discounts from Overview page:    Free Acer Notebook    Tu & Wed $5 off 5 or more    10% off $100+    Free smartphone    20% off cameras    Free Acer M2610    Free standard delivery    10% off Intel Core    5% off white    Tu & Wed €5 off 5 or more    10% off minimum order
-    ...    AND    common.Trigger p&s
+    ...    AND    Trigger p&s
 
 Split_Delivery
     [Documentation]    Checks split delivery in checkout
@@ -489,7 +488,7 @@ Return_Management
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
-    common.Trigger oms
+    Trigger oms
     Yves: get the last placed order ID by current customer
     Zed: login on Zed with provided credentials:    ${zed_main_merchant_email}
     Zed: go to order page:    ${lastPlacedOrder}
@@ -565,7 +564,7 @@ Content_Management
     [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: go to second navigation item level:    Content    Pages
     ...    AND    Zed: click Action Button in a table for row that contains:    Test Page${random}    Deactivate
-    ...    AND    common.Trigger multistore p&s
+    ...    AND    Trigger multistore p&s
 
 Product_Relations
     [Documentation]    Checks related product on PDP and upsell products in cart
@@ -652,7 +651,7 @@ Refunds
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
-    common.Trigger oms
+    Trigger oms
     Yves: get the last placed order ID by current customer
     Zed: login on Zed with provided credentials:    ${zed_main_merchant_email}
     Zed: grand total for the order equals:    ${lastPlacedOrder}    €394.41
@@ -685,7 +684,7 @@ Multiple_Merchants_Order
     ...    AND    MP: change offer stock:
     ...    || offer   | stock quantity | is never out of stock ||
     ...    || offer89 | 10             | true                  ||
-    ...    AND    common.Trigger p&s
+    ...    AND    Trigger p&s
     ...    AND    Yves: login on Yves with provided credentials:    ${yves_user_email}
     ...    AND    Yves: delete all user addresses
     ...    AND    Yves: check if cart is not empty and clear it
@@ -740,7 +739,7 @@ Merchant_Profile_Update
     ...    || email                  | phone           | delivery time | data privacy              ||
     ...    || updated@office-king.nl | +11 222 333 444 | 2-4 weeks     | Data privacy updated text ||
     MP: click submit button
-    common.Trigger multistore p&s
+    Trigger multistore p&s
     Yves: go to URL:    en/merchant/video-king
     Yves: assert merchant profile fields:
     ...    || name | email                  | phone           | delivery time | data privacy              ||
@@ -752,7 +751,7 @@ Merchant_Profile_Update
     ...    || email            | phone           | delivery time | data privacy                                         ||
     ...    || hi@video-king.nl | +31 123 345 777 | 2-4 days      | Video King values the privacy of your personal data. ||
     ...    AND    MP: click submit button
-    ...    AND    common.Trigger multistore p&s
+    ...    AND    Trigger multistore p&s
 
 Merchant_Profile_Set_to_Offline_from_MP
     [Documentation]    Checks that merchant is able to set store offline and then his profile, products and offers won't be displayed on Yves
@@ -791,7 +790,7 @@ Merchant_Profile_Set_to_Inactive_from_Backoffice
     ...    AND    MP: change offer stock:
     ...    || offer   | stock quantity | is never out of stock ||
     ...    || offer30 | 10             | true                  ||
-    ...    AND    common.Trigger oms
+    ...    AND    Trigger oms
     Yves: go to the 'Home' page
     Yves: perform search by:    Video King
     Yves: go to the PDP of the first available product on open catalog page
@@ -803,7 +802,7 @@ Merchant_Profile_Set_to_Inactive_from_Backoffice
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Marketplace    Merchants  
     Zed: click Action Button in a table for row that contains:     Video King     Deactivate
-    common.Trigger multistore p&s
+    Trigger multistore p&s
     Yves: go to the 'Home' page
     Yves: go to URL:    en/merchant/video-king
     Yves: try reloading page if element is/not appear:    ${merchant_profile_main_content_locator}    false
@@ -817,7 +816,7 @@ Merchant_Profile_Set_to_Inactive_from_Backoffice
     [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: go to second navigation item level:    Marketplace    Merchants  
     ...    AND    Zed: click Action Button in a table for row that contains:     Video King     Activate
-    ...    AND    common.Trigger multistore p&s
+    ...    AND    Trigger multistore p&s
 
 Manage_Merchants_from_Backoffice
     [Documentation]    Checks that backoffice admin is able to create, approve, edit merchants
@@ -838,7 +837,7 @@ Manage_Merchants_from_Backoffice
     Zed: update Merchant on edit page with the following data:
     ...    || merchant name               | merchant reference | e-mail  | store | store | en url | de url ||
     ...    || NewMerchantUpdated${random} |                    |         |       |       |        |        ||
-    common.Trigger multistore p&s
+    Trigger multistore p&s
     Yves: go to newly created page by URL:    en/merchant/NewMerchantURL${random}
     Yves: assert merchant profile fields:
     ...    || name                         | email| phone | delivery time | data privacy ||
@@ -849,12 +848,12 @@ Manage_Merchants_from_Backoffice
     Zed: update Merchant on edit page with the following data:
     ...    || merchant name | merchant reference | e-mail  | uncheck store | en url | de url ||
     ...    ||               |                    |         | DE            |        |        ||
-    common.Trigger multistore p&s
+    Trigger multistore p&s
     Yves: go to URL and refresh until 404 occurs:    ${yves_url}en/merchant/NewMerchantURL${random}
     [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: go to second navigation item level:    Marketplace    Merchants  
     ...    AND    Zed: click Action Button in a table for row that contains:     NewMerchantUpdated${random}     Deactivate
-    ...    AND    common.Trigger multistore p&s
+    ...    AND    Trigger multistore p&s
 
 Manage_Merchant_Users
     [Documentation]    Checks that backoffice admin is able to create, activate, edit and delete merchant users
@@ -917,7 +916,7 @@ Create_and_Approve_New_Merchant_Product
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Catalog    Products 
     Zed: click Action Button in a table for row that contains:     NewProduct${random}     Approve
-    common.Trigger p&s
+    Trigger p&s
     Yves: login on Yves with provided credentials:    ${yves_user_email}   
     Yves: go to URL:    en/search?q=SKU${random}
     Try reloading page until element is/not appear:    ${catalog_product_card_locator}    true    21    5s
@@ -928,7 +927,7 @@ Create_and_Approve_New_Merchant_Product
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Catalog    Products 
     Zed: click Action Button in a table for row that contains:     NewProduct${random}     Deny
-    common.Trigger p&s
+    Trigger p&s
     Yves: go to the 'Home' page
     Yves: go to URL and refresh until 404 occurs:    ${url}
 
@@ -957,7 +956,7 @@ Create_New_Offer
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Catalog    Products 
     Zed: click Action Button in a table for row that contains:     SprykerSKU${random}     Approve 
-    common.Trigger p&s 
+    Trigger p&s 
     Yves: go to URL:    en/search?q=SprykerSKU${random}
     Try reloading page until element is/not appear:    ${catalog_product_card_locator}    true    21    5s
     MP: login on MP with provided credentials:    ${merchant_budget_cameras_email}
@@ -978,7 +977,7 @@ Create_New_Offer
     ...    || row number | store | currency | gross default ||
     ...    || 1          | DE    | EUR      | 200           ||
     MP: save offer
-    common.Trigger p&s
+    Trigger p&s
     Yves: login on Yves with provided credentials:    ${yves_user_email}
     Yves: check if cart is not empty and clear it
     Yves: go to PDP of the product with sku:     SprykerSKU${random}-2
@@ -994,7 +993,7 @@ Create_New_Offer
     ...    AND    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: go to second navigation item level:    Catalog    Products 
     ...    AND    Zed: click Action Button in a table for row that contains:     SprykerProduct${random}     Deny
-    ...    AND    common.Trigger p&s
+    ...    AND    Trigger p&s
 
 Approve_Offer
     [Documentation]    Checks that marketplace operator is able to approve or deny merchant's offer and it will be available or not in store due to this status
@@ -1007,7 +1006,7 @@ Approve_Offer
     Zed: go to second navigation item level:    Marketplace    Offers
     Zed: select merchant in filter:    Video King
     Zed: click Action Button in a table for row that contains:     ${second_product_with_multiple_offers_concrete_sku}     Deny
-    common.Trigger p&s
+    Trigger p&s
     Yves: go to the 'Home' page
     Yves: go to PDP of the product with sku:     ${second_product_with_multiple_offers_concrete_sku}
     Yves: merchant is (not) displaying in Sold By section of PDP:    Video King    false
@@ -1015,7 +1014,7 @@ Approve_Offer
     Zed: go to second navigation item level:    Marketplace    Offers
     Zed: select merchant in filter:    Video King
     Zed: click Action Button in a table for row that contains:     ${second_product_with_multiple_offers_concrete_sku}    Approve
-    common.Trigger p&s
+    Trigger p&s
     Yves: login on Yves with provided credentials:    ${yves_user_email}
     Yves: go to PDP of the product with sku:    ${second_product_with_multiple_offers_abstract_sku}
     Yves: merchant is (not) displaying in Sold By section of PDP:    Video King    true
@@ -1037,7 +1036,7 @@ Fulfill_Order_from_Merchant_Portal
     ...    AND    MP: change offer stock:
     ...    || offer    | stock quantity | is never out of stock ||
     ...    || offer410 | 10             | true                  ||
-    ...    AND    common.Trigger p&s
+    ...    AND    Trigger p&s
     ...    AND    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: change product stock:    ${one_variant_product_of_main_merchant_abstract_sku}    ${one_variant_product_of_main_merchant_concrete_sku}    true    10    10
     ...    AND    Yves: login on Yves with provided credentials:    ${yves_user_email}
@@ -1158,7 +1157,7 @@ Merchant_Portal_Product_Volume_Prices
     ...    || product type | row number | store | currency | gross default | quantity ||
     ...    || abstract     | 2          | DE    | EUR      | 10            | 2        ||
     MP: save abstract product 
-    common.Trigger p&s
+    Trigger p&s
     MP: click on a table row that contains:    VPNewProduct${random}
     MP: open concrete drawer by SKU:    VPSKU${random}-2
     MP: fill concrete product fields:
@@ -1167,7 +1166,7 @@ Merchant_Portal_Product_Volume_Prices
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Catalog    Products 
     Zed: click Action Button in a table for row that contains:     VPNewProduct${random}     Approve
-    common.Trigger p&s
+    Trigger p&s
     Yves: login on Yves with provided credentials:    ${yves_user_email}
     Yves: check if cart is not empty and clear it
     Yves: go to URL:    en/search?q=VPSKU${random}
@@ -1189,7 +1188,7 @@ Merchant_Portal_Product_Volume_Prices
     MP: click on a table row that contains:    VPNewProduct${random}
     MP: delete product price row that contains quantity:    2
     MP: save abstract product
-    common.Trigger p&s
+    Trigger p&s
     Yves: login on Yves with provided credentials:    ${yves_user_email}
     Yves: go to PDP of the product with sku:     VPSKU${random}
     Yves: change quantity using '+' or '-' button № times:    +    3
@@ -1201,7 +1200,7 @@ Merchant_Portal_Product_Volume_Prices
     ...    AND    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: go to second navigation item level:    Catalog    Products 
     ...    AND    Zed: click Action Button in a table for row that contains:     VPNewProduct${random}     Deny
-    ...    AND    common.Trigger p&s
+    ...    AND    Trigger p&s
 
 Merchant_Portal_Offer_Volume_Prices
     [Documentation]    Checks that merchant is able to create new offer with volume prices and it will be displayed on Yves. Falback to default price after delete.
@@ -1220,7 +1219,7 @@ Merchant_Portal_Offer_Volume_Prices
     ...    || product type | row number | store | currency | gross default ||
     ...    || abstract     | 1          | DE    | EUR      | 100           ||
     MP: save abstract product 
-    common.Trigger p&s
+    Trigger p&s
     MP: click on a table row that contains:    OfferNewProduct${random}
     MP: open concrete drawer by SKU:    OfferSKU${random}-2
     MP: fill concrete product fields:
@@ -1229,7 +1228,7 @@ Merchant_Portal_Offer_Volume_Prices
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Catalog    Products 
     Zed: click Action Button in a table for row that contains:     OfferNewProduct${random}     Approve
-    common.Trigger p&s
+    Trigger p&s
     Yves: login on Yves with provided credentials:    ${yves_second_user_email}  
     Yves: check if cart is not empty and clear it
     Yves: go to URL:    en/search?q=OfferSKU${random}
@@ -1254,7 +1253,7 @@ Merchant_Portal_Offer_Volume_Prices
     ...    || row number | store | currency | gross default | quantity ||
     ...    || 3          | DE    | EUR      | 10            | 2        ||
     MP: save offer
-    common.Trigger p&s
+    Trigger p&s
     Yves: login on Yves with provided credentials:    ${yves_second_user_email}
     Yves: go to PDP of the product with sku:     OfferSKU${random}
     Yves: merchant is (not) displaying in Sold By section of PDP:    Video King    true
@@ -1275,7 +1274,7 @@ Merchant_Portal_Offer_Volume_Prices
     MP: click on a table row that contains:    volumeMerchantSKU${random}
     MP: delete offer price row that contains quantity:    2
     MP: save offer
-    common.Trigger p&s
+    Trigger p&s
     Yves: login on Yves with provided credentials:    ${yves_second_user_email}
     Yves: go to PDP of the product with sku:     OfferSKU${random}
     Reload
@@ -1289,7 +1288,7 @@ Merchant_Portal_Offer_Volume_Prices
     ...    AND    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: go to second navigation item level:    Catalog    Products 
     ...    AND    Zed: click Action Button in a table for row that contains:     OfferNewProduct${random}     Deny
-    ...    AND    common.Trigger p&s
+    ...    AND    Trigger p&s
 
 Merchant_Portal_My_Account
     [Documentation]    Checks that MU can edit personal data in MP
@@ -1369,7 +1368,7 @@ Merchant_Product_Offer_in_Backoffice
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Catalog    Products 
     Zed: click Action Button in a table for row that contains:     ViewProduct${random}     Approve
-    common.Trigger p&s
+    Trigger p&s
     MP: login on MP with provided credentials:    ${merchant_video_king_email}
     MP: open navigation menu tab:    Offers
     MP: click on create new entity button:    Add Offer
@@ -1408,7 +1407,7 @@ Merchant_Product_Offer_in_Backoffice
     [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: go to second navigation item level:    Catalog    Products 
     ...    AND    Zed: click Action Button in a table for row that contains:     ViewProduct${random}     Deny
-    ...    AND    common.Trigger p&s
+    ...    AND    Trigger p&s
 
 Manage_Merchant_Product
     [Documentation]    Checks that MU and BO user can manage merchant abstract and concrete products + add new concrete product
@@ -1427,7 +1426,7 @@ Manage_Merchant_Product
     ...    || product type | row number  | store | currency | gross default | gross original ||
     ...    || abstract     | 1           | DE    | EUR      | 100           | 90             ||
     MP: save abstract product 
-    common.Trigger multistore p&s
+    Trigger multistore p&s
     MP: click on a table row that contains:    manageProduct${random}
     MP: open concrete drawer by SKU:    manageSKU${random}-1
     MP: fill concrete product fields:
@@ -1450,11 +1449,11 @@ Manage_Merchant_Product
     ...    || product type | row number | store | currency | gross default | quantity ||
     ...    || concrete     | 2          | DE    | EUR      | 10            | 2        ||
     MP: save concrete product
-    common.Trigger multistore p&s
+    Trigger multistore p&s
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Catalog    Products 
     Zed: click Action Button in a table for row that contains:     manageProduct${random}     Approve
-    common.Trigger p&s
+    Trigger p&s
     Yves: login on Yves with provided credentials:    ${yves_user_email}   
     Yves: go to URL:    en/search?q=manageSKU${random}
     Try reloading page until element is/not appear:    ${catalog_product_card_locator}    true    21    5s
@@ -1504,13 +1503,13 @@ Manage_Merchant_Product
     Zed: update abstract product data:
     ...    || productAbstract    | store | name en                         | name de                         | new from   | new to     ||
     ...    || manageSKU${random} | AT    | ENUpdatedmanageProduct${random} | DEUpdatedmanageProduct${random} | 01.01.2020 | 01.01.2030 ||
-    common.Trigger multistore p&s
+    Trigger multistore p&s
     Zed: go to second navigation item level:    Catalog    Products
     Zed: table should contain:    ENUpdatedmanageProduct${random}
     Zed: change concrete product price on:
     ...    || productAbstract    | productConcrete      | store | mode  | type   | currency | amount ||
     ...    || manageSKU${random} | manageSKU${random}-3 | DE    | gross | default| €        | 15.00  ||
-    common.Trigger multistore p&s
+    Trigger multistore p&s
     Yves: login on Yves with provided credentials:    ${yves_user_email}
     Yves: go to PDP of the product with sku:     manageSKU${random}
     Yves: product name on PDP should be:    ENUpdatedmanageProduct${random}
@@ -1521,7 +1520,7 @@ Manage_Merchant_Product
     ...    AND    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: go to second navigation item level:    Catalog    Products 
     ...    AND    Zed: click Action Button in a table for row that contains:     manageSKU${random}     Deny
-    ...    AND    common.Trigger multistore p&s
+    ...    AND    Trigger multistore p&s
 
 Merchant_Product_Original_Price
     [Documentation]    checks that Orignal price is displayed on the PDP and in Catalog
@@ -1565,7 +1564,7 @@ Merchant_Product_Original_Price
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Catalog    Products 
     Zed: click Action Button in a table for row that contains:     originalProduct${random}     Approve
-    common.Trigger p&s
+    Trigger p&s
     Yves: login on Yves with provided credentials:    ${yves_user_email}   
     Yves: go to URL:    en/search?q=originalSKU${random}
     Try reloading page until element is/not appear:    ${catalog_product_card_locator}    true    21    5s
@@ -1578,7 +1577,7 @@ Merchant_Product_Original_Price
     ...    AND    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: go to second navigation item level:    Catalog    Products 
     ...    AND    Zed: click Action Button in a table for row that contains:     originalSKU${random}     Deny
-    ...    AND    common.Trigger p&s
+    ...    AND    Trigger p&s
 
 Checkout_Address_Management
     [Documentation]    Bug: CC-30439. Checks that user can change address during the checkout and save new into the address book
@@ -1714,7 +1713,7 @@ Minimum_Order_Value
     Zed: change global threshold settings:
     ...    || store & currency | minimum hard value | minimum hard en message  | minimum hard de message  | maximun hard value | maximun hard en message | maximun hard de message | soft threshold                | soft threshold value | soft threshold fixed fee | soft threshold en message | soft threshold de message ||
     ...    || DE - Euro [EUR]  | 5                  | EN minimum {{threshold}} | DE minimum {{threshold}} | 150                | EN max {{threshold}}    | DE max {{threshold}}    | Soft Threshold with fixed fee | 100000               | 9                        | EN fixed {{fee}} fee      | DE fixed {{fee}} fee      ||
-    common.Trigger p&s
+    Trigger p&s
     Yves: login on Yves with provided credentials:    ${yves_user_email}
     Yves: go to PDP of the product with sku:    005
     Yves: add product to the shopping cart
@@ -1750,7 +1749,7 @@ Minimum_Order_Value
     ...    AND    Zed: change global threshold settings:
     ...    || store & currency | minimum hard value | minimum hard en message | minimum hard de message | maximun hard value | maximun hard en message                                                                                   | maximun hard de message                                                                                                              | soft threshold | soft threshold value | soft threshold en message | soft threshold de message ||
     ...    || DE - Euro [EUR]  | ${SPACE}           | ${SPACE}                | ${SPACE}                | 10000.00           | The cart value cannot be higher than {{threshold}}. Please remove some items to proceed with the order    | Der Warenkorbwert darf nicht höher als {{threshold}} sein. Bitte entfernen Sie einige Artikel, um mit der Bestellung fortzufahren    | None           | ${EMPTY}             | ${EMPTY}                  | ${EMPTY}                  ||
-    ...    AND    common.Trigger p&s
+    ...    AND    Trigger p&s
     
 Order_Cancelation
     [Documentation]    Check that customer is able to cancel order
@@ -1771,7 +1770,7 @@ Order_Cancelation
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed    
-    common.Trigger oms
+    Trigger oms
     Yves: go to 'Order History' page
     Yves: get the last placed order ID by current customer
     Yves: cancel the order:    ${lastPlacedOrder}
@@ -1847,7 +1846,7 @@ Multistore_Product_Offer
     ...    || product type | row number  | store | currency | gross default | gross original ||
     ...    || abstract     | 2           | AT    | EUR      | 300           | 90             ||
     MP: save abstract product 
-    common.Trigger multistore p&s
+    Trigger multistore p&s
     MP: click on a table row that contains:    multistoreProduct${random}
     MP: open concrete drawer by SKU:    multistoreSKU${random}-1
     MP: fill concrete product fields:
@@ -1864,7 +1863,7 @@ Multistore_Product_Offer
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Catalog    Products 
     Zed: click Action Button in a table for row that contains:     multistoreProduct${random}     Approve
-    common.Trigger multistore p&s
+    Trigger multistore p&s
     Yves: login on Yves with provided credentials:    ${yves_second_user_email}  
     Yves: check if cart is not empty and clear it
     Yves: go to URL:    en/search?q=multistoreSKU${random}
@@ -1890,7 +1889,7 @@ Multistore_Product_Offer
     ...    || row number | store | currency | gross default | quantity ||
     ...    || 3          | AT    | EUR      | 10            | 1        ||
     MP: save offer
-    common.Trigger multistore p&s
+    Trigger multistore p&s
     Yves: login on Yves with provided credentials:    ${yves_second_user_email}
     Yves: go to PDP of the product with sku:     multistoreSKU${random}
     Yves: merchant is (not) displaying in Sold By section of PDP:    Video King    true
@@ -1911,7 +1910,7 @@ Multistore_Product_Offer
     ...    || is active | unselect store ||
     ...    || true      | AT             ||         
     MP: save offer
-    common.Trigger multistore p&s
+    Trigger multistore p&s
     Yves: go to AT store 'Home' page
     Yves: go to AT URL:    en/search?q=multistoreSKU${random}
     Try reloading page until element is/not appear:    ${catalog_product_card_locator}    true    21    5s
@@ -1922,19 +1921,19 @@ Multistore_Product_Offer
     Zed: update abstract product data:
     ...    || productAbstract        | unselect store ||
     ...    || multistoreSKU${random} | AT             ||
-    common.Trigger multistore p&s
+    Trigger multistore p&s
     Yves: go to URL and refresh until 404 occurs:    ${url}
     [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: go to second navigation item level:    Catalog    Products 
     ...    AND    Zed: click Action Button in a table for row that contains:     multistoreSKU${random}     Deny
-    ...    AND    common.Trigger multistore p&s
+    ...    AND    Trigger multistore p&s
 
 Multistore_CMS
     [Documentation]    check CMS multistore functionality
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Content    Pages
     Zed: create a cms page and publish it:    Multistore Page${random}    multistore-page${random}    Multistore Page    Page text
-    common.Trigger multistore p&s
+    Trigger multistore p&s
     Yves: go to newly created page by URL on AT store:    en/multistore-page${random}
     Save current URL
     Yves: page contains CMS element:    CMS Page Title    Multistore Page
@@ -1946,7 +1945,7 @@ Multistore_CMS
     [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: go to second navigation item level:    Content    Pages
     ...    AND    Zed: click Action Button in a table for row that contains:    Multistore Page${random}    Deactivate
-    ...    AND    common.Trigger multistore p&s
+    ...    AND    Trigger multistore p&s
 
 Product_Availability_Calculation
     [Documentation]    Bug: CC-24108. Check product availability + multistore
@@ -1968,7 +1967,7 @@ Product_Availability_Calculation
     ...    || product type | row number  | store | currency | gross default | gross original ||
     ...    || abstract     | 2           | AT    | EUR      | 200           | 90             ||
     MP: save abstract product 
-    common.Trigger multistore p&s
+    Trigger multistore p&s
     MP: click on a table row that contains:    availabilityProduct${random}
     MP: open concrete drawer by SKU:    availabilitySKU${random}-1
     MP: fill concrete product fields:
@@ -1982,11 +1981,11 @@ Product_Availability_Calculation
     ...    || product type | row number | store | currency | gross default ||
     ...    || concrete     | 2          | AT    | EUR      | 50            || 
     MP: save concrete product
-    common.Trigger multistore p&s
+    Trigger multistore p&s
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Catalog    Products 
     Zed: click Action Button in a table for row that contains:     availabilityProduct${random}     Approve
-    common.Trigger multistore p&s
+    Trigger multistore p&s
     Yves: login on Yves with provided credentials:    ${yves_second_user_email}   
     Yves: go to URL:    en/search?q=availabilitySKU${random}
     Try reloading page until element is/not appear:    ${catalog_product_card_locator}    true    21    5s
@@ -2009,7 +2008,7 @@ Product_Availability_Calculation
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
-    common.Trigger oms
+    Trigger oms
     Yves: get the last placed order ID by current customer
     Yves: go to PDP of the product with sku:     availabilitySKU${random}
     Yves: change quantity using '+' or '-' button № times:    +    5
@@ -2019,7 +2018,7 @@ Product_Availability_Calculation
     Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Pay
     Zed: go to my order page:    ${lastPlacedOrder}
     Zed: trigger matching state of xxx merchant's shipment:    1    Cancel
-    common.Trigger multistore p&s
+    Trigger multistore p&s
     Yves: login on Yves with provided credentials:    ${yves_second_user_email}
     Yves: go to PDP of the product with sku:     availabilitySKU${random}
     Yves: change quantity using '+' or '-' button № times:    +    5
@@ -2035,7 +2034,7 @@ Product_Availability_Calculation
     Zed: update warehouse:    
     ...    || warehouse                                         | unselect store || 
     ...    || Spryker ${merchant_spryker_reference} Warehouse 1 | AT             ||
-    common.Trigger multistore p&s
+    Trigger multistore p&s
     Yves: go to AT store 'Home' page
     Yves: go to PDP of the product with sku:     availabilitySKU${random}
     Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    True
@@ -2048,7 +2047,7 @@ Product_Availability_Calculation
     ...    AND    Zed: update warehouse:    
     ...    || warehouse                                         | store || 
     ...    || Spryker ${merchant_spryker_reference} Warehouse 1 | AT    ||
-    ...    AND    common.Trigger multistore p&s
+    ...    AND    Trigger multistore p&s
 
 Offer_Availability_Calculation
     [Documentation]    check offer availability
@@ -2070,7 +2069,7 @@ Offer_Availability_Calculation
     ...    || product type | row number  | store | currency | gross default | gross original ||
     ...    || abstract     | 2           | AT    | EUR      | 200           | 90             ||
     MP: save abstract product 
-    common.Trigger multistore p&s
+    Trigger multistore p&s
     MP: click on a table row that contains:    offAvProduct${random}
     MP: open concrete drawer by SKU:    offAvKU${random}-1
     MP: fill concrete product fields:
@@ -2087,7 +2086,7 @@ Offer_Availability_Calculation
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Catalog    Products 
     Zed: click Action Button in a table for row that contains:     offAvProduct${random}     Approve
-    common.Trigger multistore p&s
+    Trigger multistore p&s
     Yves: login on Yves with provided credentials:    ${yves_second_user_email}   
     Yves: go to URL:    en/search?q=offAvKU${random}
     Try reloading page until element is/not appear:    ${catalog_product_card_locator}    true    21    5s
@@ -2109,7 +2108,7 @@ Offer_Availability_Calculation
     ...    || row number | store | currency | gross default | quantity ||
     ...    || 3          | AT    | EUR      | 10            | 1        ||
     MP: save offer
-    common.Trigger multistore p&s
+    Trigger multistore p&s
     Yves: login on Yves with provided credentials:    ${yves_second_user_email}
     Yves: go to PDP of the product with sku:     offAvKU${random}
     Yves: merchant is (not) displaying in Sold By section of PDP:    Spryker    true
@@ -2134,7 +2133,7 @@ Offer_Availability_Calculation
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
-    common.Trigger oms
+    Trigger oms
     Yves: get the last placed order ID by current customer
     Yves: go to PDP of the product with sku:     offAvKU${random}
     Yves: select xxx merchant's offer:    Spryker
@@ -2145,7 +2144,7 @@ Offer_Availability_Calculation
     Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Pay
     Zed: go to my order page:    ${lastPlacedOrder}
     Zed: trigger matching state of xxx merchant's shipment:    1    Cancel
-    common.Trigger p&s
+    Trigger p&s
     Yves: login on Yves with provided credentials:    ${yves_second_user_email}
     Yves: go to PDP of the product with sku:     offAvKU${random}
     Yves: select xxx merchant's offer:    Spryker
@@ -2161,7 +2160,7 @@ Offer_Availability_Calculation
     ...    AND    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: go to second navigation item level:    Catalog    Products 
     ...    AND    Zed: click Action Button in a table for row that contains:      offAvProduct${random}     Deny
-    ...    AND    common.Trigger p&s
+    ...    AND    Trigger p&s
 
 User_Control
     [Documentation]    Create a user with limited access
@@ -2259,17 +2258,17 @@ Glossary
     ...    || DE_DE                    | EN_US                              ||
     ...    || ${original_DE_text}-Test | ${original_EN_text}-Test-${random} ||
     Zed: submit the form
-    common.Trigger p&s
+    Trigger p&s
     Yves: login on Yves with provided credentials:    ${yves_second_user_email}
     Yves: validate the page title:    ${original_EN_text}-Test-${random}
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: undo the changes in glossary translation:    ${glossary_name}     ${original_DE_text}    ${original_EN_text}
-    common.Trigger p&s
+    Trigger p&s
     Yves: login on Yves with provided credentials:    ${yves_second_user_email}
     Yves: validate the page title:    ${original_EN_text}
     [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: undo the changes in glossary translation:    ${glossary_name}     ${original_DE_text}    ${original_EN_text}
-    ...    AND    common.Trigger p&s
+    ...    AND    Trigger p&s
 
 Configurable_Product_PDP_Wishlist
     [Documentation]    Configure product from PDP and Wishlist
@@ -2370,7 +2369,7 @@ Configurable_Product_OMS
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
-    common.Trigger oms
+    Trigger oms
     Yves: get the last placed order ID by current customer
     Zed: login on Zed with provided credentials:    ${zed_main_merchant_email}
     Zed: grand total for the order equals:    ${lastPlacedOrder}    €316.67
@@ -2447,7 +2446,7 @@ Data_exchange_API_download_specification
     ...    || name       | true    | name         | string | true      | true     | true     ||
     Zed: save data exchange api configuration
     Zed: download data exchange api specification should be active:    false
-    common.Trigger API specification update
+    Trigger API specification update
     Zed: wait until info box is not displayed
     Zed: download data exchange api specification
     Zed: check that downloaded api specification contains:    /mime-types
@@ -2455,11 +2454,11 @@ Data_exchange_API_download_specification
     ...    || table_name  | is_enabled ||
     ...    || mime-types  | false      ||
     Zed: save data exchange api configuration
-    common.Trigger API specification update
+    Trigger API specification update
     Zed: wait until info box is not displayed
     [Teardown]    Run Keywords    Zed: delete dowloaded api specification
     ...    AND    Delete dynamic entity configuration in Database:    mime-types
-    ...    AND    common.Trigger API specification update
+    ...    AND    Trigger API specification update
 
 Data_exchange_API_Configuration_in_Zed
     [Tags]    bapi
@@ -2484,13 +2483,13 @@ Data_exchange_API_Configuration_in_Zed
     ...    || field_name | enabled | visible_name | type   | creatable | editable | required ||
     ...    || name       | true    | name         | string | true      | true     | true     ||
     Zed: save data exchange api configuration
-    common.Trigger API specification update
-    common.Trigger multistore p&s
-    common_api.TestSetup
+    Trigger API specification update
+    Trigger multistore p&s
+    API_test_setup
     I get access token by user credentials:   ${zed_admin_email}
     ### CREATE TEST MIME TYPE USING DATA EXCHANGE API ###
-    common_api.I set Headers:    Content-Type=application/json    Authorization=Bearer ${token}
-    common_api.I send a POST request:    /dynamic-entity/mime-types    {"data":[{"name":"POST ${random}","is_allowed":${false},"extensions":"[\\"fake\\"]"}]}
+    I set Headers:    Content-Type=application/json    Authorization=Bearer ${token}
+    I send a POST request:    /dynamic-entity/mime-types    {"data":[{"name":"POST ${random}","is_allowed":${false},"extensions":"[\\"fake\\"]"}]}
     Response status code should be:    201
     Response header parameter should be:    Content-Type    application/json
     Response body parameter should be:    [data][0][name]    POST ${random}
@@ -2499,10 +2498,10 @@ Data_exchange_API_Configuration_in_Zed
     Response body parameter should be:    [data][0][comment]    None
     Save value to a variable:    [data][0][id_mime_type]    id_mime_type
     ### UPDATE TEST MIME TYPE USING DATA EXCHANGE API ###
-    common_api.I send a PATCH request:    /dynamic-entity/mime-types/${id_mime_type}    {"data":{"comment":${null},"extensions":"[\\"dummy\\"]","is_allowed":${true},"name":"PATCH ${random}"}}
+    I send a PATCH request:    /dynamic-entity/mime-types/${id_mime_type}    {"data":{"comment":${null},"extensions":"[\\"dummy\\"]","is_allowed":${true},"name":"PATCH ${random}"}}
     Response status code should be:    200
     ### GET UPDATE TEST MIME TYPE BY ID ###
-    common_api.I send a GET request:    /dynamic-entity/mime-types/${id_mime_type}
+    I send a GET request:    /dynamic-entity/mime-types/${id_mime_type}
     Response status code should be:    200
     Response header parameter should be:    Content-Type    application/json
     Response body parameter should be:    [data][name]    PATCH ${random}
@@ -2513,12 +2512,12 @@ Data_exchange_API_Configuration_in_Zed
     ...    || table_name  | is_enabled ||
     ...    || mime-types  | false      ||
     Zed: save data exchange api configuration
-    common.Trigger API specification update
+    Trigger API specification update
     Zed: wait until info box is not displayed
     ### DELETE TEST CONFIGURATION AND TEST MIME TYPE FROM DB ###
     [Teardown]    Run Keywords    Delete dynamic entity configuration in Database:    mime-types
     ...    AND    Delete mime_type by id_mime_type in Database:    ${id_mime_type}
-    ...    AND    common.Trigger API specification update       
+    ...    AND    Trigger API specification update       
 
 Fulfilment_app_e2e
     # #LOGGED IN TO BO and SET CHECKBOX is a warehouse user = true FOR admin_de USER. UI TEST
@@ -2526,29 +2525,29 @@ Fulfilment_app_e2e
     Zed: update Zed user:
     ...    || oldEmail                       | password      | user_is_warehouse_user ||
     ...    || admin_de@spryker.com           | Change123!321 | true                   ||
-    common_api.TestSetup
     Remove Tags    *
     Set Tags   bapi
+    API_test_setup
     # #ASSIGN admin_de user TO WAREHOUSE [Spryker Mer 000001 Warehouse 1] MAKE WAREHOUSE ACTIVE BY BAPI
     And I get access token by user credentials:   ${zed_admin_email}
-    common_api.I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer ${token}
-    common_api.I send a POST request:    /warehouse-user-assignments    {"data": {"type": "warehouse-user-assignments", "attributes":{"userUuid": "${warehous_user[0].de_admin_user_uuid}","warehouse" :{"uuid": "${warehouse[0].warehouse_uuid}"},"isActive":"true"}}}
+    I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer ${token}
+    I send a POST request:    /warehouse-user-assignments    {"data": {"type": "warehouse-user-assignments", "attributes":{"userUuid": "${warehous_user[0].de_admin_user_uuid}","warehouse" :{"uuid": "${warehouse[0].warehouse_uuid}"},"isActive":"true"}}}
     Then Response status code should be:    201
     Then Save value to a variable:    [data][id]   warehouse_assigment_id  
     # #CREATE AN ORDER BY GLUE
-    common_api.I set Headers:    Content-Type=${default_header_content_type}
+    I set Headers:    Content-Type=${default_header_content_type}
     Remove Tags    *
     Set Tags    glue
-    common_api.TestSetup
+    API_test_setup
     When I get access token for the customer:    ${yves_user_email}    
-    Then common_api.I set Headers:    Authorization=${token}
+    Then I set Headers:    Authorization=${token}
     When Find or create customer cart
     Then Cleanup all items in the cart:    ${cart_id}
-    common_api.I send a POST request:    /carts/${cart_id}/items?include=items    {"data": {"type": "items","attributes": {"sku": "091_25873091","quantity": 1}}}
-    common_api.I send a POST request:    /carts/${cart_id}/items?include=items    {"data": {"type": "items","attributes": {"sku": "093_24495843","quantity": 1}}}
-    common_api.I send a POST request:    /checkout-data    {"data": {"type": "checkout-data","attributes": {"customer": {"email": "${yves_user_email}","salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}"},"idCart": "${cart_id}","billingAddress": {"salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}","address1": "${default.address1}","address2": "${default.address2}","address3": "${default.address3}","zipCode": "${default.zipCode}","city": "${default.city}","iso2Code": "${default.iso2Code}","company": "${default.company}","phone": "${default.phone}","isDefaultBilling": True,"isDefaultShipping": True},"shippingAddress": {"salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}","address1": "${default.address1}","address2": "${default.address2}","address3": "${default.address3}","zipCode": "${default.zipCode}","city": "${default.city}","iso2Code": "${default.iso2Code}","company": "${default.company}","phone": "${default.phone}","isDefaultBilling": True,"isDefaultShipping": True},"payments": [{"paymentProviderName": "${payment_provider_name_1}","paymentMethodName": "${payment_method_name_1}"}],"shipment": {"idShipmentMethod": 1},"items": ["091_25873091","093_24495843"]}}}
+    I send a POST request:    /carts/${cart_id}/items?include=items    {"data": {"type": "items","attributes": {"sku": "091_25873091","quantity": 1}}}
+    I send a POST request:    /carts/${cart_id}/items?include=items    {"data": {"type": "items","attributes": {"sku": "093_24495843","quantity": 1}}}
+    I send a POST request:    /checkout-data    {"data": {"type": "checkout-data","attributes": {"customer": {"email": "${yves_user_email}","salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}"},"idCart": "${cart_id}","billingAddress": {"salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}","address1": "${default.address1}","address2": "${default.address2}","address3": "${default.address3}","zipCode": "${default.zipCode}","city": "${default.city}","iso2Code": "${default.iso2Code}","company": "${default.company}","phone": "${default.phone}","isDefaultBilling": True,"isDefaultShipping": True},"shippingAddress": {"salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}","address1": "${default.address1}","address2": "${default.address2}","address3": "${default.address3}","zipCode": "${default.zipCode}","city": "${default.city}","iso2Code": "${default.iso2Code}","company": "${default.company}","phone": "${default.phone}","isDefaultBilling": True,"isDefaultShipping": True},"payments": [{"paymentProviderName": "${payment_provider_name_1}","paymentMethodName": "${payment_method_name_1}"}],"shipment": {"idShipmentMethod": 1},"items": ["091_25873091","093_24495843"]}}}
     Then Response status code should be:    200
-    common_api.I send a POST request:    /checkout?include=orders    {"data": {"type": "checkout","attributes": {"customer": {"email": "${yves_user_email}","salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}"},"idCart": "${cart_id}","billingAddress": {"salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}","address1": "${default.address1}","address2": "${default.address2}","address3": "${default.address3}","zipCode": "${default.zipCode}","city": "${default.city}","iso2Code": "${default.iso2Code}","company": "${default.company}","phone": "${default.phone}","isDefaultBilling": False,"isDefaultShipping": False},"shippingAddress": {"salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}","address1": "${default.address1}","address2": "${default.address2}","address3": "${default.address3}","zipCode": "${default.zipCode}","city": "${default.city}","iso2Code": "${default.iso2Code}","company": "${default.company}","phone": "${default.phone}","isDefaultBilling": False,"isDefaultShipping": False},"payments": [{"paymentProviderName": "${payment_provider_name_1}","paymentMethodName": "${payment_method_name_1}"}],"shipment": {"idShipmentMethod": 1},"items": ["091_25873091","093_24495843"]}}}
+    I send a POST request:    /checkout?include=orders    {"data": {"type": "checkout","attributes": {"customer": {"email": "${yves_user_email}","salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}"},"idCart": "${cart_id}","billingAddress": {"salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}","address1": "${default.address1}","address2": "${default.address2}","address3": "${default.address3}","zipCode": "${default.zipCode}","city": "${default.city}","iso2Code": "${default.iso2Code}","company": "${default.company}","phone": "${default.phone}","isDefaultBilling": False,"isDefaultShipping": False},"shippingAddress": {"salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}","address1": "${default.address1}","address2": "${default.address2}","address3": "${default.address3}","zipCode": "${default.zipCode}","city": "${default.city}","iso2Code": "${default.iso2Code}","company": "${default.company}","phone": "${default.phone}","isDefaultBilling": False,"isDefaultShipping": False},"payments": [{"paymentProviderName": "${payment_provider_name_1}","paymentMethodName": "${payment_method_name_1}"}],"shipment": {"idShipmentMethod": 1},"items": ["091_25873091","093_24495843"]}}}
     Then Response status code should be:    201
     And Save value to a variable:    [included][0][attributes][items][0][uuid]    uuid
     And Save value to a variable:    [included][0][attributes][items][1][uuid]    uuid1
@@ -2556,25 +2555,25 @@ Fulfilment_app_e2e
     And Update order status in Database:    waiting    ${uuid} 
     And Update order status in Database:    waiting    ${uuid1}     
     # #MOVE ORDER ITEMS TO PROPER STATE USING BO, PICKING LIST GENERATED AUTOMATICALLY. UI TEST
-    common.TestSetup
+    UI_test_setup
     Yves: login on Yves with provided credentials:    ${yves_user_email}
     Yves: get the last placed order ID by current customer
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to order page:    ${lastPlacedOrder}
     Zed: trigger all matching states inside this order:    picking list generation schedule
     Zed: trigger all matching states inside this order:    prepare for picking
-    common.Trigger oms
+    Trigger oms
     # #ORDER READY FOR PICKING
     Zed: wait for order item to be in state:    091_25873091    ready for picking
     Zed: wait for order item to be in state:    093_24495843    ready for picking
     # #START PICKING PROCESS AND PICKING ITEMS BY BAPI
     Remove Tags    glue
     Set Tags   bapi
-    common_api.TestSetup
-    common_api.I set Headers:    Content-Type=${default_header_content_type}
+    API_test_setup
+    I set Headers:    Content-Type=${default_header_content_type}
     Then I get access token by user credentials:   ${zed_admin_email_de}    Change123!321
-    common_api.I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer ${token}
-    common_api.I send a GET request:    /picking-lists/?include=picking-list-items,concrete-products,sales-shipments,sales-orders,warehouses
+    I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer ${token}
+    I send a GET request:    /picking-lists/?include=picking-list-items,concrete-products,sales-shipments,sales-orders,warehouses
     Then Response status code should be:    200
     Then Save value to a variable:    [data][0][id]    picklist_id
     And Response body parameter should be:    [data][0][type]    picking-lists
@@ -2590,7 +2589,7 @@ Fulfilment_app_e2e
     And Response body parameter should be in:    [included][6][type]    concrete-products    sales-orders    sales-shipments    picking-list-items    warehouses
     And Each array in response should contain property with NOT EMPTY value:    [included]    id
     # #START PICKING
-    common_api.I send a POST request:   /picking-lists/${picklist_id}/start-picking    {"data": [{"type": "picking-lists","attributes": {"action": "startPicking"}}]}
+    I send a POST request:   /picking-lists/${picklist_id}/start-picking    {"data": [{"type": "picking-lists","attributes": {"action": "startPicking"}}]}
     Then Response status code should be:    201
     And Response body parameter should be:    [data][attributes][status]    picking-started
     And Response body parameter should be:    [data][type]    picking-lists
@@ -2611,3 +2610,119 @@ Fulfilment_app_e2e
     ...  AND    Remove picking list by uuid in DB:    ${picklist_id}
     ...  AND    Make user a warehouse user/ not a warehouse user:   ${warehous_user[0].de_admin_user_uuid}    0
     ...  AND    I send a DELETE request:    /warehouse-user-assignments/${warehouse_assigment_id}       
+
+# Click_and_collect
+#     [Documentation]    checks that product offer is successfully replaced with a target product offer
+#     [Setup]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+#     ...    AND    Zed: deactivate all discounts from Overview page
+#     MP: login on MP with provided credentials:    ${merchant_spryker_email}
+#     MP: open navigation menu tab:    Products    
+#     MP: click on create new entity button:    Create Product
+#     MP: create multi sku product with following data:
+#     ...    || product sku              | product name                 | first attribute name | first attribute first value | first attribute second value | second attribute name | second attribute value ||
+#     ...    || clickCollectSku${random} | clickCollectProduct${random} | packaging_unit       | Item                        | Box                          | series                | Ace Plus               ||
+#     MP: perform search by:    clickCollectProduct${random} 
+#     MP: click on a table row that contains:     clickCollectSku${random}
+#     MP: fill abstract product required fields:
+#     ...    || product name DE              | store | tax set           ||
+#     ...    || clickCollectProduct${random} | DE    | Smart Electronics ||
+#     MP: fill product price values:
+#     ...    || product type | row number | store | currency | gross default ||
+#     ...    || abstract     | 1          | DE    | EUR      | 50            ||
+#     MP: save abstract product
+#     MP: click on a table row that contains:    clickCollectSku${random}
+#     MP: open concrete drawer by SKU:    clickCollectSku${random}-2
+#     MP: fill concrete product fields:
+#     ...    || is active | stock quantity | use abstract name | searchability ||
+#     ...    || true      | 100            | true              | en_US         ||
+#     Zed: login on Zed with provided credentials:    ${zed_admin_email}
+#     Zed: go to second navigation item level:    Catalog    Products 
+#     Zed: click Action Button in a table for row that contains:     clickCollectSku${random}     Approve 
+#     Trigger p&s 
+#     MP: login on MP with provided credentials:    ${merchant_budget_cameras_email}
+#     MP: open navigation menu tab:    Offers
+#     MP: click on create new entity button:    Add Offer
+#     MP: perform search by:    clickCollectSku${random}-2
+#     MP: click on a table row that contains:    clickCollectSku${random}-2
+#     MP: fill offer fields:
+#     ...    || is active | merchant sku                           | store | stock quantity | service point      | services | shipment types  ||
+#     ...    || true      | clickCollectFirstSku${random}${random} | DE    | 100            | Spryker Main Store | Pickup   | pickup - Pickup ||
+#     MP: add offer price:
+#     ...    || row number | store | currency | gross default ||
+#     ...    || 1          | DE    | EUR      | 100           ||
+#     MP: save offer
+#     MP: click on create new entity button:    Add Offer
+#     MP: perform search by:    clickCollectSku${random}-2
+#     MP: click on a table row that contains:    clickCollectSku${random}-2
+#     MP: fill offer fields:
+#     ...    || is active | merchant sku                            | store | stock quantity | shipment types      ||
+#     ...    || true      | clickCollectSecondSku${random}${random} | DE    | 100            | delivery - Delivery ||
+#     MP: add offer price:
+#     ...    || row number | store | currency | gross default ||
+#     ...    || 1          | DE    | EUR      | 150           ||
+#     MP: save offer
+#     MP: click on create new entity button:    Add Offer
+#     MP: perform search by:    clickCollectSku${random}-2
+#     MP: click on a table row that contains:    clickCollectSku${random}-2
+#     MP: fill offer fields:
+#     ...    || is active | merchant sku                  | store | stock quantity | service point        | services | shipment types  ||
+#     ...    || true      | clickCollectThirdSku${random} | DE    | 100            | Spryker Berlin Store | Pickup   | pickup - Pickup ||
+#     MP: add offer price:
+#     ...    || row number | store | currency | gross default ||
+#     ...    || 1          | DE    | EUR      | 200           ||
+#     MP: save offer
+#     Trigger p&s
+#     Zed: login on Zed with provided credentials:    ${zed_admin_email}
+#     Zed: go to second navigation item level:    Marketplace    Offers
+#     Zed: filter by merchant:    Budget Cameras
+#     Zed: table should contain:    clickCollectSku${random}-2
+#     Zed: click Action Button in a table for row that contains:     clickCollectSku${random}-2     View
+#     Zed: view offer page is displayed
+#     Zed: view offer product page contains:
+#     ...    || approval status | status | store | sku                        | merchant       | merchant sku                  | services                      | shipment types  ||
+#     ...    || Approved        | Active | DE    | clickCollectSku${random}-2 | Budget Cameras | clickCollectThirdSku${random} | Spryker Berlin Store - Pickup | pickup - Pickup ||
+#     Yves: login on Yves with provided credentials:    ${yves_user_email}
+#     Yves: check if cart is not empty and clear it
+#     Yves: go to PDP of the product with sku:     clickCollectSku${random}
+#     Yves: select xxx merchant's offer with price:    Budget Cameras    €100.00
+#     Yves: add product to the shopping cart
+#     Yves: select xxx merchant's offer with price:    Budget Cameras    €150.00
+#     Yves: add product to the shopping cart
+#     Yves: go to b2c shopping cart
+#     Yves: click on the 'Checkout' button in the shopping cart
+#     Yves: select multiple addresses from toggler
+#     Yves: select xxx shipment type for item number xxx:    shipment_type=Pickup    item_number=1
+#     Yves: select xxx shipment type for item number xxx:    shipment_type=Pickup    item_number=2
+
+#     Yves: check store availabiity for item number xxx:
+#     ...    || item_number | store              | availability ||
+#     ...    || 1           | Spryker Main Store | green        ||
+#     Yves: check store availabiity for item number xxx:
+#     ...    || item_number | store                | availability ||
+#     ...    || 1           | Spryker Berlin Store | green        ||
+#     Yves: check store availabiity for item number xxx:
+#     ...    || item_number | store              | availability ||
+#     ...    || 2           | Spryker Main Store | green        ||
+#     Yves: check store availabiity for item number xxx:
+#     ...    || item_number | store                | availability ||
+#     ...    || 2           | Spryker Berlin Store | green        ||
+#     Yves: 'billing same as shipping' checkbox should be displayed:    false
+#     Yves: fill in the following new billing address:
+#     ...    || salutation | firstName | lastName | street         | houseNumber | postCode | city   | country | company | phone     | additionalAddress ||
+#     ...    || Mr.        | First     | Last     | Billing Street | 123         | 10247    | Berlin | Germany | Spryker | 987654321 | Additional street ||
+#     Take Screenshot    fullPage=True
+
+
+    # Yves: submit form on the checkout
+    # Yves: select the following shipping method for the shipment:    1    Hermes    Next Day
+    # Yves: select the following shipping method for the shipment:    2    Hermes    Same Day
+    # Yves: select the following shipping method for the shipment:    3    DHL    Express
+    # Yves: submit form on the checkout
+    # Yves: select the following payment method on the checkout and go next:    Invoice (Marketplace)
+    # Yves: accept the terms and conditions:    true
+#     Yves: 'submit the order' on the summary page
+#     Yves: 'Thank you' page is displayed
+    # [Teardown]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    # ...    AND    Zed: activate following discounts from Overview page:    Free Acer Notebook    Tu & Wed $5 off 5 or more    10% off $100+    Free smartphone    20% off cameras    Free Acer M2610    Free standard delivery    10% off Intel Core    5% off white    Tu & Wed €5 off 5 or more    10% off minimum order
+    # ...    AND    Zed: go to second navigation item level:    Catalog    Products 
+    # ...    AND    Zed: click Action Button in a table for row that contains:     clickCollectSku${random}     Deny

@@ -294,15 +294,34 @@ Yves: unsubscribe from availability notifications
 Yves: select xxx merchant's offer:
     [Arguments]    ${merchantName}
     Wait Until Element Is Visible    ${pdp_product_sku}[${env}]
-    Click    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]/ancestor::div[contains(@class,'offer-item')]//span[contains(@class,'radio__box')]
+    Repeat Keyword    2    Wait Until Network Is Idle
     TRY
+        Click    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]/ancestor::div[contains(@class,'offer-item')]//span[contains(@class,'radio__box')]
         Repeat Keyword    2    Wait Until Network Is Idle
         Wait For Elements State    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]/ancestor::div[contains(@class,'offer-item')]//span[contains(@class,'radio__box')]/../input    state=checked    timeout=3s
-    EXCEPT    
+    EXCEPT  
+        Reload
+        Repeat Keyword    2    Wait Until Network Is Idle
+        Click    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]/ancestor::div[contains(@class,'offer-item')]//span[contains(@class,'radio__box')]
         Wait For Elements State    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]/ancestor::div[contains(@class,'offer-item')]//span[contains(@class,'radio__box')]/../input    state=checked    timeout=3s
     END
     Wait Until Element Contains    ${referrer_url}    offer    message=Offer selector radio button does not work on PDP but should
 
+Yves: select xxx merchant's offer with price:
+    [Arguments]    ${merchantName}    ${price}
+    Wait Until Element Is Visible    ${pdp_product_sku}[${env}]
+    Repeat Keyword    2    Wait Until Network Is Idle
+    TRY
+        Click    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]/ancestor::div[contains(@class,'item')]//span[@itemprop='price'][contains(.,'${price}')]/ancestor::div[contains(@class,'offer-item')]//span[contains(@class,'radio__box')]
+        Repeat Keyword    2    Wait Until Network Is Idle
+        Wait For Elements State    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]/ancestor::div[contains(@class,'item')]//span[@itemprop='price'][contains(.,'${price}')]/ancestor::div[contains(@class,'offer-item')]//span[contains(@class,'radio__box')]/../input    state=checked    timeout=3s
+    EXCEPT   
+        Reload
+        Repeat Keyword    2    Wait Until Network Is Idle
+        Click    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]/ancestor::div[contains(@class,'item')]//span[@itemprop='price'][contains(.,'${price}')]/ancestor::div[contains(@class,'offer-item')]//span[contains(@class,'radio__box')]
+        Wait For Elements State    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]/ancestor::div[contains(@class,'item')]//span[@itemprop='price'][contains(.,'${price}')]/ancestor::div[contains(@class,'offer-item')]//span[contains(@class,'radio__box')]/../input    state=checked    timeout=3s
+    END
+    Wait Until Element Contains    ${referrer_url}    offer    message=Offer selector radio button does not work on PDP but should
 
 Yves: merchant's offer/product price should be:
     [Arguments]    ${merchantName}    ${expectedProductPrice}
@@ -326,3 +345,9 @@ Yves: try add product to the cart from PDP and expect error:
 Yves: product name on PDP should be:
     [Arguments]    ${expected_product_name}
     Yves: try reloading page if element is/not appear:    xpath=//h1[contains(@class,'title')][contains(.,'${expected_product_name}')]    True    15    3s
+
+Yves: try to add product to wishlist as guest user
+    Wait Until Element Is Visible    ${pdp_add_to_wishlist_button}
+    Click    ${pdp_add_to_wishlist_button}
+    Sleep    1s
+    Wait Until Element Is Visible    ${email_field}

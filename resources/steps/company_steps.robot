@@ -6,7 +6,6 @@ Resource    ../pages/zed/zed_attach_to_business_unit_page.robot
 Resource    ../pages/yves/yves_customer_account_page.robot
 Resource    ../pages/zed/zed_delete_company_user_page.robot
 
-
 *** Keywords ***
 Zed: create new Company Business Unit with provided name and company:
     [Documentation]     Creates new company BU with provided BU Name and for provided company.

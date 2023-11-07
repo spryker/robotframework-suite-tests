@@ -1,6 +1,5 @@
 *** Settings ***
-Library    BuiltIn
-Resource    common.robot
+Resource    common_ui.robot
 Resource    ../pages/mp/mp_login_page.robot
 
 *** Variable ***

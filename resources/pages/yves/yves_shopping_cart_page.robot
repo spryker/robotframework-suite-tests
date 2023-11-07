@@ -20,5 +20,5 @@ ${shopping_cart_edit_comment_button}    xpath=(//comment-form//*[@title='edit']/
 ${shopping_cart_edit_comment_placeholder}    xpath=(//comment-form[@data-qa='component comment-form']//form[@method='POST']//textarea)[1]
 ${shopping_cart_update_comment_button}    xpath=//button[contains(@action,"/comment/update")]
 ${shopping_cart_remove_comment_button}    xpath=//button[contains(@action,"/comment/remove")]
-###xpath OR operator exapme###
+###xpath OR operator example###
 ${shopping_cart_checkout_error_message_locator}    xpath=(//div[@data-qa='component cart-summary']//div[@class='spacing-top'] | //div[@data-qa='component cart-summary']//div/strong)[1]

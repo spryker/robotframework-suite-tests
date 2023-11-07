@@ -1,7 +1,6 @@
 *** Settings ***
-Library    BuiltIn
-Resource                  common.robot
-Resource                  ../pages/zed/zed_login_page.robot
+Resource    common_ui.robot
+Resource    ../pages/zed/zed_login_page.robot
 Resource    ../pages/zed/zed_edit_product_page.robot
 
 *** Variable ***

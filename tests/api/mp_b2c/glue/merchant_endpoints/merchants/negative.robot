@@ -1,13 +1,13 @@
 *** Settings ***
 
-Suite Setup       SuiteSetup
+Suite Setup       API_suite_setup
 Resource    ../../../../../../resources/common/common_api.robot
-Test Setup        TestSetup
+Test Setup        API_test_setup
 Default Tags    glue
 
 *** Test Cases ***
 ENABLER
-    TestSetup
+    API_test_setup
     
 Retrieves_merchant_with_non_existent_id
     When I send a GET request:    /merchants/NonExistId

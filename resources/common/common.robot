@@ -1,5 +1,4 @@
 *** Settings ***
-Library    Browser    run_on_failure=Take Screenshot \ EMBED \ fullPage=True
 Library    String
 Library    Dialogs
 Library    OperatingSystem
@@ -7,55 +6,68 @@ Library    Process
 Library    Collections
 Library    BuiltIn
 Library    DateTime
-Library    ../../resources/libraries/common.py
-Library    Telnet
 Library    RequestsLibrary
 Library    DatabaseLibrary
-Resource                  ../pages/yves/yves_header_section.robot
-Resource                  ../pages/yves/yves_login_page.robot
+Library    ../../resources/libraries/common.py
+Library    Telnet
 
 *** Variables ***
-# *** SUITE VARIABLES ***
-${env}                 ui_mp_b2b
-${headless}            true
-${verify_ssl}          false
-${browser}             chromium
-${browser_timeout}     60 seconds
-${email_domain}        @spryker.com
-${default_password}    change123
-${admin_email}         admin@spryker.com
-${device}
 # *** DB VARIABLES ***
-${default_db_host}         127.0.0.1
-${default_db_name}         eu-docker
-${default_db_password}     secret
-${default_db_port}         3306
+${db_engine}
+${db_port}
+${default_db_host}    127.0.0.1
+${default_db_name}    eu-docker
+${default_db_password}    secret
+${default_db_port}    3306
 ${default_db_port_postgres}    5432
-${default_db_user}         spryker
-${default_db_engine}       pymysql
-###
+${default_db_user}    spryker
+${default_db_engine}    pymysql
+# ${default_db_engine}       psycopg2
+
+# *** DOCKER VARIABLES ***
 ${docker}
 ${default_docker}     ${False}
 ${docker_db_host}     database
 ${docker_cli_url}     http://cli:9000
 ${cli_path}    ..
-${db_engine}
-${yves_env}
-${yves_at_env}
-${zed_env}
-${mp_env}
-${glue_env}
-${db_port}
+
+# *** CLI VARIABLES ***
 ${project_location}
 ${ignore_console}
 ${default_ignore_console}    ${True}
-# ${default_db_engine}       psycopg2
-# ${device}              Desktop Chrome
-# ${fake_email}          test.spryker+${random}@gmail.com
+
+# *** COMMON VARIABLES ***
+${verify_ssl}          false
 
 *** Keywords ***
+Common_suite_setup
+    [documentation]  Basic steps before each suite
+    Remove Files    ${OUTPUTDIR}/selenium-screenshot-*.png
+    Remove Files    resources/libraries/__pycache__/*
+    Remove Files    ${OUTPUTDIR}/*.png
+    Remove Files    ${OUTPUTDIR}/*.yml
+    Load Variables    ${env}
+    Overwrite env variables
+    ${random}=    Generate Random String    5    [NUMBERS]
+    Set Global Variable    ${random}
+    ${today}=    Get Current Date    result_format=%Y-%m-%d
+    Set Global Variable    ${today}
+    IF    ${docker}
+        Set Global Variable    ${db_host}    ${docker_db_host}
+    END
+    [Return]    ${random}
 
 Load Variables
+    [Documentation]    Keyword is used to load variable values from the environment file passed during execution. This Keyword is used during suite setup.
+    ...    It accepts the name of the environment as specified at the beginning of an environment file e.g. ``"environment": "api_suite"``.
+    ...
+    ...    These variables are loaded and usable throughtout all tests of the test suite, if this keyword is called during suite setup.
+    ...
+    ...    *Example:*
+    ...
+    ...    ``Load Variables    ${env}``
+    ...
+    ...    ``Load Variables    api_suite``
     [Arguments]    ${env}
     &{vars}=   Define Environment Variables From Json File    ${env}
     FOR    ${key}    ${value}    IN    &{vars}
@@ -64,42 +76,7 @@ Load Variables
         Set Global Variable    ${${key}}    ${var_value}
     END
 
-Set Up Keyword Arguments
-    [Arguments]    @{args}
-    &{arguments}=    Fill Variables From Text String    @{args}
-    FOR    ${key}    ${value}    IN    &{arguments}
-        Log    Key is '${key}' and value is '${value}'.
-        ${var_value}=   Set Variable    ${value}
-        Set Test Variable    ${${key}}    ${var_value}
-    END
-    [Return]    &{arguments}
-
 Overwrite env variables
-    IF    '${yves_env}' == '${EMPTY}'
-            Set Suite Variable    ${yves_url}    ${yves_url}
-    ELSE
-            Set Suite Variable    ${yves_url}    ${yves_env}
-    END
-    IF    '${yves_at_env}' == '${EMPTY}'
-            Set Suite Variable    ${yves_at_url}    ${yves_at_url}
-    ELSE
-            Set Suite Variable    ${yves_at_url}    ${yves_at_env}
-    END
-    IF    '${zed_env}' == '${EMPTY}'
-            Set Suite Variable    ${zed_url}   ${zed_url}
-    ELSE
-            Set Suite Variable    ${zed_url}   ${zed_env}
-    END
-    IF    '${mp_env}' == '${EMPTY}'
-            Set Suite Variable    ${mp_url}    ${mp_url}
-    ELSE
-            Set Suite Variable    ${mp_url}   ${mp_env}
-    END
-    IF    '${glue_env}' == '${EMPTY}'
-            Set Suite Variable    ${glue_url}    ${glue_url}
-    ELSE
-            Set Suite Variable    ${glue_url}   ${glue_env}
-    END
     IF    '${project_location}' == '${EMPTY}'
             Set Suite Variable    ${cli_path}    ${cli_path}
     ELSE
@@ -119,74 +96,23 @@ Overwrite env variables
     IF    '${ignore_console}' == 'false'    Set Suite Variable    ${ignore_console}    ${False}
     IF    '${docker}' == 'true'    Set Suite Variable    ${docker}    ${True}
     IF    '${docker}' == 'false'    Set Suite Variable    ${docker}    ${False}
-    &{urls}=    Create Dictionary    yves_url    ${yves_url}    yves_at_url    ${yves_at_url}    zed_url    ${zed_url}    mp_url    ${mp_url}    glue_url    ${glue_url}
-    FOR    ${key}    ${url}    IN    &{urls}
-        Log    Key is '${key}' and value is '${url}'.
-        ${url_last_character}=    Get Regexp Matches    ${url}    .$    flags=IGNORECASE
-        ${url_last_character}=    Convert To String    ${url_last_character}
-        ${url_last_character}=    Replace String    ${url_last_character}    '   ${EMPTY}
-        ${url_last_character}=    Replace String    ${url_last_character}    [   ${EMPTY}
-        ${url_last_character}=    Replace String    ${url_last_character}    ]   ${EMPTY}
-        IF    '${url_last_character}' != '/' and '${key}' != 'glue_url'
-            ${url}=    Set Variable    ${url}${/}
-        END
-        ${var_url}=   Set Variable    ${url}
-        Set Suite Variable    ${${key}}    ${var_url}
-    END
-
-SuiteSetup
-    [documentation]  Basic steps before each suite
-    Remove Files    ${OUTPUTDIR}/selenium-screenshot-*.png
-    Remove Files    resources/libraries/__pycache__/*
-    Remove Files    ${OUTPUTDIR}/*.png
-    Remove Files    ${OUTPUTDIR}/*.yml
-    Load Variables    ${env}
     ${verify_ssl}=    Convert To String    ${verify_ssl}
     ${verify_ssl}=    Convert To Lower Case    ${verify_ssl}
-    IF    '${verify_ssl}' == 'true'
-        New Browser    ${browser}    headless=${headless}    
+    IF    '${verify_ssl}' == 'true'   
         Set Global Variable    ${verify_ssl}    ${True}
     ELSE
-        New Browser    ${browser}    headless=${headless}    args=['--ignore-certificate-errors']
         Set Global Variable    ${verify_ssl}    ${False}
     END
-    Set Browser Timeout    ${browser_timeout}
-    Create default Main Context
-    Overwrite env variables
-    New Page    ${yves_url}
-    ${random}=    Generate Random String    5    [NUMBERS]
-    Set Global Variable    ${random}
-    ${today}=    Get Current Date    result_format=%Y-%m-%d
-    Set Global Variable    ${today}
-    ${test_customer_email}=     set variable    test.spryker+${random}@gmail.com
-    Set Global Variable  ${test_customer_email}
-    IF    ${docker}
-        Set Global Variable    ${db_host}    ${docker_db_host}
+
+Set Up Keyword Arguments
+    [Arguments]    @{args}
+    &{arguments}=    Fill Variables From Text String    @{args}
+    FOR    ${key}    ${value}    IN    &{arguments}
+        Log    Key is '${key}' and value is '${value}'.
+        ${var_value}=   Set Variable    ${value}
+        Set Test Variable    ${${key}}    ${var_value}
     END
-    [Teardown]
-    [Return]    ${random}
-
-SuiteTeardown
-    Close Browser    ALL
-
-TestSetup
-    Delete All Cookies
-    Set Browser Timeout    ${browser_timeout}
-    Go To    ${yves_url}
-
-TestTeardown
-    # Run Keyword If Test Failed    Pause Execution
-    Delete All Cookies
-
-Create default Main Context
-    Log    ${device}
-    IF  '${device}' == '${EMPTY}'
-        ${main_context}=    New Context    viewport={'width': 1440, 'height': 1080}    acceptDownloads=True
-    ELSE
-        ${device}=    Get Device    ${device}
-        ${main_context}=    New Context    &{device}
-    END
-    Set Suite Variable    ${main_context}
+    [Return]    &{arguments}
 
 Variable datatype should be:
     [Arguments]    ${variable}    ${expected_data_type}
@@ -201,252 +127,11 @@ Evaluate datatype of a variable:
     # ${is int}=      Evaluate     isinstance($variable, int)    # will be True
     # ${is string}=   Evaluate     isinstance($variable, str)    # will be False
 
-Select Random Option From List
-    [Arguments]    ${dropDownLocator}    ${dropDownOptionsLocator}
-    ${getOptionsCount}=    Get Element Count    ${dropDownOptionsLocator}
-    ${index}=    Evaluate    random.randint(0, ${getOptionsCount}-1)    random
-    ${index}=    Convert To String    ${index}
-    Select From List By Index    ${dropDownLocator}    ${index}
-
-Click Element by xpath with JavaScript
-    [Arguments]    ${xpath}
-    Evaluate Javascript     ${None}     document.evaluate("${xpath}", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.click()
-
-Click Element with JavaScript:
-    [Documentation]    This keyword force clicks on web element using native JavaScript inside the browser. *Note*: it doesn't automatically wait until action is finished.
-    ...
-    ...    *Examples:*
-    ...
-    ...    `Click Element with JavaScript    id=w3loginbtn`
-    ...
-    ...    `Click Element with JavaScript    xpath=//a[@id='w3loginbtn']`
-    ...
-    ...    `Click Element with JavaScript    css=#w3loginbtn`
-    ...
-    ...    `Click Element with JavaScript    name=w3loginname`
-    ...
-    [Arguments]    ${locator}
-    ${element}=    Get Element    ${locator}
-    Evaluate JavaScript    ${element}    (e) => e.click({force:true})
-
-Click Element by id with JavaScript
-    [Arguments]    ${id}
-    Evaluate Javascript     ${None}    document.getElementById("${id}").click()
-
-Remove element from HTML with JavaScript
-    [Arguments]    ${xpath}
-    Evaluate Javascript     ${None}    var element=document.evaluate("${xpath}", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;element.parentNode.removeChild(element);
-
-Add/Edit element attribute with JavaScript:
-    [Arguments]    ${xpath}    ${attribute}    ${attributeValue}
-    Log    ${attribute}
-    Log    ${attributeValue}
-    Evaluate Javascript     ${None}    (document.evaluate("${xpath}", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue).setAttribute("${attribute}", "${attributeValue}");
-
-Remove element attribute with JavaScript:
-    [Arguments]    ${xpath}    ${attribute}
-    Evaluate Javascript     ${None}    var element=document.evaluate("${xpath}", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;element.removeAttribute("${attribute}"");
-
-# Helper keywords for migration from Selenium Library to Browser Library
-Wait Until Element Is Visible
-    [Arguments]    ${locator}    ${message}=${EMPTY}    ${timeout}=${browser_timeout}
-    Wait For Elements State    ${locator}    visible    ${timeout}    ${message}
-
-Wait Until Page Contains Element
-    [Arguments]    ${locator}    ${message}=${EMPTY}    ${timeout}=${browser_timeout}
-    Wait For Elements State    ${locator}    attached    ${timeout}    ${message}
-
-Wait Until Page Does Not Contain Element
-    [Arguments]    ${locator}    ${message}=${EMPTY}    ${timeout}=${browser_timeout}
-    Wait For Elements State    ${locator}    detached    ${timeout}    ${message}
-
-Wait Until Element Is Enabled
-    [Arguments]    ${locator}    ${message}=${EMPTY}    ${timeout}=${browser_timeout}
-    Wait For Elements State    ${locator}    enabled    ${timeout}    ${message}
-
-Wait Until Element Is Disabled
-    [Arguments]    ${locator}    ${message}=${EMPTY}    ${timeout}=${browser_timeout}
-    Wait For Elements State    ${locator}    disabled    ${timeout}    ${message}
-
-Element Should Be Visible
-    [Arguments]    ${locator}    ${message}=${EMPTY}    ${timeout}=0:00:05
-    Wait For Elements State    ${locator}    visible    ${timeout}    ${message}
-
-Page Should Contain Element
-    [Arguments]    ${locator}    ${message}=${EMPTY}    ${timeout}=0:00:05
-    Wait For Elements State    ${locator}    attached    ${timeout}    ${message}
-
-Get Location
-    ${current_location}=    Get URL
-    ${location}=    Set Variable    ${current_location}
-    Set Test Variable    ${location}    ${location}
-    [Return]    ${location}
-
-Save current URL
-    ${current_url}=    Get URL
-    ${url}=    Set Variable    ${current_url}
-    Set Test Variable    ${url}    ${url}
-    [Return]    ${url}
-
-Wait Until Element Is Not Visible
-    [Arguments]    ${locator}    ${message}=${EMPTY}    ${timeout}=${browser_timeout}
-    Wait For Elements State    ${locator}    hidden    ${timeout}    ${message}
-
-Page Should Contain Link
-    [Arguments]    ${url}    ${message}=${EMPTY}
-    ${hrefs}=    Evaluate Javascript     ${None}    Array.from(document.querySelectorAll('a')).map(e => e.getAttribute('href'))
-    Should Contain    ${hrefs}    ${url}
-
-Scroll Element Into View
-    [Arguments]    ${locator}
-    Hover    ${locator}
-
-Input Text
-    [Arguments]    ${locator}    ${text}
-    Type Text    ${locator}    ${text}    0ms
-
-Table Should Contain
-    [Arguments]    ${locator}    ${expected}    ${message}=${EMPTY}    ${ignore_case}=${EMPTY}
-    Get Text    ${locator}    contains    ${expected}    ${message}
-
-Table Should Not Contain
-    [Arguments]    ${locator}    ${expected}    ${message}=${EMPTY}    ${ignore_case}=${EMPTY}
-    Get Text    ${locator}    not contains    ${expected}    ${message}
-
-Element Should Contain
-    [Arguments]    ${locator}    ${expected}    ${message}=${EMPTY}    ${ignore_case}=${EMPTY}
-    Get Text    ${locator}    contains    ${expected}    ${message}
-
-Element Text Should Be
-    [Arguments]    ${locator}    ${expected}    ${message}=${EMPTY}    ${ignore_case}=${EMPTY}
-    Get Text    ${locator}    equal    ${expected}    ${message}
-
-Wait Until Element Contains
-    [Arguments]    ${locator}    ${text}    ${timeout}=${browser_timeout}    ${message}=${EMPTY}
-    Get Text    ${locator}    contains    ${text}    ${message}
-
-Page Should Not Contain Element
-    [Arguments]    ${locator}    ${message}=${EMPTY}    ${timeout}=0:00:05
-    Wait For Elements State    ${locator}    detached    ${timeout}    ${message}
-
-Element Should Not Contain
-    [Arguments]    ${locator}    ${text}
-    Get Text    ${locator}    validate    "${text}" not in value
-
-Checkbox Should Be Selected
-    [Arguments]    ${locator}
-    Get Checkbox State    ${locator}    ==    checked
-
-Checkbox Should Not Be Selected
-    [Arguments]    ${locator}
-    Get Checkbox State    ${locator}    ==    unchecked
-
-Mouse Over
-    [Arguments]    ${locator}
-    Hover    ${locator}
-
-Element Should Not Be Visible
-    [Arguments]    ${locator}    ${message}=${EMPTY}    ${timeout}=0:00:05
-    Wait For Elements State    ${locator}    hidden    ${timeout}    ${message}
-
-Get Element Attribute
-    [Arguments]    ${locator}    ${attribute}
-    ${element_attribute}=    Get Attribute    ${locator}    ${attribute}
-    [Return]    ${element_attribute}
-
-Select From List By Label
-    [Arguments]    ${locator}    ${value}
-    Select Options By    ${locator}    label    ${value}
-
-Select From List By Value
-    [Arguments]    ${locator}    ${value}
-    Select Options By    ${locator}    value    ${value}
-
-Select From List By Index
-    [Arguments]    ${locator}    ${value}
-    Select Options By    ${locator}    index    ${value}
-
-Select From List By Text
-    [Arguments]    ${locator}    ${value}
-    Select Options By    ${locator}    text    ${value}
-
-Create New Context
-    ${new_context}=    New Context
-    New Page    ${yves_url}
-
-Close Current Context
-    ${context_ids}=    Get Context Ids
-    ${count_context_ids}=    Get Length    ${context_ids}
-    IF    ${count_context_ids}>1    Close Context    CURRENT
-
-Switch back to the Main Context
-    Switch Context    ${main_context}
-
-Verify the src attribute of the image is accessible:
-    [Arguments]    @{image_list}    ${element1}=${EMPTY}     ${element2}=${EMPTY}     ${element3}=${EMPTY}     ${element4}=${EMPTY}     ${element5}=${EMPTY}     ${element6}=${EMPTY}     ${element7}=${EMPTY}     ${element8}=${EMPTY}     ${element9}=${EMPTY}     ${element10}=${EMPTY}     ${element11}=${EMPTY}     ${element12}=${EMPTY}     ${element13}=${EMPTY}     ${element14}=${EMPTY}     ${element15}=${EMPTY}
-    ${image_list_count}=   get length  ${image_list}
-    FOR    ${index}    IN RANGE    0    ${image_list_count}
-        ${image_to_check}=    Get From List    ${image_list}    ${index}
-        ${image_src}=    Get Element Attribute    ${image_to_check}    src
-        ${response}=    GET    ${image_src}
-        Should Be Equal    '${response.status_code}'    '200'
-    END
-
 Conver string to List by separator:
     [Arguments]    ${string}    ${separator}=,
     ${convertedList}=    Split String    ${string}    ${separator}
     ${convertedList}=    Set Test Variable    ${convertedList}
     [Return]    ${convertedList}
-
-Try reloading page until element is/not appear:
-    [Documentation]    will reload the page until an element is shown or disappears. The second argument is the expected condition (true[shown]/false[disappeared]) for the element.
-    [Arguments]    ${element}    ${shouldBeDisplayed}    ${tries}=20    ${timeout}=3s    ${message}='Timeout exceeded, element state doesn't match the expected'
-    ${shouldBeDisplayed}=    Convert To Lower Case    ${shouldBeDisplayed}
-    FOR    ${index}    IN RANGE    0    ${tries}
-        ${elementAppears}=    Run Keyword And Return Status    Page Should Contain Element    ${element}
-        IF    '${shouldBeDisplayed}'=='true' and '${elementAppears}'=='False'
-            Run Keywords    Sleep    ${timeout}    AND    Reload
-        ELSE IF     '${shouldBeDisplayed}'=='false' and '${elementAppears}'=='True'
-            Run Keywords    Sleep    ${timeout}    AND    Reload
-        ELSE
-            Exit For Loop
-        END
-    END
-    IF    ('${shouldBeDisplayed}'=='true' and '${elementAppears}'=='False') or ('${shouldBeDisplayed}'=='false' and '${elementAppears}'=='True')
-        Take Screenshot    EMBED    fullPage=True
-        Fail    ${message}
-    END
-
-Try reloading page until element does/not contain text:
-    [Documentation]    will reload the page until an element text will be updated. The second argument is the expected condition (true[contains]/false[doesn't contain]) for the element text.
-    [Arguments]    ${element}    ${expectedText}    ${shouldContain}    ${tries}=20    ${timeout}=1s
-    ${shouldContain}=    Convert To Lower Case    ${shouldContain}
-    FOR    ${index}    IN RANGE    0    ${tries}
-        ${textAppears}=    Run Keyword And Return Status    Element Text Should Be    ${element}    ${expectedText}    
-        IF    '${shouldContain}'=='true' and '${textAppears}'=='False'
-            Run Keywords    Sleep    ${timeout}    AND    Reload
-        ELSE IF     '${shouldContain}'=='false' and '${textAppears}'=='True'
-            Run Keywords    Sleep    ${timeout}    AND    Reload
-        ELSE
-            Exit For Loop
-        END
-    END
-    IF    ('${shouldContain}'=='true' and '${textAppears}'=='False') or ('${shouldContain}'=='false' and '${textAppears}'=='True')
-        Take Screenshot    EMBED    fullPage=True
-        Fail    'Timeout exceeded, element text doesn't match the expected'
-    END
-
-Type Text When Element Is Visible
-    [Arguments]    ${selector}    ${text}
-    Run keywords
-        ...    Wait Until Element Is Visible    ${selector}
-        ...    AND    Type Text    ${selector}     ${text}
-
-Select From List By Value When Element Is Visible
-    [Arguments]    ${selector}    ${value}
-    Run keywords
-        ...    Wait Until Element Is Visible    ${selector}
-        ...    AND    Select From List By Value    ${selector}     ${value}
 
 Remove leading and trailing whitespace from a string:
     [Arguments]    ${string}
@@ -455,11 +140,21 @@ Remove leading and trailing whitespace from a string:
     [Return]    ${string}
 
 Connect to Spryker DB
+    [Documentation]    This keyword allows to connect to Spryker DB.
+    ...        Supports both MariaDB and PostgeSQL.
+    ...
+    ...        To specify the expected DB engine, use ``db_engine`` variabl. Default one -> *MariaDB*
+    ...
+    ...    *Example:*
+    ...    ``robot -v env:api_suite -v db_engine:psycopg2``
+    ...
+    ...    with the example above you'll use PostgreSQL DB engine
     ${db_name}=    Set Variable If    '${db_name}' == '${EMPTY}'    ${default_db_name}    ${db_name}
     ${db_user}=    Set Variable If    '${db_user}' == '${EMPTY}'    ${default_db_user}    ${db_user}
     ${db_password}=    Set Variable If    '${db_password}' == '${EMPTY}'    ${default_db_password}    ${db_password}
     ${db_host}=    Set Variable If    '${db_host}' == '${EMPTY}'    ${default_db_host}    ${db_host}
     ${db_engine}=    Set Variable If    '${db_engine}' == '${EMPTY}'    ${default_db_engine}    ${db_engine}
+    ${db_engine}=    Convert To Lower Case    ${db_engine}
     IF    '${db_engine}' == 'mysql'
         ${db_engine}=    Set Variable    pymysql
     ELSE IF    '${db_engine}' == 'postgresql'
@@ -506,30 +201,11 @@ Save the result of a SELECT DB query to a variable:
     Set Test Variable    ${${variable_name}}    ${var_value}
     [Return]    ${variable_name}
 
-Ping and go to URL:
-    [Arguments]    ${url}    ${timeout}=${EMPTY}
-    ${accessible}=    Run Keyword And Ignore Error    Send GET request and return status code:    ${url}    ${timeout}
-    ${successful}=    Run Keyword And Ignore Error    Should Contain Any    '${response.status_code}'    '200'    '201'    '202'    '301'    '302'
-    IF    'PASS' in ${accessible} and 'PASS' in ${successful}
-        Go To    ${url}
-    ELSE
-        Fail    '${url}' URL is not accessible of throws an error
-    END
-
 Send GET request and return status code:
     [Arguments]    ${url}    ${timeout}=5
     ${response}=    GET    ${url}    timeout=${timeout}    allow_redirects=true    expected_status=ANY
     Set Test Variable    ${response.status_code}    ${response.status_code}
     [Return]    ${response.status_code}
-
-## Example of intercepting the network request
-##     [Arguments]    ${eventName}    ${timeout}=30s
-##     ${response}=    Wait for response    matcher=bazaarvoice\\.com\\/\\w+\\.gif\\?.*type=${eventName}    timeout=${timeout}
-##     Should be true    ${response}[ok]
-## OR
-##    [Arguments]    ${timeout}=30s
-##    ${response}=    Wait for response    matcher=usercentrics.*?graphql     timeout=${timeout}
-##    Should be true    ${response}[ok]
 
 Run console command
     [Documentation]    This keyword executes console command using provided command and parameters. If docker is enabled, it will execute the command using docker.
@@ -538,19 +214,17 @@ Run console command
         ...    ``Run console command    command=publish:trigger-events parameters=-r service_point    storeName=DE``
         ...
     [Arguments]    ${command}    ${storeName}=DE
-    IF    '.local' in '${yves_url}' or '.local' in '${zed_url}' or '.local' in '${glue_url}' or '.local' in '${bapi_url}' or '.local' in '${sapi_url}' or '.local' in '${mp_url}' or ${docker}
-        ${consoleCommand}=    Set Variable    cd ${cli_path} && APPLICATION_STORE=${storeName} docker/sdk ${command}
-        IF    ${docker}
-            ${consoleCommand}=    Set Variable    curl --request POST -LsS --data "APPLICATION_STORE='${storeName}' COMMAND='${command}' cli.sh" --max-time 1000 --url "${docker_cli_url}/console"
-            ${rc}    ${output}=    Run And Return RC And Output    ${consoleCommand}
-            Log   ${output}
-            Should Be Equal As Integers    ${rc}    0    message=CLI command can't be executed. Check '{docker}', '{ignore_console}' variables value and cli execution path: '{cli_path}'
-        END
-        IF    ${ignore_console} != True
-            ${rc}    ${output}=    Run And Return RC And Output    ${consoleCommand}
-            Log   ${output}
-            Should Be Equal As Integers    ${rc}    0    message=CLI command can't be executed. Check '{docker}', '{ignore_console}' variables value and cli execution path: '{cli_path}'
-        END
+    ${consoleCommand}=    Set Variable    cd ${cli_path} && APPLICATION_STORE=${storeName} docker/sdk ${command}
+    IF    ${docker}
+        ${consoleCommand}=    Set Variable    curl --request POST -LsS --data "APPLICATION_STORE='${storeName}' COMMAND='${command}' cli.sh" --max-time 1000 --url "${docker_cli_url}/console"
+        ${rc}    ${output}=    Run And Return RC And Output    ${consoleCommand}
+        Log   ${output}
+        Should Be Equal As Integers    ${rc}    0    message=CLI command can't be executed. Check '{docker}', '{ignore_console}' variables value and cli execution path: '{cli_path}'
+    END
+    IF    ${ignore_console} != True
+        ${rc}    ${output}=    Run And Return RC And Output    ${consoleCommand}
+        Log   ${output}
+        Should Be Equal As Integers    ${rc}    0    message=CLI command can't be executed. Check '{docker}', '{ignore_console}' variables value and cli execution path: '{cli_path}'
     END
 
 Trigger p&s
@@ -577,3 +251,246 @@ Trigger oms
     Run console command    console oms:check-condition    DE
     Run console command    console oms:check-condition    AT
     IF    ${docker} or ${ignore_console} != True    Sleep    ${timeout}
+
+Trigger publish trigger-events
+    [Documentation]    This keyword triggers publish:trigger-events console command using provided resource, path and store.
+        ...    *Example:*
+        ...
+        ...    ``Trigger publish trigger-events    resource=service_point    storeName=DE    timeout=5s``
+        ...
+    [Arguments]    ${resource}    ${storeName}=DE    ${timeout}=5s
+    Run console command    console publish:trigger-events -r ${resource}    ${storeName}
+    Trigger p&s    ${timeout}    ${storeName}
+
+Get next id from table
+    [Documentation]    This keyword returns next ID from the given table.
+        ...    *Example:*
+        ...
+        ...    ``Get next id from table    tableName=product    idColumnName=id_product``
+        ...
+    [Arguments]    ${tableName}    ${idColumnName}
+    Connect to Spryker DB
+    ${lastId}=    Query    SELECT ${idColumnName} FROM ${tableName} ORDER BY ${idColumnName} DESC LIMIT 1;
+    ${newId}=    Set Variable    ${EMPTY}
+    ${lastIdLength}=    Get Length    ${lastId}
+    IF    ${lastIdLength} > 0
+        ${newId}=    Evaluate    ${lastId[0][0]} + 1
+    ELSE
+        ${newId}=    Evaluate    1
+    END
+    Disconnect From Database
+    Log    ${newId}
+    [Return]    ${newId}
+
+Get concrete product sku by id from DB:
+    [Documentation]    This keyword returns product concrete sku from DB found by id_product. Returns '${concrete_sku}' variable
+    ...    *Example:*
+    ...
+    ...    ``Get concrete product sku by id from DB:    ${id_product}``
+    ...
+    [Arguments]    ${id_product}
+    Connect to Spryker DB
+    ${concrete_sku}=    Query    select sku from spy_product WHERE id_product='${id_product}';
+    ${concrete_sku}=    Get From List    ${concrete_sku}    0
+    ${concrete_sku}=    Convert To String    ${concrete_sku[0]}
+    Set Test Variable    ${concrete_sku}    ${concrete_sku}
+    Disconnect From Database
+
+Create giftcode in Database:
+    [Documentation]    This keyword creates a new entry in the DB table spy_gift_card with the name, value and gift-card code.
+        ...    *Example:*
+        ...
+        ...    ``Create giftcode in Database:    checkout_${random}    ${gift_card.amount}``
+        ...
+    [Arguments]    ${spy_gift_card_code}    ${spy_gift_card_value}
+    ${amount}=   Evaluate    ${spy_gift_card_value} / 100
+    ${amount}=    Evaluate    "%.f" % ${amount}
+    ${new_id}=    Get next id from table    spy_gift_card    id_gift_card
+    Connect to Spryker DB
+    IF    '${db_engine}' == 'pymysql'
+        Execute Sql String    insert ignore into spy_gift_card (code,name,currency_iso_code,value) value ('${spy_gift_card_code}','Gift_card_${amount}','EUR','${spy_gift_card_value}')
+    ELSE
+        Execute Sql String    INSERT INTO spy_gift_card (id_gift_card, code, name, currency_iso_code, value) VALUES (${new_id}, '${spy_gift_card_code}', 'Gift_card_${amount}', 'EUR', '${spy_gift_card_value}');
+    END
+    Disconnect From Database
+
+Update order status in Database:
+    [Documentation]    This keyword updates order status in database to any required status. This allows to skip going through the order workflow manually
+    ...    but just switch to the status you need to create a test.
+    ...    There is no separate endpoint to update order status and this keyword allows to do this via database value update.
+    ...    *Example:*
+    ...
+    ...    ``Update order status in Database:    7    shipped``
+    [Arguments]    ${order_item_status_name}    ${uuid_to_use}
+    Connect to Spryker DB
+    ${new_id}=    Set Variable    ${EMPTY}
+    ${state_id}=    Set Variable    ${EMPTY}
+    ${last_id}=    Query    SELECT id_oms_order_item_state FROM spy_oms_order_item_state ORDER BY id_oms_order_item_state DESC LIMIT 1;
+    ${expected_state_id}=    Query    SELECT id_oms_order_item_state FROM spy_oms_order_item_state WHERE name='${order_item_status_name}';
+    ${last_id_length}=    Get Length    ${last_id}
+    ${expected_state_id_length}=    Get Length    ${expected_state_id}
+    IF    ${expected_state_id_length} > 0
+        ${state_id}=    Set Variable    ${expected_state_id[0][0]}
+    ELSE
+        ${new_id}=    Evaluate    ${last_id[0][0]} + 1
+        Execute Sql String    INSERT INTO spy_oms_order_item_state (id_oms_order_item_state, name) VALUES (${new_id}, '${order_item_status_name}');
+        ${state_id}=    Set Variable    ${new_id}
+    END
+    Execute Sql String    update spy_sales_order_item set fk_oms_order_item_state = '${state_id}' where uuid= '${uuid_to_use}'
+    Disconnect From Database
+
+Create merchant order for the item in DB and change status:
+    [Documentation]    This keyword creates new merchant order in the DB and sets the desired status . This allows to skip going through the order workflow manually
+    ...    but just switch to the status you need to create a test.
+    ...    There is no separate endpoint to update order status and this keyword allows to do this via database value update.
+    ...    *Example:*
+    ...
+    ...    ``Create merchant order for the item in DB and change status:    shipped    ${uuid}    ${merchants.sony_experts.merchant_reference}``
+    [Arguments]    ${order_item_status_name}    ${uuid_to_use}    ${merchant_reference}
+    Connect to Spryker DB
+    ${new_id}=    Set Variable    ${EMPTY}
+    ${state_id}=    Set Variable    ${EMPTY}
+    ${last_id}=    Query    SELECT id_state_machine_item_state FROM spy_state_machine_item_state ORDER BY id_state_machine_item_state DESC LIMIT 1;
+    ${expected_state_id}=    Query    SELECT id_state_machine_item_state FROM spy_state_machine_item_state WHERE name='${order_item_status_name}';
+    ${last_id_length}=    Get Length    ${last_id}
+    IF    ${last_id_length} == 0
+        ${state_id}=    Set Variable    1
+        ${state_id}=    Convert To String    ${state_id}
+    END
+    ${expected_state_id_length}=    Get Length    ${expected_state_id}
+    IF    ${expected_state_id_length} > 0
+        ${state_id}=    Set Variable    ${expected_state_id[0][0]}
+    ELSE
+        ${state_id}=    Set Variable    ${state_id}
+        Execute Sql String    INSERT INTO spy_state_machine_item_state (id_state_machine_item_state, fk_state_machine_process, name) VALUES (${state_id}, 2, '${order_item_status_name}');
+    END
+    ${last_order_item_id}=    Query    SELECT id_merchant_sales_order_item from spy_merchant_sales_order_item order by id_merchant_sales_order_item desc limit 1;
+    ${last_order_item_id_length}=    Get Length    ${last_order_item_id}
+    IF    ${last_order_item_id_length} == 0
+        ${new_order_item_id}=    Set variable    1
+        ${new_order_item_id}=    Convert To String    ${new_order_item_id}
+    END
+    IF    ${last_order_item_id_length} > 0
+        ${new_order_item_id}=    Evaluate    ${last_order_item_id[0][0]} +1
+    ELSE
+        ${new_order_item_id}=    Set Variable    ${new_order_item_id}
+    END
+    ${last_merchant_order_id}=    Query    SELECT id_merchant_sales_order from spy_merchant_sales_order order by id_merchant_sales_order desc limit 1;
+    ${last_merchant_order_id_length}=    Get Length    ${last_merchant_order_id}
+    IF    ${last_merchant_order_id_length} == 0
+        ${new_merchant_order_id}=    Set Variable    1
+        ${new_merchant_order_id}=    Convert To String    ${new_merchant_order_id}
+    END
+    IF    ${last_merchant_order_id_length} > 0
+        ${new_merchant_order_id}=    Evaluate    ${last_merchant_order_id[0][0]} +1
+    ELSE
+        ${new_merchant_order_id}=    Set Variable    ${new_merchant_order_id}
+    END
+    ${sales_order_id}=    Query    SELECT fk_sales_order from spy_sales_order_item where uuid='${uuid_to_use}';
+    ${sales_order_id}=    Set Variable    ${sales_order_id[0][0]}
+    Execute Sql String    INSERT INTO spy_merchant_sales_order (id_merchant_sales_order, fk_sales_order, merchant_reference, merchant_sales_order_reference) VALUES (${new_merchant_order_id}, ${sales_order_id}, '${merchant_reference}', 'DE--${sales_order_id}--${merchant_reference}');
+    ${last_merchant_order_item_id}=    Query    SELECT id_merchant_sales_order from spy_merchant_sales_order order by id_merchant_sales_order desc limit 1;
+    ${last_merchant_order_item_id_length}=    Get Length    ${last_merchant_order_item_id}
+    IF    ${last_merchant_order_item_id_length} > 0
+        ${new_merchant_order_item_id}=    Evaluate    ${last_merchant_order_item_id[0][0]} +1
+    END
+    ${sales_order_item_id}=    Query    SELECT id_sales_order_item from spy_sales_order_item where uuid='${uuid_to_use}';
+    ${sales_order_item_id}=    Set Variable    ${sales_order_item_id[0][0]}
+    ${random_merchant_order_item_reference}=    Generate Random String    10    [NUMBERS]
+    Execute Sql String    INSERT INTO spy_merchant_sales_order_item (id_merchant_sales_order_item, fk_merchant_sales_order, fk_sales_order_item, fk_state_machine_item_state, merchant_order_item_reference) VALUES (${new_merchant_order_item_id}, ${new_merchant_order_id}, ${sales_order_item_id}, ${state_id}, '${random_merchant_order_item_reference}');
+    Disconnect From Database
+
+Delete country by iso2_code in Database:
+    [Documentation]    This keyword deletes a country by iso2_code in the DB table spy_country.
+        ...    *Example:*
+        ...
+        ...    ``Delete country by iso2_code in Database:    DE``
+        ...
+    [Arguments]    ${iso2_code}
+    Connect to Spryker DB
+    Execute Sql String    DELETE FROM spy_country WHERE iso2_code = '${iso2_code}';
+    Disconnect From Database
+
+Create dynamic entity configuration in Database:
+     [Documentation]    This keyword create dynamic entity configuration in the DB table spy_dynamic_entity_configuration.
+        ...    *Example:*
+        ...
+        ...    ``Create dynamic entity configuration in Database:    country    spy_country     1   {"identifier":"id_country","fields":[...]}``
+        ...
+    [Arguments]    ${table_alias}   ${table_name}    ${is_active}    ${definition}
+    ${new_id}=    Get next id from table    spy_dynamic_entity_configuration    id_dynamic_entity_configuration
+    Connect to Spryker DB
+    IF    '${db_engine}' == 'pymysql'
+        Execute Sql String  insert ignore into spy_dynamic_entity_configuration (table_alias, table_name, is_active, definition) value ('${table_alias}', '${table_name}', '${is_active}', '${definition}');
+    ELSE
+        Execute Sql String  insert into spy_dynamic_entity_configuration (id_dynamic_entity_configuration, table_alias, table_name, is_active, definition) values (${new_id}, '${table_alias}', '${table_name}', '${is_active}', '${definition}')
+    END
+    Disconnect From Database
+
+Delete dynamic entity configuration in Database:
+     [Documentation]    This keyword delete dynamic entity configuration in the DB table spy_dynamic_entity_configuration.
+        ...    *Example:*
+        ...
+        ...    ``Delete dynamic entity configuration in Database:    country```
+        ...
+    [Arguments]    ${table_alias}
+    Connect to Spryker DB
+    Execute Sql String  DELETE FROM spy_dynamic_entity_configuration WHERE table_alias = '${table_alias}';
+    Disconnect From Database
+
+I add 'admin' role to company user and get company_user_uuid:
+    [Documentation]    This is a helper keyword which sets the 'Admin' role to the company user if it is not already set and returns the uuid of this company user. Requires: company user email, company key and business unit key
+    ...    *Example:*
+    ...
+    ...    ``Add 'admin' role to company user and return company_user_uuid:    anne.boleyn@spryker.com    BoB-Hotel-Jim    business-unit-jim-1``
+    [Arguments]    ${email}    ${company_key}    ${business_unit_key}
+    Connect to Spryker DB
+    ${id_customer}=    Query    select id_customer from spy_customer WHERE email='${email}'
+    ${id_customer}=    Evaluate    ${id_customer[0][0]}+0
+    IF    '${db_engine}' == 'pymysql'
+        ${id_business_unit}=    Query    select id_company_business_unit from spy_company_business_unit where `key`='${business_unit_key}'
+    ELSE
+        ${id_business_unit}=    Query    select id_company_business_unit from spy_company_business_unit where "key"='${business_unit_key}'
+    END
+    ${id_business_unit}=    Evaluate    ${id_business_unit[0][0]}+0
+    IF    '${db_engine}' == 'pymysql'
+        ${id_company}=    Query    select id_company from spy_company WHERE `key`='${company_key}'
+    ELSE
+        ${id_company}=    Query    select id_company from spy_company WHERE "key"='${company_key}'
+    END
+    ${id_company}=    Evaluate    ${id_company[0][0]}+0
+    ${id_company_user}=    Query    select id_company_user from spy_company_user WHERE fk_customer=${id_customer} and fk_company_business_unit=${id_business_unit} and fk_company=${id_company}
+    ${id_company_user}=    Evaluate    ${id_company_user[0][0]}+0
+    ${id_company_role_admin}=    Query    select id_company_role from spy_company_role WHERE name='Admin' and fk_company='${id_company}'
+    ${id_company_role_admin}=    Evaluate    ${id_company_role_admin[0][0]}+0
+    ${is_role_set}=    Query    SELECT id_company_role_to_company_user FROM spy_company_role_to_company_user WHERE fk_company_role = ${id_company_role_admin} and fk_company_user = ${id_company_user}
+    ${is_role_set_length}=    Get Length    ${is_role_set}
+    IF    ${is_role_set_length} == 0
+        ${last_id}=    Query    SELECT id_company_role_to_company_user FROM spy_company_role_to_company_user ORDER BY id_company_role_to_company_user DESC LIMIT 1;
+        ${new_id}=    Evaluate    ${last_id[0][0]}+1
+        Execute Sql String    INSERT INTO spy_company_role_to_company_user (id_company_role_to_company_user, fk_company_role, fk_company_user) VALUES (${new_id}, ${id_company_role_admin}, ${id_company_user});
+    END
+    ${company_user_uuid}=    Query    select uuid from spy_company_user where id_company_user=${id_company_user}
+    ${company_user_uuid}=    Convert To String    ${company_user_uuid}
+    ${company_user_uuid}=    Replace String    ${company_user_uuid}    '   ${EMPTY}
+    ${company_user_uuid}=    Replace String    ${company_user_uuid}    ,   ${EMPTY}
+    ${company_user_uuid}=    Replace String    ${company_user_uuid}    (   ${EMPTY}
+    ${company_user_uuid}=    Replace String    ${company_user_uuid}    )   ${EMPTY}
+    ${company_user_uuid}=    Replace String    ${company_user_uuid}    [   ${EMPTY}
+    ${company_user_uuid}=    Replace String    ${company_user_uuid}    ]   ${EMPTY}
+    Set Test Variable    ${company_user_uuid}    ${company_user_uuid}
+    [Return]    ${company_user_uuid}
+
+Get voucher code by discountId from Database:
+    [Documentation]    This keyword allows to get voucher code according to the discount ID. Discount_id can be found in Backoffice > Merchandising > Discount page
+    ...        and set this id as an argument of a keyword.
+    ...
+    ...    *Example:*
+    ...    ``Get voucher code by discountId from Database:    3``
+    [Arguments]    ${discount_id}
+    Save the result of a SELECT DB query to a variable:    select fk_discount_voucher_pool from spy_discount where id_discount = ${discount_id}    discount_voucher_pool_id
+    IF    '${db_engine}' == 'pymysql'
+        Save the result of a SELECT DB query to a variable:    select code from spy_discount_voucher where fk_discount_voucher_pool = ${discount_voucher_pool_id} and is_active = 1 limit 1    discount_voucher_code
+    ELSE
+        Save the result of a SELECT DB query to a variable:    select code from spy_discount_voucher where fk_discount_voucher_pool = ${discount_voucher_pool_id} and is_active = true limit 1    discount_voucher_code
+    END

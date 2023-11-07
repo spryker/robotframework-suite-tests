@@ -1,12 +1,12 @@
 *** Settings ***
-Suite Setup    SuiteSetup
-Test Setup    TestSetup
+Suite Setup    API_suite_setup
+Test Setup    API_test_setup
 Resource    ../../../../../../resources/steps/service_point_steps.robot
 Default Tags    glue
 
 *** Test Cases ***
 ENABLER
-    TestSetup
+    API_test_setup
 
 Retrieves_list_of_service_point_addresses
     When I send a GET request:    /service-points/${servicePoints[0].uuid}/service-point-addresses

@@ -1,12 +1,12 @@
 *** Settings ***
-Suite Setup       SuiteSetup
-Test Setup        TestSetup
+Suite Setup       API_suite_setup
+Test Setup        API_test_setup
 Resource    ../../../../../../resources/common/common_api.robot
 Default Tags    glue
 
 *** Test Cases ***
 ENABLER
-    TestSetup
+    API_test_setup
 
 Get_abstract_product_by_concrete_SKU
     When I send a GET request:    /abstract-products/${product_with_alternative.concrete_sku}

@@ -42,6 +42,22 @@ MP: fill offer fields:
             MP: select option in expanded dropdown:    ${value}
             Click    ${stores_list_selector}
         END
+        IF    '${key}'=='service point' and '${value}' != '${EMPTY}'
+            Click    ${offer_service_point_selector}
+            Input Text    ${offer_service_point_search_field}    ${value}
+            MP: select option in expanded dropdown:    ${value}
+            Click    ${offer_service_point_selector}
+        END
+        IF    '${key}'=='services' and '${value}' != '${EMPTY}'
+            Click    ${offer_services_selector}
+            MP: select option in expanded dropdown:    ${value}
+            Click    ${offer_services_selector}
+        END
+        IF    '${key}'=='shipment types' and '${value}' != '${EMPTY}'
+            Click    ${offer_shipment_types_selector}
+            MP: select option in expanded dropdown:    ${value}
+            Click    ${offer_shipment_types_selector}
+        END
     END
             
 MP: add offer price:
@@ -73,7 +89,12 @@ MP: add offer price:
 
 MP: save offer    
     MP: click submit button
-    Wait Until Element Is Visible    ${offer_saved_popup}
+    ${offerSaved}=    Run Keyword And Ignore Error    Wait Until Element Is Visible    ${offer_saved_popup}    timeout=5s
+    ### resave in case of error
+    IF    'FAIL' in ${offerSaved}
+        MP: click submit button
+        Wait Until Element Is Visible    ${offer_saved_popup}    timeout=5s
+    END
     MP: remove notification wrapper
 
 MP: change offer stock:
@@ -137,4 +158,11 @@ Zed: view offer product page contains:
         IF    '${key}'=='merchant sku' and '${value}' != '${EMPTY}'    
             Element Should Contain    ${zed_view_offer_merchant_sku}    ${value}
         END
+        IF    '${key}'=='services' and '${value}' != '${EMPTY}'    
+            Element Should Contain    ${zed_view_offer_services}    ${value}
+        END
+        IF    '${key}'=='shipment types' and '${value}' != '${EMPTY}'    
+            Element Should Contain    ${zed_view_offer_shipment_types}    ${value}
+        END
+
     END

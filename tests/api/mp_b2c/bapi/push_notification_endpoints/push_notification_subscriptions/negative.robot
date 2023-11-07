@@ -1,13 +1,13 @@
 *** Settings ***
-Suite Setup       SuiteSetup
-Test Setup        TestSetup
+Suite Setup       API_suite_setup
+Test Setup        API_test_setup
 Resource    ../../../../../../resources/common/common_api.robot
 Resource    ../../../../../../resources/steps/push_notifications_steps.robot
 Default Tags    bapi
 
 *** Test Cases ***
 ENABLER
-   TestSetup
+   API_test_setup
 
 Creates_push_notification_subscription_with_incorrect_locale
     [Setup]    Run Keywords    Create warehouse in DB:    ${warehouses[0].name}     ${True}     ${warehouses[0].uuid}

@@ -12,14 +12,14 @@ Create api key in db
     ...
     ### works for MariaDB and PostgreSQL ###
     [Arguments]    ${key_hash}=${dummy_key_hash}    ${created_by}=1
-    common_api.Connect to Spryker DB
+    Connect to Spryker DB
     ${hash_id}=    Query    select id_api_key from spy_api_key WHERE key_hash='${key_hash}';
     ${hash_id_length}=    Get Length    ${hash_id}
     IF    ${hash_id_length} > 0
         Execute Sql String    DELETE FROM spy_api_key WHERE key_hash='${key_hash}';
     END
     ${new_id}=    Get next id from table    spy_api_key    id_api_key
-    common_api.Connect to Spryker DB
+    Connect to Spryker DB
     IF    '${db_engine}' == 'pymysql'
         Execute Sql String  insert into spy_api_key (id_api_key, name, key_hash, created_by) value ('${new_id}', 'autotest${random}', '${key_hash}', '${created_by}');
     ELSE
@@ -32,7 +32,7 @@ Delete api key from db
     ...
     ### works for MariaDB and PostgreSQL ###
     [Arguments]    ${key_hash}=${dummy_key_hash}
-    common_api.Connect to Spryker DB
+    Connect to Spryker DB
     ${hash_id}=    Query    select id_api_key from spy_api_key WHERE key_hash='${key_hash}';
     ${hash_id_length}=    Get Length    ${hash_id}
     IF    ${hash_id_length} > 0
@@ -97,7 +97,7 @@ Delete mime_type by id_mime_type in Database:
         ...    ``Delete mime_type by id_mime_type in Database:    21``
         ...
     [Arguments]    ${id_mime_type}
-    common_api.Connect to Spryker DB
+    Connect to Spryker DB
     Execute Sql String    DELETE FROM spy_mime_type WHERE id_mime_type = '${id_mime_type}';
     Disconnect From Database
 
@@ -144,7 +144,7 @@ Find first available product via data exchange api
     [Arguments]    ${start_from_index}=0    ${end_index}=100
     Remove Tags    *
     Set Tags    bapi
-    common_api.TestSetup
+    API_test_setup
     I get access token by user credentials:   ${zed_admin.email}    
     I set Headers:    Content-Type=application/json    Authorization=Bearer ${token}
     FOR    ${index}    IN RANGE    ${start_from_index}    ${end_index}   
@@ -174,7 +174,7 @@ Make sure that concrete product is available:
     [Arguments]    ${sku}=${concrete_sku}
     Remove Tags    *
     Set Tags    glue
-    common_api.TestSetup
+    API_test_setup
     I set Headers:    Content-Type==application/json
     I send a GET request:    /concrete-products/${concrete_sku}/concrete-product-availabilities
     ${is_avaialbe}=    Run Keyword And Ignore Error    Response body parameter should be:    [data][0][attributes][availability]   True
@@ -188,7 +188,7 @@ Product availability status should be changed on:
     ${is_available}=    Convert To Title Case    ${is_available}
     Remove Tags    *
     Set Tags    glue
-    common_api.TestSetup
+    API_test_setup
     I set Headers:    Content-Type==application/json
     FOR    ${index}    IN RANGE    0    ${iterations}
         I send a GET request:    /concrete-products/${concrete_sku}/concrete-product-availabilities
@@ -211,7 +211,7 @@ Restore product initial stock via data exchange api:
     [Arguments]    ${id_stock_product}=${index}
     Remove Tags    *
     Set Tags    bapi
-    common_api.TestSetup
+    API_test_setup
     I get access token by user credentials:   ${zed_admin.email}    
     I set Headers:    Content-Type=application/json    Authorization=Bearer ${token}
     I send a PATCH request:    /dynamic-entity/stock-products/${id_stock_product}    {"data":{"is_never_out_of_stock":${initial_is_never_out_of_stock},"quantity":${initial_quantity}}}

@@ -1,9 +1,5 @@
 *** Settings ***
-Library    String
-Library    Browser
-Library    DatabaseLibrary
-Library    ../../resources/libraries/common.py
-Resource    common.robot
+Resource    common_ui.robot
 Resource    ../pages/yves/yves_overview_page.robot
 Resource    ../pages/yves/yves_profile_page.robot
 Resource    ../pages/yves/yves_overview_page.robot
@@ -351,8 +347,12 @@ Yves: check if cart is not empty and clear it
 Helper: delete all items in cart
     ${productsInCart}=    Get Element Count    xpath=//article[@class='product-card-item']//div[contains(@class,'product-card-item__box')]
     FOR    ${index}    IN RANGE    0    ${productsInCart}
-        Click    xpath=(//div[@class='page-layout-cart__items-wrap']//ancestor::div/following-sibling::div//form[contains(@name,'removeFromCart')]//button[text()='Remove'])\[1\]
-        Yves: remove flash messages
+        TRY
+            Click    xpath=(//div[@class='page-layout-cart__items-wrap']//ancestor::div/following-sibling::div//form[contains(@name,'removeFromCart')]//button[text()='Remove'])[1]
+            Yves: remove flash messages
+        EXCEPT    
+            Log    Shopping cart is empty now
+        END
     END
 
 Yves: try reloading page if element is/not appear:
@@ -400,56 +400,6 @@ Yves: login after signup during checkout:
     Type Text    ${email_field}     ${email}
     Type Text    ${password_field}     ${password}
     Click    ${form_login_button}
-
-I send a POST request:
-    [Documentation]    This keyword is used to make POST requests. It accepts the endpoint *without the domain* and the body in JOSN.
-    ...    Variables can and should be used in the endpoint url and in the body JSON.
-    ...
-    ...    If the endpoint needs to have any headers (e.g. token for authorisation), ``I set Headers`` keyword should be called before this keyword to set the headers beforehand.
-    ...
-    ...    After this keyword is called, response body, selflink, response status and headers are recorded into the test variables which have the scope of the current test and can then be used by other keywords to get and compare data.
-    ...
-    ...    *Example:*
-    ...
-    ...    ``I send a POST request:    /agent-access-tokens    {"data": {"type": "agent-access-tokens","attributes": {"username": "${agent.email}","password": "${agent.password}"}}}``
-    [Arguments]   ${path}    ${json}    ${timeout}=60    ${allow_redirects}=true    ${auth}=${NONE}    ${expected_status}=ANY
-    ${data}=    Evaluate    ${json}
-    ${headers_not_empty}    Run Keyword and return status     Should not be empty    ${headers}
-    ${response}=    IF    ${headers_not_empty}   run keyword    POST    ${glue_url}${path}    json=${data}    headers=${headers}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}    verify=${verify_ssl}
-    ...    ELSE    POST    ${glue_url}${path}    json=${data}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=ANY    verify=${verify_ssl}
-    ${response.status_code}=    Set Variable    ${response.status_code}
-    IF    ${response.status_code} != 204    
-        TRY    
-            ${response_body}=    Set Variable    ${response.json()}
-        EXCEPT
-            ${content_type}=    Get From Dictionary    ${response.headers}    content-type
-            Fail    Got: '${response.status_code}' status code on: '${response.url}' with reason: '${response.reason}'. Response content type: '${content_type}'. Details: '${response.content}'
-        END
-    END
-    ${response_headers}=    Set Variable    ${response.headers}
-    IF    ${response.status_code} == 204    
-        ${response_body}=    Set Variable    ${EMPTY}
-    END
-    Set Test Variable    ${response_headers}    ${response_headers}
-    Set Test Variable    ${response_body}    ${response_body}
-    Set Test Variable    ${response}    ${response}
-    Set Test Variable    ${expected_self_link}    ${glue_url}${path}
-    [Return]    ${response_body}
-
-I set Headers:
-    [Documentation]    Keyword sets any number of headers for the further endpoint calls.
-    ...    Headers can have any name and any value, they are set as test variable - which means they can be used throughtout one test if set once.
-    ...    This keyword can be used to add access token to the next endpoint calls or to set header for the guest customer, etc.
-    ...
-    ...    It accepts a list of pairs haader-name=header-value as an argument. The list items should be separated by 4 spaces.
-    ...
-    ...    *Example:*
-    ...
-    ...    ``I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}``
-
-    [Arguments]    &{headers}
-    Set Test Variable    &{headers}
-    [Return]    &{headers}
 
 Yves: checkout is blocked with the following message:
     [Arguments]    ${expectedMessage}

@@ -1,12 +1,12 @@
 *** Settings ***
 Resource    ../../../../../../resources/common/common_api.robot
-Suite Setup    SuiteSetup
-Test Setup    TestSetup
+Suite Setup    API_suite_setup
+Test Setup    API_test_setup
 Default Tags    glue
 
 *** Test Cases ***
 ENABLER
-    TestSetup
+    API_test_setup
 
 Create_a_shopping_list_with_empty_type
     I send a POST request:    /shopping-lists    {"data":{"type":"","attributes":{"name":"${shopping_list_name}${random}"}}}
