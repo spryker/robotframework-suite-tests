@@ -201,7 +201,7 @@ Scroll Element Into View
 
 Input Text
     [Arguments]    ${locator}    ${text}
-    Type Text    ${locator}    ${text}    0ms
+    Type Text    ${locator}    ${text}    delay=10ms
 
 Table Should Contain
     [Arguments]    ${locator}    ${expected}    ${message}=${EMPTY}    ${ignore_case}=${EMPTY}

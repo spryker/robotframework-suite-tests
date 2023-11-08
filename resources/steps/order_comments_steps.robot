@@ -11,8 +11,8 @@ Resource    order_history_steps.robot
 *** Keywords ***
 Yves: add comment on cart:
     [Arguments]    ${comment}
-    Click With Options    ${shopping_cart_write_comment_placeholder}    delay=0.5s
-    Type Text    ${shopping_cart_write_comment_placeholder}    ${comment}
+    Click With Options    ${shopping_cart_write_comment_placeholder}    delay=0.5s    force=true
+    Type Text    ${shopping_cart_write_comment_placeholder}    ${comment}    delay=50ms
     Keyboard Key    press    Enter
     Click With Options    ${shopping_cart_add_comment_button}    delay=0.5s
 
@@ -56,9 +56,8 @@ Zed: check comment appears at order detailed page in zed:
 Yves: edit comment on cart:
     [Arguments]    ${comment_to_set}
     Click With Options    ${shopping_cart_edit_comment_button}    delay=0.5s
-    Click With Options    ${shopping_cart_edit_comment_placeholder}    delay=0.5s
     Clear Text    ${shopping_cart_edit_comment_placeholder}  
-    Keyboard Key    press    Enter
+    # Keyboard Key    press    Enter
     Input Text    ${shopping_cart_edit_comment_placeholder}    ${comment_to_set}
     Click With Options    ${shopping_cart_update_comment_button}    delay=0.5s
 
@@ -69,5 +68,5 @@ Yves: delete comment on cart
 Yves: add comment on order in order detail page:
     [Arguments]    ${comment}
     Click With Options    ${order_details_page_add_comments_textbox}    delay=0.5s
-    Type Text    ${order_details_page_add_comments_textbox}    ${comment}
+    Type Text    ${order_details_page_add_comments_textbox}    ${comment}    delay=50ms
     Click With Options    ${add_comment_button_order_details_page}    delay=0.5s

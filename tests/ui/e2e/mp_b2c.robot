@@ -988,7 +988,8 @@ Create_New_Offer
     Yves: 'Shopping Cart' page is displayed
     Yves: assert merchant of product in b2c cart:    SprykerProduct${random}    Budget Cameras
     Yves: shopping cart contains product with unit price:    SprykerSKU${random}-2    SprykerProduct${random}    200
-    [Teardown]    Run Keywords    Yves: check if cart is not empty and clear it
+    [Teardown]    Run Keywords    Yves: login on Yves with provided credentials:    ${yves_user_email}
+    ...    AND    Yves: check if cart is not empty and clear it
     ...    AND    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: go to second navigation item level:    Catalog    Products 
     ...    AND    Zed: click Action Button in a table for row that contains:     SprykerProduct${random}     Deny

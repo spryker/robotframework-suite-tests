@@ -100,7 +100,12 @@ Yves: select filter value:
     [Arguments]    ${filter}    ${filterValue}
     Wait Until Element Is Visible    xpath=//section[contains(@data-qa,'component filter-section')]//*[contains(@class,'filter-section')][contains(text(),'${filter}')]
     Click    xpath=//section[contains(@data-qa,'component filter-section')]//*[contains(@class,'filter-section')][contains(text(),'${filter}')]
-    Wait Until Element Is Visible    xpath=//section[contains(@data-qa,'component filter-section')]//*[contains(@class,'filter-section')][contains(text(),'${filter}')]/following-sibling::*//span[contains(@data-qa,'checkbox')][contains(.,'${filterValue}')]
+    ${filter_expanded}=    Run Keyword And Ignore Error    Wait Until Element Is Visible    xpath=//section[contains(@data-qa,'component filter-section')]//*[contains(@class,'filter-section')][contains(text(),'${filter}')]/following-sibling::*//span[contains(@data-qa,'checkbox')][contains(.,'${filterValue}')]    timeout=3s
+    IF    'FAIL' in ${filter_expanded}
+        Reload
+        Wait Until Element Is Visible    xpath=//section[contains(@data-qa,'component filter-section')]//*[contains(@class,'filter-section')][contains(text(),'${filter}')]
+        Click    xpath=//section[contains(@data-qa,'component filter-section')]//*[contains(@class,'filter-section')][contains(text(),'${filter}')]
+    END
     Click    xpath=//section[contains(@data-qa,'component filter-section')]//*[contains(@class,'filter-section')][contains(text(),'${filter}')]/following-sibling::*//span[contains(@data-qa,'checkbox')][contains(.,'${filterValue}')]
     Click    ${catalog_filter_apply_button}
 

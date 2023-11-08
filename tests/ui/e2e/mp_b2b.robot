@@ -1249,7 +1249,8 @@ Create_New_Offer
     Yves: 'Shopping Cart' page is displayed
     Yves: assert merchant of product in cart or list:    SprykerSKU${random}-2    Office King
     Yves: shopping cart contains product with unit price:    SprykerSKU${random}-2    SprykerProduct${random}    200
-    [Teardown]    Run Keywords    Yves: delete 'Shopping Cart' with name:    newOfferCart${random}
+    [Teardown]    Run Keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
+    ...    AND    Yves: delete 'Shopping Cart' with name:    newOfferCart${random}
     ...    AND    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: go to second navigation item level:    Catalog    Products 
     ...    AND    Zed: click Action Button in a table for row that contains:     SprykerProduct${random}     Deny

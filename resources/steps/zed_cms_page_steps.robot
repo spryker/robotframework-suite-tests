@@ -27,10 +27,11 @@ Zed: create a cms page and publish it:
     END
     Wait Until Element Is Visible    ${zed_cms_page_general_second_locale_name_field}    message=Second locale section of CMS page is not open
     Check checkbox    ${zed_cms_page_general_is_searchable_checkbox}
-    Type Text    ${zed_cms_page_general_first_locale_name_field}    ${enName}
-    Type Text    ${zed_cms_page_general_first_locale_url_field}    ${enURL}
-    Type Text    ${zed_cms_page_general_second_locale_name_field}    ${enName}
-    Type Text    ${zed_cms_page_general_second_locale_url_field}    ${enURL}
+    Type Text    ${zed_cms_page_general_first_locale_name_field}    ${enName}    delay=50ms
+    Type Text    ${zed_cms_page_general_first_locale_url_field}    ${enURL}    delay=50ms
+    Type Text    ${zed_cms_page_general_second_locale_name_field}    ${enName}    delay=50ms
+    Type Text    ${zed_cms_page_general_second_locale_url_field}    ${enURL}    delay=50ms
+    Sleep    0.5s
     Click    ${zed_cms_page_save_button}
     ### Placeholder information input
     ${page_was_created}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//body//*[contains(text(),'Edit Placeholders: ${enName}')]
@@ -45,9 +46,9 @@ Zed: create a cms page and publish it:
     END
     Wait Until Element Is Visible    ${zed_cms_page_placeholder_title_deDE_field}    message=DE section of Title tab is not open
     Clear Text    ${zed_cms_page_placeholder_title_enUS_field}
-    Type Text    ${zed_cms_page_placeholder_title_enUS_field}    ${enTitlePlaceholder}
+    Type Text    ${zed_cms_page_placeholder_title_enUS_field}    ${enTitlePlaceholder}    delay=50ms
     Clear Text    ${zed_cms_page_placeholder_title_deDE_field}
-    Type Text    ${zed_cms_page_placeholder_title_deDE_field}    ${enTitlePlaceholder}
+    Type Text    ${zed_cms_page_placeholder_title_deDE_field}    ${enTitlePlaceholder}    delay=50ms
     Zed: go to tab:    Content
     Page Should Contain Element    ${zed_cms_page_placeholder_content_enUS_field}    message=EN section of Content tab is not visible
     Scroll Element Into View    ${zed_cms_page_content_second_locale_content_collapsed_section}
@@ -58,15 +59,16 @@ Zed: create a cms page and publish it:
         Click    ${zed_cms_page_content_second_locale_content_collapsed_section}
     END
     Clear Text    ${zed_cms_page_placeholder_content_enUS_field}
-    Type Text    ${zed_cms_page_placeholder_content_enUS_field}    ${enContentPlaceholder}
+    Type Text    ${zed_cms_page_placeholder_content_enUS_field}    ${enContentPlaceholder}    delay=50ms
     Clear Text    ${zed_cms_page_placeholder_content_deDE_field}
-    Type Text    ${zed_cms_page_placeholder_content_deDE_field}    ${enContentPlaceholder}
+    Type Text    ${zed_cms_page_placeholder_content_deDE_field}    ${enContentPlaceholder}    delay=50ms
+    Sleep    0.5s
     ### Save and publish
     Click    ${zed_cms_page_save_button}
     Zed: message should be shown:    Placeholder translations successfully updated.
     Click    ${zed_cms_page_publish_button}
     Zed: message should be shown:    successfully published
-    ### Check the CMS page in
+    ### Check the CMS page in Zed table
     Zed: go to second navigation item level:    Content    Pages
     Zed: perform search by:    ${enName}
     Page Should Contain Element    xpath=//td[contains(@class,'name') and contains(text(),'${enName}')]/following-sibling::td[contains(@class,'status')]//span[contains(@class,'label') and contains(text(),'Active')]    message=CMS page is not found or not activated
