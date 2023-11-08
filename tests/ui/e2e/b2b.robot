@@ -1917,6 +1917,7 @@ Data_exchange_API_Configuration_in_Zed
     Zed: save data exchange api configuration
     Trigger API specification update
     Trigger multistore p&s
+    Zed: wait until info box is not displayed
     API_test_setup
     I get access token by user credentials:   ${zed_admin_email}
     ### CREATE TEST MIME TYPE USING DATA EXCHANGE API ###
