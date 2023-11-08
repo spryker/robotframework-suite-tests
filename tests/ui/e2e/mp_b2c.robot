@@ -2386,8 +2386,8 @@ Data_exchange_API_download_specification
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: download data exchange api specification should be active:    true
     Zed: download data exchange api specification
-    Zed: check that downloaded api specification contains:    /product-attributes
-    Zed: check that downloaded api specification does not contain:    /mime-types
+    Zed: check that downloaded api specification contains:    /dynamic-entity/product-abstracts
+    Zed: check that downloaded api specification does not contain:    /dynamic-entity/mime-types
     Zed: delete dowloaded api specification
     Zed: start creation of new data exchange api configuration for db table:    spy_mime_type
     Zed: edit data exchange api configuration:
@@ -2488,8 +2488,8 @@ Fulfilment_app_e2e
     # #LOGGED IN TO BO and SET CHECKBOX is a warehouse user = true FOR admin_de USER. UI TEST
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: update Zed user:
-    ...    || oldEmail                       | password      | user_is_warehouse_user ||
-    ...    || admin_de@spryker.com           | Change123!321 | true                   ||
+    ...    || oldEmail             | user_is_warehouse_user ||
+    ...    || admin_de@spryker.com | true                   ||
     Remove Tags    *
     Set Tags   bapi
     API_test_setup

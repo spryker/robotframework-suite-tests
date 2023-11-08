@@ -1853,8 +1853,8 @@ Data_exchange_API_download_specification
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: download data exchange api specification should be active:    true
     Zed: download data exchange api specification
-    Zed: check that downloaded api specification contains:    /product-attributes
-    Zed: check that downloaded api specification does not contain:    /mime-types
+    Zed: check that downloaded api specification contains:    /dynamic-entity/product-abstracts
+    Zed: check that downloaded api specification does not contain:    /dynamic-entity/mime-types
     Zed: delete dowloaded api specification
     Zed: start creation of new data exchange api configuration for db table:    spy_mime_type
     Zed: edit data exchange api configuration:
