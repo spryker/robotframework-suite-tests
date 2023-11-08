@@ -40,7 +40,7 @@ Yves: add product to the shopping cart
     ${variants_present_status}=    Run Keyword And Return Status    Page Should Not Contain Element    ${pdp_variant_selector}    timeout=0:00:01
     IF    '${variants_present_status}'=='False'    Yves: change variant of the product on PDP on random value
     Click    ${pdp_add_to_cart_button}
-    Repeat Keyword    2    Wait Until Network Is Idle
+    Repeat Keyword    3    Wait Until Network Is Idle
     Yves: remove flash messages
 
 Yves: change quantity on PDP:
@@ -58,7 +58,6 @@ Yves: select the following 'Sales Unit' on PDP:
     [Arguments]    ${salesUnit}
     Wait Until Element Is Visible    ${pdp_measurement_sales_unit_selector}
     Select From List By Label    ${pdp_measurement_sales_unit_selector}    ${salesUnit}
-
 
 Yves: change quantity using '+' or '-' button № times:
     [Arguments]    ${action}    ${clicksCount}
@@ -174,8 +173,9 @@ Yves: product original price on the PDP should be:
 Yves: add product to the shopping list:
     [Documentation]    If SL name is not provided, default one will be used
     [Arguments]    ${shoppingListName}=${EMPTY}
+    Repeat Keyword    3    Wait Until Network Is Idle
     ${variants_present_status}=    Run Keyword And Ignore Error    Page Should Not Contain Element    ${pdp_variant_selector}    timeout=1s
-    ${shopping_list_dropdown_status}=    Run Keyword And Ignore Error    Page should contain element    ${pdp_shopping_list_selector}    timeout=1s
+    ${shopping_list_dropdown_status}=    Run Keyword And Ignore Error    Page should contain element    ${pdp_shopping_list_selector}    timeout=5s
     IF    'FAIL' in ${variants_present_status}    Yves: change variant of the product on PDP on random value
     Set Browser Timeout    3s
     IF    ('${shoppingListName}' != '${EMPTY}' and 'PASS' in ${shopping_list_dropdown_status})
@@ -184,15 +184,21 @@ Yves: add product to the shopping list:
             Select From List By Label    ${pdp_shopping_list_selector}    ${shoppingListName}
             Wait Until Element Is Visible    ${pdp_add_to_shopping_list_button}
             Click    ${pdp_add_to_shopping_list_button}    
-            Wait Until Network Is Idle
+            Wait For Request
+            Repeat Keyword    3    Wait Until Network Is Idle
         EXCEPT    
             Click    xpath=//span[@class='select2-selection select2-selection--single']//span[contains(@id,'select2-idShoppingList')]
             Wait Until Element Is Visible    xpath=//li[contains(@id,'select2-idShoppingList')][contains(@id,'result')][contains(.,'${shoppingListName}')]
             Click    xpath=//li[contains(@id,'select2-idShoppingList')][contains(@id,'result')][contains(.,'${shoppingListName}')]
             Wait Until Element Is Visible    ${pdp_add_to_shopping_list_button}
             Click    ${pdp_add_to_shopping_list_button}
-            Wait Until Network Is Idle
+            Wait For Request
+            Repeat Keyword    3    Wait Until Network Is Idle
         END
+    ELSE
+        Click    ${pdp_add_to_shopping_list_button}    
+        Wait For Request
+        Repeat Keyword    3    Wait Until Network Is Idle
     END
     Set Browser Timeout    ${browser_timeout}
     Yves: remove flash messages
@@ -294,14 +300,14 @@ Yves: unsubscribe from availability notifications
 Yves: select xxx merchant's offer:
     [Arguments]    ${merchantName}
     Wait Until Element Is Visible    ${pdp_product_sku}[${env}]
-    Repeat Keyword    2    Wait Until Network Is Idle
+    Repeat Keyword    3    Wait Until Network Is Idle
     TRY
         Click    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]/ancestor::div[contains(@class,'offer-item')]//span[contains(@class,'radio__box')]
-        Repeat Keyword    2    Wait Until Network Is Idle
+        Repeat Keyword    3    Wait Until Network Is Idle
         Wait For Elements State    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]/ancestor::div[contains(@class,'offer-item')]//span[contains(@class,'radio__box')]/../input    state=checked    timeout=3s
     EXCEPT  
         Reload
-        Repeat Keyword    2    Wait Until Network Is Idle
+        Repeat Keyword    3    Wait Until Network Is Idle
         Click    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]/ancestor::div[contains(@class,'offer-item')]//span[contains(@class,'radio__box')]
         Wait For Elements State    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]/ancestor::div[contains(@class,'offer-item')]//span[contains(@class,'radio__box')]/../input    state=checked    timeout=3s
     END

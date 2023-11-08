@@ -30,10 +30,11 @@ MP: update profile fields with following data:
     Wait Until Element Is Visible    ${store_status_checkbox}
     FOR    ${key}    ${value}    IN    &{profileData}
         Log    Key is '${key}' and value is '${value}'.
-        IF    '${key}'=='email' and '${value}' != '${EMPTY}'    Type Text    ${merchant_profile_email_field}    ${value}
-        IF    '${key}'=='phone' and '${value}' != '${EMPTY}'    Type Text    ${merchant_profile_phone_field}    ${value}
-        IF    '${key}'=='delivery time' and '${value}' != '${EMPTY}'    Type Text    ${merchant_profile_delivery_time_en_field}    ${value}
-        IF    '${key}'=='data privacy' and '${value}' != '${EMPTY}'     Type Text    ${merchant_profile_data_privacy_en_field}    ${value}
-        IF    '${key}'=='profile url en' and '${value}' != '${EMPTY}'     Type Text    ${merchant_profile_store_profile_url_en_field}    ${value}
-        IF    '${key}'=='profile url de' and '${value}' != '${EMPTY}'     Type Text    ${merchant_profile_store_profile_url_de_field}    ${value}
+        IF    '${key}'=='email' and '${value}' != '${EMPTY}'    Type Text    ${merchant_profile_email_field}    ${value}    delay=50ms
+        IF    '${key}'=='phone' and '${value}' != '${EMPTY}'    Type Text    ${merchant_profile_phone_field}    ${value}    delay=50ms
+        IF    '${key}'=='delivery time' and '${value}' != '${EMPTY}'    Type Text    ${merchant_profile_delivery_time_en_field}    ${value}    delay=50ms
+        IF    '${key}'=='data privacy' and '${value}' != '${EMPTY}'     Type Text    ${merchant_profile_data_privacy_en_field}    ${value}    delay=50ms
+        IF    '${key}'=='profile url en' and '${value}' != '${EMPTY}'     Type Text    ${merchant_profile_store_profile_url_en_field}    ${value}    delay=50ms
+        IF    '${key}'=='profile url de' and '${value}' != '${EMPTY}'     Type Text    ${merchant_profile_store_profile_url_de_field}    ${value}    delay=50ms
     END  
+    Sleep    0.5s
