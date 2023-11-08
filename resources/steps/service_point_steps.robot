@@ -109,7 +109,6 @@ Create service point with address and store relations in DB
     Create service point in DB    uuid=${servicePointUuid}    storeName=${storeName}
     Log    ${servicePointAddressUuid}
     Create service point address in DB    servicePointUuid=${servicePointUuid}    uuid=${servicePointAddressUuid}
-    Disconnect From Database
 
 Create service in DB
     [Documentation]    This keyword creates a new entry in the DB table `spy_service`.
