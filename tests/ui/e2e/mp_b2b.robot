@@ -2772,6 +2772,7 @@ Configurable_Product_RfQ_Order_Management
     ...    AND    Zed: delete Zed user with the following email:    agent_config+${random}@spryker.com
 
 Data_exchange_API_download_specification
+    [Setup]    Trigger API specification update
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: download data exchange api specification should be active:    true
     Zed: download data exchange api specification
@@ -2815,6 +2816,7 @@ Data_exchange_API_download_specification
     
 Data_exchange_API_Configuration_in_Zed
     [Tags]    bapi
+    [Setup]    Trigger API specification update
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: start creation of new data exchange api configuration for db table:    spy_mime_type
     Zed: edit data exchange api configuration:
