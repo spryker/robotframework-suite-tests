@@ -2524,6 +2524,7 @@ Data_exchange_API_Configuration_in_Zed
 
 Fulfilment_app_e2e
     # #LOGGED IN TO BO and SET CHECKBOX is a warehouse user = true FOR admin_de USER. UI TEST
+    Make user a warehouse user/ not a warehouse user:    ${warehous_user[0].de_admin_user_uuid}    0
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: update Zed user:
     ...    || oldEmail             | user_is_warehouse_user ||
