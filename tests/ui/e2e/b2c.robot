@@ -1465,7 +1465,6 @@ Register_during_checkout
     Save the result of a SELECT DB query to a variable:    select registration_key from spy_customer where email = 'sonia+guest${random}@spryker.com'    confirmation_key
     API_test_setup
     I send a POST request:     /customer-confirmation   {"data":{"type":"customer-confirmation","attributes":{"registrationKey":"${confirmation_key}"}}}
-    UI_test_setup
     Yves: login after signup during checkout:    sonia+guest${random}@spryker.com    Abc#${random}
     Yves: fill in the following new shipping address:
     ...    || salutation     | firstName                | lastName                | street    | houseNumber | postCode     | city       | country     | company    | phone     | additionalAddress         ||
@@ -1812,7 +1811,7 @@ Fulfilment_app_e2e
     Set Tags   bapi
     API_test_setup
     I set Headers:    Content-Type=${default_header_content_type}
-    Then I get access token by user credentials:   ${zed_admin_email_de}    Change123!321
+    Then I get access token by user credentials:   ${zed_admin_email_de}
     I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer ${token}
     I send a GET request:    /picking-lists/?include=picking-list-items,concrete-products,sales-shipments,sales-orders,include=warehouses
     Then Response status code should be:    200
