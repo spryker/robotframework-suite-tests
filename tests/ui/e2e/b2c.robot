@@ -344,13 +344,21 @@ Configurable_Bundle
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
+    Trigger oms
     Yves: go to user menu item in header:    Orders History
     Yves: 'Order History' page is displayed
     Yves: get the last placed order ID by current customer
     Yves: 'View Order/Reorder/Return' on the order history page:    View Order    ${lastPlacedOrder}
     Yves: 'Order Details' page is displayed
     Yves: 'Order Details' page contains the following product title N times:    Smartstation Kit    3
-    [Teardown]    Yves: check if cart is not empty and clear it
+    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Pay
+    Zed: trigger all matching states inside this order:    Skip timeout
+    Zed: trigger all matching states inside this order:    Ship
+    Zed: trigger all matching states inside this order:    Stock update
+    Zed: trigger all matching states inside this order:    Close
+    [Teardown]    Run Keywords    Yves: login on Yves with provided credentials:    ${yves_user_email}
+    ...    AND    Yves: check if cart is not empty and clear it
 
 Discounts
     [Documentation]    Discounts, Promo Products, and Coupon Codes (includes guest checkout)
@@ -579,12 +587,11 @@ Product_Relations
     [Teardown]    Yves: check if cart is not empty and clear it
 
 Guest_Checkout
-    [Documentation]    Bug: CC-31660. Guest checkout with bundles, discounts and OMS
+    [Documentation]    Guest checkout with bundles, discounts and OMS
     [Setup]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: change product stock:    ${bundled_product_1_abstract_sku}    ${bundled_product_1_concrete_sku}    true    10
     ...    AND    Zed: change product stock:    ${bundled_product_2_abstract_sku}    ${bundled_product_2_concrete_sku}    true    10
     ...    AND    Zed: change product stock:    ${bundled_product_3_abstract_sku}    ${bundled_product_3_concrete_sku}    true    10
-    ...    AND    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: go to second navigation item level:    Merchandising    Discount
     ...    AND    Zed: create a discount and activate it:    voucher    Percentage    5    sku = '*'    guestTest${random}    discountName=Guest Voucher Code 5% ${random}
     ...    AND    Zed: create a discount and activate it:    cart rule    Percentage    10    sku = '*'    discountName=Guest Cart Rule 10% ${random}
@@ -593,13 +600,6 @@ Guest_Checkout
     Yves: go to PDP of the product with sku:    ${bundle_product_abstract_sku}
     Yves: PDP contains/doesn't contain:    true    ${bundleItemsSmall}
     Yves: add product to the shopping cart
-    Yves: go to URL:    en/configurable-bundle/configurator/template-selection
-    Yves: 'Choose Bundle to configure' page is displayed
-    Yves: choose bundle template to configure:    Smartstation Kit
-    Yves: select product in the bundle slot:    Slot 5    Sony Cyber-shot DSC-W830
-    Yves: select product in the bundle slot:    Slot 6    Sony NEX-VG30E
-    Yves: go to 'Summary' step in the bundle configurator
-    Yves: add products to the shopping cart in the bundle configurator
     Yves: go to PDP of the product with sku:    007
     Yves: add product to the shopping cart
     Yves: go to PDP of the product with sku:    008
@@ -624,6 +624,7 @@ Guest_Checkout
     Zed: get the last placed order ID of the customer by email:    sonia+guest${random}@spryker.com
     Zed: trigger all matching states inside xxx order:    ${zedLastPlacedOrder}    Pay
     Zed: trigger all matching states inside this order:    Skip timeout
+    Zed: trigger all matching states inside this order:    skip picking
     Zed: trigger all matching states inside this order:    Ship
     Zed: trigger all matching states inside this order:    Stock update
     Zed: trigger all matching states inside this order:    Close
@@ -632,7 +633,7 @@ Guest_Checkout
     ...    AND    Zed: deactivate following discounts from Overview page:    Guest Voucher Code 5% ${random}    Guest Cart Rule 10% ${random}
 
 Guest_Checkout_Addresses
-    [Documentation]    Guest checkout with discounts and OMS
+    [Documentation]    Guest checkout with discounts, OMS and different addresses
     Yves: go to the 'Home' page
     Yves: logout on Yves as a customer
     Yves: go to PDP of the product with sku:    007
@@ -1689,16 +1690,17 @@ Data_exchange_API_download_specification
     Zed: wait until info box is not displayed
     Zed: download data exchange api specification
     Zed: check that downloaded api specification contains:    /mime-types
-    Zed: edit data exchange api configuration:
+    [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    ...    AND    Zed: edit data exchange api configuration:
     ...    || table_name  | is_enabled ||
     ...    || mime-types  | false      ||
-    Zed: save data exchange api configuration
-    Trigger API specification update
-    Zed: wait until info box is not displayed
-    [Teardown]    Run Keywords    Zed: delete dowloaded api specification
+    ...    AND    Zed: save data exchange api configuration
+    ...    AND    Trigger API specification update
+    ...    AND    Zed: wait until info box is not displayed
+    ...    AND    Zed: delete dowloaded api specification
     ...    AND    Delete dynamic entity configuration in Database:    mime-types
     ...    AND    Trigger API specification update
-    
+
 Data_exchange_API_Configuration_in_Zed
     [Tags]    bapi
     [Setup]    Trigger API specification update
@@ -1749,16 +1751,17 @@ Data_exchange_API_Configuration_in_Zed
     Response body parameter should be:    [data][is_allowed]    True
     Response body parameter should be:    [data][extensions]    "dummy"
     Response body parameter should be:    [data][comment]    None
-    Zed: edit data exchange api configuration:
+    ### DELETE TEST CONFIGURATION AND TEST MIME TYPE FROM DB ###
+    [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    ...    AND    Zed: edit data exchange api configuration:
     ...    || table_name  | is_enabled ||
     ...    || mime-types  | false      ||
-    Zed: save data exchange api configuration
-    Trigger API specification update
-    Zed: wait until info box is not displayed
-    ### DELETE TEST CONFIGURATION AND TEST MIME TYPE FROM DB ###
-    [Teardown]    Run Keywords    Delete dynamic entity configuration in Database:    mime-types
+    ...    AND    Zed: save data exchange api configuration
+    ...    AND    Trigger API specification update
+    ...    AND    Zed: wait until info box is not displayed
+    ...    AND    Delete dynamic entity configuration in Database:    mime-types
     ...    AND    Delete mime_type by id_mime_type in Database:    ${id_mime_type}
-    ...    AND    Trigger API specification update  
+    ...    AND    Trigger API specification update
 
 Fulfilment_app_e2e
     # # LOGGED IN TO BO and SET CHECKBOX is a warehouse user = true FOR admin_de USER. UI TEST

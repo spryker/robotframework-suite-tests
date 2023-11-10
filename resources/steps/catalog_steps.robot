@@ -118,7 +118,7 @@ Yves: quick add to cart for first item in catalog
         Wait Until Element Is Visible    xpath=//product-item[@data-qa='component product-item'][1]//ajax-add-to-cart//button
         Click    xpath=//product-item[@data-qa='component product-item'][1]//ajax-add-to-cart//button
     END
-    Wait For Request
+    Wait For Response
     Repeat Keyword    3    Wait Until Network Is Idle
 
 Yves: get current cart item counter value

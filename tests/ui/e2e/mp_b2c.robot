@@ -577,8 +577,12 @@ Product_Relations
     Yves: shopping cart contains/doesn't contain the following elements:    true    ${upSellProducts}
     [Teardown]    Yves: check if cart is not empty and clear it
 
-Guest_Checkout
-    [Documentation]    Guest checkout with discounts and OMS
+Guest_Checkout_and_Addresses
+    [Documentation]    Guest checkout with discounts, OMS and different addresses
+    [Setup]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    ...    AND    Zed: go to second navigation item level:    Merchandising    Discount
+    ...    AND    Zed: create a discount and activate it:    voucher    Percentage    5    sku = '*'    guestTest${random}    discountName=Guest Voucher Code 5% ${random}
+    ...    AND    Zed: create a discount and activate it:    cart rule    Percentage    10    sku = '*'    discountName=Guest Cart Rule 10% ${random}
     Yves: go to the 'Home' page
     Yves: logout on Yves as a customer
     Yves: go to PDP of the product with sku:    007
@@ -588,6 +592,7 @@ Guest_Checkout
     Yves: go to PDP of the product with sku:    012
     Yves: add product to the shopping cart
     Yves: go to b2c shopping cart
+    Yves: apply discount voucher to cart:    guestTest${random}
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: proceed with checkout as guest:    Mr    Guest    user    sonia+guest${random}@spryker.com
     Yves: billing address same as shipping address:    true
@@ -625,6 +630,8 @@ Guest_Checkout
     Zed: trigger matching state of xxx merchant's shipment:    1    confirm at center
     Zed: trigger matching state of xxx merchant's shipment:    1    Ship   
     [Teardown]    Run keywords    Yves: check if cart is not empty and clear it
+    ...    AND    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    ...    AND    Zed: deactivate following discounts from Overview page:    Guest Voucher Code 5% ${random}    Guest Cart Rule 10% ${random}
 
 Refunds
     [Documentation]    Checks that refund can be created for one item and the whole order
@@ -2451,13 +2458,14 @@ Data_exchange_API_download_specification
     Zed: wait until info box is not displayed
     Zed: download data exchange api specification
     Zed: check that downloaded api specification contains:    /mime-types
-    Zed: edit data exchange api configuration:
+    [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    ...    AND    Zed: edit data exchange api configuration:
     ...    || table_name  | is_enabled ||
     ...    || mime-types  | false      ||
-    Zed: save data exchange api configuration
-    Trigger API specification update
-    Zed: wait until info box is not displayed
-    [Teardown]    Run Keywords    Zed: delete dowloaded api specification
+    ...    AND    Zed: save data exchange api configuration
+    ...    AND    Trigger API specification update
+    ...    AND    Zed: wait until info box is not displayed
+    ...    AND    Zed: delete dowloaded api specification
     ...    AND    Delete dynamic entity configuration in Database:    mime-types
     ...    AND    Trigger API specification update
 
@@ -2511,16 +2519,17 @@ Data_exchange_API_Configuration_in_Zed
     Response body parameter should be:    [data][is_allowed]    True
     Response body parameter should be:    [data][extensions]    "dummy"
     Response body parameter should be:    [data][comment]    None
-    Zed: edit data exchange api configuration:
+    ### DELETE TEST CONFIGURATION AND TEST MIME TYPE FROM DB ###
+    [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    ...    AND    Zed: edit data exchange api configuration:
     ...    || table_name  | is_enabled ||
     ...    || mime-types  | false      ||
-    Zed: save data exchange api configuration
-    Trigger API specification update
-    Zed: wait until info box is not displayed
-    ### DELETE TEST CONFIGURATION AND TEST MIME TYPE FROM DB ###
-    [Teardown]    Run Keywords    Delete dynamic entity configuration in Database:    mime-types
+    ...    AND    Zed: save data exchange api configuration
+    ...    AND    Trigger API specification update
+    ...    AND    Zed: wait until info box is not displayed
+    ...    AND    Delete dynamic entity configuration in Database:    mime-types
     ...    AND    Delete mime_type by id_mime_type in Database:    ${id_mime_type}
-    ...    AND    Trigger API specification update       
+    ...    AND    Trigger API specification update  
 
 Fulfilment_app_e2e
     # #LOGGED IN TO BO and SET CHECKBOX is a warehouse user = true FOR admin_de USER. UI TEST

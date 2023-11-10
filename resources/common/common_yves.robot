@@ -134,7 +134,7 @@ Yves: flash message should be shown:
     END
 
 Yves: logout on Yves as a customer
-    delete all cookies
+    Delete All Cookies
     Reload
 
 Yves: go to the 'Home' page

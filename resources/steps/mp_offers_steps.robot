@@ -96,6 +96,8 @@ MP: save offer
         Wait Until Element Is Visible    ${offer_saved_popup}    timeout=5s
     END
     MP: remove notification wrapper
+    Repeat Keyword    3    Wait Until Network Is Idle
+    MP: Wait until loader is no longer visible
 
 MP: change offer stock:
     [Arguments]    @{args}
@@ -128,6 +130,7 @@ MP: delete offer price row that contains quantity:
     Hover    xpath=//web-spy-card[@spy-title='Price']//tbody/tr/td[7][contains(.,'${quantity}')]/ancestor::tr//td[@class='ng-star-inserted']/div
     Click    ${product_delete_price_row_button}
     Wait Until Element Is Visible    ${product_price_deleted_popup}
+    Repeat Keyword    3    Wait Until Network Is Idle
     MP: remove notification wrapper
 
 Zed: view offer page is displayed

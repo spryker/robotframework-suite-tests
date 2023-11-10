@@ -126,6 +126,7 @@ MP: save abstract product
     MP: click submit button
     Wait Until Element Is Visible    ${product_updated_popup}
     MP: remove notification wrapper
+    MP: Wait until loader is no longer visible
     
 MP: fill concrete product fields:
     [Arguments]    @{args}
@@ -165,6 +166,8 @@ MP: save concrete product
     Click    ${product_concrete_submit_button}
     Wait Until Element Is Visible    ${product_updated_popup}
     MP: remove notification wrapper
+    Repeat Keyword    3    Wait Until Network Is Idle
+    MP: Wait until loader is no longer visible
 
 MP: delete product price row that contains text:
     [Arguments]    ${rowContent}
@@ -173,13 +176,14 @@ MP: delete product price row that contains text:
     Click    ${product_delete_price_row_button}
     Wait Until Element Is Visible    ${product_price_deleted_popup}
     MP: remove notification wrapper
+    Repeat Keyword    3    Wait Until Network Is Idle
 
 MP: open concrete drawer by SKU:
     [Arguments]    ${concreteSKU}
     Click    ${product_drawer_concretes_tab}    
     MP: click on a table row that contains:    ${concreteSKU}
-    Wait For Response
     Repeat Keyword    3    Wait Until Network Is Idle
+    MP: Wait until loader is no longer visible
 
 MP: delete product price row that contains quantity:
     [Arguments]    ${quantity}
@@ -188,6 +192,7 @@ MP: delete product price row that contains quantity:
         Hover    xpath=//web-spy-card[@spy-title='Price']//tbody/tr/td[8][contains(.,'${quantity}')]/ancestor::tr//td[@class='ng-star-inserted']/div
         Click    ${product_delete_price_row_button}
         Wait Until Element Is Visible    ${product_price_deleted_popup}
+        Repeat Keyword    3    Wait Until Network Is Idle
         MP: remove notification wrapper
     END
     IF    '${env}' in ['ui_mp_b2c']
@@ -195,6 +200,7 @@ MP: delete product price row that contains quantity:
         Hover    xpath=//web-spy-card[@spy-title='Price']//tbody/tr/td[7][contains(.,'${quantity}')]/ancestor::tr//td[@class='ng-star-inserted']/div
         Click    ${product_delete_price_row_button}
         Wait Until Element Is Visible    ${product_price_deleted_popup}
+        Repeat Keyword    3    Wait Until Network Is Idle
         MP: remove notification wrapper
     END
 
@@ -232,8 +238,8 @@ MP: add new concrete product:
             Sleep    0.5s
         END
     END
-    Repeat Keyword    2    Wait Until Network Is Idle
+    Repeat Keyword    3    Wait Until Network Is Idle
     Click    ${new_product_submit_create_button}
-    Repeat Keyword    2    Wait Until Network Is Idle
+    Repeat Keyword    3    Wait Until Network Is Idle
     Wait Until Element Is Visible    ${mp_add_concrete_products_button}
     MP: remove notification wrapper

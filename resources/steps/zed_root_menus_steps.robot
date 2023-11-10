@@ -44,10 +44,10 @@ Zed: verify second navigation root menus
                 log    ${node_state}
                 IF    'active' not in '${node_state}'     
                     Click Element by xpath with JavaScript    (//ul[@id='side-menu']/li/a/span[@class='nav-label']/../../a[contains(@href,'javascript')])[${counter}]
-                    Repeat Keyword    2    Wait Until Network Is Idle
+                    Repeat Keyword    3    Wait Until Network Is Idle
                 END
                 Click Element by xpath with JavaScript    ((//ul[@id='side-menu']/li/a/span[@class='nav-label']/../../a[contains(@href,'javascript')])[${counter}]/ancestor::li//ul[contains(@class,'nav-second-level')]//a)[${counter_1}]
-                Repeat Keyword    2    Wait Until Network Is Idle
+                Repeat Keyword    3    Wait Until Network Is Idle
                 Wait Until Element Is Visible    ${zed_log_out_button}    timeout=10s
                 Log    ${counter_1}
                 ${counter_1}=    Evaluate    ${counter_1} + 1   

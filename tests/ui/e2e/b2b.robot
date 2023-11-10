@@ -1881,13 +1881,14 @@ Data_exchange_API_download_specification
     Zed: wait until info box is not displayed
     Zed: download data exchange api specification
     Zed: check that downloaded api specification contains:    /mime-types
-    Zed: edit data exchange api configuration:
+    [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    ...    AND    Zed: edit data exchange api configuration:
     ...    || table_name  | is_enabled ||
     ...    || mime-types  | false      ||
-    Zed: save data exchange api configuration
-    Trigger API specification update
-    Zed: wait until info box is not displayed
-    [Teardown]    Run Keywords    Zed: delete dowloaded api specification
+    ...    AND    Zed: save data exchange api configuration
+    ...    AND    Trigger API specification update
+    ...    AND    Zed: wait until info box is not displayed
+    ...    AND    Zed: delete dowloaded api specification
     ...    AND    Delete dynamic entity configuration in Database:    mime-types
     ...    AND    Trigger API specification update
 
@@ -1941,13 +1942,14 @@ Data_exchange_API_Configuration_in_Zed
     Response body parameter should be:    [data][is_allowed]    True
     Response body parameter should be:    [data][extensions]    "dummy"
     Response body parameter should be:    [data][comment]    None
-    Zed: edit data exchange api configuration:
+    ### DELETE TEST CONFIGURATION AND TEST MIME TYPE FROM DB ###
+    [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    ...    AND    Zed: edit data exchange api configuration:
     ...    || table_name  | is_enabled ||
     ...    || mime-types  | false      ||
-    Zed: save data exchange api configuration
-    Trigger API specification update
-    Zed: wait until info box is not displayed
-    ### DELETE TEST CONFIGURATION AND TEST MIME TYPE FROM DB ###
-    [Teardown]    Run Keywords    Delete dynamic entity configuration in Database:    mime-types
+    ...    AND    Zed: save data exchange api configuration
+    ...    AND    Trigger API specification update
+    ...    AND    Zed: wait until info box is not displayed
+    ...    AND    Delete dynamic entity configuration in Database:    mime-types
     ...    AND    Delete mime_type by id_mime_type in Database:    ${id_mime_type}
     ...    AND    Trigger API specification update
