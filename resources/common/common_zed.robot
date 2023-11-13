@@ -57,17 +57,17 @@ Zed: go to second navigation item level:
        run keywords
             wait until element is visible  xpath=//ul[contains(@class,'nav-second-level')]//a/span[text()='${navigation_item_level2}']
             Click Element by xpath with JavaScript    //span[contains(@class,'nav-label')][text()='${navigation_item_level1}']/ancestor::li//ul[contains(@class,'nav-second-level')]//a/span[text()='${navigation_item_level2}']
-            Repeat Keyword    2    Wait Until Network Is Idle
+            Repeat Keyword    3    Wait Until Network Is Idle
     ELSE
         run keywords
             Scroll Element Into View    xpath=//ul[@id='side-menu']/li/a/span[@class='nav-label'][contains(text(),'${navigation_item_level1}')]/../../a
             Click Element by xpath with JavaScript    //ul[@id='side-menu']/li/a/span[@class='nav-label'][contains(text(),'${navigation_item_level1}')]/../../a
-            Repeat Keyword    2    Wait Until Network Is Idle
+            Repeat Keyword    3    Wait Until Network Is Idle
             ${node_expanded}=    Run Keyword And Return Status    Element Should Be Visible    xpath=//span[contains(@class,'nav-label')][text()='${navigation_item_level1}']/ancestor::li//ul[contains(@class,'nav-second-level')]//a/span[text()='${navigation_item_level2}']    timeout=1s
             IF    '${node_expanded}'=='False'    
                 Reload
                 Click    xpath=//ul[@id='side-menu']/li/a/span[@class='nav-label'][contains(text(),'${navigation_item_level1}')]/../../a
-                Repeat Keyword    2    Wait Until Network Is Idle
+                Repeat Keyword    3    Wait Until Network Is Idle
             END
             wait until element is visible  xpath=//span[contains(@class,'nav-label')][text()='${navigation_item_level1}']/ancestor::li//ul[contains(@class,'nav-second-level')]//a/span[text()='${navigation_item_level2}']
             Click Element by xpath with JavaScript    //span[contains(@class,'nav-label')][text()='${navigation_item_level1}']/ancestor::li//ul[contains(@class,'nav-second-level')]//a/span[text()='${navigation_item_level2}']

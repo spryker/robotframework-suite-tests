@@ -28,8 +28,8 @@ Yves: billing address same as shipping address:
         Click Element by xpath with JavaScript    //input[@id='addressesForm_billingSameAsShipping']
         Repeat Keyword    3    Wait Until Network Is Idle
     END
+    Sleep    1s
     IF    '${state}' == 'true'    Wait Until Element Is Not Visible    ${billing_address_section}[${env}]
-    IF    '${state}' == 'false'    Wait Until Element Is Visible    ${billing_address_section}[${env}]
     Repeat Keyword    3    Wait Until Network Is Idle
 
 Yves: 'billing same as shipping' checkbox should be displayed:

@@ -184,7 +184,7 @@ Yves: add product to the shopping list:
             Select From List By Label    ${pdp_shopping_list_selector}    ${shoppingListName}
             Wait Until Element Is Visible    ${pdp_add_to_shopping_list_button}
             Click    ${pdp_add_to_shopping_list_button}    
-            Wait For Request
+            Wait For Response
             Repeat Keyword    3    Wait Until Network Is Idle
         EXCEPT    
             Click    xpath=//span[@class='select2-selection select2-selection--single']//span[contains(@id,'select2-idShoppingList')]
@@ -192,12 +192,12 @@ Yves: add product to the shopping list:
             Click    xpath=//li[contains(@id,'select2-idShoppingList')][contains(@id,'result')][contains(.,'${shoppingListName}')]
             Wait Until Element Is Visible    ${pdp_add_to_shopping_list_button}
             Click    ${pdp_add_to_shopping_list_button}
-            Wait For Request
+            Wait For Response
             Repeat Keyword    3    Wait Until Network Is Idle
         END
     ELSE
         Click    ${pdp_add_to_shopping_list_button}    
-        Wait For Request
+        Wait For Response
         Repeat Keyword    3    Wait Until Network Is Idle
     END
     Set Browser Timeout    ${browser_timeout}
