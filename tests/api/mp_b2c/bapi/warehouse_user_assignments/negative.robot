@@ -207,4 +207,3 @@ Delete_warehouse_user_assigment_with_invalid_token
     Then Response status code should be:    400
     And Remove_warehous_user_assigment:    ${warehouse[0].warehouse_uuid}    ${warehous_user[0].user_uuid}
     And Make user a warehouse user/ not a warehouse user:   ${warehous_user[0].user_uuid}    0
-
