@@ -52,7 +52,6 @@ Create_warehouse_user_assigment_with_empty_body
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=Bearer ${token}
     When I send a POST request:    /warehouse-user-assignments    {"data": {}}
     Then Response status code should be:    400
-    And Make user a warehouse user/ not a warehouse user:   ${admin_user_uuid}    0
 
 Create_warehouse_user_assigment_with_incorrect_type
     [Documentation]    https://spryker.atlassian.net/browse/FRW-6312
