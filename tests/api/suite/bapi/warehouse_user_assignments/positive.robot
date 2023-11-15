@@ -10,8 +10,9 @@ ENABLER
     API_test_setup
 
 Assign_user_to_warehouse
-    [Setup]    Run Keywords    I get access token by user credentials:    ${zed_user.email}
-    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=Bearer ${token}    
+    [Setup]    Run Keywords    I get access token by user credentials:    ${zed_admin.email}
+    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=Bearer ${token}
+    ...    AND    Make user a warehouse user/ not a warehouse user:   ${warehous_user[0].user_uuid}    1
     When I send a POST request:    /warehouse-user-assignments    {"data": {"type": "warehouse-user-assignments", "attributes":{"userUuid": "${warehous_user[0].user_uuid}","warehouse" :{"uuid": "${warehouse[0].warehouse_uuid}"},"isActive":"false"}}}
     Then Response status code should be:    201
     Then Save value to a variable:    [data][id]   warehouse_assigment_id
@@ -26,10 +27,12 @@ Assign_user_to_warehouse
     And Response body has correct self link for created entity:    ${warehouse_assigment_id}
     [Teardown]     Run Keywords    I send a DELETE request:    /warehouse-user-assignments/${warehouse_assigment_id}
     ...  AND    Response status code should be:    204
+    ...  AND    Make user a warehouse user/ not a warehouse user:   ${warehous_user[0].user_uuid}    0
 
 Assign_user_to_warehouse_with_include
-    [Setup]    Run Keywords    I get access token by user credentials:    ${zed_user.email}
-    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=Bearer ${token}    
+    [Setup]    Run Keywords    I get access token by user credentials:    ${zed_admin.email}
+    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=Bearer ${token}
+    ...    AND    Make user a warehouse user/ not a warehouse user:   ${warehous_user[0].user_uuid}    1
     When I send a POST request:    /warehouse-user-assignments?include=users    {"data": {"type": "warehouse-user-assignments", "attributes":{"userUuid": "${warehous_user[0].user_uuid}","warehouse" :{"uuid": "${warehouse[0].warehouse_uuid}"},"isActive":"false"}}}
     Then Response status code should be:    201
     Then Save value to a variable:    [data][id]   warehouse_assigment_id
@@ -43,11 +46,13 @@ Assign_user_to_warehouse_with_include
     And Response body parameter should be:    [included][0][attributes][lastName]    ${warehous_user[0].user_last_name}
     [Teardown]     Run Keywords    I send a DELETE request:    /warehouse-user-assignments/${warehouse_assigment_id}
     ...  AND    Response status code should be:    204
+    ...  AND    Make user a warehouse user/ not a warehouse user:   ${warehous_user[0].user_uuid}    0
 
 Get_warehouse_user_assigments_by_UUID
-    [Setup]    Run Keywords    I get access token by user credentials:    ${zed_user.email}
-    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=Bearer ${token}    
+    [Setup]    Run Keywords    I get access token by user credentials:    ${zed_admin.email}
+    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=Bearer ${token}
     # assign several warehouses to one user [only one warehouse active]
+    ...    AND    Make user a warehouse user/ not a warehouse user:   ${warehous_user[0].user_uuid}    1
     When I send a POST request:    /warehouse-user-assignments?include=users    {"data": {"type": "warehouse-user-assignments", "attributes":{"userUuid": "${warehous_user[0].user_uuid}","warehouse" :{"uuid": "${warehouse[0].warehouse_uuid}"},"isActive":"false"}}}
     Then Response status code should be:    201
     Then Save value to a variable:    [data][id]   warehouse_assigment_id
@@ -60,14 +65,16 @@ Get_warehouse_user_assigments_by_UUID
     And Response body parameter should be:    [data][attributes][warehouse][name]    ${warehouse[0].warehouse_name}
     And Response body parameter should not be EMPTY:    [data][attributes][warehouse][uuid]
     And Response body parameter should be:    [data][attributes][warehouse][isActive]    True
-    And Response body has correct self link internal   
+    And Response body has correct self link internal
     [Teardown]     Run Keywords    I send a DELETE request:    /warehouse-user-assignments/${warehouse_assigment_id}
     ...  AND    Response status code should be:    204
+    ...  AND    Make user a warehouse user/ not a warehouse user:   ${warehous_user[0].user_uuid}    0
 
 Get_warehouse_user_assigments_list
-    [Setup]    Run Keywords    I get access token by user credentials:    ${zed_user.email}
-    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=Bearer ${token}    
+    [Setup]    Run Keywords    I get access token by user credentials:    ${zed_admin.email}
+    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=Bearer ${token}
     # assign several warehouses to one user [only one warehous active]
+    ...    AND    Make user a warehouse user/ not a warehouse user:   ${warehous_user[0].user_uuid}    1
     When I send a POST request:    /warehouse-user-assignments?include=users    {"data": {"type": "warehouse-user-assignments", "attributes":{"userUuid": "${warehous_user[0].user_uuid}","warehouse" :{"uuid": "${warehouse[0].warehouse_uuid}"},"isActive":"false"}}}
     Then Response status code should be:    201
     Then Save value to a variable:    [data][id]   warehouse_assigment_id_1
@@ -93,11 +100,14 @@ Get_warehouse_user_assigments_list
     ...  AND    Response status code should be:    204
     ...  AND    I send a DELETE request:    /warehouse-user-assignments/${warehouse_assigment_id_2}
     ...  AND    Response status code should be:    204
+    ...  AND    Make user a warehouse user/ not a warehouse user:   ${warehous_user[0].user_uuid}    0
 
 Get_warehouse_user_assigments_with_filter_by_warehouse_assigment_uuid
-    [Setup]    Run Keywords    I get access token by user credentials:    ${zed_user.email}
-    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=Bearer ${token}    
+    [Setup]    Run Keywords    I get access token by user credentials:    ${zed_admin.email}
+    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=Bearer ${token}
     # assign several users to one warehouse
+    ...    AND    Make user a warehouse user/ not a warehouse user:   ${warehous_user[0].user_uuid}    1
+    ...    AND    Make user a warehouse user/ not a warehouse user:   ${warehous_user[0].user_uuid_2}    1
     When I send a POST request:    /warehouse-user-assignments?include=users    {"data": {"type": "warehouse-user-assignments", "attributes":{"userUuid": "${warehous_user[0].user_uuid}","warehouse" :{"uuid": "${warehouse[0].warehouse_uuid}"},"isActive":"false"}}}
     Then Response status code should be:    201
     Then Save value to a variable:    [data][id]   warehouse_assigment_id_1
@@ -117,10 +127,14 @@ Get_warehouse_user_assigments_with_filter_by_warehouse_assigment_uuid
     ...  AND    Response status code should be:    204
     ...  AND    I send a DELETE request:    /warehouse-user-assignments/${warehouse_assigment_id_2}
     ...  AND    Response status code should be:    204
+    ...  AND    Make user a warehouse user/ not a warehouse user:   ${warehous_user[0].user_uuid}    0
+    ...  AND    Make user a warehouse user/ not a warehouse user:   ${warehous_user[0].user_uuid_2}    0
 
 Get_warehouse_user_assigments_with_filter_by_warehouse_uuid
-    [Setup]    Run Keywords    I get access token by user credentials:    ${zed_user.email}
-    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=Bearer ${token}    
+    [Setup]    Run Keywords    I get access token by user credentials:    ${zed_admin.email}
+    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=Bearer ${token}
+    ...    AND    Make user a warehouse user/ not a warehouse user:   ${warehous_user[0].user_uuid}    1
+    ...    AND    Make user a warehouse user/ not a warehouse user:   ${warehous_user[0].user_uuid_2}    1
     When I send a POST request:    /warehouse-user-assignments?include=users    {"data": {"type": "warehouse-user-assignments", "attributes":{"userUuid": "${warehous_user[0].user_uuid}","warehouse" :{"uuid": "${warehouse[0].warehouse_uuid}"},"isActive":"false"}}}
     Then Response status code should be:    201
     Then Save value to a variable:    [data][id]   warehouse_assigment_id_1
@@ -139,10 +153,14 @@ Get_warehouse_user_assigments_with_filter_by_warehouse_uuid
     ...  AND    Response status code should be:    204
     ...  AND    I send a DELETE request:    /warehouse-user-assignments/${warehouse_assigment_id_2}
     ...  AND    Response status code should be:    204
+    ...  AND    Make user a warehouse user/ not a warehouse user:   ${warehous_user[0].user_uuid}    0
+    ...  AND    Make user a warehouse user/ not a warehouse user:   ${warehous_user[0].user_uuid_2}    0
 
 Get_warehouse_user_assigments_with_filter_by_user_uuid
-    [Setup]    Run Keywords    I get access token by user credentials:    ${zed_user.email}
-    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=Bearer ${token}    
+    [Setup]    Run Keywords    I get access token by user credentials:    ${zed_admin.email}
+    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=Bearer ${token}
+    ...    AND    Make user a warehouse user/ not a warehouse user:   ${warehous_user[0].user_uuid}    1
+    ...    AND    Make user a warehouse user/ not a warehouse user:   ${warehous_user[0].user_uuid_2}    1
     When I send a POST request:    /warehouse-user-assignments?include=users    {"data": {"type": "warehouse-user-assignments", "attributes":{"userUuid": "${warehous_user[0].user_uuid}","warehouse" :{"uuid": "${warehouse[0].warehouse_uuid}"},"isActive":"false"}}}
     Then Response status code should be:    201
     Then Save value to a variable:    [data][id]   warehouse_assigment_id_1
@@ -160,11 +178,15 @@ Get_warehouse_user_assigments_with_filter_by_user_uuid
     [Teardown]     Run Keywords    I send a DELETE request:    /warehouse-user-assignments/${warehouse_assigment_id_1}
     ...  AND    Response status code should be:    204
     ...  AND    I send a DELETE request:    /warehouse-user-assignments/${warehouse_assigment_id_2}
-    ...  AND    Response status code should be:    204  
+    ...  AND    Response status code should be:    204
+    ...  AND    Make user a warehouse user/ not a warehouse user:   ${warehous_user[0].user_uuid}    0
+    ...  AND    Make user a warehouse user/ not a warehouse user:   ${warehous_user[0].user_uuid_2}    0
 
 Get_warehouse_user_assigments_with_filter_by_isActive
-    [Setup]    Run Keywords    I get access token by user credentials:    ${zed_user.email}
-    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=Bearer ${token}    
+    [Setup]    Run Keywords    I get access token by user credentials:    ${zed_admin.email}
+    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=Bearer ${token}
+    ...    AND    Make user a warehouse user/ not a warehouse user:   ${warehous_user[0].user_uuid}    1
+    ...    AND    Make user a warehouse user/ not a warehouse user:   ${warehous_user[0].user_uuid_2}    1
     When I send a POST request:    /warehouse-user-assignments?include=users    {"data": {"type": "warehouse-user-assignments", "attributes":{"userUuid": "${warehous_user[0].user_uuid}","warehouse" :{"uuid": "${warehouse[0].warehouse_uuid}"},"isActive":"false"}}}
     Then Response status code should be:    201
     Then Save value to a variable:    [data][id]   warehouse_assigment_id_1
@@ -183,29 +205,34 @@ Get_warehouse_user_assigments_with_filter_by_isActive
     ...  AND    Response status code should be:    204
     ...  AND    I send a DELETE request:    /warehouse-user-assignments/${warehouse_assigment_id_2}
     ...  AND    Response status code should be:    204
+    ...  AND    Make user a warehouse user/ not a warehouse user:   ${warehous_user[0].user_uuid}    0
+    ...  AND    Make user a warehouse user/ not a warehouse user:   ${warehous_user[0].user_uuid_2}    0
 
-Update_warehous_user_assigment
-    [Setup]    Run Keywords    I get access token by user credentials:    ${zed_user.email}
-    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=Bearer ${token}    
+Update_warehouse_user_assigment
+    [Setup]    Run Keywords    I get access token by user credentials:    ${zed_admin.email}
+    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=Bearer ${token}
+    ...    AND    Make user a warehouse user/ not a warehouse user:   ${warehous_user[0].user_uuid}    1
     When I send a POST request:    /warehouse-user-assignments    {"data": {"type": "warehouse-user-assignments", "attributes":{"userUuid": "${warehous_user[0].user_uuid}","warehouse" :{"uuid": "${warehouse[0].warehouse_uuid}"},"isActive":"false"}}}
     Then Response status code should be:    201
     Then Save value to a variable:    [data][id]   warehouse_assigment_id
-    Then I send a PATCH request:    /warehouse-user-assignments/${warehouse_assigment_id}    {"data":{"attributes":{"isActive":"true"}}} 
+    Then I send a PATCH request:    /warehouse-user-assignments/${warehouse_assigment_id}    {"data":{"attributes":{"isActive":"true"}}}
     Then Response status code should be:    200
     Then I send a GET request:    /warehouse-user-assignments/${warehouse_assigment_id}
     Then Response status code should be:    200
     And Response body parameter should be:    [data][id]    ${warehouse_assigment_id}
     And Response body parameter should be:    [data][attributes][isActive]    True
-    Then I send a PATCH request:    /warehouse-user-assignments/${warehouse_assigment_id}    {"data":{"attributes":{"isActive":"false"}}} 
+    Then I send a PATCH request:    /warehouse-user-assignments/${warehouse_assigment_id}    {"data":{"attributes":{"isActive":"false"}}}
     Then I send a GET request:    /warehouse-user-assignments/${warehouse_assigment_id}
     And Response body parameter should be:    [data][attributes][isActive]    False
-    And Response body has correct self link internal  
+    And Response body has correct self link internal
     [Teardown]     Run Keywords    I send a DELETE request:    /warehouse-user-assignments/${warehouse_assigment_id}
     ...  AND    Response status code should be:    204
- 
+    ...  AND    Make user a warehouse user/ not a warehouse user:   ${warehous_user[0].user_uuid}    0
+
 Create_warehouse_user_assignment_with_multiple_active_assignments
-    [Setup]    Run Keywords    I get access token by user credentials:    ${zed_user.email}
-    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=Bearer ${token}    
+    [Setup]    Run Keywords    I get access token by user credentials:    ${zed_admin.email}
+    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=Bearer ${token}
+    ...    AND    Make user a warehouse user/ not a warehouse user:   ${warehous_user[0].user_uuid}    1
     When I send a POST request:    /warehouse-user-assignments    {"data": {"type": "warehouse-user-assignments", "attributes":{"userUuid": "${warehous_user[0].user_uuid}","warehouse" :{"uuid": "${warehouse[0].warehouse_uuid}"},"isActive":"true"}}}
     Then Save value to a variable:    [data][id]   warehouse_assigment_id
     Then I send a GET request:    /warehouse-user-assignments/${warehouse_assigment_id}
@@ -219,23 +246,26 @@ Create_warehouse_user_assignment_with_multiple_active_assignments
     And Response body parameter should be:    [data][attributes][isActive]    False
     [Teardown]     Run Keywords    I send a DELETE request:    /warehouse-user-assignments/${warehouse_assigment_id}
     ...  AND    Response status code should be:    204
+    ...  AND    Make user a warehouse user/ not a warehouse user:   ${warehous_user[0].user_uuid}    0
     Then I send a DELETE request:    /warehouse-user-assignments/${warehouse_assigment_id_2}
-    And Response status code should be:    204 
+    And Response status code should be:    204
 
-Update_one_of_already exist_warehous_user_assigment_with_two_assigments_to active
-    [Setup]    Run Keywords    I get access token by user credentials:    ${zed_user.email}
-    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=Bearer ${token}    
+Update_one_of_already exist_warehouse_user_assigment_with_two_assigments_to active
+    [Setup]    Run Keywords    I get access token by user credentials:    ${zed_admin.email}
+    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=Bearer ${token}
+    ...    AND    Make user a warehouse user/ not a warehouse user:   ${warehous_user[0].user_uuid}    1
     When I send a POST request:    /warehouse-user-assignments?include=users    {"data": {"type": "warehouse-user-assignments", "attributes":{"userUuid": "${warehous_user[0].user_uuid}","warehouse" :{"uuid": "${warehouse[0].warehouse_uuid}"},"isActive":"false"}}}
     Then Response status code should be:    201
     Then Save value to a variable:    [data][id]   warehouse_assigment_id_1
     When I send a POST request:    /warehouse-user-assignments?include=users    {"data": {"type": "warehouse-user-assignments", "attributes":{"userUuid": "${warehous_user[0].user_uuid}","warehouse" :{"uuid": "${warehouse[0].video_king_warehouse_uuid}"},"isActive":"true"}}}
     Then Response status code should be:    201
     Then Save value to a variable:    [data][id]   warehouse_assigment_id_2
-    Then I send a PATCH request:    /warehouse-user-assignments/${warehouse_assigment_id_1}    {"data":{"attributes":{"isActive":"true"}}} 
+    Then I send a PATCH request:    /warehouse-user-assignments/${warehouse_assigment_id_1}    {"data":{"attributes":{"isActive":"true"}}}
     Then Response status code should be:    200
     Then I send a GET request:    /warehouse-user-assignments/${warehouse_assigment_id_2}
     And Response body parameter should be:    [data][attributes][isActive]    False
     [Teardown]     Run Keywords    I send a DELETE request:    /warehouse-user-assignments/${warehouse_assigment_id_1}
-    ...  AND    Response status code should be:    204 
+    ...  AND    Response status code should be:    204
+    ...  AND    Make user a warehouse user/ not a warehouse user:   ${warehous_user[0].user_uuid}    0
     Then I send a DELETE request:    /warehouse-user-assignments/${warehouse_assigment_id_2}
-    And Response status code should be:    204 
+    And Response status code should be:    204
