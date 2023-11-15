@@ -29,18 +29,18 @@ Create_warehouse_user_assigment_without_token
     And Make user a warehouse user/ not a warehouse user:   ${warehous_user[0].user_uuid}    0
 
 Create_warehouse_user_assigment_as_warehouse_user_for_other_user
-    [Setup]    Run Keywords    I get access token by user credentials:    ${warehous_user[0].user_name}
+    [Setup]    Run Keywords    I get access token by user credentials:    ${zed_admin.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=Bearer ${token}
-    ...    AND    Make user a warehouse user/ not a warehouse user:   ${warehous_user[0].user_uuid}    1
-    ...    AND    Make user a warehouse user/ not a warehouse user:   ${warehous_user[0].user_uuid_2}    1
-    When I send a POST request:    /warehouse-user-assignments    {"data": {"type": "warehouse-user-assignments", "attributes":{"userUuid": "${warehous_user[0].user_uuid_2}","warehouse" :{"uuid": "${warehouse[0].warehouse_uuid}"},"isActive":"false"}}}
+    ...    AND    Make user a warehouse user/ not a warehouse user:   ${warehous_user[0].admin_user_uuid}    1
+    ...    AND    Make user a warehouse user/ not a warehouse user:   ${warehous_user[0].de_admin_user_uuid}    1
+    When I send a POST request:    /warehouse-user-assignments    {"data": {"type": "warehouse-user-assignments", "attributes":{"userUuid": "${warehous_user[0].de_admin_user_uuid}","warehouse" :{"uuid": "${warehouse[0].warehouse_uuid}"},"isActive":"false"}}}
     Then Response status code should be:    404
     And Response should return error message:    Warehouse user assignment not found.
-    And Make user a warehouse user/ not a warehouse user:   ${warehous_user[0].user_uuid}    0
-    And Make user a warehouse user/ not a warehouse user:   ${warehous_user[0].user_uuid_2}    0
+    And Make user a warehouse user/ not a warehouse user:   ${warehous_user[0].admin_user_uuid}    0
+    And Make user a warehouse user/ not a warehouse user:   ${warehous_user[0].de_admin_user_uuid}    0
 
 Create_warehouse_user_assigment_with_invalid_body
-    [Setup]    Run Keywords    I get access token by user credentials:    ${zed_user.email}
+    [Setup]    Run Keywords    I get access token by user credentials:    ${zed_admin.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=Bearer ${token}
     When I send a POST request:    /warehouse-user-assignments    {"data": {"type": "warehouse-user-assignments", "attributes":{"userUuid": "test","warehouse" :{"uuid": "${warehouse[0].warehouse_uuid}"},"isActive":"false"}}}
     Then Response status code should be:    400
@@ -66,7 +66,7 @@ Create_warehouse_user_assigment_with_incorrect_type
     And Make user a warehouse user/ not a warehouse user:   ${warehous_user[0].user_uuid}    0
 
 Create_warehouse_user_assignment_with_duplicate_assignment
-    [Setup]    Run Keywords    I get access token by user credentials:    ${zed_user.email}
+    [Setup]    Run Keywords    I get access token by user credentials:    ${zed_admin.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=Bearer ${token}
     ...    AND    Make user a warehouse user/ not a warehouse user:   ${warehous_user[0].user_uuid}    1
     When I send a POST request:    /warehouse-user-assignments    {"data": {"type": "warehouse-user-assignments", "attributes":{"userUuid": "${warehous_user[0].user_uuid}","warehouse" :{"uuid": "${warehouse[0].warehouse_uuid}"},"isActive":"false"}}}
@@ -107,7 +107,7 @@ Get_user_assigments_by_UUID_with_invalid_token
     And Make user a warehouse user/ not a warehouse user:   ${warehous_user[0].user_uuid}    0
 
 Get_user_assigments_by_invalid_UUID
-    [Setup]    Run Keywords    I get access token by user credentials:    ${zed_user.email}
+    [Setup]    Run Keywords    I get access token by user credentials:    ${zed_admin.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=Bearer ${token}
     ...    AND    Make user a warehouse user/ not a warehouse user:   ${warehous_user[0].user_uuid}    1
     And Create_warehouse_user_assigment:    ${warehouse[0].warehouse_uuid}    ${warehouse[0].fk_warehouse_spryker}    ${warehous_user[0].user_uuid}    false
@@ -171,7 +171,7 @@ Update_warehouse_user_assigment_with_invalid_token
     And Make user a warehouse user/ not a warehouse user:   ${warehous_user[0].user_uuid}    0
 
 Update_warehouse_user_assigment_without_uuid
-    [Setup]    Run Keywords    I get access token by user credentials:    ${zed_user.email}
+    [Setup]    Run Keywords    I get access token by user credentials:    ${zed_admin.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=Bearer ${token}
     ...    AND    Make user a warehouse user/ not a warehouse user:   ${warehous_user[0].user_uuid}    1
     ...    AND    Make user a warehouse user/ not a warehouse user:   ${warehous_user[0].user_uuid_2}    1
