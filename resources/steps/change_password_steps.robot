@@ -1,5 +1,5 @@
 *** Settings ***
-Resource    ../common/common.robot
+Resource    ../common/common_ui.robot
 
 *** Keywords ***
 Yves: set new password on Restore Password page

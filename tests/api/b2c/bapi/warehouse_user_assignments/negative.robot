@@ -1,13 +1,13 @@
 *** Settings ***
-Suite Setup       SuiteSetup
-Test Setup    TestSetup
+Suite Setup       API_suite_setup
+Test Setup    API_test_setup
 Resource    ../../../../../resources/common/common_api.robot
 Resource    ../../../../../resources/steps/warehouse_user_assigment_steps.robot
 Default Tags    bapi
 
 *** Test Cases ***
 ENABLER
-    TestSetup
+    API_test_setup
 
 *** Test Cases ***
 Create_warehouse_user_assigment_with_invalid_token
@@ -164,4 +164,3 @@ Delete_warehous_user_assigment_without_token
     Then I send a DELETE request:    /warehouse-user-assignments/${id_warehouse_user_assigment}
     Then Response status code should be:    400
     And Remove_warehous_user_assigment:    ${warehouse_uuid}    ${admin_user_uuid}
- 

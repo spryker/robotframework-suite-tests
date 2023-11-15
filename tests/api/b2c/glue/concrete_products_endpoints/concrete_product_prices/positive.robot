@@ -1,12 +1,12 @@
 *** Settings ***
-Suite Setup    SuiteSetup
-Test Setup     TestSetup
+Suite Setup    API_suite_setup
+Test Setup     API_test_setup
 Resource    ../../../../../../resources/common/common_api.robot
 Default Tags    glue
 
 *** Test Cases ***
 ENABLER
-    TestSetup
+    API_test_setup
 Request_concrete_product_with_only_default_price
     When I send a GET request:    /concrete-products/${concrete_product.one_image_set.sku}/concrete-product-prices
     Then Response status code should be:    200

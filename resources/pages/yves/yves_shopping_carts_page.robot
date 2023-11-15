@@ -1,5 +1,5 @@
 *** Settings ***
-Resource    ../../common/common.robot
+Resource    ../../common/common_ui.robot
 *** Variables ***
 ${shopping_carts_main_content_locator}    xpath=//*[@data-qa='component quote-table']
 ${create_shopping_cart_button}    xpath=//main//a[contains(@href,'multi-cart/create')]

@@ -5,7 +5,6 @@ Library    ../../resources/libraries/common.py
 Resource    ../common/common_api.robot
 
 *** Keywords ***
-
 Get shipment type id from DB by key:
     [Documentation]    This keyword gets the entry ${id_shipment_type_store[0][0]} from the DB table `spy_shipment_type`. 
         ...    *Example:*

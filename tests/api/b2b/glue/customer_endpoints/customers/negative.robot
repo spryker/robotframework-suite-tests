@@ -1,14 +1,14 @@
 *** Settings ***
 Resource        ../../../../../../resources/common/common_api.robot
 
-Suite Setup     SuiteSetup
+Suite Setup     API_suite_setup
 
 Default Tags    glue
 
 
 *** Test Cases ***
 ENABLER
-    TestSetup
+    API_test_setup
 
 Create_a_customer_with_already_existing_email
     When I send a POST request:

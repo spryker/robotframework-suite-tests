@@ -1,13 +1,13 @@
 *** Settings ***
-Suite Setup       SuiteSetup
+Suite Setup       API_suite_setup
 Resource    ../../../../../../resources/common/common_api.robot
 Default Tags    glue
-Test Setup    TestSetup
+Test Setup    API_test_setup
 
 *** Test Cases ***
 
 ENABLER
-    TestSetup
+    API_test_setup
 
 Customer_confirmation_with_wrong_confirmation_key
     And I send a POST request:    /customer-confirmation   {"data":{"type":"customer-confirmation","attributes":{"registrationKey":"39085d16b04b34265910c7ea2a35367ggh"}}}
