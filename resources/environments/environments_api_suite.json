@@ -4,12 +4,16 @@
       "glue_url":"http://glue.de.spryker.local",
       "bapi_url":"http://glue-backend.de.spryker.local",
       "sapi_url":"http://glue-storefront.de.spryker.local",
+      "yves_url":"http://yves.de.spryker.local/",
+      "zed_url":"http://backoffice.de.spryker.local/",
+      "yves_at_url":"http://yves.at.spryker.local/",
+      "mp_url":"http://mp.de.spryker.local/security-merchant-portal-gui/login/",
       "console_path":".."
    },
    "database":{
       "db_host":"127.0.0.1",
       "db_port_env":"3306",
-      "db_port_postgres_env": "5432",
+      "db_port_postgres_env":"5432",
       "db_user":"spryker",
       "db_password":"secret",
       "db_name":"eu-docker"
@@ -57,11 +61,12 @@
          "password":"change123"
       },
       "yves_seventh_user":{
-        "email":"andrew@ottom.de",
-        "password":"change123"
+         "email":"andrew@ottom.de",
+         "password":"change123"
       },
       "zed_admin":{
          "email":"admin@spryker.com",
+         "email_de":"admin_de@spryker.com",
          "password":"change123"
       },
       "zed_user":{
@@ -217,11 +222,11 @@
          }
       },
       "warehouse_user":{
-        "name":"",
-        "password":""
+         "name":"",
+         "password":""
       },
       "admin_not_warehouse_user":{
-        "email":"richard@spryker.com",
+        "email":"admin_de@spryker.com",
         "password":"change123"
       },
       "product_with_relations":{
@@ -719,6 +724,7 @@
             "merchant_offer_id":"offer350",
             "concrete_product_with_offer_sku":"195_25904159",
             "description":"Capture your moment with the best cameras from Sony. From pocket-size to professional-style, they all pack features to deliver the best quality pictures. Discover the range of Sony cameras, lenses and accessories, and capture your favorite moments with precision and style with the best cameras can offer.",
+            "description":"Capture your moment with the best cameras from Sony. From pocket-size to professional-style, they all pack features to deliver the best quality pictures. Discover the range of Sony cameras, lenses and accessories, and capture your favorite moments with precision and style with the best cameras can offer.",
             "addresses":{
                "city_munchen":"München",
                "address1":"Matthias-Pschorr-Straße"
@@ -756,7 +762,7 @@
       "configurable_bundle_slot_5_uuid":"9626de80-6caa-57a9-a683-2846ec5b6914",
       "configurable_bundle_slot_6_uuid":"2a5e55b1-993a-5510-864c-a4a18558aa75",
       "configurable_bundle_template_name_1":"Configurable Bundle \"All in\"",
-      "configurable_bundle_template_name_2": "Smartstation Kit",
+      "configurable_bundle_template_name_2":"Smartstation Kit",
       "configured_bundle_quantity":2,
       "configurable_bundle_first_slot_item_name":"Canon IXUS 160",
       "configurable_bundle_first_slot_item_name2":"Acer Aspire S7"
@@ -771,82 +777,82 @@
    },
    "dataType":{
       "arrow":[
-
+         
       ]
    },
-   "servicePoints": {
-       "servicePoints":[
-           {
-               "uuid":"test-service-point",
-               "name":"TSP",
-               "key":"tsp"
-           },
-           {
-               "uuid":"test-service-point-2",
-               "name":"TSP2",
-               "key":"tsp2"
-           }
-       ],
-       "servicePointAddresses":[
-           {
-               "uuid":"test-service-point-address",
-               "address1":"Test address",
-               "address2":"Test address 2",
-               "address3":"Test address 3",
-               "city":"City",
-               "zipCode":"10115"
-           }
-       ],
-       "services":[
-           {
-               "uuid":"test-service",
-               "key":"ts"
-           }
-       ],
-       "serviceTypes":[
-           {
-               "uuid":"test-service-type",
-               "name":"Test service type",
-               "key":"tst"
-           }
-       ]
+   "servicePoints":{
+      "servicePoints":[
+         {
+            "uuid":"test-service-point",
+            "name":"TSP",
+            "key":"tsp"
+         },
+         {
+            "uuid":"test-service-point-2",
+            "name":"TSP2",
+            "key":"tsp2"
+         }
+      ],
+      "servicePointAddresses":[
+         {
+            "uuid":"test-service-point-address",
+            "address1":"Test address",
+            "address2":"Test address 2",
+            "address3":"Test address 3",
+            "city":"City",
+            "zipCode":"10115"
+         }
+      ],
+      "services":[
+         {
+            "uuid":"test-service",
+            "key":"ts"
+         }
+      ],
+      "serviceTypes":[
+         {
+            "uuid":"test-service-type",
+            "name":"Test service type",
+            "key":"tst"
+         }
+      ]
    },
    "warehouses":{
-       "warehouses": [
-           {
-               "uuid": "test-warehouse",
-               "is_active": true,
-               "name": "Test warehouse"
-           }
-       ]
+      "warehouses":[
+         {
+            "uuid":"test-warehouse",
+            "is_active":true,
+            "name":"Test warehouse"
+         }
+      ]
    },
-   "push_notifications": {
-       "push_notification_subscriptions": [
-           {
-               "providerName": "web-push-php",
-               "group": {
-                   "name": "warehouse",
-                   "identifier": ""               },
-               "payload": {
-                   "endpoint": "endpoint",
-                   "publicKey": "publicKey",
-                   "authToken": "authToken"
-               },
-               "localeName": ""
-           }
-       ]
+   "push_notifications":{
+      "push_notification_subscriptions":[
+         {
+            "providerName":"web-push-php",
+            "group":{
+               "name":"warehouse",
+               "identifier":""
+            },
+            "payload":{
+               "endpoint":"endpoint",
+               "publicKey":"publicKey",
+               "authToken":"authToken"
+            },
+            "localeName":""
+         }
+      ]
    },
-      "push_notification_providers":{
-         "push_notification_provider_uuid":"2a304ddf-d51b-514f-bd11-6e818a27fe23"
-},
-
+   "push_notification_providers":{
+      "push_notification_provider_uuid":"2a304ddf-d51b-514f-bd11-6e818a27fe23"
+   },
    "shipment_type":{
-       "shipment_type_uuid":"174d9dc0-55ae-5c4b-a2f2-a419027029ef",
-       "shipment_type_name":"Pickup"
+      "shipment_type_uuid":"174d9dc0-55ae-5c4b-a2f2-a419027029ef",
+      "shipment_type_name":"Pickup"
    },
    "warehouse_user_assigment":{
       "warehous_user":[
-        {
+         {
             "user_uuid":"48a6c610-693e-5d88-bdce-3c6018b3abd2",
             "admin_user_uuid":"c0e244d4-03e8-556f-aa8d-174be9d236e5",
             "de_admin_user_uuid":"92cd431f-96e3-5259-91cb-ab9f6d14829f",
@@ -855,9 +861,10 @@
             "user_name":"martha@video-king.nl",
             "user_first_name":"Martha",
             "user_last_name":"Farmer"
-         }],
+         }
+      ],
       "warehouse":[
-        {
+         {
             "warehouse_uuid":"e84b3cb8-a94a-5a7e-9adb-cc5353f7a73f",
             "warehouse_uuid_budjet_cameras":"86496ec7-0d44-518c-81e4-f472b9e8547d",
             "warehouse_name":"Spryker MER000001 Warehouse 1",
@@ -865,31 +872,28 @@
             "video_king_warehouse_uuid":"62372576-6a2b-5a71-9e9c-737bc47b0bf1",
             "video_king_warehouse_name":"Video King MER000002 Warehouse 1",
             "fk_warehouse_spryker":"9"
-         }],
-         "demo_service_point": {
-            "spryker_main_store":
-               {
-                  "uuid":"262feb9d-33a7-5c55-9b04-45b1fd22067e",
-                  "uuid2":"7e3b03e0-c53c-5298-9ece-968f4628b4f8",
-                  "name":"Spryker Main Store",
-                  "key":"sp1"
-               }
-            },
-            "service_point_address":
-            {
-                  "uuid":"74768ee9-e7dd-5e3c-bafd-b654e7946c54",
-                  "uuid2":"7a711afc-02ce-5f54-a08c-fadfaf5713c6",
-                  "address1":"Julie-Wolfthorn-Straße",
-                  "address2":"1",
-                  "address3":"None",
-                  "city":"Berlin",
-                  "zip":"10115"
-
-            }
-            },
-            "dynamic_entity":{
-               "dummy_api_key":"eba8110c9f9bf5685e8b5f4eba9b17c2",
-               "dummy_key_hash":"f683f48de788d57cd396fc212ef33fd146e1ff0b51cde37ecb4ddd77eeed1706"
-           }
-
+         }
+      ],
+      "demo_service_point":{
+         "spryker_main_store":{
+            "uuid":"262feb9d-33a7-5c55-9b04-45b1fd22067e",
+            "uuid2":"7e3b03e0-c53c-5298-9ece-968f4628b4f8",
+            "name":"Spryker Main Store",
+            "key":"sp1"
+         }
+      },
+      "service_point_address":{
+         "uuid":"74768ee9-e7dd-5e3c-bafd-b654e7946c54",
+         "uuid2":"7a711afc-02ce-5f54-a08c-fadfaf5713c6",
+         "address1":"Julie-Wolfthorn-Straße",
+         "address2":"1",
+         "address3":"None",
+         "city":"Berlin",
+         "zip":"10115"
+      }
+   },
+   "dynamic_entity":{
+      "dummy_api_key":"eba8110c9f9bf5685e8b5f4eba9b17c2",
+      "dummy_key_hash":"f683f48de788d57cd396fc212ef33fd146e1ff0b51cde37ecb4ddd77eeed1706"
+   }
 }

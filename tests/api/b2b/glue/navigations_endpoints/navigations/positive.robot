@@ -1,15 +1,15 @@
 *** Settings ***
 Resource        ../../../../../../resources/common/common_api.robot
 
-Suite Setup     SuiteSetup
-Test Setup      TestSetup
+Suite Setup     API_suite_setup
+Test Setup      API_test_setup
 
 Default Tags    glue
 
 
 *** Test Cases ***
 ENABLER
-    TestSetup
+    API_test_setup
 
 Get_navigation_tree_using_valid_navigation_key
     When I send a GET request:    /navigations/MAIN_NAVIGATION

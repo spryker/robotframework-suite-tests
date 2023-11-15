@@ -1,14 +1,13 @@
 *** Settings ***
-Suite Setup       SuiteSetup
-Test Setup        TestSetup
+Suite Setup       API_suite_setup
+Test Setup        API_test_setup
 Resource    ../../../../../../resources/common/common_api.robot
 Resource    ../../../../../../resources/steps/service_point_steps.robot
 Default Tags    bapi
 
 *** Test Cases ***
 ENABLER
-    TestSetup
-*** Test Cases ***
+    API_test_setup
 
 Create_Service_Point_Address_Without_Authentication
     [Documentation]    https://spryker.atlassian.net/browse/FRW-5850

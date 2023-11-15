@@ -1,11 +1,11 @@
 *** Settings ***
 Resource    ../../../../../../resources/common/common_api.robot
-Test Setup    TestSetup
-Suite Setup    SuiteSetup
+Test Setup    API_test_setup
+Suite Setup    API_suite_setup
 Default Tags    glue
 *** Test Cases ***
 ENABLER
-    TestSetup
+    API_test_setup
 Update_customer_password_with_all_required_fields_and_valid_data
     [Setup]    Run Keywords    I send a POST request:    /access-tokens    {"data":{"type":"access-tokens","attributes":{"username":"${yves_user.email}","password":"${yves_user.password}"}}}
     ...    AND    Response status code should be:    201

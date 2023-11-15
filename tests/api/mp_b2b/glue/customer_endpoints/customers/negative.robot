@@ -1,12 +1,12 @@
 *** Settings ***
-Suite Setup       SuiteSetup
+Suite Setup       API_suite_setup
 Resource    ../../../../../../resources/common/common_api.robot
 Default Tags    glue
 
 *** Test Cases ***
 
 ENABLER
-    TestSetup
+    API_test_setup
 
 Create_a_customer_with_already_existing_email
     I send a POST request:    /customers/    {"data":{"type":"customers","attributes":{"firstName":"${yves_third_user.first_name}","lastName":"${yves_third_user.last_name}","gender":"${gender.male}","salutation":"${yves_third_user.salutation}","email":"${yves_user.email}","password":"${yves_user.password}","confirmPassword":"${yves_user.password}","acceptedTerms":True}}}

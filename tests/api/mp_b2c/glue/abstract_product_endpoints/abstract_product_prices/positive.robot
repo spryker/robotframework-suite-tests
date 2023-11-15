@@ -1,12 +1,12 @@
 *** Settings ***
 Resource    ../../../../../../resources/common/common_api.robot
-Suite Setup    SuiteSetup
-Test Setup    TestSetup
+Suite Setup    API_suite_setup
+Test Setup    API_test_setup
 Default Tags    glue
 
 *** Test Cases ***
 ENABLER
-    TestSetup
+    API_test_setup
 
 Get_abstract_product_prices_detault_only
     When I send a GET request:    /abstract-products/${abstract_available_product_with.concretes_3_sku}/abstract-product-prices?currency=EUR&priceMode=GROSS_MODE

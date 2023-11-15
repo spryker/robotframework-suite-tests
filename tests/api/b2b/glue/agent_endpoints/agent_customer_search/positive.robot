@@ -1,15 +1,15 @@
 *** Settings ***
 Resource        ../../../../../../resources/common/common_api.robot
 
-Suite Setup     SuiteSetup
-Test Setup      TestSetup
+Suite Setup     API_suite_setup
+Test Setup      API_test_setup
 
 Default Tags    glue
 
 
 *** Test Cases ***
 ENABLER
-    TestSetup
+    API_test_setup
 
 Agent_can_get_search_for_customers_without_search_parameters
     [Setup]    Run Keywords    I send a POST request:    /agent-access-tokens    {"data": {"type": "agent-access-tokens","attributes": {"username": "${agent.email}","password": "${agent.password}"}}}

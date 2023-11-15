@@ -1,12 +1,12 @@
 *** Settings ***
-Suite Setup       SuiteSetup
+Suite Setup       API_suite_setup
 Resource    ../../../../../../resources/common/common_api.robot
-Test Setup        TestSetup
+Test Setup        API_test_setup
 Default Tags    glue
 
 *** Test Cases ***
 ENABLER
-    TestSetup
+    API_test_setup
 
 Get_abstract_product_list_by_fake_id
     When I send a GET request:    /content-product-abstract-lists/fake

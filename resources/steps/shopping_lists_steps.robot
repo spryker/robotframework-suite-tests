@@ -18,6 +18,7 @@ Yves: go To 'Shopping Lists' Page
     ${button_exists}=    Run Keyword And Return Status    Element Should Be Visible    ${shopping_list_sub_navigation_all_lists_button}
     IF    ${button_exists}=='PASS'
         Click Element by xpath with JavaScript    ${shopping_list_sub_navigation_all_lists_button}
+        Repeat Keyword    3    Wait Until Network Is Idle
     ELSE
         Click    ${shopping_list_icon_header_menu_item}
     END
@@ -37,6 +38,7 @@ Yves: create new 'Shopping List' with name:
 
 Yves: the following shopping list is shown:
     [Arguments]    ${shoppingListName}    ${shoppingListOwner}    ${shoppingListAccess}
+    Repeat Keyword    3    Wait Until Network Is Idle
     Page Should Contain Element    xpath=//*[@data-qa="component shopping-list-overview-table"]//table//td[@data-content='Access'][contains(.,'${shoppingListAccess}')]/../td[@data-content='Owner'][contains(.,'${shoppingListOwner}')]/../td[@data-content='Name'][contains(.,'${shoppingListName}')]
 
 Yves: share shopping list with user:
@@ -44,11 +46,13 @@ Yves: share shopping list with user:
     Share shopping list with name:    ${shoppingListName}
     Select access level to share shopping list with:    ${customer}    ${accessLevel}
     Click    ${share_shopping_list_confirm_button}
+    Repeat Keyword    3    Wait Until Network Is Idle
     Yves: 'Shopping Lists' page is displayed
     Yves: flash message 'should' be shown
 
 Yves: shopping list contains the following products:
     [Arguments]    @{sku_list}    ${sku1}=${EMPTY}     ${sku2}=${EMPTY}     ${sku3}=${EMPTY}     ${sku4}=${EMPTY}     ${sku5}=${EMPTY}     ${sku6}=${EMPTY}     ${sku7}=${EMPTY}     ${sku8}=${EMPTY}     ${sku9}=${EMPTY}     ${sku10}=${EMPTY}     ${sku11}=${EMPTY}     ${sku12}=${EMPTY}     ${sku13}=${EMPTY}     ${sku14}=${EMPTY}     ${sku15}=${EMPTY}
+    Repeat Keyword    3    Wait Until Network Is Idle
     ${sku_list_count}=   get length  ${sku_list}
     FOR    ${index}    IN RANGE    0    ${sku_list_count}
         ${sku_to_check}=    Get From List    ${sku_list}    ${index}
@@ -68,6 +72,7 @@ Yves: delete 'Shopping List' with name:
     Delete shopping list with name:    ${shoppingListName}
     Wait Until Element Is Visible    ${delete_shopping_list_button}
     Click    ${delete_shopping_list_button}
+    Repeat Keyword    3    Wait Until Network Is Idle
 
 Yves: view shopping list with name:
     [Arguments]    ${shoppingListName}
@@ -84,3 +89,4 @@ Yves: view shopping list with name:
 Yves: add all available products from list to cart
     Wait Until Element Is Visible    ${shopping_list_main_content_locator}
     Click    ${add_all_available_products_to_cart_locator} 
+    Repeat Keyword    3    Wait Until Network Is Idle

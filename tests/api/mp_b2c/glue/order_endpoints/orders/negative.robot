@@ -1,12 +1,12 @@
 *** Settings ***
-Suite Setup       SuiteSetup
+Suite Setup       API_suite_setup
 Resource    ../../../../../../resources/common/common_api.robot
-Test Setup        TestSetup
+Test Setup        API_test_setup
 Default Tags    glue
 
 *** Test Cases ***
 ENABLER
-    TestSetup
+    API_test_setup
 #GET requests
 Get_order_by_order_id_with_invalid_access_token
     [Setup]    I set Headers:    Authorization=fake_token
