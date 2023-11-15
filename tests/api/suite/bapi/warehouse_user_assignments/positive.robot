@@ -10,7 +10,7 @@ ENABLER
     TestSetup
 
 Assign_user_to_warehouse
-    [Setup]    Run Keywords    I get access token by user credentials:    ${zed_user.email}
+    [Setup]    Run Keywords    I get access token by user credentials:    ${zed_admin.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=Bearer ${token}
     ...    AND    Make user a warehouse user/ not a warehouse user:   ${warehous_user[0].user_uuid}    1
     When I send a POST request:    /warehouse-user-assignments    {"data": {"type": "warehouse-user-assignments", "attributes":{"userUuid": "${warehous_user[0].user_uuid}","warehouse" :{"uuid": "${warehouse[0].warehouse_uuid}"},"isActive":"false"}}}
@@ -30,7 +30,7 @@ Assign_user_to_warehouse
     ...  AND    Make user a warehouse user/ not a warehouse user:   ${warehous_user[0].user_uuid}    0
 
 Assign_user_to_warehouse_with_include
-    [Setup]    Run Keywords    I get access token by user credentials:    ${zed_user.email}
+    [Setup]    Run Keywords    I get access token by user credentials:    ${zed_admin.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=Bearer ${token}
     ...    AND    Make user a warehouse user/ not a warehouse user:   ${warehous_user[0].user_uuid}    1
     When I send a POST request:    /warehouse-user-assignments?include=users    {"data": {"type": "warehouse-user-assignments", "attributes":{"userUuid": "${warehous_user[0].user_uuid}","warehouse" :{"uuid": "${warehouse[0].warehouse_uuid}"},"isActive":"false"}}}
@@ -49,7 +49,7 @@ Assign_user_to_warehouse_with_include
     ...  AND    Make user a warehouse user/ not a warehouse user:   ${warehous_user[0].user_uuid}    0
 
 Get_warehouse_user_assigments_by_UUID
-    [Setup]    Run Keywords    I get access token by user credentials:    ${zed_user.email}
+    [Setup]    Run Keywords    I get access token by user credentials:    ${zed_admin.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=Bearer ${token}
     # assign several warehouses to one user [only one warehouse active]
     ...    AND    Make user a warehouse user/ not a warehouse user:   ${warehous_user[0].user_uuid}    1
@@ -71,7 +71,7 @@ Get_warehouse_user_assigments_by_UUID
     ...  AND    Make user a warehouse user/ not a warehouse user:   ${warehous_user[0].user_uuid}    0
 
 Get_warehouse_user_assigments_list
-    [Setup]    Run Keywords    I get access token by user credentials:    ${zed_user.email}
+    [Setup]    Run Keywords    I get access token by user credentials:    ${zed_admin.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=Bearer ${token}
     # assign several warehouses to one user [only one warehous active]
     ...    AND    Make user a warehouse user/ not a warehouse user:   ${warehous_user[0].user_uuid}    1
@@ -103,7 +103,7 @@ Get_warehouse_user_assigments_list
     ...  AND    Make user a warehouse user/ not a warehouse user:   ${warehous_user[0].user_uuid}    0
 
 Get_warehouse_user_assigments_with_filter_by_warehouse_assigment_uuid
-    [Setup]    Run Keywords    I get access token by user credentials:    ${zed_user.email}
+    [Setup]    Run Keywords    I get access token by user credentials:    ${zed_admin.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=Bearer ${token}
     # assign several users to one warehouse
     ...    AND    Make user a warehouse user/ not a warehouse user:   ${warehous_user[0].user_uuid}    1
@@ -131,7 +131,7 @@ Get_warehouse_user_assigments_with_filter_by_warehouse_assigment_uuid
     ...  AND    Make user a warehouse user/ not a warehouse user:   ${warehous_user[0].user_uuid_2}    0
 
 Get_warehouse_user_assigments_with_filter_by_warehouse_uuid
-    [Setup]    Run Keywords    I get access token by user credentials:    ${zed_user.email}
+    [Setup]    Run Keywords    I get access token by user credentials:    ${zed_admin.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=Bearer ${token}
     ...    AND    Make user a warehouse user/ not a warehouse user:   ${warehous_user[0].user_uuid}    1
     ...    AND    Make user a warehouse user/ not a warehouse user:   ${warehous_user[0].user_uuid_2}    1
@@ -157,7 +157,7 @@ Get_warehouse_user_assigments_with_filter_by_warehouse_uuid
     ...  AND    Make user a warehouse user/ not a warehouse user:   ${warehous_user[0].user_uuid_2}    0
 
 Get_warehouse_user_assigments_with_filter_by_user_uuid
-    [Setup]    Run Keywords    I get access token by user credentials:    ${zed_user.email}
+    [Setup]    Run Keywords    I get access token by user credentials:    ${zed_admin.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=Bearer ${token}
     ...    AND    Make user a warehouse user/ not a warehouse user:   ${warehous_user[0].user_uuid}    1
     ...    AND    Make user a warehouse user/ not a warehouse user:   ${warehous_user[0].user_uuid_2}    1
@@ -183,7 +183,7 @@ Get_warehouse_user_assigments_with_filter_by_user_uuid
     ...  AND    Make user a warehouse user/ not a warehouse user:   ${warehous_user[0].user_uuid_2}    0
 
 Get_warehouse_user_assigments_with_filter_by_isActive
-    [Setup]    Run Keywords    I get access token by user credentials:    ${zed_user.email}
+    [Setup]    Run Keywords    I get access token by user credentials:    ${zed_admin.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=Bearer ${token}
     ...    AND    Make user a warehouse user/ not a warehouse user:   ${warehous_user[0].user_uuid}    1
     ...    AND    Make user a warehouse user/ not a warehouse user:   ${warehous_user[0].user_uuid_2}    1
@@ -209,7 +209,7 @@ Get_warehouse_user_assigments_with_filter_by_isActive
     ...  AND    Make user a warehouse user/ not a warehouse user:   ${warehous_user[0].user_uuid_2}    0
 
 Update_warehouse_user_assigment
-    [Setup]    Run Keywords    I get access token by user credentials:    ${zed_user.email}
+    [Setup]    Run Keywords    I get access token by user credentials:    ${zed_admin.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=Bearer ${token}
     ...    AND    Make user a warehouse user/ not a warehouse user:   ${warehous_user[0].user_uuid}    1
     When I send a POST request:    /warehouse-user-assignments    {"data": {"type": "warehouse-user-assignments", "attributes":{"userUuid": "${warehous_user[0].user_uuid}","warehouse" :{"uuid": "${warehouse[0].warehouse_uuid}"},"isActive":"false"}}}
@@ -230,7 +230,7 @@ Update_warehouse_user_assigment
     ...  AND    Make user a warehouse user/ not a warehouse user:   ${warehous_user[0].user_uuid}    0
 
 Create_warehouse_user_assignment_with_multiple_active_assignments
-    [Setup]    Run Keywords    I get access token by user credentials:    ${zed_user.email}
+    [Setup]    Run Keywords    I get access token by user credentials:    ${zed_admin.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=Bearer ${token}
     ...    AND    Make user a warehouse user/ not a warehouse user:   ${warehous_user[0].user_uuid}    1
     When I send a POST request:    /warehouse-user-assignments    {"data": {"type": "warehouse-user-assignments", "attributes":{"userUuid": "${warehous_user[0].user_uuid}","warehouse" :{"uuid": "${warehouse[0].warehouse_uuid}"},"isActive":"true"}}}
@@ -251,7 +251,7 @@ Create_warehouse_user_assignment_with_multiple_active_assignments
     And Response status code should be:    204
 
 Update_one_of_already exist_warehouse_user_assigment_with_two_assigments_to active
-    [Setup]    Run Keywords    I get access token by user credentials:    ${zed_user.email}
+    [Setup]    Run Keywords    I get access token by user credentials:    ${zed_admin.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=Bearer ${token}
     ...    AND    Make user a warehouse user/ not a warehouse user:   ${warehous_user[0].user_uuid}    1
     When I send a POST request:    /warehouse-user-assignments?include=users    {"data": {"type": "warehouse-user-assignments", "attributes":{"userUuid": "${warehous_user[0].user_uuid}","warehouse" :{"uuid": "${warehouse[0].warehouse_uuid}"},"isActive":"false"}}}

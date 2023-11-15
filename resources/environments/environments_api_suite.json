@@ -221,7 +221,7 @@
         "password":""
       },
       "admin_not_warehouse_user":{
-        "email":"richard@spryker.com",
+        "email":"admin_de@spryker.com",
         "password":"change123"
       },
       "product_with_relations":{
@@ -232,8 +232,8 @@
             "sku":"145"
          },
          "has_upselling_products":{
-            "sku":"018",
-            "concrete_sku":"018_21081477"
+            "sku":"063",
+            "concrete_sku":"063_29231675"
          }
       },
       "concrete_products":{
@@ -250,8 +250,8 @@
          }
       },
       "product_related_product_with_upselling_relation":{
-         "sku":"022",
-         "name":"Sony Cyber-shot DSC-WX220"
+         "sku":"042",
+         "name":"Samsung Galaxy S7"
       },
       "concrete_of_alternative_product_with_relations_upselling":{
          "sku":"007_30691822"
