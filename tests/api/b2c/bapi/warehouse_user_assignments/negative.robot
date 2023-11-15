@@ -11,20 +11,20 @@ ENABLER
 
 *** Test Cases ***
 Create_warehouse_user_assigment_with_invalid_token
-    [Setup]    Run Keywords    I get access token by user credentials:    ${zed_admin.email}
-    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=Bearer invalid
-    ...    AND Make user a warehouse user/ not a warehouse user: ${admin_user_uuid}    1
+    [Setup]    Run Keywords    I get access token by user credentials:    invalid
+    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=Bearer ${token}
+    ...    AND    Make user a warehouse user/ not a warehouse user:   ${admin_user_uuid}    1
     When I send a POST request:    /warehouse-user-assignments    {"data": {"type": "warehouse-user-assignments", "attributes":{"userUuid": "${admin_user_uuid}","warehouse" :{"uuid": "${warehouse_uuid}"},"isActive":"false"}}}
     Then Response status code should be:    400
-    And Make user a warehouse user/ not a warehouse user: ${admin_user_uuid}    0
+    And Make user a warehouse user/ not a warehouse user:   ${admin_user_uuid}    0
 
 Create_warehouse_user_assigment_without_token
     And I set Headers:    Content-Type=${default_header_content_type}
-    And Make user a warehouse user/ not a warehouse user: ${admin_user_uuid}    1
+    And Make user a warehouse user/ not a warehouse user:   ${admin_user_uuid}    1
     When I send a POST request:    /warehouse-user-assignments    {"data": {"type": "warehouse-user-assignments", "attributes":{"userUuid": "${admin_user_uuid}","warehouse" :{"uuid": "${warehouse_uuid}"},"isActive":"false"}}}
     Then Response status code should be:    403
     And Response should return error message:    Unauthorized request.
-    And Make user a warehouse user/ not a warehouse user: ${admin_user_uuid}    0
+    And Make user a warehouse user/ not a warehouse user:   ${admin_user_uuid}    0
 
 Create_warehouse_user_assigment_as_warehouse_user_for_other_user
     [Setup]    Run Keywords    I get access token by user credentials:    ${zed_admin.email}
@@ -66,17 +66,17 @@ Create_warehouse_user_assigment_with_incorrect_type
 Create_warehouse_user_assignment_with_duplicate_assignment
     [Setup]    Run Keywords    I get access token by user credentials:    ${zed_admin.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=Bearer ${token}
-    ...    AND    Make user a warehouse user/ not a warehouse user:   ${admin_user_uuid}    1
-    When I send a POST request:    /warehouse-user-assignments    {"data": {"type": "warehouse-user-assignments", "attributes":{"userUuid": "${admin_user_uuid}","warehouse" :{"uuid": "${warehouse_uuid}"},"isActive":"false"}}}
+    ...    AND    Make user a warehouse user/ not a warehouse user:   ${user_uuid}    1
+    When I send a POST request:    /warehouse-user-assignments    {"data": {"type": "warehouse-user-assignments", "attributes":{"userUuid": "${user_uuid}","warehouse" :{"uuid": "${warehouse_uuid}"},"isActive":"false"}}}
     Then Response status code should be:    201
     Then Save value to a variable:    [data][id]   warehouse_assigment_id
-    When I send a POST request:    /warehouse-user-assignments    {"data": {"type": "warehouse-user-assignments", "attributes":{"userUuid": "${admin_user_uuid}","warehouse" :{"uuid": "${warehouse_uuid}"},"isActive":"false"}}}
+    When I send a POST request:    /warehouse-user-assignments    {"data": {"type": "warehouse-user-assignments", "attributes":{"userUuid": "${user_uuid}","warehouse" :{"uuid": "${warehouse_uuid}"},"isActive":"false"}}}
     Then Response status code should be:    400
     And Response should return error code:    5206
     And Response should return error message:    Warehouse user assignment already exists.
     [Teardown]     Run Keywords    I send a DELETE request:    /warehouse-user-assignments/${warehouse_assigment_id}
     ...  AND    Response status code should be:    204
-    ...  AND Make user a warehouse user/ not a warehouse user:   ${admin_user_uuid}    0
+    ...  AND    Make user a warehouse user/ not a warehouse user:   ${user_uuid}    0
 
 Get_warehouse_user_assigments_by_UUID_without_token
     [Documentation]    https://spryker.atlassian.net/browse/FRW-5850
@@ -171,7 +171,7 @@ Update_warehous_user_assigment_with_invalid_token
 Update_warehous_user_assigment_without_uuid
     [Setup]    Run Keywords    I get access token by user credentials:    ${zed_admin.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=Bearer ${token}
-    ...    AND    Make user a warehouse user/ not a warehouse user:   ${admin_user_uuid}    1
+    ...    AND    Make user a warehouse user/ not a warehouse user:   ${user_uuid}    1
     ...    AND    Make user a warehouse user/ not a warehouse user:   ${user_uuid_2}    1
     When I send a POST request:    /warehouse-user-assignments    {"data": {"type": "warehouse-user-assignments", "attributes":{"userUuid": "${user_uuid_2}","warehouse" :{"uuid": "${warehouse_uuid}"},"isActive":"false"}}}
     Then Response status code should be:    201
@@ -182,7 +182,7 @@ Update_warehous_user_assigment_without_uuid
     And Response should return error message:    Warehouse user assignment not found.
     [Teardown]     Run Keywords    I send a DELETE request:    /warehouse-user-assignments/${warehouse_assigment_id_1}
     ...    AND    Response status code should be:    204
-    ...    AND    Make user a warehouse user/ not a warehouse user:   ${admin_user_uuid}    0
+    ...    AND    Make user a warehouse user/ not a warehouse user:   ${user_uuid}    0
     ...    AND    Make user a warehouse user/ not a warehouse user:   ${user_uuid_2}    0
 
 Delete_warehous_user_assigment_without_token
