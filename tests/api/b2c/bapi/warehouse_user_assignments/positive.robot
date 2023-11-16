@@ -265,7 +265,7 @@ Update_one_of_already exist_warehous_user_assigment_with_two_assigments_to activ
     Then I send a GET request:    /warehouse-user-assignments/${warehouse_assigment_id_2}
     And Response body parameter should be:    [data][attributes][isActive]    False
     [Teardown]     Run Keywords    I send a DELETE request:    /warehouse-user-assignments/${warehouse_assigment_id_1}
-    ...  AND    Response status code should be:    204 
+    ...    AND    Response status code should be:    204 
     ...    AND    I send a DELETE request:    /warehouse-user-assignments/${warehouse_assigment_id_2}
     ...    AND    Response status code should be:    204 
     ...    AND    Make user a warehouse user/ not a warehouse user:    ${admin_user_uuid}    0  
