@@ -36,8 +36,7 @@ Assign_user_to_warehouse_with_include
     When I send a POST request:    /warehouse-user-assignments?include=users    {"data": {"type": "warehouse-user-assignments", "attributes":{"userUuid": "${warehous_user[0].user_uuid}","warehouse" :{"uuid": "${warehouse[0].warehouse_uuid}"},"isActive":"false"}}}
     Then Response status code should be:    201
     Then Save value to a variable:    [data][id]    warehouse_assigment_id
-    And Response body parameter should not be EMPTY:    [data][relat
-    ionships][users][data][0][id]
+    And Response body parameter should not be EMPTY:    [data][relationships][users][data][0][id]
     And Each array in response should contain property with NOT EMPTY value:    [data][relationships][users][data]    id
     And Each array element of array in response should contain property with value:    [data][relationships][users][data]    type    users
     And Each array in response should contain property with NOT EMPTY value:    [included]    id
