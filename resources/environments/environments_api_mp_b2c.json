@@ -67,7 +67,7 @@
          "female":"Female"
       },
       "admin_not_warehouse_user":{
-         "email":"richard@spryker.com",
+         "email":"admin_de@spryker.com",
          "password":"change123"
       }
    },
