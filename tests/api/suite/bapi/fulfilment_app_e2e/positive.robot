@@ -1,8 +1,8 @@
 # *** Settings ***
 # Suite Setup       UI_suite_setup
 # Test Setup        UI_test_setup
-# Test Teardown     common.TestTeardown
-# Suite Teardown    common.SuiteTeardown
+# Test Teardown     UI_test_teardown
+# Suite Teardown    UI_suite_teardown
 # Resource    ../../../../../resources/common/common.robot
 # Resource    ../../../../../resources/common/common_zed.robot
 # Resource    ../../../../../resources/common/common_yves.robot
@@ -15,13 +15,16 @@
 # Resource    ../../../../../resources/steps/picking_list_steps.robot
 # Default Tags    bapi
 # Test Tags     robot:recursive-stop-on-failure
+
 # *** Test Cases ***
 # Fulfilment_app_e2e
 #     # #LOGGED IN TO BO and SET CHECKBOX is a warehouse user = true FOR admin_de USER. UI TEST
 #     Zed: login on Zed with provided credentials:    ${zed_admin.email}
 #     Zed: update Zed user:
-#     ...    || oldEmail                       | password      | user_is_warehouse_user ||
-#     ...    || admin_de@spryker.com           | Change123!321 | true                   ||
+#     ...    || oldEmail             | user_is_warehouse_user ||
+#     ...    || admin_de@spryker.com | true                   ||
+#     Remove Tags    *
+#     Set Tags   bapi
 #     API_test_setup
 #     # #ASSIGN admin_de user TO WAREHOUSE [Spryker Mer 000001 Warehouse 1] MAKE WAREHOUSE ACTIVE BY BAPI
 #     And I get access token by user credentials:   ${zed_admin.email}
@@ -31,6 +34,7 @@
 #     Then Save value to a variable:    [data][id]   warehouse_assigment_id  
 #     # #CREATE AN ORDER BY GLUE
 #     I set Headers:    Content-Type=${default_header_content_type}
+#     Remove Tags    *
 #     Set Tags    glue
 #     API_test_setup
 #     And I get access token for the customer:    ${yves_user.email}
@@ -54,6 +58,7 @@
 #     UI_test_setup
 #     Yves: login on Yves with provided credentials:    ${yves_user.email}
 #     Yves: get the last placed order ID by current customer
+#     Trigger oms
 #     Zed: login on Zed with provided credentials:    ${zed_admin.email}
 #     Zed: go to order page:    ${lastPlacedOrder}
 #     Zed: trigger all matching states inside this order:    picking list generation schedule
@@ -62,7 +67,7 @@
 #     Zed: wait for order item to be in state:    091_25873091    ready for picking
 #     Zed: wait for order item to be in state:    093_24495843    ready for picking
 #     # #START PICKING PROCESS AND PICKING ITEMS BY BAPI
-#     Remove Tags    glue
+#     Remove Tags    *
 #     Set Tags   bapi
 #     API_test_setup
 #     I set Headers:    Content-Type=${default_header_content_type}
@@ -103,5 +108,5 @@
 #     [Teardown]     Run Keywords    Remove picking list item by uuid in DB:    ${item_id_1}
 #     ...  AND    Remove picking list item by uuid in DB:    ${item_id_2} 
 #     ...  AND    Remove picking list by uuid in DB:    ${picklist_id}
-#     ...  AND    Make user not a warehouse user:   ${warehous_user[0].de_admin_user_uuid}    0
+#     ...  AND    Make user a warehouse user/ not a warehouse user:   ${warehous_user[0].de_admin_user_uuid}    0
 #     ...  AND    I send a DELETE request:    /warehouse-user-assignments/${warehouse_assigment_id}
