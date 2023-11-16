@@ -66,17 +66,17 @@ Create_warehouse_user_assigment_with_incorrect_type
 Create_warehouse_user_assignment_with_duplicate_assignment
     [Setup]    Run Keywords    I get access token by user credentials:    ${zed_admin.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=Bearer ${token}
-    ...    AND    Make user a warehouse user/ not a warehouse user:   ${user_uuid}    1
-    When I send a POST request:    /warehouse-user-assignments    {"data": {"type": "warehouse-user-assignments", "attributes":{"userUuid": "${user_uuid}","warehouse" :{"uuid": "${warehouse_uuid}"},"isActive":"false"}}}
+    ...    AND    Make user a warehouse user/ not a warehouse user:   ${admin_user_uuid}    1
+    When I send a POST request:    /warehouse-user-assignments    {"data": {"type": "warehouse-user-assignments", "attributes":{"userUuid": "${admin_user_uuid}","warehouse" :{"uuid": "${warehouse_uuid}"},"isActive":"false"}}}
     Then Response status code should be:    201
     Then Save value to a variable:    [data][id]   warehouse_assigment_id
-    When I send a POST request:    /warehouse-user-assignments    {"data": {"type": "warehouse-user-assignments", "attributes":{"userUuid": "${user_uuid}","warehouse" :{"uuid": "${warehouse_uuid}"},"isActive":"false"}}}
+    When I send a POST request:    /warehouse-user-assignments    {"data": {"type": "warehouse-user-assignments", "attributes":{"userUuid": "${admin_user_uuid}","warehouse" :{"uuid": "${warehouse_uuid}"},"isActive":"false"}}}
     Then Response status code should be:    400
     And Response should return error code:    5206
     And Response should return error message:    Warehouse user assignment already exists.
     [Teardown]     Run Keywords    I send a DELETE request:    /warehouse-user-assignments/${warehouse_assigment_id}
     ...  AND    Response status code should be:    204
-    ...  AND    Make user a warehouse user/ not a warehouse user:   ${user_uuid}    0
+    ...  AND    Make user a warehouse user/ not a warehouse user:   ${admin_user_uuid}    0
 
 Get_warehouse_user_assigments_by_UUID_without_token
     [Documentation]    https://spryker.atlassian.net/browse/FRW-5850
