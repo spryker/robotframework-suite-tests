@@ -43,7 +43,7 @@ Create_warehouse_user_assigment_with_invalid_body
     ...    AND    Make user a warehouse user/ not a warehouse user:    ${admin_user_uuid}    1
     When I send a POST request:    /warehouse-user-assignments    {"data": {"type": "warehouse-user-assignments", "attributes":{"userUuid": "test","warehouse" :{"uuid": "${warehouse_uuid}"},"isActive":"false"}}}
     Then Response status code should be:    404
-    And Response should return error code:    5202
+    And Response should return error code:    5201
     And Response should return error message:    Warehouse user assignment not found.
     [Teardown]    Make user a warehouse user/ not a warehouse user:    ${admin_user_uuid}    0
 
