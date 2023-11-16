@@ -171,7 +171,7 @@ Get_warehouse_user_assigments_with_filter_by_user_uuid
     Then I send a GET request:    /warehouse-user-assignments/?filter[warehouse-user-assignments.userUuid]=${warehous_user[0].admin_user_uuid}
     Then Response status code should be:    200
     And Response body parameter should be:    [data][0][id]    ${warehouse_assigment_id_1}
-    And Response body parameter should be:    [data][0][attributes][userUuid]    ${warehous_user[0].user_uuid}
+    And Response body parameter should be:    [data][0][attributes][userUuid]    ${warehous_user[0].admin_user_uuid}
     And Response body parameter should be:    [data][0][attributes][isActive]    False
     And Response body parameter should be:    [data][0][attributes][warehouse][name]    ${warehouse[0].warehouse_name}
     And Response body parameter should be:    [data][0][attributes][warehouse][uuid]    ${warehouse[0].warehouse_uuid}
