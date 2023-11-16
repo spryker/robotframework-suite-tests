@@ -111,6 +111,7 @@ Get_warehouse_user_assigments_with_filter_by_warehouse_assigment_uuid
     When I send a POST request:    /warehouse-user-assignments?include=users    {"data": {"type": "warehouse-user-assignments", "attributes":{"userUuid": "${warehous_user[0].admin_user_uuid}","warehouse" :{"uuid": "${warehouse[0].warehouse_uuid}"},"isActive":"false"}}}
     Then Response status code should be:    201
     Then Save value to a variable:    [data][id]   warehouse_assigment_id_1
+    Make user a warehouse user/ not a warehouse user:   ${warehous_user[0].admin_user_uuid}    0
     When I send a POST request:    /warehouse-user-assignments?include=users    {"data": {"type": "warehouse-user-assignments", "attributes":{"userUuid": "${warehous_user[0].de_admin_user_uuid}","warehouse" :{"uuid": "${warehouse[0].warehouse_uuid}"},"isActive":"true"}}}
     Then Response status code should be:    201
     Then Save value to a variable:    [data][id]   warehouse_assigment_id_2
@@ -127,7 +128,6 @@ Get_warehouse_user_assigments_with_filter_by_warehouse_assigment_uuid
     ...    AND    Response status code should be:    204
     ...    AND    I send a DELETE request:    /warehouse-user-assignments/${warehouse_assigment_id_2}
     ...    AND    Response status code should be:    204
-    ...    AND    Make user a warehouse user/ not a warehouse user:   ${warehous_user[0].admin_user_uuid}    0
     ...    AND    Make user a warehouse user/ not a warehouse user:   ${warehous_user[0].de_admin_user_uuid}    0
 
 Get_warehouse_user_assigments_with_filter_by_warehouse_uuid
@@ -138,6 +138,7 @@ Get_warehouse_user_assigments_with_filter_by_warehouse_uuid
     When I send a POST request:    /warehouse-user-assignments?include=users    {"data": {"type": "warehouse-user-assignments", "attributes":{"userUuid": "${warehous_user[0].admin_user_uuid}","warehouse" :{"uuid": "${warehouse[0].warehouse_uuid}"},"isActive":"false"}}}
     Then Response status code should be:    201
     Then Save value to a variable:    [data][id]   warehouse_assigment_id_1
+    Make user a warehouse user/ not a warehouse user:   ${warehous_user[0].admin_user_uuid}    0
     When I send a POST request:    /warehouse-user-assignments?include=users    {"data": {"type": "warehouse-user-assignments", "attributes":{"userUuid": "${warehous_user[0].de_admin_user_uuid}","warehouse" :{"uuid": "${warehouse[0].video_king_warehouse_uuid}"},"isActive":"true"}}}
     Then Response status code should be:    201
     Then Save value to a variable:    [data][id]   warehouse_assigment_id_2
@@ -153,7 +154,6 @@ Get_warehouse_user_assigments_with_filter_by_warehouse_uuid
     ...    AND    Response status code should be:    204
     ...    AND    I send a DELETE request:    /warehouse-user-assignments/${warehouse_assigment_id_2}
     ...    AND    Response status code should be:    204
-    ...    AND    Make user a warehouse user/ not a warehouse user:   ${warehous_user[0].admin_user_uuid}    0
     ...    AND    Make user a warehouse user/ not a warehouse user:   ${warehous_user[0].de_admin_user_uuid}    0
    
 Get_warehouse_user_assigments_with_filter_by_user_uuid
@@ -164,6 +164,7 @@ Get_warehouse_user_assigments_with_filter_by_user_uuid
     When I send a POST request:    /warehouse-user-assignments?include=users    {"data": {"type": "warehouse-user-assignments", "attributes":{"userUuid": "${warehous_user[0].admin_user_uuid}","warehouse" :{"uuid": "${warehouse[0].warehouse_uuid}"},"isActive":"false"}}}
     Then Response status code should be:    201
     Then Save value to a variable:    [data][id]   warehouse_assigment_id_1
+    Make user a warehouse user/ not a warehouse user:   ${warehous_user[0].admin_user_uuid}    0
     When I send a POST request:    /warehouse-user-assignments?include=users    {"data": {"type": "warehouse-user-assignments", "attributes":{"userUuid": "${warehous_user[0].de_admin_user_uuid}","warehouse" :{"uuid": "${warehouse[0].warehouse_uuid}"},"isActive":"true"}}}
     Then Response status code should be:    201
     Then Save value to a variable:    [data][id]   warehouse_assigment_id_2
@@ -179,7 +180,6 @@ Get_warehouse_user_assigments_with_filter_by_user_uuid
     ...    AND    Response status code should be:    204
     ...    AND    I send a DELETE request:    /warehouse-user-assignments/${warehouse_assigment_id_2}
     ...    AND    Response status code should be:    204  
-    ...    AND    Make user a warehouse user/ not a warehouse user:   ${warehous_user[0].admin_user_uuid}    0
     ...    AND    Make user a warehouse user/ not a warehouse user:   ${warehous_user[0].de_admin_user_uuid}    0
    
 Get_warehouse_user_assigments_with_filter_by_isActive
@@ -190,6 +190,7 @@ Get_warehouse_user_assigments_with_filter_by_isActive
     When I send a POST request:    /warehouse-user-assignments?include=users    {"data": {"type": "warehouse-user-assignments", "attributes":{"userUuid": "${warehous_user[0].admin_user_uuid}","warehouse" :{"uuid": "${warehouse[0].warehouse_uuid}"},"isActive":"false"}}}
     Then Response status code should be:    201
     Then Save value to a variable:    [data][id]   warehouse_assigment_id_1
+    Make user a warehouse user/ not a warehouse user:   ${warehous_user[0].admin_user_uuid}    0
     When I send a POST request:    /warehouse-user-assignments?include=users    {"data": {"type": "warehouse-user-assignments", "attributes":{"userUuid": "${warehous_user[0].de_admin_user_uuid}","warehouse" :{"uuid": "${warehouse[0].video_king_warehouse_uuid}"},"isActive":"true"}}}
     Then Response status code should be:    201
     Then Save value to a variable:    [data][id]   warehouse_assigment_id_2
@@ -205,7 +206,6 @@ Get_warehouse_user_assigments_with_filter_by_isActive
     ...    AND    Response status code should be:    204
     ...    AND    I send a DELETE request:    /warehouse-user-assignments/${warehouse_assigment_id_2}
     ...    AND    Response status code should be:    204
-    ...    AND    Make user a warehouse user/ not a warehouse user:   ${warehous_user[0].admin_user_uuid}    0
     ...    AND    Make user a warehouse user/ not a warehouse user:   ${warehous_user[0].de_admin_user_uuid}    0
  
 Update_warehous_user_assigment
