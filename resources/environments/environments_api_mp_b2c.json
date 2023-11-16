@@ -664,7 +664,10 @@
             "user_uuid_3":"8565d483-70cd-5c73-bc6a-96d2e70ddee1",
             "user_name":"martha@video-king.nl",
             "user_first_name":"Martha",
-            "user_last_name":"Farmer"
+            "user_last_name":"Farmer",
+            "admin_user_name":"admin@spryker.com",
+            "admin_user_first_name":"Admin",
+            "admin_user_last_name":"Spryker"
          }
       ],
       "warehouse":[
