@@ -247,7 +247,7 @@ Filter_by_rating_only_min
    
 
 Filter_by_rating_only_max
-    When I send a GET request:    /catalog-search?q=&rating[max]=${default_price_range.min}
+    When I send a GET request:    /catalog-search?q=&rating[max]=${default_price_range.max}
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
@@ -337,10 +337,10 @@ Filter_by_label_one_label
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response body parameter should be:    [data][0][type]    catalog-search
-    And Response body parameter should be:    [data][0][attributes][pagination][numFound]    4
+    And Response body parameter should be:    [data][0][attributes][pagination][numFound]    5
     And Response body parameter should be:    [data][0][attributes][pagination][currentPage]    1
     And Response body parameter should be:    [data][0][attributes][pagination][maxPage]    1
-    And Response should contain the array of a certain size:    [data][0][attributes][abstractProducts]    4
+    And Response should contain the array of a certain size:    [data][0][attributes][abstractProducts]    5
     And Response body parameter should be:    [data][0][attributes][valueFacets][1][activeValue]    ${label.new}
     And Response body has correct self link
 
