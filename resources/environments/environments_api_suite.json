@@ -574,7 +574,7 @@
       },
       "default_qty":{
          "ipp_pages":"19",
-         "categories":"18",
+         "categories":"19",
          "colors":"10",
          "labels":"4",
          "materials":"7",
@@ -583,7 +583,7 @@
          "sorting_options":"6"
       },
       "default_price_range":{
-         "min":"175",
+         "min":"0",
          "max":"345699"
       },
       "default_active":{

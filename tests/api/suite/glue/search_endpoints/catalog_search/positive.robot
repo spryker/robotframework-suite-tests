@@ -44,9 +44,9 @@ Search_with_empty_search_criteria_all_default_values_check
     And Each array element of array in response should contain value:    [data][0][attributes][abstractProducts]    images
     And Each array element of array in response should contain value:    [data][0][attributes][abstractProducts]    abstractSku
     And Response body parameter should be:    [data][0][attributes][abstractProducts][0][prices][0][currency][code]    ${currency.eur.code}
-    And Response body parameter should be:    [data][0][attributes][abstractProducts][0][prices][0][currency][symbol]    ${currency.eur.symbol} 
-    And Response body parameter should be:    [data][0][attributes][abstractProducts][0][prices][0][currency][name]    ${currency.eur.name} 
-    And Response body parameter should be greater than:    [data][0][attributes][abstractProducts][0][prices][0][DEFAULT]    1  
+    And Response body parameter should be:    [data][0][attributes][abstractProducts][0][prices][0][currency][symbol]    ${currency.eur.symbol}
+    And Response body parameter should be:    [data][0][attributes][abstractProducts][0][prices][0][currency][name]    ${currency.eur.name}
+    And Response body parameter should be greater than:    [data][0][attributes][abstractProducts][0][prices][0][DEFAULT]    1
     #Filters - category
     And Response body parameter should contain:    [data][0][attributes]    valueFacets
     And Response body parameter should be:    [data][0][attributes][valueFacets][0][name]    category
@@ -89,9 +89,9 @@ Search_with_empty_search_criteria_all_default_values_check
     #Filters - category tree
     And Response should contain the array of a certain size:    [data][0][attributes][categoryTreeFilter]    ${category_tree_branches_qty}
     And Each array element of array in response should contain value:    [data][0][attributes][categoryTreeFilter]   nodeId
-    And Each array element of array in response should contain value:    [data][0][attributes][categoryTreeFilter]   name  
-    And Each array element of array in response should contain value:    [data][0][attributes][categoryTreeFilter]   docCount  
-    And Each array element of array in response should contain value:    [data][0][attributes][categoryTreeFilter]   children  
+    And Each array element of array in response should contain value:    [data][0][attributes][categoryTreeFilter]   name
+    And Each array element of array in response should contain value:    [data][0][attributes][categoryTreeFilter]   docCount
+    And Each array element of array in response should contain value:    [data][0][attributes][categoryTreeFilter]   children
     #Selflinks
     And Response body has correct self link
     And Response body parameter should not be EMPTY:    [links][last]
@@ -244,10 +244,10 @@ Filter_by_rating_only_min
     And Response body parameter should be:    [data][0][attributes][rangeFacets][0][activeMax]    ${default_active.max}
     And Response body parameter should not be EMPTY:    [data][0][attributes][rangeFacets][0][activeMin]
     And Response body parameter should not be EMPTY:    [data][0][attributes][rangeFacets][0][activeMax]
-   
+
 
 Filter_by_rating_only_max
-    When I send a GET request:    /catalog-search?q=&rating[max]=${default_price_range.min}
+    When I send a GET request:    /catalog-search?q=&rating[max]=${default_price_range.max}
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
@@ -260,7 +260,7 @@ Filter_by_rating_only_max
     And Response body parameter should be:    [data][0][attributes][rangeFacets][0][activeMin]    ${default_active.min}
     And Response body parameter should be:    [data][0][attributes][rangeFacets][0][activeMax]    ${default_active.max}
     And Response body parameter should not be EMPTY:    [data][0][attributes][rangeFacets][0][activeMin]
-    And Response body parameter should not be EMPTY:    [data][0][attributes][rangeFacets][0][activeMax] 
+    And Response body parameter should not be EMPTY:    [data][0][attributes][rangeFacets][0][activeMax]
 
 
 Filter_by_rating_Min_max
@@ -337,10 +337,10 @@ Filter_by_label_one_label
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response body parameter should be:    [data][0][type]    catalog-search
-    And Response body parameter should be:    [data][0][attributes][pagination][numFound]    4
+    And Response body parameter should be:    [data][0][attributes][pagination][numFound]    5
     And Response body parameter should be:    [data][0][attributes][pagination][currentPage]    1
     And Response body parameter should be:    [data][0][attributes][pagination][maxPage]    1
-    And Response should contain the array of a certain size:    [data][0][attributes][abstractProducts]    4
+    And Response should contain the array of a certain size:    [data][0][attributes][abstractProducts]    5
     And Response body parameter should be:    [data][0][attributes][valueFacets][1][activeValue]    ${label.new}
     And Response body has correct self link
 
@@ -471,7 +471,7 @@ Filter_by_valid_subcategory
     And Response body parameter should be:    [data][0][attributes][categoryTreeFilter][0][docCount]    0
     And Array element should contain property with value at least once:    [data][0][attributes][categoryTreeFilter]    docCount    ${${category_lvl2.qty}}
     And Array element should contain nested array with property and value at least once:    [data][0][attributes][categoryTreeFilter]    [children]    docCount    ${category_lvl2.qty}
-    And Response body parameter should be less than:    [data][0][attributes][categoryTreeFilter][3][children][0][children][0][docCount]    ${category_lvl2.qty} 
+    And Response body parameter should be less than:    [data][0][attributes][categoryTreeFilter][3][children][0][children][0][docCount]    ${category_lvl2.qty}
     And Response body has correct self link
 
 Search_with_specific_currency
@@ -485,9 +485,9 @@ Search_with_specific_currency
     And Response body parameter should be greater than:    [data][0][attributes][pagination][maxPage]    1
     And Response should contain the array of a certain size:    [data][0][attributes][abstractProducts]    ${ipp.default}
     And Response body parameter should be:    [data][0][attributes][abstractProducts][0][prices][0][currency][code]    ${currency.chf.code}
-    And Response body parameter should be:    [data][0][attributes][abstractProducts][0][prices][0][currency][symbol]    ${currency.chf.symbol} 
-    And Response body parameter should be:    [data][0][attributes][abstractProducts][0][prices][0][currency][name]    ${currency.chf.name} 
-    And Response body parameter should be greater than:    [data][0][attributes][abstractProducts][0][prices][0][DEFAULT]    1   
+    And Response body parameter should be:    [data][0][attributes][abstractProducts][0][prices][0][currency][symbol]    ${currency.chf.symbol}
+    And Response body parameter should be:    [data][0][attributes][abstractProducts][0][prices][0][currency][name]    ${currency.chf.name}
+    And Response body parameter should be greater than:    [data][0][attributes][abstractProducts][0][prices][0][DEFAULT]    1
     And Response body has correct self link
 
 # PAGINATION AND SORTING #
