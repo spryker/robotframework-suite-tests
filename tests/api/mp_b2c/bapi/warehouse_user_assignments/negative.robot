@@ -27,15 +27,15 @@ Create_warehouse_user_assigment_without_token
     [Teardown]    Make user a warehouse user/ not a warehouse user:    ${warehous_user[0].user_uuid}    0
 
 Create_warehouse_user_assigment_as_warehouse_user_for_other_user
-    [Setup]    Run Keywords    I get access token by user credentials:    ${warehous_user[0].user_name}
+    [Setup]    Run Keywords    I get access token by user credentials:    ${zed_admin.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=Bearer ${token}
-    ...    AND    Make user a warehouse user/ not a warehouse user:    ${warehous_user[0].user_uuid}    1
-    ...    AND    Make user a warehouse user/ not a warehouse user:    ${warehous_user[0].user_uuid_2}    1
-    When I send a POST request:    /warehouse-user-assignments    {"data": {"type": "warehouse-user-assignments", "attributes":{"userUuid": "${warehous_user[0].user_uuid_2}","warehouse" :{"uuid": "${warehouse[0].warehouse_uuid}"},"isActive":"false"}}}
+    ...    AND    Make user a warehouse user/ not a warehouse user:    ${warehous_user[0].admin_user_uuid}    1
+    ...    AND    Make user a warehouse user/ not a warehouse user:    ${warehous_user[0].de_admin_user_uuid}    1
+    When I send a POST request:    /warehouse-user-assignments    {"data": {"type": "warehouse-user-assignments", "attributes":{"userUuid": "${warehous_user[0].de_admin_user_uuid}","warehouse" :{"uuid": "${warehouse[0].warehouse_uuid}"},"isActive":"false"}}}
     Then Response status code should be:    404
     And Response should return error message:    Warehouse user assignment not found.
-    [Teardown]    Run Keywords    Make user a warehouse user/ not a warehouse user:    ${warehous_user[0].user_uuid}    0
-    ...    AND    Make user a warehouse user/ not a warehouse user:    ${warehous_user[0].user_uuid_2}    0
+    [Teardown]    Run Keywords    Make user a warehouse user/ not a warehouse user:    ${warehous_user[0].admin_user_uuid}    0
+    ...    AND    Make user a warehouse user/ not a warehouse user:    ${warehous_user[0].de_admin_user_uuid}    0
 
 Create_warehouse_user_assigment_with_invalid_body
     [Setup]    Run Keywords    I get access token by user credentials:    ${zed_admin.email}
