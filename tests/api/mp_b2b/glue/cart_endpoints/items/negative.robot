@@ -321,7 +321,7 @@ Add_a_configurable_product_to_the_cart_with_negative_price
    When I send a GET request:    /carts/${cart_id}?include=items,concrete-products
    Then Response status code should be:    200
    And Response reason should be:    OK
-   And Response body parameter should be:  [data][attributes][totals][priceToPay]    None
+   And Response body parameter should be:  [data][attributes][totals][priceToPay]    0
    And Response body parameter should not be EMPTY:    [data][links][self]
   [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cart_id}
     ...    AND    Response status code should be:    204
@@ -348,7 +348,7 @@ Add_a_configurable_product_to_the_cart_with_empty_price
    When I send a GET request:    /carts/${cart_id}?include=items,concrete-products
    Then Response status code should be:    200
    And Response reason should be:    OK
-   And Response body parameter should be:  [data][attributes][totals][priceToPay]    None
+   And Response body parameter should be:  [data][attributes][totals][priceToPay]    0
    And Response body parameter should not be EMPTY:    [data][links][self]
   [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cart_id}
     ...    AND    Response status code should be:    204
@@ -368,7 +368,7 @@ Add_a_configurable_product_with_missing_isComplete_value_of_to_the_cart
    When I send a GET request:    /carts/${cart_id}?include=items,concrete-products
    Then Response status code should be:    200
    And Response reason should be:    OK
-   And Response body parameter should be:  [data][attributes][totals][priceToPay]    None
+   And Response body parameter should be:  [data][attributes][totals][priceToPay]    0
    And Response body parameter should not be EMPTY:    [data][links][self]
   [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cart_id}
     ...    AND    Response status code should be:    204
