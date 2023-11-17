@@ -151,8 +151,6 @@ Add_a_configurable_product_to_the_cart_with_negative_quantity
 
 
 Add_a_configurable_product_to_the_cart_with_negative_price
-   [Documentation]   https://spryker.atlassian.net/browse/CC-30918
-   [Tags]    skip-due-to-issue
    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
    ...    AND    I send a POST request:    /carts   {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "config-product-to-cart-${random}"}}}
@@ -162,8 +160,14 @@ Add_a_configurable_product_to_the_cart_with_negative_price
    And Response status code should be:    422
    And Response should return error code:    901
    And Response reason should be:    Unprocessable Content
-   And Response should return error message:    netAmount => This value should be greater than 0.
-   And Response should return error message:    grossAmount => This value should be greater than 0.
+   And Array in response should contain property with value:
+   ...    [errors]
+   ...    detail
+   ...    productConfigurationInstance.prices.0.netAmount => This value should be greater than or equal to 0.
+   And Array in response should contain property with value:
+   ...    [errors]
+   ...    detail
+   ...    productConfigurationInstance.prices.0.grossAmount => This value should be greater than or equal to 0.
    When I send a GET request:    /carts/${cart_id}?include=items,concrete-products
    Then Response status code should be:    200
    And Response reason should be:    OK
@@ -174,8 +178,6 @@ Add_a_configurable_product_to_the_cart_with_negative_price
     ...    AND    Response reason should be:    No Content
 
 Add_a_configurable_product_to_the_cart_with_empty_price
-   [Documentation]   https://spryker.atlassian.net/browse/CC-25381
-   [Tags]    skip-due-to-issue
    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
    ...    AND    I send a POST request:    /carts   {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "config-product-to-cart-${random}"}}}
@@ -185,8 +187,14 @@ Add_a_configurable_product_to_the_cart_with_empty_price
    And Response status code should be:    422
    And Response should return error code:    901
    And Response reason should be:    Unprocessable Content
-   And Response should return error message:    netAmount => This value should be greater than 0.
-   And Response should return error message:    grossAmount => This value should be greater than 0.
+   And Array in response should contain property with value:
+    ...    [errors]
+    ...    detail
+    ...    productConfigurationInstance.prices.0.netAmount => This value should not be blank.
+    And Array in response should contain property with value:
+    ...    [errors]
+    ...    detail
+    ...    productConfigurationInstance.prices.0.grossAmount => This value should not be blank.
    When I send a GET request:    /carts/${cart_id}?include=items,concrete-products
    Then Response status code should be:    200
    And Response reason should be:    OK
@@ -197,8 +205,6 @@ Add_a_configurable_product_to_the_cart_with_empty_price
     ...    AND    Response reason should be:    No Content
 
 Add_a_configurable_product_with_missing_isComplete_value_of_to_the_cart
-   [Documentation]   https://spryker.atlassian.net/browse/CC-25381
-   [Tags]    skip-due-to-issue
    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
    ...    AND    I send a POST request:    /carts   {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "config-product-to-cart-${random}"}}}
@@ -208,7 +214,7 @@ Add_a_configurable_product_with_missing_isComplete_value_of_to_the_cart
    And Response status code should be:    422
    And Response should return error code:    901
    And Response reason should be:    Unprocessable Content
-   And Response should return error message:    isComplete => This field is missing.
+   And Response should return error message: productConfigurationInstance.isComplete => This field is missing.
    When I send a GET request:    /carts/${cart_id}?include=items,concrete-products
    Then Response status code should be:    200
    And Response reason should be:    OK
