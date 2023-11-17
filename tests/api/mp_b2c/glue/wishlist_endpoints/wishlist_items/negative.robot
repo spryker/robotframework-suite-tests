@@ -342,7 +342,7 @@ Add_a_configurable_product_with_numeric_isComplete_value_of_to_the_wishlist
     I send a POST request:    /wishlists/${wishlist_id}/wishlist-items    {"data": {"type": "wishlist-items","attributes":{"sku":"${configurable_product.sku_1}","quantity":3,"productConfigurationInstance":{"displayData":'{"Preferred time of the day":"Afternoon","Date":"09.09.2050"}',"configuration":'{"time_of_day":"4"}',"configuratorKey":"DATE_TIME_CONFIGURATOR","isComplete":1,"quantity":3,"availableQuantity":3,"prices":[{"priceTypeName":"DEFAULT","netAmount":23434,"grossAmount":42502,"currency":{"code":"EUR","name":"Euro","symbol":"€"},"volumePrices":[{"netAmount":150,"grossAmount":165,"quantity":5},{"netAmount":145,"grossAmount":158,"quantity":10},{"netAmount":140,"grossAmount":152,"quantity":20}]}]}}}}
     And Response status code should be:    422
     And Response should return error code:    901
-    And Response should return error message: productConfigurationInstance.isComplete => This value should be of type boolean.
+    And Response should return error message:    productConfigurationInstance.isComplete => This value should be of type boolean.
     [Teardown]    Run Keywords    I send a DELETE request:    /wishlists/${wishlist_id}
     ...    AND    Response status code should be:    204
     ...    AND    Response reason should be:    No Content
@@ -357,7 +357,7 @@ Add_a_configurable_product_with_string_isComplete_value_of_to_the_wishlist
     I send a POST request:    /wishlists/${wishlist_id}/wishlist-items    {"data": {"type": "wishlist-items","attributes":{"sku":"${configurable_product.sku_1}","quantity":3,"productConfigurationInstance":{"displayData":'{"Preferred time of the day":"Afternoon","Date":"09.09.2050"}',"configuration":'{"time_of_day":"4"}',"configuratorKey":"DATE_TIME_CONFIGURATOR","isComplete":"True","quantity":3,"availableQuantity":3,"prices":[{"priceTypeName":"DEFAULT","netAmount":23434,"grossAmount":42502,"currency":{"code":"EUR","name":"Euro","symbol":"€"},"volumePrices":[{"netAmount":150,"grossAmount":165,"quantity":5},{"netAmount":145,"grossAmount":158,"quantity":10},{"netAmount":140,"grossAmount":152,"quantity":20}]}]}}}}
     And Response status code should be:    422
     And Response should return error code:    901
-    And Response should return error message: productConfigurationInstance.isComplete => This value should be of type boolean.
+    And Response should return error message:    productConfigurationInstance.isComplete => This value should be of type boolean.
     [Teardown]    Run Keywords    I send a DELETE request:    /wishlists/${wishlist_id}
     ...    AND    Response status code should be:    204
     ...    AND    Response reason should be:    No Content
@@ -372,7 +372,7 @@ Add_a_configurable_product_with_missing_isComplete_value_of_to_the_wishlist
     I send a POST request:    /wishlists/${wishlist_id}/wishlist-items    {"data": {"type": "wishlist-items","attributes":{"sku":"${configurable_product.sku_1}","quantity":3,"productConfigurationInstance":{"displayData":'{"Preferred time of the day":"Afternoon","Date":"09.09.2050"}',"configuration":'{"time_of_day":"4"}',"configuratorKey":"DATE_TIME_CONFIGURATOR","quantity":3,"availableQuantity":3,"prices":[{"priceTypeName":"DEFAULT","netAmount":23434,"grossAmount":42502,"currency":{"code":"EUR","name":"Euro","symbol":"€"},"volumePrices":[{"netAmount":150,"grossAmount":165,"quantity":5},{"netAmount":145,"grossAmount":158,"quantity":10},{"netAmount":140,"grossAmount":152,"quantity":20}]}]}}}}
     And Response status code should be:    422
     And Response should return error code:    901
-    And Response should return error message: productConfigurationInstance.isComplete => This field is missing.
+    And Response should return error message:    productConfigurationInstance.isComplete => This field is missing.
     [Teardown]    Run Keywords    I send a DELETE request:    /wishlists/${wishlist_id}
     ...    AND    Response status code should be:    204
     ...    AND    Response reason should be:    No Content

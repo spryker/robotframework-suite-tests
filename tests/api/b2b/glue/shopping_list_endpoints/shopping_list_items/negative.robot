@@ -754,7 +754,7 @@ Add_a_configurable_product_with_numeric_isComplete_value_of_to_the_shopping_list
     And Response status code should be:    422
     And Response should return error code:    901
     And Response reason should be:    Unprocessable Content
-    And Response should return error message: productConfigurationInstance.isComplete => This value should be of type boolean.
+    And Response should return error message:    productConfigurationInstance.isComplete => This value should be of type boolean.
     [Teardown]    Run Keywords    I send a DELETE request:    /shopping-lists/${shoppingListId}
     ...    AND    Response status code should be:    204
     ...    AND    Response reason should be:    No Content
@@ -769,7 +769,7 @@ Add_a_configurable_product_with_string_isComplete_value_of_to_the_shopping_list
     And Response status code should be:    422
     And Response should return error code:    901
     And Response reason should be:    Unprocessable Content
-    And Response should return error message: productConfigurationInstance.isComplete => This value should be of type boolean.
+    And Response should return error message:    productConfigurationInstance.isComplete => This value should be of type boolean.
     [Teardown]    Run Keywords    I send a DELETE request:    /shopping-lists/${shoppingListId}
     ...    AND    Response status code should be:    204
     ...    AND    Response reason should be:    No Content
@@ -784,7 +784,7 @@ Add_a_configurable_product_with_missing_isComplete_value_of_to_the_shopping_list
     And Response status code should be:    422
     And Response should return error code:    901
     And Response reason should be:    Unprocessable Content
-    And Response should return error message: productConfigurationInstance.isComplete => This field is missing.
+    And Response should return error message:    productConfigurationInstance.isComplete => This field is missing.
     [Teardown]    Run Keywords    I send a DELETE request:    /shopping-lists/${shoppingListId}
     ...    AND    Response status code should be:    204
     ...    AND    Response reason should be:    No Content

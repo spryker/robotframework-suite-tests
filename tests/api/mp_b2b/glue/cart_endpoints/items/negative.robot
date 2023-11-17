@@ -364,7 +364,7 @@ Add_a_configurable_product_with_missing_isComplete_value_of_to_the_cart
    And Response status code should be:    422
    And Response should return error code:    901
    And Response reason should be:    Unprocessable Content
-   And Response should return error message: productConfigurationInstance.isComplete => This field is missing.
+   And Response should return error message:    productConfigurationInstance.isComplete => This field is missing.
    When I send a GET request:    /carts/${cart_id}?include=items,concrete-products
    Then Response status code should be:    200
    And Response reason should be:    OK
