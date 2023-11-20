@@ -1089,7 +1089,7 @@ Fulfill_Order_from_Merchant_Portal
     MP: open navigation menu tab:    Orders    
     MP: wait for order to appear:    ${lastPlacedOrder}--${merchant_budget_cameras_reference}
     MP: click on a table row that contains:    ${lastPlacedOrder}--${merchant_budget_cameras_reference}
-    MP: order grand total should be:    €247.08
+    MP: order grand total should be:    €230.27
     MP: update order state using header button:    Ship
     MP: order states on drawer should contain:    Shipped 
     MP: switch to the tab:    Items

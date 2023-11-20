@@ -60,7 +60,8 @@ MP: Wait until loader is no longer visible
     END
 
 MP: click submit button
-    Wait Until Element Is Visible    ${mp_submit_button}
+    [Arguments]    ${timeout}=${browser_timeout}
+    Wait Until Element Is Visible    ${mp_submit_button}    timeout=${timeout}
     Click    ${mp_submit_button}
     Repeat Keyword    3    Wait Until Network Is Idle
 
