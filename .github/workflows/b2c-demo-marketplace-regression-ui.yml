@@ -29,7 +29,7 @@ jobs:
               run: |
                   git fetch origin
                   git config pull.ff only
-                  git pull origin internal --no-ff --allow-unrelated-histories --no-edit
+                  git pull origin release-202311.0-testing-fa --no-ff --allow-unrelated-histories --no-edit
             - name: Install packages
               run: |
                   sudo apt-get install apache2-utils
