@@ -25,11 +25,11 @@ jobs:
                   git config --global user.email "github-actions[bot]@users.noreply.github.com"
                   git config --global user.name "github-actions[bot]"
                   git clone -b internal-robot-ui --single-branch https://github.com/spryker-shop/b2c-demo-marketplace.git .
-            - name: Up-merge fresh branch (release-202311.0-testing-fa)
+            - name: Up-merge fresh branch (internal)
               run: |
                   git fetch origin
                   git config pull.ff only
-                  git pull origin release-202311.0-testing-fa --no-ff --allow-unrelated-histories --no-edit
+                  git pull origin internal --no-ff --allow-unrelated-histories --no-edit
             - name: Install packages
               run: |
                   sudo apt-get install apache2-utils
