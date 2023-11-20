@@ -103,7 +103,7 @@ Share_Shopping_Carts
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
     Yves: go to the 'Home' page
-    Yves: go to user menu item in header:    Order History
+    Yves: go to user menu:    Order History
     Yves: 'Order History' page is displayed
     Yves: get the last placed order ID by current customer
     Yves: 'View Order/Reorder/Return' on the order history page:     View Order    ${lastPlacedOrder}
@@ -163,7 +163,7 @@ Quick_Order
     Yves: 'Thank you' page is displayed
     ### Order History ###
     Yves: go to the 'Home' page
-    Yves: go to user menu item in header:    Order History
+    Yves: go to user menu:    Order History
     Yves: 'Order History' page is displayed
     Yves: get the last placed order ID by current customer
     Yves: 'View Order/Reorder/Return' on the order history page:     View Order    ${lastPlacedOrder}
@@ -395,7 +395,7 @@ Business_Unit_Address_on_Checkout
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
-    Yves: go to user menu item in header:    Order History
+    Yves: go to user menu:    Order History
     Yves: 'Order History' page is displayed
     Yves: get the last placed order ID by current customer
     Yves: 'View Order/Reorder/Return' on the order history page:    View Order    ${lastPlacedOrder}
@@ -448,7 +448,7 @@ Approval_Process
     Yves: 'Summary' page contains/doesn't contain:    true    ${cancelRequestButton}    ${alertWarning}    ${quoteStatus}
     Yves: logout on Yves as a customer
     Yves: login on Yves with provided credentials:    ${yves_company_user_approver_email}
-    Yves: go to user menu item in header:    Overview
+    Yves: go to user menu:    Overview
     Yves: 'Overview' page is displayed
     Yves: go to user menu item in the left bar:    Shopping carts
     Yves: 'Shopping Carts' page is displayed
@@ -463,7 +463,7 @@ Approval_Process
     Yves: 'Summary' page is displayed
     Yves: 'Summary' page contains/doesn't contain:    false    ${cancelRequestButton}    ${alertWarning}
     Yves: go to the 'Home' page
-    Yves: go to user menu item in header:    Overview
+    Yves: go to user menu:    Overview
     Yves: 'Overview' page is displayed
     Yves: go to user menu item in the left bar:    Shopping carts
     Yves: 'Shopping Carts' page is displayed
@@ -512,7 +512,7 @@ Request_for_Quote
     Yves: logout on Yves as a customer
     Yves: go to the 'Home' page
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
-    Yves: go to user menu item in header:    Quote Requests
+    Yves: go to user menu:    Quote Requests
     Yves: quote request with reference xxx should have status:    ${lastCreatedRfQ}    Ready
     Yves: view quote request with reference:    ${lastCreatedRfQ}
     Yves: click 'Revise' button on the 'Quote Request Details' page
@@ -536,7 +536,7 @@ Request_for_Quote
     Yves: logout on Yves as a customer
     Yves: go to the 'Home' page
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
-    Yves: go to user menu item in header:    Quote Requests
+    Yves: go to user menu:    Quote Requests
     Yves: quote request with reference xxx should have status:    ${lastCreatedRfQ}    Ready
     Yves: view quote request with reference:    ${lastCreatedRfQ}
     Yves: click 'Convert to Cart' button on the 'Quote Request Details' page
@@ -600,7 +600,7 @@ Configurable_Bundle
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
-    Yves: go to user menu item in header:    Order History
+    Yves: go to user menu:    Order History
     Yves: 'Order History' page is displayed
     Yves: get the last placed order ID by current customer
     Yves: 'View Order/Reorder/Return' on the order history page:    View Order    ${lastPlacedOrder}
@@ -633,7 +633,7 @@ Return_Management
     Zed: trigger all matching states inside this order:    Skip timeout
     Zed: trigger all matching states inside this order:    Ship
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
-    Yves: go to user menu item in header:    Order History
+    Yves: go to user menu:    Order History
     Yves: 'Order History' page is displayed
     Yves: get the last placed order ID by current customer
     Yves: 'View Order/Reorder/Return' on the order history page:     Return    ${lastPlacedOrder}
@@ -652,7 +652,7 @@ Return_Management
     Yves: perform search by customer:    ${yves_company_user_buyer_email}
     Yves: agent widget contains:    ${yves_company_user_buyer_email}
     Yves: as an agent login under the customer:    ${yves_company_user_buyer_email}
-    Yves: go to user menu item in header:    Order History
+    Yves: go to user menu:    Order History
     Yves: 'View Order/Reorder/Return' on the order history page:     Return    ${lastPlacedOrder}
     Yves: 'Create Return' page is displayed
     Yves: create return for the following products:    108278
@@ -661,7 +661,7 @@ Return_Management
     Zed: login on Zed with provided credentials:    admin@spryker.com
     Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Execute return
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
-    Yves: go to user menu item in header:    Order History
+    Yves: go to user menu:    Order History
     Yves: 'Order History' page is displayed
     Yves: 'Order History' page contains the following order with a status:    ${lastPlacedOrder}    Returned
     [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
@@ -670,11 +670,11 @@ Return_Management
 User_Account
     [Documentation]    Checks user account pages work + address management
     Yves: login on Yves with provided credentials:    ${yves_user_email}
-    Yves: go to user menu item in header:    Overview
+    Yves: go to user menu:    Overview
     Yves: 'Overview' page is displayed
-    Yves: go to user menu item in header:    Order History
+    Yves: go to user menu:    Order History
     Yves: 'Order History' page is displayed
-    Yves: go to user menu item in header:    Profile
+    Yves: go to user menu:    Profile
     Yves: 'Profile' page is displayed
     Yves: go to user menu item in the left bar:    Addresses
     Yves: 'Addresses' page is displayed
@@ -696,7 +696,7 @@ User_Account
     ...    || email              | salutation | first name                       | last name                       | address 1          | address 2           | address 3           | city            | zip code  | country | phone     | company          ||
     ...    || ${yves_user_email} | Ms         | ${yves_user_first_name}${random} | ${yves_user_last_name}${random} | address 1${random} | address 2 ${random} | address 3 ${random} | Berlin${random} | ${random} | Austria | 123456789 | Spryker${random} ||
     Yves: login on Yves with provided credentials:    ${yves_user_email}
-    Yves: go to user menu item in header:    Overview
+    Yves: go to user menu:    Overview
     Yves: go to user menu item in the left bar:    Addresses
     Yves: check that user has address exists/doesn't exist:    true    ${yves_user_first_name}${random}    ${yves_user_last_name}${random}    address 1${random}    address 2 ${random}    ${random}    Berlin${random}    Austria
     [Teardown]    Run Keywords    Yves: login on Yves with provided credentials:    ${yves_user_email}
@@ -1550,9 +1550,9 @@ User_Control
 Update_Customer_Data
     [Documentation]    Checks customer data can be updated from Yves and Zed
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
-    Yves: go to user menu item in header:    Overview
+    Yves: go to user menu:    Overview
     Yves: 'Overview' page is displayed
-    Yves: go to user menu item in header:    Profile
+    Yves: go to user menu:    Profile
     Yves: 'Profile' page is displayed
     Yves: assert customer profile data:
     ...    || salutation | first name                           | last name                           | email                            ||
@@ -1571,9 +1571,9 @@ Update_Customer_Data
     ...    || email                            | salutation | first name                           | last name                           ||
     ...    || ${yves_company_user_buyer_email} | Mr         | ${yves_company_user_buyer_firstname} | ${yves_company_user_buyer_lastname} ||
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
-    Yves: go to user menu item in header:    Overview
+    Yves: go to user menu:    Overview
     Yves: 'Overview' page is displayed
-    Yves: go to user menu item in header:    Profile
+    Yves: go to user menu:    Profile
     Yves: 'Profile' page is displayed
     Yves: assert customer profile data:
     ...    || salutation | first name                           | last name                           | email                            ||
@@ -1788,7 +1788,7 @@ Configurable_Product_RfQ_Order_Management
     Yves: logout on Yves as a customer
     Yves: go to the 'Home' page
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
-    Yves: go to user menu item in header:    Quote Requests
+    Yves: go to user menu:    Quote Requests
     Yves: quote request with reference xxx should have status:    ${lastCreatedRfQ}    Ready
     Yves: view quote request with reference:    ${lastCreatedRfQ}
     Yves: click 'Convert to Cart' button on the 'Quote Request Details' page
@@ -1821,7 +1821,7 @@ Configurable_Product_RfQ_Order_Management
     Zed: go to order page:    ${lastPlacedOrder}
     Zed: trigger matching state of xxx order item inside xxx shipment:    Ship    1
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
-    Yves: go to user menu item in header:    Order History
+    Yves: go to user menu:    Order History
     Yves: 'Order History' page is displayed
     Yves: get the last placed order ID by current customer
     Yves: 'View Order/Reorder/Return' on the order history page:     Return    ${lastPlacedOrder}
@@ -1833,7 +1833,7 @@ Configurable_Product_RfQ_Order_Management
     Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Execute return
     Yves: go to the 'Home' page
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
-    Yves: go to user menu item in header:    Order History
+    Yves: go to user menu:    Order History
     Yves: 'Order History' page contains the following order with a status:    ${lastPlacedOrder}    Returned
     Yves: 'View Order/Reorder/Return' on the order history page:     View Order
     Yves: 'Order Details' page is displayed

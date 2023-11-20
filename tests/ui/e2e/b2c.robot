@@ -59,7 +59,7 @@ Guest_User_Access_Restrictions
     Yves: add product to the shopping cart
     Yves: go to b2c shopping cart
     Yves: shopping cart contains product with unit price:   002    Canon IXUS 160    37.50
-    Yves: go to user menu item in header:    Overview
+    Yves: go to user menu:    Overview
     Yves: 'Login' page is displayed
     Yves: go To 'Wishlist' Page
     Yves: 'Login' page is displayed
@@ -73,9 +73,9 @@ Authorized_User_Access
     Yves: add product to the shopping cart
     Yves: go to b2c shopping cart
     Yves: shopping cart contains product with unit price:    002    Canon IXUS 160    37.50
-    Yves: go to user menu item in header:    Overview
+    Yves: go to user menu:    Overview
     Yves: 'Overview' page is displayed
-    Yves: go to user menu item in header:    Orders History
+    Yves: go to user menu:    Orders History
     Yves: 'Order History' page is displayed
     Yves: go To 'Wishlist' Page
     Yves: 'Wishlist' page is displayed
@@ -84,11 +84,11 @@ Authorized_User_Access
 User_Account
     [Documentation]    Checks user account pages work + address management
     Yves: login on Yves with provided credentials:    ${yves_second_user_email}
-    Yves: go to user menu item in header:    Overview
+    Yves: go to user menu:    Overview
     Yves: 'Overview' page is displayed
-    Yves: go to user menu item in header:    Orders History
+    Yves: go to user menu:    Orders History
     Yves: 'Order History' page is displayed
-    Yves: go to user menu item in header:    My Profile
+    Yves: go to user menu:    My Profile
     Yves: 'Profile' page is displayed
     Yves: go To 'Wishlist' Page
     Yves: 'Wishlist' page is displayed
@@ -112,7 +112,7 @@ User_Account
     ...    || email                     | salutation | first name                              | last name                              | address 1          | address 2           | address 3           | city            | zip code  | country | phone     | company          ||
     ...    || ${yves_second_user_email} | Mr         | ${yves_second_user_first_name}${random} | ${yves_second_user_last_name}${random} | address 1${random} | address 2 ${random} | address 3 ${random} | Berlin${random} | ${random} | Austria | 123456789 | Spryker${random} ||
     Yves: login on Yves with provided credentials:    ${yves_second_user_email}
-    Yves: go to user menu item in header:    Overview
+    Yves: go to user menu:    Overview
     Yves: go to user menu item in the left bar:    Addresses
     Yves: check that user has address exists/doesn't exist:    true    ${yves_second_user_first_name}${random}    ${yves_second_user_last_name}${random}    address 1${random}    address 2 ${random}    ${random}    Berlin${random}    Austria
     [Teardown]    Run Keywords    Yves: login on Yves with provided credentials:    ${yves_second_user_email}
@@ -345,7 +345,7 @@ Configurable_Bundle
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
     Trigger oms
-    Yves: go to user menu item in header:    Orders History
+    Yves: go to user menu:    Orders History
     Yves: 'Order History' page is displayed
     Yves: get the last placed order ID by current customer
     Yves: 'View Order/Reorder/Return' on the order history page:    View Order    ${lastPlacedOrder}
@@ -520,7 +520,7 @@ Return_Management
     Zed: trigger all matching states inside this order:    skip picking
     Zed: trigger all matching states inside this order:    Ship
     Yves: login on Yves with provided credentials:    ${yves_user_email}
-    Yves: go to user menu item in header:    Orders History
+    Yves: go to user menu:    Orders History
     Yves: 'Order History' page is displayed
     Yves: get the last placed order ID by current customer
     Yves: 'View Order/Reorder/Return' on the order history page:     Return    ${lastPlacedOrder}
@@ -539,7 +539,7 @@ Return_Management
     Yves: perform search by customer:    ${yves_user_email}
     Yves: agent widget contains:    ${yves_user_email}
     Yves: as an agent login under the customer:    ${yves_user_email}
-    Yves: go to user menu item in header:    Orders History
+    Yves: go to user menu:    Orders History
     Yves: 'View Order/Reorder/Return' on the order history page:     Return    ${lastPlacedOrder}
     Yves: 'Create Return' page is displayed
     Yves: create return for the following products:    008_30692992
@@ -548,7 +548,7 @@ Return_Management
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Execute return
     Yves: login on Yves with provided credentials:    ${yves_user_email}
-    Yves: go to user menu item in header:    Orders History
+    Yves: go to user menu:    Orders History
     Yves: 'Order History' page is displayed
     Yves: 'Order History' page contains the following order with a status:    ${lastPlacedOrder}    Returned
     [Teardown]    Run Keywords    Yves: check if cart is not empty and clear it
@@ -1347,9 +1347,9 @@ Reorder
 Update_Customer_Data
     [Documentation]    Checks customer data can be updated from Yves and Zed
     Yves: login on Yves with provided credentials:    ${yves_second_user_email}
-    Yves: go to user menu item in header:    Overview
+    Yves: go to user menu:    Overview
     Yves: 'Overview' page is displayed
-    Yves: go to user menu item in header:    My Profile
+    Yves: go to user menu:    My Profile
     Yves: 'Profile' page is displayed
     Yves: assert customer profile data:
     ...    || salutation | first name                     | last name                     | email                     ||
@@ -1368,9 +1368,9 @@ Update_Customer_Data
     ...    || email                     | salutation | first name                     | last name                     ||
     ...    || ${yves_second_user_email} | Mr         | ${yves_second_user_first_name} | ${yves_second_user_last_name} ||
     Yves: login on Yves with provided credentials:    ${yves_second_user_email}
-    Yves: go to user menu item in header:    Overview
+    Yves: go to user menu:    Overview
     Yves: 'Overview' page is displayed
-    Yves: go to user menu item in header:    My Profile
+    Yves: go to user menu:    My Profile
     Yves: 'Profile' page is displayed
     Yves: assert customer profile data:
     ...    || salutation | first name                     | last name                     | email                     ||
@@ -1477,9 +1477,9 @@ Register_during_checkout
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
-    Yves: go to user menu item in header:    Overview
+    Yves: go to user menu:    Overview
     Yves: 'Overview' page is displayed
-    Yves: go to user menu item in header:    My Profile
+    Yves: go to user menu:    My Profile
     Yves: 'Profile' page is displayed
     Yves: assert customer profile data:
     ...    || salutation    | first name               | last name               | email                            ||
@@ -1636,7 +1636,7 @@ Configurable_Product_OMS
     Zed: go to order page:    ${lastPlacedOrder}
     Zed: trigger matching state of xxx order item inside xxx shipment:    Ship    1
     Yves: login on Yves with provided credentials:    ${yves_user_email}
-    Yves: go to user menu item in header:    Orders History
+    Yves: go to user menu:    Orders History
     Yves: 'Order History' page is displayed
     Yves: 'View Order/Reorder/Return' on the order history page:     Return    ${lastPlacedOrder}
     Yves: 'Create Return' page is displayed
@@ -1647,7 +1647,7 @@ Configurable_Product_OMS
     Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Execute return
     Yves: go to the 'Home' page
     Yves: login on Yves with provided credentials:    ${yves_user_email}
-    Yves: go to user menu item in header:    Orders History
+    Yves: go to user menu:    Orders History
     ### Reorder ###
     Yves: 'View Order/Reorder/Return' on the order history page:    Reorder    ${lastPlacedOrder}
     Yves: go to b2c shopping cart
