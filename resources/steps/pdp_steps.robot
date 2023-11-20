@@ -143,8 +143,8 @@ Yves: product price on the PDP should be:
                 Reload
                 Continue For Loop
             ELSE
-                Exit For Loop
                 Set Browser Timeout    ${browser_timeout}
+                Exit For Loop
             END
             IF    ${index} == ${iterations}-1
                 Take Screenshot    EMBED    fullPage=True
