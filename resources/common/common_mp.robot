@@ -13,7 +13,8 @@ ${spinner_loader}    xpath=//span[contains(@class,'ant-spin-dot')]
 ${mp_success_flyout}    xpath=//span[contains(@class,'alert')][contains(@class,'icon')][contains(@class,'success')]
 ${mp_error_flyout}    xpath=//span[contains(@class,'alert')][contains(@class,'icon')][contains(@class,'error')]
 ${mp_notification_wrapper}    xpath=//spy-notification-wrapper
-${mp_loading_icon}    xpath=//span[contains(@class,'spin-dot')]
+${mp_loading_icon}    xpath=//span[contains(@class,'spin-dot') and not(ancestor::div[contains(@style,'hidden')])]
+
 *** Keywords ***
 MP: login on MP with provided credentials:
     [Arguments]    ${email}    ${password}=${default_password}
@@ -51,10 +52,11 @@ MP: Wait until loader is no longer visible
         TRY
             Wait Until Element Is Not Visible    ${mp_loading_icon}
         EXCEPT    
-            Fail    Timeout exceeded. Loader is still displayed after ${browser_timeout} seconds
+            Take Screenshot    EMBED    fullPage=True
+            Fail    Timeout exceeded. Loader is still displayed after ${browser_timeout}
         END
     ELSE
-    Run Keyword And Ignore Error    Wait Until Element Is Not Visible    ${mp_loading_icon}    message=Timeout exceeded. Loader is still displayed after ${browser_timeout} seconds
+    Run Keyword And Ignore Error    Wait Until Element Is Not Visible    ${mp_loading_icon}    message=Timeout exceeded. Loader is still displayed after ${browser_timeout}
     END
 
 MP: click submit button
