@@ -84,9 +84,9 @@ Yves: delete user address:
     [Arguments]    ${street}
     Yves: remove flash messages
     IF    '${env}' in ['ui_b2c','ui_mp_b2c']
-        Yves: go to user menu item in header:    My Profile
+        Yves: go to user menu:    My Profile
     ELSE IF    '${env}' in ['ui_b2b','ui_mp_b2b']
-        Yves: go to user menu item in header:    Profile
+        Yves: go to user menu:    Profile
     END
     Yves: go to user menu item in the left bar:    Addresses
     IF    '${env}' in ['ui_b2c','ui_mp_b2c']
@@ -189,3 +189,19 @@ Zed: create a new customer address in profile:
     END
     Click    ${zed_customer_edit_address_submit_button}
     Wait Until Element Is Not Visible    ${zed_customer_edit_address_submit_button}
+
+Yves: go to user menu:
+    [Arguments]    ${user_menu_item}
+    ${user_menu_item}=    Convert To Lower Case    ${user_menu_item}
+    IF    'profile' in '${user_menu_item}'   Yves: go to URL:    /customer/profile
+    IF    'sign' in '${user_menu_item}'    Yves: go to URL:    /register
+    IF    'login' in '${user_menu_item}'    Yves: go to URL:    /login
+    IF    'history' in '${user_menu_item}' or 'order' in '${user_menu_item}'    Yves: go to URL:    /customer/order
+    IF    'overview' in '${user_menu_item}'    Yves: go to URL:    /customer/overview
+    IF    'quote' in '${user_menu_item}'    Yves: go to URL:    /quote-request
+    IF    'address' in '${user_menu_item}'    Yves: go to URL:    /customer/address
+    IF    'return' in '${user_menu_item}'    Yves: go to URL:    /return/list
+    IF    'newsletter' in '${user_menu_item}'    Yves: go to URL:    /customer/newsletter
+    IF    'shopping list' in '${user_menu_item}' or 'shopping-list' in '${user_menu_item}'    Yves: go to URL:    /shopping-list
+    IF    'cart' in '${user_menu_item}'    Yves: go to URL:    /multi-cart
+    IF    'wishlist' in '${user_menu_item}'    Yves: go to URL:    /wishlist

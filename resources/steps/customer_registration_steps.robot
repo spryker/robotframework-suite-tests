@@ -11,7 +11,7 @@ Register a new customer with data:
     [Documentation]    Possible argument names: e-mail, salutation, first name, last name, password
     [Arguments]    @{args}
     ${registrationData}=    Set Up Keyword Arguments    @{args}
-    Yves: go to user menu item in header:    Sign Up
+    Yves: go to user menu:    Sign Up
     FOR    ${key}    ${value}    IN    &{registrationData}
         Log    Key is '${key}' and value is '${value}'.
         IF    '${key}'=='first name'    Type Text    ${registration_first_name_field}    ${value}
