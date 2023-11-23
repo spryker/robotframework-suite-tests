@@ -44,7 +44,7 @@ Get_specific_cms_page
     And Response body has correct self link internal
 
 Get_specific_cms_with_includes
-    [Setup]    Run Keyword    Add content product abstract list to cms page in DB ${cms_pages.cms_page_with_product_lists.id}
+    [Setup]    Run Keyword    Add content product abstract list to cms page in DB    ${cms_pages.cms_page_with_product_lists.id}
     When I send a GET request:    /cms-pages/${cms_pages.cms_page_with_product_lists.id}?include=content-product-abstract-lists
     Then Response status code should be:    200
     And Response reason should be:    OK
@@ -57,4 +57,4 @@ Get_specific_cms_with_includes
     And Response should contain the array of a certain size:    [included]    1
     And Response include should contain certain entity type:    content-product-abstract-lists
     And Response include element has self link:   content-product-abstract-lists
-    [Teardown]    Run Keyword    Delete latest cms page version by uuid from DB ${cms_pages.cms_page_with_product_lists.id}
+    [Teardown]    Run Keyword    Delete latest cms page version by uuid from DB    ${cms_pages.cms_page_with_product_lists.id}
