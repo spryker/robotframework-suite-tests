@@ -1,11 +1,10 @@
 *** Settings ***
-Resource        ../../../../../../resources/common/common_api.robot
+Resource        ../../../../../../resources/steps/cms_steps.robot
 
 Suite Setup     SuiteSetup
 Test Setup      TestSetup
 
 Default Tags    glue
-
 
 *** Test Cases ***
 ENABLER
@@ -51,6 +50,7 @@ Get_specific_cms_page
     And Response body has correct self link internal
 
 Get_specific_cms_with_includes
+    [Setup] Run Keyword Add content product abstract list to cms page in DB ${cms_pages.product_lists_id}
     When I send a GET request:    /cms-pages/${cms_page.product_lists_id}?include=content-product-abstract-lists
     Then Response status code should be:    200
     And Response reason should be:    OK
@@ -59,9 +59,8 @@ Get_specific_cms_with_includes
     And Response body parameter should be:    [data][type]    cms-pages
     And Response body parameter should be:    [data][attributes][name]    ${cms_page.product_lists_name}
     And Response body has correct self link internal
-    And Response should contain the array of a certain size:
-    ...    [data][relationships][content-product-abstract-lists][data]
-    ...    2
-    And Response should contain the array larger than a certain size:    [included]    1
+    And Response should contain the array of a certain size:    [data][relationships][content-product-abstract-lists][data]    1
+    And Response should contain the array of a certain size:    [included]    1
     And Response include should contain certain entity type:    content-product-abstract-lists
     And Response include element has self link:    content-product-abstract-lists
+    [Teardown] Run Keyword Delete latest cms page version by uuid from DB ${cms_pages.product_lists_id}
