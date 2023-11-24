@@ -1,12 +1,12 @@
 *** Settings ***
-Suite Setup       SuiteSetup
-Test Setup        TestSetup
+Suite Setup       API_suite_setup
+Test Setup        API_test_setup
 Resource    ../../../../../../resources/common/common_api.robot
 Default Tags    glue
 
 *** Test Cases ***
 ENABLER
-    TestSetup
+    API_test_setup
     
 Product_is_available_with_stock_and_never_out_of_stock
     When I send a GET request:    /abstract-products/${abstract_product.product_availability.product_3.abstract_available_with_stock_and_never_out_of_stock}/abstract-product-availabilities

@@ -1,6 +1,6 @@
 *** Settings ***
-Suite Setup    SuiteSetup
-Test Setup     TestSetup
+Suite Setup    API_suite_setup
+Test Setup     API_test_setup
 Resource    ../../../../../../resources/common/common_api.robot
 Default Tags    glue
 
@@ -8,7 +8,7 @@ Default Tags    glue
 
 ##### SEARCH PARAMETERS #####
 ENABLER
-     TestSetup
+    API_test_setup
 
 Search_with_empty_search_criteria_all_default_values_check
     When I send a GET request:    /catalog-search?q=

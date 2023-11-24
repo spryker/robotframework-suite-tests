@@ -1,12 +1,12 @@
 *** Settings ***
 Resource    ../../../../../../resources/common/common_api.robot
-Test Setup    TestSetup
-Suite Setup    SuiteSetup
+Test Setup    API_test_setup
+Suite Setup    API_suite_setup
 Default Tags    glue
 
 *** Test Cases ***
 ENABLER
-    TestSetup
+    API_test_setup
 Update_customer_password_with_not_equal_new_password
     Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}    

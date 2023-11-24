@@ -1,5 +1,5 @@
 *** Settings ***
-Resource    ../common/common.robot
+Resource    ../common/common_ui.robot
 Resource    ../pages/yves/yves_merchant_profile.robot
 Resource    ../pages/yves/yves_header_section.robot
 

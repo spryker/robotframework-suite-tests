@@ -5,7 +5,6 @@ Library    ../../resources/libraries/common.py
 Resource    ../common/common_api.robot
 
 *** Keywords ***
-
 Get shipment type id from DB by key:
     [Documentation]    This keyword gets the entry ${id_shipment_type_store[0][0]} from the DB table `spy_shipment_type`. 
         ...    *Example:*
@@ -20,6 +19,7 @@ Get shipment type id from DB by key:
     ELSE
     ${id_shipment_type_store}    Query    SELECT id_shipment_type FROM spy_shipment_type WHERE "key" = '${key}' ORDER BY id_shipment_type DESC LIMIT 1;
     END
+    Disconnect From Database
     [Return]    ${id_shipment_type_store[0][0]}
 
 Delete shipment type in DB:

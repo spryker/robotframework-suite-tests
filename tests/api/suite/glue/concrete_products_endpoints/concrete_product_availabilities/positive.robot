@@ -1,12 +1,12 @@
 *** Settings ***
-Suite Setup    SuiteSetup
-Test Setup     TestSetup
+Suite Setup    API_suite_setup
+Test Setup     API_test_setup
 Resource    ../../../../../../resources/common/common_api.robot
 Default Tags    glue
 
 *** Test Cases ***
 ENABLER
-    TestSetup
+    API_test_setup
 Request_concrete_availability_by_concrete_SKU_with_stock
     When I send a GET request:    /concrete-products/${concrete.available_product.with_stock.sku3}/concrete-product-availabilities
     Then Response status code should be:    200

@@ -1,12 +1,12 @@
 *** Settings ***
-Suite Setup       SuiteSetup
-Test Setup    TestSetup
+Suite Setup       API_suite_setup
+Test Setup    API_test_setup
 Resource    ../../../../../resources/common/common_api.robot
 Default Tags    bapi
 
 *** Test Cases ***
 ENABLER
-    TestSetup
+    API_test_setup
 
 Generate_new_user_token
     When I set Headers:    Content-Type=application/x-www-form-urlencoded

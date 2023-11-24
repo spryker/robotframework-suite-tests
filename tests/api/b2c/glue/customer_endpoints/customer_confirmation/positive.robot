@@ -1,12 +1,12 @@
 *** Settings ***
-Suite Setup    SuiteSetup
-Test Setup     TestSetup
+Suite Setup    API_suite_setup
+Test Setup     API_test_setup
 Resource    ../../../../../../resources/common/common_api.robot
 Default Tags    glue
 
 *** Test Cases ***
 ENABLER
-    TestSetup
+    API_test_setup
 
 Customer_confirmation
     [Setup]    Run Keywords    I send a POST request:    /customers    {"data":{"type":"customers","attributes":{"firstName":"${yves_third_user.first_name}","lastName":"${yves_third_user.last_name}","gender":"${yves_third_user.gender_male}","salutation":"${yves_third_user.salutation}","email":"${yves_third_user.first_name}.${yves_third_user.last_name}${random}@spryker.com","password":"${yves_third_user.password}","confirmPassword":"${yves_third_user.password}","acceptedTerms":True}}}

@@ -1,13 +1,13 @@
 *** Settings ***
 Resource    ../../../../../../resources/common/common_api.robot
-Suite Setup    SuiteSetup
-Test Setup     TestSetup
+Suite Setup    API_suite_setup
+Test Setup     API_test_setup
 
 Default Tags    glue
 
 *** Test Cases ***
 ENABLER
-    TestSetup
+    API_test_setup
 Get_category_node_is_root_by_id
     [Documentation]    Step skip due to isse https://spryker.atlassian.net/browse/CC-25961
     [Tags]    skip-due-to-issue

@@ -1,13 +1,13 @@
 *** Settings ***
-Suite Setup       SuiteSetup
-Test Setup        TestSetup
+Suite Setup       API_suite_setup
+Test Setup        API_test_setup
 Resource    ../../../../../../resources/common/common_api.robot
 Resource    ../../../../../../resources/steps/push_notifications_steps.robot
 Default Tags    bapi
 
 *** Test Cases ***
 ENABLER
-   TestSetup
+    API_test_setup
 
 Creates_push_notification_subscription_with_incorrect_locale
     [Setup]    Run Keywords    Create warehouse in DB:    ${warehouses[0].name}     ${True}     ${warehouses[0].uuid}
@@ -19,6 +19,5 @@ Creates_push_notification_subscription_with_incorrect_locale
     And Response reason should be:    Bad Request
     And Response should return error message:    Provided locale not found.
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
-
     [Teardown]    Run Keywords    De-assign user from Warehouse in DB:    ${zed_admin.email}    ${warehouses[0].uuid}
     ...    AND    Delete warehouse in DB:   ${warehouses[0].uuid}
