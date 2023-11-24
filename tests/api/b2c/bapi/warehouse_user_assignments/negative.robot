@@ -66,7 +66,6 @@ Create_warehouse_user_assigment_with_incorrect_type
     When I send a POST request:    /warehouse-user-assignments    {"data": {"type": "invalid", "attributes":{"userUuid": "${admin_user_uuid}","warehouse" :{"uuid": "${warehouse_uuid}"},"isActive":"false"}}}
     Then Response status code should be:    400
     [Teardown]    Make user a warehouse user/ not a warehouse user:    ${admin_user_uuid}    0
-    [Teardown]    Make user a warehouse user/ not a warehouse user:    ${admin_user_uuid}    0
 
 Create_warehouse_user_assignment_with_duplicate_assignment
     [Setup]    Run Keywords    I get access token by user credentials:    ${zed_admin.email}
@@ -121,8 +120,6 @@ Get_user_assigments_by_invalid_UUID
     And Response should return error message:    Warehouse user assignment not found.
     [Teardown]    Run Keywords    Remove_warehous_user_assigment:    ${warehouse_uuid}    ${admin_user_uuid}
     ...    AND    Make user a warehouse user/ not a warehouse user:    ${admin_user_uuid}    0
-    [Teardown]    Run Keywords    Remove_warehous_user_assigment:    ${warehouse_uuid}    ${admin_user_uuid}
-    ...    AND    Make user a warehouse user/ not a warehouse user:    ${admin_user_uuid}    0
 
 Get_user_assigments_list_with_invalid_token
     [Documentation]    https://spryker.atlassian.net/browse/FRW-5850
@@ -137,8 +134,6 @@ Get_user_assigments_list_with_invalid_token
     And Response should return error message:    Invalid access token.
     [Teardown]    Run Keywords    Remove_warehous_user_assigment:    ${warehouse_uuid}    ${admin_user_uuid}
     ...    AND    Make user a warehouse user/ not a warehouse user:    ${admin_user_uuid}    0
-    [Teardown]    Run Keywords    Remove_warehous_user_assigment:    ${warehouse_uuid}    ${admin_user_uuid}
-    ...    AND    Make user a warehouse user/ not a warehouse user:    ${admin_user_uuid}    0
 
 Get_user_assigments_list_without_token
     [Documentation]    https://spryker.atlassian.net/browse/FRW-5850
@@ -149,8 +144,6 @@ Get_user_assigments_list_without_token
     Then Response status code should be:    403
     And Response reason should be:    Unauthorized
     And Response should return error message:    Invalid access token.
-    [Teardown]    Run Keywords    Remove_warehous_user_assigment:    ${warehouse_uuid}    ${admin_user_uuid}
-    ...    AND    Make user a warehouse user/ not a warehouse user:    ${admin_user_uuid}    0
     [Teardown]    Run Keywords    Remove_warehous_user_assigment:    ${warehouse_uuid}    ${admin_user_uuid}
     ...    AND    Make user a warehouse user/ not a warehouse user:    ${admin_user_uuid}    0
 
@@ -168,8 +161,6 @@ Update_warehous_user_assigment_without_token
 Update_warehous_user_assigment_with_invalid_token
     [Documentation]    https://spryker.atlassian.net/browse/FRW-5850
     [Tags]    skip-due-to-issue
-    [Documentation]    https://spryker.atlassian.net/browse/FRW-5850
-    [Tags]    skip-due-to-issue
     [Setup]    Run Keywords    I get access token by user credentials:    invalid
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=Bearer ${token} 
     ...    AND    Make user a warehouse user/ not a warehouse user:    ${admin_user_uuid}    1
@@ -178,8 +169,6 @@ Update_warehous_user_assigment_with_invalid_token
     And Create_warehouse_user_assigment:    ${warehouse_uuid}    ${fk_warehouse_spryker}    ${admin_user_uuid}    false
     Then I send a PATCH request:    /warehouse-user-assignments/${id_warehouse_user_assigment}    {"data":{"attributes":{"isActive":"true"}}}
     Then Response status code should be:    403
-    [Teardown]    Run Keywords    Remove_warehous_user_assigment:    ${warehouse_uuid}    ${admin_user_uuid}
-    ...    AND    Make user a warehouse user/ not a warehouse user:    ${admin_user_uuid}    0
     [Teardown]    Run Keywords    Remove_warehous_user_assigment:    ${warehouse_uuid}    ${admin_user_uuid}
     ...    AND    Make user a warehouse user/ not a warehouse user:    ${admin_user_uuid}    0
 
@@ -206,8 +195,6 @@ Delete_warehous_user_assigment_without_token
     Then Get_warehouse_user_assigment_id:   ${warehouse_uuid}    ${admin_user_uuid}
     Then I send a DELETE request:    /warehouse-user-assignments/${id_warehouse_user_assigment}  
     Then Response status code should be:    400
-    [Teardown]    Run Keywords    Remove_warehous_user_assigment:    ${warehouse_uuid}    ${admin_user_uuid}
-    ...    AND    Make user a warehouse user/ not a warehouse user:    ${admin_user_uuid}    0
     [Teardown]    Run Keywords    Remove_warehous_user_assigment:    ${warehouse_uuid}    ${admin_user_uuid}
     ...    AND    Make user a warehouse user/ not a warehouse user:    ${admin_user_uuid}    0
 

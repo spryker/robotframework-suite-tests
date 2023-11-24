@@ -66,7 +66,7 @@ Get_cms_pages_with_Pagination
     And Response body parameter should not be EMPTY:    [links][first]
 
 Get_specific_cms_with_includes
-    [Setup]    Run Keyword    Add content product abstarct list to cms page in DB    ${cms_pages.cms_page_with_product_lists.id}
+    [Setup]    Add content product abstract list to cms page in DB    ${cms_pages.cms_page_with_product_lists.id}
     When I send a GET request:    /cms-pages/${cms_pages.cms_page_with_product_lists.id}?include=content-product-abstract-lists
     Then Response status code should be:    200
     And Response reason should be:    OK

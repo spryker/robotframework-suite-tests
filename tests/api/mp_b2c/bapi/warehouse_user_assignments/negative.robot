@@ -157,8 +157,6 @@ Update_warehous_user_assigment_without_token
 Update_warehous_user_assigment_with_invalid_token
     [Documentation]    https://spryker.atlassian.net/browse/FRW-5850
     [Tags]    skip-due-to-issue
-    [Documentation]    https://spryker.atlassian.net/browse/FRW-5850
-    [Tags]    skip-due-to-issue
     [Setup]    Run Keywords    I get access token by user credentials:    invalid
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=Bearer ${token}   
     When Make user a warehouse user/ not a warehouse user:   ${warehous_user[0].admin_user_uuid}    1
