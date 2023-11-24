@@ -14,8 +14,10 @@ Yves: select product in the bundle slot:
     Click    xpath=//form[@name='configurator_state_form']//button[contains(.,'${slot}')]
     IF    '${env}' in ['ui_b2b','ui_mp_b2b']
         Click    xpath=//product-item-list[@data-qa='component configurator-product']//span[@class='configurator-product__sku'][text()='Sku: ${sku}']/ancestor::product-item-list//button
+    ELSE IF    '${env}' in ['ui_b2c','ui_mp_b2c']    
+        Click    xpath=(//product-item-list[@data-qa='component configurator-product']//span[contains(text(),'${sku}')]/ancestor::product-item-list//button)[1]
     ELSE
-        IF    '${env}' in ['ui_b2c','ui_mp_b2c']    Click    xpath=(//product-item-list[@data-qa='component configurator-product']//span[contains(text(),'${sku}')]/ancestor::product-item-list//button)[1]
+        Click    xpath=//product-item//*[@itemprop='sku'][contains(text(),'${sku}')]/ancestor::product-item//button
     END
 
 Yves: go to 'Summary' step in the bundle configurator

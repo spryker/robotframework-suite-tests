@@ -1,14 +1,14 @@
 *** Variables ***
-&{shopping_cart_main_content_locator}    ui_b2b=xpath=//*[@data-qa='component cart-sidebar']    ui_b2c=xpath=//*[@class='page-layout-cart']    ui_mp_b2b=xpath=//*[@data-qa='component cart-sidebar']    ui_mp_b2c=xpath=//*[@class='page-layout-cart']
+&{shopping_cart_main_content_locator}    ui_b2b=xpath=//*[@data-qa='component cart-sidebar']    ui_b2c=xpath=//*[@class='page-layout-cart']    ui_mp_b2b=xpath=//*[@data-qa='component cart-sidebar']    ui_mp_b2c=xpath=//*[@class='page-layout-cart']    ui_suite=xpath=//form[@name='cartCodeForm']
 ${shopping_cart_checkout_button}    xpath=//main//a[@data-qa='cart-go-to-checkout']
 ${shopping_cart_request_quote_button}    xpath=//a[contains(@href,'/quote-request/create')]
-&{shopping_cart_upp-sell_products_section}    ui_b2b=xpath=//main[contains(@class,'cart')]//slick-carousel[@data-qa='component slick-carousel']    ui_b2c=xpath=//div[contains(@data-qa,'component extra-product')]    ui_mp_b2b=xpath=//main[contains(@class,'cart')]//slick-carousel[@data-qa='component slick-carousel']    ui_mp_b2c=xpath=//main[contains(@class,'cart')]//slick-carousel[@data-qa='component slick-carousel']
+&{shopping_cart_upp-sell_products_section}    ui_b2b=xpath=//main[contains(@class,'cart')]//slick-carousel[@data-qa='component slick-carousel']    ui_b2c=xpath=//div[contains(@data-qa,'component extra-product')]    ui_mp_b2b=xpath=//main[contains(@class,'cart')]//slick-carousel[@data-qa='component slick-carousel']    ui_mp_b2c=xpath=//main[contains(@class,'cart')]//slick-carousel[@data-qa='component slick-carousel']    ui_suite=(//div[contains(@class,'upselling')]//simple-carousel)[1]
 ${shopping_cart_locked_cart_form}    xpath=//form[@class='cart-locking__form']
 ${shopping_cart_cart_title}    xpath=//*[contains(@class,'cart-title__text')]
 ${request_a_quote_button}    xpath=//a[contains(@class,'button')][contains(text(),'Request a Quote')]
 ${shopping_cart_voucher_code_section_toggler}    xpath=//input[@id='cartCodeForm_code']//ancestor::div[@data-qa='component toggler-item']
 ${shopping_cart_voucher_code_field}    id=cartCodeForm_code
-${shopping_cart_voucher_code_redeem_button}    xpath=//button[contains(text(),'Redeem') and contains(@data-qa,'submit')]
+${shopping_cart_voucher_code_redeem_button}    xpath=//button[contains(.,'Redeem') and contains(@data-qa,'submit')]
 ${shopping_cart_promotional_product_section}    xpath=(//product-item[contains(@data-qa,'component product-item')])[1]
 ${shopping_cart_promotional_product_add_to_cart_button}    xpath=//product-item[contains(@data-qa,'component product-item')]//form[contains(@name,'addToCartForm')]//button[@data-init-single-click]
 &{shopping_cart_promotional_product_increase_quantity_button}    ui_b2c=xpath=(//product-item[contains(@data-qa,'component product-item')]//quantity-counter//div[contains(@class,'incr')])[1]    ui_b2b=xpath=(//product-item[contains(@data-qa,'component product-item')]//quantity-counter/button[contains(@class,'increment')])[1]    ui_mp_b2b=xpath=(//product-item[contains(@data-qa,'component product-item')]//quantity-counter/button[contains(@class,'increment')])[1]    ui_mp_b2c=xpath=(//product-item[contains(@data-qa,'component product-item')]//quantity-counter//div[contains(@class,'incr')])[1]

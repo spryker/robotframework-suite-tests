@@ -93,6 +93,8 @@ Yves: delete user address:
         Click    xpath=//li[contains(text(),'${street}')]/ancestor::div/div[@data-qa='component title-box']//form[contains(@action,'address/delete')]//button
     ELSE IF    '${env}' in ['ui_b2b','ui_mp_b2b']
         Click    xpath=//li[contains(text(),'${street}')]/ancestor::div[@data-qa="component action-card"]//form[contains(@action,'address/delete')]//button
+    ELSE
+        Click    xpath=//li[contains(text(),'${street}')]/ancestor::div//form[contains(@action,'delete')]//button
     END
 
 Yves: delete all user addresses
@@ -111,6 +113,8 @@ Yves: delete all user addresses
                 Click    xpath=//main//div[contains(@class,'col--md')]/div[contains(@class,'grid')]/div[1]//div[@data-qa='component title-box']//form[contains(@action,'address/delete')]//button
             ELSE IF    '${env}' in ['ui_b2b','ui_mp_b2b']
                 Click    xpath=//div[@data-qa='component action-card-grid']/div[1]/div[@data-qa="component action-card"]//form[contains(@action,'address/delete')]//button
+            ELSE
+                Click    xpath=(//div//form[contains(@action,'delete')]//button)[1]
             END
         END   
     END
@@ -120,7 +124,7 @@ Yves: assert customer profile data:
     Wait Until Element Is Visible    ${customer_account_profile_first_name_field}
     ${profileData}=    Set Up Keyword Arguments    @{args}
     FOR    ${key}    ${value}    IN    &{profileData}
-        IF    '${key}'=='salutation' and '${value}' != '${EMPTY}'    Get Text    ${customer_account_profile_salutation_span}    contains    ${value}
+        IF    '${key}'=='salutation' and '${value}' != '${EMPTY}'    Get Text    ${customer_account_profile_salutation_span}[${env}]    contains    ${value}
         IF    '${key}'=='first name' and '${value}' != '${EMPTY}'    Get Text    ${customer_account_profile_first_name_field}    contains    ${value}
         IF    '${key}'=='last name' and '${value}' != '${EMPTY}'    Get Text    ${customer_account_profile_last_name_field}    contains    ${value}
         IF    '${key}'=='email' and '${value}' != '${EMPTY}'    Get Text    ${customer_account_profile_email_field}    contains    ${value}
@@ -131,9 +135,13 @@ Yves: update customer profile data:
     Wait Until Element Is Visible    ${customer_account_profile_first_name_field}
     ${profileData}=    Set Up Keyword Arguments    @{args}
     FOR    ${key}    ${value}    IN    &{profileData}
-        IF    '${key}'=='salutation' and '${value}' != '${EMPTY}'    
-            Click    ${customer_account_profile_salutation_span}
-            Click    xpath=//li[contains(@id,'select2-profileForm_salutation-result')][contains(text(),'${value}')]
+        IF    '${key}'=='salutation' and '${value}' != '${EMPTY}'  
+                IF    '${env}' in ['ui_suite']
+                    Select From List By Label    ${customer_account_profile_salutation_selector}    ${value}
+                ELSE
+                    Click    ${customer_account_profile_salutation_span}
+                    Click    xpath=//li[contains(@id,'select2-profileForm_salutation-result')][contains(text(),'${value}')]
+                END        
         END
         IF    '${key}'=='first name' and '${value}' != '${EMPTY}'    Type Text    ${customer_account_profile_first_name_field}    ${value}
         IF    '${key}'=='last name' and '${value}' != '${EMPTY}'    Type Text    ${customer_account_profile_last_name_field}    ${value}

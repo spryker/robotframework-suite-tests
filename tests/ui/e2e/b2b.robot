@@ -501,7 +501,7 @@ Request_for_Quote
     Yves: go to URL:    agent/login
     Yves: login on Yves with provided credentials:    agent_quote+${random}@spryker.com    change123${random}
     Yves: header contains/doesn't contain:    true    ${quoteRequestsWidget}
-    Yves: go to 'Quote Requests' page through the header
+    Yves: go to 'Agent Quote Requests' page through the header
     Yves: 'Quote Requests' page is displayed
     Yves: quote request with reference xxx should have status:    ${lastCreatedRfQ}    Waiting
     Yves: view quote request with reference:    ${lastCreatedRfQ}
@@ -1641,7 +1641,6 @@ Comment_Management_in_the_Cart
     [Teardown]    Run Keyword    Yves: delete 'Shopping Cart' with name:    commentManagement+${random}
 
 Comment_Management_in_Order
-    [Tags]    skip-due-to-issue
     [Documentation]    Bug:CC-23306. Add comments in Yves and check in Zed. 
     Yves: login on Yves with provided credentials:    ${yves_company_user_shared_permission_owner_email}
     Yves: create new 'Shopping Cart' with name:    comments+${random}
@@ -1730,7 +1729,7 @@ Configurable_Product_PDP_Shopping_List
     ...    || date       | date_time ||
     ...    || 01.01.2055 | Morning   ||
     Yves: add product to the shopping list:    configProduct+${random}
-    Yves: go To 'Shopping Lists' Page
+    Yves: go to 'Shopping Lists' page
     Yves: view shopping list with name:    configProduct+${random}
     Yves: configuration should be equal:
     ...    || date       | date_time ||
@@ -1774,7 +1773,7 @@ Configurable_Product_RfQ_Order_Management
     Yves: logout on Yves as a customer
     Yves: go to URL:    agent/login
     Yves: login on Yves with provided credentials:    agent_config+${random}@spryker.com    change123${random}
-    Yves: go to 'Quote Requests' page through the header
+    Yves: go to 'Agent Quote Requests' page through the header
     Yves: quote request with reference xxx should have status:    ${lastCreatedRfQ}    Waiting
     Yves: view quote request with reference:    ${lastCreatedRfQ}
     Yves: 'Quote Request Details' page is displayed

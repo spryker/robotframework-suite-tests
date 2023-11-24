@@ -80,7 +80,7 @@ Share_Shopping_Lists
     Yves: 'Shopping Cart' page is displayed
     Yves: assert merchant of product in cart or list:    ${product_with_multiple_offers_concrete_sku}    Spryker
     Yves: assert merchant of product in cart or list:    ${product_with_multiple_offers_concrete_sku}    Computer Experts
-    [Teardown]    Run Keywords    Close Context    CURRENT    AND    Yves: delete 'Shopping List' with name:    shareShoppingList+${random}
+    [Teardown]    Run Keywords    Close Current Context    AND    Yves: delete 'Shopping List' with name:    shareShoppingList+${random}
 
 Share_Shopping_Carts
     [Documentation]    Checks that cart can be shared and used for checkout
@@ -511,7 +511,7 @@ Request_for_Quote
     Yves: go to URL:    agent/login
     Yves: login on Yves with provided credentials:    agent_quote+${random}@spryker.com    change123${random}
     Yves: header contains/doesn't contain:    true    ${quoteRequestsWidget}
-    Yves: go to 'Quote Requests' page through the header
+    Yves: go to 'Agent Quote Requests' page through the header
     Yves: 'Quote Requests' page is displayed
     Yves: quote request with reference xxx should have status:    ${lastCreatedRfQ}    Waiting
     Yves: view quote request with reference:    ${lastCreatedRfQ}
@@ -2646,7 +2646,7 @@ Configurable_Product_PDP_Shopping_List
     ...    || date       | date_time ||
     ...    || 01.01.2055 | Morning   ||
     Yves: add product to the shopping list:    configProduct+${random}
-    Yves: go To 'Shopping Lists' Page
+    Yves: go to 'Shopping Lists' page
     Yves: view shopping list with name:    configProduct+${random}
     Yves: assert merchant of product in cart or list:    ${configurable_product_concrete_sku}    Spryker
     Yves: configuration should be equal:
@@ -2692,7 +2692,7 @@ Configurable_Product_RfQ_Order_Management
     Yves: logout on Yves as a customer
     Yves: go to URL:    agent/login
     Yves: login on Yves with provided credentials:    agent_config+${random}@spryker.com    change123${random}
-    Yves: go to 'Quote Requests' page through the header
+    Yves: go to 'Agent Quote Requests' page through the header
     Yves: quote request with reference xxx should have status:    ${lastCreatedRfQ}    Waiting
     Yves: view quote request with reference:    ${lastCreatedRfQ}
     Yves: 'Quote Request Details' page is displayed

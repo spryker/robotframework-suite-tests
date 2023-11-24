@@ -61,7 +61,7 @@ Guest_User_Access_Restrictions
     Yves: shopping cart contains product with unit price:   002    Canon IXUS 160    37.50
     Yves: go to user menu:    Overview
     Yves: 'Login' page is displayed
-    Yves: go To 'Wishlist' Page
+    Yves: go to 'Wishlist' page
     Yves: 'Login' page is displayed
 
 Authorized_User_Access
@@ -77,7 +77,7 @@ Authorized_User_Access
     Yves: 'Overview' page is displayed
     Yves: go to user menu:    Orders History
     Yves: 'Order History' page is displayed
-    Yves: go To 'Wishlist' Page
+    Yves: go to 'Wishlist' page
     Yves: 'Wishlist' page is displayed
     [Teardown]    Yves: check if cart is not empty and clear it
 
@@ -90,7 +90,7 @@ User_Account
     Yves: 'Order History' page is displayed
     Yves: go to user menu:    My Profile
     Yves: 'Profile' page is displayed
-    Yves: go To 'Wishlist' Page
+    Yves: go to 'Wishlist' page
     Yves: 'Wishlist' page is displayed
     Yves: go to user menu item in the left bar:    Addresses
     Yves: 'Addresses' page is displayed
@@ -218,7 +218,7 @@ Discontinued_Alternative_Products
     Zed: add following alternative products to the concrete:    012
     Trigger p&s
     Yves: login on Yves with provided credentials:    ${yves_user_email}
-    Yves: go To 'Wishlist' Page
+    Yves: go to 'Wishlist' page
     Yves: go to wishlist with name:    My wishlist
     Yves: product with sku is marked as discountinued in wishlist:    ${discontinued_product_concrete_sku}
     Yves: product with sku is marked as alternative in wishlist:    012
@@ -260,11 +260,11 @@ Add_to_Wishlist
     Yves: delete all wishlists
     Yves: go to PDP of the product with sku:  003
     Yves: add product to wishlist:    My wishlist
-    Yves: go To 'Wishlist' Page
+    Yves: go to 'Wishlist' page
     Yves: create wishlist with name:    Second wishlist
     Yves: go to PDP of the product with sku:  004
     Yves: add product to wishlist:    Second wishlist    select
-    Yves: go To 'Wishlist' Page
+    Yves: go to 'Wishlist' page
     Yves: go to wishlist with name:    My wishlist
     Yves: wishlist contains product with sku:    003_26138343
     Yves: go to wishlist with name:    Second wishlist
@@ -633,7 +633,7 @@ Guest_Checkout
     ...    AND    Zed: deactivate following discounts from Overview page:    Guest Voucher Code 5% ${random}    Guest Cart Rule 10% ${random}
 
 Guest_Checkout_Addresses
-    [Documentation]    Guest checkout with discounts, OMS and different addresses
+    [Documentation]    Guest checkout with different addresses and OMS
     Yves: go to the 'Home' page
     Yves: logout on Yves as a customer
     Yves: go to PDP of the product with sku:    007

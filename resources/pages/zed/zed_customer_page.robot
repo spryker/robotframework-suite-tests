@@ -17,3 +17,11 @@ ${zed_customer_edit_address_country_select}    id=customer_address_fk_country
 ${zed_customer_edit_address_phone_field}    id=customer_address_phone
 ${zed_customer_edit_address_company_field}    id=customer_address_company
 ${zed_customer_edit_address_submit_button}    xpath=//form[@name='customer_address']//*[@type='submit']
+${zed_edit_company_user_salutation}    id=company-user_customer_salutation
+${zed_edit_company_user_first_name}    id=company-user_customer_first_name
+${zed_edit_company_user_last_name}    id=company-user_customer_last_name
+${zed_edit_company_user_company_select}    id=company-user_fk_company
+${zed_edit_company_user_company_span}    id=select2-company-user_fk_company-container
+${zed_edit_company_user_business_unit_select}    id=company-user_fk_company_business_unit
+${zed_edit_company_user_business_unit_span}    id=select2-company-user_fk_company_business_unit-container
+${zed_edit_company_user_search_select_field}    xpath=//input[@type='search']

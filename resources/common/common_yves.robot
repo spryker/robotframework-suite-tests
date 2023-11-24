@@ -106,7 +106,7 @@ Yves: '${pageName}' page is displayed
     ...    ELSE IF    '${pageName}' == 'Return Details'    Page Should Contain Element    ${return_details_main_content_locator}    ${pageName} page is not displayed
     ...    ELSE IF    '${pageName}' == 'Payment cancellation'    Page Should Contain Element    ${cancel_payment_page_main_container_locator}    ${pageName} page is not displayed
     ...    ELSE IF    '${pageName}' == 'Merchant Profile'    Page Should Contain Element    ${merchant_profile_main_content_locator}    ${pageName} page is not displayed
-    ...    ELSE IF    '${pageName}' == 'Wishlist'    Page Should Contain Element    ${wishlist_main_content_locator}    ${pageName} page is not displayed
+    ...    ELSE IF    '${pageName}' == 'Wishlist'    Page Should Contain Element    ${wishlist_main_content_locator}[${env}]    ${pageName} page is not displayed
     ...    ELSE        Fail    '${pageName}' page is not displayed or the page name is incorrect
 
 Yves: remove flash messages
@@ -247,15 +247,17 @@ Yves: go to second navigation item level:
 Yves: go to first navigation item level:
     [Arguments]     ${navigation_item_level1}
     IF    '${env}' in ['ui_b2b','ui_mp_b2b']
-        Run keywords
-            Wait Until Element Is Visible    xpath=//div[@class='header__navigation']//navigation-multilevel[@data-qa='component navigation-multilevel']/ul[@class='menu menu--lvl-0']//li[contains(@class,'menu__item--lvl-0')]/span/*[contains(@class,'lvl-0')][1][text()='${navigation_item_level1}']
-            Click Element by xpath with JavaScript    //div[@class='header__navigation']//navigation-multilevel[@data-qa='component navigation-multilevel']/ul[@class='menu menu--lvl-0']//li[contains(@class,'menu__item--lvl-0')]/span/*[contains(@class,'lvl-0')][1][text()='${navigation_item_level1}']
-            Repeat Keyword    3    Wait Until Network Is Idle
+        Wait Until Element Is Visible    xpath=//div[@class='header__navigation']//navigation-multilevel[@data-qa='component navigation-multilevel']/ul[@class='menu menu--lvl-0']//li[contains(@class,'menu__item--lvl-0')]/span/*[contains(@class,'lvl-0')][1][text()='${navigation_item_level1}']
+        Click Element by xpath with JavaScript    //div[@class='header__navigation']//navigation-multilevel[@data-qa='component navigation-multilevel']/ul[@class='menu menu--lvl-0']//li[contains(@class,'menu__item--lvl-0')]/span/*[contains(@class,'lvl-0')][1][text()='${navigation_item_level1}']
+        Repeat Keyword    3    Wait Until Network Is Idle
+    ELSE IF    '${env}' in ['ui_suite']
+        Wait Until Element Is Visible    xpath=(//header//nav[contains(@data-qa,'navigation-multilevel')]/ul/li[contains(.,'${navigation_item_level1}')])[1]
+        Click    xpath=(//header//nav[contains(@data-qa,'navigation-multilevel')]/ul/li[contains(.,'${navigation_item_level1}')])[1]
+        Repeat Keyword    3    Wait Until Network Is Idle
     ELSE
-        Run keywords
-            Wait Until Element Is Visible    xpath=//*[contains(@class,'header') and @data-qa='component header']//*[contains(@data-qa,'navigation-multilevel')]/*[contains(@class,'navigation-multilevel-node__link--lvl-1') and contains(text(),'${navigation_item_level1}')]
-            Click Element by xpath with JavaScript    //*[contains(@class,'header') and @data-qa='component header']//*[contains(@data-qa,'navigation-multilevel')]/*[contains(@class,'navigation-multilevel-node__link--lvl-1') and contains(text(),'${navigation_item_level1}')]
-            Repeat Keyword    3    Wait Until Network Is Idle
+        Wait Until Element Is Visible    xpath=//*[contains(@class,'header') and @data-qa='component header']//*[contains(@data-qa,'navigation-multilevel')]/*[contains(@class,'navigation-multilevel-node__link--lvl-1') and contains(text(),'${navigation_item_level1}')]
+        Click Element by xpath with JavaScript    //*[contains(@class,'header') and @data-qa='component header']//*[contains(@data-qa,'navigation-multilevel')]/*[contains(@class,'navigation-multilevel-node__link--lvl-1') and contains(text(),'${navigation_item_level1}')]
+        Repeat Keyword    3    Wait Until Network Is Idle
     END
 
 Yves: go to third navigation item level:
@@ -334,7 +336,7 @@ Yves: go to the PDP of the first available product
     Wait Until Page Contains Element    ${pdp_main_container_locator}[${env}]
 
 Yves: go to the PDP of the first available product on open catalog page
-    Click    xpath=//product-item[@data-qa='component product-item'][1]//a[contains(@class,'link-detail-page') and (contains(@class,'info')) or (contains(@class,'name'))]
+    Click    xpath=(//product-item[@data-qa='component product-item'][1]//a[contains(@class,'link-detail-page') and (contains(@class,'info')) or (contains(@class,'name'))])[1]
     Wait Until Page Contains Element    ${pdp_main_container_locator}[${env}]
 
 Yves: check if cart is not empty and clear it
@@ -345,13 +347,26 @@ Yves: check if cart is not empty and clear it
     IF    '${cartIsEmpty}'=='False'    Helper: delete all items in cart
 
 Helper: delete all items in cart
-    ${productsInCart}=    Get Element Count    xpath=//article[@class='product-card-item']//div[contains(@class,'product-card-item__box')]
-    FOR    ${index}    IN RANGE    0    ${productsInCart}
-        TRY
-            Click    xpath=(//div[@class='page-layout-cart__items-wrap']//ancestor::div/following-sibling::div//form[contains(@name,'removeFromCart')]//button[text()='Remove'])[1]
-            Yves: remove flash messages
-        EXCEPT    
-            Log    Shopping cart is empty now
+
+    IF    '${env}' in ['ui_suite']
+        ${productsInCart}=    Get Element Count    xpath=//main//cart-items-list//product-item[contains(@data-qa,'component product-cart-item')]
+        FOR    ${index}    IN RANGE    0    ${productsInCart}
+            TRY
+                Click    xpath=(//main//cart-items-list//product-item[contains(@data-qa,'component product-cart-item')]//form[contains(@name,'removeFromCart')]//button)[1]
+                Yves: remove flash messages
+            EXCEPT    
+                Log    Shopping cart is empty now
+            END
+        END
+    ELSE
+        ${productsInCart}=    Get Element Count    xpath=//article[@class='product-card-item']//div[contains(@class,'product-card-item__box')]
+        FOR    ${index}    IN RANGE    0    ${productsInCart}
+            TRY
+                Click    xpath=(//div[@class='page-layout-cart__items-wrap']//ancestor::div/following-sibling::div//form[contains(@name,'removeFromCart')]//button[text()='Remove'])[1]
+                Yves: remove flash messages
+            EXCEPT    
+                Log    Shopping cart is empty now
+            END
         END
     END
 

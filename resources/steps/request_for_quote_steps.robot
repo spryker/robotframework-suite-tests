@@ -7,8 +7,13 @@ Resource    ../common/common.robot
 Resource    ../../resources/pages/yves/yves_shopping_cart_page.robot
 
 *** Keywords ***
-Yves: Go to 'Quote Requests' page
-    Click    ${agent_quote_requests_header_item}
+Yves: go to 'Agent Quote Requests' page
+    ${lang}=    Yves: get current lang
+    Yves: go to URL:    ${lang}/agent/quote-request
+
+Yves: go to 'Quote Requests' page
+    ${lang}=    Yves: get current lang
+    Yves: go to URL:    ${lang}/quote-request
 
 Yves: convert a cart to a quote request
     Click    ${request_a_quote_button}

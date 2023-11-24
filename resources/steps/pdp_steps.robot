@@ -49,6 +49,8 @@ Yves: change quantity on PDP:
         Type Text    ${pdp_quantity_input_filed}[${env}]    ${qtyToSet}
         Keyboard Key    press    Enter 
         Sleep    1s
+    ELSE IF    '${env}' in ['ui_suite']
+        Select From List By Value    ${pdp_quantity_input_filed}[${env}]    ${qtyToSet}
     ELSE
         Add/Edit element attribute with JavaScript:    ${pdp_quantity_input_filed}[${env}]    value    ${qtyToSet}
         Click    ${pdp_product_name}  
@@ -69,6 +71,10 @@ Yves: change quantity using '+' or '-' button № times:
             Click    ${pdp_decrease_quantity_button}[${env}]
         END
     END
+
+Yves: set quantity on PDP:
+    [Arguments]    ${qty}
+    Type Text    xpath=(//formatted-number-input//input)[1]    ${qty}
 
 Yves: change variant of the product on PDP on:
     [Arguments]    ${variantToChoose}

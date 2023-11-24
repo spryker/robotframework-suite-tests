@@ -68,15 +68,15 @@ Yves: header contains/doesn't contain:
 
 Yves: go to '${pageName}' page through the header
     IF    '${pageName}' == 'Shopping Lists'
-        Yves: go To 'Shopping Lists' Page
+        Yves: go to 'Shopping Lists' page
     ELSE IF    '${pageName}' == 'Shopping Carts'
-        Yves: Go to 'Shopping Carts' page
+        Yves: go to 'Shopping Carts' page
     ELSE IF    '${pageName}' == 'Quick Order'
-        Yves: Go to 'Quick Order' page
+        Yves: go to 'Quick Order' page
     ELSE IF    '${pageName}' == 'Quote Requests'
-        Yves: Go to 'Quote Requests' page
+        Yves: go to 'Agent Quote Requests' page
     ELSE IF    '${pageName}' == 'Wishlist'
-        Yves: go To 'Wishlist' Page
+        Yves: go to 'Wishlist' page
     END
 
 Yves: go to user menu item in header:
