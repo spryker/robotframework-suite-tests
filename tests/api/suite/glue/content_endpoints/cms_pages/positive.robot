@@ -17,7 +17,7 @@ Get_cms_pages_list
     And Response body parameter should not be EMPTY:    [data][0][id]
     And Response body parameter should not be EMPTY:    [data][0][attributes][name]
     And Response body parameter should not be EMPTY:    [data][0][attributes][url]
-    And Each array element of array in response should contain property with value:    [data]    type    cms-pages  
+    And Each array element of array in response should contain property with value:    [data]    type    cms-pages
     And Each array element of array in response should contain nested property with value:    [data]    [attributes][isSearchable]    True
     And Each array element of array in response should contain property:    [data]    id
     And Each array element of array in response should contain property:    [data]    links
@@ -30,7 +30,7 @@ Get_cms_pages_list
 Get_specific_cms_page
     [Setup]    Run Keywords    I send a GET request:    /cms-pages
     ...    AND    Response status code should be:    200
-    ...    AND    Save value to a variable:    [data][0][id]    cms_page_id    
+    ...    AND    Save value to a variable:    [data][0][id]    cms_page_id
     When I send a GET request:    /cms-pages/${cms_page_id}
     Then Response status code should be:    200
     And Response reason should be:    OK
@@ -38,7 +38,7 @@ Get_specific_cms_page
     And Response body parameter should be:    [data][id]    ${cms_page_id}
     And Response body parameter should be:    [data][type]    cms-pages
     And Response body parameter should not be EMPTY:    [data][attributes][name]
-    And Response body parameter should not be EMPTY:    [data][attributes][url] 
+    And Response body parameter should not be EMPTY:    [data][attributes][url]
     And Response body parameter should not be EMPTY:    [data][attributes][isSearchable]
     And Response body should contain:    pageKey
     And Response body should contain:    validTo
@@ -53,7 +53,7 @@ Get_cms_pages_with_Pagination
     And Response body parameter should not be EMPTY:    [data][0][id]
     And Response body parameter should not be EMPTY:    [data][0][attributes][name]
     And Response body parameter should not be EMPTY:    [data][0][attributes][url]
-    And Each array element of array in response should contain property with value:    [data]    type    cms-pages  
+    And Each array element of array in response should contain property with value:    [data]    type    cms-pages
     And Each array element of array in response should contain nested property with value:    [data]    [attributes][isSearchable]    True
     And Each array element of array in response should contain property:    [data]    id
     And Each array element of array in response should contain property:    [data]    links

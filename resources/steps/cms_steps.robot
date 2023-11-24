@@ -18,11 +18,11 @@ Get latest cms page version data by uuid
     Disconnect From Database
     [Return]    ${data[0]}
 
-Add content product abstarct list to cms page in DB
+Add content product abstract list to cms page in DB
     [Documentation]    This keyword adds conctent product abstarct list to a given CMS page in the DB table `spy_cms_version`.
         ...    *Example:*
         ...
-        ...    ``Add conctent product abstarct list to cms page in DB    uuid=10014bd9-4bba-5a54-b84f-31b4b7efd064``
+        ...    ``Add content product abstract list to cms page in DB    uuid=10014bd9-4bba-5a54-b84f-31b4b7efd064``
         ...
     [Arguments]    ${uuid}
     ${data}    Get latest cms page version data by uuid    ${uuid}
@@ -62,6 +62,11 @@ Delete latest cms page version by uuid from DB
     Trigger publish trigger-events    cms_page
 
 Replace special chars
+    [Documentation]    This keyword replaces special chars in the given string.
+        ...    *Example:*
+        ...
+        ...    ``Replace special chars    input_string=Input string with special chars: & < > ' "``
+        ...
     [Arguments]    ${input_string}
     ${converted_string}=    Replace String    ${input_string}    &    \\u0026
     ${converted_string}=    Replace String    ${converted_string}    <    \\u003C
