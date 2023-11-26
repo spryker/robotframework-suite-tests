@@ -28,7 +28,7 @@ Yves: reorder all items from 'Order Details' page
 
 Yves: shipping address on the order details page is:
     [Arguments]    ${expectedShippingAddress}
-    ${actualShippingAddress}=    Get Text    ${order_details_shipping_address_locator}
+    ${actualShippingAddress}=    Get Text    ${order_details_shipping_address_locator}[${env}]
     ${actualShippingAddress}=    Replace String    ${actualShippingAddress}    \n    ${SPACE}
     Should Be Equal    ${expectedShippingAddress}    ${actualShippingAddress}
 

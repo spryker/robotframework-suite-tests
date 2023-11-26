@@ -273,7 +273,7 @@ Yves: select the following payment method on the checkout and go next:
             ${date_of_birth_present}=    Run Keyword And Ignore Error    Page Should Contain Element    ${checkout_payment_invoice_date_of_birth_field}    timeout=1s
             IF    'PASS' in ${date_of_birth_present}    Type Text    ${checkout_payment_invoice_date_of_birth_field}    11.11.1111
         ELSE
-            ${payment_method_index}=    Set Variable    first()
+            ${payment_method_index}=    Set Variable    position()=1
             Click    xpath=(//form[@name='paymentForm']//span[contains(@class,'toggler') and contains(text(),'Invoice')]/preceding-sibling::span[@class='toggler-radio__box'])[${payment_method_index}]
             ${date_of_birth_present}=    Run Keyword And Ignore Error    Page Should Contain Element    ${checkout_payment_marketplace_invoice_date_field}    timeout=1s
             IF    'PASS' in ${date_of_birth_present}    Type Text    ${checkout_payment_marketplace_invoice_date_field}    11.11.1111

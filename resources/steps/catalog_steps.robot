@@ -33,11 +33,17 @@ Yves: page contains CMS element:
     ELSE IF    '${type}'=='Footer section'
         Element Should Be Visible    xpath=//*[@class='footer']
     ELSE IF    '${type}'=='CMS Page Title'
-        Element Should Be Visible    xpath=//*[contains(@class,'cms-page')][contains(@class,'title')]//*[contains(text(),'${text}')]
+        IF    '${env}' in ['ui_suite']
+            Element Should Be Visible    xpath=//*[contains(@data-qa,'breadcrumb')]/ancestor::div[1]//p[contains(.,'${text}')]
+        ELSE
+            Element Should Be Visible    xpath=//*[contains(@class,'cms-page')][contains(@class,'title')]//*[contains(text(),'${text}')]
+        END
     ELSE IF    '${type}'=='CMS Page Content' and '${env}' in ['ui_b2c','ui_mp_b2c']
         Element Should Be Visible    xpath=//*[contains(@class,'cms-page__content')]//*[contains(text(),'${text}')]
     ELSE IF    '${type}'=='CMS Page Content' and '${env}' in ['ui_b2b','ui_mp_b2b']
         Element Should Be Visible    xpath=//main[contains(@class,'cms-page')]//*[contains(text(),'${text}')]
+    ELSE IF    '${type}'=='CMS Page Content' and '${env}' in ['ui_suite']
+        Element Should Be Visible    xpath=//main//p[contains(.,'${text}')]
     ELSE IF    '${type}'=='CMS Block'
         Element Should Be Visible    xpath=//div[contains(@class,'catalog-cms-block')]//*[.="${text}"]
     END

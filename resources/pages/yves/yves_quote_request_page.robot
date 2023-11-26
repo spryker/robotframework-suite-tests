@@ -1,5 +1,5 @@
 *** Variables ***
-${quote_request_main_content_locator}    xpath=//main[contains(@class,'request-for-quote')]
+${quote_request_main_content_locator}    xpath=//*[contains(@data-qa,'quote-request-information')]
 ${quote_request_sidebar_locator}    xpath=//aside[@data-qa='component quote-request-sidebar']
 ${quote_request_back_to_list_button}    xpath=//aside[@data-qa='component quote-request-sidebar']//a[contains(.,'Back')]
 ${quote_request_cancel_button}    xpath=//aside[@data-qa='component quote-request-sidebar']//a[contains(@href,'cancel')]

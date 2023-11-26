@@ -58,7 +58,8 @@
       "yves_company_user_blacklist_restriction_customer_last_name":"Grott",
       "yves_company_user_blacklist_restriction_customer_company":"Ottom ltd",
       "yves_company_user_blacklist_restriction_customer_bu":"Ottom store Berlin (id: 20)",
-      "yves_company_user_whotelist_restriction_customer_email":"alexa@ottom.de"
+      "yves_company_user_whotelist_restriction_customer_email":"alexa@ottom.de",
+      "yves_company_user_bob_email":"donald@spryker.com"
    },
    "user_role":{
       "bundle_access":"product-attribute-gui",
@@ -75,6 +76,7 @@
    },
    "products":{
       "one_variant_product_abstract_sku":"009",
+      "one_variant_product_concrete_sku":"009_30692991",
       "one_variant_product_abstract_name":"EUROKRAFT trolley - with open shovel",
       "one_variant_product_default_price":"€99.99",
       "one_variant_product_of_main_merchant_abstract_sku":"064",
@@ -122,7 +124,13 @@
       "configurable_product_concrete_two_attribute": "500 GB",
       "configurable_product_name": "HP ProDesk 400 G3",
       "configurable_product_concrete_one_price": "25.00",
-      "configurable_product_concrete_two_price": "310.19"
+      "configurable_product_concrete_two_price": "310.19",
+      "available_never_out_of_stock_abstract_sku": "007",
+      "available_never_out_of_stock_concrete_sku": "007_30691822",
+      "available_never_out_of_stock_abstract_name": "Canon IXUS 285",
+      "product_with_sale_price_abstract_sku": "006",
+      "product_with_sale_price_concrete_sku": "006_30692993",
+      "product_with_sale_price_abstract_name": "Canon IXUS 175"
    },
    "misc":{
      "grant_type":{

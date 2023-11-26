@@ -77,6 +77,8 @@ Yves: go to '${pageName}' page through the header
         Yves: go to 'Agent Quote Requests' page
     ELSE IF    '${pageName}' == 'Wishlist'
         Yves: go to 'Wishlist' page
+    ELSE IF    '${pageName}' == 'Agent Quote Requests'
+        Yves: go to 'Agent Quote Requests' page
     END
 
 Yves: go to user menu item in header:

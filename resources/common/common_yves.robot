@@ -280,26 +280,25 @@ Yves: get index of the first available product
     ${productsCount}=    Get Element Count    xpath=//product-item[@data-qa='component product-item']
     Log    ${productsCount}
     FOR    ${index}    IN RANGE    1    ${productsCount}+1
-        ${status}=    IF    '${env}'=='ui_b2b'    Run Keyword And Ignore Error     Page should contain element    xpath=//product-item[@data-qa='component product-item'][${index}]//*[@class='product-item__actions']//ajax-add-to-cart//button[@disabled='']
-        ...    ELSE IF    '${env}' in ['ui_b2c','ui_mp_b2c']    Run Keyword And Ignore Error    Page should contain element    xpath=//product-item[@data-qa='component product-item'][${index}]//ajax-add-to-cart//button    Add to cart button is missing    ${browser_timeout}
+        ${status}=    IF    '${env}'=='ui_b2b'    Run Keyword And Ignore Error     Page should contain element    xpath=(//product-item[@data-qa='component product-item'])[${index}]//*[@class='product-item__actions']//ajax-add-to-cart//button[@disabled='']    timeout=10ms
+        ${status}=    IF    '${env}'=='ui_suite'    Run Keyword And Ignore Error     Page should contain element    xpath=(//product-item[@data-qa='component product-item'])[${index}]//*[@class='product-item__actions']//ajax-add-to-cart//button[@disabled='']    timeout=10ms
+        ...    ELSE IF    '${env}' in ['ui_b2c','ui_mp_b2c']    Run Keyword And Ignore Error    Page should contain element    xpath=(//product-item[@data-qa='component product-item'])[${index}]//ajax-add-to-cart//button    Add to cart button is missing    timeout=10ms
         Log    ${index}
-        ${pdp_url}=    IF    '${env}'=='ui_b2b'    Get Element Attribute    xpath=//product-item[@data-qa='component product-item'][${index}]//a[@itemprop='url']    href
-        IF    'PASS' in ${status} and '${env}'=='ui_b2b'    Continue For Loop
-        IF    'bundle' in '${pdp_url}' and '${env}'=='ui_b2b'    Continue For Loop
-        IF    'FAIL' in ${status} and '${env}'=='ui_b2b'
-            Run Keywords
-                Return From Keyword  ${index}
-                Log ${index}
-                Exit For Loop
+        ${pdp_url}=    IF    '${env}' in ['ui_b2b','ui_suite']    Get Element Attribute    xpath=(//product-item[@data-qa='component product-item'])[${index}]//a[@itemprop='url']    href
+        IF    'PASS' in ${status} and '${env}' in ['ui_b2b','ui_suite']    Continue For Loop
+        IF    'bundle' in '${pdp_url}' and '${env}' in ['ui_b2b','ui_suite']    Continue For Loop
+        IF    'FAIL' in ${status} and '${env}' in ['ui_b2b','ui_suite']
+            Return From Keyword  ${index}
+            Log ${index}
+            Exit For Loop
         END
-        ${pdp_url}=    IF    '${env}' in ['ui_b2c','ui_mp_b2c']    Get Element Attribute    xpath=//product-item[@data-qa='component product-item'][${index}]//div[contains(@class,'product-item__image')]//a[contains(@class,'link-detail-page')]    href
+        ${pdp_url}=    IF    '${env}' in ['ui_b2c','ui_mp_b2c']    Get Element Attribute    xpath=(//product-item[@data-qa='component product-item'])[${index}]//div[contains(@class,'product-item__image')]//a[contains(@class,'link-detail-page')]    href
         IF    'FAIL' in ${status} and '${env}' in ['ui_b2c','ui_mp_b2c']    Continue For Loop
         IF    'bundle' in '${pdp_url}' and '${env}' in ['ui_b2c','ui_mp_b2c']    Continue For Loop
         IF    'PASS' in ${status} and '${env}' in ['ui_b2c','ui_mp_b2c']
-            Run Keywords
-                Return From Keyword    ${index}
-                Log ${index}
-                Exit For Loop
+            Return From Keyword    ${index}
+            Log ${index}
+            Exit For Loop
         END
     END
         ${productIndex}=    Set Variable    ${index}
@@ -311,9 +310,10 @@ Yves: get index of the first available product on marketplace
     ${productsCount}=    Get Element Count    xpath=//product-item[@data-qa='component product-item']
     Log    ${productsCount}   
     FOR    ${index}    IN RANGE    1    ${productsCount}+1
-        Click    xpath=//product-item[@data-qa='component product-item'][${index}]//a[contains(@class,'link-detail-page') and (contains(@class,'info')) or (contains(@class,'name'))]
+        Click    xpath=(//product-item[@data-qa='component product-item'])[${index}]//a[contains(@class,'link-detail-page') and (contains(@class,'info')) or (contains(@class,'name'))]
+        Wait Until Network Is Idle
         Wait Until Page Contains Element    ${pdp_main_container_locator}[${env}]
-        ${status}=    Run Keyword And Ignore Error     Page should contain element    &{pdp_add_to_cart_disabled_button}[${env}]
+        ${status}=    Run Keyword And Ignore Error     Page should contain element    &{pdp_add_to_cart_disabled_button}[${env}]    timeout=10ms
         Log    ${index}
         IF    'PASS' in ${status}    Continue For Loop
         IF    'FAIL' in ${status}
@@ -331,7 +331,7 @@ Yves: go to the PDP of the first available product
         ${index}=    Yves: get index of the first available product on marketplace
     ELSE    
         ${index}=    Yves: get index of the first available product
-        Click    xpath=//product-item[@data-qa='component product-item'][${index}]//a[contains(@class,'link-detail-page') and (contains(@class,'info')) or (contains(@class,'name'))]
+        Click    xpath=(//product-item[@data-qa='component product-item'])[${index}]//a[contains(@class,'link-detail-page') and (contains(@class,'info')) or (contains(@class,'name'))]
     END
     Wait Until Page Contains Element    ${pdp_main_container_locator}[${env}]
 

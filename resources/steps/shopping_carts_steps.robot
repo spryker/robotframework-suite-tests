@@ -112,6 +112,11 @@ Yves: shopping cart contains product with unit price:
         Page Should Contain Element    xpath=//main[@class='page-layout-cart']//article[contains(@data-qa,'component product-card-item')]//a[contains(text(),'${productName}')]/following-sibling::span/span[contains(@class,'money-price__amount') and contains(.,'${productPrice}')]    timeout=1s
     END
 
+Yves: checkout summary step contains product with unit price:
+    [Arguments]    ${productName}    ${productPrice}
+    Repeat Keyword    3    Wait Until Network Is Idle
+    Page Should Contain Element    xpath=//*[contains(@data-qa,'summary-node')]//div[contains(.,'${productName}')]/ancestor::*[contains(@data-qa,'summary-node')]//strong[contains(.,'${productPrice}')]
+
 Yves: shopping cart contains/doesn't contain the following elements:
     [Arguments]    ${condition}    @{shopping_cart_elements_list}    ${element1}=${EMPTY}     ${element2}=${EMPTY}     ${element3}=${EMPTY}     ${element4}=${EMPTY}     ${element5}=${EMPTY}     ${element6}=${EMPTY}     ${element7}=${EMPTY}     ${element8}=${EMPTY}     ${element9}=${EMPTY}     ${element10}=${EMPTY}     ${element11}=${EMPTY}     ${element12}=${EMPTY}     ${element13}=${EMPTY}     ${element14}=${EMPTY}     ${element15}=${EMPTY}
     ${condition}=    Convert To Lower Case    ${condition}
@@ -292,6 +297,13 @@ Yves: change quantity of promotional product and add to cart:
             Click    ${shopping_cart_promotional_product_decrease_quantity_button}[${env}]
         END
     END
+    Click    ${shopping_cart_promotional_product_add_to_cart_button}
+    Repeat Keyword    3    Wait Until Network Is Idle
+    Yves: flash message should be shown:    success    Items added successfully
+    Yves: remove flash messages
+
+Yves: add promotional product to the cart
+    [Documentation]    
     Click    ${shopping_cart_promotional_product_add_to_cart_button}
     Repeat Keyword    3    Wait Until Network Is Idle
     Yves: flash message should be shown:    success    Items added successfully
