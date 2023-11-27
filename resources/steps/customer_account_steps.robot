@@ -33,7 +33,7 @@ Yves: create a new customer address in profile:
     [Arguments]    ${salutation}    ${firstName}    ${lastName}    ${street}    ${houseNumber}    ${postCode}    ${city}    ${country}    ${isDefaultShipping}=True     ${isDefaultBilling}=True       ${company}=    ${phone}=    ${additionalAddress}=
     Yves: remove flash messages
     ${currentURL}=    Get Location
-    IF    '/multi-cart' not in '${currentURL}'    
+    IF    'customer/address' not in '${currentURL}'    
             IF    '.at.' in '${currentURL}'
                 Go To    ${yves_at_url}customer/address
             ELSE
@@ -59,12 +59,14 @@ Yves: check that user has address exists/doesn't exist:
     Yves: remove flash messages
     [Arguments]    ${exists}    ${firstName}    ${lastName}    ${street}    ${houseNumber}    ${postCode}    ${city}    ${country}    ${isDefaultShipping}=True     ${isDefaultBilling}=True       ${company}=NUll    ${phone}=NUll    ${additionalAddress}=NUll
     ${exists}=    Convert To Lower Case    ${exists}
-    IF    '${env}' in ['ui_b2c','ui_mp_b2c']
-        Yves: go to user menu item in header:    My Profile
-    ELSE IF     '${env}' in ['ui_b2b','ui_mp_b2b']
-        Yves: go to user menu item in header:    Profile
+    ${currentURL}=    Get Location
+    IF    'customer/address' not in '${currentURL}'    
+            IF    '.at.' in '${currentURL}'
+                Go To    ${yves_at_url}customer/address
+            ELSE
+                Go To    ${yves_url}customer/address
+            END    
     END
-    Yves: go to user menu item in the left bar:    Addresses
     Wait Until Element Is Visible    ${customer_account_add_new_address_button}[${env}]
     IF    '${exists}'=='true'
         Run keywords
@@ -82,9 +84,9 @@ Yves: delete user address:
     [Arguments]    ${street}
     Yves: remove flash messages
     IF    '${env}' in ['ui_b2c','ui_mp_b2c']
-        Yves: go to user menu item in header:    My Profile
+        Yves: go to user menu:    My Profile
     ELSE IF    '${env}' in ['ui_b2b','ui_mp_b2b']
-        Yves: go to user menu item in header:    Profile
+        Yves: go to user menu:    Profile
     END
     Yves: go to user menu item in the left bar:    Addresses
     IF    '${env}' in ['ui_b2c','ui_mp_b2c']
@@ -187,3 +189,19 @@ Zed: create a new customer address in profile:
     END
     Click    ${zed_customer_edit_address_submit_button}
     Wait Until Element Is Not Visible    ${zed_customer_edit_address_submit_button}
+
+Yves: go to user menu:
+    [Arguments]    ${user_menu_item}
+    ${user_menu_item}=    Convert To Lower Case    ${user_menu_item}
+    IF    'profile' in '${user_menu_item}'   Yves: go to URL:    /customer/profile
+    IF    'sign' in '${user_menu_item}'    Yves: go to URL:    /register
+    IF    'login' in '${user_menu_item}'    Yves: go to URL:    /login
+    IF    'history' in '${user_menu_item}' or 'order' in '${user_menu_item}'    Yves: go to URL:    /customer/order
+    IF    'overview' in '${user_menu_item}'    Yves: go to URL:    /customer/overview
+    IF    'quote' in '${user_menu_item}'    Yves: go to URL:    /quote-request
+    IF    'address' in '${user_menu_item}'    Yves: go to URL:    /customer/address
+    IF    'return' in '${user_menu_item}'    Yves: go to URL:    /return/list
+    IF    'newsletter' in '${user_menu_item}'    Yves: go to URL:    /customer/newsletter
+    IF    'shopping list' in '${user_menu_item}' or 'shopping-list' in '${user_menu_item}'    Yves: go to URL:    /shopping-list
+    IF    'cart' in '${user_menu_item}'    Yves: go to URL:    /multi-cart
+    IF    'wishlist' in '${user_menu_item}'    Yves: go to URL:    /wishlist

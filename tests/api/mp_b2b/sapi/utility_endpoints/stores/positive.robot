@@ -1,13 +1,13 @@
 *** Settings ***
 Resource    ../../../../../../resources/common/common_api.robot
-Suite Setup    SuiteSetup
-Test Setup     TestSetup
+Suite Setup    API_suite_setup
+Test Setup     API_test_setup
 Default Tags    sapi
 
 *** Test Cases ***
 
 ENABLER
-    TestSetup
+    API_test_setup
 Get_all_availiable_stores
     And I set Headers:    Content-Type=${default_header_content_type}
     When I send a GET request:    /stores

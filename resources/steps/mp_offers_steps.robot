@@ -42,6 +42,22 @@ MP: fill offer fields:
             MP: select option in expanded dropdown:    ${value}
             Click    ${stores_list_selector}
         END
+        IF    '${key}'=='service point' and '${value}' != '${EMPTY}'
+            Click    ${offer_service_point_selector}
+            Input Text    ${offer_service_point_search_field}    ${value}
+            MP: select option in expanded dropdown:    ${value}
+            Click    ${offer_service_point_selector}
+        END
+        IF    '${key}'=='services' and '${value}' != '${EMPTY}'
+            Click    ${offer_services_selector}
+            MP: select option in expanded dropdown:    ${value}
+            Click    ${offer_services_selector}
+        END
+        IF    '${key}'=='shipment types' and '${value}' != '${EMPTY}'
+            Click    ${offer_shipment_types_selector}
+            MP: select option in expanded dropdown:    ${value}
+            Click    ${offer_shipment_types_selector}
+        END
     END
             
 MP: add offer price:
@@ -73,8 +89,20 @@ MP: add offer price:
 
 MP: save offer    
     MP: click submit button
-    Wait Until Element Is Visible    ${offer_saved_popup}
+    ${offerSaved}=    Run Keyword And Ignore Error    Wait Until Element Is Visible    ${offer_saved_popup}    timeout=5s
+    ### resave in case of error
+    IF    'FAIL' in ${offerSaved}
+        TRY
+            MP: click submit button    timeout=3s
+            Wait Until Element Is Visible    ${offer_saved_popup}    timeout=5s
+        EXCEPT    
+            Log    Offer is already saved
+        END
+
+    END
     MP: remove notification wrapper
+    Repeat Keyword    3    Wait Until Network Is Idle
+    MP: Wait until loader is no longer visible
 
 MP: change offer stock:
     [Arguments]    @{args}
@@ -107,6 +135,7 @@ MP: delete offer price row that contains quantity:
     Hover    xpath=//web-spy-card[@spy-title='Price']//tbody/tr/td[7][contains(.,'${quantity}')]/ancestor::tr//td[@class='ng-star-inserted']/div
     Click    ${product_delete_price_row_button}
     Wait Until Element Is Visible    ${product_price_deleted_popup}
+    Repeat Keyword    3    Wait Until Network Is Idle
     MP: remove notification wrapper
 
 Zed: view offer page is displayed
@@ -137,4 +166,11 @@ Zed: view offer product page contains:
         IF    '${key}'=='merchant sku' and '${value}' != '${EMPTY}'    
             Element Should Contain    ${zed_view_offer_merchant_sku}    ${value}
         END
+        IF    '${key}'=='services' and '${value}' != '${EMPTY}'    
+            Element Should Contain    ${zed_view_offer_services}    ${value}
+        END
+        IF    '${key}'=='shipment types' and '${value}' != '${EMPTY}'    
+            Element Should Contain    ${zed_view_offer_shipment_types}    ${value}
+        END
+
     END

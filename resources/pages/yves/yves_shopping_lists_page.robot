@@ -1,5 +1,5 @@
 *** Settings ***
-Resource    ../../common/common.robot
+Resource    ../../common/common_ui.robot
 
 *** Variable ***
 ${shopping_lists_main_content_locator}    xpath=//div[@data-qa='component shopping-list-overview-table']
@@ -19,23 +19,29 @@ Select access level to share shopping list with:
 Edit shopping list with name:
     [Arguments]    ${shoppingListName}       
     Click    xpath=//*[@data-qa="component shopping-list-overview-table"]//table//td[@data-content='Name'][contains(.,'${shoppingListName}')]/..//div[@data-qa='component table-action-list']//a[contains(.,'Edit')]
+    Repeat Keyword    3    Wait Until Network Is Idle
 
 Share shopping list with name:
     [Arguments]    ${shoppingListName}       
     Click    xpath=//*[@data-qa="component shopping-list-overview-table"]//table//td[@data-content='Name'][contains(.,'${shoppingListName}')]/..//div[@data-qa='component table-action-list']//a[contains(.,'Share')]
+    Repeat Keyword    3    Wait Until Network Is Idle
 
 Print shopping list with name:
     [Arguments]    ${shoppingListName}       
     Click    xpath=//*[@data-qa="component shopping-list-overview-table"]//table//td[@data-content='Name'][contains(.,'${shoppingListName}')]/..//div[@data-qa='component table-action-list']//a[contains(.,'Print')]
+    Repeat Keyword    3    Wait Until Network Is Idle
 
 Delete shopping list with name:
     [Arguments]    ${shoppingListName}       
     Click    xpath=//*[@data-qa="component shopping-list-overview-table"]//table//td[@data-content='Name'][contains(.,'${shoppingListName}')]/..//div[@data-qa='component table-action-list']//a[contains(.,'Delete')]
+    Repeat Keyword    3    Wait Until Network Is Idle
 
 Dismiss shopping list with name:
     [Arguments]    ${shoppingListName}       
     Click    xpath=//*[@data-qa="component shopping-list-overview-table"]//table//td[@data-content='Name'][contains(.,'${shoppingListName}')]/..//div[@data-qa='component table-action-list']//a[contains(.,'Dismiss')]
+    Repeat Keyword    3    Wait Until Network Is Idle
 
 View shopping list with name:
     [Arguments]    ${shoppingListName}       
     Click    xpath=//*[@data-qa="component shopping-list-overview-table"]//table//td[@data-content='Name'][contains(.,'${shoppingListName}')]//a[contains(@href,'details')]
+    Repeat Keyword    3    Wait Until Network Is Idle

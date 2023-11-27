@@ -1,12 +1,12 @@
 *** Settings ***
-Suite Setup       SuiteSetup
+Suite Setup       API_suite_setup
 Default Tags      glue
-Test Setup        TestSetup
+Test Setup        API_test_setup
 Resource    ../../../../../../resources/common/common_api.robot
 
 *** Test Cases ***
 ENABLER
-    TestSetup
+    API_test_setup
 
  ####POST####
 Create_a_return_with_Invalid_access_token

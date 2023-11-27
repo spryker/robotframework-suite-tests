@@ -4,7 +4,6 @@ Resource    ../common/common_zed.robot
 Resource    ../common/common.robot
 
 *** Keywords ***
-
 Zed: check if product is/not in stock:
     [Arguments]    ${sku}    ${isInStock}
     ${isInStock}=    Convert To Lower Case    ${isInStock}
@@ -48,6 +47,7 @@ Zed: change product stock:
         Log    Form is already submitted
     END
     Set Browser Timeout    ${browser_timeout}
+    Trigger multistore p&s
 
 Zed: check and restore product availability in Zed:
     [Arguments]    ${skuAbstract}    ${expectedStatus}    ${skuConcrete}
@@ -63,5 +63,3 @@ Zed: check and restore product availability in Zed:
         Zed: change product stock:    ${skuAbstract}    ${skuConcrete}    false    0    0
         END
     END
-
-

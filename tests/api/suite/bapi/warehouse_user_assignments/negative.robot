@@ -1,13 +1,13 @@
 *** Settings ***
-Suite Setup       SuiteSetup
-Test Setup    TestSetup
+Suite Setup       API_suite_setup
+Test Setup    API_test_setup
 Resource    ../../../../../resources/common/common_api.robot
 Resource    ../../../../../resources/steps/warehouse_user_assigment_steps.robot
 Default Tags    bapi
 
 *** Test Cases ***
 ENABLER
-    TestSetup
+    API_test_setup
 
 *** Test Cases ***
 Create_warehouse_user_assigment_with_invalid_token
@@ -18,7 +18,7 @@ Create_warehouse_user_assigment_with_invalid_token
     Then Response status code should be:    400
     And Response should return error code:    001
     And Response should return error message:    Invalid access token.
-    [Teardown]    Make user a warehouse user/ not a warehouse user:    ${warehous_user[0].user_uuid}    0
+    [Teardown]    Make user a warehouse user/ not a warehouse user:   ${warehous_user[0].user_uuid}    0
 
 Create_warehouse_user_assigment_without_token
     [Setup]    Run Keywords    I set Headers:    Content-Type=${default_header_content_type}
@@ -205,6 +205,5 @@ Delete_warehouse_user_assigment_with_invalid_token
     Then Get_warehouse_user_assigment_id:    ${warehouse[0].warehouse_uuid}    ${warehous_user[0].user_uuid}
     Then I send a DELETE request:    /warehouse-user-assignments/${id_warehouse_user_assigment}
     Then Response status code should be:    400
-    [Teardown]    Run Keywords    Remove_warehous_user_assigment:    ${warehouse[0].warehouse_uuid}    ${warehous_user[0].user_uuid}
-    ...    AND    Make user a warehouse user/ not a warehouse user:    ${warehous_user[0].user_uuid}    0
-
+    And Remove_warehous_user_assigment:    ${warehouse[0].warehouse_uuid}    ${warehous_user[0].user_uuid}
+    And Make user a warehouse user/ not a warehouse user:   ${warehous_user[0].user_uuid}    0

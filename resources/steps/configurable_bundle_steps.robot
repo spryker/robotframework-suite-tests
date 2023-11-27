@@ -18,14 +18,10 @@ Yves: select product in the bundle slot:
         IF    '${env}' in ['ui_b2c','ui_mp_b2c']    Click    xpath=(//product-item-list[@data-qa='component configurator-product']//span[contains(text(),'${sku}')]/ancestor::product-item-list//button)[1]
     END
 
-
 Yves: go to 'Summary' step in the bundle configurator
     Click    ${bundle_configurator_summary_step}
-
-
 
 Yves: add products to the shopping cart in the bundle configurator
     Wait Until Element Is Visible    ${bundle_configurator_add_to_cart_button}
     Click    ${bundle_configurator_add_to_cart_button}
-
     Yves: remove flash messages

@@ -47,6 +47,7 @@ Zed: update Merchant on edit page with the following data:
     Zed: submit the form
     Zed: wait for button in Header to be visible:    Add Merchant    ${browser_timeout}
     Zed: table should contain:    ${zedMerchantNewName}
+
 Zed: update Merchant name on edit page:
     [Arguments]    ${zedMerchantNewName}
     Wait Until Element Is Visible    ${zed_create_merchant_name_field}
