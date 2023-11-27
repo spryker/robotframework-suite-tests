@@ -51,6 +51,20 @@ MP: fill product price values:
             IF    '${key}'=='gross original' and '${value}' != '${EMPTY}'    Type Text    xpath=//web-spy-card[@spy-title='Price']//tbody/tr[${rowNumber}]/td[6]//input    ${value}
             IF    '${key}'=='quantity' and '${value}' != '${EMPTY}'    Type Text    xpath=//web-spy-card[@spy-title='Price']//tbody/tr[${rowNumber}]/td[7]//input    ${value}
         END
+        IF    '${env}' in ['ui_suite']
+            IF    '${key}'=='customer' and '${value}' != '${EMPTY}'    Run Keywords
+            ...    Click    xpath=//web-spy-card[@spy-title='Price']//tbody/tr[${rowNumber}]/td[1]//spy-select
+            ...    AND    MP: select option in expanded dropdown:    ${value}
+            IF    '${key}'=='store' and '${value}' != '${EMPTY}'    Run Keywords
+            ...    Click    xpath=//web-spy-card[@spy-title='Price']//tbody/tr[${rowNumber}]/td[2]//spy-select
+            ...    AND    MP: select option in expanded dropdown:    ${value}
+            IF    '${key}'=='currency' and '${value}' != '${EMPTY}'    Run Keywords
+            ...    Click    xpath=//web-spy-card[@spy-title='Price']//tbody/tr[${rowNumber}]/td[3]//spy-select
+            ...    AND    MP: select option in expanded dropdown:    ${value}
+            IF    '${key}'=='gross default' and '${value}' != '${EMPTY}'    Type Text    xpath=//web-spy-card[@spy-title='Price']//tbody/tr[${rowNumber}]/td[5]//input    ${value}
+            IF    '${key}'=='gross original' and '${value}' != '${EMPTY}'    Type Text    xpath=//web-spy-card[@spy-title='Price']//tbody/tr[${rowNumber}]/td[7]//input    ${value}
+            IF    '${key}'=='quantity' and '${value}' != '${EMPTY}'    Type Text    xpath=//web-spy-card[@spy-title='Price']//tbody/tr[${rowNumber}]/td[8]//input    ${value}
+        END
     Repeat Keyword    2    Wait Until Network Is Idle
     END  
     

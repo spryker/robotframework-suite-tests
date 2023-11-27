@@ -37,9 +37,36 @@ Yves: PDP contains/doesn't contain:
     END
 
 Yves: add product to the shopping cart
+    [Arguments]    ${wait_for_p&s}=${False}    ${iterations}=21    ${delay}=3s
     ${variants_present_status}=    Run Keyword And Return Status    Page Should Not Contain Element    ${pdp_variant_selector}    timeout=0:00:01
     IF    '${variants_present_status}'=='False'    Yves: change variant of the product on PDP on random value
-    Click    ${pdp_add_to_cart_button}
+    ${wait_for_p&s}=    Convert To String    ${wait_for_p&s}
+    ${wait_for_p&s}=    Convert To Lower Case    ${wait_for_p&s}
+    IF    '${wait_for_p&s}' == 'true'
+        ${wait_for_p&s}=    Set Variable    ${True}
+    END
+    IF    '${wait_for_p&s}' == 'false'
+        ${wait_for_p&s}=    Set Variable    ${False}
+    END
+    IF    ${wait_for_p&s}
+        FOR    ${index}    IN RANGE    0    ${iterations}
+        ${result}=    Run Keyword And Ignore Error    Wait Until Element Is Enabled    ${pdp_add_to_cart_button}    timeout=1s
+            IF    'FAIL' in ${result}   
+                Sleep    ${delay}
+                Reload
+                Continue For Loop
+            ELSE
+                Click    ${pdp_add_to_cart_button}
+                Exit For Loop
+            END
+            IF    ${index} == ${iterations}-1
+                Take Screenshot    EMBED    fullPage=True
+                Fail    'Add to cart' button is not actionable/available on PDP
+            END
+        END
+    ELSE
+        Click    ${pdp_add_to_cart_button}
+    END
     Repeat Keyword    3    Wait Until Network Is Idle
     Yves: remove flash messages
 
@@ -142,9 +169,12 @@ Yves: product price on the PDP should be:
     Set Browser Timeout    3s
     IF    ${wait_for_p&s}
         FOR    ${index}    IN RANGE    0    ${iterations}
-            ${actualProductPrice}=    Get Text    ${pdp_price_element_locator}
+            ${price_displayed}=    Run Keyword And Ignore Error    Page Should Contain Element    ${pdp_price_element_locator}    timeout=1s
+            IF    'PASS' in ${price_displayed}    
+                ${actualProductPrice}=    Get Text    ${pdp_price_element_locator}
+            END
             ${result}=    Run Keyword And Ignore Error    Should Be Equal    ${expectedProductPrice}    ${actualProductPrice}
-            IF    'FAIL' in ${result}   
+            IF    'FAIL' in ${result} or 'FAIL' in ${price_displayed}
                 Sleep    ${delay}
                 Reload
                 Continue For Loop

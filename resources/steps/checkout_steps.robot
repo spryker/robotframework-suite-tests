@@ -199,7 +199,7 @@ Yves: fill in new delivery address for a product:
 Yves: select the following shipping method on the checkout and go next:
     [Arguments]    ${shippingMethod}
     IF    '${env}'=='ui_suite'
-        Click    xpath=//input[contains(@id,'shipmentSelection')]/following-sibling::span[contains(@class,'label')][contains(.,'${shippingMethod}')]/../span[contains(@class,'radio__box')]
+        Click With Options    xpath=//input[contains(@id,'shipmentSelection')]/following-sibling::span[contains(@class,'label')][contains(.,'${shippingMethod}')]/../span[contains(@class,'radio__box')]    force=True
     ELSE
         Click    xpath=//div[@data-qa='component shipment-sidebar']//*[contains(.,'Shipping Method')]/../ul//label[contains(.,'${shippingMethod}')]/span[contains(@class,'radio__box')]
     END

@@ -25,8 +25,9 @@ Zed: change product stock:
     Element Should Be Visible    xpath=//div[@class='ibox float-e-margins']/*[contains(.,'Variant availability')]
     Click    xpath=//*[contains(text(),'${skuConcrete}')]/ancestor::tr//following-sibling::td//*[contains(.,'Edit Stock')]
     Element Should Be Visible    xpath=//div[@class='ibox float-e-margins']/*[contains(.,'Edit Stock')]
+    Wait Until Element Is Visible    ${zed_save_button}
     ${checkBoxes}=    Get Element Count    ${zed_availability_never_out_of_stock_checkbox}
-    FOR    ${index}    IN RANGE    1    ${checkBoxes}
+    FOR    ${index}    IN RANGE    1    ${checkBoxes}+1
         Log    ${zed_availability_never_out_of_stock_checkbox}
         Log    ${index}
         Log    ${zed_availability_never_out_of_stock_checkbox}\[${index}\]
