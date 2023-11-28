@@ -16,8 +16,8 @@ Create_warehouse_user_assigment_with_invalid_token
     ...    AND    Make user a warehouse user/ not a warehouse user:    ${warehous_user[0].user_uuid}    1
     When I send a POST request:    /warehouse-user-assignments    {"data": {"type": "warehouse-user-assignments", "attributes":{"userUuid": "${warehous_user[0].user_uuid}","warehouse" :{"uuid": "${warehouse[0].warehouse_uuid}"},"isActive":"false"}}}
     Then Response status code should be:    403
-    And Response should return error code:    001
-    And Response should return error message:    Invalid access token.
+    And Response should return error code:    002
+    And Response should return error message:    Missing access token.
     [Teardown]    Make user a warehouse user/ not a warehouse user:   ${warehous_user[0].user_uuid}    0
 
 Create_warehouse_user_assigment_without_token
