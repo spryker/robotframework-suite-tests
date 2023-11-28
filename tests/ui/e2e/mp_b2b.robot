@@ -2243,7 +2243,7 @@ Multistore_CMS
     ...    AND    Trigger multistore p&s
 
 Product_Availability_Calculation
-    [Documentation]    Bug: CC-24108. Check product availability + multistore
+    [Documentation]    Check product availability + multistore
     MP: login on MP with provided credentials:    ${merchant_spryker_email}
     MP: open navigation menu tab:    Products    
     MP: click on create new entity button:    Create Product

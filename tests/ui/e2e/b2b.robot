@@ -1433,7 +1433,7 @@ Multistore_CMS
     ...    AND    Trigger multistore p&s
 
 Product_Availability_Calculation
-    [Documentation]    Bug: CC-24108. Check product availability + multistore
+    [Documentation]    Check product availability + multistore
     [Setup]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: update warehouse:    
     ...    || warehouse  | store || 
@@ -1463,7 +1463,7 @@ Product_Availability_Calculation
     ...    || availabilitySKU${random} | availabilitySKU${random}-farbe-grey | AT    | gross | default | €        | 75.00  ||
     Zed: change concrete product stock:
     ...    || productAbstract          | productConcrete                     | warehouse n1 | warehouse n1 qty | warehouse n1 never out of stock ||
-    ...    || availabilitySKU${random} | availabilitySKU${random}-farbe-grey | Warehouse2   | 5                | false                            ||
+    ...    || availabilitySKU${random} | availabilitySKU${random}-farbe-grey | Warehouse1   | 5                | false                            ||
     Trigger multistore p&s
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     Yves: create new 'Shopping Cart' with name:    availabilityCart+${random}
