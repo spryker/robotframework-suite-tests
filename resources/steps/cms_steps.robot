@@ -22,15 +22,15 @@ Add content product abstract list to cms page in DB
     [Documentation]    This keyword adds conctent product abstarct list to a given CMS page in the DB table `spy_cms_version`.
         ...    *Example:*
         ...
-        ...    ``Add content product abstract list to cms page in DB    uuid=10014bd9-4bba-5a54-b84f-31b4b7efd064``
+        ...    ``Add content product abstract list to cms page in DB    uuid=10014bd9-4bba-5a54-b84f-31b4b7efd064    content_product_abstract_list_key=apl-1``
         ...
-    [Arguments]    ${uuid}
+    [Arguments]    ${uuid}    ${content_product_abstract_list_key}=apl-1
     ${data}    Get latest cms page version data by uuid    ${uuid}
     ${cms_page_data_json}=    Convert String to JSON    ${data[2]}
     FOR    ${glossary_attributes}    IN    @{cms_page_data_json['cms_glossary']['glossary_attributes']}
         FOR    ${translation}    IN    @{glossary_attributes['translations']}
             IF    '${glossary_attributes['placeholder']}' == 'content'
-                Set To Dictionary    ${translation}    translation=${translation['translation']} {{ content_product_abstract_list("apl-1", "bottom-title") }}
+                Set To Dictionary    ${translation}    translation={{ content_product_abstract_list("${content_product_abstract_list_key}", "bottom-title") }}
             END
             ${new_translation}=    Replace special chars    ${translation['translation']}
             Set To Dictionary    ${translation}    translation=${new_translation}
