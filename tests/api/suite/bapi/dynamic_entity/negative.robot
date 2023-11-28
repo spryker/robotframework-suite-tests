@@ -17,7 +17,7 @@ Get_list_of_country_with_invalid_token
     ### GET WITH INVALID TOKEN ###
     And I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     And I send a GET request:    /dynamic-entity/countries
-    Then Response status code should be:    400
+    Then Response status code should be:    401
     And Response reason should be:    Bad Request
     And Response should return error code:    001
     And Response should return error message:    Invalid access token.

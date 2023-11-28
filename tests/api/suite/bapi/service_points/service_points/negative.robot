@@ -90,7 +90,7 @@ Create_Service_Point_With_Invalid_Content_Type
 Create_Service_Point_With_Invalid_Token
     [Setup]    I set Headers:    Authorization=Bearer InvalidToken
     When I send a POST request:    /service-points   {"name": "Invalid Token", "key": "invalid_token", "isActive": "true", "stores": ["DE", "AT"]}
-    Then Response status code should be:    400
+    Then Response status code should be:    401
 
 Create_Service_Point_With_Missing_Required_Fields
     [Documentation]    https://spryker.atlassian.net/browse/FRW-1597
@@ -120,7 +120,7 @@ Update_Service_Point_With_Wrong_type
 Update_Service_Point_Without_Authorization
     [Setup]    I set Headers:    Authorization=
     When I send a PATCH request:    /service-points/random-id    {"data": {"type": "service-points","attributes": {"name": "Unauthorized Update","key": "unauthorized-update-${random}","isActive": "true","stores": ["DE", "AT"]}}}
-    Then Response status code should be:    400
+    Then Response status code should be:    403
 
 Update_Service_Point_With_Nonexistent_ID
     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
@@ -133,7 +133,7 @@ Update_Service_Point_With_Nonexistent_ID
 Update_Service_Point_With_incorrect_token
     [Setup]    I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer incorrect
     When I send a PATCH request:    /service-points/random-id    {"data": {"type": "service-points","attributes": {"name": "Unauthorized Update","key": "unauthorized-update-${random}","isActive": "true","stores": ["DE", "AT"]}}}
-    Then Response status code should be:    400
+    Then Response status code should be:    401
 
 Update_Service_Point_With_Empty_Name
     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
@@ -165,12 +165,12 @@ Update_Service_Point_With_not_existing_key
 Get_Service_Points_Without_Authentication
     [Setup]    I set Headers:    Authorization=
     When I send a GET request:    /service-points
-    Then Response status code should be:    400
+    Then Response status code should be:    403
 
 Get_Service_Points_With_Incorrect_Token
     [Setup]    I set Headers:    Authorization=Bearer IncorrectToken
     When I send a GET request:    /service-points
-    Then Response status code should be:    400
+    Then Response status code should be:    401
 
 Get_Service_Point_By_Nonexistent_ID
     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}

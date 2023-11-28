@@ -42,7 +42,7 @@ Create_shipment_type_with_empty_token
 Create_shipment_type_with_incorrect_token
     [Setup]    I set Headers:    Authorization=wrong_token
     When I send a POST request:    /shipment-types    {"data": {"type": "shipment-types","attributes": {"name": "Some Shipment Type","key": "incorrect_token${random}","isActive": "true","stores": ["DE", "AT"]}}}
-    Then Response status code should be:    400
+    Then Response status code should be:    403
     And Response reason should be:    Bad Request
 
 Create_shipment_type_without_key_in_request
@@ -77,7 +77,7 @@ Update_sipment_type_without_token
     [Documentation]    https://spryker.atlassian.net/browse/FRW-5850
     [Tags]    skip-due-to-issue
     When I send a PATCH request:    /shipment-types/${shipment_type_uuid}
-    ...    {"data": {"type": "shipment-types","attributes": {"name": "updated_name${random}","isActive": "false","stores": ["AT"]}}} 
+    ...    {"data": {"type": "shipment-types","attributes": {"name": "updated_name${random}","isActive": "false","stores": ["AT"]}}}
     Then Response status code should be:    403
     And Response reason should be:    Unauthorized
     And Response should return error message:    Invalid access token.
@@ -85,8 +85,8 @@ Update_sipment_type_without_token
 Update_sipment_type_with_incorrect_token
     [Setup]    I set Headers:    Authorization=wrong_token
     When I send a PATCH request:    /shipment-types/${shipment_type_uuid}
-    ...    {"data": {"type": "shipment-types","attributes": {"name": "updated_name${random}","isActive": "false","stores": ["AT"]}}} 
-     Then Response status code should be:    400
+    ...    {"data": {"type": "shipment-types","attributes": {"name": "updated_name${random}","isActive": "false","stores": ["AT"]}}}
+     Then Response status code should be:    403
      And Response reason should be:    Bad Request
 
 Update_sipment_type_without_key
@@ -95,7 +95,7 @@ Update_sipment_type_without_key
     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer ${token}
     When I send a PATCH request:    /shipment-types
-    ...    {"data": {"type": "shipment-types","attributes": {"name": "updated_name${random}","isActive": "false","stores": ["AT"]}}} 
+    ...    {"data": {"type": "shipment-types","attributes": {"name": "updated_name${random}","isActive": "false","stores": ["AT"]}}}
     Then Response status code should be:    404
     And Response should return error code:    5501
     And Response should return error message:    A delivery type entity was not found.
@@ -115,7 +115,7 @@ Update_sipment_type_with_not_existing_key
     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer ${token}
     When I send a PATCH request:    /shipment-types/not-existing-key
-    ...    {"data": {"type": "shipment-types","attributes": {"name": "updated_name${random}","isActive": "false","stores": ["AT"]}}} 
+    ...    {"data": {"type": "shipment-types","attributes": {"name": "updated_name${random}","isActive": "false","stores": ["AT"]}}}
     Then Response status code should be:    404
     And Response should return error code:    5501
     And Response should return error message:    A delivery type entity was not found.
@@ -131,7 +131,7 @@ Retrive_single_shipment_type_without_auth
 Retrive_single_shipment_type_with_incorrect_token
     [Setup]    I set Headers:    Authorization=wrong_token
     When I send a GET request:    /shipment-types/${shipment_type_uuid}
-     Then Response status code should be:    400
+     Then Response status code should be:    403
      And Response reason should be:    Bad Request
 
 Retrive_single_shipment_type_with_incorrect_id
@@ -153,5 +153,5 @@ Retrive_list_of_shipment_types_without_auth
 Retrive_list_of_shipment_types_witt_incorrect_token
     [Setup]    I set Headers:    Authorization=wrong_token
     When I send a GET request:    /shipment-types/${shipment_type_uuid}
-     Then Response status code should be:    400
+     Then Response status code should be:    403
      And Response reason should be:    Bad Request
