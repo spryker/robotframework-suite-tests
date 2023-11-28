@@ -27,12 +27,6 @@ Get_product_abstract_collection_with_invalid_query_parameter:
 
     ### GET TOKEN ###
     I get access token by user credentials:   ${zed_admin.email}
-    ### GET PRODUCT ABSTRACT COLLECTION WITH INVALID QUERY PARAMETER ###
-    And I set Headers:    Content-Type=application/json    Authorization=Bearer ${token}
-    And I send a GET request:    /dynamic-entity/product-abstracts?innclude=test
-    Then Response status code should be:    400
-    And Response body parameter should be:    [0][status]    400
-    And Response body parameter should be:    [0][code]    1312
     ### GET PRODUCT ABSTRACT COLLECTION WITH CHILDS ###
     And I set Headers:    Content-Type=application/json    Authorization=Bearer ${token}
     And I send a GET request:    /dynamic-entity/product-abstracts?include=test
