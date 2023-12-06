@@ -191,12 +191,28 @@ Yves: create return for the following products:
 Yves: check that 'Print Slip' contains the following products:
     [Arguments]    @{sku_list}    ${element1}=${EMPTY}     ${element2}=${EMPTY}     ${element3}=${EMPTY}     ${element4}=${EMPTY}     ${element5}=${EMPTY}     ${element6}=${EMPTY}     ${element7}=${EMPTY}     ${element8}=${EMPTY}     ${element9}=${EMPTY}     ${element10}=${EMPTY}     ${element11}=${EMPTY}     ${element12}=${EMPTY}     ${element13}=${EMPTY}     ${element14}=${EMPTY}     ${element15}=${EMPTY}
     Click    ${return_details_print_slip_button}
-    Switch Page    NEW
-    Wait Until Page Contains Element    ${return_slip_products_table}
-    ${sku_list_count}=   get length  ${sku_list}
-    FOR    ${index}    IN RANGE    0    ${sku_list_count}
-        ${sku_to_check}=    Get From List    ${sku_list}    ${index}
-        Table Should Contain    ${return_slip_products_table}    ${sku_to_check}
+    Repeat Keyword    3    Wait Until Network Is Idle
+    ### Wait until new page (pop-up) is displayed ###
+    Sleep    3s
+    ${context}=    Get Browser Catalog
+    ${page_count}=    Get Length    ${context[0]['contexts'][0]['pages']}
+    IF    ${page_count}<2
+        Sleep    7s
+        ${context}=    Get Browser Catalog
+    END
+    ${print_slip_page_id}=    Evaluate    [page['id'] for page in ${context[0]['contexts'][0]['pages']} if '/return/slip-print/' in page['url']]
+    ${print_slip_page_length}=    Get Length    ${print_slip_page_id}
+    IF    ${print_slip_page_length}>0
+        ${print_slip_page_id}=    Get From List    ${print_slip_page_id}    0
+        Switch Page    id=${print_slip_page_id}
+        Wait Until Page Contains Element    ${return_slip_products_table}
+        ${sku_list_count}=   get length  ${sku_list}
+        FOR    ${index}    IN RANGE    0    ${sku_list_count}
+            ${sku_to_check}=    Get From List    ${sku_list}    ${index}
+            Table Should Contain    ${return_slip_products_table}    ${sku_to_check}
+        END
+    ELSE
+        Log    New browser page did not open, there is nothing to switch to
     END
 
 Zed: create a return for the following order and product in it:

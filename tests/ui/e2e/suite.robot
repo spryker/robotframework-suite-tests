@@ -1112,7 +1112,7 @@ Split_Delivery
     ...    AND    Yves: delete all user addresses
 
 Content_Management
-    [Documentation]    Bug: CC-32036. Checks cms content can be edited in zed and that correct cms elements are present on homepage
+    [Documentation]    Checks cms content can be edited in zed and that correct cms elements are present on homepage
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Content    Pages
     Zed: create a cms page and publish it:    Test Page${random}    test-page${random}    Page Title    Page text
@@ -1723,6 +1723,7 @@ Multistore_Product_Offer
     Yves: merchant is (not) displaying in Sold By section of PDP:    Spryker    true
     Yves: merchant's offer/product price should be:    Spryker    €200.00
     Yves: go to AT store 'Home' page
+    Trigger multistore p&s
     Yves: login on Yves with provided credentials:    ${yves_user_email}
     Yves: go to PDP of the product with sku:     multistoreSKU${random}    wait_for_p&s=true
     Yves: merchant is (not) displaying in Sold By section of PDP:    Video King    true
@@ -1739,6 +1740,7 @@ Multistore_Product_Offer
     MP: save offer
     Trigger multistore p&s
     Yves: go to AT store 'Home' page
+    Trigger multistore p&s
     Yves: login on Yves with provided credentials:    ${yves_user_email}
     Yves: go to PDP of the product with sku:     multistoreSKU${random}    wait_for_p&s=true
     Yves: merchant is (not) displaying in Sold By section of PDP:    Spryker    false
@@ -1755,7 +1757,7 @@ Multistore_Product_Offer
     ...    AND    Trigger multistore p&s
 
 Multistore_CMS
-    [Documentation]    Bug: CC-32036. check CMS multistore functionality
+    [Documentation]    check CMS multistore functionality
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Content    Pages
     Zed: create a cms page and publish it:    Multistore Page${random}    multistore-page${random}    Multistore Page    Page text
@@ -3086,6 +3088,7 @@ Merchant_Portal_Dashboard
     Zed: update Zed user:
     ...    || oldEmail                             | newEmail | password      | firstName | lastName ||
     ...    || sonia+dahboard+${random}@spryker.com |          | Change123!321 |           |          ||
+    Trigger multistore p&s
     MP: login on MP with provided credentials:    sonia+dahboard+${random}@spryker.com    Change123!321
     MP: click button on dashboard page and check url:    Manage Offers    /product-offers
     MP: click button on dashboard page and check url:    Add Offer    /product-list

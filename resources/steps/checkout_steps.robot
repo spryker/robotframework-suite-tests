@@ -152,7 +152,7 @@ Yves: fill in new delivery address for a product:
             IF    '${env}' not in ['ui_suite']    Select From List By Label    xpath=//article[contains(@data-qa,'component product-card-item')]//*[contains(.,'${item}')]//select    Define new address
             IF    '${env}' in ['ui_suite']
                 Click    xpath=//*[contains(@data-qa,'address-item-form-field-list')]/div//strong[contains(.,'${item}')]/ancestor::div[contains(@class,'item-shipping')]//shipment-type-toggler//span[contains(@class,'label')][contains(.,'Delivery')]
-                Select From List By Label    xpath=//*[contains(@data-qa,'address-item-form-field-list')]/div//strong[contains(.,'${item}')]/ancestor::div[contains(@class,'item-shipping')]//select[contains(@class,'address-select')]    Define new address
+                Select From List By Label    xpath=//*[contains(@data-qa,'address-item-form-field-list')]/div//strong[contains(.,'${item}')]/ancestor::div[contains(@class,'item-shipping')]//select[contains(@name,'id_customer_address')]    Define new address
             END
         END
         IF    '${env}' in ['ui_mp_b2c']
