@@ -1,12 +1,12 @@
 *** Settings ***
-Suite Setup       SuiteSetup
-Test Setup    TestSetup
+Suite Setup       API_suite_setup
+Test Setup    API_test_setup
 Default Tags    glue
 Resource    ../../../../../../resources/common/common_api.robot
 
 *** Test Cases ***
 ENABLER
-    TestSetup
+    API_test_setup
 Get_concrete_alternative_product_for_a_product_that_has_none
     When I send a GET request:    /concrete-products/${bundle_product.concrete.product_1_sku}/concrete-alternative-products
     Then Response status code should be:    200

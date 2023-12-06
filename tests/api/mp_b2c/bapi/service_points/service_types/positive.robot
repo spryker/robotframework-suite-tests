@@ -1,14 +1,13 @@
 *** Settings ***
-Suite Setup       SuiteSetup
-Test Setup        TestSetup
+Suite Setup       API_suite_setup
+Test Setup        API_test_setup
 Resource    ../../../../../../resources/common/common_api.robot
 Resource    ../../../../../../resources/steps/service_point_steps.robot
 Default Tags    bapi
 
-
 *** Test Cases ***
 ENABLER
-    TestSetup
+    API_test_setup
 
 Create_Service_Type
     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}

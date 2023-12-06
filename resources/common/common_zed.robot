@@ -1,7 +1,6 @@
 *** Settings ***
-Library    BuiltIn
-Resource                  common.robot
-Resource                  ../pages/zed/zed_login_page.robot
+Resource    common_ui.robot
+Resource    ../pages/zed/zed_login_page.robot
 Resource    ../pages/zed/zed_edit_product_page.robot
 
 *** Variable ***
@@ -9,6 +8,7 @@ ${zed_log_out_button}   xpath=//ul[@class='nav navbar-top-links navbar-right']//
 ${zed_save_button}      xpath=//input[contains(@class,'safe-submit')]
 ${zed_success_flash_message}    xpath=//div[@class='flash-messages']/div[@class='alert alert-success']
 ${zed_error_flash_message}    xpath=//div[@class='flash-messages']/div[@class='alert alert-danger']
+${zed_info_flash_message}    xpath=//div[@class='flash-messages']/../div[@class='alert alert-info']
 ${zed_error_message}    xpath=//div[@class='alert alert-danger']
 ${zed_table_locator}    xpath=//table[contains(@class,'dataTable')]/tbody
 ${zed_search_field_locator}     xpath=//input[@type='search']
@@ -46,6 +46,7 @@ Zed: go to first navigation item level:
     [Arguments]     ${navigation_item}
     Wait Until Page Contains Element    xpath=//ul[@id='side-menu']/li/a/span[@class='nav-label'][contains(text(),'${navigation_item}')]/../../a
     Click Element by xpath with JavaScript    //ul[@id='side-menu']/li/a/span[@class='nav-label'][contains(text(),'${navigation_item}')]/../../a
+    Repeat Keyword    3    Wait Until Network Is Idle
 
 Zed: go to second navigation item level:
     [Documentation]     example: "Zed: Go to Second Navigation Item Level    Customers    Customer Access"
@@ -53,20 +54,22 @@ Zed: go to second navigation item level:
     ${node_state}=    Get Element Attribute  xpath=(//span[contains(@class,'nav-label')][text()='${navigation_item_level1}']/ancestor::li)[1]    class
     log    ${node_state}
     IF    'active' in '${node_state}'
-       run keywords
-            wait until element is visible  xpath=//ul[contains(@class,'nav-second-level')]//a/span[text()='${navigation_item_level2}']
-            Click Element by xpath with JavaScript    //span[contains(@class,'nav-label')][text()='${navigation_item_level1}']/ancestor::li//ul[contains(@class,'nav-second-level')]//a/span[text()='${navigation_item_level2}']
+        wait until element is visible  xpath=(//ul[contains(@class,'nav-second-level')]//a/span[text()='${navigation_item_level2}'])[1]
+        Click Element by xpath with JavaScript    (//span[contains(@class,'nav-label')][text()='${navigation_item_level1}']/ancestor::li//ul[contains(@class,'nav-second-level')]//a/span[text()='${navigation_item_level2}'])[1]
+        Repeat Keyword    3    Wait Until Network Is Idle    timeout=${browser_timeout}
     ELSE
-        run keywords
-            Scroll Element Into View    xpath=//ul[@id='side-menu']/li/a/span[@class='nav-label'][contains(text(),'${navigation_item_level1}')]/../../a
-            Click Element by xpath with JavaScript    //ul[@id='side-menu']/li/a/span[@class='nav-label'][contains(text(),'${navigation_item_level1}')]/../../a
-            ${node_expanded}=    Run Keyword And Return Status    Element Should Be Visible    xpath=//span[contains(@class,'nav-label')][text()='${navigation_item_level1}']/ancestor::li//ul[contains(@class,'nav-second-level')]//a/span[text()='${navigation_item_level2}']    timeout=1s
-            IF    '${node_expanded}'=='False'    
-                Reload
-                Click    xpath=//ul[@id='side-menu']/li/a/span[@class='nav-label'][contains(text(),'${navigation_item_level1}')]/../../a
-            END
-            wait until element is visible  xpath=//span[contains(@class,'nav-label')][text()='${navigation_item_level1}']/ancestor::li//ul[contains(@class,'nav-second-level')]//a/span[text()='${navigation_item_level2}']
-            Click Element by xpath with JavaScript    //span[contains(@class,'nav-label')][text()='${navigation_item_level1}']/ancestor::li//ul[contains(@class,'nav-second-level')]//a/span[text()='${navigation_item_level2}']
+        Scroll Element Into View    xpath=//ul[@id='side-menu']/li/a/span[@class='nav-label'][contains(text(),'${navigation_item_level1}')]/../../a
+        Click Element by xpath with JavaScript    //ul[@id='side-menu']/li/a/span[@class='nav-label'][contains(text(),'${navigation_item_level1}')]/../../a
+        Repeat Keyword    3    Wait Until Network Is Idle
+        ${node_expanded}=    Run Keyword And Return Status    Element Should Be Visible    xpath=//span[contains(@class,'nav-label')][text()='${navigation_item_level1}']/ancestor::li//ul[contains(@class,'nav-second-level')]//a/span[text()='${navigation_item_level2}']    timeout=1s
+        IF    '${node_expanded}'=='False'    
+            Reload
+            Click    xpath=//ul[@id='side-menu']/li/a/span[@class='nav-label'][contains(text(),'${navigation_item_level1}')]/../../a
+            Repeat Keyword    3    Wait Until Network Is Idle    timeout=${browser_timeout}
+        END
+        wait until element is visible  xpath=(//span[contains(@class,'nav-label')][text()='${navigation_item_level1}']/ancestor::li//ul[contains(@class,'nav-second-level')]//a/span[text()='${navigation_item_level2}'])[1]
+        Click Element by xpath with JavaScript    (//span[contains(@class,'nav-label')][text()='${navigation_item_level1}']/ancestor::li//ul[contains(@class,'nav-second-level')]//a/span[text()='${navigation_item_level2}'])[1]
+        Repeat Keyword    3    Wait Until Network Is Idle    timeout=${browser_timeout}
     END
 
 Zed: click button in Header:

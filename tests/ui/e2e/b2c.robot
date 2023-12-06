@@ -1,9 +1,8 @@
 *** Settings ***
-Library    BuiltIn
-Suite Setup       common.SuiteSetup
-Test Setup        common.TestSetup
-Test Teardown     common.TestTeardown
-Suite Teardown    common.SuiteTeardown
+Suite Setup       UI_suite_setup
+Test Setup        UI_test_setup
+Test Teardown     UI_test_teardown
+Suite Teardown    UI_suite_teardown
 Test Tags    robot:recursive-stop-on-failure
 Resource    ../../../resources/common/common.robot
 Resource    ../../../resources/steps/header_steps.robot
@@ -35,6 +34,7 @@ Resource    ../../../resources/steps/glossary_steps.robot
 Resource    ../../../resources/steps/zed_payment_methods_steps.robot
 Resource    ../../../resources/steps/zed_dashboard_steps.robot
 Resource    ../../../resources/steps/configurable_product_steps.robot
+Resource    ../../../resources/steps/dynamic_entity_steps.robot
 Resource    ../../../resources/steps/service_point_steps.robot
 Resource    ../../../resources/steps/warehouse_user_assigment_steps.robot
 Resource    ../../../resources/steps/picking_list_steps.robot
@@ -59,9 +59,9 @@ Guest_User_Access_Restrictions
     Yves: add product to the shopping cart
     Yves: go to b2c shopping cart
     Yves: shopping cart contains product with unit price:   002    Canon IXUS 160    37.50
-    Yves: go to user menu item in header:    Overview
+    Yves: go to user menu:    Overview
     Yves: 'Login' page is displayed
-    Yves: go To 'Wishlist' Page
+    Yves: go to 'Wishlist' page
     Yves: 'Login' page is displayed
 
 Authorized_User_Access
@@ -73,24 +73,24 @@ Authorized_User_Access
     Yves: add product to the shopping cart
     Yves: go to b2c shopping cart
     Yves: shopping cart contains product with unit price:    002    Canon IXUS 160    37.50
-    Yves: go to user menu item in header:    Overview
+    Yves: go to user menu:    Overview
     Yves: 'Overview' page is displayed
-    Yves: go to user menu item in header:    Orders History
+    Yves: go to user menu:    Orders History
     Yves: 'Order History' page is displayed
-    Yves: go To 'Wishlist' Page
+    Yves: go to 'Wishlist' page
     Yves: 'Wishlist' page is displayed
     [Teardown]    Yves: check if cart is not empty and clear it
 
 User_Account
     [Documentation]    Checks user account pages work + address management
     Yves: login on Yves with provided credentials:    ${yves_second_user_email}
-    Yves: go to user menu item in header:    Overview
+    Yves: go to user menu:    Overview
     Yves: 'Overview' page is displayed
-    Yves: go to user menu item in header:    Orders History
+    Yves: go to user menu:    Orders History
     Yves: 'Order History' page is displayed
-    Yves: go to user menu item in header:    My Profile
+    Yves: go to user menu:    My Profile
     Yves: 'Profile' page is displayed
-    Yves: go To 'Wishlist' Page
+    Yves: go to 'Wishlist' page
     Yves: 'Wishlist' page is displayed
     Yves: go to user menu item in the left bar:    Addresses
     Yves: 'Addresses' page is displayed
@@ -112,7 +112,7 @@ User_Account
     ...    || email                     | salutation | first name                              | last name                              | address 1          | address 2           | address 3           | city            | zip code  | country | phone     | company          ||
     ...    || ${yves_second_user_email} | Mr         | ${yves_second_user_first_name}${random} | ${yves_second_user_last_name}${random} | address 1${random} | address 2 ${random} | address 3 ${random} | Berlin${random} | ${random} | Austria | 123456789 | Spryker${random} ||
     Yves: login on Yves with provided credentials:    ${yves_second_user_email}
-    Yves: go to user menu item in header:    Overview
+    Yves: go to user menu:    Overview
     Yves: go to user menu item in the left bar:    Addresses
     Yves: check that user has address exists/doesn't exist:    true    ${yves_second_user_first_name}${random}    ${yves_second_user_last_name}${random}    address 1${random}    address 2 ${random}    ${random}    Berlin${random}    Austria
     [Teardown]    Run Keywords    Yves: login on Yves with provided credentials:    ${yves_second_user_email}
@@ -144,6 +144,7 @@ Catalog_Actions
     Zed: change concrete product price on:
     ...    || productAbstract | productConcrete | store | mode  | type   | currency | amount ||
     ...    || 003             | 003_26138343    | DE    | gross | default| €        | 65.00  ||
+    Trigger p&s
     Yves: check if cart is not empty and clear it
     Yves: perform search by:    NEX-VG20EH
     Yves: 1st product card in catalog (not)contains:      Add to Cart    true
@@ -176,13 +177,13 @@ Product_PDP
     [Documentation]    Checks that PDP contains required elements
     Yves: go to PDP of the product with sku:    135
     Yves: change variant of the product on PDP on:    Flash
-    Yves: PDP contains/doesn't contain:    true    ${pdpPriceLocator}   ${addToCartButton}    ${pdp_warranty_option}    ${pdp_gift_wrapping_option}    ${relatedProducts}
+    Yves: PDP contains/doesn't contain:    true    ${pdpPriceLocator}   ${addToCartButton}    ${pdp_warranty_option}    ${pdp_gift_wrapping_option}[${env}]    ${relatedProducts}
     Yves: PDP contains/doesn't contain:    false    ${pdp_add_to_wishlist_button}
     Yves: login on Yves with provided credentials:    ${yves_user_email}
     Yves: go to PDP of the product with sku:    135
-    Yves: PDP contains/doesn't contain:    true    ${pdpPriceLocator}   ${pdp_add_to_cart_disabled_button}[${env}]    ${pdp_warranty_option}    ${pdp_gift_wrapping_option}     ${pdp_add_to_wishlist_button}    ${relatedProducts}
+    Yves: PDP contains/doesn't contain:    true    ${pdpPriceLocator}   ${pdp_add_to_cart_disabled_button}[${env}]    ${pdp_warranty_option}    ${pdp_gift_wrapping_option}[${env}]     ${pdp_add_to_wishlist_button}    ${relatedProducts}
     Yves: change variant of the product on PDP on:    Flash
-    Yves: PDP contains/doesn't contain:    true    ${pdpPriceLocator}    ${addToCartButton}    ${pdp_warranty_option}    ${pdp_gift_wrapping_option}     ${pdp_add_to_wishlist_button}    ${relatedProducts}
+    Yves: PDP contains/doesn't contain:    true    ${pdpPriceLocator}    ${addToCartButton}    ${pdp_warranty_option}    ${pdp_gift_wrapping_option}[${env}]     ${pdp_add_to_wishlist_button}    ${relatedProducts}
 
 Volume_Prices
     [Documentation]    Checks volume prices are applied
@@ -192,6 +193,7 @@ Volume_Prices
     Yves: check if cart is not empty and clear it
     Yves: go to PDP of the product with sku:    193
     Yves: change quantity using '+' or '-' button № times:    +    4
+    Yves: product price on the PDP should be:    €165.00
     Yves: add product to the shopping cart
     Yves: go to b2c shopping cart
     Yves: shopping cart contains product with unit price:    193    Sony FDR-AX40    825.00
@@ -203,7 +205,7 @@ Volume_Prices
 Discontinued_Alternative_Products
     [Documentation]    Checks discontinued and alternative products
     Yves: go to PDP of the product with sku:    ${product_with_relations_alternative_products_sku}
-    Yves: change variant of the product on PDP on:    2.3 GHz - Discontinued
+    Yves: change variant of the product on PDP on:    2.3 GHz
     Yves: PDP contains/doesn't contain:    true    ${alternativeProducts}
     Yves: login on Yves with provided credentials:    ${yves_user_email}
     Yves: delete all wishlists
@@ -214,8 +216,9 @@ Discontinued_Alternative_Products
     Zed: product is successfully discontinued
     Zed: check if at least one price exists for concrete and add if doesn't:    100
     Zed: add following alternative products to the concrete:    012
+    Trigger p&s
     Yves: login on Yves with provided credentials:    ${yves_user_email}
-    Yves: go To 'Wishlist' Page
+    Yves: go to 'Wishlist' page
     Yves: go to wishlist with name:    My wishlist
     Yves: product with sku is marked as discountinued in wishlist:    ${discontinued_product_concrete_sku}
     Yves: product with sku is marked as alternative in wishlist:    012
@@ -223,6 +226,7 @@ Discontinued_Alternative_Products
     ...    AND    Yves: check if cart is not empty and clear it
     ...    AND    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: undo discontinue the following product:    ${discontinued_product_abstract_sku}    ${discontinued_product_concrete_sku}
+    ...    AND    Trigger p&s
 
 Back_in_Stock_Notification
     [Documentation]    Back in stock notification is sent and availability check
@@ -247,7 +251,8 @@ Back_in_Stock_Notification
     Yves: go to PDP of the product with sku:  ${stock_product_abstract_sku}
     Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    False
     Yves: check if product is available on PDP:    ${stock_product_abstract_sku}    true
-    [Teardown]    Zed: check and restore product availability in Zed:    ${stock_product_abstract_sku}    Available    ${stock_product_concrete_sku}
+    [Teardown]    Run Keywords    Zed: check and restore product availability in Zed:    ${stock_product_abstract_sku}    Available    ${stock_product_concrete_sku}
+    ...    AND    Trigger p&s
 
 Add_to_Wishlist
     [Documentation]    Check creation of wishlist and adding to different wishlists
@@ -255,11 +260,11 @@ Add_to_Wishlist
     Yves: delete all wishlists
     Yves: go to PDP of the product with sku:  003
     Yves: add product to wishlist:    My wishlist
-    Yves: go To 'Wishlist' Page
+    Yves: go to 'Wishlist' page
     Yves: create wishlist with name:    Second wishlist
     Yves: go to PDP of the product with sku:  004
     Yves: add product to wishlist:    Second wishlist    select
-    Yves: go To 'Wishlist' Page
+    Yves: go to 'Wishlist' page
     Yves: go to wishlist with name:    My wishlist
     Yves: wishlist contains product with sku:    003_26138343
     Yves: go to wishlist with name:    Second wishlist
@@ -309,7 +314,7 @@ Product_Bundles
     [Teardown]    Yves: check if cart is not empty and clear it
 
 Configurable_Bundle
-    [Documentation]    Check the usage of configurable bundles (includes authorized checkout)
+    [Documentation]    Bug: CC-31660. Check the usage of configurable bundles (includes authorized checkout)
     Yves: login on Yves with provided credentials:    ${yves_user_email}
     Yves: check if cart is not empty and clear it
     Yves: go to URL:    en/configurable-bundle/configurator/template-selection
@@ -339,13 +344,22 @@ Configurable_Bundle
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
-    Yves: go to user menu item in header:    Orders History
+    Trigger oms
+    Yves: go to user menu:    Orders History
     Yves: 'Order History' page is displayed
     Yves: get the last placed order ID by current customer
     Yves: 'View Order/Reorder/Return' on the order history page:    View Order    ${lastPlacedOrder}
     Yves: 'Order Details' page is displayed
     Yves: 'Order Details' page contains the following product title N times:    Smartstation Kit    3
-    [Teardown]    Yves: check if cart is not empty and clear it
+    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Pay
+    Zed: trigger all matching states inside this order:    Skip timeout
+    Zed: trigger all matching states inside this order:    skip picking
+    Zed: trigger all matching states inside this order:    Ship
+    Zed: trigger all matching states inside this order:    Stock update
+    Zed: trigger all matching states inside this order:    Close
+    [Teardown]    Run Keywords    Yves: login on Yves with provided credentials:    ${yves_user_email}
+    ...    AND    Yves: check if cart is not empty and clear it
 
 Discounts
     [Documentation]    Discounts, Promo Products, and Coupon Codes (includes guest checkout)
@@ -357,6 +371,7 @@ Discounts
     Zed: create a discount and activate it:    voucher    Percentage    5    sku = '*'    test${random}    discountName=Voucher Code 5% ${random}
     Zed: create a discount and activate it:    cart rule    Percentage    10    sku = '*'    discountName=Cart Rule 10% ${random}
     Zed: create a discount and activate it:    cart rule    Percentage    100    discountName=Promotional Product 100% ${random}    promotionalProductDiscount=True    promotionalProductAbstractSku=002    promotionalProductQuantity=2
+    Trigger p&s
     Yves: login on Yves with provided credentials:    ${yves_user_email}
     Yves: check if cart is not empty and clear it
     Yves: go to PDP of the product with sku:    190
@@ -498,13 +513,15 @@ Return_Management
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
+    Trigger oms
     Yves: get the last placed order ID by current customer
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Pay
     Zed: trigger all matching states inside this order:    Skip timeout
+    Zed: trigger all matching states inside this order:    skip picking
     Zed: trigger all matching states inside this order:    Ship
     Yves: login on Yves with provided credentials:    ${yves_user_email}
-    Yves: go to user menu item in header:    Orders History
+    Yves: go to user menu:    Orders History
     Yves: 'Order History' page is displayed
     Yves: get the last placed order ID by current customer
     Yves: 'View Order/Reorder/Return' on the order history page:     Return    ${lastPlacedOrder}
@@ -523,7 +540,7 @@ Return_Management
     Yves: perform search by customer:    ${yves_user_email}
     Yves: agent widget contains:    ${yves_user_email}
     Yves: as an agent login under the customer:    ${yves_user_email}
-    Yves: go to user menu item in header:    Orders History
+    Yves: go to user menu:    Orders History
     Yves: 'View Order/Reorder/Return' on the order history page:     Return    ${lastPlacedOrder}
     Yves: 'Create Return' page is displayed
     Yves: create return for the following products:    008_30692992
@@ -532,7 +549,7 @@ Return_Management
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Execute return
     Yves: login on Yves with provided credentials:    ${yves_user_email}
-    Yves: go to user menu item in header:    Orders History
+    Yves: go to user menu:    Orders History
     Yves: 'Order History' page is displayed
     Yves: 'Order History' page contains the following order with a status:    ${lastPlacedOrder}    Returned
     [Teardown]    Run Keywords    Yves: check if cart is not empty and clear it
@@ -556,6 +573,7 @@ Content_Management
     [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: go to second navigation item level:    Content    Pages
     ...    AND    Zed: click Action Button in a table for row that contains:    Test Page${random}    Deactivate
+    ...    AND    Trigger p&s
 
 Product_Relations
     [Documentation]    Checks related product on PDP and upsell products in cart
@@ -575,7 +593,6 @@ Guest_Checkout
     ...    AND    Zed: change product stock:    ${bundled_product_1_abstract_sku}    ${bundled_product_1_concrete_sku}    true    10
     ...    AND    Zed: change product stock:    ${bundled_product_2_abstract_sku}    ${bundled_product_2_concrete_sku}    true    10
     ...    AND    Zed: change product stock:    ${bundled_product_3_abstract_sku}    ${bundled_product_3_concrete_sku}    true    10
-    ...    AND    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: go to second navigation item level:    Merchandising    Discount
     ...    AND    Zed: create a discount and activate it:    voucher    Percentage    5    sku = '*'    guestTest${random}    discountName=Guest Voucher Code 5% ${random}
     ...    AND    Zed: create a discount and activate it:    cart rule    Percentage    10    sku = '*'    discountName=Guest Cart Rule 10% ${random}
@@ -584,13 +601,6 @@ Guest_Checkout
     Yves: go to PDP of the product with sku:    ${bundle_product_abstract_sku}
     Yves: PDP contains/doesn't contain:    true    ${bundleItemsSmall}
     Yves: add product to the shopping cart
-    Yves: go to URL:    en/configurable-bundle/configurator/template-selection
-    Yves: 'Choose Bundle to configure' page is displayed
-    Yves: choose bundle template to configure:    Smartstation Kit
-    Yves: select product in the bundle slot:    Slot 5    Sony Cyber-shot DSC-W830
-    Yves: select product in the bundle slot:    Slot 6    Sony NEX-VG30E
-    Yves: go to 'Summary' step in the bundle configurator
-    Yves: add products to the shopping cart in the bundle configurator
     Yves: go to PDP of the product with sku:    007
     Yves: add product to the shopping cart
     Yves: go to PDP of the product with sku:    008
@@ -610,10 +620,12 @@ Guest_Checkout
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
+    Trigger oms
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: get the last placed order ID of the customer by email:    sonia+guest${random}@spryker.com
     Zed: trigger all matching states inside xxx order:    ${zedLastPlacedOrder}    Pay
     Zed: trigger all matching states inside this order:    Skip timeout
+    Zed: trigger all matching states inside this order:    skip picking
     Zed: trigger all matching states inside this order:    Ship
     Zed: trigger all matching states inside this order:    Stock update
     Zed: trigger all matching states inside this order:    Close
@@ -622,7 +634,7 @@ Guest_Checkout
     ...    AND    Zed: deactivate following discounts from Overview page:    Guest Voucher Code 5% ${random}    Guest Cart Rule 10% ${random}
 
 Guest_Checkout_Addresses
-    [Documentation]    Guest checkout with discounts and OMS
+    [Documentation]    Guest checkout with different addresses and OMS
     Yves: go to the 'Home' page
     Yves: logout on Yves as a customer
     Yves: go to PDP of the product with sku:    007
@@ -639,10 +651,10 @@ Guest_Checkout_Addresses
     Yves: fill in new delivery address for a product:
     ...    || product        | salutation | firstName | lastName | street       | houseNumber | postCode | city   | country | company | phone     | additionalAddress ||
     ...    || Canon IXUS 285 | Dr.        | First     | Last     | First Street | 1           | 10247    | Berlin | Germany | Spryker | 123456789 | Additional street ||
-   Yves: fill in new delivery address for a product:
+    Yves: fill in new delivery address for a product:
     ...    || product        | salutation | firstName | lastName | street        | houseNumber | postCode | city   | country | company | phone     | additionalAddress ||
     ...    || Canon IXUS 175 | Dr.        | First     | Last     | Second Street | 2           | 10247    | Berlin | Germany | Spryker | 123456789 | Additional street ||
-   Yves: fill in new delivery address for a product:
+    Yves: fill in new delivery address for a product:
     ...    || product        | salutation | firstName | lastName | street       | houseNumber | postCode | city   | country | company | phone     | additionalAddress ||
     ...    || Canon IXUS 165 | Dr.        | First     | Last     | Third Street | 3           | 10247    | Berlin | Germany | Spryker | 123456789 | Additional street ||
     Yves: fill in the following new billing address:
@@ -657,6 +669,7 @@ Guest_Checkout_Addresses
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
+    Trigger oms
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: get the last placed order ID of the customer by email:    sonia+guest+new${random}@spryker.com
     Zed: trigger all matching states inside xxx order:    ${zedLastPlacedOrder}    Pay
@@ -665,6 +678,7 @@ Guest_Checkout_Addresses
     Zed: shipping address inside xxx shipment should be:    2    Dr First, Last, Second Street, 2, Additional street, Spryker, 10247, Berlin, Germany 
     Zed: shipping address inside xxx shipment should be:    3    Dr First, Last, Third Street, 3, Additional street, Spryker, 10247, Berlin, Germany 
     Zed: trigger all matching states inside this order:    Skip timeout
+    Zed: trigger all matching states inside this order:    skip picking
     Zed: trigger all matching states inside this order:    Ship
     Zed: trigger all matching states inside this order:    Stock update
     Zed: trigger all matching states inside this order:    Close
@@ -694,11 +708,13 @@ Refunds
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
+    Trigger oms
     Yves: get the last placed order ID by current customer
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: grand total for the order equals:    ${lastPlacedOrder}    €394.41
     Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Pay
     Zed: trigger all matching states inside this order:    Skip timeout
+    Zed: trigger all matching states inside this order:    skip picking
     Zed: trigger matching state of order item inside xxx shipment:    008_30692992    Ship
     Zed: trigger matching state of order item inside xxx shipment:    008_30692992    Stock update
     Zed: trigger matching state of order item inside xxx shipment:    008_30692992    Refund
@@ -722,6 +738,7 @@ Manage_Product
     Zed: update abstract product price on:
     ...    || store | mode  | type    | currency | amount | tax set           ||
     ...    || DE    | gross | default | €        | 100.00 | Smart Electronics ||
+    Trigger multistore p&s
     Zed: change concrete product data:
     ...    || productAbstract    | productConcrete               | active | searchable en | searchable de ||
     ...    || manageSKU${random} | manageSKU${random}-color-grey | true   | true          | true          ||
@@ -737,23 +754,27 @@ Manage_Product
     Zed: change concrete product stock:
     ...    || productAbstract    | productConcrete               | warehouse n1 | warehouse n1 qty | warehouse n1 never out of stock ||
     ...    || manageSKU${random} | manageSKU${random}-color-blue | Warehouse1   | 100              | false                           ||
+    Trigger multistore p&s
+    Zed: update abstract product data:
+    ...    || productAbstract    | name de                        ||
+    ...    || manageSKU${random} | DEmanageProduct${random} force ||
+    Trigger multistore p&s
     Yves: login on Yves with provided credentials:    ${yves_user_email}
-    Yves: go to URL:    en/search?q=manageSKU${random}
-    Try reloading page until element is/not appear:    ${catalog_product_card_locator}    true    21    5s
-    Yves: go to PDP of the product with sku:    manageSKU${random}
-    Yves: product price on the PDP should be:    €100.00
+    Yves: go to PDP of the product with sku:    manageSKU${random}    wait_for_p&s=true
+    Yves: product price on the PDP should be:    €100.00    wait_for_p&s=true
     Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    False
     Yves: change variant of the product on PDP on:    grey
     Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    False
-    Yves: product price on the PDP should be:    €100.00
+    Yves: product price on the PDP should be:    €100.00    wait_for_p&s=true
     Yves: reset selected variant of the product on PDP
     Yves: change variant of the product on PDP on:    blue
     Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    False
-    Yves: product price on the PDP should be:    €15.00
+    Yves: product price on the PDP should be:    €15.00    wait_for_p&s=true
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: add new concrete product to abstract:
     ...    || productAbstract    | sku                            | autogenerate sku | attribute 1 | name en                  | name de                  | use prices from abstract ||
     ...    || manageSKU${random} | manageSKU${random}-color-black | false            | black       | ENaddedConcrete${random} | DEaddedConcrete${random} | true                     ||
+    Trigger multistore p&s
     Zed: change concrete product data:
     ...    || productAbstract    | productConcrete                | active | searchable en | searchable de ||
     ...    || manageSKU${random} | manageSKU${random}-color-black | true   | true          | true          ||
@@ -766,26 +787,26 @@ Manage_Product
     Zed: update abstract product price on:
     ...    || productAbstract    | store | mode  | type    | currency | amount | tax set           ||
     ...    || manageSKU${random} | DE    | gross | default | €        | 150.00 | Smart Electronics ||
+    Trigger multistore p&s
     Zed: update abstract product data:
     ...    || productAbstract    | name en                         | name de                         ||
     ...    || manageSKU${random} | ENUpdatedmanageProduct${random} | DEUpdatedmanageProduct${random} ||
+    Trigger multistore p&s
     Yves: login on Yves with provided credentials:    ${yves_user_email}
     Yves: check if cart is not empty and clear it
-    Yves: go to URL:    en/search?q=manageSKU${random}
-    Try reloading page until element is/not appear:    ${catalog_product_card_locator}    true    21    5s
-    Yves: go to PDP of the product with sku:    manageSKU${random}
+    Yves: go to PDP of the product with sku:    manageSKU${random}    wait_for_p&s=true
     Yves: product name on PDP should be:    ENUpdatedmanageProduct${random}
-    Yves: product price on the PDP should be:    €150.00
+    Yves: product price on the PDP should be:    €150.00    wait_for_p&s=true
     Yves: change variant of the product on PDP on:    grey
-    Yves: product price on the PDP should be:    €100.00
+    Yves: product price on the PDP should be:    €100.00    wait_for_p&s=true
     Yves: reset selected variant of the product on PDP
     Yves: change variant of the product on PDP on:    blue
-    Yves: product price on the PDP should be:    €15.00
+    Yves: product price on the PDP should be:    €15.00    wait_for_p&s=true
     Yves: reset selected variant of the product on PDP
     Yves: change variant of the product on PDP on:    black
     Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    False
     Yves: product name on PDP should be:    ENaddedConcrete${random}
-    Yves: product price on the PDP should be:    €25.00
+    Yves: product price on the PDP should be:    €25.00    wait_for_p&s=true
     Yves: change quantity using '+' or '-' button № times:    +    5
     Yves: try add product to the cart from PDP and expect error:    Item manageSKU${random}-color-black only has availability of 5.
     Yves: change quantity using '+' or '-' button № times:    +    2
@@ -817,6 +838,7 @@ Product_Original_Price
     Zed: update abstract product price on:
     ...    || store | mode  | type     | currency | amount | tax set           ||
     ...    || DE    | gross | original | €        | 200.00 | Smart Electronics ||
+    Trigger multistore p&s
     Zed: change concrete product data:
     ...    || productAbstract      | productConcrete                 | active | searchable en | searchable de ||
     ...    || originalSKU${random} | originalSKU${random}-color-grey | true   | true          | true          ||
@@ -835,17 +857,22 @@ Product_Original_Price
     Zed: change concrete product stock:
     ...    || productAbstract      | productConcrete                 | warehouse n1 | warehouse n1 qty | warehouse n1 never out of stock ||
     ...    || originalSKU${random} | originalSKU${random}-color-blue | Warehouse1   | 100              | false                           ||
+    Trigger multistore p&s
+    Zed: update abstract product data:
+    ...    || productAbstract      | name de                     ||
+    ...    || originalSKU${random} | originalSKU${random} forced ||
+    Trigger multistore p&s
     Yves: login on Yves with provided credentials:    ${yves_user_email}
     Yves: go to URL:    en/search?q=originalSKU${random}
     Try reloading page until element is/not appear:    ${catalog_product_card_locator}    true    21    5s
     Yves: 1st product card in catalog (not)contains:     Price    €100.00
     Yves: 1st product card in catalog (not)contains:     Original Price    €200.00
     Yves: go to PDP of the product with sku:    originalSKU${random}
-    Yves: product price on the PDP should be:    €100.00
+    Yves: product price on the PDP should be:    €100.00    wait_for_p&s=true
     Yves: product original price on the PDP should be:    €200.00
     Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    False
     Yves: change variant of the product on PDP on:    blue
-    Yves: product price on the PDP should be:    €15.00
+    Yves: product price on the PDP should be:    €15.00    wait_for_p&s=true
     Yves: product original price on the PDP should be:    €50.00
 
 Checkout_Address_Management
@@ -869,6 +896,7 @@ Checkout_Address_Management
     Yves: select the following shipping method on the checkout and go next:    Express
     Yves: select the following payment method on the checkout and go next:    Invoice
     Yves: return to the previous checkout step:    Address
+    Yves: billing address same as shipping address:    false
     Yves: fill in the following new billing address:
     ...    || salutation | firstName | lastName | street         | houseNumber | postCode | city   | country | company | phone     | additionalAddress ||
     ...    || Mr.        | New       | Billing  | Changed Street | 098         | 09876    | Berlin | Germany | Spryker | 987654321 | Additional street ||
@@ -884,9 +912,6 @@ Checkout_Address_Management
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
     Yves: get the last placed order ID by current customer
-    Yves: go to user menu item in header:    Overview
-    Yves: go to user menu item in the left bar:    Addresses
-    Yves: 'Addresses' page is displayed
     Yves: check that user has address exists/doesn't exist:    true    First    Last    Shipping Street    7    10247    Vienna    Austria
     Yves: check that user has address exists/doesn't exist:    false    New    Billing    Changed Street    098    09876    Berlin    Germany
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
@@ -984,6 +1009,7 @@ Minimum_Order_Value
     Zed: change global threshold settings:
     ...    || store & currency | minimum hard value | minimum hard en message  | minimum hard de message  | maximun hard value | maximun hard en message | maximun hard de message | soft threshold                | soft threshold value | soft threshold fixed fee | soft threshold en message | soft threshold de message ||
     ...    || DE - Euro [EUR]  | 5                  | EN minimum {{threshold}} | DE minimum {{threshold}} | 150                | EN max {{threshold}}    | DE max {{threshold}}    | Soft Threshold with fixed fee | 100000               | 9                        | EN fixed {{fee}} fee      | DE fixed {{fee}} fee      ||
+    Trigger p&s
     Yves: login on Yves with provided credentials:    ${yves_user_email}
     Yves: go to PDP of the product with sku:    005
     Yves: add product to the shopping cart
@@ -999,7 +1025,7 @@ Minimum_Order_Value
     Yves: submit form on the checkout
     Yves: select the following payment method on the checkout and go next:    Invoice
     Yves: soft threshold surcharge is added on summary page:    €9.00
-    Yves: hard threshold is applied with the following message:    EN max €150.00
+    Yves: hard threshold is applied with the following message:    €150.00
     Yves: go to the 'Home' page
     Yves: go to b2c shopping cart
     Yves: delete product from the shopping cart with name:    Canon IXUS 175
@@ -1063,7 +1089,8 @@ Order_Cancelation
     Yves: select the following payment method on the checkout and go next:    Invoice
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
-    Yves: 'Thank you' page is displayed    
+    Yves: 'Thank you' page is displayed
+    Trigger oms  
     Yves: go to 'Order History' page
     Yves: get the last placed order ID by current customer
     ### change the order state of one product ###
@@ -1109,6 +1136,7 @@ Multistore_Product
     Zed: update abstract product price on:
     ...    || store | mode  | type    | currency | amount | tax set           ||
     ...    || AT    | gross | default | €        | 200.00 | Smart Electronics ||
+    Trigger multistore p&s
     Zed: change concrete product data:
     ...    || productAbstract   | productConcrete              | active | searchable en | searchable de ||
     ...    || multiSKU${random} | multiSKU${random}-color-grey | true   | true          | true          ||
@@ -1121,13 +1149,14 @@ Multistore_Product
     Zed: change concrete product stock:
     ...    || productAbstract   | productConcrete              | warehouse n1 | warehouse n1 qty | warehouse n1 never out of stock ||
     ...    || multiSKU${random} | multiSKU${random}-color-grey | Warehouse2   | 100              | true                            ||
+    Trigger multistore p&s
     Yves: login on Yves with provided credentials:    ${yves_second_user_email}
     Yves: go to URL:    en/search?q=multiSKU${random}
     Try reloading page until element is/not appear:    ${catalog_product_card_locator}    true    21    5s
     Yves: 1st product card in catalog (not)contains:     Price    €100.00
     Yves: go to PDP of the product with sku:    multiSKU${random}
     Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    False
-    Yves: product price on the PDP should be:    €15.00
+    Yves: product price on the PDP should be:    €15.00    wait_for_p&s=true
     Yves: go to AT store 'Home' page
     Yves: login on Yves with provided credentials:    ${yves_second_user_email}
     Yves: check if cart is not empty and clear it
@@ -1136,7 +1165,7 @@ Multistore_Product
     Yves: 1st product card in catalog (not)contains:     Price    €200.00
     Yves: go to PDP of the product with sku:    multiSKU${random}
     Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    False
-    Yves: product price on the PDP should be:    €25.00
+    Yves: product price on the PDP should be:    €25.00    wait_for_p&s=true
     Save current URL
     Yves: add product to the shopping cart
     Yves: go to b2c shopping cart
@@ -1145,6 +1174,7 @@ Multistore_Product
     Zed: update abstract product data:
     ...    || productAbstract   | unselect store ||
     ...    || multiSKU${random} | AT             ||
+    Trigger multistore p&s
     Yves: go to URL and refresh until 404 occurs:    ${url}
     [Teardown]    Run Keywords    Yves: go to AT store 'Home' page
     ...    AND    Yves: login on Yves with provided credentials:    ${yves_second_user_email}
@@ -1155,6 +1185,7 @@ Multistore_CMS
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Content    Pages
     Zed: create a cms page and publish it:    Multistore Page${random}    multistore-page${random}    Multistore Page    Page text
+    Trigger multistore p&s
     Yves: go to newly created page by URL on AT store:    en/multistore-page${random}
     Save current URL
     Yves: page contains CMS element:    CMS Page Title    Multistore Page
@@ -1166,9 +1197,10 @@ Multistore_CMS
     [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: go to second navigation item level:    Content    Pages
     ...    AND    Zed: click Action Button in a table for row that contains:    Multistore Page${random}    Deactivate
+    ...    AND    Trigger multistore p&s
 
 Product_Availability_Calculation
-    [Documentation]    Bug: CC-24108. Check product availability + multistore
+    [Documentation]    Check product availability + multistore
     [Setup]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: update warehouse:    
     ...    || warehouse  | store || 
@@ -1186,6 +1218,7 @@ Product_Availability_Calculation
     Zed: update abstract product price on:
     ...    || store | mode  | type    | currency | amount | tax set           ||
     ...    || AT    | gross | default | €        | 200.00 | Smart Electronics ||
+    Trigger multistore p&s
     Zed: change concrete product data:
     ...    || productAbstract          | productConcrete                     | active | searchable en | searchable de ||
     ...    || availabilitySKU${random} | availabilitySKU${random}-color-grey | true   | true          | true          ||
@@ -1197,13 +1230,12 @@ Product_Availability_Calculation
     ...    || availabilitySKU${random} | availabilitySKU${random}-color-grey | AT    | gross | default | €        | 75.00  ||
     Zed: change concrete product stock:
     ...    || productAbstract          | productConcrete                     | warehouse n1 | warehouse n1 qty | warehouse n1 never out of stock ||
-    ...    || availabilitySKU${random} | availabilitySKU${random}-color-grey | Warehouse2   | 5                | false                            ||
+    ...    || availabilitySKU${random} | availabilitySKU${random}-color-grey | Warehouse1   | 5                | false                            ||
+    Trigger multistore p&s
     Yves: login on Yves with provided credentials:    ${yves_second_user_email}
     Yves: check if cart is not empty and clear it
     Yves: delete all user addresses
-    Yves: go to URL:    en/search?q=availabilitySKU${random}
-    Try reloading page until element is/not appear:    ${catalog_product_card_locator}    true    21    5s
-    Yves: go to PDP of the product with sku:    availabilitySKU${random}
+    Yves: go to PDP of the product with sku:    availabilitySKU${random}    wait_for_p&s=true
     Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    False
     Yves: change quantity using '+' or '-' button № times:    +    5
     Yves: try add product to the cart from PDP and expect error:    Item availabilitySKU${random}-color-grey only has availability of 5.
@@ -1221,6 +1253,7 @@ Product_Availability_Calculation
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed    
+    Trigger oms
     Yves: get the last placed order ID by current customer
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to order page:    ${lastPlacedOrder}
@@ -1233,6 +1266,7 @@ Product_Availability_Calculation
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to order page:    ${lastPlacedOrder}
     Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Cancel
+    Trigger multistore p&s
     Yves: login on Yves with provided credentials:    ${yves_second_user_email}
     Yves: go to PDP of the product with sku:    availabilitySKU${random}
     Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    False
@@ -1240,24 +1274,22 @@ Product_Availability_Calculation
     Yves: try add product to the cart from PDP and expect error:    Item availabilitySKU${random}-color-grey only has availability of 5.
     Yves: go to AT store 'Home' page
     Yves: login on Yves with provided credentials:    ${yves_second_user_email}
-    Yves: go to AT URL:    en/search?q=availabilitySKU${random}
-    Try reloading page until element is/not appear:    ${catalog_product_card_locator}    true    21    5s
-    Yves: go to PDP of the product with sku:    availabilitySKU${random}
+    Yves: go to PDP of the product with sku:    availabilitySKU${random}    wait_for_p&s=true
     Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    False
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: update warehouse:    
     ...    || warehouse  | unselect store || 
     ...    || Warehouse1 | AT             ||
+    Trigger multistore p&s
     Yves: go to AT store 'Home' page
     Yves: login on Yves with provided credentials:    ${yves_second_user_email}
-    Yves: go to AT URL:    en/search?q=availabilitySKU${random}
-    Try reloading page until element is/not appear:    ${catalog_product_card_locator}    true    21    5s
-    Yves: go to PDP of the product with sku:    availabilitySKU${random}
+    Yves: go to PDP of the product with sku:    availabilitySKU${random}    wait_for_p&s=true
     Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    True
     [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: update warehouse:    
     ...    || warehouse  | unselect store || 
     ...    || Warehouse1 | AT             ||
+    ...    AND    Trigger multistore p&s
 
 User_Control
     [Documentation]    Create a user with limited access
@@ -1306,9 +1338,9 @@ Reorder
 Update_Customer_Data
     [Documentation]    Checks customer data can be updated from Yves and Zed
     Yves: login on Yves with provided credentials:    ${yves_second_user_email}
-    Yves: go to user menu item in header:    Overview
+    Yves: go to user menu:    Overview
     Yves: 'Overview' page is displayed
-    Yves: go to user menu item in header:    My Profile
+    Yves: go to user menu:    My Profile
     Yves: 'Profile' page is displayed
     Yves: assert customer profile data:
     ...    || salutation | first name                     | last name                     | email                     ||
@@ -1327,9 +1359,9 @@ Update_Customer_Data
     ...    || email                     | salutation | first name                     | last name                     ||
     ...    || ${yves_second_user_email} | Mr         | ${yves_second_user_first_name} | ${yves_second_user_last_name} ||
     Yves: login on Yves with provided credentials:    ${yves_second_user_email}
-    Yves: go to user menu item in header:    Overview
+    Yves: go to user menu:    Overview
     Yves: 'Overview' page is displayed
-    Yves: go to user menu item in header:    My Profile
+    Yves: go to user menu:    My Profile
     Yves: 'Profile' page is displayed
     Yves: assert customer profile data:
     ...    || salutation | first name                     | last name                     | email                     ||
@@ -1358,6 +1390,7 @@ CRUD_Product_Set
     Yves: check if cart is not empty and clear it
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: delete product set:    test set ${random}
+    Trigger multistore p&s
     Yves: go to URL and refresh until 404 occurs:    ${yves_url}en/test-set-${random}
 
 Payment_method_update
@@ -1413,6 +1446,7 @@ Login_during_checkout
 
 Register_during_checkout
     [Documentation]    Guest user email should be whitelisted from the AWS side before running the test
+    [Tags]    glue
     Yves: go to the 'Home' page
     Yves: go to PDP of the product with sku:    ${bundled_product_3_concrete_sku}
     Yves: add product to the shopping cart
@@ -1420,8 +1454,9 @@ Register_during_checkout
     Yves: go to b2c shopping cart  
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: signup guest user during checkout:    ${guest_user_first_name}    ${guest_user_last_name}    sonia+guest${random}@spryker.com    Abc#${random}    Abc#${random}
-    common.Save the result of a SELECT DB query to a variable:    select registration_key from spy_customer where email = 'sonia+guest${random}@spryker.com'    confirmation_key
-    common_api.I send a POST request:     /customer-confirmation   {"data":{"type":"customer-confirmation","attributes":{"registrationKey":"${confirmation_key}"}}}
+    Save the result of a SELECT DB query to a variable:    select registration_key from spy_customer where email = 'sonia+guest${random}@spryker.com'    confirmation_key
+    API_test_setup
+    I send a POST request:     /customer-confirmation   {"data":{"type":"customer-confirmation","attributes":{"registrationKey":"${confirmation_key}"}}}
     Yves: login after signup during checkout:    sonia+guest${random}@spryker.com    Abc#${random}
     Yves: fill in the following new shipping address:
     ...    || salutation     | firstName                | lastName                | street    | houseNumber | postCode     | city       | country     | company    | phone     | additionalAddress         ||
@@ -1433,9 +1468,9 @@ Register_during_checkout
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
-    Yves: go to user menu item in header:    Overview
+    Yves: go to user menu:    Overview
     Yves: 'Overview' page is displayed
-    Yves: go to user menu item in header:    My Profile
+    Yves: go to user menu:    My Profile
     Yves: 'Profile' page is displayed
     Yves: assert customer profile data:
     ...    || salutation    | first name               | last name               | email                            ||
@@ -1460,14 +1495,17 @@ Glossary
     ...    || DE_DE                    | EN_US                              ||
     ...    || ${original_DE_text}-Test | ${original_EN_text}-Test-${random} ||
     Zed: submit the form
+    Trigger p&s
     Yves: login on Yves with provided credentials:    ${yves_second_user_email}
     Yves: validate the page title:    ${original_EN_text}-Test-${random}
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: undo the changes in glossary translation:    ${glossary_name}     ${original_DE_text}    ${original_EN_text}
+    Trigger p&s
     Yves: login on Yves with provided credentials:    ${yves_second_user_email}
     Yves: validate the page title:    ${original_EN_text}
     [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: undo the changes in glossary translation:    ${glossary_name}     ${original_DE_text}    ${original_EN_text}
+    ...    AND    Trigger p&s
 
 Configurable_Product_PDP_Wishlist
     [Documentation]    Configure product from PDP and Wishlist
@@ -1568,6 +1606,7 @@ Configurable_Product_OMS
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
+    Trigger oms
     Yves: get the last placed order ID by current customer
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: grand total for the order equals:    ${lastPlacedOrder}    €316.67
@@ -1580,6 +1619,7 @@ Configurable_Product_OMS
     ...    || 1        | 2        | ${configurable_product_concrete_two_sku} | 01.01.2055 | Afternoon ||
     Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Pay
     Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Skip timeout
+    Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    skip picking
     Zed: trigger matching state of xxx order item inside xxx shipment:    Ship    2
     Zed: trigger matching state of xxx order item inside xxx shipment:    Stock update    2
     Zed: trigger matching state of xxx order item inside xxx shipment:    Refund    2
@@ -1587,7 +1627,7 @@ Configurable_Product_OMS
     Zed: go to order page:    ${lastPlacedOrder}
     Zed: trigger matching state of xxx order item inside xxx shipment:    Ship    1
     Yves: login on Yves with provided credentials:    ${yves_user_email}
-    Yves: go to user menu item in header:    Orders History
+    Yves: go to user menu:    Orders History
     Yves: 'Order History' page is displayed
     Yves: 'View Order/Reorder/Return' on the order history page:     Return    ${lastPlacedOrder}
     Yves: 'Create Return' page is displayed
@@ -1598,7 +1638,7 @@ Configurable_Product_OMS
     Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Execute return
     Yves: go to the 'Home' page
     Yves: login on Yves with provided credentials:    ${yves_user_email}
-    Yves: go to user menu item in header:    Orders History
+    Yves: go to user menu:    Orders History
     ### Reorder ###
     Yves: 'View Order/Reorder/Return' on the order history page:    Reorder    ${lastPlacedOrder}
     Yves: go to b2c shopping cart
@@ -1607,33 +1647,143 @@ Configurable_Product_OMS
     ...    || date       | date_time ||
     ...    || 12.12.2030 | Evening   ||
     [Teardown]    Yves: check if cart is not empty and clear it
+  
+Data_exchange_API_download_specification
+    [Setup]    Trigger API specification update
+    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: download data exchange api specification should be active:    true
+    Zed: download data exchange api specification
+    Zed: check that downloaded api specification contains:    /dynamic-entity/product-abstracts
+    Zed: check that downloaded api specification does not contain:    /dynamic-entity/mime-types
+    Zed: delete dowloaded api specification
+    Zed: start creation of new data exchange api configuration for db table:    spy_mime_type
+    Zed: edit data exchange api configuration:
+    ...    || table_name  | is_enabled ||
+    ...    || mime-types  | true       ||
+    Zed: edit data exchange api configuration:
+    ...    || field_name   | enabled | visible_name | type    | creatable | editable | required ||
+    ...    || id_mime_type | true    | id_mime_type | integer | true      | false    | false    ||
+    Zed: edit data exchange api configuration:
+    ...    || field_name  | enabled | visible_name | type    | creatable | editable | required ||
+    ...    || comment     | true    | comment      | string  | true      | true     | false    ||
+    Zed: edit data exchange api configuration:
+    ...    || field_name  | enabled | visible_name | type    | creatable | editable | required ||
+    ...    || extensions  | true    | extensions   | string  | true      | true     | false    ||
+    Zed: edit data exchange api configuration:
+    ...    || field_name  | enabled | visible_name | type    | creatable | editable | required ||
+    ...    || is_allowed  | true    | is_allowed   | boolean | true      | true     | true     ||
+    Zed: edit data exchange api configuration:
+    ...    || field_name | enabled | visible_name | type   | creatable | editable | required ||
+    ...    || name       | true    | name         | string | true      | true     | true     ||
+    Zed: save data exchange api configuration
+    Zed: download data exchange api specification should be active:    false
+    Trigger API specification update
+    Zed: wait until info box is not displayed
+    Zed: download data exchange api specification
+    Zed: check that downloaded api specification contains:    /mime-types
+    [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    ...    AND    Zed: edit data exchange api configuration:
+    ...    || table_name  | is_enabled ||
+    ...    || mime-types  | false      ||
+    ...    AND    Zed: save data exchange api configuration
+    ...    AND    Trigger API specification update
+    ...    AND    Zed: wait until info box is not displayed
+    ...    AND    Zed: delete dowloaded api specification
+    ...    AND    Delete dynamic entity configuration in Database:    mime-types
+    ...    AND    Trigger API specification update
+
+Data_exchange_API_Configuration_in_Zed
+    [Tags]    bapi
+    [Setup]    Trigger API specification update
+    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: start creation of new data exchange api configuration for db table:    spy_mime_type
+    Zed: edit data exchange api configuration:
+    ...    || table_name  | is_enabled ||
+    ...    || mime-types  | true       ||
+    Zed: edit data exchange api configuration:
+    ...    || field_name   | enabled | visible_name | type    | creatable | editable | required ||
+    ...    || id_mime_type | true    | id_mime_type | integer | true      | false    | false    ||
+    Zed: edit data exchange api configuration:
+    ...    || field_name  | enabled | visible_name | type    | creatable | editable | required ||
+    ...    || comment     | true    | comment      | string  | true      | true     | false    ||
+    Zed: edit data exchange api configuration:
+    ...    || field_name  | enabled | visible_name | type    | creatable | editable | required ||
+    ...    || extensions  | true    | extensions   | string  | true      | true     | false    ||
+    Zed: edit data exchange api configuration:
+    ...    || field_name  | enabled | visible_name | type    | creatable | editable | required ||
+    ...    || is_allowed  | true    | is_allowed   | boolean | true      | true     | true     ||
+    Zed: edit data exchange api configuration:
+    ...    || field_name | enabled | visible_name | type   | creatable | editable | required ||
+    ...    || name       | true    | name         | string | true      | true     | true     ||
+    Zed: save data exchange api configuration
+    Trigger API specification update
+    Trigger multistore p&s
+    Zed: wait until info box is not displayed
+    API_test_setup
+    I get access token by user credentials:   ${zed_admin_email}
+    ### CREATE TEST MIME TYPE USING DATA EXCHANGE API ###
+    I set Headers:    Content-Type=application/json    Authorization=Bearer ${token}
+    I send a POST request:    /dynamic-entity/mime-types    {"data":[{"name":"POST ${random}","is_allowed":${false},"extensions":"[\\"fake\\"]"}]}
+    Response status code should be:    201
+    Response header parameter should be:    Content-Type    application/json
+    Response body parameter should be:    [data][0][name]    POST ${random}
+    Response body parameter should be:    [data][0][is_allowed]    False
+    Response body parameter should be:    [data][0][extensions]    "fake"
+    Response body parameter should be:    [data][0][comment]    None
+    Save value to a variable:    [data][0][id_mime_type]    id_mime_type
+    ### UPDATE TEST MIME TYPE USING DATA EXCHANGE API ###
+    I send a PATCH request:    /dynamic-entity/mime-types/${id_mime_type}    {"data":{"comment":${null},"extensions":"[\\"dummy\\"]","is_allowed":${true},"name":"PATCH ${random}"}}
+    Response status code should be:    200
+    ### GET UPDATE TEST MIME TYPE BY ID ###
+    I send a GET request:    /dynamic-entity/mime-types/${id_mime_type}
+    Response status code should be:    200
+    Response header parameter should be:    Content-Type    application/json
+    Response body parameter should be:    [data][name]    PATCH ${random}
+    Response body parameter should be:    [data][is_allowed]    True
+    Response body parameter should be:    [data][extensions]    "dummy"
+    Response body parameter should be:    [data][comment]    None
+    ### DELETE TEST CONFIGURATION AND TEST MIME TYPE FROM DB ###
+    [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    ...    AND    Zed: edit data exchange api configuration:
+    ...    || table_name  | is_enabled ||
+    ...    || mime-types  | false      ||
+    ...    AND    Zed: save data exchange api configuration
+    ...    AND    Trigger API specification update
+    ...    AND    Zed: wait until info box is not displayed
+    ...    AND    Delete dynamic entity configuration in Database:    mime-types
+    ...    AND    Delete mime_type by id_mime_type in Database:    ${id_mime_type}
+    ...    AND    Trigger API specification update
 
 Fulfilment_app_e2e
     # # LOGGED IN TO BO and SET CHECKBOX is a warehouse user = true FOR admin_de USER. UI TEST
+    Make user a warehouse user/ not a warehouse user:    ${warehous_user[0].de_admin_user_uuid}    0
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: update Zed user:
-    ...    || oldEmail                       | password      | user_is_warehouse_user ||
-    ...    || admin_de@spryker.com           | Change123!321 | true                   ||
-    common_api.TestSetup
+    ...    || oldEmail              | user_is_warehouse_user ||
+    ...    || admin_de@spryker.com  | true                   ||
+    Remove Tags    *
+    Set Tags   bapi
+    API_test_setup
     # # ASSIGN admin_de user TO WAREHOUSE [Warehouse 1] MAKE WAREHOUSE ACTIVE BY BAPI
     And I get access token by user credentials:   ${zed_admin_email}
-    common_api.I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer ${token}
-    common_api.I send a POST request:    /warehouse-user-assignments    {"data": {"type": "warehouse-user-assignments", "attributes":{"userUuid": "${warehous_user[0].de_admin_user_uuid}","warehouse" :{"uuid": "${warehouse[0].warehouse_uuid_warehouse1}"},"isActive":"true"}}}
+    I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer ${token}
+    I send a POST request:    /warehouse-user-assignments    {"data": {"type": "warehouse-user-assignments", "attributes":{"userUuid": "${warehous_user[0].de_admin_user_uuid}","warehouse" :{"uuid": "${warehouse[0].warehouse_uuid_warehouse1}"},"isActive":"true"}}}
     Then Response status code should be:    201
     Then Save value to a variable:    [data][id]   warehouse_assigment_id  
     # CREATE AN ORDER BY GLUE
-    common_api.I set Headers:    Content-Type=${default_header_content_type}
+    I set Headers:    Content-Type=${default_header_content_type}
+    Remove Tags    *
     Set Tags    glue
-    common_api.TestSetup
+    API_test_setup
     When I get access token for the customer:    ${yves_user_email}    
-    Then common_api.I set Headers:    Authorization=${token}
+    Then I set Headers:    Authorization=${token}
     When Find or create customer cart
     Then Cleanup all items in the cart:    ${cart_id}
-    common_api.I send a POST request:    /carts/${cart_id}/items?include=items    {"data": {"type": "items","attributes": {"sku": "091_25873091","quantity": 1}}}
-    common_api.I send a POST request:    /carts/${cart_id}/items?include=items    {"data": {"type": "items","attributes": {"sku": "093_24495843","quantity": 1}}}
-    common_api.I send a POST request:    /checkout-data    {"data": {"type": "checkout-data","attributes": {"customer": {"email": "${yves_user_email}","salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}"},"idCart": "${cart_id}","billingAddress": {"salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}","address1": "${default.address1}","address2": "${default.address2}","address3": "${default.address3}","zipCode": "${default.zipCode}","city": "${default.city}","iso2Code": "${default.iso2Code}","company": "${default.company}","phone": "${default.phone}","isDefaultBilling": True,"isDefaultShipping": True},"shippingAddress": {"salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}","address1": "${default.address1}","address2": "${default.address2}","address3": "${default.address3}","zipCode": "${default.zipCode}","city": "${default.city}","iso2Code": "${default.iso2Code}","company": "${default.company}","phone": "${default.phone}","isDefaultBilling": True,"isDefaultShipping": True},"payments": [{"paymentProviderName": "${payment_provider_name_1}","paymentMethodName": "${payment_method_name}"}],"shipment": {"idShipmentMethod": 1},"items": ["091_25873091","093_24495843"]}}}
+    I send a POST request:    /carts/${cart_id}/items?include=items    {"data": {"type": "items","attributes": {"sku": "091_25873091","quantity": 1}}}
+    I send a POST request:    /carts/${cart_id}/items?include=items    {"data": {"type": "items","attributes": {"sku": "093_24495843","quantity": 1}}}
+    I send a POST request:    /checkout-data    {"data": {"type": "checkout-data","attributes": {"customer": {"email": "${yves_user_email}","salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}"},"idCart": "${cart_id}","billingAddress": {"salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}","address1": "${default.address1}","address2": "${default.address2}","address3": "${default.address3}","zipCode": "${default.zipCode}","city": "${default.city}","iso2Code": "${default.iso2Code}","company": "${default.company}","phone": "${default.phone}","isDefaultBilling": True,"isDefaultShipping": True},"shippingAddress": {"salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}","address1": "${default.address1}","address2": "${default.address2}","address3": "${default.address3}","zipCode": "${default.zipCode}","city": "${default.city}","iso2Code": "${default.iso2Code}","company": "${default.company}","phone": "${default.phone}","isDefaultBilling": True,"isDefaultShipping": True},"payments": [{"paymentProviderName": "${payment_provider_name_1}","paymentMethodName": "${payment_method_name}"}],"shipment": {"idShipmentMethod": 1},"items": ["091_25873091","093_24495843"]}}}
     Then Response status code should be:    200
-    common_api.I send a POST request:    /checkout?include=orders    {"data": {"type": "checkout","attributes": {"customer": {"email": "${yves_user_email}","salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}"},"idCart": "${cart_id}","billingAddress": {"salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}","address1": "${default.address1}","address2": "${default.address2}","address3": "${default.address3}","zipCode": "${default.zipCode}","city": "${default.city}","iso2Code": "${default.iso2Code}","company": "${default.company}","phone": "${default.phone}","isDefaultBilling": False,"isDefaultShipping": False},"shippingAddress": {"salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}","address1": "${default.address1}","address2": "${default.address2}","address3": "${default.address3}","zipCode": "${default.zipCode}","city": "${default.city}","iso2Code": "${default.iso2Code}","company": "${default.company}","phone": "${default.phone}","isDefaultBilling": False,"isDefaultShipping": False},"payments": [{"paymentProviderName": "${payment_provider_name_1}","paymentMethodName": "${payment_method_name}"}],"shipment": {"idShipmentMethod": 1},"items": ["091_25873091","093_24495843"]}}}
+    I send a POST request:    /checkout?include=orders    {"data": {"type": "checkout","attributes": {"customer": {"email": "${yves_user_email}","salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}"},"idCart": "${cart_id}","billingAddress": {"salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}","address1": "${default.address1}","address2": "${default.address2}","address3": "${default.address3}","zipCode": "${default.zipCode}","city": "${default.city}","iso2Code": "${default.iso2Code}","company": "${default.company}","phone": "${default.phone}","isDefaultBilling": False,"isDefaultShipping": False},"shippingAddress": {"salutation": "${yves_user_salutation}","firstName": "${yves_user_first_name}","lastName": "${yves_user_last_name}","address1": "${default.address1}","address2": "${default.address2}","address3": "${default.address3}","zipCode": "${default.zipCode}","city": "${default.city}","iso2Code": "${default.iso2Code}","company": "${default.company}","phone": "${default.phone}","isDefaultBilling": False,"isDefaultShipping": False},"payments": [{"paymentProviderName": "${payment_provider_name_1}","paymentMethodName": "${payment_method_name}"}],"shipment": {"idShipmentMethod": 1},"items": ["091_25873091","093_24495843"]}}}
     Then Response status code should be:    201
     And Save value to a variable:    [included][0][attributes][items][0][uuid]    uuid
     And Save value to a variable:    [included][0][attributes][items][1][uuid]    uuid1
@@ -1641,31 +1791,31 @@ Fulfilment_app_e2e
     And Update order status in Database:    waiting    ${uuid} 
     And Update order status in Database:    waiting    ${uuid1}     
     # # MOVE ORDER ITEMS TO PROPER STATE USING BO, PICKING LIST GENERATED AUTOMATICALLY. UI TEST
-    common.TestSetup
+    UI_test_setup
     Yves: login on Yves with provided credentials:    ${yves_user_email}
     Yves: get the last placed order ID by current customer
+    Trigger oms
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to order page:    ${lastPlacedOrder}
     Zed: trigger all matching states inside this order:    picking list generation schedule
-    Trigger oms
     # # ORDER READY FOR PICKING
     Zed: wait for order item to be in state:    091_25873091    ready for picking
     Zed: wait for order item to be in state:    093_24495843    ready for picking
     # # START PICKING PROCESS AND PICKING ITEMS BY BAPI
     Remove Tags    glue
     Set Tags   bapi
-    common_api.TestSetup
-    common_api.I set Headers:    Content-Type=${default_header_content_type}
-    Then I get access token by user credentials:   ${zed_admin_email_de}    Change123!321
-    common_api.I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer ${token}
-    common_api.I send a GET request:    /picking-lists/?include=picking-list-items,concrete-products,sales-shipments,sales-orders,include=warehouses
+    API_test_setup
+    I set Headers:    Content-Type=${default_header_content_type}
+    Then I get access token by user credentials:   ${zed_admin_email_de}
+    I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer ${token}
+    I send a GET request:    /picking-lists/?include=picking-list-items,concrete-products,sales-shipments,sales-orders,include=warehouses
     Then Response status code should be:    200
     Then Save value to a variable:    [data][0][id]    picklist_id
     Then Save value to a variable:    [data][0][relationships][picking-list-items][data][0][id]    item_id_1
     Then Save value to a variable:    [data][0][relationships][picking-list-items][data][1][id]    item_id_2
     And Response body parameter should be:    [data][0][attributes][status]    ready-for-picking
     # # START PICKING
-    common_api.I send a POST request:   /picking-lists/${picklist_id}/start-picking    {"data": [{"type": "picking-lists","attributes": {"action": "startPicking"}}]}
+    I send a POST request:   /picking-lists/${picklist_id}/start-picking    {"data": [{"type": "picking-lists","attributes": {"action": "startPicking"}}]}
     Then Response status code should be:    201
     And Response body parameter should be:    [data][attributes][status]    picking-started
     # # PICKING ONE ITEM, ANOTHER ITEM STILL NOT PICKED

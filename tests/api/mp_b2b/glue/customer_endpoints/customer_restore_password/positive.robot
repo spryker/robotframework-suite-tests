@@ -1,11 +1,11 @@
 *** Settings ***
-Suite Setup       SuiteSetup
+Suite Setup       API_suite_setup
 Resource    ../../../../../../resources/common/common_api.robot
 Default Tags    glue
 
 *** Test Cases ***
 ENABLER
-    TestSetup
+    API_test_setup
 Restore_password_with_all_required_fields_and_valid_data
     [Setup]    Run Keywords    I send a POST request:    /customers/    {"data":{"type":"customers","attributes":{"firstName":"${yves_user.first_name}","lastName":"${yves_user.last_name}","gender":"${gender.female}","salutation":"${yves_user.salutation}","email":"random-name1+${random}${email.domain}","password":"${yves_user.password_new}","confirmPassword":"${yves_user.password_new}","acceptedTerms":True}}}
     ...    AND    Response status code should be:    201

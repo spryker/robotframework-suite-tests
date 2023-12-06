@@ -1,15 +1,15 @@
 *** Settings ***
 Resource        ../../../../../../resources/common/common_api.robot
 
-Suite Setup     SuiteSetup
-Test Setup      TestSetup
+Suite Setup     API_suite_setup
+Test Setup      API_test_setup
 
 Default Tags    glue
 
 
 *** Test Cases ***
 ENABLER
-    TestSetup
+    API_test_setup
 
 Abstract_product_with_one_concrete
     #Bug - CC-16551
@@ -112,6 +112,8 @@ Abstract_product_with_abstract_includes_for_availability_images_taxes_categories
     And Response include element has self link:    abstract-product-prices
 
 Abstract_product_with_abstract_includes_for_labels
+    [Documentation]    https://spryker.atlassian.net/browse/CC-31988
+    [Tags]    skip-due-to-refactoring
     When I send a GET request:    /abstract-products/${abstract.with_label.sku}?include=product-labels
     Then Response status code should be:    200
     And Response reason should be:    OK

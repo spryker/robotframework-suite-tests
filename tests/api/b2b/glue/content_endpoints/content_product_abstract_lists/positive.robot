@@ -1,15 +1,15 @@
 *** Settings ***
 Resource        ../../../../../../resources/common/common_api.robot
 
-Suite Setup     SuiteSetup
-Test Setup      TestSetup
+Suite Setup     API_suite_setup
+Test Setup      API_test_setup
 
 Default Tags    glue
 
 
 *** Test Cases ***
 ENABLER
-    TestSetup
+    API_test_setup
 
 Abstract_product_list
     When I send a GET request:    /content-product-abstract-lists/${abstract_list.id}

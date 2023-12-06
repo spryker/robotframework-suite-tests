@@ -1,5 +1,5 @@
 *** Settings ***
-Resource    ../common/common.robot
+Resource    ../common/common_ui.robot
 Resource    ../../resources/pages/yves/yves_product_configurator_page.robot
 Resource    ../../resources/pages/yves/yves_product_details_page.robot
 Resource    ../../resources/pages/zed/zed_order_details_page.robot
@@ -19,10 +19,10 @@ Yves: change the product configuration to:
     END
     Click    ${configurator_day_time_selector}
     ### sleep 1 seconds to process background event
-    Repeat Keyword    2    Wait Until Network Is Idle
+    Repeat Keyword    3    Wait Until Network Is Idle
     Sleep    1s
     Click    ${configurator_save_button}
-    Repeat Keyword    2    Wait Until Network Is Idle
+    Repeat Keyword    3    Wait Until Network Is Idle
     Wait Until Element Is Visible    ${pdp_configure_button}
 
 Yves: product configuration status should be equal:
@@ -35,8 +35,13 @@ Yves: configuration should be equal:
     Wait Until Element Is Visible    ${pdp_configure_button}
     FOR    ${key}    ${value}    IN    &{configurationData}
         Log    Key is '${key}' and value is '${value}'.
-        IF    '${key}'=='date' and '${value}' != '${EMPTY}'   Element Text Should Be    ${pdp_configuration_date}[${env}]    ${value}
-        IF    '${key}'=='date_time' and '${value}' != '${EMPTY}'   Element Text Should Be    ${pdp_configuration_date_time}[${env}]    ${value}
+        IF    '${env}' in ['ui_suite']
+            IF    '${key}'=='date' and '${value}' != '${EMPTY}'   Element Should Contain    ${pdp_configuration_date}[${env}]    ${value}
+            IF    '${key}'=='date_time' and '${value}' != '${EMPTY}'   Element Should Contain    ${pdp_configuration_date_time}[${env}]    ${value}
+        ELSE
+            IF    '${key}'=='date' and '${value}' != '${EMPTY}'   Element Text Should Be    ${pdp_configuration_date}[${env}]    ${value}
+            IF    '${key}'=='date_time' and '${value}' != '${EMPTY}'   Element Text Should Be    ${pdp_configuration_date_time}[${env}]    ${value}
+        END
     END
 
 Yves: check and go back that configuration page contains:

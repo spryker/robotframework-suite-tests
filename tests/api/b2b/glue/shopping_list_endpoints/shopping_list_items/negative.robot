@@ -1,15 +1,15 @@
 *** Settings ***
 Resource        ../../../../../../resources/common/common_api.robot
 
-Suite Setup     SuiteSetup
-Test Setup      TestSetup
+Suite Setup     API_suite_setup
+Test Setup      API_test_setup
 
 Default Tags    glue
 
 
 *** Test Cases ***
 ENABLER
-    TestSetup
+    API_test_setup
 
 Add_a_concrete_product_to_the_shopping_list_without_access_token
     I send a POST request:
@@ -384,7 +384,7 @@ Update_product_quntity_at_the_shopping_list_to_not_allowed_qty
     And Array in response should contain property with value:
     ...    [errors]
     ...    detail
-    ...    quantity => This value should be less than 2147483647.  
+    ...    quantity => This value should be less than 2147483647.
 
 
 Update_product_quntity_at_the_shopping_list_to_a_negative_number
@@ -568,7 +568,7 @@ Remove_a_concrete_product_from_the_shared_shopping_list_without_write_access_per
 
 Add_a_non-configurable_product_to_the_shopping_list_with_configuration
     [Documentation]   https://spryker.atlassian.net/browse/CC-23115
-    [Tags]    skip-due-to-issue  
+    [Tags]    skip-due-to-issue
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     ...    AND    I send a POST request:    /shopping-lists    {"data":{"type":"shopping-lists","attributes":{"name":"${shopping_list_name}${random}"}}}
@@ -585,7 +585,7 @@ Add_a_non-configurable_product_to_the_shopping_list_with_configuration
 
 Add_a_non-configurable_product_to_the_shopping_list_with_configuration_and_configurable_product
     [Documentation]   https://spryker.atlassian.net/browse/CC-23115
-    [Tags]    skip-due-to-issue  
+    [Tags]    skip-due-to-issue
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     ...    AND    I send a POST request:    /shopping-lists    {"data":{"type":"shopping-lists","attributes":{"name":"${shopping_list_name}${random}"}}}
@@ -612,9 +612,9 @@ Add_a_non-configurable_product_to_the_shopping_list_with_configuration_and_confi
     ...    AND    Response status code should be:    204
     ...    AND    Response reason should be:    No Content
 
-Add_a_configurable_product_with_zero_quantity_to_the_shopping_list  
+Add_a_configurable_product_with_zero_quantity_to_the_shopping_list
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
-    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}  
+    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     ...    AND    I send a POST request:    /shopping-lists    {"data":{"type":"shopping-lists","attributes":{"name":"${shopping_list_name}${random}"}}}
     ...    AND    Response status code should be:    201
     ...    AND    Save value to a variable:    [data][id]    shoppingListId
@@ -627,9 +627,9 @@ Add_a_configurable_product_with_zero_quantity_to_the_shopping_list
     ...    AND    Response status code should be:    204
     ...    AND    Response reason should be:    No Content
 
-Add_a_configurable_product_with_string_quantity_to_the_shopping_list  
+Add_a_configurable_product_with_string_quantity_to_the_shopping_list
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
-    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}  
+    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     ...    AND    I send a POST request:    /shopping-lists    {"data":{"type":"shopping-lists","attributes":{"name":"${shopping_list_name}${random}"}}}
     ...    AND    Response status code should be:    201
     ...    AND    Save value to a variable:    [data][id]    shoppingListId
@@ -642,9 +642,9 @@ Add_a_configurable_product_with_string_quantity_to_the_shopping_list
     ...    AND    Response status code should be:    204
     ...    AND    Response reason should be:    No Content
 
-Add_a_configurable_product_with_negative_quantity_to_the_shopping_list  
+Add_a_configurable_product_with_negative_quantity_to_the_shopping_list
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
-    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}  
+    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     ...    AND    I send a POST request:    /shopping-lists    {"data":{"type":"shopping-lists","attributes":{"name":"${shopping_list_name}${random}"}}}
     ...    AND    Response status code should be:    201
     ...    AND    Save value to a variable:    [data][id]    shoppingListId
@@ -657,9 +657,9 @@ Add_a_configurable_product_with_negative_quantity_to_the_shopping_list
     ...    AND    Response status code should be:    204
     ...    AND    Response reason should be:    No Content
 
-Add_a_configurable_product_with_missing_quantity_to_the_shopping_list  
+Add_a_configurable_product_with_missing_quantity_to_the_shopping_list
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
-    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}  
+    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     ...    AND    I send a POST request:    /shopping-lists    {"data":{"type":"shopping-lists","attributes":{"name":"${shopping_list_name}${random}"}}}
     ...    AND    Response status code should be:    201
     ...    AND    Save value to a variable:    [data][id]    shoppingListId
@@ -672,9 +672,9 @@ Add_a_configurable_product_with_missing_quantity_to_the_shopping_list
     ...    AND    Response status code should be:    204
     ...    AND    Response reason should be:    No Content
 
-Add_a_configurable_product_with_empty_quantity_value_of_to_the_shopping_list  
+Add_a_configurable_product_with_empty_quantity_value_of_to_the_shopping_list
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
-    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}  
+    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     ...    AND    I send a POST request:    /shopping-lists    {"data":{"type":"shopping-lists","attributes":{"name":"${shopping_list_name}${random}"}}}
     ...    AND    Response status code should be:    201
     ...    AND    Save value to a variable:    [data][id]    shoppingListId
@@ -690,13 +690,13 @@ Add_a_configurable_product_with_empty_quantity_value_of_to_the_shopping_list
     And Response body parameter should be:    [data][attributes][numberOfItems]    0
     [Teardown]    Run Keywords    I send a DELETE request:    /shopping-lists/${shoppingListId}
     ...    AND    Response status code should be:    204
-    ...    AND    Response reason should be:    No Content    
+    ...    AND    Response reason should be:    No Content
 
 Add_a_configurable_product_with_empty_availableQuantity_value_of_to_the_shopping_list
     [Documentation]   https://spryker.atlassian.net/browse/CC-25381
-    [Tags]    skip-due-to-issue    
+    [Tags]    skip-due-to-issue
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
-    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}  
+    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     ...    AND    I send a POST request:    /shopping-lists    {"data":{"type":"shopping-lists","attributes":{"name":"${shopping_list_name}${random}"}}}
     ...    AND    Response status code should be:    201
     ...    AND    Save value to a variable:    [data][id]    shoppingListId
@@ -712,9 +712,9 @@ Add_a_configurable_product_with_empty_availableQuantity_value_of_to_the_shopping
 
 Add_aconfigurable_product_with_missing_availableQuantity_value_of_to_the_shopping_list
     [Documentation]   https://spryker.atlassian.net/browse/CC-25381
-    [Tags]    skip-due-to-issue    
+    [Tags]    skip-due-to-issue
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
-    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}  
+    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     ...    AND    I send a POST request:    /shopping-lists    {"data":{"type":"shopping-lists","attributes":{"name":"${shopping_list_name}${random}"}}}
     ...    AND    Response status code should be:    201
     ...    AND    Save value to a variable:    [data][id]    shoppingListId
@@ -725,13 +725,13 @@ Add_aconfigurable_product_with_missing_availableQuantity_value_of_to_the_shoppin
     And Response should return error message:    availableQuantity => This field is missing.
     [Teardown]    Run Keywords    I send a DELETE request:    /shopping-lists/${shoppingListId}
     ...    AND    Response status code should be:    204
-    ...    AND    Response reason should be:    No Content 
+    ...    AND    Response reason should be:    No Content
 
 Add_aconfigurable_product_with_string_availableQuantity_value_of_to_the_shopping_list
     [Documentation]   https://spryker.atlassian.net/browse/CC-25381
-    [Tags]    skip-due-to-issue    
+    [Tags]    skip-due-to-issue
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
-    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}  
+    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     ...    AND    I send a POST request:    /shopping-lists    {"data":{"type":"shopping-lists","attributes":{"name":"${shopping_list_name}${random}"}}}
     ...    AND    Response status code should be:    201
     ...    AND    Save value to a variable:    [data][id]    shoppingListId
@@ -745,10 +745,8 @@ Add_aconfigurable_product_with_string_availableQuantity_value_of_to_the_shopping
     ...    AND    Response reason should be:    No Content
 
 Add_a_configurable_product_with_numeric_isComplete_value_of_to_the_shopping_list
-    [Documentation]   https://spryker.atlassian.net/browse/CC-25381
-    [Tags]    skip-due-to-issue    
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
-    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}  
+    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     ...    AND    I send a POST request:    /shopping-lists    {"data":{"type":"shopping-lists","attributes":{"name":"${shopping_list_name}${random}"}}}
     ...    AND    Response status code should be:    201
     ...    AND    Save value to a variable:    [data][id]    shoppingListId
@@ -756,16 +754,14 @@ Add_a_configurable_product_with_numeric_isComplete_value_of_to_the_shopping_list
     And Response status code should be:    422
     And Response should return error code:    901
     And Response reason should be:    Unprocessable Content
-    And Response should return error message:    isComplete => This value should be of type boolean.
+    And Response should return error message:    productConfigurationInstance.isComplete => This value should be of type boolean.
     [Teardown]    Run Keywords    I send a DELETE request:    /shopping-lists/${shoppingListId}
     ...    AND    Response status code should be:    204
     ...    AND    Response reason should be:    No Content
 
 Add_a_configurable_product_with_string_isComplete_value_of_to_the_shopping_list
-    [Documentation]   https://spryker.atlassian.net/browse/CC-25381
-    [Tags]    skip-due-to-issue    
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
-    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}  
+    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     ...    AND    I send a POST request:    /shopping-lists    {"data":{"type":"shopping-lists","attributes":{"name":"${shopping_list_name}${random}"}}}
     ...    AND    Response status code should be:    201
     ...    AND    Save value to a variable:    [data][id]    shoppingListId
@@ -773,16 +769,14 @@ Add_a_configurable_product_with_string_isComplete_value_of_to_the_shopping_list
     And Response status code should be:    422
     And Response should return error code:    901
     And Response reason should be:    Unprocessable Content
-    And Response should return error message:    isComplete => This value should be of type boolean.
+    And Response should return error message:    productConfigurationInstance.isComplete => This value should be of type boolean.
     [Teardown]    Run Keywords    I send a DELETE request:    /shopping-lists/${shoppingListId}
     ...    AND    Response status code should be:    204
     ...    AND    Response reason should be:    No Content
 
 Add_a_configurable_product_with_missing_isComplete_value_of_to_the_shopping_list
-    [Documentation]   https://spryker.atlassian.net/browse/CC-25381
-    [Tags]    skip-due-to-issue    
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
-    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}  
+    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     ...    AND    I send a POST request:    /shopping-lists    {"data":{"type":"shopping-lists","attributes":{"name":"${shopping_list_name}${random}"}}}
     ...    AND    Response status code should be:    201
     ...    AND    Save value to a variable:    [data][id]    shoppingListId
@@ -790,16 +784,14 @@ Add_a_configurable_product_with_missing_isComplete_value_of_to_the_shopping_list
     And Response status code should be:    422
     And Response should return error code:    901
     And Response reason should be:    Unprocessable Content
-    And Response should return error message:    isComplete => This field is missing.
+    And Response should return error message:    productConfigurationInstance.isComplete => This field is missing.
     [Teardown]    Run Keywords    I send a DELETE request:    /shopping-lists/${shoppingListId}
     ...    AND    Response status code should be:    204
     ...    AND    Response reason should be:    No Content
 
 Add_a_configurable_product_with_negative_price_value_of_to_the_shopping_list
-    [Documentation]   https://spryker.atlassian.net/browse/CC-25381
-    [Tags]    skip-due-to-issue    
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
-    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}  
+    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     ...    AND    I send a POST request:    /shopping-lists    {"data":{"type":"shopping-lists","attributes":{"name":"${shopping_list_name}${random}"}}}
     ...    AND    Response status code should be:    201
     ...    AND    Save value to a variable:    [data][id]    shoppingListId
@@ -807,17 +799,21 @@ Add_a_configurable_product_with_negative_price_value_of_to_the_shopping_list
     And Response status code should be:    422
     And Response should return error code:    901
     And Response reason should be:    Unprocessable Content
-    And Response should return error message:    netAmount => This value should be greater than 0.
-    And Response should return error message:    grossAmount => This value should be greater than 0.
+    And Array in response should contain property with value:
+    ...    [errors]
+    ...    detail
+    ...    productConfigurationInstance.prices.0.netAmount => This value should be greater than or equal to 0.
+    And Array in response should contain property with value:
+    ...    [errors]
+    ...    detail
+    ...    productConfigurationInstance.prices.0.grossAmount => This value should be greater than or equal to 0.
     [Teardown]    Run Keywords    I send a DELETE request:    /shopping-lists/${shoppingListId}
     ...    AND    Response status code should be:    204
-    ...    AND    Response reason should be:    No Content   
+    ...    AND    Response reason should be:    No Content
 
 Add_a_configurable_product_with_empty_price_value_of_to_the_shopping_list
-    [Documentation]   https://spryker.atlassian.net/browse/CC-25381
-    [Tags]    skip-due-to-issue    
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
-    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}  
+    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     ...    AND    I send a POST request:    /shopping-lists    {"data":{"type":"shopping-lists","attributes":{"name":"${shopping_list_name}${random}"}}}
     ...    AND    Response status code should be:    201
     ...    AND    Save value to a variable:    [data][id]    shoppingListId
@@ -825,19 +821,21 @@ Add_a_configurable_product_with_empty_price_value_of_to_the_shopping_list
     And Response status code should be:    422
     And Response should return error code:    901
     And Response reason should be:    Unprocessable Content
-    And Response should return error message:    netAmount => This value should not be blank.
-    And Response should return error message:    netAmount => This value should be of type numeric.
-    And Response should return error message:    grossAmount => This value should not be blank.
-    And Response should return error message:    grossAmount => This value should be of type numeric.
+    And Array in response should contain property with value:
+    ...    [errors]
+    ...    detail
+    ...    productConfigurationInstance.prices.0.netAmount => This value should not be blank.
+    And Array in response should contain property with value:
+    ...    [errors]
+    ...    detail
+    ...    productConfigurationInstance.prices.0.grossAmount => This value should not be blank.
     [Teardown]    Run Keywords    I send a DELETE request:    /shopping-lists/${shoppingListId}
     ...    AND    Response status code should be:    204
-    ...    AND    Response reason should be:    No Content    
+    ...    AND    Response reason should be:    No Content
 
 Add_a_configurable_product_to_the_shopping_list_with_missing_price
-    [Documentation]   https://spryker.atlassian.net/browse/CC-25381
-    [Tags]    skip-due-to-issue    
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
-    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}  
+    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     ...    AND    I send a POST request:    /shopping-lists    {"data":{"type":"shopping-lists","attributes":{"name":"${shopping_list_name}${random}"}}}
     ...    AND    Response status code should be:    201
     ...    AND    Save value to a variable:    [data][id]    shoppingListId
@@ -845,8 +843,14 @@ Add_a_configurable_product_to_the_shopping_list_with_missing_price
     And Response status code should be:    422
     And Response should return error code:    901
     And Response reason should be:    Unprocessable Content
-    And Response should return error message:    netAmount => This field is missing.
-    And Response should return error message:    grossAmount => This field is missing.
+    And Array in response should contain property with value:
+    ...    [errors]
+    ...    detail
+    ...    productConfigurationInstance.prices.0.netAmount => This field is missing.
+    And Array in response should contain property with value:
+    ...    [errors]
+    ...    detail
+    ...    productConfigurationInstance.prices.0.grossAmount => This field is missing.
     [Teardown]    Run Keywords    I send a DELETE request:    /shopping-lists/${shoppingListId}
     ...    AND    Response status code should be:    204
     ...    AND    Response reason should be:    No Content

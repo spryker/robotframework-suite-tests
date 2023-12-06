@@ -6,7 +6,6 @@ Resource    ../pages/zed/zed_attach_to_business_unit_page.robot
 Resource    ../pages/yves/yves_customer_account_page.robot
 Resource    ../pages/zed/zed_delete_company_user_page.robot
 
-
 *** Keywords ***
 Zed: create new Company Business Unit with provided name and company:
     [Documentation]     Creates new company BU with provided BU Name and for provided company.
@@ -82,7 +81,14 @@ Zed: Create new Company User with provided email/company/business unit and role(
 Zed: attach company user to the following BU with role:
     [Arguments]    ${business_unit}    ${role_checkbox}
     Wait Until Element Is Visible    ${zed_business_unit_selector}
-    Select From List By Label    ${zed_business_unit_selector}    ${business_unit}
+    IF    '${env}' in ['ui_suite']
+        Click    ${zed_attach_customer_to_bu_business_unit_span}
+        Wait Until Element Is Visible    ${zed_edit_company_user_search_select_field}
+        Type Text    ${zed_edit_company_user_search_select_field}    ${business_unit}
+        Click    xpath=(//input[@type='search']/../..//ul[contains(.,'${business_unit}')])[1]
+    ELSE
+        Select From List By Label    ${zed_business_unit_selector}    ${business_unit}
+    END
     Zed: Check checkbox by Label:    ${role_checkbox}
     Zed: submit the form
 

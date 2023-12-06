@@ -1,13 +1,13 @@
 *** Settings ***
-Suite Setup       SuiteSetup
-Test Setup        TestSetup
+Suite Setup       API_suite_setup
+Test Setup        API_test_setup
 Resource    ../../../../../../resources/common/common_api.robot
 Resource    ../../../../../../resources/steps/push_notifications_steps.robot
 Default Tags    bapi
 
 *** Test Cases ***
 ENABLER
-   TestSetup
+    API_test_setup
 
 *** Test Cases ***
 Create_push_notification_provider
@@ -65,7 +65,7 @@ Retrieve_push_notification_providers
     And Each array in response should contain property with NOT EMPTY value:    [data]    [attributes][uuid]
     [Teardown]     Run Keywords    I send a DELETE request:    /push-notification-providers/${push_notification_provider_id}
     ...    AND    I send a DELETE request:    /push-notification-providers/${push_notification_provider_id_2}
-    
+
 Retrieve_push_notification_provider_with_pagination
     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
     ...    AND    I set Headers:    Content-Type=application/vnd.api+json   Authorization=Bearer ${token}
@@ -117,8 +117,8 @@ Retrieve_push_notification_provider_by_id
 
 Delete_push_notification_provider_while_push_notofocation_subscribtion_exists
     [Setup]    Run Keywords    Create warehouse in DB:    ${warehouses[0].name}     ${True}     ${warehouses[0].uuid}
-    ...    AND    Assign user to Warehouse in DB:    richard@spryker.com    ${warehouses[0].uuid}
-    I get access token by user credentials:    richard@spryker.com
+    ...    AND    Assign user to Warehouse in DB:    ${zed_admin.email}    ${warehouses[0].uuid}
+    I get access token by user credentials:    ${zed_admin.email}
     When I set Headers:    Content-Type=${default_header_content_type}    Authorization=Bearer ${token}
     # create a provider for push notification
     When I send a POST request:    /push-notification-providers    {"data": {"type": "push-notification-providers","attributes": {"name": "My Push Notification Provider ${random}"}}}
@@ -133,7 +133,7 @@ Delete_push_notification_provider_while_push_notofocation_subscribtion_exists
     Then Response status code should be:    400
     And Response should return error code:    5004
     And Response should return error message:    Unable to delete push notification provider while push notification subscription exists.
-    [Teardown]    Run Keywords    De-assign user from Warehouse in DB:    richard@spryker.com    ${warehouses[0].uuid}
+    [Teardown]    Run Keywords    De-assign user from Warehouse in DB:    ${zed_admin.email}    ${warehouses[0].uuid}
     ...    AND    Delete warehouse in DB:   ${warehouses[0].uuid}
     ...    AND    Delete push notification subscription in DB:    ${push_notification_subscription_uuid}
     ...    AND    I send a DELETE request:    /push-notification-providers/${push_notification_provider_id}

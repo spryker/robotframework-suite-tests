@@ -11,23 +11,33 @@ Resource    order_history_steps.robot
 *** Keywords ***
 Yves: add comment on cart:
     [Arguments]    ${comment}
-    Click With Options    ${shopping_cart_write_comment_placeholder}    delay=0.5s
-    Type Text    ${shopping_cart_write_comment_placeholder}    ${comment}
+    Click With Options    ${shopping_cart_write_comment_placeholder}    delay=0.5s    force=true
+    Type Text    ${shopping_cart_write_comment_placeholder}    ${comment}    delay=50ms
     Keyboard Key    press    Enter
     Click With Options    ${shopping_cart_add_comment_button}    delay=0.5s
 
 Yves: check comments are visible or not in cart:
     [Arguments]    ${condition}    @{comments}    
     FOR    ${element}    IN    @{comments}
-        IF    '${condition}' == 'true'    Element Should Be Visible    xpath=(//comment-form[@data-qa='component comment-form']//p[contains(text(),'${element}')])[1]    message=Comment '${element}' is not visible in the shopping cart but should
-        IF    '${condition}' == 'false'    Element Should Not Be Visible    xpath=(//comment-form[@data-qa='component comment-form']//p[contains(text(),'${element}')])[1]    message=Comment '${element}' is visible in the shopping cart but should not
+        IF    '${env}' in ['ui_suite']
+            IF    '${condition}' == 'true'    Element Should Be Visible    xpath=(//comment-form[@data-qa='component comment-form']//*[contains(text(),'${element}')])[1]    message=Comment '${element}' is not visible in the shopping cart but should
+            IF    '${condition}' == 'false'    Element Should Not Be Visible    xpath=(//comment-form[@data-qa='component comment-form']//*[contains(text(),'${element}')])[1]    message=Comment '${element}' is visible in the shopping cart but should not
+        ELSE
+            IF    '${condition}' == 'true'    Element Should Be Visible    xpath=(//comment-form[@data-qa='component comment-form']//p[contains(text(),'${element}')])[1]    message=Comment '${element}' is not visible in the shopping cart but should
+            IF    '${condition}' == 'false'    Element Should Not Be Visible    xpath=(//comment-form[@data-qa='component comment-form']//p[contains(text(),'${element}')])[1]    message=Comment '${element}' is visible in the shopping cart but should not
+        END
     END
 
 Yves: check comments is visible or not in order:
     [Arguments]    ${condition}    @{comments}    
     FOR    ${element}    IN    @{comments}
-        IF    '${condition}' == 'true'    Element Should Be Visible    xpath=(//comment-form[@data-qa='component comment-form']//p[contains(text(),'${element}')])[1]    message=Comment '${element}' is not visible in BO:order details page but should
-        IF    '${condition}' == 'false'    Element Should Not Be Visible    xpath=(//div[contains(@class,"comment-form__readonly")]/p[contains(text(),'${element}')])[1]   message=Comment '${element}' is visible in BO:order details page but should not
+        IF    '${env}' in ['ui_suite']
+            IF    '${condition}' == 'true'    Element Should Be Visible    xpath=(//comment-thread-list//comment-form[@data-qa='component comment-form']//textarea[contains(text(),'${element}')])[1]    message=Comment '${element}' is not visible in BO:order details page but should
+            IF    '${condition}' == 'false'    Element Should Not Be Visible    xpath=(//comment-thread-list//comment-form[@data-qa='component comment-form']//textarea[contains(text(),'${element}')])[1]   message=Comment '${element}' is visible in BO:order details page but should not
+        ELSE
+            IF    '${condition}' == 'true'    Element Should Be Visible    xpath=(//comment-form[@data-qa='component comment-form']//p[contains(text(),'${element}')])[1]    message=Comment '${element}' is not visible in BO:order details page but should
+            IF    '${condition}' == 'false'    Element Should Not Be Visible    xpath=(//div[contains(@class,"comment-form__readonly")]/p[contains(text(),'${element}')])[1]   message=Comment '${element}' is visible in BO:order details page but should not
+        END
     END
 
 Yves: go to order details page to check comment:
@@ -55,19 +65,23 @@ Zed: check comment appears at order detailed page in zed:
 
 Yves: edit comment on cart:
     [Arguments]    ${comment_to_set}
-    Click With Options    ${shopping_cart_edit_comment_button}    delay=0.5s
-    Click With Options    ${shopping_cart_edit_comment_placeholder}    delay=0.5s
-    Clear Text    ${shopping_cart_edit_comment_placeholder}  
-    Keyboard Key    press    Enter
-    Input Text    ${shopping_cart_edit_comment_placeholder}    ${comment_to_set}
+    Reload
+    Repeat Keyword    3    Wait Until Network Is Idle
+    IF    '${env}' not in ['ui_suite']    Click    ${shopping_cart_edit_comment_button}
+    Repeat Keyword    3    Wait Until Network Is Idle 
+    Fill Text    ${shopping_cart_edit_comment_placeholder}    ${EMPTY}    force=true
+    Fill Text    ${shopping_cart_edit_comment_placeholder}    ${comment_to_set}    force=true
     Click With Options    ${shopping_cart_update_comment_button}    delay=0.5s
+    Repeat Keyword    3    Wait Until Network Is Idle
 
 Yves: delete comment on cart
     Click With Options    ${shopping_cart_remove_comment_button}    delay=0.5s 
+    Repeat Keyword    3    Wait Until Network Is Idle
     Page Should Not Contain Element    ${shopping_cart_remove_comment_button}
 
 Yves: add comment on order in order detail page:
     [Arguments]    ${comment}
     Click With Options    ${order_details_page_add_comments_textbox}    delay=0.5s
-    Type Text    ${order_details_page_add_comments_textbox}    ${comment}
+    Type Text    ${order_details_page_add_comments_textbox}    ${comment}    delay=50ms
     Click With Options    ${add_comment_button_order_details_page}    delay=0.5s
+    Repeat Keyword    3    Wait Until Network Is Idle

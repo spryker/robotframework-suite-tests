@@ -47,6 +47,7 @@ Zed: update Merchant on edit page with the following data:
     Zed: submit the form
     Zed: wait for button in Header to be visible:    Add Merchant    ${browser_timeout}
     Zed: table should contain:    ${zedMerchantNewName}
+
 Zed: update Merchant name on edit page:
     [Arguments]    ${zedMerchantNewName}
     Wait Until Element Is Visible    ${zed_create_merchant_name_field}
@@ -88,13 +89,12 @@ Zed: perform Merchant User search by:
     Wait Until Page Contains Element    ${zed_table_locator}
     Clear Text    ${zed_merchant_user_search_field_locator}
     Type Text    ${zed_merchant_user_search_field_locator}    ${search_key}
-    Keyboard Key    press    Enter
     TRY
         Wait For Response    timeout=10s
     EXCEPT    
         Log    Search event is not fired
     END
-    Wait Until Network Is Idle
+    Repeat Keyword    3    Wait Until Network Is Idle
 
 Zed: click Action Button in Merchant Users table for row that contains:
     [Arguments]    ${row_content}    ${zed_table_action_button_locator}

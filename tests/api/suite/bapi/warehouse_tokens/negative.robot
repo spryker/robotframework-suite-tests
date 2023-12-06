@@ -1,12 +1,12 @@
 *** Settings ***
-Suite Setup       SuiteSetup
-Test Setup    TestSetup
+Suite Setup       API_suite_setup
+Test Setup    API_test_setup
 Resource    ../../../../../resources/common/common_api.robot
 Default Tags    bapi
 
 *** Test Cases ***
 ENABLER
-    TestSetup
+    API_test_setup
 
 New_warehouse_token_without_autorization
     [Tags]    skip-due-to-issue

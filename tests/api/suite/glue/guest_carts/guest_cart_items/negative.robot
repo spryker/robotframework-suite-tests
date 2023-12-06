@@ -1,14 +1,14 @@
 *** Settings ***
-Suite Setup       SuiteSetup
+Suite Setup       API_suite_setup
 Resource    ../../../../../../resources/common/common_api.robot
-Test Setup        TestSetup
+Test Setup        API_test_setup
 Default Tags    glue
 
 *** Test Cases ***
 ENABLER
-    TestSetup
+    API_test_setup
 ### Important CHECKOUT and CHECKOUT-DATA endpoints require Item ID and NOT intem sku. To get item id and include to the cart endpoint.
-### Example:  
+### Example:
 ###I send a POST request:    /carts/${cartId}/items?include=items   {"data": {"type": "items","attributes": {"sku": "${concrete_product.random_weight.sku}","quantity": 1,"salesUnit": {"id": "${sales_unit_id}","amount": 5}}}}
 ### Save value to a variable:    [included][0][id]    test
 ### I send a POST request:    /checkout    {"data": {"type": "checkout","attributes": {"customer": {"email": "${yves_user.email}","salutation": "${yves_user.salutation}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}"},"idCart": "${cart_id}","billingAddress": {"salutation": "${yves_user.salutation}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}","address1": "${default.address1}","address2": "${default.address2}","address3": "${default.address3}","zipCode": "${default.zipCode}","city": "${default.city}","iso2Code": "${default.iso2Code}","company": "${default.company}","phone": "${default.phone}","isDefaultBilling": False,"isDefaultShipping": False},"shippingAddress": {"salutation": "${yves_user.salutation}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}","address1": "${default.address1}","address2": "${default.address2}","address3": "${default.address3}","zipCode": "${default.zipCode}","city": "${default.city}","iso2Code": "${default.iso2Code}","company": "${default.company}","phone": "${default.phone}","isDefaultBilling": False,"isDefaultShipping": False},"payments": [{"paymentProviderName": "${payment.provider_name_1}","paymentMethodName": "${payment.method_name}"}],"shipment": {"idShipmentMethod": 1},"items": ["${test}"]}}}
@@ -211,7 +211,7 @@ Add_a_configurable_product_to_the_cart_with_empty_quantity
    Then Response status code should be:    200
    And Response reason should be:    OK
    And Response body parameter should be:    [data][attributes][totals][grandTotal]    0
-   And Response body parameter should not be EMPTY:    [data][links][self] 
+   And Response body parameter should not be EMPTY:    [data][links][self]
 
 
  Add_a_configurable_product_to_the_cart_with_0_quantity
@@ -228,7 +228,7 @@ Add_a_configurable_product_to_the_cart_with_empty_quantity
    Then Response status code should be:    200
    And Response reason should be:    OK
    And Response body parameter should be:    [data][attributes][totals][grandTotal]    0
-   And Response body parameter should not be EMPTY:    [data][links][self] 
+   And Response body parameter should not be EMPTY:    [data][links][self]
 
 Add_a_configurable_product_to_the_cart_with_negative_quantity
    [Setup]    I set Headers:    Content-Type=${default_header_content_type}    X-Anonymous-Customer-Unique-Id=${random}
@@ -244,12 +244,9 @@ Add_a_configurable_product_to_the_cart_with_negative_quantity
    Then Response status code should be:    200
    And Response reason should be:    OK
    And Response body parameter should be:    [data][attributes][totals][grandTotal]    0
-   And Response body parameter should not be EMPTY:    [data][links][self]  
-
+   And Response body parameter should not be EMPTY:    [data][links][self]
 
 Add_a_configurable_product_to_the_cart_with_negative_price
-    [Documentation]   https://spryker.atlassian.net/browse/CC-30918
-    [Tags]    skip-due-to-issue    
     [Setup]    I set Headers:    Content-Type=${default_header_content_type}    X-Anonymous-Customer-Unique-Id=${random}
     Run Keywords    Create a guest cart:    ${random}    ${concrete_product_with_concrete_product_alternative.sku}    1
     ...    AND    Save value to a variable:    [data][id]    guestCartId
@@ -258,18 +255,21 @@ Add_a_configurable_product_to_the_cart_with_negative_price
     And Response status code should be:    422
     And Response should return error code:    901
     And Response reason should be:    Unprocessable Content
-    And Response should return error message:    netAmount => This value should be greater than 0.
-    And Response should return error message:    grossAmount => This value should be greater than 0.
+    And Array in response should contain property with value:
+    ...    [errors]
+    ...    detail
+    ...    productConfigurationInstance.prices.0.netAmount => This value should be greater than or equal to 0.
+    And Array in response should contain property with value:
+    ...    [errors]
+    ...    detail
+    ...    productConfigurationInstance.prices.0.grossAmount => This value should be greater than or equal to 0.
     And I send a GET request:    /guest-carts/${guestCartId}?include=guest-cart-items
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response body parameter should be:    [data][attributes][totals][grandTotal]    0
-    And Response body parameter should not be EMPTY:    [data][links][self]  
-
+    And Response body parameter should not be EMPTY:    [data][links][self]
 
 Add_a_configurable_product_to_the_cart_with_empty_price
-    [Documentation]   https://spryker.atlassian.net/browse/CC-29260
-    [Tags]    skip-due-to-issue    
     [Setup]    I set Headers:    Content-Type=${default_header_content_type}    X-Anonymous-Customer-Unique-Id=${random}
     Run Keywords    Create a guest cart:    ${random}    ${concrete_product_with_concrete_product_alternative.sku}    1
     ...    AND    Save value to a variable:    [data][id]    guestCartId
@@ -278,17 +278,21 @@ Add_a_configurable_product_to_the_cart_with_empty_price
     And Response status code should be:    422
     And Response should return error code:    901
     And Response reason should be:    Unprocessable Content
-    And Response should return error message:    netAmount => This value should be greater than 0.
-    And Response should return error message:    grossAmount => This value should be greater than 0.
+    And Array in response should contain property with value:
+    ...    [errors]
+    ...    detail
+    ...    productConfigurationInstance.prices.0.netAmount => This value should not be blank.
+    And Array in response should contain property with value:
+    ...    [errors]
+    ...    detail
+    ...    productConfigurationInstance.prices.0.grossAmount => This value should not be blank.
     And I send a GET request:    /guest-carts/${guestCartId}?include=guest-cart-items
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response body parameter should be:    [data][attributes][totals][grandTotal]    0
-    And Response body parameter should not be EMPTY:    [data][links][self]  
+    And Response body parameter should not be EMPTY:    [data][links][self]
 
 Add_a_configurable_product_with_missing_isComplete_value_of_to_the_cart
-   [Documentation]   https://spryker.atlassian.net/browse/CC-29261
-   [Tags]    skip-due-to-issue   
    [Setup]    I set Headers:    Content-Type=${default_header_content_type}    X-Anonymous-Customer-Unique-Id=${random}
    Run Keywords    Create a guest cart:    ${random}    ${concrete_product_with_concrete_product_alternative.sku}    1
    ...    AND    Save value to a variable:    [data][id]    guestCartId
@@ -297,9 +301,9 @@ Add_a_configurable_product_with_missing_isComplete_value_of_to_the_cart
    And Response status code should be:    422
    And Response should return error code:    901
    And Response reason should be:    Unprocessable Content
-   And Response should return error message:    isComplete => This field is missing.
+   And Response should return error message:    productConfigurationInstance.isComplete => This field is missing.
    And I send a GET request:    /guest-carts/${guestCartId}?include=guest-cart-items
    Then Response status code should be:    200
    And Response reason should be:    OK
    And Response body parameter should be:    [data][attributes][totals][grandTotal]    0
-   And Response body parameter should not be EMPTY:    [data][links][self]  
+   And Response body parameter should not be EMPTY:    [data][links][self]

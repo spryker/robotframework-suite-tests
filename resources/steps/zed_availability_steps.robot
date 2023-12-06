@@ -4,7 +4,6 @@ Resource    ../common/common_zed.robot
 Resource    ../common/common.robot
 
 *** Keywords ***
-
 Zed: check if product is/not in stock:
     [Arguments]    ${sku}    ${isInStock}
     ${isInStock}=    Convert To Lower Case    ${isInStock}
@@ -26,8 +25,9 @@ Zed: change product stock:
     Element Should Be Visible    xpath=//div[@class='ibox float-e-margins']/*[contains(.,'Variant availability')]
     Click    xpath=//*[contains(text(),'${skuConcrete}')]/ancestor::tr//following-sibling::td//*[contains(.,'Edit Stock')]
     Element Should Be Visible    xpath=//div[@class='ibox float-e-margins']/*[contains(.,'Edit Stock')]
+    Wait Until Element Is Visible    ${zed_save_button}
     ${checkBoxes}=    Get Element Count    ${zed_availability_never_out_of_stock_checkbox}
-    FOR    ${index}    IN RANGE    1    ${checkBoxes}
+    FOR    ${index}    IN RANGE    1    ${checkBoxes}+1
         Log    ${zed_availability_never_out_of_stock_checkbox}
         Log    ${index}
         Log    ${zed_availability_never_out_of_stock_checkbox}\[${index}\]
@@ -48,6 +48,7 @@ Zed: change product stock:
         Log    Form is already submitted
     END
     Set Browser Timeout    ${browser_timeout}
+    Trigger multistore p&s
 
 Zed: check and restore product availability in Zed:
     [Arguments]    ${skuAbstract}    ${expectedStatus}    ${skuConcrete}
@@ -63,5 +64,3 @@ Zed: check and restore product availability in Zed:
         Zed: change product stock:    ${skuAbstract}    ${skuConcrete}    false    0    0
         END
     END
-
-

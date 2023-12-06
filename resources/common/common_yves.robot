@@ -1,9 +1,5 @@
 *** Settings ***
-Library    String
-Library    Browser
-Library    DatabaseLibrary
-Library    ../../resources/libraries/common.py
-Resource    common.robot
+Resource    common_ui.robot
 Resource    ../pages/yves/yves_overview_page.robot
 Resource    ../pages/yves/yves_profile_page.robot
 Resource    ../pages/yves/yves_overview_page.robot
@@ -44,45 +40,16 @@ Yves: login on Yves with provided credentials:
     Set Browser Timeout    ${browser_timeout}
     ${currentURL}=    Get Url
     IF    '/login' not in '${currentURL}'
-        IF    '${env}' in ['ui_b2b','ui_suite','ui_mp_b2b']
-            ${currentURL}=    Get Location
-                IF    '.at.' in '${currentURL}'
-                    Go To    ${yves_at_url}
-                    delete all cookies
-                    Reload
-                    Wait Until Element Is Visible    ${header_login_button}[${env}]
-                    Click    ${header_login_button}[${env}]
-                    Wait Until Element Is Visible    ${email_field}
-                ELSE
-                    Go To    ${yves_url}
-                    delete all cookies
-                    Reload
-                    Wait Until Element Is Visible    ${header_login_button}[${env}]
-                    Click    ${header_login_button}[${env}]
-                    Wait Until Element Is Visible    ${email_field}
-                END
+        IF    '.at.' in '${currentURL}'
+            Delete All Cookies
+            Reload
+            Go To    ${yves_at_url}login
         ELSE
-                ${currentURL}=    Get Location
-                    IF    '.at.' in '${currentURL}'
-                        Go To    ${yves_at_url}
-                        delete all cookies
-                        Reload
-                        mouse over  ${user_navigation_icon_header_menu_item}[${env}]
-                        Wait Until Element Is Visible    ${user_navigation_menu_login_button}
-                        Click    ${user_navigation_menu_login_button}
-                        Wait Until Element Is Visible    ${email_field}
-                    ELSE
-                        Go To    ${yves_url}
-                        delete all cookies
-                        Reload
-                        mouse over  ${user_navigation_icon_header_menu_item}[${env}]
-                        Wait Until Element Is Visible    ${user_navigation_menu_login_button}
-                        Click    ${user_navigation_menu_login_button}
-                        Wait Until Element Is Visible    ${email_field}
-                    END
-                    
-        END
-    END
+            Delete All Cookies
+            Reload
+            Go To    ${yves_url}login
+        END  
+    END  
     Type Text    ${email_field}    ${email}
     Type Text    ${password_field}    ${password}
     Click    ${form_login_button}
@@ -94,25 +61,61 @@ Yves: login on Yves with provided credentials:
     Yves: remove flash messages
 
 Yves: go to PDP of the product with sku:
-    [Arguments]    ${sku}
+    [Arguments]    ${sku}    ${wait_for_p&s}=${False}    ${iterations}=26    ${delay}=5s
     Yves: go to URL:    /search?q=${sku}
-    TRY
-        Wait Until Page Contains Element    ${catalog_main_page_locator}[${env}]
-        Wait Until Page Contains Element    ${catalog_product_card_locator}
-        Click    ${catalog_product_card_locator}
-        Wait Until Page Contains Element    ${pdp_main_container_locator}[${env}]
-        Wait Until Network Is Idle
-    EXCEPT    
-        Yves: go to URL:    /search?q=${sku}
-        Reload
-        Wait Until Network Is Idle
-        Wait Until Page Contains Element    ${catalog_main_page_locator}[${env}]
-        Wait Until Page Contains Element    ${catalog_product_card_locator}
-        Click    ${catalog_product_card_locator}
-        Wait Until Page Contains Element    ${pdp_main_container_locator}[${env}]
-        Wait Until Network Is Idle
+    ### *** promise for P&S *** ####
+    ${wait_for_p&s}=    Convert To String    ${wait_for_p&s}
+    ${wait_for_p&s}=    Convert To Lower Case    ${wait_for_p&s}
+    IF    '${wait_for_p&s}' == 'true'
+        ${wait_for_p&s}=    Set Variable    ${True}
     END
-
+    IF    '${wait_for_p&s}' == 'false'
+        ${wait_for_p&s}=    Set Variable    ${False}
+    END
+    IF    ${wait_for_p&s}
+        FOR    ${index}    IN RANGE    1    ${iterations}
+        ${result}=    Run Keyword And Ignore Error    Page Should Contain Element    ${catalog_product_card_locator}    timeout=1s
+            IF    ${index} == ${iterations}-1
+                Take Screenshot    EMBED    fullPage=True
+                Fail    Product '${sku}' is not displayed in the search results
+            END
+            IF    'FAIL' in ${result}   
+                Sleep    ${delay}
+                Yves: go to URL:    /search?q=${sku}
+                Continue For Loop
+            ELSE
+                ${pdp_url}=    Get Element Attribute    ${catalog_product_card_locator}    href
+                Yves: go to URL:    ${pdp_url}?fake=${random}+${index}
+                Repeat Keyword    3    Wait Until Network Is Idle
+                ${pdp_available}=    Run Keyword And Ignore Error    Wait Until Page Contains Element    ${pdp_main_container_locator}[${env}]    timeout=0.5s
+                IF    'PASS' in ${pdp_available}
+                    Exit For Loop
+                ELSE
+                    Sleep    ${delay}
+                    Yves: go to URL:    /search?q=${sku}
+                    Continue For Loop
+                END
+            END
+        END
+    ELSE
+        TRY
+            Wait Until Page Contains Element    ${catalog_main_page_locator}[${env}]
+            Wait Until Page Contains Element    ${catalog_product_card_locator}
+            Click    ${catalog_product_card_locator}
+            Wait Until Page Contains Element    ${pdp_main_container_locator}[${env}]
+            Repeat Keyword    3    Wait Until Network Is Idle
+        EXCEPT    
+            Yves: go to URL:    /search?q=${sku}
+            Reload
+            Repeat Keyword    3    Wait Until Network Is Idle
+            Wait Until Page Contains Element    ${catalog_main_page_locator}[${env}]
+            Wait Until Page Contains Element    ${catalog_product_card_locator}
+            ${pdp_url}=    Get Element Attribute    ${catalog_product_card_locator}    href
+            Yves: go to URL:    ${pdp_url}?fake=${random}+${index}
+            Repeat Keyword    3    Wait Until Network Is Idle
+            Wait Until Page Contains Element    ${pdp_main_container_locator}[${env}]
+        END
+    END
 
 Yves: '${pageName}' page is displayed
     IF    '${pageName}' == 'Company Users'    Page Should Contain Element    ${company_users_main_content_locator}    ${pageName} page is not displayed
@@ -139,7 +142,7 @@ Yves: '${pageName}' page is displayed
     ...    ELSE IF    '${pageName}' == 'Return Details'    Page Should Contain Element    ${return_details_main_content_locator}    ${pageName} page is not displayed
     ...    ELSE IF    '${pageName}' == 'Payment cancellation'    Page Should Contain Element    ${cancel_payment_page_main_container_locator}    ${pageName} page is not displayed
     ...    ELSE IF    '${pageName}' == 'Merchant Profile'    Page Should Contain Element    ${merchant_profile_main_content_locator}    ${pageName} page is not displayed
-    ...    ELSE IF    '${pageName}' == 'Wishlist'    Page Should Contain Element    ${wishlist_main_content_locator}    ${pageName} page is not displayed
+    ...    ELSE IF    '${pageName}' == 'Wishlist'    Page Should Contain Element    ${wishlist_main_content_locator}[${env}]    ${pageName} page is not displayed
     ...    ELSE        Fail    '${pageName}' page is not displayed or the page name is incorrect
 
 Yves: remove flash messages
@@ -167,7 +170,7 @@ Yves: flash message should be shown:
     END
 
 Yves: logout on Yves as a customer
-    delete all cookies
+    Delete All Cookies
     Reload
 
 Yves: go to the 'Home' page
@@ -210,7 +213,7 @@ Yves: go to AT URL:
 
 Yves: go to newly created page by URL:
     [Arguments]    ${url}    ${delay}=5s    ${iterations}=31
-    FOR    ${index}    IN RANGE    0    ${iterations}
+    FOR    ${index}    IN RANGE    1    ${iterations}
         Go To    ${yves_url}${url}?${index}
         ${page_not_published}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//main//*[contains(text(),'ERROR 404')]
         Log    ${page_not_published}
@@ -227,7 +230,7 @@ Yves: go to newly created page by URL:
 
 Yves: go to newly created page by URL on AT store:
     [Arguments]    ${url}    ${delay}=5s    ${iterations}=31
-    FOR    ${index}    IN RANGE    0    ${iterations}
+    FOR    ${index}    IN RANGE    1    ${iterations}
         Go To    ${yves_at_url}${url}?${index}
         ${page_not_published}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//main//*[contains(text(),'ERROR 404')]
         Log    ${page_not_published}
@@ -244,7 +247,7 @@ Yves: go to newly created page by URL on AT store:
 
 Yves: go to URL and refresh until 404 occurs:
     [Arguments]    ${url}    ${delay}=5s    ${iterations}=31
-    FOR    ${index}    IN RANGE    0    ${iterations}
+    FOR    ${index}    IN RANGE    1    ${iterations}
         Go To    ${url}
         ${page_not_published}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//main//*[contains(text(),'ERROR 404')]
         Log    ${page_not_published}
@@ -275,17 +278,22 @@ Yves: go to second navigation item level:
     Add/Edit element attribute with JavaScript:    ${1LevelXpath}    class    ${nodeUpdatedClass}
     Wait Until Element Is Visible    //div[@class='header__navigation']//navigation-multilevel[@data-qa='component navigation-multilevel']/ul[@class='menu menu--lvl-0']//li[contains(@class,'menu__item--lvl-0')]/span/*[contains(@class,'lvl-0')][1][text()='${navigation_item_level1}']/ancestor::li//ul[contains(@class,'menu--lvl-1')]
     Click Element by xpath with JavaScript    //div[@class='header__navigation']//navigation-multilevel[@data-qa='component navigation-multilevel']/ul[@class='menu menu--lvl-0']//li[contains(@class,'menu__item--lvl-0')]/span/*[contains(@class,'lvl-0')][1][text()='${navigation_item_level1}']/ancestor::li//ul[contains(@class,'menu--lvl-1')]//li[contains(@class,'menu__item--lvl-1')]/span/*[contains(@class,'lvl-1')][1][text()='${navigation_item_level2}']
+    Repeat Keyword    3    Wait Until Network Is Idle
 
 Yves: go to first navigation item level:
     [Arguments]     ${navigation_item_level1}
     IF    '${env}' in ['ui_b2b','ui_mp_b2b']
-        Run keywords
-            Wait Until Element Is Visible    xpath=//div[@class='header__navigation']//navigation-multilevel[@data-qa='component navigation-multilevel']/ul[@class='menu menu--lvl-0']//li[contains(@class,'menu__item--lvl-0')]/span/*[contains(@class,'lvl-0')][1][text()='${navigation_item_level1}']    AND
-            Click Element by xpath with JavaScript    //div[@class='header__navigation']//navigation-multilevel[@data-qa='component navigation-multilevel']/ul[@class='menu menu--lvl-0']//li[contains(@class,'menu__item--lvl-0')]/span/*[contains(@class,'lvl-0')][1][text()='${navigation_item_level1}']
+        Wait Until Element Is Visible    xpath=//div[@class='header__navigation']//navigation-multilevel[@data-qa='component navigation-multilevel']/ul[@class='menu menu--lvl-0']//li[contains(@class,'menu__item--lvl-0')]/span/*[contains(@class,'lvl-0')][1][text()='${navigation_item_level1}']
+        Click Element by xpath with JavaScript    //div[@class='header__navigation']//navigation-multilevel[@data-qa='component navigation-multilevel']/ul[@class='menu menu--lvl-0']//li[contains(@class,'menu__item--lvl-0')]/span/*[contains(@class,'lvl-0')][1][text()='${navigation_item_level1}']
+        Repeat Keyword    3    Wait Until Network Is Idle
+    ELSE IF    '${env}' in ['ui_suite']
+        Wait Until Element Is Visible    xpath=(//header//nav[contains(@data-qa,'navigation-multilevel')]/ul/li[contains(.,'${navigation_item_level1}')])[1]
+        Click    xpath=(//header//nav[contains(@data-qa,'navigation-multilevel')]/ul/li[contains(.,'${navigation_item_level1}')])[1]
+        Repeat Keyword    3    Wait Until Network Is Idle
     ELSE
-        Run keywords
-            Wait Until Element Is Visible    xpath=//*[contains(@class,'header') and @data-qa='component header']//*[contains(@data-qa,'navigation-multilevel')]/*[contains(@class,'navigation-multilevel-node__link--lvl-1') and contains(text(),'${navigation_item_level1}')]    AND
-            Click Element by xpath with JavaScript    //*[contains(@class,'header') and @data-qa='component header']//*[contains(@data-qa,'navigation-multilevel')]/*[contains(@class,'navigation-multilevel-node__link--lvl-1') and contains(text(),'${navigation_item_level1}')]
+        Wait Until Element Is Visible    xpath=//*[contains(@class,'header') and @data-qa='component header']//*[contains(@data-qa,'navigation-multilevel')]/*[contains(@class,'navigation-multilevel-node__link--lvl-1') and contains(text(),'${navigation_item_level1}')]
+        Click Element by xpath with JavaScript    //*[contains(@class,'header') and @data-qa='component header']//*[contains(@data-qa,'navigation-multilevel')]/*[contains(@class,'navigation-multilevel-node__link--lvl-1') and contains(text(),'${navigation_item_level1}')]
+        Repeat Keyword    3    Wait Until Network Is Idle
     END
 
 Yves: go to third navigation item level:
@@ -299,6 +307,7 @@ Yves: go to third navigation item level:
     Add/Edit element attribute with JavaScript:    ${1LevelXpath}    class    ${nodeUpdatedClass}
     Wait Until Element Is Visible    //div[@class='header__navigation']//navigation-multilevel[@data-qa='component navigation-multilevel']/ul[@class='menu menu--lvl-0']//li[contains(@class,'menu__item--lvl-0')]/span/*[contains(@class,'lvl-0')][1][text()='${navigation_item_level1}']/ancestor::li//ul[contains(@class,'menu--lvl-1')]
     Click Element by xpath with JavaScript    //div[@class='header__navigation']//navigation-multilevel[@data-qa='component navigation-multilevel']/ul[@class='menu menu--lvl-0']//li[contains(@class,'menu__item--lvl-0')]/span/*[contains(@class,'lvl-0')][1][text()='${navigation_item_level1}']/ancestor::li//ul[contains(@class,'menu--lvl-2')]//li[contains(@class,'menu__item--lvl-2')]/span/*[contains(@class,'lvl-2')][1][text()='${navigation_item_level3}']
+    Repeat Keyword    3    Wait Until Network Is Idle
 
 Yves: get index of the first available product
     [Documentation]    For B2B this keyword should be used only for logged in customers, otherwise add to cart buttons are absent and it returns wrong index
@@ -307,26 +316,25 @@ Yves: get index of the first available product
     ${productsCount}=    Get Element Count    xpath=//product-item[@data-qa='component product-item']
     Log    ${productsCount}
     FOR    ${index}    IN RANGE    1    ${productsCount}+1
-        ${status}=    IF    '${env}'=='ui_b2b'    Run Keyword And Ignore Error     Page should contain element    xpath=//product-item[@data-qa='component product-item'][${index}]//*[@class='product-item__actions']//ajax-add-to-cart//button[@disabled='']
-        ...    ELSE IF    '${env}' in ['ui_b2c','ui_mp_b2c']    Run Keyword And Ignore Error    Page should contain element    xpath=//product-item[@data-qa='component product-item'][${index}]//ajax-add-to-cart//button    Add to cart button is missing    ${browser_timeout}
+        ${status}=    IF    '${env}'=='ui_b2b'    Run Keyword And Ignore Error     Page should contain element    xpath=(//product-item[@data-qa='component product-item'])[${index}]//*[@class='product-item__actions']//ajax-add-to-cart//button[@disabled='']    timeout=10ms
+        ${status}=    IF    '${env}'=='ui_suite'    Run Keyword And Ignore Error     Page should contain element    xpath=(//product-item[@data-qa='component product-item'])[${index}]//*[@class='product-item__actions']//ajax-add-to-cart//button[@disabled='']    timeout=10ms
+        ...    ELSE IF    '${env}' in ['ui_b2c','ui_mp_b2c']    Run Keyword And Ignore Error    Page should contain element    xpath=(//product-item[@data-qa='component product-item'])[${index}]//ajax-add-to-cart//button    Add to cart button is missing    timeout=10ms
         Log    ${index}
-        ${pdp_url}=    IF    '${env}'=='ui_b2b'    Get Element Attribute    xpath=//product-item[@data-qa='component product-item'][${index}]//a[@itemprop='url']    href
-        IF    'PASS' in ${status} and '${env}'=='ui_b2b'    Continue For Loop
-        IF    'bundle' in '${pdp_url}' and '${env}'=='ui_b2b'    Continue For Loop
-        IF    'FAIL' in ${status} and '${env}'=='ui_b2b'
-            Run Keywords
-                Return From Keyword  ${index}
-                Log ${index}
-                Exit For Loop
+        ${pdp_url}=    IF    '${env}' in ['ui_b2b','ui_suite']    Get Element Attribute    xpath=(//product-item[@data-qa='component product-item'])[${index}]//a[@itemprop='url']    href
+        IF    'PASS' in ${status} and '${env}' in ['ui_b2b','ui_suite']    Continue For Loop
+        IF    'bundle' in '${pdp_url}' and '${env}' in ['ui_b2b','ui_suite']    Continue For Loop
+        IF    'FAIL' in ${status} and '${env}' in ['ui_b2b','ui_suite']
+            Return From Keyword  ${index}
+            Log ${index}
+            Exit For Loop
         END
-        ${pdp_url}=    IF    '${env}' in ['ui_b2c','ui_mp_b2c']    Get Element Attribute    xpath=//product-item[@data-qa='component product-item'][${index}]//div[contains(@class,'product-item__image')]//a[contains(@class,'link-detail-page')]    href
+        ${pdp_url}=    IF    '${env}' in ['ui_b2c','ui_mp_b2c']    Get Element Attribute    xpath=(//product-item[@data-qa='component product-item'])[${index}]//div[contains(@class,'product-item__image')]//a[contains(@class,'link-detail-page')]    href
         IF    'FAIL' in ${status} and '${env}' in ['ui_b2c','ui_mp_b2c']    Continue For Loop
         IF    'bundle' in '${pdp_url}' and '${env}' in ['ui_b2c','ui_mp_b2c']    Continue For Loop
         IF    'PASS' in ${status} and '${env}' in ['ui_b2c','ui_mp_b2c']
-            Run Keywords
-                Return From Keyword    ${index}
-                Log ${index}
-                Exit For Loop
+            Return From Keyword    ${index}
+            Log ${index}
+            Exit For Loop
         END
     END
         ${productIndex}=    Set Variable    ${index}
@@ -338,9 +346,10 @@ Yves: get index of the first available product on marketplace
     ${productsCount}=    Get Element Count    xpath=//product-item[@data-qa='component product-item']
     Log    ${productsCount}   
     FOR    ${index}    IN RANGE    1    ${productsCount}+1
-        Click    xpath=//product-item[@data-qa='component product-item'][${index}]//a[contains(@class,'link-detail-page') and (contains(@class,'info')) or (contains(@class,'name'))]
+        Click    xpath=(//product-item[@data-qa='component product-item'])[${index}]//a[contains(@class,'link-detail-page') and (contains(@class,'info')) or (contains(@class,'name'))]
+        Wait Until Network Is Idle
         Wait Until Page Contains Element    ${pdp_main_container_locator}[${env}]
-        ${status}=    Run Keyword And Ignore Error     Page should contain element    &{pdp_add_to_cart_disabled_button}[${env}]
+        ${status}=    Run Keyword And Ignore Error     Page should contain element    &{pdp_add_to_cart_disabled_button}[${env}]    timeout=10ms
         Log    ${index}
         IF    'PASS' in ${status}    Continue For Loop
         IF    'FAIL' in ${status}
@@ -358,12 +367,12 @@ Yves: go to the PDP of the first available product
         ${index}=    Yves: get index of the first available product on marketplace
     ELSE    
         ${index}=    Yves: get index of the first available product
-        Click    xpath=//product-item[@data-qa='component product-item'][${index}]//a[contains(@class,'link-detail-page') and (contains(@class,'info')) or (contains(@class,'name'))]
+        Click    xpath=(//product-item[@data-qa='component product-item'])[${index}]//a[contains(@class,'link-detail-page') and (contains(@class,'info')) or (contains(@class,'name'))]
     END
     Wait Until Page Contains Element    ${pdp_main_container_locator}[${env}]
 
 Yves: go to the PDP of the first available product on open catalog page
-    Click    xpath=//product-item[@data-qa='component product-item'][1]//a[contains(@class,'link-detail-page') and (contains(@class,'info')) or (contains(@class,'name'))]
+    Click    xpath=(//product-item[@data-qa='component product-item'][1]//a[contains(@class,'link-detail-page') and (contains(@class,'info')) or (contains(@class,'name'))])[1]
     Wait Until Page Contains Element    ${pdp_main_container_locator}[${env}]
 
 Yves: check if cart is not empty and clear it
@@ -374,16 +383,33 @@ Yves: check if cart is not empty and clear it
     IF    '${cartIsEmpty}'=='False'    Helper: delete all items in cart
 
 Helper: delete all items in cart
-    ${productsInCart}=    Get Element Count    xpath=//article[@class='product-card-item']//div[contains(@class,'product-card-item__box')]
-    FOR    ${index}    IN RANGE    0    ${productsInCart}
-        Click    xpath=(//div[@class='page-layout-cart__items-wrap']//ancestor::div/following-sibling::div//form[contains(@name,'removeFromCart')]//button[text()='Remove'])\[1\]
-        Yves: remove flash messages
+
+    IF    '${env}' in ['ui_suite']
+        ${productsInCart}=    Get Element Count    xpath=//main//cart-items-list//product-item[contains(@data-qa,'component product-cart-item')]
+        FOR    ${index}    IN RANGE    0    ${productsInCart}
+            TRY
+                Click    xpath=(//main//cart-items-list//product-item[contains(@data-qa,'component product-cart-item')]//form[contains(@name,'removeFromCart')]//button)[1]
+                Yves: remove flash messages
+            EXCEPT    
+                Log    Shopping cart is empty now
+            END
+        END
+    ELSE
+        ${productsInCart}=    Get Element Count    xpath=//article[@class='product-card-item']//div[contains(@class,'product-card-item__box')]
+        FOR    ${index}    IN RANGE    0    ${productsInCart}
+            TRY
+                Click    xpath=(//div[@class='page-layout-cart__items-wrap']//ancestor::div/following-sibling::div//form[contains(@name,'removeFromCart')]//button[text()='Remove'])[1]
+                Yves: remove flash messages
+            EXCEPT    
+                Log    Shopping cart is empty now
+            END
+        END
     END
 
 Yves: try reloading page if element is/not appear:
-    [Arguments]    ${element}    ${isDisplayed}    ${iterations}=26    ${sleep}=3s
+    [Arguments]    ${element}    ${isDisplayed}    ${iterations}=26    ${sleep}=5s
     ${isDisplayed}=    Convert To Lower Case    ${isDisplayed}
-    FOR    ${index}    IN RANGE    0    ${iterations}
+    FOR    ${index}    IN RANGE    1    ${iterations}
         ${elementAppears}=    Run Keyword And Return Status    Element Should Be Visible    ${element}
         IF    '${isDisplayed}'=='true' and '${elementAppears}'=='False'
             Run Keywords    Sleep    ${sleep}    AND    Reload
@@ -425,56 +451,6 @@ Yves: login after signup during checkout:
     Type Text    ${email_field}     ${email}
     Type Text    ${password_field}     ${password}
     Click    ${form_login_button}
-
-I send a POST request:
-    [Documentation]    This keyword is used to make POST requests. It accepts the endpoint *without the domain* and the body in JOSN.
-    ...    Variables can and should be used in the endpoint url and in the body JSON.
-    ...
-    ...    If the endpoint needs to have any headers (e.g. token for authorisation), ``I set Headers`` keyword should be called before this keyword to set the headers beforehand.
-    ...
-    ...    After this keyword is called, response body, selflink, response status and headers are recorded into the test variables which have the scope of the current test and can then be used by other keywords to get and compare data.
-    ...
-    ...    *Example:*
-    ...
-    ...    ``I send a POST request:    /agent-access-tokens    {"data": {"type": "agent-access-tokens","attributes": {"username": "${agent.email}","password": "${agent.password}"}}}``
-    [Arguments]   ${path}    ${json}    ${timeout}=60    ${allow_redirects}=true    ${auth}=${NONE}    ${expected_status}=ANY
-    ${data}=    Evaluate    ${json}
-    ${headers_not_empty}    Run Keyword and return status     Should not be empty    ${headers}
-    ${response}=    IF    ${headers_not_empty}   run keyword    POST    ${glue_url}${path}    json=${data}    headers=${headers}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}    verify=${verify_ssl}
-    ...    ELSE    POST    ${glue_url}${path}    json=${data}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=ANY    verify=${verify_ssl}
-    ${response.status_code}=    Set Variable    ${response.status_code}
-    IF    ${response.status_code} != 204    
-        TRY    
-            ${response_body}=    Set Variable    ${response.json()}
-        EXCEPT
-            ${content_type}=    Get From Dictionary    ${response.headers}    content-type
-            Fail    Got: '${response.status_code}' status code on: '${response.url}' with reason: '${response.reason}'. Response content type: '${content_type}'. Details: '${response.content}'
-        END
-    END
-    ${response_headers}=    Set Variable    ${response.headers}
-    IF    ${response.status_code} == 204    
-        ${response_body}=    Set Variable    ${EMPTY}
-    END
-    Set Test Variable    ${response_headers}    ${response_headers}
-    Set Test Variable    ${response_body}    ${response_body}
-    Set Test Variable    ${response}    ${response}
-    Set Test Variable    ${expected_self_link}    ${glue_url}${path}
-    [Return]    ${response_body}
-
-I set Headers:
-    [Documentation]    Keyword sets any number of headers for the further endpoint calls.
-    ...    Headers can have any name and any value, they are set as test variable - which means they can be used throughtout one test if set once.
-    ...    This keyword can be used to add access token to the next endpoint calls or to set header for the guest customer, etc.
-    ...
-    ...    It accepts a list of pairs haader-name=header-value as an argument. The list items should be separated by 4 spaces.
-    ...
-    ...    *Example:*
-    ...
-    ...    ``I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}``
-
-    [Arguments]    &{headers}
-    Set Test Variable    &{headers}
-    [Return]    &{headers}
 
 Yves: checkout is blocked with the following message:
     [Arguments]    ${expectedMessage}

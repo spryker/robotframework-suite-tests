@@ -3,6 +3,8 @@ Resource    ../common/common.robot
 Resource    ../pages/yves/yves_shopping_lists_page.robot
 Resource    ../common/common_yves.robot
 Resource    ../pages/yves/yves_delete_shopping_list_page.robot
+Resource    customer_account_steps.robot
+Resource    order_history_steps.robot
 
 *** Keywords ***
 Yves: 'Shopping List' widget contains:
@@ -10,17 +12,11 @@ Yves: 'Shopping List' widget contains:
     Wait Until Element Is Visible    ${shopping_list_icon_header_menu_item}
     Mouse Over    ${shopping_list_icon_header_menu_item}
     Wait Until Element Is Visible    ${shopping_list_sub_navigation_widget}
-    Page Should Contain Element    xpath=//*[contains(@class,'icon--header-shopping-list')]/ancestor::li//div[contains(@class,'js-user-navigation__sub-nav-shopping-list')]//span[text()[contains(.,'${accessLevel}')]]/..//a/*[text()='${shoppingListName}']
+    Page Should Contain Element    xpath=//header//li[contains(@class,'item')]/a[contains(@href,'shopping-list')]/ancestor::li/*[contains(@class,'list')]//li//a[contains(.,'${shoppingListName}')]/ancestor::li/div[contains(@class,'list-item')]//*[contains(@class,'access')][contains(.,'${accessLevel}')]
 
-Yves: go To 'Shopping Lists' Page
-    Yves: remove flash messages
-    Mouse Over    ${shopping_list_icon_header_menu_item}
-    ${button_exists}=    Run Keyword And Return Status    Element Should Be Visible    ${shopping_list_sub_navigation_all_lists_button}
-    IF    ${button_exists}=='PASS'
-        Click Element by xpath with JavaScript    ${shopping_list_sub_navigation_all_lists_button}
-    ELSE
-        Click    ${shopping_list_icon_header_menu_item}
-    END
+Yves: go to 'Shopping Lists' page
+    ${lang}=    Yves: get current lang
+    Yves: go to URL:    ${lang}/shopping-list
 
 Yves: create new 'Shopping List' with name:
     [Arguments]    ${shoppingListName}
@@ -37,37 +33,47 @@ Yves: create new 'Shopping List' with name:
 
 Yves: the following shopping list is shown:
     [Arguments]    ${shoppingListName}    ${shoppingListOwner}    ${shoppingListAccess}
-    Page Should Contain Element    xpath=//*[@data-qa="component shopping-list-overview-table"]//table//td[@data-content='Access'][contains(.,'${shoppingListAccess}')]/../td[@data-content='Owner'][contains(.,'${shoppingListOwner}')]/../td[@data-content='Name'][contains(.,'${shoppingListName}')]
+    Repeat Keyword    3    Wait Until Network Is Idle
+    IF    '${env}' in ['ui_suite']
+        Page Should Contain Element    xpath=//*[contains(@data-qa,"shopping-list-overview")]//table//td//span[contains(@data-qa,'shopping-list-permission')][contains(.,'${shoppingListAccess}')]/ancestor::tr/td[contains(.,'${shoppingListOwner}')]/ancestor::tr/td[contains(@class,'name')][contains(.,'${shoppingListName}')]
+    ELSE
+        Page Should Contain Element    xpath=//*[@data-qa="component shopping-list-overview-table"]//table//td[@data-content='Access'][contains(.,'${shoppingListAccess}')]/../td[@data-content='Owner'][contains(.,'${shoppingListOwner}')]/../td[@data-content='Name'][contains(.,'${shoppingListName}')]
+    END
 
 Yves: share shopping list with user:
     [Arguments]    ${shoppingListName}    ${customer}    ${accessLevel}
     Share shopping list with name:    ${shoppingListName}
     Select access level to share shopping list with:    ${customer}    ${accessLevel}
     Click    ${share_shopping_list_confirm_button}
+    Repeat Keyword    3    Wait Until Network Is Idle
     Yves: 'Shopping Lists' page is displayed
     Yves: flash message 'should' be shown
 
 Yves: shopping list contains the following products:
     [Arguments]    @{sku_list}    ${sku1}=${EMPTY}     ${sku2}=${EMPTY}     ${sku3}=${EMPTY}     ${sku4}=${EMPTY}     ${sku5}=${EMPTY}     ${sku6}=${EMPTY}     ${sku7}=${EMPTY}     ${sku8}=${EMPTY}     ${sku9}=${EMPTY}     ${sku10}=${EMPTY}     ${sku11}=${EMPTY}     ${sku12}=${EMPTY}     ${sku13}=${EMPTY}     ${sku14}=${EMPTY}     ${sku15}=${EMPTY}
+    Repeat Keyword    3    Wait Until Network Is Idle
     ${sku_list_count}=   get length  ${sku_list}
     FOR    ${index}    IN RANGE    0    ${sku_list_count}
         ${sku_to_check}=    Get From List    ${sku_list}    ${index}
-        Page Should Contain Element    xpath=//*[@data-qa='component shopping-list-table']//div[contains(@class,'product-card-item__col--description')]//div[contains(.,'SKU: ${sku_to_check}')]/ancestor::article
+        IF    '${env}' in ['ui_suite']
+            Page Should Contain Element    xpath=(//table[contains(@data-qa,'shopping-list')]/tbody/tr//*[@itemprop='sku'][contains(.,'${sku_to_check}')])[1]
+        ELSE
+            Page Should Contain Element    xpath=(//*[@data-qa='component shopping-list-table']//div[contains(@class,'product-card-item__col--description')]//div[contains(.,'SKU: ${sku_to_check}')]/ancestor::article)[1]
+        END
     END
 
 Yves: delete 'Shopping List' with name:
     [Arguments]    ${shoppingListName}
     ${currentURL}=    Get Location
-    IF    '/shopping-list' not in '${currentURL}'    
-            IF    '.at.' in '${currentURL}'
-                Go To    ${yves_at_url}shopping-list
-            ELSE
-                Go To    ${yves_url}shopping-list
-            END    
-    END
+    IF    '.at.' in '${currentURL}'
+        Go To    ${yves_at_url}shopping-list
+    ELSE
+        Go To    ${yves_url}shopping-list
+    END    
     Delete shopping list with name:    ${shoppingListName}
     Wait Until Element Is Visible    ${delete_shopping_list_button}
     Click    ${delete_shopping_list_button}
+    Repeat Keyword    3    Wait Until Network Is Idle
 
 Yves: view shopping list with name:
     [Arguments]    ${shoppingListName}
@@ -84,3 +90,4 @@ Yves: view shopping list with name:
 Yves: add all available products from list to cart
     Wait Until Element Is Visible    ${shopping_list_main_content_locator}
     Click    ${add_all_available_products_to_cart_locator} 
+    Repeat Keyword    3    Wait Until Network Is Idle
