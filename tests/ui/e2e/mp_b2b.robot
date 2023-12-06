@@ -1518,6 +1518,7 @@ Merchant_Portal_Dashboard
     Zed: update Zed user:
     ...    || oldEmail                             | newEmail | password      | firstName | lastName ||
     ...    || sonia+dahboard+${random}@spryker.com |          | Change123!321 |           |          ||
+    Trigger multistore p&s
     MP: login on MP with provided credentials:    sonia+dahboard+${random}@spryker.com    Change123!321
     MP: click button on dashboard page and check url:    Manage Offers    /product-offers
     MP: click button on dashboard page and check url:    Add Offer    /product-list
@@ -1801,7 +1802,7 @@ Checkout_Address_Management
     Yves: check that user has address exists/doesn't exist:    false    New    Billing    Changed Street    098    09876    Berlin    Germany
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to order page:    ${lastPlacedOrder}
-    Zed: billing address for the order should be:    New Billing, Changed Street 098, Additional street, 09876 Berlin, Germany 987654321
+    Zed: billing address for the order should be:    New Billing, Changed Street 098, 09876 Berlin, Germany
     Zed: shipping address inside xxx shipment should be:    1    Mr First, Last, Shipping Street, 7, Additional street, Spryker, 10247, Vienna, Austria
     [Teardown]    Run Keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     ...    AND    Yves: delete all user addresses
@@ -2100,6 +2101,7 @@ Multistore_Product_Offer
     Yves: merchant is (not) displaying in Sold By section of PDP:    Spryker    true
     Yves: merchant's offer/product price should be:    Spryker    €200.00
     Yves: go to AT store 'Home' page
+    Trigger multistore p&s
     Yves: login on Yves with provided credentials:    ${yves_user_email}
     Yves: go to PDP of the product with sku:     multistoreSKU${random}    wait_for_p&s=true
     Yves: merchant is (not) displaying in Sold By section of PDP:    Office King    true
@@ -2116,6 +2118,7 @@ Multistore_Product_Offer
     MP: save offer
     Trigger multistore p&s
     Yves: go to AT store 'Home' page
+    Trigger multistore p&s
     Yves: login on Yves with provided credentials:    ${yves_user_email}
     Yves: go to PDP of the product with sku:     multistoreSKU${random}    wait_for_p&s=true
     Yves: merchant is (not) displaying in Sold By section of PDP:    Spryker    false

@@ -1332,6 +1332,7 @@ Merchant_Portal_Dashboard
     Zed: update Zed user:
     ...    || oldEmail                             | newEmail | password      | firstName | lastName ||
     ...    || sonia+dahboard+${random}@spryker.com |          | Change123!321 |           |          ||
+    Trigger multistore p&s
     MP: login on MP with provided credentials:    sonia+dahboard+${random}@spryker.com    Change123!321
     MP: click button on dashboard page and check url:    Manage Offers    /product-offers
     MP: click button on dashboard page and check url:    Add Offer    /product-list
@@ -1890,6 +1891,7 @@ Multistore_Product_Offer
     Yves: merchant is (not) displaying in Sold By section of PDP:    Video King    true
     Yves: merchant's offer/product price should be:    Video King    €200.00
     Yves: go to AT store 'Home' page
+    Trigger multistore p&s
     Yves: go to PDP of the product with sku:     multistoreSKU${random}    wait_for_p&s=true
     Yves: merchant is (not) displaying in Sold By section of PDP:    Budget Cameras    true
     Yves: product price on the PDP should be:    €55.00    wait_for_p&s=true
@@ -1905,6 +1907,7 @@ Multistore_Product_Offer
     MP: save offer
     Trigger multistore p&s
     Yves: go to AT store 'Home' page
+    Trigger multistore p&s
     Yves: go to PDP of the product with sku:     multistoreSKU${random}    wait_for_p&s=true
     Yves: merchant is (not) displaying in Sold By section of PDP:    Video King    false
     Save current URL
