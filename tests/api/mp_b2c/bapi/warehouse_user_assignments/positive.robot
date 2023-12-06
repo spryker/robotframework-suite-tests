@@ -15,7 +15,7 @@ Assign_user_to_warehouse
     ...    AND    Make user a warehouse user/ not a warehouse user:   ${warehous_user[0].admin_user_uuid}    1        
     When I send a POST request:    /warehouse-user-assignments    {"data": {"type": "warehouse-user-assignments", "attributes":{"userUuid": "${warehous_user[0].admin_user_uuid}","warehouse" :{"uuid": "${warehouse[0].warehouse_uuid}"},"isActive":"false"}}}
     Then Response status code should be:    201
-    Then Save value to a variable:    [data][id]   warehouse_assigment_id
+    Then Save value to a variable:    [data][id]    warehouse_assigment_id
     And Response reason should be:    Created
     And Response body parameter should be:    [data][id]    ${warehouse_assigment_id}
     And Response body parameter should be:    [data][type]    warehouse-user-assignments
@@ -35,7 +35,7 @@ Assign_user_to_warehouse_with_include
     ...    AND    Make user a warehouse user/ not a warehouse user:   ${warehous_user[0].admin_user_uuid}    1     
     When I send a POST request:    /warehouse-user-assignments?include=users    {"data": {"type": "warehouse-user-assignments", "attributes":{"userUuid": "${warehous_user[0].admin_user_uuid}","warehouse" :{"uuid": "${warehouse[0].warehouse_uuid}"},"isActive":"false"}}}
     Then Response status code should be:    201
-    Then Save value to a variable:    [data][id]   warehouse_assigment_id
+    Then Save value to a variable:    [data][id]    warehouse_assigment_id
     And Response body parameter should not be EMPTY:    [data][relationships][users][data][0][id]
     And Each array in response should contain property with NOT EMPTY value:    [data][relationships][users][data]    id
     And Each array element of array in response should contain property with value:    [data][relationships][users][data]    type    users
@@ -54,7 +54,7 @@ Get_warehouse_user_assigments_by_UUID
     ...    AND    Make user a warehouse user/ not a warehouse user:   ${warehous_user[0].admin_user_uuid}    1     
     When I send a POST request:    /warehouse-user-assignments?include=users    {"data": {"type": "warehouse-user-assignments", "attributes":{"userUuid": "${warehous_user[0].admin_user_uuid}","warehouse" :{"uuid": "${warehouse[0].warehouse_uuid}"},"isActive":"false"}}}
     Then Response status code should be:    201
-    Then Save value to a variable:    [data][id]   warehouse_assigment_id
+    Then Save value to a variable:    [data][id]    warehouse_assigment_id
     Then I send a GET request:    /warehouse-user-assignments/${warehouse_assigment_id}
     Then Response status code should be:    200
     And Response body parameter should be:    [data][id]    ${warehouse_assigment_id}
@@ -79,7 +79,7 @@ Get_warehouse_user_assigments_list
     Then Save value to a variable:    [data][id]   warehouse_assigment_id_1
     When I send a POST request:    /warehouse-user-assignments?include=users    {"data": {"type": "warehouse-user-assignments", "attributes":{"userUuid": "${warehous_user[0].admin_user_uuid}","warehouse" :{"uuid": "${warehouse[0].video_king_warehouse_uuid}"},"isActive":"true"}}}
     Then Response status code should be:    201
-    Then Save value to a variable:    [data][id]   warehouse_assigment_id_2
+    Then Save value to a variable:    [data][id]    warehouse_assigment_id_2
     Then I send a GET request:    /warehouse-user-assignments
     Then Response status code should be:    200
     And Response should contain the array of a certain size:    [data]    2
@@ -114,7 +114,7 @@ Get_warehouse_user_assigments_with_filter_by_warehouse_assigment_uuid
     Make user a warehouse user/ not a warehouse user:   ${warehous_user[0].admin_user_uuid}    0
     When I send a POST request:    /warehouse-user-assignments?include=users    {"data": {"type": "warehouse-user-assignments", "attributes":{"userUuid": "${warehous_user[0].de_admin_user_uuid}","warehouse" :{"uuid": "${warehouse[0].warehouse_uuid}"},"isActive":"true"}}}
     Then Response status code should be:    201
-    Then Save value to a variable:    [data][id]   warehouse_assigment_id_2
+    Then Save value to a variable:    [data][id]    warehouse_assigment_id_2
     Then I send a GET request:    /warehouse-user-assignments/?filter[warehouse-user-assignments.uuid]=${warehouse_assigment_id_1}
     Then Response status code should be:    200
     And Response body parameter should be:    [data][0][id]    ${warehouse_assigment_id_1}
@@ -141,7 +141,7 @@ Get_warehouse_user_assigments_with_filter_by_warehouse_uuid
     Make user a warehouse user/ not a warehouse user:   ${warehous_user[0].admin_user_uuid}    0
     When I send a POST request:    /warehouse-user-assignments?include=users    {"data": {"type": "warehouse-user-assignments", "attributes":{"userUuid": "${warehous_user[0].de_admin_user_uuid}","warehouse" :{"uuid": "${warehouse[0].video_king_warehouse_uuid}"},"isActive":"true"}}}
     Then Response status code should be:    201
-    Then Save value to a variable:    [data][id]   warehouse_assigment_id_2
+    Then Save value to a variable:    [data][id]    warehouse_assigment_id_2
     Then I send a GET request:    /warehouse-user-assignments/?filter[warehouse-user-assignments.warehouseUuid]=${warehouse[0].video_king_warehouse_uuid}
     Then Response status code should be:    200
     And Response body parameter should be:    [data][0][id]    ${warehouse_assigment_id_2}
@@ -193,7 +193,7 @@ Get_warehouse_user_assigments_with_filter_by_isActive
     Make user a warehouse user/ not a warehouse user:   ${warehous_user[0].admin_user_uuid}    0
     When I send a POST request:    /warehouse-user-assignments?include=users    {"data": {"type": "warehouse-user-assignments", "attributes":{"userUuid": "${warehous_user[0].de_admin_user_uuid}","warehouse" :{"uuid": "${warehouse[0].video_king_warehouse_uuid}"},"isActive":"true"}}}
     Then Response status code should be:    201
-    Then Save value to a variable:    [data][id]   warehouse_assigment_id_2
+    Then Save value to a variable:    [data][id]    warehouse_assigment_id_2
     Then I send a GET request:    /warehouse-user-assignments/?filter[warehouse-user-assignments.isActive]=true
     Then Response status code should be:    200
     And Response body parameter should be:    [data][0][id]    ${warehouse_assigment_id_2}
@@ -214,14 +214,14 @@ Update_warehous_user_assigment
     ...    AND    Make user a warehouse user/ not a warehouse user:   ${warehous_user[0].admin_user_uuid}    1    
     When I send a POST request:    /warehouse-user-assignments    {"data": {"type": "warehouse-user-assignments", "attributes":{"userUuid": "${warehous_user[0].admin_user_uuid}","warehouse" :{"uuid": "${warehouse[0].warehouse_uuid}"},"isActive":"false"}}}
     Then Response status code should be:    201
-    Then Save value to a variable:    [data][id]   warehouse_assigment_id
-    Then I send a PATCH request:    /warehouse-user-assignments/${warehouse_assigment_id}    {"data":{"attributes":{"isActive":"true"}}} 
+    Then Save value to a variable:    [data][id]    warehouse_assigment_id
+    Then I send a PATCH request:    /warehouse-user-assignments/${warehouse_assigment_id}    {"data":{"attributes":{"isActive":"true"}}}
     Then Response status code should be:    200
     Then I send a GET request:    /warehouse-user-assignments/${warehouse_assigment_id}
     Then Response status code should be:    200
     And Response body parameter should be:    [data][id]    ${warehouse_assigment_id}
     And Response body parameter should be:    [data][attributes][isActive]    True
-    Then I send a PATCH request:    /warehouse-user-assignments/${warehouse_assigment_id}    {"data":{"attributes":{"isActive":"false"}}} 
+    Then I send a PATCH request:    /warehouse-user-assignments/${warehouse_assigment_id}    {"data":{"attributes":{"isActive":"false"}}}
     Then I send a GET request:    /warehouse-user-assignments/${warehouse_assigment_id}
     And Response body parameter should be:    [data][attributes][isActive]    False
     And Response body has correct self link internal  
@@ -261,8 +261,8 @@ Update_one_of_already exist_warehous_user_assigment_with_two_assigments_to activ
     Then Save value to a variable:    [data][id]   warehouse_assigment_id_1
     When I send a POST request:    /warehouse-user-assignments?include=users    {"data": {"type": "warehouse-user-assignments", "attributes":{"userUuid": "${warehous_user[0].admin_user_uuid}","warehouse" :{"uuid": "${warehouse[0].video_king_warehouse_uuid}"},"isActive":"true"}}}
     Then Response status code should be:    201
-    Then Save value to a variable:    [data][id]   warehouse_assigment_id_2
-    Then I send a PATCH request:    /warehouse-user-assignments/${warehouse_assigment_id_1}    {"data":{"attributes":{"isActive":"true"}}} 
+    Then Save value to a variable:    [data][id]    warehouse_assigment_id_2
+    Then I send a PATCH request:    /warehouse-user-assignments/${warehouse_assigment_id_1}    {"data":{"attributes":{"isActive":"true"}}}
     Then Response status code should be:    200
     Then I send a GET request:    /warehouse-user-assignments/${warehouse_assigment_id_2}
     And Response body parameter should be:    [data][attributes][isActive]    False

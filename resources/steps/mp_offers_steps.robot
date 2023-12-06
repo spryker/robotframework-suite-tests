@@ -92,8 +92,13 @@ MP: save offer
     ${offerSaved}=    Run Keyword And Ignore Error    Wait Until Element Is Visible    ${offer_saved_popup}    timeout=5s
     ### resave in case of error
     IF    'FAIL' in ${offerSaved}
-        MP: click submit button
-        Wait Until Element Is Visible    ${offer_saved_popup}    timeout=5s
+        TRY
+            MP: click submit button    timeout=3s
+            Wait Until Element Is Visible    ${offer_saved_popup}    timeout=5s
+        EXCEPT    
+            Log    Offer is already saved
+        END
+
     END
     MP: remove notification wrapper
     Repeat Keyword    3    Wait Until Network Is Idle

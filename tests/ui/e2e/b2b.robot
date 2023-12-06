@@ -103,7 +103,7 @@ Share_Shopping_Carts
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
     Yves: go to the 'Home' page
-    Yves: go to user menu item in header:    Order History
+    Yves: go to user menu:    Order History
     Yves: 'Order History' page is displayed
     Yves: get the last placed order ID by current customer
     Yves: 'View Order/Reorder/Return' on the order history page:     View Order    ${lastPlacedOrder}
@@ -163,7 +163,7 @@ Quick_Order
     Yves: 'Thank you' page is displayed
     ### Order History ###
     Yves: go to the 'Home' page
-    Yves: go to user menu item in header:    Order History
+    Yves: go to user menu:    Order History
     Yves: 'Order History' page is displayed
     Yves: get the last placed order ID by current customer
     Yves: 'View Order/Reorder/Return' on the order history page:     View Order    ${lastPlacedOrder}
@@ -395,7 +395,7 @@ Business_Unit_Address_on_Checkout
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
-    Yves: go to user menu item in header:    Order History
+    Yves: go to user menu:    Order History
     Yves: 'Order History' page is displayed
     Yves: get the last placed order ID by current customer
     Yves: 'View Order/Reorder/Return' on the order history page:    View Order    ${lastPlacedOrder}
@@ -448,7 +448,7 @@ Approval_Process
     Yves: 'Summary' page contains/doesn't contain:    true    ${cancelRequestButton}    ${alertWarning}    ${quoteStatus}
     Yves: logout on Yves as a customer
     Yves: login on Yves with provided credentials:    ${yves_company_user_approver_email}
-    Yves: go to user menu item in header:    Overview
+    Yves: go to user menu:    Overview
     Yves: 'Overview' page is displayed
     Yves: go to user menu item in the left bar:    Shopping carts
     Yves: 'Shopping Carts' page is displayed
@@ -463,7 +463,7 @@ Approval_Process
     Yves: 'Summary' page is displayed
     Yves: 'Summary' page contains/doesn't contain:    false    ${cancelRequestButton}    ${alertWarning}
     Yves: go to the 'Home' page
-    Yves: go to user menu item in header:    Overview
+    Yves: go to user menu:    Overview
     Yves: 'Overview' page is displayed
     Yves: go to user menu item in the left bar:    Shopping carts
     Yves: 'Shopping Carts' page is displayed
@@ -501,7 +501,7 @@ Request_for_Quote
     Yves: go to URL:    agent/login
     Yves: login on Yves with provided credentials:    agent_quote+${random}@spryker.com    change123${random}
     Yves: header contains/doesn't contain:    true    ${quoteRequestsWidget}
-    Yves: go to 'Quote Requests' page through the header
+    Yves: go to 'Agent Quote Requests' page through the header
     Yves: 'Quote Requests' page is displayed
     Yves: quote request with reference xxx should have status:    ${lastCreatedRfQ}    Waiting
     Yves: view quote request with reference:    ${lastCreatedRfQ}
@@ -512,7 +512,7 @@ Request_for_Quote
     Yves: logout on Yves as a customer
     Yves: go to the 'Home' page
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
-    Yves: go to user menu item in header:    Quote Requests
+    Yves: go to user menu:    Quote Requests
     Yves: quote request with reference xxx should have status:    ${lastCreatedRfQ}    Ready
     Yves: view quote request with reference:    ${lastCreatedRfQ}
     Yves: click 'Revise' button on the 'Quote Request Details' page
@@ -536,7 +536,7 @@ Request_for_Quote
     Yves: logout on Yves as a customer
     Yves: go to the 'Home' page
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
-    Yves: go to user menu item in header:    Quote Requests
+    Yves: go to user menu:    Quote Requests
     Yves: quote request with reference xxx should have status:    ${lastCreatedRfQ}    Ready
     Yves: view quote request with reference:    ${lastCreatedRfQ}
     Yves: click 'Convert to Cart' button on the 'Quote Request Details' page
@@ -600,7 +600,7 @@ Configurable_Bundle
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
-    Yves: go to user menu item in header:    Order History
+    Yves: go to user menu:    Order History
     Yves: 'Order History' page is displayed
     Yves: get the last placed order ID by current customer
     Yves: 'View Order/Reorder/Return' on the order history page:    View Order    ${lastPlacedOrder}
@@ -633,7 +633,7 @@ Return_Management
     Zed: trigger all matching states inside this order:    Skip timeout
     Zed: trigger all matching states inside this order:    Ship
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
-    Yves: go to user menu item in header:    Order History
+    Yves: go to user menu:    Order History
     Yves: 'Order History' page is displayed
     Yves: get the last placed order ID by current customer
     Yves: 'View Order/Reorder/Return' on the order history page:     Return    ${lastPlacedOrder}
@@ -652,7 +652,7 @@ Return_Management
     Yves: perform search by customer:    ${yves_company_user_buyer_email}
     Yves: agent widget contains:    ${yves_company_user_buyer_email}
     Yves: as an agent login under the customer:    ${yves_company_user_buyer_email}
-    Yves: go to user menu item in header:    Order History
+    Yves: go to user menu:    Order History
     Yves: 'View Order/Reorder/Return' on the order history page:     Return    ${lastPlacedOrder}
     Yves: 'Create Return' page is displayed
     Yves: create return for the following products:    108278
@@ -661,7 +661,7 @@ Return_Management
     Zed: login on Zed with provided credentials:    admin@spryker.com
     Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Execute return
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
-    Yves: go to user menu item in header:    Order History
+    Yves: go to user menu:    Order History
     Yves: 'Order History' page is displayed
     Yves: 'Order History' page contains the following order with a status:    ${lastPlacedOrder}    Returned
     [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
@@ -670,11 +670,11 @@ Return_Management
 User_Account
     [Documentation]    Checks user account pages work + address management
     Yves: login on Yves with provided credentials:    ${yves_user_email}
-    Yves: go to user menu item in header:    Overview
+    Yves: go to user menu:    Overview
     Yves: 'Overview' page is displayed
-    Yves: go to user menu item in header:    Order History
+    Yves: go to user menu:    Order History
     Yves: 'Order History' page is displayed
-    Yves: go to user menu item in header:    Profile
+    Yves: go to user menu:    Profile
     Yves: 'Profile' page is displayed
     Yves: go to user menu item in the left bar:    Addresses
     Yves: 'Addresses' page is displayed
@@ -696,7 +696,7 @@ User_Account
     ...    || email              | salutation | first name                       | last name                       | address 1          | address 2           | address 3           | city            | zip code  | country | phone     | company          ||
     ...    || ${yves_user_email} | Ms         | ${yves_user_first_name}${random} | ${yves_user_last_name}${random} | address 1${random} | address 2 ${random} | address 3 ${random} | Berlin${random} | ${random} | Austria | 123456789 | Spryker${random} ||
     Yves: login on Yves with provided credentials:    ${yves_user_email}
-    Yves: go to user menu item in header:    Overview
+    Yves: go to user menu:    Overview
     Yves: go to user menu item in the left bar:    Addresses
     Yves: check that user has address exists/doesn't exist:    true    ${yves_user_first_name}${random}    ${yves_user_last_name}${random}    address 1${random}    address 2 ${random}    ${random}    Berlin${random}    Austria
     [Teardown]    Run Keywords    Yves: login on Yves with provided credentials:    ${yves_user_email}
@@ -965,9 +965,7 @@ Manage_Product
     ...    || manageSKU${random} | DEmanageProduct${random} force ||
     Trigger multistore p&s
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
-    Yves: go to URL:    en/search?q=manageSKU${random}
-    Try reloading page until element is/not appear:    ${catalog_product_card_locator}    true    21    5s
-    Yves: go to PDP of the product with sku:    manageSKU${random}
+    Yves: go to PDP of the product with sku:    manageSKU${random}    wait_for_p&s=true
     Yves: product price on the PDP should be:    €100.00    wait_for_p&s=true
     Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    False
     Yves: change variant of the product on PDP on:    grey
@@ -1001,9 +999,7 @@ Manage_Product
     Trigger multistore p&s
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     Yves: create new 'Shopping Cart' with name:    manageProductCart+${random}
-    Yves: go to URL:    en/search?q=manageSKU${random}
-    Try reloading page until element is/not appear:    ${catalog_product_card_locator}    true    21    5s
-    Yves: go to PDP of the product with sku:    manageSKU${random}
+    Yves: go to PDP of the product with sku:    manageSKU${random}    wait_for_p&s=true
     Yves: product name on PDP should be:    ENUpdatedmanageProduct${random}
     Yves: product price on the PDP should be:    €150.00    wait_for_p&s=true
     Yves: change variant of the product on PDP on:    grey
@@ -1433,7 +1429,7 @@ Multistore_CMS
     ...    AND    Trigger multistore p&s
 
 Product_Availability_Calculation
-    [Documentation]    Bug: CC-24108. Check product availability + multistore
+    [Documentation]    Check product availability + multistore
     [Setup]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: update warehouse:    
     ...    || warehouse  | store || 
@@ -1463,13 +1459,11 @@ Product_Availability_Calculation
     ...    || availabilitySKU${random} | availabilitySKU${random}-farbe-grey | AT    | gross | default | €        | 75.00  ||
     Zed: change concrete product stock:
     ...    || productAbstract          | productConcrete                     | warehouse n1 | warehouse n1 qty | warehouse n1 never out of stock ||
-    ...    || availabilitySKU${random} | availabilitySKU${random}-farbe-grey | Warehouse2   | 5                | false                            ||
+    ...    || availabilitySKU${random} | availabilitySKU${random}-farbe-grey | Warehouse1   | 5                | false                            ||
     Trigger multistore p&s
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     Yves: create new 'Shopping Cart' with name:    availabilityCart+${random}
-    Yves: go to URL:    en/search?q=availabilitySKU${random}
-    Try reloading page until element is/not appear:    ${catalog_product_card_locator}    true    21    5s
-    Yves: go to PDP of the product with sku:    availabilitySKU${random}
+    Yves: go to PDP of the product with sku:    availabilitySKU${random}    wait_for_p&s=true
     Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    False
     Yves: change quantity using '+' or '-' button № times:    +    5
     Yves: try add product to the cart from PDP and expect error:    Item availabilitySKU${random}-farbe-grey only has availability of 5.
@@ -1507,9 +1501,7 @@ Product_Availability_Calculation
     Yves: try add product to the cart from PDP and expect error:    Item availabilitySKU${random}-farbe-grey only has availability of 5.
     Yves: go to AT store 'Home' page
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
-    Yves: go to AT URL:    en/search?q=availabilitySKU${random}
-    Try reloading page until element is/not appear:    ${catalog_product_card_locator}    true    21    5s
-    Yves: go to PDP of the product with sku:    availabilitySKU${random}
+    Yves: go to PDP of the product with sku:    availabilitySKU${random}    wait_for_p&s=true
     Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    False
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: update warehouse:    
@@ -1518,9 +1510,7 @@ Product_Availability_Calculation
     Trigger multistore p&s
     Yves: go to AT store 'Home' page
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
-    Yves: go to AT URL:    en/search?q=availabilitySKU${random}
-    Try reloading page until element is/not appear:    ${catalog_product_card_locator}    true    21    5s
-    Yves: go to PDP of the product with sku:    availabilitySKU${random}
+    Yves: go to PDP of the product with sku:    availabilitySKU${random}    wait_for_p&s=true
     Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    True
     [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: update warehouse:    
@@ -1550,9 +1540,9 @@ User_Control
 Update_Customer_Data
     [Documentation]    Checks customer data can be updated from Yves and Zed
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
-    Yves: go to user menu item in header:    Overview
+    Yves: go to user menu:    Overview
     Yves: 'Overview' page is displayed
-    Yves: go to user menu item in header:    Profile
+    Yves: go to user menu:    Profile
     Yves: 'Profile' page is displayed
     Yves: assert customer profile data:
     ...    || salutation | first name                           | last name                           | email                            ||
@@ -1571,9 +1561,9 @@ Update_Customer_Data
     ...    || email                            | salutation | first name                           | last name                           ||
     ...    || ${yves_company_user_buyer_email} | Mr         | ${yves_company_user_buyer_firstname} | ${yves_company_user_buyer_lastname} ||
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
-    Yves: go to user menu item in header:    Overview
+    Yves: go to user menu:    Overview
     Yves: 'Overview' page is displayed
-    Yves: go to user menu item in header:    Profile
+    Yves: go to user menu:    Profile
     Yves: 'Profile' page is displayed
     Yves: assert customer profile data:
     ...    || salutation | first name                           | last name                           | email                            ||
@@ -1641,8 +1631,7 @@ Comment_Management_in_the_Cart
     [Teardown]    Run Keyword    Yves: delete 'Shopping Cart' with name:    commentManagement+${random}
 
 Comment_Management_in_Order
-    [Tags]    skip-due-to-issue
-    [Documentation]    Bug:CC-23306. Add comments in Yves and check in Zed. 
+    [Documentation]    Add comments in Yves and check in Zed. 
     Yves: login on Yves with provided credentials:    ${yves_company_user_shared_permission_owner_email}
     Yves: create new 'Shopping Cart' with name:    comments+${random}
     Yves: go to PDP of the product with sku:    ${bundled_product_3_abstract_sku}
@@ -1730,7 +1719,7 @@ Configurable_Product_PDP_Shopping_List
     ...    || date       | date_time ||
     ...    || 01.01.2055 | Morning   ||
     Yves: add product to the shopping list:    configProduct+${random}
-    Yves: go To 'Shopping Lists' Page
+    Yves: go to 'Shopping Lists' page
     Yves: view shopping list with name:    configProduct+${random}
     Yves: configuration should be equal:
     ...    || date       | date_time ||
@@ -1774,7 +1763,7 @@ Configurable_Product_RfQ_Order_Management
     Yves: logout on Yves as a customer
     Yves: go to URL:    agent/login
     Yves: login on Yves with provided credentials:    agent_config+${random}@spryker.com    change123${random}
-    Yves: go to 'Quote Requests' page through the header
+    Yves: go to 'Agent Quote Requests' page through the header
     Yves: quote request with reference xxx should have status:    ${lastCreatedRfQ}    Waiting
     Yves: view quote request with reference:    ${lastCreatedRfQ}
     Yves: 'Quote Request Details' page is displayed
@@ -1788,7 +1777,7 @@ Configurable_Product_RfQ_Order_Management
     Yves: logout on Yves as a customer
     Yves: go to the 'Home' page
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
-    Yves: go to user menu item in header:    Quote Requests
+    Yves: go to user menu:    Quote Requests
     Yves: quote request with reference xxx should have status:    ${lastCreatedRfQ}    Ready
     Yves: view quote request with reference:    ${lastCreatedRfQ}
     Yves: click 'Convert to Cart' button on the 'Quote Request Details' page
@@ -1821,7 +1810,7 @@ Configurable_Product_RfQ_Order_Management
     Zed: go to order page:    ${lastPlacedOrder}
     Zed: trigger matching state of xxx order item inside xxx shipment:    Ship    1
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
-    Yves: go to user menu item in header:    Order History
+    Yves: go to user menu:    Order History
     Yves: 'Order History' page is displayed
     Yves: get the last placed order ID by current customer
     Yves: 'View Order/Reorder/Return' on the order history page:     Return    ${lastPlacedOrder}
@@ -1833,7 +1822,7 @@ Configurable_Product_RfQ_Order_Management
     Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Execute return
     Yves: go to the 'Home' page
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
-    Yves: go to user menu item in header:    Order History
+    Yves: go to user menu:    Order History
     Yves: 'Order History' page contains the following order with a status:    ${lastPlacedOrder}    Returned
     Yves: 'View Order/Reorder/Return' on the order history page:     View Order
     Yves: 'Order Details' page is displayed

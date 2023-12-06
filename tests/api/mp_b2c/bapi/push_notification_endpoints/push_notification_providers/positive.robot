@@ -65,7 +65,7 @@ Retrieve_push_notification_providers
     And Each array in response should contain property with NOT EMPTY value:    [data]    [attributes][uuid]
     [Teardown]     Run Keywords    I send a DELETE request:    /push-notification-providers/${push_notification_provider_id}
     ...    AND    I send a DELETE request:    /push-notification-providers/${push_notification_provider_id_2}
-    
+
 Retrieve_push_notification_provider_with_pagination
     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
     ...    AND    I set Headers:    Content-Type=application/vnd.api+json   Authorization=Bearer ${token}

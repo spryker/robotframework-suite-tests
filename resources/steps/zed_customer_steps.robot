@@ -25,3 +25,39 @@ Zed: delete customer:
                     Zed: message should be shown:    Customer successfully deleted
             END
         END
+
+Zed: update company customer data:
+    [Arguments]    @{args}
+    ${registrationData}=    Set Up Keyword Arguments    @{args}
+    Zed: perform search by:    ${first_name}
+    ${customerExists}=    Run Keyword And Return Status    Zed: table should contain non-searchable value:    ${first_name}
+    IF    '${customerExists}'=='True'
+        Zed: click Action Button in a table for row that contains:    ${first_name}    Edit
+        FOR    ${key}    ${value}    IN    &{registrationData}
+            Log    Key is '${key}' and value is '${value}'.
+            IF    '${key}'=='salutation' and '${value}' != '${EMPTY}'
+                Select From List By Label    ${zed_edit_company_user_salutation}    ${value}
+            END
+            IF    '${key}'=='first_name' and '${value}' != '${EMPTY}'
+                Type Text    ${zed_edit_company_user_first_name}    ${value}
+            END
+            IF    '${key}'=='last_name' and '${value}' != '${EMPTY}'
+                Type Text    ${zed_edit_company_user_last_name}    ${value}
+            END
+            IF    '${key}'=='company' and '${value}' != '${EMPTY}'
+                Click    ${zed_edit_company_user_company_span}
+                Wait Until Element Is Visible    ${zed_edit_company_user_search_select_field}
+                Type Text    ${zed_edit_company_user_search_select_field}    ${value}
+                Click    xpath=(//input[@type='search']/../..//ul[contains(.,'${value}')])[1]
+            END
+            IF    '${key}'=='business_unit' and '${value}' != '${EMPTY}'
+                Click    ${zed_edit_company_user_business_unit_span}
+                Wait Until Element Is Visible    ${zed_edit_company_user_search_select_field}
+                Type Text    ${zed_edit_company_user_search_select_field}    ${value}
+                Click    xpath=(//input[@type='search']/../..//ul[contains(.,'${value}')])[1]
+            END
+        END
+        Zed: submit the form
+    ELSE
+        Log    ${email} customer doesn't exist
+    END

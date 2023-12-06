@@ -15,13 +15,14 @@ Yves: 'Shopping Carts' widget contains:
     Wait Until Element Is Visible    ${shopping_car_icon_header_menu_item}[${env}]
     Mouse Over    ${shopping_car_icon_header_menu_item}[${env}]
     Wait Until Element Is Visible    ${shopping_cart_sub_navigation_widget}
-    Page Should Contain Element    xpath=//*[contains(@class,'icon--cart')]/ancestor::li//div[contains(@class,'js-user-navigation__sub-nav-cart')]//span[text()[contains(.,'${accessLevel}')]]/ancestor::div[@class='mini-cart-detail']//*[contains(@class,'mini-cart-detail__title')]/*[text()='${shoppingCartName}']
-
-Yves: Go to 'Shopping Carts' page
-    Mouse Over    ${shopping_car_icon_header_menu_item}[${env}]
-    Wait Until Page Contains Element    ${shopping_cart_sub_navigation_widget}
-    Click Element by xpath with JavaScript    ${shopping_cart_sub_navigation_all_carts_button}
-    Repeat Keyword    3    Wait Until Network Is Idle
+    IF    '${env}' in ['ui_suite']
+        Page Should Contain Element    xpath=//header//cart-counter//a[contains(@href,'/cart')]/ancestor::li/ul[contains(@class,'menu')][contains(@class,'wide')]//*[contains(@data-qa,'mini-cart-detail')]//a[contains(.,'${shoppingCartName}')]/ancestor::div[1]//*[@class='cart-permission'][contains(.,'${accessLevel}')] | //header//cart-counter//a[contains(@href,'/cart')]/ancestor::li/ul[contains(@class,'menu')][contains(@class,'wide')]//*[contains(@data-qa,'mini-cart-detail')]//button[contains(.,'${shoppingCartName}')]/ancestor::div[1]//*[@class='cart-permission'][contains(.,'${accessLevel}')]
+    ELSE
+        Page Should Contain Element    xpath=//*[contains(@class,'icon--cart')]/ancestor::li//div[contains(@class,'js-user-navigation__sub-nav-cart')]//span[text()[contains(.,'${accessLevel}')]]/ancestor::div[@class='mini-cart-detail']//*[contains(@class,'mini-cart-detail__title')]/*[text()='${shoppingCartName}']
+    END
+Yves: go to 'Shopping Carts' page
+    ${lang}=    Yves: get current lang
+    Yves: go to URL:    ${lang}/multi-cart
 
 Yves: create new 'Shopping Cart' with name:
     [Arguments]    ${shoppingCartName}
@@ -39,8 +40,11 @@ Yves: create new 'Shopping Cart' with name:
 
 Yves: the following shopping cart is shown:
     [Arguments]    ${shoppingCartName}    ${shoppingCartAccess}
-    Page Should Contain Element    xpath=//*[@data-qa='component quote-table']//table//td[@data-content='Access'][contains(.,'${shoppingCartAccess}')]/../td[@data-content='Name'][contains(.,'${shoppingCartName}')]
-
+    IF    '${env}' in ['ui_suite']
+        Page Should Contain Element    xpath=//*[contains(@data-qa,'quote-table')]//*[@class='cart-permission'][contains(.,'${shoppingCartAccess}')]/ancestor::tr/td[1][contains(.,'${shoppingCartName}')]
+    ELSE
+        Page Should Contain Element    xpath=//*[@data-qa='component quote-table']//table//td[@data-content='Access'][contains(.,'${shoppingCartAccess}')]/../td[@data-content='Name'][contains(.,'${shoppingCartName}')]
+    END
 Yves: share shopping cart with user:
     [Arguments]    ${shoppingCartName}    ${customerToShare}    ${accessLevel}
     Share shopping cart with name:    ${shoppingCartName}
@@ -55,7 +59,11 @@ Yves: go to the shopping cart through the header with name:
     Wait Until Element Is Visible    ${shopping_car_icon_header_menu_item}[${env}]
     Mouse Over    ${shopping_car_icon_header_menu_item}[${env}]
     Wait Until Element Is Visible    ${shopping_cart_sub_navigation_widget}
-    Click    xpath=//*[contains(@class,'icon--cart')]/ancestor::li//div[contains(@class,'js-user-navigation__sub-nav-cart')]//div[@class='mini-cart-detail']//*[contains(@class,'mini-cart-detail__title')]/*[text()='${shoppingCartName}']
+    IF    '${env}' in ['ui_suite']
+        Click    xpath=//header//cart-counter//a[contains(@href,'/cart')]/ancestor::li/ul[contains(@class,'menu')][contains(@class,'wide')]//*[contains(@data-qa,'mini-cart-detail')]//a[contains(.,'${shoppingCartName}')] | //header//cart-counter//a[contains(@href,'/cart')]/ancestor::li/ul[contains(@class,'menu')][contains(@class,'wide')]//*[contains(@data-qa,'mini-cart-detail')]//button[contains(.,'${shoppingCartName}')]
+    ELSE
+        Click    xpath=//*[contains(@class,'icon--cart')]/ancestor::li//div[contains(@class,'js-user-navigation__sub-nav-cart')]//div[@class='mini-cart-detail']//*[contains(@class,'mini-cart-detail__title')]/*[text()='${shoppingCartName}']
+    END
     Repeat Keyword    3    Wait Until Network Is Idle
 
 Yves: go to b2c shopping cart
@@ -71,7 +79,11 @@ Yves: shopping cart contains the following products:
     ${items_list_count}=   get length  ${items_list}
     FOR    ${index}    IN RANGE    0    ${items_list_count}
         ${item_to_check}=    Get From List    ${items_list}    ${index}
-        Page Should Contain Element    xpath=(//main[contains(@class,'cart')]//article[(contains(@data-qa,'product-cart-item') or contains(@data-qa,'product-card-item'))]//*[contains(.,'${item_to_check}')]/ancestor::article)[1]
+        IF    '${env}' in ['ui_suite']
+            Page Should Contain Element    xpath=(//main//cart-items-list//product-item[contains(@data-qa,'component product-cart-item')]//*[@data-qa='cart-item-sku'][contains(text(),'${item_to_check}')])[1]
+        ELSE
+            Page Should Contain Element    xpath=(//main[contains(@class,'cart')]//article[(contains(@data-qa,'product-cart-item') or contains(@data-qa,'product-card-item'))]//*[contains(.,'${item_to_check}')]/ancestor::article)[1]
+        END
     END
 
 Yves: click on the '${buttonName}' button in the shopping cart
@@ -94,6 +106,8 @@ Yves: shopping cart contains product with unit price:
         EXCEPT
             Page Should Contain Element    xpath=//div[contains(@class,'product-cart-item__col--description')]//div[contains(.,'SKU: ${sku}')]/ancestor::article//*[contains(@class,'product-cart-item__col--description')]/div[1]//*[contains(@class,'money-price__amount')][contains(.,'${productPrice}')]    timeout=1s
         END  
+    ELSE IF    '${env}' in ['ui_suite']
+        Page Should Contain Element    xpath=//main//cart-items-list//product-item[contains(@data-qa,'component product-cart-item')]//*[@data-qa='cart-item-sku'][contains(text(),'${sku}')]/ancestor::product-item//*[contains(@data-qa,'cart-item-summary')]//span[contains(.,'${productPrice}')]    timeout=1s
     ELSE
         Page Should Contain Element    xpath=//main[@class='page-layout-cart']//article[contains(@data-qa,'component product-card-item')]//a[contains(text(),'${productName}')]/following-sibling::span/span[contains(@class,'money-price__amount') and contains(.,'${productPrice}')]    timeout=1s
     END
@@ -172,10 +186,13 @@ Yves: Shopping Cart title should be equal:
 Yves: change quantity of the configurable bundle in the shopping cart on:
     [Documentation]    In case of multiple matches, changes quantity for the first product in the shopping cart
     [Arguments]    ${confBundleTitle}    ${quantity}
-    IF    '${env}' in ['ui_b2b','ui_mp_b2b']
-        Type Text    xpath=//main//article[contains(@data-qa,'configured-bundle')][1]//a[text()='Presentation bundle']/ancestor::article//input[contains(@class, 'formatted-number-input__input')]    ${quantity}
+    IF    '${env}' in ['ui_b2b','ui_mp_b2b','ui_suite']
+        Type Text    xpath=//main//article[contains(@data-qa,'configured-bundle')][1]//a[text()='${confBundleTitle}']/ancestor::article//input[contains(@class, 'formatted-number-input__input')]    ${quantity}
     ELSE
         Type Text    xpath=//article[contains(@data-qa,'configured-bundle-secondary')][1]//ancestor::*[contains(@data-qa, 'component formatted-number-input')]//input[contains(@class,'formatted-number-input')][contains(@data-min-quantity,'1')]    ${quantity}
+    END
+    IF    '${env}' in ['ui_suite']
+        Click    //main//article[contains(@data-qa,'configured-bundle')][1]//a[text()='${confBundleTitle}']/ancestor::article//input[contains(@class, 'formatted-number-input__input')]/ancestor::article//button[@data-qa='quantity-input-submit']
     END
     Click With Options    xpath=//main//article[contains(@data-qa,'configured-bundle')][1]//a[text()='${confBundleTitle}']/ancestor::article    delay=1s
     Repeat Keyword    3    Wait Until Network Is Idle
@@ -275,6 +292,13 @@ Yves: change quantity of promotional product and add to cart:
             Click    ${shopping_cart_promotional_product_decrease_quantity_button}[${env}]
         END
     END
+    Click    ${shopping_cart_promotional_product_add_to_cart_button}
+    Repeat Keyword    3    Wait Until Network Is Idle
+    Yves: flash message should be shown:    success    Items added successfully
+    Yves: remove flash messages
+
+Yves: add promotional product to the cart
+    [Documentation]    
     Click    ${shopping_cart_promotional_product_add_to_cart_button}
     Repeat Keyword    3    Wait Until Network Is Idle
     Yves: flash message should be shown:    success    Items added successfully

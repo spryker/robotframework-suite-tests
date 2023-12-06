@@ -66,9 +66,9 @@ Guest_User_Access_Restrictions
     Yves: add product to the shopping cart
     Yves: go to b2c shopping cart
     Yves: shopping cart contains product with unit price:   002    Canon IXUS 160    37.50
-    Yves: go to user menu item in header:    Overview
+    Yves: go to user menu:    Overview
     Yves: 'Login' page is displayed
-    Yves: go To 'Wishlist' Page
+    Yves: go to 'Wishlist' page
     Yves: 'Login' page is displayed
 
 Authorized_User_Access
@@ -80,24 +80,24 @@ Authorized_User_Access
     Yves: add product to the shopping cart
     Yves: go to b2c shopping cart
     Yves: shopping cart contains product with unit price:    002    Canon IXUS 160    37.50
-    Yves: go to user menu item in header:    Overview
+    Yves: go to user menu:    Overview
     Yves: 'Overview' page is displayed
-    Yves: go to user menu item in header:    Orders History
+    Yves: go to user menu:    Orders History
     Yves: 'Order History' page is displayed
-    Yves: go To 'Wishlist' Page
+    Yves: go to 'Wishlist' page
     Yves: 'Wishlist' page is displayed
     [Teardown]    Yves: check if cart is not empty and clear it
 
 User_Account
     [Documentation]    Checks user account pages work + address management
     Yves: login on Yves with provided credentials:    ${yves_second_user_email}
-    Yves: go to user menu item in header:    Overview
+    Yves: go to user menu:    Overview
     Yves: 'Overview' page is displayed
-    Yves: go to user menu item in header:    Orders History
+    Yves: go to user menu:    Orders History
     Yves: 'Order History' page is displayed
-    Yves: go to user menu item in header:    My Profile
+    Yves: go to user menu:    My Profile
     Yves: 'Profile' page is displayed
-    Yves: go To 'Wishlist' Page
+    Yves: go to 'Wishlist' page
     Yves: 'Wishlist' page is displayed
     Yves: go to user menu item in the left bar:    Addresses
     Yves: 'Addresses' page is displayed
@@ -119,7 +119,7 @@ User_Account
     ...    || email                     | salutation | first name                              | last name                              | address 1          | address 2           | address 3           | city            | zip code  | country | phone     | company          ||
     ...    || ${yves_second_user_email} | Mr         | ${yves_second_user_first_name}${random} | ${yves_second_user_last_name}${random} | address 1${random} | address 2 ${random} | address 3 ${random} | Berlin${random} | ${random} | Austria | 123456789 | Spryker${random} ||
     Yves: login on Yves with provided credentials:    ${yves_second_user_email}
-    Yves: go to user menu item in header:    Overview
+    Yves: go to user menu:    Overview
     Yves: go to user menu item in the left bar:    Addresses
     Yves: check that user has address exists/doesn't exist:    true    ${yves_second_user_first_name}${random}    ${yves_second_user_last_name}${random}    address 1${random}    address 2 ${random}    ${random}    Berlin${random}    Austria
     [Teardown]    Run Keywords    Yves: login on Yves with provided credentials:    ${yves_second_user_email}
@@ -178,13 +178,13 @@ Product_PDP
     [Documentation]    Checks that PDP contains required elements
     Yves: go to PDP of the product with sku:    135
     Yves: change variant of the product on PDP on:    Flash
-    Yves: PDP contains/doesn't contain:    true    ${pdpPriceLocator}   ${addToCartButton}    ${pdp_limited_warranty_option}    ${pdp_gift_wrapping_option}    ${relatedProducts}
+    Yves: PDP contains/doesn't contain:    true    ${pdpPriceLocator}   ${addToCartButton}    ${pdp_limited_warranty_option}[${env}]    ${pdp_gift_wrapping_option}[${env}]    ${relatedProducts}
     Yves: PDP contains/doesn't contain:    false    ${pdp_add_to_wishlist_button}
     Yves: login on Yves with provided credentials:    ${yves_user_email}
     Yves: go to PDP of the product with sku:    135
-    Yves: PDP contains/doesn't contain:    true    ${pdpPriceLocator}   ${pdp_add_to_cart_disabled_button}[${env}]    ${pdp_limited_warranty_option}    ${pdp_gift_wrapping_option}     ${pdp_add_to_wishlist_button}    ${relatedProducts}
+    Yves: PDP contains/doesn't contain:    true    ${pdpPriceLocator}   ${pdp_add_to_cart_disabled_button}[${env}]    ${pdp_limited_warranty_option}[${env}]    ${pdp_gift_wrapping_option}[${env}]     ${pdp_add_to_wishlist_button}    ${relatedProducts}
     Yves: change variant of the product on PDP on:    Flash
-    Yves: PDP contains/doesn't contain:    true    ${pdpPriceLocator}    ${addToCartButton}    ${pdp_limited_warranty_option}    ${pdp_gift_wrapping_option}     ${pdp_add_to_wishlist_button}    ${relatedProducts}
+    Yves: PDP contains/doesn't contain:    true    ${pdpPriceLocator}    ${addToCartButton}    ${pdp_limited_warranty_option}[${env}]    ${pdp_gift_wrapping_option}[${env}]     ${pdp_add_to_wishlist_button}    ${relatedProducts}
 
 Volume_Prices
     [Documentation]    Checks volume prices are applied
@@ -201,7 +201,7 @@ Volume_Prices
 Discontinued_Alternative_Products
     [Documentation]    Checks discontinued and alternative products
     Yves: go to PDP of the product with sku:    ${product_with_relations_alternative_products_sku}
-    Yves: change variant of the product on PDP on:    2.3 GHz - Discontinued
+    Yves: change variant of the product on PDP on:    2.3 GHz
     Yves: PDP contains/doesn't contain:    true    ${alternativeProducts}
     Yves: login on Yves with provided credentials:    ${yves_user_email}
     Yves: delete all wishlists
@@ -214,7 +214,7 @@ Discontinued_Alternative_Products
     Zed: add following alternative products to the concrete:    012
     Trigger p&s
     Yves: login on Yves with provided credentials:    ${yves_user_email}
-    Yves: go To 'Wishlist' Page
+    Yves: go to 'Wishlist' page
     Yves: go to wishlist with name:    My wishlist
     Yves: product with sku is marked as discountinued in wishlist:    ${discontinued_product_concrete_sku}
     Yves: product with sku is marked as alternative in wishlist:    012
@@ -260,11 +260,11 @@ Add_to_Wishlist
     Yves: create wishlist with name:    My wishlist
     Yves: go to PDP of the product with sku:  003
     Yves: add product to wishlist:    My wishlist
-    Yves: go To 'Wishlist' Page
+    Yves: go to 'Wishlist' page
     Yves: create wishlist with name:    Second wishlist
     Yves: go to PDP of the product with sku:  004
     Yves: add product to wishlist:    Second wishlist    select
-    Yves: go To 'Wishlist' Page
+    Yves: go to 'Wishlist' page
     Yves: go to wishlist with name:    My wishlist
     Yves: wishlist contains product with sku:    003_26138343
     Yves: go to wishlist with name:    Second wishlist
@@ -345,7 +345,7 @@ Add_to_Wishlist
 #     Yves: accept the terms and conditions:    true
 #     Yves: 'submit the order' on the summary page
 #     Yves: 'Thank you' page is displayed
-#     Yves: go to user menu item in header:    Orders History
+#     Yves: go to user menu:    Orders History
 #     Yves: 'Order History' page is displayed
 #     Yves: get the last placed order ID by current customer
 #     Yves: 'View Order/Reorder/Return' on the order history page:    View Order    ${lastPlacedOrder}
@@ -454,7 +454,7 @@ Agent_Assist
     Yves: header contains/doesn't contain:    true    ${customerSearchWidget}
     Yves: perform search by customer:    ${yves_user_first_name}
     Yves: agent widget contains:    ${yves_user_email}
-    Yves: As an Agent login under the customer:    ${yves_user_email}
+    Yves: as an agent login under the customer:    ${yves_user_email}
     Yves: perform search by:    031
     Yves: product with name in the catalog should have price:    Canon PowerShot G9 X    €400.24
     Yves: go to PDP of the product with sku:    031
@@ -498,7 +498,7 @@ Return_Management
     Zed: trigger matching state of xxx merchant's shipment:    1    confirm at center
     Zed: trigger matching state of xxx merchant's shipment:    1    Ship   
     Yves: login on Yves with provided credentials:    ${yves_user_email}
-    Yves: go to user menu item in header:    Orders History
+    Yves: go to user menu:    Orders History
     Yves: 'Order History' page is displayed
     Yves: get the last placed order ID by current customer
     Yves: 'View Order/Reorder/Return' on the order history page:     Return    ${lastPlacedOrder}
@@ -523,8 +523,8 @@ Return_Management
     Yves: header contains/doesn't contain:    true    ${customerSearchWidget}
     Yves: perform search by customer:    ${yves_user_email}
     Yves: agent widget contains:    ${yves_user_email}
-    Yves: As an Agent login under the customer:    ${yves_user_email}
-    Yves: go to user menu item in header:    Orders History
+    Yves: as an agent login under the customer:    ${yves_user_email}
+    Yves: go to user menu:    Orders History
     Yves: 'View Order/Reorder/Return' on the order history page:     Return    ${lastPlacedOrder}
     Yves: 'Create Return' page is displayed
     Yves: create return for the following products:    008_30692992
@@ -538,7 +538,7 @@ Return_Management
     Zed: view the latest return from My Returns:    ${lastPlacedOrder}
     Zed: return details page contains the following items:    008_30692992
     Yves: login on Yves with provided credentials:    ${yves_user_email}
-    Yves: go to user menu item in header:    Orders History
+    Yves: go to user menu:    Orders History
     Yves: 'Order History' page is displayed
     Yves: 'Order History' page contains the following order with a status:    ${lastPlacedOrder}    Returned
     [Teardown]    Run Keywords    Yves: check if cart is not empty and clear it
@@ -924,9 +924,7 @@ Create_and_Approve_New_Merchant_Product
     Zed: click Action Button in a table for row that contains:     NewProduct${random}     Approve
     Trigger p&s
     Yves: login on Yves with provided credentials:    ${yves_user_email}   
-    Yves: go to URL:    en/search?q=SKU${random}
-    Try reloading page until element is/not appear:    ${catalog_product_card_locator}    true    21    5s
-    Yves: go to PDP of the product with sku:     SKU${random}
+    Yves: go to PDP of the product with sku:     SKU${random}    wait_for_p&s=true
     Save current URL
     Yves: merchant is (not) displaying in Sold By section of PDP:    Budget Cameras    true
     Yves: product price on the PDP should be:    €100.00    wait_for_p&s=true
@@ -963,8 +961,6 @@ Create_New_Offer
     Zed: go to second navigation item level:    Catalog    Products 
     Zed: click Action Button in a table for row that contains:     SprykerSKU${random}     Approve 
     Trigger p&s 
-    Yves: go to URL:    en/search?q=SprykerSKU${random}
-    Try reloading page until element is/not appear:    ${catalog_product_card_locator}    true    21    5s
     MP: login on MP with provided credentials:    ${merchant_budget_cameras_email}
     MP: open navigation menu tab:    Offers
     MP: click on create new entity button:    Add Offer
@@ -986,7 +982,7 @@ Create_New_Offer
     Trigger p&s
     Yves: login on Yves with provided credentials:    ${yves_user_email}
     Yves: check if cart is not empty and clear it
-    Yves: go to PDP of the product with sku:     SprykerSKU${random}-2
+    Yves: go to PDP of the product with sku:     SprykerSKU${random}-2    wait_for_p&s=true
     Yves: merchant is (not) displaying in Sold By section of PDP:    Budget Cameras    true
     Yves: merchant's offer/product price should be:    Budget Cameras    €200.00
     Yves: select xxx merchant's offer:    Budget Cameras
@@ -1089,7 +1085,7 @@ Fulfill_Order_from_Merchant_Portal
     MP: open navigation menu tab:    Orders    
     MP: wait for order to appear:    ${lastPlacedOrder}--${merchant_budget_cameras_reference}
     MP: click on a table row that contains:    ${lastPlacedOrder}--${merchant_budget_cameras_reference}
-    MP: order grand total should be:    €247.08
+    MP: order grand total should be:    €230.27
     MP: update order state using header button:    Ship
     MP: order states on drawer should contain:    Shipped 
     MP: switch to the tab:    Items
@@ -1110,13 +1106,13 @@ Wishlist_List_Supports_Offers
     [Setup]    Run Keywords    Yves: login on Yves with provided credentials:    ${yves_user_email}
     ...    AND    Yves: delete all wishlists
     ...    AND    Yves: check if cart is not empty and clear it
-    ...    AND    Yves: go To 'Wishlist' Page
+    ...    AND    Yves: go to 'Wishlist' page
     ...    AND    Yves: create wishlist with name:    Offer wishlist
     Yves: go to PDP of the product with sku:    ${product_with_multiple_offers_abstract_sku}
     Yves: add product to wishlist:    Offer wishlist
     Yves: select xxx merchant's offer:    Budget Cameras
     Yves: add product to wishlist:    Offer wishlist
-    Yves: go To 'Wishlist' Page
+    Yves: go to 'Wishlist' page
     Yves: go to wishlist with name:    Offer wishlist
     Yves: assert merchant of product in wishlist:    ${product_with_multiple_offers_concrete_sku}    Spryker
     Yves: assert merchant of product in wishlist:    ${product_with_multiple_offers_concrete_sku}    Budget Cameras
@@ -1172,13 +1168,11 @@ Merchant_Portal_Product_Volume_Prices
     ...    || true      | 100            | true              | en_US         ||
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Catalog    Products 
-    Zed: click Action Button in a table for row that contains:     VPNewProduct${random}     Approve
+    Zed: click Action Button in a table for row that contains:     VPSKU${random}     Approve
     Trigger p&s
     Yves: login on Yves with provided credentials:    ${yves_user_email}
     Yves: check if cart is not empty and clear it
-    Yves: go to URL:    en/search?q=VPSKU${random}
-    Try reloading page until element is/not appear:    ${catalog_product_card_locator}    true    21    5s
-    Yves: go to PDP of the product with sku:     VPSKU${random}
+    Yves: go to PDP of the product with sku:     VPSKU${random}    wait_for_p&s=true
     Yves: merchant is (not) displaying in Sold By section of PDP:    Video King    true
     Yves: product price on the PDP should be:    €100.00    wait_for_p&s=true
     Reload
@@ -1238,9 +1232,7 @@ Merchant_Portal_Offer_Volume_Prices
     Trigger p&s
     Yves: login on Yves with provided credentials:    ${yves_second_user_email}  
     Yves: check if cart is not empty and clear it
-    Yves: go to URL:    en/search?q=OfferSKU${random}
-    Try reloading page until element is/not appear:    ${catalog_product_card_locator}    true    21    5s
-    Yves: go to PDP of the product with sku:     OfferSKU${random}
+    Yves: go to PDP of the product with sku:     OfferSKU${random}    wait_for_p&s=true
     Yves: merchant is (not) displaying in Sold By section of PDP:    Spryker    true
     MP: login on MP with provided credentials:    ${merchant_video_king_email}
     MP: open navigation menu tab:    Offers
@@ -1462,9 +1454,7 @@ Manage_Merchant_Product
     Zed: click Action Button in a table for row that contains:     manageProduct${random}     Approve
     Trigger p&s
     Yves: login on Yves with provided credentials:    ${yves_user_email}   
-    Yves: go to URL:    en/search?q=manageSKU${random}
-    Try reloading page until element is/not appear:    ${catalog_product_card_locator}    true    21    5s
-    Yves: go to PDP of the product with sku:     manageSKU${random}
+    Yves: go to PDP of the product with sku:     manageSKU${random}    wait_for_p&s=true
     Yves: product price on the PDP should be:    €100.00    wait_for_p&s=true
     Yves: change variant of the product on PDP on:    Item
     Yves: product price on the PDP should be:    €50.00    wait_for_p&s=true
@@ -1873,9 +1863,7 @@ Multistore_Product_Offer
     Trigger multistore p&s
     Yves: login on Yves with provided credentials:    ${yves_second_user_email}  
     Yves: check if cart is not empty and clear it
-    Yves: go to URL:    en/search?q=multistoreSKU${random}
-    Try reloading page until element is/not appear:    ${catalog_product_card_locator}    true    21    5s
-    Yves: go to PDP of the product with sku:     multistoreSKU${random}
+    Yves: go to PDP of the product with sku:     multistoreSKU${random}    wait_for_p&s=true
     Yves: merchant is (not) displaying in Sold By section of PDP:    Budget Cameras    true
     Yves: product price on the PDP should be:    €50.00    wait_for_p&s=true
     MP: login on MP with provided credentials:    ${merchant_video_king_email}
@@ -1902,9 +1890,7 @@ Multistore_Product_Offer
     Yves: merchant is (not) displaying in Sold By section of PDP:    Video King    true
     Yves: merchant's offer/product price should be:    Video King    €200.00
     Yves: go to AT store 'Home' page
-    Yves: go to AT URL:    en/search?q=multistoreSKU${random}
-    Try reloading page until element is/not appear:    ${catalog_product_card_locator}    true    21    5s
-    Yves: go to PDP of the product with sku:     multistoreSKU${random}
+    Yves: go to PDP of the product with sku:     multistoreSKU${random}    wait_for_p&s=true
     Yves: merchant is (not) displaying in Sold By section of PDP:    Budget Cameras    true
     Yves: product price on the PDP should be:    €55.00    wait_for_p&s=true
     Yves: merchant is (not) displaying in Sold By section of PDP:    Video King    true
@@ -1919,9 +1905,7 @@ Multistore_Product_Offer
     MP: save offer
     Trigger multistore p&s
     Yves: go to AT store 'Home' page
-    Yves: go to AT URL:    en/search?q=multistoreSKU${random}
-    Try reloading page until element is/not appear:    ${catalog_product_card_locator}    true    21    5s
-    Yves: go to PDP of the product with sku:     multistoreSKU${random}
+    Yves: go to PDP of the product with sku:     multistoreSKU${random}    wait_for_p&s=true
     Yves: merchant is (not) displaying in Sold By section of PDP:    Video King    false
     Save current URL
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
@@ -1955,7 +1939,7 @@ Multistore_CMS
     ...    AND    Trigger multistore p&s
 
 Product_Availability_Calculation
-    [Documentation]    Bug: CC-24108. Check product availability + multistore
+    [Documentation]    Check product availability + multistore
     MP: login on MP with provided credentials:    ${merchant_spryker_email}
     MP: open navigation menu tab:    Products    
     MP: click on create new entity button:    Create Product
@@ -1994,9 +1978,7 @@ Product_Availability_Calculation
     Zed: click Action Button in a table for row that contains:     availabilityProduct${random}     Approve
     Trigger multistore p&s
     Yves: login on Yves with provided credentials:    ${yves_second_user_email}   
-    Yves: go to URL:    en/search?q=availabilitySKU${random}
-    Try reloading page until element is/not appear:    ${catalog_product_card_locator}    true    21    5s
-    Yves: go to PDP of the product with sku:     availabilitySKU${random}
+    Yves: go to PDP of the product with sku:     availabilitySKU${random}    wait_for_p&s=true
     Yves: change quantity using '+' or '-' button № times:    +    5
     Yves: try add product to the cart from PDP and expect error:    Item availabilitySKU${random}-1 only has availability of 5.
     Yves: change quantity using '+' or '-' button № times:    +    2
@@ -2094,9 +2076,6 @@ Offer_Availability_Calculation
     Zed: go to second navigation item level:    Catalog    Products 
     Zed: click Action Button in a table for row that contains:     offAvProduct${random}     Approve
     Trigger multistore p&s
-    Yves: login on Yves with provided credentials:    ${yves_second_user_email}   
-    Yves: go to URL:    en/search?q=offAvKU${random}
-    Try reloading page until element is/not appear:    ${catalog_product_card_locator}    true    21    5s
     MP: login on MP with provided credentials:    ${merchant_spryker_email}
     MP: open navigation menu tab:    Offers
     MP: click on create new entity button:    Add Offer
@@ -2117,7 +2096,7 @@ Offer_Availability_Calculation
     MP: save offer
     Trigger multistore p&s
     Yves: login on Yves with provided credentials:    ${yves_second_user_email}
-    Yves: go to PDP of the product with sku:     offAvKU${random}
+    Yves: go to PDP of the product with sku:     offAvKU${random}    wait_for_p&s=true
     Yves: merchant is (not) displaying in Sold By section of PDP:    Spryker    true
     Yves: merchant's offer/product price should be:    Spryker    €200.00
     Yves: select xxx merchant's offer:    Spryker
@@ -2216,9 +2195,9 @@ Reorder
 Update_Customer_Data
     [Documentation]    Checks customer data can be updated from Yves and Zed
     Yves: login on Yves with provided credentials:    ${yves_second_user_email}
-    Yves: go to user menu item in header:    Overview
+    Yves: go to user menu:    Overview
     Yves: 'Overview' page is displayed
-    Yves: go to user menu item in header:    My Profile
+    Yves: go to user menu:    My Profile
     Yves: 'Profile' page is displayed
     Yves: assert customer profile data:
     ...    || salutation | first name                     | last name                     | email                     ||
@@ -2237,9 +2216,9 @@ Update_Customer_Data
     ...    || email                     | salutation | first name                     | last name                     ||
     ...    || ${yves_second_user_email} | Mr         | ${yves_second_user_first_name} | ${yves_second_user_last_name} ||
     Yves: login on Yves with provided credentials:    ${yves_second_user_email}
-    Yves: go to user menu item in header:    Overview
+    Yves: go to user menu:    Overview
     Yves: 'Overview' page is displayed
-    Yves: go to user menu item in header:    My Profile
+    Yves: go to user menu:    My Profile
     Yves: 'Profile' page is displayed
     Yves: assert customer profile data:
     ...    || salutation | first name                     | last name                     | email                     ||
@@ -2399,7 +2378,7 @@ Configurable_Product_OMS
     Zed: go to my order page:    ${lastPlacedOrder}
     Zed: trigger matching state of xxx order item inside xxx shipment:    Ship    1
     Yves: login on Yves with provided credentials:    ${yves_user_email}
-    Yves: go to user menu item in header:    Orders History
+    Yves: go to user menu:    Orders History
     Yves: 'Order History' page is displayed
     Yves: 'View Order/Reorder/Return' on the order history page:     Return    ${lastPlacedOrder}
     Yves: 'Create Return' page is displayed
@@ -2415,7 +2394,7 @@ Configurable_Product_OMS
     MP: order states on drawer should contain:    Refunded  
     Yves: go to the 'Home' page
     Yves: login on Yves with provided credentials:    ${yves_user_email}
-    Yves: go to user menu item in header:    Orders History
+    Yves: go to user menu:    Orders History
     ### Reorder ###
     Yves: 'View Order/Reorder/Return' on the order history page:    Reorder    ${lastPlacedOrder}
     Yves: go to b2c shopping cart

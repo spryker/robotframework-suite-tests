@@ -15,7 +15,7 @@ Request_concrete_product_with_one_image_set
     And Response body parameter should be:    [data][0][id]    ${concrete_products.one_image_set.sku}
     And Response body parameter should be:    [data][0][type]   concrete-product-image-sets
     And Response body parameter should be:    [data][0][attributes][imageSets][0][name]    default
-    And Response body parameter should contain:    [data][0][attributes]   imageSets 
+    And Response body parameter should contain:    [data][0][attributes]   imageSets
     And Response should contain the array of a certain size:    [data][0][attributes][imageSets]   1
     And Response should contain the array of a certain size:    [data][0][attributes][imageSets][0][images]    1
     And Response body parameter should not be EMPTY:    [data][0][attributes][imageSets][0][images][0][externalUrlLarge]
