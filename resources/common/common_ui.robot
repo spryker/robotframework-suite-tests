@@ -6,7 +6,7 @@ Resource    ../pages/yves/yves_login_page.robot
 
 *** Variables ***
 # *** UI SUITE VARIABLES ***
-${env}                 ui_mp_b2b
+${env}                 ui_suite
 ${headless}            true
 ${browser}             chromium
 ${browser_timeout}     60 seconds
@@ -316,7 +316,7 @@ Try reloading page until element does/not contain text:
     [Arguments]    ${element}    ${expectedText}    ${shouldContain}    ${tries}=20    ${timeout}=1s
     ${shouldContain}=    Convert To Lower Case    ${shouldContain}
     FOR    ${index}    IN RANGE    0    ${tries}
-        ${textAppears}=    Run Keyword And Return Status    Element Text Should Be    ${element}    ${expectedText}    
+        ${textAppears}=    Run Keyword And Return Status    Element Text Should Be    ${element}    ${expectedText}    timeout=${timeout} 
         IF    '${shouldContain}'=='true' and '${textAppears}'=='False'
             Run Keywords    Sleep    ${timeout}    AND    Reload
         ELSE IF     '${shouldContain}'=='false' and '${textAppears}'=='True'

@@ -13,6 +13,8 @@ Yves: 'Product Sets' page contains the following sets:
         ${product_set_to_check}=    Get From List    ${product_set_list}    ${index}
         IF    '${env}' in ['ui_b2b','ui_mp_b2b']
             Page Should Contain Element    xpath=//*[contains(@class,'product-set-card__name')][text()="${product_set_to_check}"]/ancestor::article
+        ELSE IF    '${env}' in ['ui_suite']
+            Page Should Contain Element    xpath=//article//*[contains(@class,'box')][contains(.,'${product_set_to_check}')]/ancestor::article
         ELSE
             Page Should Contain Element    xpath=//*[contains(@class,'title')][text()="${product_set_to_check}"]/ancestor::article
         END
@@ -22,6 +24,8 @@ Yves: view the following Product Set:
     [Arguments]    ${productSetName}
     IF    '${env}' in ['ui_b2b','ui_mp_b2b']
         Click    xpath=//*[contains(@class,'product-set-card__name')][text()="${productSetName}"]/ancestor::article
+    ELSE IF    '${env}' in ['ui_suite']
+        Click    xpath=//article//*[contains(@class,'box')][contains(.,'${productSetName}')]/ancestor::article
     ELSE
         Click    xpath=//*[contains(@class,'title')][text()="${productSetName}"]/ancestor::article
     END
@@ -36,10 +40,16 @@ Yves: 'Product Set' page contains the following products:
 
 Yves: change variant of the product on CMS page on:
     [Arguments]    ${productName}    ${variantToSet}
-    Mouse Over    xpath=//*[contains(@class,'product-item__container') and descendant::a[contains(.,'${productName}')]]
-    Click    xpath=//*[contains(@class,'product-item__container') and descendant::a[contains(.,'${productName}')]]/ancestor::product-item//span[contains(@class,'selection--single')]
-    Wait Until Element Is Visible    xpath=//span[contains(@class,'select2-results')]//li[contains(text(),'${variantToSet}')]
-    Click    xpath=//span[contains(@class,'select2-results')]//li[contains(text(),'${variantToSet}')]
+    IF    '${env}' in ['ui_suite']
+        Set Browser Timeout    1s
+        Run Keyword And Ignore Error    Select From List By Value    xpath=//product-item//a//*[@itemprop='name'][contains(.,'${productName}')]/ancestor::product-item//select    ${variantToSet}
+        Set Browser Timeout    ${browser_timeout}
+    ELSE
+        Mouse Over    xpath=//*[contains(@class,'product-item__container') and descendant::a[contains(.,'${productName}')]]
+        Click    xpath=//*[contains(@class,'product-item__container') and descendant::a[contains(.,'${productName}')]]/ancestor::product-item//span[contains(@class,'selection--single')]
+        Wait Until Element Is Visible    xpath=//span[contains(@class,'select2-results')]//li[contains(text(),'${variantToSet}')]
+        Click    xpath=//span[contains(@class,'select2-results')]//li[contains(text(),'${variantToSet}')]
+    END
 
 Yves: add all products to the shopping cart from Product Set
     Wait Until Element Is Enabled    ${add_all_product_to_the_shopping_cart}
