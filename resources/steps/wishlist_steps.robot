@@ -72,7 +72,11 @@ Yves: delete all wishlists
 Yves: assert merchant of product in wishlist:
     [Documentation]    Method for MP which asserts value in 'Sold by' label of item in wishlist. Requires concrete SKU
     [Arguments]    ${sku}    ${merchant_name_expected}
-    Page Should Contain Element    xpath=//ul[@class='menu menu--inline menu--middle']//li[contains(text(),'${sku}')]/../li/p[@data-qa='component sold-by-merchant']//a[text()='${merchant_name_expected}']
+    IF    '${env}' in ['ui_suite']
+        Page Should Contain Element    xpath=(//*[contains(@data-qa,'wishlist-table')]//td[contains(.,'${sku}')]//a[contains(@href,'merchant')][contains(text(),'${merchant_name_expected}')])[1]
+    ELSE
+        Page Should Contain Element    xpath=//ul[@class='menu menu--inline menu--middle']//li[contains(text(),'${sku}')]/../li/p[@data-qa='component sold-by-merchant']//a[text()='${merchant_name_expected}']
+    END
 
 Yves: add all available products from wishlist to cart
     Wait Until Element Is Visible    ${wishlist_add_all_to_cart_button}
@@ -91,6 +95,3 @@ Yves: create new 'Whistist' with name:
     Type Text    ${wishlist_name_input_field}    ${wishlistName}
     Click    ${wishlist_add_new_button}
     Yves: remove flash messages
-
-
-

@@ -19,15 +19,25 @@ Yves: add comment on cart:
 Yves: check comments are visible or not in cart:
     [Arguments]    ${condition}    @{comments}    
     FOR    ${element}    IN    @{comments}
-        IF    '${condition}' == 'true'    Element Should Be Visible    xpath=(//comment-form[@data-qa='component comment-form']//p[contains(text(),'${element}')])[1]    message=Comment '${element}' is not visible in the shopping cart but should
-        IF    '${condition}' == 'false'    Element Should Not Be Visible    xpath=(//comment-form[@data-qa='component comment-form']//p[contains(text(),'${element}')])[1]    message=Comment '${element}' is visible in the shopping cart but should not
+        IF    '${env}' in ['ui_suite']
+            IF    '${condition}' == 'true'    Element Should Be Visible    xpath=(//comment-form[@data-qa='component comment-form']//*[contains(text(),'${element}')])[1]    message=Comment '${element}' is not visible in the shopping cart but should
+            IF    '${condition}' == 'false'    Element Should Not Be Visible    xpath=(//comment-form[@data-qa='component comment-form']//*[contains(text(),'${element}')])[1]    message=Comment '${element}' is visible in the shopping cart but should not
+        ELSE
+            IF    '${condition}' == 'true'    Element Should Be Visible    xpath=(//comment-form[@data-qa='component comment-form']//p[contains(text(),'${element}')])[1]    message=Comment '${element}' is not visible in the shopping cart but should
+            IF    '${condition}' == 'false'    Element Should Not Be Visible    xpath=(//comment-form[@data-qa='component comment-form']//p[contains(text(),'${element}')])[1]    message=Comment '${element}' is visible in the shopping cart but should not
+        END
     END
 
 Yves: check comments is visible or not in order:
     [Arguments]    ${condition}    @{comments}    
     FOR    ${element}    IN    @{comments}
-        IF    '${condition}' == 'true'    Element Should Be Visible    xpath=(//comment-form[@data-qa='component comment-form']//p[contains(text(),'${element}')])[1]    message=Comment '${element}' is not visible in BO:order details page but should
-        IF    '${condition}' == 'false'    Element Should Not Be Visible    xpath=(//div[contains(@class,"comment-form__readonly")]/p[contains(text(),'${element}')])[1]   message=Comment '${element}' is visible in BO:order details page but should not
+        IF    '${env}' in ['ui_suite']
+            IF    '${condition}' == 'true'    Element Should Be Visible    xpath=(//comment-thread-list//comment-form[@data-qa='component comment-form']//textarea[contains(text(),'${element}')])[1]    message=Comment '${element}' is not visible in BO:order details page but should
+            IF    '${condition}' == 'false'    Element Should Not Be Visible    xpath=(//comment-thread-list//comment-form[@data-qa='component comment-form']//textarea[contains(text(),'${element}')])[1]   message=Comment '${element}' is visible in BO:order details page but should not
+        ELSE
+            IF    '${condition}' == 'true'    Element Should Be Visible    xpath=(//comment-form[@data-qa='component comment-form']//p[contains(text(),'${element}')])[1]    message=Comment '${element}' is not visible in BO:order details page but should
+            IF    '${condition}' == 'false'    Element Should Not Be Visible    xpath=(//div[contains(@class,"comment-form__readonly")]/p[contains(text(),'${element}')])[1]   message=Comment '${element}' is visible in BO:order details page but should not
+        END
     END
 
 Yves: go to order details page to check comment:
@@ -57,7 +67,7 @@ Yves: edit comment on cart:
     [Arguments]    ${comment_to_set}
     Reload
     Repeat Keyword    3    Wait Until Network Is Idle
-    Click    ${shopping_cart_edit_comment_button}
+    IF    '${env}' not in ['ui_suite']    Click    ${shopping_cart_edit_comment_button}
     Repeat Keyword    3    Wait Until Network Is Idle 
     Fill Text    ${shopping_cart_edit_comment_placeholder}    ${EMPTY}    force=true
     Fill Text    ${shopping_cart_edit_comment_placeholder}    ${comment_to_set}    force=true

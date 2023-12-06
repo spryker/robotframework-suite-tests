@@ -139,7 +139,7 @@ Yves: update customer profile data:
                 IF    '${env}' in ['ui_suite']
                     Select From List By Label    ${customer_account_profile_salutation_selector}    ${value}
                 ELSE
-                    Click    ${customer_account_profile_salutation_span}
+                    Click    ${customer_account_profile_salutation_span}[${env}]
                     Click    xpath=//li[contains(@id,'select2-profileForm_salutation-result')][contains(text(),'${value}')]
                 END        
         END

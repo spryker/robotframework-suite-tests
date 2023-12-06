@@ -426,9 +426,15 @@ Yves: check store availabiity for item number xxx:
             ${item_number}=    Set Variable    ${value}
         END
         IF    '${key}'=='store' and '${value}' != '${EMPTY}'    
-            Click    xpath=(//article)[${item_number}]//shipment-type-toggler//service-point-selector[contains(@data-qa,'service-point-selector')]
-            Sleep    2s
-            Fill Text    xpath=((//div[contains(@id,'service-point-selector')])[${item_number}]//input[contains(@class,'search')])[1]    ${value}    force=True
+            IF    '${env}' in ['ui_suite']
+                Click    xpath=(//*[contains(@data-qa,'address-item-form')][contains(@class,'list')]/div)[${item_number}]//shipment-type-toggler//service-point-selector[contains(@data-qa,'service-point-selector')]/div[contains(@class,'no-location')]/button
+                Sleep    2s
+                Fill Text    xpath=((//div[contains(@id,'service-point-selector')])[${item_number}]//input[contains(@class,'search')])[1]    ${value}    force=True
+            ELSE
+                Click    xpath=(//article)[${item_number}]//shipment-type-toggler//service-point-selector[contains(@data-qa,'service-point-selector')]
+                Sleep    2s
+                Fill Text    xpath=((//div[contains(@id,'service-point-selector')])[${item_number}]//input[contains(@class,'search')])[1]    ${value}    force=True
+            END
             Keyboard Key    press    Enter
             Sleep    2s
             Repeat Keyword    5    Wait Until Network Is Idle
@@ -457,10 +463,15 @@ Yves: select pickup service point store for item number xxx:
             ${item_number}=    Set Variable    ${value}
         END
         IF    '${key}'=='store' and '${value}' != '${EMPTY}'    
-            Log    (//article)[${item_number}]//shipment-type-toggler//service-point-selector[contains(@data-qa,'service-point-selector')]
-            Click    xpath=(//article)[${item_number}]//shipment-type-toggler//service-point-selector[contains(@data-qa,'service-point-selector')]
-            Sleep    2s
-            Fill Text    xpath=((//div[contains(@id,'service-point-selector')])[${item_number}]//input[contains(@class,'search')])[1]    ${value}    force=True
+            IF    '${env}' in ['ui_suite']
+                Click    xpath=(//*[contains(@data-qa,'address-item-form')][contains(@class,'list')]/div)[${item_number}]//shipment-type-toggler//service-point-selector[contains(@data-qa,'service-point-selector')]/div[contains(@class,'no-location')]/button
+                Sleep    2s
+                Fill Text    xpath=((//div[contains(@id,'service-point-selector')])[${item_number}]//input[contains(@class,'search')])[1]    ${value}    force=True
+            ELSE
+                Click    xpath=(//article)[${item_number}]//shipment-type-toggler//service-point-selector[contains(@data-qa,'service-point-selector')]
+                Sleep    2s
+                Fill Text    xpath=((//div[contains(@id,'service-point-selector')])[${item_number}]//input[contains(@class,'search')])[1]    ${value}    force=True
+            END
             Keyboard Key    press    Enter
             Sleep    2s
             Repeat Keyword    5    Wait Until Network Is Idle
@@ -480,6 +491,13 @@ Yves: checkout summary page contains product with unit price:
         EXCEPT
             Page Should Contain Element    xpath=//div[contains(@class,'product-cart-item__col--description')]//div[contains(.,'SKU: ${sku}')]/ancestor::article//*[contains(@class,'product-cart-item__col--description')]/div[1]//*[contains(@class,'money-price__amount')][contains(.,'${productPrice}')]    timeout=1s
         END  
+    ELSE IF    '${env}' in ['ui_suite']
+        Page Should Contain Element    xpath=//*[contains(@data-qa,'summary-node')]//div[contains(.,'${productName}')]/ancestor::*[contains(@data-qa,'summary-node')]//strong[contains(.,'${productPrice}')]
     ELSE
         Page Should Contain Element    xpath=//article[contains(@data-qa,'component product-card-item')]//*[contains(text(),'${productName}')]/following-sibling::span/span[contains(@class,'money-price__amount') and contains(.,'${productPrice}')]    timeout=1s
     END
+
+Yves: checkout summary step contains product with unit price:
+    [Arguments]    ${productName}    ${productPrice}
+    Repeat Keyword    3    Wait Until Network Is Idle
+    Page Should Contain Element    xpath=(//*[contains(@data-qa,'summary-node')]//div[contains(.,'${productName}')]/ancestor::*[contains(@data-qa,'summary-node')]//strong[contains(.,'${productPrice}')])[1]

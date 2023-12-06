@@ -11,11 +11,13 @@ Yves: 'Catalog' page should show products:
 
 Yves: product with name in the catalog should have price:
     [Arguments]    ${productName}    ${expectedProductPrice}
-    ${actualProductPrice}=    Get Text    xpath=//product-item[@data-qa='component product-item']//*[contains(@class,'product-item__name')][contains(text(),'${productName}')]/ancestor::product-item//*[@data-qa='component money-price']/*[contains(@class,'money-price__amount')][contains(@class,'default')]
+    IF    '${env}' in ['ui_suite']
+        ${actualProductPrice}=    Get Text    xpath=(//product-item[@data-qa='component product-item'])[1]//a[contains(@class,'name')][contains(.,'${productName}')]/ancestor::product-item//*[@itemprop='price'][contains(@class,'default-price')]
+    ELSE
+        ${actualProductPrice}=    Get Text    xpath=//product-item[@data-qa='component product-item']//*[contains(@class,'product-item__name')][contains(text(),'${productName}')]/ancestor::product-item//*[@data-qa='component money-price']/*[contains(@class,'money-price__amount')][contains(@class,'default')]
+    END
     ${actualProductPrice}=    Remove String    ${actualProductPrice}    ${SPACE}
-    Log    ${expectedProductPrice}
-    Log    ${actualProductPrice}
-    Should Be Equal    ${actualProductPrice}    ${expectedProductPrice}
+    Should Be Equal    ${actualProductPrice}    ${expectedProductPrice}    message=Actual product price is '${actualProductPrice}' but expected to have '${expectedProductPrice}'
 
 Yves: page contains CMS element:
     [Documentation]    Arguments are ${type}    ${title}, ${type} can be: CMS Block, Banner, Product Slider, Homepage Banners, Homepage Inspirational Block, Homepage Banner Video, Footer section, CMS Page Title, CMS Page Content
@@ -158,4 +160,58 @@ Yves: mouse over color on product card:
         Wait Until Element Is Visible    xpath=//product-item[@data-qa='component product-item'][1]//product-item-color-selector
         Mouse Over    xpath=//product-item[@data-qa='component product-item'][1]//product-item-color-selector//span[contains(@class,'tooltip')][contains(text(),'${colour}')]/ancestor::button
         Wait Until Network Is Idle
+    END
+
+Yves: at least one product is/not displayed on the search results page:
+    [Arguments]    ${search_query}    ${expected_visibility}    ${wait_for_p&s}=${False}    ${iterations}=26    ${delay}=3s
+    Yves: perform search by:    ${search_query}
+    ${expected_visibility}=    Convert To Lower Case    ${expected_visibility}
+    IF    '${expected_visibility}' == 'true'
+        ${expected_visibility}=    Set Variable    ${True}
+    END
+    IF    '${expected_visibility}' == 'yes'
+        ${expected_visibility}=    Set Variable    ${True}
+    END
+    IF    '${expected_visibility}' == 'displayed'
+        ${expected_visibility}=    Set Variable    ${True}
+    END
+    IF    '${expected_visibility}' == 'is displayed'
+        ${expected_visibility}=    Set Variable    ${True}
+    END
+    IF    '${expected_visibility}' == 'false'
+        ${expected_visibility}=    Set Variable    ${False}
+    END
+     ${wait_for_p&s}=    Convert To String    ${wait_for_p&s}
+    ${wait_for_p&s}=    Convert To Lower Case    ${wait_for_p&s}
+    IF    '${wait_for_p&s}' == 'true'
+        ${wait_for_p&s}=    Set Variable    ${True}
+    END
+    IF    '${wait_for_p&s}' == 'false'
+        ${wait_for_p&s}=    Set Variable    ${False}
+    END
+    IF    ${wait_for_p&s}
+        FOR    ${index}    IN RANGE    1    ${iterations}
+            IF    ${index} == ${iterations}-1
+                Take Screenshot    EMBED    fullPage=True
+                Fail    Expected product visibility is not reached
+            END
+            IF    ${expected_visibility}
+                ${result}=    Run Keyword And Ignore Error    Page Should Contain Element    ${catalog_product_card_locator}
+            ELSE
+                ${result}=    Run Keyword And Ignore Error    Page Should Not Contain Element    ${catalog_product_card_locator}
+            END
+            IF    'FAIL' in ${result}   
+                Sleep    ${delay}
+                Reload
+                Continue For Loop
+            ELSE
+                Exit For Loop
+            END
+        END
+    ELSE
+        IF    ${expected_visibility}
+            Page Should Contain Element    ${catalog_product_card_locator}
+        ELSE
+            Page Should Not Contain Element    ${catalog_product_card_locator}
+        END
     END

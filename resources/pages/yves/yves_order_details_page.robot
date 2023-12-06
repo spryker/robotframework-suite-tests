@@ -10,6 +10,6 @@ ${order_details_add_comment_button}    xpath=//button[contains(@class,"js-add-co
 ${order_details_edit_comment_button}    xpath=//button[contains(@class,"button--hollow-icon-small") and not (contains(@class,"js-comment-form__remove-button"))]
 ${order_details_update_comment_button}    xpath=//button[contains(@action,"/comment/update")]
 ${order_details_remove_comment_button}    xpath=//button[contains(@action,"/comment/remove")]
-${yves_order_details_page_comments}    xpath=//div[contains(@class,'comment-form__readonly')]//p
-${add_comment_button_order_details_page}    xpath=//form[contains(@action,"/comment/add")]/button
-${order_details_page_add_comments_textbox}    xpath=//form[contains(@action,"/comment/add")]/textarea
+${yves_order_details_page_comments}    xpath=//comment-thread-list//comment-form//textarea
+${add_comment_button_order_details_page}    xpath=//button[contains(@action,'comment/add')] | //button[contains(@class,'add-comment')]
+${order_details_page_add_comments_textbox}    xpath=//textarea[ancestor::form[@method='POST'] and not(ancestor::comment-thread-list)]

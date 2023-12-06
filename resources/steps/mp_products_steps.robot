@@ -201,7 +201,7 @@ MP: open concrete drawer by SKU:
 
 MP: delete product price row that contains quantity:
     [Arguments]    ${quantity}
-    IF    '${env}' in ['ui_mp_b2b']
+    IF    '${env}' in ['ui_mp_b2b','ui_suite']
         Scroll Element Into View    xpath=//web-spy-card[@spy-title='Price']//tbody/tr/td[8][contains(.,'${quantity}')]/ancestor::tr//td[@class='ng-star-inserted']/div
         Hover    xpath=//web-spy-card[@spy-title='Price']//tbody/tr/td[8][contains(.,'${quantity}')]/ancestor::tr//td[@class='ng-star-inserted']/div
         Click    ${product_delete_price_row_button}

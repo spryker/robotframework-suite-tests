@@ -37,7 +37,7 @@ Yves: PDP contains/doesn't contain:
     END
 
 Yves: add product to the shopping cart
-    [Arguments]    ${wait_for_p&s}=${False}    ${iterations}=21    ${delay}=3s
+    [Arguments]    ${wait_for_p&s}=${False}    ${iterations}=26    ${delay}=3s
     ${variants_present_status}=    Run Keyword And Return Status    Page Should Not Contain Element    ${pdp_variant_selector}    timeout=0:00:01
     IF    '${variants_present_status}'=='False'    Yves: change variant of the product on PDP on random value
     ${wait_for_p&s}=    Convert To String    ${wait_for_p&s}
@@ -49,8 +49,12 @@ Yves: add product to the shopping cart
         ${wait_for_p&s}=    Set Variable    ${False}
     END
     IF    ${wait_for_p&s}
-        FOR    ${index}    IN RANGE    0    ${iterations}
+        FOR    ${index}    IN RANGE    1    ${iterations}
         ${result}=    Run Keyword And Ignore Error    Wait Until Element Is Enabled    ${pdp_add_to_cart_button}    timeout=1s
+            IF    ${index} == ${iterations}-1
+                Take Screenshot    EMBED    fullPage=True
+                Fail    'Add to cart' button is not actionable/available on PDP
+            END
             IF    'FAIL' in ${result}   
                 Sleep    ${delay}
                 Reload
@@ -58,10 +62,6 @@ Yves: add product to the shopping cart
             ELSE
                 Click    ${pdp_add_to_cart_button}
                 Exit For Loop
-            END
-            IF    ${index} == ${iterations}-1
-                Take Screenshot    EMBED    fullPage=True
-                Fail    'Add to cart' button is not actionable/available on PDP
             END
         END
     ELSE
@@ -91,7 +91,7 @@ Yves: select the following 'Sales Unit' on PDP:
 Yves: change quantity using '+' or '-' button № times:
     [Arguments]    ${action}    ${clicksCount}
     FOR    ${index}    IN RANGE    0    ${clicksCount}
-        Sleep    1s
+        Repeat Keyword    3    Wait Until Network Is Idle
         IF    '${action}' == '+'
             Click    ${pdp_increase_quantity_button}[${env}]
         ELSE IF    '${action}' == '-'
@@ -107,7 +107,7 @@ Yves: change variant of the product on PDP on:
     [Arguments]    ${variantToChoose}
     Wait Until Page Contains Element    ${pdp_variant_selector}
     TRY    
-        ${timeout}=    Set Variable    3s
+        ${timeout}=    Set Variable    1s
         Set Browser Timeout    ${timeout}
         Click    ${pdp_variant_custom_selector}
         Wait Until Network Is Idle
@@ -129,7 +129,7 @@ Yves: change variant of the product on PDP on:
     ${variant_selected}=    Run Keyword And Return Status    Wait For Elements State    ${pdp_reset_selected_variant_locator}    attached    timeout=3s
     IF    '${variant_selected}'=='False'
         TRY    
-            Set Browser Timeout    3s
+            Set Browser Timeout    1s
             Click    ${pdp_variant_custom_selector}
             Wait Until Element Is Visible    ${pdp_variant_custom_selector_results}
             TRY
@@ -142,8 +142,12 @@ Yves: change variant of the product on PDP on:
                 Repeat Keyword    3    Wait Until Network Is Idle
             END
         EXCEPT
-            Run Keyword And Ignore Error    Select From List By Value    ${pdp_variant_selector}    ${variantToChoose}
+            ${final_try}=    Run Keyword And Ignore Error    Select From List By Value    ${pdp_variant_selector}    ${variantToChoose}
             Repeat Keyword    3    Wait Until Network Is Idle
+            IF    'FAIL' in ${final_try}
+                Take Screenshot    EMBED    fullPage=True
+                FAIL    '${variantToChoose}' variant was not selected on PDP. Check if variant exists
+            END
         END
     END
     Set Browser Timeout    ${browser_timeout}  
@@ -157,7 +161,8 @@ Yves: change amount on PDP:
     Type Text    ${pdp_amount_input_filed}    ${amountToSet}
 
 Yves: product price on the PDP should be:
-    [Arguments]    ${expectedProductPrice}    ${wait_for_p&s}=${False}    ${iterations}=21    ${delay}=5s
+    [Arguments]    ${expectedProductPrice}    ${wait_for_p&s}=${False}    ${iterations}=26    ${delay}=5s
+    ### *** promise for P&S *** ####
     ${wait_for_p&s}=    Convert To String    ${wait_for_p&s}
     ${wait_for_p&s}=    Convert To Lower Case    ${wait_for_p&s}
     IF    '${wait_for_p&s}' == 'true'
@@ -168,12 +173,16 @@ Yves: product price on the PDP should be:
     END
     Set Browser Timeout    3s
     IF    ${wait_for_p&s}
-        FOR    ${index}    IN RANGE    0    ${iterations}
+        FOR    ${index}    IN RANGE    1    ${iterations}
             ${price_displayed}=    Run Keyword And Ignore Error    Page Should Contain Element    ${pdp_price_element_locator}    timeout=1s
             IF    'PASS' in ${price_displayed}    
                 ${actualProductPrice}=    Get Text    ${pdp_price_element_locator}
             END
             ${result}=    Run Keyword And Ignore Error    Should Be Equal    ${expectedProductPrice}    ${actualProductPrice}
+            IF    ${index} == ${iterations}-1
+                Take Screenshot    EMBED    fullPage=True
+                Fail    Actual product price is ${actualProductPrice}, expected ${expectedProductPrice}
+            END
             IF    'FAIL' in ${result} or 'FAIL' in ${price_displayed}
                 Sleep    ${delay}
                 Reload
@@ -182,12 +191,9 @@ Yves: product price on the PDP should be:
                 Set Browser Timeout    ${browser_timeout}
                 Exit For Loop
             END
-            IF    ${index} == ${iterations}-1
-                Take Screenshot    EMBED    fullPage=True
-                Fail    Actual product price is ${actualProductPrice}, expected ${expectedProductPrice}
-            END
         END
     ELSE
+        Set Browser Timeout    3s
         TRY
             ${actualProductPrice}=    Get Text    ${pdp_price_element_locator}
             Should Be Equal    ${expectedProductPrice}    ${actualProductPrice}    message=Actual product price is ${actualProductPrice}, expected ${expectedProductPrice}
@@ -350,25 +356,54 @@ Yves: select xxx merchant's offer:
     Wait Until Element Contains    ${referrer_url}    offer    message=Offer selector radio button does not work on PDP but should
 
 Yves: select xxx merchant's offer with price:
-    [Arguments]    ${merchantName}    ${price}
+    [Arguments]    ${merchantName}    ${price}    ${wait_for_p&s}=${False}    ${iterations}=26    ${delay}=3s
     Wait Until Element Is Visible    ${pdp_product_sku}[${env}]
     Repeat Keyword    2    Wait Until Network Is Idle
-    TRY
-        Click    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]/ancestor::div[contains(@class,'item')]//span[@itemprop='price'][contains(.,'${price}')]/ancestor::div[contains(@class,'offer-item')]//span[contains(@class,'radio__box')]
-        Repeat Keyword    2    Wait Until Network Is Idle
-        Wait For Elements State    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]/ancestor::div[contains(@class,'item')]//span[@itemprop='price'][contains(.,'${price}')]/ancestor::div[contains(@class,'offer-item')]//span[contains(@class,'radio__box')]/../input    state=checked    timeout=3s
-    EXCEPT   
-        Reload
-        Repeat Keyword    2    Wait Until Network Is Idle
-        Click    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]/ancestor::div[contains(@class,'item')]//span[@itemprop='price'][contains(.,'${price}')]/ancestor::div[contains(@class,'offer-item')]//span[contains(@class,'radio__box')]
-        Wait For Elements State    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]/ancestor::div[contains(@class,'item')]//span[@itemprop='price'][contains(.,'${price}')]/ancestor::div[contains(@class,'offer-item')]//span[contains(@class,'radio__box')]/../input    state=checked    timeout=3s
+    ### *** promise for P&S *** ####
+    ${wait_for_p&s}=    Convert To String    ${wait_for_p&s}
+    ${wait_for_p&s}=    Convert To Lower Case    ${wait_for_p&s}
+    IF    '${wait_for_p&s}' == 'true'
+        ${wait_for_p&s}=    Set Variable    ${True}
     END
+    IF    '${wait_for_p&s}' == 'false'
+        ${wait_for_p&s}=    Set Variable    ${False}
+    END
+    IF    ${wait_for_p&s}
+        FOR    ${index}    IN RANGE    1    ${iterations}
+        ${result}=    Run Keyword And Ignore Error    Page Should Contain Element    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]/ancestor::div[contains(@class,'item')]//span[@itemprop='price'][contains(.,'${price}')]/ancestor::div[contains(@class,'offer-item')]//span[contains(@class,'radio__box')]    timeout=1s
+            IF    ${index} == ${iterations}-1
+                Take Screenshot    EMBED    fullPage=True
+                Fail    Expected '${merchantName}' merchant offer with '${price}' is not present on PDP
+            END
+            IF    'FAIL' in ${result}   
+                Sleep    ${delay}
+                Reload
+                Continue For Loop
+            ELSE
+                Click    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]/ancestor::div[contains(@class,'item')]//span[@itemprop='price'][contains(.,'${price}')]/ancestor::div[contains(@class,'offer-item')]//span[contains(@class,'radio__box')]
+                Repeat Keyword    2    Wait Until Network Is Idle
+                Wait For Elements State    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]/ancestor::div[contains(@class,'item')]//span[@itemprop='price'][contains(.,'${price}')]/ancestor::div[contains(@class,'offer-item')]//span[contains(@class,'radio__box')]/../input    state=checked    timeout=3s
+                Exit For Loop
+            END
+        END
+    ELSE
+        TRY
+            Click    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]/ancestor::div[contains(@class,'item')]//span[@itemprop='price'][contains(.,'${price}')]/ancestor::div[contains(@class,'offer-item')]//span[contains(@class,'radio__box')]
+            Repeat Keyword    2    Wait Until Network Is Idle
+            Wait For Elements State    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]/ancestor::div[contains(@class,'item')]//span[@itemprop='price'][contains(.,'${price}')]/ancestor::div[contains(@class,'offer-item')]//span[contains(@class,'radio__box')]/../input    state=checked    timeout=3s
+        EXCEPT   
+            Reload
+            Repeat Keyword    2    Wait Until Network Is Idle
+            Click    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]/ancestor::div[contains(@class,'item')]//span[@itemprop='price'][contains(.,'${price}')]/ancestor::div[contains(@class,'offer-item')]//span[contains(@class,'radio__box')]
+            Wait For Elements State    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]/ancestor::div[contains(@class,'item')]//span[@itemprop='price'][contains(.,'${price}')]/ancestor::div[contains(@class,'offer-item')]//span[contains(@class,'radio__box')]/../input    state=checked    timeout=3s
+        END
+    END    
     Wait Until Element Contains    ${referrer_url}    offer    message=Offer selector radio button does not work on PDP but should
 
 Yves: merchant's offer/product price should be:
     [Arguments]    ${merchantName}    ${expectedProductPrice}
     Wait Until Element Is Visible    ${pdpPriceLocator}  
-    Try reloading page until element does/not contain text:    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]/ancestor::div[contains(@class,'item')]//span[@itemprop='price']    ${expectedProductPrice}    true    26    5s
+    Try reloading page until element does/not contain text:    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]/ancestor::div[contains(@class,'item')]//span[@itemprop='price']    ${expectedProductPrice}    true    21    5s
 
 Yves: merchant is (not) displaying in Sold By section of PDP:
     [Arguments]    ${merchantName}    ${condition}

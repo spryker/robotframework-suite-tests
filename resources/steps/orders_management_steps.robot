@@ -30,7 +30,7 @@ Zed: trigger all matching states inside this order:
     [Arguments]    ${status}    ${delay}=3s    ${iterations}=21
     Trigger oms
     Reload
-    FOR    ${index}    IN RANGE    0    ${iterations}
+    FOR    ${index}    IN RANGE    1    ${iterations}
         ${order_state_reached}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//div[@id='order-overview']//form[@name='oms_trigger_form']//button[@id='oms_trigger_form_submit'][text()='${status}']
         IF    '${order_state_reached}'=='False'
             Run Keywords    Sleep    ${delay}    AND    Reload

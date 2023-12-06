@@ -61,25 +61,61 @@ Yves: login on Yves with provided credentials:
     Yves: remove flash messages
 
 Yves: go to PDP of the product with sku:
-    [Arguments]    ${sku}
+    [Arguments]    ${sku}    ${wait_for_p&s}=${False}    ${iterations}=26    ${delay}=5s
     Yves: go to URL:    /search?q=${sku}
-    TRY
-        Wait Until Page Contains Element    ${catalog_main_page_locator}[${env}]
-        Wait Until Page Contains Element    ${catalog_product_card_locator}
-        Click    ${catalog_product_card_locator}
-        Wait Until Page Contains Element    ${pdp_main_container_locator}[${env}]
-        Wait Until Network Is Idle
-    EXCEPT    
-        Yves: go to URL:    /search?q=${sku}
-        Reload
-        Wait Until Network Is Idle
-        Wait Until Page Contains Element    ${catalog_main_page_locator}[${env}]
-        Wait Until Page Contains Element    ${catalog_product_card_locator}
-        Click    ${catalog_product_card_locator}
-        Wait Until Page Contains Element    ${pdp_main_container_locator}[${env}]
-        Wait Until Network Is Idle
+    ### *** promise for P&S *** ####
+    ${wait_for_p&s}=    Convert To String    ${wait_for_p&s}
+    ${wait_for_p&s}=    Convert To Lower Case    ${wait_for_p&s}
+    IF    '${wait_for_p&s}' == 'true'
+        ${wait_for_p&s}=    Set Variable    ${True}
     END
-
+    IF    '${wait_for_p&s}' == 'false'
+        ${wait_for_p&s}=    Set Variable    ${False}
+    END
+    IF    ${wait_for_p&s}
+        FOR    ${index}    IN RANGE    1    ${iterations}
+        ${result}=    Run Keyword And Ignore Error    Page Should Contain Element    ${catalog_product_card_locator}    timeout=1s
+            IF    ${index} == ${iterations}-1
+                Take Screenshot    EMBED    fullPage=True
+                Fail    Product '${sku}' is not displayed in the search results
+            END
+            IF    'FAIL' in ${result}   
+                Sleep    ${delay}
+                Yves: go to URL:    /search?q=${sku}
+                Continue For Loop
+            ELSE
+                ${pdp_url}=    Get Element Attribute    ${catalog_product_card_locator}    href
+                Yves: go to URL:    ${pdp_url}?fake=${random}+${index}
+                Repeat Keyword    3    Wait Until Network Is Idle
+                ${pdp_available}=    Run Keyword And Ignore Error    Wait Until Page Contains Element    ${pdp_main_container_locator}[${env}]    timeout=0.5s
+                IF    'PASS' in ${pdp_available}
+                    Exit For Loop
+                ELSE
+                    Sleep    ${delay}
+                    Yves: go to URL:    /search?q=${sku}
+                    Continue For Loop
+                END
+            END
+        END
+    ELSE
+        TRY
+            Wait Until Page Contains Element    ${catalog_main_page_locator}[${env}]
+            Wait Until Page Contains Element    ${catalog_product_card_locator}
+            Click    ${catalog_product_card_locator}
+            Wait Until Page Contains Element    ${pdp_main_container_locator}[${env}]
+            Repeat Keyword    3    Wait Until Network Is Idle
+        EXCEPT    
+            Yves: go to URL:    /search?q=${sku}
+            Reload
+            Repeat Keyword    3    Wait Until Network Is Idle
+            Wait Until Page Contains Element    ${catalog_main_page_locator}[${env}]
+            Wait Until Page Contains Element    ${catalog_product_card_locator}
+            ${pdp_url}=    Get Element Attribute    ${catalog_product_card_locator}    href
+            Yves: go to URL:    ${pdp_url}?fake=${random}+${index}
+            Repeat Keyword    3    Wait Until Network Is Idle
+            Wait Until Page Contains Element    ${pdp_main_container_locator}[${env}]
+        END
+    END
 
 Yves: '${pageName}' page is displayed
     IF    '${pageName}' == 'Company Users'    Page Should Contain Element    ${company_users_main_content_locator}    ${pageName} page is not displayed
@@ -177,7 +213,7 @@ Yves: go to AT URL:
 
 Yves: go to newly created page by URL:
     [Arguments]    ${url}    ${delay}=5s    ${iterations}=31
-    FOR    ${index}    IN RANGE    0    ${iterations}
+    FOR    ${index}    IN RANGE    1    ${iterations}
         Go To    ${yves_url}${url}?${index}
         ${page_not_published}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//main//*[contains(text(),'ERROR 404')]
         Log    ${page_not_published}
@@ -194,7 +230,7 @@ Yves: go to newly created page by URL:
 
 Yves: go to newly created page by URL on AT store:
     [Arguments]    ${url}    ${delay}=5s    ${iterations}=31
-    FOR    ${index}    IN RANGE    0    ${iterations}
+    FOR    ${index}    IN RANGE    1    ${iterations}
         Go To    ${yves_at_url}${url}?${index}
         ${page_not_published}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//main//*[contains(text(),'ERROR 404')]
         Log    ${page_not_published}
@@ -211,7 +247,7 @@ Yves: go to newly created page by URL on AT store:
 
 Yves: go to URL and refresh until 404 occurs:
     [Arguments]    ${url}    ${delay}=5s    ${iterations}=31
-    FOR    ${index}    IN RANGE    0    ${iterations}
+    FOR    ${index}    IN RANGE    1    ${iterations}
         Go To    ${url}
         ${page_not_published}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//main//*[contains(text(),'ERROR 404')]
         Log    ${page_not_published}
@@ -371,9 +407,9 @@ Helper: delete all items in cart
     END
 
 Yves: try reloading page if element is/not appear:
-    [Arguments]    ${element}    ${isDisplayed}    ${iterations}=26    ${sleep}=3s
+    [Arguments]    ${element}    ${isDisplayed}    ${iterations}=26    ${sleep}=5s
     ${isDisplayed}=    Convert To Lower Case    ${isDisplayed}
-    FOR    ${index}    IN RANGE    0    ${iterations}
+    FOR    ${index}    IN RANGE    1    ${iterations}
         ${elementAppears}=    Run Keyword And Return Status    Element Should Be Visible    ${element}
         IF    '${isDisplayed}'=='true' and '${elementAppears}'=='False'
             Run Keywords    Sleep    ${sleep}    AND    Reload
