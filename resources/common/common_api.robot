@@ -2185,3 +2185,4 @@ I get access token by user credentials:
     Save value to a variable:    [access_token]    token
     Log    ${token}
     [Return]    ${token}
+
