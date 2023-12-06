@@ -7,8 +7,13 @@ Resource    ../common/common.robot
 Resource    ../../resources/pages/yves/yves_shopping_cart_page.robot
 
 *** Keywords ***
-Yves: Go to 'Quote Requests' page
-    Click    ${agent_quote_requests_header_item}
+Yves: go to 'Agent Quote Requests' page
+    ${lang}=    Yves: get current lang
+    Yves: go to URL:    ${lang}/agent/quote-request
+
+Yves: go to 'Quote Requests' page
+    ${lang}=    Yves: get current lang
+    Yves: go to URL:    ${lang}/quote-request
 
 Yves: convert a cart to a quote request
     Click    ${request_a_quote_button}
@@ -22,7 +27,11 @@ Yves: quote request with reference xxx should have status:
 
 Yves: view quote request with reference:
     [Arguments]    ${quoteReference}
-    Click    xpath=//div[contains(@data-qa,'component quote-request')]//td[contains(.,'${quoteReference}')]/..//*[text()='View']/ancestor::a[contains(@class,'table-action-link')]
+    IF    '${env}' in ['ui_suite']
+        Click    xpath=(//div[contains(@data-qa,'component quote-request')]//td[contains(.,'${quoteReference}')]/ancestor::tr/td[last()]//a[contains(@href,'details')])[1]
+    ELSE
+        Click    xpath=//div[contains(@data-qa,'component quote-request')]//td[contains(.,'${quoteReference}')]/..//*[text()='View']/ancestor::a[contains(@class,'table-action-link')]
+    END
 
 Yves: click '${buttonName}' button on the 'Quote Request Details' page
 
@@ -54,10 +63,17 @@ Yves: change price for the product in the quote request with sku xxx on:
     [Arguments]    ${sku}    ${priceToSet}
     Wait Until Element Is Visible    ${quote_request_save_button}
     ${use_default_price_state}=    Set Variable    ${EMPTY}
-    ${use_default_price_state}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//article[@data-qa='component quote-request-cart-item']//div[contains(@class,'quote-request-cart-item__column--content')][contains(.,'${sku}')]/ancestor::article//*[contains(@class,'quote-request-cart-item__column--total')]//input[@type='checkbox'][@checked]
-    IF    '${use_default_price_state}'=='True'    Click With Options    xpath=//article[@data-qa='component quote-request-cart-item']//div[contains(@class,'quote-request-cart-item__column--content')][contains(.,'${sku}')]/ancestor::article//*[contains(@class,'quote-request-cart-item__column--total')]//span[@data-qa='component checkbox use_default_price']    delay=1s
-    Wait Until Element Is Visible    xpath=//article[@data-qa='component quote-request-cart-item']//div[contains(@class,'quote-request-cart-item__column--content')][contains(.,'${sku}')]/ancestor::article//*[contains(@class,'quote-request-cart-item__column--total')]//input[@id]//ancestor::div[contains(@id,'quote_request_agent_form')]
-    Type Text    xpath=//article[@data-qa='component quote-request-cart-item']//div[contains(@class,'quote-request-cart-item__column--content')][contains(.,'${sku}')]/ancestor::article//*[contains(@class,'quote-request-cart-item__column--total')]//input[@id]    ${priceToSet}
+    IF    '${env}' in ['ui_suite']
+        ${use_default_price_state}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//product-item[contains(@data-qa,'product-cart-item')]//*[@itemprop='sku' and (text()='${sku}' or @content='${sku}')]/ancestor::product-item//input[@type='checkbox'][@checked]
+        IF    '${use_default_price_state}'=='True'    Click with Options    xpath=//product-item[contains(@data-qa,'product-cart-item')]//*[@itemprop='sku' and (text()='${sku}' or @content='${sku}')]/ancestor::product-item//input[@type='checkbox']/ancestor::span[contains(@data-qa,'use_default_price')]
+        Wait Until Element Is Visible    xpath=//product-item[contains(@data-qa,'product-cart-item')]//*[@itemprop='sku' and (text()='${sku}' or @content='${sku}')]/ancestor::product-item//input[contains(@id,'UnitGrossPrice')]
+        Type Text    xpath=//product-item[contains(@data-qa,'product-cart-item')]//*[@itemprop='sku' and (text()='${sku}' or @content='${sku}')]/ancestor::product-item//input[contains(@id,'UnitGrossPrice')]    ${priceToSet}
+    ELSE
+        ${use_default_price_state}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//article[@data-qa='component quote-request-cart-item']//div[contains(@class,'quote-request-cart-item__column--content')][contains(.,'${sku}')]/ancestor::article//*[contains(@class,'quote-request-cart-item__column--total')]//input[@type='checkbox'][@checked]
+        IF    '${use_default_price_state}'=='True'    Click With Options    xpath=//article[@data-qa='component quote-request-cart-item']//div[contains(@class,'quote-request-cart-item__column--content')][contains(.,'${sku}')]/ancestor::article//*[contains(@class,'quote-request-cart-item__column--total')]//span[@data-qa='component checkbox use_default_price']    delay=1s
+        Wait Until Element Is Visible    xpath=//article[@data-qa='component quote-request-cart-item']//div[contains(@class,'quote-request-cart-item__column--content')][contains(.,'${sku}')]/ancestor::article//*[contains(@class,'quote-request-cart-item__column--total')]//input[@id]//ancestor::div[contains(@id,'quote_request_agent_form')]
+        Type Text    xpath=//article[@data-qa='component quote-request-cart-item']//div[contains(@class,'quote-request-cart-item__column--content')][contains(.,'${sku}')]/ancestor::article//*[contains(@class,'quote-request-cart-item__column--total')]//input[@id]    ${priceToSet}
+    END
 
 Yves: add the following note to the quote request:
     [Arguments]    ${noteToSet}
@@ -65,13 +81,20 @@ Yves: add the following note to the quote request:
 
 Yves: go to the quote request through the header with reference:
     [Arguments]    ${quoteReference}
-    Yves: move mouse over header menu item:    ${quoteRequestsWidget}
-    Wait Until Element Is Visible    ${agent_quote_requests_widget}
-    Click    xpath=//agent-control-bar//a[contains(@href,'quote-request')]/ancestor::li[contains(@class,'menu__item--has-children')]//a[contains(@class,'quote-request-detail')][contains(.,'${quoteReference}')]
+    # *** OBSOLETE ***
+    # Yves: move mouse over header menu item:    ${quoteRequestsWidget}
+    # Wait Until Element Is Visible    ${agent_quote_requests_widget}
+    # Click    xpath=//agent-control-bar//a[contains(@href,'quote-request')]/ancestor::li[contains(@class,'menu__item--has-children')]//a[contains(@class,'quote-request-detail')][contains(.,'${quoteReference}')]
+    ${lang}=    Yves: get current lang
+    Yves: go to URL:    ${lang}/agent/quote-request/details/${quoteReference}
 
 Yves: 'Quote Request Details' page contains the following note:
     [Arguments]    ${noteToCheck}
-    ${actualNote}=    Get Text    xpath=//main[contains(@class,'request-for-quote')]//label[@class='label'][contains(text(),'Notes')]//following-sibling::p[1]
+    IF    '${env}' in ['ui_suite']
+        ${actualNote}=    Get Text    xpath=//*[contains(@data-qa,'quote-request-information')]/ancestor::main/div[position()=1]/div[position()=1]//p
+    ELSE
+        ${actualNote}=    Get Text    xpath=//main[contains(@class,'request-for-quote')]//label[@class='label'][contains(text(),'Notes')]//following-sibling::p[1]
+    END
     Should Be Equal    ${actualNote}    ${noteToCheck}
 
 Yves: set 'Valid Till' date for the quote request, today +:
@@ -87,7 +110,12 @@ Yves: submit new request for quote
     [Documentation]    Returns ID of the RfQ
     Yves: click on the 'Request a Quote' button in the shopping cart
     Click    ${quote_request_convert_from_cart_confirm_button}
-    ${lastCreatedRfQ}=    Get Text    xpath=//div[@class='page-info']//*[contains(@class,'page-info__title')]
+    IF    '${env}' in ['ui_suite']
+        ${lastCreatedRfQ}=    Get Text    xpath=//*[@data-qa='component breadcrumb']//li[last()]
+    ELSE
+        ${lastCreatedRfQ}=    Get Text    xpath=//div[@class='page-info']//*[contains(@class,'page-info__title')]
+    END
     ${lastCreatedRfQ}=    Replace String    ${lastCreatedRfQ}    \#    ${EMPTY}
+    ${lastCreatedRfQ}=    Replace String    ${lastCreatedRfQ}    ${SPACE}    ${EMPTY}
     Set Suite Variable    ${lastCreatedRfQ}    ${lastCreatedRfQ}
     [Return]    ${lastCreatedRfQ}

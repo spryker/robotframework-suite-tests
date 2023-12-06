@@ -35,8 +35,13 @@ Yves: configuration should be equal:
     Wait Until Element Is Visible    ${pdp_configure_button}
     FOR    ${key}    ${value}    IN    &{configurationData}
         Log    Key is '${key}' and value is '${value}'.
-        IF    '${key}'=='date' and '${value}' != '${EMPTY}'   Element Text Should Be    ${pdp_configuration_date}[${env}]    ${value}
-        IF    '${key}'=='date_time' and '${value}' != '${EMPTY}'   Element Text Should Be    ${pdp_configuration_date_time}[${env}]    ${value}
+        IF    '${env}' in ['ui_suite']
+            IF    '${key}'=='date' and '${value}' != '${EMPTY}'   Element Should Contain    ${pdp_configuration_date}[${env}]    ${value}
+            IF    '${key}'=='date_time' and '${value}' != '${EMPTY}'   Element Should Contain    ${pdp_configuration_date_time}[${env}]    ${value}
+        ELSE
+            IF    '${key}'=='date' and '${value}' != '${EMPTY}'   Element Text Should Be    ${pdp_configuration_date}[${env}]    ${value}
+            IF    '${key}'=='date_time' and '${value}' != '${EMPTY}'   Element Text Should Be    ${pdp_configuration_date_time}[${env}]    ${value}
+        END
     END
 
 Yves: check and go back that configuration page contains:

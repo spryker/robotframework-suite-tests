@@ -80,7 +80,7 @@ Share_Shopping_Lists
     Yves: 'Shopping Cart' page is displayed
     Yves: assert merchant of product in cart or list:    ${product_with_multiple_offers_concrete_sku}    Spryker
     Yves: assert merchant of product in cart or list:    ${product_with_multiple_offers_concrete_sku}    Computer Experts
-    [Teardown]    Run Keywords    Close Context    CURRENT    AND    Yves: delete 'Shopping List' with name:    shareShoppingList+${random}
+    [Teardown]    Run Keywords    Close Current Context    AND    Yves: delete 'Shopping List' with name:    shareShoppingList+${random}
 
 Share_Shopping_Carts
     [Documentation]    Checks that cart can be shared and used for checkout
@@ -261,44 +261,6 @@ Packaging_Units
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
-
-#### Product Sets feature is not present in marketplace for now ####
-# Product_Sets
-#     [Documentation]    Checks that product set can be added into cart
-#     [Setup]    Run keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
-#     ...    AND    Yves: create new 'Shopping Cart' with name:    productSetsCart+${random}
-#     Yves: go to URL:    en/product-sets
-#     Yves: 'Product Sets' page contains the following sets:    The Presenter's Set    Basic office supplies    The ultimate data disposal set
-#     Yves: view the following Product Set:    Basic office supplies
-#     Yves: 'Product Set' page contains the following products:    Clairefontaine Collegeblock 8272C DIN A5, 90 sheets
-#     Yves: change variant of the product on CMS page on:    Clairefontaine Collegeblock 8272C DIN A5, 90 sheets    lined
-#     Yves: add all products to the shopping cart from Product Set
-#     Yves: shopping cart contains the following products:    421344    420687    421511    423452
-#     [Teardown]    Yves: delete 'Shopping Cart' with name:    productSetsCart+${random}
-
-#### Product Bundles feature is not present in marketplace for now ####
-# Product_Bundles
-#     [Documentation]    Checks checkout with Bundle product
-#     [Setup]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
-#     ...    AND    Zed: change product stock:    ${bundled_product_1_abstract_sku}    ${bundled_product_1_concrete_sku}    true    10
-#     ...    AND    Zed: change product stock:    ${bundled_product_2_abstract_sku}    ${bundled_product_2_concrete_sku}    true    10
-#     ...    AND    Zed: change product stock:    ${bundled_product_3_abstract_sku}    ${bundled_product_3_concrete_sku}    true    10
-#     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
-#     Yves: create new 'Shopping Cart' with name:    productBundleCart+${random}
-#     Yves: go to PDP of the product with sku:    ${bundle_product_abstract_sku}
-#     #Fails due to bug CC-16679
-#     Yves: PDP contains/doesn't contain:    true    ${bundleItemsSmall}
-#     Yves: add product to the shopping cart
-#     Yves: go to the shopping cart through the header with name:    productBundleCart+${random}
-#     Yves: shopping cart contains the following products:    ${bundle_product_concrete_sku}
-#     Yves: click on the 'Checkout' button in the shopping cart
-#     Yves: billing address same as shipping address:    true
-#     Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${yves_company_user_buyer_address}
-#     Yves: select the following shipping method on the checkout and go next:    Express
-#     Yves: select the following payment method on the checkout and go next:    Marketplace Invoice
-#     Yves: accept the terms and conditions:    true
-#     Yves: 'submit the order' on the summary page
-#     Yves: 'Thank you' page is displayed
 
 Product_Relations
     [Documentation]    Checks related product on PDP and upsell products in cart
@@ -511,7 +473,7 @@ Request_for_Quote
     Yves: go to URL:    agent/login
     Yves: login on Yves with provided credentials:    agent_quote+${random}@spryker.com    change123${random}
     Yves: header contains/doesn't contain:    true    ${quoteRequestsWidget}
-    Yves: go to 'Quote Requests' page through the header
+    Yves: go to 'Agent Quote Requests' page through the header
     Yves: 'Quote Requests' page is displayed
     Yves: quote request with reference xxx should have status:    ${lastCreatedRfQ}    Waiting
     Yves: view quote request with reference:    ${lastCreatedRfQ}
@@ -582,42 +544,6 @@ Unique_URL
     Yves: shopping cart contains the following products:    108302
     [Teardown]    Run Keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_manager_and_buyer_email}
     ...    AND    Yves: delete 'Shopping Cart' with name:    externalCart+${random}
-
-# ### Configurable Bundles feature is not present in marketplace for now ####
-# Configurable_Bundle
-#     [Documentation]    Checks checkout with the configurable bundle
-#     [Setup]    Run keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_manager_and_buyer_email}
-#     ...    AND    Yves: delete all shopping carts
-#     ...    AND    Yves: create new 'Shopping Cart' with name:    confBundle+${random}
-#     Yves: go to second navigation item level:    More    Configurable Bundle
-#     Yves: 'Choose Bundle to configure' page is displayed
-#     Yves: choose bundle template to configure:    Presentation bundle
-#     Yves: select product in the bundle slot:    Slot 5    408104
-#     Yves: select product in the bundle slot:    Slot 6    423172
-#     Yves: go to 'Summary' step in the bundle configurator
-#     Yves: add products to the shopping cart in the bundle configurator
-#     Yves: go to second navigation item level:    More    Configurable Bundle
-#     Yves: 'Choose Bundle to configure' page is displayed
-#     Yves: choose bundle template to configure:    Presentation bundle
-#     Yves: select product in the bundle slot:    Slot 5    421539
-#     Yves: select product in the bundle slot:    Slot 6    424551
-#     Yves: go to 'Summary' step in the bundle configurator
-#     Yves: add products to the shopping cart in the bundle configurator
-#     Yves: change quantity of the configurable bundle in the shopping cart on:    Presentation bundle    2
-#     Yves: click on the 'Checkout' button in the shopping cart
-#     Yves: billing address same as shipping address:    true
-#     Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${yves_company_user_manager_and_buyer_address}
-#     Yves: select the following shipping method on the checkout and go next:    Express
-#     Yves: select the following payment method on the checkout and go next:    Marketplace Invoice
-#     Yves: accept the terms and conditions:    true
-#     Yves: 'submit the order' on the summary page
-#     Yves: 'Thank you' page is displayed
-#     Yves: go to user menu:    Order History
-#     Yves: 'Order History' page is displayed
-#     Yves: get the last placed order ID by current customer
-#     Yves: 'View Order/Reorder/Return' on the order history page:    View Order    ${lastPlacedOrder}
-#     Yves: 'View Order' page is displayed
-#     Yves: 'Order Details' page contains the following product title N times:    Presentation bundle    3
 
 Return_Management
     [Documentation]    Checks OMS and that Yves user and in Zed main merchant can create/execute returns.
@@ -733,13 +659,13 @@ Product_PDP
     [Documentation]    Checks that PDP contains required elements
     Yves: go to PDP of the product with sku:    ${multi_variant_product_abstract_sku}
     Yves: change variant of the product on PDP on:    500 x 930 x 400
-    Yves: PDP contains/doesn't contain:    true    ${pdp_limited_warranty_option}     ${pdp_insurance_coverage_option}
+    Yves: PDP contains/doesn't contain:    true    ${pdp_limited_warranty_option}[${env}]     ${pdp_insurance_coverage_option}
     Yves: PDP contains/doesn't contain:    false    ${pdpPriceLocator}   ${addToCartButton} 
     Yves: login on Yves with provided credentials:    ${yves_user_email}
     Yves: go to PDP of the product with sku:    ${multi_variant_product_abstract_sku}
-    Yves: PDP contains/doesn't contain:    true    ${pdpPriceLocator}    ${pdp_add_to_cart_disabled_button}[${env}]    ${pdp_limited_warranty_option}    ${pdp_insurance_coverage_option}
+    Yves: PDP contains/doesn't contain:    true    ${pdpPriceLocator}    ${pdp_add_to_cart_disabled_button}[${env}]    ${pdp_limited_warranty_option}[${env}]    ${pdp_insurance_coverage_option}
     Yves: change variant of the product on PDP on:    500 x 930 x 400
-    Yves: PDP contains/doesn't contain:    true    ${pdpPriceLocator}    ${addToCartButton}    ${pdp_limited_warranty_option}     ${pdp_insurance_coverage_option}
+    Yves: PDP contains/doesn't contain:    true    ${pdpPriceLocator}    ${addToCartButton}    ${pdp_limited_warranty_option}[${env}]     ${pdp_insurance_coverage_option}
 
 Product_labels
     [Documentation]    Checks that products have labels on PLP and PDP
@@ -1177,9 +1103,7 @@ Create_and_Approve_New_Merchant_Product
     Zed: click Action Button in a table for row that contains:     NewProduct${random}     Approve
     Trigger p&s
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}   
-    Yves: go to URL:    en/search?q=SKU${random}
-    Try reloading page until element is/not appear:    ${catalog_product_card_locator}    true    21    5s
-    Yves: go to PDP of the product with sku:     SKU${random}
+    Yves: go to PDP of the product with sku:     SKU${random}    wait_for_p&s=true
     Save current URL
     Yves: merchant is (not) displaying in Sold By section of PDP:    Office King    true
     Yves: product price on the PDP should be:    €100.00    wait_for_p&s=true
@@ -1216,9 +1140,6 @@ Create_New_Offer
     Zed: go to second navigation item level:    Catalog    Products 
     Zed: click Action Button in a table for row that contains:     SprykerSKU${random}     Approve
     Trigger p&s
-    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}   
-    Yves: go to URL:    en/search?q=SprykerSKU${random}
-    Try reloading page until element is/not appear:    ${catalog_product_card_locator}    true    21    5s
     MP: login on MP with provided credentials:    ${merchant_office_king_email}
     MP: open navigation menu tab:    Offers
     MP: click on create new entity button:    Add Offer
@@ -1240,7 +1161,7 @@ Create_New_Offer
     Trigger p&s
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     Yves: create new 'Shopping Cart' with name:    newOfferCart${random}
-    Yves: go to PDP of the product with sku:     SprykerSKU${random}-2
+    Yves: go to PDP of the product with sku:     SprykerSKU${random}-2    wait_for_p&s=true
     Yves: merchant is (not) displaying in Sold By section of PDP:    Office King    true
     Yves: merchant's offer/product price should be:    Office King    €200.00
     Yves: select xxx merchant's offer:    Office King
@@ -1438,9 +1359,7 @@ Merchant_Portal_Product_Volume_Prices
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}  
     Yves: delete all shopping carts
     Yves: create new 'Shopping Cart' with name:    MPVolumePriceCart+${random}
-    Yves: go to URL:    en/search?q=VPSKU${random}
-    Try reloading page until element is/not appear:    ${catalog_product_card_locator}    true    21    5s
-    Yves: go to PDP of the product with sku:     VPSKU${random}
+    Yves: go to PDP of the product with sku:     VPSKU${random}    wait_for_p&s=true
     Yves: merchant is (not) displaying in Sold By section of PDP:    Office King    true
     Yves: product price on the PDP should be:    €100.00    wait_for_p&s=true
     Reload
@@ -1499,9 +1418,7 @@ Merchant_Portal_Offer_Volume_Prices
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}  
     Yves: delete all shopping carts
     Yves: create new 'Shopping Cart' with name:    MPVolumePriceCart+${random}
-    Yves: go to URL:    en/search?q=OfferSKU${random}
-    Try reloading page until element is/not appear:    ${catalog_product_card_locator}    true    21    5s
-    Yves: go to PDP of the product with sku:     OfferSKU${random}
+    Yves: go to PDP of the product with sku:     OfferSKU${random}    wait_for_p&s=true
     Yves: merchant is (not) displaying in Sold By section of PDP:    Spryker    true
     MP: login on MP with provided credentials:    ${merchant_office_king_email}
     MP: open navigation menu tab:    Offers
@@ -1721,9 +1638,7 @@ Manage_Merchant_Product
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}   
     Yves: delete all shopping carts
     Yves: create new 'Shopping Cart' with name:    manageMProduct+${random}
-    Yves: go to URL:    en/search?q=manageSKU${random}
-    Try reloading page until element is/not appear:    ${catalog_product_card_locator}    true    21    5s
-    Yves: go to PDP of the product with sku:     manageSKU${random}
+    Yves: go to PDP of the product with sku:     manageSKU${random}    wait_for_p&s=true
     Yves: product price on the PDP should be:    €100.00    wait_for_p&s=true
     Yves: change variant of the product on PDP on:    Item
     Yves: product price on the PDP should be:    €50.00    wait_for_p&s=true
@@ -2158,9 +2073,7 @@ Multistore_Product_Offer
     Trigger multistore p&s
     Yves: login on Yves with provided credentials:    ${yves_user_email}  
     Yves: check if cart is not empty and clear it
-    Yves: go to URL:    en/search?q=multistoreSKU${random}
-    Try reloading page until element is/not appear:    ${catalog_product_card_locator}    true    21    5s
-    Yves: go to PDP of the product with sku:     multistoreSKU${random}
+    Yves: go to PDP of the product with sku:     multistoreSKU${random}    wait_for_p&s=true
     Yves: merchant is (not) displaying in Sold By section of PDP:    Office King    true
     Yves: product price on the PDP should be:    €50.00    wait_for_p&s=true
     MP: login on MP with provided credentials:    ${merchant_spryker_email}
@@ -2188,9 +2101,7 @@ Multistore_Product_Offer
     Yves: merchant's offer/product price should be:    Spryker    €200.00
     Yves: go to AT store 'Home' page
     Yves: login on Yves with provided credentials:    ${yves_user_email}
-    Yves: go to AT URL:    en/search?q=multistoreSKU${random}
-    Try reloading page until element is/not appear:    ${catalog_product_card_locator}    true    21    5s
-    Yves: go to PDP of the product with sku:     multistoreSKU${random}
+    Yves: go to PDP of the product with sku:     multistoreSKU${random}    wait_for_p&s=true
     Yves: merchant is (not) displaying in Sold By section of PDP:    Office King    true
     Yves: product price on the PDP should be:    €55.00    wait_for_p&s=true
     Yves: merchant is (not) displaying in Sold By section of PDP:    Spryker    true
@@ -2206,9 +2117,7 @@ Multistore_Product_Offer
     Trigger multistore p&s
     Yves: go to AT store 'Home' page
     Yves: login on Yves with provided credentials:    ${yves_user_email}
-    Yves: go to AT URL:    en/search?q=multistoreSKU${random}
-    Try reloading page until element is/not appear:    ${catalog_product_card_locator}    true    21    5s
-    Yves: go to PDP of the product with sku:     multistoreSKU${random}
+    Yves: go to PDP of the product with sku:     multistoreSKU${random}    wait_for_p&s=true
     Yves: merchant is (not) displaying in Sold By section of PDP:    Spryker    false
     Save current URL
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
@@ -2243,7 +2152,7 @@ Multistore_CMS
     ...    AND    Trigger multistore p&s
 
 Product_Availability_Calculation
-    [Documentation]    Bug: CC-24108. Check product availability + multistore
+    [Documentation]    Check product availability + multistore
     MP: login on MP with provided credentials:    ${merchant_spryker_email}
     MP: open navigation menu tab:    Products    
     MP: click on create new entity button:    Create Product
@@ -2282,9 +2191,7 @@ Product_Availability_Calculation
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email} 
     Yves: delete all shopping carts
     Yves: create new 'Shopping Cart' with name:    prodAvailCalculation+${random}
-    Yves: go to URL:    en/search?q=availabilitySKU${random}
-    Try reloading page until element is/not appear:    ${catalog_product_card_locator}    true    21    5s
-    Yves: go to PDP of the product with sku:     availabilitySKU${random}
+    Yves: go to PDP of the product with sku:     availabilitySKU${random}    wait_for_p&s=true
     Yves: change quantity using '+' or '-' button № times:    +    5
     Yves: try add product to the cart from PDP and expect error:    Item availabilitySKU${random}-1 only has availability of 5.
     Yves: change quantity using '+' or '-' button № times:    +    2
@@ -2385,8 +2292,6 @@ Offer_Availability_Calculation
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     Yves: delete all shopping carts
     Yves: create new 'Shopping Cart' with name:    offAvailability${random}
-    Yves: go to URL:    en/search?q=offAvKU${random}
-    Try reloading page until element is/not appear:    ${catalog_product_card_locator}    true    21    5s
     MP: login on MP with provided credentials:    ${merchant_spryker_email}
     MP: open navigation menu tab:    Offers
     MP: click on create new entity button:    Add Offer
@@ -2409,7 +2314,7 @@ Offer_Availability_Calculation
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     Yves: delete all shopping carts
     Yves: create new 'Shopping Cart' with name:    offAvailability${random}
-    Yves: go to PDP of the product with sku:     offAvKU${random}
+    Yves: go to PDP of the product with sku:     offAvKU${random}    wait_for_p&s=true
     Yves: merchant is (not) displaying in Sold By section of PDP:    Spryker    true
     Yves: merchant's offer/product price should be:    Spryker    €200.00
     Yves: select xxx merchant's offer:    Spryker
@@ -2646,7 +2551,7 @@ Configurable_Product_PDP_Shopping_List
     ...    || date       | date_time ||
     ...    || 01.01.2055 | Morning   ||
     Yves: add product to the shopping list:    configProduct+${random}
-    Yves: go To 'Shopping Lists' Page
+    Yves: go to 'Shopping Lists' page
     Yves: view shopping list with name:    configProduct+${random}
     Yves: assert merchant of product in cart or list:    ${configurable_product_concrete_sku}    Spryker
     Yves: configuration should be equal:
@@ -2692,7 +2597,7 @@ Configurable_Product_RfQ_Order_Management
     Yves: logout on Yves as a customer
     Yves: go to URL:    agent/login
     Yves: login on Yves with provided credentials:    agent_config+${random}@spryker.com    change123${random}
-    Yves: go to 'Quote Requests' page through the header
+    Yves: go to 'Agent Quote Requests' page through the header
     Yves: quote request with reference xxx should have status:    ${lastCreatedRfQ}    Waiting
     Yves: view quote request with reference:    ${lastCreatedRfQ}
     Yves: 'Quote Request Details' page is displayed
@@ -2877,3 +2782,80 @@ Data_exchange_API_Configuration_in_Zed
     ...    AND    Delete dynamic entity configuration in Database:    mime-types
     ...    AND    Delete mime_type by id_mime_type in Database:    ${id_mime_type}
     ...    AND    Trigger API specification update
+
+#### Product Sets feature is not present in marketplace for now ####
+# Product_Sets
+#     [Tags]    skip-due-to-refactoring
+#     [Documentation]    Checks that product set can be added into cart
+#     [Setup]    Run keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
+#     ...    AND    Yves: create new 'Shopping Cart' with name:    productSetsCart+${random}
+#     Yves: go to URL:    en/product-sets
+#     Yves: 'Product Sets' page contains the following sets:    The Presenter's Set    Basic office supplies    The ultimate data disposal set
+#     Yves: view the following Product Set:    Basic office supplies
+#     Yves: 'Product Set' page contains the following products:    Clairefontaine Collegeblock 8272C DIN A5, 90 sheets
+#     Yves: change variant of the product on CMS page on:    Clairefontaine Collegeblock 8272C DIN A5, 90 sheets    lined
+#     Yves: add all products to the shopping cart from Product Set
+#     Yves: shopping cart contains the following products:    421344    420687    421511    423452
+#     [Teardown]    Yves: delete 'Shopping Cart' with name:    productSetsCart+${random}
+
+#### Product Bundles feature is not present in marketplace for now ####
+# Product_Bundles
+#     [Tags]    skip-due-to-refactoring
+#     [Documentation]    Checks checkout with Bundle product
+#     [Setup]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+#     ...    AND    Zed: change product stock:    ${bundled_product_1_abstract_sku}    ${bundled_product_1_concrete_sku}    true    10
+#     ...    AND    Zed: change product stock:    ${bundled_product_2_abstract_sku}    ${bundled_product_2_concrete_sku}    true    10
+#     ...    AND    Zed: change product stock:    ${bundled_product_3_abstract_sku}    ${bundled_product_3_concrete_sku}    true    10
+#     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
+#     Yves: create new 'Shopping Cart' with name:    productBundleCart+${random}
+#     Yves: go to PDP of the product with sku:    ${bundle_product_abstract_sku}
+#     #Fails due to bug CC-16679
+#     Yves: PDP contains/doesn't contain:    true    ${bundleItemsSmall}
+#     Yves: add product to the shopping cart
+#     Yves: go to the shopping cart through the header with name:    productBundleCart+${random}
+#     Yves: shopping cart contains the following products:    ${bundle_product_concrete_sku}
+#     Yves: click on the 'Checkout' button in the shopping cart
+#     Yves: billing address same as shipping address:    true
+#     Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${yves_company_user_buyer_address}
+#     Yves: select the following shipping method on the checkout and go next:    Express
+#     Yves: select the following payment method on the checkout and go next:    Marketplace Invoice
+#     Yves: accept the terms and conditions:    true
+#     Yves: 'submit the order' on the summary page
+#     Yves: 'Thank you' page is displayed
+
+# ### Configurable Bundles feature is not present in marketplace for now ####
+# Configurable_Bundle
+#     [Tags]    skip-due-to-refactoring
+#     [Documentation]    Checks checkout with the configurable bundle
+#     [Setup]    Run keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_manager_and_buyer_email}
+#     ...    AND    Yves: delete all shopping carts
+#     ...    AND    Yves: create new 'Shopping Cart' with name:    confBundle+${random}
+#     Yves: go to second navigation item level:    More    Configurable Bundle
+#     Yves: 'Choose Bundle to configure' page is displayed
+#     Yves: choose bundle template to configure:    Presentation bundle
+#     Yves: select product in the bundle slot:    Slot 5    408104
+#     Yves: select product in the bundle slot:    Slot 6    423172
+#     Yves: go to 'Summary' step in the bundle configurator
+#     Yves: add products to the shopping cart in the bundle configurator
+#     Yves: go to second navigation item level:    More    Configurable Bundle
+#     Yves: 'Choose Bundle to configure' page is displayed
+#     Yves: choose bundle template to configure:    Presentation bundle
+#     Yves: select product in the bundle slot:    Slot 5    421539
+#     Yves: select product in the bundle slot:    Slot 6    424551
+#     Yves: go to 'Summary' step in the bundle configurator
+#     Yves: add products to the shopping cart in the bundle configurator
+#     Yves: change quantity of the configurable bundle in the shopping cart on:    Presentation bundle    2
+#     Yves: click on the 'Checkout' button in the shopping cart
+#     Yves: billing address same as shipping address:    true
+#     Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${yves_company_user_manager_and_buyer_address}
+#     Yves: select the following shipping method on the checkout and go next:    Express
+#     Yves: select the following payment method on the checkout and go next:    Marketplace Invoice
+#     Yves: accept the terms and conditions:    true
+#     Yves: 'submit the order' on the summary page
+#     Yves: 'Thank you' page is displayed
+#     Yves: go to user menu:    Order History
+#     Yves: 'Order History' page is displayed
+#     Yves: get the last placed order ID by current customer
+#     Yves: 'View Order/Reorder/Return' on the order history page:    View Order    ${lastPlacedOrder}
+#     Yves: 'View Order' page is displayed
+#     Yves: 'Order Details' page contains the following product title N times:    Presentation bundle    3

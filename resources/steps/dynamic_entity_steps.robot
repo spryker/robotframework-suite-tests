@@ -191,10 +191,13 @@ Product availability status should be changed on:
     Set Tags    glue
     API_test_setup
     I set Headers:    Content-Type==application/json
-    FOR    ${index}    IN RANGE    0    ${iterations}
+    FOR    ${index}    IN RANGE    1    ${iterations}
         I send a GET request:    /concrete-products/${concrete_sku}/concrete-product-availabilities
         Response status code should be:    200
         ${actual_availability}=    Run Keyword And Ignore Error    Response body parameter should be:    [data][0][attributes][availability]   ${is_available}
+        IF    ${index} == ${iterations}-1
+            Fail    Expected product availability is not reached. Check P&S
+        END
         IF    'PASS' in ${actual_availability}
             Exit For Loop
         END
@@ -202,9 +205,7 @@ Product availability status should be changed on:
             Sleep    ${sleep_time}
             Continue For Loop
         END
-        IF    ${index} == ${iterations}-1
-            Fail    Expected product availability is not reached. Check P&S
-        END
+        
     END
 
 

@@ -501,7 +501,7 @@ Request_for_Quote
     Yves: go to URL:    agent/login
     Yves: login on Yves with provided credentials:    agent_quote+${random}@spryker.com    change123${random}
     Yves: header contains/doesn't contain:    true    ${quoteRequestsWidget}
-    Yves: go to 'Quote Requests' page through the header
+    Yves: go to 'Agent Quote Requests' page through the header
     Yves: 'Quote Requests' page is displayed
     Yves: quote request with reference xxx should have status:    ${lastCreatedRfQ}    Waiting
     Yves: view quote request with reference:    ${lastCreatedRfQ}
@@ -965,9 +965,7 @@ Manage_Product
     ...    || manageSKU${random} | DEmanageProduct${random} force ||
     Trigger multistore p&s
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
-    Yves: go to URL:    en/search?q=manageSKU${random}
-    Try reloading page until element is/not appear:    ${catalog_product_card_locator}    true    21    5s
-    Yves: go to PDP of the product with sku:    manageSKU${random}
+    Yves: go to PDP of the product with sku:    manageSKU${random}    wait_for_p&s=true
     Yves: product price on the PDP should be:    €100.00    wait_for_p&s=true
     Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    False
     Yves: change variant of the product on PDP on:    grey
@@ -1001,9 +999,7 @@ Manage_Product
     Trigger multistore p&s
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     Yves: create new 'Shopping Cart' with name:    manageProductCart+${random}
-    Yves: go to URL:    en/search?q=manageSKU${random}
-    Try reloading page until element is/not appear:    ${catalog_product_card_locator}    true    21    5s
-    Yves: go to PDP of the product with sku:    manageSKU${random}
+    Yves: go to PDP of the product with sku:    manageSKU${random}    wait_for_p&s=true
     Yves: product name on PDP should be:    ENUpdatedmanageProduct${random}
     Yves: product price on the PDP should be:    €150.00    wait_for_p&s=true
     Yves: change variant of the product on PDP on:    grey
@@ -1433,7 +1429,7 @@ Multistore_CMS
     ...    AND    Trigger multistore p&s
 
 Product_Availability_Calculation
-    [Documentation]    Bug: CC-24108. Check product availability + multistore
+    [Documentation]    Check product availability + multistore
     [Setup]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: update warehouse:    
     ...    || warehouse  | store || 
@@ -1463,13 +1459,11 @@ Product_Availability_Calculation
     ...    || availabilitySKU${random} | availabilitySKU${random}-farbe-grey | AT    | gross | default | €        | 75.00  ||
     Zed: change concrete product stock:
     ...    || productAbstract          | productConcrete                     | warehouse n1 | warehouse n1 qty | warehouse n1 never out of stock ||
-    ...    || availabilitySKU${random} | availabilitySKU${random}-farbe-grey | Warehouse2   | 5                | false                            ||
+    ...    || availabilitySKU${random} | availabilitySKU${random}-farbe-grey | Warehouse1   | 5                | false                            ||
     Trigger multistore p&s
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     Yves: create new 'Shopping Cart' with name:    availabilityCart+${random}
-    Yves: go to URL:    en/search?q=availabilitySKU${random}
-    Try reloading page until element is/not appear:    ${catalog_product_card_locator}    true    21    5s
-    Yves: go to PDP of the product with sku:    availabilitySKU${random}
+    Yves: go to PDP of the product with sku:    availabilitySKU${random}    wait_for_p&s=true
     Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    False
     Yves: change quantity using '+' or '-' button № times:    +    5
     Yves: try add product to the cart from PDP and expect error:    Item availabilitySKU${random}-farbe-grey only has availability of 5.
@@ -1507,9 +1501,7 @@ Product_Availability_Calculation
     Yves: try add product to the cart from PDP and expect error:    Item availabilitySKU${random}-farbe-grey only has availability of 5.
     Yves: go to AT store 'Home' page
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
-    Yves: go to AT URL:    en/search?q=availabilitySKU${random}
-    Try reloading page until element is/not appear:    ${catalog_product_card_locator}    true    21    5s
-    Yves: go to PDP of the product with sku:    availabilitySKU${random}
+    Yves: go to PDP of the product with sku:    availabilitySKU${random}    wait_for_p&s=true
     Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    False
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: update warehouse:    
@@ -1518,9 +1510,7 @@ Product_Availability_Calculation
     Trigger multistore p&s
     Yves: go to AT store 'Home' page
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
-    Yves: go to AT URL:    en/search?q=availabilitySKU${random}
-    Try reloading page until element is/not appear:    ${catalog_product_card_locator}    true    21    5s
-    Yves: go to PDP of the product with sku:    availabilitySKU${random}
+    Yves: go to PDP of the product with sku:    availabilitySKU${random}    wait_for_p&s=true
     Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    True
     [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: update warehouse:    
@@ -1641,8 +1631,7 @@ Comment_Management_in_the_Cart
     [Teardown]    Run Keyword    Yves: delete 'Shopping Cart' with name:    commentManagement+${random}
 
 Comment_Management_in_Order
-    [Tags]    skip-due-to-issue
-    [Documentation]    Bug:CC-23306. Add comments in Yves and check in Zed. 
+    [Documentation]    Add comments in Yves and check in Zed. 
     Yves: login on Yves with provided credentials:    ${yves_company_user_shared_permission_owner_email}
     Yves: create new 'Shopping Cart' with name:    comments+${random}
     Yves: go to PDP of the product with sku:    ${bundled_product_3_abstract_sku}
@@ -1730,7 +1719,7 @@ Configurable_Product_PDP_Shopping_List
     ...    || date       | date_time ||
     ...    || 01.01.2055 | Morning   ||
     Yves: add product to the shopping list:    configProduct+${random}
-    Yves: go To 'Shopping Lists' Page
+    Yves: go to 'Shopping Lists' page
     Yves: view shopping list with name:    configProduct+${random}
     Yves: configuration should be equal:
     ...    || date       | date_time ||
@@ -1774,7 +1763,7 @@ Configurable_Product_RfQ_Order_Management
     Yves: logout on Yves as a customer
     Yves: go to URL:    agent/login
     Yves: login on Yves with provided credentials:    agent_config+${random}@spryker.com    change123${random}
-    Yves: go to 'Quote Requests' page through the header
+    Yves: go to 'Agent Quote Requests' page through the header
     Yves: quote request with reference xxx should have status:    ${lastCreatedRfQ}    Waiting
     Yves: view quote request with reference:    ${lastCreatedRfQ}
     Yves: 'Quote Request Details' page is displayed
