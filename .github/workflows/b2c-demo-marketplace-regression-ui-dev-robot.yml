@@ -1,8 +1,6 @@
 name: "[b2c-mp][internal] Robot Regression UI (DEV robot)"
 
 on:
-    schedule:
-        -   cron: '0 3 * * *'
     workflow_dispatch:
 
 jobs:
