@@ -22,11 +22,11 @@ jobs:
               with:
                   python-version: '3.9'
 
-            - name: Clone project (internal-robot-ui)
+            - name: Clone project (internal)
               run: |
                   git config --global user.email "github-actions[bot]@users.noreply.github.com"
                   git config --global user.name "github-actions[bot]"
-                  git clone -b internal-robot-ui --single-branch https://github.com/spryker-shop/b2c-demo-marketplace.git .
+                  git clone -b internal --single-branch https://github.com/spryker-shop/b2c-demo-marketplace.git .
             - name: Up-merge fresh branch (internal)
               run: |
                   git fetch origin
@@ -49,7 +49,7 @@ jobs:
                   sudo chmod +x /usr/local/bin/docker-compose
             - name: Install Robot tests
               run: |
-                  git clone https://github.com/spryker/robotframework-suite-tests.git --single-branch --branch ci-smoke-set robotframework-tests
+                  git clone https://github.com/spryker/robotframework-suite-tests.git --single-branch --branch master robotframework-tests
             - name: Install Project
               continue-on-error: true
               run: |
