@@ -1,6 +1,8 @@
 name: "[b2c][internal] Robot Regression UI"
 
 on:
+    schedule:
+        -   cron: '0 3 * * *'
     workflow_dispatch:
 
 jobs:
@@ -20,11 +22,11 @@ jobs:
               with:
                   python-version: '3.9'
 
-            - name: Clone project (internal-robot-ui)
+            - name: Clone project (internal)
               run: |
                   git config --global user.email "github-actions[bot]@users.noreply.github.com"
                   git config --global user.name "github-actions[bot]"
-                  git clone -b internal-robot-ui --single-branch https://github.com/spryker-shop/b2c-demo-shop.git .
+                  git clone -b internal --single-branch https://github.com/spryker-shop/b2c-demo-shop.git .
             - name: Up-merge fresh branch (internal)
               run: |
                   git fetch origin
@@ -47,14 +49,14 @@ jobs:
                   sudo chmod +x /usr/local/bin/docker-compose
             - name: Install Robot tests
               run: |
-                  git clone https://github.com/spryker/robotframework-suite-tests.git --single-branch --branch ci-smoke-set robotframework-tests
+                  git clone https://github.com/spryker/robotframework-suite-tests.git --single-branch --branch master robotframework-tests
             - name: Install Project
               continue-on-error: true
               run: |
                   git clone https://github.com/spryker/docker-sdk.git ./docker
                   docker/sdk boot -v deploy.ci.acceptance.mariadb.yml
                   docker/sdk up -t -v
-                  sudo bash -c "echo '127.0.0.1 backend-api.at.spryker.local backend-api.de.spryker.local glue-backend.de.spryker.local glue-backend.at.spryker.local glue-storefront.de.spryker.local glue-storefront.at.spryker.local backend-gateway.at.spryker.local backend-gateway.de.spryker.local backoffice.at.spryker.local backoffice.de.spryker.local date-time-configurator-example.spryker.local glue.at.spryker.local glue.de.spryker.local yves.at.spryker.local yves.de.spryker.local mp.de.spryker.local mail.spryker.local mp.at.spryker.local' >> /etc/hosts"            
+                  sudo bash -c "echo '127.0.0.1 backend-api.at.spryker.local backend-api.de.spryker.local glue-backend.de.spryker.local glue-backend.at.spryker.local glue-storefront.de.spryker.local glue-storefront.at.spryker.local backend-gateway.at.spryker.local backend-gateway.de.spryker.local backoffice.at.spryker.local backoffice.de.spryker.local date-time-configurator-example.spryker.local glue.at.spryker.local glue.de.spryker.local yves.at.spryker.local yves.de.spryker.local mp.de.spryker.local mail.spryker.local mp.at.spryker.local' >> /etc/hosts"
             - name: Custom commands
               continue-on-error: true
               run: |
