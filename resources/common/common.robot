@@ -496,7 +496,7 @@ Get voucher code by discountId from Database:
     END
 
 Create dynamic entity configuration relation in Database:
-     [Documentation]    This keyword create dynamic entity configuration in the DB tables spy_dynamic_entity_configuration_relation and spy_dynamic_entity_configuration_relation_mapping.
+     [Documentation]    This keyword create dynamic entity configuration in the DB tables spy_dynamic_entity_configuration_relation and spy_dynamic_entity_configuration_relation_field_mapping.
         ...    *Example:*
         ...
         ...   TODO Finish this keyword
@@ -531,7 +531,7 @@ Create dynamic entity configuration relation in Database:
     ELSE
         ${new_mapping_id}=    Get next id from table    spy_dynamic_entity_configuration_relation_field_mapping    id_dynamic_entity_configuration_relation_field_mapping
         Connect to Spryker DB
-        Execute Sql String  insert into spy_dynamic_entity_configuration_relation_mapping (id_dynamic_entity_configuration_relation_field_mapping, fk_dynamic_entity_configuration_relation, parent_field_name, child_field_name) values (${new_mapping_id},'${dynamic_entity_configuration_relation_id}','${parent_field_name}','${child_field_name}')
+        Execute Sql String  insert into spy_dynamic_entity_configuration_relation_field_mapping (id_dynamic_entity_configuration_relation_field_mapping, fk_dynamic_entity_configuration_relation, parent_field_name, child_field_name) values (${new_mapping_id},'${dynamic_entity_configuration_relation_id}','${parent_field_name}','${child_field_name}')
     END
     Disconnect From Database
 
