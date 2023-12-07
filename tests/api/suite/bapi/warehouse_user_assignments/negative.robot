@@ -15,9 +15,9 @@ Create_warehouse_user_assigment_with_invalid_token
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=Bearer ${token}
     ...    AND    Make user a warehouse user/ not a warehouse user:    ${warehous_user[0].user_uuid}    1
     When I send a POST request:    /warehouse-user-assignments    {"data": {"type": "warehouse-user-assignments", "attributes":{"userUuid": "${warehous_user[0].user_uuid}","warehouse" :{"uuid": "${warehouse[0].warehouse_uuid}"},"isActive":"false"}}}
-    Then Response status code should be:    400
-    And Response should return error code:    001
-    And Response should return error message:    Invalid access token.
+    Then Response status code should be:    403
+    And Response should return error code:    002
+    And Response should return error message:    Missing access token.
     [Teardown]    Make user a warehouse user/ not a warehouse user:   ${warehous_user[0].user_uuid}    0
 
 Create_warehouse_user_assigment_without_token
@@ -204,6 +204,6 @@ Delete_warehouse_user_assigment_with_invalid_token
     ...    AND    Create_warehouse_user_assigment:    ${warehouse[0].warehouse_uuid}    ${warehouse[0].fk_warehouse_spryker}    ${warehous_user[0].user_uuid}    false
     Then Get_warehouse_user_assigment_id:    ${warehouse[0].warehouse_uuid}    ${warehous_user[0].user_uuid}
     Then I send a DELETE request:    /warehouse-user-assignments/${id_warehouse_user_assigment}
-    Then Response status code should be:    400
+    Then Response status code should be:    401
     And Remove_warehous_user_assigment:    ${warehouse[0].warehouse_uuid}    ${warehous_user[0].user_uuid}
     And Make user a warehouse user/ not a warehouse user:   ${warehous_user[0].user_uuid}    0
