@@ -517,6 +517,7 @@ Create dynamic entity configuration relation in Database:
         Execute Sql String    INSERT INTO spy_dynamic_entity_configuration_relation (fk_parent_dynamic_entity_configuration,fk_child_dynamic_entity_configuration,name,is_editable) VALUES (${parent_dynamic_entity_configuration_alias_id},${child_dynamic_entity_configuration_alias_id},'${name}',1);
     ELSE
         ${new_relation_id}=    Get next id from table    spy_dynamic_entity_configuration_relation    id_dynamic_entity_configuration_relation
+        Connect to Spryker DB
         Log  ${new_relation_id}
 
         Execute Sql String    INSERT INTO spy_dynamic_entity_configuration_relation (id_dynamic_entity_configuration_relation, fk_parent_dynamic_entity_configuration, fk_child_dynamic_entity_configuration,name,is_editable) values (${new_relation_id}, ${parent_dynamic_entity_configuration_alias_id},${child_dynamic_entity_configuration_alias_id},'${name}',1);
@@ -529,6 +530,7 @@ Create dynamic entity configuration relation in Database:
         Execute Sql String    insert ignore into spy_dynamic_entity_configuration_relation_field_mapping (fk_dynamic_entity_configuration_relation, parent_field_name, child_field_name) value (${dynamic_entity_configuration_relation_id}, '${parent_field_name}', '${child_field_name}');
     ELSE
         ${new_mapping_id}=    Get next id from table    spy_dynamic_entity_configuration_relation_field_mapping    id_dynamic_entity_configuration_relation_field_mapping
+        Connect to Spryker DB
         Execute Sql String  insert into spy_dynamic_entity_configuration_relation_mapping (id_dynamic_entity_configuration_relation_field_mapping, fk_dynamic_entity_configuration_relation, parent_field_name, child_field_name) values (${new_mapping_id},'${dynamic_entity_configuration_relation_id}','${parent_field_name}','${child_field_name}')
     END
     Disconnect From Database
