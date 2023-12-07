@@ -2,9 +2,7 @@ name: "[suite][master] Robot Regression UI (DEV robot)"
 
 on:
     workflow_dispatch:
-    pull_request:
-        branches:
-            - feature/cc-32114-add-suite-ui-tests
+
 jobs:
     docker-alpine-php-8-2-mariadb-robot-ui:
         name: "Docker / Alpine / PHP 8.2 / MariaDB / Robot / UI"
