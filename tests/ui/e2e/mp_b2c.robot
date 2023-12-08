@@ -2020,6 +2020,7 @@ Product_Availability_Calculation
     Yves: go to b2c shopping cart
     Yves: assert merchant of product in b2c cart:    availabilityProduct${random}    Spryker
     Yves: go to AT store 'Home' page
+    Trigger multistore p&s
     Yves: go to PDP of the product with sku:     availabilitySKU${random}
     Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    False
     Zed: login on Zed with provided credentials:    ${zed_main_merchant_email}

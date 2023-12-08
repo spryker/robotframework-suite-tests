@@ -203,8 +203,9 @@ Yves: check that 'Print Slip' contains the following products:
     ${print_slip_page_id}=    Evaluate    [page['id'] for page in ${context[0]['contexts'][0]['pages']} if '/return/slip-print/' in page['url']]
     ${print_slip_page_length}=    Get Length    ${print_slip_page_id}
     IF    ${print_slip_page_length}>0
-        ${print_slip_page_id}=    Get From List    ${print_slip_page_id}    0
-        Switch Page    id=${print_slip_page_id}
+        ${print_slip_page_url}=    Evaluate    [page['url'] for page in ${context[0]['contexts'][0]['pages']} if '/return/slip-print/' in page['url']]
+        ${print_slip_page_url}=    Get From List    ${print_slip_page_url}    0
+        Go To    ${print_slip_page_url}
         Wait Until Page Contains Element    ${return_slip_products_table}
         ${sku_list_count}=   get length  ${sku_list}
         FOR    ${index}    IN RANGE    0    ${sku_list_count}
