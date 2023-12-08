@@ -1,5 +1,5 @@
 {
-   "environment":"ui_mp_b2c",
+   "environment":"ui_suite",
    "env":{
       "yves_url":"http://yves.de.spryker.local/",
       "yves_at_url":"http://yves.at.spryker.local/",

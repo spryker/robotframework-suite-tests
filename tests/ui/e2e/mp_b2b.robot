@@ -2234,6 +2234,7 @@ Product_Availability_Calculation
     Yves: go to the shopping cart through the header with name:    newProdAvlCalculation+${random}
     Yves: assert merchant of product in cart or list:    availabilitySKU${random}-1    Spryker
     Yves: go to AT store 'Home' page
+    Trigger multistore p&s
     Yves: go to PDP of the product with sku:     availabilitySKU${random}
     Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    False
     Zed: login on Zed with provided credentials:    ${zed_main_merchant_email}
