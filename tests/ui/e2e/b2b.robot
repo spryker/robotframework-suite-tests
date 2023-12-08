@@ -1387,6 +1387,7 @@ Multistore_Product
     Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    False
     Yves: product price on the PDP should be:    €15.00    wait_for_p&s=true
     Yves: go to AT store 'Home' page
+    Trigger multistore p&s
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     Yves: create new 'Shopping Cart' with name:    multiProductCart+${random}
     Yves: go to AT URL:    en/search?q=multiSKU${random}
