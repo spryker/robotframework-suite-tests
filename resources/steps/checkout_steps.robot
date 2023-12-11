@@ -29,7 +29,7 @@ Yves: billing address same as shipping address:
         Repeat Keyword    3    Wait Until Network Is Idle
     END
     Sleep    1s
-    IF    '${state}' == 'true'    Wait Until Element Is Not Visible    ${billing_address_section}[${env}]
+    IF    '${state}' == 'true'    Wait Until Element Is Not Visible    ${checkout_billing_address_first_name_field}
     Repeat Keyword    3    Wait Until Network Is Idle
 
 Yves: 'billing same as shipping' checkbox should be displayed:
