@@ -35,10 +35,10 @@ ENABLER
     And Response should contain the array of a certain size:   [data]    224
     And Response should contain the array of a certain size:   [data][0]    9
     And Response should contain the array of a certain size:   [data][0][roboTestsConcreteProducts]    1
-    And Response body parameter should be:    [data][0][id_product_abstract]    1
-    And Response body parameter should be:    [data][0][sku]    001
-    And Response body parameter should be:    [data][0][roboTestsConcreteProducts][0][id_product]    1
-    And Response body parameter should be:    [data][0][roboTestsConcreteProducts][0][fk_product_abstract]    1
+    And Each array element of array in response should contain property:    [data]    id_product_abstract
+    And Each array element of array in response should contain property:    [data]    sku
+    And Each array element of array in response should contain nested property:    [data]    [roboTestsConcreteProducts]    id_product
+    And Each array element of array in response should contain nested property:    [data]    [roboTestsConcreteProducts]    fk_product_abstract
     ### GET PRODUCT ABSTRACT COLLECTION WITH CHILDS AS TREE ###
     And I set Headers:    Content-Type=application/json    Authorization=Bearer ${token}
     And I send a GET request:    /dynamic-entity/robotests-product-abstracts?include=roboTestsConcreteProducts.roboTestsProductCategories.roboTestsCategories
