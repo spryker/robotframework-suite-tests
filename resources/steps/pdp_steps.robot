@@ -219,28 +219,30 @@ Yves: add product to the shopping list:
     ${variants_present_status}=    Run Keyword And Ignore Error    Page Should Not Contain Element    ${pdp_variant_selector}    timeout=1s
     ${shopping_list_dropdown_status}=    Run Keyword And Ignore Error    Page should contain element    ${pdp_shopping_list_selector}    timeout=5s
     IF    'FAIL' in ${variants_present_status}    Yves: change variant of the product on PDP on random value
-    Set Browser Timeout    3s
     IF    ('${shoppingListName}' != '${EMPTY}' and 'PASS' in ${shopping_list_dropdown_status})
         TRY
+            Set Browser Timeout    3s
             Wait Until Element Is Enabled    ${pdp_shopping_list_selector}
             Select From List By Label    ${pdp_shopping_list_selector}    ${shoppingListName}
             Wait Until Element Is Visible    ${pdp_add_to_shopping_list_button}
             Click    ${pdp_add_to_shopping_list_button}    
+            Set Browser Timeout    ${browser_timeout}
             Wait For Response
             Repeat Keyword    3    Wait Until Network Is Idle
-        EXCEPT    
+        EXCEPT 
+            Set Browser Timeout    3s   
             Click    xpath=//span[@class='select2-selection select2-selection--single']//span[contains(@id,'select2-idShoppingList')]
             Wait Until Element Is Visible    xpath=//li[contains(@id,'select2-idShoppingList')][contains(@id,'result')][contains(.,'${shoppingListName}')]
             Click    xpath=//li[contains(@id,'select2-idShoppingList')][contains(@id,'result')][contains(.,'${shoppingListName}')]
             Wait Until Element Is Visible    ${pdp_add_to_shopping_list_button}
             Click    ${pdp_add_to_shopping_list_button}
+            Set Browser Timeout    ${browser_timeout}
             Wait For Response
             Repeat Keyword    3    Wait Until Network Is Idle
         END
     ELSE
         Click    ${pdp_add_to_shopping_list_button}    
         Wait For Response
-        Repeat Keyword    3    Wait Until Network Is Idle
     END
     Set Browser Timeout    ${browser_timeout}
     Yves: remove flash messages

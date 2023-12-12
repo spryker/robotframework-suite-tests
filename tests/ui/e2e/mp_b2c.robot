@@ -1323,8 +1323,8 @@ Merchant_Portal_Dashboard
     Zed: go to second navigation item level:    Marketplace    Merchants
     Zed: click Action Button in a table for row that contains:     Sony Experts     Edit
     Zed: create new Merchant User with the following data:
-    ...    || e-mail                               | first name     | last name      ||
-    ...    || sonia+dahboard+${random}@spryker.com | FName${random} | LName${random} ||
+    ...    || e-mail                               | first name      | last name       ||
+    ...    || sonia+dahboard+${random}@spryker.com | DFName${random} | DLName${random} ||
     Zed: perform merchant user search by:     sonia+dahboard+${random}@spryker.com
     Zed: table should contain non-searchable value:    Deactivated
     Zed: click Action Button in Merchant Users table for row that contains:    sonia+dahboard+${random}@spryker.com    Activate

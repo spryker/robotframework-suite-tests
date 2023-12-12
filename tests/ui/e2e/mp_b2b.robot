@@ -1509,8 +1509,8 @@ Merchant_Portal_Dashboard
     Zed: go to second navigation item level:    Marketplace    Merchants
     Zed: click Action Button in a table for row that contains:     Oryx Merchant     Edit
     Zed: create new Merchant User with the following data:
-    ...    || e-mail                               | first name     | last name      ||
-    ...    || sonia+dahboard+${random}@spryker.com | FName${random} | LName${random} ||
+    ...    || e-mail                               | first name      | last name       ||
+    ...    || sonia+dahboard+${random}@spryker.com | DFName${random} | DLName${random} ||
     Zed: perform merchant user search by:     sonia+dahboard+${random}@spryker.com
     Zed: table should contain non-searchable value:    Deactivated
     Zed: click Action Button in Merchant Users table for row that contains:    sonia+dahboard+${random}@spryker.com    Activate
@@ -2097,7 +2097,7 @@ Multistore_Product_Offer
     MP: save offer
     Trigger multistore p&s
     Yves: login on Yves with provided credentials:    ${yves_user_email}
-    Yves: go to PDP of the product with sku:     multistoreSKU${random}
+    Yves: go to PDP of the product with sku:     multistoreSKU${random}    wait_for_p&s=true
     Yves: merchant is (not) displaying in Sold By section of PDP:    Spryker    true
     Yves: merchant's offer/product price should be:    Spryker    €200.00
     Yves: go to AT store 'Home' page
