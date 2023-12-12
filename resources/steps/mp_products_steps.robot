@@ -171,8 +171,7 @@ MP: fill concrete product fields:
         IF    '${key}'=='searchability' and '${value}' != '${EMPTY}'
             Click    ${product_concrete_searchability_selector}
             MP: select option in expanded dropdown:    ${value}
-        END
-    
+        END    
     END
     MP: save concrete product  
 
