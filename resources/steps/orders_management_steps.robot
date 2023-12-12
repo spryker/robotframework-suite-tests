@@ -265,7 +265,7 @@ Zed: return details page contains the following items:
     ${sku_list_count}=   get length  ${sku_list}
     FOR    ${index}    IN RANGE    0    ${sku_list_count}
         ${sku_to_check}=    Get From List    ${sku_list}    ${index}
-        Page Should Contain Element    xpath=//table[@data-qa='return-items-table']//td//a[contains(@href,'view/variant')]/../div[@class='sku'][contains(text(),'SKU: ${sku_to_check}')]    message=Return details page doesn't contain '${sku_list}' but should.
+        Page Should Contain Element    xpath=//table[@data-qa='return-items-table']//td//a[contains(@href,'view/variant')]/../div[@class='sku'][contains(.,'${sku_to_check}')]    message=Return details page doesn't contain '${sku_list}' but should.
     END
 
 Zed: view the latest return from My Returns:

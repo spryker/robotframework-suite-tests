@@ -2070,7 +2070,7 @@ Multistore_Product_Offer
     Trigger multistore p&s
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Catalog    Products 
-    Zed: click Action Button in a table for row that contains:     multistoreProduct${random}     Approve
+    Zed: click Action Button in a table for row that contains:     multistoreSKU${random}     Approve
     Trigger multistore p&s
     Yves: login on Yves with provided credentials:    ${yves_user_email}  
     Yves: check if cart is not empty and clear it
@@ -2096,6 +2096,23 @@ Multistore_Product_Offer
     ...    || 3          | AT    | EUR      | 10            | 1        ||
     MP: save offer
     Trigger multistore p&s
+    ### *** Dummy steps to bypass multisrore P&S issue in CI env *** ###
+    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: change concrete product price on:
+    ...    || productAbstract        | productConcrete          ||
+    ...    || multistoreSKU${random} | multistoreSKU${random}-1 ||
+    Zed: change concrete product data:
+    ...    || productAbstract        | productConcrete          | name en                           | name de                           ||
+    ...    || multistoreSKU${random} | multistoreSKU${random}-1 | multistoreProduct${random} forced | multistoreProduct${random} forced ||
+    Trigger p&s    storeName=AT    
+    Zed: update abstract product price on:
+    ...    || productAbstract        ||
+    ...    || multistoreSKU${random} ||
+    Zed: update abstract product data:
+    ...    || productAbstract        | name en                           | name de                           ||
+    ...    || multistoreSKU${random} | multistoreProduct${random} forced | multistoreProduct${random} forced ||
+    Trigger multistore p&s
+    ### *** ###
     Yves: login on Yves with provided credentials:    ${yves_user_email}
     Yves: go to PDP of the product with sku:     multistoreSKU${random}    wait_for_p&s=true
     Yves: merchant is (not) displaying in Sold By section of PDP:    Spryker    true
