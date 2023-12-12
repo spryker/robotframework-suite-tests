@@ -3080,8 +3080,8 @@ Merchant_Portal_Dashboard
     Zed: go to second navigation item level:    Marketplace    Merchants
     Zed: click Action Button in a table for row that contains:     Sony Experts     Edit
     Zed: create new Merchant User with the following data:
-    ...    || e-mail                               | first name     | last name      ||
-    ...    || sonia+dahboard+${random}@spryker.com | FName${random} | LName${random} ||
+    ...    || e-mail                               | first name      | last name       ||
+    ...    || sonia+dahboard+${random}@spryker.com | DFName${random} | DLName${random} ||
     Zed: perform merchant user search by:     sonia+dahboard+${random}@spryker.com
     Zed: table should contain non-searchable value:    Deactivated
     Zed: click Action Button in Merchant Users table for row that contains:    sonia+dahboard+${random}@spryker.com    Activate
@@ -3481,6 +3481,7 @@ Product_Restrictions
     Zed: create product list with the following assigned category:    list_name=Black${random}    list_type=black    category=Smartphones
     Zed: unassign all product lists from merchant relation:    business_unit_owner=Hotel Tommy Berlin    merchant_relation=Hotel Tommy Berlin,Hotel Tommy London
     Zed: assign product list to merchant relation:    business_unit_owner=Hotel Tommy Berlin    merchant_relation=Hotel Tommy Berlin,Hotel Tommy London    product_list=White${random}
+    Trigger multistore p&s
     Yves: login on Yves with provided credentials:    ${yves_test_company_user_email}
     Yves: at least one product is/not displayed on the search results page:    search_query=TomTom    expected_visibility=true    wait_for_p&s=true
     Yves: at least one product is/not displayed on the search results page:    search_query=Canon    expected_visibility=false
@@ -3488,6 +3489,7 @@ Product_Restrictions
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: unassign all product lists from merchant relation:    business_unit_owner=Hotel Tommy Berlin    merchant_relation=Hotel Tommy Berlin,Hotel Tommy London
     Zed: assign product list to merchant relation:    business_unit_owner=Hotel Tommy Berlin    merchant_relation=Hotel Tommy Berlin,Hotel Tommy London    product_list=Black${random}
+    Trigger multistore p&s
     Yves: login on Yves with provided credentials:    ${yves_test_company_user_email}
     Yves: at least one product is/not displayed on the search results page:    search_query=060    expected_visibility=false    wait_for_p&s=true
     Yves: at least one product is/not displayed on the search results page:    search_query=052    expected_visibility=false
@@ -3503,6 +3505,7 @@ Product_Restrictions
     ...    AND    Zed: unassign all product lists from merchant relation:    business_unit_owner=Hotel Tommy Berlin    merchant_relation=Hotel Tommy Berlin,Hotel Tommy London
     ...    AND    Zed: remove product list with title:    White${random}
     ...    AND    Zed: remove product list with title:    Black${random}
+    ...    AND    Trigger multistore p&s
 
 Customer_Specific_Prices
     [Documentation]    Checks that product price can be different for different customers
