@@ -288,14 +288,13 @@ Add_to_Wishlist
 
 # Product_Bundles
 #     ### Product Bundles are not supported by Marketplace for now ###
-#     [Documentation]    Checks checkout with Bundle product. Fails due to bug CC-16679
+#     [Documentation]    Checks checkout with Bundle product. 
 #     [Setup]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
 #     ...    AND    Zed: change product stock:    ${bundled_product_1_abstract_sku}    ${bundled_product_1_concrete_sku}    true    10
 #     ...    AND    Zed: change product stock:    ${bundled_product_2_abstract_sku}    ${bundled_product_2_concrete_sku}    true    10
 #     ...    AND    Zed: change product stock:    ${bundled_product_3_abstract_sku}    ${bundled_product_3_concrete_sku}    true    10
 #     Yves: login on Yves with provided credentials:    ${yves_user_email}
 #     Yves: go to PDP of the product with sku:    ${bundle_product_abstract_sku}
-#     #Fails due to bug CC-16679
 #     Yves: PDP contains/doesn't contain:    true    ${bundleItemsSmall}
 #     Yves: add product to the shopping cart
 #     Yves: go to b2c shopping cart
