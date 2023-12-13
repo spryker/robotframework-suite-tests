@@ -499,7 +499,6 @@ Create dynamic entity configuration relation in Database:
      [Documentation]    This keyword create dynamic entity configuration in the DB tables spy_dynamic_entity_configuration_relation and spy_dynamic_entity_configuration_relation_field_mapping.
         ...    *Example:*
         ...
-        ...   TODO Finish this keyword
         ...    ``Create dynamic entity configuration relation in Database:    country    spy_country     1   {"identifier":"id_country","fields":[...]}``
         ...
     [Arguments]    ${parent_dynamic_entity_configuration_alias}   ${child_dynamic_entity_configuration_alias}    ${name}    ${child_field_name}   ${parent_field_name}
