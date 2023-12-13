@@ -2096,23 +2096,6 @@ Multistore_Product_Offer
     ...    || 3          | AT    | EUR      | 10            | 1        ||
     MP: save offer
     Trigger multistore p&s
-    ### *** Dummy steps to bypass multisrore P&S issue in CI env *** ###
-    Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    Zed: change concrete product price on:
-    ...    || productAbstract        | productConcrete          ||
-    ...    || multistoreSKU${random} | multistoreSKU${random}-1 ||
-    Zed: change concrete product data:
-    ...    || productAbstract        | productConcrete          | name en                           | name de                           ||
-    ...    || multistoreSKU${random} | multistoreSKU${random}-1 | multistoreProduct${random} forced | multistoreProduct${random} forced ||
-    Trigger p&s    storeName=AT    
-    Zed: update abstract product price on:
-    ...    || productAbstract        ||
-    ...    || multistoreSKU${random} ||
-    Zed: update abstract product data:
-    ...    || productAbstract        | name en                           | name de                           ||
-    ...    || multistoreSKU${random} | multistoreProduct${random} forced | multistoreProduct${random} forced ||
-    Trigger multistore p&s
-    ### *** ###
     Yves: login on Yves with provided credentials:    ${yves_user_email}
     Yves: go to PDP of the product with sku:     multistoreSKU${random}    wait_for_p&s=true
     Yves: merchant is (not) displaying in Sold By section of PDP:    Spryker    true
@@ -2481,7 +2464,7 @@ Comment_Management_in_the_Cart
     [Teardown]    Run Keyword    Yves: delete 'Shopping Cart' with name:    commentManagement+${random}
 
 Comment_Management_in_Order
-    [Documentation]    Bug: CC-26145. Add comments in Yves and check in Zed
+    [Documentation]    Add comments in Yves and check in Zed
     Yves: login on Yves with provided credentials:    ${yves_company_user_shared_permission_owner_email}
     Yves: create new 'Shopping Cart' with name:    comments+${random}
     Yves: go to PDP of the product with sku:    ${one_variant_product_abstract_sku}
@@ -2830,7 +2813,6 @@ Data_exchange_API_Configuration_in_Zed
 #     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
 #     Yves: create new 'Shopping Cart' with name:    productBundleCart+${random}
 #     Yves: go to PDP of the product with sku:    ${bundle_product_abstract_sku}
-#     #Fails due to bug CC-16679
 #     Yves: PDP contains/doesn't contain:    true    ${bundleItemsSmall}
 #     Yves: add product to the shopping cart
 #     Yves: go to the shopping cart through the header with name:    productBundleCart+${random}

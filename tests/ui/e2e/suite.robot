@@ -1568,7 +1568,7 @@ Minimum_Order_Value
     ...    || DE - Euro [EUR]  | ${SPACE}           | ${SPACE}                | ${SPACE}                | 10000.00           | The cart value cannot be higher than {{threshold}}. Please remove some items to proceed with the order    | Der Warenkorbwert darf nicht höher als {{threshold}} sein. Bitte entfernen Sie einige Artikel, um mit der Bestellung fortzufahren    | None           | ${EMPTY}             | ${EMPTY}                  | ${EMPTY}                  ||
 
 Zed_navigation_ordering_and_naming
-    [Documentation]    Bug: CC-32098. Verifies each left navigation node can be opened
+    [Documentation]    Verifies each left navigation node can be opened
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: verify first navigation root menus
     Zed: verify root menu icons

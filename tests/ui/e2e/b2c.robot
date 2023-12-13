@@ -314,7 +314,7 @@ Product_Bundles
     [Teardown]    Yves: check if cart is not empty and clear it
 
 Configurable_Bundle
-    [Documentation]    Bug: CC-31660. Check the usage of configurable bundles (includes authorized checkout)
+    [Documentation]    Check the usage of configurable bundles (includes authorized checkout)
     Yves: login on Yves with provided credentials:    ${yves_user_email}
     Yves: check if cart is not empty and clear it
     Yves: go to URL:    en/configurable-bundle/configurator/template-selection

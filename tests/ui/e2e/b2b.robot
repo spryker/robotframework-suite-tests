@@ -573,7 +573,7 @@ Unique_URL
     [Teardown]    Yves: delete 'Shopping Cart' with name:    externalCart+${random}
 
 Configurable_Bundle
-    [Documentation]    Bug: CC-31660. Checks checkout with the configurable bundle
+    [Documentation]    Checks checkout with the configurable bundle
     [Setup]    Run keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_manager_and_buyer_email}
     ...    AND    Yves: delete all shopping carts
     ...    AND    Yves: create new 'Shopping Cart' with name:    confBundle+${random}

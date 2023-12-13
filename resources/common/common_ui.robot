@@ -86,6 +86,8 @@ UI_suite_setup
     Set Browser Timeout    ${browser_timeout}
     Create default Main Context
     New Page    ${yves_url}
+    ### Executed only in CI env ###
+    Repeat Keyword    5    Trigger multistore p&s    timeout=1s
 
 UI_suite_teardown
     Close Browser    ALL
