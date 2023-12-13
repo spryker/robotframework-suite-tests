@@ -288,14 +288,13 @@ Add_to_Wishlist
 
 # Product_Bundles
 #     ### Product Bundles are not supported by Marketplace for now ###
-#     [Documentation]    Checks checkout with Bundle product. Fails due to bug CC-16679
+#     [Documentation]    Checks checkout with Bundle product. 
 #     [Setup]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
 #     ...    AND    Zed: change product stock:    ${bundled_product_1_abstract_sku}    ${bundled_product_1_concrete_sku}    true    10
 #     ...    AND    Zed: change product stock:    ${bundled_product_2_abstract_sku}    ${bundled_product_2_concrete_sku}    true    10
 #     ...    AND    Zed: change product stock:    ${bundled_product_3_abstract_sku}    ${bundled_product_3_concrete_sku}    true    10
 #     Yves: login on Yves with provided credentials:    ${yves_user_email}
 #     Yves: go to PDP of the product with sku:    ${bundle_product_abstract_sku}
-#     #Fails due to bug CC-16679
 #     Yves: PDP contains/doesn't contain:    true    ${bundleItemsSmall}
 #     Yves: add product to the shopping cart
 #     Yves: go to b2c shopping cart
@@ -783,6 +782,7 @@ Merchant_Profile_Set_to_Offline_from_MP
     ...    AND    MP: open navigation menu tab:    Profile
     ...    AND    MP: open profile tab:    Online Profile
     ...    AND    MP: change store status to:    online
+    ...    AND    Repeat Keyword    3    Trigger multistore p&s
     ...    AND    Yves: go to the 'Home' page
     ...    AND    Yves: go to PDP of the product with sku:    ${second_product_with_multiple_offers_abstract_sku}
     ...    AND    Yves: merchant is (not) displaying in Sold By section of PDP:    Video King    true
@@ -808,7 +808,7 @@ Merchant_Profile_Set_to_Inactive_from_Backoffice
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Marketplace    Merchants  
     Zed: click Action Button in a table for row that contains:     Video King     Deactivate
-    Trigger multistore p&s
+    Repeat Keyword    3    Trigger multistore p&s
     Yves: go to the 'Home' page
     Yves: go to URL:    en/merchant/video-king
     Yves: try reloading page if element is/not appear:    ${merchant_profile_main_content_locator}    false
@@ -822,7 +822,7 @@ Merchant_Profile_Set_to_Inactive_from_Backoffice
     [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: go to second navigation item level:    Marketplace    Merchants  
     ...    AND    Zed: click Action Button in a table for row that contains:     Video King     Activate
-    ...    AND    Trigger multistore p&s
+    ...    AND    Repeat Keyword    3    Trigger multistore p&s
 
 Manage_Merchants_from_Backoffice
     [Documentation]    Checks that backoffice admin is able to create, approve, edit merchants
@@ -1488,6 +1488,7 @@ Manage_Merchant_Product
     MP: fill concrete product fields:
     ...    || is active | stock quantity | use abstract name | searchability ||
     ...    || true      | 3              | true              | en_US         ||
+    Trigger multistore p&s
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Catalog    Products 
     Zed: click Action Button in a table for row that contains:     manageProduct${random}     View
@@ -1826,6 +1827,7 @@ Order_Cancelation
 
 Multistore_Product_Offer
     [Documentation]    check product and offer multistore functionality
+    [Setup]    Repeat Keyword    3    Trigger multistore p&s
     MP: login on MP with provided credentials:    ${merchant_budget_cameras_email}
     MP: open navigation menu tab:    Products    
     MP: click on create new entity button:    Create Product
