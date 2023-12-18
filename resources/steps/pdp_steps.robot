@@ -114,15 +114,19 @@ Yves: change variant of the product on PDP on:
         Wait Until Element Is Visible    ${pdp_variant_custom_selector_results}    timeout=${timeout}
         TRY
             Click    xpath=//ul[contains(@id,'select2-attribute')][contains(@id,'results')]/li[contains(@id,'select2-attribute')][contains(.,'${variantToChoose}')]
+            Set Browser Timeout    ${browser_timeout}
             Repeat Keyword    3    Wait Until Network Is Idle
         EXCEPT    
             Reload
             Sleep    ${timeout}
             Click    xpath=//ul[contains(@id,'select2-attribute')][contains(@id,'results')]/li[contains(@id,'select2-attribute')][contains(.,'${variantToChoose}')]
+            Set Browser Timeout    ${browser_timeout}
             Repeat Keyword    3    Wait Until Network Is Idle
         END
     EXCEPT
+        Set Browser Timeout    ${timeout}
         Run Keyword And Ignore Error    Select From List By Value    ${pdp_variant_selector}    ${variantToChoose}
+        Set Browser Timeout    ${browser_timeout}
         Repeat Keyword    3    Wait Until Network Is Idle
     END
     Set Browser Timeout    ${browser_timeout}
@@ -134,11 +138,12 @@ Yves: change variant of the product on PDP on:
             Wait Until Element Is Visible    ${pdp_variant_custom_selector_results}
             TRY
                 Click    xpath=//ul[contains(@id,'select2-attribute')][contains(@id,'results')]/li[contains(@id,'select2-attribute')][contains(.,'${variantToChoose}')]
+                Set Browser Timeout    ${browser_timeout}
                 Repeat Keyword    3    Wait Until Network Is Idle
             EXCEPT    
                 Reload
-                Repeat Keyword    3    Wait Until Network Is Idle
                 Click    xpath=//ul[contains(@id,'select2-attribute')][contains(@id,'results')]/li[contains(@id,'select2-attribute')][contains(.,'${variantToChoose}')]
+                Set Browser Timeout    ${browser_timeout}
                 Repeat Keyword    3    Wait Until Network Is Idle
             END
         EXCEPT
