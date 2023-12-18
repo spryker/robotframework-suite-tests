@@ -87,7 +87,7 @@ UI_suite_setup
     Create default Main Context
     New Page    ${yves_url}
     ### Executed only in CI env ###
-    Repeat Keyword    11    Trigger multistore p&s    timeout=1s
+    Repeat Keyword    13    Trigger multistore p&s    timeout=1s
 
 UI_suite_teardown
     Close Browser    ALL
