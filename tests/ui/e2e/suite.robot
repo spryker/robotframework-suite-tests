@@ -1876,6 +1876,7 @@ Product_Availability_Calculation
 
 Offer_Availability_Calculation
     [Documentation]    check offer availability
+    [Setup]    Repeat Keyword    3    Trigger multistore p&s
     MP: login on MP with provided credentials:    ${merchant_video_king_email}
     MP: open navigation menu tab:    Products    
     MP: click on create new entity button:    Create Product
@@ -2849,6 +2850,7 @@ Search_for_Merchant_Offers_and_Products
 
 Merchant_Portal_Product_Volume_Prices
     [Documentation]    Checks that merchant is able to create new multi-SKU product with volume prices. Falback to default price after delete
+    [Setup]    Repeat Keyword    3    Trigger multistore p&s
     MP: login on MP with provided credentials:    ${merchant_video_king_email}
     MP: open navigation menu tab:    Products    
     MP: click on create new entity button:    Create Product
@@ -2913,6 +2915,7 @@ Merchant_Portal_Product_Volume_Prices
 
 Merchant_Portal_Offer_Volume_Prices
     [Documentation]    Checks that merchant is able to create new offer with volume prices and it will be displayed on Yves. Falback to default price after delete.
+    [Setup]    Repeat Keyword    3    Trigger multistore p&s
     MP: login on MP with provided credentials:    ${merchant_spryker_email}
     MP: open navigation menu tab:    Products    
     MP: click on create new entity button:    Create Product
@@ -3000,6 +3003,7 @@ Merchant_Portal_Offer_Volume_Prices
 
 Merchant_Portal_Customer_Specific_Prices
     [Documentation]    Checks that customer will see product/offer prices specified by merchant for his business unit
+    [Setup]    Repeat Keyword    3    Trigger multistore p&s
     MP: login on MP with provided credentials:    ${merchant_budget_cameras_email}
     MP: open navigation menu tab:    Products    
     MP: click on create new entity button:    Create Product
@@ -3102,6 +3106,7 @@ Merchant_Portal_Dashboard
 
 Merchant_Product_Offer_in_Backoffice
     [Documentation]    Check View action and filtration for Mproduct and Moffer in backoffice
+    [Setup]    Repeat Keyword    3    Trigger multistore p&s
     MP: login on MP with provided credentials:    ${merchant_spryker_email}
     MP: open navigation menu tab:    Products    
     MP: click on create new entity button:    Create Product
@@ -3171,6 +3176,7 @@ Merchant_Product_Offer_in_Backoffice
 
 Manage_Merchant_Product
     [Documentation]    Checks that MU and BO user can manage merchant abstract and concrete products + add new concrete product
+    [Setup]    Repeat Keyword    3    Trigger multistore p&s
     MP: login on MP with provided credentials:    ${merchant_budget_cameras_email}
     MP: open navigation menu tab:    Products    
     MP: click on create new entity button:    Create Product
@@ -3285,6 +3291,7 @@ Manage_Merchant_Product
 
 Merchant_Product_Original_Price
     [Documentation]    checks that Orignal price is displayed on the PDP and in Catalog
+    [Setup]    Repeat Keyword    3    Trigger multistore p&s
     MP: login on MP with provided credentials:    ${merchant_budget_cameras_email}
     MP: open navigation menu tab:    Products    
     MP: click on create new entity button:    Create Product
