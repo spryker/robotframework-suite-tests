@@ -6,7 +6,7 @@ ${create_shopping_cart_button}    xpath=//main//a[contains(@href,'multi-cart/cre
 ${shopping_cart_name_input_field}    id=quoteForm_name
 ${create_new_cart_submit_button}    xpath=//form[@name='quoteForm']//button[@data-qa='submit-button']
 ${share_shopping_cart_confirm_button}    xpath=//form[@name='shareCartForm']//button[@type='submit']
-${delete_first_shopping_cart_button}    xpath=//*[@data-qa='component quote-table']//table/tbody/tr[1]//ul//a[contains(.,'Delete')]
+${delete_first_shopping_cart_button}    xpath=//*[@data-qa='component quote-table']//table/tbody/tr[1]//a[contains(.,'Delete')]
 
 
 *** Keywords ***
@@ -15,31 +15,31 @@ Edit shopping cart with name:
     IF    '${env}' in ['ui_suite']
         Click    xpath=//*[contains(@data-qa,'quote-table')]//tr/td[1][contains(.,'${shoppingCartName}')]/ancestor::tr/td[last()]//a[contains(@href,'update')]
     ELSE
-        Click    xpath=//*[@data-qa='component quote-table']//table//td[@data-content='Name'][contains(.,'${shoppingCartName}')]/..//ul//a[contains(.,'Edit')]
+        Click    xpath=//*[@data-qa='component quote-table']//table//td[@data-content='Name'][contains(.,'${shoppingCartName}')]/..//a[contains(.,'Edit')]
     END
     
 Duplicate shopping cart with name:
     [Arguments]    ${shoppingCartName}
-    Click    xpath=//*[@data-qa='component quote-table']//table//td[@data-content='Name'][contains(.,'${shoppingCartName}')]/..//ul//a[contains(.,'Duplicate')]
+    Click    xpath=//*[@data-qa='component quote-table']//table//td[@data-content='Name'][contains(.,'${shoppingCartName}')]/..//a[contains(.,'Duplicate')]
 
 Add to list shopping cart with name:
     [Arguments]    ${shoppingCartName}
     IF    '${env}' in ['ui_suite']
         Click    xpath=//*[contains(@data-qa,'quote-table')]//tr/td[1][contains(.,'${shoppingCartName}')]/ancestor::tr/td[last()]//a[contains(@href,'shopping-list')]
     ELSE
-        Click    xpath=//*[@data-qa='component quote-table']//table//td[@data-content='Name'][contains(.,'${shoppingCartName}')]/..//ul//a[contains(.,'Add to list')]
+        Click    xpath=//*[@data-qa='component quote-table']//table//td[@data-content='Name'][contains(.,'${shoppingCartName}')]/..//a[contains(.,'Add to list')]
     END
 
 Dismiss shopping cart with name:
     [Arguments]    ${shoppingCartName}
-    Click    xpath=//*[@data-qa='component quote-table']//table//td[@data-content='Name'][contains(.,'${shoppingCartName}')]/..//ul//a[contains(.,'Dismiss')]
+    Click    xpath=//*[@data-qa='component quote-table']//table//td[@data-content='Name'][contains(.,'${shoppingCartName}')]/..//a[contains(.,'Dismiss')]
 
 Delete shopping cart with name:
     [Arguments]    ${shoppingCartName}
     IF    '${env}' in ['ui_suite']
         Click    xpath=//*[contains(@data-qa,'quote-table')]//tr/td[1][contains(.,'${shoppingCartName}')]/ancestor::tr/td[last()]//a[contains(@href,'delete')]
     ELSE
-        Click    xpath=//*[@data-qa='component quote-table']//table//td[@data-content='Name'][contains(.,'${shoppingCartName}')]/..//ul//a[contains(.,'Delete')]
+        Click    xpath=//*[@data-qa='component quote-table']//table//td[@data-content='Name'][contains(.,'${shoppingCartName}')]/..//a[contains(.,'Delete')]
     END
 
 Share shopping cart with name:
@@ -47,7 +47,7 @@ Share shopping cart with name:
     IF    '${env}' in ['ui_suite']
         Click    xpath=//*[contains(@data-qa,'quote-table')]//tr/td[1][contains(.,'${shoppingCartName}')]/ancestor::tr/td[last()]//a[contains(@href,'share')]
     ELSE
-        Click    xpath=//*[@data-qa='component quote-table']//table//td[@data-content='Name'][contains(.,'${shoppingCartName}')]/..//ul//a[contains(.,'Share')]
+        Click    xpath=//*[@data-qa='component quote-table']//table//td[@data-content='Name'][contains(.,'${shoppingCartName}')]/..//a[contains(.,'Share')]
     END
 Select access level to share shopping cart with:
     [Arguments]    ${customerToShareWith}    ${accessLevel}
