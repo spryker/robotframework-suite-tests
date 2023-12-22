@@ -15,7 +15,7 @@ Create_warehouse_user_assigment_with_invalid_token
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=Bearer invalid
     ...    AND    Make user a warehouse user/ not a warehouse user:    ${admin_user_uuid}    1
     When I send a POST request:    /warehouse-user-assignments    {"data": {"type": "warehouse-user-assignments", "attributes":{"userUuid": "${admin_user_uuid}","warehouse" :{"uuid": "${warehouse_uuid}"},"isActive":"false"}}}
-    Then Response status code should be:    400
+    Then Response status code should be:    401
     [Teardown]    Make user a warehouse user/ not a warehouse user:    ${admin_user_uuid}    0
 
 Create_warehouse_user_assigment_without_token
