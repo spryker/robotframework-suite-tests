@@ -23,7 +23,7 @@ Zed: create a discount and activate it:
     ### Discount calculation
     Zed: go to tab:    Discount calculation
     Wait Until Network Is Idle
-    Wait For Elements State    ${zed_discount_query_builder_first_calculation_group}    visible    15s
+    Wait For Elements State    ${zed_discount_query_builder_first_calculation_group}    visible    ${browser_timeout}
     IF    '${valueType}'=='Percentage'    Run Keywords    Select From List By Label    ${zed_discount_calculator_type_drop_down}    Percentage
     ...    AND    Type Text    ${zed_discount_percentage_value_field}     ${discountValue}
     ...    ELSE   Run keywords    '${valueType}'=='Fixed amount'    Select From List By Label    ${zed_discount_calculator_type_drop_down}    Fixed amount
@@ -43,7 +43,7 @@ Zed: create a discount and activate it:
     ### Discount condition
     Zed: go to tab:    Conditions
     Wait Until Network Is Idle
-    Wait For Elements State    ${zed_discount_query_builder_first_condition_group}    visible    15s
+    Wait For Elements State    ${zed_discount_query_builder_first_condition_group}    visible    ${browser_timeout}
     Click    ${zed_discount_plain_query_apply_when__button}
     Wait Until Element Is Visible    ${zed_discount_plain_query_apply_when_field}
     IF    '${applyWhenQuery}' != '${EMPTY}'
