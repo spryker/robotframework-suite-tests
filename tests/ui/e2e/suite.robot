@@ -1000,6 +1000,9 @@ Discounts
     [Setup]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: deactivate all discounts from Overview page
     ...    AND    Zed: change product stock:    190    190_25111746    true    10
+    ...    AND    Zed: change product stock:    ${bundled_product_1_abstract_sku}    ${bundled_product_1_concrete_sku}    true    10
+    ...    AND    Zed: change product stock:    ${bundled_product_2_abstract_sku}    ${bundled_product_2_concrete_sku}    true    10
+    ...    AND    Zed: change product stock:    ${bundled_product_3_abstract_sku}    ${bundled_product_3_concrete_sku}    true    10
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Merchandising    Discount
     Zed: create a discount and activate it:    voucher    Percentage    5    sku = '*'    test${random}    discountName=Voucher Code 5% ${random}
@@ -1391,7 +1394,7 @@ Product_Original_Price
     Try reloading page until element is/not appear:    ${catalog_product_card_locator}    true    21    5s
     Yves: 1st product card in catalog (not)contains:     Price    €100.00
     Yves: 1st product card in catalog (not)contains:     Original Price    €200.00
-    Yves: go to PDP of the product with sku:    zedOriginalSKU${random}
+    Yves: go to PDP of the product with sku:    zedOriginalSKU${random}    wait_for_p&s=true
     Yves: product price on the PDP should be:    €100.00    wait_for_p&s=true
     Yves: product original price on the PDP should be:    €200.00
     Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    False
@@ -1629,7 +1632,7 @@ Multistore_Product
     Yves: go to URL:    en/search?q=multiSKU${random}
     Try reloading page until element is/not appear:    ${catalog_product_card_locator}    true    21    5s
     Yves: 1st product card in catalog (not)contains:     Price    €100.00
-    Yves: go to PDP of the product with sku:    multiSKU${random}
+    Yves: go to PDP of the product with sku:    multiSKU${random}    wait_for_p&s=true
     Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    False
     Yves: product price on the PDP should be:    €15.00    wait_for_p&s=true
     Yves: go to AT store 'Home' page
@@ -1823,7 +1826,7 @@ Product_Availability_Calculation
     Yves: try add product to the cart from PDP and expect error:    Item availabilitySKU${random}-color-grey only has availability of 5.
     Yves: go to PDP of the product with sku:    availabilitySKU${random}
     Yves: change quantity on PDP:    3
-    Yves: add product to the shopping cart
+    Yves: add product to the shopping cart    wait_for_p&s=true
     Yves: go to b2c shopping cart
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: billing address same as shipping address:    true
@@ -2566,7 +2569,7 @@ Merchant_Profile_Set_to_Offline_from_MP
     ...    AND    MP: open navigation menu tab:    Profile
     ...    AND    MP: open profile tab:    Online Profile
     ...    AND    MP: change store status to:    online
-    ...    AND    Repeat Keyword    3    Trigger multistore p&s
+    ...    AND    Repeat Keyword    5    Trigger multistore p&s
     ...    AND    Yves: go to the 'Home' page
     ...    AND    Yves: go to PDP of the product with sku:    ${second_product_with_multiple_offers_abstract_sku}
     ...    AND    Yves: merchant is (not) displaying in Sold By section of PDP:    Video King    true
@@ -2592,7 +2595,7 @@ Merchant_Profile_Set_to_Inactive_from_Backoffice
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Marketplace    Merchants  
     Zed: click Action Button in a table for row that contains:     Video King     Deactivate
-    Repeat Keyword    3    Trigger multistore p&s
+    Repeat Keyword    5    Trigger multistore p&s
     Yves: go to the 'Home' page
     Yves: go to URL:    en/merchant/video-king
     Yves: try reloading page if element is/not appear:    ${merchant_profile_main_content_locator}    false
@@ -2606,7 +2609,7 @@ Merchant_Profile_Set_to_Inactive_from_Backoffice
     [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: go to second navigation item level:    Marketplace    Merchants  
     ...    AND    Zed: click Action Button in a table for row that contains:     Video King     Activate
-    ...    AND    Repeat Keyword    3    Trigger multistore p&s
+    ...    AND    Repeat Keyword    5    Trigger multistore p&s
 
 Manage_Merchants_from_Backoffice
     [Documentation]    Checks that backoffice admin is able to create, approve, edit merchants
@@ -3329,16 +3332,17 @@ Merchant_Product_Original_Price
     ...    || product type | row number | store | currency | gross default | quantity ||
     ...    || concrete     | 2          | DE    | EUR      | 10            | 2        ||
     MP: save concrete product
+    Trigger multistore p&s
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Catalog    Products 
     Zed: click Action Button in a table for row that contains:     originalProduct${random}     Approve
-    Trigger p&s
+    Trigger multistore p&s
     Yves: login on Yves with provided credentials:    ${yves_user_email}   
     Yves: go to URL:    en/search?q=originalSKU${random}
     Try reloading page until element is/not appear:    ${catalog_product_card_locator}    true    21    5s
     Yves: 1st product card in catalog (not)contains:     Price    €100.00
     Yves: 1st product card in catalog (not)contains:     Original Price    €150.00
-    Yves: go to PDP of the product with sku:     originalSKU${random}
+    Yves: go to PDP of the product with sku:     originalSKU${random}    wait_for_p&s=true
     Yves: product price on the PDP should be:    €100.00    wait_for_p&s=true
     Yves: product original price on the PDP should be:    €150.00
     [Teardown]    Run Keywords    Yves: check if cart is not empty and clear it
