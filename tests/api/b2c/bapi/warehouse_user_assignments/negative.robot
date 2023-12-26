@@ -204,6 +204,6 @@ Delete_warehous_user_assigment_without_token
     And Create_warehouse_user_assigment:    ${warehouse_uuid}    ${fk_warehouse_spryker}    ${admin_user_uuid}    false
     Then Get_warehouse_user_assigment_id:   ${warehouse_uuid}    ${admin_user_uuid}
     Then I send a DELETE request:    /warehouse-user-assignments/${id_warehouse_user_assigment}
-    Then Response status code should be:    400
+    Then Response status code should be:    401
     [Teardown]    Run Keywords    Remove_warehous_user_assigment:    ${warehouse_uuid}    ${admin_user_uuid}
     ...    AND    Make user a warehouse user/ not a warehouse user:    ${admin_user_uuid}    0
