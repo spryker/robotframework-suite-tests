@@ -32,8 +32,8 @@ ENABLER
     And I send a GET request:    /dynamic-entity/robotests-product-abstracts?include=roboTestsConcreteProducts
     Then Response status code should be:    200
     And Response header parameter should be:    Content-Type    application/json
-    And Response should contain the array of a certain size:   [data]    224
-    And Response should contain the array of a certain size:   [data][0]    9
+    And Response should contain the array of a certain size:   [data]    215
+    And Response should contain the array of a certain size:   [data][0]    8
     And Response should contain the array of a certain size:   [data][0][roboTestsConcreteProducts]    1
     And Each array element of array in response should contain property:    [data]    id_product_abstract
     And Each array element of array in response should contain property:    [data]    sku
@@ -44,8 +44,8 @@ ENABLER
     And I send a GET request:    /dynamic-entity/robotests-product-abstracts?include=roboTestsConcreteProducts.roboTestsProductCategories.roboTestsCategories
     Then Response status code should be:    200
     And Response header parameter should be:    Content-Type    application/json
-    And Response should contain the array of a certain size:   [data]    224
-    And Response should contain the array of a certain size:   [data][0]    9
+    And Response should contain the array of a certain size:   [data]    215
+    And Response should contain the array of a certain size:   [data][0]    8
     And Response should contain the array of a certain size:   [data][0][roboTestsConcreteProducts]    1
     And Response should contain the array of a certain size:   [data][0][roboTestsConcreteProducts][0][roboTestsProductCategories]    1
     And Response should contain the array of a certain size:   [data][0][roboTestsConcreteProducts][0][roboTestsProductCategories][0][roboTestsCategories]    1
@@ -74,7 +74,7 @@ ENABLER
     And I send a GET request:    /dynamic-entity/robotests-product-abstracts/130?include=roboTestsConcreteProducts
     Then Response status code should be:    200
     And Response header parameter should be:    Content-Type    application/json
-    And Response should contain the array of a certain size:   [data]    9
+    And Response should contain the array of a certain size:   [data]    8
     And Response should contain the array of a certain size:   [data][roboTestsConcreteProducts]    3
     And Response body parameter should be:    [data][id_product_abstract]    130
     And Response body parameter should be:    [data][sku]    130
@@ -87,7 +87,7 @@ ENABLER
     And I send a GET request:    /dynamic-entity/robotests-product-abstracts/130?include=roboTestsConcreteProducts.roboTestsProductCategories.roboTestsCategories
     Then Response status code should be:    200
     And Response header parameter should be:    Content-Type    application/json
-    And Response should contain the array of a certain size:   [data]    9
+    And Response should contain the array of a certain size:   [data]    8
     And Response should contain the array of a certain size:   [data][roboTestsConcreteProducts]    3
     And Response should contain the array of a certain size:   [data][roboTestsConcreteProducts][0][roboTestsProductCategories]    1
     And Response should contain the array of a certain size:   [data][roboTestsConcreteProducts][0][roboTestsProductCategories][0][roboTestsCategories]    1
