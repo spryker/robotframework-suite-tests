@@ -22,7 +22,7 @@ Create_Service_Invalid_Auth
     Create service type in DB    uuid=33a7-5c55-9b04${random}    name=TestType1${random}    key=sp11${random}
     When I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer invalid
     When I send a POST request:    /services    {"data": {"type": "services", "attributes": {"serviceTypeUuid": "33a7-5c55-9b04${random}", "servicePointUuid": "262feb9d-33a7${random}", "isActive": "true", "key": "service-point-1-collect"}}}
-    Then Response status code should be:    400
+    Then Response status code should be:    401
     [Teardown]     Run Keywords    Delete service point in DB    262feb9d-33a7${random}
      ...    AND    Delete service type in DB    33a7-5c55-9b04${random}
 
