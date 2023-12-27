@@ -21,7 +21,7 @@ Retrieve_push_notification_providers_without_authorization
 Retrieve_push_notification_providers_with_incorrect_token
     When I set Headers:    Content-Type=application/vnd.api+json   Authorization=Bearer incorrect_token
     When I send a GET request:    /push-notification-providers
-    Then Response status code should be:    400
+    Then Response status code should be:    401
     And Response should return error code:    001
     And Response should return error message:    Invalid access token.
 
