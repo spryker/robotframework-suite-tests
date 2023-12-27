@@ -2853,7 +2853,7 @@ Search_for_Merchant_Offers_and_Products
 
 Merchant_Portal_Product_Volume_Prices
     [Documentation]    Checks that merchant is able to create new multi-SKU product with volume prices. Falback to default price after delete
-    [Setup]    Repeat Keyword    3    Trigger multistore p&s
+    [Setup]    Repeat Keyword    5    Trigger multistore p&s
     MP: login on MP with provided credentials:    ${merchant_video_king_email}
     MP: open navigation menu tab:    Products    
     MP: click on create new entity button:    Create Product
@@ -2872,16 +2872,17 @@ Merchant_Portal_Product_Volume_Prices
     ...    || product type | row number | store | currency | gross default | quantity ||
     ...    || abstract     | 2          | DE    | EUR      | 10            | 2        ||
     MP: save abstract product 
-    Trigger p&s
+    Trigger multistore p&s
     MP: click on a table row that contains:    VPNewProduct${random}
     MP: open concrete drawer by SKU:    VPSKU${random}-2
     MP: fill concrete product fields:
     ...    || is active | stock quantity | use abstract name | searchability ||
     ...    || true      | 100            | true              | en_US         ||
+    Trigger multistore p&s
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Catalog    Products 
     Zed: click Action Button in a table for row that contains:     VPNewProduct${random}     Approve
-    Trigger p&s
+    Trigger multistore p&s
     Yves: login on Yves with provided credentials:    ${yves_user_email}
     Yves: check if cart is not empty and clear it
     Yves: go to PDP of the product with sku:     VPSKU${random}    wait_for_p&s=true
