@@ -85,8 +85,8 @@ Authorized_User_Access
 New_Customer_Registration
     [Documentation]    Check that a new user can be registered in the system
     Register a new customer with data:
-    ...    || salutation | first name          | last name | e-mail                       | password            ||
-    ...    || Mr.        | Test${random}       | User      | sonia+${random}@spryker.com  | Change123!${random} ||
+    ...    || salutation | first name | last name | e-mail                       | password            ||
+    ...    || Mr.        | Test       | User      | sonia+${random}@spryker.com  | Change123!${random} ||
     Yves: flash message should be shown:    success    Almost there! We send you an email to validate your email address. Please confirm it to be able to log in.
     [Teardown]    Zed: delete customer:
     ...    || email                       ||
@@ -2935,16 +2935,17 @@ Merchant_Portal_Offer_Volume_Prices
     ...    || product type | row number | store | currency | gross default ||
     ...    || abstract     | 1          | DE    | EUR      | 100           ||
     MP: save abstract product 
-    Trigger p&s
+    Trigger multistore p&s
     MP: click on a table row that contains:    OfferNewProduct${random}
     MP: open concrete drawer by SKU:    OfferSKU${random}-2
     MP: fill concrete product fields:
     ...    || is active | stock quantity | use abstract name | searchability ||
     ...    || true      | 100            | true              | en_US         ||
+    Trigger multistore p&s
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Catalog    Products 
     Zed: click Action Button in a table for row that contains:     OfferNewProduct${random}     Approve
-    Trigger p&s
+    Trigger multistore p&s
     Yves: login on Yves with provided credentials:    ${yves_second_user_email}  
     Yves: check if cart is not empty and clear it
     Yves: go to PDP of the product with sku:     OfferSKU${random}    wait_for_p&s=true
