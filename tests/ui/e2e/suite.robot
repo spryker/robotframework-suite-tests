@@ -1217,22 +1217,18 @@ Order_Cancelation
     Trigger oms  
     Yves: go to 'Order History' page
     Yves: get the last placed order ID by current customer
-    ### change the order state of one product ###
-    Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    Zed: go to order page:    ${lastPlacedOrder}
-    Zed: trigger matching state of order item inside xxx shipment:    005_30663301    Pay
-    Yves: login on Yves with provided credentials:    ${yves_second_user_email}
-    Yves: go to 'Order History' page
     Yves: 'View Order/Reorder/Return' on the order history page:    View Order    ${lastPlacedOrder}
     Yves: 'Order Details' page contains the cancel order button:    true
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to order page:    ${lastPlacedOrder}
+    ### change the order state of one product ###
+    Zed: trigger matching state of order item inside xxx shipment:    005_30663301    Pay
     Zed: trigger matching state of order item inside xxx shipment:    005_30663301    Skip timeout 
     Yves: login on Yves with provided credentials:    ${yves_second_user_email}
     Yves: go to 'Order History' page
     Yves: 'View Order/Reorder/Return' on the order history page:    View Order    ${lastPlacedOrder}
     Yves: 'Order Details' page contains the cancel order button:    false
-    ### change state of state of all products ###
+    ### change state for all products ###
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to order page:    ${lastPlacedOrder}
     Zed: trigger matching state of order item inside xxx shipment:    007_30691822    Pay
@@ -1841,10 +1837,6 @@ Product_Availability_Calculation
     Yves: 'Thank you' page is displayed    
     Trigger oms
     Yves: get the last placed order ID by current customer
-    Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    Zed: go to order page:    ${lastPlacedOrder}
-    Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Pay
-    Yves: login on Yves with provided credentials:    ${yves_second_user_email}
     Yves: go to PDP of the product with sku:    availabilitySKU${random}
     Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    False
     Yves: change quantity on PDP:    6
