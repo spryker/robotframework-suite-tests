@@ -113,6 +113,20 @@ Create_country_with_empty_data
     And Response body parameter should be:    [0][code]    1301
     [Teardown]    Run Keyword    Delete dynamic entity configuration in Database:    countries-test
 
+Create_country_with_empty_data_test
+    ### SETUP DYNAMIC ENTITY CONFIGURATION ###
+    Delete dynamic entity configuration in Database:    countries-test
+    Create dynamic entity configuration in Database:   countries-test    spy_country     1    {"identifier":"id_country","fields":[{"fieldName":"id_country","fieldVisibleName":"id_country","isEditable":false,"isCreatable":false,"type":"integer","validation":{"isRequired":false}},{"fieldName":"iso2_code","fieldVisibleName":"iso2_code","type":"string","isEditable":true,"isCreatable":true,"validation":{"isRequired":true,"maxLength":2,"minLength":2}},{"fieldName":"iso3_code","fieldVisibleName":"iso3_code","type":"string","isEditable":true,"isCreatable":true,"validation":{"isRequired":true,"maxLength":3,"minLength":3}},{"fieldName":"name","fieldVisibleName":"name","type":"string","isEditable":true,"isCreatable":true,"validation":{"isRequired":true,"maxLength":255,"minLength":1}},{"fieldName":"postal_code_mandatory","fieldVisibleName":"postal_code_mandatory","type":"boolean","isEditable":true,"isCreatable":true,"validation":{"isRequired":false}},{"fieldName":"postal_code_regex","isEditable":"false","isCreatable":"false","fieldVisibleName":"postal_code_regex","type":"string","validation":{"isRequired":false,"maxLength":500,"minLength":1}}]}
+    ### GET TOKEN ###
+    I get access token by user credentials:   ${zed_admin.email}
+    ### POST WITH EMPTY DATA ###
+    And I set Headers:    Content-Type=application/json    Authorization=Bearer ${token}
+    And I send a POST request:    /dynamic-entity/countries-test   {"data": []}
+    Then Response status code should be:    400
+    And Response body parameter should contain:    [0][message]    Invalid or missing data format. Please ensure that the data is provided in the correct format
+    And Response body parameter should be:    [0][code]    1301
+    [Teardown]    Run Keyword    Delete dynamic entity configuration in Database:    countries-test
+
 Create_country_with_invalid_data
     ### SETUP DYNAMIC ENTITY CONFIGURATION ###
     Delete dynamic entity configuration in Database:    countries-test
@@ -129,6 +143,43 @@ Create_country_with_invalid_data
     And Response body parameter should contain:    [0][status]   400
     [Teardown]    Run Keywords    Delete dynamic entity configuration in Database:    countries-test
     ...   AND    Delete country by iso2_code in Database:   XX
+
+Create_country_with_invalid_data_test2
+    ### SETUP DYNAMIC ENTITY CONFIGURATION ###
+    Delete dynamic entity configuration in Database:    countries-test
+    Create dynamic entity configuration in Database:   countries-test    spy_country     1    {"identifier":"id_country","fields":[{"fieldName":"id_country","fieldVisibleName":"id_country","isEditable":false,"isCreatable":false,"type":"integer","validation":{"isRequired":false}},{"fieldName":"iso2_code","fieldVisibleName":"iso2_code","type":"string","isEditable":true,"isCreatable":true,"validation":{"isRequired":true,"maxLength":2,"minLength":2}},{"fieldName":"iso3_code","fieldVisibleName":"iso3_code","type":"string","isEditable":true,"isCreatable":true,"validation":{"isRequired":true,"maxLength":3,"minLength":3}},{"fieldName":"name","fieldVisibleName":"name","type":"string","isEditable":true,"isCreatable":true,"validation":{"isRequired":true,"maxLength":255,"minLength":1}},{"fieldName":"postal_code_mandatory","fieldVisibleName":"postal_code_mandatory","type":"boolean","isEditable":true,"isCreatable":true,"validation":{"isRequired":false}},{"fieldName":"postal_code_regex","isEditable":"false","isCreatable":"false","fieldVisibleName":"postal_code_regex","type":"string","validation":{"isRequired":false,"maxLength":500,"minLength":1}}]}
+    ### GET TOKEN ###
+    I get access token by user credentials:   ${zed_admin.email}
+
+Create_country_with_invalid_data_test3
+    ### SETUP DYNAMIC ENTITY CONFIGURATION ###
+    Delete dynamic entity configuration in Database:    countries-test
+    Create dynamic entity configuration in Database:   countries-test    spy_country     1    {"identifier":"id_country","fields":[{"fieldName":"id_country","fieldVisibleName":"id_country","isEditable":false,"isCreatable":false,"type":"integer","validation":{"isRequired":false}},{"fieldName":"iso2_code","fieldVisibleName":"iso2_code","type":"string","isEditable":true,"isCreatable":true,"validation":{"isRequired":true,"maxLength":2,"minLength":2}},{"fieldName":"iso3_code","fieldVisibleName":"iso3_code","type":"string","isEditable":true,"isCreatable":true,"validation":{"isRequired":true,"maxLength":3,"minLength":3}},{"fieldName":"name","fieldVisibleName":"name","type":"string","isEditable":true,"isCreatable":true,"validation":{"isRequired":true,"maxLength":255,"minLength":1}},{"fieldName":"postal_code_mandatory","fieldVisibleName":"postal_code_mandatory","type":"boolean","isEditable":true,"isCreatable":true,"validation":{"isRequired":false}},{"fieldName":"postal_code_regex","isEditable":"false","isCreatable":"false","fieldVisibleName":"postal_code_regex","type":"string","validation":{"isRequired":false,"maxLength":500,"minLength":1}}]}
+    ### GET TOKEN ###
+    I get access token by user credentials:   ${zed_admin.email}
+    ### POST WITH INVALID DATA ###
+    Delete country by iso2_code in Database:   XX
+
+Create_country_with_invalid_data_test4
+    ### SETUP DYNAMIC ENTITY CONFIGURATION ###
+    Delete dynamic entity configuration in Database:    countries-test
+    Create dynamic entity configuration in Database:   countries-test    spy_country     1    {"identifier":"id_country","fields":[{"fieldName":"id_country","fieldVisibleName":"id_country","isEditable":false,"isCreatable":false,"type":"integer","validation":{"isRequired":false}},{"fieldName":"iso2_code","fieldVisibleName":"iso2_code","type":"string","isEditable":true,"isCreatable":true,"validation":{"isRequired":true,"maxLength":2,"minLength":2}},{"fieldName":"iso3_code","fieldVisibleName":"iso3_code","type":"string","isEditable":true,"isCreatable":true,"validation":{"isRequired":true,"maxLength":3,"minLength":3}},{"fieldName":"name","fieldVisibleName":"name","type":"string","isEditable":true,"isCreatable":true,"validation":{"isRequired":true,"maxLength":255,"minLength":1}},{"fieldName":"postal_code_mandatory","fieldVisibleName":"postal_code_mandatory","type":"boolean","isEditable":true,"isCreatable":true,"validation":{"isRequired":false}},{"fieldName":"postal_code_regex","isEditable":"false","isCreatable":"false","fieldVisibleName":"postal_code_regex","type":"string","validation":{"isRequired":false,"maxLength":500,"minLength":1}}]}
+    ### GET TOKEN ###
+    I get access token by user credentials:   ${zed_admin.email}
+    ### POST WITH INVALID DATA ###
+    Delete country by iso2_code in Database:   XX
+    And I set Headers:    Content-Type=application/json    Authorization=Bearer ${token}
+    And I send a POST request:    /dynamic-entity/countries-test   {"data":[{"iso2_code":"XX","name":"XXX"}]}
+
+Create_country_with_invalid_data_test5
+    ### SETUP DYNAMIC ENTITY CONFIGURATION ###
+    Delete dynamic entity configuration in Database:    countries-test
+    Create dynamic entity configuration in Database:   countries-test    spy_country     1    {"identifier":"id_country","fields":[{"fieldName":"id_country","fieldVisibleName":"id_country","isEditable":false,"isCreatable":false,"type":"integer","validation":{"isRequired":false}},{"fieldName":"iso2_code","fieldVisibleName":"iso2_code","type":"string","isEditable":true,"isCreatable":true,"validation":{"isRequired":true,"maxLength":2,"minLength":2}},{"fieldName":"iso3_code","fieldVisibleName":"iso3_code","type":"string","isEditable":true,"isCreatable":true,"validation":{"isRequired":true,"maxLength":3,"minLength":3}},{"fieldName":"name","fieldVisibleName":"name","type":"string","isEditable":true,"isCreatable":true,"validation":{"isRequired":true,"maxLength":255,"minLength":1}},{"fieldName":"postal_code_mandatory","fieldVisibleName":"postal_code_mandatory","type":"boolean","isEditable":true,"isCreatable":true,"validation":{"isRequired":false}},{"fieldName":"postal_code_regex","isEditable":"false","isCreatable":"false","fieldVisibleName":"postal_code_regex","type":"string","validation":{"isRequired":false,"maxLength":500,"minLength":1}}]}
+    ### GET TOKEN ###
+    I get access token by user credentials:   ${zed_admin.email}
+    ### POST WITH INVALID DATA ###
+    Delete country by iso2_code in Database:   XX
+    And I set Headers:    Content-Type=application/json    Authorization=Bearer ${token}
 
 Create_country_with_invalid_resource_name
     ### SETUP DYNAMIC ENTITY CONFIGURATION ###
