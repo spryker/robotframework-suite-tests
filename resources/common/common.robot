@@ -426,6 +426,7 @@ Create dynamic entity configuration in Database:
         Execute Sql String  insert into spy_dynamic_entity_configuration (id_dynamic_entity_configuration, table_alias, table_name, is_active, definition) values (${new_id}, '${table_alias}', '${table_name}', '${is_active}', '${definition}')
     END
     Disconnect From Database
+    Run console command    glue glue-api:controller:cache:warm-up
 
 Delete dynamic entity configuration in Database:
      [Documentation]    This keyword delete dynamic entity configuration in the DB table spy_dynamic_entity_configuration.
