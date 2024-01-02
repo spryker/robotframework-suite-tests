@@ -144,13 +144,6 @@ Create_country_with_invalid_data
     [Teardown]    Run Keywords    Delete dynamic entity configuration in Database:    robotests-countries
     ...   AND    Delete country by iso2_code in Database:   XX
 
-Create_country_with_invalid_data_test2
-    ### SETUP DYNAMIC ENTITY CONFIGURATION ###
-    Delete dynamic entity configuration in Database:    robotests-countries
-    Create dynamic entity configuration in Database:   robotests-countries    spy_country     1    {"identifier":"id_country","fields":[{"fieldName":"id_country","fieldVisibleName":"id_country","isEditable":false,"isCreatable":false,"type":"integer","validation":{"isRequired":false}},{"fieldName":"iso2_code","fieldVisibleName":"iso2_code","type":"string","isEditable":true,"isCreatable":true,"validation":{"isRequired":true,"maxLength":2,"minLength":2}},{"fieldName":"iso3_code","fieldVisibleName":"iso3_code","type":"string","isEditable":true,"isCreatable":true,"validation":{"isRequired":true,"maxLength":3,"minLength":3}},{"fieldName":"name","fieldVisibleName":"name","type":"string","isEditable":true,"isCreatable":true,"validation":{"isRequired":true,"maxLength":255,"minLength":1}},{"fieldName":"postal_code_mandatory","fieldVisibleName":"postal_code_mandatory","type":"boolean","isEditable":true,"isCreatable":true,"validation":{"isRequired":false}},{"fieldName":"postal_code_regex","isEditable":"false","isCreatable":"false","fieldVisibleName":"postal_code_regex","type":"string","validation":{"isRequired":false,"maxLength":500,"minLength":1}}]}
-    ### GET TOKEN ###
-    I get access token by user credentials:   ${zed_admin.email}
-
 Create_country_with_invalid_data_test3
     ### SETUP DYNAMIC ENTITY CONFIGURATION ###
     Delete dynamic entity configuration in Database:    robotests-countries
