@@ -11,7 +11,7 @@ Yves: go to 'Wishlist' page
 Yves: go to wishlist with name:
     [Arguments]    ${wishlistName}
     Yves: go to 'Wishlist' page
-    Click    xpath=//table[@class='table table--expand']//a[contains(text(),'${wishlistName}')]
+    Click    xpath=//*[contains(@data-qa,'wishlist-overview')]//table//a[contains(text(),'${wishlistName}')]
     Element Should Be Visible    xpath=//main//*[contains(@class,'title')][contains(text(),'${wishlistName}')]
 
 Yves: product with sku is marked as discountinued in wishlist:

@@ -111,7 +111,7 @@ Yves: go to PDP of the product with sku:
             Wait Until Page Contains Element    ${catalog_main_page_locator}[${env}]
             Wait Until Page Contains Element    ${catalog_product_card_locator}
             ${pdp_url}=    Get Element Attribute    ${catalog_product_card_locator}    href
-            Yves: go to URL:    ${pdp_url}?fake=${random}+${index}
+            Yves: go to URL:    ${pdp_url}?fake=${random}+${random}
             Repeat Keyword    3    Wait Until Network Is Idle
             Wait Until Page Contains Element    ${pdp_main_container_locator}[${env}]
         END

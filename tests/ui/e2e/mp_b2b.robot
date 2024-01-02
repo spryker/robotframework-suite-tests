@@ -1167,7 +1167,7 @@ Create_New_Offer
     Yves: merchant is (not) displaying in Sold By section of PDP:    Office King    true
     Yves: merchant's offer/product price should be:    Office King    €200.00
     Yves: select xxx merchant's offer:    Office King
-    Yves: add product to the shopping cart
+    Yves: add product to the shopping cart    wait_for_p&s=true
     Yves: go to the shopping cart through the header with name:    newOfferCart${random}
     Yves: 'Shopping Cart' page is displayed
     Yves: assert merchant of product in cart or list:    SprykerSKU${random}-2    Office King
@@ -1408,15 +1408,17 @@ Merchant_Portal_Offer_Volume_Prices
     ...    || product type | row number | customer | store | currency | gross default ||
     ...    || abstract     | 1          | Default  | DE    | EUR      | 100           ||
     MP: save abstract product 
+    Trigger multistore p&s
     MP: click on a table row that contains:    OfferNewProduct${random}
     MP: open concrete drawer by SKU:    OfferSKU${random}-2
     MP: fill concrete product fields:
     ...    || is active | stock quantity | use abstract name | searchability ||
     ...    || true      | 100            | true              | en_US         ||
+    Trigger multistore p&s
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Catalog    Products 
     Zed: click Action Button in a table for row that contains:     OfferNewProduct${random}     Approve
-    Trigger p&s
+    Trigger multistore p&s
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}  
     Yves: delete all shopping carts
     Yves: create new 'Shopping Cart' with name:    MPVolumePriceCart+${random}
@@ -1753,7 +1755,7 @@ Merchant_Product_Original_Price
     Try reloading page until element is/not appear:    ${catalog_product_card_locator}    true    21    5s
     Yves: 1st product card in catalog (not)contains:     Price    €100.00
     Yves: 1st product card in catalog (not)contains:     Original Price    €150.00
-    Yves: go to PDP of the product with sku:     originalSKU${random}
+    Yves: go to PDP of the product with sku:     originalSKU${random}    wait_for_p&s=true
     Yves: product price on the PDP should be:    €100.00    wait_for_p&s=true
     Yves: product original price on the PDP should be:    €150.00
     [Teardown]    Run Keywords    Yves: check if cart is not empty and clear it

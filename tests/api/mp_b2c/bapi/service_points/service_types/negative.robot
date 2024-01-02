@@ -64,12 +64,12 @@ Create_Service_Type_With_Empty_Name
 Create_Service_Type_without_Auth
     And I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer
     When I send a POST request:    /service-types    {"data": {"type": "service-types", "attributes": {"name": "Test Service ${random}", "key": "service1-test${random}"}}}
-    Then Response status code should be:    400
+    Then Response status code should be:    403
 
 Create_Service_Type_with_incorrect_Auth
     And I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer incorrect
     When I send a POST request:    /service-types    {"data": {"type": "service-types", "attributes": {"name": "Test Service ${random}", "key": "service1-test${random}"}}}
-    Then Response status code should be:    400
+    Then Response status code should be:    401
 
 Update_Service_Type_Key
     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
@@ -103,7 +103,7 @@ Update_Service_Type_without_Auth
     When Create service type in DB    12345678${random}    test    test
     And I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer
     When I send a PATCH request:    /service-types/12345678${random}    {"data": {"type": "service-types", "attributes": {"name": "Updated Service Name","key": "12345678${random}"}}}
-    Then Response status code should be:    400
+    Then Response status code should be:    403
     [Teardown]    Delete service type in DB    12345678${random}
 
 Get_Service_Types_No_Auth
@@ -115,7 +115,7 @@ Get_Service_Types_No_Auth
 Get_Service_Types_Invalid_Auth
     When I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer InvalidToken
     When I send a GET request:    /service-types
-    Then Response status code should be:    400
+    Then Response status code should be:    401
     And Response should return error code:    001
     And Response should return error message:    Invalid access token.
 
@@ -132,7 +132,7 @@ Get_Service_Type_By_ID_invalid_Auth
     Create service type in DB    uuid=service-invalid${random}    name=service-invalid     key=service-invalid${random}
     When I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer InvalidToken
     When I send a GET request:    /service-types/service-invalid${random}
-    Then Response status code should be:    400
+    Then Response status code should be:    401
     And Response should return error code:    001
     And Response should return error message:    Invalid access token.
     [Teardown]    Delete service type in DB    service-invalid${random}

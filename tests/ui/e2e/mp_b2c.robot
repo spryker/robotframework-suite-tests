@@ -51,8 +51,8 @@ Default Tags    bapi
 New_Customer_Registration
     [Documentation]    Check that a new user can be registered in the system
     Register a new customer with data:
-    ...    || salutation | first name          | last name | e-mail                       | password            ||
-    ...    || Mr.        | Test${random}       | User      | sonia+${random}@spryker.com  | Change123!${random} ||
+    ...    || salutation | first name | last name | e-mail                       | password            ||
+    ...    || Mr.        | Test       | User      | sonia+${random}@spryker.com  | Change123!${random} ||
     Yves: flash message should be shown:    success    Almost there! We send you an email to validate your email address. Please confirm it to be able to log in.
     [Teardown]    Zed: delete customer:
     ...    || email                       ||
@@ -286,31 +286,33 @@ Add_to_Wishlist
 #     Yves: delete from b2c cart products with name:    TomTom Golf    Samsung Galaxy S6 edge
 #     [Teardown]    Yves: check if cart is not empty and clear it
 
-# Product_Bundles
-#     ### Product Bundles are not supported by Marketplace for now ###
-#     [Documentation]    Checks checkout with Bundle product. 
-#     [Setup]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
-#     ...    AND    Zed: change product stock:    ${bundled_product_1_abstract_sku}    ${bundled_product_1_concrete_sku}    true    10
-#     ...    AND    Zed: change product stock:    ${bundled_product_2_abstract_sku}    ${bundled_product_2_concrete_sku}    true    10
-#     ...    AND    Zed: change product stock:    ${bundled_product_3_abstract_sku}    ${bundled_product_3_concrete_sku}    true    10
-#     Yves: login on Yves with provided credentials:    ${yves_user_email}
-#     Yves: go to PDP of the product with sku:    ${bundle_product_abstract_sku}
-#     Yves: PDP contains/doesn't contain:    true    ${bundleItemsSmall}
-#     Yves: add product to the shopping cart
-#     Yves: go to b2c shopping cart
-#     Yves: shopping cart contains the following products:    ${bundle_product_product_name}
-#     Yves: click on the 'Checkout' button in the shopping cart
-#     Yves: billing address same as shipping address:    true
-#     Yves: fill in the following new shipping address:
-#     ...    || salutation | firstName                      | lastName                      | street        | houseNumber | postCode | city   | country | company | phone     | additionalAddress ||
-#     ...    || Mr.        | ${yves_second_user_first_name} | ${yves_second_user_last_name} | Kirncher Str. | 7           | 10247    | Berlin | Germany | Spryker | 123456789 | Additional street ||
-#     Yves: submit form on the checkout
-#     Yves: select the following shipping method on the checkout and go next:    Express
-#     Yves: select the following payment method on the checkout and go next:    Invoice (Marketplace)
-#     Yves: accept the terms and conditions:    true
-#     Yves: 'submit the order' on the summary page
-#     Yves: 'Thank you' page is displayed
-#     [Teardown]    Yves: check if cart is not empty and clear it
+Product_Bundles
+    [Documentation]    Checks checkout with Bundle product. 
+    [Setup]    Run keywords    Repeat Keyword    3    Trigger multistore p&s
+    ...    AND    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    ...    AND    Zed: change product stock:    ${bundled_product_1_abstract_sku}    ${bundled_product_1_concrete_sku}    true    10
+    ...    AND    Zed: change product stock:    ${bundled_product_2_abstract_sku}    ${bundled_product_2_concrete_sku}    true    10
+    ...    AND    Zed: change product stock:    ${bundled_product_3_abstract_sku}    ${bundled_product_3_concrete_sku}    true    10
+    Repeat Keyword    3    Trigger multistore p&s
+    Yves: login on Yves with provided credentials:    ${yves_user_email}
+    Yves: check if cart is not empty and clear it
+    Yves: go to PDP of the product with sku:    ${bundle_product_abstract_sku}
+    Yves: PDP contains/doesn't contain:    true    ${bundleItemsSmall}
+    Yves: add product to the shopping cart    wait_for_p&s=true
+    Yves: go to b2c shopping cart
+    Yves: shopping cart contains the following products:    ${bundle_product_product_name}
+    Yves: click on the 'Checkout' button in the shopping cart
+    Yves: billing address same as shipping address:    true
+    Yves: fill in the following new shipping address:
+    ...    || salutation | firstName                      | lastName                      | street        | houseNumber | postCode | city   | country | company | phone     | additionalAddress ||
+    ...    || Mr.        | ${yves_second_user_first_name} | ${yves_second_user_last_name} | Kirncher Str. | 7           | 10247    | Berlin | Germany | Spryker | 123456789 | Additional street ||
+    Yves: submit form on the checkout
+    Yves: select the following shipping method on the checkout and go next:    Express
+    Yves: select the following payment method on the checkout and go next:    Credit Card
+    Yves: accept the terms and conditions:    true
+    Yves: 'submit the order' on the summary page
+    Yves: 'Thank you' page is displayed
+    [Teardown]    Yves: check if cart is not empty and clear it
 
 # Configurable_Bundle
 #     ### Configurable Bundles are not supported by Marketplace for now ###
@@ -357,6 +359,9 @@ Discounts
     [Setup]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: deactivate all discounts from Overview page
     ...    AND    Zed: change product stock:    190    190_25111746    true    10
+    ...    AND    Zed: change product stock:    ${bundled_product_1_abstract_sku}    ${bundled_product_1_concrete_sku}    true    10
+    ...    AND    Zed: change product stock:    ${bundled_product_2_abstract_sku}    ${bundled_product_2_concrete_sku}    true    10
+    ...    AND    Zed: change product stock:    ${bundled_product_3_abstract_sku}    ${bundled_product_3_concrete_sku}    true    10
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Merchandising    Discount
     Zed: create a discount and activate it:    voucher    Percentage    5    sku = '*'    test${random}    discountName=Voucher Code 5% ${random}
@@ -1179,7 +1184,7 @@ Merchant_Portal_Product_Volume_Prices
     Yves: change quantity using '+' or '-' button № times:    +    3
     Yves: product price on the PDP should be:    €10.00
     Yves: merchant's offer/product price should be:    Video King     €10.00
-    Yves: add product to the shopping cart
+    Yves: add product to the shopping cart    wait_for_p&s=true
     Yves: go to b2c shopping cart
     Yves: shopping cart contains product with unit price:    VPNewProduct${random}    VPNewProduct${random}    40.00
     Yves: assert merchant of product in b2c cart:    VPNewProduct${random}    Video King
@@ -1191,7 +1196,7 @@ Merchant_Portal_Product_Volume_Prices
     MP: save abstract product
     Trigger p&s
     Yves: login on Yves with provided credentials:    ${yves_user_email}
-    Yves: go to PDP of the product with sku:     VPSKU${random}
+    Yves: go to PDP of the product with sku:     VPSKU${random}    wait_for_p&s=true
     Yves: change quantity using '+' or '-' button № times:    +    3
     Yves: product price on the PDP should be:    €100.00
     Yves: merchant's offer/product price should be:    Video King     €100.00
@@ -1205,6 +1210,7 @@ Merchant_Portal_Product_Volume_Prices
 
 Merchant_Portal_Offer_Volume_Prices
     [Documentation]    Checks that merchant is able to create new offer with volume prices and it will be displayed on Yves. Falback to default price after delete.
+    [Setup]    Repeat Keyword    3    Trigger multistore p&s
     MP: login on MP with provided credentials:    ${merchant_spryker_email}
     MP: open navigation menu tab:    Products    
     MP: click on create new entity button:    Create Product
@@ -1220,16 +1226,17 @@ Merchant_Portal_Offer_Volume_Prices
     ...    || product type | row number | store | currency | gross default ||
     ...    || abstract     | 1          | DE    | EUR      | 100           ||
     MP: save abstract product 
-    Trigger p&s
+    Trigger multistore p&s
     MP: click on a table row that contains:    OfferNewProduct${random}
     MP: open concrete drawer by SKU:    OfferSKU${random}-2
     MP: fill concrete product fields:
     ...    || is active | stock quantity | use abstract name | searchability ||
     ...    || true      | 100            | true              | en_US         ||
+    Trigger multistore p&s
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Catalog    Products 
     Zed: click Action Button in a table for row that contains:     OfferNewProduct${random}     Approve
-    Trigger p&s
+    Trigger multistore p&s
     Yves: login on Yves with provided credentials:    ${yves_second_user_email}  
     Yves: check if cart is not empty and clear it
     Yves: go to PDP of the product with sku:     OfferSKU${random}    wait_for_p&s=true
@@ -1254,7 +1261,7 @@ Merchant_Portal_Offer_Volume_Prices
     MP: save offer
     Trigger p&s
     Yves: login on Yves with provided credentials:    ${yves_second_user_email}
-    Yves: go to PDP of the product with sku:     OfferSKU${random}
+    Yves: go to PDP of the product with sku:     OfferSKU${random}    wait_for_p&s=true
     Yves: merchant is (not) displaying in Sold By section of PDP:    Video King    true
     Yves: merchant's offer/product price should be:    Video King    €200.00
     Reload
@@ -1275,7 +1282,7 @@ Merchant_Portal_Offer_Volume_Prices
     MP: save offer
     Trigger p&s
     Yves: login on Yves with provided credentials:    ${yves_second_user_email}
-    Yves: go to PDP of the product with sku:     OfferSKU${random}
+    Yves: go to PDP of the product with sku:     OfferSKU${random}    wait_for_p&s=true
     Reload
     Yves: select xxx merchant's offer:    Video King
     Yves: change quantity using '+' or '-' button № times:    +    3
@@ -1510,7 +1517,7 @@ Manage_Merchant_Product
     ...    || manageSKU${random} | manageSKU${random}-3 | DE    | gross | default| €        | 15.00  ||
     Trigger multistore p&s
     Yves: login on Yves with provided credentials:    ${yves_user_email}
-    Yves: go to PDP of the product with sku:     manageSKU${random}
+    Yves: go to PDP of the product with sku:     manageSKU${random}    wait_for_p&s=true
     Yves: product name on PDP should be:    ENUpdatedmanageProduct${random}
     Yves: product price on the PDP should be:    €110.00    wait_for_p&s=true
     Yves: change variant of the product on PDP on:    Giftbox
@@ -1569,7 +1576,7 @@ Merchant_Product_Original_Price
     Try reloading page until element is/not appear:    ${catalog_product_card_locator}    true    21    5s
     Yves: 1st product card in catalog (not)contains:     Price    €100.00
     Yves: 1st product card in catalog (not)contains:     Original Price    €150.00
-    Yves: go to PDP of the product with sku:     originalSKU${random}
+    Yves: go to PDP of the product with sku:     originalSKU${random}    wait_for_p&s=true
     Yves: product price on the PDP should be:    €100.00    wait_for_p&s=true
     Yves: product original price on the PDP should be:    €150.00
     [Teardown]    Run Keywords    Yves: check if cart is not empty and clear it
@@ -2687,11 +2694,11 @@ Click_and_collect
     ...    || Approved        | Active | DE    | clickCollectSku${random}-2 | Budget Cameras | clickCollectThirdSku${random} | Spryker Berlin Store - Pickup | pickup - Pickup ||
     Yves: login on Yves with provided credentials:    ${yves_user_email}
     Yves: check if cart is not empty and clear it
-    Yves: go to PDP of the product with sku:     clickCollectSku${random}
+    Yves: go to PDP of the product with sku:     clickCollectSku${random}    wait_for_p&s=true
     Yves: select xxx merchant's offer with price:    Budget Cameras    €100.00
-    Yves: add product to the shopping cart
+    Yves: add product to the shopping cart    wait_for_p&s=true
     Yves: select xxx merchant's offer with price:    Budget Cameras    €150.00
-    Yves: add product to the shopping cart
+    Yves: add product to the shopping cart    wait_for_p&s=true
     Yves: go to b2c shopping cart
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: select multiple addresses from toggler
