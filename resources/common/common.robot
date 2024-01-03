@@ -237,6 +237,11 @@ Trigger API specification update
     Run console command    cli glue api:generate:documentation --invalidated-after-interval 90sec    ${storeName}
     IF    ${docker} or ${ignore_console} != True    Sleep    ${timeout}
 
+Trigger API controller cache warm-up
+    [Arguments]    ${timeout}=5s
+    Run console command    cli glue glue-api:controller:cache:warm-up
+    IF    ${docker} or ${ignore_console} != True    Sleep    ${timeout}
+
 Trigger multistore p&s
     [Arguments]    ${timeout}=5s
     Trigger p&s    ${timeout}    DE
@@ -426,8 +431,7 @@ Create dynamic entity configuration in Database:
         Execute Sql String  insert into spy_dynamic_entity_configuration (id_dynamic_entity_configuration, table_alias, table_name, is_active, definition) values (${new_id}, '${table_alias}', '${table_name}', '${is_active}', '${definition}')
     END
     Disconnect From Database
-    Run console command    cli glue glue-api:controller:cache:warm-up
-    Run console command    glue glue-api:controller:cache:warm-up
+    Trigger API controller cache warm-up
 
 Delete dynamic entity configuration in Database:
      [Documentation]    This keyword delete dynamic entity configuration in the DB table spy_dynamic_entity_configuration.
@@ -535,8 +539,7 @@ Create dynamic entity configuration relation in Database:
         Execute Sql String  insert into spy_dynamic_entity_configuration_relation_field_mapping (id_dynamic_entity_configuration_relation_field_mapping, fk_dynamic_entity_configuration_relation, parent_field_name, child_field_name) values (${new_mapping_id},'${dynamic_entity_configuration_relation_id}','${parent_field_name}','${child_field_name}');
     END
     Disconnect From Database
-    Run console command    glue glue-api:controller:cache:warm-up
-    Run console command    cli glue glue-api:controller:cache:warm-up
+    Trigger API controller cache warm-up
 
 Delete dynamic entity configuration relation in Database:
      [Documentation]    This keyword delete dynamic entity configuration in the DB table spy_dynamic_entity_configuration_relation.

@@ -67,8 +67,7 @@ ENABLER
     Create dynamic entity configuration relation in Database:    robottests-products    robottests-product-categories    roboTestsProductCategories    fk_product_abstract    id_product
     Create dynamic entity configuration relation in Database:    robottests-product-categories    robottests-categories    roboTestsCategories    id_category    fk_category
 
-    Run console command    glue glue-api:controller:cache:warm-up
-    Run console command    cli glue glue-api:controller:cache:warm-up
+    Trigger API controller cache warm-up
     ### GET TOKEN ###
     I get access token by user credentials:   ${zed_admin.email}
     ### GET PRODUCT ABSTRACT COLLECTION WITH CHILDS ONE LVEL ###
