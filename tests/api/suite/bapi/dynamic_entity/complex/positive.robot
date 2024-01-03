@@ -67,7 +67,6 @@ ENABLER
     Create dynamic entity configuration relation in Database:    robot-tests-products    robot-tests-product-categories    roboTestsProductCategories    fk_product_abstract    id_product
     Create dynamic entity configuration relation in Database:    robot-tests-product-categories    robot-tests-categories    roboTestsCategories    id_category    fk_category
 
-    Trigger API controller cache warm-up
     ### GET TOKEN ###
     I get access token by user credentials:   ${zed_admin.email}
     ### GET PRODUCT ABSTRACT COLLECTION WITH CHILDS ONE LVEL ###

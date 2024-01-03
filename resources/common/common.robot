@@ -239,7 +239,7 @@ Trigger API specification update
 
 Trigger API controller cache warm-up
     [Arguments]    ${timeout}=10s
-    Run console command    vendor/bin/glue glue-api:controller:cache:warm-up
+    Run console command    glue glue-api:controller:cache:warm-up
     IF    ${docker} or ${ignore_console} != True    Sleep    ${timeout}
 
 Trigger multistore p&s
