@@ -535,6 +535,8 @@ Create dynamic entity configuration relation in Database:
         Execute Sql String  insert into spy_dynamic_entity_configuration_relation_field_mapping (id_dynamic_entity_configuration_relation_field_mapping, fk_dynamic_entity_configuration_relation, parent_field_name, child_field_name) values (${new_mapping_id},'${dynamic_entity_configuration_relation_id}','${parent_field_name}','${child_field_name}');
     END
     Disconnect From Database
+    Run console command    glue glue-api:controller:cache:warm-up
+    Run console command    cli glue glue-api:controller:cache:warm-up
 
 Delete dynamic entity configuration relation in Database:
      [Documentation]    This keyword delete dynamic entity configuration in the DB table spy_dynamic_entity_configuration_relation.
