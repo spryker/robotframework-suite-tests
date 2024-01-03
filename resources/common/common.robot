@@ -238,7 +238,7 @@ Trigger API specification update
     IF    ${docker} or ${ignore_console} != True    Sleep    ${timeout}
 
 Trigger API controller cache warm-up
-    [Arguments]    ${timeout}=5s
+    [Arguments]    ${timeout}=10s
     Run console command    cli glue glue-api:controller:cache:warm-up
     IF    ${docker} or ${ignore_console} != True    Sleep    ${timeout}
 
