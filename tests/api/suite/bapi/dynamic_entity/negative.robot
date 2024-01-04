@@ -107,7 +107,7 @@ Create_country_with_invalid_data
     ### POST WITH INVALID DATA ###
     Delete country by iso2_code in Database:   XX
     And I set Headers:    Content-Type=application/json    Authorization=Bearer ${token}
-    And I send a POST request:    /dynamic-entity/countries    {"data":[{"iso2_code":"XX","name":"XXX"}]}
+    And I send a POST request:    /dynamic-entity/countries   {"data":[{"iso2_code":"XX","name":"XXX"}]}
     Then Response status code should be:    400
     And Response body parameter should contain:    [0][message]    The required field must not be empty. Field: iso3_code
     And Response body parameter should be:    [0][code]    1307
@@ -188,7 +188,7 @@ Update_country_with_invalid_data
     When Save value to a variable:    [data][1][id_country]    xxb_country_id
     ### UPDATE COUNTRY WITH INVALID DATA ###
     And I set Headers:    Content-Type==application/json    Authorization=Bearer ${token}
-    And I send a PATCH request:    /dynamic-entity/countries /${xxa_country_id}    {"data":{"iso2_code":"XXXX"}}
+    And I send a PATCH request:    /dynamic-entity/countries/${xxa_country_id}    {"data":{"iso2_code":"XXXX"}}
     Then Response status code should be:    400
     And Response body parameter should contain:    [0][message]    Invalid data value for field: iso2_code, row number: 1.
     And Response body parameter should be:    [0][code]    1306
@@ -211,7 +211,7 @@ Update_country_collection_with_invalid_data
     When Save value to a variable:    [data][1][id_country]    xxb_country_id
     ### UPDATE COUNTRY COLLECTION WITH INVALID DATA ###
     And I set Headers:    Content-Type==application/json    Authorization=Bearer ${token}
-    And I send a PATCH request:    /dynamic-entity/countries     {"data":[{"id_country":${xxa_country_id},"iso2_code":"XXXX"},{"id_country":${xxb_country_id},"iso3_code":"XXXXX"}]}
+    And I send a PATCH request:    /dynamic-entity/countries    {"data":[{"id_country":${xxa_country_id},"iso2_code":"XXXX"},{"id_country":${xxb_country_id},"iso3_code":"XXXXX"}]}
     Then Response status code should be:    400
     And Response body parameter should contain:    [0][message]    Invalid data value for field: iso2_code, row number: 1.
     And Response body parameter should be:    [0][code]    1306
@@ -237,7 +237,7 @@ Update_country_with_invalid_field_type
     When Save value to a variable:    [data][1][id_country]    xxb_country_id
     ### UPDATE COUNTRY WITH INVALID FILELD TYPE ###
     And I set Headers:    Content-Type==application/json    Authorization=Bearer ${token}
-    And I send a PATCH request:    /dynamic-entity/countries /${xxa_country_id}    {"data":{"iso2_code":1234}}
+    And I send a PATCH request:    /dynamic-entity/countries/${xxa_country_id}    {"data":{"iso2_code":1234}}
     Then Response status code should be:    400
     And Response body parameter should contain:    [0][message]    Invalid data type for field: iso2_code
     And Response body parameter should be:    [0][code]    1305
@@ -269,7 +269,7 @@ Upsert_with_invalid_id
 
     ### UDATE WITH INVALID ID ###
     And I set Headers:    Content-Type==application/json    Authorization=Bearer ${token}
-    And I send a PUT request:    /dynamic-entity/countries /1000    {"data":{"iso2_code":"XX","iso3_code":"XXX","name":"Country XXX"}}
+    And I send a PUT request:    /dynamic-entity/countries/1000    {"data":{"iso2_code":"XX","iso3_code":"XXX","name":"Country XXX"}}
     Then Response status code should be:    400
     And Response header parameter should be:    Content-Type    application/json
     And Response body parameter should be:    [0][message]    Entity `id_country: 1000` not found by identifier, and new identifier can not be persisted. Please update the request.

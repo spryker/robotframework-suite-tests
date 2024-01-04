@@ -22,7 +22,7 @@ ENABLER
     I get access token by user credentials:   ${zed_admin.email}
     ### GET PRODUCT ABSTRACT COLLECTION WITH CHILDS ONE LVEL ###
     And I set Headers:    Content-Type=application/json    Authorization=Bearer ${token}
-    And I send a GET request:    /dynamic-entity/ product-abstracts?include=productAbstractProducts
+    And I send a GET request:    /dynamic-entity/product-abstracts?include=productAbstractProducts
     Then Response status code should be:    200
     And Response header parameter should be:    Content-Type    application/json
     And Response should contain the array of a certain size:   [data]    224
@@ -34,7 +34,7 @@ ENABLER
     And Each array element of array in response should contain nested property:    [data]    [productAbstractProducts]    fk_product_abstract
     ### GET PRODUCT ABSTRACT COLLECTION WITH CHILDS AS TREE ###
     And I set Headers:    Content-Type=application/json    Authorization=Bearer ${token}
-    And I send a GET request:    /dynamic-entity/ product-abstracts?include=productAbstractProducts.productCategories.categories
+    And I send a GET request:    /dynamic-entity/product-abstracts?include=productAbstractProducts.productCategories.categories
     Then Response status code should be:    200
     And Response header parameter should be:    Content-Type    application/json
     And Response should contain the array of a certain size:   [data]    224
@@ -57,7 +57,7 @@ ENABLER
     I get access token by user credentials:   ${zed_admin.email}
     ### GET PRODUCT ABSTRACT COLLECTION WITH CHILDS ONE LVEL ###
     And I set Headers:    Content-Type=application/json    Authorization=Bearer ${token}
-    And I send a GET request:    /dynamic-entity/ product-abstracts/130?include=productAbstractProducts
+    And I send a GET request:    /dynamic-entity/product-abstracts/130?include=productAbstractProducts
     Then Response status code should be:    200
     And Response header parameter should be:    Content-Type    application/json
     And Response should contain the array of a certain size:   [data]    9
@@ -70,7 +70,7 @@ ENABLER
 
     ### GET PRODUCT ABSTRACT COLLECTION WITH CHILDS AS TREE ###
     And I set Headers:    Content-Type=application/json    Authorization=Bearer ${token}
-    And I send a GET request:    /dynamic-entity/ product-abstracts/130?include=productAbstractProducts.productCategories.categories
+    And I send a GET request:    /dynamic-entity/product-abstracts/130?include=productAbstractProducts.productCategories.categories
     Then Response status code should be:    200
     And Response header parameter should be:    Content-Type    application/json
     And Response should contain the array of a certain size:   [data]    9
