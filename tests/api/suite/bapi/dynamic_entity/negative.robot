@@ -112,7 +112,6 @@ Create_country_with_invalid_data
     And Response body parameter should contain:    [0][message]    The required field must not be empty. Field: iso3_code
     And Response body parameter should be:    [0][code]    1307
     And Response body parameter should contain:    [0][status]   400
-    [Teardown]    Run Keywords    Delete country by iso2_code in Database:   XX
 
 Create_country_with_invalid_resource_name
     ### SETUP DYNAMIC ENTITY CONFIGURATION ###
@@ -127,7 +126,6 @@ Create_country_with_invalid_resource_name
     And Response body parameter should contain:    [0][message]    Not found
     And Response body parameter should be:    [0][code]    007
     And Response body parameter should contain:    [0][status]   404
-    [Teardown]    Run Keywords    Delete country by iso2_code in Database:   XX
 
 Create_country_with_invalid_field_value
     ### SETUP DYNAMIC ENTITY CONFIGURATION ###
@@ -148,7 +146,6 @@ Create_country_with_invalid_field_value
     And Response body parameter should contain:    [2][message]    Invalid data value for field: name, row number: 1.
     And Response body parameter should be:    [2][code]    1306
     And Response body parameter should contain:    [2][status]   400
-    [Teardown]    Run Keywords    Delete country by iso2_code in Database:   X
 
 Create_country_with_invalid_field
     ### SETUP DYNAMIC ENTITY CONFIGURATION ###
@@ -163,7 +160,6 @@ Create_country_with_invalid_field
     And Response body parameter should contain:    [0][message]    The provided `iso3_code` is incorrect or invalid.
     And Response body parameter should be:    [0][code]    1311
     And Response body parameter should contain:    [0][status]   400
-    [Teardown]    Run Keywords    Delete country by iso2_code in Database:   XX
 
 Update_country_with_invalid_data
     ### SETUP DYNAMIC ENTITY CONFIGURATION ###
@@ -259,7 +255,6 @@ Update_country_with_invalid_field
     And Response body parameter should contain:    [0][message]    The provided `iso3_code` is incorrect or invalid.
     And Response body parameter should be:    [0][code]    1311
     And Response body parameter should contain:    [0][status]   400
-    [Teardown]    Run Keywords    Delete country by iso2_code in Database:   XX
 
 Upsert_with_invalid_id
     ### SETUP DYNAMIC ENTITY CONFIGURATION ###
@@ -275,4 +270,3 @@ Upsert_with_invalid_id
     And Response body parameter should be:    [0][message]    Entity `id_country: 1000` not found by identifier, and new identifier can not be persisted. Please update the request.
     And Response body parameter should be:    [0][code]    1308
     And Response body parameter should be:    [0][status]    400
-    [Teardown]    Run Keywords    AND    Delete country by iso2_code in Database:   XX
