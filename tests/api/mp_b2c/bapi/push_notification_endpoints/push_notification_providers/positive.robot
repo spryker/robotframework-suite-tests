@@ -115,25 +115,30 @@ Retrieve_push_notification_provider_by_id
     And Response body parameter should be:    [data][attributes][name]    My Push Notification Provider ${random}
     [Teardown]    I send a DELETE request:    /push-notification-providers/${push_notification_provider_id}
 
-Delete_push_notification_provider_while_push_notofocation_subscribtion_exists
-    [Setup]    Run Keywords    Create warehouse in DB:    ${warehouses[0].name}     ${True}     ${warehouses[0].uuid}
-    ...    AND    Assign user to Warehouse in DB:    ${zed_admin.email}    ${warehouses[0].uuid}
-    I get access token by user credentials:    ${zed_admin.email}
-    When I set Headers:    Content-Type=${default_header_content_type}    Authorization=Bearer ${token}
+Delete_push_notification_provider_while_push_notification_subscription_exists
+    [Setup]    Run Keywords    I get access token by user credentials:    ${zed_admin.email}
+    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=Bearer ${token}
     # create a provider for push notification
     When I send a POST request:    /push-notification-providers    {"data": {"type": "push-notification-providers","attributes": {"name": "My Push Notification Provider ${random}"}}}
     Then Response status code should be:    201
     And Save value to a variable:    [data][id]    push_notification_provider_id
     And Save value to a variable:    [data][attributes][name]    push_notification_provider_name
     # create a subscription
+    Create warehouse in DB:    ${warehouses[0].name}     ${True}     ${warehouses[0].uuid}
+    Assign user to Warehouse in DB:    ${zed_admin.email}   ${warehouses[0].uuid}
+    I get access token by user credentials:    ${zed_admin.email}
+    When I set Headers:    Content-Type=${default_header_content_type}    Authorization=Bearer ${token}
     And I send a POST request:    /push-notification-subscriptions    {"data":{"type":"push-notification-subscriptions","attributes":{"providerName":"${push_notification_provider_name}","group":{"name":"${push_notification_subscriptions[0].group.name}","identifier":"${warehouses[0].uuid}"},"payload":{"endpoint":"${push_notification_subscriptions[0].payload.endpoint}","publicKey":"${push_notification_subscriptions[0].payload.publicKey}","authToken":"${push_notification_subscriptions[0].payload.authToken}"},"localeName":"${locale.DE.name}"}}}
     Then Response status code should be:    201
     And Save value to a variable:    [data][id]    push_notification_subscription_uuid
+    # delete a provider for push notification
+    De-assign user from Warehouse in DB:    ${zed_admin.email}   ${warehouses[0].uuid}
+    I get access token by user credentials:    ${zed_admin.email}
+    When I set Headers:    Content-Type=${default_header_content_type}    Authorization=Bearer ${token}
     Then I send a DELETE request:    /push-notification-providers/${push_notification_provider_id}
     Then Response status code should be:    400
     And Response should return error code:    5004
     And Response should return error message:    Unable to delete push notification provider while push notification subscription exists.
-    [Teardown]    Run Keywords    De-assign user from Warehouse in DB:    ${zed_admin.email}    ${warehouses[0].uuid}
-    ...    AND    Delete warehouse in DB:   ${warehouses[0].uuid}
+    [Teardown]    Run Keywords    Delete warehouse in DB:   ${warehouses[0].uuid}
     ...    AND    Delete push notification subscription in DB:    ${push_notification_subscription_uuid}
     ...    AND    I send a DELETE request:    /push-notification-providers/${push_notification_provider_id}
