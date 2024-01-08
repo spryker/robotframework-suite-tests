@@ -33,3 +33,98 @@ Get_product_abstract_collection_with_invalid_query_parameter:
     Then Response status code should be:    400
     And Response body parameter should be:    [0][status]    400
     And Response body parameter should be:    [0][code]    1313
+
+Create_product_abstract_collection_with_invalid_child:
+    ### SETUP DYNAMIC ENTITY CONFIGURATION AND RELATION ###
+    Delete dynamic entity configuration relation in Database:    roboTestsCategories
+    Delete dynamic entity configuration relation in Database:    roboTestsProductCategories
+    Delete dynamic entity configuration relation in Database:    roboTestsConcreteProducts
+    Delete dynamic entity configuration in Database:    robotests-product-abstracts
+    Delete dynamic entity configuration in Database:    robotests-products
+    Delete dynamic entity configuration in Database:    robotests-product-categories
+    Delete dynamic entity configuration in Database:    robotests-categories
+    Create dynamic entity configuration in Database:    robot-tests-product-abstracts    spy_product_abstract     1    {"identifier":"id_product_abstract","fields":[{"fieldName":"id_product_abstract","fieldVisibleName":"id_product_abstract","isCreatable":false,"isEditable":false,"type":"integer","validation":{"isRequired":false}},{"fieldName":"fk_tax_set","fieldVisibleName":"fk_tax_set","isCreatable":true,"isEditable":true,"type":"integer","validation":{"isRequired":true}},{"fieldName":"approval_status","fieldVisibleName":"approval_status","isCreatable":true,"isEditable":true,"type":"string","validation":{"isRequired":false}},{"fieldName":"attributes","fieldVisibleName":"attributes","isCreatable":true,"isEditable":true,"type":"string","validation":{"isRequired":true}},{"fieldName":"new_from","fieldVisibleName":"new_from","isCreatable":true,"isEditable":true,"type":"string","validation":{"isRequired":false}},{"fieldName":"new_to","fieldVisibleName":"new_to","isCreatable":true,"isEditable":true,"type":"string","validation":{"isRequired":false}},{"fieldName":"sku","fieldVisibleName":"sku","isCreatable":true,"isEditable":true,"type":"string","validation":{"isRequired":true}},{"fieldName":"color_code","fieldVisibleName":"color_code","isCreatable":true,"isEditable":true,"type":"string","validation":{"isRequired":false}}]}
+    Create dynamic entity configuration in Database:    robot-tests-products    spy_product     1    {"identifier":"id_product","fields":[{"fieldName":"id_product","fieldVisibleName":"id_product","isCreatable":false,"isEditable":false,"validation":{"isRequired":false},"type":"integer"},{"fieldName":"fk_product_abstract","fieldVisibleName":"fk_product_abstract","type":"integer","isCreatable":true,"isEditable":true,"validation":{"isRequired":true}},{"fieldName":"attributes","fieldVisibleName":"attributes","isCreatable":true,"isEditable":true,"type":"string","validation":{"isRequired":true}},{"fieldName":"discount","fieldVisibleName":"discount","isCreatable":true,"isEditable":true,"type":"integer","validation":{"isRequired":false}},{"fieldName":"is_active","fieldVisibleName":"is_active","isCreatable":true,"isEditable":true,"type":"boolean","validation":{"isRequired":false}},{"fieldName":"is_quantity_splittable","fieldVisibleName":"is_quantity_splittable","isCreatable":true,"isEditable":true,"type":"boolean","validation":{"isRequired":false}},{"fieldName":"sku","fieldVisibleName":"sku","isCreatable":true,"isEditable":true,"type":"string","validation":{"isRequired":true}},{"fieldName":"warehouses","fieldVisibleName":"warehouses","isCreatable":true,"isEditable":true,"type":"string","validation":{"isRequired":false}}]}
+    Create dynamic entity configuration relation in Database:    robot-tests-product-abstracts    robot-tests-products    robotTestsConcreteProducts    fk_product_abstract    id_product_abstract
+    ### GET TOKEN ###
+    I get access token by user credentials:   ${zed_admin.email}
+    ### CREATE PRODUCT ABSTRACT WITH INVALID CHILD ###
+    And I set Headers:    Content-Type=application/json    Authorization=Bearer ${token}
+    And I send a POST request:    /dynamic-entity/robot-tests-product-abstracts  {"data": [{"fk_tax_set": 1, "attributes": "FOO", "sku": "FOO", "robotTestsConcreteProductsInvalid": [{"attributes": "FOOBAR", "sku": "FOOBAR"}]}]}
+    Then Response status code should be:    400
+    And Response body parameter should be:    [0][status]    400
+    And Response body parameter should be:    [0][code]    1313
+    And Response body parameter should be:    [0][message]    Relation `robotTestsConcreteProductsInvalid` not found. Please check the requested relation name and try again.
+    [Teardown]    Run Keywords    Delete dynamic entity configuration relation in Database:    robotTestsConcreteProducts
+    ...   AND    Delete dynamic entity configuration in Database:    robot-tests-product-abstracts
+    ...   AND    Delete dynamic entity configuration in Database:    robot-tests-products
+
+Create_product_abstract_collection_with_child_contained_invalid_field:
+    ### SETUP DYNAMIC ENTITY CONFIGURATION AND RELATION ###
+    Create dynamic entity configuration in Database:    robot-tests-product-abstracts    spy_product_abstract     1    {"identifier":"id_product_abstract","fields":[{"fieldName":"id_product_abstract","fieldVisibleName":"id_product_abstract","isCreatable":false,"isEditable":false,"type":"integer","validation":{"isRequired":false}},{"fieldName":"fk_tax_set","fieldVisibleName":"fk_tax_set","isCreatable":true,"isEditable":true,"type":"integer","validation":{"isRequired":true}},{"fieldName":"approval_status","fieldVisibleName":"approval_status","isCreatable":true,"isEditable":true,"type":"string","validation":{"isRequired":false}},{"fieldName":"attributes","fieldVisibleName":"attributes","isCreatable":true,"isEditable":true,"type":"string","validation":{"isRequired":true}},{"fieldName":"new_from","fieldVisibleName":"new_from","isCreatable":true,"isEditable":true,"type":"string","validation":{"isRequired":false}},{"fieldName":"new_to","fieldVisibleName":"new_to","isCreatable":true,"isEditable":true,"type":"string","validation":{"isRequired":false}},{"fieldName":"sku","fieldVisibleName":"sku","isCreatable":true,"isEditable":true,"type":"string","validation":{"isRequired":true}},{"fieldName":"color_code","fieldVisibleName":"color_code","isCreatable":true,"isEditable":true,"type":"string","validation":{"isRequired":false}}]}
+    Create dynamic entity configuration in Database:    robot-tests-products    spy_product     1    {"identifier":"id_product","fields":[{"fieldName":"id_product","fieldVisibleName":"id_product","isCreatable":false,"isEditable":false,"validation":{"isRequired":false},"type":"integer"},{"fieldName":"fk_product_abstract","fieldVisibleName":"fk_product_abstract","type":"integer","isCreatable":true,"isEditable":true,"validation":{"isRequired":true}},{"fieldName":"attributes","fieldVisibleName":"attributes","isCreatable":true,"isEditable":true,"type":"string","validation":{"isRequired":true}},{"fieldName":"discount","fieldVisibleName":"discount","isCreatable":true,"isEditable":true,"type":"integer","validation":{"isRequired":false}},{"fieldName":"is_active","fieldVisibleName":"is_active","isCreatable":true,"isEditable":true,"type":"boolean","validation":{"isRequired":false}},{"fieldName":"is_quantity_splittable","fieldVisibleName":"is_quantity_splittable","isCreatable":true,"isEditable":true,"type":"boolean","validation":{"isRequired":false}},{"fieldName":"sku","fieldVisibleName":"sku","isCreatable":true,"isEditable":true,"type":"string","validation":{"isRequired":true}},{"fieldName":"warehouses","fieldVisibleName":"warehouses","isCreatable":true,"isEditable":true,"type":"string","validation":{"isRequired":false}}]}
+    Create dynamic entity configuration relation in Database:    robot-tests-product-abstracts    robot-tests-products    robotTestsConcreteProducts    fk_product_abstract    id_product_abstract
+    ### GET TOKEN ###
+    I get access token by user credentials:   ${zed_admin.email}
+    ### CREATE PRODUCT ABSTRACT WITH CHILD CONTAINED INVALID FIELD ###
+    And I set Headers:    Content-Type=application/json    Authorization=Bearer ${token}
+    And I send a POST request:    /dynamic-entity/robot-tests-product-abstracts  {"data": [{"fk_tax_set": 1, "attributes": "FOO", "sku": "FOO", "robotTestsConcreteProducts": [{"attributes": "FOOBAR", "sku": "FOOBAR", "invalid_field": "invalid"}]}]}
+    Then Response status code should be:    400
+    And Response body parameter should be:    [0][status]    400
+    And Response body parameter should be:    [0][code]    1311
+    And Response body parameter should be:    [0][message]    The provided `invalid_field` is incorrect or invalid.
+    [Teardown]    Run Keywords    Delete dynamic entity configuration relation in Database:    robotTestsConcreteProducts
+    ...   AND    Delete dynamic entity configuration in Database:    robot-tests-product-abstracts
+    ...   AND    Delete dynamic entity configuration in Database:    robot-tests-products
+
+Update_product_abstract_collection_with_invalid_child:
+    ### SETUP DYNAMIC ENTITY CONFIGURATION AND RELATION ###
+    Create dynamic entity configuration in Database:    robot-tests-product-abstracts    spy_product_abstract     1    {"identifier":"id_product_abstract","fields":[{"fieldName":"id_product_abstract","fieldVisibleName":"id_product_abstract","isCreatable":false,"isEditable":false,"type":"integer","validation":{"isRequired":false}},{"fieldName":"fk_tax_set","fieldVisibleName":"fk_tax_set","isCreatable":true,"isEditable":true,"type":"integer","validation":{"isRequired":true}},{"fieldName":"approval_status","fieldVisibleName":"approval_status","isCreatable":true,"isEditable":true,"type":"string","validation":{"isRequired":false}},{"fieldName":"attributes","fieldVisibleName":"attributes","isCreatable":true,"isEditable":true,"type":"string","validation":{"isRequired":true}},{"fieldName":"new_from","fieldVisibleName":"new_from","isCreatable":true,"isEditable":true,"type":"string","validation":{"isRequired":false}},{"fieldName":"new_to","fieldVisibleName":"new_to","isCreatable":true,"isEditable":true,"type":"string","validation":{"isRequired":false}},{"fieldName":"sku","fieldVisibleName":"sku","isCreatable":true,"isEditable":true,"type":"string","validation":{"isRequired":true}},{"fieldName":"color_code","fieldVisibleName":"color_code","isCreatable":true,"isEditable":true,"type":"string","validation":{"isRequired":false}}]}
+    Create dynamic entity configuration in Database:    robot-tests-products    spy_product     1    {"identifier":"id_product","fields":[{"fieldName":"id_product","fieldVisibleName":"id_product","isCreatable":false,"isEditable":false,"validation":{"isRequired":false},"type":"integer"},{"fieldName":"fk_product_abstract","fieldVisibleName":"fk_product_abstract","type":"integer","isCreatable":true,"isEditable":true,"validation":{"isRequired":true}},{"fieldName":"attributes","fieldVisibleName":"attributes","isCreatable":true,"isEditable":true,"type":"string","validation":{"isRequired":true}},{"fieldName":"discount","fieldVisibleName":"discount","isCreatable":true,"isEditable":true,"type":"integer","validation":{"isRequired":false}},{"fieldName":"is_active","fieldVisibleName":"is_active","isCreatable":true,"isEditable":true,"type":"boolean","validation":{"isRequired":false}},{"fieldName":"is_quantity_splittable","fieldVisibleName":"is_quantity_splittable","isCreatable":true,"isEditable":true,"type":"boolean","validation":{"isRequired":false}},{"fieldName":"sku","fieldVisibleName":"sku","isCreatable":true,"isEditable":true,"type":"string","validation":{"isRequired":true}},{"fieldName":"warehouses","fieldVisibleName":"warehouses","isCreatable":true,"isEditable":true,"type":"string","validation":{"isRequired":false}}]}
+    Create dynamic entity configuration relation in Database:    robot-tests-product-abstracts    robot-tests-products    robotTestsConcreteProducts    fk_product_abstract    id_product_abstract
+    ### GET TOKEN ###
+    I get access token by user credentials:   ${zed_admin.email}
+    ### CREATE PRODUCT ABSTRACT WITH CHILD ###
+    And I set Headers:    Content-Type=application/json    Authorization=Bearer ${token}
+    And I send a POST request:    /dynamic-entity/robot-tests-product-abstracts  {"data": [{"fk_tax_set": 1, "attributes": "FOO", "sku": "FOO", "robotTestsConcreteProducts": [{"attributes": "FOOBAR", "sku": "FOOBAR"}]}]}
+    Then Response status code should be:    201
+    When Save value to a variable:    [data][0][id_product_abstract]    id_product_abstract
+    When Save value to a variable:    [data][0][robotTestsConcreteProducts][0][id_product]    id_product
+    ### UPDATE PRODUCT ABSTRACT WITH INVALID CHILD###
+    And I set Headers:    Content-Type==application/json    Authorization=Bearer ${token}
+    And I send a PATCH request:   /dynamic-entity/robot-tests-product-abstracts  {"data": [{"id_product_abstract": ${id_product_abstract}, "fk_tax_set": 1, "attributes": "FOO", "sku": "FOO", "robotTestsConcreteProductsInvalid": [{"id_product": ${id_product}, "attributes": "FOOBAR", "sku": "FOOBAR"}]}]}
+    Then Response status code should be:    400
+    And Response body parameter should be:    [0][status]    400
+    And Response body parameter should be:    [0][code]    1313
+    And Response body parameter should be:    [0][message]    Relation `robotTestsConcreteProductsInvalid` not found. Please check the requested relation name and try again.
+    [Teardown]    Run Keywords    Delete dynamic entity configuration relation in Database:    robotTestsConcreteProducts
+    ...   AND    Delete dynamic entity configuration in Database:    robot-tests-product-abstracts
+    ...   AND    Delete dynamic entity configuration in Database:    robot-tests-products
+    ...   AND    Delete product by id_product in Database:    ${id_product}
+    ...   AND    Delete product_abstract by id_product_abstract in Database:   ${id_product_abstract}
+
+Update_product_abstract_collection_with_child_contained_invalid_field:
+    ### SETUP DYNAMIC ENTITY CONFIGURATION AND RELATION ###
+    Create dynamic entity configuration in Database:    robot-tests-product-abstracts    spy_product_abstract     1    {"identifier":"id_product_abstract","fields":[{"fieldName":"id_product_abstract","fieldVisibleName":"id_product_abstract","isCreatable":false,"isEditable":false,"type":"integer","validation":{"isRequired":false}},{"fieldName":"fk_tax_set","fieldVisibleName":"fk_tax_set","isCreatable":true,"isEditable":true,"type":"integer","validation":{"isRequired":true}},{"fieldName":"approval_status","fieldVisibleName":"approval_status","isCreatable":true,"isEditable":true,"type":"string","validation":{"isRequired":false}},{"fieldName":"attributes","fieldVisibleName":"attributes","isCreatable":true,"isEditable":true,"type":"string","validation":{"isRequired":true}},{"fieldName":"new_from","fieldVisibleName":"new_from","isCreatable":true,"isEditable":true,"type":"string","validation":{"isRequired":false}},{"fieldName":"new_to","fieldVisibleName":"new_to","isCreatable":true,"isEditable":true,"type":"string","validation":{"isRequired":false}},{"fieldName":"sku","fieldVisibleName":"sku","isCreatable":true,"isEditable":true,"type":"string","validation":{"isRequired":true}},{"fieldName":"color_code","fieldVisibleName":"color_code","isCreatable":true,"isEditable":true,"type":"string","validation":{"isRequired":false}}]}
+    Create dynamic entity configuration in Database:    robot-tests-products    spy_product     1    {"identifier":"id_product","fields":[{"fieldName":"id_product","fieldVisibleName":"id_product","isCreatable":false,"isEditable":false,"validation":{"isRequired":false},"type":"integer"},{"fieldName":"fk_product_abstract","fieldVisibleName":"fk_product_abstract","type":"integer","isCreatable":true,"isEditable":true,"validation":{"isRequired":true}},{"fieldName":"attributes","fieldVisibleName":"attributes","isCreatable":true,"isEditable":true,"type":"string","validation":{"isRequired":true}},{"fieldName":"discount","fieldVisibleName":"discount","isCreatable":true,"isEditable":true,"type":"integer","validation":{"isRequired":false}},{"fieldName":"is_active","fieldVisibleName":"is_active","isCreatable":true,"isEditable":true,"type":"boolean","validation":{"isRequired":false}},{"fieldName":"is_quantity_splittable","fieldVisibleName":"is_quantity_splittable","isCreatable":true,"isEditable":true,"type":"boolean","validation":{"isRequired":false}},{"fieldName":"sku","fieldVisibleName":"sku","isCreatable":true,"isEditable":true,"type":"string","validation":{"isRequired":true}},{"fieldName":"warehouses","fieldVisibleName":"warehouses","isCreatable":true,"isEditable":true,"type":"string","validation":{"isRequired":false}}]}
+    Create dynamic entity configuration relation in Database:    robot-tests-product-abstracts    robot-tests-products    robotTestsConcreteProducts    fk_product_abstract    id_product_abstract
+    ### GET TOKEN ###
+    I get access token by user credentials:   ${zed_admin.email}
+    ### CREATE PRODUCT ABSTRACT WITH CHILD ###
+    And I set Headers:    Content-Type=application/json    Authorization=Bearer ${token}
+    And I send a POST request:    /dynamic-entity/robot-tests-product-abstracts  {"data": [{"fk_tax_set": 1, "attributes": "FOO", "sku": "FOO", "robotTestsConcreteProducts": [{"attributes": "FOOBAR", "sku": "FOOBAR"}]}]}
+    Then Response status code should be:    201
+    When Save value to a variable:    [data][0][id_product_abstract]    id_product_abstract
+    When Save value to a variable:    [data][0][robotTestsConcreteProducts][0][id_product]    id_product
+    ### UPDATE PRODUCT ABSTRACT WITH INVALID CHILD CONTAINED INVALID FIELD ###
+    And I set Headers:    Content-Type==application/json    Authorization=Bearer ${token}
+    And I send a PATCH request:   /dynamic-entity/robot-tests-product-abstracts  {"data": [{"id_product_abstract": ${id_product_abstract}, "fk_tax_set": 1, "attributes": "FOO", "sku": "FOO", "robotTestsConcreteProducts": [{"id_product": ${id_product}, "attributes": "FOOBAR", "sku": "FOOBAR", "invalid_field": "invalid"}]}]}
+    Then Response status code should be:    400
+    And Response body parameter should be:    [0][status]    400
+    And Response body parameter should be:    [0][code]    1311
+    And Response body parameter should be:    [0][message]    The provided `invalid_field` is incorrect or invalid.
+    [Teardown]    Run Keywords    Delete dynamic entity configuration relation in Database:    robotTestsConcreteProducts
+    ...   AND    Delete dynamic entity configuration in Database:    robot-tests-product-abstracts
+    ...   AND    Delete dynamic entity configuration in Database:    robot-tests-products
+    ...   AND    Delete product by id_product in Database:    ${id_product}
+    ...   AND    Delete product_abstract by id_product_abstract in Database:   ${id_product_abstract}

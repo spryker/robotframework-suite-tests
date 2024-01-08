@@ -556,3 +556,25 @@ Delete dynamic entity configuration relation in Database:
     END
 
     Disconnect From Database
+
+Delete product by id_product in Database:
+    [Documentation]    This keyword deletes a product by id_product in the DB table spy_product.
+        ...    *Example:*
+        ...
+        ...    ``Delete product by id_product in Database:    100``
+        ...
+    [Arguments]    ${id_product}
+    Connect to Spryker DB
+    Execute Sql String    DELETE FROM spy_product WHERE id_product = ${id_product};
+    Disconnect From Database
+
+Delete product_abstract by id_product_abstract in Database:
+    [Documentation]    This keyword deletes a product abstract by id_product_abstract from spy_product_abstract.
+        ...    *Example:*
+        ...
+        ...    ``Delete product_abstract by id_product_abstract in Database:    200``
+        ...
+    [Arguments]    ${id_product_abstract}
+    Connect to Spryker DB
+    Execute Sql String    DELETE FROM spy_product_abstract WHERE id_product_abstract = ${id_product_abstract};
+    Disconnect From Database
