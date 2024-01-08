@@ -605,34 +605,34 @@ Create_order_with_split_shipments_&_invalid_shipping_address
     And Response should return error message:    Shipping address country not found for country code: fake_iso2Code
     [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cart_id}
     ...    AND    Response status code should be:    204
-#
-#Create_order_with_split_shipments_&_empty_shipping_address
-#    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
-#    ...    AND    I set Headers:    Authorization=${token}
-#    ...    AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
-#    ...    AND    Save value to a variable:    [data][id]    cart_id
-#    When I send a POST request:
-#    ...    /checkout?include=orders
-#    ...    {"data": {"type": "checkout","attributes": {"customer": {"salutation": "${yves_user.salutation}","email": "${yves_user.email}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}"},"idCart": "${cart_id}","billingAddress": {"salutation": "${yves_user.salutation}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}","address1": "${default.address1}","address2": "${default.address2}","address3": "${default.address3}","zipCode": "${default.zipCode}","city": "${default.city}","iso2Code": "${default.iso2Code}","company": "${default.company}","phone": "${default.phone}","isDefaultBilling": False,"isDefaultShipping": False},"payments": [{"paymentMethodName": "${payment_method_name}","paymentProviderName": "${payment_provider_name}"}],"shipments": [{"items": ["${concrete.available_product.with_stock_and_never_out_of_stock.sku}"],"shippingAddress": {"salutation": "${yves_user.salutation}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}","address1": "${default.address1}","address2": "${default.address2}","address3": "${default.address3}","zipCode": "${default.zipCode}","city": "${default.city}","iso2Code": "${default.iso2Code}","company": "${default.company}","phone": "${default.phone}"},"idShipmentMethod": 2,"requestedDeliveryDate": "${shipment.delivery_date}"},{"items": ["${concrete.with_options.sku}"],"shippingAddress": {"salutation": "","firstName": "","lastName": "","address1": "","address2": "","address3": "","zipCode": "","city": "","iso2Code": "","company": "","phone": "","isDefaultBilling": False,"isDefaultShipping": False},"idShipmentMethod": 4,"requestedDeliveryDate": None}]}}}
-#    Then Response status code should be:    ${422}
-#    And Response reason should be:    Unprocessable Content
-#    And Response should return error code:    4302
-#    And Response should return error message:
-#    ...    Provided address is not valid. You can either provide address ID or address fields.
-#    [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cart_id}
-#    ...    AND    Response status code should be:    204
-#
-#Create_order_with_split_shipments_&_without_shipping_address
-#    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
-#    ...    AND    I set Headers:    Authorization=${token}
-#    ...    AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
-#    ...    AND    Save value to a variable:    [data][id]    cart_id
-#    When I send a POST request:
-#    ...    /checkout?include=orders
-#    ...    {"data": {"type": "checkout","attributes": {"customer": {"salutation": "${yves_user.salutation}","email": "${yves_user.email}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}"},"idCart": "${cart_id}","billingAddress": {"salutation": "${yves_user.salutation}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}","address1": "${default.address1}","address2": "${default.address2}","address3": "${default.address3}","zipCode": "${default.zipCode}","city": "${default.city}","iso2Code": "${default.iso2Code}","company": "${default.company}","phone": "${default.phone}","isDefaultBilling": False,"isDefaultShipping": False},"payments": [{"paymentMethodName": "${payment_method_name}","paymentProviderName": "${payment_provider_name}"}],"shipments": [{"items": ["${concrete.available_product.with_stock_and_never_out_of_stock.sku}"],"shippingAddress": {"salutation": "${yves_user.salutation}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}","address1": "${default.address1}","address2": "${default.address2}","address3": "${default.address3}","zipCode": "${default.zipCode}","city": "${default.city}","iso2Code": "${default.iso2Code}","company": "${default.company}","phone": "${default.phone}"},"idShipmentMethod": 2,"requestedDeliveryDate": "${shipment.delivery_date}"},{"items": ["${concrete.with_options.sku}"],"shippingAddress": {},"idShipmentMethod": 4,"requestedDeliveryDate": None}]}}}
-#    Then Response status code should be:    ${422}
-#    And Response reason should be:    Unprocessable Content
-#    And Response should return error code:    901
-#    And Response should return error message:    shipments.1.shippingAddress => This value should not be blank.
-#    [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cart_id}
-#    ...    AND    Response status code should be:    204
+
+Create_order_with_split_shipments_&_empty_shipping_address
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
+    ...    AND    I set Headers:    Authorization=${token}
+    ...    AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
+    ...    AND    Save value to a variable:    [data][id]    cart_id
+    When I send a POST request:
+    ...    /checkout?include=orders
+    ...    {"data": {"type": "checkout","attributes": {"customer": {"salutation": "${yves_user.salutation}","email": "${yves_user.email}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}"},"idCart": "${cart_id}","billingAddress": {"salutation": "${yves_user.salutation}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}","address1": "${default.address1}","address2": "${default.address2}","address3": "${default.address3}","zipCode": "${default.zipCode}","city": "${default.city}","iso2Code": "${default.iso2Code}","company": "${default.company}","phone": "${default.phone}","isDefaultBilling": False,"isDefaultShipping": False},"payments": [{"paymentMethodName": "${payment_method_name}","paymentProviderName": "${payment_provider_name}"}],"shipments": [{"items": ["${concrete.available_product.with_stock_and_never_out_of_stock.sku}"],"shippingAddress": {"salutation": "${yves_user.salutation}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}","address1": "${default.address1}","address2": "${default.address2}","address3": "${default.address3}","zipCode": "${default.zipCode}","city": "${default.city}","iso2Code": "${default.iso2Code}","company": "${default.company}","phone": "${default.phone}"},"idShipmentMethod": 2,"requestedDeliveryDate": "${shipment.delivery_date}"},{"items": ["${concrete.with_options.sku}"],"shippingAddress": {"salutation": "","firstName": "","lastName": "","address1": "","address2": "","address3": "","zipCode": "","city": "","iso2Code": "","company": "","phone": "","isDefaultBilling": False,"isDefaultShipping": False},"idShipmentMethod": 4,"requestedDeliveryDate": None}]}}}
+    Then Response status code should be:    ${422}
+    And Response reason should be:    Unprocessable Content
+    And Response should return error code:    4302
+    And Response should return error message:
+    ...    Provided address is not valid. You can either provide address ID or address fields.
+    [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cart_id}
+    ...    AND    Response status code should be:    204
+
+Create_order_with_split_shipments_&_without_shipping_address
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
+    ...    AND    I set Headers:    Authorization=${token}
+    ...    AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
+    ...    AND    Save value to a variable:    [data][id]    cart_id
+    When I send a POST request:
+    ...    /checkout?include=orders
+    ...    {"data": {"type": "checkout","attributes": {"customer": {"salutation": "${yves_user.salutation}","email": "${yves_user.email}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}"},"idCart": "${cart_id}","billingAddress": {"salutation": "${yves_user.salutation}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}","address1": "${default.address1}","address2": "${default.address2}","address3": "${default.address3}","zipCode": "${default.zipCode}","city": "${default.city}","iso2Code": "${default.iso2Code}","company": "${default.company}","phone": "${default.phone}","isDefaultBilling": False,"isDefaultShipping": False},"payments": [{"paymentMethodName": "${payment_method_name}","paymentProviderName": "${payment_provider_name}"}],"shipments": [{"items": ["${concrete.available_product.with_stock_and_never_out_of_stock.sku}"],"shippingAddress": {"salutation": "${yves_user.salutation}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}","address1": "${default.address1}","address2": "${default.address2}","address3": "${default.address3}","zipCode": "${default.zipCode}","city": "${default.city}","iso2Code": "${default.iso2Code}","company": "${default.company}","phone": "${default.phone}"},"idShipmentMethod": 2,"requestedDeliveryDate": "${shipment.delivery_date}"},{"items": ["${concrete.with_options.sku}"],"shippingAddress": {},"idShipmentMethod": 4,"requestedDeliveryDate": None}]}}}
+    Then Response status code should be:    ${422}
+    And Response reason should be:    Unprocessable Content
+    And Response should return error code:    901
+    And Response should return error message:    shipments.1.shippingAddress => This value should not be blank.
+    [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cart_id}
+    ...    AND    Response status code should be:    204
