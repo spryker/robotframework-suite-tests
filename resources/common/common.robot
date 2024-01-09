@@ -49,7 +49,9 @@ Common_suite_setup
     Load Variables    ${env}
     Overwrite env variables
     ${random}=    Generate Random String    5    [NUMBERS]
+    ${random_id}=    Generate Random String    5    [NUMBERS]
     Set Global Variable    ${random}
+    Set Global Variable    ${random_id}
     ${today}=    Get Current Date    result_format=%Y-%m-%d
     Set Global Variable    ${today}
     IF    ${docker}
