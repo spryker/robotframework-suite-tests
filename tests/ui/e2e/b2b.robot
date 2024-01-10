@@ -1434,7 +1434,8 @@ Multistore_CMS
 
 Product_Availability_Calculation
     [Documentation]    Check product availability + multistore
-    [Setup]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    [Setup]    Run Keywords    Repeat Keyword    3    Trigger multistore p&s
+    ...    AND    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: update warehouse:    
     ...    || warehouse  | store || 
     ...    || Warehouse1 | AT    ||

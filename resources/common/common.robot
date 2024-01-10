@@ -415,31 +415,15 @@ Delete country by iso2_code in Database:
     Execute Sql String    DELETE FROM spy_country WHERE iso2_code = '${iso2_code}';
     Disconnect From Database
 
-Create dynamic entity configuration in Database:
-     [Documentation]    This keyword create dynamic entity configuration in the DB table spy_dynamic_entity_configuration.
+Update dynamic entity configuration in Database:
+     [Documentation]    This keyword update dynamic entity configuration in the DB table spy_dynamic_entity_configuration if configuration exists.
         ...    *Example:*
         ...
-        ...    ``Create dynamic entity configuration in Database:    country    spy_country     1   {"identifier":"id_country","fields":[...]}``
+        ...    ``Update dynamic entity configuration in Database:    country    spy_country     1   {"identifier":"id_country","fields":[...]}``
         ...
     [Arguments]    ${table_alias}   ${table_name}    ${is_active}    ${definition}
-    ${new_id}=    Get next id from table    spy_dynamic_entity_configuration    id_dynamic_entity_configuration
     Connect to Spryker DB
-    IF    '${db_engine}' == 'pymysql'
-        Execute Sql String  insert ignore into spy_dynamic_entity_configuration (table_alias, table_name, is_active, definition) value ('${table_alias}', '${table_name}', '${is_active}', '${definition}');
-    ELSE
-        Execute Sql String  insert into spy_dynamic_entity_configuration (id_dynamic_entity_configuration, table_alias, table_name, is_active, definition) values (${new_id}, '${table_alias}', '${table_name}', '${is_active}', '${definition}')
-    END
-    Disconnect From Database
-
-Delete dynamic entity configuration in Database:
-     [Documentation]    This keyword delete dynamic entity configuration in the DB table spy_dynamic_entity_configuration.
-        ...    *Example:*
-        ...
-        ...    ``Delete dynamic entity configuration in Database:    country```
-        ...
-    [Arguments]    ${table_alias}
-    Connect to Spryker DB
-    Execute Sql String  DELETE FROM spy_dynamic_entity_configuration WHERE table_alias = '${table_alias}';
+    Execute Sql String  update spy_dynamic_entity_configuration set table_alias = '${table_alias}', table_name = '${table_name}', is_active = '${is_active}', definition = '${definition}' where table_alias = '${table_alias}';
     Disconnect From Database
 
 I add 'admin' role to company user and get company_user_uuid:
@@ -499,11 +483,11 @@ Get voucher code by discountId from Database:
         Save the result of a SELECT DB query to a variable:    select code from spy_discount_voucher where fk_discount_voucher_pool = ${discount_voucher_pool_id} and is_active = true limit 1    discount_voucher_code
     END
 
-Create dynamic entity configuration relation in Database:
-     [Documentation]    This keyword create dynamic entity configuration in the DB tables spy_dynamic_entity_configuration_relation and spy_dynamic_entity_configuration_relation_field_mapping.
+Update dynamic entity configuration relation in Database:
+     [Documentation]    This keyword update dynamic entity configuration in the DB tables spy_dynamic_entity_configuration_relation and spy_dynamic_entity_configuration_relation_field_mapping.
         ...    *Example:*
         ...
-        ...    ``Create dynamic entity configuration relation in Database:    country    spy_country     1   {"identifier":"id_country","fields":[...]}``
+        ...    ``Update dynamic entity configuration relation in Database:    product-abstracts    products    productAbstractProducts    fk_product_abstract    id_product_abstract``
         ...
     [Arguments]    ${parent_dynamic_entity_configuration_alias}   ${child_dynamic_entity_configuration_alias}    ${name}    ${child_field_name}   ${parent_field_name}
     Connect to Spryker DB
@@ -514,49 +498,10 @@ Create dynamic entity configuration relation in Database:
     ${child_dynamic_entity_configuration_alias_id}=    Query    SELECT id_dynamic_entity_configuration from spy_dynamic_entity_configuration where table_alias='${child_dynamic_entity_configuration_alias}';
     ${child_dynamic_entity_configuration_alias_id}=    Set Variable    ${child_dynamic_entity_configuration_alias_id[0][0]}
     Log  ${child_dynamic_entity_configuration_alias_id}
-
-    IF    '${db_engine}' == 'pymysql'
-        Execute Sql String    INSERT INTO spy_dynamic_entity_configuration_relation (fk_parent_dynamic_entity_configuration,fk_child_dynamic_entity_configuration,name,is_editable) VALUES (${parent_dynamic_entity_configuration_alias_id},${child_dynamic_entity_configuration_alias_id},'${name}',true);
-    ELSE
-        Disconnect From Database
-        ${new_relation_id}=    Get next id from table    spy_dynamic_entity_configuration_relation    id_dynamic_entity_configuration_relation
-        Log  ${new_relation_id}
-        Connect to Spryker DB
-        Execute Sql String    INSERT INTO spy_dynamic_entity_configuration_relation (id_dynamic_entity_configuration_relation, fk_parent_dynamic_entity_configuration, fk_child_dynamic_entity_configuration,name,is_editable) values (${new_relation_id}, ${parent_dynamic_entity_configuration_alias_id},${child_dynamic_entity_configuration_alias_id},'${name}',true);
-    END
+    Execute Sql String  update spy_dynamic_entity_configuration_relation set fk_parent_dynamic_entity_configuration = '${parent_dynamic_entity_configuration_alias_id}', fk_child_dynamic_entity_configuration = '${child_dynamic_entity_configuration_alias_id}', name = '${name}', is_editable = true where name='${name}';
 
     ${dynamic_entity_configuration_relation_id}=    Query    SELECT id_dynamic_entity_configuration_relation from spy_dynamic_entity_configuration_relation where name='${name}';
     ${dynamic_entity_configuration_relation_id}=    Set Variable    ${dynamic_entity_configuration_relation_id[0][0]}
 
-    IF    '${db_engine}' == 'pymysql'
-        Execute Sql String    insert ignore into spy_dynamic_entity_configuration_relation_field_mapping (fk_dynamic_entity_configuration_relation, parent_field_name, child_field_name) value (${dynamic_entity_configuration_relation_id}, '${parent_field_name}', '${child_field_name}');
-    ELSE
-        Disconnect From Database
-        ${new_mapping_id}=    Get next id from table    spy_dynamic_entity_configuration_relation_field_mapping    id_dynamic_entity_configuration_relation_field_mapping
-        Connect to Spryker DB
-        Execute Sql String  insert into spy_dynamic_entity_configuration_relation_field_mapping (id_dynamic_entity_configuration_relation_field_mapping, fk_dynamic_entity_configuration_relation, parent_field_name, child_field_name) values (${new_mapping_id},'${dynamic_entity_configuration_relation_id}','${parent_field_name}','${child_field_name}');
-    END
-    Disconnect From Database
-
-Delete dynamic entity configuration relation in Database:
-     [Documentation]    This keyword delete dynamic entity configuration in the DB table spy_dynamic_entity_configuration_relation.
-        ...    *Example:*
-        ...
-        ...    ``Delete dynamic entity configuration relation in Database:    name```
-        ...
-    [Arguments]    ${relation_name}
-    Connect to Spryker DB
-    ${dynamic_entity_configuration_relation_id}=    Query    SELECT id_dynamic_entity_configuration_relation from spy_dynamic_entity_configuration_relation where name='${relation_name}';
-    Log    ${dynamic_entity_configuration_relation_id}
-    ${dynamic_entity_configuration_relation_id_length}=    Get Length    ${dynamic_entity_configuration_relation_id}
-    ${dynamic_entity_configuration_relation_id_length}=    Set Variable    ${dynamic_entity_configuration_relation_id_length}
-    Log    ${dynamic_entity_configuration_relation_id_length}
-    IF   ${dynamic_entity_configuration_relation_id_length} > 0
-        ${dynamic_entity_configuration_relation_id}=    Set Variable    ${dynamic_entity_configuration_relation_id[0][0]}
-        Log   ${dynamic_entity_configuration_relation_id}
-
-        Execute Sql String  DELETE FROM spy_dynamic_entity_configuration_relation_field_mapping WHERE fk_dynamic_entity_configuration_relation = ${dynamic_entity_configuration_relation_id};
-        Execute Sql String  DELETE FROM spy_dynamic_entity_configuration_relation WHERE id_dynamic_entity_configuration_relation = ${dynamic_entity_configuration_relation_id};
-    END
-
+    Execute Sql String  update spy_dynamic_entity_configuration_relation_field_mapping set parent_field_name = '${parent_field_name}', child_field_name = '${child_field_name}' where fk_dynamic_entity_configuration_relation='${dynamic_entity_configuration_relation_id}';
     Disconnect From Database

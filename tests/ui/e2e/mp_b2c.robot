@@ -1313,16 +1313,16 @@ Merchant_Portal_My_Account
     ...    || sonia+editmu+${random}@spryker.com |          | Change123!321 |           |          ||
     MP: login on MP with provided credentials:    sonia+editmu+${random}@spryker.com    Change123!321
     MP: update merchant personal details with data:
-    ...    || firstName               | lastName                | email                                  | currentPassword | newPassword          ||
-    ...    || MPUpdatedFName${random} | MPUpdatedLName${random} | sonia+new+editmu+${random}@spryker.com | Change123!321   | UpdatedChange123!321 ||
+    ...    || firstName               | lastName                | email | currentPassword | newPassword          ||
+    ...    || MPUpdatedFName${random} | MPUpdatedLName${random} |       | Change123!321   | UpdatedChange123!321 ||
     MP: click submit button
-    MP: login on MP with provided credentials:    sonia+new+editmu+${random}@spryker.com    UpdatedChange123!321
+    MP: login on MP with provided credentials:    sonia+editmu+${random}@spryker.com    UpdatedChange123!321
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Users    Users
     Zed: table should contain:    MPUpdatedFName${random}
     Zed: table should contain:    MPUpdatedLName${random}
     [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    ...    AND    Zed: delete Zed user with the following email:    sonia+new+editmu+${random}@spryker.com
+    ...    AND    Zed: delete Zed user with the following email:    sonia+editmu+${random}@spryker.com
     
 Merchant_Portal_Dashboard
     [Documentation]    Checks that merchant user is able to access the dashboard page
@@ -1953,6 +1953,7 @@ Multistore_CMS
 
 Product_Availability_Calculation
     [Documentation]    Check product availability + multistore
+    [Setup]    Repeat Keyword    3    Trigger multistore p&s
     MP: login on MP with provided credentials:    ${merchant_spryker_email}
     MP: open navigation menu tab:    Products    
     MP: click on create new entity button:    Create Product
