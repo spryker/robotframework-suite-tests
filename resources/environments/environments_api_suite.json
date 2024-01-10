@@ -581,7 +581,7 @@
          "ipp_pages":"19",
          "categories":"19",
          "colors":"10",
-         "labels":"4",
+         "labels":"5",
          "materials":"7",
          "material":"5",
          "brands":"10",
@@ -776,7 +776,7 @@
    },
    "dataType":{
       "arrow":[
-         
+
       ]
    },
    "servicePoints":{
