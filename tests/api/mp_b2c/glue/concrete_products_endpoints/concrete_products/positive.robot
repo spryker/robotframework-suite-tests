@@ -74,7 +74,8 @@ Get_concrete_product_with_included_abstract_product
     And Response include element has self link:   abstract-products
 
 Get_concrete_product_with_included_product_labels
-        When I send a GET request:    /concrete-products/${concrete_product_with_alternative.sku}?include=product-labels
+    [Setup]    Trigger product labels update
+    When I send a GET request:    /concrete-products/${concrete_product_with_alternative.sku}?include=product-labels
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}

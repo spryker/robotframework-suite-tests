@@ -74,6 +74,7 @@ Get_concrete_product_with_included_abstract_product
     And Response include element has self link:   abstract-products
 
 Get_concrete_product_with_included_product_labels
+    [Setup]    Trigger product labels update
     When I send a GET request:    /concrete-products/${concrete_product_with_alternative.sku}?include=product-labels
     Then Response status code should be:    200
     And Response reason should be:    OK

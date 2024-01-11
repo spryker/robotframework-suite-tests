@@ -178,6 +178,7 @@ Connect to Spryker DB
         END
     END
     Set Test Variable    ${db_engine}
+    Disconnect From Database
     Connect To Database    ${db_engine}    ${db_name}    ${db_user}    ${db_password}    ${db_host}    ${db_port}
 
 Save the result of a SELECT DB query to a variable:
@@ -594,3 +595,12 @@ Delete dynamic entity configuration relation in Database:
     END
 
     Disconnect From Database
+    
+Trigger product labels update
+    [Arguments]    ${timeout}=5s
+    Run console command    console product-label:relations:update -vvv --no-touch    DE
+    Run console command    console product-label:validity    DE
+    Run console command    console product-label:relations:update -vvv --no-touch    AT
+    Run console command    console product-label:validity    AT
+    Repeat Keyword    3    Trigger multistore p&s
+    IF    ${docker} or ${ignore_console} != True    Sleep    ${timeout}
