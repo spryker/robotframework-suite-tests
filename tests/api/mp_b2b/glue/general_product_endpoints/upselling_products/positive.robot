@@ -199,13 +199,13 @@ Cart_contains_product_with_upselling_relation_with_include_abstract_product_avai
     ...  AND    Response status code should be:    204
 
 Cart_contains_product_with_upselling_relation_with_include_product_labels
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
+    [Setup]    Run Keywords    Trigger product labels update
+    ...    AND    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}
     ...    AND    I send a POST request:    /carts    {"data":{"type":"carts","attributes":{"priceMode":"${mode.gross}","currency":"${currency.eur.code}","store":"${store.de}","name":"Cart-${random}"}}}
     ...    AND    Save value to a variable:    [data][id]    cart_id
     ...    AND    I send a POST request:    /carts/${cart_id}/items    {"data": {"type": "items","attributes": {"sku": "${product_with_relations.has_related_products.concrete_sku}","quantity": 1}}}
     ...    AND    Response status code should be:    201
-    ...    AND    Trigger product labels update
     When I send a GET request:    /carts/${cart_id}/up-selling-products?include=product-labels
     Then Response status code should be:    200
     And Response reason should be:    OK
