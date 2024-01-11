@@ -100,6 +100,7 @@ Request_product_concrete_with_included_sales_unit_and_product_measurement_units
     And Response include element has self link:   sales-units
 
 Request_product_concrete_with_included_product_labels_and_product_options
+    [Setup]    Trigger product labels update
     When I send a GET request:    /concrete-products/${concrete_product.original_prices.sku}?include=product-labels,product-options
     Then Response status code should be:    200
     And Response reason should be:    OK
