@@ -29,7 +29,7 @@ Create_new_service_point
     [Teardown]     Run Keywords    Get service point uuid by key:    ${service_point_key}
     ...    AND    Delete service point in DB    ${servicePointUuid}
 
- Create_new_service_point_with_existing_name
+Create_new_service_point_with_existing_name
     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer ${token}
     When I send a POST request:    /service-points    {"data": {"type": "service-points","attributes": {"name": "Not Unique Name","key": "some-service-point-1${random}","isActive": "true","stores": ["DE", "AT"]}}}

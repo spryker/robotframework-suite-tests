@@ -65,6 +65,7 @@ Product_has_related_products
 Product_has_related_products_with_includes
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
+    ...    AND    Trigger product labels update
     When I send a GET request:    /abstract-products/${product_with_relations.has_related_products.sku}/related-products?include=product-labels
     Then Response status code should be:    200
     And Response reason should be:    OK

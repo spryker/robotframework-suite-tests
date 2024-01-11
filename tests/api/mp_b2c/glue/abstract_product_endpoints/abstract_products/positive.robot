@@ -82,6 +82,7 @@ Abstract_product_with_abstract_includes_for_availability_images_taxes_categories
     And Response include element has self link:   abstract-product-prices
     
 Abstract_product_with_abstract_includes_for_labels
+    [Setup]    Trigger product labels update
     When I send a GET request:    /abstract-products/${abstract_product.product_with_label.sku}?include=product-labels
     Then Response status code should be:    200
     And Response reason should be:    OK
