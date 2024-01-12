@@ -59,7 +59,7 @@ Common_suite_setup
     IF    ${docker}
         Set Global Variable    ${db_host}    ${docker_db_host}
     END
-    [Return]    ${random}
+    RETURN    ${random}
 
 Load Variables
     [Documentation]    Keyword is used to load variable values from the environment file passed during execution. This Keyword is used during suite setup.
@@ -116,7 +116,7 @@ Set Up Keyword Arguments
         ${var_value}=   Set Variable    ${value}
         Set Test Variable    ${${key}}    ${var_value}
     END
-    [Return]    &{arguments}
+    RETURN    &{arguments}
 
 Variable datatype should be:
     [Arguments]    ${variable}    ${expected_data_type}
@@ -126,7 +126,7 @@ Variable datatype should be:
 Evaluate datatype of a variable:
     [Arguments]    ${variable}
     ${data_type}=    Evaluate     type($variable).__name__
-    [Return]    ${data_type}
+    RETURN    ${data_type}
     #Example of assertions:
     # ${is int}=      Evaluate     isinstance($variable, int)    # will be True
     # ${is string}=   Evaluate     isinstance($variable, str)    # will be False
@@ -135,13 +135,13 @@ Conver string to List by separator:
     [Arguments]    ${string}    ${separator}=,
     ${convertedList}=    Split String    ${string}    ${separator}
     ${convertedList}=    Set Test Variable    ${convertedList}
-    [Return]    ${convertedList}
+    RETURN    ${convertedList}
 
 Remove leading and trailing whitespace from a string:
     [Arguments]    ${string}
     ${string}=    Replace String Using Regexp    ${string}    (^[ ]+|[ ]+$)    ${EMPTY}
     Set Global Variable    ${string}
-    [Return]    ${string}
+    RETURN    ${string}
 
 Connect to Spryker DB
     [Documentation]    This keyword allows to connect to Spryker DB.
@@ -204,13 +204,13 @@ Save the result of a SELECT DB query to a variable:
     ${var_value}=    Replace String    ${var_value}    [   ${EMPTY}
     ${var_value}=    Replace String    ${var_value}    ]   ${EMPTY}
     Set Test Variable    ${${variable_name}}    ${var_value}
-    [Return]    ${variable_name}
+    RETURN    ${variable_name}
 
 Send GET request and return status code:
     [Arguments]    ${url}    ${timeout}=5
     ${response}=    GET    ${url}    timeout=${timeout}    allow_redirects=true    expected_status=ANY
     Set Test Variable    ${response.status_code}    ${response.status_code}
-    [Return]    ${response.status_code}
+    RETURN    ${response.status_code}
 
 Run console command
     [Documentation]    This keyword executes console command using provided command and parameters. If docker is enabled, it will execute the command using docker.
@@ -285,7 +285,7 @@ Get next id from table
     END
     Disconnect From Database
     Log    ${newId}
-    [Return]    ${newId}
+    RETURN    ${newId}
 
 Get concrete product sku by id from DB:
     [Documentation]    This keyword returns product concrete sku from DB found by id_product. Returns '${concrete_sku}' variable
@@ -468,7 +468,7 @@ I add 'admin' role to company user and get company_user_uuid:
     ${company_user_uuid}=    Replace String    ${company_user_uuid}    [   ${EMPTY}
     ${company_user_uuid}=    Replace String    ${company_user_uuid}    ]   ${EMPTY}
     Set Test Variable    ${company_user_uuid}    ${company_user_uuid}
-    [Return]    ${company_user_uuid}
+    RETURN    ${company_user_uuid}
 
 Get voucher code by discountId from Database:
     [Documentation]    This keyword allows to get voucher code according to the discount ID. Discount_id can be found in Backoffice > Merchandising > Discount page

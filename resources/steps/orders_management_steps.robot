@@ -248,7 +248,7 @@ Zed: get the last placed order ID of the customer by email:
     Zed: perform search by:    ${email}
     ${zedLastPlacedOrder}=    Get Text    xpath=//table[contains(@data-ajax,'sales')][contains(@class,'dataTable')]/tbody/tr[1]/td[2]
     Set Suite Variable    ${zedLastPlacedOrder}    ${zedLastPlacedOrder}
-    [Return]    ${zedLastPlacedOrder}
+    RETURN    ${zedLastPlacedOrder}
 
 Zed: order has the following number of shipments:
     [Arguments]    ${orderID}    ${expectedShipments}

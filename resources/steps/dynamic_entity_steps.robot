@@ -169,7 +169,7 @@ Find first available product via data exchange api
     END
     Get concrete product sku by id from DB:    ${fk_product}
     Make sure that concrete product is available:    ${concrete_sku}
-    [Return]    ${concrete_sku}
+    RETURN    ${concrete_sku}
 
 Make sure that concrete product is available:
     [Arguments]    ${sku}=${concrete_sku}

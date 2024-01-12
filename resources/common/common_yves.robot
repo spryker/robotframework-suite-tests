@@ -31,7 +31,7 @@ Resource    ../pages/yves/yves_checkout_cancel_payment_page.robot
 Resource    ../steps/header_steps.robot
 Resource    ../steps/checkout_steps.robot
 
-*** Variable ***
+*** Variables ***
 ${notification_area}    xpath=//section[@data-qa='component notification-area']
 
 *** Keywords ***
@@ -192,7 +192,7 @@ Yves: get the last placed order ID by current customer
     Yves: go to URL:    /customer/order
     ${lastPlacedOrder}=    Get Text    xpath=//div[contains(@data-qa,'component order-table')]//tr[1]//td[1]
     Set Suite Variable    ${lastPlacedOrder}    ${lastPlacedOrder}
-    [Return]    ${lastPlacedOrder}
+    RETURN    ${lastPlacedOrder}
 
 Yves: go to URL:
     [Arguments]    ${url}
