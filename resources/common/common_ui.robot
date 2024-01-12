@@ -180,13 +180,13 @@ Get Location
     ${current_location}=    Get URL
     ${location}=    Set Variable    ${current_location}
     Set Test Variable    ${location}    ${location}
-    [Return]    ${location}
+    RETURN    ${location}
 
 Save current URL
     ${current_url}=    Get URL
     ${url}=    Set Variable    ${current_url}
     Set Test Variable    ${url}    ${url}
-    [Return]    ${url}
+    RETURN    ${url}
 
 Wait Until Element Is Not Visible
     [Arguments]    ${locator}    ${message}=${EMPTY}    ${timeout}=${browser_timeout}
@@ -252,7 +252,7 @@ Element Should Not Be Visible
 Get Element Attribute
     [Arguments]    ${locator}    ${attribute}
     ${element_attribute}=    Get Attribute    ${locator}    ${attribute}
-    [Return]    ${element_attribute}
+    RETURN    ${element_attribute}
 
 Select From List By Label
     [Arguments]    ${locator}    ${value}

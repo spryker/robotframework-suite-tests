@@ -3,7 +3,7 @@ Resource    ../common/common.robot
 Resource    ../pages/yves/yves_product_details_page.robot
 Resource    ../common/common_yves.robot
 
-*** Variable ***
+*** Variables ***
 ${pdpPriceLocator}    ${pdp_price_element_locator}
 ${addToCartButton}    ${pdp_add_to_cart_button}
 ${alternativeProducts}    ${pdp_alternative_products_slider}[${env}]
@@ -271,14 +271,14 @@ Yves: get sku of the concrete product on PDP
     ${got_concrete_product_sku}=    Replace String    ${got_concrete_product_sku}    SKU:     ${EMPTY}
     ${got_concrete_product_sku}=    Replace String    ${got_concrete_product_sku}    ${SPACE}    ${EMPTY}
     Set Global Variable    ${got_concrete_product_sku}
-    [Return]    ${got_concrete_product_sku}
+    RETURN    ${got_concrete_product_sku}
 
 Yves: get name of the product on PDP
     Wait Until Element Is Visible    ${pdp_main_container_locator}[${env}]
     ${got_product_name}=    Get Text    ${pdp_product_name}
     ${got_product_name}=    Remove leading and trailing whitespace from a string:    ${got_product_name}
     Set Global Variable    ${got_product_name}
-    [Return]    ${got_product_name}
+    RETURN    ${got_product_name}
 
 Yves: get sku of the abstract product on PDP
     Wait Until Element Is Visible    ${pdp_main_container_locator}[${env}]
@@ -293,7 +293,7 @@ Yves: get sku of the abstract product on PDP
     ${got_abstract_product_sku}=    Set Variable If    '${env}'!='ui_b2b' and '${sku_length}'=='2'    0${got_abstract_product_sku}    ${got_abstract_product_sku}
     ${got_abstract_product_sku}=    Set Variable If    '${env}'!='ui_b2b' and '${sku_length}'=='1'    00${got_abstract_product_sku}    ${got_abstract_product_sku}
     Set Global Variable    ${got_abstract_product_sku}
-    [Return]    ${got_abstract_product_sku}
+    RETURN    ${got_abstract_product_sku}
 
 Yves: add product to wishlist:
     [Arguments]    ${wishlistName}    ${selectWishlist}=

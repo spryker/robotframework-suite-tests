@@ -16,7 +16,7 @@ Get latest cms page version data by uuid
     Connect to Spryker DB
     ${data}    Query    SELECT fk_cms_page, version, data from spy_cms_version JOIN spy_cms_page ON spy_cms_version.fk_cms_page = spy_cms_page.id_cms_page WHERE spy_cms_page.uuid = '${uuid}' ORDER BY version DESC LIMIT 1;
     Disconnect From Database
-    [Return]    ${data[0]}
+    RETURN    ${data[0]}
 
 Add content product abstract list to cms page in DB
     [Documentation]    This keyword adds conctent product abstarct list to a given CMS page in the DB table `spy_cms_version`.
@@ -75,4 +75,4 @@ Replace special chars
     IF    '${db_engine}' == 'pymysql'
         ${converted_string}=    Replace String    ${converted_string}    "    \\u0022
     END
-    [Return]  ${converted_string}
+    RETURN  ${converted_string}
