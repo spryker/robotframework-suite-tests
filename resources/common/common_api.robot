@@ -111,7 +111,7 @@ I set Headers:
 
     [Arguments]    &{headers}
     Set Test Variable    &{headers}
-    [Return]    &{headers}
+    RETURN    &{headers}
 
 I get access token for the customer:
     [Documentation]    This is a helper keyword which helps get access token for future use in the headers of the following requests.
@@ -146,7 +146,7 @@ I get access token for the customer:
     Set Test Variable    ${response_body}    ${response_body}
     Set Test Variable    ${expected_self_link}    ${current_url}/access-tokens
     Log    ${token}
-    [Return]    ${token}
+    RETURN    ${token}
 
 I get access token for the company user by uuid:
     [Documentation]    This is a helper keyword which helps get company user access token by uuid for future use in the headers of the following requests.
@@ -179,7 +179,7 @@ I get access token for the company user by uuid:
     Set Test Variable    ${response_body}    ${response_body}
     Set Test Variable    ${expected_self_link}    ${current_url}/company-user-access-tokens
     Log    ${token}
-    [Return]    ${token}
+    RETURN    ${token}
 
 I send a POST request:
     [Documentation]    This keyword is used to make POST requests. It accepts the endpoint *without the domain* and the body in JOSN.
@@ -214,7 +214,7 @@ I send a POST request:
     Set Test Variable    ${response_body}    ${response_body}
     Set Test Variable    ${response}    ${response}
     Set Test Variable    ${expected_self_link}    ${current_url}${path}
-    [Return]    ${response_body}
+    RETURN    ${response_body}
 
 I send a POST request with data:
     [Documentation]    This keyword is used to make POST requests with a plain text data. It accepts the endpoint *without the domain* and the body in plain text.
@@ -249,7 +249,7 @@ I send a POST request with data:
     Set Test Variable    ${response_body}    ${response_body}
     Set Test Variable    ${response}    ${response}
     Set Test Variable    ${expected_self_link}    ${current_url}${path}
-    [Return]    ${response_body}
+    RETURN    ${response_body}
 
 I send a PUT request:
     [Documentation]    This keyword is used to make PUT requests. It accepts the endpoint *without the domain* and the body in JSON.
@@ -284,7 +284,7 @@ I send a PUT request:
     Set Test Variable    ${response_body}    ${response_body}
     Set Test Variable    ${response}    ${response}
     Set Test Variable    ${expected_self_link}    ${current_url}${path}
-    [Return]    ${response_body}
+    RETURN    ${response_body}
 
 I send a PUT request with data:
     [Documentation]    This keyword is used to make PUT requests with a plain text data. It accepts the endpoint *without the domain* and the body in plain text.
@@ -319,7 +319,7 @@ I send a PUT request with data:
     Set Test Variable    ${response_body}    ${response_body}
     Set Test Variable    ${response}    ${response}
     Set Test Variable    ${expected_self_link}    ${current_url}${path}
-    [Return]    ${response_body}
+    RETURN    ${response_body}
 
 I send a PATCH request:
     [Documentation]    This keyword is used to make PATCH requests. It accepts the endpoint *without the domain* and the body in JOSN.
@@ -359,7 +359,7 @@ I send a PATCH request:
     Set Test Variable    ${response_body}    ${response_body}
     Set Test Variable    ${response}    ${response}
     Set Test Variable    ${expected_self_link}    ${current_url}${path}
-    [Return]    ${response_body}
+    RETURN    ${response_body}
 
 I send a PATCH request with data:
     [Documentation]    This keyword is used to make PATCH requests with a plain text data. It accepts the endpoint *without the domain* and the body in plain text.
@@ -400,7 +400,7 @@ I send a PATCH request with data:
     Set Test Variable    ${response_body}    ${response_body}
     Set Test Variable    ${response}    ${response}
     Set Test Variable    ${expected_self_link}    ${current_url}${path}
-    [Return]    ${response_body}
+    RETURN    ${response_body}
 
 I send a GET request:
     [Documentation]    This keyword is used to make GET requests. It accepts the endpoint *without the domain*.
@@ -438,7 +438,7 @@ I send a GET request:
     Set Test Variable    ${response_body}    ${response_body}
     Set Test Variable    ${response}    ${response}
     Set Test Variable    ${expected_self_link}    ${current_url}${path}
-    [Return]    ${response_body}
+    RETURN    ${response_body}
 
 I send a DELETE request:
     [Documentation]    This keyword is used to make DELETE requests. It accepts the endpoint *without the domain*.
@@ -479,7 +479,7 @@ I send a DELETE request:
     Set Test Variable    ${response_headers}    ${response_headers}
     Set Test Variable    ${response_body}    ${response_body}
     Set Test Variable    ${expected_self_link}    ${current_url}${path}
-    [Return]    ${response_body}
+    RETURN    ${response_body}
 
 Response reason should be:
     [Documentation]    This keyword checks that response reason saved  in ``${response}`` test variable matches the reason passed as an argument.
@@ -577,7 +577,7 @@ Perform arithmetical calculation with two arguments:
     END
     ${result}=    Convert To String    ${result}
     Set Test Variable    ${${variable_name}}    ${result}
-    [Return]    ${variable_name}
+    RETURN    ${variable_name}
 
 Response body parameter should be in:
     [Documentation]    This keyword checks that the response saved  in ``${response_body}`` test variable contsains the speficied parameter ``${json_path}`` with the value that matches one of the parameters ``${expected_value1}``, ``${expected_value2}``.
@@ -691,7 +691,7 @@ Evaluate datatype of a variable:
     ...    ``${is string}=   Evaluate     isinstance($variable, str) ``    will be False
     [Arguments]    ${variable}
     ${data_type}=    Evaluate     type($variable).__name__
-    [Return]    ${data_type}
+    RETURN    ${data_type}
 
 Response header parameter should be:
     [Documentation]    This keyword checks that the response header saved previiously in ``${response_headers}`` test variable has the expected header with name ``${header_parameter}`` and this header has value ``${header_value}``
@@ -1517,7 +1517,7 @@ Save value to a variable:
     ${var_value}=    Replace String    ${var_value}    [   ${EMPTY}
     ${var_value}=    Replace String    ${var_value}    ]   ${EMPTY}
     Set Test Variable    ${${name}}    ${var_value}
-    [Return]    ${name}
+    RETURN    ${name}
 
 Save Header value to a variable:
     [Documentation]    This keyword saves any value located in a response Header parameter ``${header_parameter}`` to a test variable called ``${name}``.
@@ -1534,7 +1534,7 @@ Save Header value to a variable:
     [Arguments]    ${header_parameter}    ${name}
     ${actual_header_value}=    Get From Dictionary    ${response_headers}    ${header_parameter}
     Set Test Variable    ${${name}}    ${actual_header_value}
-    [Return]    ${name}
+    RETURN    ${name}
 
 Response body parameter should contain:
     [Documentation]    This keyword checks that response parameter with name ``${json_path}`` contains the specified substing ``${expected_value}``.
@@ -1740,7 +1740,7 @@ Get ETag header value from cart
         ${Etag}=    Replace String    ${Etag}    "   ${EMPTY}
         Log    ${Etag}
         Set Test Variable    ${Etag}
-        [Return]    ${Etag}
+        RETURN    ${Etag}
 
 Create a guest cart:
     [Documentation]    This keyword creates guest cart and sets ``${x_anonymous_customer_unique_id}`` that specify guest reference
@@ -2184,4 +2184,4 @@ I get access token by user credentials:
     And I send a POST request:    /token    {"grantType": "${grant_type.password}","username": "${email}","password": "${password}"}
     Save value to a variable:    [access_token]    token
     Log    ${token}
-    [Return]    ${token}
+    RETURN    ${token}

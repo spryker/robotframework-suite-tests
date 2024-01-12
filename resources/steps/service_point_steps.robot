@@ -15,7 +15,7 @@ Get id service point by uuid
     Connect to Spryker DB
     ${servicePointIds}    Query    SELECT id_service_point FROM spy_service_point WHERE uuid = '${uuid}' ORDER BY id_service_point DESC LIMIT 1;
     Disconnect From Database
-    [Return]    ${servicePointIds[0][0]}
+    RETURN    ${servicePointIds[0][0]}
 
 Create service point in DB
     [Documentation]    This keyword creates a new entry in the DB table `spy_service_point`. If `storeName` is provided, creates store relation.
@@ -196,7 +196,7 @@ Get service point uuid by key:
     END
     Disconnect From Database
     Set Test Variable    ${servicePointUuid}     ${servicePointUuid[0][0]}
-    [Return]    ${servicePointUuid}
+    RETURN    ${servicePointUuid}
 
 Delete service point in DB
     [Documentation]    This keyword deletes the entry from the DB table `spy_service_point`. If `withRelations=true`, deletes with relations.

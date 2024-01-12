@@ -1,7 +1,7 @@
 *** Settings ***
 Resource    ../../common/common_ui.robot
 
-*** Variable ***
+*** Variables ***
 ${shopping_lists_main_content_locator}    xpath=//div[@data-qa='component shopping-list-overview-table']
 ${shopping_lists_page_form_locator}    xpath=//form[@name='shopping_list_form']
 ${shopping_list_name_input_field}    id=shopping_list_form_name

@@ -2,7 +2,7 @@
 Resource    common_ui.robot
 Resource    ../pages/mp/mp_login_page.robot
 
-*** Variable ***
+*** Variables ***
 ${mp_user_menu_button}    xpath=//button[contains(@class,'spy-user-menu__action')]
 ${mp_navigation_slider_menu}    xpath=//spy-navigation
 ${mp_submit_button}    xpath=//button[@type='submit'][not(contains(text(),'Back'))]

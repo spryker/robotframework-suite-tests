@@ -147,7 +147,7 @@ Yves: get current cart item counter value
     [Documentation]    returns the cart item count number as an integer
     ${currentCartCounterText}=    Evaluate Javascript    ${None}    document.evaluate("//*[@data-qa='component navigation-top']//span[contains(@class,'cart-counter__quantity js-cart-counter__quantity')]", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.textContent
     ${currentCartCounter}=    Convert To Integer    ${currentCartCounterText}
-    [return]    ${currentCartCounter}
+    RETURN    ${currentCartCounter}
 
 Yves: mouse over color on product card:
     [Documentation]    the color should start with capital letter, e.g. Black, Red, White
