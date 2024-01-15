@@ -224,12 +224,12 @@ Run console command
         ${consoleCommand}=    Set Variable    curl --request POST -LsS --data "APPLICATION_STORE='${storeName}' COMMAND='${command}' cli.sh" --max-time 1000 --url "${docker_cli_url}/console"
         ${rc}    ${output}=    Run And Return RC And Output    ${consoleCommand}
         Log   ${output}
-        Should Be Equal As Integers    ${rc}    0    message=CLI command can't be executed. Check '{docker}', '{ignore_console}' variables value and cli execution path: '{cli_path}'
+        Should Be Equal As Integers    ${rc}    0    message=CLI output:"${output}". CLI command can't be executed. Check '{docker}', '{ignore_console}' variables value and cli execution path: '{cli_path}'.
     END
     IF    ${ignore_console} != True
         ${rc}    ${output}=    Run And Return RC And Output    ${consoleCommand}
         Log   ${output}
-        Should Be Equal As Integers    ${rc}    0    message=CLI command can't be executed. Check '{docker}', '{ignore_console}' variables value and cli execution path: '{cli_path}'
+        Should Be Equal As Integers    ${rc}    0    message=CLI output:"${output}". CLI command can't be executed. Check '{docker}', '{ignore_console}' variables value and cli execution path: '{cli_path}'
     END
 
 Trigger p&s
