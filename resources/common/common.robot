@@ -578,3 +578,14 @@ Delete product_abstract by id_product_abstract in Database:
     Connect to Spryker DB
     Execute Sql String    DELETE FROM spy_product_abstract WHERE id_product_abstract = ${id_product_abstract};
     Disconnect From Database
+
+Delete product_price by id_price_product in Database:
+    [Documentation]    This keyword deletes a product price by id_price_product from spy_price_product.
+        ...    *Example:*
+        ...
+        ...    ``Delete product_price by id_price_product in Database:    200``
+        ...
+    [Arguments]    ${id_price_product}
+    Connect to Spryker DB
+    Execute Sql String    DELETE FROM spy_price_product WHERE id_price_product = ${id_price_product};
+    Disconnect From Database
