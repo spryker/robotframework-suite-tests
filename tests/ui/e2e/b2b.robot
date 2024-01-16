@@ -1302,15 +1302,12 @@ Order_Cancelation
     Yves: get the last placed order ID by current customer
     Trigger oms
     ### change the order state of one product ###
-    Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    Zed: go to order page:    ${lastPlacedOrder}
-    Zed: trigger matching state of order item inside xxx shipment:    403125    Pay
-    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     Yves: go to 'Order History' page
     Yves: 'View Order/Reorder/Return' on the order history page:    View Order    ${lastPlacedOrder}
     Yves: 'Order Details' page contains the cancel order button:    true
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to order page:    ${lastPlacedOrder}
+    Zed: trigger matching state of order item inside xxx shipment:    403125    Pay
     Zed: trigger matching state of order item inside xxx shipment:    403125    Skip timeout 
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     Yves: go to 'Order History' page
@@ -1434,7 +1431,8 @@ Multistore_CMS
 
 Product_Availability_Calculation
     [Documentation]    Check product availability + multistore
-    [Setup]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    [Setup]    Run Keywords    Repeat Keyword    3    Trigger multistore p&s
+    ...    AND    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: update warehouse:    
     ...    || warehouse  | store || 
     ...    || Warehouse1 | AT    ||
@@ -1489,7 +1487,7 @@ Product_Availability_Calculation
     Yves: get the last placed order ID by current customer
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to order page:    ${lastPlacedOrder}
-    Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Pay
+    Zed: wait for order item to be in state:    sku=availabilitySKU${random}-farbe-grey    state=payment pending    iterations=7  
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     Yves: go to PDP of the product with sku:    availabilitySKU${random}
     Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    False

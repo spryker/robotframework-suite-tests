@@ -33,7 +33,7 @@ Get_warehouse_user_assigment_id:
     ${id_warehouse_user_assigment}=   Query    SELECT id_warehouse_user_assignment FROM spy_warehouse_user_assignment WHERE uuid = '${warehouse_uuid}' AND user_uuid='${user_uuid}';
     Disconnect From Database
     Set Test Variable    ${id_warehouse_user_assigment}    ${id_warehouse_user_assigment[0][0]}
-    [Return]    ${id_warehouse_user_assigment}
+    RETURN    ${id_warehouse_user_assigment}
 
 Remove_warehous_user_assigment:
     [Documentation]    This keyword deletes the entry from the DB table `spy_warehouse_user_assignment`.

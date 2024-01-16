@@ -85,8 +85,8 @@ Authorized_User_Access
 New_Customer_Registration
     [Documentation]    Check that a new user can be registered in the system
     Register a new customer with data:
-    ...    || salutation | first name | last name | e-mail                       | password            ||
-    ...    || Mr.        | Test       | User      | sonia+${random}@spryker.com  | Change123!${random} ||
+    ...    || salutation | first name | last name | e-mail                       | password                      ||
+    ...    || Mr.        | New        | User      | sonia+${random}@spryker.com  | P${random_str}#!#${random_id} ||
     Yves: flash message should be shown:    success    Almost there! We send you an email to validate your email address. Please confirm it to be able to log in.
     [Teardown]    Zed: delete customer:
     ...    || email                       ||
@@ -258,11 +258,11 @@ Register_during_checkout
     Page Should Not Contain Element    ${pdp_add_to_wishlist_button}
     Yves: go to b2c shopping cart  
     Yves: click on the 'Checkout' button in the shopping cart
-    Yves: signup guest user during checkout:    ${guest_user_first_name}    ${guest_user_last_name}    sonia+guest${random}@spryker.com    Abc#${random}    Abc#${random}
+    Yves: signup guest user during checkout:    ${guest_user_first_name}    ${guest_user_last_name}    sonia+guest${random}@spryker.com    ${random_str}R!#${random}    ${random_str}R!#${random}
     Save the result of a SELECT DB query to a variable:    select registration_key from spy_customer where email = 'sonia+guest${random}@spryker.com'    confirmation_key
     API_test_setup
     I send a POST request:     /customer-confirmation   {"data":{"type":"customer-confirmation","attributes":{"registrationKey":"${confirmation_key}"}}}
-    Yves: login after signup during checkout:    sonia+guest${random}@spryker.com    Abc#${random}
+    Yves: login after signup during checkout:    sonia+guest${random}@spryker.com    ${random_str}R!#${random}
     Yves: fill in the following new shipping address:
     ...    || salutation     | firstName                | lastName                | street    | houseNumber | postCode     | city       | country     | company    | phone     | additionalAddress         ||
     ...    || ${salutation}  | ${guest_user_first_name} | ${guest_user_last_name} | ${random} | ${random}   | ${random}    | ${city}    | ${country}  | ${company} | ${random} | ${additional_address}     ||
@@ -1778,7 +1778,8 @@ Multistore_CMS
 
 Product_Availability_Calculation
     [Documentation]    Check product availability + multistore
-    [Setup]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    [Setup]    Run Keywords    Repeat Keyword    3    Trigger multistore p&s
+    ...    AND    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: update warehouse:    
     ...    || warehouse  | store || 
     ...    || Warehouse1 | AT    ||
@@ -3067,16 +3068,16 @@ Merchant_Portal_My_Account
     ...    || sonia+editmu+${random}@spryker.com |          | Change123!321 |           |          ||
     MP: login on MP with provided credentials:    sonia+editmu+${random}@spryker.com    Change123!321
     MP: update merchant personal details with data:
-    ...    || firstName               | lastName                | email                                  | currentPassword | newPassword          ||
-    ...    || MPUpdatedFName${random} | MPUpdatedLName${random} | sonia+new+editmu+${random}@spryker.com | Change123!321   | UpdatedChange123!321 ||
+    ...    || firstName               | lastName                | email | currentPassword | newPassword          ||
+    ...    || MPUpdatedFName${random} | MPUpdatedLName${random} |       | Change123!321   | UpdatedChange123!321 ||
     MP: click submit button
-    MP: login on MP with provided credentials:    sonia+new+editmu+${random}@spryker.com    UpdatedChange123!321
+    MP: login on MP with provided credentials:    sonia+editmu+${random}@spryker.com    UpdatedChange123!321
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Users    Users
     Zed: table should contain:    MPUpdatedFName${random}
     Zed: table should contain:    MPUpdatedLName${random}
     [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    ...    AND    Zed: delete Zed user with the following email:    sonia+new+editmu+${random}@spryker.com
+    ...    AND    Zed: delete Zed user with the following email:    sonia+editmu+${random}@spryker.com
     
 Merchant_Portal_Dashboard
     [Documentation]    Checks that merchant user is able to access the dashboard page

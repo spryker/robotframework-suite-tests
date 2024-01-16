@@ -115,6 +115,7 @@ Zed: trigger matching state of order item inside xxx shipment:
     ${item_available_transitions_count}=    Get Element Count    ${item_available_transition_selector}
     ${item_available_transitions}=    Create List
     Set Browser Timeout    1s
+    ${item_available_transition}=    Set Variable
     FOR    ${index}    IN RANGE    1    ${item_available_transitions_count}+1
         IF    '${env}' in ['ui_mp_b2b','ui_mp_b2c']
             ${item_available_transition}=    Get Text    xpath=(//table[@data-qa='order-item-list'][${shipment}]/tbody//td//div[@class='sku'][contains(text(),'${sku}')]/ancestor::tr//td/form[@name='event_item_trigger_form']//button)[${index}]
@@ -175,7 +176,7 @@ Zed: trigger matching state of xxx order item inside xxx shipment:
 
 Zed: wait for order item to be in state:
     [Arguments]    ${sku}    ${state}    ${shipment}=1    ${delay}=10s    ${iterations}=20
-    ${elementSelector}=    Set Variable    xpath=//table[@data-qa='order-item-list'][${shipment}]/tbody//td/div[@class='sku'][contains(text(),'${sku}')]/ancestor::tr/td[@class='state-history']//a[contains(text(),'${state}')]
+    ${elementSelector}=    Set Variable    xpath=(//table[@data-qa='order-item-list'][${shipment}]/tbody//td/div[@class='sku'][contains(text(),'${sku}')]/ancestor::tr/td[@class='state-history']//a[contains(text(),'${state}')])[1]
     Try reloading page until element is/not appear:    ${elementSelector}    true    ${iterations}    ${delay}    message=Expected order item state '${state}' is not available for the item '${sku}'. Check if OMS is functional
 
 Yves: create return for the following products:
@@ -248,7 +249,7 @@ Zed: get the last placed order ID of the customer by email:
     Zed: perform search by:    ${email}
     ${zedLastPlacedOrder}=    Get Text    xpath=//table[contains(@data-ajax,'sales')][contains(@class,'dataTable')]/tbody/tr[1]/td[2]
     Set Suite Variable    ${zedLastPlacedOrder}    ${zedLastPlacedOrder}
-    [Return]    ${zedLastPlacedOrder}
+    RETURN    ${zedLastPlacedOrder}
 
 Zed: order has the following number of shipments:
     [Arguments]    ${orderID}    ${expectedShipments}

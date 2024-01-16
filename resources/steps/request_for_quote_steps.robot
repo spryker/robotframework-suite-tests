@@ -118,4 +118,4 @@ Yves: submit new request for quote
     ${lastCreatedRfQ}=    Replace String    ${lastCreatedRfQ}    \#    ${EMPTY}
     ${lastCreatedRfQ}=    Replace String    ${lastCreatedRfQ}    ${SPACE}    ${EMPTY}
     Set Suite Variable    ${lastCreatedRfQ}    ${lastCreatedRfQ}
-    [Return]    ${lastCreatedRfQ}
+    RETURN    ${lastCreatedRfQ}

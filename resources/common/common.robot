@@ -49,13 +49,17 @@ Common_suite_setup
     Load Variables    ${env}
     Overwrite env variables
     ${random}=    Generate Random String    5    [NUMBERS]
+    ${random_id}=    Generate Random String    5    [NUMBERS]
+    ${random_str}=    Generate Random String    5    [LETTERS]
     Set Global Variable    ${random}
+    Set Global Variable    ${random_id}
+    Set Global Variable    ${random_str}
     ${today}=    Get Current Date    result_format=%Y-%m-%d
     Set Global Variable    ${today}
     IF    ${docker}
         Set Global Variable    ${db_host}    ${docker_db_host}
     END
-    [Return]    ${random}
+    RETURN    ${random}
 
 Load Variables
     [Documentation]    Keyword is used to load variable values from the environment file passed during execution. This Keyword is used during suite setup.
@@ -112,7 +116,7 @@ Set Up Keyword Arguments
         ${var_value}=   Set Variable    ${value}
         Set Test Variable    ${${key}}    ${var_value}
     END
-    [Return]    &{arguments}
+    RETURN    &{arguments}
 
 Variable datatype should be:
     [Arguments]    ${variable}    ${expected_data_type}
@@ -122,7 +126,7 @@ Variable datatype should be:
 Evaluate datatype of a variable:
     [Arguments]    ${variable}
     ${data_type}=    Evaluate     type($variable).__name__
-    [Return]    ${data_type}
+    RETURN    ${data_type}
     #Example of assertions:
     # ${is int}=      Evaluate     isinstance($variable, int)    # will be True
     # ${is string}=   Evaluate     isinstance($variable, str)    # will be False
@@ -131,13 +135,13 @@ Conver string to List by separator:
     [Arguments]    ${string}    ${separator}=,
     ${convertedList}=    Split String    ${string}    ${separator}
     ${convertedList}=    Set Test Variable    ${convertedList}
-    [Return]    ${convertedList}
+    RETURN    ${convertedList}
 
 Remove leading and trailing whitespace from a string:
     [Arguments]    ${string}
     ${string}=    Replace String Using Regexp    ${string}    (^[ ]+|[ ]+$)    ${EMPTY}
     Set Global Variable    ${string}
-    [Return]    ${string}
+    RETURN    ${string}
 
 Connect to Spryker DB
     [Documentation]    This keyword allows to connect to Spryker DB.
@@ -174,6 +178,7 @@ Connect to Spryker DB
         END
     END
     Set Test Variable    ${db_engine}
+    Disconnect From Database
     Connect To Database    ${db_engine}    ${db_name}    ${db_user}    ${db_password}    ${db_host}    ${db_port}
 
 Save the result of a SELECT DB query to a variable:
@@ -199,13 +204,13 @@ Save the result of a SELECT DB query to a variable:
     ${var_value}=    Replace String    ${var_value}    [   ${EMPTY}
     ${var_value}=    Replace String    ${var_value}    ]   ${EMPTY}
     Set Test Variable    ${${variable_name}}    ${var_value}
-    [Return]    ${variable_name}
+    RETURN    ${variable_name}
 
 Send GET request and return status code:
     [Arguments]    ${url}    ${timeout}=5
     ${response}=    GET    ${url}    timeout=${timeout}    allow_redirects=true    expected_status=ANY
     Set Test Variable    ${response.status_code}    ${response.status_code}
-    [Return]    ${response.status_code}
+    RETURN    ${response.status_code}
 
 Run console command
     [Documentation]    This keyword executes console command using provided command and parameters. If docker is enabled, it will execute the command using docker.
@@ -219,12 +224,12 @@ Run console command
         ${consoleCommand}=    Set Variable    curl --request POST -LsS --data "APPLICATION_STORE='${storeName}' COMMAND='${command}' cli.sh" --max-time 1000 --url "${docker_cli_url}/console"
         ${rc}    ${output}=    Run And Return RC And Output    ${consoleCommand}
         Log   ${output}
-        Should Be Equal As Integers    ${rc}    0    message=CLI command can't be executed. Check '{docker}', '{ignore_console}' variables value and cli execution path: '{cli_path}'
+        Should Be Equal As Integers    ${rc}    0    message=CLI output:"${output}". CLI command can't be executed. Check '{docker}', '{ignore_console}' variables value and cli execution path: '{cli_path}'.
     END
     IF    ${ignore_console} != True
         ${rc}    ${output}=    Run And Return RC And Output    ${consoleCommand}
         Log   ${output}
-        Should Be Equal As Integers    ${rc}    0    message=CLI command can't be executed. Check '{docker}', '{ignore_console}' variables value and cli execution path: '{cli_path}'
+        Should Be Equal As Integers    ${rc}    0    message=CLI output:"${output}". CLI command can't be executed. Check '{docker}', '{ignore_console}' variables value and cli execution path: '{cli_path}'
     END
 
 Trigger p&s
@@ -280,7 +285,7 @@ Get next id from table
     END
     Disconnect From Database
     Log    ${newId}
-    [Return]    ${newId}
+    RETURN    ${newId}
 
 Get concrete product sku by id from DB:
     [Documentation]    This keyword returns product concrete sku from DB found by id_product. Returns '${concrete_sku}' variable
@@ -411,31 +416,15 @@ Delete country by iso2_code in Database:
     Execute Sql String    DELETE FROM spy_country WHERE iso2_code = '${iso2_code}';
     Disconnect From Database
 
-Create dynamic entity configuration in Database:
-     [Documentation]    This keyword create dynamic entity configuration in the DB table spy_dynamic_entity_configuration.
+Update dynamic entity configuration in Database:
+     [Documentation]    This keyword update dynamic entity configuration in the DB table spy_dynamic_entity_configuration if configuration exists.
         ...    *Example:*
         ...
-        ...    ``Create dynamic entity configuration in Database:    country    spy_country     1   {"identifier":"id_country","fields":[...]}``
+        ...    ``Update dynamic entity configuration in Database:    country    spy_country     1   {"identifier":"id_country","fields":[...]}``
         ...
     [Arguments]    ${table_alias}   ${table_name}    ${is_active}    ${definition}
-    ${new_id}=    Get next id from table    spy_dynamic_entity_configuration    id_dynamic_entity_configuration
     Connect to Spryker DB
-    IF    '${db_engine}' == 'pymysql'
-        Execute Sql String  insert ignore into spy_dynamic_entity_configuration (table_alias, table_name, is_active, definition) value ('${table_alias}', '${table_name}', '${is_active}', '${definition}');
-    ELSE
-        Execute Sql String  insert into spy_dynamic_entity_configuration (id_dynamic_entity_configuration, table_alias, table_name, is_active, definition) values (${new_id}, '${table_alias}', '${table_name}', '${is_active}', '${definition}')
-    END
-    Disconnect From Database
-
-Delete dynamic entity configuration in Database:
-     [Documentation]    This keyword delete dynamic entity configuration in the DB table spy_dynamic_entity_configuration.
-        ...    *Example:*
-        ...
-        ...    ``Delete dynamic entity configuration in Database:    country```
-        ...
-    [Arguments]    ${table_alias}
-    Connect to Spryker DB
-    Execute Sql String  DELETE FROM spy_dynamic_entity_configuration WHERE table_alias = '${table_alias}';
+    Execute Sql String  update spy_dynamic_entity_configuration set table_alias = '${table_alias}', table_name = '${table_name}', is_active = '${is_active}', definition = '${definition}' where table_alias = '${table_alias}';
     Disconnect From Database
 
 I add 'admin' role to company user and get company_user_uuid:
@@ -479,7 +468,7 @@ I add 'admin' role to company user and get company_user_uuid:
     ${company_user_uuid}=    Replace String    ${company_user_uuid}    [   ${EMPTY}
     ${company_user_uuid}=    Replace String    ${company_user_uuid}    ]   ${EMPTY}
     Set Test Variable    ${company_user_uuid}    ${company_user_uuid}
-    [Return]    ${company_user_uuid}
+    RETURN    ${company_user_uuid}
 
 Get voucher code by discountId from Database:
     [Documentation]    This keyword allows to get voucher code according to the discount ID. Discount_id can be found in Backoffice > Merchandising > Discount page
@@ -495,12 +484,62 @@ Get voucher code by discountId from Database:
         Save the result of a SELECT DB query to a variable:    select code from spy_discount_voucher where fk_discount_voucher_pool = ${discount_voucher_pool_id} and is_active = true limit 1    discount_voucher_code
     END
 
+Update dynamic entity configuration relation in Database:
+    [Documentation]    This keyword update dynamic entity configuration in the DB tables spy_dynamic_entity_configuration_relation and spy_dynamic_entity_configuration_relation_field_mapping.
+    ...    *Example:*
+    ...
+    ...    ``Update dynamic entity configuration relation in Database:    product-abstracts    products    productAbstractProducts    fk_product_abstract    id_product_abstract``
+    ...
+    [Arguments]    ${parent_dynamic_entity_configuration_alias}   ${child_dynamic_entity_configuration_alias}    ${name}    ${child_field_name}   ${parent_field_name}
+    Connect to Spryker DB
+
+    ${parent_dynamic_entity_configuration_alias_id}=    Query    SELECT id_dynamic_entity_configuration from spy_dynamic_entity_configuration where table_alias='${parent_dynamic_entity_configuration_alias}';
+    ${parent_dynamic_entity_configuration_alias_id}=    Set Variable    ${parent_dynamic_entity_configuration_alias_id[0][0]}
+    Log  ${parent_dynamic_entity_configuration_alias_id}
+    ${child_dynamic_entity_configuration_alias_id}=    Query    SELECT id_dynamic_entity_configuration from spy_dynamic_entity_configuration where table_alias='${child_dynamic_entity_configuration_alias}';
+    ${child_dynamic_entity_configuration_alias_id}=    Set Variable    ${child_dynamic_entity_configuration_alias_id[0][0]}
+    Log  ${child_dynamic_entity_configuration_alias_id}
+    Execute Sql String  update spy_dynamic_entity_configuration_relation set fk_parent_dynamic_entity_configuration = '${parent_dynamic_entity_configuration_alias_id}', fk_child_dynamic_entity_configuration = '${child_dynamic_entity_configuration_alias_id}', name = '${name}', is_editable = true where name='${name}';
+
+    ${dynamic_entity_configuration_relation_id}=    Query    SELECT id_dynamic_entity_configuration_relation from spy_dynamic_entity_configuration_relation where name='${name}';
+    ${dynamic_entity_configuration_relation_id}=    Set Variable    ${dynamic_entity_configuration_relation_id[0][0]}
+
+    Execute Sql String  update spy_dynamic_entity_configuration_relation_field_mapping set parent_field_name = '${parent_field_name}', child_field_name = '${child_field_name}' where fk_dynamic_entity_configuration_relation='${dynamic_entity_configuration_relation_id}';
+    Disconnect From Database
+
+Create dynamic entity configuration in Database:
+    [Documentation]    This keyword create dynamic entity configuration in the DB table spy_dynamic_entity_configuration.
+    ...    *Example:*
+    ...
+    ...    ``Create dynamic entity configuration in Database:    country    spy_country     1   {"identifier":"id_country","fields":[...]}``
+    ...
+    [Arguments]    ${table_alias}   ${table_name}    ${is_active}    ${definition}
+    ${new_id}=    Get next id from table    spy_dynamic_entity_configuration    id_dynamic_entity_configuration
+    Connect to Spryker DB
+    IF    '${db_engine}' == 'pymysql'
+        Execute Sql String  insert ignore into spy_dynamic_entity_configuration (table_alias, table_name, is_active, definition) value ('${table_alias}', '${table_name}', '${is_active}', '${definition}');
+    ELSE
+        Execute Sql String  insert into spy_dynamic_entity_configuration (id_dynamic_entity_configuration, table_alias, table_name, is_active, definition) values (${new_id}, '${table_alias}', '${table_name}', '${is_active}', '${definition}')
+    END
+    Disconnect From Database
+
+Delete dynamic entity configuration in Database:
+    [Documentation]    This keyword delete dynamic entity configuration in the DB table spy_dynamic_entity_configuration.
+    ...    *Example:*
+    ...
+    ...    ``Delete dynamic entity configuration in Database:    country```
+    ...
+    [Arguments]    ${table_alias}
+    Connect to Spryker DB
+    Execute Sql String  DELETE FROM spy_dynamic_entity_configuration WHERE table_alias = '${table_alias}';
+    Disconnect From Database
+
 Create dynamic entity configuration relation in Database:
-     [Documentation]    This keyword create dynamic entity configuration in the DB tables spy_dynamic_entity_configuration_relation and spy_dynamic_entity_configuration_relation_field_mapping.
-        ...    *Example:*
-        ...
-        ...    ``Create dynamic entity configuration relation in Database:    country    spy_country     1   {"identifier":"id_country","fields":[...]}``
-        ...
+    [Documentation]    This keyword create dynamic entity configuration in the DB tables spy_dynamic_entity_configuration_relation and spy_dynamic_entity_configuration_relation_field_mapping.
+    ...    *Example:*
+    ...
+    ...    ``Create dynamic entity configuration relation in Database:    country    spy_country     1   {"identifier":"id_country","fields":[...]}``
+    ...
     [Arguments]    ${parent_dynamic_entity_configuration_alias}   ${child_dynamic_entity_configuration_alias}    ${name}    ${child_field_name}   ${parent_field_name}
     Connect to Spryker DB
 
@@ -535,11 +574,11 @@ Create dynamic entity configuration relation in Database:
     Disconnect From Database
 
 Delete dynamic entity configuration relation in Database:
-     [Documentation]    This keyword delete dynamic entity configuration in the DB table spy_dynamic_entity_configuration_relation.
-        ...    *Example:*
-        ...
-        ...    ``Delete dynamic entity configuration relation in Database:    name```
-        ...
+    [Documentation]    This keyword delete dynamic entity configuration in the DB table spy_dynamic_entity_configuration_relation.
+    ...    *Example:*
+    ...
+    ...    ``Delete dynamic entity configuration relation in Database:    name```
+    ...
     [Arguments]    ${relation_name}
     Connect to Spryker DB
     ${dynamic_entity_configuration_relation_id}=    Query    SELECT id_dynamic_entity_configuration_relation from spy_dynamic_entity_configuration_relation where name='${relation_name}';
@@ -589,3 +628,12 @@ Delete product_price by id_price_product in Database:
     Connect to Spryker DB
     Execute Sql String    DELETE FROM spy_price_product WHERE id_price_product = ${id_price_product};
     Disconnect From Database
+
+Trigger product labels update
+    [Arguments]    ${timeout}=5s
+    Run console command    console product-label:relations:update -vvv --no-touch    DE
+    Run console command    console product-label:validity    DE
+    Run console command    console product-label:relations:update -vvv --no-touch    AT
+    Run console command    console product-label:validity    AT
+    Repeat Keyword    3    Trigger multistore p&s
+    IF    ${docker} or ${ignore_console} != True    Sleep    ${timeout}
