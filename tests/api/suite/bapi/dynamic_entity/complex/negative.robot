@@ -147,8 +147,8 @@ Update_product_abstract_collection_with_missing_required_field:
     And I send a PATCH request:   /dynamic-entity/robot-tests-product-abstracts  {"data": [{"id_product_abstract": ${id_product_abstract}, "fk_tax_set": 1, "attributes": "FOO", "sku": "FOO", "robotTestsProductAbstractProducts": [{"fk_product_abstract": ${id_product_abstract}, "attributes": "FOOBAR", "sku": "FOOBAR"}]}]}
     Then Response status code should be:    400
     And Response body parameter should be:    [0][status]    400
-    And Response body parameter should be:    [0][code]    1307
-    And Response body parameter should be:    [0][message]    "The required field must not be empty. Field: 'robot-tests-products.id_product'"
+    And Response body parameter should be:    [0][code]    1310
+    And Response body parameter should be:    [0][message]    Incomplete Request - missing identifier
     [Teardown]    Run Keywords    Delete dynamic entity configuration relation in Database:    robotTestsProductAbstractProducts
     ...   AND    Delete dynamic entity configuration in Database:    robot-tests-product-abstracts
     ...   AND    Delete dynamic entity configuration in Database:    robot-tests-products
