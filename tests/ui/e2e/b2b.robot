@@ -1352,6 +1352,7 @@ Order_Cancelation
 
 Multistore_Product
     [Documentation]    check product multistore functionality
+    [Setup]    Repeat Keyword    3    Trigger multistore p&s
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: start new abstract product creation:
     ...    || sku               | store | store 2 | name en               | name de                 | new from   | new to     ||
@@ -1378,7 +1379,7 @@ Multistore_Product
     Zed: change concrete product stock:
     ...    || productAbstract   | productConcrete              | warehouse n1 | warehouse n1 qty | warehouse n1 never out of stock ||
     ...    || multiSKU${random} | multiSKU${random}-farbe-grey | Warehouse2   | 100              | true                            ||
-    Trigger multistore p&s
+    Repeat Keyword    3    Trigger multistore p&s
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     Yves: go to URL:    en/search?q=multiSKU${random}
     Try reloading page until element is/not appear:    ${catalog_product_card_locator}    true    21    5s
