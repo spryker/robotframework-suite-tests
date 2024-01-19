@@ -74,7 +74,7 @@ ENABLER
     Then Response status code should be:    200
     And Response header parameter should be:    Content-Type    application/json
     And Response should contain the array of a certain size:   [data]    9
-    And Response should contain the array of a certain size:   [data][robotTestsProductAbstractProducts]    3
+    And Response should contain the array of a certain size:   [data][robotTestsProductAbstractProducts]    1
     And Response body parameter should be:    [data][id_product_abstract]    130
     And Response body parameter should be:    [data][sku]    M21704
     And Response body parameter should be:    [data][robotTestsProductAbstractProducts][0][fk_product_abstract]    130

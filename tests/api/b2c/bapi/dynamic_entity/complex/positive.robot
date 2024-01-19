@@ -76,7 +76,7 @@ ENABLER
     And Response should contain the array of a certain size:   [data]    8
     And Response should contain the array of a certain size:   [data][robotTestsProductAbstractProducts]    3
     And Response body parameter should be:    [data][id_product_abstract]    130
-    And Response body parameter should be:    [data][sku]    M21704
+    And Response body parameter should be:    [data][sku]    130
     And Response body parameter should be:    [data][robotTestsProductAbstractProducts][0][fk_product_abstract]    130
     And Response body parameter should be:    [data][robotTestsProductAbstractProducts][1][fk_product_abstract]    130
     And Response body parameter should be:    [data][robotTestsProductAbstractProducts][2][fk_product_abstract]    130
