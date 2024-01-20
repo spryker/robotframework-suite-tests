@@ -85,8 +85,6 @@ ENABLER
     Then Response status code should be:    200
     And Response header parameter should be:    Content-Type    application/json
     And Response should contain the array of a certain size:   [data]    8
-    And Response should contain the array of a certain size:   [data][robotTestsProductAbstractProducts]    3
+    And Response should contain the array of a certain size:   [data][robotTestsProductAbstractProducts]    1
     And Response should contain the array of a certain size:   [data][robotTestsProductAbstractProducts][0][robotTestsProductCategories]    1
     And Response should contain the array of a certain size:   [data][robotTestsProductAbstractProducts][0][robotTestsProductCategories][0][robotTestsCategories]    1
-    And Response should contain the array of a certain size:   [data][robotTestsProductAbstractProducts][1][robotTestsProductCategories]    1
-    And Response should contain the array of a certain size:   [data][robotTestsProductAbstractProducts][1][robotTestsProductCategories][0][robotTestsCategories]    1

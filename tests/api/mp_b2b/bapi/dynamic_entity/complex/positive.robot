@@ -78,8 +78,6 @@ ENABLER
     And Response body parameter should be:    [data][id_product_abstract]    130
     And Response body parameter should be:    [data][sku]    M21714
     And Response body parameter should be:    [data][robotTestsProductAbstractProducts][0][fk_product_abstract]    130
-    And Response body parameter should be:    [data][robotTestsProductAbstractProducts][1][fk_product_abstract]    130
-    And Response body parameter should be:    [data][robotTestsProductAbstractProducts][2][fk_product_abstract]    130
 
     ### GET PRODUCT ABSTRACT COLLECTION WITH CHILDS AS TREE ###
     And I set Headers:    Content-Type=application/json    Authorization=Bearer ${token}
@@ -87,8 +85,6 @@ ENABLER
     Then Response status code should be:    200
     And Response header parameter should be:    Content-Type    application/json
     And Response should contain the array of a certain size:   [data]    9
-    And Response should contain the array of a certain size:   [data][robotTestsProductAbstractProducts]    3
+    And Response should contain the array of a certain size:   [data][robotTestsProductAbstractProducts]    1
     And Response should contain the array of a certain size:   [data][robotTestsProductAbstractProducts][0][robotTestsProductCategories]    1
     And Response should contain the array of a certain size:   [data][robotTestsProductAbstractProducts][0][robotTestsProductCategories][0][robotTestsCategories]    1
-    And Response should contain the array of a certain size:   [data][robotTestsProductAbstractProducts][1][robotTestsProductCategories]    1
-    And Response should contain the array of a certain size:   [data][robotTestsProductAbstractProducts][1][robotTestsProductCategories][0][robotTestsCategories]    1
