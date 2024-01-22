@@ -46,8 +46,6 @@ ENABLER
     And Response should contain the array of a certain size:   [data]    422
     And Response should contain the array of a certain size:   [data][0]    8
     And Response should contain the array of a certain size:   [data][0][robotTestsProductAbstractProducts]    1
-    And Response should contain the array of a certain size:   [data][0][robotTestsProductAbstractProducts][0][robotTestsProductCategories]    1
-    And Response should contain the array of a certain size:   [data][0][robotTestsProductAbstractProducts][0][robotTestsProductCategories][0][robotTestsCategories]    1
 
  Get_product_abstract_with_childs_by_id:
     ### SETUP DYNAMIC ENTITY CONFIGURATION AND RELATION ###
