@@ -213,8 +213,8 @@ Update_country_with_invalid_data
     And I set Headers:    Content-Type==application/json    Authorization=Bearer ${token}
     And I send a PATCH request:    /dynamic-entity/robot-test-countries/${xxa_country_id}    {"data":{"iso2_code":"XXXX"}}
     Then Response status code should be:    400
-    And Response body parameter should contain:    [0][message]    The required field must not be empty. Field: robot-test-countries.iso3_code
-    And Response body parameter should be:    [0][code]    1307
+    And Response body parameter should contain:    [0][message]    Invalid data value for field: iso2_code, row number: 1.
+    And Response body parameter should be:    [0][code]    1306
     And Response body parameter should be:    [0][status]    400
     [Teardown]    Run Keywords    Delete dynamic entity configuration in Database:    robot-test-countries
     ...   AND    Delete country by iso2_code in Database:   XA
@@ -238,11 +238,11 @@ Update_country_collection_with_invalid_data
     And I set Headers:    Content-Type==application/json    Authorization=Bearer ${token}
     And I send a PATCH request:    /dynamic-entity/robot-test-countries    {"data":[{"id_country":${xxa_country_id},"iso2_code":"XXXX"},{"id_country":${xxb_country_id},"iso3_code":"XXXXX"}]}
     Then Response status code should be:    400
-    And Response body parameter should contain:    [0][message]    The required field must not be empty. Field: robot-test-countries.iso3_code
-    And Response body parameter should be:    [0][code]    1307
+    And Response body parameter should contain:    [0][message]    Invalid data value for field: iso2_code, row number: 1.
+    And Response body parameter should be:    [0][code]    1306
     And Response body parameter should be:    [0][status]    400
-    And Response body parameter should contain:    [1][message]    The required field must not be empty. Field: robot-test-countries.name
-    And Response body parameter should be:    [1][code]    1307
+    And Response body parameter should contain:    [1][message]    Invalid data value for field: iso3_code, row number: 2.
+    And Response body parameter should be:    [1][code]    1306
     And Response body parameter should be:    [1][status]    400
     [Teardown]    Run Keywords    Delete dynamic entity configuration in Database:    robot-test-countries
     ...   AND    Delete country by iso2_code in Database:   XA
