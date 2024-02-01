@@ -14,6 +14,12 @@ ${default_auth}    ${NONE}
 ${glue_env}
 ${bapi_env}
 ${sapi_env}
+${bapi_env_dms_en}
+${glue_env_dms_en}
+${sapi_env_dms_en}
+${bapi_env_dms_us}
+${glue_env_dms_us}
+${sapi_env_dms_us}
 
 *** Keywords ***
 API_suite_setup
@@ -39,6 +45,28 @@ Overwrite api variables
                 Set Suite Variable    ${tag}    glue
             END
         END
+         IF    '${glue_env_dms_en}' == '${EMPTY}'
+            IF    '${tag}' == 'glue_dms_en'
+                Set Suite Variable    ${current_url}    ${glue_url_dms_en}
+                Set Suite Variable    ${tag}    glue_dms_en
+            END
+        ELSE
+            IF    '${tag}' == 'glue_dms_en'
+                Set Suite Variable    ${current_url}    ${glue_env_dms_en}
+                Set Suite Variable    ${tag}    glue_dms_en
+            END
+        END
+                 IF    '${glue_env_dms_us}' == '${EMPTY}'
+            IF    '${tag}' == 'glue_dms_us'
+                Set Suite Variable    ${current_url}    ${glue_url_dms_us}
+                Set Suite Variable    ${tag}    glue_dms_us
+            END
+        ELSE
+            IF    '${tag}' == 'glue_dms_us'
+                Set Suite Variable    ${current_url}    ${glue_env_dms_us}
+                Set Suite Variable    ${tag}    glue_dms_us
+            END
+        END
         IF    '${bapi_env}' == '${EMPTY}'
             IF    '${tag}'=='bapi'
                 Set Suite Variable    ${current_url}    ${bapi_url}
@@ -48,6 +76,28 @@ Overwrite api variables
             IF    '${tag}' == 'bapi'
                 Set Suite Variable    ${current_url}    ${bapi_env}
                 Set Suite Variable    ${tag}    bapi
+            END
+        END
+        IF    '${bapi_env_dms_en}' == '${EMPTY}'
+            IF    '${tag}'=='bapi_dms_en'
+                Set Suite Variable    ${current_url}    ${bapi_url_dms_en}
+                Set Suite Variable    ${tag}    bapi_dms_en
+            END
+        ELSE
+            IF    '${tag}' == ' bapi_dms_en'
+                Set Suite Variable    ${current_url}    ${bapi_env_dms_en}
+                Set Suite Variable    ${tag}    bapi_dms_en
+            END
+        END
+        IF    '${bapi_env_dms_us}' == '${EMPTY}'
+            IF    '${tag}'=='bapi_dms_us'
+                Set Suite Variable    ${current_url}    ${bapi_url_dms_us}
+                Set Suite Variable    ${tag}    bapi_dms_us
+            END
+        ELSE
+            IF    '${tag}' == 'bapi_dms_us'
+                Set Suite Variable    ${current_url}    ${bapi_env_dms_us}
+                Set Suite Variable    ${tag}    bapi_dms_us
             END
         END
         IF    '${sapi_env}' == '${EMPTY}'
@@ -61,6 +111,28 @@ Overwrite api variables
                 Set Suite Variable    ${tag}    sapi
             END
         END
+        IF    '${sapi_env_dms_en}' == '${EMPTY}'
+            IF    '${tag}' == 'sapi_dms_en'
+                Set Suite Variable    ${current_url}    ${sapi_url_dms_en}
+                Set Suite Variable    ${tag}    sapi_dms_en
+            END
+        ELSE
+            IF    '${tag}' == 'sapi_dms_en'
+                Set Suite Variable    ${current_url}    ${sapi_env_dms_en}
+                Set Suite Variable    ${tag}    sapi_dms_en
+            END
+        END
+        IF    '${sapi_env_dms_us}' == '${EMPTY}'
+            IF    '${tag}' == 'sapi_dms_us'
+                Set Suite Variable    ${current_url}    ${sapi_url_dms_us}
+                Set Suite Variable    ${tag}    sapi_dms_us
+            END
+        ELSE
+            IF    '${tag}' == 'sapi_dms_us'
+                Set Suite Variable    ${current_url}    ${sapi_env_dms_us}
+                Set Suite Variable    ${tag}    sapi_dms_us
+            END
+        END        
         ${current_url_last_character}=    Get Regexp Matches    ${current_url}    .$    flags=IGNORECASE
         ${current_url_last_character}=    Convert To String    ${current_url_last_character}
         ${current_url_last_character}=    Replace String    ${current_url_last_character}    '   ${EMPTY}
