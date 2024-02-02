@@ -3,7 +3,7 @@ Suite Setup       API_suite_setup
 Test Setup    API_test_setup
 Resource    ../../../../../resources/common/common_api.robot
 Resource    ../../../../../resources/steps/shipment_type_steps.robot
-Default Tags    bapi_dms_en
+Default Tags    bapi_dms_eu
 
 *** Test Cases ***
 ENABLER

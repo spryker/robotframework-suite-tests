@@ -2,7 +2,7 @@
 Suite Setup    API_suite_setup
 Test Setup    API_test_setup
 Resource    ../../../../../../resources/steps/service_point_steps.robot
-Default Tags    glue_dms_en
+Default Tags    glue_dms_eu
 
 *** Test Cases ***
 ENABLER

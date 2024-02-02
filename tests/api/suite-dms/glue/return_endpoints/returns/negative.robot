@@ -1,6 +1,6 @@
 *** Settings ***
 Suite Setup     API_suite_setup
-Default Tags    glue_dms_en
+Default Tags    glue_dms_eu
 Test Setup      API_test_setup
 Resource    ../../../../../../resources/common/common_api.robot
 

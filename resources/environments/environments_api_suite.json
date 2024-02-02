@@ -9,9 +9,9 @@
       "yves_at_url":"http://yves.at.spryker.local/",
       "mp_url":"http://mp.de.spryker.local/security-merchant-portal-gui/login/",
       "console_path":"..",
-      "bapi_url_dms_en":"http://glue-backend.eu.spryker.local",
-      "glue_url_dms_en":"http://glue.eu.spryker.local",
-      "sapi_url_dms_en":"http://glue-storefront.en.spryker.local",
+      "bapi_url_dms_eu":"http://glue-backend.eu.spryker.local",
+      "glue_url_dms_eu":"http://glue.eu.spryker.local",
+      "sapi_url_dms_eu":"http://glue-storefront.eu.spryker.local",
       "bapi_url_dms_us":"http://glue-backend.us.spryker.local",
       "glue_url_dms_us":"http://glue.us.spryker.local",
       "sapi_url_dms_us":"http://glue-storefront.us.spryker.local"
