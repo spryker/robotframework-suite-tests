@@ -226,7 +226,7 @@ Upsert_product_abstract_collection_with_missing_required_field:
     Then Response status code should be:    400
     And Response body parameter should be:    [0][status]    400
     And Response body parameter should be:    [0][code]    1309
-    And Response body parameter should be:    [0][message]    Incomplete Request - missing identifier
+    And Response body parameter should be:    [0][message]    Failed to persist the data. Please verify the provided data and try again. Entry is duplicated.
     [Teardown]    Run Keywords    Delete dynamic entity configuration relation in Database:    robotTestsProductAbstractProducts
     ...   AND    Delete dynamic entity configuration in Database:    robot-tests-product-abstracts
     ...   AND    Delete dynamic entity configuration in Database:    robot-tests-products
