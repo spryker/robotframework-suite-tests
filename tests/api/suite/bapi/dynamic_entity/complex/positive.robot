@@ -258,7 +258,7 @@ Create_product_abstract_collection_with_child:
     ### CREATE PRODUCT ABSTRACT WITH CHILD ###
     And I set Headers:    Content-Type==application/json    Authorization=Bearer ${token}
     And I send a PUT request:    /dynamic-entity/robot-tests-product-abstracts    {"data": [{"fk_tax_set": 1, "attributes": "FOO_CREATED", "sku": "FOO_CREATED", "robotTestsProductAbstractProducts": [{"attributes": "FOOBAR_CREATED", "sku": "FOOBAR_CREATED"}]}]}
-    Then Response status code should be:    200
+    Then Response status code should be:    201
     When Save value to a variable:    [data][0][id_product_abstract]    id_product_abstract
     When Save value to a variable:    [data][0][robotTestsProductAbstractProducts][0][id_product]    id_product
     And Response header parameter should be:    Content-Type    application/json
