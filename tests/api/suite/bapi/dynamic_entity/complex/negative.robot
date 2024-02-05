@@ -196,7 +196,7 @@ Upsert_product_abstract_collection_with_child_contained_invalid_field:
     When Save value to a variable:    [data][0][robotTestsProductAbstractProducts][0][id_product]    id_product
     ### UPDATE PRODUCT ABSTRACT WITH INVALID CHILD CONTAINED INVALID FIELD ###
     And I set Headers:    Content-Type==application/json    Authorization=Bearer ${token}
-    And I send a PUT request:   /dynamic-entity/robot-tests-product-abstracts  {"data": [{"id_product_abstract": ${id_product_abstract}, "fk_tax_set": 1, "attributes": "FOO", "sku": "FOO", "robotTestsProductAbstractProducts": [{"id_product": ${id_product}, "attributes": "FOOBAR", "sku": "FOOBAR", "invalid_field": "invalid"}]}]}
+    And I send a PUT request:   /dynamic-entity/robot-tests-product-abstracts  {"data": [{"id_product_abstract": ${id_product_abstract}, "fk_tax_set": 1, "attributes": "FOO", "sku": "FOO", "robotTestsProductAbstractProducts": [{"id_product": ${id_product}, "fk_product_abstract": ${id_product_abstract}, "attributes": "FOOBAR", "sku": "FOOBAR", "invalid_field": "invalid"}]}]}
     Then Response status code should be:    400
     And Response body parameter should be:    [0][status]    400
     And Response body parameter should be:    [0][code]    1311
