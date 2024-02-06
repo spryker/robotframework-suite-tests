@@ -41,6 +41,10 @@ ${default_ignore_console}    ${True}
 # *** COMMON VARIABLES ***
 ${verify_ssl}          false
 
+# *** DMS VARIABLES ***
+${dms}
+${default_dms}    ${False}
+
 *** Keywords ***
 Common_suite_setup
     [documentation]  Basic steps before each suite
@@ -98,6 +102,17 @@ Overwrite env variables
     ELSE
             Set Suite Variable    ${docker}    ${docker}
     END
+    IF    '${dms}' == '${EMPTY}'
+            Set Suite Variable    ${dms}    ${default_dms}
+    ELSE
+        Set Suite Variable    ${dms}    ${dms}
+    END
+    ${dms}=    Convert To String    ${dms}
+    ${dms}=    Convert To Lower Case    ${dms}
+    IF    '${dms}' == 'true'    Set Suite Variable    ${dms}    ${True}
+    IF    '${dms}' == 'false'    Set Suite Variable    ${dms}    ${False}
+    IF    '${dms}' == 'on'    Set Suite Variable    ${dms}    ${True}
+    IF    '${dms}' == 'off'    Set Suite Variable    ${dms}    ${False}
     IF    '${ignore_console}' == 'true'    Set Suite Variable    ${ignore_console}    ${True}
     IF    '${ignore_console}' == 'false'    Set Suite Variable    ${ignore_console}    ${False}
     IF    '${docker}' == 'true'    Set Suite Variable    ${docker}    ${True}
@@ -226,17 +241,42 @@ Run console command
         ...    ``Run console command    command=publish:trigger-events parameters=-r service_point    storeName=DE``
         ...
     [Arguments]    ${command}    ${storeName}=DE
-    ${consoleCommand}=    Set Variable    cd ${cli_path} && APPLICATION_STORE=${storeName} docker/sdk ${command}
-    IF    ${docker}
-        ${consoleCommand}=    Set Variable    curl --request POST -LsS --data "APPLICATION_STORE='${storeName}' COMMAND='${command}' cli.sh" --max-time 1000 --url "${docker_cli_url}/console"
-        ${rc}    ${output}=    Run And Return RC And Output    ${consoleCommand}
-        Log   ${output}
-        Should Be Equal As Integers    ${rc}    0    message=CLI output:"${output}". CLI command can't be executed. Check '{docker}', '{ignore_console}' variables value and cli execution path: '{cli_path}'.
-    END
-    IF    ${ignore_console} != True
-        ${rc}    ${output}=    Run And Return RC And Output    ${consoleCommand}
-        Log   ${output}
-        Should Be Equal As Integers    ${rc}    0    message=CLI output:"${output}". CLI command can't be executed. Check '{docker}', '{ignore_console}' variables value and cli execution path: '{cli_path}'
+    IF    ${dms}
+        IF    '${storeName}' == 'DE'
+            ${storeName}=    Set Variable    EU
+        END
+        IF    '${storeName}' == 'AT'
+            ${storeName}=    Set Variable    EU
+        END
+        IF    '${storeName}' == 'US'
+            ${storeName}=    Set Variable    US
+        END
+        ${consoleCommand}=    Set Variable    cd ${cli_path} && SPRYKER_CURRENT_REGION=${storeName} docker/sdk ${command}
+        IF    ${docker}
+            ${consoleCommand}=    Set Variable    curl --request POST -LsS --data "SPRYKER_CURRENT_REGION='${storeName}' COMMAND='${command}' cli.sh" --max-time 1000 --url "${docker_cli_url}/console"
+            ${rc}    ${output}=    Run And Return RC And Output    ${consoleCommand}
+            Log   ${output}
+            Should Be Equal As Integers    ${rc}    0    message=CLI output:"${output}". CLI command can't be executed. Check '{docker}', '{ignore_console}' variables value and cli execution path: '{cli_path}'.
+        END
+        Log    ${ignore_console}
+        IF    ${ignore_console} != True
+            ${rc}    ${output}=    Run And Return RC And Output    ${consoleCommand}
+            Log   ${output}
+            Should Be Equal As Integers    ${rc}    0    message=CLI output:"${output}". CLI command can't be executed. Check '{docker}', '{ignore_console}' variables value and cli execution path: '{cli_path}'
+        END
+    ELSE
+        ${consoleCommand}=    Set Variable    cd ${cli_path} && APPLICATION_STORE=${storeName} docker/sdk ${command}
+        IF    ${docker}
+            ${consoleCommand}=    Set Variable    curl --request POST -LsS --data "APPLICATION_STORE='${storeName}' COMMAND='${command}' cli.sh" --max-time 1000 --url "${docker_cli_url}/console"
+            ${rc}    ${output}=    Run And Return RC And Output    ${consoleCommand}
+            Log   ${output}
+            Should Be Equal As Integers    ${rc}    0    message=CLI output:"${output}". CLI command can't be executed. Check '{docker}', '{ignore_console}' variables value and cli execution path: '{cli_path}'.
+        END
+        IF    ${ignore_console} != True
+            ${rc}    ${output}=    Run And Return RC And Output    ${consoleCommand}
+            Log   ${output}
+            Should Be Equal As Integers    ${rc}    0    message=CLI output:"${output}". CLI command can't be executed. Check '{docker}', '{ignore_console}' variables value and cli execution path: '{cli_path}'
+        END
     END
 
 Trigger p&s

@@ -9,6 +9,10 @@ ${api_timeout}    60
 ${default_password}    change123
 ${default_allow_redirects}     true
 ${default_auth}    ${NONE}
+&{default_headers}
+
+# *** default headers example: applied to all requests if not empty ***
+# &{default_headers}    Store=DE    Accept-Language=EN
 
 # *** API VARIABLES ***
 ${glue_env}
@@ -30,10 +34,20 @@ API_suite_setup
     ...    ``Suite Setup       API_suite_setup``
     Common_suite_setup
 
+Should Test Run
+    Log Many    @{Test Tags}
+    ${dms_state}=    Convert To String    ${dms}
+    IF   '${dms_state}' != 'True'
+        IF   'dms' in @{Test Tags}
+            Skip
+        END
+    END
+
 Overwrite api variables
     FOR  ${tag}  IN  @{Test Tags}
         Log   ${tag}
         Set Test Variable    ${tag}
+        IF    '${tag}' == 'dms'    CONTINUE
         IF    '${glue_env}' == '${EMPTY}'
             IF    '${tag}' == 'glue'
                 Set Suite Variable    ${current_url}    ${glue_url}
@@ -169,6 +183,8 @@ API_test_setup
     ...
     ...    ``Default Tags    bapi``
     Overwrite api variables
+    Should Test Run
+    I set default Headers:    &{default_headers}
 
 I set Headers:
     [Documentation]    Keyword sets any number of headers for the further endpoint calls.
@@ -182,7 +198,15 @@ I set Headers:
     ...    ``I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}``
 
     [Arguments]    &{headers}
+    Set To Dictionary    ${headers}    &{headers}    &{default_headers}
+    Log Dictionary    ${headers}
     Set Test Variable    &{headers}
+    RETURN    &{headers}
+
+I set default Headers:
+    [Arguments]    &{headers}
+    Log Dictionary    ${headers}
+    Set Suite Variable    &{headers}
     RETURN    &{headers}
 
 I get access token for the customer:
