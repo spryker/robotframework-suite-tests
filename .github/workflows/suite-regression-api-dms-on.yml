@@ -56,7 +56,6 @@ jobs:
               run: |
                   docker/sdk cli composer dump-autoload -o -a
                   SPRYKER_CURRENT_REGION=EU docker/sdk console queue:worker:start --stop-when-empty
-                  SPRYKER_CURRENT_REGION=US docker/sdk console queue:worker:start --stop-when-empty
             - name: Run Tests
               run: |
                   cd robotframework-tests
