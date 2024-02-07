@@ -21,8 +21,6 @@ ${default_db_password}    secret
 ${default_db_port}    3306
 ${default_db_port_postgres}    5432
 ${default_db_user}    spryker
-${dms}
-${default_dms}    false
 ${default_db_engine}    pymysql
 # ${default_db_engine}       psycopg2
 
@@ -123,11 +121,6 @@ Overwrite env variables
         Set Global Variable    ${verify_ssl}    ${True}
     ELSE
         Set Global Variable    ${verify_ssl}    ${False}
-    END
-    IF    '${dms}' == '${EMPTY}'
-            Set Suite Variable    ${dms}    ${default_dms}
-    ELSE
-            Set Suite Variable    ${dms}    ${dms}
     END
 
 Set Up Keyword Arguments
