@@ -204,6 +204,7 @@ Yves: product price on the PDP should be:
             Should Be Equal    ${expectedProductPrice}    ${actualProductPrice}    message=Actual product price is ${actualProductPrice}, expected ${expectedProductPrice}
         EXCEPT    
             Sleep    ${browser_timeout}
+            Set Browser Timeout    ${browser_timeout}
             Reload
             Take Screenshot    EMBED    fullPage=True
             ${actualProductPrice}=    Get Text    ${pdp_price_element_locator}
@@ -235,7 +236,7 @@ Yves: add product to the shopping list:
             Wait For Response
             Repeat Keyword    3    Wait Until Network Is Idle
         EXCEPT 
-            Set Browser Timeout    3s   
+            Set Browser Timeout    ${browser_timeout}
             Click    xpath=//span[@class='select2-selection select2-selection--single']//span[contains(@id,'select2-idShoppingList')]
             Wait Until Element Is Visible    xpath=//li[contains(@id,'select2-idShoppingList')][contains(@id,'result')][contains(.,'${shoppingListName}')]
             Click    xpath=//li[contains(@id,'select2-idShoppingList')][contains(@id,'result')][contains(.,'${shoppingListName}')]
@@ -244,6 +245,8 @@ Yves: add product to the shopping list:
             Set Browser Timeout    ${browser_timeout}
             Wait For Response
             Repeat Keyword    3    Wait Until Network Is Idle
+        FINALLY
+            Set Browser Timeout    ${browser_timeout}
         END
     ELSE
         Click    ${pdp_add_to_shopping_list_button}    
@@ -312,6 +315,7 @@ Yves: add product to wishlist:
         Yves: flash message should be shown:    success    Items added successfully
         Yves: remove flash messages 
     EXCEPT    
+        Set Browser Timeout    ${browser_timeout}
         Log    flash message was not shown
     END
     Set Browser Timeout    ${browser_timeout}

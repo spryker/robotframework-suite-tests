@@ -80,10 +80,11 @@ Zed: update cms page and publish it:
     Zed: go to second navigation item level:    Content    Pages
     Zed: perform search by:    ${cmsPage}
     Zed: click Action Button in a table for row that contains:     ${cmsPage}     Edit
-    Set Browser Timeout    3s
+    Set Browser Timeout    5s
     TRY
         Click    xpath=(//a[contains(@href,'edit-page')])[2]
     EXCEPT    
+        Set Browser Timeout    ${browser_timeout}
         Click    xpath=(//a[contains(@href,'edit-page')])[1]
     END
     Set Browser Timeout    ${browser_timeout}
