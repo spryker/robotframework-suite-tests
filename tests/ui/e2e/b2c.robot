@@ -45,7 +45,7 @@ New_Customer_Registration
     [Documentation]    Check that a new user can be registered in the system
     Register a new customer with data:
     ...    || salutation | first name | last name | e-mail                      | password                    ||
-    ...    || Mr.        | New        | User      | sonia+${random}@spryker.com | P${random_str}!${random_id} ||
+    ...    || Mr.        | New        | User      | sonia+${random}@spryker.com | P${random_str}s!${random_id} ||
     Yves: flash message should be shown:    success    Almost there! We send you an email to validate your email address. Please confirm it to be able to log in.
     [Teardown]    Zed: delete customer:
     ...    || email                       ||
