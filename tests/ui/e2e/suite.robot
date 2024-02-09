@@ -86,7 +86,7 @@ New_Customer_Registration
     [Documentation]    Check that a new user can be registered in the system
     Register a new customer with data:
     ...    || salutation | first name | last name | e-mail                       | password                      ||
-    ...    || Mr.        | New        | User      | sonia+${random}@spryker.com  | P${random_str}#!#${random_id} ||
+    ...    || Mr.        | New        | User      | sonia+${random}@spryker.com  | P${random_str}s#!#${random_id} ||
     Yves: flash message should be shown:    success    Almost there! We send you an email to validate your email address. Please confirm it to be able to log in.
     [Teardown]    Zed: delete customer:
     ...    || email                       ||
@@ -258,7 +258,7 @@ Register_during_checkout
     Page Should Not Contain Element    ${pdp_add_to_wishlist_button}
     Yves: go to b2c shopping cart  
     Yves: click on the 'Checkout' button in the shopping cart
-    Yves: signup guest user during checkout:    ${guest_user_first_name}    ${guest_user_last_name}    sonia+guest${random}@spryker.com    ${random_str}R!#${random}    ${random_str}R!#${random}
+    Yves: signup guest user during checkout:    ${guest_user_first_name}    ${guest_user_last_name}    sonia+guest${random}@spryker.com    ${random_str}sR!#${random}    ${random_str}R!#${random}
     Save the result of a SELECT DB query to a variable:    select registration_key from spy_customer where email = 'sonia+guest${random}@spryker.com'    confirmation_key
     API_test_setup
     I send a POST request:     /customer-confirmation   {"data":{"type":"customer-confirmation","attributes":{"registrationKey":"${confirmation_key}"}}}
