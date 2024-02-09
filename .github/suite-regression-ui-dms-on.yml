@@ -56,8 +56,7 @@ jobs:
               continue-on-error: false
               run: |
                   docker/sdk cli composer dump-autoload -o -a
-                  APPLICATION_STORE=DE docker/sdk console queue:worker:start --stop-when-empty
-                  APPLICATION_STORE=AT docker/sdk console queue:worker:start --stop-when-empty
+                  SPRYKER_CURRENT_REGION=EU docker/sdk console queue:worker:start --stop-when-empty
             - name: Run Tests
               run: |
                   cd robotframework-tests
