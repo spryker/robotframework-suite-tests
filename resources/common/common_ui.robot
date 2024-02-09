@@ -100,6 +100,7 @@ UI_test_setup
 UI_test_teardown
     # Run Keyword If Test Failed    Pause Execution
     Delete All Cookies
+    Set Browser Timeout    ${browser_timeout}
 
 Select Random Option From List
     [Arguments]    ${dropDownLocator}    ${dropDownOptionsLocator}
