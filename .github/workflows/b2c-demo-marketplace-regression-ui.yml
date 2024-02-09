@@ -41,7 +41,7 @@ jobs:
                   python3 -m pip install -U robotframework-requests
                   python3 -m pip install -U robotframework-jsonlibrary
                   python3 -m pip install -U robotframework-databaselibrary
-                  python3 -m pip install -U robotframework-browser
+                  python3 -m pip install robotframework-browser==18.0.0
                   python3 -m pip install PyMySQL
             - name: Install docker-compose
               run: |
