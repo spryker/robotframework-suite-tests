@@ -28,20 +28,11 @@ API_suite_setup
     ...    ``Suite Setup       API_suite_setup``
     Common_suite_setup
 
-Should Test Run
-    Log Many    @{Test Tags}
-    ${dms_state}=    Convert To String    ${dms}
-    IF   '${dms_state}' != 'True'
-        IF   'dms' in @{Test Tags}
-            Skip
-        END
-    END
-
 Overwrite api variables
     FOR  ${tag}  IN  @{Test Tags}
         Log   ${tag}
         Set Test Variable    ${tag}
-        IF    '${tag}' == 'dms'    CONTINUE
+        IF    '${tag}' == 'dms-on'    CONTINUE
         IF    '${glue_env}' == '${EMPTY}'
             IF    '${tag}' == 'glue'
                 Set Suite Variable    ${current_url}    ${glue_url}

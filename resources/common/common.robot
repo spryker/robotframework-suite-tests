@@ -65,6 +65,19 @@ Common_suite_setup
     END
     RETURN    ${random}
 
+Should Test Run
+    Log Many    @{Test Tags}
+    ${dms_state}=    Convert To String    ${dms}
+    IF   '${dms_state}' != 'True'
+        IF   'dms-on' in @{Test Tags}
+            Skip  
+        END
+    ELSE    
+        IF   'dms-off' in @{Test Tags}
+            Skip      
+        END
+    END    
+
 Load Variables
     [Documentation]    Keyword is used to load variable values from the environment file passed during execution. This Keyword is used during suite setup.
     ...    It accepts the name of the environment as specified at the beginning of an environment file e.g. ``"environment": "api_suite"``.

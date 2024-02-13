@@ -1593,6 +1593,7 @@ User_Control
     ...    AND    Zed: click Action Button in a table for row that contains:    controlRole${random}    Delete
 
 Multistore_Product
+    [Tags]    dms-off
     [Documentation]    check product multistore functionality
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: start new abstract product creation:
@@ -1651,13 +1652,16 @@ Multistore_Product
     ...    || multiSKU${random} | AT             ||
     Trigger multistore p&s
     Yves: go to URL and refresh until 404 occurs:    ${url}
-    [Teardown]    Run Keywords    Yves: go to AT store 'Home' page
+    [Teardown]    Run Keywords    Should Test Run
+    ...    AND    Yves: go to AT store 'Home' page
     ...    AND    Yves: login on Yves with provided credentials:    ${yves_second_user_email}
     ...    AND    Yves: check if cart is not empty and clear it
 
 Multistore_Product_Offer
+    [Tags]    dms-off
     [Documentation]    check product and offer multistore functionality
-    [Setup]    Repeat Keyword    3    Trigger multistore p&s
+    [Setup]    Run Keywords    Should Test Run
+    ...    AND    Repeat Keyword    3    Trigger multistore p&s
     MP: login on MP with provided credentials:    ${merchant_video_king_email}
     MP: open navigation menu tab:    Products    
     MP: click on create new entity button:    Create Product
@@ -1752,12 +1756,14 @@ Multistore_Product_Offer
     ...    || multistoreSKU${random} | AT             ||
     Trigger multistore p&s
     Yves: go to URL and refresh until 404 occurs:    ${url}
-    [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    [Teardown]    Run Keywords    Should Test Run    
+    ...    AND    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: go to second navigation item level:    Catalog    Products 
     ...    AND    Zed: click Action Button in a table for row that contains:     multistoreSKU${random}     Deny
     ...    AND    Trigger multistore p&s
 
 Multistore_CMS
+    [Tags]    dms-off
     [Documentation]    check CMS multistore functionality
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Content    Pages
@@ -1771,14 +1777,17 @@ Multistore_CMS
     ...    || cmsPage                  | unselect store ||
     ...    || Multistore Page${random} | AT             ||
     Yves: go to URL and refresh until 404 occurs:    ${url}
-    [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    [Teardown]    Run Keywords    Should Test Run
+    ...    AND    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: go to second navigation item level:    Content    Pages
     ...    AND    Zed: click Action Button in a table for row that contains:    Multistore Page${random}    Deactivate
     ...    AND    Trigger multistore p&s
 
 Product_Availability_Calculation
+    [Tags]    dms-off
     [Documentation]    Check product availability + multistore
-    [Setup]    Run Keywords    Repeat Keyword    3    Trigger multistore p&s
+    [Setup]    Run Keywords    Should Test Run
+    ...    AND    Repeat Keyword    3    Trigger multistore p&s
     ...    AND    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: update warehouse:    
     ...    || warehouse  | store || 
@@ -1864,7 +1873,8 @@ Product_Availability_Calculation
     Yves: login on Yves with provided credentials:    ${yves_second_user_email}
     Yves: go to PDP of the product with sku:    availabilitySKU${random}    wait_for_p&s=true
     Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    True
-    [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    [Teardown]    Run Keywords    Should Test Run
+    ...    AND    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: update warehouse:    
     ...    || warehouse  | unselect store || 
     ...    || Warehouse1 | AT             ||
