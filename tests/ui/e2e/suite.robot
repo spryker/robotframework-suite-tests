@@ -2652,7 +2652,7 @@ Manage_Merchants_from_Backoffice
     ...    AND    Trigger multistore p&s
 
 Manage_Merchant_Users
-    [Documentation]    Checks that backoffice admin is able to create, activate, edit and delete merchant users
+    [Documentation]    Checks that backoffice admin is able to create, activate, edit and delete merchant users. DMS-ON: https://spryker.atlassian.net/browse/FRW-7395
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Marketplace    Merchants
     Zed: click Action Button in a table for row that contains:     Video King     Edit
@@ -3062,7 +3062,7 @@ Merchant_Portal_Customer_Specific_Prices
     Yves: merchant's offer/product price should be:    Budget Cameras     €500.00
 
 Merchant_Portal_My_Account
-    [Documentation]    Checks that MU can edit personal data in MP
+    [Documentation]    Checks that MU can edit personal data in MP. DMS-ON: https://spryker.atlassian.net/browse/FRW-7395
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Marketplace    Merchants
     Zed: click Action Button in a table for row that contains:     Sony Experts     Edit
@@ -3090,7 +3090,7 @@ Merchant_Portal_My_Account
     ...    AND    Zed: delete Zed user with the following email:    sonia+editmu+${random}@spryker.com
     
 Merchant_Portal_Dashboard
-    [Documentation]    Checks that merchant user is able to access the dashboard page
+    [Documentation]    Checks that merchant user is able to access the dashboard page. DMS-ON: https://spryker.atlassian.net/browse/FRW-7395
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Marketplace    Merchants
     Zed: click Action Button in a table for row that contains:     Sony Experts     Edit
