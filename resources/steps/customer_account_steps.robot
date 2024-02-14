@@ -51,8 +51,8 @@ Yves: create a new customer address in profile:
     Type Text    ${customer_account_address_additional_address_field}     ${additionalAddress}
     Type Text    ${customer_account_address_zip_code_field}     ${postCode}
     Type Text    ${customer_account_address_city_field}     ${city}
-    Select From List By Text    ${customer_account_address_country}    ${country}
     Type Text    ${customer_account_address_phone_field}     ${phone}
+    Select From List By Text    ${customer_account_address_country}    ${country} 
     Click    ${customer_account_address_submit_button}
     Wait Until Element Is Visible    ${customer_account_add_new_address_button}[${env}]
 
