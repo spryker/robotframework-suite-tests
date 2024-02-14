@@ -22,5 +22,5 @@ ${customer_account_profile_salutation_selector}    id=profileForm_salutation
 ${customer_account_profile_first_name_field}    id=profileForm_first_name
 ${customer_account_profile_last_name_field}    id=profileForm_last_name
 ${customer_account_profile_email_field}    id=profileForm_email
-${customer_account_address_country}    xpath=//*[contains(@id, 'addressForm_iso2_code')]
+${customer_account_address_country}    xpath=//select[contains(@id, 'addressForm_iso2_code')]
 ${customer_account_profile_submit_profile_button}    xpath=//form[@name='profileForm']//button[@type='submit']
