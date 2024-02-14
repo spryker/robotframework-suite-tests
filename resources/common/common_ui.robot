@@ -93,6 +93,7 @@ UI_suite_teardown
     Close Browser    ALL
 
 UI_test_setup
+    Should Test Run
     Delete All Cookies
     Set Browser Timeout    ${browser_timeout}
     Go To    ${yves_url}
