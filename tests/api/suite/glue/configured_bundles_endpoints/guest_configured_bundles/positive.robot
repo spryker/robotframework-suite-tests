@@ -33,7 +33,7 @@ Add_configured_bundle_with_1_slot_1_product_new_cart
     And Response body parameter should not be EMPTY:    [data][attributes][discounts][0][amount]
     And Response body parameter should be:    [data][attributes][discounts][0][code]    None
     And Response should contain the array smaller than a certain size:    [data][attributes][thresholds]    2
-    And Response body parameter should be:    [data][links][self]    ${glue_url}/guest-carts/${guest_cart_id}
+    And Response body parameter should be:    [data][links][self]    ${current_url}/guest-carts/${guest_cart_id}
     [Teardown]    Run Keyword    Cleanup all items in the guest cart:    ${guest_cart_id}
 
 Add_configured_bundle_with_multiple_slots_and_products_to_existing_cart
@@ -60,7 +60,7 @@ Add_configured_bundle_with_multiple_slots_and_products_to_existing_cart
     And Response body parameter should not be EMPTY:    [data][attributes][discounts][0][amount]
     And Response body parameter should be:    [data][attributes][discounts][0][code]    None
     And Response should contain the array smaller than a certain size:    [data][attributes][thresholds]    2
-    And Response body parameter should be:    [data][links][self]    ${glue_url}/guest-carts/${guest_cart_id}
+    And Response body parameter should be:    [data][links][self]    ${current_url}/guest-carts/${guest_cart_id}
     [Teardown]    Run Keyword    Cleanup all items in the guest cart:    ${guest_cart_id}
 
 Add_configured_bundle_include_cart_rules
@@ -73,7 +73,7 @@ Add_configured_bundle_include_cart_rules
     And Save value to a variable:    [data][id]    guest_cart_id
     And Response should contain the array larger than a certain size:    [data]    0
     And Response body parameter should be:    [data][type]    guest-carts   
-    And Response body parameter should be:    [data][links][self]    ${glue_url}/guest-carts/${guest_cart_id}
+    And Response body parameter should be:    [data][links][self]    ${current_url}/guest-carts/${guest_cart_id}
     And Response include should contain certain entity type:     cart-rules
     And Response should contain the array larger than a certain size:    [included]    0
     And Response should contain the array of a certain size:    [data][relationships][cart-rules][data]    1
@@ -102,7 +102,7 @@ Add_configured_bundle_include_guest_cart_items
     And Save value to a variable:    [data][id]    guest_cart_id
     And Response should contain the array larger than a certain size:    [data]    0
     And Response body parameter should be:    [data][type]    guest-carts   
-    And Response body parameter should be:    [data][links][self]    ${glue_url}/guest-carts/${guest_cart_id}
+    And Response body parameter should be:    [data][links][self]    ${current_url}/guest-carts/${guest_cart_id}
     And Response include should contain certain entity type:     guest-cart-items
     And Response should contain the array larger than a certain size:    [included]    0
     And Response should contain the array of a certain size:    [data][relationships][guest-cart-items][data]    1
@@ -158,7 +158,7 @@ Add_configured_bundle_include_concrete_products
     And Save value to a variable:    [data][id]    guest_cart_id
     And Response should contain the array larger than a certain size:    [data]    0
     And Response body parameter should be:    [data][type]    guest-carts   
-    And Response body parameter should be:    [data][links][self]    ${glue_url}/guest-carts/${guest_cart_id}
+    And Response body parameter should be:    [data][links][self]    ${current_url}}/guest-carts/${guest_cart_id}
     And Response include should contain certain entity type:     concrete-products
     And Response should contain the array larger than a certain size:    [included]    0
     And Response body parameter should be:    [included][0][type]    concrete-products
@@ -189,7 +189,7 @@ Add_configured_bundle_include_bundle_items
     And Response reason should be:    Created
     And Response should contain the array larger than a certain size:    [data]    0
     And Response body parameter should be:    [data][type]    guest-carts   
-    And Response body parameter should be:    [data][links][self]    ${glue_url}/guest-carts/${guest_cart_id}
+    And Response body parameter should be:    [data][links][self]    ${current_url}/guest-carts/${guest_cart_id}
     And Response include should contain certain entity type:     bundle-items
     And Response should contain the array larger than a certain size:    [included]    0
     And Response should contain the array of a certain size:    [data][relationships][bundle-items][data]    1
@@ -220,7 +220,7 @@ Add_same_configured_bundle_again_to_check_quantity_not_merged
     Then Response status code should be:    201   
     And Response should contain the array larger than a certain size:    [data]    0
     And Response body parameter should be:    [data][type]    guest-carts   
-    And Response body parameter should be:    [data][links][self]    ${glue_url}/guest-carts/${guest_cart_id}
+    And Response body parameter should be:    [data][links][self]    ${current_url}/guest-carts/${guest_cart_id}
     And Response include should contain certain entity type:     guest-cart-items
     And Response should contain the array of a certain size:    [data][relationships][guest-cart-items][data]    2   
     And Response should contain the array of a certain size:    [included]    2
@@ -235,7 +235,7 @@ Add_configured_bundle_to_cart_that_contains_same_product
     Then Response status code should be:    201
     And Response should contain the array larger than a certain size:    [data]    0
     And Response body parameter should be:    [data][type]    guest-carts   
-    And Response body parameter should be:    [data][links][self]    ${glue_url}/guest-carts/${guest_cart_id}
+    And Response body parameter should be:    [data][links][self]    ${current_url}/guest-carts/${guest_cart_id}
     And Response include should contain certain entity type:     guest-cart-items
     And Response should contain the array of a certain size:    [data][relationships][guest-cart-items][data]    2   
     And Response should contain the array of a certain size:    [included]    2
@@ -253,7 +253,7 @@ Add_other_configured_bundle_product_with_same_template
     Then Response status code should be:    201   
     And Response should contain the array larger than a certain size:    [data]    0
     And Response body parameter should be:    [data][type]    guest-carts   
-    And Response body parameter should be:    [data][links][self]    ${glue_url}/guest-carts/${guest_cart_id}
+    And Response body parameter should be:    [data][links][self]    ${current_url}/guest-carts/${guest_cart_id}
     And Response include should contain certain entity type:     guest-cart-items
     And Response should contain the array of a certain size:    [data][relationships][guest-cart-items][data]    2   
     And Response should contain the array of a certain size:    [included]    2
@@ -290,7 +290,7 @@ Update_configured_bundle_product_quantity
     And Response body parameter should not be EMPTY:    [data][attributes][discounts][0][amount]
     And Response body parameter should be:    [data][attributes][discounts][0][code]    None
     And Response should contain the array smaller than a certain size:    [data][attributes][thresholds]    2
-    And Response body parameter should be:    [data][links][self]    ${glue_url}/guest-carts/${guest_cart_id}
+    And Response body parameter should be:    [data][links][self]    ${current_url}/guest-carts/${guest_cart_id}
     And Response body parameter should be:    [included][0][attributes][sku]    ${configurable_bundle.slot_5.product_1} 
     And Response body parameter should be:    [included][0][attributes][quantity]    2
     [Teardown]    Run Keyword    Cleanup all items in the guest cart:    ${guest_cart_id}
