@@ -1792,8 +1792,8 @@ Checkout_Address_Management
     ...    || Mr.        | New       | Billing  | Changed Street | 098         | 09876    | Berlin | Germany | Spryker | 987654321 | Additional street ||
     Yves: save new billing address to address book:    false
     Yves: fill in the following new shipping address:
-    ...    || salutation | firstName | lastName | street          | houseNumber | postCode | city   | country | company | phone     | additionalAddress ||
-    ...    || Mr.        | First     | Last     | Shipping Street | 7           | 10247    | Vienna | Austria | Spryker | 123456789 | Additional street ||
+    ...    || salutation | firstName | lastName | street          | houseNumber | postCode | city   | country    | company | phone     | additionalAddress ||
+    ...    || Mr.        | First     | Last     | Shipping Street | 7           | 10247    | Geneva | Switzerland| Spryker | 123456789 | Additional street ||
     Yves: save new deviery address to address book:    true
     Yves: submit form on the checkout
     Yves: select the following shipping method on the checkout and go next:    Express
@@ -1802,12 +1802,12 @@ Checkout_Address_Management
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
     Yves: get the last placed order ID by current customer
-    Yves: check that user has address exists/doesn't exist:    true    First    Last    Shipping Street    7    10247    Vienna    Austria
+    Yves: check that user has address exists/doesn't exist:    true    First    Last    Shipping Street    7    10247    Geneva    Switzerland
     Yves: check that user has address exists/doesn't exist:    false    New    Billing    Changed Street    098    09876    Berlin    Germany
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to order page:    ${lastPlacedOrder}
     Zed: billing address for the order should be:    New Billing, Changed Street 098, 09876 Berlin, Germany
-    Zed: shipping address inside xxx shipment should be:    1    Mr First, Last, Shipping Street, 7, Additional street, Spryker, 10247, Vienna, Austria
+    Zed: shipping address inside xxx shipment should be:    1    Mr First, Last, Shipping Street, 7, Additional street, Spryker, 10247, Geneva, Switzerland
     [Teardown]    Run Keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     ...    AND    Yves: delete all user addresses
 
