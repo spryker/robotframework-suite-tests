@@ -1,4 +1,4 @@
-name: "[suite][master] Robot Regression UI DMS ON"
+name: "[suite][master] Robot Regression UI Dynamic Multistore"
 
 on:
     schedule:
@@ -7,7 +7,7 @@ on:
 
 jobs:
     docker-alpine-php-8-2-mariadb-robot-ui:
-        name: "Docker / Alpine / PHP 8.2 / MariaDB / Robot / UI /DMS-ON"
+        name: "Docker / Alpine / PHP 8.2 / MariaDB / Robot / UI / Dynamic Multistore"
         runs-on: ubuntu-20.04
         env:
             PROGRESS_TYPE: plain
