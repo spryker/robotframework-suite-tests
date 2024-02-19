@@ -1,4 +1,4 @@
-name: "[b2b][internal] Robot Regression API Dynamic Multistore
+name: "[b2b][internal] Robot Regression API Dynamic Multistore"
 
 on:
     schedule:
