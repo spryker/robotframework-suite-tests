@@ -243,3 +243,30 @@ Upsert_product_abstract_collection_with_child:
     ...   AND    Delete dynamic entity configuration in Database:    robot-tests-product-abstracts
     ...   AND    Delete dynamic entity configuration in Database:    robot-tests-products
     ...   AND    Delete dynamic entity configuration in Database:    robot-tests-product-prices
+
+Create_product_abstract_collection_with_child_stock_products:
+    ### SETUP DYNAMIC ENTITY CONFIGURATION AND RELATION ###
+    Create dynamic entity configuration in Database:    robot-tests-products    spy_product     1    {"identifier":"id_product","fields":[{"fieldName":"id_product","fieldVisibleName":"id_product","isCreatable":false,"isEditable":false,"validation":{"isRequired":false},"type":"integer"},{"fieldName":"fk_product_abstract","fieldVisibleName":"fk_product_abstract","type":"integer","isCreatable":true,"isEditable":true,"validation":{"isRequired":true}},{"fieldName":"attributes","fieldVisibleName":"attributes","isCreatable":true,"isEditable":true,"type":"string","validation":{"isRequired":true}},{"fieldName":"discount","fieldVisibleName":"discount","isCreatable":true,"isEditable":true,"type":"integer","validation":{"isRequired":false}},{"fieldName":"is_active","fieldVisibleName":"is_active","isCreatable":true,"isEditable":true,"type":"boolean","validation":{"isRequired":false}},{"fieldName":"is_quantity_splittable","fieldVisibleName":"is_quantity_splittable","isCreatable":true,"isEditable":true,"type":"boolean","validation":{"isRequired":false}},{"fieldName":"sku","fieldVisibleName":"sku","isCreatable":true,"isEditable":true,"type":"string","validation":{"isRequired":true}},{"fieldName":"warehouses","fieldVisibleName":"warehouses","isCreatable":true,"isEditable":true,"type":"string","validation":{"isRequired":false}}]}
+    Create dynamic entity configuration in Database:    robot-tests-stock-products   spy_stock_product     1    {"identifier":"id_stock_product","fields":[{"fieldName":"id_stock_product","fieldVisibleName":"id_stock_product","isCreatable":false,"isEditable":false,"validation":{"isRequired":false},"type":"integer"},{"fieldName":"fk_product","fieldVisibleName":"fk_product","isCreatable":true,"isEditable":true,"type":"integer","validation":{"isRequired":true}},{"fieldName":"quantity","fieldVisibleName":"quantity","isCreatable":true,"isEditable":true,"type":"integer","validation":{"isRequired":true}},{"fieldName":"is_never_out_of_stock","fieldVisibleName":"is_never_out_of_stock","isCreatable":true,"isEditable":true,"type":"boolean","validation":{"isRequired":false}}]}
+    Create dynamic entity configuration relation in Database:    robot-tests-products  robot-tests-stock-products   robotTestsProductStockProducts    fk_product    id_product
+
+    ### GET TOKEN ###
+    I get access token by user credentials:   ${zed_admin.email}
+
+    ### SAVE PRODUCT ABSTRACT WITH STOCK ###
+    And I set Headers:    Content-Type==application/json    Authorization=Bearer ${token}
+    And I send a POST request:    /dynamic-entity/robot-tests-products  {"data": [{"fk_tax_set": 1, "attributes": "FOO", "sku": "FOO2", "robotTestsProductStockProducts": [{"is_never_out_of_stock":${false},"quantity":0}]}]}
+    Then Response status code should be:    201
+    When Save value to a variable:    [data][0][id_product]    id_product
+    When Save value to a variable:    [data][0][sku]    concrete_sku
+    When Save value to a variable:    [data][0][robotTestsProductStockProducts][0][id_stock_product]    id_stock_product
+    Trigger p&s
+    And Product availability status should be changed on:    is_available=False sku=${concrete_sku}
+    [Teardown]    Run Keywords    Remove Tags    *
+    ...   AND    Delete product by id_product in Database:   ${id_product}
+    ...   AND    Delete stock_product by id_stock_product in Database:   ${id_stock_product}
+    ...   AND    Delete dynamic entity configuration relation in Database:    robotTestsProductStockProducts
+    ...   AND    Delete dynamic entity configuration in Database:    robot-tests-products
+    ...   AND    Delete dynamic entity configuration in Database:    robot-tests-stock-products
+    ...   AND    Set Tags    bapi
+    ...   AND    Restore product initial stock via data exchange api:
