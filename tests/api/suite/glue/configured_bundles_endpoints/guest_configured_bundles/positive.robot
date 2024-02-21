@@ -158,7 +158,7 @@ Add_configured_bundle_include_concrete_products
     And Save value to a variable:    [data][id]    guest_cart_id
     And Response should contain the array larger than a certain size:    [data]    0
     And Response body parameter should be:    [data][type]    guest-carts   
-    And Response body parameter should be:    [data][links][self]    ${current_url}}/guest-carts/${guest_cart_id}
+    And Response body parameter should be:    [data][links][self]    ${current_url}/guest-carts/${guest_cart_id}
     And Response include should contain certain entity type:     concrete-products
     And Response should contain the array larger than a certain size:    [included]    0
     And Response body parameter should be:    [included][0][type]    concrete-products

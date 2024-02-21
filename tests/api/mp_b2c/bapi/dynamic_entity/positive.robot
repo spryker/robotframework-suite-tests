@@ -310,7 +310,7 @@ Upsert_country_collection:
     And Response body parameter should be:    [data][name]    Country XXX
     ### PARTIAL UPDATE ONE COUNTRY ###
     And I set Headers:    Content-Type==application/json    Authorization=Bearer ${token}
-    And I send a PUT request:    /dynamic-entity/robot-test-countries/${xaa_country_id}    {"data":{"name":"Country XXL"}}
+    And I send a PUT request:    /dynamic-entity/robot-test-countries/${xaa_country_id}    {"data":{"iso2_code":"XX","iso3_code":"XXX","name":"Country XXL"}}
     Then Response status code should be:    200
     And Response header parameter should be:    Content-Type    application/json
     And Response body parameter should be:    [data][name]    Country XXL

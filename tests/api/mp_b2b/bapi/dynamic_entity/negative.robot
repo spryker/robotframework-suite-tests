@@ -124,7 +124,7 @@ Create_country_with_invalid_data
     And I set Headers:    Content-Type=application/json    Authorization=Bearer ${token}
     And I send a POST request:    /dynamic-entity/robot-test-countries   {"data":[{"iso2_code":"XX","name":"XXX"}]}
     Then Response status code should be:    400
-    And Response body parameter should contain:    [0][message]    The required field must not be empty. Field: iso3_code
+    And Response body parameter should contain:    [0][message]    The required field must not be empty. Field: robot-test-countries.iso3_code
     And Response body parameter should be:    [0][code]    1307
     And Response body parameter should contain:    [0][status]   400
     [Teardown]    Run Keywords    Delete dynamic entity configuration in Database:    robot-test-countries
@@ -264,9 +264,9 @@ Update_country_with_invalid_field_type
     When Save value to a variable:    [data][1][id_country]    xxb_country_id
     ### UPDATE COUNTRY WITH INVALID FILELD TYPE ###
     And I set Headers:    Content-Type==application/json    Authorization=Bearer ${token}
-    And I send a PATCH request:    /dynamic-entity/robot-test-countries/${xxa_country_id}    {"data":{"iso2_code":1234}}
+    And I send a PATCH request:    /dynamic-entity/robot-test-countries/${xxa_country_id}    {"data":{"name": "FOO", "iso2_code":1234, "iso3_code": 1234}}
     Then Response status code should be:    400
-    And Response body parameter should contain:    [0][message]    Invalid data type for field: iso2_code
+    And Response body parameter should contain:    [0][message]    Invalid data type for field: robot-test-countries.iso2_code
     And Response body parameter should be:    [0][code]    1305
     And Response body parameter should be:    [0][status]    400
     [Teardown]    Run Keywords    Delete dynamic entity configuration in Database:    robot-test-countries
