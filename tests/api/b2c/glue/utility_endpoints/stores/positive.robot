@@ -11,6 +11,8 @@ ENABLER
 
 #get
 Get_all_availiable_stores
+    [Tags]    dms-off
+    [Documentation]    https://spryker.atlassian.net/browse/FRW-7430 Test has been skipped for dms-on shop. discussed with Platform team. Bug has low priority can be not fixed soon.
     When I send a GET request:    /stores
     Then Response status code should be:    200
     And Response reason should be:    OK
@@ -41,6 +43,8 @@ Get_all_availiable_stores
 
 
 Get_store_by_id
+    [Tags]    dms-off
+    [Documentation]    https://spryker.atlassian.net/browse/FRW-7430 Test has been skipped for dms-on shop. discussed with Platform team. Bug has low priority can be not fixed soon.
     When I send a GET request:    /stores/${store.de}
     Then Response status code should be:    200
     And Response reason should be:    OK
