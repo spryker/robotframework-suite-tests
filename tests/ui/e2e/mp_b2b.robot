@@ -2038,6 +2038,7 @@ Order_Cancelation
     # ...    AND    Yves: delete all shopping carts
 
 Multistore_Product_Offer
+    [Tags]    dms-off
     [Documentation]    check product and offer multistore functionality
     [Setup]    Repeat Keyword    3    Trigger multistore p&s
     MP: login on MP with provided credentials:    ${merchant_office_king_email}
@@ -2140,6 +2141,7 @@ Multistore_Product_Offer
     ...    AND    Trigger multistore p&s
 
 Multistore_CMS
+    [Tags]    dms-off
     [Documentation]    Check CMS multistore functionality
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Content    Pages
@@ -2160,6 +2162,7 @@ Multistore_CMS
     ...    AND    Trigger multistore p&s
 
 Product_Availability_Calculation
+    [Tags]    dms-off
     [Documentation]    Check product availability + multistore
     [Setup]    Repeat Keyword    3    Trigger multistore p&s
     MP: login on MP with provided credentials:    ${merchant_spryker_email}
@@ -2521,7 +2524,7 @@ Glossary
     ...    AND    Trigger p&s
 
 Configurable_Product_PDP_Shopping_List
-    [Documentation]    Configure product from PDP and Shopping List
+    [Documentation]    Configure product from PDP and Shopping List. DMS-ON: https://spryker.atlassian.net/browse/FRW-6380
     [Setup]    Run keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     ...    AND    Yves: create new 'Shopping Cart' with name:    configProduct+${random}
     ...    AND    Yves: create new 'Shopping List' with name:    configProduct+${random}
@@ -2583,7 +2586,7 @@ Configurable_Product_PDP_Shopping_List
     ...    AND    Yves: delete 'Shopping Cart' with name:    configProduct+${random}
       
 Configurable_Product_RfQ_Order_Management
-    [Documentation]    Conf Product in RfQ, OMS and reorder
+    [Documentation]    Conf Product in RfQ, OMS and reorder. DMS-ON: https://spryker.atlassian.net/browse/FRW-6380
     [Setup]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: create new Zed user with the following data:    agent_config+${random}@spryker.com    change123${random}    Config    Product    Root group    This user is an agent in Storefront    en_US
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
@@ -2688,6 +2691,7 @@ Configurable_Product_RfQ_Order_Management
     ...    AND    Zed: delete Zed user with the following email:    agent_config+${random}@spryker.com
 
 Data_exchange_API_download_specification
+    [Documentation]    DMS-ON: https://spryker.atlassian.net/browse/FRW-7396
     [Setup]    Trigger API specification update
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: download data exchange api specification should be active:    true
@@ -2732,6 +2736,7 @@ Data_exchange_API_download_specification
     ...    AND    Trigger API specification update
 
 Data_exchange_API_Configuration_in_Zed
+    [Documentation]    DMS-ON: https://spryker.atlassian.net/browse/FRW-7396
     [Tags]    bapi
     [Setup]    Trigger API specification update
     Zed: login on Zed with provided credentials:    ${zed_admin_email}

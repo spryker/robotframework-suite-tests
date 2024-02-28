@@ -187,7 +187,7 @@ Volume_Prices
     [Teardown]    Yves: delete 'Shopping Cart' with name:    VolumePriceCart+${random}
 
 Discontinued_Alternative_Products
-    [Documentation]    Checks that product can be discontinued in Zed
+    [Documentation]    Checks that product can be discontinued in Zed. DMS-ON: https://spryker.atlassian.net/browse/FRW-7465
     Yves: go to PDP of the product with sku:  M21100
     Yves: PDP contains/doesn't contain:    true    ${alternativeProducts}
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
@@ -256,7 +256,7 @@ Packaging_Units
     Yves: 'Thank you' page is displayed
 
 Product_Sets
-    [Documentation]    Checks that product set can be added into cart
+    [Documentation]    Checks that product set can be added into cart. DMS-on mode: https://spryker.atlassian.net/browse/FRW-6377
     [Setup]    Run keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     ...    AND    Yves: create new 'Shopping Cart' with name:    productSetsCart+${random}
     Yves: go to URL:    en/product-sets
@@ -1351,6 +1351,7 @@ Order_Cancelation
     ...    AND    Yves: delete all shopping carts
 
 Multistore_Product
+    [Tags]    dms-off
     [Documentation]    check product multistore functionality
     [Setup]    Repeat Keyword    3    Trigger multistore p&s
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
@@ -1412,6 +1413,7 @@ Multistore_Product
     ...    AND    Yves: delete all shopping carts
 
 Multistore_CMS
+    [Tags]    dms-off
     [Documentation]    check CMS multistore functionality
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Content    Pages
@@ -1431,6 +1433,7 @@ Multistore_CMS
     ...    AND    Trigger multistore p&s
 
 Product_Availability_Calculation
+    [Tags]    dms-off
     [Documentation]    Check product availability + multistore
     [Setup]    Run Keywords    Repeat Keyword    3    Trigger multistore p&s
     ...    AND    Zed: login on Zed with provided credentials:    ${zed_admin_email}
@@ -1579,7 +1582,7 @@ Update_Customer_Data
     ...    || ${yves_company_user_buyer_email} | Mr         | ${yves_company_user_buyer_firstname} | ${yves_company_user_buyer_lastname} ||
 
 CRUD_Product_Set
-    [Documentation]    CRUD operations for product sets
+    [Documentation]    CRUD operations for product sets. DMS-ON: https://spryker.atlassian.net/browse/FRW-7393 
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: create new product set:
     ...    || name en            | name de            | url en             | url de             | set key       | active | product                             | product 2                           | product 3                                      ||
@@ -1685,7 +1688,7 @@ Glossary
     ...    AND    Trigger p&s
     
 Configurable_Product_PDP_Shopping_List
-    [Documentation]    Configure product from PDP and Shopping List
+    [Documentation]    Configure product from PDP and Shopping List. DMS-ON: https://spryker.atlassian.net/browse/FRW-6380
     [Setup]    Run keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     ...    AND    Yves: create new 'Shopping Cart' with name:    configProduct+${random}
     ...    AND    Yves: create new 'Shopping List' with name:    configProduct+${random}
@@ -1744,7 +1747,7 @@ Configurable_Product_PDP_Shopping_List
     ...    AND    Yves: delete 'Shopping Cart' with name:    configProduct+${random}
       
 Configurable_Product_RfQ_Order_Management
-    [Documentation]    Conf Product in RfQ, OMS and reorder
+    [Documentation]    Conf Product in RfQ, OMS and reorder. DMS-ON: https://spryker.atlassian.net/browse/FRW-6380
     [Setup]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: create new Zed user with the following data:    agent_config+${random}@spryker.com    change123${random}    Config    Product    Root group    This user is an agent    en_US
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
@@ -1843,6 +1846,7 @@ Configurable_Product_RfQ_Order_Management
     ...    AND    Zed: delete Zed user with the following email:    agent_config+${random}@spryker.com
     
 Data_exchange_API_download_specification
+    [Documentation]    DMS-ON: https://spryker.atlassian.net/browse/FRW-7396
     [Setup]    Trigger API specification update
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: download data exchange api specification should be active:    true
@@ -1887,6 +1891,7 @@ Data_exchange_API_download_specification
     ...    AND    Trigger API specification update
 
 Data_exchange_API_Configuration_in_Zed
+    [Documentation]    DMS-ON: https://spryker.atlassian.net/browse/FRW-7396
     [Tags]    bapi
     [Setup]    Trigger API specification update
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
