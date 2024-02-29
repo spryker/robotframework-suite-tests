@@ -71,6 +71,21 @@ Get_list_of_country_with_invalid_id
     And Response body parameter should be:    [0][code]    1303
     [Teardown]    Run Keyword    Delete dynamic entity configuration in Database:    robot-test-countries
 
+Get_country_collection_with_invalid_multiple_filter
+    ### SETUP DYNAMIC ENTITY CONFIGURATION ###
+    Delete dynamic entity configuration in Database:    robot-test-countries
+    Create dynamic entity configuration in Database:    robot-test-countries    spy_country     1    {"identifier":"id_country","fields":[{"fieldName":"id_country","fieldVisibleName":"id_country","isEditable":false,"isCreatable":false,"type":"integer","validation":{"isRequired":false}},{"fieldName":"iso2_code","fieldVisibleName":"iso2_code","type":"string","isEditable":true,"isCreatable":true,"validation":{"isRequired":true,"maxLength":2,"minLength":2}},{"fieldName":"iso3_code","fieldVisibleName":"iso3_code","type":"string","isEditable":true,"isCreatable":true,"validation":{"isRequired":true,"maxLength":3,"minLength":3}},{"fieldName":"name","fieldVisibleName":"name","type":"string","isEditable":true,"isCreatable":true,"validation":{"isRequired":true,"maxLength":255,"minLength":1}},{"fieldName":"postal_code_mandatory","fieldVisibleName":"postal_code_mandatory","type":"boolean","isEditable":true,"isCreatable":true,"validation":{"isRequired":false}},{"fieldName":"postal_code_regex","isEditable":"false","isCreatable":"false","fieldVisibleName":"postal_code_regex","type":"string","validation":{"isRequired":false,"maxLength":500,"minLength":1}}]}
+    # ### GET TOKEN ###
+    I get access token by user credentials:   ${zed_admin.email}
+    ### GET COUNTRY COLLECTION WITH FILTER ###
+    And I set Headers:    Content-Type=application/json    Authorization=Bearer ${token}
+    And I send a GET request:    /dynamic-entity/robot-test-countries?filter[countries.iso2_code]={"in": ["UA","AD","AE"], "not in": ["AT"]}
+    Then Response status code should be:    200
+    And Response header parameter should be:    Content-Type    application/json
+    And Response should contain the array of a certain size:   $    1
+    And Response should contain the array of a certain size:   [data]    0
+    [Teardown]    Run Keyword    Delete dynamic entity configuration in Database:    robot-test-countries
+
 Create_country_with_empty_body
     ### SETUP DYNAMIC ENTITY CONFIGURATION ###
     Delete dynamic entity configuration in Database:    robot-test-countries
