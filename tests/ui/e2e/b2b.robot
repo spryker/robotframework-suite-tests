@@ -1353,7 +1353,7 @@ Order_Cancelation
 Multistore_Product
     [Tags]    dms-off
     [Documentation]    check product multistore functionality
-    [Setup]    Repeat Keyword    3    Trigger multistore p&s
+    Repeat Keyword    3    Trigger multistore p&s
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: start new abstract product creation:
     ...    || sku               | store | store 2 | name en               | name de                 | new from   | new to     ||
@@ -1408,7 +1408,8 @@ Multistore_Product
     ...    || multiSKU${random} | AT             ||
     Trigger multistore p&s
     Yves: go to URL and refresh until 404 occurs:    ${url}
-    [Teardown]    Run Keywords    Yves: go to AT store 'Home' page
+    [Teardown]    Run Keywords    Should Test Run
+    ...    AND    Yves: go to AT store 'Home' page
     ...    AND    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     ...    AND    Yves: delete all shopping carts
 
@@ -1427,7 +1428,8 @@ Multistore_CMS
     ...    || cmsPage                  | unselect store ||
     ...    || Multistore Page${random} | AT             ||
     Yves: go to URL and refresh until 404 occurs:    ${url}
-    [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    [Teardown]    Run Keywords    Should Test Run
+    ...    AND    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: go to second navigation item level:    Content    Pages
     ...    AND    Zed: click Action Button in a table for row that contains:    Multistore Page${random}    Deactivate
     ...    AND    Trigger multistore p&s
@@ -1435,12 +1437,12 @@ Multistore_CMS
 Product_Availability_Calculation
     [Tags]    dms-off
     [Documentation]    Check product availability + multistore
-    [Setup]    Run Keywords    Repeat Keyword    3    Trigger multistore p&s
-    ...    AND    Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    ...    AND    Zed: update warehouse:    
+    Repeat Keyword    3    Trigger multistore p&s
+    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: update warehouse:    
     ...    || warehouse  | store || 
     ...    || Warehouse1 | AT    ||
-    ...    AND    Repeat Keyword    3    Trigger multistore p&s
+    Repeat Keyword    3    Trigger multistore p&s
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: start new abstract product creation:
     ...    || sku                      | store | store 2 | name en                      | name de                        | new from   | new to     ||
@@ -1519,7 +1521,8 @@ Product_Availability_Calculation
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     Yves: go to PDP of the product with sku:    availabilitySKU${random}    wait_for_p&s=true
     Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    True
-    [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    [Teardown]    Run Keywords    Should Test Run
+    ...    AND    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: update warehouse:    
     ...    || warehouse  | unselect store || 
     ...    || Warehouse1 | AT             ||
