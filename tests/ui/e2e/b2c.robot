@@ -275,7 +275,7 @@ Add_to_Wishlist
     [Teardown]    Run keywords    Yves: delete all wishlists    AND    Yves: check if cart is not empty and clear it
 
 Product_Sets
-    [Documentation]    Check the usage of product sets
+    [Documentation]    Check the usage of product sets. DMS-on mode: https://spryker.atlassian.net/browse/FRW-6377
     Yves: login on Yves with provided credentials:    ${yves_user_email}
     Yves: go to URL:    en/product-sets
     Yves: 'Product Sets' page contains the following sets:    HP Product Set    Sony Product Set    Upgrade your running game
@@ -314,7 +314,7 @@ Product_Bundles
     [Teardown]    Yves: check if cart is not empty and clear it
 
 Configurable_Bundle
-    [Documentation]    Check the usage of configurable bundles (includes authorized checkout)
+    [Documentation]    Check the usage of configurable bundles (includes authorized checkout). DMS-ON: https://spryker.atlassian.net/browse/FRW-7463
     Yves: login on Yves with provided credentials:    ${yves_user_email}
     Yves: check if cart is not empty and clear it
     Yves: go to URL:    en/configurable-bundle/configurator/template-selection
@@ -495,7 +495,7 @@ Agent_Assist
     ...    AND    Zed: delete Zed user with the following email:    agent+${random}@spryker.com
 
 Return_Management
-    [Documentation]    Checks that returns work and oms process is checked.
+    [Documentation]    Checks that returns work and oms process is checked. DMS-ON: https://spryker.atlassian.net/browse/FRW-7463
     Yves: login on Yves with provided credentials:    ${yves_user_email}
     Yves: check if cart is not empty and clear it
     Yves: go to PDP of the product with sku:    007
@@ -591,7 +591,7 @@ Product_Relations
     [Teardown]    Yves: check if cart is not empty and clear it
 
 Guest_Checkout
-    [Documentation]    Guest checkout with bundles, discounts and OMS
+    [Documentation]    Guest checkout with bundles, discounts and OMS. DMS-ON: https://spryker.atlassian.net/browse/FRW-7463
     [Setup]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: change product stock:    ${bundled_product_1_abstract_sku}    ${bundled_product_1_concrete_sku}    true    10
     ...    AND    Zed: change product stock:    ${bundled_product_2_abstract_sku}    ${bundled_product_2_concrete_sku}    true    10
@@ -637,7 +637,7 @@ Guest_Checkout
     ...    AND    Zed: deactivate following discounts from Overview page:    Guest Voucher Code 5% ${random}    Guest Cart Rule 10% ${random}
 
 Guest_Checkout_Addresses
-    [Documentation]    Guest checkout with different addresses and OMS
+    [Documentation]    Guest checkout with different addresses and OMS. DMS-ON: https://spryker.atlassian.net/browse/FRW-7463
     Yves: go to the 'Home' page
     Yves: logout on Yves as a customer
     Yves: go to PDP of the product with sku:    007
@@ -688,7 +688,7 @@ Guest_Checkout_Addresses
     [Teardown]    Run keywords    Yves: check if cart is not empty and clear it
 
 Refunds
-    [Documentation]    Checks that refund can be created for one item and the whole order
+    [Documentation]    Checks that refund can be created for one item and the whole order. DMS-ON: https://spryker.atlassian.net/browse/FRW-7463
     [Setup]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: deactivate all discounts from Overview page
     Yves: login on Yves with provided credentials:    ${yves_user_email}
@@ -1119,6 +1119,7 @@ Order_Cancelation
     ...    AND    Yves: delete all user addresses
 
 Multistore_Product
+    [Tags]    dms-off
     [Documentation]    check product multistore functionality
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: start new abstract product creation:
@@ -1179,6 +1180,7 @@ Multistore_Product
     ...    AND    Yves: check if cart is not empty and clear it
 
 Multistore_CMS
+    [Tags]    dms-off
     [Documentation]    check CMS multistore functionality
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Content    Pages
@@ -1198,6 +1200,7 @@ Multistore_CMS
     ...    AND    Trigger multistore p&s
 
 Product_Availability_Calculation
+    [Tags]    dms-off
     [Documentation]    Check product availability + multistore
     [Setup]    Run Keywords    Repeat Keyword    3    Trigger multistore p&s
     ...    AND    Zed: login on Zed with provided credentials:    ${zed_admin_email}
@@ -1372,7 +1375,7 @@ Update_Customer_Data
     ...    || ${yves_second_user_email} | Mr         | ${yves_second_user_first_name} | ${yves_second_user_last_name} ||
 
 CRUD_Product_Set
-    [Documentation]    CRUD operations for product sets
+    [Documentation]    CRUD operations for product sets. DMS-ON: https://spryker.atlassian.net/browse/FRW-7393 
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: create new product set:
     ...    || name en            | name de            | url en             | url de             | set key       | active | product | product 2 | product 3 ||
@@ -1508,7 +1511,7 @@ Glossary
     ...    AND    Trigger p&s
 
 Configurable_Product_PDP_Wishlist
-    [Documentation]    Configure product from PDP and Wishlist
+    [Documentation]    Configure product from PDP and Wishlist. DMS-ON: https://spryker.atlassian.net/browse/FRW-6380
     [Setup]    Run keywords    Yves: login on Yves with provided credentials:    ${yves_user_email}
     ...    AND    Yves: create new 'Whistist' with name:    configProduct${random}
     ...    AND    Yves: check if cart is not empty and clear it
@@ -1575,7 +1578,7 @@ Configurable_Product_PDP_Wishlist
     ...    AND    Yves: delete all user addresses
 
 Configurable_Product_OMS
-    [Documentation]    Conf Product OMS check and reorder
+    [Documentation]    Conf Product OMS check and reorder. DMS-ON: https://spryker.atlassian.net/browse/FRW-6380
     [Setup]    Run keywords    Yves: login on Yves with provided credentials:    ${yves_user_email}
     ...    AND    Yves: check if cart is not empty and clear it
     ...    AND    Yves: delete all user addresses
@@ -1649,6 +1652,7 @@ Configurable_Product_OMS
     [Teardown]    Yves: check if cart is not empty and clear it
   
 Data_exchange_API_download_specification
+    [Documentation]    DMS-ON: https://spryker.atlassian.net/browse/FRW-7396
     [Setup]    Trigger API specification update
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: download data exchange api specification should be active:    true
@@ -1693,6 +1697,7 @@ Data_exchange_API_download_specification
     ...    AND    Trigger API specification update
 
 Data_exchange_API_Configuration_in_Zed
+    [Documentation]    DMS-ON: https://spryker.atlassian.net/browse/FRW-7396
     [Tags]    bapi
     [Setup]    Trigger API specification update
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
@@ -1755,6 +1760,7 @@ Data_exchange_API_Configuration_in_Zed
     ...    AND    Trigger API specification update
 
 Fulfilment_app_e2e
+    [Documentation]    DMS-ON: https://spryker.atlassian.net/browse/FRW-7463
     # # LOGGED IN TO BO and SET CHECKBOX is a warehouse user = true FOR admin_de USER. UI TEST
     Make user a warehouse user/ not a warehouse user:    ${warehous_user[0].de_admin_user_uuid}    0
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
