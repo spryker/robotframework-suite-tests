@@ -1762,6 +1762,111 @@ Multistore_Product_Offer
     ...    AND    Zed: click Action Button in a table for row that contains:     multistoreSKU${random}     Deny
     ...    AND    Trigger multistore p&s
 
+Multistore_Product_Offer
+    [Tags]    dms-on
+    [Documentation]    check product and offer multistore functionality
+    [Setup]    Run Keywords    Should Test Run
+    ...    AND    Repeat Keyword    3    Trigger multistore p&s
+    MP: login on MP with provided credentials:    ${merchant_video_king_email}
+    MP: open navigation menu tab:    Products    
+    MP: click on create new entity button:    Create Product
+    MP: create multi sku product with following data:
+    ...    || product sku            | product name               | first attribute name | first attribute first value | first attribute second value | second attribute name | second attribute value ||
+    ...    || multistoreSKU${random} | multistoreProduct${random} | color                | white                       | black                        | series                | Ace Plus               ||
+    MP: perform search by:    multistoreProduct${random}
+    MP: click on a table row that contains:     multistoreProduct${random}
+    MP: fill abstract product required fields:
+    ...    || product name DE            | store | store 2 |  tax set       ||
+    ...    || multistoreProduct${random} | DE    | AT      | Standard Taxes ||
+    MP: fill product price values:
+    ...    || product type | row number  | store | currency | gross default | gross original ||
+    ...    || abstract     | 1           | DE    | EUR      | 100           | 90             ||
+    MP: fill product price values:
+    ...    || product type | row number  | store | currency | gross default | gross original ||
+    ...    || abstract     | 2           | AT    | EUR      | 300           | 90             ||
+    MP: save abstract product 
+    Trigger multistore p&s
+    MP: click on a table row that contains:    multistoreProduct${random}
+    MP: open concrete drawer by SKU:    multistoreSKU${random}-1
+    MP: fill concrete product fields:
+    ...    || is active | stock quantity | use abstract name | searchability ||
+    ...    || true      | 100            | true              | en_US         ||
+    MP: open concrete drawer by SKU:    multistoreSKU${random}-1
+    MP: fill product price values:
+    ...    || product type | row number | store | currency | gross default ||
+    ...    || concrete     | 1          | DE    | EUR      | 50            ||
+    MP: fill product price values:
+    ...    || product type | row number | store | currency | gross default ||
+    ...    || concrete     | 2          | AT    | EUR      | 55            ||
+    MP: save concrete product
+    Trigger multistore p&s
+    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: go to second navigation item level:    Catalog    Products 
+    Zed: click Action Button in a table for row that contains:     multistoreProduct${random}     Approve
+    Trigger multistore p&s
+    Yves: login on Yves with provided credentials:    ${yves_user_email}  
+    Yves: check if cart is not empty and clear it
+    Yves: go to PDP of the product with sku:     multistoreSKU${random}    wait_for_p&s=true
+    Yves: merchant is (not) displaying in Sold By section of PDP:    Video King    true
+    Yves: product price on the PDP should be:    €50.00    wait_for_p&s=true
+    MP: login on MP with provided credentials:    ${merchant_spryker_email}
+    MP: open navigation menu tab:    Offers
+    MP: click on create new entity button:    Add Offer
+    MP: perform search by:    multistoreSKU${random}-1
+    MP: click on a table row that contains:    multistoreSKU${random}-1
+    MP: fill offer fields:
+    ...    || is active | merchant sku                   | store | store 2 | stock quantity ||
+    ...    || true      | multistoreMerchantSKU${random} | DE    | AT      | 100            ||
+    MP: add offer price:
+    ...    || row number | store | currency | gross default ||
+    ...    || 1          | DE    | CHF      | 100           ||
+    MP: add offer price:
+    ...    || row number | store | currency | gross default | quantity ||
+    ...    || 2          | DE    | EUR      | 200           | 1        ||
+    MP: add offer price:
+    ...    || row number | store | currency | gross default | quantity ||
+    ...    || 3          | AT    | EUR      | 10            | 1        ||
+    MP: save offer
+    Trigger multistore p&s
+    Yves: login on Yves with provided credentials:    ${yves_user_email}
+    Yves: go to PDP of the product with sku:     multistoreSKU${random}    wait_for_p&s=true
+    # Yves: merchant is (not) displaying in Sold By section of PDP:    Spryker    true
+    # Yves: merchant's offer/product price should be:    Spryker    €200.00
+    # Yves: go to store menu item:    AT
+    # Trigger multistore p&s
+    # Yves: login on Yves with provided credentials:    ${yves_user_email}
+    # Yves: go to PDP of the product with sku:     multistoreSKU${random}    wait_for_p&s=true
+    # Yves: merchant is (not) displaying in Sold By section of PDP:    Video King    true
+    # Yves: product price on the PDP should be:    €55.00    wait_for_p&s=true
+    # Yves: merchant is (not) displaying in Sold By section of PDP:    Spryker    true
+    # Yves: merchant's offer/product price should be:    Spryker    €10.00
+    # MP: login on MP with provided credentials:    ${merchant_spryker_email}
+    # MP: open navigation menu tab:    Offers
+    # MP: perform search by:    multistoreSKU${random}-1
+    # MP: click on a table row that contains:    multistoreSKU${random}-1
+    # MP: fill offer fields:
+    # ...    || is active | unselect store ||
+    # ...    || true      | AT             ||         
+    # MP: save offer
+    # Trigger multistore p&s
+    # Yves: go to store menu item:    AT
+    # Trigger multistore p&s
+    # Yves: login on Yves with provided credentials:    ${yves_user_email}
+    # Yves: go to PDP of the product with sku:     multistoreSKU${random}    wait_for_p&s=true
+    # Yves: merchant is (not) displaying in Sold By section of PDP:    Spryker    false
+    # Save current URL
+    # Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    # Zed: update abstract product data:
+    # ...    || productAbstract        | unselect store ||
+    # ...    || multistoreSKU${random} | AT             ||
+    # Trigger multistore p&s
+    # Yves: go to URL and refresh until 404 occurs:    ${url}
+    # [Teardown]    Run Keywords    Should Test Run    
+    # ...    AND    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    # ...    AND    Zed: go to second navigation item level:    Catalog    Products 
+    # ...    AND    Zed: click Action Button in a table for row that contains:     multistoreSKU${random}     Deny
+    # ...    AND    Trigger multistore p&s
+
 Multistore_CMS
     [Tags]    dms-off
     [Documentation]    check CMS multistore functionality
@@ -1870,6 +1975,104 @@ Product_Availability_Calculation
     ...    || Warehouse1 | AT             ||
     Repeat Keyword    3    Trigger multistore p&s
     Yves: go to AT store 'Home' page
+    Yves: login on Yves with provided credentials:    ${yves_second_user_email}
+    Yves: go to PDP of the product with sku:    availabilitySKU${random}    wait_for_p&s=true
+    Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    True
+    [Teardown]    Run Keywords    Should Test Run
+    ...    AND    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    ...    AND    Zed: update warehouse:    
+    ...    || warehouse  | unselect store || 
+    ...    || Warehouse1 | AT             ||
+    ...    AND    Repeat Keyword    3    Trigger multistore p&s
+
+Product_Availability_Calculation
+    [Tags]    dms-on
+    [Documentation]    Check product availability + multistore
+    [Setup]    Run Keywords    Should Test Run
+    ...    AND    Repeat Keyword    3    Trigger p&s
+    ...    AND    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    ...    AND    Zed: update warehouse:    
+    ...    || warehouse  | store || 
+    ...    || Warehouse1 | AT    ||
+    ...    AND    Repeat Keyword    3    Trigger multistore p&s
+    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: start new abstract product creation:
+    ...    || sku                      | store | store 2 | name en                      | name de                        | new from   | new to     ||
+    ...    || availabilitySKU${random} | DE    | AT      | availabilityProduct${random} | DEavailabilityProduct${random} | 01.01.2020 | 01.01.2030 ||
+    Zed: select abstract product variants:
+    ...    || attribute 1 | attribute value 1 ||
+    ...    || color       | grey              ||
+    Zed: update abstract product price on:
+    ...    || store | mode  | type    | currency | amount | tax set           ||
+    ...    || DE    | gross | default | €        | 100.00 | Smart Electronics ||
+    Zed: update abstract product price on:
+    ...    || store | mode  | type    | currency | amount | tax set           ||
+    ...    || AT    | gross | default | €        | 200.00 | Smart Electronics ||
+    Trigger multistore p&s
+    Zed: change concrete product data:
+    ...    || productAbstract          | productConcrete                     | active | searchable en | searchable de ||
+    ...    || availabilitySKU${random} | availabilitySKU${random}-color-grey | true   | true          | true          ||
+    Zed: change concrete product price on:
+    ...    || productAbstract          | productConcrete                     | store | mode  | type    | currency | amount ||
+    ...    || availabilitySKU${random} | availabilitySKU${random}-color-grey | DE    | gross | default | €        | 50.00  ||
+    Zed: change concrete product price on:
+    ...    || productAbstract          | productConcrete                     | store | mode  | type    | currency | amount ||
+    ...    || availabilitySKU${random} | availabilitySKU${random}-color-grey | AT    | gross | default | €        | 75.00  ||
+    Zed: change concrete product stock:
+    ...    || productAbstract          | productConcrete                     | warehouse n1 | warehouse n1 qty | warehouse n1 never out of stock ||
+    ...    || availabilitySKU${random} | availabilitySKU${random}-color-grey | Warehouse1   | 5                | false                           ||
+    Trigger multistore p&s
+    Zed: go to second navigation item level:    Catalog    Products 
+    Zed: click Action Button in a table for row that contains:     availabilitySKU${random}     Approve
+    Trigger multistore p&s
+    Yves: login on Yves with provided credentials:    ${yves_second_user_email}
+    Yves: check if cart is not empty and clear it
+    Yves: delete all user addresses
+    Yves: go to PDP of the product with sku:    availabilitySKU${random}    wait_for_p&s=true
+    Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    False
+    Yves: change quantity on PDP:    6
+    Yves: try add product to the cart from PDP and expect error:    Item availabilitySKU${random}-color-grey only has availability of 5.
+    Yves: go to PDP of the product with sku:    availabilitySKU${random}
+    Yves: change quantity on PDP:    3
+    Yves: add product to the shopping cart    wait_for_p&s=true
+    Yves: go to b2c shopping cart
+    Yves: click on the 'Checkout' button in the shopping cart
+    Yves: billing address same as shipping address:    true
+    Yves: fill in the following new shipping address:
+    ...    || salutation | firstName                      | lastName                      | street        | houseNumber | postCode | city   | country | company | phone     | additionalAddress ||
+    ...    || Mr.        | ${yves_second_user_first_name} | ${yves_second_user_last_name} | Kirncher Str. | 7           | 10247    | Berlin | Germany | Spryker | 123456789 | Additional street ||
+    Yves: submit form on the checkout
+    Yves: select the following shipping method on the checkout and go next:    Express
+    Yves: select the following payment method on the checkout and go next:    Invoice
+    Yves: accept the terms and conditions:    true
+    Yves: 'submit the order' on the summary page
+    Yves: 'Thank you' page is displayed    
+    Trigger oms
+    Yves: get the last placed order ID by current customer
+    Yves: go to PDP of the product with sku:    availabilitySKU${random}
+    Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    False
+    Yves: change quantity on PDP:    6
+    Yves: try add product to the cart from PDP and expect error:    Item availabilitySKU${random}-color-grey only has availability of 2.
+    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: go to order page:    ${lastPlacedOrder}
+    Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Cancel
+    Trigger multistore p&s
+    Yves: login on Yves with provided credentials:    ${yves_second_user_email}
+    Yves: go to PDP of the product with sku:    availabilitySKU${random}
+    Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    False
+    Yves: change quantity on PDP:    6
+    Yves: try add product to the cart from PDP and expect error:    Item availabilitySKU${random}-color-grey only has availability of 5.
+    Yves: go to store menu item:    AT
+    Yves: login on Yves with provided credentials:    ${yves_second_user_email}
+    Yves: go to PDP of the product with sku:    availabilitySKU${random}    wait_for_p&s=true
+    Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    False
+    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: update warehouse:    
+    ...    || warehouse  | unselect store || 
+    ...    || Warehouse1 | AT             ||
+    Repeat Keyword    3    Trigger multistore p&s
+    Yves: go to the 'Home' page
+    Yves: go to store menu item:    AT
     Yves: login on Yves with provided credentials:    ${yves_second_user_email}
     Yves: go to PDP of the product with sku:    availabilitySKU${random}    wait_for_p&s=true
     Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    True

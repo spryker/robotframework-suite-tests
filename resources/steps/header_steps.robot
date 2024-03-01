@@ -20,6 +20,7 @@ ${shoppingCartIcon}    ${shopping_car_icon_header_menu_item}[${env}]
 ${customerSearchWidget}    ${agent_customer_search_widget}
 ${quoteRequestsWidget}    ${agent_quote_requests_header_item}
 ${wishlistIcon}    ${wishlist_icon_header_navigation_widget}
+${storeSwitcher}    ${store_switcher_header_menu_item}
 
 *** Keywords ***
 Yves: perform search by:
@@ -34,6 +35,17 @@ Yves: perform search by:
     Keyboard Key    press    Enter
     Wait Until Page Contains Element    ${catalog_main_page_locator}[${env}]
     Repeat Keyword    3    Wait Until Network Is Idle
+
+Yves: go to store menu item:
+    [Arguments]    ${store}
+    IF    '${dms}' == True
+        wait until element is visible  ${store_switcher_header_menu_item}
+        Click    ${store_switcher_header_menu_item}
+        Select From List By Value    ${store_switcher_header_menu_item}[${env}]  ${store}
+    ELSE
+        Set Browser Timeout    ${browser_timeout}
+        Go To    ${yves_at_url}
+     END
 
 Yves: go to company menu item:
     [Arguments]    ${company_menu_item}
