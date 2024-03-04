@@ -1833,7 +1833,7 @@ Order_Cancelation
     # ...    AND    Yves: delete all user addresses
 
 Multistore_Product_Offer
-    [Documentation]    check product and offer multistore functionality. DMS-ON: https://spryker.atlassian.net/browse/FRW-7484
+    [Documentation]    check product and offer multistore functionality
     [Setup]    Repeat Keyword    3    Trigger multistore p&s
     MP: login on MP with provided credentials:    ${merchant_budget_cameras_email}
     MP: open navigation menu tab:    Products    
@@ -1927,7 +1927,8 @@ Multistore_Product_Offer
     ...    || multistoreSKU${random} | AT             ||
     Trigger multistore p&s
     Yves: go to URL and refresh until 404 occurs:    ${url}
-    [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    [Teardown]    Run Keywords    Should Test Run
+    ...    AND    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: go to second navigation item level:    Catalog    Products 
     ...    AND    Zed: click Action Button in a table for row that contains:     multistoreSKU${random}     Deny
     ...    AND    Trigger multistore p&s
@@ -1946,14 +1947,15 @@ Multistore_CMS
     ...    || cmsPage                  | unselect store ||
     ...    || Multistore Page${random} | AT             ||
     Yves: go to URL and refresh until 404 occurs:    ${url}
-    [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    [Teardown]    Run Keywords    Should Test Run
+    ...    AND    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: go to second navigation item level:    Content    Pages
     ...    AND    Zed: click Action Button in a table for row that contains:    Multistore Page${random}    Deactivate
     ...    AND    Trigger multistore p&s
 
 Product_Availability_Calculation
     [Documentation]    Check product availability + multistore
-    [Setup]    Repeat Keyword    3    Trigger multistore p&s
+    Repeat Keyword    3    Trigger multistore p&s
     MP: login on MP with provided credentials:    ${merchant_spryker_email}
     MP: open navigation menu tab:    Products    
     MP: click on create new entity button:    Create Product
@@ -2042,7 +2044,8 @@ Product_Availability_Calculation
     Yves: go to AT store 'Home' page
     Yves: go to PDP of the product with sku:     availabilitySKU${random}
     Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    True
-    [Teardown]    Run Keywords    Yves: login on Yves with provided credentials:    ${yves_second_user_email}
+    [Teardown]    Run Keywords    Should Test Run
+    ...    AND    Yves: login on Yves with provided credentials:    ${yves_second_user_email}
     ...    AND    Yves: check if cart is not empty and clear it
     ...    AND    Yves: delete all user addresses
     ...    AND    Zed: login on Zed with provided credentials:    ${zed_admin_email}
