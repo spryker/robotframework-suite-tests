@@ -183,8 +183,22 @@ Yves: go to the 'Home' page
     END
 
 Yves: go to AT store 'Home' page
+    [Arguments]    ${store}=AT
     Set Browser Timeout    ${browser_timeout}
-    Go To    ${yves_at_url}
+    ${dms_state}=    Convert To String    ${dms}
+    IF   '${dms_state}' != 'True'
+        Go To    ${yves_at_url}
+    ELSE
+        Go To    ${yves_url}
+        wait until element is visible  ${store_switcher_header_menu_item}
+        IF    '${env}' in ['ui_b2b','ui_mp_b2b']
+        Click Element with JavaScript:    ${store_switcher_header_menu_item}
+        ELSE
+        Click    ${store_switcher_header_menu_item}
+        END
+        Click Element with JavaScript:    ${store_switcher_header_menu_item}
+        Select From List By Value    ${store_switcher_header_menu_item}  ${store}
+    END
 
 Yves: get the last placed order ID by current customer
     [Documentation]    Returns orderID of the last order from customer account
@@ -206,10 +220,24 @@ Yves: go to URL:
     END    
 
 Yves: go to AT URL:
-    [Arguments]    ${url}
+    [Arguments]    ${url}    ${store}=AT
     Set Browser Timeout    ${browser_timeout}
     ${url}=    Get URL Without Starting Slash    ${url}
+    ${dms_state}=    Convert To String    ${dms}
+    IF   '${dms_state}' != 'True'
     Go To    ${yves_at_url}${url}
+    ELSE
+    Go To    ${yves_url}
+    wait until element is visible  ${store_switcher_header_menu_item}
+       IF    '${env}' in ['ui_b2b','ui_mp_b2b']
+            Click Element with JavaScript:    ${store_switcher_header_menu_item}
+        ELSE
+            Click    ${store_switcher_header_menu_item}
+       END
+    Select From List By Value    ${store_switcher_header_menu_item}  ${store}
+    Go To    ${yves_url}${url}
+    END
+   
 
 Yves: go to newly created page by URL:
     [Arguments]    ${url}    ${delay}=5s    ${iterations}=31
@@ -229,9 +257,24 @@ Yves: go to newly created page by URL:
     END
 
 Yves: go to newly created page by URL on AT store:
-    [Arguments]    ${url}    ${delay}=5s    ${iterations}=31
+    [Arguments]    ${url}    ${delay}=5s    ${iterations}=31    ${store}=AT
     FOR    ${index}    IN RANGE    1    ${iterations}
+        ${dms_state}=    Convert To String    ${dms}
+        IF   '${dms_state}' != 'True'
+        Set Browser Timeout    ${browser_timeout}
         Go To    ${yves_at_url}${url}?${index}
+        ELSE
+       Set Browser Timeout    ${browser_timeout}
+        Go To    ${yves_url}
+        wait until element is visible  ${store_switcher_header_menu_item}
+            IF    '${env}' in ['ui_b2b','ui_mp_b2b']
+                Click Element with JavaScript:    ${store_switcher_header_menu_item}
+            ELSE
+                Click    ${store_switcher_header_menu_item}
+            END
+        Select From List By Value    ${store_switcher_header_menu_item}  ${store}
+        Go To    ${yves_url}${url}?${index}
+        END
         ${page_not_published}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//main//*[contains(text(),'ERROR 404')]
         Log    ${page_not_published}
         IF    '${page_not_published}'=='True'
@@ -246,9 +289,24 @@ Yves: go to newly created page by URL on AT store:
     END
 
 Yves: go to URL and refresh until 404 occurs:
-    [Arguments]    ${url}    ${delay}=5s    ${iterations}=31
+    [Arguments]    ${url}    ${delay}=5s    ${iterations}=31    ${store}=AT
     FOR    ${index}    IN RANGE    1    ${iterations}
+        ${dms_state}=    Convert To String    ${dms}
+        IF   '${dms_state}' != 'True'
+        Set Browser Timeout    ${browser_timeout}
         Go To    ${url}
+        ELSE
+       Set Browser Timeout    ${browser_timeout}
+        Go To    ${yves_url}
+        wait until element is visible  ${store_switcher_header_menu_item}
+            IF    '${env}' in ['ui_b2b','ui_mp_b2b']
+                Click Element with JavaScript:    ${store_switcher_header_menu_item}
+            ELSE
+                Click    ${store_switcher_header_menu_item}
+            END
+        Select From List By Value    ${store_switcher_header_menu_item}  ${store}
+        Go To    ${url}
+        END
         ${page_not_published}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//main//*[contains(text(),'ERROR 404')]
         Log    ${page_not_published}
         IF    '${page_not_published}'=='False'

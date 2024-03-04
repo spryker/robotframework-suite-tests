@@ -1119,7 +1119,6 @@ Order_Cancelation
     ...    AND    Yves: delete all user addresses
 
 Multistore_Product
-    [Tags]    dms-off
     [Documentation]    check product multistore functionality
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: start new abstract product creation:
@@ -1180,7 +1179,6 @@ Multistore_Product
     ...    AND    Yves: check if cart is not empty and clear it
 
 Multistore_CMS
-    [Tags]    dms-off
     [Documentation]    check CMS multistore functionality
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Content    Pages
@@ -1200,7 +1198,6 @@ Multistore_CMS
     ...    AND    Trigger multistore p&s
 
 Product_Availability_Calculation
-    [Tags]    dms-off
     [Documentation]    Check product availability + multistore
     [Setup]    Run Keywords    Repeat Keyword    3    Trigger multistore p&s
     ...    AND    Zed: login on Zed with provided credentials:    ${zed_admin_email}

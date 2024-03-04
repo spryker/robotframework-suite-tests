@@ -36,17 +36,6 @@ Yves: perform search by:
     Wait Until Page Contains Element    ${catalog_main_page_locator}[${env}]
     Repeat Keyword    3    Wait Until Network Is Idle
 
-Yves: go to store menu item:
-    [Arguments]    ${store}
-    IF    '${dms}' == True
-        wait until element is visible  ${store_switcher_header_menu_item}
-        Click    ${store_switcher_header_menu_item}
-        Select From List By Value    ${store_switcher_header_menu_item}[${env}]  ${store}
-    ELSE
-        Set Browser Timeout    ${browser_timeout}
-        Go To    ${yves_at_url}
-     END
-
 Yves: go to company menu item:
     [Arguments]    ${company_menu_item}
     wait until element is visible  ${company_name_icon_header_menu_item}

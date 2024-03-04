@@ -1833,8 +1833,7 @@ Order_Cancelation
     # ...    AND    Yves: delete all user addresses
 
 Multistore_Product_Offer
-    [Tags]    dms-off
-    [Documentation]    check product and offer multistore functionality
+    [Documentation]    check product and offer multistore functionality. DMS-ON: https://spryker.atlassian.net/browse/FRW-7484
     [Setup]    Repeat Keyword    3    Trigger multistore p&s
     MP: login on MP with provided credentials:    ${merchant_budget_cameras_email}
     MP: open navigation menu tab:    Products    
@@ -1934,7 +1933,6 @@ Multistore_Product_Offer
     ...    AND    Trigger multistore p&s
 
 Multistore_CMS
-    [Tags]    dms-off
     [Documentation]    check CMS multistore functionality
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Content    Pages
@@ -1954,7 +1952,6 @@ Multistore_CMS
     ...    AND    Trigger multistore p&s
 
 Product_Availability_Calculation
-    [Tags]    dms-off
     [Documentation]    Check product availability + multistore
     [Setup]    Repeat Keyword    3    Trigger multistore p&s
     MP: login on MP with provided credentials:    ${merchant_spryker_email}
