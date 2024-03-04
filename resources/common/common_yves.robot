@@ -182,22 +182,23 @@ Yves: go to the 'Home' page
         Go To    ${yves_url}
     END
 
-Yves: go to AT store 'Home' page
+Yves: go to AT store 'Home' page if other store not specified if other store not specified
     [Arguments]    ${store}=AT
     Set Browser Timeout    ${browser_timeout}
+    Go To    ${yves_at_url}
     ${dms_state}=    Convert To String    ${dms}
     IF   '${dms_state}' != 'True'
         Go To    ${yves_at_url}
     ELSE
         Go To    ${yves_url}
-        wait until element is visible  ${store_switcher_header_menu_item}
+        Wait Until Element Is Visible    ${store_switcher_header_menu_item}
         IF    '${env}' in ['ui_b2b','ui_mp_b2b']
         Click Element with JavaScript:    ${store_switcher_header_menu_item}
         ELSE
         Click    ${store_switcher_header_menu_item}
         END
         Click Element with JavaScript:    ${store_switcher_header_menu_item}
-        Select From List By Value    ${store_switcher_header_menu_item}  ${store}
+        Select From List By Value    ${store_switcher_header_menu_item}    ${store}
     END
 
 Yves: get the last placed order ID by current customer
@@ -219,7 +220,7 @@ Yves: go to URL:
         Go To    ${yves_url}${url}
     END    
 
-Yves: go to AT URL:
+Yves: go to AT store URL if other store not specified:
     [Arguments]    ${url}    ${store}=AT
     Set Browser Timeout    ${browser_timeout}
     ${url}=    Get URL Without Starting Slash    ${url}
@@ -228,13 +229,13 @@ Yves: go to AT URL:
     Go To    ${yves_at_url}${url}
     ELSE
     Go To    ${yves_url}
-    wait until element is visible  ${store_switcher_header_menu_item}
-       IF    '${env}' in ['ui_b2b','ui_mp_b2b']
-            Click Element with JavaScript:    ${store_switcher_header_menu_item}
+    Wait Until Element Is Visible    ${store_switcher_header_menu_item}
+        IF    '${env}' in ['ui_b2b','ui_mp_b2b']
+        Click Element with JavaScript:    ${store_switcher_header_menu_item}
         ELSE
-            Click    ${store_switcher_header_menu_item}
-       END
-    Select From List By Value    ${store_switcher_header_menu_item}  ${store}
+        Click    ${store_switcher_header_menu_item}
+        END
+    Select From List By Value    ${store_switcher_header_menu_item}    ${store}
     Go To    ${yves_url}${url}
     END
    
@@ -256,7 +257,7 @@ Yves: go to newly created page by URL:
         END
     END
 
-Yves: go to newly created page by URL on AT store:
+Yves: go to newly created page by URL on AT store if other store not specified:
     [Arguments]    ${url}    ${delay}=5s    ${iterations}=31    ${store}=AT
     FOR    ${index}    IN RANGE    1    ${iterations}
         ${dms_state}=    Convert To String    ${dms}
@@ -264,13 +265,13 @@ Yves: go to newly created page by URL on AT store:
         Set Browser Timeout    ${browser_timeout}
         Go To    ${yves_at_url}${url}?${index}
         ELSE
-       Set Browser Timeout    ${browser_timeout}
+        Set Browser Timeout    ${browser_timeout}
         Go To    ${yves_url}
-        wait until element is visible  ${store_switcher_header_menu_item}
+        Wait Until Element Is Visible    ${store_switcher_header_menu_item}
             IF    '${env}' in ['ui_b2b','ui_mp_b2b']
-                Click Element with JavaScript:    ${store_switcher_header_menu_item}
+            Click Element with JavaScript:    ${store_switcher_header_menu_item}
             ELSE
-                Click    ${store_switcher_header_menu_item}
+            Click    ${store_switcher_header_menu_item}
             END
         Select From List By Value    ${store_switcher_header_menu_item}  ${store}
         Go To    ${yves_url}${url}?${index}
@@ -296,15 +297,15 @@ Yves: go to URL and refresh until 404 occurs:
         Set Browser Timeout    ${browser_timeout}
         Go To    ${url}
         ELSE
-       Set Browser Timeout    ${browser_timeout}
+        Set Browser Timeout    ${browser_timeout}
         Go To    ${yves_url}
-        wait until element is visible  ${store_switcher_header_menu_item}
+        Wait Until Element Is Visible    ${store_switcher_header_menu_item}
             IF    '${env}' in ['ui_b2b','ui_mp_b2b']
-                Click Element with JavaScript:    ${store_switcher_header_menu_item}
+            Click Element with JavaScript:    ${store_switcher_header_menu_item}
             ELSE
-                Click    ${store_switcher_header_menu_item}
+            Click    ${store_switcher_header_menu_item}
             END
-        Select From List By Value    ${store_switcher_header_menu_item}  ${store}
+        Select From List By Value    ${store_switcher_header_menu_item}    ${store}
         Go To    ${url}
         END
         ${page_not_published}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//main//*[contains(text(),'ERROR 404')]
