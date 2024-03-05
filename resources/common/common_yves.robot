@@ -182,7 +182,7 @@ Yves: go to the 'Home' page
         Go To    ${yves_url}
     END
 
-Yves: go to AT store 'Home' page if other store not specified
+Yves: go to AT store 'Home' page if other store not specified:
     Set Browser Timeout    ${browser_timeout}
     Go To    ${yves_at_url}
     ${dms_state}=    Convert To String    ${dms}
@@ -288,7 +288,7 @@ Yves: go to newly created page by URL on AT store if other store not specified:
         END
     END
 
-Yves: go to URL and refresh until 404 occurs:
+Yves: go to store specified URL and refresh until 404 occurs:
     [Arguments]    ${url}    ${delay}=5s    ${iterations}=31    ${store}=AT
     FOR    ${index}    IN RANGE    1    ${iterations}
         ${dms_state}=    Convert To String    ${dms}
