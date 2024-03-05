@@ -182,9 +182,18 @@ Yves: go to the 'Home' page
         Go To    ${yves_url}
     END
 
-Yves: go to AT store 'Home' page
+Yves: go to AT store 'Home' page if other store not specified:
+    [Arguments]    ${store}=AT
     Set Browser Timeout    ${browser_timeout}
-    Go To    ${yves_at_url}
+    ${dms_state}=    Convert To String    ${dms}
+    IF    '${dms_state}' != 'True'
+        Go To    ${yves_at_url}
+    ELSE
+        Go To    ${yves_url}
+        Wait Until Element Is Visible    ${store_switcher_header_menu_item}
+        Select From List By Value    ${store_switcher_header_menu_item}    ${store}
+        Wait Until Element Contains    //*[@data-qa='component header']//select[contains(@name,'store')]/option[@selected='']    ${store}
+    END
 
 Yves: get the last placed order ID by current customer
     [Documentation]    Returns orderID of the last order from customer account
@@ -205,11 +214,20 @@ Yves: go to URL:
         Go To    ${yves_url}${url}
     END    
 
-Yves: go to AT URL:
-    [Arguments]    ${url}
+Yves: go to AT store URL if other store not specified:
+    [Arguments]    ${url}    ${store}=AT
     Set Browser Timeout    ${browser_timeout}
     ${url}=    Get URL Without Starting Slash    ${url}
-    Go To    ${yves_at_url}${url}
+    ${dms_state}=    Convert To String    ${dms}
+    IF   '${dms_state}' != 'True'
+        Go To    ${yves_at_url}${url}
+    ELSE
+    Go To    ${yves_url}
+        Wait Until Element Is Visible    ${store_switcher_header_menu_item}
+        Select From List By Value    ${store_switcher_header_menu_item}    ${store}
+        Wait Until Element Contains    //*[@data-qa='component header']//select[contains(@name,'store')]/option[@selected='']    ${store}
+    Go To    ${yves_url}${url}
+    END
 
 Yves: go to newly created page by URL:
     [Arguments]    ${url}    ${delay}=5s    ${iterations}=31
@@ -228,10 +246,20 @@ Yves: go to newly created page by URL:
         END
     END
 
-Yves: go to newly created page by URL on AT store:
-    [Arguments]    ${url}    ${delay}=5s    ${iterations}=31
+Yves: go to newly created page by URL on AT store if other store not specified:
+    [Arguments]    ${url}    ${delay}=5s    ${iterations}=31    ${store}=AT
+    ${dms_state}=    Convert To String    ${dms}
+    Set Browser Timeout    ${browser_timeout}    
     FOR    ${index}    IN RANGE    1    ${iterations}
-        Go To    ${yves_at_url}${url}?${index}
+        IF   '${dms_state}' != 'True'
+            Go To    ${yves_at_url}${url}?${index}
+        ELSE
+            Go To    ${yves_url}
+            Wait Until Element Is Visible    ${store_switcher_header_menu_item}
+            Select From List By Value    ${store_switcher_header_menu_item}    ${store}
+            Wait Until Element Contains    //*[@data-qa='component header']//select[contains(@name,'store')]/option[@selected='']    ${store}
+            Go To    ${yves_url}${url}?${index}
+        END
         ${page_not_published}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//main//*[contains(text(),'ERROR 404')]
         Log    ${page_not_published}
         IF    '${page_not_published}'=='True'
@@ -245,6 +273,33 @@ Yves: go to newly created page by URL on AT store:
         END
     END
 
+Yves: navigate to specified AT store URL if no other store is specified and refresh until 404 occurs:
+    [Arguments]    ${url}    ${delay}=5s    ${iterations}=31    ${store}=AT
+    ${dms_state}=    Convert To String    ${dms}
+    Set Browser Timeout    ${browser_timeout}
+    FOR    ${index}    IN RANGE    1    ${iterations}
+        IF   '${dms_state}' != 'True'
+            Go To    ${url}
+        ELSE
+            Go To    ${yves_url}
+            Wait Until Element Is Visible    ${store_switcher_header_menu_item}
+            Select From List By Value    ${store_switcher_header_menu_item}    ${store}
+            Wait Until Element Contains    //*[@data-qa='component header']//select[contains(@name,'store')]/option[@selected='']    ${store}
+            Go To    ${url}
+        END
+        ${page_not_published}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//main//*[contains(text(),'ERROR 404')]
+        Log    ${page_not_published}
+        IF    '${page_not_published}'=='False'
+            Run Keyword    Sleep    ${delay}
+        ELSE
+            Exit For Loop
+        END
+        IF    ${index} == ${iterations}-1
+            Take Screenshot    EMBED    fullPage=True
+            Fail    URL is still accessible but should not, check P&S
+        END
+    END
+    
 Yves: go to URL and refresh until 404 occurs:
     [Arguments]    ${url}    ${delay}=5s    ${iterations}=31
     FOR    ${index}    IN RANGE    1    ${iterations}
@@ -261,7 +316,7 @@ Yves: go to URL and refresh until 404 occurs:
             Fail    URL is still accessible but should not, check P&S
         END
     END
-
+    
 Yves: go to external URL:
     [Arguments]    ${url}
     Set Browser Timeout    ${browser_timeout}
