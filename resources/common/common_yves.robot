@@ -197,7 +197,6 @@ Yves: go to AT store 'Home' page if other store not specified:
         ELSE
             Click    ${store_switcher_header_menu_item}
         END
-        Click Element with JavaScript:    ${store_switcher_header_menu_item}
         Select From List By Value    ${store_switcher_header_menu_item}    ${store}
     END
 
