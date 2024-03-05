@@ -185,7 +185,6 @@ Yves: go to the 'Home' page
 Yves: go to AT store 'Home' page if other store not specified:
     [Arguments]    ${store}=AT
     Set Browser Timeout    ${browser_timeout}
-    Go To    ${yves_at_url}
     ${dms_state}=    Convert To String    ${dms}
     IF    '${dms_state}' != 'True'
         Go To    ${yves_at_url}
