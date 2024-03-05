@@ -221,7 +221,7 @@ Yves: go to URL:
     END    
 
 Yves: go to AT store URL if other store not specified:
-    [Arguments]    ${store}=AT
+    [Arguments]    ${url}    ${store}=AT
     Set Browser Timeout    ${browser_timeout}
     ${url}=    Get URL Without Starting Slash    ${url}
     ${dms_state}=    Convert To String    ${dms}
