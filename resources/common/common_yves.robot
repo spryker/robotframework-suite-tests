@@ -191,12 +191,8 @@ Yves: go to AT store 'Home' page if other store not specified:
     ELSE
         Go To    ${yves_url}
         Wait Until Element Is Visible    ${store_switcher_header_menu_item}
-        IF    '${env}' in ['ui_b2b','ui_mp_b2b']
-            Click Element with JavaScript:    ${store_switcher_header_menu_item}
-        ELSE
-            Click    ${store_switcher_header_menu_item}
-        END
         Select From List By Value    ${store_switcher_header_menu_item}    ${store}
+        Wait Until Element Contains    //*[@data-qa='component header']//select[contains(@name,'store')]/option[@selected='']    ${store}
     END
 
 Yves: get the last placed order ID by current customer
@@ -226,17 +222,12 @@ Yves: go to AT store URL if other store not specified:
     IF   '${dms_state}' != 'True'
         Go To    ${yves_at_url}${url}
     ELSE
-        Go To    ${yves_url}
+    Go To    ${yves_url}
         Wait Until Element Is Visible    ${store_switcher_header_menu_item}
-            IF    '${env}' in ['ui_b2b','ui_mp_b2b']
-                Click Element with JavaScript:    ${store_switcher_header_menu_item}
-            ELSE
-                Click    ${store_switcher_header_menu_item}
-            END
-    Select From List By Value    ${store_switcher_header_menu_item}    ${store}
+        Select From List By Value    ${store_switcher_header_menu_item}    ${store}
+        Wait Until Element Contains    //*[@data-qa='component header']//select[contains(@name,'store')]/option[@selected='']    ${store}
     Go To    ${yves_url}${url}
     END
-   
 
 Yves: go to newly created page by URL:
     [Arguments]    ${url}    ${delay}=5s    ${iterations}=31
@@ -257,21 +248,16 @@ Yves: go to newly created page by URL:
 
 Yves: go to newly created page by URL on AT store if other store not specified:
     [Arguments]    ${url}    ${delay}=5s    ${iterations}=31    ${store}=AT
+    ${dms_state}=    Convert To String    ${dms}
     FOR    ${index}    IN RANGE    1    ${iterations}
-        ${dms_state}=    Convert To String    ${dms}
+        Set Browser Timeout    ${browser_timeout}
         IF   '${dms_state}' != 'True'
-            Set Browser Timeout    ${browser_timeout}
             Go To    ${yves_at_url}${url}?${index}
         ELSE
-            Set Browser Timeout    ${browser_timeout}
             Go To    ${yves_url}
             Wait Until Element Is Visible    ${store_switcher_header_menu_item}
-                IF    '${env}' in ['ui_b2b','ui_mp_b2b']
-                    Click Element with JavaScript:    ${store_switcher_header_menu_item}
-                ELSE
-                    Click    ${store_switcher_header_menu_item}
-                END
             Select From List By Value    ${store_switcher_header_menu_item}    ${store}
+            Wait Until Element Contains    //*[@data-qa='component header']//select[contains(@name,'store')]/option[@selected='']    ${store}
             Go To    ${yves_url}${url}?${index}
         END
         ${page_not_published}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//main//*[contains(text(),'ERROR 404')]
@@ -287,23 +273,18 @@ Yves: go to newly created page by URL on AT store if other store not specified:
         END
     END
 
-Yves: go to store specified URL and refresh until 404 occurs:
+Yves: navigate to specified AT store URL if no other store is specified and refresh until 404 occurs:
     [Arguments]    ${url}    ${delay}=5s    ${iterations}=31    ${store}=AT
+    ${dms_state}=    Convert To String    ${dms}
+    Set Browser Timeout    ${browser_timeout}
     FOR    ${index}    IN RANGE    1    ${iterations}
-        ${dms_state}=    Convert To String    ${dms}
         IF   '${dms_state}' != 'True'
-            Set Browser Timeout    ${browser_timeout}
             Go To    ${url}
         ELSE
-            Set Browser Timeout    ${browser_timeout}
             Go To    ${yves_url}
             Wait Until Element Is Visible    ${store_switcher_header_menu_item}
-                IF    '${env}' in ['ui_b2b','ui_mp_b2b']
-                    Click Element with JavaScript:    ${store_switcher_header_menu_item}
-                ELSE
-                    Click    ${store_switcher_header_menu_item}
-                END
             Select From List By Value    ${store_switcher_header_menu_item}    ${store}
+            Wait Until Element Contains    //*[@data-qa='component header']//select[contains(@name,'store')]/option[@selected='']    ${store}
             Go To    ${url}
         END
         ${page_not_published}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//main//*[contains(text(),'ERROR 404')]

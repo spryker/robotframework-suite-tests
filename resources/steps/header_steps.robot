@@ -20,7 +20,6 @@ ${shoppingCartIcon}    ${shopping_car_icon_header_menu_item}[${env}]
 ${customerSearchWidget}    ${agent_customer_search_widget}
 ${quoteRequestsWidget}    ${agent_quote_requests_header_item}
 ${wishlistIcon}    ${wishlist_icon_header_navigation_widget}
-${storeSwitcher}    ${store_switcher_header_menu_item}
 
 *** Keywords ***
 Yves: perform search by:
