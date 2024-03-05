@@ -249,8 +249,8 @@ Yves: go to newly created page by URL:
 Yves: go to newly created page by URL on AT store if other store not specified:
     [Arguments]    ${url}    ${delay}=5s    ${iterations}=31    ${store}=AT
     ${dms_state}=    Convert To String    ${dms}
+    Set Browser Timeout    ${browser_timeout}    
     FOR    ${index}    IN RANGE    1    ${iterations}
-        Set Browser Timeout    ${browser_timeout}
         IF   '${dms_state}' != 'True'
             Go To    ${yves_at_url}${url}?${index}
         ELSE
