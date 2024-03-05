@@ -87,7 +87,7 @@ Get_country_collection_with_multiple_filter_fields
     And Response body parameter should be:    [data][0][iso3_code]    AND
     And Response body parameter should be:    [data][0][name]    Andorra
     And Response body parameter should be:    [data][0][postal_code_mandatory]    True
-    And Response body parameter should be:    [data][0][postal_code_regex]    AD\\d{3}
+    And Response body parameter should be:    [data][0][postal_code_regex]    AD\\\\d{3}
     And Response body parameter should be:    [data][1][id_country]    235
     And Response body parameter should be:    [data][1][iso2_code]    UA
     And Response body parameter should be:    [data][1][iso3_code]    UKR
@@ -112,13 +112,19 @@ Get_country_collection_with_filter_in_condition
     And Response body parameter should be:    [data][0][iso3_code]    AND
     And Response body parameter should be:    [data][0][name]    Andorra
     And Response body parameter should be:    [data][0][postal_code_mandatory]    True
-    And Response body parameter should be:    [data][0][postal_code_regex]    AD\\d{3}
-    And Response body parameter should be:    [data][1][id_country]    235
-    And Response body parameter should be:    [data][1][iso2_code]    UA
-    And Response body parameter should be:    [data][1][iso3_code]    UKR
-    And Response body parameter should be:    [data][1][name]    Ukraine
-    And Response body parameter should be:    [data][1][postal_code_mandatory]    True
-    And Response body parameter should be:    [data][1][postal_code_regex]    \\\\d{5}
+    And Response body parameter should be:    [data][0][postal_code_regex]    AD\\\\d{3}
+    And Response body parameter should be:    [data][1][id_country]    3
+    And Response body parameter should be:    [data][1][iso2_code]    AE
+    And Response body parameter should be:    [data][1][iso3_code]    ARE
+    And Response body parameter should be:    [data][1][name]    United Arab Emirates
+    And Response body parameter should be:    [data][1][postal_code_mandatory]    False
+    And Response body parameter should be:    [data][1][postal_code_regex]    None
+    And Response body parameter should be:    [data][2][id_country]    235
+    And Response body parameter should be:    [data][2][iso2_code]    UA
+    And Response body parameter should be:    [data][2][iso3_code]    UKR
+    And Response body parameter should be:    [data][2][name]    Ukraine
+    And Response body parameter should be:    [data][2][postal_code_mandatory]    True
+    And Response body parameter should be:    [data][2][postal_code_regex]    \\\\d{5}
     [Teardown]    Run Keyword    Delete dynamic entity configuration in Database:    robot-test-countries
 
 Get_country_collection_with_paginations
