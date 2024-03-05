@@ -1035,7 +1035,7 @@ Manage_Merchants_from_Backoffice
     ...    || merchant name | merchant reference | e-mail  | uncheck store | en url | de url ||
     ...    ||               |                    |         | DE            |        |        ||
     Trigger p&s
-    Yves: navigate to specified AT store URL if no other store is specified and refresh until 404 occurs:    ${yves_url}en/merchant/NewMerchantURL${random}
+    Yves: go to URL and refresh until 404 occurs:    ${yves_url}en/merchant/NewMerchantURL${random}
     [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: go to second navigation item level:    Marketplace    Merchants  
     ...    AND    Zed: click Action Button in a table for row that contains:     NewMerchantUpdated${random}     Deactivate
@@ -1114,7 +1114,7 @@ Create_and_Approve_New_Merchant_Product
     Zed: click Action Button in a table for row that contains:     NewProduct${random}     Deny
     Trigger p&s
     Yves: go to the 'Home' page
-    Yves: navigate to specified AT store URL if no other store is specified and refresh until 404 occurs:    ${url}
+    Yves: go to URL and refresh until 404 occurs:    ${url}
 
 Create_New_Offer
     [Documentation]    Checks that merchant is able to create new offer and it will be displayed on Yves

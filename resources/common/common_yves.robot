@@ -299,7 +299,24 @@ Yves: navigate to specified AT store URL if no other store is specified and refr
             Fail    URL is still accessible but should not, check P&S
         END
     END
-
+    
+Yves: go to URL and refresh until 404 occurs:
+    [Arguments]    ${url}    ${delay}=5s    ${iterations}=31
+    FOR    ${index}    IN RANGE    1    ${iterations}
+        Go To    ${url}
+        ${page_not_published}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//main//*[contains(text(),'ERROR 404')]
+        Log    ${page_not_published}
+        IF    '${page_not_published}'=='False'
+            Run Keyword    Sleep    ${delay}
+        ELSE
+            Exit For Loop
+        END
+        IF    ${index} == ${iterations}-1
+            Take Screenshot    EMBED    fullPage=True
+            Fail    URL is still accessible but should not, check P&S
+        END
+    END
+    
 Yves: go to external URL:
     [Arguments]    ${url}
     Set Browser Timeout    ${browser_timeout}

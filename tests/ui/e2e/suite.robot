@@ -681,7 +681,7 @@ CRUD_Product_Set
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: delete product set:    test set ${random}
     Trigger multistore p&s
-    Yves: navigate to specified AT store URL if no other store is specified and refresh until 404 occurs:    ${yves_url}en/test-set-${random}
+    Yves: go to URL and refresh until 404 occurs:    ${yves_url}en/test-set-${random}
 
 Product_Bundles
     [Documentation]    Checks checkout with Bundle product
@@ -2637,7 +2637,7 @@ Manage_Merchants_from_Backoffice
     ...    || merchant name | merchant reference | e-mail  | uncheck store | en url | de url ||
     ...    ||               |                    |         | DE            |        |        ||
     Trigger multistore p&s
-    Yves: navigate to specified AT store URL if no other store is specified and refresh until 404 occurs:    ${yves_url}en/merchant/NewMerchantURL${random}
+    Yves: go to URL and refresh until 404 occurs:    ${yves_url}en/merchant/NewMerchantURL${random}
     [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: go to second navigation item level:    Marketplace    Merchants  
     ...    AND    Zed: click Action Button in a table for row that contains:     NewMerchantUpdated${random}     Deactivate
