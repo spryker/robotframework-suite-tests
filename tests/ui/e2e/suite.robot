@@ -3019,7 +3019,7 @@ Merchant_Portal_Customer_Specific_Prices
     ...    || product type | row number | store | currency | gross default ||
     ...    || abstract     | 1          | DE    | EUR      | 500           ||
     MP: save abstract product 
-    Trigger p&s
+    Repeat Keyword    3    Trigger p&s
     MP: click on a table row that contains:    riceProduct${random}
     MP: open concrete drawer by SKU:    PriceSKU${random}-2
     MP: fill product price values:
@@ -3031,10 +3031,11 @@ Merchant_Portal_Customer_Specific_Prices
     MP: fill concrete product fields:
     ...    || is active | stock quantity | use abstract name | searchability ||
     ...    || true      | 100            | true              | en_US         ||
+    MP: save abstract product 
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Catalog    Products 
     Zed: click Action Button in a table for row that contains:     PriceSKU${random}     Approve
-    Trigger p&s
+    Repeat Keyword    3    Trigger p&s
     Yves: login on Yves with provided credentials:     ${yves_test_company_user_email}
     Yves: go to PDP of the product with sku:    PriceSKU${random}    wait_for_p&s=true
     Yves: merchant's offer/product price should be:    Budget Cameras     €100.00
@@ -3048,7 +3049,7 @@ Merchant_Portal_Customer_Specific_Prices
     MP: open concrete drawer by SKU:    PriceSKU${random}-2
     MP: delete product price row that contains text:    2 - Hotel Tommy Berlin
     MP: save concrete product
-    Trigger p&s
+    Repeat Keyword    3    Trigger p&s
     Yves: login on Yves with provided credentials:     ${yves_test_company_user_email}
     Yves: go to PDP of the product with sku:    PriceSKU${random}
     Yves: merchant's offer/product price should be:    Budget Cameras     €500.00
