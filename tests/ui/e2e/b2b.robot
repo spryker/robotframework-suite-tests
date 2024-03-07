@@ -1466,8 +1466,9 @@ Product_Availability_Calculation
     Zed: change concrete product stock:
     ...    || productAbstract          | productConcrete                     | warehouse n1 | warehouse n1 qty | warehouse n1 never out of stock ||
     ...    || availabilitySKU${random} | availabilitySKU${random}-farbe-grey | Warehouse1   | 5                | false                            ||
-    Zed: click button in Header:     Edit Product Abstract
-    Zed: save abstract 
+    Zed: update abstract product data:
+    ...    || productAbstract          | name de                              ||
+    ...    || availabilitySKU${random} | DEavailabilityProduct${random} force ||
     Repeat Keyword    3    Trigger multistore p&s
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     Yves: create new 'Shopping Cart' with name:    availabilityCart+${random}
