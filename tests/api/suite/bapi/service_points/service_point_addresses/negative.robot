@@ -11,23 +11,18 @@ ENABLER
 *** Test Cases ***
 
 Create_Service_Point_Address_Without_Authentication
-    [Documentation]    https://spryker.atlassian.net/browse/FRW-5850
-    [Tags]    skip-due-to-issue
     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}   Authorization=
     When I send a POST request:    /service-points/${demo_service_point.spryker_main_store.uuid}/service-point-addresses    {"data":{"type":"service-point-addresses","attributes":{"address1":"Park Avenue","address2":"Building №2","address3":"address3","city":"Dreamtown","zipCode":"30-221","countryIso2Code":"DE"}}}
     Then Response status code should be:    403
-    And Response should return error message:    Invalid access token.
+    And Response should return error message:    Missing access token.
 
 Create_Service_Point_Address_With_Incorrect_Token
-    [Documentation]    https://spryker.atlassian.net/browse/FRW-5850
-    [Tags]    skip-due-to-issue
     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
      ...    AND    I set Headers:    Content-Type=${default_header_content_type}   Authorization=IncorrectToken
     When I send a POST request:    /service-points/${demo_service_point.spryker_main_store.uuid}/service-point-addresses    {"data":{"type":"service-point-addresses","attributes":{"address1":"Park Avenue","address2":"Building №2","address3":"address3","city":"Dreamtown","zipCode":"30-221","countryIso2Code":"DE"}}}
-    Then Response status code should be:    401
-    And Response should return error code:    001
-    And Response should return error message:    Invalid access token.
+    Then Response status code should be:    403
+    And Response should return error message:    Missing access token.
 
 Create_Duplicate_Service_Point_Address
     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
