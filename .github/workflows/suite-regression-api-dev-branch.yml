@@ -1,4 +1,4 @@
-name: "[suite][master] Robot Regression API"
+name: "[suite][master] DEV Robot Regression API"
 
 on:
     schedule:
@@ -7,7 +7,7 @@ on:
 
 jobs:
     docker-alpine-php-8-2-mariadb-robot-api:
-        name: "Docker / Alpine / PHP 8.2 / MariaDB / Robot / API"
+        name: "Docker / Alpine / PHP 8.2 / MariaDB / Robot / API "
         runs-on: ubuntu-22.04
         env:
             PROGRESS_TYPE: plain
