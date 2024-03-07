@@ -707,7 +707,6 @@ Create_checkout_with_gift_card
     And Response body parameter should contain:    [included][0][attributes][calculatedDiscounts]    quantity
     
 Create_checkout_with_gift_card_when_gift_amount_partially_used
-    [Documentation]    bug https://spryker.atlassian.net/browse/CC-21301
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_second_user.email}
     ...  AND    I set Headers:    Authorization=${token}
     ...  AND    I send a POST request:    /carts    {"data":{"type":"carts","attributes":{"priceMode":"${mode.gross}","currency":"${currency.eur.code}","store":"${store.de}","name": "${test_cart_name}-${random}"}}}

@@ -129,8 +129,6 @@ Update_non-existent_push_notification_provider
     ...    AND    I send a DELETE request:    /push-notification-providers/${push_notification_provider_id_2}
 
 Delete_push_notification_provider_with_not_exist_id
-    [Documentation]    https://spryker.atlassian.net/browse/CC-31549
-    [Tags]    skip-due-to-issue
     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
     ...    AND    I set Headers:    Content-Type=application/vnd.api+json   Authorization=Bearer ${token}
     Then I send a DELETE request:    /push-notification-providers/invalid

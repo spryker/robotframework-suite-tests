@@ -40,12 +40,10 @@ Create_Service_Point_With_Empty_Key
     And Response should return error message:    A service point key must have length from 1 to 255 characters.
 
 Create_Service_Point_Without_Authorization
-    [Documentation]    https://spryker.atlassian.net/browse/FRW-5850
-    [Tags]    skip-due-to-issue
     [Setup]    I set Headers:    Authorization=
     When I send a POST request:    /service-points   {"name": "New Service Point", "key": "new_service_point", "isActive": "true", "stores": ["DE", "AT"]}
     Then Response status code should be:    403
-    And Response should return error message:    Invalid access token
+    And Response reason should be:    Forbidden
 
 Create_Service_Point_With_Empty_Name
     [Documentation]    https://spryker.atlassian.net/browse/FRW-1597

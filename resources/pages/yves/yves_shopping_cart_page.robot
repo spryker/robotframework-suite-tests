@@ -4,7 +4,7 @@ ${shopping_cart_checkout_button}    xpath=//main//a[@data-qa='cart-go-to-checkou
 ${shopping_cart_request_quote_button}    xpath=//a[contains(@href,'/quote-request/create')]
 &{shopping_cart_upp-sell_products_section}    ui_b2b=xpath=//main[contains(@class,'cart')]//slick-carousel[@data-qa='component slick-carousel']    ui_b2c=xpath=//div[contains(@data-qa,'component extra-product')]    ui_mp_b2b=xpath=//main[contains(@class,'cart')]//slick-carousel[@data-qa='component slick-carousel']    ui_mp_b2c=xpath=//main[contains(@class,'cart')]//slick-carousel[@data-qa='component slick-carousel']    ui_suite=(//div[contains(@class,'upselling')]//simple-carousel)[1]
 ${shopping_cart_locked_cart_form}    xpath=//form[@class='cart-locking__form']
-${shopping_cart_cart_title}    xpath=//*[contains(@class,'cart-title__text')]
+&{shopping_cart_cart_title}    ui_mp_b2b=xpath=//*[contains(@class,'cart-title__text')]    ui_b2b=xpath=//*[contains(@class,'cart-title__text')]    ui_suite=xpath=//*[contains(@class, 'box')]/h3
 ${request_a_quote_button}    xpath=//a[contains(@class,'button')][contains(text(),'Request a Quote')]
 ${shopping_cart_voucher_code_section_toggler}    xpath=//input[@id='cartCodeForm_code']//ancestor::div[@data-qa='component toggler-item']
 ${shopping_cart_voucher_code_field}    id=cartCodeForm_code
