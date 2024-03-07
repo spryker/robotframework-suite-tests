@@ -244,6 +244,9 @@ Zed: update abstract product price on:
     END
     Click    ${zed_pdp_save_button}
 
+Zed: save abstract
+     Click    ${zed_pdp_save_button}
+
 Zed: start new abstract product creation:
     [Arguments]    @{args}
     ${abstractProductData}=    Set Up Keyword Arguments    @{args}
