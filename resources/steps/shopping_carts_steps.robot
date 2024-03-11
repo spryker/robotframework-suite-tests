@@ -156,8 +156,12 @@ Yves: shopping cart doesn't contain the following products:
     END
 
 Yves: get link for external cart sharing
-    Yves: Expand shopping cart accordion:    Share Cart via link
-    Click    xpath=//input[@name='cart-share'][contains(@target-class-name,'external')]/ancestor::label
+    IF    '${env}' in ['ui_suite']
+        Click    xpath=//input[@name='cart-share'][contains(@target-class-name,'external')]/ancestor::label
+    ELSE
+        Yves: Expand shopping cart accordion:    Share Cart via link 
+        Click    xpath=//input[@name='cart-share'][contains(@target-class-name,'external')]/ancestor::label    
+    END
     Wait Until Element Is Visible    xpath=//input[@id='PREVIEW']
     ${externalURL}=    Get Element Attribute    xpath=//input[@id='PREVIEW']    value
     ${externalURL}=    Replace String Using Regexp    ${externalURL}    ${EMPTY}.*.com/    ${EMPTY}
@@ -180,7 +184,7 @@ Yves: Expand shopping cart accordion:
 
 Yves: Shopping Cart title should be equal:
     [Arguments]    ${expectedCartTitle}
-    ${actualCartTitle}=    Get Text    ${shopping_cart_cart_title}
+    ${actualCartTitle}=    Get Text    ${shopping_cart_cart_title}[${env}]
     Should Be Equal    ${actualCartTitle}    ${expectedCartTitle}
 
 Yves: change quantity of the configurable bundle in the shopping cart on:

@@ -1453,7 +1453,7 @@ Product_Availability_Calculation
     Zed: update abstract product price on:
     ...    || store | mode  | type    | currency | amount | tax set        ||
     ...    || AT    | gross | default | €        | 200.00 | Standard Taxes ||
-    Trigger multistore p&s
+    Repeat Keyword    3    Trigger multistore p&s
     Zed: change concrete product data:
     ...    || productAbstract          | productConcrete                     | active | searchable en | searchable de ||
     ...    || availabilitySKU${random} | availabilitySKU${random}-farbe-grey | true   | true          | true          ||
@@ -1466,7 +1466,10 @@ Product_Availability_Calculation
     Zed: change concrete product stock:
     ...    || productAbstract          | productConcrete                     | warehouse n1 | warehouse n1 qty | warehouse n1 never out of stock ||
     ...    || availabilitySKU${random} | availabilitySKU${random}-farbe-grey | Warehouse1   | 5                | false                            ||
-    Trigger multistore p&s
+    Zed: update abstract product data:
+    ...    || productAbstract          | name de                              ||
+    ...    || availabilitySKU${random} | DEavailabilityProduct${random} force ||
+    Repeat Keyword    3    Trigger multistore p&s
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     Yves: create new 'Shopping Cart' with name:    availabilityCart+${random}
     Yves: go to PDP of the product with sku:    availabilitySKU${random}    wait_for_p&s=true

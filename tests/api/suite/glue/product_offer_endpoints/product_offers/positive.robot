@@ -36,8 +36,6 @@ Get_all_concrete_product_offer_info_with_product_offer_prices_and_product_offer_
     And Response body has correct self link
 
 Get_all_product_offer_info_with_product_offer_prices_and_product_offer_availabilities_and_merchants_included
-    [Documentation]    bug: https://spryker.atlassian.net/browse/CC-25906
-    [Tags]    skip-due-to-issue
     When I send a GET request:    /product-offers/${offer_with_merchant_sku}?include=product-offer-prices,product-offer-availabilities,merchants
     Then Response status code should be:    200
     And Response reason should be:    OK
@@ -47,7 +45,7 @@ Get_all_product_offer_info_with_product_offer_prices_and_product_offer_availabil
     And Response body parameter should be in:    [data][attributes][isDefault]    True    False
     And Response body parameter should be:    [data][attributes][merchantReference]    ${merchants.spryker.merchant_reference}
     And Response body parameter should not be EMPTY:    [data][links][self]
-    And Response body parameter should be greater than:    [data][attributes][merchantSku]    1
+    And Response body parameter should not be EMPTY:    [data][attributes][merchantSku]
     And Response should contain the array of a certain size:    [included]    3
     And Response should contain the array of a certain size:    [data][relationships]    3
     And Response include should contain certain entity type:    product-offer-prices
