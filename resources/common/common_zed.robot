@@ -72,6 +72,11 @@ Zed: go to second navigation item level:
         Repeat Keyword    3    Wait Until Network Is Idle    timeout=${browser_timeout}
     END
 
+ Zed: create new store:
+     [Arguments]   ${store}
+    Zed: go to second navigation item level:    Administration    Stores
+    Zed: click button in Header:    Create Store
+
 Zed: click button in Header:
     [Arguments]    ${button_name}
     wait until element is visible    xpath=//div[@class='title-action']/a[contains(.,'${button_name}')]
