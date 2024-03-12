@@ -3379,22 +3379,21 @@ Default Tags    bapi
 #     ...    AND    Zed: undo the changes in glossary translation:    ${glossary_name}     ${original_DE_text}    ${original_EN_text}
 #     ...    AND    Trigger p&s
 
-# Unique_URL
-#     [Tags]    skip-due-to-issue
-#     [Documentation]    Fails due to Bug:CC-12380
-#     Yves: login on Yves with provided credentials:    ${yves_company_user_manager_and_buyer_email}
-#     Yves: create new 'Shopping Cart' with name:    externalCart+${random}
-#     Yves: go to PDP of the product with sku:    M90806
-#     Yves: add product to the shopping cart
-#     Yves: go to the shopping cart through the header with name:    externalCart+${random}
-#     Yves: 'Shopping Cart' page is displayed
-#     Yves: get link for external cart sharing
-#     Yves: logout on Yves as a customer
-#     Yves: go to URL:    ${externalURL}
-#     Yves: 'Shopping Cart' page is displayed
-#     Yves: Shopping Cart title should be equal:    Preview: externalCart+${random}
-#     Yves: shopping cart contains the following products:    108302
-#     [Teardown]    Yves: delete 'Shopping Cart' with name:    externalCart+${random}
+Unique_URL
+    [Documentation]    Fails due to Bug:CC-12380
+    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
+    Yves: create new 'Shopping Cart' with name:    externalCart+${random}
+    Yves: go to PDP of the product with sku:    ${one_variant_product_abstract_sku}
+    Yves: add product to the shopping cart
+    Yves: go to the shopping cart through the header with name:    externalCart+${random}
+    Yves: 'Shopping Cart' page is displayed
+    Yves: get link for external cart sharing
+    Yves: logout on Yves as a customer
+    Yves: go to external URL:    ${externalURL}
+    Yves: Shopping Cart title should be equal:    Preview: externalCart+${random}
+    Yves: shopping cart contains the following products:    ${one_variant_product_abstract_sku}
+    [Teardown]    Run Keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
+    ...    AND    Yves: delete 'Shopping Cart' with name:    externalCart+${random}
 
 # Comments_in_Cart
 #     [Documentation]    Add comments to cart and verify comments in Yves and Zed
