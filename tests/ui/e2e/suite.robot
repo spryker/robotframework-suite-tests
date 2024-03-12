@@ -3390,7 +3390,8 @@ Unique_URL
     Yves: go to external URL:    ${externalURL}
     Yves: Shopping Cart title should be equal:    Preview: externalCart+${random}
     Yves: shopping cart contains the following products:    ${one_variant_product_abstract_sku}
-    [Teardown]    Yves: delete 'Shopping Cart' with name:    externalCart+${random}
+    [Teardown]    Run Keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
+    ...    AND    Yves: delete 'Shopping Cart' with name:    externalCart+${random}
 
 Comments_in_Cart
     [Documentation]    Add comments to cart and verify comments in Yves and Zed
