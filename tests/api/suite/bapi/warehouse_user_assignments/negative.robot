@@ -134,16 +134,11 @@ Get_user_assigments_list_with_invalid_token
     ...    AND    Make user a warehouse user/ not a warehouse user:    ${warehous_user[0].user_uuid}    0
 
 Get_user_assigments_list_without_token
-    [Documentation]    https://spryker.atlassian.net/browse/FRW-5850
-    [Tags]    skip-due-to-issue
-    [Setup]    Run Keywords    Make user a warehouse user/ not a warehouse user:    ${warehous_user[0].user_uuid}    1
-    ...    AND    Create_warehouse_user_assigment:    ${warehouse[0].warehouse_uuid}    ${warehouse[0].fk_warehouse_spryker}   ${warehous_user[0].user_uuid}    false
+    When I set Headers:    Content-Type=${default_header_content_type}
     Then I send a GET request:    /warehouse-user-assignments/
     Then Response status code should be:    403
-    And Response reason should be:    Unauthorized
-    And Response should return error message:    Invalid access token.
-    [Teardown]    Run Keywords    Remove_warehous_user_assigment:    ${warehouse[0].warehouse_uuid}    ${warehous_user[0].user_uuid}
-    ...    AND    Make user a warehouse user/ not a warehouse user:    ${warehous_user[0].user_uuid}    0
+    And Response reason should be:    Forbidden
+    And Response should return error message:    Unauthorized request.
 
 Update_warehouse_user_assigment_without_token
     [Documentation]    https://spryker.atlassian.net/browse/FRW-5850

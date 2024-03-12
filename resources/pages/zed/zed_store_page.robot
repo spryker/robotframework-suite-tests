@@ -1,0 +1,11 @@
+*** Variables ***
+${zed_store_add_name_input}     xpath=//input[@id="store_name"]
+${zed_store_save_button}    xpath=//input[@type="submit"]
+${zed_store_locale_tab}    xpath=//ul[contains(@class, 'nav')]/li[contains(@data-tab-content-id, 'locale_store_relation')]
+${zed_store_default_locale_iso_code}    xpath=//select[contains(@id,"defaultLocaleIsoCode")]
+${zed_store_currency_tab}    xpath=//ul[contains(@class, 'nav')]/li[contains(@data-tab-content-id, 'locale_currency_relation')]
+${zed_store_default_currency_iso_code}    xpath=//select[contains(@id,"defaultCurrencyIsoCode")]
+${zed_store_delivery_region_tab}    xpath=//ul[contains(@class, 'nav')]/li[contains(@data-tab-content-id, 'country_store_relation')]
+${zed_store_search_country_field}    xpath=//div[@class='tabs-container']//div[contains(@id, 'available_country')]//input[@type='search']
+${zed_store_search_locale_field}    xpath=//div[@class='tabs-container']//div[contains(@id, 'available-locale')]//input[@type='search']
+${zed_store_search_currency_field}    xpath=//div[@class='tabs-container']//div[contains(@id, 'available-currency')]//input[@type='search']

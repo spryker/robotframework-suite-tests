@@ -48,6 +48,8 @@ Resource    ../../../resources/steps/picking_list_steps.robot
 Resource    ../../../resources/steps/zed_payment_methods_steps.robot
 Resource    ../../../resources/steps/order_comments_steps.robot
 Resource    ../../../resources/steps/merchants_steps.robot
+Resource    ../../../resources/steps/zed_store_steps.robot    
+
 Default Tags    bapi
 
 *** Test Cases ***
@@ -87,7 +89,7 @@ Default Tags    bapi
 #     Register a new customer with data:
 #     ...    || salutation | first name | last name | e-mail                       | password                      ||
 #     ...    || Mr.        | New        | User      | sonia+${random}@spryker.com  | P${random_str}s#!#${random_id} ||
-#     Yves: flash message should be shown:    success    Almost there! We send you an email to validate your email address. Please confirm it to be able to log in.
+    # Yves: flash message should be shown:    success    Almost there! We send you an email to validate your email address. Please confirm it to be able to log in.
 #     [Teardown]    Zed: delete customer:
 #     ...    || email                       ||
 #     ...    || sonia+${random}@spryker.com ||
@@ -3543,7 +3545,7 @@ Default Tags    bapi
 #     [Tags]    skip-due-to-refactoring
 #     # #LOGGED IN TO BO and SET CHECKBOX is a warehouse user = true FOR admin_de USER. UI TEST
 #     Zed: login on Zed with provided credentials:    ${zed_admin_email}
-#     Zed: update Zed user:
+    # Zed: update Zed user:
 #     ...    || oldEmail             | user_is_warehouse_user ||
 #     ...    || admin_de@spryker.com | true                   ||
 #     Remove Tags    *
@@ -3718,6 +3720,7 @@ Default Tags    bapi
 # # #     Yves: 'Thank you' page is displayed
 
 Dynamic-multistore
-    [Documentation]    Checks White and Black lists
+    [Documentation]    This test should exclusively run for dynamic multi-store scenarios.
+    [Tags]    dms-on
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    Zed: create new store:    AT
+    Zed: create new Store:    AT_D    en_US    Euro    EUR    AT   

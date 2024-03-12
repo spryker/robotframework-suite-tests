@@ -77,12 +77,6 @@ Zed: deactivate the created user:
     Zed: click Action Button in a table for row that contains:    ${email}    Deactivate
     Wait Until Element Is Visible    ${zed_success_flash_message}
 
-
-
-
-
-
-    
  Zed: assign warehouse to user:
     [Arguments]    ${email}
     Zed: go to second navigation item level:    Users    Users   
