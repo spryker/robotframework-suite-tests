@@ -3723,4 +3723,7 @@ Dynamic-multistore
     [Documentation]    This test should exclusively run for dynamic multi-store scenarios.
     [Tags]    dms-on
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    Zed: create new Store:    AT_D    en_US    Euro    EUR    AT   
+    # Zed: create new Store:    AT_P    en_US    Euro    EUR    AT   
+    Zed: create new Store:
+    ...    || name | locale iso code | currency iso code | currency code | store delivery region ||
+    ...    || AT_Y | en_US           | Euro              | EUR           | AT                    ||
