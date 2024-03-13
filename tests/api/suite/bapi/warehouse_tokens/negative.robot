@@ -9,23 +9,16 @@ ENABLER
     API_test_setup
 
 New_warehouse_token_without_autorization
-    [Tags]    skip-due-to-issue
-    [Documentation]    https://spryker.atlassian.net/browse/FRW-2142
     And I send a POST request:    /warehouse-tokens   {}
-    Then Response status code should be:    401
-    And Response reason should be:    Unauthorized
-    And Response should return error code:    003
-    And Response should return error message:    Autorization is required.
+    Then Response status code should be:    403
+    And Response reason should be:    Forbidden
+
 
 New_warehouse_token_with_invalid_token
-    [Tags]    skip-due-to-issue
-    [Documentation]    https://spryker.atlassian.net/browse/FRW-1728
     When I set Headers:    Authorization=fake_token    Content-Type=application/x-www-form-urlencoded
     And I send a POST request:    /warehouse-tokens   {}
-    Then Response status code should be:    401
-    And Response reason should be:    Unauthorized
-    And Response should return error code:    003
-    And Response should return error message:    Failed to authenticate user.
+    Then Response status code should be:    403
+    And Response reason should be:    Forbidden
 
 New_warehouse_token_for_admin_user_who_is_not_a_WH_user
     When I set Headers:    Content-Type=application/x-www-form-urlencoded
