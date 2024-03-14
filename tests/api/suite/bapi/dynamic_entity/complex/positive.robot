@@ -255,7 +255,7 @@ Create_product_abstract_collection_with_child_stock_products:
 
     ### SAVE PRODUCT ABSTRACT WITH STOCK ###
     And I set Headers:    Content-Type==application/json    Authorization=Bearer ${token}
-    And I send a POST request:    /dynamic-entity/robot-tests-products  {"data": [{"fk_tax_set": 1, "attributes": "FOO", "sku": "FOO2", "robotTestsProductStockProducts": [{"is_never_out_of_stock":${false},"quantity":0}]}]}
+    And I send a POST request:    /dynamic-entity/robot-tests-products  {"data": [{"fk_product_abstract": 1, "is_active": true, "attributes": "FOO", "sku": "FOO2", "robotTestsProductStockProducts": [{"fk_stock": 1,"is_never_out_of_stock":${false},"quantity":0}]}]}
     Then Response status code should be:    201
     When Save value to a variable:    [data][0][id_product]    id_product
     When Save value to a variable:    [data][0][sku]    concrete_sku
