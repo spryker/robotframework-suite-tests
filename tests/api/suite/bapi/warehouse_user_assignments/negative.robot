@@ -143,9 +143,8 @@ Update_warehouse_user_assigment_with_invalid_token
     [Setup]    Run Keywords    I get access token by user credentials:    invalid
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=Bearer ${token}
     ...    AND    Make user a warehouse user/ not a warehouse user:    ${warehous_user[0].user_uuid}    1
-    And Create_warehouse_user_assigment:    ${warehouse[0].warehouse_uuid}    ${warehouse[0].fk_warehouse_spryker}    ${warehous_user[0].user_uuid}    false
+    ...    AND    Create_warehouse_user_assigment:    ${warehouse[0].warehouse_uuid}    ${warehouse[0].fk_warehouse_spryker}    ${warehous_user[0].user_uuid}    false
     Then Get_warehouse_user_assigment_id:    ${warehouse[0].warehouse_uuid}    ${warehous_user[0].user_uuid}
-    And Create_warehouse_user_assigment:    ${warehouse[0].warehouse_uuid}    ${warehouse[0].fk_warehouse_spryker}    ${warehous_user[0].user_uuid}    false
     Then I send a PATCH request:    /warehouse-user-assignments/${id_warehouse_user_assigment}    {"data":{"attributes":{"isActive":"true"}}}
     Then Response status code should be:    403
     [Teardown]    Run Keywords    Remove_warehous_user_assigment:    ${warehouse[0].warehouse_uuid}    ${warehous_user[0].user_uuid}
