@@ -70,13 +70,13 @@ Should Test Run
     ${dms_state}=    Convert To String    ${dms}
     IF   '${dms_state}' != 'True'
         IF   'dms-on' in @{Test Tags}
-            Skip  
+            Skip
         END
-    ELSE    
+    ELSE
         IF   'dms-off' in @{Test Tags}
-            Skip      
+            Skip
         END
-    END    
+    END
 
 Load Variables
     [Documentation]    Keyword is used to load variable values from the environment file passed during execution. This Keyword is used during suite setup.
@@ -658,6 +658,17 @@ Delete product by id_product in Database:
     [Arguments]    ${id_product}
     Connect to Spryker DB
     Execute Sql String    DELETE FROM spy_product WHERE id_product = ${id_product};
+    Disconnect From Database
+
+Delete stock_product by id_stock_product in Database:
+    [Documentation]    This keyword deletes a stock_product by id_stock_product in the DB table spy_stock_product.
+        ...    *Example:*
+        ...
+        ...    ``Delete stock_product by id_stock_product in Database:    100``
+        ...
+    [Arguments]    ${id_stock_product}
+    Connect to Spryker DB
+    Execute Sql String    DELETE FROM spy_stock_product WHERE id_stock_product = ${id_stock_product};
     Disconnect From Database
 
 Delete product_abstract by id_product_abstract in Database:
