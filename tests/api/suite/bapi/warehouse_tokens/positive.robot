@@ -35,5 +35,5 @@ Generate_new_user_token
 #     And Response body parameter should be less than:    [data][attributes][expiresin]    30000
 #     And Response body parameter should not be EMPTY:    [data][attributes][tokenType]
 #     And Response body parameter should not be EMPTY:    [data][attributes][accessToken]
-#     And Response body parameter should not be EMPTY:    [data][attributes][refreshToken]   
+#     And Response body parameter should not be EMPTY:    [data][attributes][refreshToken]
 #     And Response body has correct self link internal
