@@ -254,7 +254,7 @@ Retrieves_list_of_returns_included_merchants
     And Response body has correct self link
 
 Retrieves_return_by_id_with_returns_items_included
-    [Documentation]    
+    [Documentation]    https://spryker.atlassian.net/browse/FRW-7619
     [Tags]    skip-due-to-issue
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}
@@ -298,7 +298,7 @@ Retrieves_return_by_id_with_returns_items_included
     And Response body has correct self link internal
 
 Retrieves_return_by_id_for_sales_order
-    [Documentation]    
+    [Documentation]    https://spryker.atlassian.net/browse/FRW-7619
     [Tags]    skip-due-to-issue
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}
@@ -326,7 +326,7 @@ Retrieves_return_by_id_for_sales_order
     And Response body parameter should be:    [data][attributes][returnTotals][remunerationTotal]    ${refundable_amount}
 
 Retrieves_return_by_id_with_merchants_included
-    [Documentation]    
+    [Documentation]    https://spryker.atlassian.net/browse/FRW-7619
     [Tags]    skip-due-to-issue
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}

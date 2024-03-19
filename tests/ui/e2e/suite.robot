@@ -1593,7 +1593,6 @@ User_Control
     ...    AND    Zed: click Action Button in a table for row that contains:    controlRole${random}    Delete
 
 Multistore_Product
-    [Tags]    dms-off
     [Documentation]    check product multistore functionality
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: start new abstract product creation:
@@ -1621,6 +1620,9 @@ Multistore_Product
     Zed: change concrete product stock:
     ...    || productAbstract   | productConcrete              | warehouse n1 | warehouse n1 qty | warehouse n1 never out of stock ||
     ...    || multiSKU${random} | multiSKU${random}-color-grey | Warehouse2   | 100              | true                            ||
+    Zed: update abstract product data:
+    ...    || productAbstract   | name de                        ||
+    ...    || multiSKU${random} | DEmultiProduct${random} forced ||
     Trigger multistore p&s
     Zed: go to second navigation item level:    Catalog    Products 
     Zed: click Action Button in a table for row that contains:     multiSKU${random}     Approve
@@ -1632,11 +1634,11 @@ Multistore_Product
     Yves: go to PDP of the product with sku:    multiSKU${random}    wait_for_p&s=true
     Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    False
     Yves: product price on the PDP should be:    €15.00    wait_for_p&s=true
-    Yves: go to AT store 'Home' page
+    Yves: go to AT store 'Home' page if other store not specified:
     Trigger multistore p&s
     Yves: login on Yves with provided credentials:    ${yves_second_user_email}
     Yves: check if cart is not empty and clear it
-    Yves: go to AT URL:    en/search?q=multiSKU${random}
+    Yves: go to AT store URL if other store not specified:    en/search?q=multiSKU${random}
     Try reloading page until element is/not appear:    ${catalog_product_card_locator}    true    21    5s
     Yves: 1st product card in catalog (not)contains:     Price    €200.00
     Yves: go to PDP of the product with sku:    multiSKU${random}
@@ -1651,17 +1653,14 @@ Multistore_Product
     ...    || productAbstract   | unselect store ||
     ...    || multiSKU${random} | AT             ||
     Trigger multistore p&s
-    Yves: go to URL and refresh until 404 occurs:    ${url}
-    [Teardown]    Run Keywords    Should Test Run
-    ...    AND    Yves: go to AT store 'Home' page
+    Yves: navigate to specified AT store URL if no other store is specified and refresh until 404 occurs:    ${url}
+    [Teardown]    Run Keywords    Yves: go to AT store 'Home' page if other store not specified:
     ...    AND    Yves: login on Yves with provided credentials:    ${yves_second_user_email}
     ...    AND    Yves: check if cart is not empty and clear it
 
 Multistore_Product_Offer
-    [Tags]    dms-off
-    [Documentation]    check product and offer multistore functionality
-    [Setup]    Run Keywords    Should Test Run
-    ...    AND    Repeat Keyword    3    Trigger multistore p&s
+    [Documentation]    check product and offer multistore functionality. DMS-ON: https://spryker.atlassian.net/browse/FRW-7484
+    [Setup]    Repeat Keyword    3    Trigger multistore p&s
     MP: login on MP with provided credentials:    ${merchant_video_king_email}
     MP: open navigation menu tab:    Products    
     MP: click on create new entity button:    Create Product
@@ -1727,7 +1726,7 @@ Multistore_Product_Offer
     Yves: go to PDP of the product with sku:     multistoreSKU${random}    wait_for_p&s=true
     Yves: merchant is (not) displaying in Sold By section of PDP:    Spryker    true
     Yves: merchant's offer/product price should be:    Spryker    €200.00
-    Yves: go to AT store 'Home' page
+    Yves: go to AT store 'Home' page if other store not specified:
     Trigger multistore p&s
     Yves: login on Yves with provided credentials:    ${yves_user_email}
     Yves: go to PDP of the product with sku:     multistoreSKU${random}    wait_for_p&s=true
@@ -1744,7 +1743,7 @@ Multistore_Product_Offer
     ...    || true      | AT             ||         
     MP: save offer
     Trigger multistore p&s
-    Yves: go to AT store 'Home' page
+    Yves: go to AT store 'Home' page if other store not specified:
     Trigger multistore p&s
     Yves: login on Yves with provided credentials:    ${yves_user_email}
     Yves: go to PDP of the product with sku:     multistoreSKU${random}    wait_for_p&s=true
@@ -1755,44 +1754,39 @@ Multistore_Product_Offer
     ...    || productAbstract        | unselect store ||
     ...    || multistoreSKU${random} | AT             ||
     Trigger multistore p&s
-    Yves: go to URL and refresh until 404 occurs:    ${url}
-    [Teardown]    Run Keywords    Should Test Run    
-    ...    AND    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Yves: navigate to specified AT store URL if no other store is specified and refresh until 404 occurs:    ${url}
+    [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: go to second navigation item level:    Catalog    Products 
     ...    AND    Zed: click Action Button in a table for row that contains:     multistoreSKU${random}     Deny
-    ...    AND    Trigger multistore p&s
+    ...    AND    Trigger multistore p&s   
 
 Multistore_CMS
-    [Tags]    dms-off
     [Documentation]    check CMS multistore functionality
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Content    Pages
     Zed: create a cms page and publish it:    Multistore Page${random}    multistore-page${random}    Multistore Page    Page text
     Trigger multistore p&s
-    Yves: go to newly created page by URL on AT store:    en/multistore-page${random}
+    Yves: go to newly created page by URL on AT store if other store not specified:    en/multistore-page${random}
     Save current URL
     Yves: page contains CMS element:    CMS Page Title    Multistore Page
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: update cms page and publish it:
     ...    || cmsPage                  | unselect store ||
     ...    || Multistore Page${random} | AT             ||
-    Yves: go to URL and refresh until 404 occurs:    ${url}
-    [Teardown]    Run Keywords    Should Test Run
-    ...    AND    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Yves: navigate to specified AT store URL if no other store is specified and refresh until 404 occurs:    ${url}
+    [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: go to second navigation item level:    Content    Pages
     ...    AND    Zed: click Action Button in a table for row that contains:    Multistore Page${random}    Deactivate
     ...    AND    Trigger multistore p&s
 
 Product_Availability_Calculation
-    [Tags]    dms-off
     [Documentation]    Check product availability + multistore
-    [Setup]    Run Keywords    Should Test Run
-    ...    AND    Repeat Keyword    3    Trigger multistore p&s
-    ...    AND    Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    ...    AND    Zed: update warehouse:    
+    [Setup]    Repeat Keyword    3    Trigger multistore p&s
+    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: update warehouse:    
     ...    || warehouse  | store || 
     ...    || Warehouse1 | AT    ||
-    ...    AND    Repeat Keyword    3    Trigger multistore p&s
+    Repeat Keyword    3    Trigger multistore p&s
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: start new abstract product creation:
     ...    || sku                      | store | store 2 | name en                      | name de                        | new from   | new to     ||
@@ -1860,7 +1854,7 @@ Product_Availability_Calculation
     Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    False
     Yves: change quantity on PDP:    6
     Yves: try add product to the cart from PDP and expect error:    Item availabilitySKU${random}-color-grey only has availability of 5.
-    Yves: go to AT store 'Home' page
+    Yves: go to AT store 'Home' page if other store not specified:
     Yves: login on Yves with provided credentials:    ${yves_second_user_email}
     Yves: go to PDP of the product with sku:    availabilitySKU${random}    wait_for_p&s=true
     Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    False
@@ -1869,12 +1863,11 @@ Product_Availability_Calculation
     ...    || warehouse  | unselect store || 
     ...    || Warehouse1 | AT             ||
     Repeat Keyword    3    Trigger multistore p&s
-    Yves: go to AT store 'Home' page
+    Yves: go to AT store 'Home' page if other store not specified:
     Yves: login on Yves with provided credentials:    ${yves_second_user_email}
     Yves: go to PDP of the product with sku:    availabilitySKU${random}    wait_for_p&s=true
     Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    True
-    [Teardown]    Run Keywords    Should Test Run
-    ...    AND    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: update warehouse:    
     ...    || warehouse  | unselect store || 
     ...    || Warehouse1 | AT             ||
@@ -3029,7 +3022,7 @@ Merchant_Portal_Customer_Specific_Prices
     ...    || product type | row number | store | currency | gross default ||
     ...    || abstract     | 1          | DE    | EUR      | 500           ||
     MP: save abstract product 
-    Trigger p&s
+    Repeat Keyword    3    Trigger p&s
     MP: click on a table row that contains:    riceProduct${random}
     MP: open concrete drawer by SKU:    PriceSKU${random}-2
     MP: fill product price values:
@@ -3041,10 +3034,11 @@ Merchant_Portal_Customer_Specific_Prices
     MP: fill concrete product fields:
     ...    || is active | stock quantity | use abstract name | searchability ||
     ...    || true      | 100            | true              | en_US         ||
+    MP: save abstract product 
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Catalog    Products 
     Zed: click Action Button in a table for row that contains:     PriceSKU${random}     Approve
-    Trigger p&s
+    Repeat Keyword    3    Trigger p&s
     Yves: login on Yves with provided credentials:     ${yves_test_company_user_email}
     Yves: go to PDP of the product with sku:    PriceSKU${random}    wait_for_p&s=true
     Yves: merchant's offer/product price should be:    Budget Cameras     €100.00
@@ -3058,7 +3052,7 @@ Merchant_Portal_Customer_Specific_Prices
     MP: open concrete drawer by SKU:    PriceSKU${random}-2
     MP: delete product price row that contains text:    2 - Hotel Tommy Berlin
     MP: save concrete product
-    Trigger p&s
+    Repeat Keyword    3    Trigger p&s
     Yves: login on Yves with provided credentials:     ${yves_test_company_user_email}
     Yves: go to PDP of the product with sku:    PriceSKU${random}
     Yves: merchant's offer/product price should be:    Budget Cameras     €500.00
@@ -3387,21 +3381,20 @@ Glossary
     ...    AND    Trigger p&s
 
 Unique_URL
-    [Tags]    skip-due-to-issue
     [Documentation]    Fails due to Bug:CC-12380
-    Yves: login on Yves with provided credentials:    ${yves_company_user_manager_and_buyer_email}
+    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     Yves: create new 'Shopping Cart' with name:    externalCart+${random}
-    Yves: go to PDP of the product with sku:    M90806
+    Yves: go to PDP of the product with sku:    ${one_variant_product_abstract_sku}
     Yves: add product to the shopping cart
     Yves: go to the shopping cart through the header with name:    externalCart+${random}
     Yves: 'Shopping Cart' page is displayed
     Yves: get link for external cart sharing
     Yves: logout on Yves as a customer
-    Yves: go to URL:    ${externalURL}
-    Yves: 'Shopping Cart' page is displayed
+    Yves: go to external URL:    ${externalURL}
     Yves: Shopping Cart title should be equal:    Preview: externalCart+${random}
-    Yves: shopping cart contains the following products:    108302
-    [Teardown]    Yves: delete 'Shopping Cart' with name:    externalCart+${random}
+    Yves: shopping cart contains the following products:    ${one_variant_product_abstract_sku}
+    [Teardown]    Run Keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
+    ...    AND    Yves: delete 'Shopping Cart' with name:    externalCart+${random}
 
 Comments_in_Cart
     [Documentation]    Add comments to cart and verify comments in Yves and Zed

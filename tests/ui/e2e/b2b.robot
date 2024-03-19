@@ -187,7 +187,7 @@ Volume_Prices
     [Teardown]    Yves: delete 'Shopping Cart' with name:    VolumePriceCart+${random}
 
 Discontinued_Alternative_Products
-    [Documentation]    Checks that product can be discontinued in Zed
+    [Documentation]    Checks that product can be discontinued in Zed. DMS-ON: https://spryker.atlassian.net/browse/FRW-7465
     Yves: go to PDP of the product with sku:  M21100
     Yves: PDP contains/doesn't contain:    true    ${alternativeProducts}
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
@@ -256,7 +256,7 @@ Packaging_Units
     Yves: 'Thank you' page is displayed
 
 Product_Sets
-    [Documentation]    Checks that product set can be added into cart
+    [Documentation]    Checks that product set can be added into cart. DMS-on mode: https://spryker.atlassian.net/browse/FRW-6377
     [Setup]    Run keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     ...    AND    Yves: create new 'Shopping Cart' with name:    productSetsCart+${random}
     Yves: go to URL:    en/product-sets
@@ -1352,7 +1352,7 @@ Order_Cancelation
 
 Multistore_Product
     [Documentation]    check product multistore functionality
-    [Setup]    Repeat Keyword    3    Trigger multistore p&s
+    Repeat Keyword    3    Trigger multistore p&s
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: start new abstract product creation:
     ...    || sku               | store | store 2 | name en               | name de                 | new from   | new to     ||
@@ -1379,6 +1379,9 @@ Multistore_Product
     Zed: change concrete product stock:
     ...    || productAbstract   | productConcrete              | warehouse n1 | warehouse n1 qty | warehouse n1 never out of stock ||
     ...    || multiSKU${random} | multiSKU${random}-farbe-grey | Warehouse2   | 100              | true                            ||
+    Zed: update abstract product data:
+    ...    || productAbstract   | name de                        ||
+    ...    || multiSKU${random} | DEmultiProduct${random} forced ||
     Repeat Keyword    3    Trigger multistore p&s
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     Yves: go to URL:    en/search?q=multiSKU${random}
@@ -1387,11 +1390,11 @@ Multistore_Product
     Yves: go to PDP of the product with sku:    multiSKU${random}    wait_for_p&s=true
     Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    False
     Yves: product price on the PDP should be:    €15.00    wait_for_p&s=true
-    Yves: go to AT store 'Home' page
+    Yves: go to AT store 'Home' page if other store not specified:
     Trigger multistore p&s
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     Yves: create new 'Shopping Cart' with name:    multiProductCart+${random}
-    Yves: go to AT URL:    en/search?q=multiSKU${random}
+    Yves: go to AT store URL if other store not specified:    en/search?q=multiSKU${random}
     Try reloading page until element is/not appear:    ${catalog_product_card_locator}    true    21    5s
     Yves: 1st product card in catalog (not)contains:     Price    €200.00
     Yves: go to PDP of the product with sku:    multiSKU${random}
@@ -1406,8 +1409,9 @@ Multistore_Product
     ...    || productAbstract   | unselect store ||
     ...    || multiSKU${random} | AT             ||
     Trigger multistore p&s
-    Yves: go to URL and refresh until 404 occurs:    ${url}
-    [Teardown]    Run Keywords    Yves: go to AT store 'Home' page
+    Yves: navigate to specified AT store URL if no other store is specified and refresh until 404 occurs:    ${url}
+    [Teardown]    Run Keywords    Should Test Run
+    ...    AND    Yves: go to AT store 'Home' page if other store not specified:
     ...    AND    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     ...    AND    Yves: delete all shopping carts
 
@@ -1417,27 +1421,28 @@ Multistore_CMS
     Zed: go to second navigation item level:    Content    Pages
     Zed: create a cms page and publish it:    Multistore Page${random}    multistore-page${random}    Multistore Page    Page text
     Trigger multistore p&s
-    Yves: go to newly created page by URL on AT store:    en/multistore-page${random}
+    Yves: go to newly created page by URL on AT store if other store not specified:    en/multistore-page${random}
     Save current URL
     Yves: page contains CMS element:    CMS Page Title    Multistore Page
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: update cms page and publish it:
     ...    || cmsPage                  | unselect store ||
     ...    || Multistore Page${random} | AT             ||
-    Yves: go to URL and refresh until 404 occurs:    ${url}
-    [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Yves: navigate to specified AT store URL if no other store is specified and refresh until 404 occurs:    ${url}
+    [Teardown]    Run Keywords    Should Test Run
+    ...    AND    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: go to second navigation item level:    Content    Pages
     ...    AND    Zed: click Action Button in a table for row that contains:    Multistore Page${random}    Deactivate
     ...    AND    Trigger multistore p&s
 
 Product_Availability_Calculation
     [Documentation]    Check product availability + multistore
-    [Setup]    Run Keywords    Repeat Keyword    3    Trigger multistore p&s
-    ...    AND    Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    ...    AND    Zed: update warehouse:    
+    Repeat Keyword    3    Trigger multistore p&s
+    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: update warehouse:    
     ...    || warehouse  | store || 
     ...    || Warehouse1 | AT    ||
-    ...    AND    Repeat Keyword    3    Trigger multistore p&s
+    Repeat Keyword    3    Trigger multistore p&s
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: start new abstract product creation:
     ...    || sku                      | store | store 2 | name en                      | name de                        | new from   | new to     ||
@@ -1451,7 +1456,7 @@ Product_Availability_Calculation
     Zed: update abstract product price on:
     ...    || store | mode  | type    | currency | amount | tax set        ||
     ...    || AT    | gross | default | €        | 200.00 | Standard Taxes ||
-    Trigger multistore p&s
+    Repeat Keyword    3    Trigger multistore p&s
     Zed: change concrete product data:
     ...    || productAbstract          | productConcrete                     | active | searchable en | searchable de ||
     ...    || availabilitySKU${random} | availabilitySKU${random}-farbe-grey | true   | true          | true          ||
@@ -1464,7 +1469,10 @@ Product_Availability_Calculation
     Zed: change concrete product stock:
     ...    || productAbstract          | productConcrete                     | warehouse n1 | warehouse n1 qty | warehouse n1 never out of stock ||
     ...    || availabilitySKU${random} | availabilitySKU${random}-farbe-grey | Warehouse1   | 5                | false                            ||
-    Trigger multistore p&s
+    Zed: update abstract product data:
+    ...    || productAbstract          | name de                              ||
+    ...    || availabilitySKU${random} | DEavailabilityProduct${random} force ||
+    Repeat Keyword    3    Trigger multistore p&s
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     Yves: create new 'Shopping Cart' with name:    availabilityCart+${random}
     Yves: go to PDP of the product with sku:    availabilitySKU${random}    wait_for_p&s=true
@@ -1503,7 +1511,7 @@ Product_Availability_Calculation
     Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    False
     Yves: change quantity using '+' or '-' button № times:    +    5
     Yves: try add product to the cart from PDP and expect error:    Item availabilitySKU${random}-farbe-grey only has availability of 5.
-    Yves: go to AT store 'Home' page
+    Yves: go to AT store 'Home' page if other store not specified:
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     Yves: go to PDP of the product with sku:    availabilitySKU${random}    wait_for_p&s=true
     Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    False
@@ -1512,11 +1520,12 @@ Product_Availability_Calculation
     ...    || warehouse  | unselect store || 
     ...    || Warehouse1 | AT             ||
     Repeat Keyword    3    Trigger multistore p&s
-    Yves: go to AT store 'Home' page
+    Yves: go to AT store 'Home' page if other store not specified:
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     Yves: go to PDP of the product with sku:    availabilitySKU${random}    wait_for_p&s=true
     Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    True
-    [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    [Teardown]    Run Keywords    Should Test Run
+    ...    AND    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: update warehouse:    
     ...    || warehouse  | unselect store || 
     ...    || Warehouse1 | AT             ||
@@ -1579,7 +1588,7 @@ Update_Customer_Data
     ...    || ${yves_company_user_buyer_email} | Mr         | ${yves_company_user_buyer_firstname} | ${yves_company_user_buyer_lastname} ||
 
 CRUD_Product_Set
-    [Documentation]    CRUD operations for product sets
+    [Documentation]    CRUD operations for product sets. DMS-ON: https://spryker.atlassian.net/browse/FRW-7393 
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: create new product set:
     ...    || name en            | name de            | url en             | url de             | set key       | active | product                             | product 2                           | product 3                                      ||
@@ -1685,7 +1694,7 @@ Glossary
     ...    AND    Trigger p&s
     
 Configurable_Product_PDP_Shopping_List
-    [Documentation]    Configure product from PDP and Shopping List
+    [Documentation]    Configure product from PDP and Shopping List. DMS-ON: https://spryker.atlassian.net/browse/FRW-6380
     [Setup]    Run keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     ...    AND    Yves: create new 'Shopping Cart' with name:    configProduct+${random}
     ...    AND    Yves: create new 'Shopping List' with name:    configProduct+${random}
@@ -1744,7 +1753,7 @@ Configurable_Product_PDP_Shopping_List
     ...    AND    Yves: delete 'Shopping Cart' with name:    configProduct+${random}
       
 Configurable_Product_RfQ_Order_Management
-    [Documentation]    Conf Product in RfQ, OMS and reorder
+    [Documentation]    Conf Product in RfQ, OMS and reorder. DMS-ON: https://spryker.atlassian.net/browse/FRW-6380
     [Setup]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: create new Zed user with the following data:    agent_config+${random}@spryker.com    change123${random}    Config    Product    Root group    This user is an agent    en_US
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
@@ -1843,6 +1852,7 @@ Configurable_Product_RfQ_Order_Management
     ...    AND    Zed: delete Zed user with the following email:    agent_config+${random}@spryker.com
     
 Data_exchange_API_download_specification
+    [Documentation]    DMS-ON: https://spryker.atlassian.net/browse/FRW-7396
     [Setup]    Trigger API specification update
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: download data exchange api specification should be active:    true
@@ -1887,6 +1897,7 @@ Data_exchange_API_download_specification
     ...    AND    Trigger API specification update
 
 Data_exchange_API_Configuration_in_Zed
+    [Documentation]    DMS-ON: https://spryker.atlassian.net/browse/FRW-7396
     [Tags]    bapi
     [Setup]    Trigger API specification update
     Zed: login on Zed with provided credentials:    ${zed_admin_email}

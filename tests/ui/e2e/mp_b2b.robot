@@ -2105,7 +2105,7 @@ Multistore_Product_Offer
     Yves: go to PDP of the product with sku:     multistoreSKU${random}    wait_for_p&s=true
     Yves: merchant is (not) displaying in Sold By section of PDP:    Spryker    true
     Yves: merchant's offer/product price should be:    Spryker    €200.00
-    Yves: go to AT store 'Home' page
+    Yves: go to AT store 'Home' page if other store not specified:
     Trigger multistore p&s
     Yves: login on Yves with provided credentials:    ${yves_user_email}
     Yves: go to PDP of the product with sku:     multistoreSKU${random}    wait_for_p&s=true
@@ -2122,7 +2122,7 @@ Multistore_Product_Offer
     ...    || true      | AT             ||         
     MP: save offer
     Trigger multistore p&s
-    Yves: go to AT store 'Home' page
+    Yves: go to AT store 'Home' page if other store not specified:
     Trigger multistore p&s
     Yves: login on Yves with provided credentials:    ${yves_user_email}
     Yves: go to PDP of the product with sku:     multistoreSKU${random}    wait_for_p&s=true
@@ -2133,8 +2133,9 @@ Multistore_Product_Offer
     ...    || productAbstract        | unselect store ||
     ...    || multistoreSKU${random} | AT             ||
     Trigger multistore p&s
-    Yves: go to URL and refresh until 404 occurs:    ${url}
-    [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Yves: navigate to specified AT store URL if no other store is specified and refresh until 404 occurs:    ${url}
+    [Teardown]    Run Keywords    Should Test Run
+    ...    AND    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: go to second navigation item level:    Catalog    Products 
     ...    AND    Zed: click Action Button in a table for row that contains:     multistoreSKU${random}     Deny
     ...    AND    Trigger multistore p&s
@@ -2145,7 +2146,7 @@ Multistore_CMS
     Zed: go to second navigation item level:    Content    Pages
     Zed: create a cms page and publish it:    Multistore Page${random}    multistore-page${random}    Multistore Page    Page text
     Trigger multistore p&s
-    Yves: go to newly created page by URL on AT store:    en/multistore-page${random}
+    Yves: go to newly created page by URL on AT store if other store not specified:    en/multistore-page${random}
     Save current URL
     Yves: page contains CMS element:    CMS Page Title    Multistore Page
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
@@ -2153,7 +2154,7 @@ Multistore_CMS
     ...    || cmsPage                  | unselect store ||
     ...    || Multistore Page${random} | AT             ||
     Trigger multistore p&s
-    Yves: go to URL and refresh until 404 occurs:    ${url}
+    Yves: navigate to specified AT store URL if no other store is specified and refresh until 404 occurs:    ${url}
     [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: go to second navigation item level:    Content    Pages
     ...    AND    Zed: click Action Button in a table for row that contains:    Multistore Page${random}    Deactivate
@@ -2161,7 +2162,7 @@ Multistore_CMS
 
 Product_Availability_Calculation
     [Documentation]    Check product availability + multistore
-    [Setup]    Repeat Keyword    3    Trigger multistore p&s
+    Repeat Keyword    3    Trigger multistore p&s
     MP: login on MP with provided credentials:    ${merchant_spryker_email}
     MP: open navigation menu tab:    Products    
     MP: click on create new entity button:    Create Product
@@ -2239,7 +2240,7 @@ Product_Availability_Calculation
     Yves: add product to the shopping cart
     Yves: go to the shopping cart through the header with name:    newProdAvlCalculation+${random}
     Yves: assert merchant of product in cart or list:    availabilitySKU${random}-1    Spryker
-    Yves: go to AT store 'Home' page
+    Yves: go to AT store 'Home' page if other store not specified:
     Trigger multistore p&s
     Yves: go to PDP of the product with sku:     availabilitySKU${random}
     Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    False
@@ -2248,10 +2249,11 @@ Product_Availability_Calculation
     ...    || warehouse                                         | unselect store || 
     ...    || Spryker ${merchant_spryker_reference} Warehouse 1 | AT             ||
     Trigger multistore p&s
-    Yves: go to AT store 'Home' page
+    Yves: go to AT store 'Home' page if other store not specified:
     Yves: go to PDP of the product with sku:     availabilitySKU${random}
     Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    True
-    [Teardown]    Run Keywords    Yves: login on Yves with provided credentials:    ${yves_user_email}
+    [Teardown]    Run Keywords    Should Test Run
+    ...    AND    Yves: login on Yves with provided credentials:    ${yves_user_email}
     ...    AND    Yves: check if cart is not empty and clear it
     ...    AND    Yves: delete all user addresses
     ...    AND    Zed: login on Zed with provided credentials:    ${zed_admin_email}
@@ -2369,7 +2371,8 @@ Offer_Availability_Calculation
     Yves: add product to the shopping cart
     Yves: go to the shopping cart through the header with name:    offUpdatedAvailability${random}
     Yves: assert merchant of product in cart or list:    offAvKU${random}-1    Spryker
-    [Teardown]    Run Keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
+    [Teardown]    Run Keywords    Should Test Run
+    ...    AND    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     ...    AND    Yves: delete all shopping carts
     ...    AND    Yves: delete all user addresses
     ...    AND    Zed: login on Zed with provided credentials:    ${zed_admin_email}
@@ -2521,7 +2524,7 @@ Glossary
     ...    AND    Trigger p&s
 
 Configurable_Product_PDP_Shopping_List
-    [Documentation]    Configure product from PDP and Shopping List
+    [Documentation]    Configure product from PDP and Shopping List. DMS-ON: https://spryker.atlassian.net/browse/FRW-6380
     [Setup]    Run keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     ...    AND    Yves: create new 'Shopping Cart' with name:    configProduct+${random}
     ...    AND    Yves: create new 'Shopping List' with name:    configProduct+${random}
@@ -2583,7 +2586,7 @@ Configurable_Product_PDP_Shopping_List
     ...    AND    Yves: delete 'Shopping Cart' with name:    configProduct+${random}
       
 Configurable_Product_RfQ_Order_Management
-    [Documentation]    Conf Product in RfQ, OMS and reorder
+    [Documentation]    Conf Product in RfQ, OMS and reorder. DMS-ON: https://spryker.atlassian.net/browse/FRW-6380
     [Setup]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: create new Zed user with the following data:    agent_config+${random}@spryker.com    change123${random}    Config    Product    Root group    This user is an agent in Storefront    en_US
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
@@ -2688,6 +2691,7 @@ Configurable_Product_RfQ_Order_Management
     ...    AND    Zed: delete Zed user with the following email:    agent_config+${random}@spryker.com
 
 Data_exchange_API_download_specification
+    [Documentation]    DMS-ON: https://spryker.atlassian.net/browse/FRW-7396
     [Setup]    Trigger API specification update
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: download data exchange api specification should be active:    true
@@ -2732,6 +2736,7 @@ Data_exchange_API_download_specification
     ...    AND    Trigger API specification update
 
 Data_exchange_API_Configuration_in_Zed
+    [Documentation]    DMS-ON: https://spryker.atlassian.net/browse/FRW-7396
     [Tags]    bapi
     [Setup]    Trigger API specification update
     Zed: login on Zed with provided credentials:    ${zed_admin_email}

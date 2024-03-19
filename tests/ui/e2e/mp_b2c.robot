@@ -355,7 +355,7 @@ Product_Bundles
 #     [Teardown]    Yves: check if cart is not empty and clear it
 
 Discounts
-    [Documentation]    Discounts, Promo Products, and Coupon Codes (includes guest checkout)
+    [Documentation]    Discounts, Promo Products, and Coupon Codes (includes guest checkout). DMS-ON: https://spryker.atlassian.net/browse/FRW-7476
     [Setup]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: deactivate all discounts from Overview page
     ...    AND    Zed: change product stock:    190    190_25111746    true    10
@@ -468,7 +468,7 @@ Agent_Assist
     ...    AND    Zed: delete Zed user with the following email:    agent+${random}@spryker.com
 
 Return_Management
-    [Documentation]    Checks that returns work and oms process is checked.
+    [Documentation]    Checks that returns work and oms process is checked. DMS-ON: https://spryker.atlassian.net/browse/FRW-7477
     Yves: login on Yves with provided credentials:    ${yves_user_email}
     Yves: check if cart is not empty and clear it
     Yves: go to PDP of the product with sku:    007
@@ -582,7 +582,7 @@ Product_Relations
     [Teardown]    Yves: check if cart is not empty and clear it
 
 Guest_Checkout_and_Addresses
-    [Documentation]    Guest checkout with discounts, OMS and different addresses
+    [Documentation]    Guest checkout with discounts, OMS and different addresses. DMS-ON: https://spryker.atlassian.net/browse/FRW-7476
     [Setup]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: go to second navigation item level:    Merchandising    Discount
     ...    AND    Zed: create a discount and activate it:    voucher    Percentage    5    sku = '*'    guestTest${random}    discountName=Guest Voucher Code 5% ${random}
@@ -638,7 +638,7 @@ Guest_Checkout_and_Addresses
     ...    AND    Zed: deactivate following discounts from Overview page:    Guest Voucher Code 5% ${random}    Guest Cart Rule 10% ${random}
 
 Refunds
-    [Documentation]    Checks that refund can be created for one item and the whole order
+    [Documentation]    Checks that refund can be created for one item and the whole order. DMS-ON: https://spryker.atlassian.net/browse/FRW-7476
     [Setup]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: deactivate all discounts from Overview page
     Yves: login on Yves with provided credentials:    ${yves_user_email}
@@ -1900,7 +1900,7 @@ Multistore_Product_Offer
     Yves: go to PDP of the product with sku:     multistoreSKU${random}
     Yves: merchant is (not) displaying in Sold By section of PDP:    Video King    true
     Yves: merchant's offer/product price should be:    Video King    €200.00
-    Yves: go to AT store 'Home' page
+    Yves: go to AT store 'Home' page if other store not specified:
     Trigger multistore p&s
     Yves: go to PDP of the product with sku:     multistoreSKU${random}    wait_for_p&s=true
     Yves: merchant is (not) displaying in Sold By section of PDP:    Budget Cameras    true
@@ -1916,7 +1916,7 @@ Multistore_Product_Offer
     ...    || true      | AT             ||         
     MP: save offer
     Trigger multistore p&s
-    Yves: go to AT store 'Home' page
+    Yves: go to AT store 'Home' page if other store not specified:
     Trigger multistore p&s
     Yves: go to PDP of the product with sku:     multistoreSKU${random}    wait_for_p&s=true
     Yves: merchant is (not) displaying in Sold By section of PDP:    Video King    false
@@ -1926,8 +1926,9 @@ Multistore_Product_Offer
     ...    || productAbstract        | unselect store ||
     ...    || multistoreSKU${random} | AT             ||
     Trigger multistore p&s
-    Yves: go to URL and refresh until 404 occurs:    ${url}
-    [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Yves: navigate to specified AT store URL if no other store is specified and refresh until 404 occurs:    ${url}
+    [Teardown]    Run Keywords    Should Test Run
+    ...    AND    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: go to second navigation item level:    Catalog    Products 
     ...    AND    Zed: click Action Button in a table for row that contains:     multistoreSKU${random}     Deny
     ...    AND    Trigger multistore p&s
@@ -1938,22 +1939,23 @@ Multistore_CMS
     Zed: go to second navigation item level:    Content    Pages
     Zed: create a cms page and publish it:    Multistore Page${random}    multistore-page${random}    Multistore Page    Page text
     Trigger multistore p&s
-    Yves: go to newly created page by URL on AT store:    en/multistore-page${random}
+    Yves: go to newly created page by URL on AT store if other store not specified:    en/multistore-page${random}
     Save current URL
     Yves: page contains CMS element:    CMS Page Title    Multistore Page
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: update cms page and publish it:
     ...    || cmsPage                  | unselect store ||
     ...    || Multistore Page${random} | AT             ||
-    Yves: go to URL and refresh until 404 occurs:    ${url}
-    [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Yves: navigate to specified AT store URL if no other store is specified and refresh until 404 occurs:    ${url}
+    [Teardown]    Run Keywords    Should Test Run
+    ...    AND    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: go to second navigation item level:    Content    Pages
     ...    AND    Zed: click Action Button in a table for row that contains:    Multistore Page${random}    Deactivate
     ...    AND    Trigger multistore p&s
 
 Product_Availability_Calculation
-    [Documentation]    Check product availability + multistore
-    [Setup]    Repeat Keyword    3    Trigger multistore p&s
+    [Documentation]    Check product availability + multistore. DMS-ON: https://spryker.atlassian.net/browse/FRW-7477
+    Repeat Keyword    3    Trigger multistore p&s
     MP: login on MP with provided credentials:    ${merchant_spryker_email}
     MP: open navigation menu tab:    Products    
     MP: click on create new entity button:    Create Product
@@ -2030,7 +2032,7 @@ Product_Availability_Calculation
     Yves: add product to the shopping cart
     Yves: go to b2c shopping cart
     Yves: assert merchant of product in b2c cart:    availabilityProduct${random}    Spryker
-    Yves: go to AT store 'Home' page
+    Yves: go to AT store 'Home' page if other store not specified:
     Trigger multistore p&s
     Yves: go to PDP of the product with sku:     availabilitySKU${random}
     Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    False
@@ -2039,10 +2041,11 @@ Product_Availability_Calculation
     ...    || warehouse                                         | unselect store || 
     ...    || Spryker ${merchant_spryker_reference} Warehouse 1 | AT             ||
     Trigger multistore p&s
-    Yves: go to AT store 'Home' page
+    Yves: go to AT store 'Home' page if other store not specified:
     Yves: go to PDP of the product with sku:     availabilitySKU${random}
     Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    True
-    [Teardown]    Run Keywords    Yves: login on Yves with provided credentials:    ${yves_second_user_email}
+    [Teardown]    Run Keywords    Should Test Run
+    ...    AND    Yves: login on Yves with provided credentials:    ${yves_second_user_email}
     ...    AND    Yves: check if cart is not empty and clear it
     ...    AND    Yves: delete all user addresses
     ...    AND    Zed: login on Zed with provided credentials:    ${zed_admin_email}
@@ -2272,7 +2275,7 @@ Glossary
     ...    AND    Trigger p&s
 
 Configurable_Product_PDP_Wishlist
-    [Documentation]    Configure product from PDP and Wishlist
+    [Documentation]    Configure product from PDP and Wishlist. DMS-ON: https://spryker.atlassian.net/browse/FRW-6380
     [Setup]    Run keywords    Yves: login on Yves with provided credentials:    ${yves_user_email}
     ...    AND    Yves: create new 'Whistist' with name:    configProduct${random}
     ...    AND    Yves: check if cart is not empty and clear it
@@ -2339,7 +2342,7 @@ Configurable_Product_PDP_Wishlist
     ...    AND    Yves: delete all user addresses
 
 Configurable_Product_OMS
-    [Documentation]    Conf Product OMS check and reorder
+    [Documentation]    Conf Product OMS check and reorder. DMS-ON: https://spryker.atlassian.net/browse/FRW-6380
     [Setup]    Run keywords    Yves: login on Yves with provided credentials:    ${yves_user_email}
     ...    AND    Yves: check if cart is not empty and clear it
     ...    AND    Yves: delete all user addresses
@@ -2420,6 +2423,7 @@ Configurable_Product_OMS
     [Teardown]    Yves: check if cart is not empty and clear it
     
 Data_exchange_API_download_specification
+    [Documentation]    DMS-ON: https://spryker.atlassian.net/browse/FRW-7396
     [Setup]    Trigger API specification update
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: download data exchange api specification should be active:    true
@@ -2464,6 +2468,7 @@ Data_exchange_API_download_specification
     ...    AND    Trigger API specification update
 
 Data_exchange_API_Configuration_in_Zed
+    [Documentation]    DMS-ON: https://spryker.atlassian.net/browse/FRW-7396
     [Tags]    bapi
     [Setup]    Trigger API specification update
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
@@ -2526,6 +2531,7 @@ Data_exchange_API_Configuration_in_Zed
     ...    AND    Trigger API specification update  
 
 Fulfilment_app_e2e
+    [Documentation]    DMS-ON: https://spryker.atlassian.net/browse/FRW-7463
     # #LOGGED IN TO BO and SET CHECKBOX is a warehouse user = true FOR admin_de USER. UI TEST
     Make user a warehouse user/ not a warehouse user:    ${warehous_user[0].de_admin_user_uuid}    0
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
