@@ -257,7 +257,7 @@ Yves: apply discount voucher to cart:
     IF    '${env}' in ['ui_b2c','ui_mp_b2c'] and '${expanded}'=='False'    Click    ${shopping_cart_voucher_code_section_toggler}
     Type Text    ${shopping_cart_voucher_code_field}    ${voucherCode}
     Click    ${shopping_cart_voucher_code_redeem_button}
-    Repeat Keyword    3    Wait Until Network Is Idle
+    Repeat Keyword    5    Wait Until Network Is Idle
     Yves: flash message should be shown:    success    Your voucher code has been applied
     Yves: remove flash messages
 

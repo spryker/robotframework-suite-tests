@@ -301,7 +301,7 @@ Default Tags    bapi
 #     Yves: PDP contains/doesn't contain:    true    ${bundleItemsSmall}
 #     Yves: add product to the shopping cart    wait_for_p&s=true
 #     Yves: go to b2c shopping cart
-#     Yves: apply discount voucher to cart:    guestTest${random}
+    # Yves: apply discount voucher to cart:    guestTest${random}
 #     Yves: shopping cart contains the following products:    ${bundle_product_concrete_sku}
 #     Yves: click on the 'Checkout' button in the shopping cart
 #     Yves: proceed with checkout as guest:    Mr    Guest    user    sonia+guest${random}@spryker.com
@@ -1016,39 +1016,39 @@ Default Tags    bapi
 #     Yves: go to PDP of the product with sku:    190
 #     Yves: add product to the shopping cart    wait_for_p&s=true
 #     Yves: go to b2c shopping cart
-#     Yves: apply discount voucher to cart:    test${random}
+    # Yves: apply discount voucher to cart:    test${random}
 #     Yves: discount is applied:    voucher    Voucher Code 5% ${random}    - €8.73
 #     Yves: discount is applied:    cart rule    Cart Rule 10% ${random}    - €17.46
-#     Yves: go to PDP of the product with sku:    ${bundle_product_abstract_sku}
-#     Yves: add product to the shopping cart
-#     Yves: go to b2c shopping cart
-#     Yves: discount is applied:    cart rule    Cart Rule 10% ${random}    - €87.96
-#     Yves: promotional product offer is/not shown in cart:    true
-#     Yves: add promotional product to the cart
-#     Yves: shopping cart contains the following products:    190_25111746    002_25904004
-#     Yves: discount is applied:    cart rule    Promotional Product 100% ${random}    - €75.00
-#     Yves: click on the 'Checkout' button in the shopping cart
-#     Yves: billing address same as shipping address:    true
-#     Yves: fill in the following new shipping address:
-#     ...    || salutation | firstName                      | lastName                      | street        | houseNumber | postCode | city   | country | company | phone     | additionalAddress ||
-#     ...    || Mr.        | ${yves_second_user_first_name} | ${yves_second_user_last_name} | Kirncher Str. | 7           | 10247    | Berlin | Germany | Spryker | 123456789 | Additional street ||
-#     Yves: submit form on the checkout
-#     Yves: select the following shipping method for the shipment:    1    Spryker Dummy Shipment    Standard
-#     Yves: select the following shipping method for the shipment:    2    Spryker Dummy Shipment    Express
-#     Yves: select the following shipping method for the shipment:    3    Spryker Drone Shipment    Air Light
-#     Yves: submit form on the checkout
-#     Yves: select the following payment method on the checkout and go next:    Invoice
-#     Yves: accept the terms and conditions:    true
-#     Yves: 'submit the order' on the summary page
-#     Yves: 'Thank you' page is displayed
-#     Yves: get the last placed order ID by current customer
-#     Zed: login on Zed with provided credentials:    ${zed_admin_email}
-#     Zed: grand total for the order equals:    ${lastPlacedOrder}    €773.45
-#     [Teardown]    Run keywords    Yves: check if cart is not empty and clear it
-#     ...    AND    Zed: login on Zed with provided credentials:    ${zed_admin_email}
-#     ...    AND    Zed: deactivate following discounts from Overview page:    Voucher Code 5% ${random}    Cart Rule 10% ${random}    Promotional Product 100% ${random}
-#     ...    AND    Zed: activate following discounts from Overview page:    	Free mobile phone    20% off cameras products    Free Acer M2610 product    Free delivery    10% off Intel products    5% off white products    Tuesday & Wednesday $5 off 5 or more    10% off $100+    Free smartphone    20% off cameras    Free Acer M2610    Free standard delivery    10% off Intel Core    5% off white    Tu & Wed €5 off 5 or more    10% off minimum order
-#     ...    AND    Trigger p&s
+    # Yves: go to PDP of the product with sku:    ${bundle_product_abstract_sku}
+    # Yves: add product to the shopping cart
+    # Yves: go to b2c shopping cart
+    # Yves: discount is applied:    cart rule    Cart Rule 10% ${random}    - €87.96
+    # Yves: promotional product offer is/not shown in cart:    true
+    # Yves: add promotional product to the cart
+    # Yves: shopping cart contains the following products:    190_25111746    002_25904004
+    # Yves: discount is applied:    cart rule    Promotional Product 100% ${random}    - €75.00
+    # Yves: click on the 'Checkout' button in the shopping cart
+    # Yves: billing address same as shipping address:    true
+    # Yves: fill in the following new shipping address:
+    # ...    || salutation | firstName                      | lastName                      | street        | houseNumber | postCode | city   | country | company | phone     | additionalAddress ||
+    # ...    || Mr.        | ${yves_second_user_first_name} | ${yves_second_user_last_name} | Kirncher Str. | 7           | 10247    | Berlin | Germany | Spryker | 123456789 | Additional street ||
+    # Yves: submit form on the checkout
+    # Yves: select the following shipping method for the shipment:    1    Spryker Dummy Shipment    Standard
+    # Yves: select the following shipping method for the shipment:    2    Spryker Dummy Shipment    Express
+    # Yves: select the following shipping method for the shipment:    3    Spryker Drone Shipment    Air Light
+    # Yves: submit form on the checkout
+    # Yves: select the following payment method on the checkout and go next:    Invoice
+    # Yves: accept the terms and conditions:    true
+    # Yves: 'submit the order' on the summary page
+    # Yves: 'Thank you' page is displayed
+    # Yves: get the last placed order ID by current customer
+    # Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    # Zed: grand total for the order equals:    ${lastPlacedOrder}    €773.45
+    # [Teardown]    Run keywords    Yves: check if cart is not empty and clear it
+    # ...    AND    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    # ...    AND    Zed: deactivate following discounts from Overview page:    Voucher Code 5% ${random}    Cart Rule 10% ${random}    Promotional Product 100% ${random}
+    # ...    AND    Zed: activate following discounts from Overview page:    	Free mobile phone    20% off cameras products    Free Acer M2610 product    Free delivery    10% off Intel products    5% off white products    Tuesday & Wednesday $5 off 5 or more    10% off $100+    Free smartphone    20% off cameras    Free Acer M2610    Free standard delivery    10% off Intel Core    5% off white    Tu & Wed €5 off 5 or more    10% off minimum order
+    # ...    AND    Trigger p&s
 
 # Back_in_Stock_Notification
 #     [Documentation]    Back in stock notification is sent and availability check
@@ -1785,7 +1785,7 @@ Default Tags    bapi
 #     Zed: update warehouse:    
 #     ...    || warehouse  | store || 
 #     ...    || Warehouse1 | AT    ||
-#     Repeat Keyword    3    Trigger multistore p&s
+    # Repeat Keyword    3    Trigger multistore p&s
 #     Zed: login on Zed with provided credentials:    ${zed_admin_email}
 #     Zed: start new abstract product creation:
 #     ...    || sku                      | store | store 2 | name en                      | name de                        | new from   | new to     ||
@@ -3732,10 +3732,10 @@ Dynamic-multistore
     Zed: update abstract product data:
     ...    || store | productAbstract                     ||
     ...    || AT_E  | ${one_variant_product_abstract_sku} ||
-    Zed: update abstract product price on:
-    ...    || store   | mode  | type    | currency | amount ||
-    ...    || AT_E    | gross | default | €        | 100.00 ||
-    Trigger multistore p&s
+#     Zed: update abstract product price on:
+#     ...    || store   | mode  | type    | currency | amount ||
+#     ...    || AT_E    | gross | default | €        | 100.00 ||
+#     Trigger multistore p&s
 #     Zed: change concrete product data:
 #     ...    || productAbstract       | productConcrete                  | active | searchable en | searchable de ||
 #     ...    || zedManageSKU${random} | zedManageSKU${random}-color-grey | true   | true          | true          ||
@@ -3749,3 +3749,4 @@ Dynamic-multistore
 #     Zed: update abstract product data:
 #     ...    || productAbstract       | name de                        ||
 #     ...    || zedManageSKU${random} | DEmanageProduct${random} force ||
+    
