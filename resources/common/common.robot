@@ -70,13 +70,13 @@ Should Test Run
     ${dms_state}=    Convert To String    ${dms}
     IF   '${dms_state}' != 'True'
         IF   'dms-on' in @{Test Tags}
-            Skip  
+            Skip
         END
-    ELSE    
+    ELSE
         IF   'dms-off' in @{Test Tags}
-            Skip      
+            Skip
         END
-    END    
+    END
 
 Load Variables
     [Documentation]    Keyword is used to load variable values from the environment file passed during execution. This Keyword is used during suite setup.
@@ -468,6 +468,29 @@ Delete country by iso2_code in Database:
     Connect to Spryker DB
     Execute Sql String    DELETE FROM spy_country WHERE iso2_code = '${iso2_code}';
     Disconnect From Database
+
+Delete url by url name in Database:
+    [Documentation]    This keyword deletes a url by url name in the DB table spy_url.
+        ...    *Example:*
+        ...
+        ...    ``Delete url by url name in Database:    test``
+        ...
+    [Arguments]    ${url}
+    Connect to Spryker DB
+    Execute Sql String    DELETE FROM spy_url WHERE url = '${url}';
+    Disconnect From Database
+
+Verify that url is present in the Database:
+    [Documentation]    This keyword verifies that url is present in the DB table spy_url.
+        ...    *Example:*
+        ...
+        ...    ``Verify that url is present in the Database:    test``
+        ...
+    [Arguments]    ${url}
+    Connect to Spryker DB
+    ${db_url}=    Query    SELECT url FROM spy_url WHERE url = '${url}' LIMIT 1;
+    Disconnect From Database
+    Should Be Equal    ${url}    ${db_url}
 
 Update dynamic entity configuration in Database:
      [Documentation]    This keyword update dynamic entity configuration in the DB table spy_dynamic_entity_configuration if configuration exists.

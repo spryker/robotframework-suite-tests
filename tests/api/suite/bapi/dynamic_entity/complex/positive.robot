@@ -135,6 +135,52 @@ ENABLER
     ...   AND    Delete dynamic entity configuration in Database:    robot-tests-products
     ...   AND    Delete dynamic entity configuration in Database:    robot-tests-product-prices
 
+Create_and_update_product_abstract_collection_with_child:
+    ### SETUP DYNAMIC ENTITY CONFIGURATION AND RELATION ###
+    Delete dynamic entity configuration relation in Database:    robotTestsProductAbstractLocalizedAttributes
+    Delete dynamic entity configuration in Database:    robot-tests-product-abstracts
+    Delete dynamic entity configuration in Database:    robot-tests-product-abstract-localized-attributes
+    Create dynamic entity configuration in Database:    robot-tests-product-abstracts    spy_product_abstract     1    {"identifier":"id_product_abstract","fields":[{"fieldName":"id_product_abstract","fieldVisibleName":"id_product_abstract","isCreatable":false,"isEditable":false,"type":"integer","validation":{"isRequired":false}},{"fieldName":"fk_tax_set","fieldVisibleName":"fk_tax_set","isCreatable":true,"isEditable":true,"type":"integer","validation":{"isRequired":true}},{"fieldName":"approval_status","fieldVisibleName":"approval_status","isCreatable":true,"isEditable":true,"type":"string","validation":{"isRequired":false}},{"fieldName":"attributes","fieldVisibleName":"attributes","isCreatable":true,"isEditable":true,"type":"string","validation":{"isRequired":true}},{"fieldName":"new_from","fieldVisibleName":"new_from","isCreatable":true,"isEditable":true,"type":"string","validation":{"isRequired":false}},{"fieldName":"new_to","fieldVisibleName":"new_to","isCreatable":true,"isEditable":true,"type":"string","validation":{"isRequired":false}},{"fieldName":"sku","fieldVisibleName":"sku","isCreatable":true,"isEditable":true,"type":"string","validation":{"isRequired":true}},{"fieldName":"color_code","fieldVisibleName":"color_code","isCreatable":true,"isEditable":true,"type":"string","validation":{"isRequired":false}}]}
+    Create dynamic entity configuration in Database:    robot-tests-product-abstract-localized-attributes    spy_product_abstract_localized_attributes     1    {"identifier":"id_abstract_attributes","fields":[{"fieldName":"id_abstract_attributes","fieldVisibleName":"id_abstract_attributes","isCreatable":false,"isEditable":false,"validation":{"isRequired":false},"type":"integer"},{"fieldName":"fk_locale","fieldVisibleName":"fk_locale","isCreatable":true,"isEditable":true,"type":"integer","validation":{"isRequired":true}},{"fieldName":"fk_product_abstract","fieldVisibleName":"fk_product_abstract","isCreatable":true,"isEditable":true,"type":"integer","validation":{"isRequired":true}},{"fieldName":"attributes","fieldVisibleName":"attributes","isCreatable":true,"isEditable":true,"type":"string","validation":{"isRequired":true}},{"fieldName":"description","fieldVisibleName":"description","isCreatable":true,"isEditable":true,"type":"string","validation":{"isRequired":false}},{"fieldName":"name","fieldVisibleName":"name","isCreatable":true,"isEditable":true,"type":"string","validation":{"isRequired":true}},{"fieldName":"meta_description","fieldVisibleName":"meta_description","isCreatable":true,"isEditable":true,"type":"string","validation":{"isRequired":false}},{"fieldName":"meta_keywords","fieldVisibleName":"meta_keywords","isCreatable":true,"isEditable":true,"type":"string","validation":{"isRequired":false}},{"fieldName":"meta_title","fieldVisibleName":"meta_title","isCreatable":true,"isEditable":true,"type":"string","validation":{"isRequired":false}}]}
+    Create dynamic entity configuration relation in Database:    robot-tests-product-abstracts    robot-tests-product-abstract-localized-attributes    robotTestsProductAbstractLocalizedAttributes    fk_product_abstract    id_product_abstract
+
+    ### GET TOKEN ###
+    I get access token by user credentials:   ${zed_admin.email}
+
+    ### CREATE PRODUCT ABSTRACT WITH PRODUCT ABSTRACT LOCALIZED ATTRIBUTES ###
+    And I set Headers:    Content-Type=application/json    Authorization=Bearer ${token}
+    And I send a POST request:    /dynamic-entity/robot-tests-product-abstracts  {"data":[{"fk_tax_set":1,"approval_status":"approved","attributes":"{}","new_from":null,"new_to":"2028-01-01 00:00:00.000000","sku":"testtesttest","color_code":"#DC2E09","robotTestsProductAbstractLocalizedAttributes":[{"fk_locale":66,"attributes":"{'color':'green'}","description":"childtesttesttest","name":"childtesttesttest","meta_description":"childtesttesttest","meta_keywords":"childtesttesttest","meta_title":"childtesttesttest"}]}]}
+    Then Response status code should be:    201
+    And Response header parameter should be:    Content-Type    application/json
+    And Response body parameter should be:    [data][0][sku]    testtesttest
+    And Response body parameter should be:    [data][0][robotTestsProductAbstractLocalizedAttributes][0][name]    childtesttesttest
+    Response body parameter should be greater than :    [data][0][id_product_abstract]    0
+    When Save value to a variable:    [data][0][id_product_abstract]    id_product_abstract
+    When Save value to a variable:    [data][0][robotTestsProductAbstractLocalizedAttributes][0][id_abstract_attributes]    id_abstract_attributes
+    Response body parameter should be greater than :    [data][0][robotTestsProductAbstractLocalizedAttributes][0][id_abstract_attributes]    0
+    And Response body parameter should be:    [data][0][robotTestsProductAbstractLocalizedAttributes][0][fk_product_abstract]    ${id_product_abstract}
+
+    ### GET PRODUCT ABSTRACT COLLECTION WITH CHILDS AS TREE ###
+    And I set Headers:    Content-Type=application/json    Authorization=Bearer ${token}
+    And I send a GET request:    /dynamic-entity/robot-tests-product-abstracts/${id_product_abstract}?include=robotTestsProductAbstractLocalizedAttributes
+    Then Response status code should be:    200
+    And Response header parameter should be:    Content-Type    application/json
+    And Response body parameter should be:    [data][id_product_abstract]    ${id_product_abstract}
+    And Response body parameter should be:    [data][sku]    testtesttest
+    And Response body parameter should be:    [data][robotTestsProductAbstractLocalizedAttributes][0][fk_product_abstract]    ${id_product_abstract}
+    And Response body parameter should be:    [data][robotTestsProductAbstractLocalizedAttributes][0][name]    childtesttesttest
+    And Verify that url is present in the Database:    /de/testtesttest-${id_product_abstract}
+    ### UPDATE PRODUCT ABSTRACT WITH CHILD ###
+    And I send a PATCH request:    /dynamic-entity/robot-tests-product-abstracts/${id_product_abstract}    {"data":{"sku":"testtesttest1","robotTestsProductAbstractLocalizedAttributes":[{"name":"childtesttesttest1","id_abstract_attributes":${id_abstract_attributes}}]}}
+    Then Response status code should be:    200
+    And Response header parameter should be:    Content-Type    application/json
+    And Response body parameter should be:    [data][0][sku]    testtesttest1
+    And Response body parameter should be:    [data][0][robotTestsProductAbstractLocalizedAttributes][0][name]    childtesttesttest1
+
+    [Teardown]    Run Keywords    Delete dynamic entity configuration relation in Database:    robotTestsProductAbstractLocalizedAttributes
+    ...   AND    Delete dynamic entity configuration in Database:    robot-tests-product-abstracts
+    ...   AND    Delete dynamic entity configuration in Database:    robot-tests-product-abstract-localized-attributes
+
  Create_product_abstract_collection_with_two_childs:
     ### SETUP DYNAMIC ENTITY CONFIGURATION AND RELATION ###
     Create dynamic entity configuration in Database:    robot-tests-product-abstracts    spy_product_abstract     1    {"identifier":"id_product_abstract","fields":[{"fieldName":"id_product_abstract","fieldVisibleName":"id_product_abstract","isCreatable":false,"isEditable":false,"type":"integer","validation":{"isRequired":false}},{"fieldName":"fk_tax_set","fieldVisibleName":"fk_tax_set","isCreatable":true,"isEditable":true,"type":"integer","validation":{"isRequired":true}},{"fieldName":"approval_status","fieldVisibleName":"approval_status","isCreatable":true,"isEditable":true,"type":"string","validation":{"isRequired":false}},{"fieldName":"attributes","fieldVisibleName":"attributes","isCreatable":true,"isEditable":true,"type":"string","validation":{"isRequired":true}},{"fieldName":"new_from","fieldVisibleName":"new_from","isCreatable":true,"isEditable":true,"type":"string","validation":{"isRequired":false}},{"fieldName":"new_to","fieldVisibleName":"new_to","isCreatable":true,"isEditable":true,"type":"string","validation":{"isRequired":false}},{"fieldName":"sku","fieldVisibleName":"sku","isCreatable":true,"isEditable":true,"type":"string","validation":{"isRequired":true}},{"fieldName":"color_code","fieldVisibleName":"color_code","isCreatable":true,"isEditable":true,"type":"string","validation":{"isRequired":false}}]}
