@@ -1620,6 +1620,9 @@ Multistore_Product
     Zed: change concrete product stock:
     ...    || productAbstract   | productConcrete              | warehouse n1 | warehouse n1 qty | warehouse n1 never out of stock ||
     ...    || multiSKU${random} | multiSKU${random}-color-grey | Warehouse2   | 100              | true                            ||
+    Zed: update abstract product data:
+    ...    || productAbstract   | name de                        ||
+    ...    || multiSKU${random} | DEmultiProduct${random} forced ||
     Trigger multistore p&s
     Zed: go to second navigation item level:    Catalog    Products 
     Zed: click Action Button in a table for row that contains:     multiSKU${random}     Approve
@@ -3019,7 +3022,7 @@ Merchant_Portal_Customer_Specific_Prices
     ...    || product type | row number | store | currency | gross default ||
     ...    || abstract     | 1          | DE    | EUR      | 500           ||
     MP: save abstract product 
-    Trigger p&s
+    Repeat Keyword    3    Trigger p&s
     MP: click on a table row that contains:    riceProduct${random}
     MP: open concrete drawer by SKU:    PriceSKU${random}-2
     MP: fill product price values:
@@ -3031,10 +3034,11 @@ Merchant_Portal_Customer_Specific_Prices
     MP: fill concrete product fields:
     ...    || is active | stock quantity | use abstract name | searchability ||
     ...    || true      | 100            | true              | en_US         ||
+    MP: save abstract product 
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Catalog    Products 
     Zed: click Action Button in a table for row that contains:     PriceSKU${random}     Approve
-    Trigger p&s
+    Repeat Keyword    3    Trigger p&s
     Yves: login on Yves with provided credentials:     ${yves_test_company_user_email}
     Yves: go to PDP of the product with sku:    PriceSKU${random}    wait_for_p&s=true
     Yves: merchant's offer/product price should be:    Budget Cameras     €100.00
@@ -3048,7 +3052,7 @@ Merchant_Portal_Customer_Specific_Prices
     MP: open concrete drawer by SKU:    PriceSKU${random}-2
     MP: delete product price row that contains text:    2 - Hotel Tommy Berlin
     MP: save concrete product
-    Trigger p&s
+    Repeat Keyword    3    Trigger p&s
     Yves: login on Yves with provided credentials:     ${yves_test_company_user_email}
     Yves: go to PDP of the product with sku:    PriceSKU${random}
     Yves: merchant's offer/product price should be:    Budget Cameras     €500.00
@@ -3389,7 +3393,8 @@ Unique_URL
     Yves: go to external URL:    ${externalURL}
     Yves: Shopping Cart title should be equal:    Preview: externalCart+${random}
     Yves: shopping cart contains the following products:    ${one_variant_product_abstract_sku}
-    [Teardown]    Yves: delete 'Shopping Cart' with name:    externalCart+${random}
+    [Teardown]    Run Keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
+    ...    AND    Yves: delete 'Shopping Cart' with name:    externalCart+${random}
 
 Comments_in_Cart
     [Documentation]    Add comments to cart and verify comments in Yves and Zed

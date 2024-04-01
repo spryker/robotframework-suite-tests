@@ -19,10 +19,11 @@ Create_Service_Point_Address_Without_Authentication
 
 Create_Service_Point_Address_With_Incorrect_Token
     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
-     ...    AND    I set Headers:    Content-Type=${default_header_content_type}   Authorization=IncorrectToken
+     ...    AND    I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer IncorrectToken
     When I send a POST request:    /service-points/${demo_service_point.spryker_main_store.uuid}/service-point-addresses    {"data":{"type":"service-point-addresses","attributes":{"address1":"Park Avenue","address2":"Building №2","address3":"address3","city":"Dreamtown","zipCode":"30-221","countryIso2Code":"DE"}}}
-    Then Response status code should be:    403
-    And Response should return error message:    Missing access token.
+    Then Response status code should be:    401
+    And Response should return error code:    001
+    And Response should return error message:    Invalid access token.
 
 Create_Duplicate_Service_Point_Address
     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
@@ -97,7 +98,6 @@ Create_Service_Point_address_with_not_existing_country
     ...    AND    Delete service point in DB    ${servicePointUuid}
 
 Update_Service_Point_Address_Without_Authentication
-    [Documentation]    https://spryker.atlassian.net/browse/FRW-5850 in response 400, expected 403
     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}   Authorization=
     When I send a PATCH request:    /service-points/${demo_service_point.spryker_main_store.uuid}/service-point-addresses/${service_point_address.uuid}    {"data": {"type": "service-point-addresses", "attributes": {"address1": "New Address", "zipCode": "40-123", "city": "New City"}}}
@@ -105,7 +105,6 @@ Update_Service_Point_Address_Without_Authentication
     And Response should return error message:    Missing access token.
 
 Update_Service_Point_Address_With_Incorrect_Token
-    [Documentation]    https://spryker.atlassian.net/browse/FRW-5850 in response 400, expected 401
     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}   Authorization=IncorrectToken
     When I send a PATCH request:    /service-points/${demo_service_point.spryker_main_store.uuid}/service-point-addresses/${service_point_address.uuid}      {"data": {"type": "service-point-addresses", "attributes": {"address1": "New Address", "zipCode": "40-123", "city": "New City"}}}
@@ -161,10 +160,8 @@ Retrive_address_for_Nonexistent_Service_Point
     And Response should return error message:    Service point entity was not found.
 
 Read_Service_Point_Address_No_Authentication
-    [Documentation]    https://spryker.atlassian.net/browse/FRW-5850
-    [Tags]    skip-due-to-issue
     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer
     When I send a GET request:    /service-points/${demo_service_point.spryker_main_store.uuid}/service-point-addresses
     Then Response status code should be:    403
-    And Response should return error message:    Invalid access token.
+    And Response should return error message:    Missing access token.
