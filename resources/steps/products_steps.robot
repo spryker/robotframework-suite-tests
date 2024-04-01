@@ -169,9 +169,9 @@ Zed: update abstract product data:
     Zed: click Action Button in a table for row that contains:     ${productAbstract}     Edit
     ${second_locale_section_expanded}=    Run Keyword And Return Status    Page Should Contain Element    ${${zed_product_general_second_locale_expanded_section}}    3s
     IF    '${second_locale_section_expanded}'=='False'
-        Scroll Element Into View    ${zed_product_general_second_locale_collapsed_section}
-        Click    ${zed_product_general_second_locale_collapsed_section}
-    END
+    Scroll Element Into View    ${zed_product_general_second_locale_collapsed_section}
+    Click    ${zed_product_general_second_locale_collapsed_section}
+    END  
     FOR    ${key}    ${value}    IN    &{abstractProductData}
         IF    '${key}'=='store' and '${value}' != '${EMPTY}'    
             Zed: Check checkbox by Label:    ${value}

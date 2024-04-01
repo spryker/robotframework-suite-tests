@@ -3724,29 +3724,29 @@ Dynamic-multistore
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: create new Store:
     ...    || name | locale iso code | currency iso code | currency code | store delivery region ||
-    ...    || AT_E | en_US           | Euro              | EUR           | AT                    ||
+    ...    || AT_Q | en_US           | Euro              | EUR           | AT                    ||
     Trigger multistore p&s
     Yves: login on Yves with provided credentials:    ${yves_user_email}
     Yves: go to AT store 'Home' page if other store not specified:    AT_E
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: update abstract product data:
     ...    || store | productAbstract                     ||
-    ...    || AT_E  | ${one_variant_product_abstract_sku} ||
-#     Zed: update abstract product price on:
-#     ...    || store   | mode  | type    | currency | amount ||
-#     ...    || AT_E    | gross | default | €        | 100.00 ||
-#     Trigger multistore p&s
-#     Zed: change concrete product data:
-#     ...    || productAbstract       | productConcrete                  | active | searchable en | searchable de ||
-#     ...    || zedManageSKU${random} | zedManageSKU${random}-color-grey | true   | true          | true          ||
-#     Zed: change concrete product price on:
-#     ...    || productAbstract       | productConcrete                  | store | mode  | type    | currency | amount ||
-#     ...    || zedManageSKU${random} | zedManageSKU${random}-color-blue | DE    | gross | default | €        | 15.00  ||
-#     Zed: change concrete product stock:
-#     ...    || productAbstract       | productConcrete                  | warehouse n1 | warehouse n1 qty | warehouse n1 never out of stock ||
-#     ...    || zedManageSKU${random} | zedManageSKU${random}-color-grey | Warehouse1   | 100              | true                            ||                          ||
-#     Trigger multistore p&s
-#     Zed: update abstract product data:
-#     ...    || productAbstract       | name de                        ||
-#     ...    || zedManageSKU${random} | DEmanageProduct${random} force ||
+    ...    || AT_Q  | ${one_variant_product_abstract_sku} ||
+    Zed: update abstract product price on:
+    ...    || productAbstract                      | store   | mode  | type    | currency | amount ||
+    ...    || ${one_variant_product_abstract_sku}  | AT_Q    | gross | default | €        | 100.00 ||
+    Trigger multistore p&s
+    Zed: change concrete product data:
+    ...    || productAbstract                     | productConcrete                     | active | searchable en | searchable de ||
+    ...    || ${one_variant_product_abstract_sku} | ${one_variant_product_concrete_sku} | true   | true          | true          ||
+    Zed: change concrete product price on:
+    ...    || productAbstract                     | productConcrete                     | store | mode  | type    | currency | amount ||
+    ...    || ${one_variant_product_abstract_sku} | ${one_variant_product_concrete_sku} | AT_Q  | gross | default | €        | 15.00  ||
+    Zed: change concrete product stock:
+    ...    || productAbstract                     | productConcrete                     | warehouse n1 | warehouse n1 qty | warehouse n1 never out of stock ||
+    ...    || ${one_variant_product_abstract_sku} | ${one_variant_product_concrete_sku} | Warehouse1   | 100              | true                            ||                          ||
+    Trigger multistore p&s
+    # Zed: update abstract product data:
+    # ...    || productAbstract                     | name de                        ||
+    # ...    || ${one_variant_product_abstract_sku} | DEmanageProduct${random} force ||
     
