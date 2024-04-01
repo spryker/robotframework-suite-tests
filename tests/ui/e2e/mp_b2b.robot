@@ -2199,7 +2199,7 @@ Product_Availability_Calculation
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Catalog    Products 
     Zed: click Action Button in a table for row that contains:     availabilityProduct${random}     Approve
-    Trigger multistore p&s
+    Repeat Keyword    3    Trigger multistore p&s
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email} 
     Yves: delete all shopping carts
     Yves: create new 'Shopping Cart' with name:    prodAvailCalculation+${random}
