@@ -55,6 +55,8 @@ Common_suite_setup
     ${random}=    Generate Random String    5    [NUMBERS]
     ${random_id}=    Generate Random String    5    [NUMBERS]
     ${random_str}=    Generate Random String    5    [LETTERS]
+    ${random_str_password}=    Generate Random String    2    [LETTERS]
+    ${random_id_password}=    Generate Random String    2    [NUMBERS]
     Set Global Variable    ${random}
     Set Global Variable    ${random_id}
     Set Global Variable    ${random_str}

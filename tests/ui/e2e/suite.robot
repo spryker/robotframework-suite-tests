@@ -85,8 +85,8 @@ Authorized_User_Access
 New_Customer_Registration
     [Documentation]    Check that a new user can be registered in the system
     Register a new customer with data:
-    ...    || salutation | first name | last name | e-mail                       | password                      ||
-    ...    || Mr.        | New        | User      | sonia+${random}@spryker.com  | P${random_str}s#!#${random_id} ||
+    ...    || salutation | first name | last name | e-mail                       | password                                        ||
+    ...    || Mr.        | New        | User      | sonia+${random}@spryker.com  | Ps${random_str_password}!5${random_id_password} ||
     Yves: flash message should be shown:    success    Almost there! We send you an email to validate your email address. Please confirm it to be able to log in.
     [Teardown]    Zed: delete customer:
     ...    || email                       ||
@@ -258,11 +258,11 @@ Register_during_checkout
     Page Should Not Contain Element    ${pdp_add_to_wishlist_button}
     Yves: go to b2c shopping cart  
     Yves: click on the 'Checkout' button in the shopping cart
-    Yves: signup guest user during checkout:    ${guest_user_first_name}    ${guest_user_last_name}    sonia+guest${random}@spryker.com    ${random_str}sR!#${random}    ${random_str}sR!#${random}
+    Yves: signup guest user during checkout:    ${guest_user_first_name}    ${guest_user_last_name}    sonia+guest${random}@spryker.com    Kj${random_str_password}!0${random_id_password}    Kj${random_str_password}!0${random_id_password}
     Save the result of a SELECT DB query to a variable:    select registration_key from spy_customer where email = 'sonia+guest${random}@spryker.com'    confirmation_key
     API_test_setup
     I send a POST request:     /customer-confirmation   {"data":{"type":"customer-confirmation","attributes":{"registrationKey":"${confirmation_key}"}}}
-    Yves: login after signup during checkout:    sonia+guest${random}@spryker.com    ${random_str}sR!#${random}
+    Yves: login after signup during checkout:    sonia+guest${random}@spryker.com    Kj${random_str_password}!0${random_id_password}
     Yves: fill in the following new shipping address:
     ...    || salutation     | firstName                | lastName                | street    | houseNumber | postCode     | city       | country     | company    | phone     | additionalAddress         ||
     ...    || ${salutation}  | ${guest_user_first_name} | ${guest_user_last_name} | ${random} | ${random}   | ${random}    | ${city}    | ${country}  | ${company} | ${random} | ${additional_address}     ||
@@ -3038,6 +3038,7 @@ Merchant_Portal_Customer_Specific_Prices
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Catalog    Products 
     Zed: click Action Button in a table for row that contains:     PriceSKU${random}     Approve
+    Zed: save abstract product:    PriceSKU${random}
     Repeat Keyword    3    Trigger p&s
     Yves: login on Yves with provided credentials:     ${yves_test_company_user_email}
     Yves: go to PDP of the product with sku:    PriceSKU${random}    wait_for_p&s=true
