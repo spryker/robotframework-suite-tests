@@ -60,6 +60,8 @@ Common_suite_setup
     Set Global Variable    ${random}
     Set Global Variable    ${random_id}
     Set Global Variable    ${random_str}
+    Set Global Variable    ${random_id_password}
+    Set Global Variable    ${random_str_password}
     ${today}=    Get Current Date    result_format=%Y-%m-%d
     Set Global Variable    ${today}
     IF    ${docker}
