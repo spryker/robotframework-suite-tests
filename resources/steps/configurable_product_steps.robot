@@ -25,6 +25,20 @@ Yves: change the product configuration to:
     Repeat Keyword    3    Wait Until Network Is Idle
     Wait Until Element Is Visible    ${pdp_configure_button}
 
+Yves: change product configuration price:
+    [Documentation]    choose options for product configuration.
+    [Arguments]    ${optionPrice1}    ${optionPrice2}
+    Click    ${pdp_configure_button}
+    Wait Until Element Is Visible    ${configurator_save_button_new}
+    Click    xpath=//div[contains(@class, 'configurator')]//app-configurator-group/div[@class='group__heading'][h3='Option One']/following-sibling::div[@class='group__section']//label[contains(@class,'tile__inner')]/span[contains(text(), '${optionPrice1}')]
+    Click    xpath=//div[contains(@class, 'configurator')]//app-configurator-group/div[@class='group__heading'][h3='Option Two']/following-sibling::div[@class='group__section']//label[contains(@class,'tile__inner')]/span[contains(text(), '${optionPrice2}')]
+    ### sleep 1 seconds to process background event
+    Repeat Keyword    3    Wait Until Network Is Idle
+    Sleep    1s
+    Click    ${configurator_save_button_new}
+    Repeat Keyword    3    Wait Until Network Is Idle
+    Wait Until Element Is Visible    ${pdp_configure_button}
+
 Yves: product configuration status should be equal:
     [Arguments]    ${expected_status}
     Element Text Should Be    ${pdp_configuration_status}    ${expected_status}
@@ -89,3 +103,31 @@ Zed: product configuration should be equal:
             END
         END
     END
+
+Zed: new product configuration should be equal:
+    [Arguments]    @{args}
+    ${configurationData}=    Set Up Keyword Arguments    @{args}
+    FOR    ${key}    ${value}    IN    &{configurationData}
+        Log    Key is '${key}' and value is '${value}'.
+        IF    '${key}'=='shipment' and '${value}' != '${EMPTY}'   
+            ${shipment}=    Set Variable    ${shipment}
+        ELSE IF    '${key}'=='shipment' and '${value}' == '${EMPTY}'
+            ${shipment}=    Set Variable    1
+        END
+        IF    '${key}'=='sku' and '${value}' != '${EMPTY}'   
+            ${sku}=    Set Variable    ${value}
+        END
+        IF    '${key}'=='position' and '${value}' != '${EMPTY}'
+            ${position}=    Set Variable    ${value}
+        ELSE IF    '${key}'=='position' and '${value}' == '${EMPTY}'
+            ${position}=    Set Variable    1
+        END
+        IF    '${key}'=='Option One:' and '${value}' != '${EMPTY}'    Element Should Contain    xpath=//table[@data-qa='order-item-list'][${shipment}]/tbody//tr[${position}]/td//div[@class='sku'][contains(text(),'${sku}')]/ancestor::tr//td//*[contains(@class,'sku')]/../div[last()]    ${value}
+        IF    '${key}'=='Option Two:' and '${value}' != '${EMPTY}'    
+            IF    '${env}' in ['ui_b2b','ui_mp_b2b']
+                Element Should Contain    xpath=//table[@data-qa='order-item-list'][${shipment}]/tbody//tr[${position}]/td//div[@class='sku'][contains(text(),'${sku}')]/ancestor::tr//td//*[contains(@class,'sku')]/../div[3]    ${value}
+            ELSE
+                Element Should Contain    xpath=//table[@data-qa='order-item-list'][${shipment}]/tbody//tr[${position}]/td//div[@class='sku'][contains(text(),'${sku}')]/ancestor::tr//td//*[contains(@class,'sku')]/../div[4]    ${value}
+            END
+        END
+    END    

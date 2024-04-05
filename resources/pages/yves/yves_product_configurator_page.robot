@@ -9,3 +9,6 @@ ${configurator_price_mode}    xpath=//app-information-list//li[contains(.,'Price
 ${configurator_currency}    xpath=//app-information-list//li[contains(.,'Currency')]/span
 ${configurator_customer_id}    xpath=//app-information-list//li[contains(.,'Customer')]/span
 ${configurator_sku}    xpath=//app-product-details//div[contains(@class,'details')]/div
+
+
+${configurator_save_button_new}    xpath=//button[contains(text(),' Save configurations ')]
