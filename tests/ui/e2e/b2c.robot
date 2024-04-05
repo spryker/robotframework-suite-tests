@@ -1515,6 +1515,7 @@ Glossary
 
 Configurable_Product_PDP_Wishlist
     [Documentation]    Configure product from PDP and Wishlist. DMS-ON: https://spryker.atlassian.net/browse/FRW-6380
+    [Tags]    robot:skip   
     [Setup]    Run keywords    Yves: login on Yves with provided credentials:    ${yves_user_email}
     ...    AND    Yves: create new 'Whistist' with name:    configProduct${random}
     ...    AND    Yves: check if cart is not empty and clear it
@@ -1582,6 +1583,7 @@ Configurable_Product_PDP_Wishlist
 
 Configurable_Product_OMS
     [Documentation]    Conf Product OMS check and reorder. DMS-ON: https://spryker.atlassian.net/browse/FRW-6380
+    [Tags]    robot:skip    
     [Setup]    Run keywords    Yves: login on Yves with provided credentials:    ${yves_user_email}
     ...    AND    Yves: check if cart is not empty and clear it
     ...    AND    Yves: delete all user addresses

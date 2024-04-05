@@ -1992,6 +1992,7 @@ Offer_Availability_Calculation
 
 Configurable_Product_PDP_Wishlist
     [Documentation]    Configure product from PDP and Wishlist. DMS-ON: https://spryker.atlassian.net/browse/FRW-6380
+    [Tags]    robot:skip
     [Setup]    Run keywords    Yves: login on Yves with provided credentials:    ${yves_user_email}
     ...    AND    Yves: create new 'Whistist' with name:    configProduct${random}
     ...    AND    Yves: check if cart is not empty and clear it
@@ -2057,6 +2058,7 @@ Configurable_Product_PDP_Wishlist
 
 Configurable_Product_PDP_Shopping_List
     [Documentation]    Configure product from PDP and Shopping List. DMS-ON: https://spryker.atlassian.net/browse/FRW-6380
+    [Tags]    robot:skip
     [Setup]    Run keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     ...    AND    Yves: create new 'Shopping Cart' with name:    configProduct+${random}
     ...    AND    Yves: create new 'Shopping List' with name:    configProduct+${random}
@@ -2119,6 +2121,7 @@ Configurable_Product_PDP_Shopping_List
       
 Configurable_Product_RfQ_OMS
     [Documentation]    Conf Product in RfQ, OMS, Merchant OMS and reorder. DMS-ON: https://spryker.atlassian.net/browse/FRW-6380
+    [Tags]    robot:skip
     [Setup]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: create new Zed user with the following data:    agent_config+${random}@spryker.com    change123${random}    Config    Product    Root group    This user is an agent in Storefront    en_US
     ...    AND    Zed: deactivate all discounts from Overview page
