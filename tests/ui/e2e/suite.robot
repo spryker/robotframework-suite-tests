@@ -3733,11 +3733,15 @@ Configurable_Product_Checkout
     Yves: go to PDP of the product with sku:    ${configurable_product_abstract_sku}
     Yves: PDP contains/doesn't contain:    true    ${configureButton}
     Yves: product configuration status should be equal:       Configuration is not complete.
-    Yves: change product configuration price:    517    167
+    Yves: change the product options in configurator to:
+    ...    || option one | option two ||
+    ...    || 517        | 167        ||
     Yves: product configuration status should be equal:      Configuration complete!
     Yves: add product to the shopping cart
     Yves: go to b2c shopping cart
-    Yves: change product configuration price:    389.50    249
+    Yves: change the product options in configurator to:
+    ...    || option one | option two ||
+    ...    || 389.50     | 249        ||
     Yves: shopping cart contains product with unit price:    sku=${configurable_product_concrete_sku}    productName=${configurable_product_name}    productPrice=638.50 
     Yves: product configuration status should be equal:      Configuration complete!
     Yves: click on the 'Checkout' button in the shopping cart
@@ -3746,7 +3750,6 @@ Configurable_Product_Checkout
     Yves: select the following shipping method on the checkout and go next:    Express
     Yves: select the following payment method on the checkout and go next:    Marketplace Invoice
     Yves: accept the terms and conditions:    true
-    Take Screenshot
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
     Yves: get the last placed order ID by current customer

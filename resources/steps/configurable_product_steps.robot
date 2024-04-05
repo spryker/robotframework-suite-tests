@@ -25,17 +25,21 @@ Yves: change the product configuration to:
     Repeat Keyword    3    Wait Until Network Is Idle
     Wait Until Element Is Visible    ${pdp_configure_button}
 
-Yves: change product configuration price:
-    [Documentation]    choose options for product configuration.
-    [Arguments]    ${optionPrice1}    ${optionPrice2}
+Yves: change the product options in configurator to:
+    [Documentation]    fill the fields for product configuration.
+    [Arguments]    @{args}
+    ${configurationData}=    Set Up Keyword Arguments    @{args}
     Click    ${pdp_configure_button}
-    Wait Until Element Is Visible    ${configurator_save_button_new}
-    Click    xpath=//div[contains(@class, 'configurator')]//app-configurator-group/div[@class='group__heading'][h3='Option One']/following-sibling::div[@class='group__section']//label[contains(@class,'tile__inner')]/span[contains(text(), '${optionPrice1}')]
-    Click    xpath=//div[contains(@class, 'configurator')]//app-configurator-group/div[@class='group__heading'][h3='Option Two']/following-sibling::div[@class='group__section']//label[contains(@class,'tile__inner')]/span[contains(text(), '${optionPrice2}')]
+    FOR    ${key}    ${value}    IN    &{configurationData}
+        ${key}=   Convert To Lower Case   ${key}
+        Log    Key is '${key}' and value is '${value}'.
+        IF    '${key}'=='option one' and '${value}' != '${EMPTY}'   Click    xpath=//div[contains(@class, 'configurator')]//app-configurator-group/div[@class='group__heading'][h3='Option One']/following-sibling::div[@class='group__section']//label[contains(@class,'tile__inner')]/span[contains(text(), '${value}')]    
+        IF    '${key}'=='option two' and '${value}' != '${EMPTY}'   Click    xpath=//div[contains(@class, 'configurator')]//app-configurator-group/div[@class='group__heading'][h3='Option Two']/following-sibling::div[@class='group__section']//label[contains(@class,'tile__inner')]/span[contains(text(), '${value}')]
+    END
     ### sleep 1 seconds to process background event
     Repeat Keyword    3    Wait Until Network Is Idle
     Sleep    1s
-    Click    ${configurator_save_button_new}
+    Click    ${configurator_save_button}
     Repeat Keyword    3    Wait Until Network Is Idle
     Wait Until Element Is Visible    ${pdp_configure_button}
 
