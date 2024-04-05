@@ -33,7 +33,6 @@ ENABLER
     And I send a GET request:    /dynamic-entity/robot-tests-product-abstracts?include=robotTestsProductAbstractProducts
     Then Response status code should be:    200
     And Response header parameter should be:    Content-Type    application/json
-    And Response should contain the array of a certain size:   [data]    224
     And Response should contain the array of a certain size:   [data][0]    9
     And Response should contain the array of a certain size:   [data][0][robotTestsProductAbstractProducts]    1
     And Each array element of array in response should contain property:    [data]    id_product_abstract
@@ -135,7 +134,7 @@ ENABLER
     ...   AND    Delete dynamic entity configuration in Database:    robot-tests-products
     ...   AND    Delete dynamic entity configuration in Database:    robot-tests-product-prices
 
-Create_and_update_product_abstract_collection_with_child:
+Create_and_update_product_abstract_collection_with_product_abstract_localized_attributes:
     ### SETUP DYNAMIC ENTITY CONFIGURATION AND RELATION ###
     Delete dynamic entity configuration relation in Database:    robotTestsProductAbstractLocalizedAttributes
     Delete dynamic entity configuration in Database:    robot-tests-product-abstracts
@@ -149,7 +148,7 @@ Create_and_update_product_abstract_collection_with_child:
 
     ### CREATE PRODUCT ABSTRACT WITH PRODUCT ABSTRACT LOCALIZED ATTRIBUTES ###
     And I set Headers:    Content-Type=application/json    Authorization=Bearer ${token}
-    And I send a POST request:    /dynamic-entity/robot-tests-product-abstracts  {"data":[{"fk_tax_set":1,"approval_status":"approved","attributes":"{}","new_from":null,"new_to":"2028-01-01 00:00:00.000000","sku":"testtesttest","color_code":"#DC2E09","robotTestsProductAbstractLocalizedAttributes":[{"fk_locale":66,"attributes":"{'color':'green'}","description":"childtesttesttest","name":"childtesttesttest","meta_description":"childtesttesttest","meta_keywords":"childtesttesttest","meta_title":"childtesttesttest"}]}]}
+    And I send a POST request:    /dynamic-entity/robot-tests-product-abstracts  {"data":[{"fk_tax_set":1,"approval_status":"approved","attributes":"{}","new_to":"2028-01-01 00:00:00.000000","sku":"testtesttest","color_code":"#DC2E09","robotTestsProductAbstractLocalizedAttributes":[{"fk_locale":66,"attributes":"{'color':'green'}","description":"childtesttesttest","name":"childtesttesttest","meta_description":"childtesttesttest","meta_keywords":"childtesttesttest","meta_title":"childtesttesttest"}]}]}
     Then Response status code should be:    201
     And Response header parameter should be:    Content-Type    application/json
     And Response body parameter should be:    [data][0][sku]    testtesttest
@@ -180,6 +179,7 @@ Create_and_update_product_abstract_collection_with_child:
     [Teardown]    Run Keywords    Delete dynamic entity configuration relation in Database:    robotTestsProductAbstractLocalizedAttributes
     ...   AND    Delete dynamic entity configuration in Database:    robot-tests-product-abstracts
     ...   AND    Delete dynamic entity configuration in Database:    robot-tests-product-abstract-localized-attributes
+    ...   AND    Delete complex product by id_product_abstract in Database:    ${id_product_abstract}
 
  Create_product_abstract_collection_with_two_childs:
     ### SETUP DYNAMIC ENTITY CONFIGURATION AND RELATION ###

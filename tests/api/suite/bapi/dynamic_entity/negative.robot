@@ -198,7 +198,7 @@ Create_url_with_invalid_url_name
     And I set Headers:    Content-Type=application/json    Authorization=Bearer ${token}
     And I send a POST request:    /dynamic-entity/robot-test-urls   {"data":[{"url":"test-url", "fk_locale": 46}]}
     Then Response status code should be:    400
-    And Response body parameter should contain:    [0][message]    The URL is invalid. The field `robot-test-urls0.url` must have a URL data format.
+    And Response body parameter should contain:    [0][message]    The URL is invalid. `robot-test-urls0` field `url` must have a URL data format.
     And Response body parameter should be:    [0][code]    1316
     And Response body parameter should contain:    [0][status]   400
     [Teardown]    Run Keywords    Delete dynamic entity configuration in Database:    robot-test-urls
@@ -213,9 +213,9 @@ Update_url_with_invalid_url_name
     ### POST WITH INVALID DATA ###
     Delete url by url name in Database:   test-url
     And I set Headers:    Content-Type=application/json    Authorization=Bearer ${token}
-    And I send a PATCH request:    /dynamic-entity/robot-test-urls   {"data":[{"url":"test-url"}]}
+    And I send a PATCH request:    /dynaЫзкнmic-entity/robot-test-urls   {"data":[{"url":"test-url"}]}
     Then Response status code should be:    400
-    And Response body parameter should contain:    [0][message]    The URL is invalid. The field `robot-test-urls0.url` must have a URL data format.
+    And Response body parameter should contain:    [0][message]    The URL is invalid. `robot-test-urls0` field `url` must have a URL data format.
     And Response body parameter should be:    [0][code]    1316
     And Response body parameter should contain:    [0][status]   400
     [Teardown]    Run Keywords    Delete dynamic entity configuration in Database:    robot-test-urls

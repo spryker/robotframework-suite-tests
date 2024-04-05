@@ -694,6 +694,58 @@ Delete product_abstract by id_product_abstract in Database:
     Execute Sql String    DELETE FROM spy_product_abstract WHERE id_product_abstract = ${id_product_abstract};
     Disconnect From Database
 
+Delete complex product by id_product_abstract in Database:
+    [Documentation]    This keyword deletes a product abstract by id_product_abstract from spy_product_abstract.
+        ...    *Example:*
+        ...
+        ...    ``Delete complex product by id_product_abstract in Database:    200``
+        ...
+    [Arguments]    ${id_product_abstract}
+    Connect to Spryker DB
+    Execute Sql String    DELETE FROM spy_product_image_set WHERE fk_product_abstract = ${id_product_abstract};
+    Execute Sql String    DELETE FROM spy_product_label_product_abstract WHERE fk_product_abstract = ${id_product_abstract};
+    Execute Sql String    DELETE FROM spy_product_abstract_localized_attributes WHERE fk_product_abstract = ${id_product_abstract};
+    Execute Sql String    DELETE FROM spy_url WHERE fk_resource_product_abstract = ${id_product_abstract};
+    Execute Sql String    DELETE FROM spy_product_category WHERE fk_product_abstract = ${id_product_abstract};
+
+    ${id_price_product}=    Query    SELECT id_price_product from spy_price_product WHERE fk_product_abstract = ${id_product_abstract};
+    ${id_price_product_length}=    Get Length    ${id_price_product}
+    IF    ${id_price_product_length} > 0
+        ${id_price_product}=    Set Variable    ${id_price_product[0][0]}
+        Execute Sql String    DELETE FROM spy_price_product_store WHERE fk_price_product = ${id_price_product};
+        Execute Sql String    DELETE FROM spy_price_product WHERE fk_product_abstract = ${id_product_abstract};
+    END
+
+    ${id_product_relation}=    Query    SELECT id_product_relation from spy_product_relation WHERE fk_product_abstract = ${id_product_abstract};
+    ${id_product_relation_length}=    Get Length    ${id_product_relation}
+    IF    ${id_product_relation_length} > 0
+        ${id_product_relation}=    Set Variable    ${id_product_relation[0][0]}
+        Execute Sql String    DELETE FROM spy_product_relation_store WHERE fk_product_relation = ${id_product_relation};
+        Execute Sql String    DELETE FROM spy_product_relation WHERE fk_product_abstract = ${id_product_abstract};
+    END
+
+    ${id_product}=    Query    SELECT id_product from spy_product WHERE fk_product_abstract='${id_product_abstract}';
+    ${id_product_length}=    Get Length    ${id_product}
+    IF    ${id_product_length} > 0
+        ${id_product}=    Set Variable    ${id_product[0][0]}
+        Execute Sql String    DELETE FROM spy_product_search WHERE fk_product = ${id_product};
+        Execute Sql String    DELETE FROM spy_stock_product WHERE fk_product = ${id_product};
+        Execute Sql String    DELETE FROM spy_product_localized_attributes WHERE fk_product = ${id_product};
+        Execute Sql String    DELETE FROM spy_product WHERE fk_product_abstract = ${id_product_abstract};
+    END
+
+    Execute Sql String    DELETE FROM spy_product_abstract_store WHERE fk_product_abstract = ${id_product_abstract};
+    Execute Sql String    DELETE FROM spy_product_abstract_category_storage WHERE fk_product_abstract = ${id_product_abstract};
+    Execute Sql String    DELETE FROM spy_product_abstract_label_storage WHERE fk_product_abstract = ${id_product_abstract};
+    Execute Sql String    DELETE FROM spy_product_abstract_product_list_storage WHERE fk_product_abstract = ${id_product_abstract};
+    Execute Sql String    DELETE FROM spy_product_abstract_page_search WHERE fk_product_abstract = ${id_product_abstract};
+    Execute Sql String    DELETE FROM spy_product_abstract_relation_storage WHERE fk_product_abstract = ${id_product_abstract};
+    Execute Sql String    DELETE FROM spy_product_abstract_storage WHERE fk_product_abstract = ${id_product_abstract};
+    Execute Sql String    DELETE FROM spy_product_label_product_abstract WHERE fk_product_abstract = ${id_product_abstract};
+    Execute Sql String    DELETE FROM spy_product_abstract WHERE id_product_abstract = ${id_product_abstract};
+
+    Disconnect From Database
+
 Delete product_price by id_price_product in Database:
     [Documentation]    This keyword deletes a product price by id_price_product from spy_price_product.
         ...    *Example:*

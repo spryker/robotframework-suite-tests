@@ -306,7 +306,7 @@ Create_and_update_url:
     And I send a PATCH request:    /dynamic-entity/robot-test-urls/${id_url}    {"data":{"url":"/test-url-test/42"}}
     Then Response status code should be:    200
     And Response header parameter should be:    Content-Type    application/json
-    And Response body parameter should be:    [data][0][url]    /test-url-test/42
+    And Response body parameter should be:    [data][url]    /test-url-test/42
     And Response body parameter should be:    [data][id_url]    ${id_url}
     ### GET URL AND VALIDATE DATA ###
     And I set Headers:    Content-Type==application/json    Authorization=Bearer ${token}
