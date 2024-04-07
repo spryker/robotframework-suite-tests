@@ -313,7 +313,7 @@ Create_and_update_url:
     And I send a GET request:    /dynamic-entity/robot-test-urls/${id_url}
     Then Response status code should be:    200
     And Response header parameter should be:    Content-Type    application/json
-    And Response body parameter should be:    [data][0][url]    /test-url-test/42
+    And Response body parameter should be:    [data][url]    /test-url-test/42
     [Teardown]    Run Keywords    Delete dynamic entity configuration in Database:    robot-test-urls
                       ...   AND    Delete url by url name in Database:   /test-url-test/42
 

@@ -173,8 +173,8 @@ Create_and_update_product_abstract_collection_with_product_abstract_localized_at
     And I send a PATCH request:    /dynamic-entity/robot-tests-product-abstracts/${id_product_abstract}    {"data":{"sku":"testtesttest1","robotTestsProductAbstractLocalizedAttributes":[{"name":"childtesttesttest1","id_abstract_attributes":${id_abstract_attributes}}]}}
     Then Response status code should be:    200
     And Response header parameter should be:    Content-Type    application/json
-    And Response body parameter should be:    [data][0][sku]    testtesttest1
-    And Response body parameter should be:    [data][0][robotTestsProductAbstractLocalizedAttributes][0][name]    childtesttesttest1
+    And Response body parameter should be:    [data][sku]    testtesttest1
+    And Response body parameter should be:    [data][robotTestsProductAbstractLocalizedAttributes][0][name]    childtesttesttest1
 
     [Teardown]    Run Keywords    Delete dynamic entity configuration relation in Database:    robotTestsProductAbstractLocalizedAttributes
     ...   AND    Delete dynamic entity configuration in Database:    robot-tests-product-abstracts

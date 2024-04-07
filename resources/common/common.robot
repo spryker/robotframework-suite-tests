@@ -489,6 +489,7 @@ Verify that url is present in the Database:
     [Arguments]    ${url}
     Connect to Spryker DB
     ${db_url}=    Query    SELECT url FROM spy_url WHERE url = '${url}' LIMIT 1;
+    ${db_url}=    Set Variable    ${db_url[0][0]}
     Disconnect From Database
     Should Be Equal    ${url}    ${db_url}
 
