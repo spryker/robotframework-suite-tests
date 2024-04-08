@@ -33,9 +33,14 @@ Yves: change the product options in configurator to:
     FOR    ${key}    ${value}    IN    &{configurationData}
         ${key}=   Convert To Lower Case   ${key}
         Log    Key is '${key}' and value is '${value}'.
-        IF    '${key}'=='option one' and '${value}' != '${EMPTY}'   Click    xpath=//div[contains(@class, 'configurator')]//app-configurator-group/div[@class='group__heading'][h3='Option One']/following-sibling::div[@class='group__section']//label[contains(@class,'tile__inner')]/span[contains(text(), '${value}')]    
-        IF    '${key}'=='option two' and '${value}' != '${EMPTY}'   Click    xpath=//div[contains(@class, 'configurator')]//app-configurator-group/div[@class='group__heading'][h3='Option Two']/following-sibling::div[@class='group__section']//label[contains(@class,'tile__inner')]/span[contains(text(), '${value}')]
-    END
+        IF    '${env}' in ['ui_suite']
+            IF    '${key}'=='option one' and '${value}' != '${EMPTY}'   Click    xpath=//div[contains(@class, 'configurator')]//app-configurator-group/div[@class='group__heading'][h3='Option One']/following-sibling::div[@class='group__section']//label[contains(@class,'tile__inner')]/span[contains(text(), '${value}')]    
+            IF    '${key}'=='option two' and '${value}' != '${EMPTY}'   Click    xpath=//div[contains(@class, 'configurator')]//app-configurator-group/div[@class='group__heading'][h3='Option Two']/following-sibling::div[@class='group__section']//label[contains(@class,'tile__inner')]/span[contains(text(), '${value}')]
+        ELSE
+            IF    '${key}'=='option one' and '${value}' != '${EMPTY}'   Click    xpath=//div[contains(@class, 'configurator')]//app-configurator-group/div[@class='group__heading'][h3='Adjustable shelves']/following-sibling::div[@class='group__section']//label[contains(@class,'tile__inner')]/span[contains(text(), '${value}')]    
+            IF    '${key}'=='option two' and '${value}' != '${EMPTY}'   Click    xpath=//div[contains(@class, 'configurator')]//app-configurator-group/div[@class='group__heading'][h3='Lockers']/following-sibling::div[@class='group__section']//label[contains(@class,'tile__inner')]/span[contains(text(), '${value}')]
+         END 
+   END
     ### sleep 1 seconds to process background event
     Repeat Keyword    3    Wait Until Network Is Idle
     Sleep    1s

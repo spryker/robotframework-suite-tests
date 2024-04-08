@@ -3726,7 +3726,6 @@ Fulfilment_app_e2e# Fulfilment_app_e2e
 
 Configurable_Product_Checkout
     [Setup]    Run keywords    Yves: login on Yves with provided credentials:    ${yves_user_email}
-    ...    AND    Yves: create new 'Whistist' with name:    configProduct${random}
     ...    AND    Yves: check if cart is not empty and clear it
     ...    AND    Yves: delete all user addresses
     ...    AND    Yves: create a new customer address in profile:     Mr    ${yves_user_first_name}    ${yves_user_last_name}    Kirncher Str.    7    10247    Berlin    Germany
