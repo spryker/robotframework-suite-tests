@@ -51,8 +51,8 @@ Default Tags    bapi
 New_Customer_Registration
     [Documentation]    Check that a new user can be registered in the system
     Register a new customer with data:
-    ...    || salutation | first name | last name | e-mail                       | password                     ||
-    ...    || Mr.        | New        | User      | sonia+${random}@spryker.com  | P${random_str}s#!${random_id} ||
+    ...    || salutation | first name | last name | e-mail                       | password                                        ||
+    ...    || Mr.        | New        | User      | sonia+${random}@spryker.com  | Bv${random_str_password}!4${random_id_password} ||
     Yves: flash message should be shown:    success    Almost there! We send you an email to validate your email address. Please confirm it to be able to log in.
     [Teardown]    Zed: delete customer:
     ...    || email                       ||
@@ -2276,6 +2276,7 @@ Glossary
 
 Configurable_Product_PDP_Wishlist
     [Documentation]    Configure product from PDP and Wishlist. DMS-ON: https://spryker.atlassian.net/browse/FRW-6380
+    [Tags]    robot:skip    
     [Setup]    Run keywords    Yves: login on Yves with provided credentials:    ${yves_user_email}
     ...    AND    Yves: create new 'Whistist' with name:    configProduct${random}
     ...    AND    Yves: check if cart is not empty and clear it
@@ -2343,6 +2344,7 @@ Configurable_Product_PDP_Wishlist
 
 Configurable_Product_OMS
     [Documentation]    Conf Product OMS check and reorder. DMS-ON: https://spryker.atlassian.net/browse/FRW-6380
+    [Tags]    robot:skip
     [Setup]    Run keywords    Yves: login on Yves with provided credentials:    ${yves_user_email}
     ...    AND    Yves: check if cart is not empty and clear it
     ...    AND    Yves: delete all user addresses

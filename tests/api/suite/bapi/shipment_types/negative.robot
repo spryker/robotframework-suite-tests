@@ -31,10 +31,11 @@ Create_shipment_type_with_empty_body
     And Response should return error message:    Unknown error.
 
 Create_shipment_type_with_empty_token
-    [Setup]    I set Headers:    Authorization=
+    [Setup]    I set Headers:    Content-Type=${default_header_content_type}    Authorization=Bearer wrong_token
     When I send a POST request:    /shipment-types    {"data": {"type": "shipment-types","attributes": {"name": "Some Shipment Type","key": "empty_token${random}","isActive": "true","stores": ["DE", "AT"]}}}
-    Then Response status code should be:    403
-    And Response reason should be:    Forbidden
+    Then Response status code should be:    401
+    And Response reason should be:    Unauthorized
+    And Response should return error message:    Invalid access token.
 
 Create_shipment_type_with_incorrect_token
     [Setup]    I set Headers:    Authorization=wrong_token
@@ -71,11 +72,10 @@ Create_shipment_type_with_already_used_key
     [Teardown]     Delete shipment type in DB:    existing-shipment-type-key
 
 Update_sipment_type_without_token
-    [Documentation]    https://spryker.atlassian.net/browse/FRW-5850
-    [Tags]    skip-due-to-issue
+    [Setup]    I set Headers:    Content-Type=${default_header_content_type}    Authorization=Bearer wrong_token
     When I send a PATCH request:    /shipment-types/${shipment_type_uuid}
     ...    {"data": {"type": "shipment-types","attributes": {"name": "updated_name${random}","isActive": "false","stores": ["AT"]}}}
-    Then Response status code should be:    403
+    Then Response status code should be:    401
     And Response reason should be:    Unauthorized
     And Response should return error message:    Invalid access token.
 
@@ -118,10 +118,9 @@ Update_sipment_type_with_not_existing_key
     And Response should return error message:    A delivery type entity was not found.
 
 Retrive_single_shipment_type_without_auth
-    [Documentation]    https://spryker.atlassian.net/browse/FRW-5850
-    [Tags]    skip-due-to-issue
+    [Setup]    I set Headers:    Content-Type=${default_header_content_type}    Authorization=Bearer wrong_token
     When I send a GET request:    /shipment-types/${shipment_type_uuid}
-    Then Response status code should be:    403
+    Then Response status code should be:    401
     And Response reason should be:    Unauthorized
     And Response should return error message:    Invalid access token.
 
@@ -140,12 +139,11 @@ Retrive_single_shipment_type_with_incorrect_id
     And Response should return error message:    A delivery type entity was not found.
 
 Retrive_list_of_shipment_types_without_auth
-    [Documentation]    https://spryker.atlassian.net/browse/FRW-5850
-    [Tags]    skip-due-to-issue
+    [Setup]    I set Headers:    Content-Type=${default_header_content_type}
     When I send a GET request:    /shipment-types/
     Then Response status code should be:    403
-    And Response reason should be:    Unauthorized
-    And Response should return error message:    Invalid access token.
+    And Response reason should be:    Forbidden
+    And Response should return error message:    Unauthorized request.
 
 Retrive_list_of_shipment_types_witt_incorrect_token
     [Setup]    I set Headers:    Authorization=wrong_token

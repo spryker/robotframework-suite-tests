@@ -1,5 +1,5 @@
 *** Variables ***
-${store_status_checkbox}    xpath=//web-spy-checkbox[contains(@spy-id,'onlineProfileMerchant')]
+${store_status_checkbox}    xpath=//web-spy-checkbox[contains(@spy-id,'onlineProfileMerchant')][contains(@spy-id,'is_active')]
 ${merchant_profile_name_field}    id=merchantProfile_businessInfoMerchantProfile_name
 ${merchant_profile_email_field}    id=merchantProfile_onlineProfileMerchantProfile_public_email
 ${merchant_profile_phone_field}    id=merchantProfile_onlineProfileMerchantProfile_public_phone

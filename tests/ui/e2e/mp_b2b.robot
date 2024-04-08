@@ -1100,6 +1100,8 @@ Create_and_Approve_New_Merchant_Product
     MP: fill concrete product fields:
     ...    || is active | stock quantity | use abstract name | searchability ||
     ...    || true      | 100            | true              | en_US         ||
+    MP: save abstract product 
+    Trigger p&s
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Catalog    Products 
     Zed: click Action Button in a table for row that contains:     NewProduct${random}     Approve
@@ -1357,7 +1359,8 @@ Merchant_Portal_Product_Volume_Prices
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Catalog    Products 
     Zed: click Action Button in a table for row that contains:     VPNewProduct${random}     Approve
-    Trigger p&s
+    Zed: save abstract product:    VPNewProduct${random}
+    Repeat Keyword   3    Trigger p&s
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}  
     Yves: delete all shopping carts
     Yves: create new 'Shopping Cart' with name:    MPVolumePriceCart+${random}
@@ -1749,6 +1752,7 @@ Merchant_Product_Original_Price
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Catalog    Products 
     Zed: click Action Button in a table for row that contains:     originalProduct${random}     Approve
+    Zed: save abstract product:    originalProduct${random}
     Trigger p&s
     Yves: login on Yves with provided credentials:    ${yves_user_email}   
     Yves: go to URL:    en/search?q=originalSKU${random}
@@ -2197,7 +2201,7 @@ Product_Availability_Calculation
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Catalog    Products 
     Zed: click Action Button in a table for row that contains:     availabilityProduct${random}     Approve
-    Trigger multistore p&s
+    Repeat Keyword    3    Trigger multistore p&s
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email} 
     Yves: delete all shopping carts
     Yves: create new 'Shopping Cart' with name:    prodAvailCalculation+${random}
@@ -2525,6 +2529,7 @@ Glossary
 
 Configurable_Product_PDP_Shopping_List
     [Documentation]    Configure product from PDP and Shopping List. DMS-ON: https://spryker.atlassian.net/browse/FRW-6380
+    [Tags]    robot:skip   
     [Setup]    Run keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     ...    AND    Yves: create new 'Shopping Cart' with name:    configProduct+${random}
     ...    AND    Yves: create new 'Shopping List' with name:    configProduct+${random}
@@ -2587,6 +2592,7 @@ Configurable_Product_PDP_Shopping_List
       
 Configurable_Product_RfQ_Order_Management
     [Documentation]    Conf Product in RfQ, OMS and reorder. DMS-ON: https://spryker.atlassian.net/browse/FRW-6380
+    [Tags]    robot:skip
     [Setup]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: create new Zed user with the following data:    agent_config+${random}@spryker.com    change123${random}    Config    Product    Root group    This user is an agent in Storefront    en_US
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}

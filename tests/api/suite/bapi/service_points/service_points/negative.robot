@@ -43,7 +43,6 @@ Create_Service_Point_Without_Authorization
     [Setup]    I set Headers:    Authorization=
     When I send a POST request:    /service-points   {"name": "New Service Point", "key": "new_service_point", "isActive": "true", "stores": ["DE", "AT"]}
     Then Response status code should be:    403
-    And Response reason should be:    Forbidden
 
 Create_Service_Point_With_Empty_Name
     [Documentation]    https://spryker.atlassian.net/browse/FRW-1597

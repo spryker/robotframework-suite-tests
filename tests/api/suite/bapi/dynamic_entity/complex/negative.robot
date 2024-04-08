@@ -72,7 +72,7 @@ Create_product_abstract_collection_with_child_contained_invalid_field:
     Then Response status code should be:    400
     And Response body parameter should be:    [0][status]    400
     And Response body parameter should be:    [0][code]    1311
-    And Response body parameter should be:    [0][message]    The provided `invalid_field` is incorrect or invalid.
+    And Response body parameter should be:    [0][message]    The provided `robot-tests-product-abstracts0.robot-tests-products0.invalid_field` is incorrect or invalid.
     [Teardown]    Run Keywords    Delete dynamic entity configuration relation in Database:    robotTestsProductAbstractProducts
     ...   AND    Delete dynamic entity configuration in Database:    robot-tests-product-abstracts
     ...   AND    Delete dynamic entity configuration in Database:    robot-tests-products
@@ -122,7 +122,7 @@ Update_product_abstract_collection_with_child_contained_invalid_field:
     Then Response status code should be:    400
     And Response body parameter should be:    [0][status]    400
     And Response body parameter should be:    [0][code]    1311
-    And Response body parameter should be:    [0][message]    The provided `invalid_field` is incorrect or invalid.
+    And Response body parameter should be:    [0][message]    The provided `robot-tests-product-abstracts0.robot-tests-products0.invalid_field` is incorrect or invalid.
     [Teardown]    Run Keywords    Delete dynamic entity configuration relation in Database:    robotTestsProductAbstractProducts
     ...   AND    Delete dynamic entity configuration in Database:    robot-tests-product-abstracts
     ...   AND    Delete dynamic entity configuration in Database:    robot-tests-products
@@ -148,7 +148,7 @@ Update_product_abstract_collection_with_missing_required_field:
     Then Response status code should be:    400
     And Response body parameter should be:    [0][status]    400
     And Response body parameter should be:    [0][code]    1310
-    And Response body parameter should be:    [0][message]    Incomplete Request - missing identifier
+    And Response body parameter should be:    [0][message]    Incomplete Request - missing identifier for `robot-tests-product-abstracts0.robot-tests-products0`
     [Teardown]    Run Keywords    Delete dynamic entity configuration relation in Database:    robotTestsProductAbstractProducts
     ...   AND    Delete dynamic entity configuration in Database:    robot-tests-product-abstracts
     ...   AND    Delete dynamic entity configuration in Database:    robot-tests-products
@@ -200,7 +200,7 @@ Upsert_product_abstract_collection_with_child_contained_invalid_field:
     Then Response status code should be:    400
     And Response body parameter should be:    [0][status]    400
     And Response body parameter should be:    [0][code]    1311
-    And Response body parameter should be:    [0][message]    The provided `invalid_field` is incorrect or invalid.
+    And Response body parameter should be:    [0][message]    The provided `robot-tests-product-abstracts0.robot-tests-products0.invalid_field` is incorrect or invalid.
     [Teardown]    Run Keywords    Delete dynamic entity configuration relation in Database:    robotTestsProductAbstractProducts
     ...   AND    Delete dynamic entity configuration in Database:    robot-tests-product-abstracts
     ...   AND    Delete dynamic entity configuration in Database:    robot-tests-products
@@ -226,7 +226,7 @@ Upsert_product_abstract_collection_with_missing_required_field:
     Then Response status code should be:    400
     And Response body parameter should be:    [0][status]    400
     And Response body parameter should be:    [0][code]    1309
-    And Response body parameter should be:    [0][message]    Failed to persist the data. Please verify the provided data and try again. Entry is duplicated.
+    And Response body parameter should be:    [0][message]    Failed to persist the data for `robot-tests-product-abstracts0.robot-tests-products0.sku`. Please verify the provided data and try again. Entry is duplicated.
     [Teardown]    Run Keywords    Delete dynamic entity configuration relation in Database:    robotTestsProductAbstractProducts
     ...   AND    Delete dynamic entity configuration in Database:    robot-tests-product-abstracts
     ...   AND    Delete dynamic entity configuration in Database:    robot-tests-products

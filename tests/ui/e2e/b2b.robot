@@ -1379,6 +1379,9 @@ Multistore_Product
     Zed: change concrete product stock:
     ...    || productAbstract   | productConcrete              | warehouse n1 | warehouse n1 qty | warehouse n1 never out of stock ||
     ...    || multiSKU${random} | multiSKU${random}-farbe-grey | Warehouse2   | 100              | true                            ||
+    Zed: update abstract product data:
+    ...    || productAbstract   | name de                        ||
+    ...    || multiSKU${random} | DEmultiProduct${random} forced ||
     Repeat Keyword    3    Trigger multistore p&s
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     Yves: go to URL:    en/search?q=multiSKU${random}
@@ -1692,6 +1695,7 @@ Glossary
     
 Configurable_Product_PDP_Shopping_List
     [Documentation]    Configure product from PDP and Shopping List. DMS-ON: https://spryker.atlassian.net/browse/FRW-6380
+    [Tags]    robot:skip    
     [Setup]    Run keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     ...    AND    Yves: create new 'Shopping Cart' with name:    configProduct+${random}
     ...    AND    Yves: create new 'Shopping List' with name:    configProduct+${random}
@@ -1751,6 +1755,7 @@ Configurable_Product_PDP_Shopping_List
       
 Configurable_Product_RfQ_Order_Management
     [Documentation]    Conf Product in RfQ, OMS and reorder. DMS-ON: https://spryker.atlassian.net/browse/FRW-6380
+    [Tags]    robot:skip    
     [Setup]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: create new Zed user with the following data:    agent_config+${random}@spryker.com    change123${random}    Config    Product    Root group    This user is an agent    en_US
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}

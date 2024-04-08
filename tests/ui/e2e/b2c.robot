@@ -44,8 +44,8 @@ Default Tags    bapi
 New_Customer_Registration
     [Documentation]    Check that a new user can be registered in the system
     Register a new customer with data:
-    ...    || salutation | first name | last name | e-mail                      | password                    ||
-    ...    || Mr.        | New        | User      | sonia+${random}@spryker.com | P${random_str}s!${random_id} ||
+    ...    || salutation | first name | last name | e-mail                      | password                                        ||
+    ...    || Mr.        | New        | User      | sonia+${random}@spryker.com | Gx${random_str_password}!2${random_id_password} ||
     Yves: flash message should be shown:    success    Almost there! We send you an email to validate your email address. Please confirm it to be able to log in.
     [Teardown]    Zed: delete customer:
     ...    || email                       ||
@@ -1146,7 +1146,10 @@ Multistore_Product
     Zed: change concrete product stock:
     ...    || productAbstract   | productConcrete              | warehouse n1 | warehouse n1 qty | warehouse n1 never out of stock ||
     ...    || multiSKU${random} | multiSKU${random}-color-grey | Warehouse2   | 100              | true                            ||
-    Trigger multistore p&s
+    Zed: update abstract product data:
+    ...    || productAbstract   | name de                        ||
+    ...    || multiSKU${random} | DEmultiProduct${random} forced ||
+    Repeat Keyword    3    Trigger multistore p&s
     Yves: login on Yves with provided credentials:    ${yves_second_user_email}
     Yves: go to URL:    en/search?q=multiSKU${random}
     Try reloading page until element is/not appear:    ${catalog_product_card_locator}    true    21    5s
@@ -1456,11 +1459,11 @@ Register_during_checkout
     Page Should Not Contain Element    ${pdp_add_to_wishlist_button}
     Yves: go to b2c shopping cart  
     Yves: click on the 'Checkout' button in the shopping cart
-    Yves: signup guest user during checkout:    ${guest_user_first_name}    ${guest_user_last_name}    sonia+guest${random}@spryker.com    ${random_str}sC!#${random}    ${random_str}sC!#${random}
+    Yves: signup guest user during checkout:    ${guest_user_first_name}    ${guest_user_last_name}    sonia+guest${random}@spryker.com    Tg${random_str_password}!9${random_id_password}    Tg${random_str_password}!9${random_id_password}
     Save the result of a SELECT DB query to a variable:    select registration_key from spy_customer where email = 'sonia+guest${random}@spryker.com'    confirmation_key
     API_test_setup
     I send a POST request:     /customer-confirmation   {"data":{"type":"customer-confirmation","attributes":{"registrationKey":"${confirmation_key}"}}}
-    Yves: login after signup during checkout:    sonia+guest${random}@spryker.com    ${random_str}sC!#${random}
+    Yves: login after signup during checkout:    sonia+guest${random}@spryker.com    Tg${random_str_password}!9${random_id_password}
     Yves: fill in the following new shipping address:
     ...    || salutation     | firstName                | lastName                | street    | houseNumber | postCode     | city       | country     | company    | phone     | additionalAddress         ||
     ...    || ${salutation}  | ${guest_user_first_name} | ${guest_user_last_name} | ${random} | ${random}   | ${random}    | ${city}    | ${country}  | ${company} | ${random} | ${additional_address}     ||
@@ -1512,6 +1515,7 @@ Glossary
 
 Configurable_Product_PDP_Wishlist
     [Documentation]    Configure product from PDP and Wishlist. DMS-ON: https://spryker.atlassian.net/browse/FRW-6380
+    [Tags]    robot:skip   
     [Setup]    Run keywords    Yves: login on Yves with provided credentials:    ${yves_user_email}
     ...    AND    Yves: create new 'Whistist' with name:    configProduct${random}
     ...    AND    Yves: check if cart is not empty and clear it
@@ -1579,6 +1583,7 @@ Configurable_Product_PDP_Wishlist
 
 Configurable_Product_OMS
     [Documentation]    Conf Product OMS check and reorder. DMS-ON: https://spryker.atlassian.net/browse/FRW-6380
+    [Tags]    robot:skip    
     [Setup]    Run keywords    Yves: login on Yves with provided credentials:    ${yves_user_email}
     ...    AND    Yves: check if cart is not empty and clear it
     ...    AND    Yves: delete all user addresses
