@@ -2882,7 +2882,8 @@ Data_exchange_API_Configuration_in_Zed
 
 Configurable_Product_Checkout
     [Setup]    Run keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
-    ...    AND    Yves: check if cart is not empty and clear it
+    ...    AND    Yves: delete all shopping carts
+    ...    AND    Yves: create new 'Shopping Cart' with name:    configProduct+${random}
     ...    AND    Yves: delete all user addresses
     Yves: go to PDP of the product with sku:    ${configurable_product_abstract_sku}
     Yves: PDP contains/doesn't contain:    true    ${configureButton}

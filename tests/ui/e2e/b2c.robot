@@ -1845,3 +1845,52 @@ Fulfilment_app_e2e
     ...  AND    Remove picking list by uuid in DB:    ${picklist_id}
     ...  AND    Make user a warehouse user/ not a warehouse user:   ${warehous_user[0].de_admin_user_uuid}    0
     ...  AND    I send a DELETE request:    /warehouse-user-assignments/${warehouse_assigment_id}    
+  
+Configurable_Product_Checkout
+    [Setup]    Run keywords    Yves: login on Yves with provided credentials:    ${yves_user_email}
+    ...    AND    Yves: create new 'Whistist' with name:    configProduct${random}
+    ...    AND    Yves: check if cart is not empty and clear it
+    ...    AND    Yves: delete all user addresses
+    ...    AND    Yves: create a new customer address in profile:     Mr    ${yves_user_first_name}    ${yves_user_last_name}    Kirncher Str.    7    10247    Berlin    Germany
+    Yves: go to PDP of the product with sku:    ${configurable_product_abstract_sku}
+    Yves: PDP contains/doesn't contain:    true    ${configureButton}
+    Yves: product configuration status should be equal:       Configuration is not complete.
+    Yves: change the product options in configurator to:
+    ...    || option one | option two ||
+    ...    || 140        | 480        ||
+    Yves: product configuration status should be equal:      Configuration complete!
+    Yves: add product to the shopping cart
+    Yves: go to b2c shopping cart
+    Yves: shopping cart contains product with unit price:    sku=${configurable_product_concrete_one_sku}    productName=${configurable_product_name}    productPrice=620
+    Yves: change the product options in configurator to:
+    ...    || option one | option two ||
+    ...    || 280        | 240        ||
+    Yves: shopping cart contains product with unit price:    sku=${configurable_product_concrete_one_sku}    productName=${configurable_product_name}    productPrice=374.40 
+    Yves: product configuration status should be equal:      Configuration complete!
+    Yves: click on the 'Checkout' button in the shopping cart
+    Yves: billing address same as shipping address:    true
+    Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${yves_user_email}
+    Yves: select the following shipping method for the shipment:    1    Hermes    Next Day
+    Yves: submit form on the checkout
+    Yves: select the following payment method on the checkout and go next:    Invoice
+    Yves: accept the terms and conditions:    true
+    Yves: 'submit the order' on the summary page
+    Yves: 'Thank you' page is displayed
+    Yves: get the last placed order ID by current customer
+    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: grand total for the order equals:    ${lastPlacedOrder}    €481.10
+    Zed: go to order page:    ${lastPlacedOrder}
+    Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Pay
+    Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Skip timeout
+    Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    skip picking
+    Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Ship
+    Zed: trigger all matching states inside this order:    Stock update
+    Zed: trigger all matching states inside this order:    Refund
+    Zed: grand total for the order equals:    ${lastPlacedOrder}    €0.0
+    Yves: login on Yves with provided credentials:   ${yves_user_email}
+    Yves: go to user menu:    Order History
+    Yves: 'Order History' page is displayed
+    Yves: get the last placed order ID by current customer
+    Yves: 'Order History' page contains the following order with a status:    ${lastPlacedOrder}    Refunded
+#
+  
