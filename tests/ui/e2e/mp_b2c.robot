@@ -2766,7 +2766,6 @@ Configurable_Product_Checkout
     ...    AND    Yves: delete all user addresses
     ...    AND    Yves: create a new customer address in profile:     Mr    ${yves_user_first_name}    ${yves_user_last_name}    Kirncher Str.    7    10247    Berlin    Germany
     Yves: go to PDP of the product with sku:    ${configurable_product_abstract_sku}
-    Yves: go to PDP of the product with sku:    ${configurable_product_abstract_sku}
     Yves: change variant of the product on PDP on:    ${configurable_product_concrete_one_attribute}
     Yves: PDP contains/doesn't contain:    true    ${configureButton}
     Yves: product configuration status should be equal:       Configuration is not complete.
