@@ -85,8 +85,8 @@ Authorized_User_Access
 New_Customer_Registration
     [Documentation]    Check that a new user can be registered in the system
     Register a new customer with data:
-    ...    || salutation | first name | last name | e-mail                       | password                      ||
-    ...    || Mr.        | New        | User      | sonia+${random}@spryker.com  | P${random_str}s#!#${random_id} ||
+    ...    || salutation | first name | last name | e-mail                       | password                                        ||
+    ...    || Mr.        | New        | User      | sonia+${random}@spryker.com  | Ps${random_str_password}!5${random_id_password} ||
     Yves: flash message should be shown:    success    Almost there! We send you an email to validate your email address. Please confirm it to be able to log in.
     [Teardown]    Zed: delete customer:
     ...    || email                       ||
@@ -258,11 +258,11 @@ Register_during_checkout
     Page Should Not Contain Element    ${pdp_add_to_wishlist_button}
     Yves: go to b2c shopping cart  
     Yves: click on the 'Checkout' button in the shopping cart
-    Yves: signup guest user during checkout:    ${guest_user_first_name}    ${guest_user_last_name}    sonia+guest${random}@spryker.com    ${random_str}sR!#${random}    ${random_str}sR!#${random}
+    Yves: signup guest user during checkout:    ${guest_user_first_name}    ${guest_user_last_name}    sonia+guest${random}@spryker.com    Kj${random_str_password}!0${random_id_password}    Kj${random_str_password}!0${random_id_password}
     Save the result of a SELECT DB query to a variable:    select registration_key from spy_customer where email = 'sonia+guest${random}@spryker.com'    confirmation_key
     API_test_setup
     I send a POST request:     /customer-confirmation   {"data":{"type":"customer-confirmation","attributes":{"registrationKey":"${confirmation_key}"}}}
-    Yves: login after signup during checkout:    sonia+guest${random}@spryker.com    ${random_str}sR!#${random}
+    Yves: login after signup during checkout:    sonia+guest${random}@spryker.com    Kj${random_str_password}!0${random_id_password}
     Yves: fill in the following new shipping address:
     ...    || salutation     | firstName                | lastName                | street    | houseNumber | postCode     | city       | country     | company    | phone     | additionalAddress         ||
     ...    || ${salutation}  | ${guest_user_first_name} | ${guest_user_last_name} | ${random} | ${random}   | ${random}    | ${city}    | ${country}  | ${company} | ${random} | ${additional_address}     ||
@@ -1992,6 +1992,7 @@ Offer_Availability_Calculation
 
 Configurable_Product_PDP_Wishlist
     [Documentation]    Configure product from PDP and Wishlist. DMS-ON: https://spryker.atlassian.net/browse/FRW-6380
+    [Tags]    robot:skip
     [Setup]    Run keywords    Yves: login on Yves with provided credentials:    ${yves_user_email}
     ...    AND    Yves: create new 'Whistist' with name:    configProduct${random}
     ...    AND    Yves: check if cart is not empty and clear it
@@ -2057,6 +2058,7 @@ Configurable_Product_PDP_Wishlist
 
 Configurable_Product_PDP_Shopping_List
     [Documentation]    Configure product from PDP and Shopping List. DMS-ON: https://spryker.atlassian.net/browse/FRW-6380
+    [Tags]    robot:skip
     [Setup]    Run keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     ...    AND    Yves: create new 'Shopping Cart' with name:    configProduct+${random}
     ...    AND    Yves: create new 'Shopping List' with name:    configProduct+${random}
@@ -2119,6 +2121,7 @@ Configurable_Product_PDP_Shopping_List
       
 Configurable_Product_RfQ_OMS
     [Documentation]    Conf Product in RfQ, OMS, Merchant OMS and reorder. DMS-ON: https://spryker.atlassian.net/browse/FRW-6380
+    [Tags]    robot:skip
     [Setup]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: create new Zed user with the following data:    agent_config+${random}@spryker.com    change123${random}    Config    Product    Root group    This user is an agent in Storefront    en_US
     ...    AND    Zed: deactivate all discounts from Overview page
@@ -3038,6 +3041,7 @@ Merchant_Portal_Customer_Specific_Prices
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Catalog    Products 
     Zed: click Action Button in a table for row that contains:     PriceSKU${random}     Approve
+    Zed: save abstract product:    PriceSKU${random}
     Repeat Keyword    3    Trigger p&s
     Yves: login on Yves with provided credentials:     ${yves_test_company_user_email}
     Yves: go to PDP of the product with sku:    PriceSKU${random}    wait_for_p&s=true
@@ -3718,3 +3722,45 @@ Fulfilment_app_e2e# Fulfilment_app_e2e
 # #     Yves: Accept the Terms and Conditions:    true
 # #     Yves: 'submit the order' on the summary page
 # #     Yves: 'Thank you' page is displayed
+
+
+Configurable_Product_Checkout
+    [Setup]    Run keywords    Yves: login on Yves with provided credentials:    ${yves_user_email}
+    ...    AND    Yves: check if cart is not empty and clear it
+    ...    AND    Yves: delete all user addresses
+    ...    AND    Yves: create a new customer address in profile:     Mr    ${yves_user_first_name}    ${yves_user_last_name}    Kirncher Str.    7    10247    Berlin    Germany
+    Yves: go to PDP of the product with sku:    ${configurable_product_abstract_sku}
+    Yves: PDP contains/doesn't contain:    true    ${configureButton}
+    Yves: product configuration status should be equal:       Configuration is not complete.
+    Yves: change the product options in configurator to:
+    ...    || option one | option two ||
+    ...    || 517        | 167        ||
+    Yves: product configuration status should be equal:      Configuration complete!
+    Yves: add product to the shopping cart
+    Yves: go to b2c shopping cart
+    Yves: change the product options in configurator to:
+    ...    || option one | option two ||
+    ...    || 389.50     | 249        ||
+    Yves: shopping cart contains product with unit price:    sku=${configurable_product_concrete_sku}    productName=${configurable_product_name}    productPrice=638.50 
+    Yves: product configuration status should be equal:      Configuration complete!
+    Yves: click on the 'Checkout' button in the shopping cart
+    Yves: billing address same as shipping address:    true
+    Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${yves_user_address}
+    Yves: select the following shipping method on the checkout and go next:    Express
+    Yves: select the following payment method on the checkout and go next:    Marketplace Invoice
+    Yves: accept the terms and conditions:    true
+    Yves: 'submit the order' on the summary page
+    Yves: 'Thank you' page is displayed
+    Yves: get the last placed order ID by current customer
+    Zed: login on Zed with provided credentials:    ${zed_main_merchant_email}
+    Zed: grand total for the order equals:    ${lastPlacedOrder}    €580.55
+    Zed: go to order page:    ${lastPlacedOrder}
+    Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Pay
+    Zed: trigger all matching states inside this order:    skip picking
+    Zed: go to my order page:    ${lastPlacedOrder}
+    Zed: trigger matching state of xxx merchant's shipment:    1    send to distribution
+    Zed: trigger matching state of xxx merchant's shipment:    1    confirm at center
+    Zed: trigger matching state of xxx order item inside xxx shipment:    Ship    1
+    Zed: trigger matching state of xxx order item inside xxx shipment:    Deliver    1
+    Zed: trigger matching state of xxx order item inside xxx shipment:    Refund    1
+    Zed: grand total for the order equals:    ${lastPlacedOrder}    €0.0

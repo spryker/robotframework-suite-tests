@@ -1,7 +1,7 @@
 *** Variables ***
 ${configurator_date_input}    id=date
 ${configurator_day_time_selector}    id=daytime
-${configurator_save_button}    xpath=//button[@type='submit']
+${configurator_save_button}    xpath=//button[@type='submit' or contains(text(),' Save configurations')]
 ${configurator_cancel_button}    xpath=//a[contains(@class,'cancel')]
 ${configurator_store}    xpath=//app-information-list//li[contains(.,'Store')]/span
 ${configurator_locale}    xpath=//app-information-list//li[contains(.,'Locale')]/span

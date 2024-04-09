@@ -212,9 +212,10 @@ There is often a need to re-execute a subset of tests, for example, after fixing
 Combining re-execution results with the original results using the default combining outputs approach does not work too well. The main problem is that you get separate test suites and possibly already fixed failures are also shown. In this situation it is better to use --merge (-R) option to tell Rebot to merge the results instead. In practice this means that tests from the latter test runs replace tests in the original.
 | Command  	|Description|
 |:--- |:--- |
-|`robot -v env:ui_b2c -d results tests/ui/e2e/b2c.robot`|first execute all tests|
-|`robot -v env:ui_b2c --rerunfailed results/output.xml --output results/rerun.xml tests/ui/e2e/b2c.robot`|then re-execute failing|
-|`rebot --merge results/output.xml results/rerun.xml`| finally merge results|
+|`robot -v env:ui_suite -d results tests/ui/e2e/suite.robot`|first execute all tests|
+|`robot -v env:ui_suite -d results/rerun --runemptysuite --rerunfailed results/output.xml --output rerun.xml tests/ui/e2e/suite.robot`|then re-execute failing|
+|`rebot -d results --merge results/output.xml results/rerun/rerun.xml`| finally merge results|
+|`robot -v env:ui_suite -d results tests/ui/e2e/suite.robot; robot -v env:ui_suite -d results/rerun --runemptysuite --rerunfailed results/output.xml --output rerun.xml tests/ui/e2e/suite.robot; rebot -d results --merge results/output.xml results/rerun/rerun.xml`| All in one|
 
 The message of the merged tests contains a note that results have been replaced. The message also shows the old status and message of the test.
 
