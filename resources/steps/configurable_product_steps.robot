@@ -26,7 +26,7 @@ Yves: change the product configuration to:
     Wait Until Element Is Visible    ${pdp_configure_button}
 
 Yves: change the product options in configurator to:
-    [Documentation]    fill the fields for product configuration.
+    [Documentation]    fill the fields for product configuration (it is possible to set price OR option name).
     [Arguments]    @{args}
     ${configurationData}=    Set Up Keyword Arguments    @{args}
     Click    ${pdp_configure_button}
@@ -36,10 +36,21 @@ Yves: change the product options in configurator to:
         IF    '${env}' in ['ui_suite']
             IF    '${key}'=='option one' and '${value}' != '${EMPTY}'   Click    xpath=//div[contains(@class, 'configurator')]//app-configurator-group/div[@class='group__heading'][h3='Option One']/following-sibling::div[@class='group__section']//label[contains(@class,'tile__inner')]/span[contains(text(), '${value}')]    
             IF    '${key}'=='option two' and '${value}' != '${EMPTY}'   Click    xpath=//div[contains(@class, 'configurator')]//app-configurator-group/div[@class='group__heading'][h3='Option Two']/following-sibling::div[@class='group__section']//label[contains(@class,'tile__inner')]/span[contains(text(), '${value}')]
-        ELSE
+        ELSE IF    '${env}' in ['ui_b2b','ui_mp_b2b']
             IF    '${key}'=='option one' and '${value}' != '${EMPTY}'   Click    xpath=//div[contains(@class, 'configurator')]//app-configurator-group/div[@class='group__heading'][h3='Adjustable shelves']/following-sibling::div[@class='group__section']//label[contains(@class,'tile__inner')]/span[contains(text(), '${value}')]    
             IF    '${key}'=='option two' and '${value}' != '${EMPTY}'   Click    xpath=//div[contains(@class, 'configurator')]//app-configurator-group/div[@class='group__heading'][h3='Lockers']/following-sibling::div[@class='group__section']//label[contains(@class,'tile__inner')]/span[contains(text(), '${value}')]
-         END 
+        ELSE
+            IF    '${key}'=='option one' and '${value}' != '${EMPTY}'   Click    xpath=//div[contains(@class, 'configurator')]//app-configurator-group/div[@class='group__heading'][h3='Laptop Barebone']/following-sibling::div[@class='group__section']//label[contains(@class,'tile__inner')]/span[contains(text(), '${value}')]    
+            IF    '${key}'=='option two' and '${value}' != '${EMPTY}'   Click    xpath=//div[contains(@class, 'configurator')]//app-configurator-group/div[@class='group__heading'][h3='Laptop Processor']/following-sibling::div[@class='group__section']//label[contains(@class,'tile__inner')]/span[contains(text(), '${value}')]
+            IF    '${key}'=='option three' and '${value}' != '${EMPTY}'   Click    xpath=//div[contains(@class, 'configurator')]//app-configurator-group/div[@class='group__heading'][h3='Laptop GPU']/following-sibling::div[@class='group__section']//label[contains(@class,'tile__inner')]/span[contains(text(), '${value}')]    
+            IF    '${key}'=='option four' and '${value}' != '${EMPTY}'   Click    xpath=//div[contains(@class, 'configurator')]//app-configurator-group/div[@class='group__heading'][h3='External Drive']/following-sibling::div[@class='group__section']//label[contains(@class,'tile__inner')]/span[contains(text(), '${value}')]
+            IF    '${key}'=='option five' and '${value}' != '${EMPTY}'   Click    xpath=//div[contains(@class, 'configurator')]//app-configurator-group/div[@class='group__heading'][h3='Operating system']/following-sibling::div[@class='group__section']//label[contains(@class,'tile__inner')]/span[contains(text(), '${value}')]    
+            IF    '${key}'=='option six' and '${value}' != '${EMPTY}'   Click    xpath=//div[contains(@class, 'configurator')]//app-configurator-group/div[@class='group__heading'][h3='W-LAN']/following-sibling::div[@class='group__section']//label[contains(@class,'tile__inner')]/span[contains(text(), '${value}')]        
+            IF    '${key}'=='option seven' and '${value}' != '${EMPTY}'   Click    xpath=//div[contains(@class, 'configurator')]//app-configurator-group/div[@class='group__heading'][h3='Memory']/following-sibling::div[@class='group__section']//label[contains(@class,'tile__inner')]/span[contains(text(), '${value}')]    
+            IF    '${key}'=='option eight' and '${value}' != '${EMPTY}'   Click    xpath=//div[contains(@class, 'configurator')]//app-configurator-group/div[@class='group__heading'][h3='SSD']/following-sibling::div[@class='group__section']//label[contains(@class,'tile__inner')]/span[contains(text(), '${value}')]          
+            IF    '${key}'=='option nine' and '${value}' != '${EMPTY}'   Click    xpath=//div[contains(@class, 'configurator')]//app-configurator-group/div[@class='group__heading'][h3='Hard disk drive (HDD)']/following-sibling::div[@class='group__section']//label[contains(@class,'tile__inner')]/span[contains(text(), '${value}')]    
+            IF    '${key}'=='option ten' and '${value}' != '${EMPTY}'   Click    xpath=//div[contains(@class, 'configurator')]//app-configurator-group/div[@class='group__heading'][h3='Laptop keyboard']/following-sibling::div[@class='group__section']//label[contains(@class,'tile__inner')][contains(text(), '${value}')]              
+        END 
    END
     ### sleep 1 seconds to process background event
     Repeat Keyword    3    Wait Until Network Is Idle

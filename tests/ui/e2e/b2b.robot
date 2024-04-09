@@ -306,7 +306,7 @@ Product_Relations
 Default_Merchants
     [Documentation]    Checks that default merchants are present in Zed
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    Zed: go to second navigation item level:    Marketplace    Merchants
+    Zed: go to second navigation item level:    B2B Contracts    Merchants
     Zed: table should contain:    Restrictions Merchant
     Zed: table should contain:    Prices Merchant
     Zed: table should contain:    Products Restrictions Merchant

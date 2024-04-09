@@ -2771,20 +2771,21 @@ Configurable_Product_Checkout
     Yves: PDP contains/doesn't contain:    true    ${configureButton}
     Yves: product configuration status should be equal:       Configuration is not complete.
     Yves: change the product options in configurator to:
-    ...    || option one | option two ||
-    ...    || 140        | 480        ||
+    ...    || option one | option two | option three |option four | option five | option six | option seven | option eight | option nine | option ten       ||
+    ...    || 517        | 473        | 100          | 0.00       |  51         | 19         | 367          | 46           | 72          | English Keyboard ||
     Yves: product configuration status should be equal:      Configuration complete!
     Yves: add product to the shopping cart
     Yves: go to b2c shopping cart
-    Yves: shopping cart contains product with unit price:    sku=${configurable_product_concrete_one_attribute}   productName=${configurable_product_name}    productPrice=620
+    Yves: shopping cart contains product with unit price:    sku=${configurable_product_concrete_one_attribute}   productName=${configurable_product_name}    productPrice=1,645.00
     Yves: change the product options in configurator to:
-    ...    || option one | option two ||
-    ...    || 280        | 240        ||
-    Yves: shopping cart contains product with unit price:    sku=${configurable_product_concrete_one_attribute}    productName=${configurable_product_name}    productPrice=374.40 
+    ...    || option one | option two | option three |option four | option five | option six | option seven | option eight | option nine | option ten      ||
+    ...    || 905        | 249        | 100          | 36         |  15         | 0.00       | 48           | 57           | 36          | German Keyboard ||
+    Yves: shopping cart contains product with unit price:    sku=${configurable_product_concrete_one_attribute}    productName=${configurable_product_name}    productPrice=1,446.00 
     Yves: product configuration status should be equal:      Configuration complete!
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: billing address same as shipping address:    true
-    Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${yves_user_email}
+    Yves: select the following existing address on the checkout as 'shipping' address and go next:   ${yves_user_address}
+    Yves: submit form on the checkout
     Yves: select the following shipping method for the shipment:    1    Hermes    Next Day
     Yves: submit form on the checkout
     Yves: select the following payment method on the checkout and go next:    Invoice (Marketplace)  
@@ -2792,19 +2793,19 @@ Configurable_Product_Checkout
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
     Yves: get the last placed order ID by current customer
-    Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    Zed: grand total for the order equals:    ${lastPlacedOrder}    €481.10
+    Zed: login on Zed with provided credentials:    ${zed_main_merchant_email}
+    Zed: grand total for the order equals:    ${lastPlacedOrder}    €1,316.40
     Zed: go to order page:    ${lastPlacedOrder}
     Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Pay
     Zed: trigger all matching states inside this order:    skip picking
     Zed: go to my order page:    ${lastPlacedOrder}
     Zed: trigger matching state of xxx merchant's shipment:    1    send to distribution
     Zed: trigger matching state of xxx merchant's shipment:    1    confirm at center
-    Zed: trigger matching state of xxx merchant's shipment:    1    Ship
-    Zed: trigger matching state of xxx merchant's shipment:    1    Deliver
-    Zed: trigger matching state of xxx merchant's shipment:    1    Refund
-    Zed: grand total for the order equals:    ${lastPlacedOrder}    €0.0
-    Yves: login on Yves with provided credentials:    ${yves_user_email}
+    Zed: trigger matching state of xxx order item inside xxx shipment:    Ship    1
+    Zed: trigger matching state of xxx order item inside xxx shipment:    Deliver    1
+    Zed: trigger matching state of xxx order item inside xxx shipment:    Refund    1
+    Zed: grand total for the order equals:    ${lastPlacedOrder}    €0.00
+    Yves: login on Yves with provided credentials:   ${yves_user_email}
     Yves: go to user menu:    Order History
     Yves: 'Order History' page is displayed
     Yves: get the last placed order ID by current customer
