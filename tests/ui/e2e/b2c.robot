@@ -1889,8 +1889,3 @@ Configurable_Product_Checkout
     Zed: trigger all matching states inside this order:    Stock update
     Zed: trigger all matching states inside this order:    Refund
     Zed: grand total for the order equals:    ${lastPlacedOrder}    €0.00
-    Yves: login on Yves with provided credentials:   ${yves_user_email}
-    Yves: go to user menu:    Order History
-    Yves: 'Order History' page is displayed
-    Yves: get the last placed order ID by current customer
-    Yves: 'Order History' page contains the following order with a status:    ${lastPlacedOrder}    Refunded

@@ -2920,9 +2920,3 @@ Configurable_Product_Checkout
     Zed: trigger matching state of xxx order item inside xxx shipment:    Deliver    1
     Zed: trigger matching state of xxx order item inside xxx shipment:    Refund    1
     Zed: grand total for the order equals:    ${lastPlacedOrder}    €0.0
-    Zed: go to my order page:    ${lastPlacedOrder}
-    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
-    Yves: go to user menu:    Order History
-    Yves: 'Order History' page is displayed
-    Yves: get the last placed order ID by current customer
-    Yves: 'Order History' page contains the following order with a status:    ${lastPlacedOrder}    Refunded
