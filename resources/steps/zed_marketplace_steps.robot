@@ -12,7 +12,11 @@ Zed: select merchant in filter:
 Zed: create new Merchant with the following data:
     [Arguments]    @{args}
     ${merchantData}=    Set Up Keyword Arguments    @{args}
-    Zed: go to second navigation item level:    Marketplace    Merchants  
+    IF    '${env}' in ['ui_suite','ui_mp_b2b','ui_mp_b2c','ui_b2c']
+        Zed: go to second navigation item level:    Marketplace    Merchants
+    ELSE
+        Zed: go to second navigation item level:    B2B Contracts    Merchants
+    END    
     Zed: click button in Header:    Add Merchant
     Wait Until Element Is Visible    ${zed_create_merchant_name_field}
     FOR    ${key}    ${value}    IN    &{merchantData}
