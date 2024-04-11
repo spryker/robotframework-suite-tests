@@ -72,7 +72,7 @@ jobs:
                   cd robotframework-tests
                   robot -v env:ui_suite -v headless:true -v ignore_console:false -d results/rerun --runemptysuite --rerunfailed results/output.xml --output rerun.xml tests/ui/e2e/suite.robot
             - name: Merge Test Results
-              if: ${{ steps.run_tests.outcome }} != 'success'
+              if: ${{ steps.run_tests.outcome }} == 'failure'
               run: |
                   cd robotframework-tests
                   rebot -d results --merge results/output.xml results/rerun/rerun.xml
