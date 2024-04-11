@@ -65,15 +65,14 @@ jobs:
                   rfbrowser init
                   robot -v env:ui_suite -v headless:true -v ignore_console:false -d results --exclude skip-due-to-issueORskip-due-to-refactoring tests/ui/e2e/suite.robot
                   touch results/time.txt && echo $(date) > results/time.txt
+                  echo "Result of run_tests was '${{ steps.run_tests.outcome }}'"
             - name: Rerun Failed Tests
               if: failure()
-              continue-on-error: true
               run: |
                   cd robotframework-tests
                   robot -v env:ui_suite -v headless:true -v ignore_console:false -d results/rerun --runemptysuite --rerunfailed results/output.xml --output rerun.xml tests/ui/e2e/suite.robot
-
             - name: Merge Test Results
-              if: steps.run_tests.outcome == 'failure'
+              if: steps.run_tests.outcome != 'success'
               run: |
                   cd robotframework-tests
                   rebot -d results --merge results/output.xml results/rerun/rerun.xml
