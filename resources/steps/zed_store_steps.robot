@@ -36,9 +36,19 @@ Zed: create new Store:
             ${currency code}=    Set Variable    ${value}
             Zed: perform store search by:    ${value}
             Zed: Check checkbox by Value:    ${value}
+        END
+        IF    '${key}'=='currency iso code2' and '${value}' != '${EMPTY}'
+            ${currency iso code}=    Set Variable    ${value}
+            Wait Until Element Is Visible    ${zed_store_default_currency_iso_code}
+            Select From List By Label    ${zed_store_default_currency_iso_code}    ${value}
+        END          
+        IF    '${key}'=='currency code2' and '${value}' != '${EMPTY}'
+            ${currency code}=    Set Variable    ${value}
+            Zed: perform store search by:    ${value}
+            Zed: Check checkbox by Value:    ${value}
             Click    ${zed_store_delivery_region_tab}
-        END  
-               IF    '${key}'=='store delivery region' and '${value}' != '${EMPTY}'
+        END   
+        IF    '${key}'=='store delivery region' and '${value}' != '${EMPTY}'
             ${store delivery region}=    Set Variable    ${value}
             Zed: perform store search by:    ${value}    
             Zed: Check checkbox by Value:    ${value} 
@@ -57,3 +67,4 @@ Zed: perform store search by:
         Log    Search event is not fired
     END
     Repeat Keyword    2    Wait Until Network Is Idle
+ 
