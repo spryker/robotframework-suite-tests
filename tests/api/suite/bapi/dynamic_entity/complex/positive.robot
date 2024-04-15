@@ -245,8 +245,7 @@ Upsert_product_abstract_collection_with_child:
     ...   AND    Delete dynamic entity configuration in Database:    robot-tests-product-prices
 
 Create_and_publish_complex_product_with_child_relations:
-    [Documentation]    https://spryker.atlassian.net/browse/FRW-7619
-    [Tags]    skip-due-to-issue
+    [Documentation]    As the tech dept, we need to adjust this test to check in /catalog-search as well.
     ### SETUP DYNAMIC ENTITY CONFIGURATION AND RELATION ###
     Create dynamic entity configuration in Database:    robot-tests-product-abstracts    spy_product_abstract     1    {"identifier":"id_product_abstract","fields":[{"fieldName":"id_product_abstract","fieldVisibleName":"id_product_abstract","isCreatable":false,"isEditable":false,"type":"integer","validation":{"isRequired":false}},{"fieldName":"fk_tax_set","fieldVisibleName":"fk_tax_set","isCreatable":true,"isEditable":true,"type":"integer","validation":{"isRequired":true}},{"fieldName":"approval_status","fieldVisibleName":"approval_status","isCreatable":true,"isEditable":true,"type":"string","validation":{"isRequired":false}},{"fieldName":"attributes","fieldVisibleName":"attributes","isCreatable":true,"isEditable":true,"type":"string","validation":{"isRequired":true}},{"fieldName":"new_from","fieldVisibleName":"new_from","isCreatable":true,"isEditable":true,"type":"string","validation":{"isRequired":false}},{"fieldName":"new_to","fieldVisibleName":"new_to","isCreatable":true,"isEditable":true,"type":"string","validation":{"isRequired":false}},{"fieldName":"sku","fieldVisibleName":"sku","isCreatable":true,"isEditable":true,"type":"string","validation":{"isRequired":true}},{"fieldName":"color_code","fieldVisibleName":"color_code","isCreatable":true,"isEditable":true,"type":"string","validation":{"isRequired":false}}]}
     Create dynamic entity configuration in Database:    robot-tests-products    spy_product     1    {"identifier":"id_product","fields":[{"fieldName":"id_product","fieldVisibleName":"id_product","isCreatable":false,"isEditable":false,"validation":{"isRequired":false},"type":"integer"},{"fieldName":"fk_product_abstract","fieldVisibleName":"fk_product_abstract","type":"integer","isCreatable":true,"isEditable":true,"validation":{"isRequired":true}},{"fieldName":"attributes","fieldVisibleName":"attributes","isCreatable":true,"isEditable":true,"type":"string","validation":{"isRequired":true}},{"fieldName":"discount","fieldVisibleName":"discount","isCreatable":true,"isEditable":true,"type":"integer","validation":{"isRequired":false}},{"fieldName":"is_active","fieldVisibleName":"is_active","isCreatable":true,"isEditable":true,"type":"integer","validation":{"isRequired":false}},{"fieldName":"is_quantity_splittable","fieldVisibleName":"is_quantity_splittable","isCreatable":true,"isEditable":true,"type":"integer","validation":{"isRequired":false}},{"fieldName":"sku","fieldVisibleName":"sku","isCreatable":true,"isEditable":true,"type":"string","validation":{"isRequired":true}},{"fieldName":"warehouses","fieldVisibleName":"warehouses","isCreatable":true,"isEditable":true,"type":"string","validation":{"isRequired":false}}]}
@@ -285,24 +284,30 @@ Create_and_publish_complex_product_with_child_relations:
 
     ### SAVE PRODUCT ABSTRACT WITH STOCK ###
     And I set Headers:    Content-Type=application/json    Authorization=Bearer ${token}
-    And I send a POST request:    /dynamic-entity/robot-tests-product-abstracts    {"data":[{"fk_tax_set":1,"approval_status":"approved","attributes":"{}","new_to":"2028-01-01 00:00:00.000000","sku":"FOO","color_code":"#DC2E09","robotTestsProductAbstractProducts":[{"attributes":"BAR1","is_active":1,"is_quantity_splittable":1,"sku":"d04e93a4-asg235tfdg4","robotTestsProductSearch":[{"fk_locale":66,"is_searchable":1}],"robotTestsProductStocks":[{"fk_stock":1,"is_never_out_of_stock":1,"quantity":10}],"robotTestsProductLocalizedAttributes":[{"fk_locale":66,"attributes":"BAR","description":"desc","name":"Test Concrete Product BAR"}]}],"robotTestsProductAbstractStores":[{"fk_store":1}],"robotTestsProductRelations":[{"fk_product_relation_type":1,"is_active":1,"is_rebuild_scheduled":1,"product_relation_key":"Prk-d04e93a4-29ea-4c48-96ab-e87416aefbec","query_set_data":"","robotTestsProductRelationStores":[{"fk_store":1}]}],"robotTestsProductAbstractPriceProducts":[{"fk_price_type":1,"price":1000,"robotTestsPriceProductStores":[{"fk_currency":93,"fk_store":1,"gross_price":9999,"net_price":8999,"robotTestsPriceProductStoreDefaults":[{}]}]}],"robotTestsProductAbstractCategories":[{"fk_category":5,"product_order":16}],"robotTestsProductAbstractUrls":[{"fk_locale":46,"url":"/de/test-bar-product-d04e93a4-29ea-4c48-96ab-e87416aefbec"},{"fk_locale":46,"url":"/at/test-bar-product-d04e93a4-29ea-4c48-96ab-e87416aefbec"},{"fk_locale":46,"url":"/en/test-bar-product-d04e93a4-29ea-4c48-96ab-e87416aefbec"}],"robotTestsProductAbstractLocalizedAttributes":[{"fk_locale":66,"attributes":"test","description":"Beeindruckende Aufnahmen","meta_description":"Beeindruckende Aufnahmen","meta_keywords":"Entertainment Electronics","meta_title":"test product d04e93a4-29ea-4c48-96ab-e87416aefbec","name":"test product bar d04e93a4-29ea-4c48-96ab-e87416aefbec"}],"robotTestsProductLabelProductAbstracts":[{"fk_product_label":1}],"robotTestsProductImageSets":[{"fk_locale":66,"name":"BAR"}]}]}
+    And I send a POST request:    /dynamic-entity/robot-tests-product-abstracts    {"data":[{"fk_tax_set":2,"approval_status":"approved","attributes":"{}","new_to":"2028-01-01 00:00:00.000000","sku":"FOO","color_code":"#DC2E09","robotTestsProductAbstractProducts":[{"attributes":"BAR1","is_active":1,"is_quantity_splittable":1,"sku":"d04e93a4-asg235tfdg4","robotTestsProductSearch":[{"fk_locale":66,"is_searchable":1}],"robotTestsProductStocks":[{"fk_stock":1,"is_never_out_of_stock":1,"quantity":10}],"robotTestsProductLocalizedAttributes":[{"fk_locale":66,"attributes":"BAR","description":"desc","name":"Test Concrete Product BAR"}]}],"robotTestsProductAbstractStores":[{"fk_store":1}],"robotTestsProductRelations":[{"fk_product_relation_type":1,"is_active":1,"is_rebuild_scheduled":1,"product_relation_key":"Prk-d04e93a4-29ea-4c48-96ab-e87416aefbec","query_set_data":"","robotTestsProductRelationStores":[{"fk_store":1}]}],"robotTestsProductAbstractPriceProducts":[{"fk_price_type":1,"price":1000,"robotTestsPriceProductStores":[{"fk_currency":93,"fk_store":1,"gross_price":9999,"net_price":8999,"robotTestsPriceProductStoreDefaults":[{}]}]}],"robotTestsProductAbstractCategories":[{"fk_category":5,"product_order":16}],"robotTestsProductAbstractUrls":[{"fk_locale":46,"url":"/de/test-bar-product-d04e93a4-29ea-4c48-96ab-e87416aefbec"},{"fk_locale":46,"url":"/at/test-bar-product-d04e93a4-29ea-4c48-96ab-e87416aefbec"},{"fk_locale":46,"url":"/en/test-bar-product-d04e93a4-29ea-4c48-96ab-e87416aefbec"}],"robotTestsProductAbstractLocalizedAttributes":[{"fk_locale":66,"attributes":"test","description":"Beeindruckende Aufnahmen","meta_description":"Beeindruckende Aufnahmen","meta_keywords":"Entertainment Electronics","meta_title":"test product d04e93a4-29ea-4c48-96ab-e87416aefbec","name":"test product bar d04e93a4-29ea-4c48-96ab-e87416aefbec"}],"robotTestsProductLabelProductAbstracts":[{"fk_product_label":1}],"robotTestsProductImageSets":[{"fk_locale":66,"name":"BAR"}]}]}
     Then Response status code should be:    201
     And Save value to a variable:    [data][0][id_product_abstract]    id_product_abstract
     And Save value to a variable:    [data][0][sku]    abstract_sku
     And Save value to a variable:    [data][0][robotTestsProductAbstractProducts][0][sku]    concrete_sku
-    Repeat Keyword    3    Trigger p&s    15s
-    Trigger p&s
-    Trigger p&s
     Trigger p&s
     Remove Tags    *
     Set Tags    glue
     API_test_setup
-    When I send a GET request:    /catalog-search?q=${concrete_sku}
-    Then Response status code should be:    200
+    I set Headers:    Content-Type=application/vnd.api+json    Accept-Language=de-DE, en;q=0.9
+    I send a GET request:    /abstract-products/${abstract_sku}/abstract-product-availabilities
+    Response status code should be:    200
     And Response reason should be:    OK
-    And Response body parameter should be:    [data][0][type]    catalog-search
-    And Response should contain the array of a certain size:    [data][0][attributes][abstractProducts]    1
-    And Response body parameter should be:    [data][0][attributes][abstractProducts][0][abstractSku]    ${abstract_sku}
+    And Response body parameter should be:    [data][0][type]    abstract-product-availabilities
+    And Response body parameter should be:    [data][0][id]    d04e93a4-29ea-4c48-96ab-e87416aefbec
+    And Response body parameter should be:    [data][0][attributes][quantity]    10
+
+    I set Headers:    Content-Type=application/vnd.api+json    Accept-Language=de-DE, en;q=0.9
+    I send a GET request:    /concrete-products/${concrete_sku}
+    Response status code should be:    200
+    And Response reason should be:    OK
+    And Response body parameter should be:    [data][type]    concrete-products
+    And Response body parameter should be:    [data][id]    d04e93a4-29ea-4c48-96ab-e87416aefbec-1
+    And Response body parameter should be:    [data][attributes][sku]    d04e93a4-29ea-4c48-96ab-e87416aefbec-1
     Remove Tags    *
     Set Tags    bapi
     API_test_setup
