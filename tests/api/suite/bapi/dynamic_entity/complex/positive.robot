@@ -290,6 +290,8 @@ Create_and_publish_complex_product_with_child_relations:
     And Save value to a variable:    [data][0][sku]    abstract_sku
     And Save value to a variable:    [data][0][robotTestsProductAbstractProducts][0][sku]    concrete_sku
     Trigger p&s
+    Trigger p&s
+    Trigger p&s
     Remove Tags    *
     Set Tags    glue
     API_test_setup
