@@ -292,6 +292,31 @@ Create_and_publish_complex_product_with_child_relations:
     Trigger p&s
     Trigger p&s
     Trigger p&s
+    Trigger p&s
+    Trigger p&s
+    Trigger p&s
+    Trigger p&s
+    Trigger p&s
+    Trigger p&s
+    Trigger p&s
+    Trigger p&s
+    Trigger p&s
+    Trigger p&s
+    Trigger p&s
+    Trigger p&s
+    Trigger p&s
+    Trigger p&s
+    Trigger p&s
+    Trigger p&s
+    Trigger p&s
+    Trigger p&s
+    Trigger p&s
+    Trigger p&s
+    Trigger p&s
+    Trigger p&s
+    Trigger p&s
+    Trigger p&s
+    Trigger p&s
     Remove Tags    *
     Set Tags    glue
     API_test_setup
