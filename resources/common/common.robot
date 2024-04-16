@@ -56,11 +56,15 @@ Common_suite_setup
     ${random_id}=    Generate Random String    5    [NUMBERS]
     ${random_str}=    Generate Random String    5    [LETTERS]
     ${random_str_store}=    Generate Random String    2    [UPPER]
+    ${random_str_password}=    Generate Random String    2    [LETTERS]
+    ${random_id_password}=    Generate Random String    2    [NUMBERS]
 
     Set Global Variable    ${random}
     Set Global Variable    ${random_id}
     Set Global Variable    ${random_str}
     Set Global Variable    ${random_str_store}
+    Set Global Variable    ${random_id_password}
+    Set Global Variable    ${random_str_password}
     
     ${today}=    Get Current Date    result_format=%Y-%m-%d
     Set Global Variable    ${today}
