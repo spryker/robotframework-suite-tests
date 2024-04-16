@@ -108,8 +108,8 @@ MP: select option in expanded dropdown:
     
 MP: switch to the tab:
     [Arguments]    ${tabName}
-    Wait Until Element Is Visible    xpath=//web-spy-tabs[@class='spy-tabs']//div[@role='tab'][contains(@class,'ant-tabs')]//div[contains(text(),'${tabName}')]
-    Click    xpath=//web-spy-tabs[@class='spy-tabs']//div[@role='tab'][contains(@class,'ant-tabs')]//div[contains(text(),'${tabName}')]
+    Wait Until Element Is Visible    xpath=//web-spy-tabs[@class='spy-tabs']//div[@role='tablist'][contains(@class,'ant-tabs')]//div[contains(text(),'${tabName}')]
+    Click    xpath=//web-spy-tabs[@class='spy-tabs']//div[@role='tablist'][contains(@class,'ant-tabs')]//div[contains(text(),'${tabName}')]
     Repeat Keyword    3    Wait Until Network Is Idle
     MP: Wait until loader is no longer visible
     

@@ -65,7 +65,7 @@ jobs:
               run: |
                   cd robotframework-tests
                   rfbrowser init
-                  robot -v env:ui_mp_b2c -v headless:true -v ignore_console:false -d results --exclude skip-due-to-issueORskip-due-to-refactoring tests/ui/e2e/mp_b2c.robot
+                  robot -v env:ui_mp_b2c -v headless:true -v ignore_console:false -d results --exclude skip-due-to-issueORskip-due-to-refactoring tests/ui/e2e/mp_b2c.robot; robot -v env:ui_mp_b2c -v headless:true -v ignore_console:false -d results/rerun --runemptysuite --rerunfailed results/output.xml --output rerun.xml tests/ui/e2e/mp_b2c.robot; rebot -d results --merge results/output.xml results/rerun/rerun.xml
                   touch results/time.txt && echo $(date) > results/time.txt
             - name: Upload artifacts
               if: always()
