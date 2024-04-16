@@ -71,6 +71,22 @@ jobs:
                   echo "Result of run_tests was '${{ steps.run_tests.outcome }}'"
                   cd robotframework-tests
                   robot -v env:ui_suite -v headless:true -v ignore_console:false -d results/rerun --runemptysuite --rerunfailed results/output.xml --output rerun.xml tests/ui/e2e/suite.robot
+            - name: Test Step 1
+              if: always() && ${{ steps.run_tests.outcome }} != 'success'
+              run: |
+                  echo "Test 1"
+            - name: Test Step 2
+              if: always() && steps.run_tests.outcome != 'success'
+              run: |
+                  echo "Test 2"
+            - name: Test Step 3
+              if: always() && steps.run_tests.outcome == 'failure'
+              run: |
+                  echo "Test 3"
+            - name: Test Step 4
+              if: always() && (steps.run_tests.outcome == 'failure')
+              run: |
+                  echo "Test 4"
             - name: Merge Test Results
               if: always() && (${{ steps.run_tests.outcome }} != 'success')
               run: |
