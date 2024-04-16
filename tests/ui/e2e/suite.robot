@@ -82,27 +82,15 @@ Authorized_User_Access
     Yves: 'Wishlist' page is displayed
     [Teardown]    Yves: check if cart is not empty and clear it
 
-<<<<<<< Updated upstream
-New_Customer_Registration
-    [Documentation]    Check that a new user can be registered in the system
-    Register a new customer with data:
-    ...    || salutation | first name | last name | e-mail                       | password                                        ||
-    ...    || Mr.        | New        | User      | sonia+${random}@spryker.com  | Ps${random_str_password}!5${random_id_password} ||
-    Yves: flash message should be shown:    success    Almost there! We send you an email to validate your email address. Please confirm it to be able to log in.
-    [Teardown]    Zed: delete customer:
-    ...    || email                       ||
-    ...    || sonia+${random}@spryker.com ||
-=======
 # New_Customer_Registration
 #     [Documentation]    Check that a new user can be registered in the system
 #     Register a new customer with data:
-#     ...    || salutation | first name | last name | e-mail                       | password                      ||
-#     ...    || Mr.        | New        | User      | sonia+${random}@spryker.com  | P${random_str}s#!#${random_id} ||
+#     ...    || salutation | first name | last name | e-mail                       | password                                        ||
+#     ...    || Mr.        | New        | User      | sonia+${random}@spryker.com  | Ps${random_str_password}!5${random_id_password} ||
 #     Yves: flash message should be shown:    success    Almost there! We send you an email to validate your email address. Please confirm it to be able to log in.
 #     [Teardown]    Zed: delete customer:
 #     ...    || email                       ||
 #     ...    || sonia+${random}@spryker.com ||
->>>>>>> Stashed changes
 
 # User_Account
 #     [Documentation]    Checks user account pages work + address management
