@@ -3642,88 +3642,88 @@ Fulfilment_app_e2e# Fulfilment_app_e2e
     ...  AND    Make user a warehouse user/ not a warehouse user:   ${warehous_user[0].de_admin_user_uuid}    0
     ...  AND    I send a DELETE request:    /warehouse-user-assignments/${warehouse_assigment_id}
 
-# # Approval_Process
-# #     ### *** DEMODATA - NO OOT LIMITS AND CAN'T SET THEM IN SUITE *** ###
-# #     [Tags]    skip-due-to-refactoring
-# #     [Documentation]    Checks role permissions on checkout and Approval process
-# #     [Setup]    Run keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_with_limit_email}
-# #     ...    AND    Yves: create new 'Shopping Cart' with name:    approvalCart+${random}
-# #     Yves: go to PDP of the product with sku:    M49320
-# #     Yves: add product to the shopping cart
-# #     Yves: go to the shopping cart through the header with name:    approvalCart+${random}
-# #     Yves: click on the 'Checkout' button in the shopping cart
-# #     Yves: billing address same as shipping address:    true
-# #     Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${yves_company_user_buyer_with_limit_address}
-# #     Yves: select the following shipping method on the checkout and go next:    Express
-# #     Yves: select the following payment method on the checkout and go next:    Invoice
-# #     Yves: select approver on the 'Summary' page:    Lilu Dallas (€1,000.00)
-# #     Yves: 'send the request' on the summary page
-# #     Yves: 'Summary' page is displayed
-# #     Yves: 'Summary' page contains/doesn't contain:    true    ${cancelRequestButton}    ${alertWarning}    ${quoteStatus}
-# #     Yves: go to the 'Home' page
-# #     Yves: go to the shopping cart through the header with name:    approvalCart+${random}
-# #     Yves: shopping cart contains/doesn't contain the following elements:    true    ${lockedCart}
-# #     Yves: create new 'Shopping Cart' with name:    newApprovalCart+${random}
-# #     Yves: go to PDP of the product with sku:    M58314
-# #     Yves: add product to the shopping cart
-# #     Yves: go to the shopping cart through the header with name:    newApprovalCart+${random}
-# #     Yves: click on the 'Checkout' button in the shopping cart
-# #     Yves: billing address same as shipping address:    true
-# #     Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${yves_company_user_buyer_with_limit_address}
-# #     Yves: select the following shipping method on the checkout and go next:    Express
-# #     Yves: select the following payment method on the checkout and go next:    Invoice
-# #     Yves: accept the terms and conditions:    true
-# #     Yves: 'submit the order' on the summary page
-# #     Yves: 'Thank you' page is displayed
-# #     Yves: create new 'Shopping Cart' with name:    anotherApprovalCart+${random}
-# #     Yves: go to PDP of the product with sku:    M58314
-# #     Yves: add product to the shopping cart
-# #     Yves: go to the shopping cart through the header with name:    anotherApprovalCart+${random}
-# #     Yves: click on the 'Checkout' button in the shopping cart
-# #     Yves: billing address same as shipping address:    true
-# #     Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${yves_company_user_buyer_with_limit_address}
-# #     Yves: select the following shipping method on the checkout and go next:    Express
-# #     Yves: select the following payment method on the checkout and go next:    Invoice
-# #     Yves: select approver on the 'Summary' page:    Lilu Dallas (€1,000.00)
-# #     Yves: 'send the request' on the summary page
-# #     Yves: 'Summary' page is displayed
-# #     Yves: 'Summary' page contains/doesn't contain:    true    ${cancelRequestButton}    ${alertWarning}    ${quoteStatus}
-# #     Yves: logout on Yves as a customer
-# #     Yves: login on Yves with provided credentials:    ${yves_company_user_approver_email}
-# #     Yves: go to user menu:    Overview
-# #     Yves: 'Overview' page is displayed
-# #     Yves: go to user menu item in the left bar:    Shopping carts
-# #     Yves: 'Shopping Carts' page is displayed
-# #     Yves: the following shopping cart is shown:    approvalCart+${random}    Read-only
-# #     Yves: the following shopping cart is shown:    anotherApprovalCart+${random}    Read-only
-# #     Yves: shopping cart with name xxx has the following status:    approvalCart+${random}    Waiting
-# #     Yves: shopping cart with name xxx has the following status:    anotherApprovalCart+${random}    Waiting
-# #     Yves: go to the shopping cart through the header with name:    approvalCart+${random}
-# #     Yves: click on the 'Checkout' button in the shopping cart
-# #     Yves: 'Summary' page is displayed
-# #     Yves: 'approve the cart' on the summary page
-# #     Yves: 'Summary' page is displayed
-# #     Yves: 'Summary' page contains/doesn't contain:    false    ${cancelRequestButton}    ${alertWarning}
-# #     Yves: go to the 'Home' page
-# #     Yves: go to user menu:    Overview
-# #     Yves: 'Overview' page is displayed
-# #     Yves: go to user menu item in the left bar:    Shopping carts
-# #     Yves: 'Shopping Carts' page is displayed
-# #     Yves: the following shopping cart is shown:    approvalCart+${random}    Read-only
-# #     Yves: the following shopping cart is shown:    anotherApprovalCart+${random}    Read-only
-# #     Yves: shopping cart with name xxx has the following status:    approvalCart+${random}    Approved
-# #     Yves: shopping cart with name xxx has the following status:    anotherApprovalCart+${random}    Waiting
-# #     Yves: logout on Yves as a customer
-# #     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_with_limit_email}
-# #     Yves: go to user menu item in the left bar:    Shopping carts
-# #     Yves: shopping cart with name xxx has the following status:    approvalCart+${random}    Approved
-# #     Yves: go to the shopping cart through the header with name:    approvalCart+${random}
-# #     Yves: shopping cart contains/doesn't contain the following elements:    true    ${lockedCart}
-# #     Yves: click on the 'Checkout' button in the shopping cart
-# #     Yves: 'Summary' page is displayed
-# #     Yves: Accept the Terms and Conditions:    true
-# #     Yves: 'submit the order' on the summary page
-# #     Yves: 'Thank you' page is displayed
+# Approval_Process
+#     ### *** DEMODATA - NO OOT LIMITS AND CAN'T SET THEM IN SUITE *** ###
+#     [Tags]    skip-due-to-refactoring
+#     [Documentation]    Checks role permissions on checkout and Approval process
+#     [Setup]    Run keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_with_limit_email}
+#     ...    AND    Yves: create new 'Shopping Cart' with name:    approvalCart+${random}
+#     Yves: go to PDP of the product with sku:    M49320
+#     Yves: add product to the shopping cart
+#     Yves: go to the shopping cart through the header with name:    approvalCart+${random}
+#     Yves: click on the 'Checkout' button in the shopping cart
+#     Yves: billing address same as shipping address:    true
+#     Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${yves_company_user_buyer_with_limit_address}
+#     Yves: select the following shipping method on the checkout and go next:    Express
+#     Yves: select the following payment method on the checkout and go next:    Invoice
+#     Yves: select approver on the 'Summary' page:    Lilu Dallas (€1,000.00)
+#     Yves: 'send the request' on the summary page
+#     Yves: 'Summary' page is displayed
+#     Yves: 'Summary' page contains/doesn't contain:    true    ${cancelRequestButton}    ${alertWarning}    ${quoteStatus}
+#     Yves: go to the 'Home' page
+#     Yves: go to the shopping cart through the header with name:    approvalCart+${random}
+#     Yves: shopping cart contains/doesn't contain the following elements:    true    ${lockedCart}
+#     Yves: create new 'Shopping Cart' with name:    newApprovalCart+${random}
+#     Yves: go to PDP of the product with sku:    M58314
+#     Yves: add product to the shopping cart
+#     Yves: go to the shopping cart through the header with name:    newApprovalCart+${random}
+#     Yves: click on the 'Checkout' button in the shopping cart
+#     Yves: billing address same as shipping address:    true
+#     Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${yves_company_user_buyer_with_limit_address}
+#     Yves: select the following shipping method on the checkout and go next:    Express
+#     Yves: select the following payment method on the checkout and go next:    Invoice
+#     Yves: accept the terms and conditions:    true
+#     Yves: 'submit the order' on the summary page
+#     Yves: 'Thank you' page is displayed
+#     Yves: create new 'Shopping Cart' with name:    anotherApprovalCart+${random}
+#     Yves: go to PDP of the product with sku:    M58314
+#     Yves: add product to the shopping cart
+#     Yves: go to the shopping cart through the header with name:    anotherApprovalCart+${random}
+#     Yves: click on the 'Checkout' button in the shopping cart
+#     Yves: billing address same as shipping address:    true
+#     Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${yves_company_user_buyer_with_limit_address}
+#     Yves: select the following shipping method on the checkout and go next:    Express
+#     Yves: select the following payment method on the checkout and go next:    Invoice
+#     Yves: select approver on the 'Summary' page:    Lilu Dallas (€1,000.00)
+#     Yves: 'send the request' on the summary page
+#     Yves: 'Summary' page is displayed
+#     Yves: 'Summary' page contains/doesn't contain:    true    ${cancelRequestButton}    ${alertWarning}    ${quoteStatus}
+#     Yves: logout on Yves as a customer
+#     Yves: login on Yves with provided credentials:    ${yves_company_user_approver_email}
+#     Yves: go to user menu:    Overview
+#     Yves: 'Overview' page is displayed
+#     Yves: go to user menu item in the left bar:    Shopping carts
+#     Yves: 'Shopping Carts' page is displayed
+#     Yves: the following shopping cart is shown:    approvalCart+${random}    Read-only
+#     Yves: the following shopping cart is shown:    anotherApprovalCart+${random}    Read-only
+#     Yves: shopping cart with name xxx has the following status:    approvalCart+${random}    Waiting
+#     Yves: shopping cart with name xxx has the following status:    anotherApprovalCart+${random}    Waiting
+#     Yves: go to the shopping cart through the header with name:    approvalCart+${random}
+#     Yves: click on the 'Checkout' button in the shopping cart
+#     Yves: 'Summary' page is displayed
+#     Yves: 'approve the cart' on the summary page
+#     Yves: 'Summary' page is displayed
+#     Yves: 'Summary' page contains/doesn't contain:    false    ${cancelRequestButton}    ${alertWarning}
+#     Yves: go to the 'Home' page
+#     Yves: go to user menu:    Overview
+#     Yves: 'Overview' page is displayed
+#     Yves: go to user menu item in the left bar:    Shopping carts
+#     Yves: 'Shopping Carts' page is displayed
+#     Yves: the following shopping cart is shown:    approvalCart+${random}    Read-only
+#     Yves: the following shopping cart is shown:    anotherApprovalCart+${random}    Read-only
+#     Yves: shopping cart with name xxx has the following status:    approvalCart+${random}    Approved
+#     Yves: shopping cart with name xxx has the following status:    anotherApprovalCart+${random}    Waiting
+#     Yves: logout on Yves as a customer
+#     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_with_limit_email}
+#     Yves: go to user menu item in the left bar:    Shopping carts
+#     Yves: shopping cart with name xxx has the following status:    approvalCart+${random}    Approved
+#     Yves: go to the shopping cart through the header with name:    approvalCart+${random}
+#     Yves: shopping cart contains/doesn't contain the following elements:    true    ${lockedCart}
+#     Yves: click on the 'Checkout' button in the shopping cart
+#     Yves: 'Summary' page is displayed
+#     Yves: Accept the Terms and Conditions:    true
+#     Yves: 'submit the order' on the summary page
+#     Yves: 'Thank you' page is displayed
 
 Dynamic-multistore
     [Documentation]  Bug: FRW-7903  This test should exclusively run for dynamic multi-store scenarios. The test verifies that the user can successfully create a new store, assign a product and CMS page, and register a customer within the new store.

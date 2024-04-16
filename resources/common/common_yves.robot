@@ -203,12 +203,9 @@ Yves: select currency Euro if other currency not specified
         Go To    ${yves_at_url}
     ELSE
         Go To    ${yves_url}
-        Wait Until Element Is visible    //header//*[@data-qa='component navigation-top']//select[@name='currency-iso-code']
-        Select From List By Value    //header//*[@data-qa='component navigation-top']//select[@name='currency-iso-code']    ${currency_code}
+        Wait Until Element Is visible    ${currency_switcher_header_menu_item}[${env}]
+        Select From List By Value    ${currency_switcher_header_menu_item}[${env}]    ${currency_code}
         Wait Until Element Contains    //*[@data-qa='component header']//select[contains(@name,'currency')]/option[@selected='']    ${currency_name}  
-        # Wait Until Element Is visible    &{currency_switcher_header_menu_item}[${env}]
-        # Select From List By Value    &{currency_switcher_header_menu_item}[${env}]    ${currency_code}
-        # Wait Until Element Contains    //*[@data-qa='component header']//select[contains(@name,'store')]/option[@selected='']    ${currency_name}
     END
 
 Yves: get the last placed order ID by current customer
