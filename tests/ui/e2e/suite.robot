@@ -68,7 +68,7 @@ Authorized_User_Access
     [Documentation]    Checks that authorized users see products info, cart and profile
     Yves: login on Yves with provided credentials:    ${yves_second_user_email}
     Yves: check if cart is not empty and clear it
-    Yves: header contains/doesn't contain:    false    ${currencySwitcher}[${env}]    ${accountIcon}    ${shoppingCartIcon}
+    Yves: header contains/doesn't contain:    true    ${currencySwitcher}[${env}]    ${accountIcon}    ${shoppingCartIcon}
     Yves: go to PDP of the product with sku:    002
     Yves: PDP contains/doesn't contain:     true    ${pdpPriceLocator}     ${addToCartButton}
     Yves: add product to the shopping cart
