@@ -65,6 +65,17 @@ jobs:
                   rfbrowser init
                   robot -v env:ui_suite -v headless:true -v ignore_console:false -d results --exclude skip-due-to-issueORskip-due-to-refactoring tests/ui/e2e/suite.robot
                   touch results/time.txt && echo $(date) > results/time.txt
+            - name: Rerun Failed Tests
+              if: failure()
+              run: |
+                  echo "Result of run_tests was '${{ steps.run_tests.outcome }}'"
+                  cd robotframework-tests
+                  robot -v env:ui_suite -v headless:true -v ignore_console:false -d results/rerun --runemptysuite --rerunfailed results/output.xml --output rerun.xml tests/ui/e2e/suite.robot
+            - name: Merge Test Results
+              if: always() && (${{ steps.run_tests.outcome }} != 'success')
+              run: |
+                  cd robotframework-tests
+                  rebot -d results --merge results/output.xml results/rerun/rerun.xml
             - name: Upload artifacts
               if: always()
               run: |
