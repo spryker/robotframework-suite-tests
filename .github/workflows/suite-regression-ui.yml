@@ -83,6 +83,10 @@ jobs:
               if: always() && steps.run_tests.outcome == 'failure'
               run: |
                   echo "Test 3"
+            - name: Test Step 4
+              if: always() && (steps.run_tests.outcome == 'failure')
+              run: |
+                  echo "Test 4"
             - name: Merge Test Results
               if: always() && (${{ steps.run_tests.outcome }} != 'success')
               run: |
