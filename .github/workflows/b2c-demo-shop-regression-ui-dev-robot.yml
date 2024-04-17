@@ -62,11 +62,22 @@ jobs:
                   APPLICATION_STORE=DE docker/sdk console queue:worker:start --stop-when-empty
                   APPLICATION_STORE=AT docker/sdk console queue:worker:start --stop-when-empty
             - name: Run Tests
+              id: run_tests
               run: |
                   cd robotframework-tests
                   rfbrowser init
-                  robot -v env:ui_b2c -v headless:true -v ignore_console:false -d results --exclude skip-due-to-issueORskip-due-to-refactoring tests/ui/e2e/b2c.robot; robot -v env:ui_b2c -v headless:true -v ignore_console:false -d results/rerun --runemptysuite --rerunfailed results/output.xml --output rerun.xml tests/ui/e2e/b2c.robot; rebot -d results --merge results/output.xml results/rerun/rerun.xml
+                  robot -v env:ui_b2c -v headless:true -v ignore_console:false -d results --exclude skip-due-to-issueORskip-due-to-refactoring tests/ui/e2e/b2c.robot
                   touch results/time.txt && echo $(date) > results/time.txt
+            - name: Rerun Failed Tests
+              if: failure()
+              run: |
+                  cd robotframework-tests
+                  robot -v env:ui_b2c -v headless:true -v ignore_console:false -d results/rerun --runemptysuite --rerunfailed results/output.xml --output rerun.xml tests/ui/e2e/b2c.robot
+            - name: Merge Test Results
+              if: always() && steps.run_tests.outcome != 'success'
+              run: |
+                  cd robotframework-tests
+                  rebot -d results --merge results/output.xml results/rerun/rerun.xml
             - name: Upload artifacts
               if: always()
               run: |
