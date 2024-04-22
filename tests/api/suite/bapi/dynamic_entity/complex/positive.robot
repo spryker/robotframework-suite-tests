@@ -284,38 +284,11 @@ Create_and_publish_complex_product_with_child_relations:
 
     ### SAVE PRODUCT ABSTRACT WITH STOCK ###
     And I set Headers:    Content-Type=application/json    Authorization=Bearer ${token}
-    And I send a POST request:    /dynamic-entity/robot-tests-product-abstracts    {"data":[{"fk_tax_set":2,"approval_status":"approved","attributes":"{}","new_to":"2028-01-01 00:00:00.000000","sku":"FOO","color_code":"#DC2E09","robotTestsProductAbstractProducts":[{"attributes":"BAR1","is_active":1,"is_quantity_splittable":1,"sku":"d04e93a4-asg235tfdg4","robotTestsProductSearch":[{"fk_locale":66,"is_searchable":1}],"robotTestsProductStocks":[{"fk_stock":1,"is_never_out_of_stock":1,"quantity":10}],"robotTestsProductLocalizedAttributes":[{"fk_locale":66,"attributes":"BAR","description":"desc","name":"Test Concrete Product BAR"}]}],"robotTestsProductAbstractStores":[{"fk_store":1}],"robotTestsProductRelations":[{"fk_product_relation_type":1,"is_active":1,"is_rebuild_scheduled":1,"product_relation_key":"Prk-d04e93a4-29ea-4c48-96ab-e87416aefbec","query_set_data":"","robotTestsProductRelationStores":[{"fk_store":1}]}],"robotTestsProductAbstractPriceProducts":[{"fk_price_type":1,"price":1000,"robotTestsPriceProductStores":[{"fk_currency":93,"fk_store":1,"gross_price":9999,"net_price":8999,"robotTestsPriceProductStoreDefaults":[{}]}]}],"robotTestsProductAbstractCategories":[{"fk_category":5,"product_order":16}],"robotTestsProductAbstractUrls":[{"fk_locale":46,"url":"/de/test-bar-product-d04e93a4-29ea-4c48-96ab-e87416aefbec"},{"fk_locale":46,"url":"/at/test-bar-product-d04e93a4-29ea-4c48-96ab-e87416aefbec"},{"fk_locale":46,"url":"/en/test-bar-product-d04e93a4-29ea-4c48-96ab-e87416aefbec"}],"robotTestsProductAbstractLocalizedAttributes":[{"fk_locale":66,"attributes":"test","description":"Beeindruckende Aufnahmen","meta_description":"Beeindruckende Aufnahmen","meta_keywords":"Entertainment Electronics","meta_title":"test product d04e93a4-29ea-4c48-96ab-e87416aefbec","name":"test product bar d04e93a4-29ea-4c48-96ab-e87416aefbec"}],"robotTestsProductLabelProductAbstracts":[{"fk_product_label":1}],"robotTestsProductImageSets":[{"fk_locale":66,"name":"BAR"}]}]}
+    And I send a POST request:    /dynamic-entity/robot-tests-product-abstracts    {"data":[{"fk_tax_set":2,"approval_status":"approved","attributes":"{}","new_to":"2028-01-01 00:00:00.000000","sku":"FOO","color_code":"#DC2E09","robotTestsProductAbstractProducts":[{"attributes":"BAR1","is_active":1,"is_quantity_splittable":1,"sku":"d04e93a4-asg235tfdg4","robotTestsProductSearch":[{"fk_locale":66,"is_searchable":1}],"robotTestsProductStocks":[{"fk_stock":1,"is_never_out_of_stock":1,"quantity":10}],"robotTestsProductLocalizedAttributes":[{"fk_locale":66,"attributes":"BAR","description":"desc","name":"Test Concrete Product BAR"}]}],"robotTestsProductAbstractStores":[{"fk_store":1}],"robotTestsProductRelations":[{"fk_product_relation_type":1,"is_active":1,"is_rebuild_scheduled":1,"product_relation_key":"Prk-d04e93a4-29ea-4c48-96ab-e87416aefbec","query_set_data":"","robotTestsProductRelationStores":[{"fk_store":1}]}],"robotTestsProductAbstractPriceProducts":[{"fk_price_type":1,"price":1000,"robotTestsPriceProductStores":[{"fk_currency":93,"fk_store":1,"gross_price":9999,"net_price":8999,"robotTestsPriceProductStoreDefaults":[{}]}]}],"robotTestsProductAbstractCategories":[{"fk_category":5,"product_order":16}],"robotTestsProductAbstractUrls":[{"fk_locale":46,"url":"/de/test-bar-product-d04e93a4-29ea-4c48-96ab-e87416aefbec"},{"fk_locale":46,"url":"/at/test-bar-product-d04e93a4-29ea-4c48-96ab-e87416aefbec"},{"fk_locale":46,"url":"/en/test-bar-product-d04e93a4-29ea-4c48-96ab-e87416aefbec"}],"robotTestsProductAbstractLocalizedAttributes":[{"fk_locale":66,"attributes":"test","description":"Beeindruckende Aufnahmen","meta_description":"Beeindruckende Aufnahmen","meta_keywords":"Entertainment Electronics","meta_title":"test product d04e93a4-29ea-4c48-96ab-e87416aefbec","name":"test product bar d04e93a4-29ea-4c48-96ab-e87416aefbec"},{"fk_locale":46,"attributes":"test","description":"Beeindruckende Aufnahmen","meta_description":"Beeindruckende Aufnahmen","meta_keywords":"Entertainment Electronics","meta_title":"test product d04e93a4-29ea-4c48-96ab-e87416aefbec","name":"test product d04e93a4-29ea-4c48-96ab-e87416aefbec"}],"robotTestsProductLabelProductAbstracts":[{"fk_product_label":1}],"robotTestsProductImageSets":[{"fk_locale":66,"name":"BAR"}]}]}
     Then Response status code should be:    201
     And Save value to a variable:    [data][0][id_product_abstract]    id_product_abstract
     And Save value to a variable:    [data][0][sku]    abstract_sku
     And Save value to a variable:    [data][0][robotTestsProductAbstractProducts][0][sku]    concrete_sku
-    Trigger p&s
-    Trigger p&s
-    Trigger p&s
-    Trigger p&s
-    Trigger p&s
-    Trigger p&s
-    Trigger p&s
-    Trigger p&s
-    Trigger p&s
-    Trigger p&s
-    Trigger p&s
-    Trigger p&s
-    Trigger p&s
-    Trigger p&s
-    Trigger p&s
-    Trigger p&s
-    Trigger p&s
-    Trigger p&s
-    Trigger p&s
-    Trigger p&s
-    Trigger p&s
-    Trigger p&s
-    Trigger p&s
-    Trigger p&s
-    Trigger p&s
-    Trigger p&s
-    Trigger p&s
     Trigger p&s
     Remove Tags    *
     Set Tags    glue
