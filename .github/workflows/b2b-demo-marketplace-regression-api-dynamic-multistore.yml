@@ -58,12 +58,13 @@ jobs:
                   SPRYKER_CURRENT_REGION=EU docker/sdk console queue:worker:start --stop-when-empty
             - name: Run Tests
               id: run_tests
+              continue-on-error: true
               run: |
                   cd robotframework-tests
                   robot -v env:api_mp_b2b -v dms:true -v glue_env:http://glue.eu.spryker.local -v bapi_env:http://glue-backend.eu.spryker.local -v sapi_env:http://glue-storefront.eu.spryker.local -v ignore_console:false -d results --exclude skip-due-to-issueORskip-due-to-refactoring -s '*'.tests.api.mp_b2b .
                   touch results/time.txt && echo $(date) > results/time.txt
             - name: Rerun Failed Tests
-              if: failure()
+              if: steps.run_tests.outcome != 'success'
               run: |
                   cd robotframework-tests
                   robot -v env:api_mp_b2b -v dms:true -v glue_env:http://glue.eu.spryker.local -v bapi_env:http://glue-backend.eu.spryker.local -v sapi_env:http://glue-storefront.eu.spryker.local -v ignore_console:false -d results/rerun --runemptysuite --rerunfailed results/output.xml --output rerun.xml -s '*'.tests.api.mp_b2b .
