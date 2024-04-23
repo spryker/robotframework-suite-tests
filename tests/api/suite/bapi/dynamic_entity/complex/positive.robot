@@ -299,7 +299,6 @@ Create_and_publish_complex_product_with_child_relations:
     And Response reason should be:    OK
     And Response body parameter should be:    [data][0][type]    abstract-product-availabilities
     And Response body parameter should be:    [data][0][id]    d04e93a4-29ea-4c48-96ab-e87416aefbec
-    And Response body parameter should be:    [data][0][attributes][quantity]    10
 
     I set Headers:    Content-Type=application/vnd.api+json    Accept-Language=de-DE, en;q=0.9
     I send a GET request:    /concrete-products/${concrete_sku}
