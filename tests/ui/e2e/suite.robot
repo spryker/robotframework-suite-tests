@@ -26,6 +26,7 @@ Resource    ../../../resources/steps/wishlist_steps.robot
 Resource    ../../../resources/steps/zed_availability_steps.robot
 Resource    ../../../resources/steps/zed_discount_steps.robot
 Resource    ../../../resources/steps/zed_cms_page_steps.robot
+Resource    ../../../resources/steps/zed_cms_block_steps.robot
 Resource    ../../../resources/steps/zed_customer_steps.robot
 Resource    ../../../resources/steps/merchant_profile_steps.robot
 Resource    ../../../resources/steps/zed_marketplace_steps.robot
@@ -3730,7 +3731,7 @@ Dynamic-multistore
     [Tags]    dms-on
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: create new Store:
-    ...    || name                                    | locale iso code | currency iso code | currency code | currency iso code2 | currency code2 |store delivery region ||
+    ...    || name                                    | locale_iso_code | currency_iso_code | currency_code | currency_iso_code2 | currency_code2 |store_delivery_region ||
     ...    || ${random_str_store}_${random_str_store} | en_US           | Euro              | EUR           | Swiss Franc        | CHF            | AT                   ||
     Trigger multistore p&s
     Yves: login on Yves with provided credentials:    ${yves_user_email}
@@ -3749,6 +3750,7 @@ Dynamic-multistore
     Zed: change concrete product price on:
     ...    || productAbstract                     | productConcrete                     | store                                   | mode  | type    | currency | amount ||
     ...    || ${one_variant_product_abstract_sku} | ${one_variant_product_concrete_sku} | ${random_str_store}_${random_str_store} | gross | default | €        | 15.00  ||
+    Zed: update warehouse:
     ...    || warehouse  | store                                   || 
     ...    || Warehouse1 | ${random_str_store}_${random_str_store} ||
     Zed: change concrete product stock:
@@ -3776,7 +3778,11 @@ Dynamic-multistore
     Yves: go to AT store 'Home' page if other store not specified:    ${random_str_store}_${random_str_store}
     Yves: go to newly created page by URL:   en/store-page${random}
     Yves: page contains CMS element:    CMS Page Content    Page text
-    #### register new customer in the new store on YVES
+    ## assigned CMS BLocks to new store
+    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: assigned store to cms block:    ${random_str_store}_${random_str_store}    customer-registration_token--html
+    Zed: assigned store to cms block:    ${random_str_store}_${random_str_store}    customer-registration_token--text
+    ## register new customer in the new store on YVES
     Yves: go to AT store 'Home' page if other store not specified:    ${random_str_store}_${random_str_store}
     Register a new customer with data:
     ...    || salutation | first name | last name | e-mail                       | password                      ||
