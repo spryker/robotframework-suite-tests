@@ -14,7 +14,7 @@ Adding_item_in_wishlist_by_invalid_Access_Token
     Then Response status code should be:    401
     And Response reason should be:    Unauthorized
     And Response should return error code:    001
-    And Response should return error message:    Invalid access token.
+    And Response should return error message:    Invalid access token.test
 
 Adding_item_in_wishlist_by_without_Access_Token
     When I send a POST request:    /wishlists    {"data": { "type": "wishlists","attributes": { "name": "${random}"} }}
