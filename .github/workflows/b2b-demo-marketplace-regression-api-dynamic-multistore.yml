@@ -1,4 +1,4 @@
-name: "[b2b-mp][internal] Robot Regression API Dynamic Multistore"
+name: "[b2b-mp][master] Robot Regression API Dynamic Multistore"
 
 on:
     schedule:
@@ -22,11 +22,11 @@ jobs:
               with:
                   python-version: '3.9'
 
-            - name: Clone project (internal)
+            - name: Clone project (master)
               run: |
                   git config --global user.email "github-actions[bot]@users.noreply.github.com"
                   git config --global user.name "github-actions[bot]"
-                  git clone -b internal --single-branch https://github.com/spryker-shop/b2b-demo-marketplace.git .
+                  git clone -b master --single-branch https://github.com/spryker-shop/b2b-demo-marketplace.git .
             - name: Install packages
               run: |
                   sudo apt-get install apache2-utils
