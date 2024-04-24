@@ -1975,7 +1975,7 @@ Configurable_Product_Checkout
     Yves: product configuration status should be equal:      Configuration complete!
     Yves: add product to the shopping cart
     Yves: go to b2c shopping cart
-    Yves: shopping cart contains product with unit price:    sku=${configurable_product_concrete_sku}    productName=${configurable_product_name}    productPrice=620
+    Yves: shopping cart contains product with unit price:    sku=${configurable_product_concrete_sku}    productName=${configurable_product_name}    productPrice=480
     Yves: change the product options in configurator to:
     ...    || option one | option two ||
     ...    || 280        | 240        ||
