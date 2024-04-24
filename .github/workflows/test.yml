@@ -1,9 +1,9 @@
+name: "Test CI"
 on:
     pull_request:
     push:
         branches:
             - master
-    workflow_dispatch:
 
 jobs:
   randomly-failing-job:
@@ -14,6 +14,5 @@ jobs:
           run: echo "random_number=$(($RANDOM % 2))" >> $GITHUB_OUTPUT
 
         - name: Execute on master branch only
-          if: (${{ github.event_name == 'pull_request' && github.event.pull_request.base.ref == 'master' }}) && (if: always() && steps.generate_number.outcome != 'success')
-          run: |
-          echo "Hello"
+          if: ${{ github.event_name == 'pull_request' && github.event.pull_request.base.ref == 'master' }}
+          run: echo "Hello"
