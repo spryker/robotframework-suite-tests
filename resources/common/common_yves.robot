@@ -195,6 +195,19 @@ Yves: go to AT store 'Home' page if other store not specified:
         Wait Until Element Contains    //*[@data-qa='component header']//select[contains(@name,'store')]/option[@selected='']    ${store}
     END
 
+Yves: select currency Euro if other currency not specified
+    [Arguments]    ${currency_name}=Euro    ${currency_code}=EUR
+    Set Browser Timeout    ${browser_timeout}
+    ${dms_state}=    Convert To String    ${dms}
+    IF    '${dms_state}' != 'True'
+        Go To    ${yves_at_url}
+    ELSE
+        Go To    ${yves_url}
+        Wait Until Element Is visible    ${currency_switcher_header_menu_item}[${env}]
+        Select From List By Value    ${currency_switcher_header_menu_item}[${env}]    ${currency_code}
+        Wait Until Element Contains    //*[@data-qa='component header']//select[contains(@name,'currency')]/option[@selected='']    ${currency_name}  
+    END
+
 Yves: get the last placed order ID by current customer
     [Documentation]    Returns orderID of the last order from customer account
     Set Browser Timeout    ${browser_timeout}
