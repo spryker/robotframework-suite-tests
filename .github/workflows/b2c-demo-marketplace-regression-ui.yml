@@ -1,4 +1,4 @@
-name: "[b2c-mp][internal] Robot Regression UI"
+name: "[b2c-mp][master] Robot Regression UI"
 
 on:
     schedule:
@@ -22,16 +22,16 @@ jobs:
               with:
                   python-version: '3.9'
 
-            - name: Clone project (internal)
+            - name: Clone project (master)
               run: |
                   git config --global user.email "github-actions[bot]@users.noreply.github.com"
                   git config --global user.name "github-actions[bot]"
-                  git clone -b internal --single-branch https://github.com/spryker-shop/b2c-demo-marketplace.git .
-            - name: Up-merge fresh branch (internal)
+                  git clone -b master --single-branch https://github.com/spryker-shop/b2c-demo-marketplace.git .
+            - name: Up-merge fresh branch (master)
               run: |
                   git fetch origin
                   git config pull.ff only
-                  git pull origin internal --no-ff --allow-unrelated-histories --no-edit
+                  git pull origin master --no-ff --allow-unrelated-histories --no-edit
             - name: Install packages
               run: |
                   sudo apt-get install apache2-utils
