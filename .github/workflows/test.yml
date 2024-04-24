@@ -1,0 +1,23 @@
+on:
+    pull_request:
+    push:
+        branches:
+            - master
+    workflow_dispatch:
+
+jobs:
+  randomly-failing-job:
+    runs-on: ubuntu-latest
+    steps:
+        - name: Generate 0 or 1
+          id: generate_number
+          run: echo "random_number=$(($RANDOM % 2))" >> $GITHUB_OUTPUT
+
+        - name: Execute on master branch only
+          if: ${{ github.event_name == 'pull_request' && github.event.pull_request.base.ref == 'master' }} && (if: always() && steps.run_tests.outcome != 'success')
+          run: |
+          echo "Hello"
+# если ПР в мастер бранч и предыдущий шаг упал = выведет Hello 
+# если ПР НЕ в мастер  и предыдущий шаг упл = НЕ выведет Hello
+# если ПР в мастер но предыдущий шаг НЕ упал = НЕ выведет Hello
+# если ПР в мастер но предыдущий шан НЕ упал = НЕ выведет Hello
