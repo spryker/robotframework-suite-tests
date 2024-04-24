@@ -1,6 +1,0 @@
-# name: "[b2c][internal] Robot Regression UI Dynamic Multistore"
-
-# on:
-#     schedule:
-#         -   cron: '0 3 * * *'
-#     workflow_dispatch:
