@@ -1,4 +1,4 @@
-name: "[b2c][internal] Robot Regression UI"
+name: "[b2c][master] Robot Regression UI"
 
 on:
     schedule:
@@ -22,16 +22,16 @@ jobs:
               with:
                   python-version: '3.9'
 
-            - name: Clone project (internal)
+            - name: Clone project (master)
               run: |
                   git config --global user.email "github-actions[bot]@users.noreply.github.com"
                   git config --global user.name "github-actions[bot]"
-                  git clone -b internal --single-branch https://github.com/spryker-shop/b2c-demo-shop.git .
-            - name: Up-merge fresh branch (internal)
+                  git clone -b master --single-branch https://github.com/spryker-shop/b2c-demo-shop.git .
+            - name: Up-merge fresh branch (master)
               run: |
                   git fetch origin
                   git config pull.ff only
-                  git pull origin internal --no-ff --allow-unrelated-histories --no-edit
+                  git pull origin master --no-ff --allow-unrelated-histories --no-edit
             - name: Install packages
               run: |
                   sudo apt-get install apache2-utils
@@ -64,11 +64,23 @@ jobs:
                   APPLICATION_STORE=DE docker/sdk console queue:worker:start --stop-when-empty
                   APPLICATION_STORE=AT docker/sdk console queue:worker:start --stop-when-empty
             - name: Run Tests
+              id: run_tests
+              continue-on-error: true
               run: |
                   cd robotframework-tests
                   rfbrowser init
-                  robot -v env:ui_b2c -v headless:true -v ignore_console:false -d results --exclude skip-due-to-issueORskip-due-to-refactoring tests/ui/e2e/b2c.robot; robot -v env:ui_b2c -v headless:true -v ignore_console:false -d results/rerun --runemptysuite --rerunfailed results/output.xml --output rerun.xml tests/ui/e2e/b2c.robot; rebot -d results --merge results/output.xml results/rerun/rerun.xml
+                  robot -v env:ui_b2c -v headless:true -v ignore_console:false -d results --exclude skip-due-to-issueORskip-due-to-refactoring tests/ui/e2e/b2c.robot
                   touch results/time.txt && echo $(date) > results/time.txt
+            - name: Rerun Failed Tests
+              if: steps.run_tests.outcome != 'success'
+              run: |
+                  cd robotframework-tests
+                  robot -v env:ui_b2c -v headless:true -v ignore_console:false -d results/rerun --runemptysuite --rerunfailed results/output.xml --output rerun.xml tests/ui/e2e/b2c.robot
+            - name: Merge Test Results
+              if: always() && steps.run_tests.outcome != 'success'
+              run: |
+                  cd robotframework-tests
+                  rebot -d results --merge results/output.xml results/rerun/rerun.xml
             - name: Upload artifacts
               if: always()
               run: |
