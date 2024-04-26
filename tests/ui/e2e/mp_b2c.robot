@@ -26,6 +26,7 @@ Resource    ../../../resources/steps/wishlist_steps.robot
 Resource    ../../../resources/steps/zed_availability_steps.robot
 Resource    ../../../resources/steps/zed_discount_steps.robot
 Resource    ../../../resources/steps/zed_cms_page_steps.robot
+Resource    ../../../resources/steps/zed_cms_block_steps.robot
 Resource    ../../../resources/steps/zed_customer_steps.robot
 Resource    ../../../resources/steps/merchant_profile_steps.robot
 Resource    ../../../resources/steps/zed_marketplace_steps.robot
@@ -45,6 +46,7 @@ Resource    ../../../resources/common/common_api.robot
 Resource    ../../../resources/steps/service_point_steps.robot
 Resource    ../../../resources/steps/warehouse_user_assigment_steps.robot
 Resource    ../../../resources/steps/picking_list_steps.robot
+Resource    ../../../resources/steps/zed_store_steps.robot    
 Default Tags    bapi
 
 *** Test Cases ***
