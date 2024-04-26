@@ -635,3 +635,22 @@ Search_by_abstract_sku_with_abstract_include
     And Response include element has self link:   abstract-products
     And Response body parameter should be:    [included][0][id]  ${concrete_product_with_alternative.abstract_sku}
     And Response body has correct self link
+
+Search_by_abstract_sku_per_store
+    When I set Headers:    store=DE
+    Then I send a GET request:    /catalog-search?q=${concrete_product_with_alternative.abstract_sku}
+    And Response status code should be:    200
+    And Response reason should be:    OK
+    And Response header parameter should be:    Content-Type    ${default_header_content_type}
+    And Response body parameter should be:    [data][0][type]    catalog-search
+    And Response body parameter should be:    [data][0][attributes][pagination][numFound]    1
+    And Response body parameter should be:    [data][0][attributes][pagination][currentPage]    1
+    And Response body parameter should be:    [data][0][attributes][pagination][maxPage]    1
+    And Response should contain the array of a certain size:    [data][0][attributes][abstractProducts]    1
+    And Response body parameter should be:    [data][0][attributes][abstractProducts][0][abstractSku]    ${concrete_product_with_alternative.abstract_sku}
+    And Response body parameter should be:    [data][0][attributes][abstractProducts][0][abstractName]    ${concrete_product_with_alternative.name}
+    And Response body parameter should be greater than:    [data][0][attributes][abstractProducts][0][prices][0][DEFAULT]    18.79
+    When I set Headers:    store=AT
+    Then I send a GET request:    /catalog-search?q=${concrete_product_with_alternative.abstract_sku}
+    And Response status code should be:    200
+    And Response body parameter should be greater than:    [data][0][attributes][abstractProducts][0][prices][0][DEFAULT]    18.79
