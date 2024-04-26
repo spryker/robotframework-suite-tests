@@ -55,7 +55,7 @@ jobs:
             - name: Custom commands
               continue-on-error: false
               run: |
-                  docker/sdk cli composer dump-autoload -o -a
+                  docker/sdk cli composer dump-autoload -o -a --apcu
                   APPLICATION_STORE=DE docker/sdk console queue:worker:start --stop-when-empty
                   APPLICATION_STORE=AT docker/sdk console queue:worker:start --stop-when-empty
             - name: Run Tests
