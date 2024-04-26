@@ -1880,7 +1880,7 @@ Configurable_Product_Checkout
     Yves: 'Thank you' page is displayed
     Yves: get the last placed order ID by current customer
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    Zed: grand total for the order equals:    ${lastPlacedOrder}    €1,316.40
+    Zed: grand total for the order equals:    ${lastPlacedOrder}    €1,226.40
     Zed: go to order page:    ${lastPlacedOrder}
     Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Pay
     Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Skip timeout
