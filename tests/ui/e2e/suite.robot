@@ -26,6 +26,7 @@ Resource    ../../../resources/steps/wishlist_steps.robot
 Resource    ../../../resources/steps/zed_availability_steps.robot
 Resource    ../../../resources/steps/zed_discount_steps.robot
 Resource    ../../../resources/steps/zed_cms_page_steps.robot
+Resource    ../../../resources/steps/zed_cms_block_steps.robot
 Resource    ../../../resources/steps/zed_customer_steps.robot
 Resource    ../../../resources/steps/merchant_profile_steps.robot
 Resource    ../../../resources/steps/zed_marketplace_steps.robot
@@ -48,6 +49,8 @@ Resource    ../../../resources/steps/picking_list_steps.robot
 Resource    ../../../resources/steps/zed_payment_methods_steps.robot
 Resource    ../../../resources/steps/order_comments_steps.robot
 Resource    ../../../resources/steps/merchants_steps.robot
+Resource    ../../../resources/steps/zed_store_steps.robot    
+
 Default Tags    bapi
 
 *** Test Cases ***
@@ -3640,85 +3643,187 @@ Fulfilment_app_e2e# Fulfilment_app_e2e
     ...  AND    Make user a warehouse user/ not a warehouse user:   ${warehous_user[0].de_admin_user_uuid}    0
     ...  AND    I send a DELETE request:    /warehouse-user-assignments/${warehouse_assigment_id}
 
-# # Approval_Process
-# #     ### *** DEMODATA - NO OOT LIMITS AND CAN'T SET THEM IN SUITE *** ###
-# #     [Tags]    skip-due-to-refactoring
-# #     [Documentation]    Checks role permissions on checkout and Approval process
-# #     [Setup]    Run keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_with_limit_email}
-# #     ...    AND    Yves: create new 'Shopping Cart' with name:    approvalCart+${random}
-# #     Yves: go to PDP of the product with sku:    M49320
-# #     Yves: add product to the shopping cart
-# #     Yves: go to the shopping cart through the header with name:    approvalCart+${random}
-# #     Yves: click on the 'Checkout' button in the shopping cart
-# #     Yves: billing address same as shipping address:    true
-# #     Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${yves_company_user_buyer_with_limit_address}
-# #     Yves: select the following shipping method on the checkout and go next:    Express
-# #     Yves: select the following payment method on the checkout and go next:    Invoice
-# #     Yves: select approver on the 'Summary' page:    Lilu Dallas (€1,000.00)
-# #     Yves: 'send the request' on the summary page
-# #     Yves: 'Summary' page is displayed
-# #     Yves: 'Summary' page contains/doesn't contain:    true    ${cancelRequestButton}    ${alertWarning}    ${quoteStatus}
-# #     Yves: go to the 'Home' page
-# #     Yves: go to the shopping cart through the header with name:    approvalCart+${random}
-# #     Yves: shopping cart contains/doesn't contain the following elements:    true    ${lockedCart}
-# #     Yves: create new 'Shopping Cart' with name:    newApprovalCart+${random}
-# #     Yves: go to PDP of the product with sku:    M58314
-# #     Yves: add product to the shopping cart
-# #     Yves: go to the shopping cart through the header with name:    newApprovalCart+${random}
-# #     Yves: click on the 'Checkout' button in the shopping cart
-# #     Yves: billing address same as shipping address:    true
-# #     Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${yves_company_user_buyer_with_limit_address}
-# #     Yves: select the following shipping method on the checkout and go next:    Express
-# #     Yves: select the following payment method on the checkout and go next:    Invoice
-# #     Yves: accept the terms and conditions:    true
-# #     Yves: 'submit the order' on the summary page
-# #     Yves: 'Thank you' page is displayed
-# #     Yves: create new 'Shopping Cart' with name:    anotherApprovalCart+${random}
-# #     Yves: go to PDP of the product with sku:    M58314
-# #     Yves: add product to the shopping cart
-# #     Yves: go to the shopping cart through the header with name:    anotherApprovalCart+${random}
-# #     Yves: click on the 'Checkout' button in the shopping cart
-# #     Yves: billing address same as shipping address:    true
-# #     Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${yves_company_user_buyer_with_limit_address}
-# #     Yves: select the following shipping method on the checkout and go next:    Express
-# #     Yves: select the following payment method on the checkout and go next:    Invoice
-# #     Yves: select approver on the 'Summary' page:    Lilu Dallas (€1,000.00)
-# #     Yves: 'send the request' on the summary page
-# #     Yves: 'Summary' page is displayed
-# #     Yves: 'Summary' page contains/doesn't contain:    true    ${cancelRequestButton}    ${alertWarning}    ${quoteStatus}
-# #     Yves: logout on Yves as a customer
-# #     Yves: login on Yves with provided credentials:    ${yves_company_user_approver_email}
-# #     Yves: go to user menu:    Overview
-# #     Yves: 'Overview' page is displayed
-# #     Yves: go to user menu item in the left bar:    Shopping carts
-# #     Yves: 'Shopping Carts' page is displayed
-# #     Yves: the following shopping cart is shown:    approvalCart+${random}    Read-only
-# #     Yves: the following shopping cart is shown:    anotherApprovalCart+${random}    Read-only
-# #     Yves: shopping cart with name xxx has the following status:    approvalCart+${random}    Waiting
-# #     Yves: shopping cart with name xxx has the following status:    anotherApprovalCart+${random}    Waiting
-# #     Yves: go to the shopping cart through the header with name:    approvalCart+${random}
-# #     Yves: click on the 'Checkout' button in the shopping cart
-# #     Yves: 'Summary' page is displayed
-# #     Yves: 'approve the cart' on the summary page
-# #     Yves: 'Summary' page is displayed
-# #     Yves: 'Summary' page contains/doesn't contain:    false    ${cancelRequestButton}    ${alertWarning}
-# #     Yves: go to the 'Home' page
-# #     Yves: go to user menu:    Overview
-# #     Yves: 'Overview' page is displayed
-# #     Yves: go to user menu item in the left bar:    Shopping carts
-# #     Yves: 'Shopping Carts' page is displayed
-# #     Yves: the following shopping cart is shown:    approvalCart+${random}    Read-only
-# #     Yves: the following shopping cart is shown:    anotherApprovalCart+${random}    Read-only
-# #     Yves: shopping cart with name xxx has the following status:    approvalCart+${random}    Approved
-# #     Yves: shopping cart with name xxx has the following status:    anotherApprovalCart+${random}    Waiting
-# #     Yves: logout on Yves as a customer
-# #     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_with_limit_email}
-# #     Yves: go to user menu item in the left bar:    Shopping carts
-# #     Yves: shopping cart with name xxx has the following status:    approvalCart+${random}    Approved
-# #     Yves: go to the shopping cart through the header with name:    approvalCart+${random}
-# #     Yves: shopping cart contains/doesn't contain the following elements:    true    ${lockedCart}
-# #     Yves: click on the 'Checkout' button in the shopping cart
-# #     Yves: 'Summary' page is displayed
-# #     Yves: Accept the Terms and Conditions:    true
-# #     Yves: 'submit the order' on the summary page
-# #     Yves: 'Thank you' page is displayed
+# Approval_Process
+#     ### *** DEMODATA - NO OOT LIMITS AND CAN'T SET THEM IN SUITE *** ###
+#     [Tags]    skip-due-to-refactoring
+#     [Documentation]    Checks role permissions on checkout and Approval process
+#     [Setup]    Run keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_with_limit_email}
+#     ...    AND    Yves: create new 'Shopping Cart' with name:    approvalCart+${random}
+#     Yves: go to PDP of the product with sku:    M49320
+#     Yves: add product to the shopping cart
+#     Yves: go to the shopping cart through the header with name:    approvalCart+${random}
+#     Yves: click on the 'Checkout' button in the shopping cart
+#     Yves: billing address same as shipping address:    true
+#     Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${yves_company_user_buyer_with_limit_address}
+#     Yves: select the following shipping method on the checkout and go next:    Express
+#     Yves: select the following payment method on the checkout and go next:    Invoice
+#     Yves: select approver on the 'Summary' page:    Lilu Dallas (€1,000.00)
+#     Yves: 'send the request' on the summary page
+#     Yves: 'Summary' page is displayed
+#     Yves: 'Summary' page contains/doesn't contain:    true    ${cancelRequestButton}    ${alertWarning}    ${quoteStatus}
+#     Yves: go to the 'Home' page
+#     Yves: go to the shopping cart through the header with name:    approvalCart+${random}
+#     Yves: shopping cart contains/doesn't contain the following elements:    true    ${lockedCart}
+#     Yves: create new 'Shopping Cart' with name:    newApprovalCart+${random}
+#     Yves: go to PDP of the product with sku:    M58314
+#     Yves: add product to the shopping cart
+#     Yves: go to the shopping cart through the header with name:    newApprovalCart+${random}
+#     Yves: click on the 'Checkout' button in the shopping cart
+#     Yves: billing address same as shipping address:    true
+#     Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${yves_company_user_buyer_with_limit_address}
+#     Yves: select the following shipping method on the checkout and go next:    Express
+#     Yves: select the following payment method on the checkout and go next:    Invoice
+#     Yves: accept the terms and conditions:    true
+#     Yves: 'submit the order' on the summary page
+#     Yves: 'Thank you' page is displayed
+#     Yves: create new 'Shopping Cart' with name:    anotherApprovalCart+${random}
+#     Yves: go to PDP of the product with sku:    M58314
+#     Yves: add product to the shopping cart
+#     Yves: go to the shopping cart through the header with name:    anotherApprovalCart+${random}
+#     Yves: click on the 'Checkout' button in the shopping cart
+#     Yves: billing address same as shipping address:    true
+#     Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${yves_company_user_buyer_with_limit_address}
+#     Yves: select the following shipping method on the checkout and go next:    Express
+#     Yves: select the following payment method on the checkout and go next:    Invoice
+#     Yves: select approver on the 'Summary' page:    Lilu Dallas (€1,000.00)
+#     Yves: 'send the request' on the summary page
+#     Yves: 'Summary' page is displayed
+#     Yves: 'Summary' page contains/doesn't contain:    true    ${cancelRequestButton}    ${alertWarning}    ${quoteStatus}
+#     Yves: logout on Yves as a customer
+#     Yves: login on Yves with provided credentials:    ${yves_company_user_approver_email}
+#     Yves: go to user menu:    Overview
+#     Yves: 'Overview' page is displayed
+#     Yves: go to user menu item in the left bar:    Shopping carts
+#     Yves: 'Shopping Carts' page is displayed
+#     Yves: the following shopping cart is shown:    approvalCart+${random}    Read-only
+#     Yves: the following shopping cart is shown:    anotherApprovalCart+${random}    Read-only
+#     Yves: shopping cart with name xxx has the following status:    approvalCart+${random}    Waiting
+#     Yves: shopping cart with name xxx has the following status:    anotherApprovalCart+${random}    Waiting
+#     Yves: go to the shopping cart through the header with name:    approvalCart+${random}
+#     Yves: click on the 'Checkout' button in the shopping cart
+#     Yves: 'Summary' page is displayed
+#     Yves: 'approve the cart' on the summary page
+#     Yves: 'Summary' page is displayed
+#     Yves: 'Summary' page contains/doesn't contain:    false    ${cancelRequestButton}    ${alertWarning}
+#     Yves: go to the 'Home' page
+#     Yves: go to user menu:    Overview
+#     Yves: 'Overview' page is displayed
+#     Yves: go to user menu item in the left bar:    Shopping carts
+#     Yves: 'Shopping Carts' page is displayed
+#     Yves: the following shopping cart is shown:    approvalCart+${random}    Read-only
+#     Yves: the following shopping cart is shown:    anotherApprovalCart+${random}    Read-only
+#     Yves: shopping cart with name xxx has the following status:    approvalCart+${random}    Approved
+#     Yves: shopping cart with name xxx has the following status:    anotherApprovalCart+${random}    Waiting
+#     Yves: logout on Yves as a customer
+#     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_with_limit_email}
+#     Yves: go to user menu item in the left bar:    Shopping carts
+#     Yves: shopping cart with name xxx has the following status:    approvalCart+${random}    Approved
+#     Yves: go to the shopping cart through the header with name:    approvalCart+${random}
+#     Yves: shopping cart contains/doesn't contain the following elements:    true    ${lockedCart}
+#     Yves: click on the 'Checkout' button in the shopping cart
+#     Yves: 'Summary' page is displayed
+#     Yves: Accept the Terms and Conditions:    true
+#     Yves: 'submit the order' on the summary page
+#     Yves: 'Thank you' page is displayed
+
+Configurable_Product_Checkout
+    [Setup]    Run keywords    Yves: login on Yves with provided credentials:    ${yves_user_email}
+    ...    AND    Yves: check if cart is not empty and clear it
+    ...    AND    Yves: delete all user addresses
+    ...    AND    Yves: create a new customer address in profile:     Mr    ${yves_user_first_name}    ${yves_user_last_name}    Kirncher Str.    7    10247    Berlin    Germany
+    Yves: go to PDP of the product with sku:    ${configurable_product_abstract_sku}
+    Yves: PDP contains/doesn't contain:    true    ${configureButton}
+    Yves: product configuration status should be equal:       Configuration is not complete.
+    Yves: change the product options in configurator to:
+    ...    || option one | option two ||
+    ...    || 517        | 167        ||
+    Yves: product configuration status should be equal:      Configuration complete!
+    Yves: add product to the shopping cart
+    Yves: go to b2c shopping cart
+    Yves: change the product options in configurator to:
+    ...    || option one | option two ||
+    ...    || 389.50     | 249        ||
+    Yves: shopping cart contains product with unit price:    sku=${configurable_product_concrete_sku}    productName=${configurable_product_name}    productPrice=638.50 
+    Yves: product configuration status should be equal:      Configuration complete!
+    Yves: click on the 'Checkout' button in the shopping cart
+    Yves: billing address same as shipping address:    true
+    Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${yves_user_address}
+    Yves: select the following shipping method on the checkout and go next:    Express
+    Yves: select the following payment method on the checkout and go next:    Marketplace Invoice
+    Yves: accept the terms and conditions:    true
+    Yves: 'submit the order' on the summary page
+    Yves: 'Thank you' page is displayed
+    Yves: get the last placed order ID by current customer
+    Zed: login on Zed with provided credentials:    ${zed_main_merchant_email}
+    Zed: grand total for the order equals:    ${lastPlacedOrder}    €580.55
+
+Dynamic-multistore
+    [Documentation]  Bug: FRW-7903  This test should exclusively run for dynamic multi-store scenarios. The test verifies that the user can successfully create a new store, assign a product and CMS page, and register a customer within the new store.
+    [Tags]    dms-on
+    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: create new Store:
+    ...    || name                                    | locale_iso_code | currency_iso_code | currency_code | currency_iso_code2 | currency_code2 |store_delivery_region ||
+    ...    || ${random_str_store}_${random_str_store} | en_US           | Euro              | EUR           | Swiss Franc        | CHF            | AT                   ||
+    Trigger multistore p&s
+    Yves: login on Yves with provided credentials:    ${yves_user_email}
+    Yves: go to AT store 'Home' page if other store not specified:     ${random_str_store}_${random_str_store}
+    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: update abstract product data:
+    ...    || store                                    | productAbstract                     ||
+    ...    ||  ${random_str_store}_${random_str_store} | ${one_variant_product_abstract_sku} ||
+    Zed: update abstract product price on:
+    ...    || productAbstract                      | store                                   | mode  | type    | currency | amount | tax set            ||
+    ...    || ${one_variant_product_abstract_sku}  | ${random_str_store}_${random_str_store} | gross | default | €        | 160.00 | Smart Electronics  ||   
+    Trigger multistore p&s
+    Zed: change concrete product data:
+    ...    || productAbstract                     | productConcrete                     | active | searchable en | searchable de ||
+    ...    || ${one_variant_product_abstract_sku} | ${one_variant_product_concrete_sku} | true   | true          | true          ||
+    Zed: change concrete product price on:
+    ...    || productAbstract                     | productConcrete                     | store                                   | mode  | type    | currency | amount ||
+    ...    || ${one_variant_product_abstract_sku} | ${one_variant_product_concrete_sku} | ${random_str_store}_${random_str_store} | gross | default | €        | 15.00  ||
+    Zed: update warehouse:
+    ...    || warehouse  | store                                   || 
+    ...    || Warehouse1 | ${random_str_store}_${random_str_store} ||
+    Zed: change concrete product stock:
+    ...    || productAbstract                     | productConcrete                     | warehouse n1 | warehouse n1 qty | warehouse n1 never out of stock ||
+    ...    || ${one_variant_product_abstract_sku} | ${one_variant_product_concrete_sku} | Warehouse1   | 100              | true                            ||
+    Trigger multistore p&s
+    Zed: update abstract product data:
+    ...    || productAbstract                     | name de                        ||
+    ...    || ${one_variant_product_abstract_sku} | DEmanageProduct${random} force ||
+    Trigger multistore p&s
+    Yves: login on Yves with provided credentials:    ${yves_user_email}
+    Yves: go to AT store 'Home' page if other store not specified:    ${random_str_store}_${random_str_store}
+    Yves: select currency Euro if other currency not specified
+    Yves: create new 'Shopping Cart' with name:    storeCart+${random}
+    Yves: go to PDP of the product with sku:    ${one_variant_product_concrete_sku}
+    Yves: product price on the PDP should be:    €15.00
+    #### create new cms page and check it in new store on YVES
+    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: go to second navigation item level:    Content    Pages
+    Zed: create a cms page and publish it:    New Page Store${random}    store-page${random}    Page Title    Page text
+    Trigger multistore p&s
+    Yves: go to newly created page by URL:    en/store-page${random}
+    Yves: page contains CMS element:    CMS Page Title    Page Title
+    Yves: page contains CMS element:    CMS Page Content    Page text
+    Yves: go to AT store 'Home' page if other store not specified:    ${random_str_store}_${random_str_store}
+    Yves: go to newly created page by URL:   en/store-page${random}
+    Yves: page contains CMS element:    CMS Page Content    Page text
+    ## assigned CMS BLocks to new store
+    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: assigned store to cms block:    ${random_str_store}_${random_str_store}    customer-registration_token--html
+    Zed: assigned store to cms block:    ${random_str_store}_${random_str_store}    customer-registration_token--text
+    ## register new customer in the new store on YVES
+    Yves: go to AT store 'Home' page if other store not specified:    ${random_str_store}_${random_str_store}
+    Register a new customer with data:
+    ...    || salutation | first name | last name | e-mail                       | password                      ||
+    ...    || Mr.        | New        | User      | sonia+dms${random}@spryker.com  | P${random_str}s#!#${random_id} ||
+    Yves: flash message should be shown:    success    Almost there! We send you an email to validate your email address. Please confirm it to be able to log in.
+    [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    ...    AND    Zed: go to second navigation item level:    Content    Pages
+    ...    AND    Zed: click Action Button in a table for row that contains:    New Page Store${random}   Deactivate
+    ...    AND    Trigger multistore p&s
+    Zed: delete customer:
+    ...    || email                       ||
+    ...    || sonia+dms${random}@spryker.com ||
+

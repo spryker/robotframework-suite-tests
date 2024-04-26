@@ -55,13 +55,17 @@ Common_suite_setup
     ${random}=    Generate Random String    5    [NUMBERS]
     ${random_id}=    Generate Random String    5    [NUMBERS]
     ${random_str}=    Generate Random String    5    [LETTERS]
+    ${random_str_store}=    Generate Random String    2    [UPPER]
     ${random_str_password}=    Generate Random String    2    [LETTERS]
     ${random_id_password}=    Generate Random String    2    [NUMBERS]
+
     Set Global Variable    ${random}
     Set Global Variable    ${random_id}
     Set Global Variable    ${random_str}
+    Set Global Variable    ${random_str_store}
     Set Global Variable    ${random_id_password}
     Set Global Variable    ${random_str_password}
+    
     ${today}=    Get Current Date    result_format=%Y-%m-%d
     Set Global Variable    ${today}
     IF    ${docker}
@@ -472,6 +476,30 @@ Delete country by iso2_code in Database:
     Connect to Spryker DB
     Execute Sql String    DELETE FROM spy_country WHERE iso2_code = '${iso2_code}';
     Disconnect From Database
+
+Delete url by url name in Database:
+    [Documentation]    This keyword deletes a url by url name in the DB table spy_url.
+        ...    *Example:*
+        ...
+        ...    ``Delete url by url name in Database:    test``
+        ...
+    [Arguments]    ${url}
+    Connect to Spryker DB
+    Execute Sql String    DELETE FROM spy_url WHERE url = '${url}';
+    Disconnect From Database
+
+Verify that url is present in the Database:
+    [Documentation]    This keyword verifies that url is present in the DB table spy_url.
+        ...    *Example:*
+        ...
+        ...    ``Verify that url is present in the Database:    test``
+        ...
+    [Arguments]    ${url}
+    Connect to Spryker DB
+    ${db_url}=    Query    SELECT url FROM spy_url WHERE url = '${url}' LIMIT 1;
+    ${db_url}=    Set Variable    ${db_url[0][0]}
+    Disconnect From Database
+    Should Be Equal    ${url}    ${db_url}
 
 Update dynamic entity configuration in Database:
      [Documentation]    This keyword update dynamic entity configuration in the DB table spy_dynamic_entity_configuration if configuration exists.

@@ -71,7 +71,7 @@ Zed: go to second navigation item level:
         Click Element by xpath with JavaScript    (//span[contains(@class,'nav-label')][text()='${navigation_item_level1}']/ancestor::li//ul[contains(@class,'nav-second-level')]//a/span[text()='${navigation_item_level2}'])[1]
         Repeat Keyword    3    Wait Until Network Is Idle    timeout=${browser_timeout}
     END
-
+    
 Zed: click button in Header:
     [Arguments]    ${button_name}
     wait until element is visible    xpath=//div[@class='title-action']/a[contains(.,'${button_name}')]
@@ -109,6 +109,11 @@ Zed: Check checkbox by Label:
     [Arguments]    ${checkbox_label}
     wait until element is visible    xpath=//input[@type='checkbox']/../../label[contains(text(),'${checkbox_label}')]//input
     Check checkbox    xpath=//input[@type='checkbox']/../../label[contains(text(),'${checkbox_label}')]//input
+
+Zed: Check checkbox by Value:
+    [Arguments]    ${checkbox_value}
+    wait until element is visible    xpath=//input[@type='checkbox' and contains(@value, '${checkbox_value}')]
+    Check checkbox    xpath=//input[@type='checkbox' and contains(@value, '${checkbox_value}')]
 
 Zed: Uncheck Checkbox by Label:
     [Arguments]    ${checkbox_label}

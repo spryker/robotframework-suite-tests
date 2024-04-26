@@ -16,6 +16,7 @@ ${zed_cms_page_content_second_locale_content_collapsed_section}    xpath=//div[@
 ${zed_cms_page_general_second_locale_name_field}    id=cms_page_pageAttributes_1_name
 ${zed_cms_page_general_second_locale_url_field}    id=cms_page_pageAttributes_1_url
 ${zed_cms_page_save_button}    id=submit-cms
+${zed_cms_block_save_button}    xpath=//input[@type='submit']
 # Placeholders
 ${zed_cms_page_placeholder_title_enUS_field}    xpath=//*[@id='cms_glossary_glossaryAttributes_0_translations_0_translation']/following-sibling::div//div[@class='note-editing-area']//div[@role='textbox']
 ${zed_cms_page_placeholder_title_deDE_field}    xpath=//*[@id='cms_glossary_glossaryAttributes_0_translations_1_translation']/following-sibling::div//div[@class='note-editing-area']//div[@role='textbox']
