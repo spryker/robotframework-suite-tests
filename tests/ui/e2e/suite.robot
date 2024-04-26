@@ -3726,6 +3726,37 @@ Fulfilment_app_e2e# Fulfilment_app_e2e
 #     Yves: 'submit the order' on the summary page
 #     Yves: 'Thank you' page is displayed
 
+Configurable_Product_Checkout
+    [Setup]    Run keywords    Yves: login on Yves with provided credentials:    ${yves_user_email}
+    ...    AND    Yves: check if cart is not empty and clear it
+    ...    AND    Yves: delete all user addresses
+    ...    AND    Yves: create a new customer address in profile:     Mr    ${yves_user_first_name}    ${yves_user_last_name}    Kirncher Str.    7    10247    Berlin    Germany
+    Yves: go to PDP of the product with sku:    ${configurable_product_abstract_sku}
+    Yves: PDP contains/doesn't contain:    true    ${configureButton}
+    Yves: product configuration status should be equal:       Configuration is not complete.
+    Yves: change the product options in configurator to:
+    ...    || option one | option two ||
+    ...    || 517        | 167        ||
+    Yves: product configuration status should be equal:      Configuration complete!
+    Yves: add product to the shopping cart
+    Yves: go to b2c shopping cart
+    Yves: change the product options in configurator to:
+    ...    || option one | option two ||
+    ...    || 389.50     | 249        ||
+    Yves: shopping cart contains product with unit price:    sku=${configurable_product_concrete_sku}    productName=${configurable_product_name}    productPrice=638.50 
+    Yves: product configuration status should be equal:      Configuration complete!
+    Yves: click on the 'Checkout' button in the shopping cart
+    Yves: billing address same as shipping address:    true
+    Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${yves_user_address}
+    Yves: select the following shipping method on the checkout and go next:    Express
+    Yves: select the following payment method on the checkout and go next:    Marketplace Invoice
+    Yves: accept the terms and conditions:    true
+    Yves: 'submit the order' on the summary page
+    Yves: 'Thank you' page is displayed
+    Yves: get the last placed order ID by current customer
+    Zed: login on Zed with provided credentials:    ${zed_main_merchant_email}
+    Zed: grand total for the order equals:    ${lastPlacedOrder}    €580.55
+
 Dynamic-multistore
     [Documentation]  This test should exclusively run for dynamic multi-store scenarios. The test verifies that the user can successfully create a new store, assign a product and CMS page, and register a customer within the new store.
     [Tags]    dms-on
@@ -3795,3 +3826,4 @@ Dynamic-multistore
     Zed: delete customer:
     ...    || email                       ||
     ...    || sonia+dms${random}@spryker.com ||
+

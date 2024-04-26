@@ -1935,16 +1935,78 @@ Dynamic-multistore
     Yves: product price on the PDP should be:    €15.00
     #### create new cms page and check it in new store on YVES
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    Zed: go to second navigation item level:    Content    Pages
-    Zed: create a cms page and publish it:    New Page Store${random}    store-page${random}    Page Title    Page text
-    Trigger multistore p&s
-    Yves: go to newly created page by URL:    en/store-page${random}
-    Yves: page contains CMS element:    CMS Page Title    Page Title
-    Yves: page contains CMS element:    CMS Page Content    Page text
-    Yves: go to AT store 'Home' page if other store not specified:    ${random_str_store}_${random_str_store}
-    Yves: go to newly created page by URL:   en/store-page${random}
-    Yves: page contains CMS element:    CMS Page Content    Page text
-    ## assigned CMS BLocks to new store
+    Zed: go to order page:    ${lastPlacedOrder}
+    Zed: trigger all matching states inside this order:    picking list generation schedule
+    # # ORDER READY FOR PICKING
+    Zed: wait for order item to be in state:    091_25873091    ready for picking
+    Zed: wait for order item to be in state:    093_24495843    ready for picking
+    # # START PICKING PROCESS AND PICKING ITEMS BY BAPI
+    Remove Tags    glue
+    Set Tags   bapi
+    API_test_setup
+    I set Headers:    Content-Type=${default_header_content_type}
+    Then I get access token by user credentials:   ${zed_admin_email_de}
+    I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer ${token}
+    I send a GET request:    /picking-lists/?include=picking-list-items,concrete-products,sales-shipments,sales-orders,include=warehouses
+    Then Response status code should be:    200
+    Then Save value to a variable:    [data][0][id]    picklist_id
+    Then Save value to a variable:    [data][0][relationships][picking-list-items][data][0][id]    item_id_1
+    Then Save value to a variable:    [data][0][relationships][picking-list-items][data][1][id]    item_id_2
+    And Response body parameter should be:    [data][0][attributes][status]    ready-for-picking
+    # # START PICKING
+    I send a POST request:   /picking-lists/${picklist_id}/start-picking    {"data": [{"type": "picking-lists","attributes": {"action": "startPicking"}}]}
+    Then Response status code should be:    201
+    And Response body parameter should be:    [data][attributes][status]    picking-started
+    # # PICKING ONE ITEM, ANOTHER ITEM STILL NOT PICKED
+    Then I send a PATCH request:    /picking-lists/${picklist_id}/picking-list-items    {"data":[{"id":"${item_id_1}","type":"picking-list-items","attributes":{"numberOfPicked":1,"numberOfNotPicked":0}},{"id":"${item_id_2}","type":"picking-list-items","attributes":{"numberOfPicked":0,"numberOfNotPicked":0}}]}
+    Then Response status code should be:    200
+    And Response body parameter should be:    [data][0][attributes][status]    picking-started
+    And Response body parameter should be in:    [data][0][relationships][picking-list-items][data][0][id]    ${item_id_1}    ${item_id_2}
+    And Response body parameter should be in:    [data][0][relationships][picking-list-items][data][1][id]    ${item_id_1}    ${item_id_2}
+    # # PICKING SECOND ITEM, PICKING FINISHED
+    Then I send a PATCH request:    /picking-lists/${picklist_id}/picking-list-items    {"data":[{"id":"${item_id_1}","type":"picking-list-items","attributes":{"numberOfPicked":1,"numberOfNotPicked":0}},{"id":"${item_id_2}","type":"picking-list-items","attributes":{"numberOfPicked":0,"numberOfNotPicked":1}}]}
+    Then Response status code should be:    200
+    And Response body parameter should be:    [data][0][attributes][status]    picking-finished
+    # CLEAN SYSTEM, REMOVE CREATED RELATIONS IN DB
+    [Teardown]     Run Keywords    Remove picking list item by uuid in DB:    ${item_id_1}
+    ...  AND    Remove picking list item by uuid in DB:    ${item_id_2} 
+    ...  AND    Remove picking list by uuid in DB:    ${picklist_id}
+    ...  AND    Make user a warehouse user/ not a warehouse user:   ${warehous_user[0].de_admin_user_uuid}    0
+    ...  AND    I send a DELETE request:    /warehouse-user-assignments/${warehouse_assigment_id}    
+  
+Configurable_Product_Checkout
+    [Setup]    Run keywords    Yves: login on Yves with provided credentials:    ${yves_user_email}
+    ...    AND    Yves: create new 'Whistist' with name:    configProduct${random}
+    ...    AND    Yves: check if cart is not empty and clear it
+    ...    AND    Yves: delete all user addresses
+    ...    AND    Yves: create a new customer address in profile:     Mr    ${yves_user_first_name}    ${yves_user_last_name}    Kirncher Str.    7    10247    Berlin    Germany
+    Yves: go to PDP of the product with sku:    ${configurable_product_abstract_sku}
+    Yves: change variant of the product on PDP on:    ${configurable_product_concrete_one_attribute}
+    Yves: PDP contains/doesn't contain:    true    ${configureButton}
+    Yves: product configuration status should be equal:       Configuration is not complete.
+    Yves: change the product options in configurator to:
+    ...    || option one | option two | option three |option four | option five | option six | option seven | option eight | option nine | option ten       ||
+    ...    || 517        | 473        | 100          | 0.00       |  51         | 19         | 367          | 46           | 72          | English Keyboard ||
+    Yves: product configuration status should be equal:      Configuration complete!
+    Yves: add product to the shopping cart
+    Yves: go to b2c shopping cart
+    Yves: shopping cart contains product with unit price:    sku=${configurable_product_concrete_one_sku}    productName=${configurable_product_name}    productPrice=1,645.00
+    Yves: change the product options in configurator to:
+    ...    || option one | option two | option three |option four | option five | option six | option seven | option eight | option nine | option ten      ||
+    ...    || 905        | 249        | 100          | 36         |  15         | 0.00       | 48           | 57           | 36          | German Keyboard ||
+    Yves: shopping cart contains product with unit price:    sku=${configurable_product_concrete_one_sku}    productName=${configurable_product_name}    productPrice=1,446.00 
+    Yves: product configuration status should be equal:      Configuration complete!
+    Yves: click on the 'Checkout' button in the shopping cart
+    Yves: billing address same as shipping address:    true
+    Yves: select the following existing address on the checkout as 'shipping' address and go next:   ${yves_user_address}
+    Yves: submit form on the checkout
+    Yves: select the following shipping method for the shipment:    1    Hermes    Next Day
+    Yves: submit form on the checkout
+    Yves: select the following payment method on the checkout and go next:    Invoice
+    Yves: accept the terms and conditions:    true
+    Yves: 'submit the order' on the summary page
+    Yves: 'Thank you' page is displayed
+    Yves: get the last placed order ID by current customer
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: assigned store to cms block:    ${random_str_store}_${random_str_store}    customer-registration_token--html
     Zed: assigned store to cms block:    ${random_str_store}_${random_str_store}    customer-registration_token--text
