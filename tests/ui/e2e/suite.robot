@@ -3727,7 +3727,7 @@ Fulfilment_app_e2e# Fulfilment_app_e2e
 #     Yves: 'Thank you' page is displayed
 
 Dynamic-multistore
-    [Documentation]  Bug: FRW-7903  This test should exclusively run for dynamic multi-store scenarios. The test verifies that the user can successfully create a new store, assign a product and CMS page, and register a customer within the new store.
+    [Documentation]  This test should exclusively run for dynamic multi-store scenarios. The test verifies that the user can successfully create a new store, assign a product and CMS page, and register a customer within the new store.
     [Tags]    dms-on
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: create new Store:

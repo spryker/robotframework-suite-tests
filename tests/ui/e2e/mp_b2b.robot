@@ -25,6 +25,7 @@ Resource    ../../../resources/steps/zed_customer_steps.robot
 Resource    ../../../resources/steps/zed_discount_steps.robot
 Resource    ../../../resources/steps/zed_availability_steps.robot
 Resource    ../../../resources/steps/zed_cms_page_steps.robot
+Resource    ../../../resources/steps/zed_cms_block_steps.robot
 Resource    ../../../resources/steps/merchant_profile_steps.robot
 Resource    ../../../resources/steps/zed_marketplace_steps.robot
 Resource    ../../../resources/steps/mp_profile_steps.robot
@@ -40,6 +41,7 @@ Resource    ../../../resources/steps/glossary_steps.robot
 Resource    ../../../resources/steps/order_comments_steps.robot
 Resource    ../../../resources/steps/configurable_product_steps.robot
 Resource    ../../../resources/steps/dynamic_entity_steps.robot
+Resource    ../../../resources/steps/zed_store_steps.robot    
 
 *** Test Cases ***
 Guest_User_Access_Restrictions
