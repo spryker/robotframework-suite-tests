@@ -637,6 +637,7 @@ Search_by_abstract_sku_with_abstract_include
     And Response body has correct self link
 
 Search_by_abstract_sku_per_store
+    [Tags]    dms-on
     When I set Headers:    store=DE
     Then I send a GET request:    /catalog-search?q=${concrete_product_with_alternative.abstract_sku}
     And Response status code should be:    200
