@@ -16,7 +16,7 @@ Zed: create new Merchant with the following data:
         Zed: go to second navigation item level:    Marketplace    Merchants
     ELSE
         Zed: go to second navigation item level:    B2B Contracts    Merchants
-    END    
+    END
     Zed: click button in Header:    Add Merchant
     Wait Until Element Is Visible    ${zed_create_merchant_name_field}
     FOR    ${key}    ${value}    IN    &{merchantData}
@@ -27,7 +27,7 @@ Zed: create new Merchant with the following data:
         IF    '${key}'=='store' and '${value}' != '${EMPTY}'    Zed: Check checkbox by Label:    ${value}
         IF    '${key}'=='en url' and '${value}' != '${EMPTY}'    Type Text    ${zed_create_merchant_url_en_locale_field}    ${value}
         IF    '${key}'=='de url' and '${value}' != '${EMPTY}'    Type Text    ${zed_create_merchant_url_de_locale_field}    ${value}
-    END  
+    END
     Zed: submit the form
     Zed: wait for button in Header to be visible:    Add Merchant    ${browser_timeout}
     Zed: table should contain:    ${MerchantName}
@@ -38,7 +38,7 @@ Zed: update Merchant on edit page with the following data:
     Wait Until Element Is Visible    ${zed_create_merchant_name_field}
     FOR    ${key}    ${value}    IN    &{merchantData}
         Log    Key is '${key}' and value is '${value}'.
-        IF    '${key}'=='merchant name' and '${value}' != '${EMPTY}'    Run Keywords    
+        IF    '${key}'=='merchant name' and '${value}' != '${EMPTY}'    Run Keywords
         ...    Type Text    ${zed_create_merchant_name_field}    ${value}
         ...    AND    Set Test Variable    ${zedMerchantNewName}    ${value}
         IF    '${key}'=='merchant reference' and '${value}' != '${EMPTY}'    Type Text    ${zed_create_merchant_reference_field}    ${value}
@@ -47,7 +47,7 @@ Zed: update Merchant on edit page with the following data:
         IF    '${key}'=='uncheck store' and '${value}' != '${EMPTY}'    Zed: Uncheck Checkbox by Label:    ${value}
         IF    '${key}'=='en url' and '${value}' != '${EMPTY}'    Type Text    ${zed_create_merchant_url_en_locale_field}    ${value}
         IF    '${key}'=='de url' and '${value}' != '${EMPTY}'    Type Text    ${zed_create_merchant_url_de_locale_field}    ${value}
-    END  
+    END
     Zed: submit the form
     Zed: wait for button in Header to be visible:    Add Merchant    ${browser_timeout}
     Zed: table should contain:    ${zedMerchantNewName}
@@ -71,7 +71,7 @@ Zed: create new Merchant User with the following data:
         IF    '${key}'=='e-mail' and '${value}' != '${EMPTY}'    Type Text    ${zed_create_merchant_user_email_field}    ${value}
         IF    '${key}'=='first name' and '${value}' != '${EMPTY}'    Type Text    ${zed_create_merchant_user_first_name_field}    ${value}
         IF    '${key}'=='last name' and '${value}' != '${EMPTY}'    Type Text    ${zed_create_merchant_user_last_name_field}    ${value}
-    END  
+    END
     Zed: submit the form
     Wait Until Element Is Visible    ${zed_table_locator}
 
@@ -84,7 +84,7 @@ Zed: update Merchant User on edit page with the following data:
         IF    '${key}'=='e-mail' and '${value}' != '${EMPTY}'    Type Text    ${zed_create_merchant_user_email_field}    ${value}
         IF    '${key}'=='first name' and '${value}' != '${EMPTY}'    Type Text    ${zed_create_merchant_user_first_name_field}    ${value}
         IF    '${key}'=='last name' and '${value}' != '${EMPTY}'    Type Text    ${zed_create_merchant_user_last_name_field}    ${value}
-    END  
+    END
     Zed: submit the form
     Wait Until Element Is Visible    ${zed_table_locator}
 
@@ -95,10 +95,10 @@ Zed: perform Merchant User search by:
     Type Text    ${zed_merchant_user_search_field_locator}    ${search_key}
     TRY
         Wait For Response    timeout=10s
-    EXCEPT    
+    EXCEPT
         Log    Search event is not fired
     END
-    Repeat Keyword    3    Wait Until Network Is Idle
+    Repeat Keyword    3    Wait For Load State
 
 Zed: click Action Button in Merchant Users table for row that contains:
     [Arguments]    ${row_content}    ${zed_table_action_button_locator}

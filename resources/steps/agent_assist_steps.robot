@@ -11,7 +11,7 @@ Zed: create new Zed user with the following data:
     IF    '/user' not in '${currentURL}'    Zed: go to second navigation item level:    Users    Users
     IF    '${env}' in ['ui_mp_b2b']
         Zed: click button in Header:    Add New User
-    ELSE 
+    ELSE
         Zed: click button in Header:    Add New User
     END
     Wait Until Element Is Visible    ${zed_user_email_field}
@@ -26,7 +26,7 @@ Zed: create new Zed user with the following data:
     Zed: submit the form
     IF    '${env}' in ['ui_mp_b2b']
         Zed: wait for button in Header to be visible:    Add New User    ${browser_timeout}
-    ELSE 
+    ELSE
         Zed: wait for button in Header to be visible:    Add New User    ${browser_timeout}
     END
     Zed: table should contain:    ${zedUserEmail}
@@ -34,7 +34,7 @@ Zed: create new Zed user with the following data:
 Yves: perform search by customer:
     [Arguments]    ${searchQuery}
     Type Text    ${agent_customer_search_widget}    ${searchQuery}    delay=0.5s
-    Repeat Keyword    3    Wait Until Network Is Idle
+    Repeat Keyword    3    Wait For Load State
 
 Yves: agent widget contains:
     [Arguments]    ${searchQuery}
@@ -44,7 +44,7 @@ Yves: agent widget contains:
 Yves: as an agent login under the customer:
     [Arguments]    ${searchQuery}
     Fill Text    ${agent_customer_search_widget}    ${EMPTY}    force=True
-    Repeat Keyword    3    Wait Until Network Is Idle
+    Repeat Keyword    3    Wait For Load State
     Yves: perform search by customer:    ${searchQuery}
     Wait Until Element Is Visible    //ul[@data-qa='component customer-list']/li[@data-value='${searchQuery}']
     Click    xpath=//ul[@data-qa='component customer-list']/li[@data-value='${searchQuery}']

@@ -1,7 +1,7 @@
 *** Settings ***
 Resource    ../common/common_zed.robot
 Resource    ../common/common.robot
-Resource    ../pages/zed/zed_store_page.robot    
+Resource    ../pages/zed/zed_store_page.robot
 
 
 *** Keywords ***
@@ -21,14 +21,14 @@ Zed: create new Store:
         IF    '${key}'=='locale_iso_code' and '${value}' != '${EMPTY}'
             Wait Until Element Is Visible    ${zed_store_default_locale_iso_code}
             Select From List By Label    ${zed_store_default_locale_iso_code}    ${value}
-            Zed: perform store search by:    ${value}   
+            Zed: perform store search by:    ${value}
             Zed: Check checkbox by Value:    ${value}
-            Click    ${zed_store_currency_tab}    
-        END   
+            Click    ${zed_store_currency_tab}
+        END
         IF    '${key}'=='currency_iso_code' and '${value}' != '${EMPTY}'
             Wait Until Element Is Visible    ${zed_store_default_currency_iso_code}
             Select From List By Label    ${zed_store_default_currency_iso_code}    ${value}
-        END    
+        END
         IF    '${key}'=='currency_code' and '${value}' != '${EMPTY}'
             ${currency code}=    Set Variable    ${value}
             Zed: perform store search by:    ${value}
@@ -37,18 +37,18 @@ Zed: create new Store:
         IF    '${key}'=='currency_iso_code2' and '${value}' != '${EMPTY}'
             Wait Until Element Is Visible    ${zed_store_default_currency_iso_code}
             Select From List By Label    ${zed_store_default_currency_iso_code}    ${value}
-        END          
+        END
         IF    '${key}'=='currency_code2' and '${value}' != '${EMPTY}'
             ${currency code}=    Set Variable    ${value}
             Zed: perform store search by:    ${value}
             Zed: Check checkbox by Value:    ${value}
             Click    ${zed_store_delivery_region_tab}
-        END   
+        END
         IF    '${key}'=='store_delivery_region' and '${value}' != '${EMPTY}'
-            Zed: perform store search by:    ${value}    
-            Zed: Check checkbox by Value:    ${value} 
-        END   
-    END 
+            Zed: perform store search by:    ${value}
+            Zed: Check checkbox by Value:    ${value}
+        END
+    END
     Click    ${zed_store_save_button}
 
 Zed: perform store search by:
@@ -58,8 +58,7 @@ Zed: perform store search by:
     Keyboard Key    press    Enter
     TRY
         Wait For Response    timeout=10s
-    EXCEPT    
+    EXCEPT
         Log    Search event is not fired
     END
-    Repeat Keyword    2    Wait Until Network Is Idle
- 
+    Repeat Keyword    2    Wait For Load State

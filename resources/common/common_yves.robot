@@ -48,14 +48,14 @@ Yves: login on Yves with provided credentials:
             Delete All Cookies
             Reload
             Go To    ${yves_url}login
-        END  
-    END  
+        END
+    END
     Type Text    ${email_field}    ${email}
     Type Text    ${password_field}    ${password}
     Click    ${form_login_button}
-    IF    'agent' in '${email}'    
+    IF    'agent' in '${email}'
     Yves: header contains/doesn't contain:    true    ${customerSearchWidget}
-        ELSE    
+        ELSE
         Wait Until Element Is Visible    ${user_navigation_icon_header_menu_item}[${env}]     Login Failed!
     END
     Yves: remove flash messages
@@ -79,14 +79,14 @@ Yves: go to PDP of the product with sku:
                 Take Screenshot    EMBED    fullPage=True
                 Fail    Product '${sku}' is not displayed in the search results
             END
-            IF    'FAIL' in ${result}   
+            IF    'FAIL' in ${result}
                 Sleep    ${delay}
                 Yves: go to URL:    /search?q=${sku}
                 Continue For Loop
             ELSE
                 ${pdp_url}=    Get Element Attribute    ${catalog_product_card_locator}    href
                 Yves: go to URL:    ${pdp_url}?fake=${random}+${index}
-                Repeat Keyword    3    Wait Until Network Is Idle
+                Repeat Keyword    3    Wait For Load State
                 ${pdp_available}=    Run Keyword And Ignore Error    Wait Until Page Contains Element    ${pdp_main_container_locator}[${env}]    timeout=0.5s
                 IF    'PASS' in ${pdp_available}
                     Exit For Loop
@@ -103,16 +103,16 @@ Yves: go to PDP of the product with sku:
             Wait Until Page Contains Element    ${catalog_product_card_locator}
             Click    ${catalog_product_card_locator}
             Wait Until Page Contains Element    ${pdp_main_container_locator}[${env}]
-            Repeat Keyword    3    Wait Until Network Is Idle
-        EXCEPT    
+            Repeat Keyword    3    Wait For Load State
+        EXCEPT
             Yves: go to URL:    /search?q=${sku}
             Reload
-            Repeat Keyword    3    Wait Until Network Is Idle
+            Repeat Keyword    3    Wait For Load State
             Wait Until Page Contains Element    ${catalog_main_page_locator}[${env}]
             Wait Until Page Contains Element    ${catalog_product_card_locator}
             ${pdp_url}=    Get Element Attribute    ${catalog_product_card_locator}    href
             Yves: go to URL:    ${pdp_url}?fake=${random}+${random}
-            Repeat Keyword    3    Wait Until Network Is Idle
+            Repeat Keyword    3    Wait For Load State
             Wait Until Page Contains Element    ${pdp_main_container_locator}[${env}]
         END
     END
@@ -149,7 +149,7 @@ Yves: remove flash messages
     TRY
         ${flash_massage_state}=    Page Should Contain Element    ${notification_area}    message=Flash message is not shown    timeout=1s
         Remove element from HTML with JavaScript    //section[@data-qa='component notification-area']
-    EXCEPT    
+    EXCEPT
         Log    Flash message is not shown
     END
 
@@ -205,7 +205,7 @@ Yves: select currency Euro if other currency not specified
         Go To    ${yves_url}
         Wait Until Element Is visible    ${currency_switcher_header_menu_item}[${env}]
         Select From List By Value    ${currency_switcher_header_menu_item}[${env}]    ${currency_code}
-        Wait Until Element Contains    //*[@data-qa='component header']//select[contains(@name,'currency')]/option[@selected='']    ${currency_name}  
+        Wait Until Element Contains    //*[@data-qa='component header']//select[contains(@name,'currency')]/option[@selected='']    ${currency_name}
     END
 
 Yves: get the last placed order ID by current customer
@@ -225,7 +225,7 @@ Yves: go to URL:
         Go To    ${yves_at_url}${url}
     ELSE
         Go To    ${yves_url}${url}
-    END    
+    END
 
 Yves: go to AT store URL if other store not specified:
     [Arguments]    ${url}    ${store}=AT
@@ -262,7 +262,7 @@ Yves: go to newly created page by URL:
 Yves: go to newly created page by URL on AT store if other store not specified:
     [Arguments]    ${url}    ${delay}=5s    ${iterations}=31    ${store}=AT
     ${dms_state}=    Convert To String    ${dms}
-    Set Browser Timeout    ${browser_timeout}    
+    Set Browser Timeout    ${browser_timeout}
     FOR    ${index}    IN RANGE    1    ${iterations}
         IF   '${dms_state}' != 'True'
             Go To    ${yves_at_url}${url}?${index}
@@ -312,7 +312,7 @@ Yves: navigate to specified AT store URL if no other store is specified and refr
             Fail    URL is still accessible but should not, check P&S
         END
     END
-    
+
 Yves: go to URL and refresh until 404 occurs:
     [Arguments]    ${url}    ${delay}=5s    ${iterations}=31
     FOR    ${index}    IN RANGE    1    ${iterations}
@@ -329,7 +329,7 @@ Yves: go to URL and refresh until 404 occurs:
             Fail    URL is still accessible but should not, check P&S
         END
     END
-    
+
 Yves: go to external URL:
     [Arguments]    ${url}
     Set Browser Timeout    ${browser_timeout}
@@ -346,22 +346,22 @@ Yves: go to second navigation item level:
     Add/Edit element attribute with JavaScript:    ${1LevelXpath}    class    ${nodeUpdatedClass}
     Wait Until Element Is Visible    //div[@class='header__navigation']//navigation-multilevel[@data-qa='component navigation-multilevel']/ul[@class='menu menu--lvl-0']//li[contains(@class,'menu__item--lvl-0')]/span/*[contains(@class,'lvl-0')][1][text()='${navigation_item_level1}']/ancestor::li//ul[contains(@class,'menu--lvl-1')]
     Click Element by xpath with JavaScript    //div[@class='header__navigation']//navigation-multilevel[@data-qa='component navigation-multilevel']/ul[@class='menu menu--lvl-0']//li[contains(@class,'menu__item--lvl-0')]/span/*[contains(@class,'lvl-0')][1][text()='${navigation_item_level1}']/ancestor::li//ul[contains(@class,'menu--lvl-1')]//li[contains(@class,'menu__item--lvl-1')]/span/*[contains(@class,'lvl-1')][1][text()='${navigation_item_level2}']
-    Repeat Keyword    3    Wait Until Network Is Idle
+    Repeat Keyword    3    Wait For Load State
 
 Yves: go to first navigation item level:
     [Arguments]     ${navigation_item_level1}
     IF    '${env}' in ['ui_b2b','ui_mp_b2b']
         Wait Until Element Is Visible    xpath=//div[@class='header__navigation']//navigation-multilevel[@data-qa='component navigation-multilevel']/ul[@class='menu menu--lvl-0']//li[contains(@class,'menu__item--lvl-0')]/span/*[contains(@class,'lvl-0')][1][text()='${navigation_item_level1}']
         Click Element by xpath with JavaScript    //div[@class='header__navigation']//navigation-multilevel[@data-qa='component navigation-multilevel']/ul[@class='menu menu--lvl-0']//li[contains(@class,'menu__item--lvl-0')]/span/*[contains(@class,'lvl-0')][1][text()='${navigation_item_level1}']
-        Repeat Keyword    3    Wait Until Network Is Idle
+        Repeat Keyword    3    Wait For Load State
     ELSE IF    '${env}' in ['ui_suite']
         Wait Until Element Is Visible    xpath=(//header//nav[contains(@data-qa,'navigation-multilevel')]/ul/li[contains(.,'${navigation_item_level1}')])[1]
         Click    xpath=(//header//nav[contains(@data-qa,'navigation-multilevel')]/ul/li[contains(.,'${navigation_item_level1}')])[1]
-        Repeat Keyword    3    Wait Until Network Is Idle
+        Repeat Keyword    3    Wait For Load State
     ELSE
         Wait Until Element Is Visible    xpath=//*[contains(@class,'header') and @data-qa='component header']//*[contains(@data-qa,'navigation-multilevel')]/*[contains(@class,'navigation-multilevel-node__link--lvl-1') and contains(text(),'${navigation_item_level1}')]
         Click Element by xpath with JavaScript    //*[contains(@class,'header') and @data-qa='component header']//*[contains(@data-qa,'navigation-multilevel')]/*[contains(@class,'navigation-multilevel-node__link--lvl-1') and contains(text(),'${navigation_item_level1}')]
-        Repeat Keyword    3    Wait Until Network Is Idle
+        Repeat Keyword    3    Wait For Load State
     END
 
 Yves: go to third navigation item level:
@@ -375,7 +375,7 @@ Yves: go to third navigation item level:
     Add/Edit element attribute with JavaScript:    ${1LevelXpath}    class    ${nodeUpdatedClass}
     Wait Until Element Is Visible    //div[@class='header__navigation']//navigation-multilevel[@data-qa='component navigation-multilevel']/ul[@class='menu menu--lvl-0']//li[contains(@class,'menu__item--lvl-0')]/span/*[contains(@class,'lvl-0')][1][text()='${navigation_item_level1}']/ancestor::li//ul[contains(@class,'menu--lvl-1')]
     Click Element by xpath with JavaScript    //div[@class='header__navigation']//navigation-multilevel[@data-qa='component navigation-multilevel']/ul[@class='menu menu--lvl-0']//li[contains(@class,'menu__item--lvl-0')]/span/*[contains(@class,'lvl-0')][1][text()='${navigation_item_level1}']/ancestor::li//ul[contains(@class,'menu--lvl-2')]//li[contains(@class,'menu__item--lvl-2')]/span/*[contains(@class,'lvl-2')][1][text()='${navigation_item_level3}']
-    Repeat Keyword    3    Wait Until Network Is Idle
+    Repeat Keyword    3    Wait For Load State
 
 Yves: get index of the first available product
     [Documentation]    For B2B this keyword should be used only for logged in customers, otherwise add to cart buttons are absent and it returns wrong index
@@ -412,10 +412,10 @@ Yves: get index of the first available product on marketplace
     Yves: perform search by:    ${EMPTY}
     Wait Until Page Contains Element    ${catalog_main_page_locator}[${env}]
     ${productsCount}=    Get Element Count    xpath=//product-item[@data-qa='component product-item']
-    Log    ${productsCount}   
+    Log    ${productsCount}
     FOR    ${index}    IN RANGE    1    ${productsCount}+1
         Click    xpath=(//product-item[@data-qa='component product-item'])[${index}]//a[contains(@class,'link-detail-page') and (contains(@class,'info')) or (contains(@class,'name'))]
-        Wait Until Network Is Idle
+        Wait For Load State
         Wait Until Page Contains Element    ${pdp_main_container_locator}[${env}]
         ${status}=    Run Keyword And Ignore Error     Page should contain element    &{pdp_add_to_cart_disabled_button}[${env}]    timeout=10ms
         Log    ${index}
@@ -431,9 +431,9 @@ Yves: get index of the first available product on marketplace
         Return From Keyword    ${productIndex}
 
 Yves: go to the PDP of the first available product
-    IF    '${env}' in ['ui_mp_b2b','ui_mp_b2c']    
+    IF    '${env}' in ['ui_mp_b2b','ui_mp_b2c']
         ${index}=    Yves: get index of the first available product on marketplace
-    ELSE    
+    ELSE
         ${index}=    Yves: get index of the first available product
         Click    xpath=(//product-item[@data-qa='component product-item'])[${index}]//a[contains(@class,'link-detail-page') and (contains(@class,'info')) or (contains(@class,'name'))]
     END
@@ -458,7 +458,7 @@ Helper: delete all items in cart
             TRY
                 Click    xpath=(//main//cart-items-list//product-item[contains(@data-qa,'component product-cart-item')]//form[contains(@name,'removeFromCart')]//button)[1]
                 Yves: remove flash messages
-            EXCEPT    
+            EXCEPT
                 Log    Shopping cart is empty now
             END
         END
@@ -468,7 +468,7 @@ Helper: delete all items in cart
             TRY
                 Click    xpath=(//div[@class='page-layout-cart__items-wrap']//ancestor::div/following-sibling::div//form[contains(@name,'removeFromCart')]//button[text()='Remove'])[1]
                 Yves: remove flash messages
-            EXCEPT    
+            EXCEPT
                 Log    Shopping cart is empty now
             END
         END
@@ -486,7 +486,7 @@ Yves: try reloading page if element is/not appear:
         ELSE
             Exit For Loop
         END
-        
+
         IF    ${index} == ${iterations}-1
             Take Screenshot    EMBED    fullPage=True
             Fail    expected element state is not reached
@@ -513,7 +513,7 @@ Yves: validate the page title:
     ELSE
         Yves: try reloading page if element is/not appear:    xpath=//h1[contains(@class,'title')][contains(text(),'${title}')]     True
     END
-    
+
 Yves: login after signup during checkout:
     [Arguments]    ${email}    ${password}
     Type Text    ${email_field}     ${email}
@@ -533,7 +533,7 @@ Yves: checkout is blocked with the following message:
             Page Should Not Contain Element    ${checkout_summary_submit_order_button}
             ${actualAlertMessage}=    Get Text    ${checkout_summary_alert_message}[${env}]
             Should Be Equal    ${actualAlertMessage}    ${expectedMessage}
-        EXCEPT    
+        EXCEPT
             Yves: accept the terms and conditions:    true
             Click    ${checkout_summary_submit_order_button}
             Yves: flash message should be shown:    error    ${expectedMessage}

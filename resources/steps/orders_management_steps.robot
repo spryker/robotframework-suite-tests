@@ -105,13 +105,13 @@ Zed: trigger matching state of order item inside xxx shipment:
     IF    '${env}' in ['ui_mp_b2b','ui_mp_b2c']
         ${elementSelector}=    Set Variable    xpath=//table[@data-qa='order-item-list'][${shipment}]/tbody//td//div[@class='sku'][contains(text(),'${sku}')]/ancestor::tr//td/form[@name='event_item_trigger_form']//button[contains(text(),'${event}')]
     ELSE
-        ${elementSelector}=    Set Variable    xpath=//table[@data-qa='order-item-list'][${shipment}]/tbody//td/div[@class='sku'][contains(text(),'${sku}')]/ancestor::tr/td/form[@class='oms-trigger-form']//button[contains(text(),'${event}')] 
-    END   
+        ${elementSelector}=    Set Variable    xpath=//table[@data-qa='order-item-list'][${shipment}]/tbody//td/div[@class='sku'][contains(text(),'${sku}')]/ancestor::tr/td/form[@class='oms-trigger-form']//button[contains(text(),'${event}')]
+    END
     IF    '${env}' in ['ui_mp_b2b','ui_mp_b2c']
         ${item_available_transition_selector}=    Set Variable    xpath=//table[@data-qa='order-item-list'][${shipment}]/tbody//td//div[@class='sku'][contains(text(),'${sku}')]/ancestor::tr//td/form[@name='event_item_trigger_form']//button
     ELSE
         ${item_available_transition_selector}=    Set Variable    xpath=//table[@data-qa='order-item-list'][${shipment}]/tbody//td/div[@class='sku'][contains(text(),'${sku}')]/ancestor::tr/td/form[@class='oms-trigger-form']//button
-    END   
+    END
     ${item_available_transitions_count}=    Get Element Count    ${item_available_transition_selector}
     ${item_available_transitions}=    Create List
     Set Browser Timeout    1s
@@ -139,7 +139,7 @@ Zed: trigger matching state of order item inside xxx shipment:
     IF    'FAIL' in ${order_changed_status}
             ${order_item_state}=    Get Text    ${elementSelector}
             Scroll Element Into View    ${elementSelector}
-            Take Screenshot    EMBED    fullPage=True 
+            Take Screenshot    EMBED    fullPage=True
             Fail    Order item stuck in '${order_item_state}' state. Check if OMS is functional
     END
 
@@ -193,7 +193,7 @@ Yves: check that 'Print Slip' contains the following products:
     [Arguments]    @{sku_list}    ${element1}=${EMPTY}     ${element2}=${EMPTY}     ${element3}=${EMPTY}     ${element4}=${EMPTY}     ${element5}=${EMPTY}     ${element6}=${EMPTY}     ${element7}=${EMPTY}     ${element8}=${EMPTY}     ${element9}=${EMPTY}     ${element10}=${EMPTY}     ${element11}=${EMPTY}     ${element12}=${EMPTY}     ${element13}=${EMPTY}     ${element14}=${EMPTY}     ${element15}=${EMPTY}
     IF    'local' not in '${yves_url}' or 'false' in '${headless}'
         Click    ${return_details_print_slip_button}
-        Repeat Keyword    3    Wait Until Network Is Idle
+        Repeat Keyword    3    Wait For Load State
         ### Wait until new page (pop-up) is displayed ###
         Sleep    3s
         ${context}=    Get Browser Catalog
@@ -346,10 +346,10 @@ Zed: shipment data inside xxx shipment should be:
     ${shipmentData}=    Set Up Keyword Arguments    @{args}
     FOR    ${key}    ${value}    IN    &{shipmentData}
         Log    Key is '${key}' and value is '${value}'.
-        IF    '${key}'=='shipment n' and '${value}' != '${EMPTY}'    
+        IF    '${key}'=='shipment n' and '${value}' != '${EMPTY}'
         ${shipment}=    Set Variable    ${value}
         END
-        IF    '${key}'=='shipment n' and '${value}' == '${EMPTY}'    
+        IF    '${key}'=='shipment n' and '${value}' == '${EMPTY}'
         ${shipment}=    Set Variable    1
         END
         IF    '${key}'=='delivery method' and '${value}' != '${EMPTY}'    Element Should Contain    xpath=//table[@data-qa='order-item-list'][${shipment}]/preceding-sibling::div[2]//p[2]    ${value}
@@ -378,9 +378,9 @@ Yves: cancel the order:
     Yves: 'View Order/Reorder/Return' on the order history page:    View Order    ${order_id}
     Yves: try reloading page if element is/not appear:    ${order_details_cancel_button_locator}    true
     Wait Until Element Is Visible    ${order_details_cancel_button_locator}
-    Repeat Keyword    3    Wait Until Network Is Idle
+    Repeat Keyword    3    Wait For Load State
     Click    ${order_details_cancel_button_locator}
-    Repeat Keyword    2    Wait Until Network Is Idle
+    Repeat Keyword    2    Wait For Load State
     Wait Until Element Is Not Visible    ${order_details_cancel_button_locator}
     Yves: go to 'Order History' page
     Yves: 'Order History' page contains the following order with a status:    ${order_id}    Canceled

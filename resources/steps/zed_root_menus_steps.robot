@@ -10,7 +10,7 @@ Zed: verify first navigation root menus
     WHILE  ${counter} <= ${first_navigation_count}
         Log    ${counter}
         Click    xpath=(//ul[@id='side-menu']/li/a/span[@class='nav-label']/../../a[contains(@href,'/') and not (contains(@href,'javascript'))])[${counter}]
-        Repeat Keyword    2    Wait Until Network Is Idle
+        Repeat Keyword    2    Wait For Load State
         TRY
             ${app_terms_overlay_state}=    Page Should Contain Element    xpath=//app-terms-and-conditions-dialog/ancestor::div[contains(@class,'overlay-container')]    message=Overlay is not displayed    timeout=1s
             Remove element from HTML with JavaScript    //app-terms-and-conditions-dialog/ancestor::div[contains(@class,'overlay-container')]
@@ -18,7 +18,7 @@ Zed: verify first navigation root menus
             Log    Overlay is not displayed
         END
         Wait Until Element Is Visible    ${zed_log_out_button}    10s
-        ${counter}=    Evaluate    ${counter} + 1   
+        ${counter}=    Evaluate    ${counter} + 1
     END
 
 Zed: verify root menu icons
@@ -42,16 +42,16 @@ Zed: verify second navigation root menus
             WHILE  ${counter_1} <= ${second_navigation_count}
                 ${node_state}=    Get Element Attribute    xpath=(//ul[@id='side-menu']/li/a/span[@class='nav-label']/../../a[contains(@href,'javascript')]/parent::li)[${counter}]    class
                 log    ${node_state}
-                IF    'active' not in '${node_state}'     
+                IF    'active' not in '${node_state}'
                     Click Element by xpath with JavaScript    (//ul[@id='side-menu']/li/a/span[@class='nav-label']/../../a[contains(@href,'javascript')])[${counter}]
-                    Repeat Keyword    3    Wait Until Network Is Idle
+                    Repeat Keyword    3    Wait For Load State
                 END
                 Click Element by xpath with JavaScript    ((//ul[@id='side-menu']/li/a/span[@class='nav-label']/../../a[contains(@href,'javascript')])[${counter}]/ancestor::li//ul[contains(@class,'nav-second-level')]//a)[${counter_1}]
-                Repeat Keyword    3    Wait Until Network Is Idle
+                Repeat Keyword    3    Wait For Load State
                 Wait Until Element Is Visible    ${zed_log_out_button}    timeout=10s
                 Log    ${counter_1}
-                ${counter_1}=    Evaluate    ${counter_1} + 1   
-            END        
+                ${counter_1}=    Evaluate    ${counter_1} + 1
+            END
         Wait Until Element Is Visible    ${zed_log_out_button}    timeout=10s
-        ${counter}=    Evaluate    ${counter} + 1  
+        ${counter}=    Evaluate    ${counter} + 1
     END

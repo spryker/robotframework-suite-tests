@@ -9,7 +9,7 @@ MP: open profile tab:
     [Arguments]    ${profileTabName}
     Wait Until Element Is Visible    xpath=//div[@class='ant-tabs-nav-list']//div[contains(text(),'${profileTabName}')]
     Click    xpath=//div[@class='ant-tabs-nav-list']//div[contains(text(),'${profileTabName}')]
-    Wait Until Network Is Idle
+    Wait For Load State
 
 MP: change store status to:
     [Arguments]    ${store_status}
@@ -36,5 +36,5 @@ MP: update profile fields with following data:
         IF    '${key}'=='data privacy' and '${value}' != '${EMPTY}'     Type Text    ${merchant_profile_data_privacy_en_field}    ${value}    delay=50ms
         IF    '${key}'=='profile url en' and '${value}' != '${EMPTY}'     Type Text    ${merchant_profile_store_profile_url_en_field}    ${value}    delay=50ms
         IF    '${key}'=='profile url de' and '${value}' != '${EMPTY}'     Type Text    ${merchant_profile_store_profile_url_de_field}    ${value}    delay=50ms
-    END  
+    END
     Sleep    0.5s

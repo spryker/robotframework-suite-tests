@@ -55,7 +55,7 @@ Yves: add product to the shopping cart
                 Take Screenshot    EMBED    fullPage=True
                 Fail    'Add to cart' button is not actionable/available on PDP
             END
-            IF    'FAIL' in ${result}   
+            IF    'FAIL' in ${result}
                 Sleep    ${delay}
                 Reload
                 Continue For Loop
@@ -67,20 +67,20 @@ Yves: add product to the shopping cart
     ELSE
         Click    ${pdp_add_to_cart_button}
     END
-    Repeat Keyword    3    Wait Until Network Is Idle
+    Repeat Keyword    3    Wait For Load State
     Yves: remove flash messages
 
 Yves: change quantity on PDP:
     [Arguments]    ${qtyToSet}
     IF    '${env}' in ['ui_b2b','ui_mp_b2b']
         Type Text    ${pdp_quantity_input_filed}[${env}]    ${qtyToSet}
-        Keyboard Key    press    Enter 
+        Keyboard Key    press    Enter
         Sleep    1s
     ELSE IF    '${env}' in ['ui_suite']
         Select From List By Value    ${pdp_quantity_input_filed}[${env}]    ${qtyToSet}
     ELSE
         Add/Edit element attribute with JavaScript:    ${pdp_quantity_input_filed}[${env}]    value    ${qtyToSet}
-        Click    ${pdp_product_name}  
+        Click    ${pdp_product_name}
     END
 
 Yves: select the following 'Sales Unit' on PDP:
@@ -91,7 +91,7 @@ Yves: select the following 'Sales Unit' on PDP:
 Yves: change quantity using '+' or '-' button № times:
     [Arguments]    ${action}    ${clicksCount}
     FOR    ${index}    IN RANGE    0    ${clicksCount}
-        Repeat Keyword    3    Wait Until Network Is Idle
+        Repeat Keyword    3    Wait For Load State
         IF    '${action}' == '+'
             Click    ${pdp_increase_quantity_button}[${env}]
         ELSE IF    '${action}' == '-'
@@ -106,56 +106,56 @@ Yves: set quantity on PDP:
 Yves: change variant of the product on PDP on:
     [Arguments]    ${variantToChoose}
     Wait Until Page Contains Element    ${pdp_variant_selector}
-    TRY    
+    TRY
         ${timeout}=    Set Variable    1s
         Set Browser Timeout    ${timeout}
         Click    ${pdp_variant_custom_selector}
-        Wait Until Network Is Idle
+        Wait For Load State
         Wait Until Element Is Visible    ${pdp_variant_custom_selector_results}    timeout=${timeout}
         TRY
             Click    xpath=//ul[contains(@id,'select2-attribute')][contains(@id,'results')]/li[contains(@id,'select2-attribute')][contains(.,'${variantToChoose}')]
             Set Browser Timeout    ${browser_timeout}
-            Repeat Keyword    3    Wait Until Network Is Idle
-        EXCEPT    
+            Repeat Keyword    3    Wait For Load State
+        EXCEPT
             Reload
             Sleep    ${timeout}
             Click    xpath=//ul[contains(@id,'select2-attribute')][contains(@id,'results')]/li[contains(@id,'select2-attribute')][contains(.,'${variantToChoose}')]
             Set Browser Timeout    ${browser_timeout}
-            Repeat Keyword    3    Wait Until Network Is Idle
+            Repeat Keyword    3    Wait For Load State
         END
     EXCEPT
         Set Browser Timeout    ${timeout}
         Run Keyword And Ignore Error    Select From List By Value    ${pdp_variant_selector}    ${variantToChoose}
         Set Browser Timeout    ${browser_timeout}
-        Repeat Keyword    3    Wait Until Network Is Idle
+        Repeat Keyword    3    Wait For Load State
     END
     Set Browser Timeout    ${browser_timeout}
     ${variant_selected}=    Run Keyword And Return Status    Wait For Elements State    ${pdp_reset_selected_variant_locator}    attached    timeout=3s
     IF    '${variant_selected}'=='False'
-        TRY    
+        TRY
             Set Browser Timeout    1s
             Click    ${pdp_variant_custom_selector}
             Wait Until Element Is Visible    ${pdp_variant_custom_selector_results}
             TRY
                 Click    xpath=//ul[contains(@id,'select2-attribute')][contains(@id,'results')]/li[contains(@id,'select2-attribute')][contains(.,'${variantToChoose}')]
                 Set Browser Timeout    ${browser_timeout}
-                Repeat Keyword    3    Wait Until Network Is Idle
-            EXCEPT    
+                Repeat Keyword    3    Wait For Load State
+            EXCEPT
                 Reload
                 Click    xpath=//ul[contains(@id,'select2-attribute')][contains(@id,'results')]/li[contains(@id,'select2-attribute')][contains(.,'${variantToChoose}')]
                 Set Browser Timeout    ${browser_timeout}
-                Repeat Keyword    3    Wait Until Network Is Idle
+                Repeat Keyword    3    Wait For Load State
             END
         EXCEPT
             ${final_try}=    Run Keyword And Ignore Error    Select From List By Value    ${pdp_variant_selector}    ${variantToChoose}
-            Repeat Keyword    3    Wait Until Network Is Idle
+            Repeat Keyword    3    Wait For Load State
             IF    'FAIL' in ${final_try}
                 Take Screenshot    EMBED    fullPage=True
                 FAIL    '${variantToChoose}' variant was not selected on PDP. Check if variant exists
             END
         END
     END
-    Set Browser Timeout    ${browser_timeout}  
+    Set Browser Timeout    ${browser_timeout}
 
 Yves: reset selected variant of the product on PDP
     Wait Until Page Contains Element    ${pdp_reset_selected_variant_locator}
@@ -180,7 +180,7 @@ Yves: product price on the PDP should be:
     IF    ${wait_for_p&s}
         FOR    ${index}    IN RANGE    1    ${iterations}
             ${price_displayed}=    Run Keyword And Ignore Error    Page Should Contain Element    ${pdp_price_element_locator}    timeout=1s
-            IF    'PASS' in ${price_displayed}    
+            IF    'PASS' in ${price_displayed}
                 ${actualProductPrice}=    Get Text    ${pdp_price_element_locator}
             END
             ${result}=    Run Keyword And Ignore Error    Should Be Equal    ${expectedProductPrice}    ${actualProductPrice}
@@ -202,7 +202,7 @@ Yves: product price on the PDP should be:
         TRY
             ${actualProductPrice}=    Get Text    ${pdp_price_element_locator}
             Should Be Equal    ${expectedProductPrice}    ${actualProductPrice}    message=Actual product price is ${actualProductPrice}, expected ${expectedProductPrice}
-        EXCEPT    
+        EXCEPT
             Sleep    ${browser_timeout}
             Set Browser Timeout    ${browser_timeout}
             Reload
@@ -221,7 +221,7 @@ Yves: product original price on the PDP should be:
 Yves: add product to the shopping list:
     [Documentation]    If SL name is not provided, default one will be used
     [Arguments]    ${shoppingListName}=${EMPTY}
-    Repeat Keyword    3    Wait Until Network Is Idle
+    Repeat Keyword    3    Wait For Load State
     ${variants_present_status}=    Run Keyword And Ignore Error    Page Should Not Contain Element    ${pdp_variant_selector}    timeout=1s
     ${shopping_list_dropdown_status}=    Run Keyword And Ignore Error    Page should contain element    ${pdp_shopping_list_selector}    timeout=5s
     IF    'FAIL' in ${variants_present_status}    Yves: change variant of the product on PDP on random value
@@ -231,11 +231,11 @@ Yves: add product to the shopping list:
             Wait Until Element Is Enabled    ${pdp_shopping_list_selector}
             Select From List By Label    ${pdp_shopping_list_selector}    ${shoppingListName}
             Wait Until Element Is Visible    ${pdp_add_to_shopping_list_button}
-            Click    ${pdp_add_to_shopping_list_button}    
+            Click    ${pdp_add_to_shopping_list_button}
             Set Browser Timeout    ${browser_timeout}
             Wait For Response
-            Repeat Keyword    3    Wait Until Network Is Idle
-        EXCEPT 
+            Repeat Keyword    3    Wait For Load State
+        EXCEPT
             Set Browser Timeout    ${browser_timeout}
             Click    xpath=//span[@class='select2-selection select2-selection--single']//span[contains(@id,'select2-idShoppingList')]
             Wait Until Element Is Visible    xpath=//li[contains(@id,'select2-idShoppingList')][contains(@id,'result')][contains(.,'${shoppingListName}')]
@@ -244,12 +244,12 @@ Yves: add product to the shopping list:
             Click    ${pdp_add_to_shopping_list_button}
             Set Browser Timeout    ${browser_timeout}
             Wait For Response
-            Repeat Keyword    3    Wait Until Network Is Idle
+            Repeat Keyword    3    Wait For Load State
         FINALLY
             Set Browser Timeout    ${browser_timeout}
         END
     ELSE
-        Click    ${pdp_add_to_shopping_list_button}    
+        Click    ${pdp_add_to_shopping_list_button}
         Wait For Response
     END
     Set Browser Timeout    ${browser_timeout}
@@ -257,7 +257,7 @@ Yves: add product to the shopping list:
 
 Yves: change variant of the product on PDP on random value
     Wait Until Element Is Visible    ${pdp_variant_selector}
-    TRY    
+    TRY
         Set Browser Timeout    10s
         Click With Options    ${pdp_variant_custom_selector}    force=True
         Wait Until Element Is Visible    ${pdp_variant_custom_selector_results}
@@ -266,7 +266,7 @@ Yves: change variant of the product on PDP on random value
         Run Keyword And Ignore Error    Select From List By Value    ${pdp_variant_selector}    ${variantToChoose}
     END
     Set Browser Timeout    ${browser_timeout}
-    Repeat Keyword    3    Wait Until Network Is Idle
+    Repeat Keyword    3    Wait For Load State
 
 Yves: get sku of the concrete product on PDP
     Wait Until Element Is Visible    ${pdp_product_sku}[${env}]
@@ -313,8 +313,8 @@ Yves: add product to wishlist:
     Set Browser Timeout    3s
     TRY
         Yves: flash message should be shown:    success    Items added successfully
-        Yves: remove flash messages 
-    EXCEPT    
+        Yves: remove flash messages
+    EXCEPT
         Set Browser Timeout    ${browser_timeout}
         Log    flash message was not shown
     END
@@ -353,14 +353,14 @@ Yves: unsubscribe from availability notifications
 Yves: select xxx merchant's offer:
     [Arguments]    ${merchantName}
     Wait Until Element Is Visible    ${pdp_product_sku}[${env}]
-    Repeat Keyword    3    Wait Until Network Is Idle
+    Repeat Keyword    3    Wait For Load State
     TRY
         Click    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]/ancestor::div[contains(@class,'offer-item')]//span[contains(@class,'radio__box')]
-        Repeat Keyword    3    Wait Until Network Is Idle
+        Repeat Keyword    3    Wait For Load State
         Wait For Elements State    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]/ancestor::div[contains(@class,'offer-item')]//span[contains(@class,'radio__box')]/../input    state=checked    timeout=3s
-    EXCEPT  
+    EXCEPT
         Reload
-        Repeat Keyword    3    Wait Until Network Is Idle
+        Repeat Keyword    3    Wait For Load State
         Click    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]/ancestor::div[contains(@class,'offer-item')]//span[contains(@class,'radio__box')]
         Wait For Elements State    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]/ancestor::div[contains(@class,'offer-item')]//span[contains(@class,'radio__box')]/../input    state=checked    timeout=3s
     END
@@ -369,7 +369,7 @@ Yves: select xxx merchant's offer:
 Yves: select xxx merchant's offer with price:
     [Arguments]    ${merchantName}    ${price}    ${wait_for_p&s}=${False}    ${iterations}=26    ${delay}=3s
     Wait Until Element Is Visible    ${pdp_product_sku}[${env}]
-    Repeat Keyword    2    Wait Until Network Is Idle
+    Repeat Keyword    2    Wait For Load State
     ### *** promise for P&S *** ####
     ${wait_for_p&s}=    Convert To String    ${wait_for_p&s}
     ${wait_for_p&s}=    Convert To Lower Case    ${wait_for_p&s}
@@ -386,13 +386,13 @@ Yves: select xxx merchant's offer with price:
                 Take Screenshot    EMBED    fullPage=True
                 Fail    Expected '${merchantName}' merchant offer with '${price}' is not present on PDP
             END
-            IF    'FAIL' in ${result}   
+            IF    'FAIL' in ${result}
                 Sleep    ${delay}
                 Reload
                 Continue For Loop
             ELSE
                 Click    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]/ancestor::div[contains(@class,'item')]//span[@itemprop='price'][contains(.,'${price}')]/ancestor::div[contains(@class,'offer-item')]//span[contains(@class,'radio__box')]
-                Repeat Keyword    2    Wait Until Network Is Idle
+                Repeat Keyword    2    Wait For Load State
                 Wait For Elements State    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]/ancestor::div[contains(@class,'item')]//span[@itemprop='price'][contains(.,'${price}')]/ancestor::div[contains(@class,'offer-item')]//span[contains(@class,'radio__box')]/../input    state=checked    timeout=3s
                 Exit For Loop
             END
@@ -400,27 +400,27 @@ Yves: select xxx merchant's offer with price:
     ELSE
         TRY
             Click    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]/ancestor::div[contains(@class,'item')]//span[@itemprop='price'][contains(.,'${price}')]/ancestor::div[contains(@class,'offer-item')]//span[contains(@class,'radio__box')]
-            Repeat Keyword    2    Wait Until Network Is Idle
+            Repeat Keyword    2    Wait For Load State
             Wait For Elements State    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]/ancestor::div[contains(@class,'item')]//span[@itemprop='price'][contains(.,'${price}')]/ancestor::div[contains(@class,'offer-item')]//span[contains(@class,'radio__box')]/../input    state=checked    timeout=3s
-        EXCEPT   
+        EXCEPT
             Reload
-            Repeat Keyword    2    Wait Until Network Is Idle
+            Repeat Keyword    2    Wait For Load State
             Click    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]/ancestor::div[contains(@class,'item')]//span[@itemprop='price'][contains(.,'${price}')]/ancestor::div[contains(@class,'offer-item')]//span[contains(@class,'radio__box')]
             Wait For Elements State    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]/ancestor::div[contains(@class,'item')]//span[@itemprop='price'][contains(.,'${price}')]/ancestor::div[contains(@class,'offer-item')]//span[contains(@class,'radio__box')]/../input    state=checked    timeout=3s
         END
-    END    
+    END
     Wait Until Element Contains    ${referrer_url}    offer    message=Offer selector radio button does not work on PDP but should
 
 Yves: merchant's offer/product price should be:
     [Arguments]    ${merchantName}    ${expectedProductPrice}
-    Wait Until Element Is Visible    ${pdpPriceLocator}  
+    Wait Until Element Is Visible    ${pdpPriceLocator}
     Try reloading page until element does/not contain text:    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]/ancestor::div[contains(@class,'item')]//span[@itemprop='price']    ${expectedProductPrice}    true    21    5s
 
 Yves: merchant is (not) displaying in Sold By section of PDP:
     [Arguments]    ${merchantName}    ${condition}
     Wait Until Element Is Visible    ${pdp_product_sku}[${env}]
-    Try reloading page until element is/not appear:    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]     ${condition}    20    10s  
-   
+    Try reloading page until element is/not appear:    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]     ${condition}    20    10s
+
 Yves: select random varian if variant selector is available
     ${variants_present_status}=    Run Keyword And Return Status    Page should contain element    ${pdp_variant_selector}    ${EMPTY}    0:00:01
     IF    '${variants_present_status}'=='True'    Yves: change variant of the product on PDP on random value

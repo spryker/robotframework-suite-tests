@@ -24,7 +24,7 @@ ${wishlistIcon}    ${wishlist_icon_header_navigation_widget}
 *** Keywords ***
 Yves: perform search by:
     [Arguments]    ${searchTerm}
-    IF    '${env}' in ['ui_b2c','ui_mp_b2c']    
+    IF    '${env}' in ['ui_b2c','ui_mp_b2c']
         Run Keywords
             Wait Until Page Contains Element    ${search_form_open_menu_item}
             Click    ${search_form_open_menu_item}
@@ -33,7 +33,7 @@ Yves: perform search by:
     Type Text    ${search_form_header_menu_item}    ${searchTerm}
     Keyboard Key    press    Enter
     Wait Until Page Contains Element    ${catalog_main_page_locator}[${env}]
-    Repeat Keyword    3    Wait Until Network Is Idle
+    Repeat Keyword    3    Wait For Load State
 
 Yves: go to company menu item:
     [Arguments]    ${company_menu_item}

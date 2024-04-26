@@ -17,7 +17,7 @@ Yves: add comment on cart:
     Click With Options    ${shopping_cart_add_comment_button}    delay=0.5s
 
 Yves: check comments are visible or not in cart:
-    [Arguments]    ${condition}    @{comments}    
+    [Arguments]    ${condition}    @{comments}
     FOR    ${element}    IN    @{comments}
         IF    '${env}' in ['ui_suite']
             IF    '${condition}' == 'true'    Element Should Be Visible    xpath=(//comment-form[@data-qa='component comment-form']//*[contains(text(),'${element}')])[1]    message=Comment '${element}' is not visible in the shopping cart but should
@@ -29,7 +29,7 @@ Yves: check comments are visible or not in cart:
     END
 
 Yves: check comments is visible or not in order:
-    [Arguments]    ${condition}    @{comments}    
+    [Arguments]    ${condition}    @{comments}
     FOR    ${element}    IN    @{comments}
         IF    '${env}' in ['ui_suite']
             IF    '${condition}' == 'true'    Element Should Be Visible    xpath=(//comment-thread-list//comment-form[@data-qa='component comment-form']//textarea[contains(text(),'${element}')])[1]    message=Comment '${element}' is not visible in BO:order details page but should
@@ -49,12 +49,12 @@ Yves: go to order details page to check comment:
         Log    text entered in comments appers in order details page in Yves
     ELSE
         Fail    comments not added succesfully to order details page in Yves
-    END    
+    END
 
 Zed: check comment appears at order detailed page in zed:
     [Arguments]    ${comment}    ${lastPlacedOrder}
     Zed: go to second navigation item level:    Sales    Orders
-    Zed: click Action Button in a table for row that contains:    ${lastPlacedOrder}    View 
+    Zed: click Action Button in a table for row that contains:    ${lastPlacedOrder}    View
     Wait Until Element Is Visible    ${zed_order_details_page_comments}
     ${text_entered}    Get Text    ${zed_order_details_page_comments}
        IF    '${text_entered}' == '${comment}'
@@ -66,17 +66,17 @@ Zed: check comment appears at order detailed page in zed:
 Yves: edit comment on cart:
     [Arguments]    ${comment_to_set}
     Reload
-    Repeat Keyword    3    Wait Until Network Is Idle
+    Repeat Keyword    3    Wait For Load State
     IF    '${env}' not in ['ui_suite']    Click    ${shopping_cart_edit_comment_button}
-    Repeat Keyword    3    Wait Until Network Is Idle 
+    Repeat Keyword    3    Wait For Load State
     Fill Text    ${shopping_cart_edit_comment_placeholder}    ${EMPTY}    force=true
     Fill Text    ${shopping_cart_edit_comment_placeholder}    ${comment_to_set}    force=true
     Click With Options    ${shopping_cart_update_comment_button}    delay=0.5s
-    Repeat Keyword    3    Wait Until Network Is Idle
+    Repeat Keyword    3    Wait For Load State
 
 Yves: delete comment on cart
-    Click With Options    ${shopping_cart_remove_comment_button}    delay=0.5s 
-    Repeat Keyword    3    Wait Until Network Is Idle
+    Click With Options    ${shopping_cart_remove_comment_button}    delay=0.5s
+    Repeat Keyword    3    Wait For Load State
     Page Should Not Contain Element    ${shopping_cart_remove_comment_button}
 
 Yves: add comment on order in order detail page:
@@ -84,4 +84,4 @@ Yves: add comment on order in order detail page:
     Click With Options    ${order_details_page_add_comments_textbox}    delay=0.5s
     Type Text    ${order_details_page_add_comments_textbox}    ${comment}    delay=50ms
     Click With Options    ${add_comment_button_order_details_page}    delay=0.5s
-    Repeat Keyword    3    Wait Until Network Is Idle
+    Repeat Keyword    3    Wait For Load State

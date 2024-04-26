@@ -17,59 +17,59 @@ Select access level to share shopping list with:
     IF    '${env}' in ['ui_suite']
         Select From List By Label    xpath=//form[@name='share_shopping_list_form']//div[contains(@class,'field')][contains(@class,'col')][last()]//div[contains(@data-qa,'share-list')]//li[contains(@data-qa,'list-item')][contains(.,'${customerToShareWith}')]//select    ${accessLevel}
     ELSE
-        Select From List By Label    xpath=//div[@data-qa="component company-dashbord-item"]//*[text()='Customer']/../../div[@data-qa='component share-list']//li[contains(.,'${customerToShareWith}')]//select    ${accessLevel}  
+        Select From List By Label    xpath=//div[@data-qa="component company-dashbord-item"]//*[text()='Customer']/../../div[@data-qa='component share-list']//li[contains(.,'${customerToShareWith}')]//select    ${accessLevel}
     END
 
 Edit shopping list with name:
-    [Arguments]    ${shoppingListName}       
+    [Arguments]    ${shoppingListName}
     IF    '${env}' in ['ui_suite']
         Click    xpath=//*[contains(@data-qa,"shopping-list-overview")]//table//td[contains(@class,'name')][contains(.,'${shoppingListName}')]/ancestor::tr/td/*[contains(@data-qa,'action')]//a[contains(@href,'update')]
     ELSE
         Click    xpath=//*[@data-qa="component shopping-list-overview-table"]//table//td[@data-content='Name'][contains(.,'${shoppingListName}')]/..//div[@data-qa='component table-action-list']//a[contains(.,'Edit')]
     END
-    Repeat Keyword    3    Wait Until Network Is Idle
+    Repeat Keyword    3    Wait For Load State
 
 Share shopping list with name:
-    [Arguments]    ${shoppingListName}       
+    [Arguments]    ${shoppingListName}
     IF    '${env}' in ['ui_suite']
         Click    xpath=//*[contains(@data-qa,"shopping-list-overview")]//table//td[contains(@class,'name')][contains(.,'${shoppingListName}')]/ancestor::tr/td/*[contains(@data-qa,'action')]//a[contains(@href,'share')]
     ELSE
         Click    xpath=//*[@data-qa="component shopping-list-overview-table"]//table//td[@data-content='Name'][contains(.,'${shoppingListName}')]/..//div[@data-qa='component table-action-list']//a[contains(.,'Share')]
-    END    
-    Repeat Keyword    3    Wait Until Network Is Idle
+    END
+    Repeat Keyword    3    Wait For Load State
 
 Print shopping list with name:
-    [Arguments]    ${shoppingListName}    
+    [Arguments]    ${shoppingListName}
     IF    '${env}' in ['ui_suite']
         Click    xpath=//*[contains(@data-qa,"shopping-list-overview")]//table//td[contains(@class,'name')][contains(.,'${shoppingListName}')]/ancestor::tr/td/*[contains(@data-qa,'action')]//a[contains(@href,'print')]
-    ELSE   
+    ELSE
         Click    xpath=//*[@data-qa="component shopping-list-overview-table"]//table//td[@data-content='Name'][contains(.,'${shoppingListName}')]/..//div[@data-qa='component table-action-list']//a[contains(.,'Print')]
     END
-    Repeat Keyword    3    Wait Until Network Is Idle
+    Repeat Keyword    3    Wait For Load State
 
 Delete shopping list with name:
-    [Arguments]    ${shoppingListName} 
+    [Arguments]    ${shoppingListName}
     IF    '${env}' in ['ui_suite']
         Click    xpath=//*[contains(@data-qa,"shopping-list-overview")]//table//td[contains(@class,'name')][contains(.,'${shoppingListName}')]/ancestor::tr/td/*[contains(@data-qa,'action')]//a[contains(@href,'delete')]
-    ELSE         
+    ELSE
         Click    xpath=//*[@data-qa="component shopping-list-overview-table"]//table//td[@data-content='Name'][contains(.,'${shoppingListName}')]/..//div[@data-qa='component table-action-list']//a[contains(.,'Delete')]
     END
-    Repeat Keyword    3    Wait Until Network Is Idle
+    Repeat Keyword    3    Wait For Load State
 
 Dismiss shopping list with name:
-    [Arguments]    ${shoppingListName}   
+    [Arguments]    ${shoppingListName}
     IF    '${env}' in ['ui_suite']
         Click    xpath=//*[contains(@data-qa,"shopping-list-overview")]//table//td[contains(@class,'name')][contains(.,'${shoppingListName}')]/ancestor::tr/td/*[contains(@data-qa,'action')]//a[contains(@href,'dismiss')]
-    ELSE      
+    ELSE
         Click    xpath=//*[@data-qa="component shopping-list-overview-table"]//table//td[@data-content='Name'][contains(.,'${shoppingListName}')]/..//div[@data-qa='component table-action-list']//a[contains(.,'Dismiss')]
     END
-    Repeat Keyword    3    Wait Until Network Is Idle
+    Repeat Keyword    3    Wait For Load State
 
 View shopping list with name:
-    [Arguments]    ${shoppingListName}  
+    [Arguments]    ${shoppingListName}
     IF    '${env}' in ['ui_suite']
         Click    xpath=//*[contains(@data-qa,"shopping-list-overview")]//table//td[contains(@class,'name')][contains(.,'${shoppingListName}')]//a
-    ELSE          
+    ELSE
         Click    xpath=//*[@data-qa="component shopping-list-overview-table"]//table//td[@data-content='Name'][contains(.,'${shoppingListName}')]//a[contains(@href,'details')]
     END
-    Repeat Keyword    3    Wait Until Network Is Idle
+    Repeat Keyword    3    Wait For Load State
