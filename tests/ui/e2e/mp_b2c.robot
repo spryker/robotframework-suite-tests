@@ -2808,7 +2808,7 @@ Configurable_Product_Checkout
     Zed: grand total for the order equals:    ${lastPlacedOrder}    €0.00
 
 Dynamic-multistore
-    [Documentation]  Bug: FRW-7903  This test should exclusively run for dynamic multi-store scenarios. The test verifies that the user can successfully create a new store, assign a product and CMS page, and register a customer within the new store.
+    [Documentation]  Bug: https://spryker.atlassian.net/browse/FRW-8141  This test should exclusively run for dynamic multi-store scenarios. The test verifies that the user can successfully create a new store, assign a product and CMS page, and register a customer within the new store.
     [Tags]    dms-on
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: create new Store:

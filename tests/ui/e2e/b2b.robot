@@ -2003,7 +2003,7 @@ Configurable_Product_Checkout
     Zed: grand total for the order equals:    ${lastPlacedOrder}    €0.0
 
 Dynamic-multistore
-    [Documentation]  Bug: FRW-7903  This test should exclusively run for dynamic multi-store scenarios. The test verifies that the user can successfully create a new store, assign a product and CMS page, and register a customer within the new store.
+    [Documentation]  Bug: https://spryker.atlassian.net/browse/FRW-8141  This test should exclusively run for dynamic multi-store scenarios. The test verifies that the user can successfully create a new store, assign a product and CMS page, and register a customer within the new store.
     [Tags]    dms-on
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: create new Store:
@@ -2017,8 +2017,8 @@ Dynamic-multistore
     ...    || store                                    | productAbstract                     ||
     ...    ||  ${random_str_store}_${random_str_store} | ${one_variant_product_abstract_sku} ||
     Zed: update abstract product price on:
-    ...    || productAbstract                      | store                                   | mode  | type    | currency | amount | tax set            ||
-    ...    || ${one_variant_product_abstract_sku}  | ${random_str_store}_${random_str_store} | gross | default | €        | 160.00 | Smart Electronics  ||   
+    ...    || productAbstract                      | store                                   | mode  | type    | currency | amount | tax set         ||
+    ...    || ${one_variant_product_abstract_sku}  | ${random_str_store}_${random_str_store} | gross | default | €        | 160.00 | Standard Taxes  ||   
     Trigger multistore p&s
     Zed: change concrete product data:
     ...    || productAbstract                     | productConcrete                     | active | searchable en | searchable de ||
