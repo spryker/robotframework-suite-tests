@@ -2,7 +2,7 @@
 Resource    ../../../../../../resources/common/common_api.robot
 Suite Setup    API_suite_setup
 Test Setup    API_test_setup
-Default Tags    glue    dms-on
+Default Tags    glue
 
 
 *** Test Cases ***
@@ -14,7 +14,6 @@ ENABLER
 
 
 Search_by_abstract_sku_per_store
-    [Tags]    dms-on
     When I set Headers:    store=DE
     Then I send a GET request:    /catalog-search?q=${abstract_available_product_with_stock.sku}
     And Response status code should be:    200
