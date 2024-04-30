@@ -120,7 +120,7 @@ Zed: switch to the tab on 'Edit product' page:
 
 Zed: switch to the tab on 'Add product' page:
     [Arguments]    ${tabToUse}
-    Click    xpath=//form[contains(@name,'product_form')]/div[@class='tabs-container']/ul[contains(@class,'nav-tabs')]//a[@data-toggle='tab'][text()='${tabToUse}']
+    Click    xpath=//form[contains(@name,'form_add')]/div[@class='tabs-container']/ul[contains(@class,'nav-tabs')]//a[@data-toggle='tab'][text()='${tabToUse}']
 
 Zed: product is successfully discontinued
     ${currentURL}=    Get Location
@@ -206,7 +206,7 @@ Zed: update abstract product price on:
     ${priceData}=    Set Up Keyword Arguments    @{args}
     Set Browser Timeout    1s
     TRY
-        Zed: switch to the tab on 'Add product' page:    Price & Tax
+        Zed: switch to the tab on 'Edit product' page:    Price & Tax
     EXCEPT
         Log    It's edit price case
     END
