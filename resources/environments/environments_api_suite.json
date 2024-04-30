@@ -273,6 +273,8 @@
       "concrete_product_with_alternative":{
          "sku":"134_29759322",
          "abstract_sku":"134",
+         "price_de":"1879",
+         "price_at":"1503",
          "name":"Acer Aspire S7",
          "name_lower_case":"acer aspire s7",
          "product_sku1":"014_25919241",
