@@ -347,6 +347,8 @@
           "alternative_products":{
              "product_1":{
                 "sku":"M21100",
+                "price_de":"1579",
+                "price_at":"1800",
                 "name":"Verbatim USB stick Store n Go V3 49173 32GB USB3.0 gray"
              },
              "product_2":{
