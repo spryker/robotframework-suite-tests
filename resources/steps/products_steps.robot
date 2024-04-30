@@ -206,7 +206,7 @@ Zed: update abstract product price on:
     ${priceData}=    Set Up Keyword Arguments    @{args}
     Set Browser Timeout    1s
     TRY
-        Zed: switch to the tab on 'Edit product' page:    Price & Tax
+        Zed: switch to the tab on 'Add product' page:   Price & Tax
     EXCEPT
         Log    It's edit price case
     END
