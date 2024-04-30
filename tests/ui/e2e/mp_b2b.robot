@@ -2923,7 +2923,7 @@ Configurable_Product_Checkout
     Zed: trigger matching state of xxx order item inside xxx shipment:    Refund    1
     Zed: grand total for the order equals:    ${lastPlacedOrder}    €0.0
 
-Dynamic-multistore
+Dynamic_multistore
     [Documentation]  Bug: https://spryker.atlassian.net/browse/FRW-8141  This test should exclusively run for dynamic multi-store scenarios. The test verifies that the user can successfully create a new store, assign a product and CMS page, and register a customer within the new store.
     [Tags]    dms-on
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
