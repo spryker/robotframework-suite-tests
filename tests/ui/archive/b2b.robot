@@ -1,9 +1,10 @@
+### DEPRECATED! USE SEPARATE FILES PER FEATURES ###
 *** Settings ***
 Suite Setup       UI_suite_setup
 Test Setup        UI_test_setup
 Test Teardown     UI_test_teardown
 Suite Teardown    UI_suite_teardown
-Test Tags    robot:recursive-stop-on-failure
+Test Tags    robot:recursive-stop-on-failure    robot:skip
 Resource    ../../../resources/common/common.robot
 Resource    ../../../resources/steps/header_steps.robot
 Resource    ../../../resources/common/common_yves.robot
@@ -34,7 +35,7 @@ Resource    ../../../resources/steps/order_comments_steps.robot
 Resource    ../../../resources/steps/zed_order_steps.robot
 Resource    ../../../resources/steps/configurable_product_steps.robot
 Resource    ../../../resources/steps/dynamic_entity_steps.robot
-Resource    ../../../resources/steps/zed_store_steps.robot    
+Resource    ../../../resources/steps/zed_store_steps.robot
  
 *** Test Cases ***
 Guest_User_Access_Restrictions
@@ -2002,7 +2003,7 @@ Configurable_Product_Checkout
     Zed: trigger all matching states inside this order:    Refund
     Zed: grand total for the order equals:    ${lastPlacedOrder}    €0.0
 
-Dynamic-multistore
+Dynamic_multistore
     [Documentation]  Bug: https://spryker.atlassian.net/browse/FRW-8141  This test should exclusively run for dynamic multi-store scenarios. The test verifies that the user can successfully create a new store, assign a product and CMS page, and register a customer within the new store.
     [Tags]    dms-on
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
@@ -2058,7 +2059,8 @@ Dynamic-multistore
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: assigned store to cms block:    ${random_str_store}_${random_str_store}    customer-registration_token--html
     Zed: assigned store to cms block:    ${random_str_store}_${random_str_store}    customer-registration_token--text
-    [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    [Teardown]    Run Keywords    Should Test Run
+    ...    AND    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: go to second navigation item level:    Content    Pages
     ...    AND    Zed: click Action Button in a table for row that contains:    New Page Store${random}   Deactivate
     ...    AND    Trigger multistore p&s
