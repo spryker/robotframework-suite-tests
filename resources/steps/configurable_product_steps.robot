@@ -19,10 +19,10 @@ Yves: change the product configuration to:
     END
     Click    ${configurator_day_time_selector}
     ### sleep 1 seconds to process background event
-    Repeat Keyword    3    Wait Until Network Is Idle
+    Repeat Keyword    3    Wait For Load State
     Sleep    1s
     Click    ${configurator_save_button}
-    Repeat Keyword    3    Wait Until Network Is Idle
+    Repeat Keyword    3    Wait For Load State
     Wait Until Element Is Visible    ${pdp_configure_button}
 
 Yves: change the product options in configurator to:
@@ -53,10 +53,10 @@ Yves: change the product options in configurator to:
         END 
    END
     ### sleep 1 seconds to process background event
-    Repeat Keyword    3    Wait Until Network Is Idle
+    Repeat Keyword    3    Wait For Load State
     Sleep    1s
     Click    ${configurator_save_button}
-    Repeat Keyword    3    Wait Until Network Is Idle
+    Repeat Keyword    3    Wait For Load State
     Wait Until Element Is Visible    ${pdp_configure_button}
 
 Yves: product configuration status should be equal:

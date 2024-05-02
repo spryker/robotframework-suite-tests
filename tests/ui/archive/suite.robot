@@ -1,9 +1,10 @@
+### DEPRECATED! USE SEPARATE FILES PER FEATURES ###
 *** Settings ***
 Suite Setup       UI_suite_setup
 Test Setup        UI_test_setup
 Test Teardown     UI_test_teardown
 Suite Teardown    UI_suite_teardown
-Test Tags    robot:recursive-stop-on-failure
+Test Tags    robot:recursive-stop-on-failure    robot:skip
 Resource    ../../../resources/common/common.robot
 Resource    ../../../resources/steps/header_steps.robot
 Resource    ../../../resources/common/common_yves.robot
@@ -3548,7 +3549,7 @@ Customer_Specific_Prices
     Yves: shopping cart contains product with unit price:    sku=${product_with_merchant_price_concrete_sku}    productName=${product_with_merchant_price_product_name}    productPrice=${product_with_merchant_price_merchant_price}
     [Teardown]    Yves: delete 'Shopping Cart' with name:    customerPrices+${random}
 
-Fulfilment_app_e2e# Fulfilment_app_e2e
+Fulfillment_app_e2e
     [Tags]    skip-due-to-refactoring
     # #LOGGED IN TO BO and SET CHECKBOX is a warehouse user = true FOR admin_de USER. UI TEST
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
@@ -3757,7 +3758,7 @@ Configurable_Product_Checkout
     Zed: login on Zed with provided credentials:    ${zed_main_merchant_email}
     Zed: grand total for the order equals:    ${lastPlacedOrder}    €580.55
 
-Dynamic-multistore
+Dynamic_multistore
     [Documentation]  Bug: FRW-7903  This test should exclusively run for dynamic multi-store scenarios. The test verifies that the user can successfully create a new store, assign a product and CMS page, and register a customer within the new store.
     [Tags]    dms-on
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
@@ -3819,11 +3820,12 @@ Dynamic-multistore
     ...    || salutation | first name | last name | e-mail                       | password                      ||
     ...    || Mr.        | New        | User      | sonia+dms${random}@spryker.com  | P${random_str}s#!#${random_id} ||
     Yves: flash message should be shown:    success    Almost there! We send you an email to validate your email address. Please confirm it to be able to log in.
-    [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    [Teardown]    Run Keywords    Should Test Run
+    ...    AND    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: go to second navigation item level:    Content    Pages
     ...    AND    Zed: click Action Button in a table for row that contains:    New Page Store${random}   Deactivate
     ...    AND    Trigger multistore p&s
     Zed: delete customer:
-    ...    || email                       ||
+    ...    || email                          ||
     ...    || sonia+dms${random}@spryker.com ||
 

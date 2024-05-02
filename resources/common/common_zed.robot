@@ -46,7 +46,7 @@ Zed: go to first navigation item level:
     [Arguments]     ${navigation_item}
     Wait Until Page Contains Element    xpath=//ul[@id='side-menu']/li/a/span[@class='nav-label'][contains(text(),'${navigation_item}')]/../../a
     Click Element by xpath with JavaScript    //ul[@id='side-menu']/li/a/span[@class='nav-label'][contains(text(),'${navigation_item}')]/../../a
-    Repeat Keyword    3    Wait Until Network Is Idle
+    Repeat Keyword    3    Wait For Load State
 
 Zed: go to second navigation item level:
     [Documentation]     example: "Zed: Go to Second Navigation Item Level    Customers    Customer Access"
@@ -56,20 +56,20 @@ Zed: go to second navigation item level:
     IF    'active' in '${node_state}'
         wait until element is visible  xpath=(//ul[contains(@class,'nav-second-level')]//a/span[text()='${navigation_item_level2}'])[1]
         Click Element by xpath with JavaScript    (//span[contains(@class,'nav-label')][text()='${navigation_item_level1}']/ancestor::li//ul[contains(@class,'nav-second-level')]//a/span[text()='${navigation_item_level2}'])[1]
-        Repeat Keyword    3    Wait Until Network Is Idle    timeout=${browser_timeout}
+        Repeat Keyword    3    Wait For Load State    timeout=${browser_timeout}
     ELSE
         Scroll Element Into View    xpath=//ul[@id='side-menu']/li/a/span[@class='nav-label'][contains(text(),'${navigation_item_level1}')]/../../a
         Click Element by xpath with JavaScript    //ul[@id='side-menu']/li/a/span[@class='nav-label'][contains(text(),'${navigation_item_level1}')]/../../a
-        Repeat Keyword    3    Wait Until Network Is Idle
+        Repeat Keyword    3    Wait For Load State
         ${node_expanded}=    Run Keyword And Return Status    Element Should Be Visible    xpath=//span[contains(@class,'nav-label')][text()='${navigation_item_level1}']/ancestor::li//ul[contains(@class,'nav-second-level')]//a/span[text()='${navigation_item_level2}']    timeout=1s
         IF    '${node_expanded}'=='False'    
             Reload
             Click    xpath=//ul[@id='side-menu']/li/a/span[@class='nav-label'][contains(text(),'${navigation_item_level1}')]/../../a
-            Repeat Keyword    3    Wait Until Network Is Idle    timeout=${browser_timeout}
+            Repeat Keyword    3    Wait For Load State    timeout=${browser_timeout}
         END
         wait until element is visible  xpath=(//span[contains(@class,'nav-label')][text()='${navigation_item_level1}']/ancestor::li//ul[contains(@class,'nav-second-level')]//a/span[text()='${navigation_item_level2}'])[1]
         Click Element by xpath with JavaScript    (//span[contains(@class,'nav-label')][text()='${navigation_item_level1}']/ancestor::li//ul[contains(@class,'nav-second-level')]//a/span[text()='${navigation_item_level2}'])[1]
-        Repeat Keyword    3    Wait Until Network Is Idle    timeout=${browser_timeout}
+        Repeat Keyword    3    Wait For Load State    timeout=${browser_timeout}
     END
     
 Zed: click button in Header:
@@ -86,7 +86,7 @@ Zed: click Action Button in a table for row that contains:
     Zed: perform search by:    ${row_content}
     Wait until element is visible    xpath=(//table[contains(@class,'dataTable')]/tbody//td[contains(text(),'${row_content}')]/../td[contains(@class,'column-Action') or contains(@class,'column-action')]/*[contains(.,'${zed_table_action_button_locator}')])[1]
     Click    xpath=(//table[contains(@class,'dataTable')]/tbody//td[contains(text(),'${row_content}')]/../td[contains(@class,'column-Action') or contains(@class,'column-action')]/*[contains(.,'${zed_table_action_button_locator}')])[1]
-    Repeat Keyword    3    Wait Until Network Is Idle
+    Repeat Keyword    3    Wait For Load State
 
 Zed: save abstract product:  
     [Arguments]    ${productAbstract}
@@ -95,7 +95,7 @@ Zed: save abstract product:
     Zed: click Action Button in a table for row that contains:     ${productAbstract}     Edit
     Wait until element is visible    ${zed_save_button}
     Click    ${zed_save_button}
-    Repeat Keyword    2    Wait Until Network Is Idle
+    Repeat Keyword    2    Wait For Load State
     Page Should Contain Element    ${zed_success_flash_message}    The product [${productAbstract}] was saved successfully.
 
 Zed: click Action Button in Variant table for row that contains:
@@ -103,7 +103,7 @@ Zed: click Action Button in Variant table for row that contains:
     Zed: perform variant search by:    ${row_content}
     wait until element is visible    xpath=//table[contains(@class,'dataTable')]/tbody//td[contains(text(),'${row_content}')]/../td[contains(@class,'column-Action') or contains(@class,'column-action')]/*[contains(.,'${zed_table_action_button_locator}')]
     Click    xpath=//table[contains(@class,'dataTable')]/tbody//td[contains(text(),'${row_content}')]/../td[contains(@class,'column-Action') or contains(@class,'column-action')]/*[contains(.,'${zed_table_action_button_locator}')]
-    Repeat Keyword    2    Wait Until Network Is Idle
+    Repeat Keyword    2    Wait For Load State
 
 Zed: Check checkbox by Label:
     [Arguments]    ${checkbox_label}
@@ -123,18 +123,18 @@ Zed: Uncheck Checkbox by Label:
 Zed: submit the form
     Wait until element is visible    ${zed_save_button}
     Click    ${zed_save_button}
-    Repeat Keyword    2    Wait Until Network Is Idle
+    Repeat Keyword    2    Wait For Load State
     Wait Until Element Is Visible    ${zed_log_out_button}
     ${error_flash_message}=    Run Keyword And Ignore Error    Page Should Not Contain Element    ${zed_error_flash_message}    1s
     IF    'FAIL' in ${error_flash_message}
         Click    ${zed_save_button}
-        Repeat Keyword    2    Wait Until Network Is Idle
+        Repeat Keyword    2    Wait For Load State
         Wait Until Element Is Visible    ${zed_log_out_button}
     END
     ${error_message}=    Run Keyword And Ignore Error    Page Should Not Contain Element    ${zed_error_message}    1s
     IF    'FAIL' in ${error_message}
         Click    ${zed_save_button}
-        Repeat Keyword    2    Wait Until Network Is Idle
+        Repeat Keyword    2    Wait For Load State
         Wait Until Element Is Visible    ${zed_log_out_button}
     END
     Page Should Not Contain Element    ${zed_error_message}    1s
@@ -150,11 +150,11 @@ Zed: perform search by:
     EXCEPT    
         Log    Search event is not fired
     END
-    Repeat Keyword    2    Wait Until Network Is Idle
+    Repeat Keyword    2    Wait For Load State
 
 Zed: clear search field
     Clear Text    ${zed_search_field_locator}
-    Repeat Keyword    2    Wait Until Network Is Idle
+    Repeat Keyword    2    Wait For Load State
 
 Zed: perform variant search by:
     [Arguments]    ${search_key}
@@ -166,7 +166,7 @@ Zed: perform variant search by:
     EXCEPT    
         Log    Search event is not fired
     END
-    Repeat Keyword    2    Wait Until Network Is Idle
+    Repeat Keyword    2    Wait For Load State
 
 Zed: table should contain:
     [Arguments]    ${search_key}
@@ -202,7 +202,7 @@ Zed: click Action Button(without search) in a table for row that contains:
     [Arguments]    ${row_content}    ${zed_table_action_button_locator}
     wait until element is visible    xpath=//table[contains(@class,'dataTable')]/tbody//td[contains(text(),'${row_content}')]/../td[contains(@class,'column-Action') or contains(@class,'column-action')]/*[contains(.,'${zed_table_action_button_locator}')]
     Click    xpath=//table[contains(@class,'dataTable')]/tbody//td[contains(text(),'${row_content}')]/../td[contains(@class,'column-Action') or contains(@class,'column-action')]/*[contains(.,'${zed_table_action_button_locator}')]
-    Wait Until Network Is Idle
+    Wait For Load State
 
 Zed: filter by merchant:
     [Arguments]    ${merchant}
