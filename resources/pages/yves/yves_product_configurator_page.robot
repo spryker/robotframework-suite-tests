@@ -1,11 +1,9 @@
 *** Variables ***
-${configurator_date_input}    id=date
-${configurator_day_time_selector}    id=daytime
+${configurator_back_button}    xpath=//a[contains(@class,'header__back')]
 ${configurator_save_button}    xpath=//button[@type='submit' or contains(text(),' Save configurations')]
-${configurator_cancel_button}    xpath=//a[contains(@class,'cancel')]
-${configurator_store}    xpath=//app-information-list//li[contains(.,'Store')]/span
-${configurator_locale}    xpath=//app-information-list//li[contains(.,'Locale')]/span
-${configurator_price_mode}    xpath=//app-information-list//li[contains(.,'Price')]/span
-${configurator_currency}    xpath=//app-information-list//li[contains(.,'Currency')]/span
-${configurator_customer_id}    xpath=//app-information-list//li[contains(.,'Customer')]/span
-${configurator_sku}    xpath=//app-product-details//div[contains(@class,'details')]/div
+${configurator_store}    xpath=//div[@class='header__bottom']//li[contains(.,'Store')]/span
+${configurator_locale}    xpath=//div[@class='header__bottom']//li[contains(.,'Locale')]/span
+${configurator_price_mode}    xpath=//div[@class='header__bottom']//li[contains(.,'Price')]/span
+${configurator_currency}    xpath=//div[@class='header__bottom']//li[contains(.,'Currency')]/span
+${configurator_sku}    xpath=//app-product-details//div[contains(@class,'details')]/span[@data-qa='product-details-sku']
+${unsaved_product_configurations_leave_button}    xpath=//app-header//div[@data-qa='header-guard-modal']//div/button[@data-qa='header-guard-leave-button']

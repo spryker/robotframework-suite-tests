@@ -3738,12 +3738,14 @@ Configurable_Product_Checkout
     Yves: change the product options in configurator to:
     ...    || option one | option two ||
     ...    || 517        | 167        ||
+    Yves: save product configuration
     Yves: product configuration status should be equal:      Configuration complete!
     Yves: add product to the shopping cart
     Yves: go to b2c shopping cart
     Yves: change the product options in configurator to:
     ...    || option one | option two ||
     ...    || 389.50     | 249        ||
+    Yves: save product configuration
     Yves: shopping cart contains product with unit price:    sku=${configurable_product_concrete_sku}    productName=${configurable_product_name}    productPrice=638.50 
     Yves: product configuration status should be equal:      Configuration complete!
     Yves: click on the 'Checkout' button in the shopping cart
