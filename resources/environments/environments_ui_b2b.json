@@ -71,6 +71,7 @@
     "products":{
        "one_variant_product_abstract_sku":"M70208",
        "one_variant_product_abstract_name":"EUROKRAFT trolley - with open shovel",
+       "one_variant_product_concrete_sku":"403125",
        "one_variant_product_default_price":"€235.43",
        "one_variant_product_merchant_price":"€188.34",
        "concrete_avaiable_product_sku":"100414",

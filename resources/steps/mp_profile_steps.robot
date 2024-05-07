@@ -9,7 +9,7 @@ MP: open profile tab:
     [Arguments]    ${profileTabName}
     Wait Until Element Is Visible    xpath=//div[@class='ant-tabs-nav-list']//div[contains(text(),'${profileTabName}')]
     Click    xpath=//div[@class='ant-tabs-nav-list']//div[contains(text(),'${profileTabName}')]
-    Wait Until Network Is Idle
+    Wait For Load State
 
 MP: change store status to:
     [Arguments]    ${store_status}

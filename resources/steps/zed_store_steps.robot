@@ -61,5 +61,5 @@ Zed: perform store search by:
     EXCEPT    
         Log    Search event is not fired
     END
-    Repeat Keyword    2    Wait Until Network Is Idle
+    Repeat Keyword    2    Wait For Load State
  
