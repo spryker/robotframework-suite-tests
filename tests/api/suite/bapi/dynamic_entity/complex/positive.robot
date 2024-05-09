@@ -392,3 +392,4 @@ Create_and_publish_complex_product_with_child_relations:
     ...   AND    Delete dynamic entity configuration in Database:    robot-tests-stock-products
     ...   AND    Delete dynamic entity configuration in Database:    robot-tests-products
     ...   AND    Delete dynamic entity configuration in Database:    robot-tests-product-abstracts
+    ...   AND    Trigger p&s
