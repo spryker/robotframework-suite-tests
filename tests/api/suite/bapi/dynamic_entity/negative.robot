@@ -156,13 +156,22 @@ Create_country_with_valid_and_invalid_data_non_transactional
     ### POST WITH INVALID DATA ###
     Delete country by iso2_code in Database:   XX
     And I set Headers:    Content-Type=application/json    Authorization=Bearer ${token}    X-Is-Transactional=false
-    And I send a POST request:    /dynamic-entity/robot-test-countries   {"data":[{"iso2_code":"XX","name":"XXX"}, {"iso2_code":"XX", "iso3_code":"XXX", "name":"XXX"}]}
+    And I send a POST request:    /dynamic-entity/robot-test-countries   {"data":[{"iso2_code":"XX","name":"XXX"}, {"iso2_code":"XX", "iso3_code":"XXX", "name":"Country XXX"}]}
     Then Response status code should be:    201
     And Response body parameter should contain:    [errors][0][message]    The required field must not be empty. Field: `robot-test-countries0.iso3_code`
     And Response body parameter should be:    [errors][0][code]    1307
     And Response body parameter should contain:    [errors][0][status]   400
     And Response body parameter should contain:    [data][0][iso2_code]    XX
     And Response body parameter should contain:    [data][0][iso3_code]    XXX
+    When Save value to a variable:    [data][0][id_country]    country_id
+    ### GET COUNTRY AND VALIDATE DATA ###
+    And I set Headers:    Content-Type==application/json    Authorization=Bearer ${token}
+    And I send a GET request:    /dynamic-entity/robot-test-countries/${country_id}
+    Then Response status code should be:    200
+    And Response header parameter should be:    Content-Type    application/json
+    And Response body parameter should be:    [data][iso2_code]    XX
+    And Response body parameter should be:    [data][iso3_code]    XXX
+    And Response body parameter should be:    [data][name]    Country XXX
     [Teardown]    Run Keywords    Delete dynamic entity configuration in Database:    robot-test-countries
     ...   AND    Delete country by iso2_code in Database:   XX
 

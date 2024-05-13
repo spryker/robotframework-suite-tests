@@ -113,6 +113,15 @@ Create_product_abstract_collection_with_correct_child_and_child_contained_invali
     And Response body parameter should be:    [errors][0][message]    The provided `robot-tests-product-abstracts0.robot-tests-products0.invalid_field` is incorrect or invalid.
     And Response body parameter should be:    [data][0][sku]    FOO1
     And Response body parameter should be:    [data][0][attributes]    FOO1
+    ### GET PRODUCT ABSTRACT WITH CHILDREN ###
+    And I set Headers:    Content-Type=application/json    Authorization=Bearer ${token}
+    And I send a GET request:    /dynamic-entity/robot-tests-product-abstracts/${id_product_abstract}?include=robotTestsProductAbstractProducts
+    Then Response status code should be:    200
+    And Response header parameter should be:    Content-Type    application/json
+    And Response body parameter should be:    [data][id_product_abstract]    ${id_product_abstract}
+    And Response body parameter should be:    [data][sku]    testtesttest
+    And Response body parameter should be:    [data][robotTestsProductAbstractProducts][0][fk_product_abstract]    ${id_product_abstract}
+    And Response body parameter should be:    [data][robotTestsProductAbstractProducts][0][id_product]    ${id_product}
     [Teardown]    Run Keywords    Delete dynamic entity configuration relation in Database:    robotTestsProductAbstractProducts
     ...   AND    Delete dynamic entity configuration in Database:    robot-tests-product-abstracts
     ...   AND    Delete dynamic entity configuration in Database:    robot-tests-products
