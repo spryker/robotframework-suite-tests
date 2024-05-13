@@ -286,6 +286,37 @@ Create_and_update_country:
     ...   AND    Delete country by iso2_code in Database:   XX
     ...   AND    Delete country by iso2_code in Database:   XM
 
+Create_and_update_url:
+    ### SETUP DYNAMIC ENTITY CONFIGURATION ###
+    Delete dynamic entity configuration in Database:    robot-test-urls
+    Create dynamic entity configuration in Database:   robot-test-urls    spy_url     1    {"identifier":"id_url","fields":[{"fieldName":"id_url","fieldVisibleName":"id_url","isCreatable":false,"isEditable":false,"validation":{"isRequired":false},"type":"integer"},{"fieldName":"fk_locale","fieldVisibleName":"fk_locale","isCreatable":true,"isEditable":true,"type":"integer","validation":{"isRequired":true}},{"fieldName":"url","fieldVisibleName":"url","isCreatable":true,"isEditable":true,"type":"string","validation":{"isRequired":true,"constraints":[{"name":"url"}]}},{"fieldName":"fk_resource_product_set","fieldVisibleName":"fk_resource_product_set","isCreatable":true,"isEditable":true,"type":"integer","validation":{"isRequired":false}}]}
+    ### GET TOKEN ###
+    I get access token by user credentials:   ${zed_admin.email}
+    ### CREATE TEST URL AND CLEANUP TEST DATA IF EXIST###
+    Delete country by iso2_code in Database:   /test-url/123
+    And I set Headers:    Content-Type=application/json    Authorization=Bearer ${token}
+    And I send a POST request:    /dynamic-entity/robot-test-urls   {"data":[{"url":"/test-url/123", "fk_locale": 46}]}
+    Then Response status code should be:    201
+    And Response header parameter should be:    Content-Type    application/json
+    And Response body parameter should be:    [data][0][url]    /test-url/123
+    And Response body parameter should be:    [data][0][fk_locale]    46
+    When Save value to a variable:    [data][0][id_url]    id_url
+    ### UPDATE URL ###
+    And I set Headers:    Content-Type==application/json    Authorization=Bearer ${token}
+    And I send a PATCH request:    /dynamic-entity/robot-test-urls/${id_url}    {"data":{"url":"/test-url-test/42"}}
+    Then Response status code should be:    200
+    And Response header parameter should be:    Content-Type    application/json
+    And Response body parameter should be:    [data][url]    /test-url-test/42
+    And Response body parameter should be:    [data][id_url]    ${id_url}
+    ### GET URL AND VALIDATE DATA ###
+    And I set Headers:    Content-Type==application/json    Authorization=Bearer ${token}
+    And I send a GET request:    /dynamic-entity/robot-test-urls/${id_url}
+    Then Response status code should be:    200
+    And Response header parameter should be:    Content-Type    application/json
+    And Response body parameter should be:    [data][url]    /test-url-test/42
+    [Teardown]    Run Keywords    Delete dynamic entity configuration in Database:    robot-test-urls
+                      ...   AND    Delete url by url name in Database:   /test-url-test/42
+
 Create_country_collection:
     ### SETUP DYNAMIC ENTITY CONFIGURATION ###
     Delete dynamic entity configuration in Database:    robot-test-countries

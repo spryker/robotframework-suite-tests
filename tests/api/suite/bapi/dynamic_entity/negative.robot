@@ -187,6 +187,40 @@ Create_country_with_invalid_field
     [Teardown]    Run Keywords    Delete dynamic entity configuration in Database:    robot-test-countries
     ...   AND    Delete country by iso2_code in Database:   XX
 
+Create_url_with_invalid_url_name
+    ### SETUP DYNAMIC ENTITY CONFIGURATION ###
+    Delete dynamic entity configuration in Database:    robot-test-urls
+    Create dynamic entity configuration in Database:   robot-test-urls    spy_url     1    {"identifier":"id_url","fields":[{"fieldName":"id_url","fieldVisibleName":"id_url","isCreatable":false,"isEditable":false,"validation":{"isRequired":false},"type":"integer"},{"fieldName":"fk_locale","fieldVisibleName":"fk_locale","isCreatable":true,"isEditable":true,"type":"integer","validation":{"isRequired":true}},{"fieldName":"url","fieldVisibleName":"url","isCreatable":true,"isEditable":true,"type":"string","validation":{"isRequired":true,"constraints":[{"name":"url"}]}},{"fieldName":"fk_resource_product_set","fieldVisibleName":"fk_resource_product_set","isCreatable":true,"isEditable":true,"type":"integer","validation":{"isRequired":false}}]}
+    ### GET TOKEN ###
+    I get access token by user credentials:   ${zed_admin.email}
+    ### POST WITH INVALID DATA ###
+    Delete url by url name in Database:   test-url
+    And I set Headers:    Content-Type=application/json    Authorization=Bearer ${token}
+    And I send a POST request:    /dynamic-entity/robot-test-urls   {"data":[{"url":"test-url", "fk_locale": 46}]}
+    Then Response status code should be:    400
+    And Response body parameter should contain:    [0][message]    The URL is invalid. `robot-test-urls0` field url must have a URL data format.
+    And Response body parameter should be:    [0][code]    1316
+    And Response body parameter should contain:    [0][status]   400
+    [Teardown]    Run Keywords    Delete dynamic entity configuration in Database:    robot-test-urls
+    ...   AND    Delete url by url name in Database:   test-url
+
+Update_url_with_invalid_url_name
+    ### SETUP DYNAMIC ENTITY CONFIGURATION ###
+    Delete dynamic entity configuration in Database:    robot-test-urls
+    Create dynamic entity configuration in Database:   robot-test-urls    spy_url     1    {"identifier":"id_url","fields":[{"fieldName":"id_url","fieldVisibleName":"id_url","isCreatable":false,"isEditable":false,"validation":{"isRequired":false},"type":"integer"},{"fieldName":"fk_locale","fieldVisibleName":"fk_locale","isCreatable":true,"isEditable":true,"type":"integer","validation":{"isRequired":true}},{"fieldName":"url","fieldVisibleName":"url","isCreatable":true,"isEditable":true,"type":"string","validation":{"isRequired":true,"constraints":[{"name":"url"}]}},{"fieldName":"fk_resource_product_set","fieldVisibleName":"fk_resource_product_set","isCreatable":true,"isEditable":true,"type":"integer","validation":{"isRequired":false}}]}
+    ### GET TOKEN ###
+    I get access token by user credentials:   ${zed_admin.email}
+    ### POST WITH INVALID DATA ###
+    Delete url by url name in Database:   test-url
+    And I set Headers:    Content-Type=application/json    Authorization=Bearer ${token}
+    And I send a PATCH request:    /dynamic-entity/robot-test-urls   {"data":[{"url":"test-url"}]}
+    Then Response status code should be:    400
+    And Response body parameter should contain:    [0][message]    The URL is invalid. `robot-test-urls0` field url must have a URL data format.
+    And Response body parameter should be:    [0][code]    1316
+    And Response body parameter should contain:    [0][status]   400
+    [Teardown]    Run Keywords    Delete dynamic entity configuration in Database:    robot-test-urls
+    ...   AND    Delete url by url name in Database:   test-url
+
 Update_country_with_invalid_data
     ### SETUP DYNAMIC ENTITY CONFIGURATION ###
     Delete dynamic entity configuration in Database:    robot-test-countries

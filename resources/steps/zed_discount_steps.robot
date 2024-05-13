@@ -22,7 +22,7 @@ Zed: create a discount and activate it:
     Evaluate JavaScript    ${None}   document.getElementById("discount_discountGeneral_valid_to").setAttribute("value", "01.01.2025 01:00")
     ### Discount calculation
     Zed: go to tab:    Discount calculation
-    Wait Until Network Is Idle
+    Wait For Load State
     Wait For Elements State    ${zed_discount_query_builder_first_calculation_group}    visible    ${browser_timeout}
     IF    '${valueType}'=='Percentage'    Run Keywords    Select From List By Label    ${zed_discount_calculator_type_drop_down}    Percentage
     ...    AND    Type Text    ${zed_discount_percentage_value_field}     ${discountValue}
@@ -42,7 +42,7 @@ Zed: create a discount and activate it:
     END
     ### Discount condition
     Zed: go to tab:    Conditions
-    Wait Until Network Is Idle
+    Wait For Load State
     Wait For Elements State    ${zed_discount_query_builder_first_condition_group}    visible    ${browser_timeout}
     Click    ${zed_discount_plain_query_apply_when__button}
     Wait Until Element Is Visible    ${zed_discount_plain_query_apply_when_field}

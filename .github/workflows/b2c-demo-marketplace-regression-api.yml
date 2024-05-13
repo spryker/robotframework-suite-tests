@@ -1,4 +1,4 @@
-name: "[b2c-mp][internal] Robot Regression API"
+name: "[b2c-mp][master] Robot Regression API"
 
 on:
     schedule:
@@ -22,11 +22,11 @@ jobs:
               with:
                   python-version: '3.9'
 
-            - name: Clone project (internal)
+            - name: Clone project (master)
               run: |
                   git config --global user.email "github-actions[bot]@users.noreply.github.com"
                   git config --global user.name "github-actions[bot]"
-                  git clone -b internal --single-branch https://github.com/spryker-shop/b2c-demo-marketplace.git .
+                  git clone -b master --single-branch https://github.com/spryker-shop/b2c-demo-marketplace.git .
             - name: Install packages
               run: |
                   sudo apt-get install apache2-utils
@@ -54,17 +54,18 @@ jobs:
             - name: Custom commands
               continue-on-error: false
               run: |
-                  docker/sdk cli composer dump-autoload -o -a
+                  docker/sdk cli composer dump-autoload -o -a --apcu
                   APPLICATION_STORE=DE docker/sdk console queue:worker:start --stop-when-empty
                   APPLICATION_STORE=AT docker/sdk console queue:worker:start --stop-when-empty
             - name: Run Tests
               id: run_tests
+              continue-on-error: true
               run: |
                   cd robotframework-tests
                   robot -v env:api_mp_b2c -v ignore_console:false -d results --exclude skip-due-to-issueORskip-due-to-refactoring -s '*'.tests.api.mp_b2c .
                   touch results/time.txt && echo $(date) > results/time.txt
             - name: Rerun Failed Tests
-              if: failure()
+              if: steps.run_tests.outcome != 'success'
               run: |
                   cd robotframework-tests
                   robot -v env:api_mp_b2c -v ignore_console:false -d results/rerun --runemptysuite --rerunfailed results/output.xml --output rerun.xml -s '*'.tests.api.mp_b2c .

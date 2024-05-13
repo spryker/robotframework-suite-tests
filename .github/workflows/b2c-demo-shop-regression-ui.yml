@@ -1,4 +1,4 @@
-name: "[b2c][internal] Robot Regression UI"
+name: "[b2c][master] Robot Regression UI"
 
 on:
     schedule:
@@ -22,16 +22,16 @@ jobs:
               with:
                   python-version: '3.9'
 
-            - name: Clone project (internal)
+            - name: Clone project (master)
               run: |
                   git config --global user.email "github-actions[bot]@users.noreply.github.com"
                   git config --global user.name "github-actions[bot]"
-                  git clone -b internal --single-branch https://github.com/spryker-shop/b2c-demo-shop.git .
-            - name: Up-merge fresh branch (internal)
+                  git clone -b master --single-branch https://github.com/spryker-shop/b2c-demo-shop.git .
+            - name: Up-merge fresh branch (master)
               run: |
                   git fetch origin
                   git config pull.ff only
-                  git pull origin internal --no-ff --allow-unrelated-histories --no-edit
+                  git pull origin master --no-ff --allow-unrelated-histories --no-edit
             - name: Install packages
               run: |
                   sudo apt-get install apache2-utils
@@ -41,7 +41,7 @@ jobs:
                   python3 -m pip install -U robotframework-requests
                   python3 -m pip install -U robotframework-jsonlibrary
                   python3 -m pip install -U robotframework-databaselibrary
-                  python3 -m pip install robotframework-browser==18.0.0
+                  python3 -m pip install -U robotframework-browser
                   python3 -m pip install PyMySQL
             - name: Install docker-compose
               run: |
@@ -60,21 +60,22 @@ jobs:
             - name: Custom commands
               continue-on-error: false
               run: |
-                  docker/sdk cli composer dump-autoload -o -a
+                  docker/sdk cli composer dump-autoload -o -a --apcu
                   APPLICATION_STORE=DE docker/sdk console queue:worker:start --stop-when-empty
                   APPLICATION_STORE=AT docker/sdk console queue:worker:start --stop-when-empty
             - name: Run Tests
               id: run_tests
+              continue-on-error: true
               run: |
                   cd robotframework-tests
                   rfbrowser init
-                  robot -v env:ui_b2c -v headless:true -v ignore_console:false -d results --exclude skip-due-to-issueORskip-due-to-refactoring tests/ui/e2e/b2c.robot
+                  robot -v env:ui_b2c -v headless:true -v ignore_console:false -d results --exclude skip-due-to-issueORskip-due-to-refactoring --include group_oneORgroup_twoORgroup_tree -s '*'.tests.ui.b2c .
                   touch results/time.txt && echo $(date) > results/time.txt
             - name: Rerun Failed Tests
-              if: failure()
+              if: steps.run_tests.outcome != 'success'
               run: |
                   cd robotframework-tests
-                  robot -v env:ui_b2c -v headless:true -v ignore_console:false -d results/rerun --runemptysuite --rerunfailed results/output.xml --output rerun.xml tests/ui/e2e/b2c.robot
+                  robot -v env:ui_b2c -v headless:true -v ignore_console:false -d results/rerun --runemptysuite --rerunfailed results/output.xml --output rerun.xml -s '*'.tests.ui.b2c .
             - name: Merge Test Results
               if: always() && steps.run_tests.outcome != 'success'
               run: |
