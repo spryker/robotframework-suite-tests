@@ -119,7 +119,7 @@ Create_product_abstract_collection_with_correct_child_and_child_contained_invali
     Then Response status code should be:    200
     And Response header parameter should be:    Content-Type    application/json
     And Response body parameter should be:    [data][id_product_abstract]    ${id_product_abstract}
-    And Response body parameter should be:    [data][sku]    testtesttest
+    And Response body parameter should be:    [data][sku]    FOO1
     And Response body parameter should be:    [data][robotTestsProductAbstractProducts][0][fk_product_abstract]    ${id_product_abstract}
     And Response body parameter should be:    [data][robotTestsProductAbstractProducts][0][id_product]    ${id_product}
     [Teardown]    Run Keywords    Delete dynamic entity configuration relation in Database:    robotTestsProductAbstractProducts
