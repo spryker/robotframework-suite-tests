@@ -2284,8 +2284,8 @@ Data_exchange_API_Configuration_in_Zed
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: start creation of new data exchange api configuration for db table:    spy_mime_type
     Zed: edit data exchange api configuration:
-    ...    || table_name  | is_enabled ||
-    ...    || mime-types  | true       ||
+    ...    || table_name  | is_enabled | is_deletable ||
+    ...    || mime-types  | true       | false       ||
     Zed: edit data exchange api configuration:
     ...    || field_name   | enabled | visible_name | type    | creatable | editable | required ||
     ...    || id_mime_type | true    | id_mime_type | integer | true      | false    | false    ||
@@ -2331,8 +2331,8 @@ Data_exchange_API_Configuration_in_Zed
     ### DELETE TEST CONFIGURATION AND TEST MIME TYPE FROM DB ###
     [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: edit data exchange api configuration:
-    ...    || table_name  | is_enabled ||
-    ...    || mime-types  | false      ||
+    ...    || table_name  | is_enabled | is_deletable ||
+    ...    || mime-types  | false      | false      ||
     ...    AND    Zed: save data exchange api configuration
     ...    AND    Trigger API specification update
     ...    AND    Zed: wait until info box is not displayed
