@@ -29,8 +29,6 @@ Zed: change product stock:
         Click    xpath=//td[contains(text(), '${skuORnameAbstract}')]/ancestor::tr//following-sibling::td//*[contains(.,'View')]
     END
     Set Browser Timeout    5s
-    # ${first_click}=    Run Keyword And Return Status    Click    xpath=//a[contains(text(),'${skuORnameAbstract}')]/ancestor::tr//following-sibling::td//*[contains(.,'View')]
-    # Run Keyword if    '${first_click}'== 'False'    Click    xpath=//td[contains(text(), '${skuORnameAbstract}')]/ancestor::tr//following-sibling::td//*[contains(.,'View')]
     Element Should Be Visible    xpath=//div[@class='ibox float-e-margins']/*[contains(.,'Variant availability')]
     Click    xpath=//*[contains(text(),'${skuConcrete}')]/ancestor::tr//following-sibling::td//*[contains(.,'Edit Stock')]
     Element Should Be Visible    xpath=//div[@class='ibox float-e-margins']/*[contains(.,'Edit Stock')]
