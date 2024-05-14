@@ -20,6 +20,7 @@ Zed: change product stock:
     ${currentURL}=    Get Location
     IF    '/availability-gui' not in '${currentURL}'    Zed: go to second navigation item level:    Catalog    Availability
     IF    '/availability-gui/index/edit' in '${currentURL}'    Zed: go to second navigation item level:    Catalog    Availability
+    Select From List By Label    xpath=//div[contains(@class,'alt-row__left')]//select[contains(@class,'form-control')]    100
     Zed: perform search by:    ${skuAbstract}
     Click    xpath=//a[contains(text(),'${skuAbstract}')]/ancestor::tr//following-sibling::td//*[contains(.,'View')]
     Element Should Be Visible    xpath=//div[@class='ibox float-e-margins']/*[contains(.,'Variant availability')]
