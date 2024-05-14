@@ -23,12 +23,13 @@ Zed: change product stock:
     Zed: perform search by:    ${skuORnameAbstract}
     Select From List By Label    xpath=//div[contains(@class,'alt-row__left')]//select[contains(@class,'form-control')]    100
     TRY
+        Set Browser Timeout    3s
         Click    xpath=//a[contains(text(),'${skuORnameAbstract}')]/ancestor::tr//following-sibling::td//*[contains(.,'View')]
     EXCEPT    
-        Set Browser Timeout    5s
+        Set Browser Timeout    3s
         Click    xpath=//td[contains(text(), '${skuORnameAbstract}')]/ancestor::tr//following-sibling::td//*[contains(.,'View')]
     END
-    Set Browser Timeout    5s
+    Set Browser Timeout    ${browser_timeout}
     Element Should Be Visible    xpath=//div[@class='ibox float-e-margins']/*[contains(.,'Variant availability')]
     Click    xpath=//*[contains(text(),'${skuConcrete}')]/ancestor::tr//following-sibling::td//*[contains(.,'Edit Stock')]
     Element Should Be Visible    xpath=//div[@class='ibox float-e-margins']/*[contains(.,'Edit Stock')]
