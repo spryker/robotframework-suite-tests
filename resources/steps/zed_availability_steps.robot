@@ -15,14 +15,15 @@ Zed: check if product is/not in stock:
     END
 
 Zed: change product stock:
-    [Arguments]    ${skuAbstract}    ${skuConcrete}    ${isNeverOutOfStock}    ${quantityWarehouse1}    ${quantityWarehouse2}=0
+    [Arguments]    ${skuORnameAbstract}    ${skuConcrete}    ${isNeverOutOfStock}    ${quantityWarehouse1}    ${quantityWarehouse2}=0
     ${isNeverOutOfStock}=    Convert To Lower Case    ${isNeverOutOfStock}
     ${currentURL}=    Get Location
     IF    '/availability-gui' not in '${currentURL}'    Zed: go to second navigation item level:    Catalog    Availability
     IF    '/availability-gui/index/edit' in '${currentURL}'    Zed: go to second navigation item level:    Catalog    Availability
-    Zed: perform search by:    ${skuAbstract}
+    Zed: perform search by:    ${skuORnameAbstract}
     Select From List By Label    xpath=//div[contains(@class,'alt-row__left')]//select[contains(@class,'form-control')]    100
-    Click    xpath=//a[contains(text(),'${skuAbstract}')]/ancestor::tr//following-sibling::td//*[contains(.,'View')]
+    ${first_click}=    Run Keyword And Return Status    Click    xpath=//a[contains(text(),'${skuORnameAbstract}')]/ancestor::tr//following-sibling::td//*[contains(.,'View')]
+    Run Keyword if    '${first_click}'== 'False'    Click    xpath=//td[contains(text(), '${skuORnameAbstract}')]/ancestor::tr//following-sibling::td//*[contains(.,'View')]
     Element Should Be Visible    xpath=//div[@class='ibox float-e-margins']/*[contains(.,'Variant availability')]
     Click    xpath=//*[contains(text(),'${skuConcrete}')]/ancestor::tr//following-sibling::td//*[contains(.,'Edit Stock')]
     Element Should Be Visible    xpath=//div[@class='ibox float-e-margins']/*[contains(.,'Edit Stock')]

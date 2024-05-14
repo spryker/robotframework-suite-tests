@@ -59,8 +59,8 @@ Discounts
     [Setup]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: deactivate all discounts from Overview page
     ...    AND    Zed: change product stock:    190    190_25111746    true    10
-    ...    AND    Zed: change product stock:    ${bundled_product_1_abstract_sku}    ${bundled_product_1_concrete_sku}    true    10
-    ...    AND    Zed: change product stock:    ${bundled_product_2_abstract_sku}    ${bundled_product_2_concrete_sku}    true    10
+    ...    AND    Zed: change product stock:    ${bundled_product_1_abstract_name}    ${bundled_product_1_concrete_sku}    true    10
+    ...    AND    Zed: change product stock:    ${bundled_product_2_abstract_name}    ${bundled_product_2_concrete_sku}    true    10
     ...    AND    Zed: change product stock:    ${bundled_product_3_abstract_sku}    ${bundled_product_3_concrete_sku}    true    10
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Merchandising    Discount
