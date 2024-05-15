@@ -46,12 +46,12 @@ Yves: find and add new item in the quick order form:
     Wait Until Element Is Visible    ${quick_order_row_search_results}
     Wait Until Page Contains Element    xpath=(//div[contains(@data-qa,'component quick-order-rows')]//*[contains(@class,'autocomplete')][@value=''])[1]/ancestor::quick-order-row//ul[@data-qa='component products-list']/li[@data-value='${searchQuery}']
     Click    xpath=(//div[contains(@data-qa,'component quick-order-rows')]//*[contains(@class,'autocomplete')][@value=''])[1]/ancestor::quick-order-row//ul[@data-qa='component products-list']/li[@data-value='${searchQuery}']
-    Repeat Keyword    3    Wait Until Network Is Idle
+    Repeat Keyword    3    Wait For Load State
     Sleep    1s
     Wait Until Element Is Visible    ${quick_order_row_merchant_selector}
     Select From List By Label    ${quick_order_row_merchant_selector}    ${merchant}
     Clear Text    ${quick_order_add_articles_text_area}
     Type Text    ${quick_order_add_articles_text_area}    ${EMPTY}
-    Repeat Keyword    3    Wait Until Network Is Idle
+    Repeat Keyword    3    Wait For Load State
     Sleep    1s
     Click    ${quick_order_verify_button}

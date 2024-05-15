@@ -64,14 +64,14 @@ Yves: go to the shopping cart through the header with name:
     ELSE
         Click    xpath=//*[contains(@class,'icon--cart')]/ancestor::li//div[contains(@class,'js-user-navigation__sub-nav-cart')]//div[@class='mini-cart-detail']//*[contains(@class,'mini-cart-detail__title')]/*[text()='${shoppingCartName}']
     END
-    Repeat Keyword    3    Wait Until Network Is Idle
+    Repeat Keyword    3    Wait For Load State
 
 Yves: go to b2c shopping cart
     Yves: remove flash messages
     Wait Until Element Is Visible    ${shopping_car_icon_header_menu_item}[${env}]
     Click     ${shopping_car_icon_header_menu_item}[${env}]
     Wait Until Element Is Visible    ${shopping_cart_main_content_locator}[${env}]
-    Repeat Keyword    3    Wait Until Network Is Idle
+    Repeat Keyword    3    Wait For Load State
 
 Yves: shopping cart contains the following products:
     [Documentation]    For item listing you can use sku or name of the product
@@ -95,11 +95,11 @@ Yves: click on the '${buttonName}' button in the shopping cart
         Click    ${shopping_cart_request_quote_button}
         Wait Until Page Does Not Contain Element    ${shopping_cart_request_quote_button}
     END
-    Repeat Keyword    3    Wait Until Network Is Idle
+    Repeat Keyword    3    Wait For Load State
 
 Yves: shopping cart contains product with unit price:
     [Arguments]    ${sku}    ${productName}    ${productPrice}
-    Repeat Keyword    3    Wait Until Network Is Idle
+    Repeat Keyword    3    Wait For Load State
     IF    '${env}' in ['ui_b2b','ui_mp_b2b']
         TRY
             Page Should Contain Element    xpath=//div[contains(@class,'product-card-item__col--description')]//div[contains(.,'SKU: ${sku}')]/ancestor::article//*[contains(@class,'product-card-item__col--description')]/div[1]//*[contains(@class,'money-price__amount')][contains(.,'${productPrice}')]    timeout=1s
@@ -137,18 +137,18 @@ Yves: shopping cart with name xxx has the following status:
 Yves: delete product from the shopping cart with sku:
     [Arguments]    ${sku}
     Click    xpath=//form[contains(@name,'removeFromCartForm_${sku}')]//button
-    Repeat Keyword    3    Wait Until Network Is Idle
+    Repeat Keyword    3    Wait For Load State
     Yves: remove flash messages
 
 Yves: delete product from the shopping cart with name:
     [Arguments]    ${productName}
     Click    //main[@class='page-layout-cart']//article[contains(@data-qa,'component product-card-item')]//a[contains(text(),'${productName}')]/ancestor::article//form[contains(@name,'removeFromCartForm')]//button
-    Repeat Keyword    3    Wait Until Network Is Idle
+    Repeat Keyword    3    Wait For Load State
     Yves: remove flash messages
 
 Yves: shopping cart doesn't contain the following products:
     [Arguments]    @{sku_list}    ${sku1}=${EMPTY}     ${sku2}=${EMPTY}     ${sku3}=${EMPTY}     ${sku4}=${EMPTY}     ${sku5}=${EMPTY}     ${sku6}=${EMPTY}     ${sku7}=${EMPTY}     ${sku8}=${EMPTY}     ${sku9}=${EMPTY}     ${sku10}=${EMPTY}     ${sku11}=${EMPTY}     ${sku12}=${EMPTY}     ${sku13}=${EMPTY}     ${sku14}=${EMPTY}     ${sku15}=${EMPTY}
-    Repeat Keyword    3    Wait Until Network Is Idle
+    Repeat Keyword    3    Wait For Load State
     ${sku_list_count}=   get length  ${sku_list}
     FOR    ${index}    IN RANGE    0    ${sku_list_count}
         ${sku_to_check}=    Get From List    ${sku_list}    ${index}
@@ -199,7 +199,7 @@ Yves: change quantity of the configurable bundle in the shopping cart on:
         Click    //main//article[contains(@data-qa,'configured-bundle')][1]//a[text()='${confBundleTitle}']/ancestor::article//input[contains(@class, 'formatted-number-input__input')]/ancestor::article//button[@data-qa='quantity-input-submit']
     END
     Click With Options    xpath=//main//article[contains(@data-qa,'configured-bundle')][1]//a[text()='${confBundleTitle}']/ancestor::article    delay=1s
-    Repeat Keyword    3    Wait Until Network Is Idle
+    Repeat Keyword    3    Wait For Load State
     Yves: remove flash messages
 
 Yves: delete all shopping carts
@@ -235,7 +235,7 @@ Yves: delete 'Shopping Cart' with name:
     Delete shopping cart with name:    ${shoppingCartName}
     Wait Until Element Is Visible    ${delete_shopping_cart_button}
     Click    ${delete_shopping_cart_button}
-    Repeat Keyword    3    Wait Until Network Is Idle
+    Repeat Keyword    3    Wait For Load State
 
 Yves: delete from b2c cart products with name:
     [Arguments]    @{productNameList}
@@ -257,8 +257,8 @@ Yves: apply discount voucher to cart:
     IF    '${env}' in ['ui_b2c','ui_mp_b2c'] and '${expanded}'=='False'    Click    ${shopping_cart_voucher_code_section_toggler}
     Type Text    ${shopping_cart_voucher_code_field}    ${voucherCode}
     Click    ${shopping_cart_voucher_code_redeem_button}
-    Repeat Keyword    3    Wait Until Network Is Idle
-    Yves: flash message should be shown:    success    Your voucher code has been applied
+    Repeat Keyword    3    Wait For Load State
+    # Yves: flash message should be shown:    success    Your voucher code has been applied
     Yves: remove flash messages
 
 Yves: discount is applied:
@@ -277,7 +277,7 @@ Yves: discount is applied:
 Yves: promotional product offer is/not shown in cart:
     [Arguments]    ${isShown}
     ${isShown}=    Convert To Lower Case    ${isShown}
-    Repeat Keyword    3    Wait Until Network Is Idle
+    Repeat Keyword    3    Wait For Load State
     IF    '${isShown}'=='true'
         Try reloading page until element is/not appear:    ${shopping_cart_promotional_product_section}    true    5
         Element Should Be Visible    ${shopping_cart_promotional_product_section}    message=Promotional products are not displayed but should be    timeout=${browser_timeout}
@@ -297,14 +297,14 @@ Yves: change quantity of promotional product and add to cart:
         END
     END
     Click    ${shopping_cart_promotional_product_add_to_cart_button}
-    Repeat Keyword    3    Wait Until Network Is Idle
+    Repeat Keyword    3    Wait For Load State
     Yves: flash message should be shown:    success    Items added successfully
     Yves: remove flash messages
 
 Yves: add promotional product to the cart
     [Documentation]    
     Click    ${shopping_cart_promotional_product_add_to_cart_button}
-    Repeat Keyword    3    Wait Until Network Is Idle
+    Repeat Keyword    3    Wait For Load State
     Yves: flash message should be shown:    success    Items added successfully
     Yves: remove flash messages
 

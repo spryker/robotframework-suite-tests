@@ -66,7 +66,7 @@ Get_list_of_country_with_invalid_id
     And I send a GET request:    /dynamic-entity/countries/9999999
     Then Response status code should be:    404
     And Response header parameter should be:    Content-Type    application/json
-    And Response body parameter should be:    [0][message]    The entity could not be found in the database.
+    And Response body parameter should be:    [0][message]    The entity `countries` could not be found in the database.
     And Response body parameter should be:    [0][status]    404
     And Response body parameter should be:    [0][code]    1303
     [Teardown]    Run Keyword    Delete dynamic entity configuration in Database:    robot-test-countries
@@ -124,9 +124,54 @@ Create_country_with_invalid_data
     And I set Headers:    Content-Type=application/json    Authorization=Bearer ${token}
     And I send a POST request:    /dynamic-entity/robot-test-countries   {"data":[{"iso2_code":"XX","name":"XXX"}]}
     Then Response status code should be:    400
-    And Response body parameter should contain:    [0][message]    The required field must not be empty. Field: robot-test-countries.iso3_code
+    And Response body parameter should contain:    [0][message]    The required field must not be empty. Field: `robot-test-countries0.iso3_code`
     And Response body parameter should be:    [0][code]    1307
     And Response body parameter should contain:    [0][status]   400
+    [Teardown]    Run Keywords    Delete dynamic entity configuration in Database:    robot-test-countries
+    ...   AND    Delete country by iso2_code in Database:   XX
+
+Create_country_with_invalid_data_non_transactional
+    ### SETUP DYNAMIC ENTITY CONFIGURATION ###
+    Delete dynamic entity configuration in Database:    robot-test-countries
+    Create dynamic entity configuration in Database:   robot-test-countries    spy_country     1    {"identifier":"id_country","fields":[{"fieldName":"id_country","fieldVisibleName":"id_country","isEditable":false,"isCreatable":false,"type":"integer","validation":{"isRequired":false}},{"fieldName":"iso2_code","fieldVisibleName":"iso2_code","type":"string","isEditable":true,"isCreatable":true,"validation":{"isRequired":true,"maxLength":2,"minLength":2}},{"fieldName":"iso3_code","fieldVisibleName":"iso3_code","type":"string","isEditable":true,"isCreatable":true,"validation":{"isRequired":true,"maxLength":3,"minLength":3}},{"fieldName":"name","fieldVisibleName":"name","type":"string","isEditable":true,"isCreatable":true,"validation":{"isRequired":true,"maxLength":255,"minLength":1}},{"fieldName":"postal_code_mandatory","fieldVisibleName":"postal_code_mandatory","type":"boolean","isEditable":true,"isCreatable":true,"validation":{"isRequired":false}},{"fieldName":"postal_code_regex","isEditable":"false","isCreatable":"false","fieldVisibleName":"postal_code_regex","type":"string","validation":{"isRequired":false,"maxLength":500,"minLength":1}}]}
+    ### GET TOKEN ###
+    I get access token by user credentials:   ${zed_admin.email}
+    ### POST WITH INVALID DATA ###
+    Delete country by iso2_code in Database:   XX
+    And I set Headers:    Content-Type=application/json    Authorization=Bearer ${token}    X-Is-Transactional=false
+    And I send a POST request:    /dynamic-entity/robot-test-countries   {"data":[{"iso2_code":"XX","name":"XXX"}]}
+    Then Response status code should be:    400
+    And Response body parameter should contain:    [errors][0][message]    The required field must not be empty. Field: `robot-test-countries0.iso3_code`
+    And Response body parameter should be:    [errors][0][code]    1307
+    And Response body parameter should contain:    [errors][0][status]   400
+    [Teardown]    Run Keywords    Delete dynamic entity configuration in Database:    robot-test-countries
+    ...   AND    Delete country by iso2_code in Database:   XX
+
+Create_country_with_valid_and_invalid_data_non_transactional
+    ### SETUP DYNAMIC ENTITY CONFIGURATION ###
+    Delete dynamic entity configuration in Database:    robot-test-countries
+    Create dynamic entity configuration in Database:   robot-test-countries    spy_country     1    {"identifier":"id_country","fields":[{"fieldName":"id_country","fieldVisibleName":"id_country","isEditable":false,"isCreatable":false,"type":"integer","validation":{"isRequired":false}},{"fieldName":"iso2_code","fieldVisibleName":"iso2_code","type":"string","isEditable":true,"isCreatable":true,"validation":{"isRequired":true,"maxLength":2,"minLength":2}},{"fieldName":"iso3_code","fieldVisibleName":"iso3_code","type":"string","isEditable":true,"isCreatable":true,"validation":{"isRequired":true,"maxLength":3,"minLength":3}},{"fieldName":"name","fieldVisibleName":"name","type":"string","isEditable":true,"isCreatable":true,"validation":{"isRequired":true,"maxLength":255,"minLength":1}},{"fieldName":"postal_code_mandatory","fieldVisibleName":"postal_code_mandatory","type":"boolean","isEditable":true,"isCreatable":true,"validation":{"isRequired":false}},{"fieldName":"postal_code_regex","isEditable":"false","isCreatable":"false","fieldVisibleName":"postal_code_regex","type":"string","validation":{"isRequired":false,"maxLength":500,"minLength":1}}]}
+    ### GET TOKEN ###
+    I get access token by user credentials:   ${zed_admin.email}
+    ### POST WITH INVALID DATA ###
+    Delete country by iso2_code in Database:   XX
+    And I set Headers:    Content-Type=application/json    Authorization=Bearer ${token}    X-Is-Transactional=false
+    And I send a POST request:    /dynamic-entity/robot-test-countries   {"data":[{"iso2_code":"XX","name":"XXX"}, {"iso2_code":"XX", "iso3_code":"XXX", "name":"Country XXX"}]}
+    Then Response status code should be:    201
+    And Response body parameter should contain:    [errors][0][message]    The required field must not be empty. Field: `robot-test-countries0.iso3_code`
+    And Response body parameter should be:    [errors][0][code]    1307
+    And Response body parameter should contain:    [errors][0][status]   400
+    And Response body parameter should contain:    [data][0][iso2_code]    XX
+    And Response body parameter should contain:    [data][0][iso3_code]    XXX
+    When Save value to a variable:    [data][0][id_country]    country_id
+    ### GET COUNTRY AND VALIDATE DATA ###
+    And I set Headers:    Content-Type==application/json    Authorization=Bearer ${token}
+    And I send a GET request:    /dynamic-entity/robot-test-countries/${country_id}
+    Then Response status code should be:    200
+    And Response header parameter should be:    Content-Type    application/json
+    And Response body parameter should be:    [data][iso2_code]    XX
+    And Response body parameter should be:    [data][iso3_code]    XXX
+    And Response body parameter should be:    [data][name]    Country XXX
     [Teardown]    Run Keywords    Delete dynamic entity configuration in Database:    robot-test-countries
     ...   AND    Delete country by iso2_code in Database:   XX
 
@@ -158,13 +203,13 @@ Create_country_with_invalid_field_value
     And I send a POST request:    /dynamic-entity/robot-test-countries   {"data":[{"iso2_code":"X","iso3_code":"XXXX","name":""}]}
     Then Response status code should be:    400
     And Response should contain the array of a certain size:   $    3
-    And Response body parameter should contain:    [0][message]    Invalid data value for field: iso2_code, row number: 1.
+    And Response body parameter should contain:    [0][message]    Invalid data value `robot-test-countries0` for field: `iso2_code`.
     And Response body parameter should be:    [0][code]    1306
     And Response body parameter should contain:    [0][status]   400
-    And Response body parameter should contain:    [1][message]    Invalid data value for field: iso3_code, row number: 1.
+    And Response body parameter should contain:    [1][message]    Invalid data value `robot-test-countries0` for field: `iso3_code`.
     And Response body parameter should be:    [1][code]    1306
     And Response body parameter should contain:    [1][status]   400
-    And Response body parameter should contain:    [2][message]    Invalid data value for field: name, row number: 1.
+    And Response body parameter should contain:    [2][message]    Invalid data value `robot-test-countries0` for field: `name`.
     And Response body parameter should be:    [2][code]    1306
     And Response body parameter should contain:    [2][status]   400
     [Teardown]    Run Keywords    Delete dynamic entity configuration in Database:    robot-test-countries
@@ -181,11 +226,45 @@ Create_country_with_invalid_field
     And I set Headers:    Content-Type=application/json    Authorization=Bearer ${token}
     And I send a POST request:    /dynamic-entity/robot-test-countries   {"data":[{"iso2_code":"XX","iso3_code":"XXX","name":"XXX"}]}
     Then Response status code should be:    400
-    And Response body parameter should contain:    [0][message]    The provided `iso3_code` is incorrect or invalid.
+    And Response body parameter should contain:    [0][message]    The provided `robot-test-countries0.iso3_code` is incorrect or invalid.
     And Response body parameter should be:    [0][code]    1311
     And Response body parameter should contain:    [0][status]   400
     [Teardown]    Run Keywords    Delete dynamic entity configuration in Database:    robot-test-countries
     ...   AND    Delete country by iso2_code in Database:   XX
+
+Create_url_with_invalid_url_name
+    ### SETUP DYNAMIC ENTITY CONFIGURATION ###
+    Delete dynamic entity configuration in Database:    robot-test-urls
+    Create dynamic entity configuration in Database:   robot-test-urls    spy_url     1    {"identifier":"id_url","fields":[{"fieldName":"id_url","fieldVisibleName":"id_url","isCreatable":false,"isEditable":false,"validation":{"isRequired":false},"type":"integer"},{"fieldName":"fk_locale","fieldVisibleName":"fk_locale","isCreatable":true,"isEditable":true,"type":"integer","validation":{"isRequired":true}},{"fieldName":"url","fieldVisibleName":"url","isCreatable":true,"isEditable":true,"type":"string","validation":{"isRequired":true,"constraints":[{"name":"url"}]}},{"fieldName":"fk_resource_product_set","fieldVisibleName":"fk_resource_product_set","isCreatable":true,"isEditable":true,"type":"integer","validation":{"isRequired":false}}]}
+    ### GET TOKEN ###
+    I get access token by user credentials:   ${zed_admin.email}
+    ### POST WITH INVALID DATA ###
+    Delete url by url name in Database:   test-url
+    And I set Headers:    Content-Type=application/json    Authorization=Bearer ${token}
+    And I send a POST request:    /dynamic-entity/robot-test-urls   {"data":[{"url":"test-url", "fk_locale": 46}]}
+    Then Response status code should be:    400
+    And Response body parameter should contain:    [0][message]    The URL is invalid. `robot-test-urls0` field url must have a URL data format.
+    And Response body parameter should be:    [0][code]    1316
+    And Response body parameter should contain:    [0][status]   400
+    [Teardown]    Run Keywords    Delete dynamic entity configuration in Database:    robot-test-urls
+    ...   AND    Delete url by url name in Database:   test-url
+
+Update_url_with_invalid_url_name
+    ### SETUP DYNAMIC ENTITY CONFIGURATION ###
+    Delete dynamic entity configuration in Database:    robot-test-urls
+    Create dynamic entity configuration in Database:   robot-test-urls    spy_url     1    {"identifier":"id_url","fields":[{"fieldName":"id_url","fieldVisibleName":"id_url","isCreatable":false,"isEditable":false,"validation":{"isRequired":false},"type":"integer"},{"fieldName":"fk_locale","fieldVisibleName":"fk_locale","isCreatable":true,"isEditable":true,"type":"integer","validation":{"isRequired":true}},{"fieldName":"url","fieldVisibleName":"url","isCreatable":true,"isEditable":true,"type":"string","validation":{"isRequired":true,"constraints":[{"name":"url"}]}},{"fieldName":"fk_resource_product_set","fieldVisibleName":"fk_resource_product_set","isCreatable":true,"isEditable":true,"type":"integer","validation":{"isRequired":false}}]}
+    ### GET TOKEN ###
+    I get access token by user credentials:   ${zed_admin.email}
+    ### POST WITH INVALID DATA ###
+    Delete url by url name in Database:   test-url
+    And I set Headers:    Content-Type=application/json    Authorization=Bearer ${token}
+    And I send a PATCH request:    /dynamic-entity/robot-test-urls   {"data":[{"url":"test-url"}]}
+    Then Response status code should be:    400
+    And Response body parameter should contain:    [0][message]    The URL is invalid. `robot-test-urls0` field url must have a URL data format.
+    And Response body parameter should be:    [0][code]    1316
+    And Response body parameter should contain:    [0][status]   400
+    [Teardown]    Run Keywords    Delete dynamic entity configuration in Database:    robot-test-urls
+    ...   AND    Delete url by url name in Database:   test-url
 
 Update_country_with_invalid_data
     ### SETUP DYNAMIC ENTITY CONFIGURATION ###
@@ -213,7 +292,7 @@ Update_country_with_invalid_data
     And I set Headers:    Content-Type==application/json    Authorization=Bearer ${token}
     And I send a PATCH request:    /dynamic-entity/robot-test-countries/${xxa_country_id}    {"data":{"iso2_code":"XXXX"}}
     Then Response status code should be:    400
-    And Response body parameter should contain:    [0][message]    Invalid data value for field: iso2_code, row number: 1.
+    And Response body parameter should contain:    [0][message]    Invalid data value `robot-test-countries0` for field: `iso2_code`.
     And Response body parameter should be:    [0][code]    1306
     And Response body parameter should be:    [0][status]    400
     [Teardown]    Run Keywords    Delete dynamic entity configuration in Database:    robot-test-countries
@@ -238,10 +317,10 @@ Update_country_collection_with_invalid_data
     And I set Headers:    Content-Type==application/json    Authorization=Bearer ${token}
     And I send a PATCH request:    /dynamic-entity/robot-test-countries    {"data":[{"id_country":${xxa_country_id},"iso2_code":"XXXX"},{"id_country":${xxb_country_id},"iso3_code":"XXXXX"}]}
     Then Response status code should be:    400
-    And Response body parameter should contain:    [0][message]    Invalid data value for field: iso2_code, row number: 1.
+    And Response body parameter should contain:    [0][message]    Invalid data value `robot-test-countries0` for field: `iso2_code`.
     And Response body parameter should be:    [0][code]    1306
     And Response body parameter should be:    [0][status]    400
-    And Response body parameter should contain:    [1][message]    Invalid data value for field: iso3_code, row number: 2.
+    And Response body parameter should contain:    [1][message]    Invalid data value `robot-test-countries1` for field: `iso3_code`.
     And Response body parameter should be:    [1][code]    1306
     And Response body parameter should be:    [1][status]    400
     [Teardown]    Run Keywords    Delete dynamic entity configuration in Database:    robot-test-countries
@@ -266,7 +345,7 @@ Update_country_with_invalid_field_type
     And I set Headers:    Content-Type==application/json    Authorization=Bearer ${token}
     And I send a PATCH request:    /dynamic-entity/robot-test-countries/${xxa_country_id}    {"data":{"name": "FOO", "iso2_code":1234, "iso3_code": 1234}}
     Then Response status code should be:    400
-    And Response body parameter should contain:    [0][message]    Invalid data type for field: robot-test-countries.iso2_code
+    And Response body parameter should contain:    [0][message]    Invalid data type `robot-test-countries0` for field `iso2_code`
     And Response body parameter should be:    [0][code]    1305
     And Response body parameter should be:    [0][status]    400
     [Teardown]    Run Keywords    Delete dynamic entity configuration in Database:    robot-test-countries
@@ -285,7 +364,7 @@ Update_country_with_invalid_field
     And I set Headers:    Content-Type=application/json    Authorization=Bearer ${token}
     And I send a PATCH request:    /dynamic-entity/robot-test-countries   {"data":[{"iso2_code":"XX","iso3_code":"XXX","name":"XXX"}]}
     Then Response status code should be:    400
-    And Response body parameter should contain:    [0][message]    The provided `iso3_code` is incorrect or invalid.
+    And Response body parameter should contain:    [0][message]    The provided `robot-test-countries0.iso3_code` is incorrect or invalid.
     And Response body parameter should be:    [0][code]    1311
     And Response body parameter should contain:    [0][status]   400
     [Teardown]    Run Keywords    Delete dynamic entity configuration in Database:    robot-test-countries
@@ -303,7 +382,7 @@ Upsert_with_invalid_id
     And I send a PUT request:    /dynamic-entity/robot-test-countries/1000    {"data":{"iso2_code":"XX","iso3_code":"XXX","name":"Country XXX"}}
     Then Response status code should be:    400
     And Response header parameter should be:    Content-Type    application/json
-    And Response body parameter should be:    [0][message]    Entity `id_country: 1000` not found by identifier, and new identifier can not be persisted. Please update the request.
+    And Response body parameter should be:    [0][message]    Entity `robot-test-countries0.id_country: 1000` not found by identifier, and new identifier can not be persisted. Please update the request.
     And Response body parameter should be:    [0][code]    1308
     And Response body parameter should be:    [0][status]    400
     [Teardown]    Run Keywords    Delete dynamic entity configuration in Database:    robot-test-countries

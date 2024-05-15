@@ -55,9 +55,17 @@ Common_suite_setup
     ${random}=    Generate Random String    5    [NUMBERS]
     ${random_id}=    Generate Random String    5    [NUMBERS]
     ${random_str}=    Generate Random String    5    [LETTERS]
+    ${random_str_store}=    Generate Random String    2    [UPPER]
+    ${random_str_password}=    Generate Random String    2    [LETTERS]
+    ${random_id_password}=    Generate Random String    2    [NUMBERS]
+
     Set Global Variable    ${random}
     Set Global Variable    ${random_id}
     Set Global Variable    ${random_str}
+    Set Global Variable    ${random_str_store}
+    Set Global Variable    ${random_id_password}
+    Set Global Variable    ${random_str_password}
+    
     ${today}=    Get Current Date    result_format=%Y-%m-%d
     Set Global Variable    ${today}
     IF    ${docker}
@@ -70,13 +78,13 @@ Should Test Run
     ${dms_state}=    Convert To String    ${dms}
     IF   '${dms_state}' != 'True'
         IF   'dms-on' in @{Test Tags}
-            Skip  
+            Skip
         END
-    ELSE    
+    ELSE
         IF   'dms-off' in @{Test Tags}
-            Skip      
+            Skip
         END
-    END    
+    END
 
 Load Variables
     [Documentation]    Keyword is used to load variable values from the environment file passed during execution. This Keyword is used during suite setup.
@@ -469,6 +477,30 @@ Delete country by iso2_code in Database:
     Execute Sql String    DELETE FROM spy_country WHERE iso2_code = '${iso2_code}';
     Disconnect From Database
 
+Delete url by url name in Database:
+    [Documentation]    This keyword deletes a url by url name in the DB table spy_url.
+        ...    *Example:*
+        ...
+        ...    ``Delete url by url name in Database:    test``
+        ...
+    [Arguments]    ${url}
+    Connect to Spryker DB
+    Execute Sql String    DELETE FROM spy_url WHERE url = '${url}';
+    Disconnect From Database
+
+Verify that url is present in the Database:
+    [Documentation]    This keyword verifies that url is present in the DB table spy_url.
+        ...    *Example:*
+        ...
+        ...    ``Verify that url is present in the Database:    test``
+        ...
+    [Arguments]    ${url}
+    Connect to Spryker DB
+    ${db_url}=    Query    SELECT url FROM spy_url WHERE url = '${url}' LIMIT 1;
+    ${db_url}=    Set Variable    ${db_url[0][0]}
+    Disconnect From Database
+    Should Be Equal    ${url}    ${db_url}
+
 Update dynamic entity configuration in Database:
      [Documentation]    This keyword update dynamic entity configuration in the DB table spy_dynamic_entity_configuration if configuration exists.
         ...    *Example:*
@@ -669,6 +701,58 @@ Delete product_abstract by id_product_abstract in Database:
     [Arguments]    ${id_product_abstract}
     Connect to Spryker DB
     Execute Sql String    DELETE FROM spy_product_abstract WHERE id_product_abstract = ${id_product_abstract};
+    Disconnect From Database
+
+Delete complex product by id_product_abstract in Database:
+    [Documentation]    This keyword deletes a product abstract by id_product_abstract from spy_product_abstract.
+        ...    *Example:*
+        ...
+        ...    ``Delete complex product by id_product_abstract in Database:    200``
+        ...
+    [Arguments]    ${id_product_abstract}
+    Connect to Spryker DB
+    Execute Sql String    DELETE FROM spy_product_image_set WHERE fk_product_abstract = ${id_product_abstract};
+    Execute Sql String    DELETE FROM spy_product_label_product_abstract WHERE fk_product_abstract = ${id_product_abstract};
+    Execute Sql String    DELETE FROM spy_product_abstract_localized_attributes WHERE fk_product_abstract = ${id_product_abstract};
+    Execute Sql String    DELETE FROM spy_url WHERE fk_resource_product_abstract = ${id_product_abstract};
+    Execute Sql String    DELETE FROM spy_product_category WHERE fk_product_abstract = ${id_product_abstract};
+
+    ${id_price_product}=    Query    SELECT id_price_product from spy_price_product WHERE fk_product_abstract = ${id_product_abstract};
+    ${id_price_product_length}=    Get Length    ${id_price_product}
+    IF    ${id_price_product_length} > 0
+        ${id_price_product}=    Set Variable    ${id_price_product[0][0]}
+        Execute Sql String    DELETE FROM spy_price_product_store WHERE fk_price_product = ${id_price_product};
+        Execute Sql String    DELETE FROM spy_price_product WHERE fk_product_abstract = ${id_product_abstract};
+    END
+
+    ${id_product_relation}=    Query    SELECT id_product_relation from spy_product_relation WHERE fk_product_abstract = ${id_product_abstract};
+    ${id_product_relation_length}=    Get Length    ${id_product_relation}
+    IF    ${id_product_relation_length} > 0
+        ${id_product_relation}=    Set Variable    ${id_product_relation[0][0]}
+        Execute Sql String    DELETE FROM spy_product_relation_store WHERE fk_product_relation = ${id_product_relation};
+        Execute Sql String    DELETE FROM spy_product_relation WHERE fk_product_abstract = ${id_product_abstract};
+    END
+
+    ${id_product}=    Query    SELECT id_product from spy_product WHERE fk_product_abstract='${id_product_abstract}';
+    ${id_product_length}=    Get Length    ${id_product}
+    IF    ${id_product_length} > 0
+        ${id_product}=    Set Variable    ${id_product[0][0]}
+        Execute Sql String    DELETE FROM spy_product_search WHERE fk_product = ${id_product};
+        Execute Sql String    DELETE FROM spy_stock_product WHERE fk_product = ${id_product};
+        Execute Sql String    DELETE FROM spy_product_localized_attributes WHERE fk_product = ${id_product};
+        Execute Sql String    DELETE FROM spy_product WHERE fk_product_abstract = ${id_product_abstract};
+    END
+
+    Execute Sql String    DELETE FROM spy_product_abstract_store WHERE fk_product_abstract = ${id_product_abstract};
+    Execute Sql String    DELETE FROM spy_product_abstract_category_storage WHERE fk_product_abstract = ${id_product_abstract};
+    Execute Sql String    DELETE FROM spy_product_abstract_label_storage WHERE fk_product_abstract = ${id_product_abstract};
+    Execute Sql String    DELETE FROM spy_product_abstract_product_list_storage WHERE fk_product_abstract = ${id_product_abstract};
+    Execute Sql String    DELETE FROM spy_product_abstract_page_search WHERE fk_product_abstract = ${id_product_abstract};
+    Execute Sql String    DELETE FROM spy_product_abstract_relation_storage WHERE fk_product_abstract = ${id_product_abstract};
+    Execute Sql String    DELETE FROM spy_product_abstract_storage WHERE fk_product_abstract = ${id_product_abstract};
+    Execute Sql String    DELETE FROM spy_product_label_product_abstract WHERE fk_product_abstract = ${id_product_abstract};
+    Execute Sql String    DELETE FROM spy_product_abstract WHERE id_product_abstract = ${id_product_abstract};
+
     Disconnect From Database
 
 Delete product_price by id_price_product in Database:
