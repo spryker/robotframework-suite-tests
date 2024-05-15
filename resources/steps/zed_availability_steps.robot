@@ -21,7 +21,6 @@ Zed: change product stock:
     IF    '/availability-gui' not in '${currentURL}'    Zed: go to second navigation item level:    Catalog    Availability
     IF    '/availability-gui/index/edit' in '${currentURL}'    Zed: go to second navigation item level:    Catalog    Availability
     Zed: perform search by:    ${skuORnameAbstract}
-    Select From List By Label    xpath=//div[contains(@class,'alt-row__left')]//select[contains(@class,'form-control')]    100
     TRY
         Set Browser Timeout    3s
         Click    xpath=//a[contains(text(),'${skuORnameAbstract}')]/ancestor::tr//following-sibling::td//*[contains(.,'View')]
