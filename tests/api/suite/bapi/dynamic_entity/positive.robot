@@ -461,6 +461,88 @@ Upsert_country_collection:
     ...   AND    Delete country by iso2_code in Database:   XL
     ...   AND    Delete country by iso2_code in Database:   XS
 
+Delete_country_collection:
+    ### SETUP DYNAMIC ENTITY CONFIGURATION ###
+    Delete dynamic entity configuration in Database:    robot-test-countries
+    Create dynamic entity configuration in Database:    robot-test-countries    spy_country     1    {"identifier":"id_country","isDeletable": true,"fields":[{"fieldName":"id_country","fieldVisibleName":"id_country","isEditable":false,"isCreatable":false,"type":"integer","validation":{"isRequired":false}},{"fieldName":"iso2_code","fieldVisibleName":"iso2_code","type":"string","isEditable":true,"isCreatable":true,"validation":{"isRequired":true,"maxLength":2,"minLength":2}},{"fieldName":"iso3_code","fieldVisibleName":"iso3_code","type":"string","isEditable":true,"isCreatable":true,"validation":{"isRequired":true,"maxLength":3,"minLength":3}},{"fieldName":"name","fieldVisibleName":"name","type":"string","isEditable":true,"isCreatable":true,"validation":{"isRequired":true,"maxLength":255,"minLength":1}},{"fieldName":"postal_code_mandatory","fieldVisibleName":"postal_code_mandatory","type":"boolean","isEditable":true,"isCreatable":true,"validation":{"isRequired":false}},{"fieldName":"postal_code_regex","isEditable":"false","isCreatable":"false","fieldVisibleName":"postal_code_regex","type":"string","validation":{"isRequired":false,"maxLength":500,"minLength":1}}]}
+    ### GET TOKEN ###
+    I get access token by user credentials:   ${zed_admin.email}
+    ### CREATE TEST COUNTRIES ###
+    And I set Headers:    Content-Type=application/json    Authorization=Bearer ${token}
+    And I send a POST request:    /dynamic-entity/robot-test-countries   {"data":[{"iso2_code":"XA","iso3_code":"XXA","name":"Country XA"},{"iso2_code":"XB","iso3_code":"XXB","name":"Country XB"},{"iso2_code":"XC","iso3_code":"XXC","name":"Country XC","postal_code_regex":"\\d{5}"}]}
+    Then Response status code should be:    201
+    And Response body parameter should be:    [data][2][iso2_code]    XC
+    And Response body parameter should be:    [data][2][iso3_code]    XXC
+    And Response body parameter should be:    [data][2][name]    Country XC
+    Response body parameter should be greater than :    [data][2][id_country]    200
+    When Save value to a variable:    [data][0][iso2_code]    xxa_iso2_code
+    When Save value to a variable:    [data][0][name]    xxa_name
+    When Save value to a variable:    [data][1][iso2_code]    xxb_iso2_code
+    When Save value to a variable:    [data][1][name]    xxb_name
+    When Save value to a variable:    [data][2][iso2_code]    xxc_iso2_code
+    When Save value to a variable:    [data][2][name]    xxc_name
+    ### GET COUNTRY COLLECTION WITH FILTER ###
+    And I set Headers:    Content-Type=application/json    Authorization=Bearer ${token}
+    And I send a GET request:    /dynamic-entity/robot-test-countries?filter[countries.iso2_code]={"in": ["${xxa_iso2_code}","${xxb_iso2_code}","${xxc_iso2_code}"]}
+    Then Response status code should be:    200
+    And Response header parameter should be:    Content-Type    application/json
+    And Response body parameter should be:    [data][0][iso2_code]    ${xxa_iso2_code}
+    And Response body parameter should be:    [data][0][name]    ${xxa_name}
+    And Response body parameter should be:    [data][1][iso2_code]    ${xxb_iso2_code}
+    And Response body parameter should be:    [data][1][name]    ${xxb_name}
+    And Response body parameter should be:    [data][2][iso2_code]    ${xxc_iso2_code}
+    And Response body parameter should be:    [data][2][name]    ${xxc_name}
+    #### DELETE COUNTRY COLLECTION ###
+    And I set Headers:    Content-Type==application/json    Authorization=Bearer ${token}
+    And I send a DELETE request:    /dynamic-entity/robot-test-countries?filter[countries.iso2_code]={"in": ["${xxa_iso2_code}","${xxb_iso2_code}","${xxc_iso2_code}"]}
+    Then Response status code should be:    204
+    And Response header parameter should be:    Content-Type    application/json
+    And I set Headers:    Content-Type=application/json    Authorization=Bearer ${token}
+    And I send a GET request:    /dynamic-entity/robot-test-countries?filter[countries.iso2_code]={"in": ["${xxa_iso2_code}","${xxb_iso2_code}","${xxc_iso2_code}"]}
+    Then Response status code should be:    200
+    And Response header parameter should be:    Content-Type    application/json
+    And Response should contain the array of a certain size:   $    1
+    And Response should contain the array of a certain size:   [data]    0
+    [Teardown]    Run Keywords    Delete dynamic entity configuration in Database:    robot-test-countries
+    ...   AND    Delete country by iso2_code in Database:   XA
+    ...   AND    Delete country by iso2_code in Database:   XB
+    ...   AND    Delete country by iso2_code in Database:   XC
+
+Delete_country_by_id:
+    ### SETUP DYNAMIC ENTITY CONFIGURATION ###
+    Delete dynamic entity configuration in Database:    robot-test-countries
+    Create dynamic entity configuration in Database:    robot-test-countries    spy_country     1    {"identifier":"id_country","isDeletable": true,"fields":[{"fieldName":"id_country","fieldVisibleName":"id_country","isEditable":false,"isCreatable":false,"type":"integer","validation":{"isRequired":false}},{"fieldName":"iso2_code","fieldVisibleName":"iso2_code","type":"string","isEditable":true,"isCreatable":true,"validation":{"isRequired":true,"maxLength":2,"minLength":2}},{"fieldName":"iso3_code","fieldVisibleName":"iso3_code","type":"string","isEditable":true,"isCreatable":true,"validation":{"isRequired":true,"maxLength":3,"minLength":3}},{"fieldName":"name","fieldVisibleName":"name","type":"string","isEditable":true,"isCreatable":true,"validation":{"isRequired":true,"maxLength":255,"minLength":1}},{"fieldName":"postal_code_mandatory","fieldVisibleName":"postal_code_mandatory","type":"boolean","isEditable":true,"isCreatable":true,"validation":{"isRequired":false}},{"fieldName":"postal_code_regex","isEditable":"false","isCreatable":"false","fieldVisibleName":"postal_code_regex","type":"string","validation":{"isRequired":false,"maxLength":500,"minLength":1}}]}
+    ### GET TOKEN ###
+    I get access token by user credentials:   ${zed_admin.email}
+    ### CREATE TEST COUNTRY ###
+    And I set Headers:    Content-Type=application/json    Authorization=Bearer ${token}
+    And I send a POST request:    /dynamic-entity/robot-test-countries   {"data":[{"iso2_code":"XA","iso3_code":"XXA","name":"Country XA"}]}
+    Then Response status code should be:    201
+    And Response body parameter should be:    [data][0][iso2_code]    XA
+    Response body parameter should be greater than :    [data][0][id_country]    200
+    When Save value to a variable:    [data][0][id_country]    xxa_id
+    When Save value to a variable:    [data][0][iso2_code]    xxa_iso2_code
+    ### GET COUNTRY BY ID ###
+    And I set Headers:    Content-Type=application/json    Authorization=Bearer ${token}
+    And I send a GET request:    /dynamic-entity/robot-test-countries/${xxa_id}
+    Then Response status code should be:    200
+    And Response header parameter should be:    Content-Type    application/json
+    And Response body parameter should be:    [data][iso2_code]    ${xxa_iso2_code}
+    #### DELETE COUNTRY ###
+    And I set Headers:    Content-Type==application/json    Authorization=Bearer ${token}
+    And I send a DELETE request:    /dynamic-entity/robot-test-countries/${xxa_id}
+    Then Response status code should be:    204
+    And Response header parameter should be:    Content-Type    application/json
+    And I set Headers:    Content-Type=application/json    Authorization=Bearer ${token}
+    And I send a GET request:    /dynamic-entity/robot-test-countries/${xxa_id}
+    Then Response status code should be:    404
+    And Response header parameter should be:    Content-Type    application/json
+    And Response body parameter should be:    [0][message]    The entity `robot-test-countries` could not be found in the database.
+    And Response body parameter should be:    [0][status]    404
+    And Response body parameter should be:    [0][code]    1303
+    [Teardown]    Run Keywords    Delete dynamic entity configuration in Database:    robot-test-countries
+    ...   AND    Delete country by iso2_code in Database:   XA
+
 Authorization_by_x_api_key
     [Documentation]    data excahnge api should support 2 autorization options: by x-api-key and by backoffice user token.
     [Setup]    Create api key in db
