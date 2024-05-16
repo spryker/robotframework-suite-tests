@@ -15,7 +15,7 @@ Zed: check if product is/not in stock:
     END
 
 Zed: change product stock:
-    [Arguments]    ${skuAbstract}    ${skuConcrete}    ${isNeverOutOfStock}    ${quantityWarehouse1}    ${quantityWarehouse2}=0
+    [Arguments]    ${skuORnameAbstract}    ${skuConcrete}    ${isNeverOutOfStock}    ${quantityWarehouse1}    ${quantityWarehouse2}=0
     ${isNeverOutOfStock}=    Convert To Lower Case    ${isNeverOutOfStock}
     ${currentURL}=    Get Location
     IF    '/availability-gui' not in '${currentURL}'    Zed: go to second navigation item level:    Catalog    Availability
