@@ -251,7 +251,7 @@ Create_and_update_country:
     Response body parameter should be greater than :    [data][0][id_country]    200
     When Save value to a variable:    [data][0][id_country]    xxa_country_id
     ### UPDATE COUNTRY ###
-    And I set Headers:    Content-Type==application/json    Authorization=Bearer ${token}
+    And I set Headers:    Content-Type=application/json    Authorization=Bearer ${token}
     And I send a PATCH request:    /dynamic-entity/robot-test-countries/${xxa_country_id}    {"data":{"iso2_code":"XX","iso3_code":"XXX","name":"Country XX"}}
     Then Response status code should be:    200
     And Response header parameter should be:    Content-Type    application/json
@@ -260,7 +260,7 @@ Create_and_update_country:
     And Response body parameter should be:    [data][name]    Country XX
     And Response body parameter should be:    [data][id_country]    ${xxa_country_id}
     ### GET COUNTRY AND VALIDATE DATA ###
-    And I set Headers:    Content-Type==application/json    Authorization=Bearer ${token}
+    And I set Headers:    Content-Type=application/json    Authorization=Bearer ${token}
     And I send a GET request:    /dynamic-entity/robot-test-countries/${xxa_country_id}
     Then Response status code should be:    200
     And Response header parameter should be:    Content-Type    application/json
@@ -268,14 +268,14 @@ Create_and_update_country:
     And Response body parameter should be:    [data][iso3_code]    XXX
     And Response body parameter should be:    [data][name]    Country XX
     ### UPDATE ONE FIELD OF COUNTRY ###
-    And I set Headers:    Content-Type==application/json    Authorization=Bearer ${token}
+    And I set Headers:    Content-Type=application/json    Authorization=Bearer ${token}
     And I send a PATCH request:    /dynamic-entity/robot-test-countries/${xxa_country_id}    {"data":{"name":"Test Country"}}
     Then Response status code should be:    200
     And Response header parameter should be:    Content-Type    application/json
     And Response body parameter should be:    [data][name]    Test Country
     And Response body parameter should be:    [data][id_country]    ${xxa_country_id}
     ### GET COUNTRY AND VALIDATE DATA ###
-    And I set Headers:    Content-Type==application/json    Authorization=Bearer ${token}
+    And I set Headers:    Content-Type=application/json    Authorization=Bearer ${token}
     And I send a GET request:    /dynamic-entity/robot-test-countries/${xxa_country_id}
     Then Response status code should be:    200
     And Response header parameter should be:    Content-Type    application/json
@@ -302,14 +302,14 @@ Create_and_update_url:
     And Response body parameter should be:    [data][0][fk_locale]    46
     When Save value to a variable:    [data][0][id_url]    id_url
     ### UPDATE URL ###
-    And I set Headers:    Content-Type==application/json    Authorization=Bearer ${token}
+    And I set Headers:    Content-Type=application/json    Authorization=Bearer ${token}
     And I send a PATCH request:    /dynamic-entity/robot-test-urls/${id_url}    {"data":{"url":"/test-url-test/42"}}
     Then Response status code should be:    200
     And Response header parameter should be:    Content-Type    application/json
     And Response body parameter should be:    [data][url]    /test-url-test/42
     And Response body parameter should be:    [data][id_url]    ${id_url}
     ### GET URL AND VALIDATE DATA ###
-    And I set Headers:    Content-Type==application/json    Authorization=Bearer ${token}
+    And I set Headers:    Content-Type=application/json    Authorization=Bearer ${token}
     And I send a GET request:    /dynamic-entity/robot-test-urls/${id_url}
     Then Response status code should be:    200
     And Response header parameter should be:    Content-Type    application/json
@@ -345,7 +345,7 @@ Create_country_collection:
     When Save value to a variable:    [data][1][id_country]    xxb_country_id
     When Save value to a variable:    [data][2][id_country]    xxc_country_id
     #### UPDATE COUNTRY COLLECTION ###
-    And I set Headers:    Content-Type==application/json    Authorization=Bearer ${token}
+    And I set Headers:    Content-Type=application/json    Authorization=Bearer ${token}
     And I send a PATCH request:    /dynamic-entity/robot-test-countries    {"data":[{"id_country":${xxa_country_id},"iso2_code":"XA","iso3_code":"XAA","name":"XAA"},{"id_country":${xxb_country_id},"iso2_code":"XB","iso3_code":"XBB","name":"XBB"},{"id_country":${xxc_country_id},"iso2_code":"XC","iso3_code":"XCC","name":"XCC"}]}
     Then Response status code should be:    200
     And Response header parameter should be:    Content-Type    application/json
@@ -394,7 +394,7 @@ Upsert_country_collection:
     When Save value to a variable:    [data][1][id_country]    xbb_country_id
 
     ## UPSERT ONE COUNTRY ###
-    And I set Headers:    Content-Type==application/json    Authorization=Bearer ${token}
+    And I set Headers:    Content-Type=application/json    Authorization=Bearer ${token}
     And I send a PUT request:    /dynamic-entity/robot-test-countries/${xaa_country_id}    {"data":{"iso2_code":"XX","iso3_code":"XXX","name":"Country XXX"}}
     Then Response status code should be:    200
     And Response header parameter should be:    Content-Type    application/json
@@ -403,7 +403,7 @@ Upsert_country_collection:
     And Response body parameter should be:    [data][name]    Country XXX
     And Response body parameter should be:    [data][id_country]    ${xaa_country_id}
     ### GET COUNTRY AND VALIDATE DATA ###
-    And I set Headers:    Content-Type==application/json    Authorization=Bearer ${token}
+    And I set Headers:    Content-Type=application/json    Authorization=Bearer ${token}
     And I send a GET request:    /dynamic-entity/robot-test-countries/${xaa_country_id}
     Then Response status code should be:    200
     And Response header parameter should be:    Content-Type    application/json
@@ -411,14 +411,14 @@ Upsert_country_collection:
     And Response body parameter should be:    [data][iso3_code]    XXX
     And Response body parameter should be:    [data][name]    Country XXX
     ### PARTIAL UPDATE ONE COUNTRY ###
-    And I set Headers:    Content-Type==application/json    Authorization=Bearer ${token}
+    And I set Headers:    Content-Type=application/json    Authorization=Bearer ${token}
     And I send a PUT request:    /dynamic-entity/robot-test-countries/${xaa_country_id}    {"data":{"iso2_code":"XX","iso3_code":"XXX","name":"Country XXL"}}
     Then Response status code should be:    200
     And Response header parameter should be:    Content-Type    application/json
     And Response body parameter should be:    [data][name]    Country XXL
     And Response body parameter should be:    [data][id_country]    ${xaa_country_id}
     ### GET COUNTRY AND VALIDATE DATA ###
-    And I set Headers:    Content-Type==application/json    Authorization=Bearer ${token}
+    And I set Headers:    Content-Type=application/json    Authorization=Bearer ${token}
     And I send a GET request:    /dynamic-entity/robot-test-countries/${xaa_country_id}
     Then Response status code should be:    200
     And Response header parameter should be:    Content-Type    application/json
@@ -426,7 +426,7 @@ Upsert_country_collection:
     And Response body parameter should be:    [data][iso3_code]    XXX
     And Response body parameter should be:    [data][name]    Country XXL
     ### UPSERT COUNTRY COLLECTION ###
-    And I set Headers:    Content-Type==application/json    Authorization=Bearer ${token}
+    And I set Headers:    Content-Type=application/json    Authorization=Bearer ${token}
     And I send a PUT request:    /dynamic-entity/robot-test-countries    {"data":[{"id_country":${xaa_country_id},"iso2_code":"XL","iso3_code":"XXL","name":"XXL"},{"id_country":${xbb_country_id},"iso2_code":"XS","iso3_code":"XXS","name":"XXS"}]}
     Then Response status code should be:    200
     And Response header parameter should be:    Content-Type    application/json
@@ -439,14 +439,14 @@ Upsert_country_collection:
     And Response body parameter should be:    [data][1][name]    XXS
     And Response body parameter should be:    [data][1][id_country]    ${xbb_country_id}
     ### GET COUNTRIES AND VALIDATE DATA ###
-    And I set Headers:    Content-Type==application/json    Authorization=Bearer ${token}
+    And I set Headers:    Content-Type=application/json    Authorization=Bearer ${token}
     And I send a GET request:    /dynamic-entity/robot-test-countries/${xaa_country_id}
     Then Response status code should be:    200
     And Response header parameter should be:    Content-Type    application/json
     And Response body parameter should be:    [data][iso2_code]    XL
     And Response body parameter should be:    [data][iso3_code]    XXL
     And Response body parameter should be:    [data][name]    XXL
-    And I set Headers:    Content-Type==application/json    Authorization=Bearer ${token}
+    And I set Headers:    Content-Type=application/json    Authorization=Bearer ${token}
     And I send a GET request:    /dynamic-entity/robot-test-countries/${xbb_country_id}
     Then Response status code should be:    200
     And Response header parameter should be:    Content-Type    application/json
@@ -493,7 +493,7 @@ Delete_country_collection:
     And Response body parameter should be:    [data][2][iso2_code]    ${xxc_iso2_code}
     And Response body parameter should be:    [data][2][name]    ${xxc_name}
     #### DELETE COUNTRY COLLECTION ###
-    And I set Headers:    Content-Type==application/json    Authorization=Bearer ${token}
+    And I set Headers:    Content-Type=application/json    Authorization=Bearer ${token}
     And I send a DELETE request:    /dynamic-entity/robot-test-countries?filter[countries.iso2_code]={"in": ["${xxa_iso2_code}","${xxb_iso2_code}","${xxc_iso2_code}"]}
     Then Response status code should be:    204
     And Response header parameter should be:    Content-Type    application/json
@@ -529,7 +529,7 @@ Delete_country_by_id:
     And Response header parameter should be:    Content-Type    application/json
     And Response body parameter should be:    [data][iso2_code]    ${xxa_iso2_code}
     #### DELETE COUNTRY ###
-    And I set Headers:    Content-Type==application/json    Authorization=Bearer ${token}
+    And I set Headers:    Content-Type=application/json    Authorization=Bearer ${token}
     And I send a DELETE request:    /dynamic-entity/robot-test-countries/${xxa_id}
     Then Response status code should be:    204
     And Response header parameter should be:    Content-Type    application/json
@@ -559,7 +559,7 @@ Availability_recalculation_after_stock_update
     Set Tags    bapi
     API_test_setup
     When I get access token by user credentials:   ${zed_admin.email}
-    And I set Headers:    Content-Type==application/json    Authorization=Bearer ${token}
+    And I set Headers:    Content-Type=application/json    Authorization=Bearer ${token}
     And I send a PATCH request:    /dynamic-entity/stock-products/${index}    {"data":{"is_never_out_of_stock":${false},"quantity":0}}
     Then Response status code should be:    200
     And Response body parameter should be:    [data][is_never_out_of_stock]    False

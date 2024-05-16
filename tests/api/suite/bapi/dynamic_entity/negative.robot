@@ -244,7 +244,7 @@ Update_country_with_invalid_data
     When Save value to a variable:    [data][0][id_country]    xxa_country_id
     When Save value to a variable:    [data][1][id_country]    xxb_country_id
     ### UPDATE COUNTRY WITH INVALID DATA ###
-    And I set Headers:    Content-Type==application/json    Authorization=Bearer ${token}
+    And I set Headers:    Content-Type=application/json    Authorization=Bearer ${token}
     And I send a PATCH request:    /dynamic-entity/robot-test-countries/${xxa_country_id}    {"data":{"iso2_code":"XXXX"}}
     Then Response status code should be:    400
     And Response body parameter should contain:    [0][message]    Invalid data value `robot-test-countries0` for field: `iso2_code`.
@@ -269,7 +269,7 @@ Update_country_collection_with_invalid_data
     When Save value to a variable:    [data][0][id_country]    xxa_country_id
     When Save value to a variable:    [data][1][id_country]    xxb_country_id
     ### UPDATE COUNTRY COLLECTION WITH INVALID DATA ###
-    And I set Headers:    Content-Type==application/json    Authorization=Bearer ${token}
+    And I set Headers:    Content-Type=application/json    Authorization=Bearer ${token}
     And I send a PATCH request:    /dynamic-entity/robot-test-countries    {"data":[{"id_country":${xxa_country_id},"iso2_code":"XXXX"},{"id_country":${xxb_country_id},"iso3_code":"XXXXX"}]}
     Then Response status code should be:    400
     And Response body parameter should contain:    [0][message]    Invalid data value `robot-test-countries0` for field: `iso2_code`.
@@ -297,7 +297,7 @@ Update_country_with_invalid_field_type
     When Save value to a variable:    [data][0][id_country]    xxa_country_id
     When Save value to a variable:    [data][1][id_country]    xxb_country_id
     ### UPDATE COUNTRY WITH INVALID FILELD TYPE ###
-    And I set Headers:    Content-Type==application/json    Authorization=Bearer ${token}
+    And I set Headers:    Content-Type=application/json    Authorization=Bearer ${token}
     And I send a PATCH request:    /dynamic-entity/robot-test-countries/${xxa_country_id}    {"data":{"name": "FOO", "iso2_code":1234, "iso3_code": 1234}}
     Then Response status code should be:    400
     And Response body parameter should contain:    [0][message]    Invalid data type `robot-test-countries0` for field `iso2_code`
@@ -333,7 +333,7 @@ Upsert_with_invalid_id
     I get access token by user credentials:   ${zed_admin.email}
 
     ### UDATE WITH INVALID ID ###
-    And I set Headers:    Content-Type==application/json    Authorization=Bearer ${token}
+    And I set Headers:    Content-Type=application/json    Authorization=Bearer ${token}
     And I send a PUT request:    /dynamic-entity/robot-test-countries/1000    {"data":{"iso2_code":"XX","iso3_code":"XXX","name":"Country XXX"}}
     Then Response status code should be:    400
     And Response header parameter should be:    Content-Type    application/json
