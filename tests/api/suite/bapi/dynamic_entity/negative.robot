@@ -337,7 +337,7 @@ Upsert_with_invalid_id
     And I send a PUT request:    /dynamic-entity/robot-test-countries/1000    {"data":{"iso2_code":"XX","iso3_code":"XXX","name":"Country XXX"}}
     Then Response status code should be:    400
     And Response header parameter should be:    Content-Type    application/json
-    And Response body parameter should be:    [0][message]    Entity `id_country: 1000` not found by identifier, and new identifier can not be persisted. Please update the request.
+    And Response body parameter should be:    [0][message]    Entity `robot-test-countries0.id_country: 1000` not found by identifier, and new identifier can not be persisted. Please update the request.
     And Response body parameter should be:    [0][code]    1308
     And Response body parameter should be:    [0][status]    400
     [Teardown]    Run Keywords    Delete dynamic entity configuration in Database:    robot-test-countries
