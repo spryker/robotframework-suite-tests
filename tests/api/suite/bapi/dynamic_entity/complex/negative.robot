@@ -337,7 +337,7 @@ Delete_product_abstract_collection_with_existing_child_entity:
     And I send a DELETE request:    /dynamic-entity/robot-tests-product-abstracts?filter[product-abstracts.sku]={"in": ["001","002", "003"]}
     Then Response status code should be:    400
     And Response header parameter should be:    Content-Type    application/json
-    And Response body parameter should be:    [0][message]    Failed to delete the data for `robot-tests-product-abstracts.id_product_abstract = ${id_product_abstract}`. The entity has a child entity and can not be deleted. Child entity: `spy_product`.
+    And Response body parameter should be:    [0][message]    Failed to delete the data for `robot-tests-product-abstracts.id_product_abstract = ${id_product_abstract}`. The entity has a child entity and can not be deleted. Child entity: `spy_price_product`.
     And Response body parameter should be:    [0][code]    1317
     And Response body parameter should be:    [0][status]    400
     And I set Headers:    Content-Type=application/json    Authorization=Bearer ${token}
