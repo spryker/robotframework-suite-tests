@@ -35,16 +35,19 @@ Yves: change the product options in configurator to:
     ### sleep 1 seconds to process background event
     Repeat Keyword    3    Wait For Load State
     Sleep    1s
+
 Yves: save product configuration    
     Click    ${configurator_save_button}
     Repeat Keyword    3    Wait For Load State
     Wait Until Element Is Visible    ${pdp_configure_button}
 
-Yves: product configuration should be not available:
-    [Arguments]    ${expected_status}
-    Element Text Should Be    ${configurator_configuration_status}     ${expected_status}
+Yves: product configuration notification is:
+    [Arguments]    ${expected_notification}
+    Element Text Should Be    ${configurator_configuration_status}     ${expected_notification}
+
+Yves: back to PDP and not save configuration    
     Click    ${configurator_back_button}
-    Click    ${unsaved_product_configurations_leave_button}
+    Click    ${unsaved_product_configurations_leave_button} 
 
 Yves: product configuration price should be:
     [Arguments]    ${expectedProductPrice}
@@ -58,6 +61,21 @@ Yves: product configuration status should be equal:
 
 Yves: configuration should be equal:
     [Arguments]    @{args}
+    ${configurationData}=    Set Up Keyword Arguments    @{args}
+    Wait Until Element Is Visible    ${pdp_configure_button}
+    FOR    ${key}    ${value}    IN    &{configurationData}
+        Log    Key is '${key}' and value is '${value}'.
+        IF    '${env}' in ['ui_suite']
+            IF    '${key}'=='option one' and '${value}' != '${EMPTY}'   Element Should Contain    ${pdp_configuration_option_one}[${env}]    ${value}
+            IF    '${key}'=='option two' and '${value}' != '${EMPTY}'   Element Should Contain    ${pdp_configuration_option_two}[${env}]    ${value}
+        ELSE
+            IF    '${key}'=='option one' and '${value}' != '${EMPTY}'   Element Text Should Be    ${pdp_configuration_option_one}[${env}]    ${value}
+            IF    '${key}'=='option two' and '${value}' != '${EMPTY}'   Element Text Should Be    ${pdp_configuration_option_two} [${env}]    ${value}
+        END
+    END
+
+Yves: configuration for concrete product should be equal:
+    [Arguments]    @{args}    ${concrete_sku}
     ${configurationData}=    Set Up Keyword Arguments    @{args}
     Wait Until Element Is Visible    ${pdp_configure_button}
     FOR    ${key}    ${value}    IN    &{configurationData}

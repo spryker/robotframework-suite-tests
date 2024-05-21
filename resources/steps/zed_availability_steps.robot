@@ -22,10 +22,10 @@ Zed: change product stock:
     IF    '/availability-gui/index/edit' in '${currentURL}'    Zed: go to second navigation item level:    Catalog    Availability
     Zed: perform search by:    ${skuORnameAbstract}
     TRY
-        Set Browser Timeout    3s
+        Set Browser Timeout    5s
         Click    xpath=//a[contains(text(),'${skuORnameAbstract}')]/ancestor::tr//following-sibling::td//*[contains(.,'View')]
     EXCEPT    
-        Set Browser Timeout    3s
+        Set Browser Timeout    5s
         Click    xpath=//td[contains(text(), '${skuORnameAbstract}')]/ancestor::tr//following-sibling::td//*[contains(.,'View')]
     END
     Set Browser Timeout    ${browser_timeout}
