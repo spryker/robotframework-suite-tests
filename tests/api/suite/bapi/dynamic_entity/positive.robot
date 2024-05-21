@@ -366,6 +366,55 @@ Create_country_collection:
     ...   AND    Delete country by iso2_code in Database:   XB
     ...   AND    Delete country by iso2_code in Database:   XC
 
+Create_country_collection_non_transactional:
+    ### SETUP DYNAMIC ENTITY CONFIGURATION ###
+    Delete dynamic entity configuration in Database:    robot-test-countries
+    Create dynamic entity configuration in Database:    robot-test-countries    spy_country     1    {"identifier":"id_country","fields":[{"fieldName":"id_country","fieldVisibleName":"id_country","isEditable":false,"isCreatable":false,"type":"integer","validation":{"isRequired":false}},{"fieldName":"iso2_code","fieldVisibleName":"iso2_code","type":"string","isEditable":true,"isCreatable":true,"validation":{"isRequired":true,"maxLength":2,"minLength":2}},{"fieldName":"iso3_code","fieldVisibleName":"iso3_code","type":"string","isEditable":true,"isCreatable":true,"validation":{"isRequired":true,"maxLength":3,"minLength":3}},{"fieldName":"name","fieldVisibleName":"name","type":"string","isEditable":true,"isCreatable":true,"validation":{"isRequired":true,"maxLength":255,"minLength":1}},{"fieldName":"postal_code_mandatory","fieldVisibleName":"postal_code_mandatory","type":"boolean","isEditable":true,"isCreatable":true,"validation":{"isRequired":false}},{"fieldName":"postal_code_regex","isEditable":"false","isCreatable":"false","fieldVisibleName":"postal_code_regex","type":"string","validation":{"isRequired":false,"maxLength":500,"minLength":1}}]}
+    ### GET TOKEN ###
+    I get access token by user credentials:   ${zed_admin.email}
+    ### CREATE THREE TEST COUNTRIES ###
+    And I set Headers:    Content-Type=application/json    Authorization=Bearer ${token}    X-Is-Transactional=false
+    And I send a POST request:    /dynamic-entity/robot-test-countries   {"data":[{"iso2_code":"XA","iso3_code":"XXA","name":"Country XA"},{"iso2_code":"XB","iso3_code":"XXB","name":"Country XB"},{"iso2_code":"XC","iso3_code":"XXC","name":"Country XC","postal_code_regex":"\\d{5}"}]}
+    Then Response status code should be:    201
+    And Response header parameter should be:    Content-Type    application/json
+    And Response body parameter should be:    [data][0][iso2_code]    XA
+    And Response body parameter should be:    [data][0][iso3_code]    XXA
+    And Response body parameter should be:    [data][0][name]    Country XA
+    Response body parameter should be greater than :    [data][0][id_country]    200
+    And Response body parameter should be:    [data][1][iso2_code]    XB
+    And Response body parameter should be:    [data][1][iso3_code]    XXB
+    And Response body parameter should be:    [data][1][name]    Country XB
+    Response body parameter should be greater than :    [data][1][id_country]    200
+    And Response body parameter should be:    [data][2][iso2_code]    XC
+    And Response body parameter should be:    [data][2][iso3_code]    XXC
+    And Response body parameter should be:    [data][2][name]    Country XC
+    And Response body parameter should be:    [data][2][postal_code_regex]    \\\\d{5}
+    Response body parameter should be greater than :    [data][2][id_country]    200
+    When Save value to a variable:    [data][0][id_country]    xxa_country_id
+    When Save value to a variable:    [data][1][id_country]    xxb_country_id
+    When Save value to a variable:    [data][2][id_country]    xxc_country_id
+    #### UPDATE COUNTRY COLLECTION ###
+    And I set Headers:    Content-Type==application/json    Authorization=Bearer ${token}   X-Is-Transactional=false
+    And I send a PATCH request:    /dynamic-entity/robot-test-countries    {"data":[{"id_country":${xxa_country_id},"iso2_code":"XA","iso3_code":"XAA","name":"XAA"},{"id_country":${xxb_country_id},"iso2_code":"XB","iso3_code":"XBB","name":"XBB"},{"id_country":${xxc_country_id},"iso2_code":"XC","iso3_code":"XCC","name":"XCC"}]}
+    Then Response status code should be:    200
+    And Response header parameter should be:    Content-Type    application/json
+    And Response body parameter should be:    [data][0][iso2_code]    XA
+    And Response body parameter should be:    [data][0][iso3_code]    XAA
+    And Response body parameter should be:    [data][0][name]    XAA
+    And Response body parameter should be:    [data][0][id_country]    ${xxa_country_id}
+    And Response body parameter should be:    [data][1][iso2_code]    XB
+    And Response body parameter should be:    [data][1][iso3_code]    XBB
+    And Response body parameter should be:    [data][1][name]    XBB
+    And Response body parameter should be:    [data][1][id_country]    ${xxb_country_id}
+    And Response body parameter should be:    [data][2][iso2_code]    XC
+    And Response body parameter should be:    [data][2][iso3_code]    XCC
+    And Response body parameter should be:    [data][2][name]    XCC
+    And Response body parameter should be:    [data][2][id_country]    ${xxc_country_id}
+    [Teardown]    Run Keywords    Delete dynamic entity configuration in Database:    robot-test-countries
+    ...   AND    Delete country by iso2_code in Database:   XA
+    ...   AND    Delete country by iso2_code in Database:   XB
+    ...   AND    Delete country by iso2_code in Database:   XC
+
 Upsert_country_collection:
     ### SETUP DYNAMIC ENTITY CONFIGURATION ###
     Delete dynamic entity configuration in Database:    robot-test-countries
