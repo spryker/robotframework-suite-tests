@@ -60,7 +60,7 @@ Yves: go to the shopping cart through the header with name:
     Mouse Over    ${shopping_car_icon_header_menu_item}[${env}]
     Wait Until Element Is Visible    ${shopping_cart_sub_navigation_widget}
     IF    '${env}' in ['ui_suite']
-        Click    xpath=//header//cart-counter//a[contains(@href,'/cart')]/ancestor::li//ul[contains(@class,'menu')][contains(@class,'wide')]//*[contains(@data-qa,'mini-cart-detail')]//a[contains(.,'${shoppingCartName}')] | //header//cart-counter//a[contains(@href,'/cart')]/ancestor::li/ul[contains(@class,'menu')][contains(@class,'wide')]//*[contains(@data-qa,'mini-cart-detail')]//button[contains(.,'${shoppingCartName}')]
+        Click    xpath=//header//cart-counter//a[contains(@href,'/cart')]/ancestor::li//ul[contains(@class,'menu')][contains(@class,'wide')]//*[contains(@data-qa,'mini-cart-detail')]//a[contains(.,'${shoppingCartName}')]
     ELSE
         Click    xpath=//*[contains(@class,'icon--cart')]/ancestor::li//div[contains(@class,'js-user-navigation__sub-nav-cart')]//div[@class='mini-cart-detail']//*[contains(@class,'mini-cart-detail__title')]/*[text()='${shoppingCartName}']
     END
