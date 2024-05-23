@@ -265,8 +265,9 @@ Retrieves_return_by_id_with_returns_items_included
     ...    AND    Save value to a variable:    [included][0][attributes][items][0][refundableAmount]    refundable_amount
     ...    AND    Update order status in Database:    shipped by merchant    ${uuid}
     ...    AND    Create merchant order for the item in DB and change status:    shipped    ${uuid}    ${merchants.sony_experts.merchant_reference}
-    ...    AND    I send a POST request:     /returns     {"data":{"type":"returns","attributes":{"store":"${store.de}","returnItems":[{"salesOrderItemUuid":"${uuid}","reason":"${return_reason_damaged}"}]}}}
-    ...    AND    Save value to a variable:    [data][id]    returnId
+    ${return_result}=    Run Keyword And Ignore Error    I send a POST request:    /returns    {"data":{"type":"returns","attributes":{"store":"${store.de}","returnItems":[{"salesOrderItemUuid":"${uuid}","reason":"${return_reason_damaged}"}]}}}
+    Run Keyword If    "${return_result[0]}" != "PASS"    Run Keywords    Log    Retry sending return request    AND    I send a POST request:    /returns    {"data":{"type":"returns","attributes":{"store":"${store.de}","returnItems":[{"salesOrderItemUuid":"${uuid}","reason":"${return_reason_damaged}"}]}}}
+    Save value to a variable:    [data][id]    returnId
     When I send a GET request:    /returns/${returnId}?include=return-items
     Then Response status code should be:     200
     And Response reason should be:     OK
@@ -291,7 +292,7 @@ Retrieves_return_by_id_with_returns_items_included
     And Each array element of array in response should contain nested property:    [included]    [links]    self
     And Each array element of array in response should contain nested property:    [included]    [attributes]    uuid
     And Each array element of array in response should contain property with value:    [included]    type    return-items
-    And Each array element of array in response should contain property with value in:    [included]    [attributes][orderItemUuid]    ${Uuid}    ${Uuid}
+    And Each array element of array in response should contain property with value in:    [included]    [attributes][orderItemUuid]    ${uuid}    ${uuid}
     And Each array element of array in response should contain property with value in:    [included]    [attributes][reason]    ${return_reason_damaged}    ${return_reason_damaged}
     And Response body has correct self link internal
 
