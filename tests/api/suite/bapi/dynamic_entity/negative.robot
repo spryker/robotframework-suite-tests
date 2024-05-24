@@ -352,7 +352,6 @@ Update_country_with_invalid_field_type
     ...   AND    Delete country by iso2_code in Database:   XA
     ...   AND    Delete country by iso2_code in Database:   XB
 
-
 Update_country_with_invalid_field
     ### SETUP DYNAMIC ENTITY CONFIGURATION ###
     Delete dynamic entity configuration in Database:    robot-test-countries
@@ -387,3 +386,69 @@ Upsert_with_invalid_id
     And Response body parameter should be:    [0][status]    400
     [Teardown]    Run Keywords    Delete dynamic entity configuration in Database:    robot-test-countries
     ...   AND    Delete country by iso2_code in Database:   XX
+
+Delete_country_by_id_is_deletable_false:
+    ### SETUP DYNAMIC ENTITY CONFIGURATION ###
+    Delete dynamic entity configuration in Database:    robot-test-countries
+    Create dynamic entity configuration in Database:    robot-test-countries    spy_country     1    {"identifier":"id_country","isDeletable": false,"fields":[{"fieldName":"id_country","fieldVisibleName":"id_country","isEditable":false,"isCreatable":false,"type":"integer","validation":{"isRequired":false}},{"fieldName":"iso2_code","fieldVisibleName":"iso2_code","type":"string","isEditable":true,"isCreatable":true,"validation":{"isRequired":true,"maxLength":2,"minLength":2}},{"fieldName":"iso3_code","fieldVisibleName":"iso3_code","type":"string","isEditable":true,"isCreatable":true,"validation":{"isRequired":true,"maxLength":3,"minLength":3}},{"fieldName":"name","fieldVisibleName":"name","type":"string","isEditable":true,"isCreatable":true,"validation":{"isRequired":true,"maxLength":255,"minLength":1}},{"fieldName":"postal_code_mandatory","fieldVisibleName":"postal_code_mandatory","type":"boolean","isEditable":true,"isCreatable":true,"validation":{"isRequired":false}},{"fieldName":"postal_code_regex","isEditable":"false","isCreatable":"false","fieldVisibleName":"postal_code_regex","type":"string","validation":{"isRequired":false,"maxLength":500,"minLength":1}}]}
+    ### GET TOKEN ###
+    I get access token by user credentials:   ${zed_admin.email}
+    ### CREATE TEST COUNTRY ###
+    And I set Headers:    Content-Type=application/json    Authorization=Bearer ${token}
+    And I send a POST request:    /dynamic-entity/robot-test-countries   {"data":[{"iso2_code":"XA","iso3_code":"XXA","name":"Country XA"}]}
+    Then Response status code should be:    201
+    When Save value to a variable:    [data][0][id_country]    xxa_id
+    #### DELETE COUNTRY ###
+    And I set Headers:    Content-Type=application/json    Authorization=Bearer ${token}
+    And I send a DELETE request:    /dynamic-entity/robot-test-countries/${xxa_id}
+    Then Response status code should be:    405
+    And Response header parameter should be:    Content-Type    application/json
+    And Response body parameter should be:    [0][message]    Method not allowed for the entity `robot-test-countries`.
+    And Response body parameter should be:    [0][status]    405
+    And Response body parameter should be:    [0][code]    1318
+    [Teardown]    Run Keywords    Delete dynamic entity configuration in Database:    robot-test-countries
+    ...   AND    Delete country by iso2_code in Database:   XA
+
+Delete_country_by_id_is_deletable_null:
+    ### SETUP DYNAMIC ENTITY CONFIGURATION ###
+    Delete dynamic entity configuration in Database:    robot-test-countries
+    Create dynamic entity configuration in Database:    robot-test-countries    spy_country     1    {"identifier":"id_country","isDeletable": null,"fields":[{"fieldName":"id_country","fieldVisibleName":"id_country","isEditable":false,"isCreatable":false,"type":"integer","validation":{"isRequired":false}},{"fieldName":"iso2_code","fieldVisibleName":"iso2_code","type":"string","isEditable":true,"isCreatable":true,"validation":{"isRequired":true,"maxLength":2,"minLength":2}},{"fieldName":"iso3_code","fieldVisibleName":"iso3_code","type":"string","isEditable":true,"isCreatable":true,"validation":{"isRequired":true,"maxLength":3,"minLength":3}},{"fieldName":"name","fieldVisibleName":"name","type":"string","isEditable":true,"isCreatable":true,"validation":{"isRequired":true,"maxLength":255,"minLength":1}},{"fieldName":"postal_code_mandatory","fieldVisibleName":"postal_code_mandatory","type":"boolean","isEditable":true,"isCreatable":true,"validation":{"isRequired":false}},{"fieldName":"postal_code_regex","isEditable":"false","isCreatable":"false","fieldVisibleName":"postal_code_regex","type":"string","validation":{"isRequired":false,"maxLength":500,"minLength":1}}]}
+    ### GET TOKEN ###
+    I get access token by user credentials:   ${zed_admin.email}
+    ### CREATE TEST COUNTRY ###
+    And I set Headers:    Content-Type=application/json    Authorization=Bearer ${token}
+    And I send a POST request:    /dynamic-entity/robot-test-countries   {"data":[{"iso2_code":"XA","iso3_code":"XXA","name":"Country XA"}]}
+    Then Response status code should be:    201
+    When Save value to a variable:    [data][0][id_country]    xxa_id
+    #### DELETE COUNTRY ###
+    And I set Headers:    Content-Type=application/json    Authorization=Bearer ${token}
+    And I send a DELETE request:    /dynamic-entity/robot-test-countries/${xxa_id}
+    Then Response status code should be:    405
+    And Response header parameter should be:    Content-Type    application/json
+    And Response body parameter should be:    [0][message]    Method not allowed for the entity `robot-test-countries`.
+    And Response body parameter should be:    [0][status]    405
+    And Response body parameter should be:    [0][code]    1318
+    [Teardown]    Run Keywords    Delete dynamic entity configuration in Database:    robot-test-countries
+    ...   AND    Delete country by iso2_code in Database:   XA
+
+Delete_country_by_id_without_is_deletable:
+    ### SETUP DYNAMIC ENTITY CONFIGURATION ###
+    Delete dynamic entity configuration in Database:    robot-test-countries
+    Create dynamic entity configuration in Database:    robot-test-countries    spy_country     1    {"identifier":"id_country","fields":[{"fieldName":"id_country","fieldVisibleName":"id_country","isEditable":false,"isCreatable":false,"type":"integer","validation":{"isRequired":false}},{"fieldName":"iso2_code","fieldVisibleName":"iso2_code","type":"string","isEditable":true,"isCreatable":true,"validation":{"isRequired":true,"maxLength":2,"minLength":2}},{"fieldName":"iso3_code","fieldVisibleName":"iso3_code","type":"string","isEditable":true,"isCreatable":true,"validation":{"isRequired":true,"maxLength":3,"minLength":3}},{"fieldName":"name","fieldVisibleName":"name","type":"string","isEditable":true,"isCreatable":true,"validation":{"isRequired":true,"maxLength":255,"minLength":1}},{"fieldName":"postal_code_mandatory","fieldVisibleName":"postal_code_mandatory","type":"boolean","isEditable":true,"isCreatable":true,"validation":{"isRequired":false}},{"fieldName":"postal_code_regex","isEditable":"false","isCreatable":"false","fieldVisibleName":"postal_code_regex","type":"string","validation":{"isRequired":false,"maxLength":500,"minLength":1}}]}
+    ### GET TOKEN ###
+    I get access token by user credentials:   ${zed_admin.email}
+    ### CREATE TEST COUNTRY ###
+    And I set Headers:    Content-Type=application/json    Authorization=Bearer ${token}
+    And I send a POST request:    /dynamic-entity/robot-test-countries   {"data":[{"iso2_code":"XA","iso3_code":"XXA","name":"Country XA"}]}
+    Then Response status code should be:    201
+    When Save value to a variable:    [data][0][id_country]    xxa_id
+    #### DELETE COUNTRY ###
+    And I set Headers:    Content-Type=application/json    Authorization=Bearer ${token}
+    And I send a DELETE request:    /dynamic-entity/robot-test-countries/${xxa_id}
+    Then Response status code should be:    405
+    And Response header parameter should be:    Content-Type    application/json
+    And Response body parameter should be:    [0][message]    Method not allowed for the entity `robot-test-countries`.
+    And Response body parameter should be:    [0][status]    405
+    And Response body parameter should be:    [0][code]    1318
+    [Teardown]    Run Keywords    Delete dynamic entity configuration in Database:    robot-test-countries
+    ...   AND    Delete country by iso2_code in Database:   XA
