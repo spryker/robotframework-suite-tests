@@ -326,8 +326,7 @@ Yves: proceed with checkout as guest:
 
 Yves: assert merchant of product in cart or list:
     [Documentation]    Method for MP which asserts value in 'Sold by' label of item in cart or list. Requires concrete SKU
-    [Arguments]    ${sku}    ${merchant_name_expected}
-    Wait Until Element Is Visible    xpath=(//*[@itemprop='sku' and (text()='${sku}' or @content='${sku}')]/ancestor::*[self::article or self::tr or self::product-item][contains(@itemtype,'Product')]//a[contains(@href,'merchant')][contains(text(),'${merchant_name_expected}')])[1]
+    [Arguments]    ${sku}    ${merchant_name_expected}    ${timeout}=${browser_timeout}
     Page Should Contain Element    xpath=(//*[@itemprop='sku' and (text()='${sku}' or @content='${sku}')]/ancestor::*[self::article or self::tr or self::product-item][contains(@itemtype,'Product')]//a[contains(@href,'merchant')][contains(text(),'${merchant_name_expected}')])[1]
 
 Yves: save new deviery address to address book:
