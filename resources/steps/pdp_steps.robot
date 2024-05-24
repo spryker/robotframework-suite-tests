@@ -440,3 +440,9 @@ Yves: try to add product to wishlist as guest user
     Click    ${pdp_add_to_wishlist_button}
     Sleep    1s
     Wait Until Element Is Visible    ${email_field}
+
+Yves: try to add product to wishlist as a guest user via glue
+    ${add_to_wishlist_url}=    Get Element Attribute    xpath=//form[contains(@action,'wishlist/add')]    action
+    &{res}=    Http    url=${yves_url}${add_to_wishlist_url}    method=POST
+    Should Be Equal     ${res.status}    ${200}
+    Should Contain     ${res.body}    Create account    msg=Guest customer is able to access wishlist page
