@@ -237,8 +237,8 @@ Dynamic_multistore
     [Tags]    dms-on
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: create new Store:
-    ...    || name                                    | locale_iso_code | currency_iso_code | currency_code | currency_iso_code2 | currency_code2 |store_delivery_region ||
-    ...    || ${random_str_store}_${random_str_store} | en_US           | Euro              | EUR           | Swiss Franc        | CHF            | AT                   ||
+    ...    || name                                    | locale_iso_code | currency_iso_code | currency_code | currency_iso_code2 | currency_code2 |store_delivery_region |store_context_timezone ||
+    ...    || ${random_str_store}_${random_str_store} | en_US           | Euro              | EUR           | Swiss Franc        | CHF            | AT                   |Europe/Berlin          ||
     Trigger multistore p&s
     Yves: login on Yves with provided credentials:    ${yves_user_email}
     Yves: go to AT store 'Home' page if other store not specified:     ${random_str_store}_${random_str_store}

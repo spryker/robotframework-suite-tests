@@ -48,6 +48,10 @@ Zed: create new Store:
             Zed: perform store search by:    ${value}    
             Zed: Check checkbox by Value:    ${value} 
         END   
+        IF    '${key}'=='store_context_timezone' and '${value}' != '${EMPTY}'
+            Click   ${zed_store_context_tab}
+            Zed: store context add timezone:    ${value}
+        END         
     END 
     Click    ${zed_store_save_button}
 
@@ -62,4 +66,9 @@ Zed: perform store search by:
         Log    Search event is not fired
     END
     Repeat Keyword    2    Wait For Load State
+
+Zed: store context add timezone:
+    [Arguments]    ${timezone}
+    Click    ${zed_store_context_add_button}
+    Select From List By Label    ${zed_store_context_select}    ${timezone}
  
