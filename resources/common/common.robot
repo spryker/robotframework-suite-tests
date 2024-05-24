@@ -65,7 +65,7 @@ Common_suite_setup
     Set Global Variable    ${random_str_store}
     Set Global Variable    ${random_id_password}
     Set Global Variable    ${random_str_password}
-    
+
     ${today}=    Get Current Date    result_format=%Y-%m-%d
     Set Global Variable    ${today}
     IF    ${docker}
@@ -716,6 +716,7 @@ Delete complex product by id_product_abstract in Database:
     Execute Sql String    DELETE FROM spy_product_abstract_localized_attributes WHERE fk_product_abstract = ${id_product_abstract};
     Execute Sql String    DELETE FROM spy_url WHERE fk_resource_product_abstract = ${id_product_abstract};
     Execute Sql String    DELETE FROM spy_product_category WHERE fk_product_abstract = ${id_product_abstract};
+    Execute Sql String    DELETE FROM spy_product_abstract_page_search WHERE fk_product_abstract = ${id_product_abstract};
 
     ${id_price_product}=    Query    SELECT id_price_product from spy_price_product WHERE fk_product_abstract = ${id_product_abstract};
     ${id_price_product_length}=    Get Length    ${id_price_product}
@@ -739,6 +740,8 @@ Delete complex product by id_product_abstract in Database:
         ${id_product}=    Set Variable    ${id_product[0][0]}
         Execute Sql String    DELETE FROM spy_product_search WHERE fk_product = ${id_product};
         Execute Sql String    DELETE FROM spy_stock_product WHERE fk_product = ${id_product};
+        Execute Sql String    DELETE FROM spy_product_concrete_page_search WHERE fk_product = ${id_product};
+        Execute Sql String    DELETE FROM spy_product_search WHERE fk_product = ${id_product};
         Execute Sql String    DELETE FROM spy_product_localized_attributes WHERE fk_product = ${id_product};
         Execute Sql String    DELETE FROM spy_product WHERE fk_product_abstract = ${id_product_abstract};
     END
