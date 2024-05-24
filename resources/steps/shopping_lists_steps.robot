@@ -9,10 +9,14 @@ Resource    order_history_steps.robot
 *** Keywords ***
 Yves: 'Shopping List' widget contains:
     [Arguments]    ${shoppingListName}    ${accessLevel}
-    Wait Until Element Is Visible    ${shopping_list_icon_header_menu_item}
-    Mouse Over    ${shopping_list_icon_header_menu_item}
-    Wait Until Element Is Visible    ${shopping_list_sub_navigation_widget}
+    Wait Until Element Is Visible    ${shopping_list_icon_header_menu_item}[${env}]
+    Mouse Over    ${shopping_list_icon_header_menu_item}[${env}]
+    Wait Until Element Is Visible    ${shopping_list_sub_navigation_widget}[${env}]
+    IF    '${env}' in ['ui_suite']
+    Page Should Contain Element    xpath=//header//li[contains(@class,'item')]//a[contains(@href,'shopping-list')]/ancestor::li//*[contains(@class,'list')]//li//a[contains(.,'${shoppingListName}')]/ancestor::li/div[contains(@class,'list-item')]//*[contains(@class,'access')][contains(.,'${accessLevel}')]
+    ELSE      
     Page Should Contain Element    xpath=//header//li[contains(@class,'item')]/a[contains(@href,'shopping-list')]/ancestor::li/*[contains(@class,'list')]//li//a[contains(.,'${shoppingListName}')]/ancestor::li/div[contains(@class,'list-item')]//*[contains(@class,'access')][contains(.,'${accessLevel}')]
+    END
 
 Yves: go to 'Shopping Lists' page
     ${lang}=    Yves: get current lang
