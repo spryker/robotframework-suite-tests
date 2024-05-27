@@ -18,7 +18,7 @@ ${shopping_cart_write_comment_placeholder}    xpath=//*[contains(@data-qa,'comme
 ${shopping_cart_add_comment_button}    xpath=//*[contains(@data-qa,'comment-form')]//form[@method='POST']//button
 ${shopping_cart_edit_comment_button}    xpath=(//comment-form//*[@title='edit']/ancestor::button)[1]
 ${shopping_cart_edit_comment_placeholder}    xpath=(//comment-form[@data-qa='component comment-form']//form[@method='POST']//textarea)[1]
-${shopping_cart_update_comment_button}    xpath=(//button[contains(@action,"/comment/async/update")])[1]
+${shopping_cart_update_comment_button}    xpath=(//button[contains(@action,"/comment/async/update")])[1] | (//button[contains(@action,"/comment/update")])[1]
 ${shopping_cart_remove_comment_button}    xpath=(//button[contains(@action,"remove")])[1]
 ###xpath OR operator example###
 ${shopping_cart_checkout_error_message_locator}    xpath=(//div[@data-qa='component cart-summary']//div[@class='spacing-top'] | //div[@data-qa='component cart-summary']//div/strong)[1]
