@@ -15,7 +15,7 @@ ${currencySwitcher}    ${currency_switcher_header_menu_item}
 ${languageSwitcher}    ${language_switcher_header_menu_item}
 ${quickOrderIcon}    ${quick_order_icon_header_menu_item}
 ${accountIcon}    ${user_navigation_icon_header_menu_item}[${env}]
-${shoppingListIcon}    ${shopping_list_icon_header_menu_item}
+${shoppingListIcon}    ${shopping_list_icon_header_menu_item}[${env}]
 ${shoppingCartIcon}    ${shopping_car_icon_header_menu_item}[${env}]
 ${customerSearchWidget}    ${agent_customer_search_widget}
 ${quoteRequestsWidget}    ${agent_quote_requests_header_item}
