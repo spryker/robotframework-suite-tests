@@ -94,9 +94,7 @@ Zed: save abstract product:
     Zed: go to second navigation item level:    Catalog    Products 
     Zed: click Action Button in a table for row that contains:     ${productAbstract}     Edit
     Wait until element is visible    ${zed_save_button}
-    Click    ${zed_save_button}
-    Repeat Keyword    2    Wait For Load State
-    Page Should Contain Element    ${zed_success_flash_message}    The product [${productAbstract}] was saved successfully.
+    Zed: submit the form
 
 Zed: click Action Button in Variant table for row that contains:
     [Arguments]    ${row_content}    ${zed_table_action_button_locator}
