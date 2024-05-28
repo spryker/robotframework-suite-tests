@@ -45,7 +45,7 @@ Resource    ../../../../resources/steps/customer_registration_steps.robot
 *** Test Cases ***
 Guest_User_Access_Restrictions
     [Documentation]    Checks that guest users see products info and cart but not profile
-    Yves: header contains/doesn't contain:    true    ${currencySwitcher}[${env}]    ${shoppingCartIcon}
+    Yves: header contains/doesn't contain:    true    ${currencySwitcher}[${env}]    ${shopping_list_icon_header_menu_item}[${env}]
     Yves: go to PDP of the product with sku:    002
     Yves: PDP contains/doesn't contain:     true    ${pdpPriceLocator}    ${addToCartButton}
     Yves: add product to the shopping cart
