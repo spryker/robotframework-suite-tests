@@ -124,7 +124,7 @@ Create_country_with_invalid_data
     And I set Headers:    Content-Type=application/json    Authorization=Bearer ${token}
     And I send a POST request:    /dynamic-entity/robot-test-countries   {"data":[{"iso2_code":"XX","name":"XXX"}]}
     Then Response status code should be:    400
-    And Response body parameter should contain:    [0][message]    The required field must not be empty. Field: `robot-test-countries0.iso3_code`
+    And Response body parameter should contain:    [0][message]    The required field must not be empty. Field: robot-test-countries0.iso3_code
     And Response body parameter should be:    [0][code]    1307
     And Response body parameter should contain:    [0][status]   400
     [Teardown]    Run Keywords    Delete dynamic entity configuration in Database:    robot-test-countries
