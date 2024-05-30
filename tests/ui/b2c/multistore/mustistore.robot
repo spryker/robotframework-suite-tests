@@ -167,7 +167,6 @@ Dynamic_multistore
     Yves: login on Yves with provided credentials:    ${yves_user_email}
     Yves: go to AT store 'Home' page if other store not specified:    ${random_str_store}_${random_str_store}
     Yves: select currency Euro if other currency not specified
-    Yves: create new 'Shopping Cart' with name:    storeCart+${random}
     Yves: go to PDP of the product with sku:    ${one_variant_product_concrete_sku}
     Yves: product price on the PDP should be:    €15.00
     ### create new cms page and check it in new store on YVES
