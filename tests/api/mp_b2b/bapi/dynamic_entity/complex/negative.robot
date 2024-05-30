@@ -378,20 +378,20 @@ Delete_product_abstract_collection_with_existing_child_entity:
     I get access token by user credentials:   ${zed_admin.email}
     ### GET PRODUCT ABSTRACT BY ID ###
     And I set Headers:    Content-Type=application/json    Authorization=Bearer ${token}
-    And I send a GET request:    /dynamic-entity/robot-tests-product-abstracts?filter[product-abstracts.sku]={"in": ["001","002", "003"]}
+    And I send a GET request:    /dynamic-entity/robot-tests-product-abstracts?filter[product-abstracts.id_product_abstract]={"in": ["1","2", "3"]}
     Then Response status code should be:    200
     And Response should contain the array of a certain size:   [data]    3
     When Save value to a variable:    [data][0][id_product_abstract]    id_product_abstract
     #### DELETE PRODUCT ABSTRACT BY ID ###
     And I set Headers:    Content-Type=application/json    Authorization=Bearer ${token}
-    And I send a DELETE request:    /dynamic-entity/robot-tests-product-abstracts?filter[product-abstracts.sku]={"in": ["001","002", "003"]}
+    And I send a DELETE request:    /dynamic-entity/robot-tests-product-abstracts?filter[product-abstracts.id_product_abstract]={"in": ["1","2", "3"]}
     Then Response status code should be:    400
     And Response header parameter should be:    Content-Type    application/json
     And Response body parameter should be:    [0][message]    Failed to delete the data for `robot-tests-product-abstracts.id_product_abstract = ${id_product_abstract}`. The entity has a child entity and can not be deleted. Child entity: `spy_price_product`.
     And Response body parameter should be:    [0][code]    1317
     And Response body parameter should be:    [0][status]    400
     And I set Headers:    Content-Type=application/json    Authorization=Bearer ${token}
-    And I send a GET request:    /dynamic-entity/robot-tests-product-abstracts?filter[product-abstracts.sku]={"in": ["001","002", "003"]}
+    And I send a GET request:    /dynamic-entity/robot-tests-product-abstracts?filter[product-abstracts.id_product_abstract]={"in": ["1","2", "3"]}
     Then Response status code should be:    200
     And Response should contain the array of a certain size:   [data]    3
     [Teardown]    Run Keywords    Delete dynamic entity configuration relation in Database:    robotTestsProductAbstractProducts
