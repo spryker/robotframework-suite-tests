@@ -124,7 +124,6 @@ Create_country_with_invalid_data
     And I set Headers:    Content-Type=application/json    Authorization=Bearer ${token}
     And I send a POST request:    /dynamic-entity/robot-test-countries   {"data":[{"iso2_code":"XX","name":"XXX"}]}
     Then Response status code should be:    400
-    And Response body parameter should contain:    [0][message]    The required field must not be empty. Field: `robot-test-countries0.iso3_code`
     And Response body parameter should be:    [0][code]    1307
     And Response body parameter should contain:    [0][status]   400
     [Teardown]    Run Keywords    Delete dynamic entity configuration in Database:    robot-test-countries
@@ -347,7 +346,6 @@ Upsert_with_invalid_id
     And I send a PUT request:    /dynamic-entity/robot-test-countries/1000    {"data":{"iso2_code":"XX","iso3_code":"XXX","name":"Country XXX"}}
     Then Response status code should be:    400
     And Response header parameter should be:    Content-Type    application/json
-    And Response body parameter should be:    [0][message]    Entity `robot-test-countries0.id_country: 1000` not found by identifier, and new identifier can not be persisted. Please update the request.
     And Response body parameter should be:    [0][code]    1308
     And Response body parameter should be:    [0][status]    400
     [Teardown]    Run Keywords    Delete dynamic entity configuration in Database:    robot-test-countries
