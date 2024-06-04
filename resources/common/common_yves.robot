@@ -205,7 +205,11 @@ Yves: select currency Euro if other currency not specified
         Go To    ${yves_url}
         Wait Until Element Is visible    ${currency_switcher_header_menu_item}[${env}]
         Select From List By Value    ${currency_switcher_header_menu_item}[${env}]    ${currency_code}
-        Wait Until Element Contains    //*[@data-qa='component header']//select[contains(@name,'currency')]/option[@selected='']    ${currency_name}  
+        IF    '${env}' in ['ui_suite']  
+            Wait Until Element Contains    //*[@data-qa='component header']//select[contains(@name,'currency')]/option[@selected='']    ${currency_name}  
+        ELSE
+            Wait Until Element Contains    //*[@data-qa='component header']//select[contains(@name,'currency')]/option[@selected='']    ${currency_code}  
+        END
     END
 
 Yves: get the last placed order ID by current customer
