@@ -36,6 +36,27 @@ Yves: change the product options in configurator to:
     Repeat Keyword    3    Wait For Load State
     Sleep    1s
 
+Yves: change the product configuration to:
+    [Documentation]    fill the fields for product configuration.
+    [Arguments]    @{args}
+    ${configurationData}=    Set Up Keyword Arguments    @{args}
+    Click    ${pdp_configure_button}
+    Wait Until Element Is Visible    ${configurator_date_input}
+    FOR    ${key}    ${value}    IN    &{configurationData}
+        Log    Key is '${key}' and value is '${value}'.
+        IF    '${key}'=='date' and '${value}' != '${EMPTY}'   Type Text    ${configurator_date_input}    ${value}
+            IF    '${key}'=='date' and '${value}' == '${EMPTY}'   Clear Text    ${configurator_date_input}
+        IF    '${key}'=='date_time' and '${value}' != '${EMPTY}'   Select From List By Label    ${configurator_day_time_selector}    ${value}
+    END
+    Click    ${configurator_day_time_selector}
+    ### sleep 1 seconds to process background event
+    Repeat Keyword    3    Wait For Load State
+    Sleep    1s
+    Click    ${configurator_save_button}
+    Repeat Keyword    3    Wait For Load State
+    Wait Until Element Is Visible    ${pdp_configure_button}
+
+
 Yves: save product configuration    
     Click    ${configurator_save_button}
     Repeat Keyword    3    Wait For Load State
