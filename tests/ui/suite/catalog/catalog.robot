@@ -769,7 +769,7 @@ Configurable_Product_RfQ_OMS
     Yves: 'Thank you' page is displayed
     Yves: get the last placed order ID by current customer
     Zed: login on Zed with provided credentials:    ${zed_main_merchant_email}
-    Zed: grand total for the order equals:    ${lastPlacedOrder}    €695.30
+    Zed: grand total for the order equals:    ${lastPlacedOrder}    €771.90
     Zed: go to order page:    ${lastPlacedOrder} 
     Zed: login on Zed with provided credentials:    ${zed_main_merchant_email}
     Zed: go to order page:    ${lastPlacedOrder} 
