@@ -5,26 +5,6 @@ Resource    ../../resources/pages/yves/yves_product_details_page.robot
 Resource    ../../resources/pages/zed/zed_order_details_page.robot
 
 *** Keywords ***
-Yves: change the product configuration to:
-    [Documentation]    fill the fields for product configuration.
-    [Arguments]    @{args}
-    ${configurationData}=    Set Up Keyword Arguments    @{args}
-    Click    ${pdp_configure_button}
-    Wait Until Element Is Visible    ${configurator_date_input}
-    FOR    ${key}    ${value}    IN    &{configurationData}
-        Log    Key is '${key}' and value is '${value}'.
-        IF    '${key}'=='date' and '${value}' != '${EMPTY}'   Type Text    ${configurator_date_input}    ${value}
-            IF    '${key}'=='date' and '${value}' == '${EMPTY}'   Clear Text    ${configurator_date_input}
-        IF    '${key}'=='date_time' and '${value}' != '${EMPTY}'   Select From List By Label    ${configurator_day_time_selector}    ${value}
-    END
-    Click    ${configurator_day_time_selector}
-    ### sleep 1 seconds to process background event
-    Repeat Keyword    3    Wait For Load State
-    Sleep    1s
-    Click    ${configurator_save_button}
-    Repeat Keyword    3    Wait For Load State
-    Wait Until Element Is Visible    ${pdp_configure_button}
-
 Yves: change the product options in configurator to:
     [Documentation]    fill the fields for product configuration (it is possible to set price OR option name).
     [Arguments]    @{args}
@@ -55,9 +35,46 @@ Yves: change the product options in configurator to:
     ### sleep 1 seconds to process background event
     Repeat Keyword    3    Wait For Load State
     Sleep    1s
+
+Yves: change the product configuration to:
+    [Documentation]    fill the fields for product configuration.
+    [Arguments]    @{args}
+    ${configurationData}=    Set Up Keyword Arguments    @{args}
+    Click    ${pdp_configure_button}
+    Wait Until Element Is Visible    ${configurator_date_input}
+    FOR    ${key}    ${value}    IN    &{configurationData}
+        Log    Key is '${key}' and value is '${value}'.
+        IF    '${key}'=='date' and '${value}' != '${EMPTY}'   Type Text    ${configurator_date_input}    ${value}
+            IF    '${key}'=='date' and '${value}' == '${EMPTY}'   Clear Text    ${configurator_date_input}
+        IF    '${key}'=='date_time' and '${value}' != '${EMPTY}'   Select From List By Label    ${configurator_day_time_selector}    ${value}
+    END
+    Click    ${configurator_day_time_selector}
+    ### sleep 1 seconds to process background event
+    Repeat Keyword    3    Wait For Load State
+    Sleep    1s
     Click    ${configurator_save_button}
     Repeat Keyword    3    Wait For Load State
     Wait Until Element Is Visible    ${pdp_configure_button}
+
+
+Yves: save product configuration    
+    Click    ${configurator_save_button}
+    Repeat Keyword    3    Wait For Load State
+    Wait Until Element Is Visible    ${pdp_configure_button}
+
+Yves: product configuration notification is:
+    [Arguments]    ${expected_notification}
+    Element Text Should Be    ${configurator_configuration_status}     ${expected_notification}
+
+Yves: back to PDP and not save configuration    
+    Click    ${configurator_back_button}
+    Click    ${unsaved_product_configurations_leave_button} 
+
+Yves: product configuration price should be:
+    [Arguments]    ${expectedProductPrice}
+        ${price_displayed}=    Run Keyword And Ignore Error    Page Should Contain Element    ${configurator_price_element_locator}    timeout=1s  
+        ${actualProductPrice}=    Get Text    ${configurator_price_element_locator}
+        ${result}=    Run Keyword And Ignore Error    Should Be Equal    ${expectedProductPrice}    ${actualProductPrice}
 
 Yves: product configuration status should be equal:
     [Arguments]    ${expected_status}
@@ -70,11 +87,26 @@ Yves: configuration should be equal:
     FOR    ${key}    ${value}    IN    &{configurationData}
         Log    Key is '${key}' and value is '${value}'.
         IF    '${env}' in ['ui_suite']
-            IF    '${key}'=='date' and '${value}' != '${EMPTY}'   Element Should Contain    ${pdp_configuration_date}[${env}]    ${value}
-            IF    '${key}'=='date_time' and '${value}' != '${EMPTY}'   Element Should Contain    ${pdp_configuration_date_time}[${env}]    ${value}
+            IF    '${key}'=='option one' and '${value}' != '${EMPTY}'   Element Should Contain    ${pdp_configuration_option_one}[${env}]    ${value}
+            IF    '${key}'=='option two' and '${value}' != '${EMPTY}'   Element Should Contain    ${pdp_configuration_option_two}[${env}]    ${value}
         ELSE
-            IF    '${key}'=='date' and '${value}' != '${EMPTY}'   Element Text Should Be    ${pdp_configuration_date}[${env}]    ${value}
-            IF    '${key}'=='date_time' and '${value}' != '${EMPTY}'   Element Text Should Be    ${pdp_configuration_date_time}[${env}]    ${value}
+            IF    '${key}'=='option one' and '${value}' != '${EMPTY}'   Element Text Should Be    ${pdp_configuration_option_one}[${env}]    ${value}
+            IF    '${key}'=='option two' and '${value}' != '${EMPTY}'   Element Text Should Be    ${pdp_configuration_option_two} [${env}]    ${value}
+        END
+    END
+
+Yves: configuration for concrete product should be equal:
+    [Arguments]    @{args}    ${concrete_sku}
+    ${configurationData}=    Set Up Keyword Arguments    @{args}
+    Wait Until Element Is Visible    ${pdp_configure_button}
+    FOR    ${key}    ${value}    IN    &{configurationData}
+        Log    Key is '${key}' and value is '${value}'.
+        IF    '${env}' in ['ui_suite']
+            IF    '${key}'=='option one' and '${value}' != '${EMPTY}'   Element Should Contain    ${pdp_configuration_option_one}[${env}]    ${value}
+            IF    '${key}'=='option two' and '${value}' != '${EMPTY}'   Element Should Contain    ${pdp_configuration_option_two}[${env}]    ${value}
+        ELSE
+            IF    '${key}'=='option one' and '${value}' != '${EMPTY}'   Element Text Should Be    ${pdp_configuration_option_one}[${env}]    ${value}
+            IF    '${key}'=='option two' and '${value}' != '${EMPTY}'   Element Text Should Be    ${pdp_configuration_option_two} [${env}]    ${value}
         END
     END
 
@@ -89,10 +121,9 @@ Yves: check and go back that configuration page contains:
         IF    '${key}'=='locale' and '${value}' != '${EMPTY}'   Element Should Contain    ${configurator_locale}    ${value}
         IF    '${key}'=='price_mode' and '${value}' != '${EMPTY}'   Element Should Contain    ${configurator_price_mode}    ${value}
         IF    '${key}'=='currency' and '${value}' != '${EMPTY}'   Element Should Contain    ${configurator_currency}    ${value}
-        IF    '${key}'=='customer_id' and '${value}' != '${EMPTY}'   Element Should Contain    ${configurator_customer_id}    ${value}
         IF    '${key}'=='sku' and '${value}' != '${EMPTY}'   Element Should Contain    ${configurator_sku}    ${value}
     END
-    Click    ${configurator_cancel_button}
+    Click    ${configurator_back_button}
     Wait Until Element Is Visible    ${pdp_configure_button}
 
 

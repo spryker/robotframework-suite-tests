@@ -231,7 +231,7 @@ Yves: add product to the shopping list:
             Wait Until Element Is Enabled    ${pdp_shopping_list_selector}
             Select From List By Label    ${pdp_shopping_list_selector}    ${shoppingListName}
             Wait Until Element Is Visible    ${pdp_add_to_shopping_list_button}
-            Click    ${pdp_add_to_shopping_list_button}    
+            Click With Options    ${pdp_add_to_shopping_list_button}   noWaitAfter=true
             Set Browser Timeout    ${browser_timeout}
             Wait For Response
             Repeat Keyword    3    Wait For Load State

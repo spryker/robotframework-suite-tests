@@ -2775,6 +2775,7 @@ Configurable_Product_Checkout
     Yves: change the product options in configurator to:
     ...    || option one | option two | option three |option four | option five | option six | option seven | option eight | option nine | option ten       ||
     ...    || 517        | 473        | 100          | 0.00       |  51         | 19         | 367          | 46           | 72          | English Keyboard ||
+    Yves: save product configuration
     Yves: product configuration status should be equal:      Configuration complete!
     Yves: add product to the shopping cart
     Yves: go to b2c shopping cart
@@ -2782,7 +2783,8 @@ Configurable_Product_Checkout
     Yves: change the product options in configurator to:
     ...    || option one | option two | option three |option four | option five | option six | option seven | option eight | option nine | option ten      ||
     ...    || 905        | 249        | 100          | 36         |  15         | 0.00       | 48           | 57           | 36          | German Keyboard ||
-    Yves: shopping cart contains product with unit price:    sku=${configurable_product_concrete_one_attribute}    productName=${configurable_product_name}    productPrice=1,346.00
+    Yves: save product configuration
+    Yves: shopping cart contains product with unit price:    sku=${configurable_product_concrete_one_attribute}    productName=${configurable_product_name}    productPrice=1,346.00 
     Yves: product configuration status should be equal:      Configuration complete!
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: billing address same as shipping address:    true

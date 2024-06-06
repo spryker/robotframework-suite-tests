@@ -132,6 +132,8 @@
       "configurable_product_abstract_sku": "093",
       "configurable_product_concrete_sku": "093_24495843",
       "configurable_product_price": "248.99",
+      "configurable_product_price_with_options":"€638.50",
+      "configurable_product_price_without_configurations":"€248.99",
       "configurable_product_name": "Sony SmartWatch 3",
       "available_never_out_of_stock_abstract_sku": "007",
       "available_never_out_of_stock_concrete_sku": "007_30691822",

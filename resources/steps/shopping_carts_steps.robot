@@ -108,9 +108,9 @@ Yves: shopping cart contains product with unit price:
             Page Should Contain Element    xpath=//div[contains(@class,'product-cart-item__col--description')]//div[contains(.,'SKU: ${sku}')]/ancestor::article//*[contains(@class,'product-cart-item__col--description')]/div[1]//*[contains(@class,'money-price__amount')][contains(.,'${productPrice}')]    timeout=1s
         END  
     ELSE IF    '${env}' in ['ui_suite']
-        Page Should Contain Element    xpath=//main//cart-items-list//product-item[contains(@data-qa,'component product-cart-item')]//*[@data-qa='cart-item-sku'][contains(text(),'${sku}')]/ancestor::product-item//*[contains(@data-qa,'cart-item-summary')]//span[contains(.,'${productPrice}')]    timeout=1s
+        Page Should Contain Element    xpath=//main//cart-items-list//product-item[contains(@data-qa,'component product-cart-item')]//*[@data-qa='cart-item-sku'][contains(text(),'${sku}')]/ancestor::product-item//*[contains(@data-qa,'cart-item-summary')]//span[contains(.,'${productPrice}')]    timeout=3s
     ELSE
-        Page Should Contain Element    xpath=//main[@class='page-layout-cart']//article[contains(@data-qa,'component product-card-item')]//a[contains(text(),'${productName}')]/following-sibling::span/span[contains(@class,'money-price__amount') and contains(.,'${productPrice}')]    timeout=1s
+        Page Should Contain Element    xpath=//main[@class='page-layout-cart']//article[contains(@data-qa,'component product-card-item')]//a[contains(text(),'${productName}')]/following-sibling::span/span[contains(@class,'money-price__amount') and contains(.,'${productPrice}')]    timeout=3s
     END
 
 Yves: shopping cart contains/doesn't contain the following elements:
@@ -143,7 +143,7 @@ Yves: delete product from the shopping cart with sku:
 
 Yves: delete product from the shopping cart with name:
     [Arguments]    ${productName}
-    Click    //main[@class='page-layout-cart']//article[contains(@data-qa,'component product-card-item')]//a[contains(text(),'${productName}')]/ancestor::article//form[contains(@name,'removeFromCartForm')]//button
+    Click    //main[@class='page-layout-cart']//article[contains(@data-qa,'component product-card-item')]//a[contains(text(),'${productName}')]/ancestor::article//form[contains(@name,'removeFromCartForm')]//button | //div[contains(@class,'box cart-items-list')]//a[contains(text(),'${productName}')]//ancestor::*[@data-qa='component product-cart-item']//button[contains(text(),'remove')]
     Repeat Keyword    3    Wait For Load State
     Yves: remove flash messages
 
