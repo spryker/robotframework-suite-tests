@@ -56,6 +56,7 @@ Product_labels
     [Teardown]    Yves: check if cart is not empty and clear it
 
 Product_Sets
+    [Tags]    dms-off    
     [Documentation]    Check the usage of product sets. DMS-on mode: https://spryker.atlassian.net/browse/FRW-6377
     Yves: login on Yves with provided credentials:    ${yves_user_email}
     Yves: go to URL:    en/product-sets
