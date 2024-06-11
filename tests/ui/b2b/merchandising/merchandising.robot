@@ -45,6 +45,7 @@ Resource    ../../../../resources/steps/configurable_bundle_steps.robot
 *** Test Cases ***
 Product_Sets
     [Documentation]    Checks that product set can be added into cart. DMS-on mode: https://spryker.atlassian.net/browse/FRW-6377
+    [Tags]    dms-off
     [Setup]    Run keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     ...    AND    Yves: create new 'Shopping Cart' with name:    productSetsCart+${random}
     Yves: go to URL:    en/product-sets
