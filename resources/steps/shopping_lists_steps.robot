@@ -25,12 +25,12 @@ Yves: go to 'Shopping Lists' page
 Yves: create new 'Shopping List' with name:
     [Arguments]    ${shoppingListName}
     ${currentURL}=    Get Location
-    IF    '/shopping-list' not in '${currentURL}'
+    IF    '/shopping-list' not in '${currentURL}'    
             IF    '.at.' in '${currentURL}'
                 Go To    ${yves_at_url}shopping-list
             ELSE
                 Go To    ${yves_url}shopping-list
-            END
+            END    
     END
     Type Text    ${shopping_list_name_input_field}    ${shoppingListName}
     Click    ${create_shopping_list_button}
@@ -73,7 +73,7 @@ Yves: delete 'Shopping List' with name:
         Go To    ${yves_at_url}shopping-list
     ELSE
         Go To    ${yves_url}shopping-list
-    END
+    END    
     Delete shopping list with name:    ${shoppingListName}
     Wait Until Element Is Visible    ${delete_shopping_list_button}
     Click    ${delete_shopping_list_button}
@@ -82,16 +82,16 @@ Yves: delete 'Shopping List' with name:
 Yves: view shopping list with name:
     [Arguments]    ${shoppingListName}
     ${currentURL}=    Get Location
-    IF    '/shopping-list' not in '${currentURL}'
+    IF    '/shopping-list' not in '${currentURL}'    
             IF    '.at.' in '${currentURL}'
                 Go To    ${yves_at_url}shopping-list
             ELSE
                 Go To    ${yves_url}shopping-list
-            END
+            END    
     END
     View shopping list with name:   ${shoppingListName}
 
 Yves: add all available products from list to cart
     Wait Until Element Is Visible    ${shopping_list_main_content_locator}
-    Click    ${add_all_available_products_to_cart_locator}
+    Click    ${add_all_available_products_to_cart_locator} 
     Repeat Keyword    3    Wait For Load State
