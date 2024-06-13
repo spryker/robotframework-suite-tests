@@ -15,7 +15,7 @@ Yves: 'Shopping List' widget contains:
     IF    '${env}' in ['ui_suite']
     Page Should Contain Element    xpath=//header//li[contains(@class,'item')]//a[contains(@href,'shopping-list')]/ancestor::li//*[contains(@class,'list')]//li//a[contains(.,'${shoppingListName}')]/ancestor::li/div[contains(@class,'list-item')]//*[contains(@class,'access')][contains(.,'${accessLevel}')]
     ELSE
-    Page Should Contain Element    xpath=//header//li[contains(@class,'item')]/span[contains(@class,'item-inner')]//a[contains(@href,'shopping-list')]/ancestor::li/*[contains(@class,'list')]//li//a[contains(.,'${shoppingListName}')]/ancestor::li/div[contains(@class,'list-item')]//*[contains(@class,'access')][contains(.,'${accessLevel}')]
+    Page Should Contain Element    xpath=//header//li[contains(@class,'item')]/span[contains(@class,'item-inner')]//a[contains(@href,'shopping-list')]/ancestor::span/*[contains(@class,'list')]//li//a[contains(.,'${shoppingListName}')]/ancestor::li/div[contains(@class,'list-item')]//*[contains(@class,'access')][contains(.,'${accessLevel}')]
     END
 
 Yves: go to 'Shopping Lists' page
