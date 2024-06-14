@@ -794,7 +794,7 @@ Manage_Merchant_Product
     Zed: update abstract product data:
     ...    || productAbstract    | store | name en                         | name de                         | new from   | new to     ||
     ...    || manageSKU${random} | AT    | ENUpdatedmanageProduct${random} | DEUpdatedmanageProduct${random} | 01.01.2020 | 01.01.2030 ||
-    Trigger multistore p&s
+    Repeat Keyword    3    Trigger multistore p&s
     Zed: go to second navigation item level:    Catalog    Products
     Zed: table should contain:    ENUpdatedmanageProduct${random}
     Zed: change concrete product price on:
