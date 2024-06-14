@@ -46,8 +46,8 @@ Resource    ../../../../resources/steps/configurable_bundle_steps.robot
 Product_Sets
     [Documentation]    Checks that product set can be added into cart. DMS-on mode: https://spryker.atlassian.net/browse/FRW-6377
     [Tags]    dms-off
-    [Setup]    Run keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
-    ...    AND    Yves: create new 'Shopping Cart' with name:    productSetsCart+${random}
+    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
+    Yves: create new 'Shopping Cart' with name:    productSetsCart+${random}
     Yves: go to URL:    en/product-sets
     Yves: 'Product Sets' page contains the following sets:    The Presenter's Set    Basic office supplies    The ultimate data disposal set
     Yves: view the following Product Set:    Basic office supplies
