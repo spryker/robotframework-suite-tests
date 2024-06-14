@@ -830,6 +830,7 @@ Manage_Merchant_Product
     Zed: update abstract product price on:
     ...    || productAbstract    | store | mode  | type    | currency | amount ||
     ...    || manageSKU${random} | DE    | gross | default | €        | 110.00 ||
+    Zed: save abstract product:    manageSKU${random}
     Zed: update abstract product data:
     ...    || productAbstract    | store | name en                         | name de                         | new from   | new to     ||
     ...    || manageSKU${random} | AT    | ENUpdatedmanageProduct${random} | DEUpdatedmanageProduct${random} | 01.01.2020 | 01.01.2030 ||
