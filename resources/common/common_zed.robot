@@ -95,7 +95,6 @@ Zed: save abstract product:
     Zed: click Action Button in a table for row that contains:     ${productAbstract}     Edit
     Wait until element is visible    ${zed_save_button}
     Zed: submit the form
-    Trigger p&s
 
 Zed: click Action Button in Variant table for row that contains:
     [Arguments]    ${row_content}    ${zed_table_action_button_locator}
