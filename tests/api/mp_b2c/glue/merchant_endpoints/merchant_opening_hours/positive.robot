@@ -33,11 +33,11 @@ Retrieves_merchant_opening_hours
 Retrieves_merchant_with_include_merchant_opening_hours
     When I send a GET request:  /merchants/${merchant.sony_experts.merchant_id}?include=merchant-opening-hours
     Then Response status code should be:    200
-    And Response reason should be:    OK    
+    And Response reason should be:    OK
     And Response body parameter should be:    [data][type]    merchants
     And Response body parameter should be:    [data][id]    ${merchant.sony_experts.merchant_id}
     And Response should contain the array of a certain size:    [included][0][attributes][weekdaySchedule]    8
-    And Response should contain the array of a certain size:    [included][0][attributes][dateSchedule]    15
+    And Response should contain the array of a certain size:    [included][0][attributes][dateSchedule]    154
     And Response should contain the array of a certain size:    [included]    1
     And Response should contain the array of a certain size:    [data][relationships]    1
     And Response body parameter should not be EMPTY:    [data][relationships]
@@ -61,5 +61,5 @@ Retrieves_merchant_with_include_merchant_opening_hours
     And Response body parameter should be:    [included][0][attributes][weekdaySchedule][0][day]    MONDAY
     And Response body parameter should be:    [included][0][attributes][weekdaySchedule][0][timeFrom]    07:00:00.000000
     And Response body parameter should be:    [included][0][attributes][weekdaySchedule][0][timeTo]    13:00:00.000000
-    And Response body parameter should be:    [included][0][attributes][dateSchedule][0][date]    2020-01-01
+    And Response body parameter should be:    [included][0][attributes][dateSchedule][0][date]    2024-01-01
     And Response body parameter should be:    [included][0][attributes][dateSchedule][0][noteGlossaryKey]    "New Years Day"
