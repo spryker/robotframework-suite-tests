@@ -91,7 +91,7 @@ Yves: configuration should be equal:
             IF    '${key}'=='option two' and '${value}' != '${EMPTY}'   Element Should Contain    ${pdp_configuration_option_two}[${env}]    ${value}
         ELSE
             IF    '${key}'=='option one' and '${value}' != '${EMPTY}'   Element Text Should Be    ${pdp_configuration_option_one}[${env}]    ${value}
-            IF    '${key}'=='option two' and '${value}' != '${EMPTY}'   Element Text Should Be    ${pdp_configuration_option_two} [${env}]    ${value}
+            IF    '${key}'=='option two' and '${value}' != '${EMPTY}'   Element Text Should Be    ${pdp_configuration_option_two}[${env}]    ${value}
         END
     END
 
