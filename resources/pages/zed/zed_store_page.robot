@@ -6,4 +6,7 @@ ${zed_store_default_locale_iso_code}    xpath=//select[contains(@id,"defaultLoca
 ${zed_store_currency_tab}    xpath=//ul[contains(@class, 'nav')]/li[contains(@data-tab-content-id, 'locale_currency_relation')]
 ${zed_store_default_currency_iso_code}    xpath=//select[contains(@id,"defaultCurrencyIsoCode")]
 ${zed_store_delivery_region_tab}    xpath=//ul[contains(@class, 'nav')]/li[contains(@data-tab-content-id, 'country_store_relation')]
+${zed_store_context_tab}    xpath=//ul[contains(@class, 'nav')]/li[contains(@data-tab-content-id, 'store_context')]
+${zed_store_context_add_button}    xpath=//a[contains(@class, 'add-store-contex')]
+${zed_store_context_select}    xpath=//select[contains(@id, 'store_contextCollection_contexts_1_timezone')]
 ${zed_store_search_field}    xpath=//form[@name='store']/div/div[@class='tab-content']/div[contains(@id,'tab-content')][contains(@class,'active')]//*[contains(@id,'available')]//input[@type='search']
