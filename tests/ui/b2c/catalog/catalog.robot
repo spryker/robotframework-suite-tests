@@ -501,4 +501,45 @@ Configurable_Product_PDP_Wishlist
     Yves: shopping cart contains product with unit price:    ${configurable_product_concrete_two_sku}    ${configurable_product_name}    ${configurable_product_concrete_two_price}
     [Teardown]    Run Keywords    Yves: delete all wishlists
     ...    AND    Yves: check if cart is not empty and clear it
+    ...    AND    Yves: delete all user addresses   
+
+
+Configurable_Product_PDP_Wishlist_Availability
+    [Documentation]    Configure product from PDP and Wishlist + availability case.
+    [Setup]    Run keywords   Delete All Cookies
+    ...    AND    Yves: login on Yves with provided credentials:    ${yves_user_email}
+    ...    AND    Yves: create new 'Whistist' with name:    configProduct${random}
+    ...    AND    Yves: check if cart is not empty and clear it
     ...    AND    Yves: delete all user addresses
+    ...    AND    Yves: create a new customer address in profile:     Mr    ${yves_user_first_name}    ${yves_user_last_name}    Kirncher Str.    7    10247    Berlin    Germany
+    Yves: go to PDP of the product with sku:    ${configurable_product_abstract_sku}
+    Yves: change variant of the product on PDP on:    ${configurable_product_concrete_one_attribute}
+    Yves: PDP contains/doesn't contain:    true    ${configureButton}
+    Yves: product price on the PDP should be:    €25.00
+    Yves: product configuration status should be equal:      Configuration is not complete. 
+    Yves: check and go back that configuration page contains:
+    ...    || store | locale | price_mode | currency | sku                                      ||
+    ...    || DE    | en_US  | GROSS_MODE | EUR      | ${configurable_product_concrete_one_sku} ||
+    Yves: change the product options in configurator to:
+    ...    || option one | option two | option three |option four | option five | option six | option seven | option eight | option nine | option ten       ||
+    ...    || 517        | 473        | 100          | 0.00       |  51         | 19         | 367          | 46           | 72          | English Keyboard ||
+    Yves: product configuration price should be:    €1599.00
+    Yves: save product configuration
+    Yves: product price on the PDP should be:    €25.00
+    Yves: product configuration status should be equal:      Configuration complete!
+    Yves: add product to wishlist:    configProduct${random}    select
+    Yves: go to wishlist with name:    configProduct${random}
+    Yves: wishlist contains product with sku:    ${configurable_product_concrete_one_sku}
+    Yves: change the product options in configurator to:
+    ...    || option one | option two | option three |option four | option five | option six | option seven | option eight | option nine | option ten      ||
+    ...    || 905        | 249        | 100          | 36         |  15         | 0.00       | 48           | 57           | 36          | German Keyboard ||
+    Yves: product configuration price should be:    €1,346.00 
+    Yves: save product configuration
+    Yves: add all available products from wishlist to cart
+    Yves: go to b2c shopping cart
+    Yves: shopping cart contains product with unit price:    sku=${configurable_product_concrete_one_sku}    productName=${configurable_product_name}    productPrice=€1,346.00
+    [Teardown]    Run Keywords    Yves: delete all wishlists
+    ...    AND    Yves: check if cart is not empty and clear it
+    ...    AND    Yves: delete all user addresses  
+    ...    AND    Delete All Cookies
+
