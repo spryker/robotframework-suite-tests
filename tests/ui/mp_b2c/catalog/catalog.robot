@@ -400,10 +400,10 @@ Offer_Availability_Calculation
     ...    AND    Zed: click Action Button in a table for row that contains:      offAvProduct${random}     Deny
     ...    AND    Trigger p&s
 
-Configurable_Product_PDP_Wishlist
-    [Documentation]    Configure product from PDP and Wishlist. DMS-ON: https://spryker.atlassian.net/browse/FRW-6380
-    [Tags]    robot:skip    
-    [Setup]    Run keywords    Yves: login on Yves with provided credentials:    ${yves_user_email}
+ Configurable_Product_PDP_Wishlist_Availability
+    [Documentation]    Configure product from PDP and Wishlist + availability case.
+    [Setup]    Run keywords   Delete All Cookies
+    ...    AND    Yves: login on Yves with provided credentials:    ${yves_user_email}
     ...    AND    Yves: create new 'Whistist' with name:    configProduct${random}
     ...    AND    Yves: check if cart is not empty and clear it
     ...    AND    Yves: delete all user addresses
@@ -411,59 +411,31 @@ Configurable_Product_PDP_Wishlist
     Yves: go to PDP of the product with sku:    ${configurable_product_abstract_sku}
     Yves: change variant of the product on PDP on:    ${configurable_product_concrete_one_attribute}
     Yves: PDP contains/doesn't contain:    true    ${configureButton}
+    Yves: product price on the PDP should be:    €25.00
+    Yves: product configuration status should be equal:      Configuration is not complete. 
     Yves: check and go back that configuration page contains:
-    ...    || store | locale | price_mode | currency | customer_id            | sku                                      ||
-    ...    || DE    | en_US  | GROSS_MODE | EUR      | ${yves_user_reference} | ${configurable_product_concrete_one_sku} ||
-    Yves: change the product configuration to:
-    ...    || date       | date_time ||
-    ...    || 12.12.2030 | Evening   ||
+    ...    || store | locale | price_mode | currency | sku                                      ||
+    ...    || DE    | en_US  | GROSS_MODE | EUR      | ${configurable_product_concrete_one_sku} ||
+    Yves: change the product options in configurator to:
+    ...    || option one | option two | option three |option four | option five | option six | option seven | option eight | option nine | option ten       ||
+    ...    || 517        | 473        | 100          | 0.00       |  51         | 19         | 367          | 46           | 72          | English Keyboard ||
+    Yves: product configuration price should be:    €1599.00
+    Yves: save product configuration
+    Yves: product price on the PDP should be:    €25.00
     Yves: product configuration status should be equal:      Configuration complete!
-    Yves: configuration should be equal:
-    ...    || date       | date_time ||
-    ...    || 12.12.2030 | Evening   ||
-    Yves: change the product configuration to:
-    ...    || date  | date_time ||
-    ...    ||       | Afternoon ||
-    Yves: product configuration status should be equal:       Configuration is not complete.
-    Yves: add product to the shopping cart
-    Yves: go to b2c shopping cart
-    Yves: change the product configuration to:    
-    ...    || date       | date_time ||
-    ...    || 05.05.2035 | Afternoon ||
-    Yves: configuration should be equal:
-    ...    || date       | date_time ||
-    ...    || 05.05.2035 | Afternoon ||
-    Yves: change the product configuration to:
-    ...    || date  | date_time ||
-    ...    ||       | Afternoon ||
-    Yves: product configuration status should be equal:       Configuration is not complete.
-    Yves: checkout is blocked with the following message:    This cart can't be processed. Please configure items inside the cart.
-    Yves: go to the 'Home' page
-    Yves: go to b2c shopping cart
-    Yves: delete product from the shopping cart with name:    ${configurable_product_name}
-    Yves: go to PDP of the product with sku:    ${configurable_product_abstract_sku}
-    Yves: change variant of the product on PDP on:    ${configurable_product_concrete_two_attribute}
-    Yves: change the product configuration to:
-    ...    || date       | date_time ||
-    ...    || 01.01.2055 | Morning   ||
     Yves: add product to wishlist:    configProduct${random}    select
     Yves: go to wishlist with name:    configProduct${random}
-    Yves: wishlist contains product with sku:    ${configurable_product_concrete_two_sku}
-    Yves: configuration should be equal:
-    ...    || date       | date_time ||
-    ...    || 01.01.2055 | Morning   ||
-    Yves: change the product configuration to:
-    ...    || date       | date_time ||
-    ...    || 01.01.2055 | Afternoon ||
-    Yves: configuration should be equal:
-    ...    || date       | date_time ||
-    ...    || 01.01.2055 | Afternoon ||
+    Yves: wishlist contains product with sku:    ${configurable_product_concrete_one_sku}
+    Yves: change the product options in configurator to:
+    ...    || option one | option two | option three |option four | option five | option six | option seven | option eight | option nine | option ten      ||
+    ...    || 905        | 249        | 100          | 36         |  15         | 0.00       | 48           | 57           | 36          | German Keyboard ||
+    Yves: product configuration price should be:    €1,346.00 
+    Yves: save product configuration
     Yves: add all available products from wishlist to cart
     Yves: go to b2c shopping cart
-    Yves: configuration should be equal:
-    ...    || date       | date_time ||
-    ...    || 01.01.2055 | Afternoon ||
-    Yves: shopping cart contains product with unit price:    ${configurable_product_concrete_two_sku}    ${configurable_product_name}    ${configurable_product_concrete_two_price}
+    Yves: shopping cart contains product with unit price:    sku=${configurable_product_concrete_one_sku}    productName=${configurable_product_name}    productPrice=€1,346.00
     [Teardown]    Run Keywords    Yves: delete all wishlists
     ...    AND    Yves: check if cart is not empty and clear it
-    ...    AND    Yves: delete all user addresses
+    ...    AND    Yves: delete all user addresses  
+    ...    AND    Delete All Cookies
+   
