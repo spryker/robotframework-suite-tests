@@ -550,86 +550,85 @@ Product_Availability_Calculation
     ...    AND    Repeat Keyword    3    Trigger multistore p&s
 
 Configurable_Product_PDP_Shopping_List
-    [Documentation]    Configure product from PDP and Shopping List. DMS-ON: https://spryker.atlassian.net/browse/FRW-6380
-    [Tags]    robot:skip    
+    [Documentation]    Configure products from both the PDP and the Shopping List. Verify the availability of five items. Ensure that products that have not been configured cannot be purchased.
     [Setup]    Run keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     ...    AND    Yves: create new 'Shopping Cart' with name:    configProduct+${random}
     ...    AND    Yves: create new 'Shopping List' with name:    configProduct+${random}
     Yves: go to PDP of the product with sku:    ${configurable_product_abstract_sku}
     Yves: PDP contains/doesn't contain:    true    ${configureButton}
-    Yves: check and go back that configuration page contains:
-    ...    || store | locale | price_mode | currency | customer_id                          | sku                                  ||
-    ...    || DE    | en_US  | GROSS_MODE | EUR      | ${yves_company_user_buyer_reference} | ${configurable_product_concrete_sku} ||
-    Yves: change the product configuration to:
-    ...    || date       | date_time ||
-    ...    || 12.12.2030 | Evening   ||
-    Yves: product configuration status should be equal:      Configuration complete!
-    Yves: configuration should be equal:
-    ...    || date       | date_time ||
-    ...    || 12.12.2030 | Evening   ||
-    Yves: change the product configuration to:
-    ...    || date  | date_time ||
-    ...    ||       | Afternoon ||
     Yves: product configuration status should be equal:       Configuration is not complete.
     Yves: add product to the shopping cart
     Yves: go to the shopping cart through the header with name:    configProduct+${random}
-    Yves: change the product configuration to:    
-    ...    || date       | date_time ||
-    ...    || 05.05.2035 | Afternoon ||
-    Yves: configuration should be equal:
-    ...    || date       | date_time ||
-    ...    || 05.05.2035 | Afternoon ||
-    Yves: change the product configuration to:
-    ...    || date  | date_time ||
-    ...    ||       | Afternoon ||
     Yves: product configuration status should be equal:       Configuration is not complete.
     Yves: checkout is blocked with the following message:    This cart can't be processed. Please configure items inside the cart.
     Yves: delete product from the shopping cart with sku:    ${configurable_product_concrete_sku}
     Yves: go to PDP of the product with sku:    ${configurable_product_abstract_sku}
-    Yves: change the product configuration to:
-    ...    || date       | date_time ||
-    ...    || 01.01.2055 | Morning   ||
+    Yves: check and go back that configuration page contains:
+    ...    || store | locale | price_mode | currency | customer_id                          | sku                                  ||
+    ...    || DE    | en_US  | GROSS_MODE | EUR      | ${yves_company_user_buyer_reference} | ${configurable_product_concrete_sku} ||       
+    Yves: change the product options in configurator to:
+    ...    || option one | option two ||
+    ...    || 420        | 240        ||
+    Yves: save product configuration
+    Yves: product configuration status should be equal:      Configuration complete!
+    Yves: change the product options in configurator to:
+    ...    || option one | option two ||
+    ...    || 280        | 480        ||
+    Yves: product configuration notification is:     Only 7 items available 
+    Yves: save product configuration
+    Yves: product configuration status should be equal:      Configuration complete!
+    Yves: configuration should be equal:
+    ...    || option one | option two ||
+    ...    || 5 shelves  | 3 lockers  ||
+    Yves: product configuration status should be equal:      Configuration complete! 
+    Yves: change quantity on PDP:    8
+    Yves: try add product to the cart from PDP and expect error:    Item ${configurable_product_concrete_sku} only has availability of 7.
+    Yves: go to PDP of the product with sku:   ${configurable_product_abstract_sku}
+    Yves: change quantity on PDP:    7
+    Yves: add product to the shopping cart
+    Yves: go to the shopping cart through the header with name:    configProduct+${random}
+    Yves: change the product options in configurator to:
+    ...    || option one | option two ||
+    ...    || 140        | 240        ||
+    Yves: save product configuration
+    Yves: shopping cart contains product with unit price:    ${configurable_product_concrete_sku}    ${configurable_product_name}    €2,206.54
+    Yves: delete all shopping carts
+    Yves: create new 'Shopping Cart' with name:    configProduct+${random}
+    Yves: go to PDP of the product with sku:    ${configurable_product_abstract_sku}
     Yves: add product to the shopping list:    configProduct+${random}
     Yves: go to 'Shopping Lists' page
     Yves: view shopping list with name:    configProduct+${random}
+    ## bug: https://spryker.atlassian.net/browse/CC-33647
+    Yves: change the product options in configurator to:
+    ...    || option one | option two ||
+    ...    || 420        | 240        ||
+    Yves: save product configuration
     Yves: configuration should be equal:
-    ...    || date       | date_time ||
-    ...    || 01.01.2055 | Morning   ||
-    Yves: change the product configuration to:
-    ...    || date       | date_time ||
-    ...    || 01.01.2055 | Afternoon ||
-    Yves: configuration should be equal:
-    ...    || date       | date_time ||
-    ...    || 01.01.2055 | Afternoon ||
+    ...    || option one | option two ||
+    ...    || 6 shelves  | 2 lockers  ||
     Yves: add all available products from list to cart
     Yves: configuration should be equal:
-    ...    || date       | date_time ||
-    ...    || 01.01.2055 | Afternoon ||
-    Yves: shopping cart contains product with unit price:    ${configurable_product_concrete_sku}    ${configurable_product_name}    ${configurable_product_concrete_price}
+    ...    || option one | option two ||
+    ...    || 6 shelves  | 2 lockers  ||
+    Yves: shopping cart contains product with unit price:    ${configurable_product_concrete_sku}    ${configurable_product_name}    €2,486.54
     [Teardown]    Run Keywords    Yves: delete 'Shopping List' with name:    configProduct+${random}
     ...    AND    Yves: delete 'Shopping Cart' with name:    configProduct+${random}
 
-Configurable_Product_RfQ_Order_Management
-    [Documentation]    Conf Product in RfQ, OMS and reorder. DMS-ON: https://spryker.atlassian.net/browse/FRW-6380
-    [Tags]    robot:skip    
+Configurable_Product_RfQ_OMS
+    [Documentation]    Conf Product in RfQ, OMS, Merchant OMS and reorder. 
     [Setup]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    ...    AND    Zed: create new Zed user with the following data:    agent_config+${random}@spryker.com    change123${random}    Config    Product    Root group    This user is an agent    en_US
+    ...    AND    Zed: create new Zed user with the following data:    agent_config+${random}@spryker.com    change123${random}    Config    Product    Root group    This user is an agent in Storefront    en_US
+    ...    AND    Zed: deactivate all discounts from Overview page
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     Yves: delete all shopping carts
     Yves: create new 'Shopping Cart' with name:    confProductCart+${random}
     Yves: go to PDP of the product with sku:    ${configurable_product_abstract_sku}
-    Yves: change the product configuration to:
-    ...    || date       | date_time ||
-    ...    || 12.12.2030 | Evening   ||
-    Yves: add product to the shopping cart
-    Yves: change the product configuration to:
-    ...    || date       | date_time ||
-    ...    || 12.12.2030 | Evening   ||
+    Yves: change the product options in configurator to:
+    ...    || option one | option two ||
+    ...    || 420        | 480        ||
+    Yves: save product configuration    
     Yves: add product to the shopping cart
     Yves: go to the shopping cart through the header with name:    confProductCart+${random}
-    Yves: configuration should be equal:
-    ...    || date       | date_time ||
-    ...    || 12.12.2030 | Evening   ||
     Yves: submit new request for quote
     Yves: click 'Send to Agent' button on the 'Quote Request Details' page   
     Yves: logout on Yves as a customer
@@ -641,9 +640,10 @@ Configurable_Product_RfQ_Order_Management
     Yves: 'Quote Request Details' page is displayed
     Yves: click 'Revise' button on the 'Quote Request Details' page
     Yves: click 'Edit Items' button on the 'Quote Request Details' page
-    Yves: change the product configuration to:
-    ...    || date       | date_time ||
-    ...    || 01.01.2050 | Morning   ||
+    Yves: change the product options in configurator to:
+    ...    || option one | option two ||
+    ...    || 280        | 240        ||
+    Yves: save product configuration    
     Yves: click 'Save and Back to Edit' button on the 'Quote Request Details' page
     Yves: click 'Send to Customer' button on the 'Quote Request Details' page
     Yves: logout on Yves as a customer
@@ -653,59 +653,36 @@ Configurable_Product_RfQ_Order_Management
     Yves: quote request with reference xxx should have status:    ${lastCreatedRfQ}    Ready
     Yves: view quote request with reference:    ${lastCreatedRfQ}
     Yves: click 'Convert to Cart' button on the 'Quote Request Details' page
-    Yves: 'Shopping Cart' page is displayed
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: billing address same as shipping address:    true
     Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${yves_company_user_buyer_address}
     Yves: select the following shipping method on the checkout and go next:    Express
-    Yves: select the following payment method on the checkout and go next:    Invoice
+    Yves: select the following payment method on the checkout and go next:    Invoice    
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
-    Trigger oms
     Yves: get the last placed order ID by current customer
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    Zed: grand total for the order equals:    ${lastPlacedOrder}    €2,636.11
-    Zed: go to order page:    ${lastPlacedOrder}
-    Zed: product configuration should be equal:
-    ...    || shipment | position | sku                                  | date       | date_time ||
-    ...    || 1        | 1        | ${configurable_product_concrete_sku} | 12.12.2030 | Evening   ||
-    Zed: product configuration should be equal:
-    ...    || shipment | position | sku                                  | date       | date_time ||
-    ...    || 1        | 2        | ${configurable_product_concrete_sku} | 01.01.2050 | Morning   ||
+    Zed: go to order page:    ${lastPlacedOrder} 
+    Zed: grand total for the order equals:    ${lastPlacedOrder}    €2,352.44
     Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Pay
-    Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Skip timeout
-    Zed: trigger matching state of xxx order item inside xxx shipment:    Ship    2
-    Zed: trigger matching state of xxx order item inside xxx shipment:    Stock update    2
-    Zed: trigger matching state of xxx order item inside xxx shipment:    Refund    2
-    Zed: grand total for the order equals:    ${lastPlacedOrder}    €1,321.0
-    Zed: go to order page:    ${lastPlacedOrder}
-    Zed: trigger matching state of xxx order item inside xxx shipment:    Ship    1
-    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
-    Yves: go to user menu:    Order History
-    Yves: 'Order History' page is displayed
-    Yves: get the last placed order ID by current customer
-    Yves: 'View Order/Reorder/Return' on the order history page:     Return    ${lastPlacedOrder}
-    Yves: 'Create Return' page is displayed
-    Yves: create return for the following products:    ${configurable_product_concrete_sku}
-    Yves: 'Return Details' page is displayed
-    Yves: check that 'Print Slip' contains the following products:    ${configurable_product_concrete_sku}
-    Zed: login on Zed with provided credentials:    admin@spryker.com
-    Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Execute return
+    Zed: trigger all matching states inside this order:    Skip timeout
+    Zed: trigger all matching states inside this order:    Ship
+    Zed: trigger all matching states inside this order:    Stock update
+    Zed: trigger all matching states inside this order:    Refund
+    Zed: grand total for the order equals:    ${lastPlacedOrder}    €0.00  
     Yves: go to the 'Home' page
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     Yves: go to user menu:    Order History
-    Yves: 'Order History' page contains the following order with a status:    ${lastPlacedOrder}    Returned
     Yves: 'View Order/Reorder/Return' on the order history page:     View Order
     Yves: 'Order Details' page is displayed
     ### Reorder ###
     Yves: reorder all items from 'Order Details' page
     Yves: go to the shopping cart through the header with name:    Cart from order ${lastPlacedOrder}
     Yves: 'Shopping Cart' page is displayed
-    Yves: shopping cart contains the following products:     ${configurable_product_concrete_sku}
     Yves: configuration should be equal:
-    ...    || date       | date_time ||
-    ...    || 12.12.2030 | Evening   ||
+    ...    || option one | option two ||
+    ...    || 5 shelves  | 2 lockers  ||
     [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    ...    AND    Zed: activate following discounts from Overview page:    	Free mobile phone    20% off cameras products    Free Acer M2610 product    Free delivery    10% off Intel products    5% off white products    Tuesday & Wednesday $5 off 5 or more    10% off $100+    Free smartphone    20% off cameras    Free Acer M2610    Free standard delivery    10% off Intel Core    5% off white    Tu & Wed €5 off 5 or more    10% off minimum order
     ...    AND    Zed: delete Zed user with the following email:    agent_config+${random}@spryker.com
-
