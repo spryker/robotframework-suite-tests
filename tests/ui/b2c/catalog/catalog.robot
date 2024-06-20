@@ -458,6 +458,17 @@ Configurable_Product_PDP_Wishlist_Availability
     Yves: save product configuration
     Yves: product price on the PDP should be:    €25.00
     Yves: product configuration status should be equal:      Configuration complete!
+    Yves: change the product options in configurator to:
+    ...    || option one    | option two | option four | option five | option six | option seven | option eight | option nine | option ten       ||
+    ...    || 389.50        | 210        | 36          |  15         | 19         | 48           | 46           | 33          | English Keyboard ||
+    Yves: product configuration price should be:    €731.50
+    Yves: product configuration notification is:     Only 7 items available
+    Yves: save product configuration
+    Yves: change quantity using '+' or '-' button № times:    +    8
+    Yves: try add product to the cart from PDP and expect error:    Item ${configurable_product_concrete_one_sku} only has availability of 7.
+    Yves: go to PDP of the product with sku:   ${configurable_product_abstract_sku}
+    Yves: change variant of the product on PDP on:    ${configurable_product_concrete_one_attribute}
+    Yves: change quantity using '+' or '-' button № times:    +    7
     Yves: add product to wishlist:    configProduct${random}    select
     Yves: go to wishlist with name:    configProduct${random}
     Yves: wishlist contains product with sku:    ${configurable_product_concrete_one_sku}
@@ -468,7 +479,7 @@ Configurable_Product_PDP_Wishlist_Availability
     Yves: save product configuration
     Yves: add all available products from wishlist to cart
     Yves: go to b2c shopping cart
-    Yves: shopping cart contains product with unit price:    sku=${configurable_product_concrete_one_sku}    productName=${configurable_product_name}    productPrice=€1,346.00
+    Yves: shopping cart contains product with unit price:    sku=${configurable_product_concrete_one_sku}    productName=${configurable_product_name}    productPrice=€1,347.00
     [Teardown]    Run Keywords    Yves: delete all wishlists
     ...    AND    Yves: check if cart is not empty and clear it
     ...    AND    Yves: delete all user addresses  
