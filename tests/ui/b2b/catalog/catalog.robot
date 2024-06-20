@@ -598,7 +598,6 @@ Configurable_Product_PDP_Shopping_List
     Yves: add product to the shopping list:    configProduct+${random}
     Yves: go to 'Shopping Lists' page
     Yves: view shopping list with name:    configProduct+${random}
-    ## bug: https://spryker.atlassian.net/browse/CC-33647
     Yves: change the product options in configurator to:
     ...    || option one | option two ||
     ...    || 420        | 240        ||
