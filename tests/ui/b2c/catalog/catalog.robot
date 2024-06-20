@@ -437,8 +437,7 @@ Product_Availability_Calculation
 
 Configurable_Product_PDP_Wishlist_Availability
     [Documentation]    Configure product from PDP and Wishlist + availability case.
-    [Setup]    Run keywords   Delete All Cookies
-    ...    AND    Yves: login on Yves with provided credentials:    ${yves_user_email}
+    [Setup]    Run keywords   Yves: login on Yves with provided credentials:    ${yves_user_email}
     ...    AND    Yves: create new 'Whistist' with name:    configProduct${random}
     ...    AND    Yves: check if cart is not empty and clear it
     ...    AND    Yves: delete all user addresses
