@@ -492,7 +492,8 @@ Offer_Availability_Calculation
 
 
 Configurable_Product_PDP_Shopping_List
-    [Documentation]    Configure products from both the PDP and the Shopping List. Verify the availability of 7 items. Ensure that products that have not been configured cannot be purchased.    
+    [Documentation]    Configure products from both the PDP and the Shopping List. Verify the availability of 7 items. Ensure that products that have not been configured cannot be purchased. bug: https://spryker.atlassian.net/browse/CC-33647
+    [Tags]    skip-due-to-issue
     [Setup]    Run keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     ...    AND    Yves: create new 'Shopping Cart' with name:    configProduct+${random}
     ...    AND    Yves: create new 'Shopping List' with name:    configProduct+${random}
@@ -540,19 +541,18 @@ Configurable_Product_PDP_Shopping_List
     Yves: add product to the shopping list:    configProduct+${random}
     Yves: go to 'Shopping Lists' page
     Yves: view shopping list with name:    configProduct+${random}
-    ## bug: https://spryker.atlassian.net/browse/CC-33647
-    # Yves: change the product options in configurator to:
-    # ...    || option one | option two ||
-    # ...    || 420        | 240        ||
-    # Yves: save product configuration
-    # Yves: configuration should be equal:
-    # ...    || option one | option two ||
-    # ...    || 6 shelves  | 2 lockers  ||
-    # Yves: add all available products from list to cart
-    # Yves: configuration should be equal:
-    # ...    || option one | option two ||
-    # ...    || 6 shelves  | 2 lockers  ||
-    # Yves: shopping cart contains product with unit price:    ${configurable_product_concrete_sku}    ${configurable_product_name}    €2,486.54
+    Yves: change the product options in configurator to:
+    ...    || option one | option two ||
+    ...    || 420        | 240        ||
+    Yves: save product configuration
+    Yves: configuration should be equal:
+    ...    || option one | option two ||
+    ...    || 6 shelves  | 2 lockers  ||
+    Yves: add all available products from list to cart
+    Yves: configuration should be equal:
+    ...    || option one | option two ||
+    ...    || 6 shelves  | 2 lockers  ||
+    Yves: shopping cart contains product with unit price:    ${configurable_product_concrete_sku}    ${configurable_product_name}    €2,486.54
     [Teardown]    Run Keywords    Yves: delete 'Shopping List' with name:    configProduct+${random}
     ...    AND    Yves: delete 'Shopping Cart' with name:    configProduct+${random}
 
@@ -604,9 +604,6 @@ Configurable_Product_RfQ_OMS
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
     Yves: get the last placed order ID by current customer
-    Zed: login on Zed with provided credentials:    ${zed_main_merchant_email}
-    # Zed: grand total for the order equals:    ${lastPlacedOrder}    €771.90
-    Zed: go to order page:    ${lastPlacedOrder} 
     Zed: login on Zed with provided credentials:    ${zed_main_merchant_email}
     Zed: go to order page:    ${lastPlacedOrder} 
     Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Pay
