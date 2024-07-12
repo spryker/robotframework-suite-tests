@@ -764,16 +764,17 @@ Manage_Merchant_Product
     Zed: update abstract product price on:
     ...    || productAbstract    | store | mode  | type    | currency | amount ||
     ...    || manageSKU${random} | DE    | gross | default | €        | 110.00 ||
+    Repeat Keyword    3    Trigger multistore p&s
     Zed: update abstract product data:
     ...    || productAbstract    | store | name en                         | name de                         | new from   | new to     ||
     ...    || manageSKU${random} | AT    | ENUpdatedmanageProduct${random} | DEUpdatedmanageProduct${random} | 01.01.2020 | 01.01.2030 ||
     Repeat Keyword    3    Trigger multistore p&s
-    Zed: go to second navigation item level:    Catalog    Products
-    Zed: table should contain:    ENUpdatedmanageProduct${random}
     Zed: change concrete product price on:
     ...    || productAbstract    | productConcrete      | store | mode  | type   | currency | amount ||
     ...    || manageSKU${random} | manageSKU${random}-3 | DE    | gross | default| €        | 15.00  ||
-    Trigger multistore p&s
+    Repeat Keyword    3    Trigger multistore p&s
+    Zed: go to second navigation item level:    Catalog    Products
+    Zed: table should contain:    ENUpdatedmanageProduct${random}
     Yves: login on Yves with provided credentials:    ${yves_user_email}
     Yves: go to PDP of the product with sku:     manageSKU${random}
     Yves: product name on PDP should be:    ENUpdatedmanageProduct${random}
