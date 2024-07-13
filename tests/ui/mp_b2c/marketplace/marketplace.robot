@@ -703,7 +703,7 @@ Merchant_Product_Offer_in_Backoffice
 
 Manage_Merchant_Product
     [Documentation]    Checks that MU and BO user can manage merchant abstract and concrete products + add new concrete product
-    [Setup]    Repeat Keyword    3    Trigger multistore p&s
+    Repeat Keyword    3    Trigger multistore p&s
     MP: login on MP with provided credentials:    ${merchant_budget_cameras_email}
     MP: open navigation menu tab:    Products    
     MP: click on create new entity button:    Create Product
@@ -796,6 +796,10 @@ Manage_Merchant_Product
     Zed: update abstract product data:
     ...    || productAbstract    | store | name en                         | name de                         | new from   | new to     ||
     ...    || manageSKU${random} | AT    | ENUpdatedmanageProduct${random} | DEUpdatedmanageProduct${random} | 01.01.2020 | 01.01.2030 ||
+    Repeat Keyword    3    Trigger multistore p&s
+    Zed: update abstract product price on:
+    ...    || productAbstract    | store | mode  | type    | currency | amount ||
+    ...    || manageSKU${random} | DE    | gross | default | €        | 110.00 ||
     Repeat Keyword    3    Trigger multistore p&s
     Zed: change concrete product price on:
     ...    || productAbstract    | productConcrete      | store | mode  | type   | currency | amount ||

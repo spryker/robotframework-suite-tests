@@ -47,7 +47,7 @@ Resource    ../../../../resources/steps/customer_registration_steps.robot
 *** Test Cases ***
 Multistore_Product_Offer
     [Documentation]    check product and offer multistore functionality
-    [Setup]    Repeat Keyword    3    Trigger multistore p&s
+    Repeat Keyword    3    Trigger multistore p&s
     MP: login on MP with provided credentials:    ${merchant_budget_cameras_email}
     MP: open navigation menu tab:    Products    
     MP: click on create new entity button:    Create Product
@@ -135,6 +135,10 @@ Multistore_Product_Offer
     Yves: merchant is (not) displaying in Sold By section of PDP:    Video King    false
     Save current URL
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: update abstract product data:
+    ...    || productAbstract        | unselect store ||
+    ...    || multistoreSKU${random} | AT             ||
+    Repeat Keyword    3    Trigger multistore p&s
     Zed: update abstract product data:
     ...    || productAbstract        | unselect store ||
     ...    || multistoreSKU${random} | AT             ||
