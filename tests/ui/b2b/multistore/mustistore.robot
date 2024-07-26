@@ -102,7 +102,10 @@ Multistore_Product
     Zed: update abstract product data:
     ...    || productAbstract   | unselect store ||
     ...    || multiSKU${random} | AT             ||
-    Trigger multistore p&s
+    Zed: update abstract product data:
+    ...    || productAbstract   | unselect store ||
+    ...    || multiSKU${random} | AT             ||
+    Repeat Keyword    3    Trigger multistore p&s
     Yves: navigate to specified AT store URL if no other store is specified and refresh until 404 occurs:    ${url}
     [Teardown]    Run Keywords    Should Test Run
     ...    AND    Yves: go to AT store 'Home' page if other store not specified:
