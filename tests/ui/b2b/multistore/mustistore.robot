@@ -102,6 +102,7 @@ Multistore_Product
     Zed: update abstract product data:
     ...    || productAbstract   | unselect store ||
     ...    || multiSKU${random} | AT             ||
+    Repeat Keyword    3    Trigger multistore p&s
     Zed: update abstract product data:
     ...    || productAbstract   | unselect store ||
     ...    || multiSKU${random} | AT             ||
