@@ -741,7 +741,6 @@ Merchant_Product_Offer_in_Backoffice
     ...    AND    Zed: click Action Button in a table for row that contains:     ViewProduct${random}     Deny
 
 Manage_Merchant_Product
-    [Tags]    debug
     [Documentation]    Checks that MU and BO user can manage merchant abstract and concrete products + add new concrete product
     Repeat Keyword    3    Trigger multistore p&s
     MP: login on MP with provided credentials:    ${merchant_office_king_email}

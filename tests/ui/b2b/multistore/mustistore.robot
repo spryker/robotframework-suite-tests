@@ -142,6 +142,7 @@ Dynamic_multistore
     ...    || ${random_str_store}_${random_str_store} | en_US           | Euro              | EUR           | Swiss Franc        | CHF            | AT                   ||
     Trigger multistore p&s
     Yves: login on Yves with provided credentials:    ${yves_user_email}
+    Yves: wait until store switcher contains:     store=${random_str_store}_${random_str_store}
     Yves: go to AT store 'Home' page if other store not specified:     ${random_str_store}_${random_str_store}
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: update abstract product data:

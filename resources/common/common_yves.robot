@@ -195,6 +195,23 @@ Yves: go to AT store 'Home' page if other store not specified:
         Wait Until Element Contains    //*[@data-qa='component header']//select[contains(@name,'store')]/option[@selected='']    ${store}
     END
 
+Yves: wait until store switcher contains:
+    [Arguments]    ${store}    ${tries}=30    ${timeout}=3s    ${message}='Timeout exceeded while waiting for '${store}' store in the store switcher. Check P&S'
+    Go To    ${yves_url}
+    Wait Until Element Is Visible    ${store_switcher_header_menu_item}
+    FOR    ${index}    IN RANGE    0    ${tries}
+        ${storetAppears}=    Run Keyword And Return Status    Wait Until Element Contains    locator=${store_switcher_header_menu_item}    text=${store}    timeout=${timeout}
+        IF    '${storetAppears}'=='False'
+            Run Keywords    Sleep    ${timeout}    AND    Reload
+        ELSE
+            Exit For Loop
+        END
+    END
+    IF    '${storetAppears}'=='False'
+        Take Screenshot    EMBED    fullPage=True
+        Fail    ${message}
+    END
+
 Yves: select currency Euro if other currency not specified
     [Arguments]    ${currency_name}=Euro    ${currency_code}=EUR
     Set Browser Timeout    ${browser_timeout}
