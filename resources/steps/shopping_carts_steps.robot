@@ -87,6 +87,19 @@ Yves: shopping cart contains the following products:
         END
     END
 
+Yves: preview shopping cart contains the following products:
+    [Documentation]    For item listing you can use sku or name of the product
+    [Arguments]    @{items_list}
+    ${items_list_count}=   get length  ${items_list}
+    FOR    ${index}    IN RANGE    0    ${items_list_count}
+        ${item_to_check}=    Get From List    ${items_list}    ${index}
+        IF    '${env}' in ['ui_suite']
+            Page Should Contain Element    xpath=(//main//product-item[contains(@data-qa,'component product-cart-item')]//*[@data-qa='cart-item-sku'][contains(text(),'${item_to_check}')])[1]
+        ELSE
+            Page Should Contain Element    xpath=(//main[contains(@class,'cart')]//article[(contains(@data-qa,'product-cart-item') or contains(@data-qa,'product-card-item'))]//*[contains(.,'${item_to_check}')]/ancestor::article)[1]
+        END
+    END
+
 Yves: click on the '${buttonName}' button in the shopping cart
     Yves: remove flash messages
     IF    '${buttonName}' == 'Checkout'
