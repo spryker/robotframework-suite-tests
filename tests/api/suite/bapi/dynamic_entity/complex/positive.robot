@@ -170,7 +170,7 @@ Create_and_update_product_abstract_collection_with_product_abstract_localized_at
     And Response body parameter should be:    [data][sku]    testtesttest
     And Response body parameter should be:    [data][robotTestsProductAbstractLocalizedAttributes][0][fk_product_abstract]    ${id_product_abstract}
     And Response body parameter should be:    [data][robotTestsProductAbstractLocalizedAttributes][0][name]    childtesttesttest
-    And Verify that url is present in the Database:    /de/testtesttest-${id_product_abstract}
+    And Verify that url is present in the Database:    /de-de/testtesttest-${id_product_abstract}
     ### UPDATE PRODUCT ABSTRACT WITH CHILD ###
     And I send a PATCH request:    /dynamic-entity/robot-tests-product-abstracts/${id_product_abstract}    {"data":{"sku":"testtesttest1","robotTestsProductAbstractLocalizedAttributes":[{"name":"childtesttesttest1","id_abstract_attributes":${id_abstract_attributes}}]}}
     Then Response status code should be:    200
