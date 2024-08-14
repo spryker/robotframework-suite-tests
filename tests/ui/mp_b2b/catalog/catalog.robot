@@ -632,7 +632,6 @@ Configurable_Product_RfQ_OMS
 
 #### Product Bundles feature is not present in marketplace for now ####
 # Product_Bundles
-#     [Tags]    skip-due-to-refactoring
 #     [Documentation]    Checks checkout with Bundle product
 #     [Setup]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
 #     ...    AND    Zed: change product stock:    ${bundled_product_1_abstract_sku}    ${bundled_product_1_concrete_sku}    true    10

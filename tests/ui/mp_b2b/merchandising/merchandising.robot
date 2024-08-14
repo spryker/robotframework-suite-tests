@@ -107,7 +107,6 @@ Product_Relations
 
 #### Product Sets feature is not present in marketplace for now ####
 # Product_Sets
-#     [Tags]    skip-due-to-refactoring
 #     [Documentation]    Checks that product set can be added into cart
 #     [Setup]    Run keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
 #     ...    AND    Yves: create new 'Shopping Cart' with name:    productSetsCart+${random}
@@ -122,7 +121,6 @@ Product_Relations
 
 # ### Configurable Bundles feature is not present in marketplace for now ####
 # Configurable_Bundle
-#     [Tags]    skip-due-to-refactoring
 #     [Documentation]    Checks checkout with the configurable bundle
 #     [Setup]    Run keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_manager_and_buyer_email}
 #     ...    AND    Yves: delete all shopping carts

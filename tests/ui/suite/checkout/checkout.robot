@@ -644,7 +644,6 @@ Configurable_Product_Checkout
 
 # Approval_Process
 #     ### *** DEMODATA - NO OOT LIMITS AND CAN'T SET THEM IN SUITE *** ###
-#     [Tags]    skip-due-to-refactoring
 #     [Documentation]    Checks role permissions on checkout and Approval process
 #     [Setup]    Run keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_with_limit_email}
 #     ...    AND    Yves: create new 'Shopping Cart' with name:    approvalCart+${random}
