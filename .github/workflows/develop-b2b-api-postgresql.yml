@@ -1,8 +1,6 @@
 name: "[develop][b2b][api][postgresql]"
 
 on:
-  schedule:
-      -   cron: '0 10 * * 1-5'
   workflow_dispatch:
 
 jobs:
