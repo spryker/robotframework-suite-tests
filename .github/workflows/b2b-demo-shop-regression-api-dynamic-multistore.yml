@@ -2,7 +2,7 @@ name: "[b2b][master] Robot Regression API Dynamic Multistore"
 
 on:
     schedule:
-        -   cron: '0 23 * * *'
+        -   cron: '0 23 * * 1-5'
     workflow_dispatch:
 
 jobs:
