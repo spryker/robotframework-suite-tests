@@ -67,7 +67,7 @@ Get_upselling_products
 
 Get_upselling_products_plus_includes
     [Documentation]    https://spryker.atlassian.net/browse/CC-31988
-    [Tags]    skip-due-to-refactoring
+    [Tags]    skip-due-to-refactoring    glue
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     ...    AND    I send a POST request:    /carts    {"data":{"type":"carts","attributes":{"priceMode":"${mode.gross}","currency":"${currency.eur.code}","store":"${store.de}","name":"Cart-${random}"}}}

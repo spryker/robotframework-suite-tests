@@ -15,7 +15,7 @@ ENABLER
 
 Adding_voucher_code_to_cart_of_logged_in_customer
     [Documentation]    Fails because of CC-16735 ( CC-16719 is closed as duplicate)
-    [Tags]    skip-due-to-issue
+    [Tags]    skip-due-to-issue    glue
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}
     ...    AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
@@ -61,7 +61,7 @@ Adding_voucher_code_to_cart_of_logged_in_customer
 
 Checking_voucher_is_applied_after_order_is_placed
     [Documentation]    Fails because of CC-16735 ( CC-16719 is closed as duplicate)
-    [Tags]    skip-due-to-issue
+    [Tags]    skip-due-to-issue    glue
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_second_user.email}
     ...    AND    I set Headers:    Authorization=${token}
     ...    AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
@@ -114,7 +114,7 @@ Checking_voucher_is_applied_after_order_is_placed
 
 Adding_two_vouchers_with_different_priority_to_the_same_cart
     [Documentation]    Fails because of CC-16735 ( CC-16719 is closed as duplicate)
-    [Tags]    skip-due-to-issue
+    [Tags]    skip-due-to-issue    glue
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}
     ...    AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
@@ -175,7 +175,7 @@ Adding_two_vouchers_with_different_priority_to_the_same_cart
 
 Adding_voucher_with_cart_rule_with_to_the_same_cart
     [Documentation]    Fails because of CC-16735 ( CC-16719 is closed as duplicate)
-    [Tags]    skip-due-to-issue
+    [Tags]    skip-due-to-issue    glue
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}
     ...    AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
@@ -227,7 +227,7 @@ Adding_voucher_with_cart_rule_with_to_the_same_cart
 
 Deleting_voucher_from_cart_of_logged_in_customer
     [Documentation]    Fails because of CC-16735 ( CC-16719 is closed as duplicate)
-    [Tags]    skip-due-to-issue
+    [Tags]    skip-due-to-issue    glue
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}
     ...    AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}

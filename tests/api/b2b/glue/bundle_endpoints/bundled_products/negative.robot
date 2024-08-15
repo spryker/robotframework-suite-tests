@@ -13,7 +13,7 @@ ENABLER
 
 Get_bundled_products_with_nonexisting_concrete_sku
     [Documentation]    bug: https://spryker.atlassian.net/browse/CC-15994
-    [Tags]    skip-due-to-issue
+    [Tags]    skip-due-to-issue    glue
     When I send a GET request:    /concrete-products/fake/bundled-products
     Then Response status code should be:    404
     And Response reason should be:    Not Found
@@ -22,7 +22,7 @@ Get_bundled_products_with_nonexisting_concrete_sku
 
 Get_bundled_products_with_invalid_concrete_sku
     [Documentation]    bug: https://spryker.atlassian.net/browse/CC-15994
-    [Tags]    skip-due-to-issue
+    [Tags]    skip-due-to-issue    glue
     When I send a GET request:    /concrete-products/:sku/bundled-products
     Then Response status code should be:    400
     And Response reason should be:    Bad Request
