@@ -60,7 +60,7 @@ jobs:
               continue-on-error: false
               run: |
                   cd robotframework-tests
-                  robot -v env:api_b2b -v db_engine:psycopg2 -v ignore_console:false -d results --include skip-due-to-issueORskip-due-to-refactoring -s '*'.tests.api.b2b .
+                  robot -v env:api_b2b -v db_engine:psycopg2 -v ignore_console:false -d results --include develop -s '*'.tests.api.b2b .
                   touch results/time.txt && echo $(date) > results/time.txt
             - name: Upload artifacts
               if: failure()
