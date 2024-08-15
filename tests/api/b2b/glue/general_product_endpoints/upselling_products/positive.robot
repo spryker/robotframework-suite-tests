@@ -67,7 +67,7 @@ Get_upselling_products
 
 Get_upselling_products_plus_includes
     [Documentation]    https://spryker.atlassian.net/browse/CC-31988
-    [Tags]    skip-due-to-refactoring    glue
+    [Tags]    skip-due-to-refactoring    glue    develop
     [Setup]    Run Keywords    API_test_setup
     ...    AND    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}

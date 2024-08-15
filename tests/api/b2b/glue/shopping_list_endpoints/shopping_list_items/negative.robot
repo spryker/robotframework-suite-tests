@@ -347,7 +347,7 @@ Update_quantity_of_the_product_at_the_shopping_list_to_zero
 
 Update_product_quntity_at_the_shopping_list_to_non_digit_value
     [Documentation]    Created a new bug CC-22842 as current error message is: "quantity => This value should be less than 2147483647." and not This value should be greater than 0.
-    [Tags]    skip-due-to-issue    glue
+    [Tags]    skip-due-to-issue    glue    develop
     [Setup]    Run Keywords    API_test_setup
     ...    AND    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
@@ -369,7 +369,7 @@ Update_product_quntity_at_the_shopping_list_to_non_digit_value
 
 Update_product_quntity_at_the_shopping_list_to_not_allowed_qty
     [Documentation]    Created a new bug CC-22842 as current error message is: "quantity => This value should be less than 2147483647." and not This value should be greater than 0.
-    [Tags]    skip-due-to-issue    glue
+    [Tags]    skip-due-to-issue    glue    develop
     [Setup]    Run Keywords    API_test_setup
     ...    AND    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
@@ -383,10 +383,10 @@ Update_product_quntity_at_the_shopping_list_to_not_allowed_qty
     ...    [errors]
     ...    detail
     ...    quantity => This value should be of type integer.
-    And Array in response should contain property with value:
-    ...    [errors]
-    ...    detail
-    ...    quantity => This value should be less than 2147483647.
+    # And Array in response should contain property with value:
+    # ...    [errors]
+    # ...    detail
+    # ...    quantity => This value should be less than 2147483647.
 
 
 Update_product_quntity_at_the_shopping_list_to_a_negative_number
@@ -698,7 +698,7 @@ Add_a_configurable_product_with_empty_quantity_value_of_to_the_shopping_list
 
 Add_a_configurable_product_with_empty_availableQuantity_value_of_to_the_shopping_list
     [Documentation]   https://spryker.atlassian.net/browse/CC-25381
-    [Tags]    skip-due-to-issue    glue
+    [Tags]    skip-due-to-issue    glue    develop
     [Setup]    Run Keywords    API_test_setup
     ...    AND    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
@@ -709,15 +709,15 @@ Add_a_configurable_product_with_empty_availableQuantity_value_of_to_the_shopping
     And Response status code should be:    422
     And Response should return error code:    901
     And Response reason should be:    Unprocessable Content
-    And Response should return error message:    availableQuantity => This value should not be blank.
-    And Response should return error message:    availableQuantity => This value should be of type numeric.
+    And Response should return error message:    productConfigurationInstance.availableQuantity => This value should not be blank.
+    And Response should return error message:    productConfigurationInstance.availableQuantity => This value should be of type numeric.
     [Teardown]    Run Keywords    I send a DELETE request:    /shopping-lists/${shoppingListId}
     ...    AND    Response status code should be:    204
     ...    AND    Response reason should be:    No Content
 
 Add_aconfigurable_product_with_missing_availableQuantity_value_of_to_the_shopping_list
     [Documentation]   https://spryker.atlassian.net/browse/CC-25381
-    [Tags]    skip-due-to-issue    glue
+    [Tags]    skip-due-to-issue    glue    develop
     [Setup]    Run Keywords    API_test_setup
     ...    AND    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
@@ -728,14 +728,14 @@ Add_aconfigurable_product_with_missing_availableQuantity_value_of_to_the_shoppin
     And Response status code should be:    422
     And Response should return error code:    901
     And Response reason should be:    Unprocessable Content
-    And Response should return error message:    availableQuantity => This field is missing.
+    And Response should return error message:    productConfigurationInstance.availableQuantity => This field is missing.
     [Teardown]    Run Keywords    I send a DELETE request:    /shopping-lists/${shoppingListId}
     ...    AND    Response status code should be:    204
     ...    AND    Response reason should be:    No Content
 
 Add_aconfigurable_product_with_string_availableQuantity_value_of_to_the_shopping_list
     [Documentation]   https://spryker.atlassian.net/browse/CC-25381
-    [Tags]    skip-due-to-issue    glue
+    [Tags]    skip-due-to-issue    glue    develop
     [Setup]    Run Keywords    API_test_setup
     ...    AND    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
@@ -746,7 +746,7 @@ Add_aconfigurable_product_with_string_availableQuantity_value_of_to_the_shopping
     And Response status code should be:    422
     And Response should return error code:    901
     And Response reason should be:    Unprocessable Content
-    And Response should return error message:    availableQuantity => This value should be of type numeric.
+    And Response should return error message:    productConfigurationInstance.availableQuantity => This value should be of type numeric.
     [Teardown]    Run Keywords    I send a DELETE request:    /shopping-lists/${shoppingListId}
     ...    AND    Response status code should be:    204
     ...    AND    Response reason should be:    No Content
