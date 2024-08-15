@@ -57,7 +57,7 @@ jobs:
                   APPLICATION_STORE=AT docker/sdk console queue:worker:start --stop-when-empty
             - name: Run Tests
               id: run_tests
-              continue-on-error: true
+              continue-on-error: false
               run: |
                   cd robotframework-tests
                   robot -v env:api_b2b -v ignore_console:false -d results --include skip-due-to-issueORskip-due-to-refactoring -s '*'.tests.api.b2b .
