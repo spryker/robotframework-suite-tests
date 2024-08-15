@@ -84,7 +84,8 @@ Update_a_shopping_list_name
 Update_a_shopping_list_name_with_includes
     [Documentation]   b2b2 - There is a bug CC-16543. Bug is resolved but it looks like we need integration to b2b public demoshop
     [Tags]    skip-due-to-issue    glue
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
+    [Setup]    Run Keywords    API_test_setup
+    ...    AND    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     ...    AND    I send a POST request:    /shopping-lists    {"data":{"type":"shopping-lists","attributes":{"name":"${shopping_list_name}${random}"}}}
     ...    AND    Response status code should be:    201
@@ -252,7 +253,8 @@ Get_single_shopping_list_info_with_includes
 Get_several_shopping_lists_info_with_includes
     [Documentation]    b2b - There is a bug CC-16541
     [Tags]    skip-due-to-issue    glue
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
+    [Setup]    Run Keywords    API_test_setup
+    ...    AND    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     I send a GET request:    /shopping-lists?include=shopping-list-items,concrete-products
     And Response status code should be:    200

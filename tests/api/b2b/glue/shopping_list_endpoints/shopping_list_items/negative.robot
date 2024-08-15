@@ -348,7 +348,8 @@ Update_quantity_of_the_product_at_the_shopping_list_to_zero
 Update_product_quntity_at_the_shopping_list_to_non_digit_value
     [Documentation]    Created a new bug CC-22842 as current error message is: "quantity => This value should be less than 2147483647." and not This value should be greater than 0.
     [Tags]    skip-due-to-issue    glue
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
+    [Setup]    Run Keywords    API_test_setup
+    ...    AND    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     I send a PATCH request:
     ...    /shopping-lists/shoppingListId/shopping-list-items/shoppingListItemId
@@ -369,7 +370,8 @@ Update_product_quntity_at_the_shopping_list_to_non_digit_value
 Update_product_quntity_at_the_shopping_list_to_not_allowed_qty
     [Documentation]    Created a new bug CC-22842 as current error message is: "quantity => This value should be less than 2147483647." and not This value should be greater than 0.
     [Tags]    skip-due-to-issue    glue
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
+    [Setup]    Run Keywords    API_test_setup
+    ...    AND    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     I send a PATCH request:
     ...    /shopping-lists/shoppingListId/shopping-list-items/shoppingListItemId
@@ -569,7 +571,8 @@ Remove_a_concrete_product_from_the_shared_shopping_list_without_write_access_per
 Add_a_non-configurable_product_to_the_shopping_list_with_configuration
     [Documentation]   https://spryker.atlassian.net/browse/CC-23115
     [Tags]    skip-due-to-issue    glue
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
+    [Setup]    Run Keywords    API_test_setup
+    ...    AND    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     ...    AND    I send a POST request:    /shopping-lists    {"data":{"type":"shopping-lists","attributes":{"name":"${shopping_list_name}${random}"}}}
     ...    AND    Response status code should be:    201
@@ -586,7 +589,8 @@ Add_a_non-configurable_product_to_the_shopping_list_with_configuration
 Add_a_non-configurable_product_to_the_shopping_list_with_configuration_and_configurable_product
     [Documentation]   https://spryker.atlassian.net/browse/CC-23115
     [Tags]    skip-due-to-issue    glue
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
+    [Setup]    Run Keywords    API_test_setup
+    ...    AND    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     ...    AND    I send a POST request:    /shopping-lists    {"data":{"type":"shopping-lists","attributes":{"name":"${shopping_list_name}${random}"}}}
     ...    AND    Response status code should be:    201
@@ -695,7 +699,8 @@ Add_a_configurable_product_with_empty_quantity_value_of_to_the_shopping_list
 Add_a_configurable_product_with_empty_availableQuantity_value_of_to_the_shopping_list
     [Documentation]   https://spryker.atlassian.net/browse/CC-25381
     [Tags]    skip-due-to-issue    glue
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
+    [Setup]    Run Keywords    API_test_setup
+    ...    AND    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     ...    AND    I send a POST request:    /shopping-lists    {"data":{"type":"shopping-lists","attributes":{"name":"${shopping_list_name}${random}"}}}
     ...    AND    Response status code should be:    201
@@ -713,7 +718,8 @@ Add_a_configurable_product_with_empty_availableQuantity_value_of_to_the_shopping
 Add_aconfigurable_product_with_missing_availableQuantity_value_of_to_the_shopping_list
     [Documentation]   https://spryker.atlassian.net/browse/CC-25381
     [Tags]    skip-due-to-issue    glue
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
+    [Setup]    Run Keywords    API_test_setup
+    ...    AND    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     ...    AND    I send a POST request:    /shopping-lists    {"data":{"type":"shopping-lists","attributes":{"name":"${shopping_list_name}${random}"}}}
     ...    AND    Response status code should be:    201
@@ -730,7 +736,8 @@ Add_aconfigurable_product_with_missing_availableQuantity_value_of_to_the_shoppin
 Add_aconfigurable_product_with_string_availableQuantity_value_of_to_the_shopping_list
     [Documentation]   https://spryker.atlassian.net/browse/CC-25381
     [Tags]    skip-due-to-issue    glue
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
+    [Setup]    Run Keywords    API_test_setup
+    ...    AND    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     ...    AND    I send a POST request:    /shopping-lists    {"data":{"type":"shopping-lists","attributes":{"name":"${shopping_list_name}${random}"}}}
     ...    AND    Response status code should be:    201

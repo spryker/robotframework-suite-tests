@@ -114,7 +114,7 @@ Abstract_product_with_abstract_includes_for_availability_images_taxes_categories
 Abstract_product_with_abstract_includes_for_labels
     [Documentation]    https://spryker.atlassian.net/browse/CC-31988
     [Tags]    skip-due-to-refactoring    glue
-    [Setup]    Trigger product labels update
+    Trigger product labels update
     When I send a GET request:    /abstract-products/${abstract.with_label.sku}?include=product-labels
     Then Response status code should be:    200
     And Response reason should be:    OK
