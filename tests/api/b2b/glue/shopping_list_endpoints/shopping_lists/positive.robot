@@ -83,7 +83,7 @@ Update_a_shopping_list_name
 
 Update_a_shopping_list_name_with_includes
     [Documentation]   b2b2 - There is a bug CC-16543. Bug is resolved but it looks like we need integration to b2b public demoshop
-    [Tags]    skip-due-to-issue    glue    develop
+    [Tags]    skip-due-to-issue
     [Setup]    Run Keywords    API_test_setup
     ...    AND    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}

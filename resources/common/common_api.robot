@@ -29,6 +29,7 @@ API_suite_setup
     Common_suite_setup
 
 Overwrite api variables
+    Set Test Variable    ${current_url}    ${EMPTY}
     FOR  ${tag}  IN  @{Test Tags}
         Log   ${tag}
         Set Test Variable    ${tag}
@@ -66,14 +67,16 @@ Overwrite api variables
                 Set Suite Variable    ${tag}    sapi
             END
         END
-        ${current_url_last_character}=    Get Regexp Matches    ${current_url}    .$    flags=IGNORECASE
-        ${current_url_last_character}=    Convert To String    ${current_url_last_character}
-        ${current_url_last_character}=    Replace String    ${current_url_last_character}    '   ${EMPTY}
-        ${current_url_last_character}=    Replace String    ${current_url_last_character}    [   ${EMPTY}
-        ${current_url_last_character}=    Replace String    ${current_url_last_character}    ]   ${EMPTY}
-        IF    '${current_url_last_character}' == '/'
-            ${current_url}=    Replace String Using Regexp    ${current_url}    .$    ${EMPTY}
-            Set Suite Variable    ${current_url}
+        IF    '${current_url}' != '${EMPTY}'
+            ${current_url_last_character}=    Get Regexp Matches    ${current_url}    .$    flags=IGNORECASE
+            ${current_url_last_character}=    Convert To String    ${current_url_last_character}
+            ${current_url_last_character}=    Replace String    ${current_url_last_character}    '   ${EMPTY}
+            ${current_url_last_character}=    Replace String    ${current_url_last_character}    [   ${EMPTY}
+            ${current_url_last_character}=    Replace String    ${current_url_last_character}    ]   ${EMPTY}
+            IF    '${current_url_last_character}' == '/'
+                ${current_url}=    Replace String Using Regexp    ${current_url}    .$    ${EMPTY}
+                Set Suite Variable    ${current_url}
+            END
         END
     END
 
@@ -1429,6 +1432,35 @@ Response should return error message:
     ${data}=    Replace String    ${data}    ]   ${EMPTY}
     Log    ${data}
     Should Be Equal    ${data}    ${error_message}    Actual '${data}' error reason doens't match expected '${error_message}'
+
+Response should contain error message:
+    [Documentation]    This keyword checks if the ``${response_body}`` test variable that contains the response of the previous request contains a specific ``${error_message}`` within an array of errors.
+    ...
+    ...    Call for negative tests where you expect multiple errors. NOTE: This checks all errors in the array to find a match.
+    ...
+    ...    *Example:*
+    ...
+    ...    ``Response should contain error message:    productConfigurationInstance.availableQuantity => This value should not be blank.``
+    [Arguments]    ${error_message}
+    @{error_list}=    Get Value From Json    ${response_body}    [errors]
+    ${list_length}=    Get Length    @{error_list}
+    ${found}=    Set Variable    False
+    FOR    ${index}    IN RANGE    0    ${list_length}
+        ${error_element}=    Get From List    @{error_list}    ${index}
+        IF    '${tag}'=='bapi' or '${tag}'=='sapi'
+            ${error_detail}=    Get Value From Json    ${error_element}    [message]
+        ELSE
+            ${error_detail}=    Get Value From Json    ${error_element}    [detail]
+        END
+        ${error_detail}=    Convert To String    ${error_detail}
+        ${error_detail}=    Replace String    ${error_detail}    '   ${EMPTY}
+        ${error_detail}=    Replace String    ${error_detail}    [   ${EMPTY}
+        ${error_detail}=    Replace String    ${error_detail}    ]   ${EMPTY}
+        ${result}=    Evaluate    '${error_detail}' == '${error_message}'
+        ${found}=    Set Variable If    ${result}    True
+        IF    ${found}    Exit For Loop
+    END
+    Should Be Equal As Strings    ${found}   True    Expected error message '${error_message}' was not found within response: '@{error_list}'
 
 Response should return error code:
     [Documentation]    This keyword checks if the ``${response_body}`` test variable that contains the response of the previous request contains the specific  ``${error_code}``.

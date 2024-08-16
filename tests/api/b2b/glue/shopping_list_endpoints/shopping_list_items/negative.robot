@@ -709,8 +709,8 @@ Add_a_configurable_product_with_empty_availableQuantity_value_of_to_the_shopping
     And Response status code should be:    422
     And Response should return error code:    901
     And Response reason should be:    Unprocessable Content
-    And Response should return error message:    productConfigurationInstance.availableQuantity => This value should not be blank.
-    And Response should return error message:    productConfigurationInstance.availableQuantity => This value should be of type numeric.
+    And Response should contain error message:    productConfigurationInstance.availableQuantity => This value should not be blank.
+    And Response should contain error message:    productConfigurationInstance.availableQuantity => This value should be of type numeric.
     [Teardown]    Run Keywords    I send a DELETE request:    /shopping-lists/${shoppingListId}
     ...    AND    Response status code should be:    204
     ...    AND    Response reason should be:    No Content
