@@ -26,8 +26,8 @@ Agent_cannot_impersonate_customer_with_wrong_token_type
 
 Agent_cannot_impersonate_customer_with_invalid_token
     [Documentation]   bug https://spryker.atlassian.net/browse/CC-23418
-    [Tags]    skip-due-to-issue
-    [Setup]    I Set Headers:    Content-Type=${default_header_content_type}    Authorization=Bearer fake
+    [Tags]    skip-due-to-issue    develop    glue
+    I Set Headers:    Content-Type=${default_header_content_type}    Authorization=Bearer fake
     When I send a POST request:    /agent-customer-impersonation-access-tokens    {"data": {"type": "agent-customer-impersonation-access-tokens","attributes":{"customerReference": "${yves_user.reference}"}}}
     Then Response status code should be:    401
     And Response reason should be:    Unauthorized

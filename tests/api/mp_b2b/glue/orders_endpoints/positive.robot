@@ -239,8 +239,9 @@ Get_order_by_order_id_with_mode.net_&_chf_currency_&_express_shipment_method
 
 Get_order_by_order_id_with_split_shipment
     [Documentation]   bug https://spryker.atlassian.net/browse/CC-21273
-    [Tags]    skip-due-to-issue
-    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
+    [Tags]    skip-due-to-issue    develop    glue
+    [Setup]    Run Keywords    API_test_setup
+    ...  AND    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
     ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
     ...  AND    Save value to a variable:    [data][id]    cart_id

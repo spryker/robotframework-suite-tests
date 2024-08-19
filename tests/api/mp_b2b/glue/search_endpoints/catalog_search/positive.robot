@@ -11,6 +11,13 @@ ENABLER
 
 ##### SEARCH PARAMETERS #####
 
+Search_without_query_parameter
+    [Tags]    skip-due-to-issue    glue    develop
+    When I send a GET request:    /catalog-search?
+    Then Response status code should be:    200
+    And Response body parameter should be:    [data][0][type]    catalog-search
+    And Response body parameter should be:    [data][0][attributes][spellingSuggestion]    None
+
 Search_with_empty_search_criteria_all_default_values_check
     When I send a GET request:    /catalog-search?q=
     Then Response status code should be:    200
