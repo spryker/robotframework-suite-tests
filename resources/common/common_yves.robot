@@ -50,7 +50,7 @@ Yves: login on Yves with provided credentials:
             Go To    ${yves_url}login
         END  
     END
-    ${is_login_page}=    Run Keyword And Return Status    Page Should Contain Element    locator=${email_field}    message=Login page is not displayed
+    ${is_login_page}=    Run Keyword And Ignore Error    Page Should Contain Element    locator=${email_field}    message=Login page is not displayed
     IF    'FAIL' in ${is_login_page}
         Delete All Cookies
         Yves: go to the 'Home' page
