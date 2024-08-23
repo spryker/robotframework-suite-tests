@@ -49,7 +49,17 @@ Yves: login on Yves with provided credentials:
             Reload
             Go To    ${yves_url}login
         END  
-    END  
+    END
+    ${is_login_page}=    Run Keyword And Return Status    Page Should Contain Element    locator=${email_field}    message=Login page is not displayed
+    IF    'FAIL' in ${is_login_page}
+        Delete All Cookies
+        Yves: go to the 'Home' page
+        IF    '.at.' in '${currentURL}'
+            Go To    ${yves_at_url}login
+        ELSE
+            Go To    ${yves_url}login
+        END
+    END
     Type Text    ${email_field}    ${email}
     Type Text    ${password_field}    ${password}
     Click    ${form_login_button}
