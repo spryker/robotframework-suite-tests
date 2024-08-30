@@ -42,6 +42,14 @@ Resource    ../../../../resources/steps/configurable_product_steps.robot
 Resource    ../../../../resources/steps/dynamic_entity_steps.robot
 
 *** Test Cases ***
+Merchant_Portal_Unauthorized_Access_Redirects_To_Login_Page
+    [Documentation]    Check that when root URL for MerchantPortal is opened by unauthorized user he is redirected to login page.
+    Delete All Cookies
+    Go To    ${mp_root_url}
+    Wait Until Page Contains Element    xpath=//div[@class='login']
+    ${url}    Get Location
+    Should Match    ${url}/    ${mp_url}
+
 Merchant_Profile_Update
     [Documentation]    Checks that merchant profile could be updated from merchant portal and that changes will be displayed on Yves
     Yves: go to URL:    en/merchant/Video-king
