@@ -368,7 +368,9 @@ Click_and_collect
     ...    AND    Trigger p&s
 
 Configurable_Product_Checkout
-    [Setup]    Run keywords    Yves: login on Yves with provided credentials:    ${yves_user_email}
+    [Setup]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    ...    AND    Zed: deactivate all discounts from Overview page
+    ...    AND    Yves: login on Yves with provided credentials:    ${yves_user_email}
     ...    AND    Yves: check if cart is not empty and clear it
     ...    AND    Yves: delete all user addresses
     ...    AND    Yves: create a new customer address in profile:     Mr    ${yves_user_first_name}    ${yves_user_last_name}    Kirncher Str.    7    10247    Berlin    Germany
@@ -402,7 +404,7 @@ Configurable_Product_Checkout
     Yves: 'Thank you' page is displayed
     Yves: get the last placed order ID by current customer
     Zed: login on Zed with provided credentials:    ${zed_main_merchant_email}
-    Zed: grand total for the order equals:    ${lastPlacedOrder}    €1,226.40
+    Zed: grand total for the order equals:    ${lastPlacedOrder}    €1,361.00
     Zed: go to order page:    ${lastPlacedOrder}
     Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Pay
     Zed: trigger all matching states inside this order:    skip picking
@@ -413,3 +415,5 @@ Configurable_Product_Checkout
     Zed: trigger matching state of xxx order item inside xxx shipment:    Deliver    1
     Zed: trigger matching state of xxx order item inside xxx shipment:    Refund    1
     Zed: grand total for the order equals:    ${lastPlacedOrder}    €0.00
+    [Teardown]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    ...    AND    Zed: activate following discounts from Overview page:    Free Acer Notebook    Tu & Wed $5 off 5 or more    10% off $100+    Free smartphone    20% off cameras    Free Acer M2610    Free standard delivery    10% off Intel Core    5% off white    Tu & Wed €5 off 5 or more    10% off minimum order

@@ -564,7 +564,7 @@ Unique_URL
     Yves: logout on Yves as a customer
     Yves: go to external URL:    ${externalURL}
     Yves: Shopping Cart title should be equal:    Preview: externalCart+${random}
-    Yves: shopping cart contains the following products:    ${one_variant_product_abstract_sku}
+    Yves: preview shopping cart contains the following products:    ${one_variant_product_abstract_sku}
     [Teardown]    Run Keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     ...    AND    Yves: delete 'Shopping Cart' with name:    externalCart+${random}
 
@@ -606,7 +606,9 @@ Comment_Management_in_the_Cart
     [Teardown]    Run Keyword    Yves: delete 'Shopping Cart' with name:    commentManagement+${random}
 
 Configurable_Product_Checkout
-    [Setup]    Run keywords    Yves: login on Yves with provided credentials:    ${yves_user_email}
+    [Setup]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    ...    AND    Zed: deactivate all discounts from Overview page
+    ...    AND    Yves: login on Yves with provided credentials:    ${yves_user_email}
     ...    AND    Yves: check if cart is not empty and clear it
     ...    AND    Yves: delete all user addresses
     ...    AND    Yves: create a new customer address in profile:     Mr    ${yves_user_first_name}    ${yves_user_last_name}    Kirncher Str.    7    10247    Berlin    Germany
@@ -636,7 +638,9 @@ Configurable_Product_Checkout
     Yves: 'Thank you' page is displayed
     Yves: get the last placed order ID by current customer
     Zed: login on Zed with provided credentials:    ${zed_main_merchant_email}
-    Zed: grand total for the order equals:    ${lastPlacedOrder}    €580.55
+    Zed: grand total for the order equals:    ${lastPlacedOrder}    €644.40
+    [Teardown]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    ...    AND    Zed: activate following discounts from Overview page:    	Free mobile phone    20% off cameras products    Free Acer M2610 product    Free delivery    10% off Intel products    5% off white products    Tuesday & Wednesday $5 off 5 or more    10% off $100+    Free smartphone    20% off cameras    Free Acer M2610    Free standard delivery    10% off Intel Core    5% off white    Tu & Wed €5 off 5 or more    10% off minimum order
 
 # Approval_Process
 #     ### *** DEMODATA - NO OOT LIMITS AND CAN'T SET THEM IN SUITE *** ###

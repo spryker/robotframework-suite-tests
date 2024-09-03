@@ -5,6 +5,7 @@
       "yves_at_url":"http://yves.at.spryker.local/",
       "zed_url":"http://backoffice.de.spryker.local/",
       "mp_url":"http://mp.de.spryker.local/security-merchant-portal-gui/login/",
+      "mp_root_url":"http://mp.de.spryker.local/",
       "glue_url":"http://glue.de.spryker.local",
       "bapi_url":"http://glue-backend.de.spryker.local",
       "sapi_url":"http://glue-storefront.de.spryker.local"

@@ -49,7 +49,17 @@ Yves: login on Yves with provided credentials:
             Reload
             Go To    ${yves_url}login
         END  
-    END  
+    END
+    ${is_login_page}=    Run Keyword And Ignore Error    Page Should Contain Element    locator=${email_field}    message=Login page is not displayed
+    IF    'FAIL' in ${is_login_page}
+        Delete All Cookies
+        Yves: go to the 'Home' page
+        IF    '.at.' in '${currentURL}'
+            Go To    ${yves_at_url}login
+        ELSE
+            Go To    ${yves_url}login
+        END
+    END
     Type Text    ${email_field}    ${email}
     Type Text    ${password_field}    ${password}
     Click    ${form_login_button}
@@ -193,6 +203,23 @@ Yves: go to AT store 'Home' page if other store not specified:
         Wait Until Element Is Visible    ${store_switcher_header_menu_item}
         Select From List By Value    ${store_switcher_header_menu_item}    ${store}
         Wait Until Element Contains    //*[@data-qa='component header']//select[contains(@name,'store')]/option[@selected='']    ${store}
+    END
+
+Yves: wait until store switcher contains:
+    [Arguments]    ${store}    ${tries}=30    ${timeout}=3s    ${message}='Timeout exceeded while waiting for '${store}' store in the store switcher. Check P&S'
+    Go To    ${yves_url}
+    Wait Until Element Is Visible    ${store_switcher_header_menu_item}
+    FOR    ${index}    IN RANGE    0    ${tries}
+        ${storetAppears}=    Run Keyword And Return Status    Wait Until Element Contains    locator=${store_switcher_header_menu_item}    text=${store}    timeout=${timeout}
+        IF    '${storetAppears}'=='False'
+            Run Keywords    Sleep    ${timeout}    AND    Reload
+        ELSE
+            Exit For Loop
+        END
+    END
+    IF    '${storetAppears}'=='False'
+        Take Screenshot    EMBED    fullPage=True
+        Fail    ${message}
     END
 
 Yves: select currency Euro if other currency not specified

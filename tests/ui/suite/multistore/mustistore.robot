@@ -105,7 +105,11 @@ Multistore_Product
     Zed: update abstract product data:
     ...    || productAbstract   | unselect store ||
     ...    || multiSKU${random} | AT             ||
-    Trigger multistore p&s
+    Repeat Keyword    3    Trigger multistore p&s
+    Zed: update abstract product data:
+    ...    || productAbstract   | unselect store ||
+    ...    || multiSKU${random} | AT             ||
+    Repeat Keyword    3    Trigger multistore p&s
     Yves: navigate to specified AT store URL if no other store is specified and refresh until 404 occurs:    ${url}
     [Teardown]    Run Keywords    Yves: go to AT store 'Home' page if other store not specified:
     ...    AND    Yves: login on Yves with provided credentials:    ${yves_second_user_email}
@@ -113,7 +117,7 @@ Multistore_Product
 
 Multistore_Product_Offer
     [Documentation]    check product and offer multistore functionality. DMS-ON: https://spryker.atlassian.net/browse/FRW-7484
-    [Setup]    Repeat Keyword    3    Trigger multistore p&s
+    Repeat Keyword    3    Trigger multistore p&s
     MP: login on MP with provided credentials:    ${merchant_video_king_email}
     MP: open navigation menu tab:    Products    
     MP: click on create new entity button:    Create Product
@@ -195,7 +199,7 @@ Multistore_Product_Offer
     ...    || is active | unselect store ||
     ...    || true      | AT             ||         
     MP: save offer
-    Trigger multistore p&s
+    Repeat Keyword    3    Trigger multistore p&s
     Yves: go to AT store 'Home' page if other store not specified:
     Trigger multistore p&s
     Yves: login on Yves with provided credentials:    ${yves_user_email}
@@ -206,7 +210,11 @@ Multistore_Product_Offer
     Zed: update abstract product data:
     ...    || productAbstract        | unselect store ||
     ...    || multistoreSKU${random} | AT             ||
-    Trigger multistore p&s
+    Repeat Keyword    3    Trigger multistore p&s
+    Zed: update abstract product data:
+    ...    || productAbstract        | unselect store ||
+    ...    || multistoreSKU${random} | AT             ||
+    Repeat Keyword    3    Trigger multistore p&s
     Yves: navigate to specified AT store URL if no other store is specified and refresh until 404 occurs:    ${url}
     [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: go to second navigation item level:    Catalog    Products 
@@ -233,14 +241,15 @@ Multistore_CMS
     ...    AND    Trigger multistore p&s
 
 Dynamic_multistore
-    [Documentation]  Bug: FRW-7903  This test should exclusively run for dynamic multi-store scenarios. The test verifies that the user can successfully create a new store, assign a product and CMS page, and register a customer within the new store.
-    [Tags]    dms-on
+    [Documentation]    This test should exclusively run for dynamic multi-store scenarios. The test verifies that the user can successfully create a new store, assign a product and CMS page, and register a customer within the new store.
+    [Tags]    dms-on    debug
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: create new Store:
-    ...    || name                                    | locale_iso_code | currency_iso_code | currency_code | currency_iso_code2 | currency_code2 |store_delivery_region ||
-    ...    || ${random_str_store}_${random_str_store} | en_US           | Euro              | EUR           | Swiss Franc        | CHF            | AT                   ||
+    ...    || name                                    | locale_iso_code | currency_iso_code | currency_code | currency_iso_code2 | currency_code2 |store_delivery_region |store_context_timezone ||
+    ...    || ${random_str_store}_${random_str_store} | en_US           | Euro              | EUR           | Swiss Franc        | CHF            | AT                   |Europe/Berlin          ||
     Trigger multistore p&s
     Yves: login on Yves with provided credentials:    ${yves_user_email}
+    Yves: wait until store switcher contains:     store=${random_str_store}_${random_str_store}
     Yves: go to AT store 'Home' page if other store not specified:     ${random_str_store}_${random_str_store}
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: update abstract product data:

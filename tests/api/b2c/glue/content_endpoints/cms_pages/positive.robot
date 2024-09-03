@@ -31,6 +31,7 @@ Get_specific_cms_page
     [Setup]    Run Keywords    I send a GET request:    /cms-pages
     ...    AND    Response status code should be:    200
     ...    AND    Save value to a variable:    [data][0][id]    cms_page_id
+    API_test_setup
     When I send a GET request:    /cms-pages/${cms_page_id}
     Then Response status code should be:    200
     And Response reason should be:    OK
@@ -46,6 +47,7 @@ Get_specific_cms_page
 
 Get_specific_cms_with_includes
     [Setup]    Add content product abstract list to cms page in DB    ${cms_pages.cms_page_with_product_lists.id}    apl-watches
+    API_test_setup
     When I send a GET request:    /cms-pages/${cms_pages.cms_page_with_product_lists.id}?include=content-product-abstract-lists
     Then Response status code should be:    200
     And Response reason should be:    OK

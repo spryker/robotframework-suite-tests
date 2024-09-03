@@ -42,6 +42,14 @@ Resource    ../../../../resources/steps/configurable_product_steps.robot
 Resource    ../../../../resources/steps/dynamic_entity_steps.robot
 
 *** Test Cases ***
+Merchant_Portal_Unauthorized_Access_Redirects_To_Login_Page
+    [Documentation]    Check that when root URL for MerchantPortal is opened by unauthorized user he is redirected to login page.
+    Delete All Cookies
+    Go To    ${mp_root_url}
+    Wait Until Page Contains Element    xpath=//div[@class='login']
+    ${url}    Get Location
+    Should Match    ${url}/    ${mp_url}
+
 Default_Merchants
     [Documentation]    Checks that default merchants are present in Zed
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
@@ -742,6 +750,7 @@ Merchant_Product_Offer_in_Backoffice
 
 Manage_Merchant_Product
     [Documentation]    Checks that MU and BO user can manage merchant abstract and concrete products + add new concrete product
+    Repeat Keyword    3    Trigger multistore p&s
     MP: login on MP with provided credentials:    ${merchant_office_king_email}
     MP: open navigation menu tab:    Products    
     MP: click on create new entity button:    Create Product
@@ -827,20 +836,24 @@ Manage_Merchant_Product
     Zed: view abstract product page contains:
     ...    || merchant     | status   | store | sku                | name                   | variants count ||
     ...    || Office King  | Approved | DE    | manageSKU${random} | manageProduct${random} | 3              ||
+    Repeat Keyword    3    Trigger multistore p&s
     Zed: update abstract product price on:
     ...    || productAbstract    | store | mode  | type    | currency | amount ||
     ...    || manageSKU${random} | DE    | gross | default | €        | 110.00 ||
-    Zed: save abstract product:    manageSKU${random}
-    Trigger p&s
+    Repeat Keyword    3    Trigger multistore p&s
     Zed: update abstract product data:
     ...    || productAbstract    | store | name en                         | name de                         | new from   | new to     ||
     ...    || manageSKU${random} | AT    | ENUpdatedmanageProduct${random} | DEUpdatedmanageProduct${random} | 01.01.2020 | 01.01.2030 ||
-    Zed: go to second navigation item level:    Catalog    Products
-    Zed: table should contain:    ENUpdatedmanageProduct${random}
+    Zed: update abstract product price on:
+    ...    || productAbstract    | store | mode  | type    | currency | amount ||
+    ...    || manageSKU${random} | DE    | gross | default | €        | 110.00 ||
+    Repeat Keyword    3    Trigger multistore p&s
     Zed: change concrete product price on:
     ...    || productAbstract    | productConcrete      | store | mode  | type   | currency | amount ||
     ...    || manageSKU${random} | manageSKU${random}-3 | DE    | gross | default| €        | 15.00  ||
-    Trigger multistore p&s
+    Repeat Keyword    3    Trigger multistore p&s
+    Zed: go to second navigation item level:    Catalog    Products
+    Zed: table should contain:    ENUpdatedmanageProduct${random}
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     Yves: go to PDP of the product with sku:     manageSKU${random}
     Yves: product name on PDP should be:    ENUpdatedmanageProduct${random}
