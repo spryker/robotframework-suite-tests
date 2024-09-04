@@ -21,6 +21,7 @@ ${yves_env}
 ${yves_at_env}
 ${zed_env}
 ${mp_env}
+${mp_root_env}
 ${glue_env}
 
 *** Keywords ***
