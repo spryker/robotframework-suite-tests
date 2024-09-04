@@ -620,13 +620,13 @@ Configurable_Product_PDP_Wishlist_Availability
     ...    || DE    | en_US  | GROSS_MODE | EUR      | ${configurable_product_concrete_sku} ||
     Yves: change the product options in configurator to:
     ...    || option one | option two ||
-    ...    || 517        | 167        ||
+    ...    || 517        | 275        ||
     Yves: product configuration price should be:    ${configurable_product_price_without_configurations}
     Yves: save product configuration
     Yves: product configuration status should be equal:      Configuration complete!
     Yves: configuration should be equal:
     ...    || option one                 | option two                     ||
-    ...    || Option One: Option title 2 | Option Two: Option Two title 1 ||
+    ...    || Option One: Option title 2 | Option Two: Option Two title 4 ||
     Yves: change the product options in configurator to:
     ...    || option one | option two ||
     ...    || 389.50     | 210        ||
@@ -635,7 +635,7 @@ Configurable_Product_PDP_Wishlist_Availability
     Yves: back to PDP and not save configuration
     Yves: change the product options in configurator to:
     ...    || option one | option two ||
-    ...    || 607        | 275        ||
+    ...    || 607        | 249        ||
     Yves: save product configuration
     Yves: product configuration status should be equal:      Configuration complete!
     Yves: product price on the PDP should be:    ${configurable_product_price_without_configurations}
@@ -644,10 +644,10 @@ Configurable_Product_PDP_Wishlist_Availability
     Yves: wishlist contains product with sku:    ${configurable_product_concrete_sku}
     Yves: configuration should be equal:
     ...    || option one                 | option two                     ||
-    ...    || Option One: Option title 3 | Option Two: Option Two title 4 ||
+    ...    || Option One: Option title 3 | Option Two: Option Two title 3 ||
     Yves: change the product options in configurator to:
     ...    || option one    | option two ||
-    ...    || 389.50        | 249        ||
+    ...    || 389.50        | 275        ||
     Yves: product configuration price should be:    ${configurable_product_price_with_options} 
     Yves: save product configuration
     Yves: add all available products from wishlist to cart
