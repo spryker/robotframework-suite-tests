@@ -45,6 +45,11 @@ Overwrite pyz variables
     ELSE
             Set Suite Variable    ${mp_url}   ${mp_env}
     END
+    IF    '${mp_root_env}' == '${EMPTY}'
+                Set Suite Variable    ${mp_root_url}    ${mp_root_url}
+    ELSE
+            Set Suite Variable    ${mp_root_url}   ${mp_root_env}
+    END
     IF    '${glue_env}' == '${EMPTY}'
             Set Suite Variable    ${glue_url}    ${glue_url}
     ELSE
