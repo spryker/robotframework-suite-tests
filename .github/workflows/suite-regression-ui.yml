@@ -7,11 +7,11 @@ on:
 
 jobs:
     docker-alpine-php-8-2-mariadb-robot-ui:
-        name: "Docker / Alpine / PHP 8.2 / MariaDB / Robot / UI"
+        name: "Docker / Alpine / PHP 8.3 / MariaDB / Robot / UI"
         runs-on: ubuntu-20.04
         env:
             PROGRESS_TYPE: plain
-            SPRYKER_PLATFORM_IMAGE: spryker/php:8.2
+            SPRYKER_PLATFORM_IMAGE: spryker/php:8.3
             TRAVIS: 1
             ROBOT_TESTS_ARTIFACTS_BUCKET_REGION: eu-west-1
         steps:
@@ -56,21 +56,20 @@ jobs:
               continue-on-error: false
               run: |
                   docker/sdk cli composer dump-autoload -o -a --apcu
-                  APPLICATION_STORE=DE docker/sdk console queue:worker:start --stop-when-empty
-                  APPLICATION_STORE=AT docker/sdk console queue:worker:start --stop-when-empty
+                  SPRYKER_CURRENT_REGION=EU docker/sdk console queue:worker:start --stop-when-empty
             - name: Run Tests
               id: run_tests
               continue-on-error: true
               run: |
                   cd robotframework-tests
                   rfbrowser init
-                  robot -v env:ui_suite -v headless:true -v ignore_console:false -d results --exclude skip-due-to-issueORskip-due-to-refactoring --include group_oneORgroup_twoORgroup_tree -s '*'.tests.ui.suite .
+                  robot -v env:ui_suite -v dms:true -v headless:true -v ignore_console:false -d results --exclude skip-due-to-issueORskip-due-to-refactoring --include group_oneORgroup_twoORgroup_tree -s '*'.tests.ui.suite .
                   touch results/time.txt && echo $(date) > results/time.txt
             - name: Rerun Failed Tests
               if: steps.run_tests.outcome != 'success'
               run: |
                   cd robotframework-tests
-                  robot -v env:ui_suite -v headless:true -v ignore_console:false -d results/rerun --runemptysuite --rerunfailed results/output.xml --output rerun.xml -s '*'.tests.ui.suite .
+                  robot -v env:ui_suite -v dms:true -v headless:true -v ignore_console:false -d results/rerun --runemptysuite --rerunfailed results/output.xml --output rerun.xml -s '*'.tests.ui.suite .
             - name: Merge Test Results
               if: always() && steps.run_tests.outcome != 'success'
               run: |
@@ -79,6 +78,6 @@ jobs:
             - name: Upload artifacts
               if: failure()
               run: |
-                  AWS_DEFAULT_REGION=${{env.ROBOT_TESTS_ARTIFACTS_BUCKET_REGION}} AWS_ACCESS_KEY_ID=${{ secrets.ROBOT_TESTS_ARTIFACTS_KEY }} AWS_SECRET_ACCESS_KEY=${{ secrets.ROBOT_TESTS_ARTIFACTS_SECRET }} aws s3 cp robotframework-tests/results s3://${{vars.ROBOT_TESTS_ARTIFACTS_BUCKET}}/night-robot-ui-ci/suite_regression/${GITHUB_RUN_ID}/PHP8.2MariaDBRobotUi/ \
+                  AWS_DEFAULT_REGION=${{env.ROBOT_TESTS_ARTIFACTS_BUCKET_REGION}} AWS_ACCESS_KEY_ID=${{ secrets.ROBOT_TESTS_ARTIFACTS_KEY }} AWS_SECRET_ACCESS_KEY=${{ secrets.ROBOT_TESTS_ARTIFACTS_SECRET }} aws s3 cp robotframework-tests/results s3://${{vars.ROBOT_TESTS_ARTIFACTS_BUCKET}}/night-robot-ui-ci/suite_regression/${GITHUB_RUN_ID}/PHP8.3MariaDBRobotUi/ \
                     --recursive \
                     --expires "$(date -d '+7 days' --utc +'%Y-%m-%dT%H:%M:%SZ')"
