@@ -5,7 +5,7 @@ Resource    ../common/common.robot
 
 *** Keywords ***
 
-Zed: assigned store to category:
+Zed: assign store to category:
     [Arguments]    ${store}
     Zed: go to second navigation item level:    Catalog    Category
     Zed: click Action Button in a table for row that contains:     cables     Edit
@@ -23,7 +23,7 @@ Zed: assigned store to category:
                 ${value}=   Get Text     xpath=//input[@id='category_localized_attributes_${index}_name']
                 IF    '${value}' == '${EMPTY}'
                     Click    xpath=//input[@id='category_localized_attributes_${index}_name']//ancestor::div[contains(@class, 'ibox') and contains(@class, 'collapsed')]//a[@class='collapse-link']
-                    Type Text    xpath=//xpath=//input[@id='category_localized_attributes_${index}_name']      'test'    delay=50ms
+                    Type Text    xpath=//input[@id='category_localized_attributes_${index}_name']      'test'    delay=50ms
                 END
             END
 
