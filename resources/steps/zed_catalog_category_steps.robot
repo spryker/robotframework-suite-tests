@@ -27,7 +27,7 @@ Zed: assign store to category:
                 END
             END
 
-    Wait Until Element Is Visible    xpath=//button[contains(@class,'safe-submit')]
-    Click    xpath=//button[contains(@class,'safe-submit')]
+    Wait Until Element Is Visible    ${zed_category_save_button}
+    Click   ${zed_category_save_button}
     Wait until element is visible    ${zed_success_flash_message}
 
