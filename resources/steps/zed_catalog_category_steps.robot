@@ -18,12 +18,12 @@ Zed: assign store to category:
     Sleep    1s
 
     ${iterations}=    Get Element Count    xpath=//input[contains(concat(' ',@id,' '), 'category_localized_attributes_') and contains(@id,'_name') and @type='text' and @required='required']
-    ${iterations}=    Evaluate    ${iterations}-2
             FOR    ${index}    IN RANGE    0    ${iterations}
-                ${value}=   Get Text     xpath=//input[@id='category_localized_attributes_${index}_name']
+                ${currentInput}=    Set Variable     xpath=//input[@id='category_localized_attributes_${index}_name']
+                ${value}=   Get Text     ${currentInput}
                 IF    '${value}' == '${EMPTY}'
                     Click    xpath=//input[@id='category_localized_attributes_${index}_name']//ancestor::div[contains(@class, 'ibox') and contains(@class, 'collapsed')]//a[@class='collapse-link']
-                    Type Text    xpath=//input[@id='category_localized_attributes_${index}_name']      'test'    delay=50ms
+                    Type Text    ${currentInput}    'test'    delay=50ms
                 END
             END
 
