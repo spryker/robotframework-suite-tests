@@ -22,7 +22,7 @@ Zed: assign store to category:
                 ${currentInput}=    Set Variable     xpath=//input[@id='category_localized_attributes_${index}_name']
                 ${value}=   Get Text     ${currentInput}
                 IF    '${value}' == '${EMPTY}'
-                    Click    xpath=//input[@id='category_localized_attributes_${index}_name']//ancestor::div[contains(@class, 'ibox') and contains(@class, 'collapsed')]//a[@class='collapse-link']
+                    Click    ${currentInput}//ancestor::div[contains(@class, 'ibox') and contains(@class, 'collapsed')]//a[@class='collapse-link']
                     Type Text    ${currentInput}    'test'    delay=50ms
                 END
             END
