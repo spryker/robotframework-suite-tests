@@ -297,6 +297,7 @@ Dynamic_multistore
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: assigned store to cms block:    ${random_str_store}_${random_str_store}    customer-registration_token--html
     Zed: assigned store to cms block:    ${random_str_store}_${random_str_store}    customer-registration_token--text
+    Zed: assign store to category:    ${random_str_store}
     ## register new customer in the new store on YVES
     Yves: go to AT store 'Home' page if other store not specified:    ${random_str_store}_${random_str_store}
     Register a new customer with data:
