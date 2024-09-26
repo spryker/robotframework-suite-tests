@@ -1,4 +1,4 @@
-name: "[suite][master] Robot Regression UI"
+name: "[dev][suite][master] Robot Regression UI"
 
 on:
     workflow_dispatch:
