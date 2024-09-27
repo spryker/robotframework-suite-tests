@@ -331,6 +331,7 @@ Manage_Product
     Zed: change concrete product stock:
     ...    || productAbstract    | productConcrete               | warehouse n1 | warehouse n1 qty | warehouse n1 never out of stock ||
     ...    || manageSKU${random} | manageSKU${random}-farbe-blue | Warehouse1   | 100              | false                           ||
+    Zed: save abstract product:    manageSKU${random}
     Trigger multistore p&s
     Zed: update abstract product data:
     ...    || productAbstract    | name de                        ||
