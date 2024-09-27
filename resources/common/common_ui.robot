@@ -94,6 +94,7 @@ UI_suite_setup
     New Page    ${yves_url}
     ### Executed only in CI env ###
     Trigger multistore p&s    timeout=1s
+    Trigger p&s    1s    US
 
 UI_suite_teardown
     Close Browser    ALL

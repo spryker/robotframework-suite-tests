@@ -513,11 +513,11 @@ Merchant_Portal_Customer_Specific_Prices
     MP: create multi sku product with following data:
     ...    || product sku       | product name          | first attribute name | first attribute first value | first attribute second value | second attribute name | second attribute value ||
     ...    || PriceSKU${random} | PriceProduct${random} | color                | white                       | black                        | series                | Ace Plus               ||
-    MP: perform search by:    riceProduct${random}
-    MP: click on a table row that contains:    riceProduct${random}
+    MP: perform search by:    PriceProduct${random}
+    MP: click on a table row that contains:    PriceProduct${random}
     MP: fill abstract product required fields:
-    ...    || product name DE      | store | tax set           ||
-    ...    || riceProduct${random} | DE    | Smart Electronics ||
+    ...    || product name DE       | store | tax set           ||
+    ...    || PriceProduct${random} | DE    | Smart Electronics ||
     MP: fill product price values:
     ...    || product type | row number | store | currency | gross default ||
     ...    || abstract     | 1          | DE    | EUR      | 500           ||
@@ -538,8 +538,11 @@ Merchant_Portal_Customer_Specific_Prices
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Catalog    Products 
     Zed: click Action Button in a table for row that contains:     PriceSKU${random}     Approve
-    Zed: save abstract product:    PriceSKU${random}
-    Repeat Keyword    3    Trigger p&s
+    Trigger p&s
+    Zed: update abstract product data:
+    ...    || productAbstract   | name de                       ||
+    ...    || PriceSKU${random} | DEPriceProduct${random} force ||
+    Trigger p&s
     Yves: login on Yves with provided credentials:     ${yves_test_company_user_email}
     Yves: go to PDP of the product with sku:    PriceSKU${random}    wait_for_p&s=true
     Yves: merchant's offer/product price should be:    Budget Cameras     €100.00
