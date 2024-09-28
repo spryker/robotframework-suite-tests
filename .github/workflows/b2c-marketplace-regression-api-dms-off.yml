@@ -1,14 +1,14 @@
-name: "[b2b][master] Robot Regression UI"
+name: "[b2c-mp][master][API][DMS-OFF]"
 
 on:
     schedule:
-        -   cron: '0 5 * * 1-5'
+        -   cron: '0 22 * * 0-4'
     workflow_dispatch:
 
 jobs:
-    docker-alpine-php-8-2-mariadb-robot-ui:
-        name: "Docker / Alpine / PHP 8.2 / MariaDB / Robot / UI"
-        runs-on: ubuntu-20.04
+    docker-alpine-php-8-2-mariadb-robot-api:
+        name: "Docker / Alpine / PHP 8.2 / MariaDB / Robot / API / DMS OFF"
+        runs-on: ubuntu-22.04
         env:
             PROGRESS_TYPE: plain
             SPRYKER_PLATFORM_IMAGE: spryker/php:8.2
@@ -26,7 +26,7 @@ jobs:
               run: |
                   git config --global user.email "github-actions[bot]@users.noreply.github.com"
                   git config --global user.name "github-actions[bot]"
-                  git clone -b master --single-branch https://github.com/spryker-shop/b2b-demo-shop.git .
+                  git clone -b master --single-branch https://github.com/spryker-shop/b2c-demo-marketplace.git .
             - name: Install packages
               run: |
                   sudo apt-get install apache2-utils
@@ -36,7 +36,6 @@ jobs:
                   python3 -m pip install -U robotframework-requests
                   python3 -m pip install -U robotframework-jsonlibrary
                   python3 -m pip install -U robotframework-databaselibrary
-                  python3 -m pip install -U robotframework-browser
                   python3 -m pip install PyMySQL
             - name: Install docker-compose
               run: |
@@ -63,14 +62,13 @@ jobs:
               continue-on-error: true
               run: |
                   cd robotframework-tests
-                  rfbrowser init
-                  robot -v env:ui_b2b -v headless:true -v ignore_console:false -d results --exclude skip-due-to-issueORskip-due-to-refactoring --include group_oneORgroup_twoORgroup_tree -s '*'.tests.ui.b2b .
+                  robot -v env:api_mp_b2c -v ignore_console:false -d results --exclude skip-due-to-issueORskip-due-to-refactoring -s '*'.tests.api.mp_b2c .
                   touch results/time.txt && echo $(date) > results/time.txt
             - name: Rerun Failed Tests
               if: steps.run_tests.outcome != 'success'
               run: |
                   cd robotframework-tests
-                  robot -v env:ui_b2b -v headless:true -v ignore_console:false -d results/rerun --runemptysuite --rerunfailed results/output.xml --output rerun.xml -s '*'.tests.ui.b2b .
+                  robot -v env:api_mp_b2c -v ignore_console:false -d results/rerun --runemptysuite --rerunfailed results/output.xml --output rerun.xml -s '*'.tests.api.mp_b2c .
             - name: Merge Test Results
               if: always() && steps.run_tests.outcome != 'success'
               run: |
@@ -79,6 +77,6 @@ jobs:
             - name: Upload artifacts
               if: failure()
               run: |
-                  AWS_DEFAULT_REGION=${{env.ROBOT_TESTS_ARTIFACTS_BUCKET_REGION}} AWS_ACCESS_KEY_ID=${{ secrets.ROBOT_TESTS_ARTIFACTS_KEY }} AWS_SECRET_ACCESS_KEY=${{ secrets.ROBOT_TESTS_ARTIFACTS_SECRET }} aws s3 cp robotframework-tests/results s3://${{vars.ROBOT_TESTS_ARTIFACTS_BUCKET}}/night-robot-ui-ci/b2b_regression/${GITHUB_RUN_ID}/PHP8.2MariaDBRobotUi/ \
+                  AWS_DEFAULT_REGION=${{env.ROBOT_TESTS_ARTIFACTS_BUCKET_REGION}} AWS_ACCESS_KEY_ID=${{ secrets.ROBOT_TESTS_ARTIFACTS_KEY }} AWS_SECRET_ACCESS_KEY=${{ secrets.ROBOT_TESTS_ARTIFACTS_SECRET }} aws s3 cp robotframework-tests/results s3://${{vars.ROBOT_TESTS_ARTIFACTS_BUCKET}}/night-robot-api-ci/b2c_mp_regression-dms-off/${GITHUB_RUN_ID}/PHP8.2MariaDBRobotAPI/ \
                     --recursive \
                     --expires "$(date -d '+7 days' --utc +'%Y-%m-%dT%H:%M:%SZ')"
