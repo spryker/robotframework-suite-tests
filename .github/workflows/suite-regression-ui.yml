@@ -1,4 +1,4 @@
-name: "[suite][master][regressio][UI][DMS-ON]"
+name: "[suite][master][UI][DMS-ON]"
 
 on:
     schedule:

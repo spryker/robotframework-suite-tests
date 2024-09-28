@@ -1,4 +1,4 @@
-name: "[suite][master][regression][API][DMS-ON]"
+name: "[suite][master][API][DMS-ON]"
 
 on:
     schedule:
