@@ -1,4 +1,4 @@
-name: "[suite][master] Robot Regression UI"
+name: "[suite][master][regressio][UI][DMS-ON]"
 
 on:
     schedule:
@@ -7,7 +7,7 @@ on:
 
 jobs:
     docker-alpine-php-8-2-mariadb-robot-ui:
-        name: "Docker / Alpine / PHP 8.3 / MariaDB / Robot / UI"
+        name: "Docker / Alpine / PHP 8.3 / MariaDB / Robot / UI / DMS ON"
         runs-on: ubuntu-20.04
         env:
             PROGRESS_TYPE: plain
