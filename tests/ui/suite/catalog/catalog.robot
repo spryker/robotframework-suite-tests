@@ -301,6 +301,10 @@ Manage_Product
     ...    || zedManageSKU${random} | DE    | gross | default | €        | 150.00 | Smart Electronics ||
     Zed: save abstract product:    zedManageSKU${random}
     Trigger multistore p&s
+    Zed: update abstract product price on:
+    ...    || productAbstract       | store | mode  | type    | currency | amount | tax set           ||
+    ...    || zedManageSKU${random} | DE    | gross | default | €        | 150.00 | Smart Electronics ||
+    Trigger multistore p&s
     Zed: update abstract product data:
     ...    || productAbstract       | name en                         | name de                         ||
     ...    || zedManageSKU${random} | ENUpdatedmanageProduct${random} | DEUpdatedmanageProduct${random} ||

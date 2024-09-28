@@ -366,6 +366,10 @@ Manage_Product
     ...    || productAbstract    | store | mode  | type    | currency | amount | tax set        ||
     ...    || manageSKU${random} | DE    | gross | default | €        | 150.00 | Standard Taxes ||
     Trigger multistore p&s
+    Zed: update abstract product price on:
+    ...    || productAbstract    | store | mode  | type    | currency | amount | tax set        ||
+    ...    || manageSKU${random} | DE    | gross | default | €        | 150.00 | Standard Taxes ||
+    Trigger multistore p&s
     Zed: update abstract product data:
     ...    || productAbstract    | name en                         | name de                         ||
     ...    || manageSKU${random} | ENUpdatedmanageProduct${random} | DEUpdatedmanageProduct${random} ||
