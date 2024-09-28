@@ -2,7 +2,7 @@ name: "[b2c][master] Robot Regression API"
 
 on:
     schedule:
-        -   cron: '0 22 * * 1-5'
+        -   cron: '0 22 * * 0-4'
     workflow_dispatch:
 
 jobs:

@@ -2,7 +2,7 @@ name: "[suite][master][API][DMS-OFF]"
 
 on:
     schedule:
-        -   cron: '0 23 * * 1-5'
+        -   cron: '0 23 * * 0-4'
     workflow_dispatch:
 
 jobs:
