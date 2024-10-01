@@ -298,6 +298,15 @@ Dynamic_multistore
     Zed: assigned store to cms block:    ${random_str_store}_${random_str_store}    customer-registration_token--html
     Zed: assigned store to cms block:    ${random_str_store}_${random_str_store}    customer-registration_token--text
     Zed: assign store to category:    ${random_str_store}
+    API_test_setup
+    I get access token by user credentials:   ${zed_admin_email}
+    Log     ${token}
+    I set Headers:    Content-Type=application/json    Authorization=Bearer ${token}
+    I send a GET request:    /categories/cables
+    Log     ${response.json()}
+    Response status code should be:    200
+    Response body parameter should contain:    [data][0][attributes][stores]    ${random_str_store}
+
     ## register new customer in the new store on YVES
     Yves: go to AT store 'Home' page if other store not specified:    ${random_str_store}_${random_str_store}
     Register a new customer with data:
