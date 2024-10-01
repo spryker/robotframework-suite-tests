@@ -143,6 +143,9 @@
       "product_with_sale_price_concrete_sku": "006_30692993",
       "product_with_sale_price_abstract_name": "Canon IXUS 175"
    },
+    "categories":{
+        "category_name":"cables"
+    },
    "misc":{
      "grant_type":{
         "password":"password",

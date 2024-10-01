@@ -106,6 +106,9 @@
        "configurable_product_concrete_one_price": "25.00",
        "configurable_product_concrete_two_price": "310.19"
     },
+    "categories":{
+        "category_name":"cables"
+    },
     "misc":{
       "grant_type":{
          "password":"password",
