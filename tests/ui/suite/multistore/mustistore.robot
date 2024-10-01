@@ -303,7 +303,7 @@ Dynamic_multistore
     I get access token by user credentials:   ${zed_admin_email}
     Log     ${token}
     I set Headers:    Content-Type=application/json    Authorization=Bearer ${token}
-    I send a GET request:    /categories/cables
+    I send a GET request:    /categories/${category_name}
     Log     ${response.json()}
     Response status code should be:    200
     Response body parameter should contain:    [data][0][attributes][stores]    ${random_str_store}
