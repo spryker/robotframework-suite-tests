@@ -25,6 +25,8 @@ Zed: create new Merchant with the following data:
         IF    '${key}'=='merchant reference' and '${value}' != '${EMPTY}'    Type Text    ${zed_create_merchant_reference_field}    ${value}
         IF    '${key}'=='e-mail' and '${value}' != '${EMPTY}'    Type Text    ${zed_create_merchant_email_field}    ${value}
         IF    '${key}'=='store' and '${value}' != '${EMPTY}'    Zed: Check checkbox by Label:    ${value}
+        IF    '${key}'=='store 2' and '${value}' != '${EMPTY}'    Zed: Check checkbox by Label:    ${value}
+        IF    '${key}'=='store 3' and '${value}' != '${EMPTY}'    Zed: Check checkbox by Label:    ${value}
         IF    '${key}'=='en url' and '${value}' != '${EMPTY}'    Type Text    ${zed_create_merchant_url_en_locale_field}    ${value}
         IF    '${key}'=='de url' and '${value}' != '${EMPTY}'    Type Text    ${zed_create_merchant_url_de_locale_field}    ${value}
     END  
@@ -44,13 +46,22 @@ Zed: update Merchant on edit page with the following data:
         IF    '${key}'=='merchant reference' and '${value}' != '${EMPTY}'    Type Text    ${zed_create_merchant_reference_field}    ${value}
         IF    '${key}'=='e-mail' and '${value}' != '${EMPTY}'    Type Text    ${zed_create_merchant_email_field}    ${value}
         IF    '${key}'=='store' and '${value}' != '${EMPTY}'    Zed: Check checkbox by Label:    ${value}
+        IF    '${key}'=='store 2' and '${value}' != '${EMPTY}'    Zed: Check checkbox by Label:    ${value}
+        IF    '${key}'=='store 3' and '${value}' != '${EMPTY}'    Zed: Check checkbox by Label:    ${value}
         IF    '${key}'=='uncheck store' and '${value}' != '${EMPTY}'    Zed: Uncheck Checkbox by Label:    ${value}
+        IF    '${key}'=='uncheck store 2' and '${value}' != '${EMPTY}'    Zed: Uncheck Checkbox by Label:    ${value}
+        IF    '${key}'=='uncheck store 3' and '${value}' != '${EMPTY}'    Zed: Uncheck Checkbox by Label:    ${value}
         IF    '${key}'=='en url' and '${value}' != '${EMPTY}'    Type Text    ${zed_create_merchant_url_en_locale_field}    ${value}
         IF    '${key}'=='de url' and '${value}' != '${EMPTY}'    Type Text    ${zed_create_merchant_url_de_locale_field}    ${value}
-    END  
+    END
     Zed: submit the form
-    Zed: wait for button in Header to be visible:    Add Merchant    ${browser_timeout}
-    Zed: table should contain:    ${zedMerchantNewName}
+    ${form_submitted}=    Run Keyword And Ignore Error    Page Should Not Contain Element    ${zed_create_merchant_email_field}    1s
+    IF    'FAIL' in ${form_submitted}
+        Reload
+        Zed: submit the form
+    END
+    Repeat Keyword    3    Wait For Load State
+    Zed: table should contain:    search_key=${zedMerchantNewName}    error_message=Merchant Profile Update Failed! Form does not submit
 
 Zed: update Merchant name on edit page:
     [Arguments]    ${zedMerchantNewName}

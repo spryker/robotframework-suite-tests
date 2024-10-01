@@ -167,9 +167,9 @@ Zed: perform variant search by:
     Repeat Keyword    2    Wait For Load State
 
 Zed: table should contain:
-    [Arguments]    ${search_key}
+    [Arguments]    ${search_key}    ${error_message}=Table doesn't contain expected '${search_key}' record
     Zed: perform search by:    ${search_key}
-    Table Should Contain    ${zed_table_locator}  ${search_key}
+    Table Should Contain    locator=${zed_table_locator}    expected=${search_key}    message=${error_message}
 
 Zed: table should contain non-searchable value:
     [Arguments]    ${search_key}

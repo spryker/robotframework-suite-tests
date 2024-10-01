@@ -156,37 +156,37 @@ Manage_Merchants_from_Backoffice
     [Documentation]    Checks that backoffice admin is able to create, approve, edit merchants
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: create new Merchant with the following data:
-    ...    || merchant name        | merchant reference            | e-mail                      | store | store | en url                  | de url                  ||
-    ...    || NewMerchant${random} | NewMerchantReference${random} | merchant+${random}@test.com | DE    | DE    | NewMerchantURL${random} | NewMerchantURL${random} ||
-    Zed: perform search by:    NewMerchant${random}
+    ...    || merchant name          | merchant reference              | e-mail                           | store | store 2 | en url                    | de url                    ||
+    ...    || RobotMerchant${random} | RobotMerchantReference${random} | robotMerchant+${random}@test.com | DE    | AT      | RobotMerchantURL${random} | RobotMerchantURL${random} ||
+    Zed: perform search by:    RobotMerchant${random}
     Zed: table should contain non-searchable value:    Inactive
     Zed: table should contain non-searchable value:    Waiting for Approval
     Zed: table should contain non-searchable value:    DE
-    Zed: click Action Button in a table for row that contains:    NewMerchant${random}    Activate
-    Zed: click Action Button in a table for row that contains:    NewMerchant${random}    Approve Access
-    Zed: perform search by:    NewMerchant${random}
+    Zed: click Action Button in a table for row that contains:    RobotMerchant${random}    Activate
+    Zed: click Action Button in a table for row that contains:    RobotMerchant${random}    Approve Access
+    Zed: perform search by:    RobotMerchant${random}
     Zed: table should contain non-searchable value:    Active
     Zed: table should contain non-searchable value:    Approved
-    Zed: click Action Button in a table for row that contains:    NewMerchant${random}    Edit
+    Zed: click Action Button in a table for row that contains:    RobotMerchant${random}    Edit
     Zed: update Merchant on edit page with the following data:
-    ...    || merchant name               | merchant reference | e-mail  | store | store | en url | de url ||
-    ...    || NewMerchantUpdated${random} |                    |         |       |       |        |        ||
-    Trigger p&s
-    Yves: go to newly created page by URL:    en/merchant/NewMerchantURL${random}
+    ...    || merchant name                 | merchant reference | e-mail  | store | en url | de url ||
+    ...    || RobotMerchantUpdated${random} |                    |         |       |        |        ||
+    Trigger multistore p&s
+    Yves: go to newly created page by URL:    en/merchant/RobotMerchantURL${random}
     Yves: assert merchant profile fields:
-    ...    || name                         | email| phone | delivery time | data privacy ||
-    ...    || NewMerchantUpdated${random}  |      |       |               |              ||
+    ...    || name                          | email | phone | delivery time | data privacy ||
+    ...    || RobotMerchantUpdated${random} |       |       |               |              ||
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Marketplace    Merchants
-    Zed: click Action Button in a table for row that contains:    NewMerchantUpdated${random}    Edit
+    Zed: click Action Button in a table for row that contains:    RobotMerchantUpdated${random}    Edit
     Zed: update Merchant on edit page with the following data:
-    ...    || merchant name | merchant reference | e-mail  | uncheck store | en url | de url ||
-    ...    ||               |                    |         | DE            |        |        ||
-    Trigger p&s
-    Yves: go to URL and refresh until 404 occurs:    ${yves_url}en/merchant/NewMerchantURL${random}
+    ...    || merchant name        | merchant reference | e-mail  | uncheck store | uncheck store 2 | en url | de url ||
+    ...    || Deactivated${random} |                    |         | DE            | AT              |        |        ||
+    Trigger multistore p&s
+    Yves: go to URL and refresh until 404 occurs:    ${yves_url}en/merchant/RobotMerchantURL${random}
     [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: go to second navigation item level:    Marketplace    Merchants  
-    ...    AND    Zed: click Action Button in a table for row that contains:     NewMerchantUpdated${random}     Deactivate
+    ...    AND    Zed: click Action Button in a table for row that contains:     Deactivated${random}     Deactivate
     ...    AND    Trigger multistore p&s
 
 Manage_Merchant_Users
