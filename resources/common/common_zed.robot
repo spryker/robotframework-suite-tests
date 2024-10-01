@@ -16,7 +16,6 @@ ${zed_variant_search_field_locator}     xpath=//*[@id='product-variant-table_fil
 ${zed_processing_block_locator}     xpath=//div[contains(@id,'processing')][contains(@class,'dataTables_processing')]
 ${zed_merchants_dropdown_locator}    xpath=//select[@name='id-merchant']
 ${zed_attribute_access_denied_header}    xpath=//div[@class='wrapper wrapper-content']//div[@class='flash-messages']//following-sibling::h1
-${zed_category_save_button}     xpath=//button[contains(@class,'safe-submit')]
 
 *** Keywords ***
 Zed: login on Zed with provided credentials:

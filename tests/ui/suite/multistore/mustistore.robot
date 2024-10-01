@@ -9,6 +9,7 @@ Resource    ../../../../resources/steps/header_steps.robot
 Resource    ../../../../resources/common/common_yves.robot
 Resource    ../../../../resources/common/common_zed.robot
 Resource    ../../../../resources/common/common_mp.robot
+Resource    ../../../../resources/pages/zed/zed_edit_category_page.robot
 Resource    ../../../../resources/steps/pdp_steps.robot
 Resource    ../../../../resources/steps/shopping_lists_steps.robot
 Resource    ../../../../resources/steps/checkout_steps.robot
