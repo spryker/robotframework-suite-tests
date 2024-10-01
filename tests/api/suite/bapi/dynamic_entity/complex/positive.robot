@@ -4,7 +4,7 @@ Test Setup        API_test_setup
 Resource    ../../../../../../resources/common/common_api.robot
 Resource    ../../../../../../resources/steps/dynamic_entity_steps.robot
 
-Default Tags    bapi
+Test Tags    bapi
 
 *** Test Cases ***
 ENABLER

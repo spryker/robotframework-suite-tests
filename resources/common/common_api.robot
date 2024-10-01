@@ -29,6 +29,8 @@ API_suite_setup
     Common_suite_setup
 
 Overwrite api variables
+    Log Many    @{Test Tags}
+    VAR    ${current_url}    ${EMPTY}
     FOR  ${tag}  IN  @{Test Tags}
         Log   ${tag}
         Set Test Variable    ${tag}
@@ -84,7 +86,7 @@ API_test_setup
     ...    If the tag is there it replaces the domein URL with bapi url.
     ...
     ...    To set a tag to a test case use ``[Tags]`` under the test name.
-    ...    To set default tags for the whole test suite (.robotframework file), use ``Default Tags`` keyword in the suite Settings.
+    ...    To set Test Tags for the whole test suite (.robotframework file), use ``Test Tags`` keyword in the suite Settings.
     ...
     ...    *Notes*:
     ...
@@ -100,7 +102,7 @@ API_test_setup
     ...
     ...    ``Test Setup    TestSetup``
     ...
-    ...    ``Default Tags    bapi``
+    ...    ``Test Tags    bapi``
     Overwrite api variables
     Should Test Run
     I set default Headers:    &{default_headers}

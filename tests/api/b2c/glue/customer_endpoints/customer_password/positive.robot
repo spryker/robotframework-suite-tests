@@ -2,7 +2,7 @@
 Resource    ../../../../../../resources/common/common_api.robot
 Test Setup    API_test_setup
 Suite Setup    API_suite_setup
-Default Tags    glue
+Test Tags    glue
 *** Test Cases ***
 ENABLER
     API_test_setup

@@ -217,6 +217,7 @@ Delete service point in DB
     Connect to Spryker DB
     Execute Sql String    DELETE FROM spy_service_point WHERE uuid = '${uuid}';
     Disconnect From Database
+    Trigger publish trigger-events    service_point    timeout=1s
 
 Delete service point address in DB
     [Documentation]    This keyword deletes the entry from the DB table `spy_service_point_address`. 

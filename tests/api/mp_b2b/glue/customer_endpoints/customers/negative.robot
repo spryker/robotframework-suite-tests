@@ -1,7 +1,7 @@
 *** Settings ***
 Suite Setup       API_suite_setup
 Resource    ../../../../../../resources/common/common_api.robot
-Default Tags    glue
+Test Tags    glue
 
 *** Test Cases ***
 

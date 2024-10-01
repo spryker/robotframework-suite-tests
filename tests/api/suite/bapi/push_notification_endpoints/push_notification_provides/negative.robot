@@ -4,7 +4,7 @@ Suite Setup       API_suite_setup
 Test Setup        API_test_setup
 Resource    ../../../../../../resources/common/common_api.robot
 Resource    ../../../../../../resources/steps/push_notifications_steps.robot
-Default Tags    bapi
+Test Tags    bapi
 
 *** Test Cases ***
 ENABLER
