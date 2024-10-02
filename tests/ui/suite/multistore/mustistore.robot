@@ -298,7 +298,7 @@ Dynamic_multistore
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: assigned store to cms block:    ${random_str_store}_${random_str_store}    customer-registration_token--html
     Zed: assigned store to cms block:    ${random_str_store}_${random_str_store}    customer-registration_token--text
-    Zed: assign store to category:    ${random_str_store}
+    Zed: assign store to category:    ${random_str_store}   ${category_name}
     API_test_setup
     I get access token by user credentials:   ${zed_admin_email}
     I set Headers:    Content-Type=application/vnd.api+json    Authorization=Bearer ${token}
