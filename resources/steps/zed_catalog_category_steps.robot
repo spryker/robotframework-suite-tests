@@ -8,7 +8,7 @@ Resource    ../common/common.robot
 Zed: assign store to category:
     [Arguments]    ${store}     ${category}
     Zed: go to second navigation item level:    Catalog    Category
-    Zed: click Action Button in a table for row that contains:     cables     Edit
+    Zed: click Action Button in a table for row that contains:     ${category}     Edit
     Click    ${zed_category_edit_button}
     Set Browser Timeout    ${browser_timeout}
     Wait Until Element Is Visible   ${zed_category_store_select}
@@ -30,4 +30,7 @@ Zed: assign store to category:
     Wait Until Element Is Visible    ${zed_category_save_button}
     Click   ${zed_category_save_button}
     Wait until element is visible    ${zed_success_flash_message}
+    Trigger Multistore P&S
+    Trigger P&S    3    ${store}
+
 
