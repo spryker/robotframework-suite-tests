@@ -107,7 +107,7 @@
        "configurable_product_concrete_two_price": "310.19"
     },
     "categories":{
-        "category_name":"cables"
+        "category_name":"demoshop"
     },
     "misc":{
       "grant_type":{
@@ -199,12 +199,12 @@
   },
   "warehouse_user_assigment":{
      "warehous_user":[
-       { 
+       {
            "admin_user_uuid":"c0e244d4-03e8-556f-aa8d-174be9d236e5",
            "de_admin_user_uuid":"92cd431f-96e3-5259-91cb-ab9f6d14829f"
         }],
      "warehouse":[
-       { 
+       {
            "warehouse_uuid":"e84b3cb8-a94a-5a7e-9adb-cc5353f7a73f",
            "warehouse_uuid_budjet_cameras":"5bf5cc56-a50b-5029-9011-feeed83af180",
            "warehouse_name":"Spryker MER000001 Warehouse 1",
