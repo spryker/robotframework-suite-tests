@@ -105,18 +105,20 @@ Yves: set quantity on PDP:
 
 Yves: change variant of the product on PDP on:
     [Arguments]    ${variantToChoose}
+    Repeat Keyword    3    Wait For Load State
     Wait Until Page Contains Element    ${pdp_variant_selector}
     TRY    
         ${timeout}=    Set Variable    1s
         Set Browser Timeout    ${timeout}
         Click    ${pdp_variant_custom_selector}
-        Wait For Load State
+        Repeat Keyword    3    Wait For Load State
         Wait Until Element Is Visible    ${pdp_variant_custom_selector_results}    timeout=${timeout}
         TRY
-            Click    xpath=//ul[contains(@id,'select2-attribute')][contains(@id,'results')]/li[contains(@id,'select2-attribute')][contains(.,'${variantToChoose}')]
             Set Browser Timeout    ${browser_timeout}
+            Click    xpath=//ul[contains(@id,'select2-attribute')][contains(@id,'results')]/li[contains(@id,'select2-attribute')][contains(.,'${variantToChoose}')]
             Repeat Keyword    3    Wait For Load State
         EXCEPT    
+            Set Browser Timeout    ${browser_timeout}
             Reload
             Sleep    ${timeout}
             Click    xpath=//ul[contains(@id,'select2-attribute')][contains(@id,'results')]/li[contains(@id,'select2-attribute')][contains(.,'${variantToChoose}')]
@@ -141,6 +143,7 @@ Yves: change variant of the product on PDP on:
                 Set Browser Timeout    ${browser_timeout}
                 Repeat Keyword    3    Wait For Load State
             EXCEPT    
+                Set Browser Timeout    ${browser_timeout}
                 Reload
                 Click    xpath=//ul[contains(@id,'select2-attribute')][contains(@id,'results')]/li[contains(@id,'select2-attribute')][contains(.,'${variantToChoose}')]
                 Set Browser Timeout    ${browser_timeout}
