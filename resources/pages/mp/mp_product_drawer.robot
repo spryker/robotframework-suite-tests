@@ -15,6 +15,7 @@ ${new_product_submit_create_button}    xpath=//button[@type='submit'][contains(t
 ${product_concrete_submit_button}    xpath=//div[@class='mp-edit-concrete-product__header']//button[@type='submit']
 ${product_updated_popup}    xpath=//spy-notification-view//span[contains(@class,'success')]
 ${product_name_de_field}    id=productAbstract_localizedAttributes_0_name
+${product_name_field}    xpath=//input[contains(@name,'name')]/ancestor::web-spy-tabs[1]//div[contains(@class,'tabpane-active')]//input[not(ancestor::div[@aria-hidden='true'])]
 ${product_store_selector}    xpath=//web-spy-card[@spy-title='Stores']//web-spy-select
 ${product_tax_selector}    xpath=//web-spy-card[contains(@spy-title,'Tax Set')]//web-spy-select
 ${product_drawer_concretes_tab}    xpath=//div[contains(text(),'Concrete Products')]
@@ -28,4 +29,5 @@ ${product_delete_price_row_button}    xpath=//li[contains(@class,'ant-dropdown-m
 ${product_price_deleted_popup}    xpath=//spy-notification-view//span[contains(@class,'success')]
 ${mp_use_abstract_price_checkbox}    xpath=//web-mp-content-toggle[@name='productConcreteEdit[useAbstractProductPrices]']//input[@type='checkbox'][contains(@class,'checkbox')]/parent::span
 ${mp_add_concrete_products_button}    xpath=//web-mp-edit-abstract-product-variants//web-spy-button-action[@type='button']//button
-
+${mp_product_name_field_de_tab}    xpath=//input[contains(@name,'name')]/ancestor::web-spy-tabs[1]//button[@role='tab'][contains(.,'de_DE')]
+${mp_product_name_field_en_tab}    xpath=//input[contains(@name,'name')]/ancestor::web-spy-tabs[1]//button[@role='tab'][contains(.,'en_US')]

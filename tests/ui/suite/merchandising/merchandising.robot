@@ -55,8 +55,7 @@ Product_labels
     Yves: PDP contains/doesn't contain:    true    ${pdp_new_label}[${env}]
     [Teardown]    Yves: check if cart is not empty and clear it
 
-Product_Sets
-    [Tags]    dms-off    
+Product_Sets   
     [Documentation]    Check the usage of product sets. DMS-on mode: https://spryker.atlassian.net/browse/FRW-6377
     Yves: login on Yves with provided credentials:    ${yves_user_email}
     Yves: go to URL:    en/product-sets

@@ -127,7 +127,7 @@ Multistore_Product_Offer
     MP: perform search by:    multistoreProduct${random}
     MP: click on a table row that contains:     multistoreProduct${random}
     MP: fill abstract product required fields:
-    ...    || product name DE            | store | store 2 |  tax set       ||
+    ...    || product name               | store | store 2 |  tax set       ||
     ...    || multistoreProduct${random} | DE    | AT      | Standard Taxes ||
     MP: fill product price values:
     ...    || product type | row number  | store | currency | gross default | gross original ||
