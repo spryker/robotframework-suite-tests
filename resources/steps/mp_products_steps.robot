@@ -123,7 +123,28 @@ MP: fill abstract product required fields:
     Wait Until Element Is Visible    ${product_name_de_field}
     FOR    ${key}    ${value}    IN    &{productData}
         Log    Key is '${key}' and value is '${value}'.
-        IF    '${key}'=='product name DE' and '${value}' != '${EMPTY}'    Type Text    ${product_name_de_field}    ${value}
+        IF    '${key}'=='product name' and '${value}' != '${EMPTY}'
+            Click    ${mp_product_name_field_de_tab}
+            Sleep    1s
+            Wait For Load State
+            Wait Until Element Is Visible    ${product_name_field}
+            Type Text    ${product_name_field}    ${value}
+            Click    ${mp_product_name_field_en_tab}
+            Sleep    1s
+            Wait For Load State
+            Wait Until Element Is Visible    ${product_name_field}
+            Type Text    ${product_name_field}    ${value}
+        END
+        IF    '${key}'=='product name DE' and '${value}' != '${EMPTY}'
+            Click    ${mp_product_name_field_de_tab}
+            Wait Until Element Is Visible    ${product_name_field}
+            Type Text    ${product_name_field}    ${value}
+        END
+        IF    '${key}'=='product name EN' and '${value}' != '${EMPTY}'
+            Click    ${mp_product_name_field_de_tab}
+            Wait Until Element Is Visible    ${product_name_field}
+            Type Text    ${product_name_field}    ${value}
+        END
         IF    '${key}'=='store' and '${value}' != '${EMPTY}'    Run Keywords
         ...    Click    ${product_store_selector}
         ...    AND    MP: select option in expanded dropdown:    ${value}

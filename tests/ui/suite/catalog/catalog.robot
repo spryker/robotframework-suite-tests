@@ -503,7 +503,7 @@ Offer_Availability_Calculation
     MP: perform search by:    offAvProduct${random}
     MP: click on a table row that contains:     offAvProduct${random}
     MP: fill abstract product required fields:
-    ...    || product name DE       | store | store 2 | tax set        ||
+    ...    || product name          | store | store 2 | tax set        ||
     ...    || offAvProduct${random} | DE    | AT      | Standard Taxes ||
     MP: fill product price values:
     ...    || product type | row number  | store | currency | gross default | gross original ||

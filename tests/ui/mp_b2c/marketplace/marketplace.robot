@@ -227,7 +227,7 @@ Create_and_Approve_New_Merchant_Product
     MP: perform search by:    NewProduct${random}
     MP: click on a table row that contains:     NewProduct${random}
     MP: fill abstract product required fields:
-    ...    || product name DE     | store | tax set           ||
+    ...    || product name        | store | tax set           ||
     ...    || NewProduct${random} | DE    | Smart Electronics ||
     MP: fill product price values:
     ...    || product type | row number  | store | currency | gross default ||
@@ -265,7 +265,7 @@ Create_New_Offer
     MP: perform search by:    SprykerProduct${random} 
     MP: click on a table row that contains:     SprykerSKU${random}
     MP: fill abstract product required fields:
-    ...    || product name DE         | store | tax set           ||
+    ...    || product name            | store | tax set           ||
     ...    || SprykerProduct${random} | DE    | Smart Electronics ||
     MP: fill product price values:
     ...    || product type | row number | store | currency | gross default ||
@@ -449,7 +449,7 @@ Merchant_Portal_Product_Volume_Prices
     MP: perform search by:    VPNewProduct${random}
     MP: click on a table row that contains:     VPNewProduct${random}
     MP: fill abstract product required fields:
-    ...    || product name DE       | store | tax set           ||
+    ...    || product name          | store | tax set           ||
     ...    || VPNewProduct${random} | DE    | Smart Electronics ||
     MP: fill product price values:
     ...    || product type | row number | store | currency | gross default ||
@@ -513,7 +513,7 @@ Merchant_Portal_Offer_Volume_Prices
     MP: perform search by:    OfferNewProduct${random}
     MP: click on a table row that contains:     OfferNewProduct${random}
     MP: fill abstract product required fields:
-    ...    || product name DE          | store | tax set           ||
+    ...    || product name             | store | tax set           ||
     ...    || OfferNewProduct${random} | DE    | Smart Electronics ||
     MP: fill product price values:
     ...    || product type | row number | store | currency | gross default ||
@@ -651,7 +651,7 @@ Merchant_Product_Offer_in_Backoffice
     MP: perform search by:    ViewProduct${random}
     MP: click on a table row that contains:     ViewProduct${random}
     MP: fill abstract product required fields:
-    ...    || product name DE      | store | tax set           ||
+    ...    || product name         | store | tax set           ||
     ...    || ViewProduct${random} | DE    | Smart Electronics ||
     MP: fill product price values:
     ...    || product type | row number | store | currency | gross default ||
@@ -721,7 +721,7 @@ Manage_Merchant_Product
     MP: perform search by:    manageProduct${random}
     MP: click on a table row that contains:     manageProduct${random}
     MP: fill abstract product required fields:
-    ...    || product name DE        | store | tax set           ||
+    ...    || product name           | store | tax set           ||
     ...    || manageProduct${random} | DE    | Smart Electronics ||
     MP: fill product price values:
     ...    || product type | row number  | store | currency | gross default | gross original ||
@@ -838,7 +838,7 @@ Merchant_Product_Original_Price
     MP: perform search by:    originalProduct${random}
     MP: click on a table row that contains:     originalProduct${random}
     MP: fill abstract product required fields:
-    ...    || product name DE          | store | tax set           ||
+    ...    || product name             | store | tax set           ||
     ...    || originalProduct${random} | DE    | Smart Electronics ||
     MP: fill product price values:
     ...    || product type | row number  | store | currency | gross default | gross original  ||
