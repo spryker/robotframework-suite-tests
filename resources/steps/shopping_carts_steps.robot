@@ -94,6 +94,8 @@ Yves: shopping cart contains the following products:
 Yves: preview shopping cart contains the following products:
     [Documentation]    For item listing you can use sku or name of the product
     [Arguments]    @{items_list}
+    Repeat Keyword    3    Wait For Load State
+    Wait For Load State    networkidle
     ${items_list_count}=   get length  ${items_list}
     FOR    ${index}    IN RANGE    0    ${items_list_count}
         ${item_to_check}=    Get From List    ${items_list}    ${index}
@@ -106,6 +108,8 @@ Yves: preview shopping cart contains the following products:
 
 Yves: click on the '${buttonName}' button in the shopping cart
     Yves: remove flash messages
+    Repeat Keyword    3    Wait For Load State
+    Wait For Load State    networkidle
     IF    '${buttonName}' == 'Checkout'
         Click    ${shopping_cart_checkout_button}
         Wait Until Page Does Not Contain Element    ${shopping_cart_checkout_button}
@@ -134,6 +138,8 @@ Yves: shopping cart contains product with unit price:
 
 Yves: shopping cart contains/doesn't contain the following elements:
     [Arguments]    ${condition}    @{shopping_cart_elements_list}    ${element1}=${EMPTY}     ${element2}=${EMPTY}     ${element3}=${EMPTY}     ${element4}=${EMPTY}     ${element5}=${EMPTY}     ${element6}=${EMPTY}     ${element7}=${EMPTY}     ${element8}=${EMPTY}     ${element9}=${EMPTY}     ${element10}=${EMPTY}     ${element11}=${EMPTY}     ${element12}=${EMPTY}     ${element13}=${EMPTY}     ${element14}=${EMPTY}     ${element15}=${EMPTY}
+    Repeat Keyword    3    Wait For Load State
+    Wait For Load State    networkidle
     ${condition}=    Convert To Lower Case    ${condition}
     ${shopping_cart_elements_list_count}=   get length  ${shopping_cart_elements_list}
     FOR    ${index}    IN RANGE    0    ${shopping_cart_elements_list_count}
@@ -156,6 +162,8 @@ Yves: shopping cart with name xxx has the following status:
 
 Yves: delete product from the shopping cart with sku:
     [Arguments]    ${sku}
+    Repeat Keyword    3    Wait For Load State
+    Wait For Load State    networkidle
     Click    xpath=//form[contains(@name,'removeFromCartForm_${sku}')]//button
     Repeat Keyword    3    Wait For Load State
     Wait For Load State    networkidle
@@ -163,6 +171,8 @@ Yves: delete product from the shopping cart with sku:
 
 Yves: delete product from the shopping cart with name:
     [Arguments]    ${productName}
+    Repeat Keyword    3    Wait For Load State
+    Wait For Load State    networkidle
     Click    //main[@class='page-layout-cart']//article[contains(@data-qa,'component product-card-item')]//a[contains(text(),'${productName}')]/ancestor::article//form[contains(@name,'removeFromCartForm')]//button | //div[contains(@class,'box cart-items-list')]//a[contains(text(),'${productName}')]//ancestor::*[@data-qa='component product-cart-item']//button[contains(text(),'remove')]
     Repeat Keyword    3    Wait For Load State
     Wait For Load State    networkidle
@@ -213,6 +223,8 @@ Yves: Shopping Cart title should be equal:
 Yves: change quantity of the configurable bundle in the shopping cart on:
     [Documentation]    In case of multiple matches, changes quantity for the first product in the shopping cart
     [Arguments]    ${confBundleTitle}    ${quantity}
+    Repeat Keyword    3    Wait For Load State
+    Wait For Load State    networkidle
     IF    '${env}' in ['ui_b2b','ui_mp_b2b','ui_suite']
         Type Text    xpath=//main//article[contains(@data-qa,'configured-bundle')][1]//a[text()='${confBundleTitle}']/ancestor::article//input[contains(@class, 'formatted-number-input__input')]    ${quantity}
     ELSE
@@ -264,6 +276,8 @@ Yves: delete 'Shopping Cart' with name:
 
 Yves: delete from b2c cart products with name:
     [Arguments]    @{productNameList}
+    Repeat Keyword    3    Wait For Load State
+    Wait For Load State    networkidle
     FOR    ${product}    IN    @{productNameList}
         Click    xpath=//div[@class='page-layout-cart__items-wrap']//a[contains(text(),'${product}')]/ancestor::div/following-sibling::div//form[contains(@name,'removeFromCart')]//button[text()='Remove']
         Yves: flash message should be shown:    success    Products were removed successfully
@@ -277,6 +291,8 @@ Yves: delete from b2c cart products with name:
 
 Yves: apply discount voucher to cart:
     [Arguments]    ${voucherCode}
+    Repeat Keyword    3    Wait For Load State
+    Wait For Load State    networkidle
     ${expanded}=    Set Variable    ${EMPTY}
     ${expanded}=    IF    '${env}' in ['ui_b2c','ui_mp_b2c']    Run Keyword And Return Status    Get Element States    ${shopping_cart_voucher_code_field}    ==    hidden    return_names=False
     IF    '${env}' in ['ui_b2c','ui_mp_b2c'] and '${expanded}'=='False'    Click    ${shopping_cart_voucher_code_section_toggler}
@@ -284,7 +300,6 @@ Yves: apply discount voucher to cart:
     Click    ${shopping_cart_voucher_code_redeem_button}
     Repeat Keyword    3    Wait For Load State
     Wait For Load State    networkidle
-    # Yves: flash message should be shown:    success    Your voucher code has been applied
     Yves: remove flash messages
 
 Yves: discount is applied:
@@ -318,6 +333,8 @@ Yves: promotional product offer is/not shown in cart:
 Yves: change quantity of promotional product and add to cart:
     [Documentation]    set ${action} to + or - to change quantity. ${clickCount} indicates how many times to click
     [Arguments]    ${action}    ${clicksCount}
+    Repeat Keyword    3    Wait For Load State
+    Wait For Load State    networkidle
     FOR    ${index}    IN RANGE    0    ${clicksCount}
         IF    '${action}' == '+'
             Click    ${shopping_cart_promotional_product_increase_quantity_button}[${env}]

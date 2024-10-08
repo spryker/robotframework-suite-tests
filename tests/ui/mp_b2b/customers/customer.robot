@@ -70,6 +70,7 @@ Share_Shopping_Lists
     Create New Context
     Yves: login on Yves with provided credentials:    ${yves_company_user_shared_permission_receiver_email}
     Yves: 'Shopping List' widget contains:    shareShoppingList+${random}    Full access
+    Yves: create new 'Shopping Cart' with name:    shoppingListToCart+${random}
     Yves: go to 'Shopping Lists' page
     Yves: 'Shopping Lists' page is displayed
     Yves: the following shopping list is shown:    shareShoppingList+${random}    ${yves_company_user_shared_permission_owner_firstname} ${yves_company_user_shared_permission_owner_lastname}    Full access
@@ -80,6 +81,7 @@ Share_Shopping_Lists
     Yves: 'Shopping Cart' page is displayed
     Yves: assert merchant of product in cart or list:    ${product_with_multiple_offers_concrete_sku}    Spryker
     Yves: assert merchant of product in cart or list:    ${product_with_multiple_offers_concrete_sku}    Computer Experts
+    Yves: delete 'Shopping Cart' with name:    shoppingListToCart+${random}
     [Teardown]    Run Keywords    Close Current Context    AND    Yves: delete 'Shopping List' with name:    shareShoppingList+${random}
 
 Share_Shopping_Carts

@@ -180,9 +180,9 @@ Yves: flash message should be shown:
     [Documentation]    ${type} can be: error, success
     [Arguments]    ${type}    ${text}
     IF    '${type}' == 'error'
-        Element Should Be Visible    xpath=//flash-message[contains(@class,'alert')]//div[contains(text(),'${text}')]
+        Element Should Be Visible    locator=xpath=//flash-message[contains(@class,'alert')]//div[contains(text(),'${text}')]    timeout=${browser_timeout}
     ELSE
-        IF  '${type}' == 'success'  Element Should Be Visible    xpath=//flash-message[contains(@class,'success')]//div[contains(text(),'${text}')]
+        IF  '${type}' == 'success'  Element Should Be Visible    locator=xpath=//flash-message[contains(@class,'success')]//div[contains(text(),'${text}')]    timeout=${browser_timeout}
     END
 
 Yves: logout on Yves as a customer
