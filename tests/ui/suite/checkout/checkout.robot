@@ -382,7 +382,7 @@ Click_and_collect
     MP: perform search by:    clickCollectProduct${random} 
     MP: click on a table row that contains:     clickCollectSku${random}
     MP: fill abstract product required fields:
-    ...    || product name DE              | store | tax set           ||
+    ...    || product name                 | store | tax set           ||
     ...    || clickCollectProduct${random} | DE    | Smart Electronics ||
     MP: fill product price values:
     ...    || product type | row number | store | currency | gross default ||
