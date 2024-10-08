@@ -82,9 +82,9 @@ Yves: shopping cart contains the following products:
     FOR    ${index}    IN RANGE    0    ${items_list_count}
         ${item_to_check}=    Get From List    ${items_list}    ${index}
         IF    '${env}' in ['ui_suite']
-            Page Should Contain Element    locator=xpath=(//main//cart-items-list//product-item[contains(@data-qa,'component product-cart-item')]//*[@data-qa='cart-item-sku'][contains(text(),'${item_to_check}')])[1]    timeout=10s
+            Page Should Contain Element    locator=xpath=(//main//cart-items-list//product-item[contains(@data-qa,'component product-cart-item')]//*[@data-qa='cart-item-sku'][contains(text(),'${item_to_check}')])[1]    timeout=${browser_timeout}
         ELSE
-            Page Should Contain Element    locator=xpath=(//main[contains(@class,'cart')]//article[(contains(@data-qa,'product-cart-item') or contains(@data-qa,'product-card-item'))]//*[contains(.,'${item_to_check}')]/ancestor::article)[1]    timeout=10s
+            Page Should Contain Element    locator=xpath=(//main[contains(@class,'cart')]//article[(contains(@data-qa,'product-cart-item') or contains(@data-qa,'product-card-item'))]//*[contains(.,'${item_to_check}')]/ancestor::article)[1]    timeout=${browser_timeout}
         END
     END
 
@@ -281,13 +281,13 @@ Yves: discount is applied:
     [Arguments]    ${discountType}    ${discountName}    ${expectedDiscountSum}
     Repeat Keyword    3    Wait For Load State
     IF    '${env}' in ['ui_b2c','ui_mp_b2c'] and '${discountType}'=='voucher'
-        Element should be visible    locator=xpath=//span[contains(text(),'${expectedDiscountSum}')]/preceding-sibling::span[contains(text(),'${discountName}')]/ancestor::*[contains(@data-qa,'cart-discount-summary')]/*[contains(.,'Vouchers')]    timeout=10s
+        Element should be visible    locator=xpath=//span[contains(text(),'${expectedDiscountSum}')]/preceding-sibling::span[contains(text(),'${discountName}')]/ancestor::*[contains(@data-qa,'cart-discount-summary')]/*[contains(.,'Vouchers')]    timeout=${browser_timeout}
     ELSE IF    '${env}' in ['ui_b2c','ui_mp_b2c'] and '${discountType}'=='cart rule'
-        Element should be visible    locator=xpath=//span[contains(text(),'${expectedDiscountSum}')]/preceding-sibling::span[contains(text(),'${discountName}')]/ancestor::*[contains(@data-qa,'cart-discount-summary')]/*[contains(.,'Discounts')]    timeout=10s
+        Element should be visible    locator=xpath=//span[contains(text(),'${expectedDiscountSum}')]/preceding-sibling::span[contains(text(),'${discountName}')]/ancestor::*[contains(@data-qa,'cart-discount-summary')]/*[contains(.,'Discounts')]    timeout=${browser_timeout}
     ELSE IF     '${env}' in ['ui_b2b','ui_mp_b2b'] and '${discountType}'=='voucher'
-        Element should be visible    locator=xpath=//span[contains(text(),'${expectedDiscountSum}')]/preceding-sibling::span[contains(text(),'${discountName}')]/ancestor::*[contains(@data-qa,'cart-code-summary')]/*[contains(.,'Vouchers')]    timeout=10s
+        Element should be visible    locator=xpath=//span[contains(text(),'${expectedDiscountSum}')]/preceding-sibling::span[contains(text(),'${discountName}')]/ancestor::*[contains(@data-qa,'cart-code-summary')]/*[contains(.,'Vouchers')]    timeout=${browser_timeout}
     ELSE IF    '${env}' in ['ui_b2b','ui_mp_b2b'] and '${discountType}'=='cart rule'
-        Element should be visible    locator=xpath=//span[contains(text(),'${expectedDiscountSum}')]/preceding-sibling::span[contains(text(),'${discountName}')]/ancestor::*[contains(@data-qa,'cart-code-summary')]/*[contains(.,'Discounts')]    timeout=10s
+        Element should be visible    locator=xpath=//span[contains(text(),'${expectedDiscountSum}')]/preceding-sibling::span[contains(text(),'${discountName}')]/ancestor::*[contains(@data-qa,'cart-code-summary')]/*[contains(.,'Discounts')]    timeout=${browser_timeout}
     END
 
 Yves: promotional product offer is/not shown in cart:
