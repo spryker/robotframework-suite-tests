@@ -89,6 +89,7 @@ Zed: edit data exchange api configuration:
 Zed: save data exchange api configuration
     Click    ${data_exchange_create_configuration_button}
     Wait For Load State
+    Wait For Load State    networkidle
     Page Should Not Contain Element    ${zed_error_message}    1s
     Page Should Not Contain Element    ${zed_error_flash_message}    1s
 

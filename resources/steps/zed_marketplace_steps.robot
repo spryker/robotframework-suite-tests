@@ -61,6 +61,7 @@ Zed: update Merchant on edit page with the following data:
         Zed: submit the form
     END
     Repeat Keyword    3    Wait For Load State
+    Wait For Load State    networkidle
     Zed: table should contain:    search_key=${zedMerchantNewName}    error_message=Merchant Profile Update Failed! Form does not submit
 
 Zed: update Merchant name on edit page:
@@ -110,6 +111,7 @@ Zed: perform Merchant User search by:
         Log    Search event is not fired
     END
     Repeat Keyword    3    Wait For Load State
+    Wait For Load State    networkidle
 
 Zed: click Action Button in Merchant Users table for row that contains:
     [Arguments]    ${row_content}    ${zed_table_action_button_locator}

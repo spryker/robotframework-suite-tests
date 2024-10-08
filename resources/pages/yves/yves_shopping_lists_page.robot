@@ -28,6 +28,7 @@ Edit shopping list with name:
         Click    xpath=//*[@data-qa="component shopping-list-overview-table"]//table//td[@data-content='Name'][contains(.,'${shoppingListName}')]/..//div[@data-qa='component table-action-list']//a[contains(.,'Edit')]
     END
     Repeat Keyword    3    Wait For Load State
+    Wait For Load State    networkidle
 
 Share shopping list with name:
     [Arguments]    ${shoppingListName}       
@@ -37,6 +38,7 @@ Share shopping list with name:
         Click    xpath=//*[@data-qa="component shopping-list-overview-table"]//table//td[@data-content='Name'][contains(.,'${shoppingListName}')]/..//div[@data-qa='component table-action-list']//a[contains(.,'Share')]
     END    
     Repeat Keyword    3    Wait For Load State
+    Wait For Load State    networkidle
 
 Print shopping list with name:
     [Arguments]    ${shoppingListName}    
@@ -46,6 +48,7 @@ Print shopping list with name:
         Click    xpath=//*[@data-qa="component shopping-list-overview-table"]//table//td[@data-content='Name'][contains(.,'${shoppingListName}')]/..//div[@data-qa='component table-action-list']//a[contains(.,'Print')]
     END
     Repeat Keyword    3    Wait For Load State
+    Wait For Load State    networkidle
 
 Delete shopping list with name:
     [Arguments]    ${shoppingListName} 
@@ -55,6 +58,7 @@ Delete shopping list with name:
         Click    xpath=//*[@data-qa="component shopping-list-overview-table"]//table//td[@data-content='Name'][contains(.,'${shoppingListName}')]/..//div[@data-qa='component table-action-list']//a[contains(.,'Delete')]
     END
     Repeat Keyword    3    Wait For Load State
+    Wait For Load State    networkidle
 
 Dismiss shopping list with name:
     [Arguments]    ${shoppingListName}   
@@ -64,6 +68,7 @@ Dismiss shopping list with name:
         Click    xpath=//*[@data-qa="component shopping-list-overview-table"]//table//td[@data-content='Name'][contains(.,'${shoppingListName}')]/..//div[@data-qa='component table-action-list']//a[contains(.,'Dismiss')]
     END
     Repeat Keyword    3    Wait For Load State
+    Wait For Load State    networkidle
 
 View shopping list with name:
     [Arguments]    ${shoppingListName}  
@@ -73,3 +78,4 @@ View shopping list with name:
         Click    xpath=//*[@data-qa="component shopping-list-overview-table"]//table//td[@data-content='Name'][contains(.,'${shoppingListName}')]//a[contains(@href,'details')]
     END
     Repeat Keyword    3    Wait For Load State
+    Wait For Load State    networkidle

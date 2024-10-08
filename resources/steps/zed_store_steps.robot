@@ -66,6 +66,7 @@ Zed: perform store search by:
         Log    Search event is not fired
     END
     Repeat Keyword    2    Wait For Load State
+    Wait For Load State    networkidle
 
 Zed: store context add timezone:
     [Arguments]    ${timezone}

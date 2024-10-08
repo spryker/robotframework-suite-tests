@@ -194,6 +194,7 @@ Yves: check that 'Print Slip' contains the following products:
     IF    'local' not in '${yves_url}' or 'false' in '${headless}'
         Click    ${return_details_print_slip_button}
         Repeat Keyword    3    Wait For Load State
+        Wait For Load State    networkidle
         ### Wait until new page (pop-up) is displayed ###
         Sleep    3s
         ${context}=    Get Browser Catalog
@@ -379,8 +380,10 @@ Yves: cancel the order:
     Yves: try reloading page if element is/not appear:    ${order_details_cancel_button_locator}    true
     Wait Until Element Is Visible    ${order_details_cancel_button_locator}
     Repeat Keyword    3    Wait For Load State
+    Wait For Load State    networkidle
     Click    ${order_details_cancel_button_locator}
     Repeat Keyword    2    Wait For Load State
+    Wait For Load State    networkidle
     Wait Until Element Is Not Visible    ${order_details_cancel_button_locator}
     Yves: go to 'Order History' page
     Yves: 'Order History' page contains the following order with a status:    ${order_id}    Canceled

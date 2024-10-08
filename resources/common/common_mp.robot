@@ -44,6 +44,7 @@ MP: open navigation menu tab:
     Wait Until Element Is Visible    ${mp_navigation_slider_menu}
     Click Element by xpath with JavaScript    xpath=//spy-navigation//span[contains(@class,'spy-navigation__title-text')][text()='${tabName}']
     Repeat Keyword    3    Wait For Load State
+    Wait For Load State    networkidle
     Wait Until Element Is Visible    //div[@class='mp-layout-main-cnt__main']//span[contains(@class,'headline__title')]//*[text()='${tabName}']
 
 MP: Wait until loader is no longer visible
@@ -64,6 +65,7 @@ MP: click submit button
     Wait Until Element Is Visible    ${mp_submit_button}    timeout=${timeout}
     Click    ${mp_submit_button}
     Repeat Keyword    3    Wait For Load State
+    Wait For Load State    networkidle
 
 MP: perform search by:
     [Arguments]    ${searchKey}
@@ -77,6 +79,7 @@ MP: perform search by:
         Log    Search event is not fired
     END
     Repeat Keyword    3    Wait For Load State
+    Wait For Load State    networkidle
     MP: Wait until loader is no longer visible
 
 MP: click on a table row that contains:
@@ -85,6 +88,7 @@ MP: click on a table row that contains:
     Click    xpath=//div[@class='spy-table-column-text'][contains(text(),'${rowContent}')]/ancestor::tr[contains(@class,'ant-table-row')]
     Wait Until Page Contains Element    ${mp_close_drawer_button}
     Repeat Keyword    3    Wait For Load State
+    Wait For Load State    networkidle
     MP: Wait until loader is no longer visible
 
 MP: close drawer
@@ -97,6 +101,7 @@ MP: click on create new entity button:
     Wait Until Element Is Visible    xpath=//spy-headline//*[contains(text(),'${buttonName}')]
     Click    xpath=//spy-headline//*[contains(text(),'${buttonName}')]
     Repeat Keyword    3    Wait For Load State
+    Wait For Load State    networkidle
     MP: Wait until loader is no longer visible
 
 MP: select option in expanded dropdown:
@@ -104,6 +109,7 @@ MP: select option in expanded dropdown:
     Wait Until Element Is Visible    xpath=//nz-option-container[contains(@class,'ant-select-dropdown')]//span[contains(text(),'${optionName}')]
     Click    xpath=//nz-option-container[contains(@class,'ant-select-dropdown')]//span[contains(text(),'${optionName}')]
     Repeat Keyword    3    Wait For Load State
+    Wait For Load State    networkidle
     Sleep    0.5s
     
 MP: switch to the tab:
@@ -111,6 +117,7 @@ MP: switch to the tab:
     Wait Until Element Is Visible    xpath=//web-spy-tabs[@class='spy-tabs']//div[@role='tablist'][contains(@class,'ant-tabs')]//div[contains(text(),'${tabName}')]
     Click    xpath=//web-spy-tabs[@class='spy-tabs']//div[@role='tablist'][contains(@class,'ant-tabs')]//div[contains(text(),'${tabName}')]
     Repeat Keyword    3    Wait For Load State
+    Wait For Load State    networkidle
     MP: Wait until loader is no longer visible
     
 MP: remove notification wrapper

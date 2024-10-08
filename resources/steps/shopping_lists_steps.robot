@@ -38,6 +38,7 @@ Yves: create new 'Shopping List' with name:
 Yves: the following shopping list is shown:
     [Arguments]    ${shoppingListName}    ${shoppingListOwner}    ${shoppingListAccess}
     Repeat Keyword    3    Wait For Load State
+    Wait For Load State    networkidle
     IF    '${env}' in ['ui_suite']
         Page Should Contain Element    xpath=//*[contains(@data-qa,"shopping-list-overview")]//table//td//span[contains(@data-qa,'shopping-list-permission')][contains(.,'${shoppingListAccess}')]/ancestor::tr/td[contains(.,'${shoppingListOwner}')]/ancestor::tr/td[contains(@class,'name')][contains(.,'${shoppingListName}')]
     ELSE
@@ -50,12 +51,14 @@ Yves: share shopping list with user:
     Select access level to share shopping list with:    ${customer}    ${accessLevel}
     Click    ${share_shopping_list_confirm_button}
     Repeat Keyword    3    Wait For Load State
+    Wait For Load State    networkidle
     Yves: 'Shopping Lists' page is displayed
     Yves: flash message 'should' be shown
 
 Yves: shopping list contains the following products:
     [Arguments]    @{sku_list}    ${sku1}=${EMPTY}     ${sku2}=${EMPTY}     ${sku3}=${EMPTY}     ${sku4}=${EMPTY}     ${sku5}=${EMPTY}     ${sku6}=${EMPTY}     ${sku7}=${EMPTY}     ${sku8}=${EMPTY}     ${sku9}=${EMPTY}     ${sku10}=${EMPTY}     ${sku11}=${EMPTY}     ${sku12}=${EMPTY}     ${sku13}=${EMPTY}     ${sku14}=${EMPTY}     ${sku15}=${EMPTY}
     Repeat Keyword    3    Wait For Load State
+    Wait For Load State    networkidle
     ${sku_list_count}=   get length  ${sku_list}
     FOR    ${index}    IN RANGE    0    ${sku_list_count}
         ${sku_to_check}=    Get From List    ${sku_list}    ${index}
@@ -78,6 +81,7 @@ Yves: delete 'Shopping List' with name:
     Wait Until Element Is Visible    ${delete_shopping_list_button}
     Click    ${delete_shopping_list_button}
     Repeat Keyword    3    Wait For Load State
+    Wait For Load State    networkidle
 
 Yves: view shopping list with name:
     [Arguments]    ${shoppingListName}
@@ -95,3 +99,4 @@ Yves: add all available products from list to cart
     Wait Until Element Is Visible    ${shopping_list_main_content_locator}
     Click    ${add_all_available_products_to_cart_locator} 
     Repeat Keyword    3    Wait For Load State
+    Wait For Load State    networkidle

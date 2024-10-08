@@ -38,6 +38,7 @@ MP: update order state using header button:
     Click    xpath=//div[@class='mp-manage-order__transitions']//button[contains(text(),'${buttonName}')]
     Wait For Response
     Wait For Load State
+    Wait For Load State    networkidle
     Wait Until Element Is Visible    ${mp_success_flyout}
     MP: remove notification wrapper
     Trigger oms
@@ -49,6 +50,7 @@ MP: change order item state on:
     Click    xpath=//*[contains(@class,'table-features')]//*[contains(@class,'batch-actions')]//button[contains(text(),'${state}')]
     Wait For Response
     Wait For Load State
+    Wait For Load State    networkidle
     Wait Until Element Is Visible    ${mp_success_flyout}
     MP: remove notification wrapper
     Trigger oms

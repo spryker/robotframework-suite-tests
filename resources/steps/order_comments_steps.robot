@@ -67,16 +67,20 @@ Yves: edit comment on cart:
     [Arguments]    ${comment_to_set}
     Reload
     Repeat Keyword    3    Wait For Load State
+    Wait For Load State    networkidle
     IF    '${env}' not in ['ui_suite']    Click    ${shopping_cart_edit_comment_button}
-    Repeat Keyword    3    Wait For Load State 
+    Repeat Keyword    3    Wait For Load State
+    Wait For Load State    networkidle
     Fill Text    ${shopping_cart_edit_comment_placeholder}    ${EMPTY}    force=true
     Fill Text    ${shopping_cart_edit_comment_placeholder}    ${comment_to_set}    force=true
     Click With Options    ${shopping_cart_update_comment_button}    delay=0.5s
     Repeat Keyword    3    Wait For Load State
+    Wait For Load State    networkidle
 
 Yves: delete comment on cart
     Click With Options    ${shopping_cart_remove_comment_button}    delay=0.5s 
     Repeat Keyword    3    Wait For Load State
+    Wait For Load State    networkidle
     Page Should Not Contain Element    ${shopping_cart_remove_comment_button}
 
 Yves: add comment on order in order detail page:
@@ -85,3 +89,4 @@ Yves: add comment on order in order detail page:
     Type Text    ${order_details_page_add_comments_textbox}    ${comment}    delay=50ms
     Click With Options    ${add_comment_button_order_details_page}    delay=0.5s
     Repeat Keyword    3    Wait For Load State
+    Wait For Load State    networkidle

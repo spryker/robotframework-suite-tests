@@ -34,6 +34,7 @@ Yves: change the product options in configurator to:
    END
     ### sleep 1 seconds to process background event
     Repeat Keyword    3    Wait For Load State
+    Wait For Load State    networkidle
     Sleep    1s
 
 Yves: change the product configuration to:
@@ -51,15 +52,18 @@ Yves: change the product configuration to:
     Click    ${configurator_day_time_selector}
     ### sleep 1 seconds to process background event
     Repeat Keyword    3    Wait For Load State
+    Wait For Load State    networkidle
     Sleep    1s
     Click    ${configurator_save_button}
     Repeat Keyword    3    Wait For Load State
+    Wait For Load State    networkidle
     Wait Until Element Is Visible    ${pdp_configure_button}
 
 
 Yves: save product configuration    
     Click    ${configurator_save_button}
     Repeat Keyword    3    Wait For Load State
+    Wait For Load State    networkidle
     Wait Until Element Is Visible    ${pdp_configure_button}
 
 Yves: product configuration notification is:

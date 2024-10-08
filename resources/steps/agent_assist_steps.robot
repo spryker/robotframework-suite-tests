@@ -35,6 +35,7 @@ Yves: perform search by customer:
     [Arguments]    ${searchQuery}
     Type Text    ${agent_customer_search_widget}    ${searchQuery}    delay=0.5s
     Repeat Keyword    3    Wait For Load State
+    Wait For Load State    networkidle
 
 Yves: agent widget contains:
     [Arguments]    ${searchQuery}
@@ -45,6 +46,7 @@ Yves: as an agent login under the customer:
     [Arguments]    ${searchQuery}
     Fill Text    ${agent_customer_search_widget}    ${EMPTY}    force=True
     Repeat Keyword    3    Wait For Load State
+    Wait For Load State    networkidle
     Yves: perform search by customer:    ${searchQuery}
     Wait Until Element Is Visible    //ul[@data-qa='component customer-list']/li[@data-value='${searchQuery}']
     Click    xpath=//ul[@data-qa='component customer-list']/li[@data-value='${searchQuery}']

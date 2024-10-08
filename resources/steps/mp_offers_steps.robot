@@ -102,6 +102,7 @@ MP: save offer
     END
     MP: remove notification wrapper
     Repeat Keyword    3    Wait For Load State
+    Wait For Load State    networkidle
     MP: Wait until loader is no longer visible
 
 MP: change offer stock:
@@ -136,6 +137,7 @@ MP: delete offer price row that contains quantity:
     Click    ${product_delete_price_row_button}
     Wait Until Element Is Visible    ${product_price_deleted_popup}
     Repeat Keyword    3    Wait For Load State
+    Wait For Load State    networkidle
     MP: remove notification wrapper
 
 Zed: view offer page is displayed

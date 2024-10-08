@@ -60,6 +60,7 @@ Yves: change sorting order on catalog page:
         Wait Until Element Is Visible    xpath=//ul[contains(@role,'listbox')]//li[contains(@id,'select2-sort') and contains(text(),'${sortingOption}')]
         Click    xpath=//ul[contains(@role,'listbox')]//li[contains(@id,'select2-sort') and contains(text(),'${sortingOption}')]
         Wait For Load State
+        Wait For Load State    networkidle
     END
 
 Yves: 1st product card in catalog (not)contains:
@@ -142,6 +143,7 @@ Yves: quick add to cart for first item in catalog
     END
     Wait For Response
     Repeat Keyword    3    Wait For Load State
+    Wait For Load State    networkidle
 
 Yves: get current cart item counter value
     [Documentation]    returns the cart item count number as an integer
@@ -157,9 +159,11 @@ Yves: mouse over color on product card:
     ELSE
         Mouse Over    xpath=//product-item[@data-qa='component product-item'][1]//*[contains(@class,'item__name')]
         Wait For Load State
+        Wait For Load State    networkidle
         Wait Until Element Is Visible    xpath=//product-item[@data-qa='component product-item'][1]//product-item-color-selector
         Mouse Over    xpath=//product-item[@data-qa='component product-item'][1]//product-item-color-selector//span[contains(@class,'tooltip')][contains(text(),'${colour}')]/ancestor::button
         Wait For Load State
+        Wait For Load State    networkidle
     END
 
 Yves: at least one product is/not displayed on the search results page:
