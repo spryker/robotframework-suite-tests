@@ -70,6 +70,41 @@ Yves: login on Yves with provided credentials:
     END
     Yves: remove flash messages
 
+Yves: login on Yves with provided credentials and expect error:
+    [Arguments]    ${email}    ${password}=${default_password}
+    Set Browser Timeout    ${browser_timeout}
+    ${currentURL}=    Get Url
+    IF    '/login' not in '${currentURL}'
+        IF    '.at.' in '${currentURL}'
+            Delete All Cookies
+            Reload
+            Go To    ${yves_at_url}login
+        ELSE
+            Delete All Cookies
+            Reload
+            Go To    ${yves_url}login
+        END
+    END
+    ${is_login_page}=    Run Keyword And Ignore Error    Page Should Contain Element    locator=${email_field}    message=Login page is not displayed
+    IF    'FAIL' in ${is_login_page}
+        Delete All Cookies
+        Yves: go to the 'Home' page
+        IF    '.at.' in '${currentURL}'
+            Go To    ${yves_at_url}login
+        ELSE
+            Go To    ${yves_url}login
+        END
+    END
+    Type Text    ${email_field}    ${email}
+    Type Text    ${password_field}    ${password}
+    Click    ${form_login_button}
+
+    Page Should Not Contain Element    ${user_navigation_icon_header_menu_item}[${env}]
+
+    Yves: flash message should be shown:    error    Please check that your E-mail address and password are correct and that you have confirmed your E-mail address by clicking the link in the registration message
+
+    Yves: remove flash messages
+
 Yves: go to PDP of the product with sku:
     [Arguments]    ${sku}    ${wait_for_p&s}=${False}    ${iterations}=26    ${delay}=5s
     Yves: go to URL:    /search?q=${sku}
