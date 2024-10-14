@@ -33,6 +33,7 @@ Resource    ../steps/checkout_steps.robot
 
 *** Variables ***
 ${notification_area}    xpath=//section[@data-qa='component notification-area']
+${footer_section}=    xpath=//*[@class='footer']
 
 *** Keywords ***
 Yves: login on Yves with provided credentials:
