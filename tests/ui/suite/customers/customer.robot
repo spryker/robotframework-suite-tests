@@ -398,7 +398,7 @@ Shopping_List_Contains_Offers
     ...    AND    Yves: delete 'Shopping List' with name:    shoppingListName${random}
 
 Email_Confirmation
-    [Documentation]    Check that a new user can cannot login if the email is not verified
+    [Documentation]    Check that a new user cannot login if the email is not verified
     Register a new customer with data:
     ...    || salutation | first name | last name | e-mail                       | password                                        ||
     ...    || Mr.        | New        | User      | sonia+fails+${random}@spryker.com  | Ps${random_str_password}!5${random_id_password} ||
