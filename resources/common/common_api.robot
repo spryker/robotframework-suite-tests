@@ -2202,3 +2202,28 @@ I get access token by user credentials:
     Save value to a variable:    [access_token]    token
     Log    ${token}
     RETURN    ${token}
+
+Create new approved dynamic customer
+    Set Tags    glue
+    API_test_setup
+    [Arguments]    ${username}=test    ${password}=change123
+    ${random}=    Generate Random String    5    [NUMBERS]
+    I send a POST request:    /customers/    {"data":{"type":"customers","attributes":{"firstName":"RobotFirst+${random}","lastName":"RobotLast+${random}","gender":"Male","salutation":"Mr","email":"sonia+robot+${username}${random}@spryker.com","password":"${password}","confirmPassword":"${password}","acceptedTerms":True}}}
+    Response status code should be:    201
+    And Save value to a variable:    [data][id]    user_id
+    And Save value to a variable:    [data][attributes][email]    userEmail
+    VAR    ${dynamic_customer}    ${userEmail}    scope=TEST
+    VAR    ${dynamic_customer_id}    ${user_id}    scope=TEST
+    And Save the result of a SELECT DB query to a variable:  select registration_key from spy_customer where customer_reference = '${user_id}'    confirmation_key
+    And I send a POST request:    /customer-confirmation    {"data":{"type":"customer-confirmation","attributes":{"registrationKey":"${confirmation_key}"}}}
+    Remove Tags    glue
+
+Delete dynamic customer
+    Set Tags    glue
+    API_test_setup
+    [Arguments]    ${customer_email}=${dynamic_customer}    ${customer_id}=${dynamic_customer_id}
+    I get access token for the customer:    ${customer_email}
+    I set Headers:    Authorization=${token}
+    I send a DELETE request:    /customers/${customer_id}
+    Response status code should be:    204
+    Remove Tags    glue

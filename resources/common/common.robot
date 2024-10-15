@@ -777,3 +777,35 @@ Trigger product labels update
     Run console command    console product-label:validity    AT
     Repeat Keyword    3    Trigger multistore p&s
     IF    ${docker} or ${ignore_console} != True    Sleep    ${timeout}
+
+Create new dynamic admin user in DB
+    [Documentation]    This keyword creates a new admin user in the DB using data from an existing admin.
+    ...               It works for both MariaDB and PostgreSQL.
+    [Arguments]    ${first_name}=ansho    ${last_name}=ansho    ${username}=ansho@spryker.com
+    
+    # Step 1: Fetch the existing user data (admin@spryker.com)
+    Connect to Spryker DB
+    ${existing_user_data}=    Query    SELECT * FROM spy_user WHERE username = 'admin@spryker.com'
+    
+    # Extract fields from the existing user
+    ${existing_fk_locale}=    Set Variable    ${existing_user_data[0][1]}
+    ${existing_password}=    Set Variable    ${existing_user_data[0][8]}
+    ${existing_status}=    Set Variable    ${existing_user_data[0][9]}
+    ${existing_created_at}=    Set Variable    ${existing_user_data[0][12]}
+    ${existing_updated_at}=    Set Variable    ${existing_user_data[0][13]}
+    
+    # Step 2: Get the maximum id_user and increment it
+    ${max_id_user}=    Query    SELECT MAX(id_user) FROM spy_user
+    ${new_id_user}=    Evaluate    ${max_id_user[0][0]} + 1
+    
+    # Step 3: Generate new UUID
+    ${new_uuid}=    Generate Random String    5    [NUMBERS]
+    
+    # Step 4: Insert the new user into the spy_user table using correct variables
+    IF    '${db_engine}' == 'pymysql'
+        Execute Sql String    INSERT INTO spy_user (id_user, fk_locale, first_name, last_name, password, status, username, uuid, created_at, updated_at) VALUES (${new_id_user}, ${existing_fk_locale}, '${first_name}', '${last_name}', '${existing_password}', ${existing_status}, '${username}', '${new_uuid}', '${existing_created_at}', '${existing_updated_at}')
+    ELSE
+        Execute Sql String    INSERT INTO spy_user (id_user, fk_locale, first_name, last_name, password, status, username, uuid, created_at, updated_at) VALUES (${new_id_user}, ${existing_fk_locale}, '${first_name}', '${last_name}', '${existing_password}', ${existing_status}, '${username}', '${new_uuid}', '${existing_created_at}', '${existing_updated_at}')
+    END
+    Disconnect From Database
+
