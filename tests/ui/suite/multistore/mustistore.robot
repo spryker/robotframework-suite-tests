@@ -9,6 +9,7 @@ Resource    ../../../../resources/steps/header_steps.robot
 Resource    ../../../../resources/common/common_yves.robot
 Resource    ../../../../resources/common/common_zed.robot
 Resource    ../../../../resources/common/common_mp.robot
+Resource    ../../../../resources/pages/zed/zed_edit_category_page.robot
 Resource    ../../../../resources/steps/pdp_steps.robot
 Resource    ../../../../resources/steps/shopping_lists_steps.robot
 Resource    ../../../../resources/steps/checkout_steps.robot
@@ -24,6 +25,7 @@ Resource    ../../../../resources/steps/orders_management_steps.robot
 Resource    ../../../../resources/steps/zed_customer_steps.robot
 Resource    ../../../../resources/steps/zed_discount_steps.robot
 Resource    ../../../../resources/steps/zed_availability_steps.robot
+Resource    ../../../../resources/steps/zed_catalog_category_steps.robot
 Resource    ../../../../resources/steps/zed_cms_page_steps.robot
 Resource    ../../../../resources/steps/merchant_profile_steps.robot
 Resource    ../../../../resources/steps/zed_marketplace_steps.robot
@@ -242,7 +244,7 @@ Multistore_CMS
 
 Dynamic_multistore
     [Documentation]    This test should exclusively run for dynamic multi-store scenarios. The test verifies that the user can successfully create a new store, assign a product and CMS page, and register a customer within the new store.
-    [Tags]    dms-on
+    [Tags]    dms-on    bapi
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: create new Store:
     ...    || name                                    | locale_iso_code | currency_iso_code | currency_code | currency_iso_code2 | currency_code2 | store_delivery_region | store_context_timezone ||
@@ -296,6 +298,14 @@ Dynamic_multistore
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: assigned store to cms block:    ${random_str_store}_${random_str_store}    customer-registration_token--html
     Zed: assigned store to cms block:    ${random_str_store}_${random_str_store}    customer-registration_token--text
+    Zed: assign store to category:    ${random_str_store}   ${category_name}
+    API_test_setup
+    I get access token by user credentials:   ${zed_admin_email}
+    I set Headers:    Content-Type=application/vnd.api+json    Authorization=Bearer ${token}
+    I send a GET request:    /categories/${category_name}
+    Response status code should be:    200
+    Response body parameter should contain:    [data][attributes][stores]    ${random_str_store}
+
     ## register new customer in the new store on YVES
     Yves: go to AT store 'Home' page if other store not specified:    ${random_str_store}_${random_str_store}
     Register a new customer with data:

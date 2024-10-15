@@ -17,7 +17,6 @@ ${zed_processing_block_locator}     xpath=//div[contains(@id,'processing')][cont
 ${zed_merchants_dropdown_locator}    xpath=//select[@name='id-merchant']
 ${zed_attribute_access_denied_header}    xpath=//div[@class='wrapper wrapper-content']//div[@class='flash-messages']//following-sibling::h1
 
-
 *** Keywords ***
 Zed: login on Zed with provided credentials:
     [Arguments]    ${email}    ${password}=${default_password}
