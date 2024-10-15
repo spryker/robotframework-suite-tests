@@ -72,6 +72,7 @@ Yves: go to b2c shopping cart
     Wait Until Element Is Visible    ${shopping_car_icon_header_menu_item}[${env}]
     Click     ${shopping_car_icon_header_menu_item}[${env}]
     Wait Until Element Is Visible    ${shopping_cart_main_content_locator}[${env}]
+    Mouse Over    ${language_switcher_header_menu_item}
     Reload
     Repeat Keyword    3    Wait For Load State
     Wait For Load State    networkidle
