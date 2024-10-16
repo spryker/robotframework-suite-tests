@@ -35,7 +35,8 @@ jobs:
                   python3 -m pip install -U robotframework-jsonlibrary
                   python3 -m pip install -U robotframework-databaselibrary
                   python3 -m pip install -U robotframework-browser
-                  python3 -m pip install PyMySQL
+                  python3 -m pip install psycopg2
+                  sudo npx playwright install-deps
             - name: Install docker-compose
               run: |
                   sudo curl -L "https://github.com/docker/compose/releases/download/2.12.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
@@ -77,6 +78,6 @@ jobs:
             - name: Upload artifacts
               if: failure()
               run: |
-                  AWS_DEFAULT_REGION=${{env.ROBOT_TESTS_ARTIFACTS_BUCKET_REGION}} AWS_ACCESS_KEY_ID=${{ secrets.ROBOT_TESTS_ARTIFACTS_KEY }} AWS_SECRET_ACCESS_KEY=${{ secrets.ROBOT_TESTS_ARTIFACTS_SECRET }} aws s3 cp robotframework-tests/results s3://${{vars.ROBOT_TESTS_ARTIFACTS_BUCKET}}/night-robot-ui-ci/b2b_regression-dms-off/${GITHUB_RUN_ID}/PHP8.2MariaDBRobotUi/ \
+                  AWS_DEFAULT_REGION=${{env.ROBOT_TESTS_ARTIFACTS_BUCKET_REGION}} AWS_ACCESS_KEY_ID=${{ secrets.ROBOT_TESTS_ARTIFACTS_KEY }} AWS_SECRET_ACCESS_KEY=${{ secrets.ROBOT_TESTS_ARTIFACTS_SECRET }} aws s3 cp robotframework-tests/results s3://${{vars.ROBOT_TESTS_ARTIFACTS_BUCKET}}/debug/ui-b2b_mp-dms-off/${GITHUB_RUN_ID}/PHP8.3PostreSQL/ \
                     --recursive \
                     --expires "$(date -d '+7 days' --utc +'%Y-%m-%dT%H:%M:%SZ')"
