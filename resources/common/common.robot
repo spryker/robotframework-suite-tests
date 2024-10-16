@@ -189,6 +189,7 @@ Connect to Spryker DB
     ...    ``robot -v env:api_suite -v db_engine:psycopg2``
     ...
     ...    with the example above you'll use PostgreSQL DB engine
+    Set Log Level    NONE
     ${db_name}=    Set Variable If    '${db_name}' == '${EMPTY}'    ${default_db_name}    ${db_name}
     ${db_user}=    Set Variable If    '${db_user}' == '${EMPTY}'    ${default_db_user}    ${db_user}
     ${db_password}=    Set Variable If    '${db_password}' == '${EMPTY}'    ${default_db_password}    ${db_password}
@@ -216,6 +217,7 @@ Connect to Spryker DB
     Set Test Variable    ${db_engine}
     Disconnect From Database
     Connect To Database    ${db_engine}    ${db_name}    ${db_user}    ${db_password}    ${db_host}    ${db_port}
+    Reset Log Level
 
 Save the result of a SELECT DB query to a variable:
     [Documentation]    This keyword saves any value which you receive from DB using SQL query ``${sql_query}`` to a test variable called ``${variable_name}``.
@@ -519,6 +521,7 @@ I add 'admin' role to company user and get company_user_uuid:
     ...    ``Add 'admin' role to company user and return company_user_uuid:    anne.boleyn@spryker.com    BoB-Hotel-Jim    business-unit-jim-1``
     [Arguments]    ${email}    ${company_key}    ${business_unit_key}
     Connect to Spryker DB
+    Set Log Level    NONE
     ${id_customer}=    Query    select id_customer from spy_customer WHERE email='${email}'
     ${id_customer}=    Evaluate    ${id_customer[0][0]}+0
     IF    '${db_engine}' == 'pymysql'
@@ -553,6 +556,7 @@ I add 'admin' role to company user and get company_user_uuid:
     ${company_user_uuid}=    Replace String    ${company_user_uuid}    [   ${EMPTY}
     ${company_user_uuid}=    Replace String    ${company_user_uuid}    ]   ${EMPTY}
     Set Test Variable    ${company_user_uuid}    ${company_user_uuid}
+    Reset Log Level
     RETURN    ${company_user_uuid}
 
 Get voucher code by discountId from Database:
@@ -780,14 +784,16 @@ Trigger product labels update
 
 Create new dynamic admin user in DB
     [Documentation]    This keyword creates a new admin user in the DB using data from an existing admin.
-    ...               It works for both MariaDB and PostgreSQL.
-    [Arguments]    ${first_name}=ansho    ${last_name}=ansho    ${username}=ansho@spryker.com
+        ...    It works for both MariaDB and PostgreSQL.
+    [Arguments]    ${first_name}=ansho    ${last_name}=ansho    ${username}=ansho${random}@spryker.com
     
     # Step 1: Fetch the existing user data (admin@spryker.com)
     Connect to Spryker DB
+    Set Log Level    NONE
     ${existing_user_data}=    Query    SELECT * FROM spy_user WHERE username = 'admin@spryker.com'
     
-    # Extract fields from the existing user
+    # Step 1: Extract fields from the existing user
+    ${existing_id_user}=    Set Variable    ${existing_user_data[0][0]}
     ${existing_fk_locale}=    Set Variable    ${existing_user_data[0][1]}
     ${existing_password}=    Set Variable    ${existing_user_data[0][8]}
     ${existing_status}=    Set Variable    ${existing_user_data[0][9]}
@@ -807,5 +813,16 @@ Create new dynamic admin user in DB
     ELSE
         Execute Sql String    INSERT INTO spy_user (id_user, fk_locale, first_name, last_name, password, status, username, uuid, created_at, updated_at) VALUES (${new_id_user}, ${existing_fk_locale}, '${first_name}', '${last_name}', '${existing_password}', ${existing_status}, '${username}', '${new_uuid}', '${existing_created_at}', '${existing_updated_at}')
     END
-    Disconnect From Database
 
+    # Step 5: Get the ACL group of the existing user from spy_acl_user_has_group
+    ${existing_acl_group}=    Query    SELECT fk_acl_group FROM spy_acl_user_has_group WHERE fk_user = ${existing_id_user}
+    
+    # Step 6: Insert the new user’s ID and the same ACL group into spy_acl_user_has_group
+    IF    '${db_engine}' == 'pymysql'
+        Execute Sql String    INSERT INTO spy_acl_user_has_group (fk_user, fk_acl_group) VALUES (${new_id_user}, ${existing_acl_group[0][0]})
+    ELSE
+        Execute Sql String    INSERT INTO spy_acl_user_has_group (fk_user, fk_acl_group) VALUES (${new_id_user}, ${existing_acl_group[0][0]})
+    END
+
+    Disconnect From Database
+    Reset Log Level
