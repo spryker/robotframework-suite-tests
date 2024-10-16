@@ -61,11 +61,13 @@ Yves: add product to the shopping cart
                 Continue For Loop
             ELSE
                 Click    ${pdp_add_to_cart_button}
+                Wait For Response
                 Exit For Loop
             END
         END
     ELSE
         Click    ${pdp_add_to_cart_button}
+        Wait For Response
     END
     Repeat Keyword    3    Wait For Load State
     Wait For Load State    networkidle
