@@ -78,7 +78,6 @@ Yves: select the following existing address on the checkout as 'shipping' addres
         END
     END
     Click    ${submit_checkout_form_button}[${env}]
-    Wait For Response
     Repeat Keyword    3    Wait For Load State
     Wait For Load State    networkidle
 
@@ -210,7 +209,6 @@ Yves: select the following shipping method on the checkout and go next:
 
 Yves: submit form on the checkout
     Click    ${submit_checkout_form_button}[${env}]
-    Wait For Response
     Repeat Keyword    3    Wait For Load State
     Wait For Load State    networkidle
 
@@ -284,7 +282,6 @@ Yves: select the following payment method on the checkout and go next:
         END
         Click    ${submit_checkout_form_button}[${env}]
     END
-    Wait For Response
     Repeat Keyword    3    Wait For Load State
     Wait For Load State    networkidle
 
