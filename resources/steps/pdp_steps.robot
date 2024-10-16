@@ -68,6 +68,7 @@ Yves: add product to the shopping cart
         Click    ${pdp_add_to_cart_button}
     END
     Repeat Keyword    3    Wait For Load State
+    Wait For Load State    networkidle
     Yves: remove flash messages
 
 Yves: change quantity on PDP:
@@ -92,11 +93,16 @@ Yves: change quantity using '+' or '-' button № times:
     [Arguments]    ${action}    ${clicksCount}
     FOR    ${index}    IN RANGE    0    ${clicksCount}
         Repeat Keyword    3    Wait For Load State
+        Wait For Load State    networkidle
         IF    '${action}' == '+'
             Click    ${pdp_increase_quantity_button}[${env}]
+            Sleep    15ms
         ELSE IF    '${action}' == '-'
             Click    ${pdp_decrease_quantity_button}[${env}]
+            Sleep    15ms
         END
+        Repeat Keyword    3    Wait For Load State
+        Wait For Load State    networkidle
     END
 
 Yves: set quantity on PDP:
@@ -430,7 +436,11 @@ Yves: select random varian if variant selector is available
 
 Yves: try add product to the cart from PDP and expect error:
     [Arguments]    ${expectedError}
+    Repeat Keyword    3    Wait For Load State
+    Wait For Load State    networkidle
     Click    ${pdp_add_to_cart_button}
+    Repeat Keyword    3    Wait For Load State
+    Wait For Load State    networkidle
     Yves: flash message should be shown:    error    ${expectedError}
 
 Yves: product name on PDP should be:
