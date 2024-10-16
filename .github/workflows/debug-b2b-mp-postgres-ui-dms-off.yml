@@ -1,7 +1,6 @@
 name: "[debug][b2b]postgres[custom][UI][DMS-OFF]"
 
 on:
-    schedule:
     workflow_dispatch:
 
 jobs:
