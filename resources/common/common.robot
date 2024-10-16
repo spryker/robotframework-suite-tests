@@ -294,17 +294,17 @@ Run console command
     END
 
 Trigger p&s
-    [Arguments]    ${timeout}=5s    ${storeName}=DE
+    [Arguments]    ${timeout}=1s    ${storeName}=DE
     Run console command    console queue:worker:start --stop-when-empty    ${storeName}
     IF    ${docker} or ${ignore_console} != True    Sleep    ${timeout}
 
 Trigger API specification update
-    [Arguments]    ${timeout}=5s    ${storeName}=DE
+    [Arguments]    ${timeout}=1s    ${storeName}=DE
     Run console command    cli glue api:generate:documentation --invalidated-after-interval 90sec    ${storeName}
     IF    ${docker} or ${ignore_console} != True    Sleep    ${timeout}
 
 Trigger multistore p&s
-    [Arguments]    ${timeout}=5s
+    [Arguments]    ${timeout}=1s
     Trigger p&s    ${timeout}    DE
     Trigger p&s    ${timeout}    AT
 
