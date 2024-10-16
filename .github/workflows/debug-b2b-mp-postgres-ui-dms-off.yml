@@ -1,11 +1,11 @@
-name: "[debug][b2b]postgres[custom][UI][DMS-OFF]"
+name: "[debug][b2b-mp][postgres][custom][UI][DMS-OFF]"
 
 on:
     workflow_dispatch:
 
 jobs:
     docker-alpine-php-8-2-mariadb-robot-ui:
-        name: "Docker / Alpine / PHP 8.2 / MariaDB / Robot / UI / DMS OFF"
+        name: "B2B-MP / PHP 8.3 / PostgreSQL / Robot / UI / DMS OFF"
         runs-on: ubuntu-20.04
         env:
             PROGRESS_TYPE: plain
@@ -62,7 +62,7 @@ jobs:
               run: |
                   cd robotframework-tests
                   rfbrowser init
-                  robot -v env:ui_mp_b2b -v db_engine:psycopg2 -v headless:true -v ignore_console:false -d results --exclude skip-due-to-issueORskip-due-to-refactoring --include debug -s '*'.tests.ui.mp_b2b .
+                  robot -v env:ui_mp_b2b -v db_engine:psycopg2 -v headless:true -v ignore_console:false -d results --exclude skip-due-to-issueORskip-due-to-refactoring --include group_oneORgroup_twoORgroup_tree -s '*'.tests.ui.mp_b2b .
                   touch results/time.txt && echo $(date) > results/time.txt
             - name: Rerun Failed Tests
               if: steps.run_tests.outcome != 'success'
