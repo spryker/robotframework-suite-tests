@@ -78,7 +78,9 @@ Yves: select the following existing address on the checkout as 'shipping' addres
         END
     END
     Click    ${submit_checkout_form_button}[${env}]
+    Wait For Response
     Repeat Keyword    3    Wait For Load State
+    Wait For Load State    networkidle
 
 Yves: fill in the following new shipping address:
     [Documentation]    Possible argument names: salutation, firstName, lastName, street, houseNumber, postCode, city, country, company, phone, additionalAddress
@@ -208,7 +210,9 @@ Yves: select the following shipping method on the checkout and go next:
 
 Yves: submit form on the checkout
     Click    ${submit_checkout_form_button}[${env}]
+    Wait For Response
     Repeat Keyword    3    Wait For Load State
+    Wait For Load State    networkidle
 
 Yves: select the following shipping method for the shipment:
     [Arguments]    ${shipment}    ${shippingProvider}    ${shippingMethod}
@@ -280,6 +284,9 @@ Yves: select the following payment method on the checkout and go next:
         END
         Click    ${submit_checkout_form_button}[${env}]
     END
+    Wait For Response
+    Repeat Keyword    3    Wait For Load State
+    Wait For Load State    networkidle
 
 Yves: '${checkoutAction}' on the summary page
     [Documentation]    Possible supported actions: 'submit the order', 'send the request' and 'approve the cart'
@@ -290,6 +297,8 @@ Yves: '${checkoutAction}' on the summary page
     ELSE IF    '${checkoutAction}' == 'approve the cart'
         Click    ${checkout_summary_approve_request_button}
     END
+    Repeat Keyword    3    Wait For Load State
+    Wait For Load State    networkidle
 
 Yves: select approver on the 'Summary' page:
     [Arguments]    ${approver}
@@ -328,7 +337,6 @@ Yves: assert merchant of product in cart or list:
     [Documentation]    Method for MP which asserts value in 'Sold by' label of item in cart or list. Requires concrete SKU
     [Arguments]    ${sku}    ${merchant_name_expected}
     Page Should Contain Element    xpath=(//*[@itemprop='sku' and (text()='${sku}' or @content='${sku}')]/ancestor::*[self::article or self::tr or self::product-item][contains(@itemtype,'Product')]//a[contains(@href,'merchant')][contains(text(),'${merchant_name_expected}')])[1]    timeout=${browser_timeout}
-
 
 Yves: save new deviery address to address book:
     [Arguments]    ${state}
