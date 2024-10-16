@@ -69,6 +69,7 @@ Yves: go to the shopping cart through the header with name:
     END
     Repeat Keyword    3    Wait For Load State
     Repeat Keyword    3    Wait For Load State    networkidle
+    Sleep    200ms
 
 Yves: go to b2c shopping cart through the header
     Yves: remove flash messages

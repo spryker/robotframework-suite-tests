@@ -80,7 +80,7 @@ Yves: add product to the shopping cart
     Repeat Keyword    5    Wait For Load State
     Repeat Keyword    5    Wait For Load State    networkidle
     Yves: remove flash messages
-    Sleep    200ms
+    Sleep    300ms
 
 Yves: change quantity on PDP:
     [Arguments]    ${qtyToSet}
@@ -387,6 +387,7 @@ Yves: select xxx merchant's offer:
     Wait Until Element Contains    ${referrer_url}    offer    message=Offer selector radio button does not work on PDP but should
     Repeat Keyword    3    Wait For Load State
     Repeat Keyword    3    Wait For Load State    networkidle
+    Sleep    200ms
 
 Yves: select xxx merchant's offer with price:
     [Arguments]    ${merchantName}    ${price}    ${wait_for_p&s}=${False}    ${iterations}=26    ${delay}=3s
@@ -457,6 +458,7 @@ Yves: try add product to the cart from PDP and expect error:
     Repeat Keyword    3    Wait For Load State
     Repeat Keyword    3    Wait For Load State    networkidle
     Yves: flash message should be shown:    error    ${expectedError}
+    Sleep    200ms
 
 Yves: product name on PDP should be:
     [Arguments]    ${expected_product_name}

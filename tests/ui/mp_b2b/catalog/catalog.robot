@@ -271,7 +271,6 @@ Back_in_Stock_Notification
     [Teardown]    Zed: check and restore product availability in Zed:    ${stock_product_abstract_sku}    Available    ${stock_product_concrete_sku}
 
 Product_Availability_Calculation
-    [Tags]    debug
     [Documentation]    Check product availability + multistore
     Repeat Keyword    3    Trigger multistore p&s
     MP: login on MP with provided credentials:    ${merchant_spryker_email}
@@ -376,7 +375,6 @@ Product_Availability_Calculation
     ...    AND    Trigger multistore p&s
 
 Offer_Availability_Calculation
-    [Tags]    debug
     [Documentation]    check offer availability
     MP: login on MP with provided credentials:    ${merchant_office_king_email}
     MP: open navigation menu tab:    Products    
