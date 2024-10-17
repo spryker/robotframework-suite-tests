@@ -100,7 +100,7 @@ Yves: delete user address:
 
 Yves: delete all user addresses
     ${currentURL}=    Get Location
-    IF    '/multi-cart' not in '${currentURL}'    
+    IF    '/customer/address' not in '${currentURL}'    
             IF    '.at.' in '${currentURL}'
                 Go To    ${yves_at_url}customer/address
             ELSE
@@ -119,6 +119,8 @@ Yves: delete all user addresses
             END
         END   
     END
+    Repeat Keyword    3    Wait For Load State
+    Wait For Load State    networkidle
 
 Yves: assert customer profile data:
     [Arguments]    @{args}

@@ -770,7 +770,7 @@ Delete product_price by id_price_product in Database:
     Disconnect From Database
 
 Trigger product labels update
-    [Arguments]    ${timeout}=5s
+    [Arguments]    ${timeout}=1s
     Run console command    console product-label:relations:update -vvv --no-touch    DE
     Run console command    console product-label:validity    DE
     Run console command    console product-label:relations:update -vvv --no-touch    AT

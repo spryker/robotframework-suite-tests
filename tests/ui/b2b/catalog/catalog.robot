@@ -676,6 +676,7 @@ Configurable_Product_RfQ_OMS
     Zed: trigger all matching states inside this order:    Stock update
     Zed: trigger all matching states inside this order:    Refund
     Zed: grand total for the order equals:    ${lastPlacedOrder}    €0.00  
+    Repeat Keyword    3    Trigger multistore p&s
     Yves: go to the 'Home' page
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     Yves: go to user menu:    Order History
