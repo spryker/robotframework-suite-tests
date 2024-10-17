@@ -323,6 +323,11 @@
           }
        },
        "abstract":{
+         "product_in_different_locales":{
+            "sku":"M29455",
+            "description_de":"Alu-Datenentsorgungsbehälter",
+            "description_en":"Aluminum data disposal container"
+         },
           "upselling_products_sku":"M29502",
           "special_product_abstract_sku":{
              "with_multivariant":"M58035",

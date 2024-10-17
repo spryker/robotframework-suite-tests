@@ -525,7 +525,12 @@
              "concretes_3":"M29456",
              "concretes_name_3":"Gmöhling aluminum data removal container - Exterior - LxWxH 435 x 385 x 650 mm",
              "concretes_superattribute_3":"material"
-          }
+          },
+          "product_in_different_locales":{
+            "sku":"M29455",
+            "description_de":"Alu-Datenentsorgungsbehälter",
+            "description_en":"Aluminum data disposal container"
+         }
        },
        "concrete_available_product_with_stock":"420566",
        "concrete_available_product_without_stock":"422780",
