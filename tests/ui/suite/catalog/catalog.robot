@@ -199,10 +199,7 @@ Product_Bundles
     Yves: shopping cart contains the following products:    ${bundle_product_concrete_sku}
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: billing address same as shipping address:    true
-    Yves: fill in the following new shipping address:
-    ...    || salutation | firstName                      | lastName                      | street        | houseNumber | postCode | city   | country | company | phone     | additionalAddress ||
-    ...    || Mr.        | ${yves_second_user_first_name} | ${yves_second_user_last_name} | Kirncher Str. | 7           | 10247    | Berlin | Germany | Spryker | 123456789 | Additional street ||
-    Yves: submit form on the checkout
+    Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${yves_user_address}
     Yves: select the following shipping method on the checkout and go next:    Express
     Yves: select the following payment method on the checkout and go next:    Invoice
     Yves: accept the terms and conditions:    true
@@ -473,10 +470,7 @@ Offer_Availability_Calculation
     Yves: assert merchant of product in cart or list:    offAvKU${random}-1    Spryker
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: billing address same as shipping address:    true
-    Yves: fill in the following new shipping address:
-    ...    || salutation | firstName               | lastName               | street        | houseNumber | postCode | city   | country | company | phone     | additionalAddress ||
-    ...    || Mr.        | ${yves_user_first_name} | ${yves_user_last_name} | Kirncher Str. | 7           | 10247    | Berlin | Germany | Spryker | 123456789 | Additional street ||
-    Yves: submit form on the checkout
+    Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${yves_company_user_buyer_address}
     Yves: select the following shipping method for the shipment:    1    Spryker Dummy Shipment    Standard
     Yves: submit form on the checkout
     Yves: select the following payment method on the checkout and go next:    Marketplace Invoice
@@ -553,7 +547,7 @@ Product_Availability_Calculation
     Zed: go to second navigation item level:    Catalog    Products 
     Zed: click Action Button in a table for row that contains:     availabilitySKU${random}     Approve
     Trigger multistore p&s
-    Yves: login on Yves with provided credentials:    ${yves_second_user_email}
+    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     Yves: check if cart is not empty and clear it
     Yves: delete all user addresses
     Yves: go to PDP of the product with sku:    availabilitySKU${random}    wait_for_p&s=true
@@ -566,10 +560,7 @@ Product_Availability_Calculation
     Yves: go to b2c shopping cart
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: billing address same as shipping address:    true
-    Yves: fill in the following new shipping address:
-    ...    || salutation | firstName                      | lastName                      | street        | houseNumber | postCode | city   | country | company | phone     | additionalAddress ||
-    ...    || Mr.        | ${yves_second_user_first_name} | ${yves_second_user_last_name} | Kirncher Str. | 7           | 10247    | Berlin | Germany | Spryker | 123456789 | Additional street ||
-    Yves: submit form on the checkout
+    Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${yves_company_user_buyer_address}
     Yves: select the following shipping method on the checkout and go next:    Express
     Yves: select the following payment method on the checkout and go next:    Invoice
     Yves: accept the terms and conditions:    true
@@ -789,6 +780,7 @@ Configurable_Product_RfQ_OMS
     Zed: trigger matching state of xxx order item inside xxx shipment:    Deliver    1
     Zed: trigger matching state of xxx order item inside xxx shipment:    Refund    1
     Zed: grand total for the order equals:    ${lastPlacedOrder}    €0.00
+    Repeat Keyword    3    Trigger multistore p&s
     Yves: go to the 'Home' page
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     Yves: go to user menu:    Order History

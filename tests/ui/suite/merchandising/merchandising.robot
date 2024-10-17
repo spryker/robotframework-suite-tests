@@ -45,6 +45,7 @@ Resource    ../../../../resources/steps/configurable_bundle_steps.robot
 *** Test Cases ***
 Product_labels
     [Documentation]    Checks that products have labels on PLP and PDP
+    Trigger product labels update
     Yves: go to first navigation item level:    Sale
     Yves: 1st product card in catalog (not)contains:     Sale label    true
     Yves: go to the PDP of the first available product on open catalog page
@@ -114,10 +115,7 @@ Configurable_Bundle
     Yves: change quantity of the configurable bundle in the shopping cart on:    Smartstation Kit    2
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: billing address same as shipping address:    true
-    Yves: fill in the following new shipping address:
-    ...    || salutation | firstName                      | lastName                      | street        | houseNumber | postCode | city   | country | company | phone     | additionalAddress ||
-    ...    || Mr.        | ${yves_second_user_first_name} | ${yves_second_user_last_name} | Kirncher Str. | 7           | 10247    | Berlin | Germany | Spryker | 123456789 | Additional street ||
-    Yves: submit form on the checkout
+    Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${yves_user_address}
     Yves: select the following shipping method on the checkout and go next:    Express
     Yves: select the following payment method on the checkout and go next:    Invoice
     Yves: accept the terms and conditions:    true
@@ -183,10 +181,7 @@ Discounts
     Yves: discount is applied:    cart rule    Promotional Product 100% ${random}    - €75.00
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: billing address same as shipping address:    true
-    Yves: fill in the following new shipping address:
-    ...    || salutation | firstName                      | lastName                      | street        | houseNumber | postCode | city   | country | company | phone     | additionalAddress ||
-    ...    || Mr.        | ${yves_second_user_first_name} | ${yves_second_user_last_name} | Kirncher Str. | 7           | 10247    | Berlin | Germany | Spryker | 123456789 | Additional street ||
-    Yves: submit form on the checkout
+    Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${yves_user_address}
     Yves: select the following shipping method for the shipment:    1    Spryker Dummy Shipment    Standard
     Yves: select the following shipping method for the shipment:    2    Spryker Dummy Shipment    Express
     Yves: select the following shipping method for the shipment:    3    Spryker Drone Shipment    Air Light

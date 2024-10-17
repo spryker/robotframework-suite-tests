@@ -225,6 +225,7 @@ Product_PDP
 
 Catalog
     [Documentation]    Checks that catalog options and search work
+    Trigger product labels update
     Yves: login on Yves with provided credentials:    ${yves_user_email}
     Yves: perform search by:    claire
     Yves: 'Catalog' page should show products:    15
@@ -344,10 +345,8 @@ Offer_Availability_Calculation
     Yves: assert merchant of product in cart or list:    offAvKU${random}-1    Spryker
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: billing address same as shipping address:    true
-    Yves: fill in the following new shipping address:
-    ...    || salutation | firstName               | lastName               | street        | houseNumber | postCode | city   | country | company | phone     | additionalAddress ||
-    ...    || Mr.        | ${yves_user_first_name} | ${yves_user_last_name} | Kirncher Str. | 7           | 10247    | Berlin | Germany | Spryker | 123456789 | Additional street ||
-    Yves: submit form on the checkout
+    Yves: billing address same as shipping address:    true
+    Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${yves_company_user_buyer_address}
     Yves: select the following shipping method for the shipment:    1    DHL    Express
     Yves: submit form on the checkout
     Yves: select the following payment method on the checkout and go next:    Marketplace Invoice
@@ -436,10 +435,7 @@ Product_Availability_Calculation
     Yves: assert merchant of product in cart or list:    availabilitySKU${random}-1    Spryker
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: billing address same as shipping address:    true
-    Yves: fill in the following new shipping address:
-    ...    || salutation | firstName               | lastName               | street        | houseNumber | postCode | city   | country | company | phone     | additionalAddress ||
-    ...    || Mr.        | ${yves_user_first_name} | ${yves_user_last_name} | Kirncher Str. | 7           | 10247    | Berlin | Germany | Spryker | 123456789 | Additional street ||
-    Yves: submit form on the checkout
+    Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${yves_company_user_buyer_address}
     Yves: select the following shipping method for the shipment:    1    DHL    Express
     Yves: submit form on the checkout
     Yves: select the following payment method on the checkout and go next:    Marketplace Invoice
@@ -614,6 +610,7 @@ Configurable_Product_RfQ_OMS
     Zed: trigger matching state of xxx order item inside xxx shipment:    Deliver    1
     Zed: trigger matching state of xxx order item inside xxx shipment:    Refund    1
     Zed: grand total for the order equals:    ${lastPlacedOrder}    €0.00  
+    Repeat Keyword    3    Trigger multistore p&s
     Yves: go to the 'Home' page
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     Yves: go to user menu:    Order History

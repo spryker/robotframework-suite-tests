@@ -193,6 +193,7 @@ Business_Unit_Address_on_Checkout
     [Documentation]    Checks that business unit address can be used during checkout
     [Setup]    Run keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     ...    AND    Yves: create new 'Shopping Cart' with name:    businessAddressCart+${random}
+    ...    AND    Yves: delete all user addresses
     Yves: go to PDP of the product with sku:    ${available_never_out_of_stock_abstract_sku}
     Yves: add product to the shopping cart
     Yves: go to the shopping cart through the header with name:    businessAddressCart+${random}
@@ -217,6 +218,7 @@ Request_for_Quote
     ...    AND    Zed: create new Zed user with the following data:    agent_quote+${random}@spryker.com    change123${random}    Request    Quote    Root group    This user is an agent in Storefront    en_US
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     Yves: delete all shopping carts
+    Yves: delete all user addresses
     Yves: create new 'Shopping Cart' with name:    RfQCart+${random}
     Yves: go to PDP of the product with sku:    ${one_variant_product_abstract_sku}
     Yves: add product to the shopping cart
@@ -648,6 +650,7 @@ Configurable_Product_Checkout
 #     [Documentation]    Checks role permissions on checkout and Approval process
 #     [Setup]    Run keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_with_limit_email}
 #     ...    AND    Yves: create new 'Shopping Cart' with name:    approvalCart+${random}
+#     ...    AND    Yves: delete all user addresses
 #     Yves: go to PDP of the product with sku:    M49320
 #     Yves: add product to the shopping cart
 #     Yves: go to the shopping cart through the header with name:    approvalCart+${random}
