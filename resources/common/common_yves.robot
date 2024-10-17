@@ -515,32 +515,17 @@ Yves: go to the PDP of the first available product on open catalog page
 Yves: check if cart is not empty and clear it
     Yves: go to the 'Home' page
     Yves: go to b2c shopping cart
-    ${productsInCart}=    Get Element Count    xpath=//article[@class='product-card-item']//div[contains(@class,'product-card-item__box')]
-    ${cartIsEmpty}=    Run Keyword And Return Status    Element should be visible    xpath=//*[contains(@class,'spacing-top') and text()='Your shopping cart is empty!']    timeout=1s
-    IF    '${cartIsEmpty}'=='False'    Helper: delete all items in cart
+    ${productsInCart}=    Get Element Count    xpath=//main//form[contains(@name,'removeFromCartForm')]//button | //main//form[contains(@action,'bundle/async/remove')]//button
+    IF    ${productsInCart} > 0    Helper: delete all items in cart
 
 Helper: delete all items in cart
-
-    IF    '${env}' in ['ui_suite']
-        ${productsInCart}=    Get Element Count    xpath=//main//cart-items-list//product-item[contains(@data-qa,'component product-cart-item')]
-        FOR    ${index}    IN RANGE    0    ${productsInCart}
-            TRY
-                Click    xpath=(//main//cart-items-list//product-item[contains(@data-qa,'component product-cart-item')]//form[contains(@name,'removeFromCart')]//button)[1]
-                Yves: remove flash messages
-            EXCEPT    
-                Log    Shopping cart is empty now
-            END
-        END
-    ELSE
-        ${productsInCart}=    Get Element Count    xpath=//article[@class='product-card-item']//div[contains(@class,'product-card-item__box')]
-        FOR    ${index}    IN RANGE    0    ${productsInCart}
-            TRY
-                Click    xpath=(//div[@class='page-layout-cart__items-wrap']//ancestor::div/following-sibling::div//form[contains(@name,'removeFromCart')]//button[text()='Remove'])[1]
-                Yves: remove flash messages
-            EXCEPT    
-                Log    Shopping cart is empty now
-            END
-        END
+    ${productsInCart}=    Get Element Count    xpath=//main//form[contains(@name,'removeFromCartForm')]//button | //main//form[contains(@action,'bundle/async/remove')]//button
+    IF    ${productsInCart} == 0    Log    Shopping cart is empty
+    FOR    ${index}    IN RANGE    0    ${productsInCart}
+        Click    xpath=(//main//form[contains(@name,'removeFromCartForm')]//button | //main//form[contains(@action,'bundle/async/remove')]//button)[1]
+        Yves: remove flash messages     
+        Repeat Keyword    3    Wait For Load State
+        Wait For Load State    networkidle
     END
 
 Yves: try reloading page if element is/not appear:
