@@ -524,6 +524,8 @@ Helper: delete all items in cart
     FOR    ${index}    IN RANGE    0    ${productsInCart}
         Click    xpath=(//main//form[contains(@name,'removeFromCartForm')]//button | //main//form[contains(@action,'bundle/async/remove')]//button)[1]
         Yves: remove flash messages     
+        Repeat Keyword    3    Wait For Load State
+        Wait For Load State    networkidle
     END
 
 Yves: try reloading page if element is/not appear:
