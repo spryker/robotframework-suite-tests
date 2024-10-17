@@ -24,7 +24,7 @@ jobs:
               run: |
                   git config --global user.email "github-actions[bot]@users.noreply.github.com"
                   git config --global user.name "github-actions[bot]"
-                  git clone -b feature/frw-7213/master-enabled-ds-on-by-default --single-branch https://github.com/spryker-shop/b2b-demo-marketplace.git .
+                  git clone -b master --single-branch https://github.com/spryker-shop/b2b-demo-marketplace.git .
             - name: Install packages
               run: |
                   sudo apt-get install apache2-utils
@@ -43,7 +43,7 @@ jobs:
                   sudo chmod +x /usr/local/bin/docker-compose
             - name: Install Robot tests
               run: |
-                  git clone https://github.com/spryker/robotframework-suite-tests.git --single-branch --branch dev robotframework-tests
+                  git clone https://github.com/spryker/robotframework-suite-tests.git --single-branch --branch master robotframework-tests
             - name: Install Project
               continue-on-error: false
               run: |
