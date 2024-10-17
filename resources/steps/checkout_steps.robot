@@ -59,6 +59,7 @@ Yves: select the following existing address on the checkout as 'shipping' addres
     [Arguments]    ${addressToUse}
     Reload
     Repeat Keyword    3    Wait For Load State
+    Wait For Load State    networkidle
     Wait Until Element Is Visible    ${checkout_address_delivery_selector}[${env}] 
     WHILE  '${selected_address}' != '${addressToUse}'    limit=5
         IF    '${env}' in ['ui_b2c','ui_mp_b2c']
@@ -74,6 +75,7 @@ Yves: select the following existing address on the checkout as 'shipping' addres
         ELSE
             Repeat Keyword    2    Select From List By Label    ${checkout_address_delivery_selector}[${env}]    ${addressToUse}
             Repeat Keyword    3    Wait For Load State
+            Sleep    1s
             Exit For Loop
         END
     END
