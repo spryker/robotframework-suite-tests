@@ -54,6 +54,8 @@ Zed: create new Store:
         END         
     END 
     Click    ${zed_store_save_button}
+    wait until element is visible    ${zed_success_flash_message}
+
 
 Zed: perform store search by:
     [Arguments]    ${search_key}
