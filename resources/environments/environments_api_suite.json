@@ -343,7 +343,9 @@
          },
          "product_with_label":{
             "sku":"001",
-            "name":"Canon IXUS 160"
+            "name":"Canon IXUS 160",
+            "description_de":"Beeindruckende Aufnahmen",
+            "description_en":"Add a personal touch"
          },
          "product_with_reviews":{
             "sku":"093",

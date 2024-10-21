@@ -343,6 +343,12 @@
          "with_options":{
             "sku":"012",
             "name":"Canon IXUS 165"
+         },
+         "product_in_different_locales":{
+            "sku":"001",
+            "name":"Canon IXUS 160",
+            "description_de":"Beeindruckende Aufnahmen",
+            "description_en":"Add a personal touch"
          }
       },
       "concrete_product":{
