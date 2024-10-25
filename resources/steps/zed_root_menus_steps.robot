@@ -17,7 +17,7 @@ Zed: verify first navigation root menus
         EXCEPT
             Log    Overlay is not displayed
         END
-        Wait Until Element Is Visible    locato=${zed_log_out_button}    timeout=${browser_timeout}    message=Some left navigation menu item throws an error.
+        Wait Until Element Is Visible    locator=${zed_log_out_button}    timeout=${browser_timeout}    message=Some left navigation menu item throws an error.
         ${counter}=    Evaluate    ${counter} + 1   
     END
 
