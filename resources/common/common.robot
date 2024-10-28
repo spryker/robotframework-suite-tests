@@ -52,7 +52,7 @@ Common_suite_setup
     Remove Files    ${OUTPUTDIR}/*.yml
     Load Variables    ${env}
     Overwrite env variables
-    ${random}=    Generate Random String    5    [NUMBERS]
+    ${random} =    Evaluate    random.randint(300, 99999)
     ${random_id}=    Generate Random String    5    [NUMBERS]
     ${random_str}=    Generate Random String    5    [LETTERS]
     ${random_str_store}=    Generate Random String    2    [UPPER]
