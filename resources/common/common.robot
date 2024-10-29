@@ -785,11 +785,11 @@ Trigger product labels update
 Create new dynamic admin user in DB
     [Documentation]    This keyword creates a new admin user in the DB using data from an existing admin.
         ...    It works for both MariaDB and PostgreSQL.
-    [Arguments]    ${first_name}=ansho    ${last_name}=ansho    ${username}=ansho${random}@spryker.com
-    
+    [Arguments]    ${first_name}=Dynamic    ${last_name}=Admin    ${user_name}=admin+robot${random}@spryker.com
+    VAR    ${dynamic_admin_user}    ${user_name}    scope=TEST
+
     # Step 1: Fetch the existing user data (admin@spryker.com)
     Connect to Spryker DB
-    Set Log Level    NONE
     ${existing_user_data}=    Query    SELECT * FROM spy_user WHERE username = 'admin@spryker.com'
     
     # Step 1: Extract fields from the existing user
@@ -809,9 +809,9 @@ Create new dynamic admin user in DB
     
     # Step 4: Insert the new user into the spy_user table using correct variables
     IF    '${db_engine}' == 'pymysql'
-        Execute Sql String    INSERT INTO spy_user (id_user, fk_locale, first_name, last_name, password, status, username, uuid, created_at, updated_at) VALUES (${new_id_user}, ${existing_fk_locale}, '${first_name}', '${last_name}', '${existing_password}', ${existing_status}, '${username}', '${new_uuid}', '${existing_created_at}', '${existing_updated_at}')
+        Execute Sql String    INSERT INTO spy_user (id_user, fk_locale, first_name, last_name, password, status, username, uuid, created_at, updated_at) VALUES (${new_id_user}, ${existing_fk_locale}, '${first_name}', '${last_name}', '${existing_password}', ${existing_status}, '${user_name}', '${new_uuid}', '${existing_created_at}', '${existing_updated_at}')
     ELSE
-        Execute Sql String    INSERT INTO spy_user (id_user, fk_locale, first_name, last_name, password, status, username, uuid, created_at, updated_at) VALUES (${new_id_user}, ${existing_fk_locale}, '${first_name}', '${last_name}', '${existing_password}', ${existing_status}, '${username}', '${new_uuid}', '${existing_created_at}', '${existing_updated_at}')
+        Execute Sql String    INSERT INTO spy_user (id_user, fk_locale, first_name, last_name, password, status, username, uuid, created_at, updated_at) VALUES (${new_id_user}, ${existing_fk_locale}, '${first_name}', '${last_name}', '${existing_password}', ${existing_status}, '${user_name}', '${new_uuid}', '${existing_created_at}', '${existing_updated_at}')
     END
 
     # Step 5: Get the ACL group of the existing user from spy_acl_user_has_group
@@ -822,6 +822,81 @@ Create new dynamic admin user in DB
         Execute Sql String    INSERT INTO spy_acl_user_has_group (fk_user, fk_acl_group) VALUES (${new_id_user}, ${existing_acl_group[0][0]})
     ELSE
         Execute Sql String    INSERT INTO spy_acl_user_has_group (fk_user, fk_acl_group) VALUES (${new_id_user}, ${existing_acl_group[0][0]})
+    END
+
+    Disconnect From Database
+    Reset Log Level
+
+Delete dynamic admin user from DB
+    [Documentation]    This keyword deletes a dynamic admin user from the DB based on the provided username.
+        ...           It works for both MariaDB and PostgreSQL.
+    [Arguments]    ${user_name}=${dynamic_admin_user}
+    
+    # Step 1: Fetch the ID of the user to be deleted
+    Connect to Spryker DB
+    ${user_data}=    Query    SELECT id_user FROM spy_user WHERE username = '${user_name}'
+    ${user_id}=    Set Variable    ${user_data[0][0]}
+    
+    # Step 2: Delete entries in related tables
+    IF    '${db_engine}' == 'pymysql'
+        Execute Sql String    DELETE FROM spy_acl_user_has_group WHERE fk_user = ${user_id}
+    ELSE
+        Execute Sql String    DELETE FROM spy_acl_user_has_group WHERE fk_user = ${user_id}
+    END
+    
+    # Step 3: Delete the user from spy_user table
+    IF    '${db_engine}' == 'pymysql'
+        Execute Sql String    DELETE FROM spy_user WHERE id_user = ${user_id}
+    ELSE
+        Execute Sql String    DELETE FROM spy_user WHERE id_user = ${user_id}
+    END
+    
+    Disconnect From Database
+    Reset Log Level
+
+Create new approved dynamic customer in DB
+    [Documentation]    This keyword creates a new approved dynamic customer in the DB based on an existing customer (sonia@spryker.com).
+    ...               It works for both MariaDB and PostgreSQL.
+    [Arguments]    ${first_name}=Dynamic    ${last_name}=Customer    ${email}=sonia+robot${random}@spryker.com
+
+    # Step 1: Fetch the existing customer data (sonia@spryker.com)
+    Connect to Spryker DB
+    ${existing_customer_data}=    Query    SELECT * FROM spy_customer WHERE email = 'sonia@spryker.com'
+    
+    # Extract all columns from the existing customer with Set Variable If for conditional handling of None values
+    ${existing_fk_locale}=                 Set Variable If    ${existing_customer_data[0][1]}    ${existing_customer_data[0][1]}    NULL
+    ${existing_fk_user}=                   Set Variable If    ${existing_customer_data[0][2]}    ${existing_customer_data[0][2]}    NULL
+    ${existing_anonymized_at}=             Set Variable If    ${existing_customer_data[0][3]}    ${existing_customer_data[0][3]}    NULL
+    ${existing_company}=                   Set Variable If    '${existing_customer_data[0][4]}' != '${EMPTY}'    ${existing_customer_data[0][4]}    ${EMPTY}
+    ${existing_date_of_birth}=             Set Variable If    ${existing_customer_data[0][6]}    ${existing_customer_data[0][6]}    NULL
+    ${existing_default_billing_address}=   Set Variable If    ${existing_customer_data[0][7]}    ${existing_customer_data[0][7]}    NULL
+    ${existing_default_shipping_address}=  Set Variable If    ${existing_customer_data[0][8]}    ${existing_customer_data[0][8]}    NULL
+    ${existing_gender}=                    Set Variable If    ${existing_customer_data[0][11]}   ${existing_customer_data[0][11]}   NULL
+    ${existing_password}=                  Set Variable    ${existing_customer_data[0][13]}
+    ${existing_phone}=                     Set Variable If    '${existing_customer_data[0][14]}' != '${EMPTY}'   ${existing_customer_data[0][14]}   ${EMPTY}
+    ${existing_registered}=                Set Variable If    ${existing_customer_data[0][15]}   ${existing_customer_data[0][15]}   '2020-06-24'  # Default to a valid date if missing
+    ${existing_registration_key}=          Set Variable If    ${existing_customer_data[0][16]}   ${existing_customer_data[0][16]}   NULL
+    ${existing_restore_password_date}=     Set Variable If    ${existing_customer_data[0][17]}   ${existing_customer_data[0][17]}   NULL
+    ${existing_restore_password_key}=      Set Variable If    ${existing_customer_data[0][18]}   ${existing_customer_data[0][18]}   NULL
+    ${existing_salutation}=                Set Variable    ${existing_customer_data[0][19]}
+    ${existing_created_at}=                Set Variable    ${existing_customer_data[0][20]}
+    ${existing_updated_at}=                Set Variable    ${existing_customer_data[0][21]}
+    
+    # Step 2: Get the maximum id_customer and increment it
+    ${max_id_customer}=    Query    SELECT MAX(id_customer) FROM spy_customer
+    ${new_id_customer}=    Evaluate    ${max_id_customer[0][0]} + 1
+    
+    # Step 3: Generate new values for customer_reference
+    ${new_customer_reference}=    Set Variable    dynamic--${new_id_customer}
+    
+    VAR    ${dynamic_customer}    ${email}    scope=TEST
+    VAR    ${dynamic_customer_id}    ${new_customer_reference}    scope=TEST
+
+    # Step 4: Insert the new customer into the spy_customer table using all columns
+    IF    '${db_engine}' == 'pymysql'
+        Execute Sql String    INSERT INTO spy_customer (id_customer, fk_locale, fk_user, anonymized_at, company, customer_reference, date_of_birth, default_billing_address, default_shipping_address, email, first_name, gender, last_name, password, phone, registered, registration_key, restore_password_date, restore_password_key, salutation, created_at, updated_at) VALUES (${new_id_customer}, ${existing_fk_locale}, ${existing_fk_user}, ${existing_anonymized_at}, '${existing_company}', '${new_customer_reference}', ${existing_date_of_birth}, ${existing_default_billing_address}, ${existing_default_shipping_address}, '${email}', '${first_name}', ${existing_gender}, '${last_name}', '${existing_password}', '${existing_phone}', '${existing_registered}', ${existing_registration_key}, ${existing_restore_password_date}, ${existing_restore_password_key}, ${existing_salutation}, '${existing_created_at}', '${existing_updated_at}')
+    ELSE
+        Execute Sql String    INSERT INTO spy_customer (id_customer, fk_locale, fk_user, anonymized_at, company, customer_reference, date_of_birth, default_billing_address, default_shipping_address, email, first_name, gender, last_name, password, phone, registered, registration_key, restore_password_date, restore_password_key, salutation, created_at, updated_at) VALUES (${new_id_customer}, ${existing_fk_locale}, ${existing_fk_user}, ${existing_anonymized_at}, '${existing_company}', '${new_customer_reference}', ${existing_date_of_birth}, ${existing_default_billing_address}, ${existing_default_shipping_address}, '${email}', '${first_name}', ${existing_gender}, '${last_name}', '${existing_password}', '${existing_phone}', '${existing_registered}', ${existing_registration_key}, ${existing_restore_password_date}, ${existing_restore_password_key}, ${existing_salutation}, '${existing_created_at}', '${existing_updated_at}')
     END
 
     Disconnect From Database

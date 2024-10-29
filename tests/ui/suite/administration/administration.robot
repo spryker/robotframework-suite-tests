@@ -44,6 +44,7 @@ Resource    ../../../../resources/steps/zed_payment_methods_steps.robot
 
 *** Test Cases ***
 Minimum_Order_Value
+    [Tags]    debug
     [Documentation]    checks that global minimum and maximun order thresholds can be applied
     # [Setup]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     # ...    AND    Zed: deactivate all discounts from Overview page
@@ -53,8 +54,13 @@ Minimum_Order_Value
     # ...    AND    Yves: delete all user addresses
     # ...    AND    Yves: create a new customer address in profile:     Mr    ${yves_user_first_name}    ${yves_user_last_name}    Kirncher Str.    7    10247    Berlin    Germany
     
-    
+    Create new approved dynamic customer in DB
+    Yves: login on Yves with provided credentials:    ${dynamic_customer}
+    Delete dynamic customer via API
     Create new dynamic admin user in DB
+    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
+    Delete dynamic admin user from DB
+    
 
 
     # Zed: login on Zed with provided credentials:    ${zed_admin_email}
